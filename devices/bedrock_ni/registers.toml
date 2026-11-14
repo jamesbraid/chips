@@ -16,7 +16,10 @@ offset = 0x680000
 access = "r"
 width = 64
 grade = "established"
-doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_STATUS at image offset 0x1606c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name."
 
 [registers.port_status.fields]
 status_bit0 = { bits = [0, 0], grade = "unknown", doc = "Low bit of the two-bit port status. The header gives no meaning for it." }
@@ -40,7 +43,10 @@ offset = 0x680010
 access = "rw"
 width = 64
 grade = "established"
-doc = "Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_RESET_ENABLE at image offset 0x1606f0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown."
 
 [registers.reset_enable.fields]
 reset_ok = { bits = [0, 0], grade = "inferred", doc = "Lets the link reset the Bedrock. The header comment says so; whether it gates the local reset bit is unknown." }
@@ -50,7 +56,10 @@ offset = 0x680018
 access = "rw"
 width = 64
 grade = "established"
-doc = "Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_DIAG_PARMS at image offset 0x160708 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them."
 
 [registers.diag_parms.fields]
 send_data_error = { bits = [0, 0], grade = "inferred", doc = "Header name: send data error." }
@@ -62,7 +71,10 @@ offset = 0x680020
 access = "rw"
 width = 64
 grade = "established"
-doc = "Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown."
+reset = 0x100
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_CHANNEL_CONTROL at image offset 0x160720 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies."
 
 [registers.channel_control.fields]
 vch_one_request = { bits = [0, 0], grade = "established" }
@@ -97,7 +109,10 @@ offset = 0x680030
 access = "rw"
 width = 64
 grade = "established"
-doc = "Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Reset unknown."
+reset = 0x7a3ff1bf0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_PARMS at image offset 0x160750 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above."
 
 [registers.port_parms.fields]
 max_burst = { bits = [9, 0], grade = "established" }
@@ -113,7 +128,10 @@ offset = 0x680038
 access = "rw"
 width = 64
 grade = "established"
-doc = "Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment). Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_CHANNEL_AGE at image offset 0x160768 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment)."
 
 [registers.channel_age.fields]
 request_inject_age = { bits = [7, 0], grade = "established" }
@@ -124,7 +142,10 @@ offset = 0x680100
 access = "r"
 width = 64
 grade = "established"
-doc = "Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_ERRORS at image offset 0x160780 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap."
 
 [registers.port_errors.fields]
 sn_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits." }
@@ -173,6 +194,9 @@ offset = 0x680118
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_SIDEBAND at image offset 0x1607c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides."
 
 [registers.port_sideband.fields]
@@ -192,7 +216,10 @@ offset = 0x680120
 access = "r"
 width = 64
 grade = "established"
-doc = "The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. Whether the read clears anything is unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_ERROR_CLEAR at image offset 0x1607e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Whether the read clears anything is unknown."
 
 [registers.port_error_clear.fields]
 pec_sn_error_count = { bits = [7, 0], grade = "established" }
@@ -213,7 +240,10 @@ count = 128
 access = "rw"
 width = 64
 grade = "established"
-doc = "Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_0 to NI_LOCAL_TABLE_127 at image offset 0x1607f8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction."
 
 [registers.local_table.fields]
 next_exit_port = { bits = [3, 0], grade = "established" }
@@ -224,7 +254,10 @@ offset = 0x682000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_GLOBAL_TABLE at image offset 0x160828 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Next-hop table for the one-bit meta destination. The header names the table and gives no access direction."
 
 [registers.global_table.fields]
 next_exit_port = { bits = [3, 0], grade = "established" }

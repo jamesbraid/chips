@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -41,7 +41,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -55,7 +55,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -125,7 +125,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -139,7 +139,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -153,7 +153,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -167,7 +167,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -195,7 +195,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -223,7 +223,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -279,7 +279,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -302,7 +302,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -316,7 +316,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -330,7 +330,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -344,7 +344,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -367,7 +367,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -381,7 +381,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -395,7 +395,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -493,7 +493,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -561,7 +561,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -575,7 +575,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -589,7 +589,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -621,7 +621,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },
@@ -653,7 +653,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
   },

@@ -41,7 +41,10 @@ offset = 0x780000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it. Reset unknown: the header states no value."
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_CURRENT_CELL at image offset 0x15f5e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it."
 
 [registers.current_cell.fields]
 region_bits = { bits = [63, 0], grade = "established", doc = "One bit per region." }
@@ -80,20 +83,29 @@ offset = 0x780040
 access = "r"
 width = 64
 grade = "established"
-doc = "Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MISC0_ERROR at image offset 0x15f670 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here."
 
 [registers.misc_error1]
 offset = 0x780048
 access = "r"
 width = 64
 grade = "established"
-doc = "Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MISC1_ERROR at image offset 0x15f688 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here."
 
 [registers.misc_error1_clr]
 offset = 0x780058
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MISC1_ERROR_CLR at image offset 0x15f6a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Clear alias of miscellaneous error word 1. The header names it a clear register without saying whether a read or a write clears it. The one consumer reads and discards the value. The clearing mechanism is unknown."
 
 [registers.outgoing_reply_queue_size]
@@ -102,7 +114,9 @@ access = "rw"
 width = 64
 grade = "established"
 reset = 0x0018_1818_0c0c_0c00
-doc = "Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults."
+reset_grade = "inferred"
+reset_from = "Linux 2.5.40 SN1 memory-directory register header, which gives 12 header entries and 24 data entries as the defaults; no IRIX source states them"
+doc = "Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults. The shipped Origin 350 PROM register table holds 0x12 in the header fields and 0x24 in the data fields, which do not fit four and five bits as hex and equal 12 and 24 read as decimal, so the table does not settle the value."
 
 [registers.outgoing_reply_queue_size.fields]
 pi0_header_queue = { bits = [11, 8], grade = "established", doc = "Header-queue size for processor interface 0. Default 12." }
@@ -147,7 +161,10 @@ offset = 0x790010
 access = "rw"
 width = 64
 grade = "established"
-doc = "Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_PERF_CNT0 at image offset 0x15f700 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred."
 
 [registers.perf_counter0.fields]
 count = { bits = [40, 0], grade = "established", doc = "41-bit count." }
@@ -157,7 +174,10 @@ offset = 0x790018
 access = "rw"
 width = 64
 grade = "established"
-doc = "Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_PERF_CNT1 at image offset 0x15f718 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Performance counter 1. The same 41-bit count layout as counter 0."
 
 [registers.perf_counter1.fields]
 count = { bits = [40, 0], grade = "established", doc = "41-bit count." }
@@ -167,7 +187,10 @@ offset = 0x780010
 access = "rw"
 width = 64
 grade = "established"
-doc = "Arbitration control. The arbitration timing is not specified by the header. Reset unknown."
+reset = 0x8f
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_ARBITRATION_CONTROL at image offset 0x15f610 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Arbitration control. The arbitration timing is not specified by the header."
 
 [registers.arbitration_control.fields]
 reply_guarantee = { bits = [3, 0], grade = "established", doc = "Reply guarantee field." }
@@ -178,7 +201,10 @@ offset = 0x780018
 access = "rw"
 width = 64
 grade = "established"
-doc = "Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown."
+reset = 0xff0020
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MIG_CONFIG at image offset 0x15f628 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. The software that uses the migration interface never touches this register, so who sets the enable bit is unknown."
 notes = "The kernel reading derived this offset by subtracting the public header's block base and graded it inferred; the header's own offset is established here and agrees."
 
 [registers.migration_config.fields]
@@ -191,7 +217,10 @@ offset = 0x780020
 access = "r"
 width = 64
 grade = "established"
-doc = "Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown."
+reset = 0xc0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_FANDOP_CAC_STAT0 at image offset 0x15f640 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given."
 
 [registers.fetchop_cache_status0.fields]
 address = { bits = [32, 6], grade = "established", doc = "Address of the captured entry." }
@@ -202,7 +231,10 @@ offset = 0x780028
 access = "r"
 width = 64
 grade = "established"
-doc = "Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown."
+reset = 0xc0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_FANDOP_CAC_STAT1 at image offset 0x15f658 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0."
 
 [registers.fetchop_cache_status1.fields]
 address = { bits = [32, 6], grade = "established", doc = "Address of the captured entry." }
@@ -213,7 +245,10 @@ offset = 0x7a0000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's reset is unknown."
+reset = 0x800
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_REFRESH_CONTROL at image offset 0x15f730 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's"
 
 [registers.refresh_control.fields]
 threshold = { bits = [11, 0], grade = "established", doc = "Refresh threshold in Bedrock clocks." }
@@ -225,7 +260,10 @@ offset = 0x7a0008
 access = "rw"
 width = 64
 grade = "established"
-doc = "Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM. Reset unknown."
+reset = 0xffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_JUNK_BUS_TIMING at image offset 0x15f748 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM."
 
 [registers.junk_bus_timing.fields]
 flash_setup_hold = { bits = [7, 0], grade = "established", doc = "Flash PROM setup and hold time." }
@@ -240,7 +278,10 @@ offset = 0x7a0010
 access = "r"
 width = 64
 grade = "established"
-doc = "Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_LED0 at image offset 0x15f760 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated."
 
 [registers.led0.fields]
 data = { bits = [7, 0], grade = "established", doc = "LED bank value." }
@@ -250,6 +291,9 @@ offset = 0x7a0018
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_LED1 at image offset 0x15f778 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Reads the value on LED bank 1. Otherwise as LED bank 0."
 
 [registers.led1.fields]
@@ -260,6 +304,9 @@ offset = 0x7a0020
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_LED2 at image offset 0x15f790 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Reads the value on LED bank 2. Otherwise as LED bank 0."
 
 [registers.led2.fields]
@@ -270,6 +317,9 @@ offset = 0x7a0028
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_LED3 at image offset 0x15f7a8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Reads the value on LED bank 3. Otherwise as LED bank 0."
 
 [registers.led3.fields]
@@ -294,6 +344,9 @@ offset = 0x7a0038
 access = "rw"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_DATA at image offset 0x15f7d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test data and pattern control. The header gives the control names, not their full transformation rules."
 
 [registers.self_test_data.fields]
@@ -308,6 +361,9 @@ offset = 0x7a0040
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_AB_ERR_ADDR at image offset 0x15f7f0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test error address: the failing column and row, and which block failed. Guest writes and the clearing mechanism are unresolved."
 
 [registers.self_test_error_addr.fields]
@@ -333,6 +389,9 @@ offset = 0x7a0060
 access = "rw"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_IB_DEBUG at image offset 0x15f820 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Issue-block debug selector. The prose gives three bits while both endian layouts declare two. The width conflict is open. The meanings of the selections are not given."
 
 [registers.issue_debug_select.fields]
@@ -343,7 +402,10 @@ offset = 0x7c0000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknown."
+reset = 0x2
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_DIR_CONFIG at image offset 0x15f838 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset."
 
 [registers.dir_config.fields]
 premium = { bits = [0, 0], grade = "established", doc = "Premium directory format: 64-bit words. Clear selects the standard format with 32-bit words." }
@@ -354,7 +416,10 @@ offset = 0x7c0010
 access = "r"
 width = 64
 grade = "established"
-doc = "Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset unknown; the header gives no value."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_DIR_ERROR at image offset 0x15f850 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable."
 
 [registers.dir_error.fields]
 uncorrectable_valid = { bits = [63, 63], grade = "established", doc = "Uncorrectable directory error recorded." }
@@ -375,6 +440,9 @@ offset = 0x7c0018
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_DIR_ERROR_CLR at image offset 0x15f868 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Clear alias of the directory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule."
 
 [registers.protocol_error]
@@ -382,13 +450,19 @@ offset = 0x7c0020
 access = "r"
 width = 64
 grade = "established"
-doc = "Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_PROTOCOL_ERROR at image offset 0x15f880 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here."
 
 [registers.protocol_error_clr]
 offset = 0x7c0028
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_PROTOCOL_ERR_CLR at image offset 0x15f898 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Clear alias of the protocol error record. The mechanism is not stated."
 
 [registers.mig_candidate]
@@ -396,7 +470,10 @@ offset = 0x7c0030
 access = "r"
 width = 64
 grade = "established"
-doc = "Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MIG_CANDIDATE at image offset 0x15f8b0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_candidate.fields]
 page_address = { bits = [20, 0], grade = "established", doc = "Page address." }
@@ -411,6 +488,9 @@ offset = 0x7c0038
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MIG_CANDIDATE_CLR at image offset 0x15f8c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_candidate_clr.fields]
@@ -426,7 +506,10 @@ offset = 0x7c0040
 access = "rw"
 width = 64
 grade = "established"
-doc = "Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MIG_DIFF_THRESH at image offset 0x15f8e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm."
 notes = "The kernel reading graded the threshold field inferred and the access write-only; the header places the field and read and write access, which are kept. The kernel's use is the narrower fact."
 
 [registers.mig_diff_thresh.fields]
@@ -440,7 +523,10 @@ offset = 0x7c0048
 access = "rw"
 width = 64
 grade = "established"
-doc = "Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MIG_VALUE_THRESH at image offset 0x15f8f8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. No shipped IRIX Origin 300/350 kernel accesses this register."
 
 [registers.mig_value_thresh.fields]
 threshold = { bits = [14, 0], grade = "established", doc = "Threshold." }
@@ -455,6 +541,8 @@ access = "rw"
 width = 64
 grade = "established"
 reset = 0x0000_0000_0404_0400
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_OUTGOING_RQ_QUEUE_SIZE at image offset 0x15f910 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Outgoing request-queue size. Each field defaults to four and has a maximum of four. A header occupies one entry. Writes above four and the side effects of resizing are not specified."
 
 [registers.outgoing_request_queue_size.fields]
@@ -467,6 +555,9 @@ offset = 0x7c0058
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_DB_ERR_DATA at image offset 0x15f928 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Failing directory word captured by the self-test. Guest writes are not established."
 
 [registers.selftest_dir_error_data.fields]
@@ -477,6 +568,9 @@ offset = 0x7c0060
 access = "rw"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_DB_DEBUG at image offset 0x15f940 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Directory-block debug selector. The meanings of the selections come from a separate design specification that is not held."
 
 [registers.dir_debug_select.fields]
@@ -487,7 +581,10 @@ offset = 0x7e0000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown."
+reset = 0x1
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MB_ECC_CONFIG at image offset 0x15f958 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Memory-block ECC configuration. Bit 0 ignores data ECC."
 
 [registers.mb_ecc_config.fields]
 ignore_data_ecc = { bits = [0, 0], grade = "established", doc = "Ignore data ECC." }
@@ -497,7 +594,10 @@ offset = 0x7e0010
 access = "r"
 width = 64
 grade = "established"
-doc = "Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred. Reset unknown."
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MEM_ERROR at image offset 0x15f970 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+doc = "Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred."
 
 [registers.mem_error.fields]
 differing_address = { bits = [63, 63], grade = "established", doc = "Uncorrectable errors reached different cache lines." }
@@ -512,6 +612,9 @@ offset = 0x7e0018
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MEM_ERROR_CLR at image offset 0x15f988 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Clear alias of the memory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule."
 
 [registers.selftest_mem_error_data0]
@@ -519,6 +622,9 @@ offset = 0x7e0020
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_MB_ERR_DATA_0 at image offset 0x15f9a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test captured memory data, quarter 0 of the failing line."
 
 [registers.selftest_mem_error_data0.fields]
@@ -529,6 +635,9 @@ offset = 0x7e0028
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_MB_ERR_DATA_1 at image offset 0x15f9b8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test captured memory data, quarter 1 of the failing line."
 
 [registers.selftest_mem_error_data1.fields]
@@ -539,6 +648,9 @@ offset = 0x7e0030
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_MB_ERR_DATA_2 at image offset 0x15f9d0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test captured memory data, quarter 2 of the failing line."
 
 [registers.selftest_mem_error_data2.fields]
@@ -549,6 +661,9 @@ offset = 0x7e0038
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_MB_ERR_DATA_3 at image offset 0x15f9e8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Self-test captured memory data, quarter 3 of the failing line."
 
 [registers.selftest_mem_error_data3.fields]
@@ -559,6 +674,9 @@ offset = 0x7e0040
 access = "rw"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MB_DEBUG at image offset 0x15fa00 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 doc = "Memory-block debug selector. The meaning of the selection requires the separate design specification."
 
 [registers.mem_debug_select.fields]

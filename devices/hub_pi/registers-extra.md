@@ -11,45 +11,45 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `pi_cpu_protect` | 0x0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cpu_protect` | 0x0 | rw | 64 |  |  | 0xffffffffffffffff (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_prot_override` | 0x8 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_io_protect` | 0x10 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_reply_level` | 0x60 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_io_protect` | 0x10 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_reply_level` | 0x60 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_nmi_b` | 0x78 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_softreset` | 0x80 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_pend_set_a` | 0xc8 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_pend_set_b` | 0xd0 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_mask` | 0xe8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_rt_filter_ctrl` | 0x168 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cc_mask` | 0xe8 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_rt_filter_ctrl` | 0x168 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_write_data` | 0x200 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_read_data` | 0x208 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_bist_read_data` | 0x208 | r | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_count_targ` | 0x210 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_ready` | 0x218 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_bist_ready` | 0x218 | r | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_shift_load` | 0x220 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_shift_unload` | 0x228 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_enter_run` | 0x230 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_page_a` | 0x300 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_bias_a` | 0x310 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_page_b` | 0x328 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_bias_b` | 0x338 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_page_a` | 0x300 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_bias_a` | 0x310 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_page_b` | 0x328 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_bias_b` | 0x338 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_err_status0_a_rclr` | 0x438 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_err_status0_b_rclr` | 0x458 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_spool_cmp_a` | 0x470 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_spool_cmp_b` | 0x478 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_crb_timeout_a` | 0x480 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_crb_timeout_b` | 0x488 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_sysad_errchk_en` | 0x490 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bad_check_bit_a` | 0x498 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cnt_a` | 0x4a8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cnt_b` | 0x4b0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cmp` | 0x4b8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_sysad_errchk_en` | 0x490 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_bad_check_bit_a` | 0x498 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_nack_cnt_a` | 0x4a8 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_nack_cnt_b` | 0x4b0 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_nack_cmp` | 0x4b8 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 
 ### Register `pi_cpu_protect`
 

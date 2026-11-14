@@ -199,7 +199,7 @@ pub mod cpu_permission_override {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604008;
 }
-/// The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor. Reset unk (established)
+/// The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor. (established)
 pub mod io_permission {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604010;
@@ -589,7 +589,7 @@ pub mod error_hdr1 {
         }
     }
 }
-/// Address field from the header of the first packet that caused an error. Not relevant for a global clock drop. Reset unknown. (established)
+/// Address field from the header of the first packet that caused an error. Not relevant for a global clock drop. (established)
 pub mod error_hdr2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604058;
@@ -604,7 +604,7 @@ pub mod error_hdr2 {
         }
     }
 }
-/// Data flit of the first erroring packet, for the error kinds that carry data. Reset unknown. (established)
+/// Data flit of the first erroring packet, for the error kinds that carry data. (established)
 pub mod error_data {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604060;
@@ -619,7 +619,7 @@ pub mod error_data {
         }
     }
 }
-/// Chooses which internal signals appear on the debug pins. The header gives no list of the choices. Reset unknown. (established)
+/// Chooses which internal signals appear on the debug pins. The header gives no list of the choices. (established)
 pub mod debug_select {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604100;
@@ -634,7 +634,7 @@ pub mod debug_select {
         }
     }
 }
-/// Value on the chip's debug pins. Reset unknown. (established)
+/// Value on the chip's debug pins. (established)
 pub mod debug_pins {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x604108;
@@ -784,7 +784,7 @@ pub mod scratch0 {
         }
     }
 }
-/// Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown. (established)
+/// Plain storage. The header says it is not reset, and does not name the reset it means. (established)
 pub mod scratch1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x608008;
@@ -799,7 +799,7 @@ pub mod scratch1 {
         }
     }
 }
-/// Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown. (established)
+/// Plain storage. The header says it is not reset, and does not name the reset it means. (established)
 pub mod scratch2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x608010;
@@ -829,7 +829,7 @@ pub mod scratch3 {
         }
     }
 }
-/// One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it. Reset unknown. (established)
+/// One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it. (established)
 pub mod scratch4 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x608020;
@@ -975,12 +975,12 @@ pub mod vector_parms {
         pub use super::super::enums::vector_op::Value;
     }
 }
-/// Outgoing vector route for the next request. The header gives no field layout. Reset unknown. (established)
+/// Outgoing vector route for the next request. The header gives no field layout. (established)
 pub mod vector_route {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60c008;
 }
-/// Write data for an outgoing vector write, and the data value for a read reply. Reset unknown. (established)
+/// Write data for an outgoing vector write, and the data value for a read reply. (established)
 pub mod vector_data {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60c010;
@@ -1061,12 +1061,12 @@ pub mod vector_status {
         pub use super::super::enums::vector_reply_type::Value;
     }
 }
-/// Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear. Reset unknown. (established)
+/// Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear. (established)
 pub mod vector_return {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60c028;
 }
-/// Read data from the last reply, under the same update rule as vector_return. Reset unknown. (established)
+/// Read data from the last reply, under the same update rule as vector_return. (established)
 pub mod vector_read_data {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60c030;

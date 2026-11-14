@@ -10,7 +10,7 @@
   <struct name="MD_LED1" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor)" register="yes" offset="0x220058" access="w" reset="unknown">
     <doc>Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred.</doc>
   </struct>
-  <struct name="MD_UREG1_1" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)" register="yes" offset="0x220088" access="rw" reset="unknown">
+  <struct name="MD_UREG1_1" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)" register="yes" offset="0x220088" access="rw" reset="0x0">
     <doc>Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
   <struct name="MD_UREG1_2" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name)" register="yes" offset="0x220090" access="rw" reset="unknown">
@@ -52,7 +52,7 @@
   <struct name="MD_UREG1_14" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name)" register="yes" offset="0x2200f0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_15" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)" register="yes" offset="0x2200f8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_15" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)" register="yes" offset="0x2200f8" access="rw" reset="0x0">
     <doc>Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
   <struct name="MD_DIMM_INIT_FORMAT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks">

@@ -87,7 +87,7 @@ pub mod reset_enable {
         }
     }
 }
-/// Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown. (established)
+/// Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. (established)
 pub mod diag_parms {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x680018;
@@ -122,7 +122,7 @@ pub mod diag_parms {
         }
     }
 }
-/// Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown. (established)
+/// Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. (established)
 pub mod channel_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x680020;
@@ -302,7 +302,7 @@ pub mod channel_test {
         }
     }
 }
-/// Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Rese (established)
+/// Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. (established)
 pub mod port_parms {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x680030;
@@ -884,7 +884,7 @@ pub mod local_table {
         }
     }
 }
-/// Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown. (established)
+/// Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. (established)
 pub mod global_table {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x682000;

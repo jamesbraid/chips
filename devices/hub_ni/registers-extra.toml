@@ -150,6 +150,9 @@ offset = 0x600400
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80a0"
 doc = "PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the header gives neither a field layout nor a reset."
 
 [registers.ni_io_prot_ovrrd]
@@ -171,6 +174,9 @@ offset = 0x608000
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x1bf0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PORT_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8190"
 doc = "Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on their own."
 
 [registers.ni_port_parms.fields]
@@ -182,6 +188,9 @@ offset = 0x600508
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80e8"
 doc = "CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 [registers.ni_age_cpu1_pio]
@@ -189,6 +198,9 @@ offset = 0x600518
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8118"
 doc = "CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 [registers.ni_age_gbr_memory]
@@ -196,6 +208,9 @@ offset = 0x600520
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8130"
 doc = "Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 [registers.ni_age_gbr_pio]
@@ -203,6 +218,9 @@ offset = 0x600528
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8148"
 doc = "Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 [registers.ni_age_io_memory]
@@ -210,6 +228,9 @@ offset = 0x600530
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_IO_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8160"
 doc = "I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 [registers.ni_age_io_pio]
@@ -217,6 +238,9 @@ offset = 0x600538
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_IO_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8178"
 doc = "I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write."
 
 # Routing table entries after the first. The census names entry 0 of each table. The header gives

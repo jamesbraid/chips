@@ -1,47 +1,47 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock/registers.toml by defs-gen - do not edit, change the source -->
 <genxml unit="bedrock" prefix="BEDROCK" title="Bedrock (node controller), Origin 3000 family" from="census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)">
-  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number &lt;&lt; 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.</doc>
+  <doc>Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown unless a register entry cites the source that states one. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number &lt;&lt; 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.</doc>
   <space name="bedrock_boot_space" unit="byte"/>
-  <struct name="HANDLE_CAC_BUSERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x18" access="r" reset="unknown">
+  <struct name="HANDLE_CAC_BUSERR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x18" access="r" reset="0xffffffffffffffff">
   </struct>
-  <struct name="SUB_1BCF0" size="8" grade="established" from="census: 115 sites, 24 routines" register="yes" offset="0x20" access="rw" reset="unknown">
+  <struct name="SUB_1BCF0" size="8" grade="established" from="census: 115 sites, 24 routines" register="yes" offset="0x20" access="rw" reset="0x0">
   </struct>
   <struct name="MEMORY_ISCALIAS" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x28" access="rw" reset="unknown">
   </struct>
-  <struct name="REG_000040" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x40" access="r" reset="unknown">
+  <struct name="REG_000040" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x40" access="r" reset="0x0">
   </struct>
   <struct name="SUB_20EE0" size="8" grade="established" from="census: 9 sites, 7 routines" register="yes" offset="0x90" access="w" reset="unknown">
   </struct>
-  <struct name="SUB_200F0" size="8" grade="established" from="census: 12 sites, 7 routines" register="yes" offset="0x98" access="r" reset="unknown">
+  <struct name="SUB_200F0" size="8" grade="established" from="census: 12 sites, 7 routines" register="yes" offset="0x98" access="r" reset="0x0">
   </struct>
-  <struct name="SUB_20250" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xa0" access="r" reset="unknown">
+  <struct name="SUB_20250" size="8" grade="established" from="census: 5 sites, 3 routines" register="yes" offset="0xa0" access="r" reset="0x0">
   </struct>
-  <struct name="REG_000108" size="8" grade="established" from="census: 24 sites, 2 routines" register="yes" offset="0x108" access="w" reset="unknown">
+  <struct name="REG_000108" size="8" grade="established" from="census: 24 sites, 2 routines" register="yes" offset="0x108" access="w" reset="0x0">
   </struct>
-  <struct name="STARTKGCLOCK" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x118" access="w" reset="unknown">
+  <struct name="STARTKGCLOCK" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x118" access="w" reset="0x0">
   </struct>
-  <struct name="ACKTMOCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x120" access="w" reset="unknown">
+  <struct name="ACKTMOCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x120" access="w" reset="0x0">
   </struct>
-  <struct name="ACKTMOCLOCK_128" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x128" access="w" reset="unknown">
+  <struct name="ACKTMOCLOCK_128" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x128" access="w" reset="0x0">
   </struct>
-  <struct name="ACKKGCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x130" access="w" reset="unknown">
+  <struct name="ACKKGCLOCK" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x130" access="w" reset="0x0">
   </struct>
-  <struct name="ACKKGCLOCK_138" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x138" access="w" reset="unknown">
+  <struct name="ACKKGCLOCK_138" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x138" access="w" reset="0x0">
   </struct>
-  <struct name="STARTKGCLOCK_150" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x150" access="w" reset="unknown">
+  <struct name="STARTKGCLOCK_150" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x150" access="w" reset="0x0">
   </struct>
-  <struct name="STARTKGCLOCK_158" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x158" access="w" reset="unknown">
+  <struct name="STARTKGCLOCK_158" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x158" access="w" reset="0x0">
   </struct>
   <struct name="HUBPI_EINT_HANDLER" size="8" grade="established" from="census: 14 sites, 4 routines" register="yes" offset="0x400" access="rw" reset="unknown">
   </struct>
-  <struct name="ERR_INT_BLOCK_MASK" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x408" access="rw" reset="unknown">
+  <struct name="ERR_INT_BLOCK_MASK" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x408" access="rw" reset="0x0">
   </struct>
-  <struct name="ERR_INT_BLOCK_MASK_410" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x410" access="rw" reset="unknown">
+  <struct name="ERR_INT_BLOCK_MASK_410" size="8" grade="established" from="census: 10 sites, 6 routines" register="yes" offset="0x410" access="rw" reset="0x0">
   </struct>
-  <struct name="HUBPI_SPOOL_GET_NEXT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x418" access="r" reset="unknown">
+  <struct name="HUBPI_SPOOL_GET_NEXT" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x418" access="r" reset="0x0">
   </struct>
-  <struct name="HUBPI_SPOOL_GET_NEXT_420" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x420" access="r" reset="unknown">
+  <struct name="HUBPI_SPOOL_GET_NEXT_420" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x420" access="r" reset="0x0">
   </struct>
   <struct name="HUBPI_SPOOL_GET_NEXT_430" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x430" access="r" reset="unknown">
   </struct>
@@ -59,71 +59,71 @@
   </struct>
   <struct name="HUBPI_EINT_HANDLER_4D0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x4d0" access="rw" reset="unknown">
   </struct>
-  <struct name="RESTORE_HUB_ERR" size="8" grade="established" from="census: 103 sites, 56 routines" register="yes" offset="0x30100" access="rw" reset="unknown">
+  <struct name="RESTORE_HUB_ERR" size="8" grade="established" from="census: 103 sites, 56 routines" register="yes" offset="0x30100" access="rw" reset="0x0">
   </struct>
-  <struct name="REG_400110" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400110" access="w" reset="unknown">
+  <struct name="REG_400110" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x400110" access="w" reset="0x0">
   </struct>
-  <struct name="REG_400128" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x400128" access="rw" reset="unknown">
+  <struct name="REG_400128" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x400128" access="rw" reset="0x3fc03ff040a">
   </struct>
-  <struct name="II_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400130" access="rw" reset="unknown">
+  <struct name="II_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400130" access="rw" reset="0x0">
   </struct>
-  <struct name="SUB_3D1D8" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x4001f8" access="w" reset="unknown">
+  <struct name="SUB_3D1D8" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x4001f8" access="w" reset="0x0">
   </struct>
-  <struct name="SUB_1BCF0_600000" size="8" grade="established" from="census: 16 sites, 13 routines" register="yes" offset="0x600000" access="r" reset="unknown">
+  <struct name="SUB_1BCF0_600000" size="8" grade="established" from="census: 16 sites, 13 routines" register="yes" offset="0x600000" access="r" reset="0x23012049">
   </struct>
-  <struct name="SUB_1BCF0_604020" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604020" access="r" reset="unknown">
+  <struct name="SUB_1BCF0_604020" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604020" access="r" reset="0xfffffffffffffff">
   </struct>
-  <struct name="SUB_1BCF0_604028" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604028" access="r" reset="unknown">
+  <struct name="SUB_1BCF0_604028" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x604028" access="r" reset="0x0">
   </struct>
-  <struct name="SUB_28E3C" size="8" grade="established" from="census: 67 sites, 36 routines" register="yes" offset="0x604200" access="rw" reset="unknown">
+  <struct name="SUB_28E3C" size="8" grade="established" from="census: 67 sites, 36 routines" register="yes" offset="0x604200" access="rw" reset="0x100000640">
   </struct>
-  <struct name="REG_608000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x608000" access="w" reset="unknown">
+  <struct name="REG_608000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x608000" access="w" reset="0x0">
   </struct>
-  <struct name="REG_608008" size="8" grade="established" from="census: 17 sites, 5 routines" register="yes" offset="0x608008" access="rw" reset="unknown">
+  <struct name="REG_608008" size="8" grade="established" from="census: 17 sites, 5 routines" register="yes" offset="0x608008" access="rw" reset="0x0">
   </struct>
-  <struct name="REG_608010" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x608010" access="rw" reset="unknown">
+  <struct name="REG_608010" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x608010" access="rw" reset="0x0">
   </struct>
-  <struct name="SUB_11984" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680000" access="r" reset="unknown">
+  <struct name="SUB_11984" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680000" access="r" reset="0x0">
   </struct>
   <struct name="SUB_10C0" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680008" access="w" reset="unknown">
   </struct>
-  <struct name="SUB_10C0_680010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680010" access="w" reset="unknown">
+  <struct name="SUB_10C0_680010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x680010" access="w" reset="0x0">
   </struct>
   <struct name="SUB_18A24" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680108" access="r" reset="unknown">
   </struct>
   <struct name="SUB_18A24_680110" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680110" access="r" reset="unknown">
   </struct>
-  <struct name="SUB_18A24_680118" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680118" access="r" reset="unknown">
+  <struct name="SUB_18A24_680118" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680118" access="r" reset="0x0">
   </struct>
-  <struct name="NI_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680120" access="r" reset="unknown">
+  <struct name="NI_LLP_ERROR_MONITOR" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x680120" access="r" reset="0x0">
   </struct>
-  <struct name="PART_DISCOVERY" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x681000" access="r" reset="unknown">
+  <struct name="PART_DISCOVERY" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x681000" access="r" reset="0x0">
   </struct>
-  <struct name="PART_DISCOVERY_681008" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681008" access="r" reset="unknown">
+  <struct name="PART_DISCOVERY_681008" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681008" access="r" reset="0x0">
   </struct>
-  <struct name="PART_DISCOVERY_681010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681010" access="r" reset="unknown">
+  <struct name="PART_DISCOVERY_681010" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681010" access="r" reset="0x0">
   </struct>
-  <struct name="PART_DISCOVERY_681018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681018" access="r" reset="unknown">
+  <struct name="PART_DISCOVERY_681018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x681018" access="r" reset="0x0">
   </struct>
-  <struct name="PART_DISCOVERY_682000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x682000" access="r" reset="unknown">
+  <struct name="PART_DISCOVERY_682000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x682000" access="r" reset="0x0">
   </struct>
   <struct name="PART_DISCOVERY_682008" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x682008" access="r" reset="unknown">
   </struct>
-  <struct name="SUB_1BCF0_780000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x780000" access="r" reset="unknown">
+  <struct name="SUB_1BCF0_780000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x780000" access="r" reset="0xffffffffffffffff">
   </struct>
   <struct name="MDIR_XLATE_ADDR_MEM" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x780008" access="r" reset="unknown">
   </struct>
-  <struct name="REG_790010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x790010" access="w" reset="unknown">
+  <struct name="REG_790010" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x790010" access="w" reset="0x0">
   </struct>
-  <struct name="REG_7A0000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0000" access="r" reset="unknown">
+  <struct name="REG_7A0000" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0000" access="r" reset="0x800">
   </struct>
-  <struct name="REG_7A0008" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x7a0008" access="rw" reset="unknown">
+  <struct name="REG_7A0008" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x7a0008" access="rw" reset="0xffffffffffff">
   </struct>
-  <struct name="DOACVEC" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0038" access="r" reset="unknown">
+  <struct name="DOACVEC" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7a0038" access="r" reset="0x0">
   </struct>
-  <struct name="REG_7C0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7c0018" access="r" reset="unknown">
+  <struct name="REG_7C0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7c0018" access="r" reset="0x0">
   </struct>
-  <struct name="REG_7E0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7e0018" access="r" reset="unknown">
+  <struct name="REG_7E0018" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x7e0018" access="r" reset="0x0">
   </struct>
   <struct name="INTR_DUMPVEC" size="8" grade="established" from="census: 19 sites, 16 routines" register="yes" offset="0x800000" access="rw" reset="unknown">
   </struct>
@@ -421,7 +421,7 @@
   </struct>
   <struct name="BOOT_SPACE_OFF_00009C" size="4" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x9c" access="r" space="bedrock_boot_space" reset="unknown">
   </struct>
-  <struct name="BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD" size="4" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa0" access="r" space="bedrock_boot_space" reset="unknown">
+  <struct name="BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD" size="4" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa0" access="r" space="bedrock_boot_space" reset="0x0">
   </struct>
   <struct name="BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD_A4" size="4" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0xa4" access="r" space="bedrock_boot_space" reset="unknown">
   </struct>

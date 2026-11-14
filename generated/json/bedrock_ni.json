@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -95,7 +95,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -118,7 +118,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -159,7 +159,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 256,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -340,7 +340,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 32816176112,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -417,7 +417,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -449,7 +449,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -689,7 +689,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -793,7 +793,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -906,7 +906,7 @@
    "count": 128,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -938,7 +938,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },

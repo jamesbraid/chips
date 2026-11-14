@@ -13,55 +13,55 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `current_cell` | 0x780000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
+| `current_cell` | 0x780000 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 memory-directory register header |
 | `memory_config` | 0x780008 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `arbitration_control` | 0x780010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `migration_config` | 0x780018 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `fetchop_cache_status0` | 0x780020 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `fetchop_cache_status1` | 0x780028 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `misc_error0` | 0x780040 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `misc_error1` | 0x780048 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `misc_error1_clr` | 0x780058 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `outgoing_reply_queue_size` | 0x780060 | rw | 64 |  |  | 0x1818180c0c0c00 | established | Linux 2.5.40 SN1 memory-directory register header |
+| `arbitration_control` | 0x780010 | rw | 64 |  |  | 0x8f (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `migration_config` | 0x780018 | rw | 64 |  |  | 0xff0020 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `fetchop_cache_status0` | 0x780020 | r | 64 |  |  | 0xc0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `fetchop_cache_status1` | 0x780028 | r | 64 |  |  | 0xc0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `misc_error0` | 0x780040 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `misc_error1` | 0x780048 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `misc_error1_clr` | 0x780058 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `outgoing_reply_queue_size` | 0x780060 | rw | 64 |  |  | 0x1818180c0c0c00 (inferred; Linux 2.5.40 SN1 memory-directory register header, which gives 12 header entries and 24 data entries as the defaults; no IRIX source states them) | established | Linux 2.5.40 SN1 memory-directory register header |
 | `perf_select0` | 0x790000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
 | `perf_select1` | 0x790008 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `perf_counter0` | 0x790010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `perf_counter1` | 0x790018 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `refresh_control` | 0x7a0000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `junk_bus_timing` | 0x7a0008 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `led0` | 0x7a0010 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `led1` | 0x7a0018 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `led2` | 0x7a0020 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `led3` | 0x7a0028 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
+| `perf_counter0` | 0x790010 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `perf_counter1` | 0x790018 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `refresh_control` | 0x7a0000 | rw | 64 |  |  | 0x800 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `junk_bus_timing` | 0x7a0008 | rw | 64 |  |  | 0xffffffffffff (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `led0` | 0x7a0010 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `led1` | 0x7a0018 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `led2` | 0x7a0020 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `led3` | 0x7a0028 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
 | `self_test_control` | 0x7a0030 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `self_test_data` | 0x7a0038 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `self_test_error_addr` | 0x7a0040 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
+| `self_test_data` | 0x7a0038 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `self_test_error_addr` | 0x7a0040 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
 | `self_test_status` | 0x7a0048 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `issue_debug_select` | 0x7a0060 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `dir_config` | 0x7c0000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `dir_error` | 0x7c0010 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `dir_error_clr` | 0x7c0018 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `protocol_error` | 0x7c0020 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `protocol_error_clr` | 0x7c0028 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mig_candidate` | 0x7c0030 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mig_candidate_clr` | 0x7c0038 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mig_diff_thresh` | 0x7c0040 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mig_value_thresh` | 0x7c0048 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `outgoing_request_queue_size` | 0x7c0050 | rw | 64 |  |  | 0x4040400 | established | Linux 2.5.40 SN1 memory-directory register header |
-| `selftest_dir_error_data` | 0x7c0058 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `dir_debug_select` | 0x7c0060 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mb_ecc_config` | 0x7e0000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mem_error` | 0x7e0010 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mem_error_clr` | 0x7e0018 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `selftest_mem_error_data0` | 0x7e0020 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `selftest_mem_error_data1` | 0x7e0028 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `selftest_mem_error_data2` | 0x7e0030 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `selftest_mem_error_data3` | 0x7e0038 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
-| `mem_debug_select` | 0x7e0040 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 memory-directory register header |
+| `issue_debug_select` | 0x7a0060 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `dir_config` | 0x7c0000 | rw | 64 |  |  | 0x2 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `dir_error` | 0x7c0010 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `dir_error_clr` | 0x7c0018 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `protocol_error` | 0x7c0020 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `protocol_error_clr` | 0x7c0028 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mig_candidate` | 0x7c0030 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mig_candidate_clr` | 0x7c0038 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mig_diff_thresh` | 0x7c0040 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mig_value_thresh` | 0x7c0048 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `outgoing_request_queue_size` | 0x7c0050 | rw | 64 |  |  | 0x4040400 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `selftest_dir_error_data` | 0x7c0058 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `dir_debug_select` | 0x7c0060 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mb_ecc_config` | 0x7e0000 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mem_error` | 0x7e0010 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mem_error_clr` | 0x7e0018 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `selftest_mem_error_data0` | 0x7e0020 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `selftest_mem_error_data1` | 0x7e0028 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `selftest_mem_error_data2` | 0x7e0030 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `selftest_mem_error_data3` | 0x7e0038 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
+| `mem_debug_select` | 0x7e0040 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 memory-directory register header |
 
 ### Register `current_cell`
 
-Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it. Reset unknown: the header states no value.
+Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -96,7 +96,7 @@ Memory configuration. Each DIMM position d has a byte at bits 8d+7 to 8d holding
 
 ### Register `arbitration_control`
 
-Arbitration control. The arbitration timing is not specified by the header. Reset unknown.
+Arbitration control. The arbitration timing is not specified by the header.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -105,7 +105,7 @@ Arbitration control. The arbitration timing is not specified by the header. Rese
 
 ### Register `migration_config`
 
-Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown.
+Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. The software that uses the migration interface never touches this register, so who sets the enable bit is unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -115,7 +115,7 @@ Page-migration configuration. The header names the interval, node mask and enabl
 
 ### Register `fetchop_cache_status0`
 
-Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown.
+Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -124,7 +124,7 @@ Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is no
 
 ### Register `fetchop_cache_status1`
 
-Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown.
+Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -133,11 +133,11 @@ Fetch-and-op cache status 1: a second captured cache entry with the same layout 
 
 ### Register `misc_error0`
 
-Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown.
+Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here.
 
 ### Register `misc_error1`
 
-Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown.
+Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here.
 
 ### Register `misc_error1_clr`
 
@@ -145,7 +145,7 @@ Clear alias of miscellaneous error word 1. The header names it a clear register 
 
 ### Register `outgoing_reply_queue_size`
 
-Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults.
+Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults. The shipped Origin 350 PROM register table holds 0x12 in the header fields and 0x24 in the data fields, which do not fit four and five bits as hex and equal 12 and 24 read as decimal, so the table does not settle the value.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -184,7 +184,7 @@ Performance counter 1 selection, with the same layout as counter 0. Reset unknow
 
 ### Register `perf_counter0`
 
-Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred. Reset unknown.
+Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -192,7 +192,7 @@ Performance counter 0. The header describes a 41-bit count; the events that adva
 
 ### Register `perf_counter1`
 
-Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown.
+Performance counter 1. The same 41-bit count layout as counter 0.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -200,7 +200,7 @@ Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown.
 
 ### Register `refresh_control`
 
-Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's reset is unknown.
+Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -210,7 +210,7 @@ Refresh control. Once the memory configuration holds the DIMM information, the h
 
 ### Register `junk_bus_timing`
 
-Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM. Reset unknown.
+Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -223,7 +223,7 @@ Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header na
 
 ### Register `led0`
 
-Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset unknown.
+Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -308,7 +308,7 @@ Issue-block debug selector. The prose gives three bits while both endian layouts
 
 ### Register `dir_config`
 
-Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknown.
+Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -317,7 +317,7 @@ Directory configuration. Bit 0 selects the premium directory format, and bit 1 i
 
 ### Register `dir_error`
 
-Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset unknown; the header gives no value.
+Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -340,7 +340,7 @@ Clear alias of the directory error record. The header repeats the base register'
 
 ### Register `protocol_error`
 
-Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. Reset unknown.
+Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here.
 
 ### Register `protocol_error_clr`
 
@@ -348,7 +348,7 @@ Clear alias of the protocol error record. The mechanism is not stated.
 
 ### Register `mig_candidate`
 
-Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
+Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. No shipped IRIX Origin 300/350 kernel accesses this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -374,7 +374,7 @@ Clear alias of the migration candidate. Software reads only this alias and never
 
 ### Register `mig_diff_thresh`
 
-Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
+Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -385,7 +385,7 @@ Page-migration difference threshold. A valid threshold is reached when the diffe
 
 ### Register `mig_value_thresh`
 
-Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
+Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -423,7 +423,7 @@ Directory-block debug selector. The meanings of the selections come from a separ
 
 ### Register `mb_ecc_config`
 
-Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown.
+Memory-block ECC configuration. Bit 0 ignores data ECC.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -431,7 +431,7 @@ Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown.
 
 ### Register `mem_error`
 
-Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred. Reset unknown.
+Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

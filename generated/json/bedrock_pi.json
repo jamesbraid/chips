@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -59,7 +59,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -82,7 +82,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -105,7 +105,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -183,7 +183,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 100,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -206,7 +206,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -229,7 +229,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -252,7 +252,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -275,7 +275,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -367,7 +367,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -453,7 +453,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -566,7 +566,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -652,7 +652,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -675,7 +675,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -761,7 +761,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -830,7 +830,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -853,7 +853,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -876,7 +876,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -899,7 +899,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -931,7 +931,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -954,7 +954,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -977,7 +977,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1000,7 +1000,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1023,7 +1023,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1046,7 +1046,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1069,7 +1069,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1092,7 +1092,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1115,7 +1115,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1138,7 +1138,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1161,7 +1161,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1184,7 +1184,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1266,7 +1266,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1298,7 +1298,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 64,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1321,7 +1321,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 36,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1344,7 +1344,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1367,7 +1367,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 65536,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1390,7 +1390,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1422,7 +1422,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 64,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1445,7 +1445,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 36,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1468,7 +1468,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -1491,7 +1491,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 65536,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -2172,7 +2172,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -2195,7 +2195,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -2218,7 +2218,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -2241,7 +2241,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -2264,7 +2264,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3237,7 +3237,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3269,7 +3269,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3301,7 +3301,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3369,7 +3369,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3392,7 +3392,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3415,7 +3415,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3447,7 +3447,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3479,7 +3479,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3502,7 +3502,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3670,7 +3670,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3810,7 +3810,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 16,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3833,7 +3833,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3856,7 +3856,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3947,7 +3947,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -3979,7 +3979,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -4079,7 +4079,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },
@@ -4111,7 +4111,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
   },

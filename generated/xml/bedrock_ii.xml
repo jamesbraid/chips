@@ -2,34 +2,34 @@
 <!-- generated from devices/bedrock_ii/registers.toml by defs-gen - do not edit, change the source -->
 <genxml unit="bedrock_ii" prefix="BEDROCK_II" title="Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts">
   <doc>Offsets are hub-relative: the I/O interface is the block that starts 4 MiB into the node's register space. Field layouts come from the public Linux 2.5.40 SN1 headers, so they are established as header positions. Behaviour the headers describe only in comments is inferred. Reset values are unknown unless a header states one. Access directions the headers do not state are recorded as they are used by the public consumers. Where the header and a consumer disagree the field is listed with the disagreement in its doc.</doc>
-  <struct name="WIDGET_ID" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400000" access="r" reset="unknown">
-    <doc>Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Reset unknown: it follows the local revision register.</doc>
+  <struct name="WIDGET_ID" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400000" access="r" reset="0x1c110049">
+    <doc>Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Its value follows the local revision register.</doc>
     <field name="revision" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="WIDGET_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)" register="yes" offset="0x400020" access="rw" reset="unknown">
+  <struct name="WIDGET_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)" register="yes" offset="0x400020" access="rw" reset="0x4011">
     <doc>Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400100" access="rw" reset="0xffffffffffffffff">
-    <doc>One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.</doc>
+  <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400100" access="rw" reset="0xfffffffffffffff">
+    <doc>One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.</doc>
     <field name="region_enable" start="0" size="64" type="uint" grade="established"/>
   </struct>
   <struct name="PROTECTION_OVERRIDE" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400108" access="w" reset="unknown">
     <doc>Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region bit in local access protection. A write through the local alias does nothing. The header union gives a nine-bit field while its description says a 64-bit key, a self-contradiction. No public consumer writes the register.</doc>
   </struct>
-  <struct name="OUTBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400110" access="rw" reset="unknown">
-    <doc>Qualifies every PIO and graphics write the Bedrock launches toward a widget. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.</doc>
+  <struct name="OUTBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400110" access="rw" reset="0x0">
+    <doc>Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.</doc>
     <field name="widgets_8_to_f" start="8" size="8" type="uint" grade="established"/>
     <field name="widget_0" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="INBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400118" access="rw" reset="unknown">
-    <doc>Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.</doc>
+  <struct name="INBOUND_WIDGET_ACCESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400118" access="rw" reset="0x0">
+    <doc>Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.</doc>
     <field name="widgets_8_to_f" start="8" size="8" type="uint" grade="established"/>
     <field name="widget_0" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="INBOUND_DEVICE_ERROR_MASK" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400120" access="rw" reset="unknown">
-    <doc>Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out. Reset unknown.</doc>
+  <struct name="INBOUND_DEVICE_ERROR_MASK" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400120" access="rw" reset="0xffffffffffffffff">
+    <doc>Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out.</doc>
     <field name="widget_15" start="56" size="8" type="uint" grade="established"/>
     <field name="widget_14" start="48" size="8" type="uint" grade="established"/>
     <field name="widget_13" start="40" size="8" type="uint" grade="established"/>
@@ -39,7 +39,7 @@
     <field name="widget_9" start="8" size="8" type="uint" grade="established"/>
     <field name="widget_8" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="LINK_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400128" access="rw" reset="unknown">
+  <struct name="LINK_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400128" access="rw" reset="0x3fc03ff040a">
     <doc>Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.</doc>
     <field name="max_burst" start="32" size="10" type="uint" grade="established"/>
     <field name="data_available_select" start="26" size="2" type="uint" grade="established"/>
@@ -51,10 +51,10 @@
     <field name="warm_reset" start="8" size="1" type="uint" grade="established"/>
     <field name="null_timeout" start="0" size="6" type="uint" grade="established"/>
   </struct>
-  <struct name="LLP_LOG" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)" register="yes" offset="0x400130" access="rw" reset="unknown">
+  <struct name="LLP_LOG" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)" register="yes" offset="0x400130" access="rw" reset="0x0">
     <doc>IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="INTERRUPT_DESTINATION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400138" access="rw" reset="unknown">
+  <struct name="INTERRUPT_DESTINATION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400138" access="rw" reset="0x0">
     <doc>Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion macros put the node at 15:8. The struct governs: the Itanium consumer writes through it. The PI register address is hard-coded per PI select (see the PI0 and PI1 constants).</doc>
     <field name="forwarded_pi1" start="33" size="1" type="uint" grade="established"/>
     <field name="forwarded_pi0" start="32" size="1" type="uint" grade="established"/>
@@ -64,17 +64,17 @@
     <field name="pi_select" start="8" size="1" type="uint" grade="established"/>
     <field name="level" start="0" size="7" type="uint" grade="established"/>
   </struct>
-  <struct name="GRAPHICS_MAP" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)" register="yes" offset="0x400140" access="rw" count="2" stride="8" reset="unknown">
+  <struct name="GRAPHICS_MAP" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)" register="yes" offset="0x400140" access="rw" count="2" stride="8" reset="0x0">
     <doc>IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="SCRATCH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)" register="yes" offset="0x400150" access="rw" count="2" stride="8" reset="unknown">
+  <struct name="SCRATCH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)" register="yes" offset="0x400150" access="rw" count="2" stride="8" reset="0x0">
     <doc>IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="TRANSLATION_TABLE_ENTRY" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="unknown">
+  <struct name="TRANSLATION_TABLE_ENTRY" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
     <doc>IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="PIO_REQUEST_BUFFER_W0" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400198" access="rw" reset="unknown">
-    <doc>Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. Reset unknown; the Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.</doc>
+  <struct name="PIO_REQUEST_BUFFER_W0" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400198" access="rw" reset="0xf">
+    <doc>Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.</doc>
     <field name="multiple_errors" start="63" size="1" type="uint" grade="established"/>
     <field name="spurious_read" start="51" size="1" type="uint" grade="established"/>
     <field name="spurious_write" start="50" size="1" type="uint" grade="established"/>
@@ -87,7 +87,7 @@
     <field name="nack_counter_a" start="8" size="14" type="uint" grade="established"/>
     <field name="credits" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="PIO_REQUEST_BUFFER_W8" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001a0" access="rw" count="8" stride="8" reset="unknown">
+  <struct name="PIO_REQUEST_BUFFER_W8" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001a0" access="rw" count="8" stride="8" reset="0xf">
     <doc>PIO request buffers for widgets 8 to F, eight registers at a stride of eight bytes; the first is widget 8. Same layout as the widget 0 entry.</doc>
     <field name="multiple_errors" start="63" size="1" type="uint" grade="established"/>
     <field name="spurious_read" start="51" size="1" type="uint" grade="established"/>
@@ -101,21 +101,21 @@
     <field name="nack_counter_a" start="8" size="14" type="uint" grade="established"/>
     <field name="credits" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="CREDIT_COUNT_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)" register="yes" offset="0x4001e0" access="rw" reset="unknown">
+  <struct name="CREDIT_COUNT_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)" register="yes" offset="0x4001e0" access="rw" reset="0x3ffffff">
     <doc>IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="MISC_ERROR_MASK" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e8" access="rw" reset="0x111">
-    <doc>Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.</doc>
+    <doc>Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.</doc>
     <field name="clear_precise" start="12" size="1" type="uint" grade="established"/>
     <field name="bte_1_enable" start="8" size="1" type="uint" grade="established"/>
     <field name="bte_0_enable" start="4" size="1" type="uint" grade="established"/>
     <field name="widget_0_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)" register="yes" offset="0x4001f0" access="rw" reset="unknown">
+  <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)" register="yes" offset="0x4001f0" access="rw" reset="0xfffffff03ffffff">
     <doc>IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="ERROR_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f8" access="w" reset="unknown">
-    <doc>Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset unknown.</doc>
+  <struct name="ERROR_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f8" access="w" reset="0x0">
+    <doc>Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero.</doc>
     <field name="forwarded_pi1" start="31" size="1" type="uint" grade="established"/>
     <field name="forwarded_pi0" start="30" size="1" type="uint" grade="established"/>
     <field name="spurious_read_header" start="29" size="1" type="uint" grade="established"/>
@@ -126,10 +126,10 @@
     <field name="request_buffers_8_to_f" start="8" size="8" type="uint" grade="established"/>
     <field name="request_buffer_0" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="BTE_GLOBAL_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)" register="yes" offset="0x400200" access="rw" reset="unknown">
+  <struct name="BTE_GLOBAL_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)" register="yes" offset="0x400200" access="rw" reset="0x8">
     <doc>IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="PIO_READ_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400308" access="rw" count="8" stride="8" reset="unknown">
+  <struct name="PIO_READ_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400308" access="rw" count="8" stride="8" reset="0x0">
     <doc>Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="timeout_count" start="58" size="5" type="uint" grade="established"/>
@@ -150,53 +150,53 @@
     <field name="read_header" start="1" size="1" type="uint" grade="established"/>
     <field name="spurious_message" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="REQUEST_BUFFER_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003b0" access="rw" reset="unknown">
+  <struct name="REQUEST_BUFFER_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003b0" access="rw" reset="0x0">
     <doc>Software control of the request buffers. It has priority over crosstalk and BTE requests. The header names the commands nop, wake, timeout, eject and flush; their numeric codes are not given in the header and are unknown.</doc>
     <field name="pending" start="16" size="1" type="uint" grade="established"/>
     <field name="command" start="8" size="8" type="uint" grade="established"/>
     <field name="entry" start="0" size="4" type="uint" grade="established"/>
   </struct>
-  <struct name="CRB_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)" register="yes" offset="0x4003b8" access="rw" reset="unknown">
+  <struct name="CRB_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)" register="yes" offset="0x4003b8" access="rw" reset="0xff">
     <doc>IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)" register="yes" offset="0x4003c0" access="rw" reset="unknown">
+  <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)" register="yes" offset="0x4003c0" access="rw" reset="0xffffff">
     <doc>IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="unknown">
+  <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="0x0">
     <doc>First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.</doc>
   </struct>
-  <struct name="CRB_B" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="unknown">
+  <struct name="CRB_B" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="0x0">
   </struct>
-  <struct name="CRB_C" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="unknown">
+  <struct name="CRB_C" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="0x0">
   </struct>
-  <struct name="CRB_D" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="unknown">
+  <struct name="CRB_D" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="0x0">
     <doc>Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.</doc>
   </struct>
-  <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="unknown">
-    <doc>One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown.</doc>
+  <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="0x0">
+    <doc>One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end.</doc>
     <field name="busy" start="20" size="1" type="uint" grade="established"/>
     <field name="error" start="16" size="1" type="uint" grade="established"/>
     <field name="length_lines" start="0" size="16" type="uint" grade="established"/>
   </struct>
-  <struct name="BTE_SOURCE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410008" access="rw" count="2" stride="65536" reset="unknown">
+  <struct name="BTE_SOURCE" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410008" access="rw" count="2" stride="65536" reset="0x0">
     <doc>Source physical address of the transfer. Low seven bits are zero (128-byte lines). After a transfer the register reads the address one line past the last line moved, or the failed line after a data error; hardware behaviour here is unknown.</doc>
     <field name="address" start="7" size="33" type="address" grade="established"/>
   </struct>
-  <struct name="BTE_DESTINATION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410010" access="rw" count="2" stride="65536" reset="unknown">
+  <struct name="BTE_DESTINATION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410010" access="rw" count="2" stride="65536" reset="0x0">
     <doc>Destination physical address of the transfer. Same layout and end-of-transfer behaviour as the source register.</doc>
     <field name="address" start="7" size="33" type="address" grade="established"/>
   </struct>
-  <struct name="BTE_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410018" access="rw" count="2" stride="65536" reset="unknown">
+  <struct name="BTE_CONTROL" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410018" access="rw" count="2" stride="65536" reset="0x0">
     <doc>Writing this register starts the transfer. Reading it terminates any transfer in progress, and stopping one engine can disturb the other. The header states this protocol; the start-on-write and terminate-on-read behaviour is inferred from the header's comments, and whether busy is observable after a start is unknown.</doc>
     <field name="poison" start="8" size="1" type="uint" grade="established"/>
     <field name="notify" start="4" size="1" type="uint" grade="established"/>
     <field name="zero_fill" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="BTE_NOTIFICATION_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410020" access="rw" count="2" stride="65536" reset="unknown">
+  <struct name="BTE_NOTIFICATION_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410020" access="rw" count="2" stride="65536" reset="0x0">
     <doc>Address that receives the completion write-invalidate. The Itanium consumer sets its line to all ones before the start and expects the final length-status value to be deposited there.</doc>
     <field name="address" start="7" size="33" type="address" grade="established"/>
   </struct>
-  <struct name="BTE_INTERRUPT_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410028" access="rw" count="2" stride="65536" reset="unknown">
+  <struct name="BTE_INTERRUPT_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410028" access="rw" count="2" stride="65536" reset="0x0">
     <doc>Where the engine's completion interrupt goes. No public consumer programs it. The PROM's hub check does.</doc>
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="1" size="8" type="uint" grade="established"/>

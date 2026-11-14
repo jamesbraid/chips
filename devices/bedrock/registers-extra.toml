@@ -12,24 +12,36 @@ offset = 0x400008
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_WSTAT at image offset 0x15fa30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ii_shutdown_status]
 offset = 0x4001e8
 access = "r"
 width = 64
 grade = "established"
+reset = 0x111
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IMEM at image offset 0x15fd18 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ii_error_header_1]
 offset = 0x400220
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH1 at image offset 0x15fdc0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ii_error_header_2]
 offset = 0x400228
 access = "r"
 width = 64
 grade = "established"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH2 at image offset 0x15fdd8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.node_region_mask]
 offset = 0x1000018

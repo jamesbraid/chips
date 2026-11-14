@@ -10,10 +10,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `ii_widget_status` | 0x400008 | r | 64 |  |  | unknown | established |  |
-| `ii_shutdown_status` | 0x4001e8 | r | 64 |  |  | unknown | established |  |
-| `ii_error_header_1` | 0x400220 | r | 64 |  |  | unknown | established |  |
-| `ii_error_header_2` | 0x400228 | r | 64 |  |  | unknown | established |  |
+| `ii_widget_status` | 0x400008 | r | 64 |  |  | 0x0 (established) | established |  |
+| `ii_shutdown_status` | 0x4001e8 | r | 64 |  |  | 0x111 (established) | established |  |
+| `ii_error_header_1` | 0x400220 | r | 64 |  |  | 0x0 (established) | established |  |
+| `ii_error_header_2` | 0x400228 | r | 64 |  |  | 0x0 (established) | established |  |
 | `node_region_mask` | 0x1000018 | r | 64 |  |  | unknown | established |  |
 | `mem_bank_config` | 0x1f80008 | rw | 64 |  |  | unknown | established |  |
 

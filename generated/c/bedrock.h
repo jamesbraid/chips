@@ -6,64 +6,64 @@
 #include <stdint.h>
 
 
-/* handle_cac_buserr: r64, reset unknown; census: 1 sites, 1 routines */
+/* handle_cac_buserr: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines */
 #define BEDROCK_HANDLE_CAC_BUSERR                    0x000018 /* established */
 
-/* sub_1bcf0: rw64, reset unknown; census: 115 sites, 24 routines */
+/* sub_1bcf0: rw64, reset 0x0; census: 115 sites, 24 routines */
 #define BEDROCK_SUB_1BCF0                            0x000020 /* established */
 
 /* memory_iscalias: rw64, reset unknown; census: 3 sites, 3 routines */
 #define BEDROCK_MEMORY_ISCALIAS                      0x000028 /* established */
 
-/* reg_000040: r64, reset unknown; census: 2 sites, 1 routines */
+/* reg_000040: r64, reset 0x0; census: 2 sites, 1 routines */
 #define BEDROCK_REG_000040                           0x000040 /* established */
 
 /* sub_20ee0: w64, reset unknown; census: 9 sites, 7 routines */
 #define BEDROCK_SUB_20EE0                            0x000090 /* established */
 
-/* sub_200f0: r64, reset unknown; census: 12 sites, 7 routines */
+/* sub_200f0: r64, reset 0x0; census: 12 sites, 7 routines */
 #define BEDROCK_SUB_200F0                            0x000098 /* established */
 
-/* sub_20250: r64, reset unknown; census: 5 sites, 3 routines */
+/* sub_20250: r64, reset 0x0; census: 5 sites, 3 routines */
 #define BEDROCK_SUB_20250                            0x0000a0 /* established */
 
-/* reg_000108: w64, reset unknown; census: 24 sites, 2 routines */
+/* reg_000108: w64, reset 0x0; census: 24 sites, 2 routines */
 #define BEDROCK_REG_000108                           0x000108 /* established */
 
-/* startkgclock: w64, reset unknown; census: 2 sites, 2 routines */
+/* startkgclock: w64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_STARTKGCLOCK                         0x000118 /* established */
 
-/* acktmoclock: w64, reset unknown; census: 1 sites, 1 routines */
+/* acktmoclock: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_ACKTMOCLOCK                          0x000120 /* established */
 
-/* acktmoclock_128: w64, reset unknown; census: 1 sites, 1 routines */
+/* acktmoclock_128: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_ACKTMOCLOCK_128                      0x000128 /* established */
 
-/* ackkgclock: w64, reset unknown; census: 1 sites, 1 routines */
+/* ackkgclock: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_ACKKGCLOCK                           0x000130 /* established */
 
-/* ackkgclock_138: w64, reset unknown; census: 1 sites, 1 routines */
+/* ackkgclock_138: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_ACKKGCLOCK_138                       0x000138 /* established */
 
-/* startkgclock_150: w64, reset unknown; census: 2 sites, 2 routines */
+/* startkgclock_150: w64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_STARTKGCLOCK_150                     0x000150 /* established */
 
-/* startkgclock_158: w64, reset unknown; census: 2 sites, 2 routines */
+/* startkgclock_158: w64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_STARTKGCLOCK_158                     0x000158 /* established */
 
 /* hubpi_eint_handler: rw64, reset unknown; census: 14 sites, 4 routines */
 #define BEDROCK_HUBPI_EINT_HANDLER                   0x000400 /* established */
 
-/* err_int_block_mask: rw64, reset unknown; census: 10 sites, 6 routines */
+/* err_int_block_mask: rw64, reset 0x0; census: 10 sites, 6 routines */
 #define BEDROCK_ERR_INT_BLOCK_MASK                   0x000408 /* established */
 
-/* err_int_block_mask_410: rw64, reset unknown; census: 10 sites, 6 routines */
+/* err_int_block_mask_410: rw64, reset 0x0; census: 10 sites, 6 routines */
 #define BEDROCK_ERR_INT_BLOCK_MASK_410               0x000410 /* established */
 
-/* hubpi_spool_get_next: r64, reset unknown; census: 1 sites, 1 routines */
+/* hubpi_spool_get_next: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT                 0x000418 /* established */
 
-/* hubpi_spool_get_next_420: r64, reset unknown; census: 2 sites, 2 routines */
+/* hubpi_spool_get_next_420: r64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_HUBPI_SPOOL_GET_NEXT_420             0x000420 /* established */
 
 /* hubpi_spool_get_next_430: r64, reset unknown; census: 1 sites, 1 routines */
@@ -90,49 +90,49 @@
 /* hubpi_eint_handler_4d0: rw64, reset unknown; census: 2 sites, 1 routines */
 #define BEDROCK_HUBPI_EINT_HANDLER_4D0               0x0004d0 /* established */
 
-/* restore_hub_err: rw64, reset unknown; census: 103 sites, 56 routines */
+/* restore_hub_err: rw64, reset 0x0; census: 103 sites, 56 routines */
 #define BEDROCK_RESTORE_HUB_ERR                      0x030100 /* established */
 
-/* reg_400110: w64, reset unknown; census: 1 sites, 1 routines */
+/* reg_400110: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_REG_400110                           0x400110 /* established */
 
-/* reg_400128: rw64, reset unknown; census: 3 sites, 1 routines */
+/* reg_400128: rw64, reset 0x3fc03ff040a; census: 3 sites, 1 routines */
 #define BEDROCK_REG_400128                           0x400128 /* established */
 
-/* ii_llp_error_monitor: rw64, reset unknown; census: 2 sites, 1 routines */
+/* ii_llp_error_monitor: rw64, reset 0x0; census: 2 sites, 1 routines */
 #define BEDROCK_II_LLP_ERROR_MONITOR                 0x400130 /* established */
 
-/* sub_3d1d8: w64, reset unknown; census: 4 sites, 2 routines */
+/* sub_3d1d8: w64, reset 0x0; census: 4 sites, 2 routines */
 #define BEDROCK_SUB_3D1D8                            0x4001f8 /* established */
 
-/* sub_1bcf0_600000: r64, reset unknown; census: 16 sites, 13 routines */
+/* sub_1bcf0_600000: r64, reset 0x23012049; census: 16 sites, 13 routines */
 #define BEDROCK_SUB_1BCF0_600000                     0x600000 /* established */
 
-/* sub_1bcf0_604020: r64, reset unknown; census: 1 sites, 1 routines */
+/* sub_1bcf0_604020: r64, reset 0xfffffffffffffff; census: 1 sites, 1 routines */
 #define BEDROCK_SUB_1BCF0_604020                     0x604020 /* established */
 
-/* sub_1bcf0_604028: r64, reset unknown; census: 1 sites, 1 routines */
+/* sub_1bcf0_604028: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_SUB_1BCF0_604028                     0x604028 /* established */
 
-/* sub_28e3c: rw64, reset unknown; census: 67 sites, 36 routines */
+/* sub_28e3c: rw64, reset 0x100000640; census: 67 sites, 36 routines */
 #define BEDROCK_SUB_28E3C                            0x604200 /* established */
 
-/* reg_608000: w64, reset unknown; census: 1 sites, 1 routines */
+/* reg_608000: w64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_REG_608000                           0x608000 /* established */
 
-/* reg_608008: rw64, reset unknown; census: 17 sites, 5 routines */
+/* reg_608008: rw64, reset 0x0; census: 17 sites, 5 routines */
 #define BEDROCK_REG_608008                           0x608008 /* established */
 
-/* reg_608010: rw64, reset unknown; census: 3 sites, 1 routines */
+/* reg_608010: rw64, reset 0x0; census: 3 sites, 1 routines */
 #define BEDROCK_REG_608010                           0x608010 /* established */
 
-/* sub_11984: r64, reset unknown; census: 2 sites, 2 routines */
+/* sub_11984: r64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_SUB_11984                            0x680000 /* established */
 
 /* sub_10c0: w64, reset unknown; census: 2 sites, 2 routines */
 #define BEDROCK_SUB_10C0                             0x680008 /* established */
 
-/* sub_10c0_680010: w64, reset unknown; census: 2 sites, 2 routines */
+/* sub_10c0_680010: w64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_SUB_10C0_680010                      0x680010 /* established */
 
 /* sub_18a24: r64, reset unknown; census: 1 sites, 1 routines */
@@ -141,52 +141,52 @@
 /* sub_18a24_680110: r64, reset unknown; census: 1 sites, 1 routines */
 #define BEDROCK_SUB_18A24_680110                     0x680110 /* established */
 
-/* sub_18a24_680118: r64, reset unknown; census: 1 sites, 1 routines */
+/* sub_18a24_680118: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_SUB_18A24_680118                     0x680118 /* established */
 
-/* ni_llp_error_monitor: r64, reset unknown; census: 1 sites, 1 routines */
+/* ni_llp_error_monitor: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_NI_LLP_ERROR_MONITOR                 0x680120 /* established */
 
-/* part_discovery: r64, reset unknown; census: 2 sites, 1 routines */
+/* part_discovery: r64, reset 0x0; census: 2 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY                       0x681000 /* established */
 
-/* part_discovery_681008: r64, reset unknown; census: 1 sites, 1 routines */
+/* part_discovery_681008: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_681008                0x681008 /* established */
 
-/* part_discovery_681010: r64, reset unknown; census: 1 sites, 1 routines */
+/* part_discovery_681010: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_681010                0x681010 /* established */
 
-/* part_discovery_681018: r64, reset unknown; census: 1 sites, 1 routines */
+/* part_discovery_681018: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_681018                0x681018 /* established */
 
-/* part_discovery_682000: r64, reset unknown; census: 1 sites, 1 routines */
+/* part_discovery_682000: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_682000                0x682000 /* established */
 
 /* part_discovery_682008: r64, reset unknown; census: 1 sites, 1 routines */
 #define BEDROCK_PART_DISCOVERY_682008                0x682008 /* established */
 
-/* sub_1bcf0_780000: r64, reset unknown; census: 1 sites, 1 routines */
+/* sub_1bcf0_780000: r64, reset 0xffffffffffffffff; census: 1 sites, 1 routines */
 #define BEDROCK_SUB_1BCF0_780000                     0x780000 /* established */
 
 /* mdir_xlate_addr_mem: r64, reset unknown; census: 3 sites, 3 routines */
 #define BEDROCK_MDIR_XLATE_ADDR_MEM                  0x780008 /* established */
 
-/* reg_790010: w64, reset unknown; census: 2 sites, 2 routines */
+/* reg_790010: w64, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_REG_790010                           0x790010 /* established */
 
-/* reg_7a0000: r64, reset unknown; census: 1 sites, 1 routines */
+/* reg_7a0000: r64, reset 0x800; census: 1 sites, 1 routines */
 #define BEDROCK_REG_7A0000                           0x7a0000 /* established */
 
-/* reg_7a0008: rw64, reset unknown; census: 2 sites, 1 routines */
+/* reg_7a0008: rw64, reset 0xffffffffffff; census: 2 sites, 1 routines */
 #define BEDROCK_REG_7A0008                           0x7a0008 /* established */
 
-/* doacvec: r64, reset unknown; census: 1 sites, 1 routines */
+/* doacvec: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_DOACVEC                              0x7a0038 /* established */
 
-/* reg_7c0018: r64, reset unknown; census: 1 sites, 1 routines */
+/* reg_7c0018: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_REG_7C0018                           0x7c0018 /* established */
 
-/* reg_7e0018: r64, reset unknown; census: 1 sites, 1 routines */
+/* reg_7e0018: r64, reset 0x0; census: 1 sites, 1 routines */
 #define BEDROCK_REG_7E0018                           0x7e0018 /* established */
 
 /* intr_dumpvec: rw64, reset unknown; census: 19 sites, 16 routines */
@@ -633,7 +633,7 @@
 /* boot_space_off_00009c: r32, space bedrock_boot_space, reset unknown; census: 1 sites, 1 routines */
 #define BEDROCK_BOOT_SPACE_OFF_00009C                0x00009c /* established */
 
-/* boot_space_cpuprom_detailed_inventory_info_add: r32, space bedrock_boot_space, reset unknown; census: 2 sites, 2 routines */
+/* boot_space_cpuprom_detailed_inventory_info_add: r32, space bedrock_boot_space, reset 0x0; census: 2 sites, 2 routines */
 #define BEDROCK_BOOT_SPACE_CPUPROM_DETAILED_INVENTORY_INFO_ADD 0x0000a0 /* established */
 
 /* boot_space_cpuprom_detailed_inventory_info_add_a4: r32, space bedrock_boot_space, reset unknown; census: 2 sites, 2 routines */

@@ -55,7 +55,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)"
   },
@@ -251,7 +251,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)"
   },

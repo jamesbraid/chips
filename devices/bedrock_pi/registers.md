@@ -13,63 +13,63 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `cpu_protect` | 0x0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_protect` | 0x0 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `prot_override` | 0x8 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `io_protect` | 0x10 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `region_present` | 0x18 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cpu_num` | 0x20 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `io_protect` | 0x10 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `region_present` | 0x18 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_num` | 0x20 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `calias_size` | 0x28 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `max_crb_timeout` | 0x30 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `crb_scale_factor` | 0x38 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cpu_present_a` | 0x40 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cpu_present_b` | 0x48 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cpu_enable_a` | 0x50 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cpu_enable_b` | 0x58 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `crb_scale_factor` | 0x38 | rw | 64 |  |  | 0x64 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_present_a` | 0x40 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_present_b` | 0x48 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_enable_a` | 0x50 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cpu_enable_b` | 0x58 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_a` | 0x70 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_b` | 0x78 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend_mod` | 0x90 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_pend0` | 0x98 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_pend1` | 0xa0 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_mask0_a` | 0xa8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_mask1_a` | 0xb0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_mask0_b` | 0xb8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_mask1_b` | 0xc0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_pend0` | 0x98 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_pend1` | 0xa0 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_mask0_a` | 0xa8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_mask1_a` | 0xb0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_mask0_b` | 0xb8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_mask1_b` | 0xc0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `cc_pend_set_a` | 0xc8 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `cc_pend_set_b` | 0xd0 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `cc_mask` | 0xe8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `int_pend1_remap` | 0xf0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_compare_a` | 0x108 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_compare_b` | 0x110 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `profile_compare` | 0x118 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_int_pend_a` | 0x120 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_int_pend_b` | 0x128 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `prof_int_pend_a` | 0x130 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `prof_int_pend_b` | 0x138 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_int_en_a` | 0x140 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_int_en_b` | 0x148 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `prof_int_en_a` | 0x150 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `prof_int_en_b` | 0x158 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `debug_sel` | 0x160 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `cc_mask` | 0xe8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `int_pend1_remap` | 0xf0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_compare_a` | 0x108 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_compare_b` | 0x110 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `profile_compare` | 0x118 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_int_pend_a` | 0x120 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_int_pend_b` | 0x128 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `prof_int_pend_a` | 0x130 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `prof_int_pend_b` | 0x138 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_int_en_a` | 0x140 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_int_en_b` | 0x148 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `prof_int_en_a` | 0x150 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `prof_int_en_b` | 0x158 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `debug_sel` | 0x160 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend_mod_alias` | 0x180 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_page_a` | 0x300 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_bias_a` | 0x310 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_int_cmp_a` | 0x320 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_page_b` | 0x328 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_bias_b` | 0x338 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_int_cmp_b` | 0x348 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_page_a` | 0x300 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | 0x40 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_bias_a` | 0x310 | rw | 64 |  |  | 0x24 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_int_cmp_a` | 0x320 | rw | 64 |  |  | 0x10000 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_page_b` | 0x328 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | 0x40 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_bias_b` | 0x338 | rw | 64 |  |  | 0x24 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_int_cmp_b` | 0x348 | rw | 64 |  |  | 0x10000 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `err_int_pend_wr` | 0x3f8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `err_int_pend` | 0x400 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_int_mask_a` | 0x408 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_int_mask_b` | 0x410 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_stack_addr_a` | 0x418 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_stack_addr_b` | 0x420 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_stack_size` | 0x428 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_int_mask_a` | 0x408 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_int_mask_b` | 0x410 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_stack_addr_a` | 0x418 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_stack_addr_b` | 0x420 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_stack_size` | 0x428 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `err_status0_a` | 0x430 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `err_status0_a_clr` | 0x438 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `err_status1_a` | 0x440 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
@@ -80,27 +80,27 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `err_status1_b_clr` | 0x468 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `spool_cmp_a` | 0x470 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `spool_cmp_b` | 0x478 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `crb_timeout_a` | 0x480 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `crb_timeout_b` | 0x488 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `sysad_errchk_en` | 0x490 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `force_bad_check_bit_a` | 0x498 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `force_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `nack_cnt_a` | 0x4a8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `nack_cnt_b` | 0x4b0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `nack_cmp` | 0x4b8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `spool_mask` | 0x4c0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `crb_timeout_a` | 0x480 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `crb_timeout_b` | 0x488 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `sysad_errchk_en` | 0x490 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `force_bad_check_bit_a` | 0x498 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `force_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `nack_cnt_a` | 0x4a8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `nack_cnt_b` | 0x4b0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `nack_cmp` | 0x4b8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `spool_mask` | 0x4c0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `spurious_hdr_0` | 0x4c8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `spurious_hdr_1` | 0x4d0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `err_inject` | 0x4d8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `reply_level` | 0x10060 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `gfx_credit_mode` | 0x20068 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `rt_counter` | 0x30100 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `err_inject` | 0x4d8 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `reply_level` | 0x10060 | rw | 64 |  |  | 0x10 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `gfx_credit_mode` | 0x20068 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `rt_counter` | 0x30100 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `perf_cntl_a` | 0x40200 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `perf_cntr0_a` | 0x40208 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `perf_cntr1_a` | 0x40210 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `perf_cntr0_a` | 0x40208 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `perf_cntr1_a` | 0x40210 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `perf_cntl_b` | 0x50200 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `perf_cntr0_b` | 0x50208 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `perf_cntr1_b` | 0x50210 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `perf_cntr0_b` | 0x50208 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `perf_cntr1_b` | 0x50210 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 
 ### Register `cpu_protect`
 

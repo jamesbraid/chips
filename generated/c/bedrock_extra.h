@@ -6,16 +6,16 @@
 #include <stdint.h>
 
 
-/* ii_widget_status: r64, reset unknown */
+/* ii_widget_status: r64, reset 0x0 */
 #define BEDROCK_II_WIDGET_STATUS                     0x400008 /* established */
 
-/* ii_shutdown_status: r64, reset unknown */
+/* ii_shutdown_status: r64, reset 0x111 */
 #define BEDROCK_II_SHUTDOWN_STATUS                   0x4001e8 /* established */
 
-/* ii_error_header_1: r64, reset unknown */
+/* ii_error_header_1: r64, reset 0x0 */
 #define BEDROCK_II_ERROR_HEADER_1                    0x400220 /* established */
 
-/* ii_error_header_2: r64, reset unknown */
+/* ii_error_header_2: r64, reset 0x0 */
 #define BEDROCK_II_ERROR_HEADER_2                    0x400228 /* established */
 
 /* node_region_mask: r64, reset unknown */

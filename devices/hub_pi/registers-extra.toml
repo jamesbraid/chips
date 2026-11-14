@@ -18,6 +18,9 @@ offset = 0x0
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c18"
 doc = "CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. Access is assumed read and write."
 
 [registers.pi_prot_override]
@@ -32,6 +35,9 @@ offset = 0x10
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c48"
 doc = "Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. Access is assumed read and write."
 
 [registers.pi_reply_level]
@@ -39,6 +45,9 @@ offset = 0x60
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_REPLY_LEVEL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d38"
 doc = "Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. Access is assumed read and write."
 
 [registers.pi_nmi_b]
@@ -74,6 +83,9 @@ offset = 0xd8
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_PEND_CLR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e88"
 doc = "Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. Access is assumed read and write."
 
 [registers.pi_cc_pend_clr_b]
@@ -81,6 +93,9 @@ offset = 0xe0
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_PEND_CLR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ea0"
 doc = "Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. Access is assumed read and write."
 
 [registers.pi_cc_mask]
@@ -88,6 +103,9 @@ offset = 0xe8
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_MASK (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6eb8"
 doc = "Cross-call interrupt mask, named PI_CC_MASK in the header. Access is assumed read and write."
 
 [registers.pi_rt_filter_ctrl]
@@ -95,6 +113,9 @@ offset = 0x168
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_FILTER_CTRL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7008"
 doc = "Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. Access is assumed read and write."
 
 [registers.pi_bist_write_data]
@@ -109,6 +130,9 @@ offset = 0x208
 access = "r"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_BIST_READ_DATA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7038"
 doc = "Built-in self-test read data, named PI_BIST_READ_DATA in the header. Access is assumed read only."
 
 [registers.pi_bist_count_targ]
@@ -123,6 +147,9 @@ offset = 0x218
 access = "r"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_BIST_RDY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7068"
 doc = "Built-in self-test ready indicator, named PI_BIST_READY in the header. Access is assumed read only."
 
 [registers.pi_bist_shift_load]
@@ -151,6 +178,9 @@ offset = 0x300
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_PAGE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70c8"
 doc = "Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. Access is assumed read and write."
 
 [registers.pi_gfx_page_a.fields]
@@ -161,6 +191,9 @@ offset = 0x308
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_CREDIT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70e0"
 doc = "Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. Access is assumed read and write."
 
 [registers.pi_gfx_bias_a]
@@ -168,6 +201,9 @@ offset = 0x310
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_BIAS_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70f8"
 doc = "Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. Access is assumed read and write."
 
 [registers.pi_gfx_int_cntr_a]
@@ -175,6 +211,9 @@ offset = 0x318
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7110"
 doc = "Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. Access is assumed read and write."
 
 [registers.pi_gfx_page_b]
@@ -182,6 +221,9 @@ offset = 0x328
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_PAGE_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7140"
 doc = "Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. Access is assumed read and write."
 
 [registers.pi_gfx_page_b.fields]
@@ -192,6 +234,9 @@ offset = 0x330
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_CREDIT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7158"
 doc = "Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. Access is assumed read and write."
 
 [registers.pi_gfx_bias_b]
@@ -199,6 +244,9 @@ offset = 0x338
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_BIAS_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7170"
 doc = "Graphics bias for processor B, named PI_GFX_BIAS_B in the header. Access is assumed read and write."
 
 [registers.pi_gfx_int_cntr_b]
@@ -206,6 +254,9 @@ offset = 0x340
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7188"
 doc = "Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. Access is assumed read and write."
 
 [registers.pi_err_status0_a_rclr]
@@ -255,6 +306,9 @@ offset = 0x490
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_SYSAD_ERRCHK_EN (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7380"
 doc = "Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. Access is assumed read and write."
 
 [registers.pi_sysad_errchk_en.fields]
@@ -270,6 +324,9 @@ offset = 0x498
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_FORCE_BAD_CHECK_BIT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7398"
 doc = "Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. Access is assumed read and write."
 
 [registers.pi_bad_check_bit_b]
@@ -277,6 +334,9 @@ offset = 0x4a0
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_FORCE_BAD_CHECK_BIT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73b0"
 doc = "Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. Access is assumed read and write."
 
 [registers.pi_nack_cnt_a]
@@ -284,6 +344,9 @@ offset = 0x4a8
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CNT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73c8"
 doc = "Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. Access is assumed read and write."
 
 [registers.pi_nack_cnt_a.fields]
@@ -295,6 +358,9 @@ offset = 0x4b0
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CNT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73e0"
 doc = "Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. Access is assumed read and write."
 
 [registers.pi_nack_cnt_b.fields]
@@ -306,6 +372,9 @@ offset = 0x4b8
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CMP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73f8"
 doc = "Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. Access is assumed read and write."
 
 [words.PI_RT_LOCAL_CTRL_FORMAT]

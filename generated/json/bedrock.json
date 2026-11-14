@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -27,7 +27,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 115 sites, 24 routines"
   },
@@ -55,7 +55,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 1 routines"
   },
@@ -83,7 +83,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 12 sites, 7 routines"
   },
@@ -97,7 +97,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 5 sites, 3 routines"
   },
@@ -111,7 +111,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 24 sites, 2 routines"
   },
@@ -125,7 +125,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -139,7 +139,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -153,7 +153,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -167,7 +167,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -181,7 +181,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -195,7 +195,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -209,7 +209,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -237,7 +237,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 10 sites, 6 routines"
   },
@@ -251,7 +251,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 10 sites, 6 routines"
   },
@@ -265,7 +265,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -279,7 +279,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -405,7 +405,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 103 sites, 56 routines"
   },
@@ -419,7 +419,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -433,7 +433,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4380933686282,
    "grade": "established",
    "from": "census: 3 sites, 1 routines"
   },
@@ -447,7 +447,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 1 routines"
   },
@@ -461,7 +461,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 4 sites, 2 routines"
   },
@@ -475,7 +475,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 587276361,
    "grade": "established",
    "from": "census: 16 sites, 13 routines"
   },
@@ -489,7 +489,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1152921504606846975,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -503,7 +503,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -517,7 +517,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4294968896,
    "grade": "established",
    "from": "census: 67 sites, 36 routines"
   },
@@ -531,7 +531,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -545,7 +545,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 17 sites, 5 routines"
   },
@@ -559,7 +559,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 3 sites, 1 routines"
   },
@@ -573,7 +573,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -601,7 +601,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -643,7 +643,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -657,7 +657,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -671,7 +671,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 1 routines"
   },
@@ -685,7 +685,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -699,7 +699,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -713,7 +713,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -727,7 +727,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -755,7 +755,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -783,7 +783,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },
@@ -797,7 +797,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 2048,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -811,7 +811,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 281474976710655,
    "grade": "established",
    "from": "census: 2 sites, 1 routines"
   },
@@ -825,7 +825,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -839,7 +839,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -853,7 +853,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
   },
@@ -2939,7 +2939,7 @@
    "count": 1,
    "stride": 4,
    "space": "bedrock_boot_space",
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
   },

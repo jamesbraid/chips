@@ -13,44 +13,44 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `rev_id` | 0x600000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `cpu_permission` | 0x604000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `rev_id` | 0x600000 | rw | 64 |  |  | 0x23012049 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `cpu_permission` | 0x604000 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
 | `cpu_permission_override` | 0x604008 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `io_permission` | 0x604010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `io_permission` | 0x604010 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
 | `soft_reset` | 0x604018 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `region_present` | 0x604020 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `nodes_absent` | 0x604028 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `microlan_ctl` | 0x604030 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `error_bits` | 0x604040 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `region_present` | 0x604020 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `nodes_absent` | 0x604028 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `microlan_ctl` | 0x604030 | rw | 64 |  |  | 0x31e300002 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `error_bits` | 0x604040 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
 | `error_mask_clr` | 0x604048 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `error_hdr1` | 0x604050 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `error_hdr2` | 0x604058 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `error_data` | 0x604060 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `debug_select` | 0x604100 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `debug_pins` | 0x604108 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `rt_local_ctrl` | 0x604200 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `rt_filter_ctrl` | 0x604208 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch0` | 0x608000 | rw | 64 |  |  | 0x0 | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch1` | 0x608008 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch2` | 0x608010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch3` | 0x608018 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch4` | 0x608020 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch0_wz` | 0x608040 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch1_wz` | 0x608048 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch2_wz` | 0x608050 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch3_rz` | 0x608058 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `scratch4_rz` | 0x608060 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_parms` | 0x60c000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_route` | 0x60c008 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_data` | 0x60c010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_status` | 0x60c020 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_return` | 0x60c028 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_read_data` | 0x60c030 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
-| `vector_status_clear` | 0x60c038 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `error_hdr1` | 0x604050 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `error_hdr2` | 0x604058 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `error_data` | 0x604060 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `debug_select` | 0x604100 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `debug_pins` | 0x604108 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `rt_local_ctrl` | 0x604200 | rw | 64 |  |  | 0x100000640 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `rt_filter_ctrl` | 0x604208 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch0` | 0x608000 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch1` | 0x608008 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch2` | 0x608010 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch3` | 0x608018 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch4` | 0x608020 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch0_wz` | 0x608040 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch1_wz` | 0x608048 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch2_wz` | 0x608050 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch3_rz` | 0x608058 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `scratch4_rz` | 0x608060 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_parms` | 0x60c000 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_route` | 0x60c008 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_data` | 0x60c010 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_status` | 0x60c020 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_return` | 0x60c028 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_read_data` | 0x60c030 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
+| `vector_status_clear` | 0x60c038 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) |
 
 ### Register `rev_id`
 
-Revision and identity. The header says this register carries the chip identity and sets the node's ID and the size of each region. The manufacturer, part and revision fields are assigned by IBM under the IEEE 1149.1 scheme, and the header does not say whether they are writable. Reset unknown: the header states no reset value. The I/O interface's widget identification register echoes the manufacturer and revision fields.
+Revision and identity. The header says this register carries the chip identity and sets the node's ID and the size of each region. The manufacturer, part and revision fields are assigned by IBM under the IEEE 1149.1 scheme, and the header does not say whether they are writable. The I/O interface's widget identification register echoes the manufacturer and revision fields.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -62,7 +62,7 @@ Revision and identity. The header says this register carries the chip identity a
 
 ### Register `cpu_permission`
 
-Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units. Reset unknown.
+Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -74,7 +74,7 @@ Writing the 64-bit ASCII key the SN1 header names sets the writer's own region b
 
 ### Register `io_permission`
 
-The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor. Reset unknown.
+The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -90,7 +90,7 @@ A write to bit 0 resets the Bedrock with a soft reset. The header does not say w
 
 ### Register `region_present`
 
-Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit. Reset unknown.
+Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -98,7 +98,7 @@ Regions that can receive an invalidate. The block samples it when an invalidate 
 
 ### Register `nodes_absent`
 
-Four 16-bit entries, one per slot. Each entry holds a node number in its low eight bits and a valid bit at bit 15. A node listed with its valid bit set cannot receive an invalidate. Reset unknown.
+Four 16-bit entries, one per slot. Each entry holds a node number in its low eight bits and a valid bit at bit 15. A node listed with its valid bit set cannot receive an invalidate.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -126,7 +126,7 @@ Control for a one-wire serial bus to the node board's add-only serial PROM. The 
 
 ### Register `error_bits`
 
-Local-block error bits. Reads do not change them. A write sets the bits it names. Any set bit raises the block's error request to both processor interfaces (bit 55 of their pending-1 register). The header says the contents survive a reset. Reset unknown: the header states no power-on value.
+Local-block error bits. Reads do not change them. A write sets the bits it names. Any set bit raises the block's error request to both processor interfaces (bit 55 of their pending-1 register). The header says the contents survive a reset.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -152,7 +152,7 @@ Write one to clear the matching error bits. A zero bit in the written value leav
 
 ### Register `error_hdr1`
 
-Header of the first packet that caused an error. It is captured while valid is clear, and valid is then set. A later error while valid is set sets overrun and leaves the rest alone. The err_type value uses the same bit numbering as error_bits, so err_type 5 means rp_long. Not relevant for a global clock drop. Reset unknown.
+Header of the first packet that caused an error. It is captured while valid is clear, and valid is then set. A later error while valid is set sets overrun and leaves the rest alone. The err_type value uses the same bit numbering as error_bits, so err_type 5 means rp_long. Not relevant for a global clock drop.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -165,7 +165,7 @@ Header of the first packet that caused an error. It is captured while valid is c
 
 ### Register `error_hdr2`
 
-Address field from the header of the first packet that caused an error. Not relevant for a global clock drop. Reset unknown.
+Address field from the header of the first packet that caused an error. Not relevant for a global clock drop.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -173,7 +173,7 @@ Address field from the header of the first packet that caused an error. Not rele
 
 ### Register `error_data`
 
-Data flit of the first erroring packet, for the error kinds that carry data. Reset unknown.
+Data flit of the first erroring packet, for the error kinds that carry data.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -181,7 +181,7 @@ Data flit of the first erroring packet, for the error kinds that carry data. Res
 
 ### Register `debug_select`
 
-Chooses which internal signals appear on the debug pins. The header gives no list of the choices. Reset unknown.
+Chooses which internal signals appear on the debug pins. The header gives no list of the choices.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -189,7 +189,7 @@ Chooses which internal signals appear on the debug pins. The header gives no lis
 
 ### Register `debug_pins`
 
-Value on the chip's debug pins. Reset unknown.
+Value on the chip's debug pins.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -197,7 +197,7 @@ Value on the chip's debug pins. Reset unknown.
 
 ### Register `rt_local_ctrl`
 
-Local source of the real-time clock. The local block gives the clock to both processor interfaces. With use_internal set it generates the clock from the Bedrock's system clock, with its period set by max_count. With it clear it filters an incoming global clock instead (see rt_filter_ctrl). Reset unknown: the header states no power-on value.
+Local source of the real-time clock. The local block gives the clock to both processor interfaces. With use_internal set it generates the clock from the Bedrock's system clock, with its period set by max_count. With it clear it filters an incoming global clock instead (see rt_filter_ctrl).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -209,7 +209,7 @@ Local source of the real-time clock. The local block gives the clock to both pro
 
 ### Register `rt_filter_ctrl`
 
-Filtering of an incoming global clock, used when rt_local_ctrl use_internal is clear. Simple filtering drops single-cycle glitches. Complex filtering (mask_enable set) expects positive edges at regular intervals, tracks missing and unexpected edges, and generates an edge itself when one is missing. Under either option the clock it hands the processor interfaces stays high for (2 * max_count + 1 - offset) / 2 cycles of the block's system clock after each positive edge. Clock loss is error bit gclk_drop. Reset unknown.
+Filtering of an incoming global clock, used when rt_local_ctrl use_internal is clear. Simple filtering drops single-cycle glitches. Complex filtering (mask_enable set) expects positive edges at regular intervals, tracks missing and unexpected edges, and generates an edge itself when one is missing. Under either option the clock it hands the processor interfaces stays high for (2 * max_count + 1 - offset) / 2 cycles of the block's system clock after each positive edge. Clock loss is error bit gclk_drop.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -230,7 +230,7 @@ Plain storage. The header says it is reset to zero.
 
 ### Register `scratch1`
 
-Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown.
+Plain storage. The header says it is not reset, and does not name the reset it means.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -238,7 +238,7 @@ Plain storage. The header says it is not reset, and does not name the reset it m
 
 ### Register `scratch2`
 
-Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown.
+Plain storage. The header says it is not reset, and does not name the reset it means.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -246,7 +246,7 @@ Plain storage. The header says it is not reset, and does not name the reset it m
 
 ### Register `scratch3`
 
-One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The public Linux ia64 L1 driver uses it as a hub-wide lock: it releases the lock by writing zero to this address. Reset unknown.
+One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The public Linux ia64 L1 driver uses it as a hub-wide lock: it releases the lock by writing zero to this address.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -254,7 +254,7 @@ One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The p
 
 ### Register `scratch4`
 
-One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it. Reset unknown.
+One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -302,7 +302,7 @@ Read-set-if-zero alias of scratch 4 (one bit). A read returns the old value and 
 
 ### Register `vector_parms`
 
-Vector I/O request parameters. A write sends one request, and the block replies to the write at once without waiting for the operation. The request is built from three registers: the route, the write data and this one, which should be written last. Software waits for busy to clear before it starts. Reset unknown.
+Vector I/O request parameters. A write sends one request, and the block replies to the write at once without waiting for the operation. The request is built from three registers: the route, the write data and this one, which should be written last. Software waits for busy to clear before it starts.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -314,15 +314,15 @@ Vector I/O request parameters. A write sends one request, and the block replies 
 
 ### Register `vector_route`
 
-Outgoing vector route for the next request. The header gives no field layout. Reset unknown.
+Outgoing vector route for the next request. The header gives no field layout.
 
 ### Register `vector_data`
 
-Write data for an outgoing vector write, and the data value for a read reply. Reset unknown.
+Write data for an outgoing vector write, and the data value for a read reply.
 
 ### Register `vector_status`
 
-Return status of the last vector request. Software clears it before launching a request. The block leaves the fields unchanged when a reply has an error. A reply that arrives while valid is already set sets overrun and leaves the rest alone. Otherwise the block loads the source, ids, address and type, sets valid, and updates return and read data. The header does not say what a write of a nonzero value does. Reset unknown.
+Return status of the last vector request. Software clears it before launching a request. The block leaves the fields unchanged when a reply has an error. A reply that arrives while valid is already set sets overrun and leaves the rest alone. Otherwise the block loads the source, ids, address and type, sets valid, and updates return and read data. The header does not say what a write of a nonzero value does.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -336,11 +336,11 @@ Return status of the last vector request. Software clears it before launching a 
 
 ### Register `vector_return`
 
-Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear. Reset unknown.
+Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear.
 
 ### Register `vector_read_data`
 
-Read data from the last reply, under the same update rule as vector_return. Reset unknown.
+Read data from the last reply, under the same update rule as vector_return.
 
 ### Register `vector_status_clear`
 

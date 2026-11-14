@@ -343,7 +343,7 @@ pub mod memory_config {
         }
     }
 }
-/// Arbitration control. The arbitration timing is not specified by the header. Reset unknown. (established)
+/// Arbitration control. The arbitration timing is not specified by the header. (established)
 pub mod arbitration_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780010;
@@ -368,7 +368,7 @@ pub mod arbitration_control {
         }
     }
 }
-/// Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown (established)
+/// Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. The software  (established)
 pub mod migration_config {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780018;
@@ -403,7 +403,7 @@ pub mod migration_config {
         }
     }
 }
-/// Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown. (established)
+/// Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. (established)
 pub mod fetchop_cache_status0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780020;
@@ -428,7 +428,7 @@ pub mod fetchop_cache_status0 {
         }
     }
 }
-/// Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown. (established)
+/// Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. (established)
 pub mod fetchop_cache_status1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780028;
@@ -453,12 +453,12 @@ pub mod fetchop_cache_status1 {
         }
     }
 }
-/// Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown. (established)
+/// Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. (established)
 pub mod misc_error0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780040;
 }
-/// Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown. (established)
+/// Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. (established)
 pub mod misc_error1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x780048;
@@ -678,7 +678,7 @@ pub mod perf_counter0 {
         }
     }
 }
-/// Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown. (established)
+/// Performance counter 1. The same 41-bit count layout as counter 0. (established)
 pub mod perf_counter1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x790018;
@@ -793,7 +793,7 @@ pub mod junk_bus_timing {
         }
     }
 }
-/// Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset (established)
+/// Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. (established)
 pub mod led0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7a0010;
@@ -1058,7 +1058,7 @@ pub mod issue_debug_select {
         }
     }
 }
-/// Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknow (established)
+/// Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. (established)
 pub mod dir_config {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7c0000;
@@ -1083,7 +1083,7 @@ pub mod dir_config {
         }
     }
 }
-/// Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset  (established)
+/// Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. (established)
 pub mod dir_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7c0010;
@@ -1213,7 +1213,7 @@ pub mod dir_error_clr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7c0018;
 }
-/// Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. R (established)
+/// Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. (established)
 pub mod protocol_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7c0020;
@@ -1518,7 +1518,7 @@ pub mod dir_debug_select {
         }
     }
 }
-/// Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown. (established)
+/// Memory-block ECC configuration. Bit 0 ignores data ECC. (established)
 pub mod mb_ecc_config {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x7e0000;

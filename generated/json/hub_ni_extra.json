@@ -27,7 +27,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -55,7 +55,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -69,7 +69,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -83,7 +83,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -97,7 +97,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -111,7 +111,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -125,7 +125,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
@@ -139,7 +139,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 7152,
    "grade": "inferred",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },

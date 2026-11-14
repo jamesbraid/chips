@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 587276361,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -104,7 +104,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1152921504606846975,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -141,7 +141,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -187,7 +187,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1152921504606846975,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -210,7 +210,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -296,7 +296,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 13391364098,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -364,7 +364,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -500,7 +500,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -568,7 +568,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -591,7 +591,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -614,7 +614,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -637,7 +637,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -660,7 +660,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4294968896,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -719,7 +719,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -810,7 +810,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -833,7 +833,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -856,7 +856,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -879,7 +879,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -902,7 +902,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -925,7 +925,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -948,7 +948,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -971,7 +971,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -994,7 +994,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1017,7 +1017,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1108,7 +1108,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1122,7 +1122,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1136,7 +1136,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1277,7 +1277,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1291,7 +1291,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },
@@ -1305,7 +1305,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)"
   },

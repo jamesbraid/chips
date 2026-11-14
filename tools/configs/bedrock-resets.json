@@ -1,0 +1,186 @@
+{
+ "ackkgclock": {
+  "from": "IP35 PROM 6.210 register table, entry PI_PROF_INT_PEND_A at image offset 0x15f0a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "ackkgclock_138": {
+  "from": "IP35 PROM 6.210 register table, entry PI_PROF_INT_PEND_B at image offset 0x15f0b8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "acktmoclock": {
+  "from": "IP35 PROM 6.210 register table, entry PI_RT_INT_PEND_A at image offset 0x15f070 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "acktmoclock_128": {
+  "from": "IP35 PROM 6.210 register table, entry PI_RT_INT_PEND_B at image offset 0x15f088 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "boot_space_cpuprom_detailed_inventory_info_add": {
+  "from": "IP35 PROM 6.210 register table, entry PI_INT_PEND1 at image offset 0x15ef20 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "doacvec": {
+  "from": "IP35 PROM 6.210 register table, entry MD_BIST_DATA at image offset 0x15f7d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "err_int_block_mask": {
+  "from": "IP35 PROM 6.210 register table, entry PI_ERR_INT_MASK_A at image offset 0x15f280 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "err_int_block_mask_410": {
+  "from": "IP35 PROM 6.210 register table, entry PI_ERR_INT_MASK_B at image offset 0x15f298 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "handle_cac_buserr": {
+  "from": "IP35 PROM 6.210 register table, entry PI_REGION_PRESENT at image offset 0x15ede8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 18446744073709551615
+ },
+ "hubpi_spool_get_next": {
+  "from": "IP35 PROM 6.210 register table, entry PI_ERR_STACK_ADDR_A at image offset 0x15f2b0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "hubpi_spool_get_next_420": {
+  "from": "IP35 PROM 6.210 register table, entry PI_ERR_STACK_ADDR_B at image offset 0x15f2c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "ii_llp_error_monitor": {
+  "from": "IP35 PROM 6.210 register table, entry II_ILLR at image offset 0x15faf0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "ni_llp_error_monitor": {
+  "from": "IP35 PROM 6.210 register table, entry NI_PORT_ERROR_CLEAR at image offset 0x1607e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "part_discovery": {
+  "from": "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_0 at image offset 0x1607f8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "part_discovery_681008": {
+  "from": "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_1 at image offset 0x160840 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "part_discovery_681010": {
+  "from": "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_2 at image offset 0x160858 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "part_discovery_681018": {
+  "from": "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_3 at image offset 0x160870 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "part_discovery_682000": {
+  "from": "IP35 PROM 6.210 register table, entry NI_GLOBAL_TABLE at image offset 0x160828 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_000040": {
+  "from": "IP35 PROM 6.210 register table, entry PI_CPU_PRESENT_A at image offset 0x15ee60 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_000108": {
+  "from": "IP35 PROM 6.210 register table, entry PI_RT_COMPARE_A at image offset 0x15f028 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_400110": {
+  "from": "IP35 PROM 6.210 register table, entry II_IOWA at image offset 0x15fa90 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_400128": {
+  "from": "IP35 PROM 6.210 register table, entry II_ILCSR at image offset 0x15fad8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 4380933686282
+ },
+ "reg_608000": {
+  "from": "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0 at image offset 0x1615a8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_608008": {
+  "from": "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1 at image offset 0x1615c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_608010": {
+  "from": "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2 at image offset 0x1615d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_790010": {
+  "from": "IP35 PROM 6.210 register table, entry MD_PERF_CNT0 at image offset 0x15f700 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_7a0000": {
+  "from": "IP35 PROM 6.210 register table, entry MD_REFRESH_CONTROL at image offset 0x15f730 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 2048
+ },
+ "reg_7a0008": {
+  "from": "IP35 PROM 6.210 register table, entry MD_JUNK_BUS_TIMING at image offset 0x15f748 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 281474976710655
+ },
+ "reg_7c0018": {
+  "from": "IP35 PROM 6.210 register table, entry MD_DIR_ERROR_CLR at image offset 0x15f868 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "reg_7e0018": {
+  "from": "IP35 PROM 6.210 register table, entry MD_MEM_ERROR_CLR at image offset 0x15f988 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "restore_hub_err": {
+  "from": "IP35 PROM 6.210 register table, entry PI_RT_COUNTER at image offset 0x15f538 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "startkgclock": {
+  "from": "IP35 PROM 6.210 register table, entry PI_PROFILE_COMPARE at image offset 0x15f058 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "startkgclock_150": {
+  "from": "IP35 PROM 6.210 register table, entry PI_PROF_INT_EN_A at image offset 0x15f100 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "startkgclock_158": {
+  "from": "IP35 PROM 6.210 register table, entry PI_PROF_INT_EN_B at image offset 0x15f118 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_10c0_680010": {
+  "from": "IP35 PROM 6.210 register table, entry NI_RESET_ENABLE at image offset 0x1606f0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_11984": {
+  "from": "IP35 PROM 6.210 register table, entry NI_PORT_STATUS at image offset 0x1606c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_18a24_680118": {
+  "from": "IP35 PROM 6.210 register table, entry NI_PORT_SIDEBAND at image offset 0x1607c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_1bcf0": {
+  "from": "IP35 PROM 6.210 register table, entry PI_CPU_NUM at image offset 0x15ee00 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_1bcf0_600000": {
+  "from": "IP35 PROM 6.210 register table, entry LB_REV_ID at image offset 0x161410 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 587276361
+ },
+ "sub_1bcf0_604020": {
+  "from": "IP35 PROM 6.210 register table, entry LB_REGION_PRESENT at image offset 0x161488 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 1152921504606846975
+ },
+ "sub_1bcf0_604028": {
+  "from": "IP35 PROM 6.210 register table, entry LB_NODES_ABSENT at image offset 0x1614a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_1bcf0_780000": {
+  "from": "IP35 PROM 6.210 register table, entry MD_CURRENT_CELL at image offset 0x15f5e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 18446744073709551615
+ },
+ "sub_200f0": {
+  "from": "IP35 PROM 6.210 register table, entry PI_INT_PEND0 at image offset 0x15ef08 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_20250": {
+  "from": "IP35 PROM 6.210 register table, entry PI_INT_PEND1 at image offset 0x15ef20 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ },
+ "sub_28e3c": {
+  "from": "IP35 PROM 6.210 register table, entry LB_RT_LOCAL_CTRL at image offset 0x161578 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 4294968896
+ },
+ "sub_3d1d8": {
+  "from": "IP35 PROM 6.210 register table, entry II_IECLR at image offset 0x15fd48 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)",
+  "value": 0
+ }
+}

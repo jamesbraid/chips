@@ -10,24 +10,24 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `iio_wid` | 0x400000 | r | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u |
-| `iio_ilapr` | 0x400100 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR |
+| `iio_wid` | 0x400000 | r | 64 |  |  | 0x1c101048 (established) | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u |
+| `iio_ilapr` | 0x400100 | rw | 64 |  |  | 0xffffffffffffffff (established) | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR |
 | `iio_ilapo` | 0x400108 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO |
 | `iio_igfx_1` | 0x400148 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) |
-| `iio_scratch_reg0` | 0x400150 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name) |
-| `iio_scratch_reg1` | 0x400158 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name) |
-| `iio_itte` | 0x400160 | rw | 64 | 7 |  | unknown | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE |
+| `iio_scratch_reg0` | 0x400150 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name) |
+| `iio_scratch_reg1` | 0x400158 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name) |
+| `iio_itte` | 0x400160 | rw | 64 | 7 |  | 0x0 (established) | inferred | public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE |
 | `iio_icrb_a` | 0x400400 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
 | `iio_icrb_b` | 0x400408 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
 | `iio_icrb_c` | 0x400410 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
 | `iio_icrb_d` | 0x400418 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
-| `iio_ibna_0` | 0x410020 | rw | 64 |  |  | unknown | inferred |  |
-| `iio_ibia_0` | 0x410028 | rw | 64 |  |  | unknown | inferred |  |
-| `iio_ibia_1` | 0x420028 | rw | 64 |  |  | unknown | inferred |  |
+| `iio_ibna_0` | 0x410020 | rw | 64 |  |  | 0x0 (established) | inferred |  |
+| `iio_ibia_0` | 0x410028 | rw | 64 |  |  | 0x0 (established) | inferred |  |
+| `iio_ibia_1` | 0x420028 | rw | 64 |  |  | 0x0 (established) | inferred |  |
 
 ### Register `iio_wid`
 
-Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the reset is unknown.
+Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -64,7 +64,7 @@ Scratch register 1, the twin of register 0. The header gives no access type, so 
 
 ### Register `iio_itte`
 
-Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption. Reset is unknown.
+Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption.
 
 Array of 7 registers, stride 8.
 

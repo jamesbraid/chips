@@ -28,9 +28,9 @@
 #define BEDROCK_MD_SIZE_CODE_GB1                     5 /* inferred */
 
 /*
- * Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it. Reset unknown: the header states no value.
+ * Access-rights vector. A region whose bit is set is inside the cell and uses the directory's local-access protection instead of per-region protection. The same vector sets the access rights for the Hub special spaces: set gives read and write, clear gives read only, except the local and remote register windows, which are inaccessible when the bit is clear. The header attributes region size to the network interface, while the local block's revision register holds it.
  */
-/* current_cell: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* current_cell: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_CURRENT_CELL                      0x780000 /* established */
 #define BEDROCK_MD_CURRENT_CELL_REGION_BITS_SHIFT    0 /* established */
 #define BEDROCK_MD_CURRENT_CELL_REGION_BITS_MASK     0xffffffffffffffffull
@@ -103,9 +103,9 @@
 #define BEDROCK_MD_MEMORY_CONFIG_POS0_ENABLES_INPLACE (BEDROCK_MD_MEMORY_CONFIG_POS0_ENABLES_MASK << BEDROCK_MD_MEMORY_CONFIG_POS0_ENABLES_SHIFT)
 
 /*
- * Arbitration control. The arbitration timing is not specified by the header. Reset unknown.
+ * Arbitration control. The arbitration timing is not specified by the header.
  */
-/* arbitration_control: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* arbitration_control: rw64, reset 0x8f; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_ARBITRATION_CONTROL               0x780010 /* established */
 #define BEDROCK_MD_ARBITRATION_CONTROL_WRITE_GUARANTEE_SHIFT 4 /* established */
 #define BEDROCK_MD_ARBITRATION_CONTROL_WRITE_GUARANTEE_MASK 0xfull
@@ -115,9 +115,9 @@
 #define BEDROCK_MD_ARBITRATION_CONTROL_REPLY_GUARANTEE_INPLACE (BEDROCK_MD_ARBITRATION_CONTROL_REPLY_GUARANTEE_MASK << BEDROCK_MD_ARBITRATION_CONTROL_REPLY_GUARANTEE_SHIFT)
 
 /*
- * Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. Reset unknown; the software that uses the migration interface never touches this register, so who sets the enable bit is unknown.
+ * Page-migration configuration. The header names the interval, node mask and enable. Interval units and the scheduling rule are not given. The software that uses the migration interface never touches this register, so who sets the enable bit is unknown.
  */
-/* migration_config: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* migration_config: rw64, reset 0xff0020; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIGRATION_CONFIG                  0x780018 /* established */
 #define BEDROCK_MD_MIGRATION_CONFIG_ENABLE_SHIFT     32 /* established */
 #define BEDROCK_MD_MIGRATION_CONFIG_ENABLE_MASK      0x1ull
@@ -130,9 +130,9 @@
 #define BEDROCK_MD_MIGRATION_CONFIG_INTERVAL_INPLACE (BEDROCK_MD_MIGRATION_CONFIG_INTERVAL_MASK << BEDROCK_MD_MIGRATION_CONFIG_INTERVAL_SHIFT)
 
 /*
- * Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given. Reset unknown.
+ * Fetch-and-op cache status 0: a captured cache entry. Guest write behaviour is not given.
  */
-/* fetchop_cache_status0: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* fetchop_cache_status0: r64, reset 0xc0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS0             0x780020 /* established */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS0_VALID_SHIFT 63 /* established */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS0_VALID_MASK  0x1ull
@@ -142,9 +142,9 @@
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS0_ADDRESS_INPLACE (BEDROCK_MD_FETCHOP_CACHE_STATUS0_ADDRESS_MASK << BEDROCK_MD_FETCHOP_CACHE_STATUS0_ADDRESS_SHIFT)
 
 /*
- * Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0. Reset unknown.
+ * Fetch-and-op cache status 1: a second captured cache entry with the same layout as status 0.
  */
-/* fetchop_cache_status1: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* fetchop_cache_status1: r64, reset 0xc0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS1             0x780028 /* established */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS1_VALID_SHIFT 63 /* established */
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS1_VALID_MASK  0x1ull
@@ -154,25 +154,25 @@
 #define BEDROCK_MD_FETCHOP_CACHE_STATUS1_ADDRESS_INPLACE (BEDROCK_MD_FETCHOP_CACHE_STATUS1_ADDRESS_MASK << BEDROCK_MD_FETCHOP_CACHE_STATUS1_ADDRESS_SHIFT)
 
 /*
- * Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here. Reset unknown.
+ * Miscellaneous error word 0: message header fields and two-bit error flags. The field positions are not summarised here.
  */
-/* misc_error0: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* misc_error0: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MISC_ERROR0                       0x780040 /* established */
 
 /*
- * Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here. Reset unknown.
+ * Miscellaneous error word 1: a 38-bit address and the same style of flags. The field positions are not summarised here.
  */
-/* misc_error1: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* misc_error1: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MISC_ERROR1                       0x780048 /* established */
 
 /*
  * Clear alias of miscellaneous error word 1. The header names it a clear register without saying whether a read or a write clears it. The one consumer reads and discards the value. The clearing mechanism is unknown.
  */
-/* misc_error1_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* misc_error1_clr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MISC_ERROR1_CLR                   0x780058 /* established */
 
 /*
- * Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults.
+ * Reply-queue credit sizes, all read-only fields. The header gives 12 header entries and 24 data entries as the defaults for each queue. A write resets the credit counters to these defaults. The shipped Origin 350 PROM register table holds 0x12 in the header fields and 0x24 in the data fields, which do not fit four and five bits as hex and equal 12 and 24 read as decimal, so the table does not settle the value.
  */
 /* outgoing_reply_queue_size: rw64, reset 0x1818180c0c0c00; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_OUTGOING_REPLY_QUEUE_SIZE         0x780060 /* established */
@@ -244,27 +244,27 @@
 #define BEDROCK_MD_PERF_SELECT1_MODE_INPLACE         (BEDROCK_MD_PERF_SELECT1_MODE_MASK << BEDROCK_MD_PERF_SELECT1_MODE_SHIFT)
 
 /*
- * Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred. Reset unknown.
+ * Performance counter 0. The header describes a 41-bit count; the events that advance it are not given. The Itanium console code and the boot firmware of this machine class both use the word as a lock word by setting and clearing bits, which the header does not sanction. That use is a software expectation, inferred.
  */
-/* perf_counter0: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* perf_counter0: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_PERF_COUNTER0                     0x790010 /* established */
 #define BEDROCK_MD_PERF_COUNTER0_COUNT_SHIFT         0 /* established */
 #define BEDROCK_MD_PERF_COUNTER0_COUNT_MASK          0x1ffffffffffull
 #define BEDROCK_MD_PERF_COUNTER0_COUNT_INPLACE       (BEDROCK_MD_PERF_COUNTER0_COUNT_MASK << BEDROCK_MD_PERF_COUNTER0_COUNT_SHIFT)
 
 /*
- * Performance counter 1. The same 41-bit count layout as counter 0. Reset unknown.
+ * Performance counter 1. The same 41-bit count layout as counter 0.
  */
-/* perf_counter1: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* perf_counter1: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_PERF_COUNTER1                     0x790018 /* established */
 #define BEDROCK_MD_PERF_COUNTER1_COUNT_SHIFT         0 /* established */
 #define BEDROCK_MD_PERF_COUNTER1_COUNT_MASK          0x1ffffffffffull
 #define BEDROCK_MD_PERF_COUNTER1_COUNT_INPLACE       (BEDROCK_MD_PERF_COUNTER1_COUNT_MASK << BEDROCK_MD_PERF_COUNTER1_COUNT_SHIFT)
 
 /*
- * Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's reset is unknown.
+ * Refresh control. Once the memory configuration holds the DIMM information, the hardware refreshes every bank. If a refresh window expires with banks unrefreshed, all other traffic halts until they are refreshed. The enable bit is cleared on reset because the first DIMM operation must be a mode-register write. The enable and threshold survive a soft reset. The live counter's
  */
-/* refresh_control: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* refresh_control: rw64, reset 0x800; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_REFRESH_CONTROL                   0x7a0000 /* established */
 #define BEDROCK_MD_REFRESH_CONTROL_ENABLE_SHIFT      63 /* established */
 #define BEDROCK_MD_REFRESH_CONTROL_ENABLE_MASK       0x1ull
@@ -277,9 +277,9 @@
 #define BEDROCK_MD_REFRESH_CONTROL_THRESHOLD_INPLACE (BEDROCK_MD_REFRESH_CONTROL_THRESHOLD_MASK << BEDROCK_MD_REFRESH_CONTROL_THRESHOLD_SHIFT)
 
 /*
- * Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM. Reset unknown.
+ * Junk-bus timing for the flash PROM, the L1 UART and a device the Linux header names Synergy. The header names the timing fields; it does not place the Synergy device on any board. This is the only register in any unit that names the UART and the flash PROM.
  */
-/* junk_bus_timing: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* junk_bus_timing: rw64, reset 0xffffffffffff; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_JUNK_BUS_TIMING                   0x7a0008 /* established */
 #define BEDROCK_MD_JUNK_BUS_TIMING_SYNERGY_ENABLE_SHIFT 40 /* established */
 #define BEDROCK_MD_JUNK_BUS_TIMING_SYNERGY_ENABLE_MASK 0xffull
@@ -301,9 +301,9 @@
 #define BEDROCK_MD_JUNK_BUS_TIMING_FLASH_SETUP_HOLD_INPLACE (BEDROCK_MD_JUNK_BUS_TIMING_FLASH_SETUP_HOLD_MASK << BEDROCK_MD_JUNK_BUS_TIMING_FLASH_SETUP_HOLD_SHIFT)
 
 /*
- * Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated. Reset unknown.
+ * Reads the value on LED bank 0. The header says a read of this register gives the 8-bit LED value. Whether a write drives the LEDs is not stated.
  */
-/* led0: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* led0: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_LED0                              0x7a0010 /* established */
 #define BEDROCK_MD_LED0_DATA_SHIFT                   0 /* established */
 #define BEDROCK_MD_LED0_DATA_MASK                    0xffull
@@ -312,7 +312,7 @@
 /*
  * Reads the value on LED bank 1. Otherwise as LED bank 0.
  */
-/* led1: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* led1: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_LED1                              0x7a0018 /* established */
 #define BEDROCK_MD_LED1_DATA_SHIFT                   0 /* established */
 #define BEDROCK_MD_LED1_DATA_MASK                    0xffull
@@ -321,7 +321,7 @@
 /*
  * Reads the value on LED bank 2. Otherwise as LED bank 0.
  */
-/* led2: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* led2: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_LED2                              0x7a0020 /* established */
 #define BEDROCK_MD_LED2_DATA_SHIFT                   0 /* established */
 #define BEDROCK_MD_LED2_DATA_MASK                    0xffull
@@ -330,7 +330,7 @@
 /*
  * Reads the value on LED bank 3. Otherwise as LED bank 0.
  */
-/* led3: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* led3: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_LED3                              0x7a0028 /* established */
 #define BEDROCK_MD_LED3_DATA_SHIFT                   0 /* established */
 #define BEDROCK_MD_LED3_DATA_MASK                    0xffull
@@ -360,7 +360,7 @@
 /*
  * Self-test data and pattern control. The header gives the control names, not their full transformation rules.
  */
-/* self_test_data: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* self_test_data: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELF_TEST_DATA                    0x7a0038 /* established */
 #define BEDROCK_MD_SELF_TEST_DATA_WRITE_CONTROL_SHIFT 7 /* established */
 #define BEDROCK_MD_SELF_TEST_DATA_WRITE_CONTROL_MASK 0x1ull
@@ -381,7 +381,7 @@
 /*
  * Self-test error address: the failing column and row, and which block failed. Guest writes and the clearing mechanism are unresolved.
  */
-/* self_test_error_addr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* self_test_error_addr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELF_TEST_ERROR_ADDR              0x7a0040 /* established */
 #define BEDROCK_MD_SELF_TEST_ERROR_ADDR_DIRECTORY_ERROR_SHIFT 49 /* established */
 #define BEDROCK_MD_SELF_TEST_ERROR_ADDR_DIRECTORY_ERROR_MASK 0x1ull
@@ -414,16 +414,16 @@
 /*
  * Issue-block debug selector. The prose gives three bits while both endian layouts declare two. The width conflict is open. The meanings of the selections are not given.
  */
-/* issue_debug_select: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* issue_debug_select: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_ISSUE_DEBUG_SELECT                0x7a0060 /* established */
 #define BEDROCK_MD_ISSUE_DEBUG_SELECT_SELECTION_SHIFT 0 /* established */
 #define BEDROCK_MD_ISSUE_DEBUG_SELECT_SELECTION_MASK 0x3ull
 #define BEDROCK_MD_ISSUE_DEBUG_SELECT_SELECTION_INPLACE (BEDROCK_MD_ISSUE_DEBUG_SELECT_SELECTION_MASK << BEDROCK_MD_ISSUE_DEBUG_SELECT_SELECTION_SHIFT)
 
 /*
- * Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset. Reset unknown.
+ * Directory configuration. Bit 0 selects the premium directory format, and bit 1 ignores directory ECC. The register survives a soft reset.
  */
-/* dir_config: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* dir_config: rw64, reset 0x2; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_DIR_CONFIG                        0x7c0000 /* established */
 #define BEDROCK_MD_DIR_CONFIG_IGNORE_DIR_ECC_SHIFT   1 /* established */
 #define BEDROCK_MD_DIR_CONFIG_IGNORE_DIR_ECC_MASK    0x1ull
@@ -433,9 +433,9 @@
 #define BEDROCK_MD_DIR_CONFIG_PREMIUM_INPLACE        (BEDROCK_MD_DIR_CONFIG_PREMIUM_MASK << BEDROCK_MD_DIR_CONFIG_PREMIUM_SHIFT)
 
 /*
- * Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable. Reset unknown; the header gives no value.
+ * Directory error record. The address and syndrome belong to the highest-priority kind latched: uncorrectable above protection above correctable.
  */
-/* dir_error: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* dir_error: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_DIR_ERROR                         0x7c0010 /* established */
 #define BEDROCK_MD_DIR_ERROR_UNCORRECTABLE_VALID_SHIFT 63 /* established */
 #define BEDROCK_MD_DIR_ERROR_UNCORRECTABLE_VALID_MASK 0x1ull
@@ -477,25 +477,25 @@
 /*
  * Clear alias of the directory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule.
  */
-/* dir_error_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* dir_error_clr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_DIR_ERROR_CLR                     0x7c0018 /* established */
 
 /*
- * Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here. Reset unknown.
+ * Protocol error record: directory state and format, pointer, message type, initiator, valid and overrun. The field positions are not summarised here.
  */
-/* protocol_error: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* protocol_error: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_PROTOCOL_ERROR                    0x7c0020 /* established */
 
 /*
  * Clear alias of the protocol error record. The mechanism is not stated.
  */
-/* protocol_error_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* protocol_error_clr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_PROTOCOL_ERROR_CLR                0x7c0028 /* established */
 
 /*
- * Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
+ * Page-migration candidate. On overrun the newest candidate replaces the earlier one. The clear operation is not established by the header's repeated text. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
-/* mig_candidate: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mig_candidate: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_CANDIDATE                     0x7c0030 /* established */
 #define BEDROCK_MD_MIG_CANDIDATE_VALID_SHIFT         63 /* established */
 #define BEDROCK_MD_MIG_CANDIDATE_VALID_MASK          0x1ull
@@ -519,7 +519,7 @@
 /*
  * Clear alias of the migration candidate. Software reads only this alias and never the base register. That reading removes the candidate is inferred; the header does not say so. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
-/* mig_candidate_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mig_candidate_clr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_CANDIDATE_CLR                 0x7c0038 /* established */
 #define BEDROCK_MD_MIG_CANDIDATE_CLR_VALID_SHIFT     63 /* established */
 #define BEDROCK_MD_MIG_CANDIDATE_CLR_VALID_MASK      0x1ull
@@ -541,9 +541,9 @@
 #define BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_INPLACE (BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_MASK << BEDROCK_MD_MIG_CANDIDATE_CLR_PAGE_ADDRESS_SHIFT)
 
 /*
- * Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. Reset unknown. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
+ * Page-migration difference threshold. A valid threshold is reached when the difference between the requester's count and the home count is at least the threshold. The action encodings are not given. The shipped IRIX Origin 300/350 kernels only write this register, setting bit 63 to arm the threshold and clearing it to disarm.
  */
-/* mig_diff_thresh: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mig_diff_thresh: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_DIFF_THRESH                   0x7c0040 /* established */
 #define BEDROCK_MD_MIG_DIFF_THRESH_VALID_SHIFT       63 /* established */
 #define BEDROCK_MD_MIG_DIFF_THRESH_VALID_MASK        0x1ull
@@ -559,9 +559,9 @@
 #define BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_INPLACE (BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_MASK << BEDROCK_MD_MIG_DIFF_THRESH_THRESHOLD_SHIFT)
 
 /*
- * Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. Reset unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
+ * Page-migration value threshold. Software writes it with bit 63 set and the local interrupt enable and action fields clear. Whether bits 18 to 15 are ignored is unknown. No shipped IRIX Origin 300/350 kernel accesses this register.
  */
-/* mig_value_thresh: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mig_value_thresh: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MIG_VALUE_THRESH                  0x7c0048 /* established */
 #define BEDROCK_MD_MIG_VALUE_THRESH_VALID_SHIFT      63 /* established */
 #define BEDROCK_MD_MIG_VALUE_THRESH_VALID_MASK       0x1ull
@@ -597,7 +597,7 @@
 /*
  * Failing directory word captured by the self-test. Guest writes are not established.
  */
-/* selftest_dir_error_data: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* selftest_dir_error_data: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELFTEST_DIR_ERROR_DATA           0x7c0058 /* established */
 #define BEDROCK_MD_SELFTEST_DIR_ERROR_DATA_WORD_SHIFT 0 /* established */
 #define BEDROCK_MD_SELFTEST_DIR_ERROR_DATA_WORD_MASK 0xffffffffull
@@ -606,25 +606,25 @@
 /*
  * Directory-block debug selector. The meanings of the selections come from a separate design specification that is not held.
  */
-/* dir_debug_select: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* dir_debug_select: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_DIR_DEBUG_SELECT                  0x7c0060 /* established */
 #define BEDROCK_MD_DIR_DEBUG_SELECT_SELECTION_SHIFT  0 /* established */
 #define BEDROCK_MD_DIR_DEBUG_SELECT_SELECTION_MASK   0x3ull
 #define BEDROCK_MD_DIR_DEBUG_SELECT_SELECTION_INPLACE (BEDROCK_MD_DIR_DEBUG_SELECT_SELECTION_MASK << BEDROCK_MD_DIR_DEBUG_SELECT_SELECTION_SHIFT)
 
 /*
- * Memory-block ECC configuration. Bit 0 ignores data ECC. Reset unknown.
+ * Memory-block ECC configuration. Bit 0 ignores data ECC.
  */
-/* mb_ecc_config: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mb_ecc_config: rw64, reset 0x1; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MB_ECC_CONFIG                     0x7e0000 /* established */
 #define BEDROCK_MD_MB_ECC_CONFIG_IGNORE_DATA_ECC_SHIFT 0 /* established */
 #define BEDROCK_MD_MB_ECC_CONFIG_IGNORE_DATA_ECC_MASK 0x1ull
 #define BEDROCK_MD_MB_ECC_CONFIG_IGNORE_DATA_ECC_INPLACE (BEDROCK_MD_MB_ECC_CONFIG_IGNORE_DATA_ECC_MASK << BEDROCK_MD_MB_ECC_CONFIG_IGNORE_DATA_ECC_SHIFT)
 
 /*
- * Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred. Reset unknown.
+ * Memory error record: an address, a syndrome and a valid and overrun flag pair for each of three kinds. The address and syndrome belong to the earliest error of the highest priority: uncorrectable read above uncorrectable write above correctable read. Bit 63 is set when uncorrectable errors reached different cache lines. The header's flag summary gives the order of each pair's bits only in one place, so the pair order is inferred.
  */
-/* mem_error: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mem_error: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MEM_ERROR                         0x7e0010 /* established */
 #define BEDROCK_MD_MEM_ERROR_DIFFERING_ADDRESS_SHIFT 63 /* established */
 #define BEDROCK_MD_MEM_ERROR_DIFFERING_ADDRESS_MASK  0x1ull
@@ -648,13 +648,13 @@
 /*
  * Clear alias of the memory error record. The header repeats the base register's text and names no mechanism. Read-to-clear is the consumer's expectation, not a stated rule.
  */
-/* mem_error_clr: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mem_error_clr: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MEM_ERROR_CLR                     0x7e0018 /* established */
 
 /*
  * Self-test captured memory data, quarter 0 of the failing line.
  */
-/* selftest_mem_error_data0: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* selftest_mem_error_data0: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA0          0x7e0020 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA0_WORD_SHIFT 0 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA0_WORD_MASK 0xfffffffffull
@@ -663,7 +663,7 @@
 /*
  * Self-test captured memory data, quarter 1 of the failing line.
  */
-/* selftest_mem_error_data1: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* selftest_mem_error_data1: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA1          0x7e0028 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA1_WORD_SHIFT 0 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA1_WORD_MASK 0xfffffffffull
@@ -672,7 +672,7 @@
 /*
  * Self-test captured memory data, quarter 2 of the failing line.
  */
-/* selftest_mem_error_data2: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* selftest_mem_error_data2: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA2          0x7e0030 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA2_WORD_SHIFT 0 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA2_WORD_MASK 0xfffffffffull
@@ -681,7 +681,7 @@
 /*
  * Self-test captured memory data, quarter 3 of the failing line.
  */
-/* selftest_mem_error_data3: r64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* selftest_mem_error_data3: r64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA3          0x7e0038 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA3_WORD_SHIFT 0 /* established */
 #define BEDROCK_MD_SELFTEST_MEM_ERROR_DATA3_WORD_MASK 0xfffffffffull
@@ -690,7 +690,7 @@
 /*
  * Memory-block debug selector. The meaning of the selection requires the separate design specification.
  */
-/* mem_debug_select: rw64, reset unknown; Linux 2.5.40 SN1 memory-directory register header */
+/* mem_debug_select: rw64, reset 0x0; Linux 2.5.40 SN1 memory-directory register header */
 #define BEDROCK_MD_MEM_DEBUG_SELECT                  0x7e0040 /* established */
 #define BEDROCK_MD_MEM_DEBUG_SELECT_SELECTION_SHIFT  0 /* established */
 #define BEDROCK_MD_MEM_DEBUG_SELECT_SELECTION_MASK   0x1ull

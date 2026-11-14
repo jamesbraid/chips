@@ -14,7 +14,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_mem_dimm_init` | 0x200090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name) |
 | `md_dir_dimm_init` | 0x200098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name) |
 | `md_led1` | 0x220058 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor) |
-| `md_ureg1_1` | 0x220088 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) |
+| `md_ureg1_1` | 0x220088 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) |
 | `md_ureg1_2` | 0x220090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name) |
 | `md_ureg1_3` | 0x220098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name) |
 | `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name) |
@@ -28,7 +28,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_ureg1_12` | 0x2200e0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_12 (offset and name) |
 | `md_ureg1_13` | 0x2200e8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_13 (offset and name) |
 | `md_ureg1_14` | 0x2200f0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name) |
-| `md_ureg1_15` | 0x2200f8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) |
+| `md_ureg1_15` | 0x2200f8 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) |
 
 ### Register `md_mem_dimm_init`
 
@@ -227,7 +227,7 @@ Layout of the one-wire (Microlan) control register.
 | 26:20 | `phi0` | inferred |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown. |
 | 19:10 | `pulse` | established |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10). The header gives no time unit, so the real pulse width is unknown. |
 | 9:2 | `sample` | established |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Eight-bit sample field at 9:2 (mask 0xff shifted 2). The header gives no time unit or reference point, so the real sample offset is unknown. |
-| 1 | `done` | established |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, so the done bit's reset value is unknown; no held source settles it, so neither value should be assumed. |
+| 1 | `done` | established |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, but the IRIX register reset table gives the whole register's reset as 0x18b100002, so done is set at reset. |
 | 0 | `rd_data` | established |  | public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*) | Read-data bit, bit 0, named MLAN_RD_DATA in the header. |
 
 ### Word `MD_MOQ_SIZE_FORMAT`

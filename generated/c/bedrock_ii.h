@@ -7,9 +7,9 @@
 
 
 /*
- * Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Reset unknown: it follows the local revision register.
+ * Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Its value follows the local revision register.
  */
-/* widget_id: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* widget_id: r64, reset 0x1c110049; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_WIDGET_ID                         0x400000 /* established */
 #define BEDROCK_II_WIDGET_ID_REVISION_SHIFT          28 /* established */
 #define BEDROCK_II_WIDGET_ID_REVISION_MASK           0xfull
@@ -24,13 +24,13 @@
 /*
  * Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* widget_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) */
+/* widget_control: rw64, reset 0x4011; Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) */
 #define BEDROCK_II_WIDGET_CONTROL                    0x400020 /* inferred */
 
 /*
- * One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.
+ * One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.
  */
-/* local_access_protection: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* local_access_protection: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION           0x400100 /* established */
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_SHIFT 0 /* established */
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION_REGION_ENABLE_MASK 0xffffffffffffffffull
@@ -43,9 +43,9 @@
 #define BEDROCK_II_PROTECTION_OVERRIDE               0x400108 /* inferred */
 
 /*
- * Qualifies every PIO and graphics write the Bedrock launches toward a widget. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.
+ * Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.
  */
-/* outbound_widget_access: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* outbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS            0x400110 /* established */
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8 /* established */
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK 0xffull
@@ -55,9 +55,9 @@
 #define BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_INPLACE (BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_MASK << BEDROCK_II_OUTBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT)
 
 /*
- * Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.
+ * Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.
  */
-/* inbound_widget_access: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* inbound_widget_access: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS             0x400118 /* established */
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_SHIFT 8 /* established */
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGETS_8_TO_F_MASK 0xffull
@@ -67,9 +67,9 @@
 #define BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_INPLACE (BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_MASK << BEDROCK_II_INBOUND_WIDGET_ACCESS_WIDGET_0_SHIFT)
 
 /*
- * Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out. Reset unknown.
+ * Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out.
  */
-/* inbound_device_error_mask: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* inbound_device_error_mask: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK         0x400120 /* established */
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_SHIFT 56 /* established */
 #define BEDROCK_II_INBOUND_DEVICE_ERROR_MASK_WIDGET_15_MASK 0xffull
@@ -99,7 +99,7 @@
 /*
  * Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. That the bit means link up is inferred from how the I/O error interrupt set-up uses it.
  */
-/* link_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* link_control: rw64, reset 0x3fc03ff040a; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_LINK_CONTROL                      0x400128 /* established */
 #define BEDROCK_II_LINK_CONTROL_MAX_BURST_SHIFT      32 /* established */
 #define BEDROCK_II_LINK_CONTROL_MAX_BURST_MASK       0x3ffull
@@ -132,13 +132,13 @@
 /*
  * IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* llp_log: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) */
+/* llp_log: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) */
 #define BEDROCK_II_LLP_LOG                           0x400130 /* inferred */
 
 /*
  * Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion macros put the node at 15:8. The struct governs: the Itanium consumer writes through it. The PI register address is hard-coded per PI select (see the PI0 and PI1 constants).
  */
-/* interrupt_destination: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* interrupt_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_INTERRUPT_DESTINATION             0x400138 /* established */
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_SHIFT 33 /* established */
 #define BEDROCK_II_INTERRUPT_DESTINATION_FORWARDED_PI1_MASK 0x1ull
@@ -165,7 +165,7 @@
 /*
  * IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* graphics_map: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) */
+/* graphics_map: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) */
 #define BEDROCK_II_GRAPHICS_MAP                      0x400140 /* inferred */
 #define BEDROCK_II_GRAPHICS_MAP_COUNT                2
 #define BEDROCK_II_GRAPHICS_MAP_STRIDE               8
@@ -173,7 +173,7 @@
 /*
  * IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* scratch: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) */
+/* scratch: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) */
 #define BEDROCK_II_SCRATCH                           0x400150 /* inferred */
 #define BEDROCK_II_SCRATCH_COUNT                     2
 #define BEDROCK_II_SCRATCH_STRIDE                    8
@@ -181,15 +181,15 @@
 /*
  * IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* translation_table_entry: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) */
+/* translation_table_entry: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY           0x400160 /* inferred */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_COUNT     7
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_STRIDE    8
 
 /*
- * Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. Reset unknown; the Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.
+ * Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.
  */
-/* pio_request_buffer_w0: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_request_buffer_w0: rw64, reset 0xf; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0             0x400198 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_SHIFT 63 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W0_MULTIPLE_ERRORS_MASK 0x1ull
@@ -228,7 +228,7 @@
 /*
  * PIO request buffers for widgets 8 to F, eight registers at a stride of eight bytes; the first is widget 8. Same layout as the widget 0 entry.
  */
-/* pio_request_buffer_w8: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_request_buffer_w8: rw64, reset 0xf; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8             0x4001a0 /* established */
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_COUNT       8
 #define BEDROCK_II_PIO_REQUEST_BUFFER_W8_STRIDE      8
@@ -269,11 +269,11 @@
 /*
  * IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* credit_count_timeout: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) */
+/* credit_count_timeout: rw64, reset 0x3ffffff; Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) */
 #define BEDROCK_II_CREDIT_COUNT_TIMEOUT              0x4001e0 /* inferred */
 
 /*
- * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.
+ * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.
  */
 /* misc_error_mask: rw64, reset 0x111; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_MISC_ERROR_MASK                   0x4001e8 /* inferred */
@@ -293,13 +293,13 @@
 /*
  * IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crosstalk_timeout_threshold: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) */
+/* crosstalk_timeout_threshold: rw64, reset 0xfffffff03ffffff; Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) */
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD       0x4001f0 /* inferred */
 
 /*
- * Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset unknown.
+ * Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero.
  */
-/* error_clear: w64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* error_clear: w64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_ERROR_CLEAR                       0x4001f8 /* established */
 #define BEDROCK_II_ERROR_CLEAR_FORWARDED_PI1_SHIFT   31 /* established */
 #define BEDROCK_II_ERROR_CLEAR_FORWARDED_PI1_MASK    0x1ull
@@ -332,13 +332,13 @@
 /*
  * IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* bte_global_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) */
+/* bte_global_control: rw64, reset 0x8; Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) */
 #define BEDROCK_II_BTE_GLOBAL_CONTROL                0x400200 /* inferred */
 
 /*
  * Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded.
  */
-/* pio_read_address: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* pio_read_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_PIO_READ_ADDRESS                  0x400308 /* established */
 #define BEDROCK_II_PIO_READ_ADDRESS_COUNT            8
 #define BEDROCK_II_PIO_READ_ADDRESS_STRIDE           8
@@ -397,7 +397,7 @@
 /*
  * Software control of the request buffers. It has priority over crosstalk and BTE requests. The header names the commands nop, wake, timeout, eject and flush; their numeric codes are not given in the header and are unknown.
  */
-/* request_buffer_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* request_buffer_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL            0x4003b0 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_PENDING_SHIFT 16 /* established */
 #define BEDROCK_II_REQUEST_BUFFER_CONTROL_PENDING_MASK 0x1ull
@@ -412,29 +412,29 @@
 /*
  * IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crb_timeout: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) */
+/* crb_timeout: rw64, reset 0xff; Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) */
 #define BEDROCK_II_CRB_TIMEOUT                       0x4003b8 /* inferred */
 
 /*
  * IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crb_timeout_prescaler: rw64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) */
+/* crb_timeout_prescaler: rw64, reset 0xffffff; Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) */
 #define BEDROCK_II_CRB_TIMEOUT_PRESCALER             0x4003c0 /* inferred */
 
 /*
  * First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.
  */
-/* crb_a: r64, reset unknown; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_a: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
 #define BEDROCK_II_CRB_A                             0x400400 /* inferred */
 #define BEDROCK_II_CRB_A_COUNT                       15
 #define BEDROCK_II_CRB_A_STRIDE                      32
 
-/* crb_b: r64, reset unknown; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_b: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
 #define BEDROCK_II_CRB_B                             0x400408 /* inferred */
 #define BEDROCK_II_CRB_B_COUNT                       15
 #define BEDROCK_II_CRB_B_STRIDE                      32
 
-/* crb_c: r64, reset unknown; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_c: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
 #define BEDROCK_II_CRB_C                             0x400410 /* inferred */
 #define BEDROCK_II_CRB_C_COUNT                       15
 #define BEDROCK_II_CRB_C_STRIDE                      32
@@ -442,15 +442,15 @@
 /*
  * Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.
  */
-/* crb_d: r64, reset unknown; Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) */
+/* crb_d: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) */
 #define BEDROCK_II_CRB_D                             0x400418 /* inferred */
 #define BEDROCK_II_CRB_D_COUNT                       15
 #define BEDROCK_II_CRB_D_STRIDE                      32
 
 /*
- * One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown.
+ * One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end.
  */
-/* bte_length_status: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_length_status: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_LENGTH_STATUS                 0x410000 /* established */
 #define BEDROCK_II_BTE_LENGTH_STATUS_COUNT           2
 #define BEDROCK_II_BTE_LENGTH_STATUS_STRIDE          65536
@@ -467,7 +467,7 @@
 /*
  * Source physical address of the transfer. Low seven bits are zero (128-byte lines). After a transfer the register reads the address one line past the last line moved, or the failed line after a data error; hardware behaviour here is unknown.
  */
-/* bte_source: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_source: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_SOURCE                        0x410008 /* established */
 #define BEDROCK_II_BTE_SOURCE_COUNT                  2
 #define BEDROCK_II_BTE_SOURCE_STRIDE                 65536
@@ -478,7 +478,7 @@
 /*
  * Destination physical address of the transfer. Same layout and end-of-transfer behaviour as the source register.
  */
-/* bte_destination: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_destination: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_DESTINATION                   0x410010 /* established */
 #define BEDROCK_II_BTE_DESTINATION_COUNT             2
 #define BEDROCK_II_BTE_DESTINATION_STRIDE            65536
@@ -489,7 +489,7 @@
 /*
  * Writing this register starts the transfer. Reading it terminates any transfer in progress, and stopping one engine can disturb the other. The header states this protocol; the start-on-write and terminate-on-read behaviour is inferred from the header's comments, and whether busy is observable after a start is unknown.
  */
-/* bte_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_control: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_CONTROL                       0x410018 /* established */
 #define BEDROCK_II_BTE_CONTROL_COUNT                 2
 #define BEDROCK_II_BTE_CONTROL_STRIDE                65536
@@ -506,7 +506,7 @@
 /*
  * Address that receives the completion write-invalidate. The Itanium consumer sets its line to all ones before the start and expects the final length-status value to be deposited there.
  */
-/* bte_notification_address: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_notification_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS          0x410020 /* established */
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS_COUNT    2
 #define BEDROCK_II_BTE_NOTIFICATION_ADDRESS_STRIDE   65536
@@ -517,7 +517,7 @@
 /*
  * Where the engine's completion interrupt goes. No public consumer programs it. The PROM's hub check does.
  */
-/* bte_interrupt_address: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* bte_interrupt_address: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS             0x410028 /* established */
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_COUNT       2
 #define BEDROCK_II_BTE_INTERRUPT_ADDRESS_STRIDE      65536

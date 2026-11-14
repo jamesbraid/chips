@@ -359,5 +359,6 @@
    "space": "boot-space",
    "slot_bytes": 4
   }
- }
+ },
+ "register_resets": "tools/configs/bedrock-resets.json"
 }

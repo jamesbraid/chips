@@ -44,7 +44,7 @@
 /*
  * PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the header gives neither a field layout nor a reset.
  */
-/* ni_io_protect: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_io_protect: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_IO_PROTECT_OFFSET                     0x600400u /* inferred */
 
 /*
@@ -56,43 +56,43 @@
 /*
  * CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_cpu0_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_cpu0_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_CPU0_PIO_OFFSET                   0x600508u /* inferred */
 
 /*
  * CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_cpu1_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_cpu1_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_CPU1_PIO_OFFSET                   0x600518u /* inferred */
 
 /*
  * Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_gbr_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_gbr_memory: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_GBR_MEMORY_OFFSET                 0x600520u /* inferred */
 
 /*
  * Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_gbr_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_gbr_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_GBR_PIO_OFFSET                    0x600528u /* inferred */
 
 /*
  * I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_io_memory: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_io_memory: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_IO_MEMORY_OFFSET                  0x600530u /* inferred */
 
 /*
  * I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.
  */
-/* ni_age_io_pio: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_io_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_AGE_IO_PIO_OFFSET                     0x600538u /* inferred */
 
 /*
  * Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on their own.
  */
-/* ni_port_parms: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_port_parms: rw64, reset 0x1bf0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
 #define HUB_NI_PORT_PARMS_OFFSET                     0x608000u /* inferred */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT         10 /* inferred */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_MASK          0x3full

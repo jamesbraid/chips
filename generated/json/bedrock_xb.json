@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 2251801961168929,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -63,7 +63,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -149,7 +149,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -262,7 +262,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 5,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -285,7 +285,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -335,7 +335,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -367,7 +367,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -381,7 +381,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -395,7 +395,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -436,7 +436,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -450,7 +450,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -464,7 +464,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -487,7 +487,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -528,7 +528,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -542,7 +542,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -556,7 +556,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -570,7 +570,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -611,7 +611,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -643,7 +643,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -805,7 +805,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -986,7 +986,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1000,7 +1000,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1014,7 +1014,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1028,7 +1028,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1042,7 +1042,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1056,7 +1056,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1070,7 +1070,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1084,7 +1084,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1098,7 +1098,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1112,7 +1112,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1126,7 +1126,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1140,7 +1140,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1154,7 +1154,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1168,7 +1168,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },
@@ -1182,7 +1182,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
   },

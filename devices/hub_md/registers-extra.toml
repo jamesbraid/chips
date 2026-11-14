@@ -69,7 +69,7 @@ phi1 = { bits = [33, 27], grade = "established", doc = "Seven-bit field at 33:27
 phi0 = { bits = [26, 20], grade = "inferred", doc = "Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown." }
 pulse = { bits = [19, 10], grade = "established", doc = "Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10). The header gives no time unit, so the real pulse width is unknown." }
 sample = { bits = [9, 2], grade = "established", doc = "Eight-bit sample field at 9:2 (mask 0xff shifted 2). The header gives no time unit or reference point, so the real sample offset is unknown." }
-done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, so the done bit's reset value is unknown; no held source settles it, so neither value should be assumed." }
+done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, but the IRIX register reset table gives the whole register's reset as 0x18b100002, so done is set at reset." }
 rd_data = { bits = [0, 0], grade = "established", doc = "Read-data bit, bit 0, named MLAN_RD_DATA in the header." }
 
 [words.MD_SLOTID_USTAT_FORMAT]
@@ -233,6 +233,9 @@ offset = 0x220088
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77d0"
 from = "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)"
 doc = "Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
@@ -345,6 +348,9 @@ offset = 0x2200f8
 access = "rw"
 width = 64
 grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_15 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77e8"
 from = "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)"
 doc = "Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 

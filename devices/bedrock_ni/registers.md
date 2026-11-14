@@ -13,25 +13,25 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `port_status` | 0x680000 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `port_status` | 0x680000 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `port_reset` | 0x680008 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `reset_enable` | 0x680010 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `diag_parms` | 0x680018 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `channel_control` | 0x680020 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `reset_enable` | 0x680010 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `diag_parms` | 0x680018 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `channel_control` | 0x680020 | rw | 64 |  |  | 0x100 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `channel_test` | 0x680028 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `port_parms` | 0x680030 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `channel_age` | 0x680038 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `port_errors` | 0x680100 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `port_parms` | 0x680030 | rw | 64 |  |  | 0x7a3ff1bf0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `channel_age` | 0x680038 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `port_errors` | 0x680100 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `port_header_a` | 0x680108 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `port_header_b` | 0x680110 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `port_sideband` | 0x680118 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `port_error_clear` | 0x680120 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `local_table` | 0x681000 | rw | 64 | 128 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `global_table` | 0x682000 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `port_sideband` | 0x680118 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `port_error_clear` | 0x680120 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `local_table` | 0x681000 | rw | 64 | 128 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `global_table` | 0x682000 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 
 ### Register `port_status`
 
-Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown.
+Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -51,7 +51,7 @@ Writing this register resets the network interface. The header's comments say bi
 
 ### Register `reset_enable`
 
-Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown.
+Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -59,7 +59,7 @@ Warm reset enable. The header's comment says bit 0 lets a reset arriving over th
 
 ### Register `diag_parms`
 
-Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown.
+Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -69,7 +69,7 @@ Diagnostic parameters. Field names are the header's; the header gives no operati
 
 ### Register `channel_control`
 
-Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown.
+Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -100,7 +100,7 @@ Access to the link test logic: seed, mask, data, valid, error and flit fields, p
 
 ### Register `port_parms`
 
-Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Reset unknown.
+Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -114,7 +114,7 @@ Link-level protocol parameters and the enables for error header capture. The hea
 
 ### Register `channel_age`
 
-Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment). Reset unknown.
+Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -123,7 +123,7 @@ Age at which request and reply packets enter the fabric. The header's comment sa
 
 ### Register `port_errors`
 
-Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown.
+Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -183,7 +183,7 @@ Sideband data for the header registers and extra error data. The header says thi
 
 ### Register `port_error_clear`
 
-The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. Whether the read clears anything is unknown.
+The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Whether the read clears anything is unknown.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -201,7 +201,7 @@ The same information as port errors, with the same layout. The header's comment 
 
 ### Register `local_table`
 
-Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction. Reset unknown.
+Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction.
 
 Array of 128 registers, stride 8.
 
@@ -212,7 +212,7 @@ Array of 128 registers, stride 8.
 
 ### Register `global_table`
 
-Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown.
+Next-hop table for the one-bit meta destination. The header names the table and gives no access direction.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

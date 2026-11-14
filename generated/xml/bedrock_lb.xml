@@ -24,35 +24,35 @@
     <value name="protection_error" value="6" grade="established"/>
     <value name="unknown_error" value="7" grade="established"/>
   </enum>
-  <struct name="REV_ID" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x600000" access="rw" reset="unknown">
-    <doc>Revision and identity. The header says this register carries the chip identity and sets the node's ID and the size of each region. The manufacturer, part and revision fields are assigned by IBM under the IEEE 1149.1 scheme, and the header does not say whether they are writable. Reset unknown: the header states no reset value. The I/O interface's widget identification register echoes the manufacturer and revision fields.</doc>
+  <struct name="REV_ID" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x600000" access="rw" reset="0x23012049">
+    <doc>Revision and identity. The header says this register carries the chip identity and sets the node's ID and the size of each region. The manufacturer, part and revision fields are assigned by IBM under the IEEE 1149.1 scheme, and the header does not say whether they are writable. The I/O interface's widget identification register echoes the manufacturer and revision fields.</doc>
     <field name="region_size" start="46" size="2" type="region_size" grade="established"/>
     <field name="node_id" start="32" size="8" type="uint" grade="established"/>
     <field name="revision" start="28" size="4" type="uint" grade="established"/>
     <field name="part_number" start="12" size="16" type="uint" grade="established"/>
     <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="CPU_PERMISSION" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604000" access="rw" reset="unknown">
-    <doc>Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units. Reset unknown.</doc>
+  <struct name="CPU_PERMISSION" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604000" access="rw" reset="0xfffffffffffffff">
+    <doc>Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units.</doc>
     <field name="region_enable" start="0" size="64" type="uint" grade="established"/>
   </struct>
   <struct name="CPU_PERMISSION_OVERRIDE" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604008" access="w" reset="unknown">
     <doc>Writing the 64-bit ASCII key the SN1 header names sets the writer's own region bit in cpu_permission. The key is not reproduced here. Reset unknown.</doc>
   </struct>
-  <struct name="IO_PERMISSION" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604010" access="rw" reset="unknown">
-    <doc>The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor. Reset unknown.</doc>
+  <struct name="IO_PERMISSION" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604010" access="rw" reset="0x0">
+    <doc>The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor.</doc>
     <field name="region_enable" start="0" size="64" type="uint" grade="established"/>
   </struct>
   <struct name="SOFT_RESET" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604018" access="w" reset="unknown">
     <doc>A write to bit 0 resets the Bedrock with a soft reset. The header does not say which state survives it. Reset unknown.</doc>
     <field name="soft_reset" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="REGION_PRESENT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604020" access="rw" reset="unknown">
-    <doc>Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit. Reset unknown.</doc>
+  <struct name="REGION_PRESENT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604020" access="rw" reset="0xfffffffffffffff">
+    <doc>Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit.</doc>
     <field name="present" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="NODES_ABSENT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604028" access="rw" reset="unknown">
-    <doc>Four 16-bit entries, one per slot. Each entry holds a node number in its low eight bits and a valid bit at bit 15. A node listed with its valid bit set cannot receive an invalidate. Reset unknown.</doc>
+  <struct name="NODES_ABSENT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604028" access="rw" reset="0x0">
+    <doc>Four 16-bit entries, one per slot. Each entry holds a node number in its low eight bits and a valid bit at bit 15. A node listed with its valid bit set cannot receive an invalidate.</doc>
     <field name="entry3_valid" start="63" size="1" type="uint" grade="established"/>
     <field name="entry3_node" start="48" size="8" type="uint" grade="established"/>
     <field name="entry2_valid" start="47" size="1" type="uint" grade="established"/>
@@ -62,7 +62,7 @@
     <field name="entry0_valid" start="15" size="1" type="uint" grade="established"/>
     <field name="entry0_node" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="MICROLAN_CTL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604030" access="rw" reset="unknown">
+  <struct name="MICROLAN_CTL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604030" access="rw" reset="0x31e300002">
     <doc>Control for a one-wire serial bus to the node board's add-only serial PROM. The header names the part as a Dallas 1990A and says the PROM holds the node board's serial number and configuration. Bytes travel least-significant bit first. The header gives no unit for the timing fields, no completion latency and no sequence of commands, so the timing and the transaction are unknown. The public Linux SN1 tree does not use this register outside its header.</doc>
     <field name="clkdiv_phi1" start="27" size="7" type="uint" grade="established"/>
     <field name="clkdiv_phi0" start="20" size="7" type="uint" grade="established"/>
@@ -71,8 +71,8 @@
     <field name="done" start="1" size="1" type="uint" grade="established"/>
     <field name="read_data" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="ERROR_BITS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604040" access="rw" reset="unknown">
-    <doc>Local-block error bits. Reads do not change them. A write sets the bits it names. Any set bit raises the block's error request to both processor interfaces (bit 55 of their pending-1 register). The header says the contents survive a reset. Reset unknown: the header states no power-on value.</doc>
+  <struct name="ERROR_BITS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604040" access="rw" reset="0x0">
+    <doc>Local-block error bits. Reads do not change them. A write sets the bits it names. Any set bit raises the block's error request to both processor interfaces (bit 55 of their pending-1 register). The header says the contents survive a reset.</doc>
     <field name="gclk_drop" start="10" size="1" type="uint" grade="established"/>
     <field name="rq_bad_inval" start="9" size="1" type="uint" grade="established"/>
     <field name="rq_bad_addr" start="8" size="1" type="uint" grade="established"/>
@@ -89,8 +89,8 @@
     <doc>Write one to clear the matching error bits. A zero bit in the written value leaves its error bit alone, so any subset clears atomically. Reset unknown.</doc>
     <field name="clear" start="0" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="ERROR_HDR1" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604050" access="rw" reset="unknown">
-    <doc>Header of the first packet that caused an error. It is captured while valid is clear, and valid is then set. A later error while valid is set sets overrun and leaves the rest alone. The err_type value uses the same bit numbering as error_bits, so err_type 5 means rp_long. Not relevant for a global clock drop. Reset unknown.</doc>
+  <struct name="ERROR_HDR1" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604050" access="rw" reset="0x0">
+    <doc>Header of the first packet that caused an error. It is captured while valid is clear, and valid is then set. A later error while valid is set sets overrun and leaves the rest alone. The err_type value uses the same bit numbering as error_bits, so err_type 5 means rp_long. Not relevant for a global clock drop.</doc>
     <field name="valid" start="44" size="1" type="uint" grade="established"/>
     <field name="overrun" start="40" size="1" type="uint" grade="established"/>
     <field name="err_type" start="32" size="4" type="uint" grade="established"/>
@@ -98,32 +98,32 @@
     <field name="suppl" start="8" size="11" type="uint" grade="established"/>
     <field name="command" start="0" size="7" type="uint" grade="established"/>
   </struct>
-  <struct name="ERROR_HDR2" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604058" access="rw" reset="unknown">
-    <doc>Address field from the header of the first packet that caused an error. Not relevant for a global clock drop. Reset unknown.</doc>
+  <struct name="ERROR_HDR2" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604058" access="rw" reset="0x0">
+    <doc>Address field from the header of the first packet that caused an error. Not relevant for a global clock drop.</doc>
     <field name="address" start="0" size="38" type="uint" grade="established"/>
   </struct>
-  <struct name="ERROR_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604060" access="rw" reset="unknown">
-    <doc>Data flit of the first erroring packet, for the error kinds that carry data. Reset unknown.</doc>
+  <struct name="ERROR_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604060" access="rw" reset="0x0">
+    <doc>Data flit of the first erroring packet, for the error kinds that carry data.</doc>
     <field name="flit" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="DEBUG_SELECT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604100" access="rw" reset="unknown">
-    <doc>Chooses which internal signals appear on the debug pins. The header gives no list of the choices. Reset unknown.</doc>
+  <struct name="DEBUG_SELECT" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604100" access="rw" reset="0x0">
+    <doc>Chooses which internal signals appear on the debug pins. The header gives no list of the choices.</doc>
     <field name="select" start="0" size="6" type="uint" grade="established"/>
   </struct>
-  <struct name="DEBUG_PINS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604108" access="r" reset="unknown">
-    <doc>Value on the chip's debug pins. Reset unknown.</doc>
+  <struct name="DEBUG_PINS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604108" access="r" reset="0x0">
+    <doc>Value on the chip's debug pins.</doc>
     <field name="pins" start="0" size="32" type="uint" grade="established"/>
   </struct>
-  <struct name="RT_LOCAL_CTRL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604200" access="rw" reset="unknown">
-    <doc>Local source of the real-time clock. The local block gives the clock to both processor interfaces. With use_internal set it generates the clock from the Bedrock's system clock, with its period set by max_count. With it clear it filters an incoming global clock instead (see rt_filter_ctrl). Reset unknown: the header states no power-on value.</doc>
+  <struct name="RT_LOCAL_CTRL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604200" access="rw" reset="0x100000640">
+    <doc>Local source of the real-time clock. The local block gives the clock to both processor interfaces. With use_internal set it generates the clock from the Bedrock's system clock, with its period set by max_count. With it clear it filters an incoming global clock instead (see rt_filter_ctrl).</doc>
     <field name="use_internal" start="32" size="1" type="uint" grade="established"/>
     <field name="gclk" start="28" size="1" type="uint" grade="established"/>
     <field name="gclk_counter" start="16" size="10" type="uint" grade="established"/>
     <field name="max_count" start="4" size="10" type="uint" grade="established"/>
     <field name="gclk_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="RT_FILTER_CTRL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604208" access="rw" reset="unknown">
-    <doc>Filtering of an incoming global clock, used when rt_local_ctrl use_internal is clear. Simple filtering drops single-cycle glitches. Complex filtering (mask_enable set) expects positive edges at regular intervals, tracks missing and unexpected edges, and generates an edge itself when one is missing. Under either option the clock it hands the processor interfaces stays high for (2 * max_count + 1 - offset) / 2 cycles of the block's system clock after each positive edge. Clock loss is error bit gclk_drop. Reset unknown.</doc>
+  <struct name="RT_FILTER_CTRL" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x604208" access="rw" reset="0x0">
+    <doc>Filtering of an incoming global clock, used when rt_local_ctrl use_internal is clear. Simple filtering drops single-cycle glitches. Complex filtering (mask_enable set) expects positive edges at regular intervals, tracks missing and unexpected edges, and generates an edge itself when one is missing. Under either option the clock it hands the processor interfaces stays high for (2 * max_count + 1 - offset) / 2 cycles of the block's system clock after each positive edge. Clock loss is error bit gclk_drop.</doc>
     <field name="error_counter" start="48" size="10" type="uint" grade="established"/>
     <field name="dropout_threshold" start="36" size="10" type="uint" grade="established"/>
     <field name="dropout_counter" start="24" size="10" type="uint" grade="established"/>
@@ -135,58 +135,58 @@
     <doc>Plain storage. The header says it is reset to zero.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH1" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608008" access="rw" reset="unknown">
-    <doc>Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown.</doc>
+  <struct name="SCRATCH1" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608008" access="rw" reset="0x0">
+    <doc>Plain storage. The header says it is not reset, and does not name the reset it means.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH2" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608010" access="rw" reset="unknown">
-    <doc>Plain storage. The header says it is not reset, and does not name the reset it means. Reset unknown.</doc>
+  <struct name="SCRATCH2" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608010" access="rw" reset="0x0">
+    <doc>Plain storage. The header says it is not reset, and does not name the reset it means.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH3" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608018" access="rw" reset="unknown">
-    <doc>One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The public Linux ia64 L1 driver uses it as a hub-wide lock: it releases the lock by writing zero to this address. Reset unknown.</doc>
+  <struct name="SCRATCH3" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608018" access="rw" reset="0x0">
+    <doc>One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The public Linux ia64 L1 driver uses it as a hub-wide lock: it releases the lock by writing zero to this address.</doc>
     <field name="bit" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH4" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608020" access="rw" reset="unknown">
-    <doc>One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it. Reset unknown.</doc>
+  <struct name="SCRATCH4" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608020" access="rw" reset="0x0">
+    <doc>One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it.</doc>
     <field name="bit" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH0_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608040" access="w" reset="unknown">
+  <struct name="SCRATCH0_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608040" access="w" reset="0x0">
     <doc>Write-if-zero alias of scratch 0. A write is accepted only when the current value is zero.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH1_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608048" access="w" reset="unknown">
+  <struct name="SCRATCH1_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608048" access="w" reset="0x0">
     <doc>Write-if-zero alias of scratch 1. A write is accepted only when the current value is zero.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH2_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608050" access="w" reset="unknown">
+  <struct name="SCRATCH2_WZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608050" access="w" reset="0x0">
     <doc>Write-if-zero alias of scratch 2. A write is accepted only when the current value is zero.</doc>
     <field name="bits" start="0" size="64" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH3_RZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608058" access="r" reset="unknown">
+  <struct name="SCRATCH3_RZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608058" access="r" reset="0x0">
     <doc>Read-set-if-zero alias of scratch 3 (one bit, bit 0 of a 64-bit word). A read returns the old value and sets the bit when it was zero, so a single read is a test-and-set. The public Linux ia64 L1 driver takes its hub-wide lock this way and reads until it gets zero.</doc>
     <field name="bit" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="SCRATCH4_RZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608060" access="r" reset="unknown">
+  <struct name="SCRATCH4_RZ" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x608060" access="r" reset="0x0">
     <doc>Read-set-if-zero alias of scratch 4 (one bit). A read returns the old value and sets the bit when it was zero.</doc>
     <field name="bit" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="VECTOR_PARMS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c000" access="rw" reset="unknown">
-    <doc>Vector I/O request parameters. A write sends one request, and the block replies to the write at once without waiting for the operation. The request is built from three registers: the route, the write data and this one, which should be written last. Software waits for busy to clear before it starts. Reset unknown.</doc>
+  <struct name="VECTOR_PARMS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c000" access="rw" reset="0x0">
+    <doc>Vector I/O request parameters. A write sends one request, and the block replies to the write at once without waiting for the operation. The request is built from three registers: the route, the write data and this one, which should be written last. Software waits for busy to clear before it starts.</doc>
     <field name="busy" start="63" size="1" type="uint" grade="established"/>
     <field name="pio_id" start="40" size="11" type="uint" grade="established"/>
     <field name="write_id" start="32" size="8" type="uint" grade="established"/>
     <field name="address" start="3" size="21" type="uint" grade="established"/>
     <field name="type" start="0" size="2" type="vector_op" grade="inferred"/>
   </struct>
-  <struct name="VECTOR_ROUTE" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c008" access="rw" reset="unknown">
-    <doc>Outgoing vector route for the next request. The header gives no field layout. Reset unknown.</doc>
+  <struct name="VECTOR_ROUTE" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c008" access="rw" reset="0x0">
+    <doc>Outgoing vector route for the next request. The header gives no field layout.</doc>
   </struct>
-  <struct name="VECTOR_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c010" access="rw" reset="unknown">
-    <doc>Write data for an outgoing vector write, and the data value for a read reply. Reset unknown.</doc>
+  <struct name="VECTOR_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c010" access="rw" reset="0x0">
+    <doc>Write data for an outgoing vector write, and the data value for a read reply.</doc>
   </struct>
-  <struct name="VECTOR_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c020" access="rw" reset="unknown">
-    <doc>Return status of the last vector request. Software clears it before launching a request. The block leaves the fields unchanged when a reply has an error. A reply that arrives while valid is already set sets overrun and leaves the rest alone. Otherwise the block loads the source, ids, address and type, sets valid, and updates return and read data. The header does not say what a write of a nonzero value does. Reset unknown.</doc>
+  <struct name="VECTOR_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c020" access="rw" reset="0x0">
+    <doc>Return status of the last vector request. Software clears it before launching a request. The block leaves the fields unchanged when a reply has an error. A reply that arrives while valid is already set sets overrun and leaves the rest alone. Otherwise the block loads the source, ids, address and type, sets valid, and updates return and read data. The header does not say what a write of a nonzero value does.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="overrun" start="62" size="1" type="uint" grade="established"/>
     <field name="source" start="51" size="11" type="uint" grade="established"/>
@@ -195,13 +195,13 @@
     <field name="address" start="3" size="21" type="uint" grade="established"/>
     <field name="type_or_error" start="0" size="3" type="vector_reply_type" grade="established"/>
   </struct>
-  <struct name="VECTOR_RETURN" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c028" access="rw" reset="unknown">
-    <doc>Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear. Reset unknown.</doc>
+  <struct name="VECTOR_RETURN" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c028" access="rw" reset="0x0">
+    <doc>Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear.</doc>
   </struct>
-  <struct name="VECTOR_READ_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c030" access="rw" reset="unknown">
-    <doc>Read data from the last reply, under the same update rule as vector_return. Reset unknown.</doc>
+  <struct name="VECTOR_READ_DATA" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c030" access="rw" reset="0x0">
+    <doc>Read data from the last reply, under the same update rule as vector_return.</doc>
   </struct>
-  <struct name="VECTOR_STATUS_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c038" access="rw" reset="unknown">
+  <struct name="VECTOR_STATUS_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use)" register="yes" offset="0x60c038" access="rw" reset="0x0">
     <doc>Clear the vector status. The header gives the same field layout as vector_status and says only that this register clears it. It does not say whether a read or a write does the clearing, so that is unknown.</doc>
     <field name="valid" start="63" size="1" type="uint" grade="established"/>
     <field name="overrun" start="62" size="1" type="uint" grade="established"/>

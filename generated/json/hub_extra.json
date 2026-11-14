@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 470814792,
    "grade": "inferred",
    "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
   },
@@ -54,7 +54,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "inferred",
    "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
   },
@@ -132,7 +132,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
   },
@@ -146,7 +146,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
   },
@@ -160,7 +160,7 @@
    "count": 7,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
   },
@@ -257,7 +257,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred"
   },
   {
@@ -270,7 +270,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred"
   },
   {
@@ -299,7 +299,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred"
   },
   {

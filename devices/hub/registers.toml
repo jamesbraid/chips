@@ -2,7 +2,7 @@
 unit = "hub"
 prefix = "HUB"
 title = "Hub (Origin 2000 node controller)"
-doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout."
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown unless a register entry cites the source that states one."
 from = "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
 public_from = ["census:"]
 
@@ -16,6 +16,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_REGION_PRESENT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c60"
 
 [registers.pi_cpu_num]
 offset = 0x20
@@ -23,6 +26,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 136 sites, 20 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_NUM (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c78"
 
 [registers.pi_calias_size]
 offset = 0x28
@@ -30,6 +36,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
+reset = 0xf
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CALIAS_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c90"
 
 [registers.pi_max_crb_timeout]
 offset = 0x30
@@ -37,6 +46,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x80
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_MAX_CRB_TIMEOUT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ca8"
 
 [registers.pi_crb_sfactor]
 offset = 0x38
@@ -44,6 +56,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CRB_SFACTOR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6cc0"
 
 [registers.pi_cpu_present_a]
 offset = 0x40
@@ -51,6 +66,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_PRESENT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6cd8"
 
 [registers.pi_cpu_present_b]
 offset = 0x48
@@ -58,6 +76,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_PRESENT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6cf0"
 
 [registers.pi_cpu_enable_a]
 offset = 0x50
@@ -65,6 +86,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_ENABLE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d08"
 
 [registers.pi_cpu_enable_b]
 offset = 0x58
@@ -72,6 +96,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_ENABLE_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d20"
 
 [registers.pi_nmi_a]
 offset = 0x70
@@ -93,6 +120,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 11 sites, 8 routines (r); census: 2 sites, 2 routines (r, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_PEND0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6dc8"
 
 [registers.pi_int_pend1]
 offset = 0xa0
@@ -100,6 +130,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 5 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_PEND1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6de0"
 
 [registers.pi_int_mask0_a]
 offset = 0xa8
@@ -107,6 +140,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 4 sites, 4 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_MASK0_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6df8"
 
 [registers.pi_int_mask1_a]
 offset = 0xb0
@@ -114,6 +150,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 4 sites, 4 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_MASK1_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e10"
 
 [registers.pi_int_mask0_b]
 offset = 0xb8
@@ -121,6 +160,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_MASK0_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e28"
 
 [registers.pi_int_mask1_b]
 offset = 0xc0
@@ -128,6 +170,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 6 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_INT_MASK1_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e40"
 
 [registers.pi_rt_compare_a]
 offset = 0x108
@@ -135,6 +180,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 25 sites, 6 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_COMPARE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ee8"
 
 [registers.pi_rt_compare_b]
 offset = 0x110
@@ -142,6 +190,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_COMPARE_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f00"
 
 [registers.pi_profile_compare]
 offset = 0x118
@@ -149,6 +200,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROFILE_COMPARE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f18"
 
 [registers.pi_rt_pend_a]
 offset = 0x120
@@ -156,6 +210,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_INT_PEND_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f30"
 
 [registers.pi_rt_pend_b]
 offset = 0x128
@@ -163,6 +220,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_INT_PEND_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f48"
 
 [registers.pi_prof_pend_a]
 offset = 0x130
@@ -170,6 +230,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROF_INT_PEND_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f60"
 
 [registers.pi_prof_pend_b]
 offset = 0x138
@@ -177,6 +240,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROF_INT_PEND_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f78"
 
 [registers.pi_rt_en_a]
 offset = 0x140
@@ -184,6 +250,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RTC_INT_EN_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6f90"
 
 [registers.pi_rt_en_b]
 offset = 0x148
@@ -191,6 +260,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RTC_INT_EN_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6fa8"
 
 [registers.pi_prof_en_a]
 offset = 0x150
@@ -198,6 +270,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROF_INT_EN_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6fc0"
 
 [registers.pi_prof_en_b]
 offset = 0x158
@@ -205,6 +280,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROF_INT_EN_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6fd8"
 
 [registers.pi_rt_local_ctrl]
 offset = 0x160
@@ -219,6 +297,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CMP_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7128"
 
 [registers.pi_gfx_int_cmp_b]
 offset = 0x348
@@ -226,6 +307,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CMP_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71a0"
 
 [registers.pi_err_int_pend]
 offset = 0x400
@@ -240,6 +324,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71d0"
 
 [registers.pi_err_int_mask_b]
 offset = 0x410
@@ -247,6 +334,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71e8"
 
 [registers.pi_err_stack_addr_a]
 offset = 0x418
@@ -254,6 +344,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 4 sites, 3 routines (r); census: 2 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_STACK_ADDR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7200"
 
 [registers.pi_err_stack_addr_b]
 offset = 0x420
@@ -261,6 +354,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 7 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_STACK_ADDR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7218"
 
 [registers.pi_err_stack_size]
 offset = 0x428
@@ -268,6 +364,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines (r); census: 2 sites, 1 routines (r, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_STACK_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7230"
 
 [registers.pi_err_status0_a]
 offset = 0x430
@@ -318,6 +417,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x1
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_UNUSED (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d50"
 
 [registers.pi_rt_count]
 offset = 0x30100
@@ -325,6 +427,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 161 sites, 80 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_COUNTER (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ed0"
 
 # ---- MD: memory and directory (configuration, migration, error latches)
 [registers.md_memory_config]
@@ -333,6 +438,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
+reset = 0x1e7fbc3fffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458"
 
 [registers.md_refresh_control]
 offset = 0x200020
@@ -340,6 +448,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x400
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470"
 
 [registers.md_fandop_cac_stat]
 offset = 0x200028
@@ -347,6 +458,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0xc0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488"
 
 [registers.md_mig_diff_thresh]
 offset = 0x200030
@@ -431,6 +545,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x3212
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0"
 
 [registers.md_mlan_ctl]
 offset = 0x2000a8
@@ -438,6 +555,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 6 sites, 1 routines"
+reset = 0x18b100002
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608"
 
 [registers.per_hub_init]
 offset = 0x2000c8
@@ -445,6 +565,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CACR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8250"
 
 [registers.hub_ifdr_fix_value]
 offset = 0x2000d0
@@ -452,6 +575,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRQQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8268"
 
 [registers.hub_ifdr_fix_value_2000d8]
 offset = 0x2000d8
@@ -459,6 +585,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRPQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8280"
 
 [registers.per_hub_init_2000e0]
 offset = 0x2000e0
@@ -466,6 +595,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8298"
 
 # ---- MD performance counters
 [registers.md_perf_sel]
@@ -517,6 +649,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 38 sites, 9 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77b8"
 
 # ---- II: I/O interface (widget, protection, error, CRB and PRB registers)
 [registers.iio_wstat]
@@ -525,6 +660,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WSTAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7830"
 
 [registers.iio_wcr]
 offset = 0x400020
@@ -532,6 +670,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x4001
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7860"
 
 [registers.iio_iowa]
 offset = 0x400110
@@ -539,6 +680,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 6 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IOWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7908"
 
 [registers.iio_iiwa]
 offset = 0x400118
@@ -546,6 +690,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7938"
 
 [registers.iio_iidem]
 offset = 0x400120
@@ -553,6 +700,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 5 sites, 3 routines"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDEM (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7968"
 
 [registers.iio_ilcsr]
 offset = 0x400128
@@ -560,6 +710,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
+reset = 0x3fc03ff000a
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILCSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7998"
 
 [registers.iio_illr]
 offset = 0x400130
@@ -567,6 +720,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILLR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79b0"
 
 [registers.iio_iidsr]
 offset = 0x400138
@@ -574,6 +730,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 12 sites, 5 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79c8"
 
 [registers.iio_igfx_0]
 offset = 0x400140
@@ -588,6 +747,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 5 sites, 4 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ITTE1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a40"
 
 [registers.mlreset]
 offset = 0x400190
@@ -595,6 +757,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ITTE7 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ad0"
 
 [registers.iio_ioprb_0]
 offset = 0x400198
@@ -602,6 +767,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 7 sites, 4 routines"
+reset = 0x1
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPRB0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ae8"
 
 [registers.iio_imem]
 offset = 0x4001e8
@@ -637,6 +805,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 4 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPRTE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7c38"
 
 [registers.iio_ipdr]
 offset = 0x400388
@@ -644,6 +815,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 5 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d10"
 
 [registers.iio_icdr]
 offset = 0x400390
@@ -651,6 +825,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d28"
 
 [registers.iio_ifdr]
 offset = 0x400398
@@ -658,6 +835,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 8 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d40"
 
 [registers.iio_icmr]
 offset = 0x4003a8
@@ -665,6 +845,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 6 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICMR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d70"
 
 [registers.iio_iccr]
 offset = 0x4003b0
@@ -672,6 +855,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 7 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d88"
 
 [registers.iio_icto]
 offset = 0x4003b8
@@ -679,6 +865,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICTO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7da0"
 
 [registers.iio_ictp]
 offset = 0x4003c0
@@ -686,6 +875,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICTP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7db8"
 
 [registers.iio_icrb0_a]
 offset = 0x400400
@@ -729,6 +921,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e00"
 
 [registers.iio_ibsa_0]
 offset = 0x410008
@@ -736,6 +931,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBSA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e18"
 
 [registers.iio_ibda_0]
 offset = 0x410010
@@ -743,6 +941,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBDA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e30"
 
 [registers.iio_ibct_0]
 offset = 0x410018
@@ -750,6 +951,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e48"
 
 [registers.iio_ibls_1]
 offset = 0x420000
@@ -757,6 +961,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e90"
 
 [registers.iio_ibsa_1]
 offset = 0x420008
@@ -764,6 +971,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBSA1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ea8"
 
 [registers.iio_ibda_1]
 offset = 0x420010
@@ -778,6 +988,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ed8"
 
 [registers.iio_ibna_1]
 offset = 0x420020
@@ -785,6 +998,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBNA1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ef0"
 
 # ---- II performance counters
 [registers.iio_ipcr]
@@ -808,6 +1024,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
+reset = 0x20020
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50"
 
 [registers.ni_port_reset]
 offset = 0x600008
@@ -822,6 +1041,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 3 sites, 2 routines"
+reset = 0x1
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80"
 
 [registers.ni_global_parms]
 offset = 0x600018
@@ -829,6 +1051,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x3fffffe000f00f0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98"
 
 [registers.ni_scratch_reg0]
 offset = 0x600100
@@ -836,6 +1061,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_SCRATCH_REG0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7fb0"
 
 [registers.ni_scratch_reg1]
 offset = 0x600108
@@ -843,6 +1071,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 14 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7fc8"
 
 [registers.ni_diag_parms]
 offset = 0x600110
@@ -899,6 +1130,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 9 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0"
 
 [registers.ni_age_cpu1_memory]
 offset = 0x600510
@@ -906,6 +1140,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 9 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100"
 
 [registers.ni_port_error]
 offset = 0x608008

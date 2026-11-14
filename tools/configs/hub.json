@@ -221,5 +221,6 @@
  "header_skip": [
   "0x0"
  ],
- "note_names": "names are the public Linux Hub header names matched by offset after the census, plus the shipped kernel's own CRB entry names (ICRB0_A and so on); row 0x0 with the index flag is a base plus a caller-supplied offset, not PI_CPU_PROTECT, and is left unnamed"
+ "note_names": "names are the public Linux Hub header names matched by offset after the census, plus the shipped kernel's own CRB entry names (ICRB0_A and so on); row 0x0 with the index flag is a base plus a caller-supplied offset, not PI_CPU_PROTECT, and is left unnamed",
+ "register_resets": "tools/configs/hub-resets.json"
 }

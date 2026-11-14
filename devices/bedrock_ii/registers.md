@@ -13,45 +13,45 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `widget_id` | 0x400000 | r | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `widget_control` | 0x400020 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) |
-| `local_access_protection` | 0x400100 | rw | 64 |  |  | 0xffffffffffffffff | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `widget_id` | 0x400000 | r | 64 |  |  | 0x1c110049 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `widget_control` | 0x400020 | rw | 64 |  |  | 0x4011 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) |
+| `local_access_protection` | 0x400100 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `protection_override` | 0x400108 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `outbound_widget_access` | 0x400110 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `inbound_widget_access` | 0x400118 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `inbound_device_error_mask` | 0x400120 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `link_control` | 0x400128 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `llp_log` | 0x400130 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) |
-| `interrupt_destination` | 0x400138 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `graphics_map` | 0x400140 | rw | 64 | 2 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) |
-| `scratch` | 0x400150 | rw | 64 | 2 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) |
-| `translation_table_entry` | 0x400160 | rw | 64 | 7 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) |
-| `pio_request_buffer_w0` | 0x400198 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `pio_request_buffer_w8` | 0x4001a0 | rw | 64 | 8 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `credit_count_timeout` | 0x4001e0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) |
-| `misc_error_mask` | 0x4001e8 | rw | 64 |  |  | 0x111 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `crosstalk_timeout_threshold` | 0x4001f0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) |
-| `error_clear` | 0x4001f8 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_global_control` | 0x400200 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) |
-| `pio_read_address` | 0x400308 | rw | 64 | 8 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `outbound_widget_access` | 0x400110 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `inbound_widget_access` | 0x400118 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `inbound_device_error_mask` | 0x400120 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `link_control` | 0x400128 | rw | 64 |  |  | 0x3fc03ff040a (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `llp_log` | 0x400130 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) |
+| `interrupt_destination` | 0x400138 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `graphics_map` | 0x400140 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) |
+| `scratch` | 0x400150 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) |
+| `translation_table_entry` | 0x400160 | rw | 64 | 7 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) |
+| `pio_request_buffer_w0` | 0x400198 | rw | 64 |  |  | 0xf (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `pio_request_buffer_w8` | 0x4001a0 | rw | 64 | 8 |  | 0xf (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `credit_count_timeout` | 0x4001e0 | rw | 64 |  |  | 0x3ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) |
+| `misc_error_mask` | 0x4001e8 | rw | 64 |  |  | 0x111 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crosstalk_timeout_threshold` | 0x4001f0 | rw | 64 |  |  | 0xfffffff03ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) |
+| `error_clear` | 0x4001f8 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_global_control` | 0x400200 | rw | 64 |  |  | 0x8 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) |
+| `pio_read_address` | 0x400308 | rw | 64 | 8 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_management` | 0x4003a8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `request_buffer_control` | 0x4003b0 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `crb_timeout` | 0x4003b8 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) |
-| `crb_timeout_prescaler` | 0x4003c0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) |
-| `crb_a` | 0x400400 | r | 64 | 15 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_b` | 0x400408 | r | 64 | 15 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_c` | 0x400410 | r | 64 | 15 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_d` | 0x400418 | r | 64 | 15 |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) |
-| `bte_length_status` | 0x410000 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_source` | 0x410008 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_destination` | 0x410010 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_control` | 0x410018 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_notification_address` | 0x410020 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `bte_interrupt_address` | 0x410028 | rw | 64 | 2 |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `request_buffer_control` | 0x4003b0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_timeout` | 0x4003b8 | rw | 64 |  |  | 0xff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) |
+| `crb_timeout_prescaler` | 0x4003c0 | rw | 64 |  |  | 0xffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) |
+| `crb_a` | 0x400400 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
+| `crb_b` | 0x400408 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
+| `crb_c` | 0x400410 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
+| `crb_d` | 0x400418 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) |
+| `bte_length_status` | 0x410000 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_source` | 0x410008 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_destination` | 0x410010 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_control` | 0x410018 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_notification_address` | 0x410020 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `bte_interrupt_address` | 0x410028 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 
 ### Register `widget_id`
 
-Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Reset unknown: it follows the local revision register.
+Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Its value follows the local revision register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -65,7 +65,7 @@ Crosstalk widget control register (the header's IO widget control). The header s
 
 ### Register `local_access_protection`
 
-One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.
+One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -77,7 +77,7 @@ Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region bit
 
 ### Register `outbound_widget_access`
 
-Qualifies every PIO and graphics write the Bedrock launches toward a widget. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.
+Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -86,7 +86,7 @@ Qualifies every PIO and graphics write the Bedrock launches toward a widget. Res
 
 ### Register `inbound_widget_access`
 
-Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.
+Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -95,7 +95,7 @@ Qualifies every request a widget launches at the Bedrock, including DMA and inte
 
 ### Register `inbound_device_error_mask`
 
-Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out. Reset unknown.
+Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -162,7 +162,7 @@ Array of 7 registers, stride 8.
 
 ### Register `pio_request_buffer_w0`
 
-Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. Reset unknown; the Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.
+Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -204,7 +204,7 @@ IO crosstalk credit count timeout. The header states no access type, so rw is as
 
 ### Register `misc_error_mask`
 
-Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. The reset value 0x111 is not stated by any source and is inferred from the later chip's recovery write, which re-enables a source by setting its bit.
+Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -219,7 +219,7 @@ IO crosstalk timeout threshold. The header states no access type, so rw is assum
 
 ### Register `error_clear`
 
-Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset unknown.
+Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -308,7 +308,7 @@ Array of 15 registers, stride 32.
 
 ### Register `bte_length_status`
 
-One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end. Reset unknown.
+One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end.
 
 Array of 2 registers, stride 65536.
 

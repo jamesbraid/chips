@@ -2,7 +2,7 @@
 // Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values
 #![allow(dead_code)]
 
-/// Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Re (established)
+/// Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. It (established)
 pub mod widget_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400000;
@@ -42,7 +42,7 @@ pub mod widget_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400020;
 }
-/// One enable bit per processor region. The header states the reset value: every region is permitted. A processor PIO is performed only when the requeste (established)
+/// One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM regis (established)
 pub mod local_access_protection {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400100;
@@ -62,7 +62,7 @@ pub mod protection_override {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400108;
 }
-/// Qualifies every PIO and graphics write the Bedrock launches toward a widget. Reset unknown. The stock PROM enables widget 0 and widgets 8 to F in it;  (established)
+/// Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it,  (established)
 pub mod outbound_widget_access {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400110;
@@ -87,7 +87,7 @@ pub mod outbound_widget_access {
         }
     }
 }
-/// Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. Reset unknown. The stock PROM enables widget 0 and widge (established)
+/// Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX (established)
 pub mod inbound_widget_access {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400118;
@@ -680,7 +680,7 @@ pub mod crosstalk_timeout_threshold {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4001f0;
 }
-/// Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. Reset u (established)
+/// Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. (established)
 pub mod error_clear {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4001f8;

@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 470876233,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -54,7 +54,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 16401,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
   },
@@ -68,7 +68,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": 18446744073709551615,
+   "reset": 1152921504606846975,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -105,7 +105,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -137,7 +137,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -169,7 +169,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -255,7 +255,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4380933686282,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -350,7 +350,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
   },
@@ -364,7 +364,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -441,7 +441,7 @@
    "count": 2,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
   },
@@ -455,7 +455,7 @@
    "count": 2,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
   },
@@ -469,7 +469,7 @@
    "count": 7,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
   },
@@ -483,7 +483,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 15,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -596,7 +596,7 @@
    "count": 8,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 15,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -709,7 +709,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 67108863,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
   },
@@ -773,7 +773,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1152921500378988543,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
   },
@@ -787,7 +787,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -882,7 +882,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 8,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)"
   },
@@ -896,7 +896,7 @@
    "count": 8,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1059,7 +1059,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1100,7 +1100,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 255,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
   },
@@ -1114,7 +1114,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 16777215,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
   },
@@ -1128,7 +1128,7 @@
    "count": 15,
    "stride": 32,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
@@ -1142,7 +1142,7 @@
    "count": 15,
    "stride": 32,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
@@ -1156,7 +1156,7 @@
    "count": 15,
    "stride": 32,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
   },
@@ -1170,7 +1170,7 @@
    "count": 15,
    "stride": 32,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
   },
@@ -1184,7 +1184,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1225,7 +1225,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1248,7 +1248,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1271,7 +1271,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1312,7 +1312,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
@@ -1335,7 +1335,7 @@
    "count": 2,
    "stride": 65536,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },

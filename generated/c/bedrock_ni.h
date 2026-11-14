@@ -7,9 +7,9 @@
 
 
 /*
- * Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name. Reset unknown.
+ * Link-level protocol status. The header calls bit 1 link up and bit 2 remote power; the header gives no encoding for the two-bit status, so the meaning of bit 1 is inferred from its name.
  */
-/* port_status: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_STATUS                       0x680000 /* established */
 #define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_SHIFT    2 /* inferred */
 #define BEDROCK_NI_PORT_STATUS_REMOTE_POWER_MASK     0x1ull
@@ -37,18 +37,18 @@
 #define BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_INPLACE (BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_MASK << BEDROCK_NI_PORT_RESET_LINK_RESET_OUT_SHIFT)
 
 /*
- * Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown. Reset unknown.
+ * Warm reset enable. The header's comment says bit 0 lets a reset arriving over the link reset the Bedrock. The header does not say whether the bit also gates a local reset, so that is unknown.
  */
-/* reset_enable: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* reset_enable: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_RESET_ENABLE                      0x680010 /* established */
 #define BEDROCK_NI_RESET_ENABLE_RESET_OK_SHIFT       0 /* inferred */
 #define BEDROCK_NI_RESET_ENABLE_RESET_OK_MASK        0x1ull
 #define BEDROCK_NI_RESET_ENABLE_RESET_OK_INPLACE     (BEDROCK_NI_RESET_ENABLE_RESET_OK_MASK << BEDROCK_NI_RESET_ENABLE_RESET_OK_SHIFT)
 
 /*
- * Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them. Reset unknown.
+ * Diagnostic parameters. Field names are the header's; the header gives no operating description beyond them.
  */
-/* diag_parms: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* diag_parms: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_DIAG_PARMS                        0x680018 /* established */
 #define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_SHIFT     2 /* inferred */
 #define BEDROCK_NI_DIAG_PARMS_SEND_ERR_OFF_MASK      0x1ull
@@ -61,9 +61,9 @@
 #define BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_INPLACE (BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_MASK << BEDROCK_NI_DIAG_PARMS_SEND_DATA_ERROR_SHIFT)
 
 /*
- * Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies. Reset unknown.
+ * Virtual channel selection for outgoing messages. Bits 0 to 3 pick the channel for requests of each class and bits 4 to 7 for replies.
  */
-/* channel_control: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* channel_control: rw64, reset 0x100; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_CHANNEL_CONTROL                   0x680020 /* established */
 #define BEDROCK_NI_CHANNEL_CONTROL_SEND_VCH_SEL_SHIFT 8 /* established */
 #define BEDROCK_NI_CHANNEL_CONTROL_SEND_VCH_SEL_MASK 0x1ull
@@ -124,9 +124,9 @@
 #define BEDROCK_NI_CHANNEL_TEST_TEST_SEED_INPLACE    (BEDROCK_NI_CHANNEL_TEST_TEST_SEED_MASK << BEDROCK_NI_CHANNEL_TEST_TEST_SEED_SHIFT)
 
 /*
- * Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above. Reset unknown.
+ * Link-level protocol parameters and the enables for error header capture. The header gives field positions, and the reset-defaults constant above.
  */
-/* port_parms: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_parms: rw64, reset 0x7a3ff1bf0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_PARMS                        0x680030 /* established */
 #define BEDROCK_NI_PORT_PARMS_VCH_ERR_ENABLE_SHIFT   31 /* established */
 #define BEDROCK_NI_PORT_PARMS_VCH_ERR_ENABLE_MASK    0xfull
@@ -151,9 +151,9 @@
 #define BEDROCK_NI_PORT_PARMS_MAX_BURST_INPLACE      (BEDROCK_NI_PORT_PARMS_MAX_BURST_MASK << BEDROCK_NI_PORT_PARMS_MAX_BURST_SHIFT)
 
 /*
- * Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment). Reset unknown.
+ * Age at which request and reply packets enter the fabric. The header's comment says a higher reply age gives replies fixed priority over requests under saturation (inferred from the comment).
  */
-/* channel_age: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* channel_age: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_CHANNEL_AGE                       0x680038 /* established */
 #define BEDROCK_NI_CHANNEL_AGE_REPLY_INJECT_AGE_SHIFT 8 /* established */
 #define BEDROCK_NI_CHANNEL_AGE_REPLY_INJECT_AGE_MASK 0xffull
@@ -163,9 +163,9 @@
 #define BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_INPLACE (BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_MASK << BEDROCK_NI_CHANNEL_AGE_REQUEST_INJECT_AGE_SHIFT)
 
 /*
- * Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap. Reset unknown.
+ * Latched link-port and problem-message errors. The header's comment says reads do not change the register and bits 52 to 24 assert the network interface interrupt (inferred from the comment). The header's comment says the eight-bit counters do not wrap.
  */
-/* port_errors: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_errors: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_ERRORS                       0x680100 /* established */
 #define BEDROCK_NI_PORT_ERRORS_LINK_RESET_IN_SHIFT   52 /* established */
 #define BEDROCK_NI_PORT_ERRORS_LINK_RESET_IN_MASK    0x1ull
@@ -249,7 +249,7 @@
 /*
  * Sideband data for the header registers and extra error data. The header says this register is not cleared on reset. Its write effect is not stated, so the access direction is taken from the header's description as data the port provides.
  */
-/* port_sideband: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_sideband: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_SIDEBAND                     0x680118 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_SHIFT    16 /* established */
 #define BEDROCK_NI_PORT_SIDEBAND_VCH_ACTIVE_MASK     0xfull
@@ -283,9 +283,9 @@
 #define BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_INPLACE    (BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_MASK << BEDROCK_NI_PORT_SIDEBAND_SIDEBAND_SHIFT)
 
 /*
- * The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Reset unknown. Whether the read clears anything is unknown.
+ * The same information as port errors, with the same layout. The header's comment for this register repeats the port-errors comment, including that reads are non-destructive, which conflicts with the register name. The read effect is therefore unknown: the header does not settle whether a read clears the latched errors. Whether the read clears anything is unknown.
  */
-/* port_error_clear: r64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* port_error_clear: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_PORT_ERROR_CLEAR                  0x680120 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_LINK_RESET_IN_SHIFT 52 /* established */
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_LINK_RESET_IN_MASK 0x1ull
@@ -322,9 +322,9 @@
 #define BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_INPLACE (BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_MASK << BEDROCK_NI_PORT_ERROR_CLEAR_PEC_SN_ERROR_COUNT_SHIFT)
 
 /*
- * Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction. Reset unknown.
+ * Next-hop table for a local destination, one entry per 7-bit local destination at a stride of eight bytes; entry 0 is at the base. The header names the table and gives no access direction.
  */
-/* local_table: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* local_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_LOCAL_TABLE                       0x681000 /* established */
 #define BEDROCK_NI_LOCAL_TABLE_COUNT                 128
 #define BEDROCK_NI_LOCAL_TABLE_STRIDE                8
@@ -336,9 +336,9 @@
 #define BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_INPLACE (BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_MASK << BEDROCK_NI_LOCAL_TABLE_NEXT_EXIT_PORT_SHIFT)
 
 /*
- * Next-hop table for the one-bit meta destination. The header names the table and gives no access direction. Reset unknown.
+ * Next-hop table for the one-bit meta destination. The header names the table and gives no access direction.
  */
-/* global_table: rw64, reset unknown; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
+/* global_table: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_NI_GLOBAL_TABLE                      0x682000 /* established */
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_VCH_LSB_SHIFT   4 /* established */
 #define BEDROCK_NI_GLOBAL_TABLE_NEXT_VCH_LSB_MASK    0x1ull

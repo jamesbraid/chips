@@ -13,7 +13,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 18446744073709551615,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -422,7 +422,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 143,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -454,7 +454,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 16711712,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -495,7 +495,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 192,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -527,7 +527,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 192,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -559,7 +559,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -573,7 +573,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -587,7 +587,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -805,7 +805,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -828,7 +828,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -851,7 +851,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 2048,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -892,7 +892,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 281474976710655,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -960,7 +960,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -983,7 +983,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1006,7 +1006,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1029,7 +1029,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1111,7 +1111,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1170,7 +1170,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1261,7 +1261,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1284,7 +1284,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 2,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1316,7 +1316,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1438,7 +1438,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1452,7 +1452,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1466,7 +1466,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1480,7 +1480,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1548,7 +1548,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1616,7 +1616,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1666,7 +1666,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1766,7 +1766,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1789,7 +1789,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1812,7 +1812,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 1,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1835,7 +1835,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1903,7 +1903,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1917,7 +1917,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1940,7 +1940,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1963,7 +1963,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -1986,7 +1986,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },
@@ -2009,7 +2009,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "Linux 2.5.40 SN1 memory-directory register header"
   },

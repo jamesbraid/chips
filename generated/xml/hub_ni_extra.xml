@@ -33,31 +33,31 @@
   <struct name="NI_RETURN_VECTOR" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600308" access="rw" reset="unknown">
     <doc>Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_IO_PROTECT" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="unknown">
+  <struct name="NI_IO_PROTECT" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="0xffffffffffffffff">
     <doc>PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the header gives neither a field layout nor a reset.</doc>
   </struct>
   <struct name="NI_IO_PROT_OVRRD" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600408" access="w" reset="unknown">
     <doc>PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.</doc>
   </struct>
-  <struct name="NI_AGE_CPU0_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600508" access="rw" reset="unknown">
+  <struct name="NI_AGE_CPU0_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600508" access="rw" reset="0x0">
     <doc>CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_AGE_CPU1_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600518" access="rw" reset="unknown">
+  <struct name="NI_AGE_CPU1_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600518" access="rw" reset="0x0">
     <doc>CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_AGE_GBR_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600520" access="rw" reset="unknown">
+  <struct name="NI_AGE_GBR_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600520" access="rw" reset="0x0">
     <doc>Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_AGE_GBR_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600528" access="rw" reset="unknown">
+  <struct name="NI_AGE_GBR_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600528" access="rw" reset="0x0">
     <doc>Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_AGE_IO_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600530" access="rw" reset="unknown">
+  <struct name="NI_AGE_IO_MEMORY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600530" access="rw" reset="0x0">
     <doc>I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_AGE_IO_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600538" access="rw" reset="unknown">
+  <struct name="NI_AGE_IO_PIO" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600538" access="rw" reset="0x0">
     <doc>I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write.</doc>
   </struct>
-  <struct name="NI_PORT_PARMS" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x608000" access="rw" reset="unknown">
+  <struct name="NI_PORT_PARMS" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x608000" access="rw" reset="0x1bf0">
     <doc>Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on their own.</doc>
     <field name="null_timeout" start="10" size="6" type="uint" grade="inferred"/>
     <field name="max_burst" start="0" size="10" type="uint" grade="established"/>

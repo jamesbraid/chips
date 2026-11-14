@@ -27,7 +27,7 @@
 /*
  * Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_1: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) */
+/* md_ureg1_1: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) */
 #define HUB_MD_UREG1_1_OFFSET                        0x220088u /* inferred */
 
 /*
@@ -111,7 +111,7 @@
 /*
  * Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_15: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) */
+/* md_ureg1_15: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) */
 #define HUB_MD_UREG1_15_OFFSET                       0x2200f8u /* inferred */
 
 /*

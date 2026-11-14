@@ -12,15 +12,15 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_io_protect` | 0x600400 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_io_protect` | 0x600400 | rw | 64 |  |  | 0xffffffffffffffff (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 | `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_port_parms` | 0x608000 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_port_parms` | 0x608000 | rw | 64 |  |  | 0x1bf0 (established) | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 | `ni_meta_entry` | 0x638008 | rw | 64 | 31 |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 | `ni_local_entry` | 0x638108 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 

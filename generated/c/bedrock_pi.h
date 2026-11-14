@@ -9,7 +9,7 @@
 /*
  * One bit per region. A set bit lets the processor in that region reach this interface's local registers. A denied access gets a protection error reply. The header says the register is not reset by a soft reset and gives no reset value.
  */
-/* cpu_protect: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_protect: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_PROTECT                       0x000000 /* established */
 #define BEDROCK_PI_CPU_PROTECT_CP_CPU_PROTECT_SHIFT  0 /* established */
 #define BEDROCK_PI_CPU_PROTECT_CP_CPU_PROTECT_MASK   0xffffffffffffffffull
@@ -27,7 +27,7 @@
 /*
  * One bit per region. Decides whether I/O-initiated interrupt writes from that region may set bits in the two pending banks. The header says it is not reset by a soft reset.
  */
-/* io_protect: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* io_protect: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_IO_PROTECT                        0x000010 /* established */
 #define BEDROCK_PI_IO_PROTECT_IP_IO_PROTECT_SHIFT    0 /* established */
 #define BEDROCK_PI_IO_PROTECT_IP_IO_PROTECT_MASK     0xffffffffffffffffull
@@ -36,7 +36,7 @@
 /*
  * One bit per region. Clear bits block speculative coherent reads to that region. A coherent read to an absent region gets an error reply and no error register changes. Partial reads and writes are not checked. Cached-alias accesses are not affected. The header says it is not reset by a soft reset.
  */
-/* region_present: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* region_present: rw64, reset 0xffffffffffffffff; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_REGION_PRESENT                    0x000018 /* established */
 #define BEDROCK_PI_REGION_PRESENT_RP_REGION_PRESENT_SHIFT 0 /* established */
 #define BEDROCK_PI_REGION_PRESENT_RP_REGION_PRESENT_MASK 0xffffffffffffffffull
@@ -45,7 +45,7 @@
 /*
  * Read by a processor to learn its own slot and interface. Bit 0 is the slot (0 for CPU A, 1 for CPU B); bit 1 is the interface (0 for PI0, 1 for PI1).
  */
-/* cpu_num: r64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_num: r64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_NUM                           0x000020 /* established */
 #define BEDROCK_PI_CPU_NUM_CN_PI_ID_SHIFT            1 /* established */
 #define BEDROCK_PI_CPU_NUM_CN_PI_ID_MASK             0x1ull
@@ -75,7 +75,7 @@
 /*
  * Sets how often a valid coherency request buffer's timeout counter increments. The header refers to the same manual section as the maximum timeout register.
  */
-/* crb_scale_factor: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* crb_scale_factor: rw64, reset 0x64; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CRB_SCALE_FACTOR                  0x000038 /* established */
 #define BEDROCK_PI_CRB_SCALE_FACTOR_CS_SFACTOR_SHIFT 0 /* established */
 #define BEDROCK_PI_CRB_SCALE_FACTOR_CS_SFACTOR_MASK  0xffffffull
@@ -84,7 +84,7 @@
 /*
  * Set by the interface when it sees the first transaction from CPU A. The header gives no write behaviour.
  */
-/* cpu_present_a: r64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_present_a: r64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_PRESENT_A                     0x000040 /* established */
 #define BEDROCK_PI_CPU_PRESENT_A_CPA_CPU_PRESENT_SHIFT 0 /* established */
 #define BEDROCK_PI_CPU_PRESENT_A_CPA_CPU_PRESENT_MASK 0x1ull
@@ -93,7 +93,7 @@
 /*
  * Set by the interface when it sees the first transaction from CPU B. The header gives no write behaviour.
  */
-/* cpu_present_b: r64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_present_b: r64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_PRESENT_B                     0x000048 /* established */
 #define BEDROCK_PI_CPU_PRESENT_B_CPB_CPU_PRESENT_SHIFT 0 /* established */
 #define BEDROCK_PI_CPU_PRESENT_B_CPB_CPU_PRESENT_MASK 0x1ull
@@ -102,7 +102,7 @@
 /*
  * While clear, the interface ignores the bus request from CPU A and never grants it the bus. The header says it is not reset by a soft reset and gives no reset value.
  */
-/* cpu_enable_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_enable_a: rw64, reset 0x1; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_ENABLE_A                      0x000050 /* established */
 #define BEDROCK_PI_CPU_ENABLE_A_CEA_CPU_ENABLE_SHIFT 0 /* established */
 #define BEDROCK_PI_CPU_ENABLE_A_CEA_CPU_ENABLE_MASK  0x1ull
@@ -111,7 +111,7 @@
 /*
  * While clear, the interface ignores the bus request from CPU B and never grants it the bus. The header says it is not reset by a soft reset and gives no reset value.
  */
-/* cpu_enable_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cpu_enable_b: rw64, reset 0x1; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CPU_ENABLE_B                      0x000058 /* established */
 #define BEDROCK_PI_CPU_ENABLE_B_CEB_CPU_ENABLE_SHIFT 0 /* established */
 #define BEDROCK_PI_CPU_ENABLE_B_CEB_CPU_ENABLE_MASK  0x1ull
@@ -147,7 +147,7 @@
 /*
  * Pending bank 0, read only. The bits map to interrupt level 2 in the header's naming. The graphics bits are set by hardware and must be cleared by software.
  */
-/* int_pend0: r64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_pend0: r64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_PEND0                         0x000098 /* established */
 #define BEDROCK_PI_INT_PEND0_INT_PEND0_HI_SHIFT      7 /* established */
 #define BEDROCK_PI_INT_PEND0_INT_PEND0_HI_MASK       0x1ffffffffffffffull
@@ -177,7 +177,7 @@
 /*
  * Pending bank 1, read only. Bits map to interrupt level 3 unless the remap register moves bits 31 to 0 to level 2. The correctable-error, NACK and performance-overflow bits are set by hardware and must be cleared by software. The system shutdown, network, local-block and crossbar bits only reflect other logic and cannot be changed through this interface.
  */
-/* int_pend1: r64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_pend1: r64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_PEND1                         0x0000a0 /* established */
 #define BEDROCK_PI_INT_PEND1_SYSTEM_SHUTDOWN_SHIFT   63 /* established */
 #define BEDROCK_PI_INT_PEND1_SYSTEM_SHUTDOWN_MASK    0x1ull
@@ -216,7 +216,7 @@
 /*
  * Masks bank 0 for CPU A. A set bit passes the pending bit through as a level 2 interrupt (bit 10 of the processor's Cause register).
  */
-/* int_mask0_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_mask0_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_MASK0_A                       0x0000a8 /* established */
 #define BEDROCK_PI_INT_MASK0_A_IMA_INT_MASK0_HI_SHIFT 7 /* established */
 #define BEDROCK_PI_INT_MASK0_A_IMA_INT_MASK0_HI_MASK 0x1ffffffffffffffull
@@ -246,7 +246,7 @@
 /*
  * Masks bank 1 for CPU A. Bits 63 to 32 always raise a level 3 interrupt (bit 11 of Cause). Bits 31 to 0 raise level 3 or level 2 depending on the remap register. The header says only one processor per Bedrock should enable the network, local-block, crossbar and memory-correctable bits.
  */
-/* int_mask1_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_mask1_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_MASK1_A                       0x0000b0 /* established */
 #define BEDROCK_PI_INT_MASK1_A_IMA_INT_MASK1_SHIFT   0 /* established */
 #define BEDROCK_PI_INT_MASK1_A_IMA_INT_MASK1_MASK    0xffffffffffffffffull
@@ -255,7 +255,7 @@
 /*
  * Masks bank 0 for CPU B. Same layout and meaning as the CPU A mask.
  */
-/* int_mask0_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_mask0_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_MASK0_B                       0x0000b8 /* established */
 #define BEDROCK_PI_INT_MASK0_B_IMB_INT_MASK0_HI_SHIFT 7 /* established */
 #define BEDROCK_PI_INT_MASK0_B_IMB_INT_MASK0_HI_MASK 0x1ffffffffffffffull
@@ -285,7 +285,7 @@
 /*
  * Masks bank 1 for CPU B. Same layout and meaning as the CPU A mask.
  */
-/* int_mask1_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_mask1_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_MASK1_B                       0x0000c0 /* established */
 #define BEDROCK_PI_INT_MASK1_B_IMB_INT_MASK1_SHIFT   0 /* established */
 #define BEDROCK_PI_INT_MASK1_B_IMB_INT_MASK1_MASK    0xffffffffffffffffull
@@ -312,7 +312,7 @@
 /*
  * A read returns the CPU A CPU-to-CPU pending bits. A write clears each bit whose data bit is one.
  */
-/* cc_pend_clr_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cc_pend_clr_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CC_PEND_CLR_A                     0x0000d8 /* established */
 #define BEDROCK_PI_CC_PEND_CLR_A_CPCA_CC_PEND_SHIFT  0 /* established */
 #define BEDROCK_PI_CC_PEND_CLR_A_CPCA_CC_PEND_MASK   0xffffffffffffffffull
@@ -321,7 +321,7 @@
 /*
  * A read returns the CPU B CPU-to-CPU pending bits. A write clears each bit whose data bit is one.
  */
-/* cc_pend_clr_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cc_pend_clr_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CC_PEND_CLR_B                     0x0000e0 /* established */
 #define BEDROCK_PI_CC_PEND_CLR_B_CPCB_CC_PEND_SHIFT  0 /* established */
 #define BEDROCK_PI_CC_PEND_CLR_B_CPCB_CC_PEND_MASK   0xffffffffffffffffull
@@ -330,7 +330,7 @@
 /*
  * Masks both CPU-to-CPU pending registers.
  */
-/* cc_mask: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* cc_mask: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CC_MASK                           0x0000e8 /* established */
 #define BEDROCK_PI_CC_MASK_CM_CC_MASK_SHIFT          0 /* established */
 #define BEDROCK_PI_CC_MASK_CM_CC_MASK_MASK           0xffffffffffffffffull
@@ -339,7 +339,7 @@
 /*
  * Moves bank 1 bits 31 to 0 from level 3 to level 2 under control of the low four bits. Bit 4 forwards the memory and unit error interrupts to the I/O interface, which raises its interrupt to the node named in its destination register, so the errors can reach another node. The header does not give the encoding of the four-bit selector.
  */
-/* int_pend1_remap: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* int_pend1_remap: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_INT_PEND1_REMAP                   0x0000f0 /* established */
 #define BEDROCK_PI_INT_PEND1_REMAP_IPR_ERROR_FORWARD_SHIFT 4 /* established */
 #define BEDROCK_PI_INT_PEND1_REMAP_IPR_ERROR_FORWARD_MASK 0x1ull
@@ -351,7 +351,7 @@
 /*
  * When the real-time counter equals this value, the CPU A real-time pending bit is set. The header's comment says this sends a level 4 interrupt. Access is not stated; read and write is assumed.
  */
-/* rt_compare_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_compare_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_COMPARE_A                      0x000108 /* established */
 #define BEDROCK_PI_RT_COMPARE_A_RCA_RT_COMPARE_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_COMPARE_A_RCA_RT_COMPARE_MASK  0x7fffffffffffffull
@@ -360,7 +360,7 @@
 /*
  * When the real-time counter equals this value, the CPU B real-time pending bit is set. The header's comment says this sends a level 4 interrupt. Access is not stated; read and write is assumed.
  */
-/* rt_compare_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_compare_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_COMPARE_B                      0x000110 /* established */
 #define BEDROCK_PI_RT_COMPARE_B_RCB_RT_COMPARE_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_COMPARE_B_RCB_RT_COMPARE_MASK  0x7fffffffffffffull
@@ -369,7 +369,7 @@
 /*
  * When the low 32 bits of the real-time counter equal this value, both profiling pending registers are set to one. Access is not stated; read and write is assumed.
  */
-/* profile_compare: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* profile_compare: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PROFILE_COMPARE                   0x000118 /* established */
 #define BEDROCK_PI_PROFILE_COMPARE_PC_PROFILE_COMPARE_SHIFT 0 /* established */
 #define BEDROCK_PI_PROFILE_COMPARE_PC_PROFILE_COMPARE_MASK 0xffffffffull
@@ -378,7 +378,7 @@
 /*
  * Real-time interrupt pending for CPU A. When the matching enable is set, CPU A's interrupt line follows this bit. The header's comment on this register says level 5, which conflicts with the compare register's level 4. Any store clears the bit.
  */
-/* rt_int_pend_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_int_pend_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_INT_PEND_A                     0x000120 /* established */
 #define BEDROCK_PI_RT_INT_PEND_A_RIPA_RTC_INT_PEND_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_INT_PEND_A_RIPA_RTC_INT_PEND_MASK 0x1ull
@@ -387,7 +387,7 @@
 /*
  * Real-time interrupt pending for CPU B. When the matching enable is set, CPU B's interrupt line follows this bit. The header's comment says level 5. Any store clears the bit.
  */
-/* rt_int_pend_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_int_pend_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_INT_PEND_B                     0x000128 /* established */
 #define BEDROCK_PI_RT_INT_PEND_B_RIPB_RTC_INT_PEND_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_INT_PEND_B_RIPB_RTC_INT_PEND_MASK 0x1ull
@@ -396,7 +396,7 @@
 /*
  * Profiling interrupt pending for CPU A. Set when the profile compare matches. Any store clears it. The A and B copies are separate so each can be cleared alone.
  */
-/* prof_int_pend_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* prof_int_pend_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PROF_INT_PEND_A                   0x000130 /* established */
 #define BEDROCK_PI_PROF_INT_PEND_A_PIPA_PROF_INT_PEND_SHIFT 0 /* established */
 #define BEDROCK_PI_PROF_INT_PEND_A_PIPA_PROF_INT_PEND_MASK 0x1ull
@@ -405,7 +405,7 @@
 /*
  * Profiling interrupt pending for CPU B. Set when the profile compare matches. Any store clears it.
  */
-/* prof_int_pend_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* prof_int_pend_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PROF_INT_PEND_B                   0x000138 /* established */
 #define BEDROCK_PI_PROF_INT_PEND_B_PIPB_PROF_INT_PEND_SHIFT 0 /* established */
 #define BEDROCK_PI_PROF_INT_PEND_B_PIPB_PROF_INT_PEND_MASK 0x1ull
@@ -414,7 +414,7 @@
 /*
  * Enables the real-time interrupt to CPU A.
  */
-/* rt_int_en_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_int_en_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_INT_EN_A                       0x000140 /* established */
 #define BEDROCK_PI_RT_INT_EN_A_RIEA_RTC_INT_EN_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_INT_EN_A_RIEA_RTC_INT_EN_MASK  0x1ull
@@ -423,7 +423,7 @@
 /*
  * Enables the real-time interrupt to CPU B.
  */
-/* rt_int_en_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_int_en_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_INT_EN_B                       0x000148 /* established */
 #define BEDROCK_PI_RT_INT_EN_B_RIEB_RTC_INT_EN_SHIFT 0 /* established */
 #define BEDROCK_PI_RT_INT_EN_B_RIEB_RTC_INT_EN_MASK  0x1ull
@@ -432,7 +432,7 @@
 /*
  * Enables the profiling interrupt to CPU A.
  */
-/* prof_int_en_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* prof_int_en_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PROF_INT_EN_A                     0x000150 /* established */
 #define BEDROCK_PI_PROF_INT_EN_A_PIEA_PROF_INT_EN_SHIFT 0 /* established */
 #define BEDROCK_PI_PROF_INT_EN_A_PIEA_PROF_INT_EN_MASK 0x1ull
@@ -441,7 +441,7 @@
 /*
  * Enables the profiling interrupt to CPU B.
  */
-/* prof_int_en_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* prof_int_en_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PROF_INT_EN_B                     0x000158 /* established */
 #define BEDROCK_PI_PROF_INT_EN_B_PIEB_PROF_INT_EN_SHIFT 0 /* established */
 #define BEDROCK_PI_PROF_INT_EN_B_PIEB_PROF_INT_EN_MASK 0x1ull
@@ -450,7 +450,7 @@
 /*
  * Selects the debug data the interface drives, together with the debug module's select. The header gives the selector names below and says the B-select bit chooses CPU A or CPU B logic for some selections. Each low and high selector bit is one signal, named by the header as follows: low selector bits are t5cc A, t5cc B, totcc A, totcc B, reqcc A, reqcc B, rplcc A, rplcc B, intcc, perf increment A 0 and 1, perf increment B 0 and 1; high selector bits are the same names in the same order.
  */
-/* debug_sel: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* debug_sel: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_DEBUG_SEL                         0x000160 /* established */
 #define BEDROCK_PI_DEBUG_SEL_DS_B_SEL_SHIFT          26 /* established */
 #define BEDROCK_PI_DEBUG_SEL_DS_B_SEL_MASK           0x1ull
@@ -480,7 +480,7 @@
 /*
  * Graphics page for CPU A. Uncached I/O stores into the enabled page are graphics write commands tracked by the credit counter, not ordinary write commands. Access is not stated; read and write is assumed.
  */
-/* gfx_page_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_page_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_PAGE_A                        0x000300 /* established */
 #define BEDROCK_PI_GFX_PAGE_A_GPA_EN_GFX_PAGE_SHIFT  40 /* established */
 #define BEDROCK_PI_GFX_PAGE_A_GPA_EN_GFX_PAGE_MASK   0x1ull
@@ -492,7 +492,7 @@
 /*
  * Graphics credit counter for CPU A. It drops by one per doubleword sent to graphics and rises by one per doubleword acknowledged. When it is below the bias, the header says write-ready is withheld, an interrupt is sent, and write-ready is allowed again. Access is not stated; read and write is assumed.
  */
-/* gfx_credit_cntr_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_credit_cntr_a: rw64, reset 0x40; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_A                 0x000308 /* established */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_A_GCCA_GFX_CREDIT_CNTR_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_A_GCCA_GFX_CREDIT_CNTR_MASK 0xfffull
@@ -501,7 +501,7 @@
 /*
  * Graphics bias for CPU A. When the credit counter is at or below this value, the header says a flow-control interrupt is sent. Access is not stated; read and write is assumed.
  */
-/* gfx_bias_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_bias_a: rw64, reset 0x24; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_BIAS_A                        0x000310 /* established */
 #define BEDROCK_PI_GFX_BIAS_A_GBA_GFX_BIAS_SHIFT     0 /* established */
 #define BEDROCK_PI_GFX_BIAS_A_GBA_GFX_BIAS_MASK      0xfffull
@@ -510,7 +510,7 @@
 /*
  * Graphics interrupt counter for CPU A. The header says it is written by software, loaded from the compare on an interrupt, NMI or soft reset, zeroed when the credit counter rises above the bias, and counts one per clock while the credit counter is at or below zero. Access is not stated; read and write is assumed.
  */
-/* gfx_int_cntr_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_int_cntr_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_INT_CNTR_A                    0x000318 /* established */
 #define BEDROCK_PI_GFX_INT_CNTR_A_GICA_GFX_INT_CNTR_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_INT_CNTR_A_GICA_GFX_INT_CNTR_MASK 0x3ffffffull
@@ -519,7 +519,7 @@
 /*
  * Graphics interrupt compare for CPU A. The interrupt is sent when the interrupt counter reaches this value. Access is not stated; read and write is assumed.
  */
-/* gfx_int_cmp_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_int_cmp_a: rw64, reset 0x10000; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_INT_CMP_A                     0x000320 /* established */
 #define BEDROCK_PI_GFX_INT_CMP_A_GICA_GFX_INT_CMP_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_INT_CMP_A_GICA_GFX_INT_CMP_MASK 0x3ffffffull
@@ -528,7 +528,7 @@
 /*
  * Graphics page for CPU B. Uncached I/O stores into the enabled page are graphics write commands tracked by the credit counter, not ordinary write commands. Access is not stated; read and write is assumed.
  */
-/* gfx_page_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_page_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_PAGE_B                        0x000328 /* established */
 #define BEDROCK_PI_GFX_PAGE_B_GPB_EN_GFX_PAGE_SHIFT  40 /* established */
 #define BEDROCK_PI_GFX_PAGE_B_GPB_EN_GFX_PAGE_MASK   0x1ull
@@ -540,7 +540,7 @@
 /*
  * Graphics credit counter for CPU B. It drops by one per doubleword sent to graphics and rises by one per doubleword acknowledged. When it is below the bias, the header says write-ready is withheld, an interrupt is sent, and write-ready is allowed again. Access is not stated; read and write is assumed.
  */
-/* gfx_credit_cntr_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_credit_cntr_b: rw64, reset 0x40; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_B                 0x000330 /* established */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_B_GCCB_GFX_CREDIT_CNTR_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_CREDIT_CNTR_B_GCCB_GFX_CREDIT_CNTR_MASK 0xfffull
@@ -549,7 +549,7 @@
 /*
  * Graphics bias for CPU B. When the credit counter is at or below this value, the header says a flow-control interrupt is sent. Access is not stated; read and write is assumed.
  */
-/* gfx_bias_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_bias_b: rw64, reset 0x24; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_BIAS_B                        0x000338 /* established */
 #define BEDROCK_PI_GFX_BIAS_B_GBB_GFX_BIAS_SHIFT     0 /* established */
 #define BEDROCK_PI_GFX_BIAS_B_GBB_GFX_BIAS_MASK      0xfffull
@@ -558,7 +558,7 @@
 /*
  * Graphics interrupt counter for CPU B. The header says it is written by software, loaded from the compare on an interrupt, NMI or soft reset, zeroed when the credit counter rises above the bias, and counts one per clock while the credit counter is at or below zero. Access is not stated; read and write is assumed.
  */
-/* gfx_int_cntr_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_int_cntr_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_INT_CNTR_B                    0x000340 /* established */
 #define BEDROCK_PI_GFX_INT_CNTR_B_GICB_GFX_INT_CNTR_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_INT_CNTR_B_GICB_GFX_INT_CNTR_MASK 0x3ffffffull
@@ -567,7 +567,7 @@
 /*
  * Graphics interrupt compare for CPU B. The interrupt is sent when the interrupt counter reaches this value. Access is not stated; read and write is assumed.
  */
-/* gfx_int_cmp_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_int_cmp_b: rw64, reset 0x10000; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_INT_CMP_B                     0x000348 /* established */
 #define BEDROCK_PI_GFX_INT_CMP_B_GICB_GFX_INT_CMP_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_INT_CMP_B_GICB_GFX_INT_CMP_MASK 0x3ffffffull
@@ -798,7 +798,7 @@
 /*
  * Masks the error pending bits for CPU A. A set bit lets that error raise the level 6 interrupt to CPU A. The header says only one processor per Bedrock should enable the memory uncorrectable bit.
  */
-/* err_int_mask_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_int_mask_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_INT_MASK_A                    0x000408 /* established */
 #define BEDROCK_PI_ERR_INT_MASK_A_EIMA_MASK_SHIFT    0 /* established */
 #define BEDROCK_PI_ERR_INT_MASK_A_EIMA_MASK_MASK     0x7ffffffffull
@@ -807,7 +807,7 @@
 /*
  * Masks the error pending bits for CPU B. A set bit lets that error raise the level 6 interrupt to CPU B. The header says only one processor per Bedrock should enable the memory uncorrectable bit.
  */
-/* err_int_mask_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_int_mask_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_INT_MASK_B                    0x000410 /* established */
 #define BEDROCK_PI_ERR_INT_MASK_B_EIMB_MASK_SHIFT    0 /* established */
 #define BEDROCK_PI_ERR_INT_MASK_B_EIMB_MASK_MASK     0x7ffffffffull
@@ -816,7 +816,7 @@
 /*
  * Address of the next write to the CPU A error stack. It increments after each write, and only the low bits that the stack size selects count up. The header says it is not reset by a soft reset.
  */
-/* err_stack_addr_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_stack_addr_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_STACK_ADDR_A                  0x000418 /* established */
 #define BEDROCK_PI_ERR_STACK_ADDR_A_ESAA_ADDR_SHIFT  3 /* established */
 #define BEDROCK_PI_ERR_STACK_ADDR_A_ESAA_ADDR_MASK   0x3fffffffull
@@ -825,7 +825,7 @@
 /*
  * Address of the next write to the CPU B error stack. It increments after each write, and only the low bits that the stack size selects count up. The header says it is not reset by a soft reset.
  */
-/* err_stack_addr_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_stack_addr_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_STACK_ADDR_B                  0x000420 /* established */
 #define BEDROCK_PI_ERR_STACK_ADDR_B_ESAB_ADDR_SHIFT  3 /* established */
 #define BEDROCK_PI_ERR_STACK_ADDR_B_ESAB_ADDR_MASK   0x3fffffffull
@@ -834,7 +834,7 @@
 /*
  * Size of the error stack that is spooled to local memory when an error occurs. The header describes it as a count of 64-bit entries and says it is not reset by a soft reset. The encoding of the four-bit field is not given in this header.
  */
-/* err_stack_size: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_stack_size: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_STACK_SIZE                    0x000428 /* established */
 #define BEDROCK_PI_ERR_STACK_SIZE_ESS_SIZE_SHIFT     0 /* established */
 #define BEDROCK_PI_ERR_STACK_SIZE_ESS_SIZE_MASK      0xfull
@@ -1173,7 +1173,7 @@
 /*
  * Coherency request buffer timeout. The header says a timeout can be forced by writing one bits; the two fields are named read and write.
  */
-/* crb_timeout_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* crb_timeout_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CRB_TIMEOUT_A                     0x000480 /* established */
 #define BEDROCK_PI_CRB_TIMEOUT_A_CTA_WRB_SHIFT       4 /* established */
 #define BEDROCK_PI_CRB_TIMEOUT_A_CTA_WRB_MASK        0xffull
@@ -1185,7 +1185,7 @@
 /*
  * Coherency request buffer timeout. The header says a timeout can be forced by writing one bits; the two fields are named read and write.
  */
-/* crb_timeout_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* crb_timeout_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_CRB_TIMEOUT_B                     0x000488 /* established */
 #define BEDROCK_PI_CRB_TIMEOUT_B_CTB_WRB_SHIFT       4 /* established */
 #define BEDROCK_PI_CRB_TIMEOUT_B_CTB_WRB_MASK        0xffull
@@ -1197,7 +1197,7 @@
 /*
  * Controls error checking and forwarding of system bus errors. The header does not give a reset value.
  */
-/* sysad_errchk_en: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* sysad_errchk_en: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_SYSAD_ERRCHK_EN                   0x000490 /* established */
 #define BEDROCK_PI_SYSAD_ERRCHK_EN_SEE_QUAL_CHK_EN_SHIFT 5 /* established */
 #define BEDROCK_PI_SYSAD_ERRCHK_EN_SEE_QUAL_CHK_EN_MASK 0x1ull
@@ -1221,7 +1221,7 @@
 /*
  * For CPU A: when reply data arrives with the uncorrectable indicator set, the check bits sent on the system bus are inverted in each set position, and the data quality indicator is not asserted.
  */
-/* force_bad_check_bit_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* force_bad_check_bit_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_A             0x000498 /* established */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_A_FBCBA_BAD_CHECK_BIT_SHIFT 0 /* established */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_A_FBCBA_BAD_CHECK_BIT_MASK 0xffull
@@ -1230,7 +1230,7 @@
 /*
  * For CPU B: when reply data arrives with the uncorrectable indicator set, the check bits sent on the system bus are inverted in each set position, and the data quality indicator is not asserted.
  */
-/* force_bad_check_bit_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* force_bad_check_bit_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_B             0x0004a0 /* established */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_B_FBCBB_BAD_CHECK_BIT_SHIFT 0 /* established */
 #define BEDROCK_PI_FORCE_BAD_CHECK_BIT_B_FBCBB_BAD_CHECK_BIT_MASK 0xffull
@@ -1239,7 +1239,7 @@
 /*
  * Counts CPU A's negative acknowledgements while the count is enabled. The count clears on any other reply. When a negative acknowledgement arrives with the count equal to the compare, the count clears, the processor gets an error reply instead, and the CPU A NACK bit is set.
  */
-/* nack_cnt_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* nack_cnt_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_NACK_CNT_A                        0x0004a8 /* established */
 #define BEDROCK_PI_NACK_CNT_A_NCA_CNT_EN_SHIFT       20 /* established */
 #define BEDROCK_PI_NACK_CNT_A_NCA_CNT_EN_MASK        0x1ull
@@ -1251,7 +1251,7 @@
 /*
  * Counts CPU B's negative acknowledgements while the count is enabled. The count clears on any other reply. When a negative acknowledgement arrives with the count equal to the compare, the count clears, the processor gets an error reply instead, and the CPU B NACK bit is set.
  */
-/* nack_cnt_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* nack_cnt_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_NACK_CNT_B                        0x0004b0 /* established */
 #define BEDROCK_PI_NACK_CNT_B_NCB_CNT_EN_SHIFT       20 /* established */
 #define BEDROCK_PI_NACK_CNT_B_NCB_CNT_EN_MASK        0x1ull
@@ -1263,7 +1263,7 @@
 /*
  * Compare value for both NACK counts. It affects both processors on this interface.
  */
-/* nack_cmp: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* nack_cmp: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_NACK_CMP                          0x0004b8 /* established */
 #define BEDROCK_PI_NACK_CMP_NC_NACK_CMP_SHIFT        0 /* established */
 #define BEDROCK_PI_NACK_CMP_NC_NACK_CMP_MASK         0xfffffull
@@ -1272,7 +1272,7 @@
 /*
  * Chooses which error kinds are spooled. A set bit spools that error. It affects both processors on this interface.
  */
-/* spool_mask: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* spool_mask: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_SPOOL_MASK                        0x0004c0 /* established */
 #define BEDROCK_PI_SPOOL_MASK_SM_NACK_OFLOW_ERR_SHIFT 5 /* established */
 #define BEDROCK_PI_SPOOL_MASK_SM_NACK_OFLOW_ERR_MASK 0x1ull
@@ -1332,7 +1332,7 @@
 /*
  * Arms the injection of one error kind into the next outbound system bus transfer of that type. The bit clears when the error is injected. Writing does not cause a transaction. A bit stays set until a matching transfer occurs, so software can poll it. Data quality injection is not in this register.
  */
-/* err_inject: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* err_inject: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_ERR_INJECT                        0x0004d8 /* established */
 #define BEDROCK_PI_ERR_INJECT_SYSRESP_PAR_B_SHIFT    38 /* established */
 #define BEDROCK_PI_ERR_INJECT_SYSRESP_PAR_B_MASK     0x1ull
@@ -1380,7 +1380,7 @@
 /*
  * Stops the processors from issuing requests while the reply FIFO holds more entries than this value. The FIFO holds 63 entries, so a value of 63 never stops the processors, and a value of 0 stops them whenever any reply waits. The register is in its own 64 KB page.
  */
-/* reply_level: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* reply_level: rw64, reset 0x10; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_REPLY_LEVEL                       0x010060 /* established */
 #define BEDROCK_PI_REPLY_LEVEL_RL_REPLY_LEVEL_SHIFT  0 /* established */
 #define BEDROCK_PI_REPLY_LEVEL_RL_REPLY_LEVEL_MASK   0x3full
@@ -1389,7 +1389,7 @@
 /*
  * Switches the credit counter from counting doublewords to counting transactions. The header puts it in its own 64 KB page so it can be mapped to user space. Access is not stated; read and write is assumed.
  */
-/* gfx_credit_mode: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* gfx_credit_mode: rw64, reset 0x1; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_GFX_CREDIT_MODE                   0x020068 /* established */
 #define BEDROCK_PI_GFX_CREDIT_MODE_GCM_TRANS_MODE_SHIFT 0 /* established */
 #define BEDROCK_PI_GFX_CREDIT_MODE_GCM_TRANS_MODE_MASK 0x1ull
@@ -1398,7 +1398,7 @@
 /*
  * Real-time counter. It wraps to zero at its maximum value and increments on each rising edge of the global clock. The header puts it in its own 64 KB page so it can be mapped to user space.
  */
-/* rt_counter: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* rt_counter: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_RT_COUNTER                        0x030100 /* established */
 #define BEDROCK_PI_RT_COUNTER_RC_COUNT_SHIFT         0 /* established */
 #define BEDROCK_PI_RT_COUNTER_RC_COUNT_MASK          0x7fffffffffffffull
@@ -1431,7 +1431,7 @@
 /*
  * Performance counter 0 of CPU A. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed.
  */
-/* perf_cntr0_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* perf_cntr0_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PERF_CNTR0_A                      0x040208 /* established */
 #define BEDROCK_PI_PERF_CNTR0_A_PCA_OVERFLOW_SHIFT   40 /* established */
 #define BEDROCK_PI_PERF_CNTR0_A_PCA_OVERFLOW_MASK    0x1ull
@@ -1443,7 +1443,7 @@
 /*
  * Performance counter 1 of CPU A. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed.
  */
-/* perf_cntr1_a: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* perf_cntr1_a: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PERF_CNTR1_A                      0x040210 /* established */
 #define BEDROCK_PI_PERF_CNTR1_A_PCA_OVERFLOW_SHIFT   40 /* established */
 #define BEDROCK_PI_PERF_CNTR1_A_PCA_OVERFLOW_MASK    0x1ull
@@ -1479,7 +1479,7 @@
 /*
  * Performance counter 0 of CPU B. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed.
  */
-/* perf_cntr0_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* perf_cntr0_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PERF_CNTR0_B                      0x050208 /* established */
 #define BEDROCK_PI_PERF_CNTR0_B_PCB_OVERFLOW_SHIFT   40 /* established */
 #define BEDROCK_PI_PERF_CNTR0_B_PCB_OVERFLOW_MASK    0x1ull
@@ -1491,7 +1491,7 @@
 /*
  * Performance counter 1 of CPU B. Forty bits wide. On overflow it wraps to zero, sets its overflow bit and sets the performance overflow bit in bank 1. Access is not stated; read and write is assumed.
  */
-/* perf_cntr1_b: rw64, reset unknown; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
+/* perf_cntr1_b: rw64, reset 0x0; Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts */
 #define BEDROCK_PI_PERF_CNTR1_B                      0x050210 /* established */
 #define BEDROCK_PI_PERF_CNTR1_B_PCB_OVERFLOW_SHIFT   40 /* established */
 #define BEDROCK_PI_PERF_CNTR1_B_PCB_OVERFLOW_MASK    0x1ull

@@ -2,7 +2,7 @@
 
 # Bedrock (node controller), Origin 3000 family
 
-Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.
+Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown unless a register entry cites the source that states one. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly.
 
 Unit `bedrock`, macro prefix `BEDROCK`.
 Default source: census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names).
@@ -19,26 +19,26 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `handle_cac_buserr` | 0x18 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `sub_1bcf0` | 0x20 | rw | 64 |  |  | unknown | established | census: 115 sites, 24 routines |
+| `handle_cac_buserr` | 0x18 | r | 64 |  |  | 0xffffffffffffffff (established) | established | census: 1 sites, 1 routines |
+| `sub_1bcf0` | 0x20 | rw | 64 |  |  | 0x0 (established) | established | census: 115 sites, 24 routines |
 | `memory_iscalias` | 0x28 | rw | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
-| `reg_000040` | 0x40 | r | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
+| `reg_000040` | 0x40 | r | 64 |  |  | 0x0 (established) | established | census: 2 sites, 1 routines |
 | `sub_20ee0` | 0x90 | w | 64 |  |  | unknown | established | census: 9 sites, 7 routines |
-| `sub_200f0` | 0x98 | r | 64 |  |  | unknown | established | census: 12 sites, 7 routines |
-| `sub_20250` | 0xa0 | r | 64 |  |  | unknown | established | census: 5 sites, 3 routines |
-| `reg_000108` | 0x108 | w | 64 |  |  | unknown | established | census: 24 sites, 2 routines |
-| `startkgclock` | 0x118 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `acktmoclock` | 0x120 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `acktmoclock_128` | 0x128 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `ackkgclock` | 0x130 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `ackkgclock_138` | 0x138 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `startkgclock_150` | 0x150 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `startkgclock_158` | 0x158 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
+| `sub_200f0` | 0x98 | r | 64 |  |  | 0x0 (established) | established | census: 12 sites, 7 routines |
+| `sub_20250` | 0xa0 | r | 64 |  |  | 0x0 (established) | established | census: 5 sites, 3 routines |
+| `reg_000108` | 0x108 | w | 64 |  |  | 0x0 (established) | established | census: 24 sites, 2 routines |
+| `startkgclock` | 0x118 | w | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
+| `acktmoclock` | 0x120 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `acktmoclock_128` | 0x128 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `ackkgclock` | 0x130 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `ackkgclock_138` | 0x138 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `startkgclock_150` | 0x150 | w | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
+| `startkgclock_158` | 0x158 | w | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
 | `hubpi_eint_handler` | 0x400 | rw | 64 |  |  | unknown | established | census: 14 sites, 4 routines |
-| `err_int_block_mask` | 0x408 | rw | 64 |  |  | unknown | established | census: 10 sites, 6 routines |
-| `err_int_block_mask_410` | 0x410 | rw | 64 |  |  | unknown | established | census: 10 sites, 6 routines |
-| `hubpi_spool_get_next` | 0x418 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `hubpi_spool_get_next_420` | 0x420 | r | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
+| `err_int_block_mask` | 0x408 | rw | 64 |  |  | 0x0 (established) | established | census: 10 sites, 6 routines |
+| `err_int_block_mask_410` | 0x410 | rw | 64 |  |  | 0x0 (established) | established | census: 10 sites, 6 routines |
+| `hubpi_spool_get_next` | 0x418 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `hubpi_spool_get_next_420` | 0x420 | r | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
 | `hubpi_spool_get_next_430` | 0x430 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `hubpi_spool_get_next_440` | 0x440 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `hubpi_spool_get_next_448` | 0x448 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
@@ -47,39 +47,39 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `hubpi_spool_get_next_468` | 0x468 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `hubpi_eint_handler_4c8` | 0x4c8 | rw | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
 | `hubpi_eint_handler_4d0` | 0x4d0 | rw | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
-| `restore_hub_err` | 0x30100 | rw | 64 |  |  | unknown | established | census: 103 sites, 56 routines |
-| `reg_400110` | 0x400110 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `reg_400128` | 0x400128 | rw | 64 |  |  | unknown | established | census: 3 sites, 1 routines |
-| `ii_llp_error_monitor` | 0x400130 | rw | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
-| `sub_3d1d8` | 0x4001f8 | w | 64 |  |  | unknown | established | census: 4 sites, 2 routines |
-| `sub_1bcf0_600000` | 0x600000 | r | 64 |  |  | unknown | established | census: 16 sites, 13 routines |
-| `sub_1bcf0_604020` | 0x604020 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `sub_1bcf0_604028` | 0x604028 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `sub_28e3c` | 0x604200 | rw | 64 |  |  | unknown | established | census: 67 sites, 36 routines |
-| `reg_608000` | 0x608000 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `reg_608008` | 0x608008 | rw | 64 |  |  | unknown | established | census: 17 sites, 5 routines |
-| `reg_608010` | 0x608010 | rw | 64 |  |  | unknown | established | census: 3 sites, 1 routines |
-| `sub_11984` | 0x680000 | r | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
+| `restore_hub_err` | 0x30100 | rw | 64 |  |  | 0x0 (established) | established | census: 103 sites, 56 routines |
+| `reg_400110` | 0x400110 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `reg_400128` | 0x400128 | rw | 64 |  |  | 0x3fc03ff040a (established) | established | census: 3 sites, 1 routines |
+| `ii_llp_error_monitor` | 0x400130 | rw | 64 |  |  | 0x0 (established) | established | census: 2 sites, 1 routines |
+| `sub_3d1d8` | 0x4001f8 | w | 64 |  |  | 0x0 (established) | established | census: 4 sites, 2 routines |
+| `sub_1bcf0_600000` | 0x600000 | r | 64 |  |  | 0x23012049 (established) | established | census: 16 sites, 13 routines |
+| `sub_1bcf0_604020` | 0x604020 | r | 64 |  |  | 0xfffffffffffffff (established) | established | census: 1 sites, 1 routines |
+| `sub_1bcf0_604028` | 0x604028 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `sub_28e3c` | 0x604200 | rw | 64 |  |  | 0x100000640 (established) | established | census: 67 sites, 36 routines |
+| `reg_608000` | 0x608000 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `reg_608008` | 0x608008 | rw | 64 |  |  | 0x0 (established) | established | census: 17 sites, 5 routines |
+| `reg_608010` | 0x608010 | rw | 64 |  |  | 0x0 (established) | established | census: 3 sites, 1 routines |
+| `sub_11984` | 0x680000 | r | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
 | `sub_10c0` | 0x680008 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `sub_10c0_680010` | 0x680010 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
+| `sub_10c0_680010` | 0x680010 | w | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
 | `sub_18a24` | 0x680108 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `sub_18a24_680110` | 0x680110 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `sub_18a24_680118` | 0x680118 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `ni_llp_error_monitor` | 0x680120 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `part_discovery` | 0x681000 | r | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
-| `part_discovery_681008` | 0x681008 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `part_discovery_681010` | 0x681010 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `part_discovery_681018` | 0x681018 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `part_discovery_682000` | 0x682000 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
+| `sub_18a24_680118` | 0x680118 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `ni_llp_error_monitor` | 0x680120 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `part_discovery` | 0x681000 | r | 64 |  |  | 0x0 (established) | established | census: 2 sites, 1 routines |
+| `part_discovery_681008` | 0x681008 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `part_discovery_681010` | 0x681010 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `part_discovery_681018` | 0x681018 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `part_discovery_682000` | 0x682000 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
 | `part_discovery_682008` | 0x682008 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `sub_1bcf0_780000` | 0x780000 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
+| `sub_1bcf0_780000` | 0x780000 | r | 64 |  |  | 0xffffffffffffffff (established) | established | census: 1 sites, 1 routines |
 | `mdir_xlate_addr_mem` | 0x780008 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
-| `reg_790010` | 0x790010 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `reg_7a0000` | 0x7a0000 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `reg_7a0008` | 0x7a0008 | rw | 64 |  |  | unknown | established | census: 2 sites, 1 routines |
-| `doacvec` | 0x7a0038 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `reg_7c0018` | 0x7c0018 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `reg_7e0018` | 0x7e0018 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
+| `reg_790010` | 0x790010 | w | 64 |  |  | 0x0 (established) | established | census: 2 sites, 2 routines |
+| `reg_7a0000` | 0x7a0000 | r | 64 |  |  | 0x800 (established) | established | census: 1 sites, 1 routines |
+| `reg_7a0008` | 0x7a0008 | rw | 64 |  |  | 0xffffffffffff (established) | established | census: 2 sites, 1 routines |
+| `doacvec` | 0x7a0038 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `reg_7c0018` | 0x7c0018 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `reg_7e0018` | 0x7e0018 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
 | `intr_dumpvec` | 0x800000 | rw | 64 |  |  | unknown | established | census: 19 sites, 16 routines |
 | `part_init_node` | 0x800010 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `part_terminate` | 0x800018 | rw | 64 |  |  | unknown | established | census: 8 sites, 5 routines |
@@ -228,7 +228,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `boot_space_off_000080` | 0x80 | r | 64 |  | bedrock_boot_space | unknown | established | census: 1 sites, 1 routines |
 | `boot_space_off_00008c` | 0x8c | r | 32 |  | bedrock_boot_space | unknown | established | census: 1 sites, 1 routines |
 | `boot_space_off_00009c` | 0x9c | r | 32 |  | bedrock_boot_space | unknown | established | census: 1 sites, 1 routines |
-| `boot_space_cpuprom_detailed_inventory_info_add` | 0xa0 | r | 32 |  | bedrock_boot_space | unknown | established | census: 2 sites, 2 routines |
+| `boot_space_cpuprom_detailed_inventory_info_add` | 0xa0 | r | 32 |  | bedrock_boot_space | 0x0 (established) | established | census: 2 sites, 2 routines |
 | `boot_space_cpuprom_detailed_inventory_info_add_a4` | 0xa4 | r | 32 |  | bedrock_boot_space | unknown | established | census: 2 sites, 2 routines |
 
 ### Register `handle_cac_buserr`

@@ -2,7 +2,7 @@
 unit = "bedrock"
 prefix = "BEDROCK"
 title = "Bedrock (node controller), Origin 3000 family"
-doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown throughout. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly."
+doc = "Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. Names are inferred from the accessor routine names the shipped objects carry. Constants are masks and values the code applies; their meaning is not read. Reset values are unknown unless a register entry cites the source that states one. Bedrock offsets: bits 23:0 of the window address the code forms; the window literals sit 0x1000000 above them, so add 0x1000000 for the offset the kernel uses. Offsets with bit 23 set come through the node-indexed alias (the code adds the node number << 33); the same register is at offset - 0x800000 in the local alias [I]. Example: 0xe80100, the network-interface error word, is 0x680100 in the local alias, where the code reads its neighbours (0x680108 to 0x680120) directly."
 from = "census: loads and stores in the shipped binaries; names from the shipped diagnostic or monitor name, or the public Linux driver name where none is printed (config register_names)"
 public_from = ["census:"]
 
@@ -28,6 +28,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_REGION_PRESENT at image offset 0x15ede8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_1bcf0]
 offset = 0x20
@@ -35,6 +38,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 115 sites, 24 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_CPU_NUM at image offset 0x15ee00 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.memory_iscalias]
 offset = 0x28
@@ -49,6 +55,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_CPU_PRESENT_A at image offset 0x15ee60 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_20ee0]
 offset = 0x90
@@ -63,6 +72,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 12 sites, 7 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_INT_PEND0 at image offset 0x15ef08 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_20250]
 offset = 0xa0
@@ -70,6 +82,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 5 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_INT_PEND1 at image offset 0x15ef20 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_000108]
 offset = 0x108
@@ -77,6 +92,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 24 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_RT_COMPARE_A at image offset 0x15f028 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.startkgclock]
 offset = 0x118
@@ -84,6 +102,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_PROFILE_COMPARE at image offset 0x15f058 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.acktmoclock]
 offset = 0x120
@@ -91,6 +112,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_RT_INT_PEND_A at image offset 0x15f070 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.acktmoclock_128]
 offset = 0x128
@@ -98,6 +122,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_RT_INT_PEND_B at image offset 0x15f088 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ackkgclock]
 offset = 0x130
@@ -105,6 +132,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_PROF_INT_PEND_A at image offset 0x15f0a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ackkgclock_138]
 offset = 0x138
@@ -112,6 +142,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_PROF_INT_PEND_B at image offset 0x15f0b8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.startkgclock_150]
 offset = 0x150
@@ -119,6 +152,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_PROF_INT_EN_A at image offset 0x15f100 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.startkgclock_158]
 offset = 0x158
@@ -126,6 +162,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_PROF_INT_EN_B at image offset 0x15f118 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.hubpi_eint_handler]
 offset = 0x400
@@ -140,6 +179,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 10 sites, 6 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_ERR_INT_MASK_A at image offset 0x15f280 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.err_int_block_mask_410]
 offset = 0x410
@@ -147,6 +189,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 10 sites, 6 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_ERR_INT_MASK_B at image offset 0x15f298 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.hubpi_spool_get_next]
 offset = 0x418
@@ -154,6 +199,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_ERR_STACK_ADDR_A at image offset 0x15f2b0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.hubpi_spool_get_next_420]
 offset = 0x420
@@ -161,6 +209,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_ERR_STACK_ADDR_B at image offset 0x15f2c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.hubpi_spool_get_next_430]
 offset = 0x430
@@ -224,6 +275,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 103 sites, 56 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_RT_COUNTER at image offset 0x15f538 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 # ---- registers
 [registers.reg_400110]
@@ -232,6 +286,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IOWA at image offset 0x15fa90 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_400128]
 offset = 0x400128
@@ -239,6 +296,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 1 routines"
+reset = 0x3fc03ff040a
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_ILCSR at image offset 0x15fad8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ii_llp_error_monitor]
 offset = 0x400130
@@ -246,6 +306,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_ILLR at image offset 0x15faf0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_3d1d8]
 offset = 0x4001f8
@@ -253,6 +316,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 4 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IECLR at image offset 0x15fd48 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 # ---- NETWORK_INTERFACE_LIKE: ports, router tables, a counter [I, routine-name prefixes]
 [registers.sub_1bcf0_600000]
@@ -261,6 +327,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 16 sites, 13 routines"
+reset = 0x23012049
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_REV_ID at image offset 0x161410 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_1bcf0_604020]
 offset = 0x604020
@@ -268,6 +337,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0xfffffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_REGION_PRESENT at image offset 0x161488 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_1bcf0_604028]
 offset = 0x604028
@@ -275,6 +347,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_NODES_ABSENT at image offset 0x1614a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_28e3c]
 offset = 0x604200
@@ -282,6 +357,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 67 sites, 36 routines"
+reset = 0x100000640
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_RT_LOCAL_CTRL at image offset 0x161578 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_608000]
 offset = 0x608000
@@ -289,6 +367,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0 at image offset 0x1615a8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_608008]
 offset = 0x608008
@@ -296,6 +377,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 17 sites, 5 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1 at image offset 0x1615c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_608010]
 offset = 0x608010
@@ -303,6 +387,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2 at image offset 0x1615d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_11984]
 offset = 0x680000
@@ -310,6 +397,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_STATUS at image offset 0x1606c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_10c0]
 offset = 0x680008
@@ -324,6 +414,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_RESET_ENABLE at image offset 0x1606f0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.sub_18a24]
 offset = 0x680108
@@ -345,6 +438,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_SIDEBAND at image offset 0x1607c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.ni_llp_error_monitor]
 offset = 0x680120
@@ -352,6 +448,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_PORT_ERROR_CLEAR at image offset 0x1607e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery]
 offset = 0x681000
@@ -359,6 +458,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_0 at image offset 0x1607f8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery_681008]
 offset = 0x681008
@@ -366,6 +468,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_1 at image offset 0x160840 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery_681010]
 offset = 0x681010
@@ -373,6 +478,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_2 at image offset 0x160858 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery_681018]
 offset = 0x681018
@@ -380,6 +488,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_LOCAL_TABLE_3 at image offset 0x160870 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery_682000]
 offset = 0x682000
@@ -387,6 +498,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry NI_GLOBAL_TABLE at image offset 0x160828 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.part_discovery_682008]
 offset = 0x682008
@@ -401,6 +515,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0xffffffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_CURRENT_CELL at image offset 0x15f5e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.mdir_xlate_addr_mem]
 offset = 0x780008
@@ -415,6 +532,9 @@ access = "w"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_PERF_CNT0 at image offset 0x15f700 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_7a0000]
 offset = 0x7a0000
@@ -422,6 +542,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x800
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_REFRESH_CONTROL at image offset 0x15f730 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_7a0008]
 offset = 0x7a0008
@@ -429,6 +552,9 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 2 sites, 1 routines"
+reset = 0xffffffffffff
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_JUNK_BUS_TIMING at image offset 0x15f748 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.doacvec]
 offset = 0x7a0038
@@ -436,6 +562,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_BIST_DATA at image offset 0x15f7d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_7c0018]
 offset = 0x7c0018
@@ -443,6 +572,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_DIR_ERROR_CLR at image offset 0x15f868 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.reg_7e0018]
 offset = 0x7e0018
@@ -450,6 +582,9 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry MD_MEM_ERROR_CLR at image offset 0x15f988 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 # ---- PROCESSOR_INTERFACE_ALIAS: second alias: dump and error routines [I, routine-name prefixes]
 [registers.intr_dumpvec]
@@ -1504,6 +1639,9 @@ width = 32
 grade = "established"
 from = "census: 2 sites, 2 routines"
 space = "bedrock_boot_space"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry PI_INT_PEND1 at image offset 0x15ef20 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 
 [registers.boot_space_cpuprom_detailed_inventory_info_add_a4]
 offset = 0xa4

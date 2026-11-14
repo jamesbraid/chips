@@ -9,7 +9,7 @@
 /*
  * CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. Access is assumed read and write.
  */
-/* pi_cpu_protect: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cpu_protect: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_CPU_PROTECT_OFFSET                    0x0u /* inferred */
 
 /*
@@ -21,13 +21,13 @@
 /*
  * Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. Access is assumed read and write.
  */
-/* pi_io_protect: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_io_protect: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_IO_PROTECT_OFFSET                     0x10u /* inferred */
 
 /*
  * Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. Access is assumed read and write.
  */
-/* pi_reply_level: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_reply_level: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_REPLY_LEVEL_OFFSET                    0x60u /* inferred */
 
 /*
@@ -57,25 +57,25 @@
 /*
  * Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. Access is assumed read and write.
  */
-/* pi_cc_pend_clr_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_clr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_CC_PEND_CLR_A_OFFSET                  0xd8u /* inferred */
 
 /*
  * Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. Access is assumed read and write.
  */
-/* pi_cc_pend_clr_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_clr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_CC_PEND_CLR_B_OFFSET                  0xe0u /* inferred */
 
 /*
  * Cross-call interrupt mask, named PI_CC_MASK in the header. Access is assumed read and write.
  */
-/* pi_cc_mask: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_mask: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_CC_MASK_OFFSET                        0xe8u /* inferred */
 
 /*
  * Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. Access is assumed read and write.
  */
-/* pi_rt_filter_ctrl: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_rt_filter_ctrl: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_RT_FILTER_CTRL_OFFSET                 0x168u /* inferred */
 
 /*
@@ -87,7 +87,7 @@
 /*
  * Built-in self-test read data, named PI_BIST_READ_DATA in the header. Access is assumed read only.
  */
-/* pi_bist_read_data: r64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_read_data: r64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_BIST_READ_DATA_OFFSET                 0x208u /* inferred */
 
 /*
@@ -99,7 +99,7 @@
 /*
  * Built-in self-test ready indicator, named PI_BIST_READY in the header. Access is assumed read only.
  */
-/* pi_bist_ready: r64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_ready: r64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_BIST_READY_OFFSET                     0x218u /* inferred */
 
 /*
@@ -123,7 +123,7 @@
 /*
  * Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. Access is assumed read and write.
  */
-/* pi_gfx_page_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_page_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_PAGE_A_OFFSET                     0x300u /* inferred */
 #define HUB_PI_GFX_PAGE_A_ENABLE_SHIFT               40 /* established */
 #define HUB_PI_GFX_PAGE_A_ENABLE_MASK                0x1ull
@@ -132,25 +132,25 @@
 /*
  * Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. Access is assumed read and write.
  */
-/* pi_gfx_credit_cntr_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_credit_cntr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_CREDIT_CNTR_A_OFFSET              0x308u /* inferred */
 
 /*
  * Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. Access is assumed read and write.
  */
-/* pi_gfx_bias_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_bias_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_BIAS_A_OFFSET                     0x310u /* inferred */
 
 /*
  * Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. Access is assumed read and write.
  */
-/* pi_gfx_int_cntr_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_int_cntr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_INT_CNTR_A_OFFSET                 0x318u /* inferred */
 
 /*
  * Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. Access is assumed read and write.
  */
-/* pi_gfx_page_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_page_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_PAGE_B_OFFSET                     0x328u /* inferred */
 #define HUB_PI_GFX_PAGE_B_ENABLE_SHIFT               40 /* established */
 #define HUB_PI_GFX_PAGE_B_ENABLE_MASK                0x1ull
@@ -159,19 +159,19 @@
 /*
  * Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. Access is assumed read and write.
  */
-/* pi_gfx_credit_cntr_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_credit_cntr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_CREDIT_CNTR_B_OFFSET              0x330u /* inferred */
 
 /*
  * Graphics bias for processor B, named PI_GFX_BIAS_B in the header. Access is assumed read and write.
  */
-/* pi_gfx_bias_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_bias_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_BIAS_B_OFFSET                     0x338u /* inferred */
 
 /*
  * Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. Access is assumed read and write.
  */
-/* pi_gfx_int_cntr_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_int_cntr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_GFX_INT_CNTR_B_OFFSET                 0x340u /* inferred */
 
 /*
@@ -213,7 +213,7 @@
 /*
  * Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. Access is assumed read and write.
  */
-/* pi_sysad_errchk_en: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_sysad_errchk_en: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_SYSAD_ERRCHK_EN_OFFSET                0x490u /* inferred */
 #define HUB_PI_SYSAD_ERRCHK_EN_QUAL_SHIFT            5 /* established */
 #define HUB_PI_SYSAD_ERRCHK_EN_QUAL_MASK             0x1ull
@@ -237,19 +237,19 @@
 /*
  * Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. Access is assumed read and write.
  */
-/* pi_bad_check_bit_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bad_check_bit_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_BAD_CHECK_BIT_A_OFFSET                0x498u /* inferred */
 
 /*
  * Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. Access is assumed read and write.
  */
-/* pi_bad_check_bit_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bad_check_bit_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_BAD_CHECK_BIT_B_OFFSET                0x4a0u /* inferred */
 
 /*
  * Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. Access is assumed read and write.
  */
-/* pi_nack_cnt_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cnt_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_NACK_CNT_A_OFFSET                     0x4a8u /* inferred */
 #define HUB_PI_NACK_CNT_A_ENABLE_SHIFT               20 /* established */
 #define HUB_PI_NACK_CNT_A_ENABLE_MASK                0x1ull
@@ -261,7 +261,7 @@
 /*
  * Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. Access is assumed read and write.
  */
-/* pi_nack_cnt_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cnt_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_NACK_CNT_B_OFFSET                     0x4b0u /* inferred */
 #define HUB_PI_NACK_CNT_B_ENABLE_SHIFT               20 /* established */
 #define HUB_PI_NACK_CNT_B_ENABLE_MASK                0x1ull
@@ -273,7 +273,7 @@
 /*
  * Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. Access is assumed read and write.
  */
-/* pi_nack_cmp: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cmp: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_NACK_CMP_OFFSET                       0x4b8u /* inferred */
 
 /*
