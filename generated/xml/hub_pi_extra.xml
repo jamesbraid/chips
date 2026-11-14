@@ -1,109 +1,109 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_pi_extra" prefix="HUB" title="Hub processor interface registers, bit layouts and constants outside the census" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
-  <struct name="PI_CPU_PROTECT" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x0" access="rw" reset="0xffffffffffffffff">
-    <doc>CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. Access is assumed read and write.</doc>
+  <struct name="PI_CPU_PROTECT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x0" access="rw" reset="0xffffffffffffffff">
+    <doc>CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_PROT_OVERRIDE" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x8" access="w" reset="unknown">
-    <doc>Protection override register, named PI_PROT_OVRRD in the header as the way to clear a CPU protection bit. The header gives neither an unlock value nor a behaviour, so none is imported. Access is assumed write only.</doc>
+  <struct name="PI_PROT_OVERRIDE" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x8" access="w" reset="unknown">
+    <doc>Protection override register, named PI_PROT_OVRRD in the header as the way to clear a CPU protection bit. The header gives neither an unlock value nor a behaviour, so none is imported. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_IO_PROTECT" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x10" access="rw" reset="0x0">
-    <doc>Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. Access is assumed read and write.</doc>
+  <struct name="PI_IO_PROTECT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x10" access="rw" reset="0x0">
+    <doc>Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_REPLY_LEVEL" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x60" access="rw" reset="0x0">
-    <doc>Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. Access is assumed read and write.</doc>
+  <struct name="PI_REPLY_LEVEL" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x60" access="rw" reset="0x0">
+    <doc>Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_NMI_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x78" access="w" reset="unknown">
-    <doc>Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired with the processor A register at the same stride. Access is assumed write only, as for the processor A register in devices/hub/registers.toml.</doc>
+  <struct name="PI_NMI_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x78" access="w" reset="unknown">
+    <doc>Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired with the processor A register at the same stride. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_SOFTRESET" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x80" access="w" reset="unknown">
-    <doc>Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. Access is assumed write only.</doc>
+  <struct name="PI_SOFTRESET" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x80" access="w" reset="unknown">
+    <doc>Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CC_PEND_SET_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xc8" access="w" reset="unknown">
-    <doc>Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. Access is assumed write only.</doc>
+  <struct name="PI_CC_PEND_SET_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xc8" access="w" reset="unknown">
+    <doc>Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CC_PEND_SET_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xd0" access="w" reset="unknown">
-    <doc>Cross-call interrupt pending set for processor B, named PI_CC_PEND_SET_B in the header. The header's pairing rule puts it eight bytes above the processor A set. Access is assumed write only.</doc>
+  <struct name="PI_CC_PEND_SET_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xd0" access="w" reset="unknown">
+    <doc>Cross-call interrupt pending set for processor B, named PI_CC_PEND_SET_B in the header. The header's pairing rule puts it eight bytes above the processor A set. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CC_PEND_CLR_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xd8" access="rw" reset="0x0">
-    <doc>Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. Access is assumed read and write.</doc>
+  <struct name="PI_CC_PEND_CLR_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xd8" access="rw" reset="0x0">
+    <doc>Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CC_PEND_CLR_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xe0" access="rw" reset="0x0">
-    <doc>Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_CC_PEND_CLR_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xe0" access="rw" reset="0x0">
+    <doc>Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CC_MASK" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xe8" access="rw" reset="0x0">
-    <doc>Cross-call interrupt mask, named PI_CC_MASK in the header. Access is assumed read and write.</doc>
+  <struct name="PI_CC_MASK" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xe8" access="rw" reset="0x0">
+    <doc>Cross-call interrupt mask, named PI_CC_MASK in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_RT_FILTER_CTRL" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x168" access="rw" reset="0x0">
-    <doc>Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. Access is assumed read and write.</doc>
+  <struct name="PI_RT_FILTER_CTRL" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x168" access="rw" reset="0x0">
+    <doc>Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_WRITE_DATA" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x200" access="w" reset="unknown">
-    <doc>Built-in self-test write data, named PI_BIST_WRITE_DATA in the header. Access is assumed write only.</doc>
+  <struct name="PI_BIST_WRITE_DATA" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x200" access="w" reset="unknown">
+    <doc>Built-in self-test write data, named PI_BIST_WRITE_DATA in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_READ_DATA" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x208" access="r" reset="0x0">
-    <doc>Built-in self-test read data, named PI_BIST_READ_DATA in the header. Access is assumed read only.</doc>
+  <struct name="PI_BIST_READ_DATA" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x208" access="r" reset="0x0">
+    <doc>Built-in self-test read data, named PI_BIST_READ_DATA in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_COUNT_TARG" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x210" access="rw" reset="unknown">
-    <doc>Built-in self-test count and target, named PI_BIST_COUNT_TARG in the header. Access is assumed read and write.</doc>
+  <struct name="PI_BIST_COUNT_TARG" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x210" access="w" reset="unknown">
+    <doc>Built-in self-test count and target, named PI_BIST_COUNT_TARG in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.</doc>
   </struct>
-  <struct name="PI_BIST_READY" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x218" access="r" reset="0x0">
-    <doc>Built-in self-test ready indicator, named PI_BIST_READY in the header. Access is assumed read only.</doc>
+  <struct name="PI_BIST_READY" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x218" access="r" reset="0x0">
+    <doc>Built-in self-test ready indicator, named PI_BIST_READY in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_SHIFT_LOAD" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x220" access="w" reset="unknown">
-    <doc>Built-in self-test control, named PI_BIST_SHIFT_LOAD in the header. Access is assumed write only.</doc>
+  <struct name="PI_BIST_SHIFT_LOAD" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x220" access="w" reset="unknown">
+    <doc>Built-in self-test control, named PI_BIST_SHIFT_LOAD in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_SHIFT_UNLOAD" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x228" access="w" reset="unknown">
-    <doc>Built-in self-test control, named PI_BIST_SHIFT_UNLOAD in the header. Access is assumed write only.</doc>
+  <struct name="PI_BIST_SHIFT_UNLOAD" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x228" access="w" reset="unknown">
+    <doc>Built-in self-test control, named PI_BIST_SHIFT_UNLOAD in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BIST_ENTER_RUN" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x230" access="w" reset="unknown">
-    <doc>Built-in self-test control, named PI_BIST_ENTER_RUN in the header. Access is assumed write only.</doc>
+  <struct name="PI_BIST_ENTER_RUN" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x230" access="w" reset="unknown">
+    <doc>Built-in self-test control, named PI_BIST_ENTER_RUN in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_PAGE_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x300" access="rw" reset="0x0">
-    <doc>Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_PAGE_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x300" access="rw" reset="0x0">
+    <doc>Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. The IRIX register table confirms the access.</doc>
     <field name="enable" start="40" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="PI_GFX_CREDIT_CNTR_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x308" access="rw" reset="0x0">
-    <doc>Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_CREDIT_CNTR_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x308" access="rw" reset="0x0">
+    <doc>Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_BIAS_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x310" access="rw" reset="0x0">
-    <doc>Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_BIAS_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x310" access="rw" reset="0x0">
+    <doc>Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_INT_CNTR_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x318" access="rw" reset="0x0">
-    <doc>Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_INT_CNTR_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x318" access="rw" reset="0x0">
+    <doc>Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_PAGE_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x328" access="rw" reset="0x0">
-    <doc>Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_PAGE_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x328" access="rw" reset="0x0">
+    <doc>Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. The IRIX register table confirms the access.</doc>
     <field name="enable" start="40" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="PI_GFX_CREDIT_CNTR_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x330" access="rw" reset="0x0">
-    <doc>Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_CREDIT_CNTR_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x330" access="rw" reset="0x0">
+    <doc>Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_BIAS_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x338" access="rw" reset="0x0">
-    <doc>Graphics bias for processor B, named PI_GFX_BIAS_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_BIAS_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x338" access="rw" reset="0x0">
+    <doc>Graphics bias for processor B, named PI_GFX_BIAS_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_GFX_INT_CNTR_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x340" access="rw" reset="0x0">
-    <doc>Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_GFX_INT_CNTR_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x340" access="rw" reset="0x0">
+    <doc>Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_ERR_STATUS0_A_RCLR" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x438" access="r" reset="unknown">
-    <doc>Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. Access is assumed read only.</doc>
+  <struct name="PI_ERR_STATUS0_A_RCLR" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x438" access="r" reset="unknown">
+    <doc>Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_ERR_STATUS0_B_RCLR" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x458" access="r" reset="unknown">
-    <doc>Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. Access is assumed read only.</doc>
+  <struct name="PI_ERR_STATUS0_B_RCLR" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x458" access="r" reset="unknown">
+    <doc>Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_SPOOL_CMP_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x470" access="rw" reset="unknown">
-    <doc>Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. Access is assumed read and write. The header gives no field layout.</doc>
+  <struct name="PI_SPOOL_CMP_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x470" access="rw" reset="unknown">
+    <doc>Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. The header gives no field layout. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_SPOOL_CMP_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x478" access="rw" reset="unknown">
-    <doc>Error spool compare for processor B, named PI_SPOOL_CMP_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_SPOOL_CMP_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x478" access="rw" reset="unknown">
+    <doc>Error spool compare for processor B, named PI_SPOOL_CMP_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_CRB_TIMEOUT_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x480" access="rw" reset="unknown">
-    <doc>Timed-out CRB entries for processor A, named PI_CRB_TIMEOUT_A in the header. The header gives no field layout. Access is assumed read and write.</doc>
+  <struct name="PI_CRB_TIMEOUT_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x480" access="w" reset="unknown">
+    <doc>Timed-out CRB entries for processor A, named PI_CRB_TIMEOUT_A in the header. The header gives no field layout. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.</doc>
   </struct>
-  <struct name="PI_CRB_TIMEOUT_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x488" access="rw" reset="unknown">
-    <doc>Timed-out CRB entries for processor B, named PI_CRB_TIMEOUT_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_CRB_TIMEOUT_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x488" access="w" reset="unknown">
+    <doc>Timed-out CRB entries for processor B, named PI_CRB_TIMEOUT_B in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.</doc>
   </struct>
-  <struct name="PI_SYSAD_ERRCHK_EN" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x490" access="rw" reset="0x0">
-    <doc>Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. Access is assumed read and write.</doc>
+  <struct name="PI_SYSAD_ERRCHK_EN" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x490" access="rw" reset="0x0">
+    <doc>Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. The IRIX register table confirms the access.</doc>
     <field name="qual" start="5" size="1" type="uint" grade="established"/>
     <field name="state" start="4" size="1" type="uint" grade="established"/>
     <field name="cmdp" start="3" size="1" type="uint" grade="established"/>
@@ -111,24 +111,24 @@
     <field name="qualgen" start="1" size="1" type="uint" grade="established"/>
     <field name="eccgen" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="PI_BAD_CHECK_BIT_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x498" access="rw" reset="0x0">
-    <doc>Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. Access is assumed read and write.</doc>
+  <struct name="PI_BAD_CHECK_BIT_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x498" access="rw" reset="0x0">
+    <doc>Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_BAD_CHECK_BIT_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4a0" access="rw" reset="0x0">
-    <doc>Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_BAD_CHECK_BIT_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4a0" access="rw" reset="0x0">
+    <doc>Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="PI_NACK_CNT_A" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4a8" access="rw" reset="0x0">
-    <doc>Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. Access is assumed read and write.</doc>
+  <struct name="PI_NACK_CNT_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4a8" access="rw" reset="0x0">
+    <doc>Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. The IRIX register table confirms the access.</doc>
     <field name="enable" start="20" size="1" type="uint" grade="established"/>
     <field name="count" start="0" size="20" type="uint" grade="established"/>
   </struct>
-  <struct name="PI_NACK_CNT_B" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b0" access="rw" reset="0x0">
-    <doc>Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. Access is assumed read and write.</doc>
+  <struct name="PI_NACK_CNT_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b0" access="rw" reset="0x0">
+    <doc>Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. The IRIX register table confirms the access.</doc>
     <field name="enable" start="20" size="1" type="uint" grade="established"/>
     <field name="count" start="0" size="20" type="uint" grade="established"/>
   </struct>
-  <struct name="PI_NACK_CMP" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b8" access="rw" reset="0x0">
-    <doc>Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. Access is assumed read and write.</doc>
+  <struct name="PI_NACK_CMP" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b8" access="rw" reset="0x0">
+    <doc>Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="PI_INT_PEND_MOD_FORMAT" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
     <doc>Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.</doc>

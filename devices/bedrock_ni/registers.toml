@@ -23,8 +23,8 @@ doc = "Link-level protocol status. The header calls bit 1 link up and bit 2 remo
 
 [registers.port_status.fields]
 status_bit0 = { bits = [0, 0], grade = "unknown", doc = "Low bit of the two-bit port status. The header gives no meaning for it." }
-link_up = { bits = [1, 1], grade = "inferred", doc = "Named link up by the header. The meaning rests on the name alone." }
-remote_power = { bits = [2, 2], grade = "inferred", doc = "Named remote power by the header. The meaning rests on the name alone." }
+link_up = { bits = [1, 1], grade = "inferred", doc = "Named link up by the Linux header. The meaning rests on the name alone. The IRIX source header, which describes an earlier layout, names the first register of this block as a status and revision word with a two-bit port status at bits 29:28, so it does not confirm these bits." }
+remote_power = { bits = [2, 2], grade = "inferred", doc = "Named remote power by the Linux header. The meaning rests on the name alone. The IRIX source header does not confirm it; see link_up." }
 
 [registers.port_reset]
 offset = 0x680008

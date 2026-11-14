@@ -14,34 +14,34 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `widget_id` | 0x400000 | r | 64 |  |  | 0x1c110049 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `widget_control` | 0x400020 | rw | 64 |  |  | 0x4011 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) |
+| `widget_control` | 0x400020 | rw | 64 |  |  | 0x4011 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `local_access_protection` | 0x400100 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `protection_override` | 0x400108 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `outbound_widget_access` | 0x400110 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `inbound_widget_access` | 0x400118 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `inbound_device_error_mask` | 0x400120 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `link_control` | 0x400128 | rw | 64 |  |  | 0x3fc03ff040a (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `llp_log` | 0x400130 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) |
+| `llp_log` | 0x400130 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `interrupt_destination` | 0x400138 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `graphics_map` | 0x400140 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) |
-| `scratch` | 0x400150 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) |
-| `translation_table_entry` | 0x400160 | rw | 64 | 7 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) |
+| `graphics_map` | 0x400140 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `scratch` | 0x400150 | rw | 64 | 2 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `translation_table_entry` | 0x400160 | rw | 64 | 7 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `pio_request_buffer_w0` | 0x400198 | rw | 64 |  |  | 0xf (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `pio_request_buffer_w8` | 0x4001a0 | rw | 64 | 8 |  | 0xf (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `credit_count_timeout` | 0x4001e0 | rw | 64 |  |  | 0x3ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) |
+| `credit_count_timeout` | 0x4001e0 | rw | 64 |  |  | 0x3ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `misc_error_mask` | 0x4001e8 | rw | 64 |  |  | 0x111 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `crosstalk_timeout_threshold` | 0x4001f0 | rw | 64 |  |  | 0xfffffff03ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) |
+| `crosstalk_timeout_threshold` | 0x4001f0 | rw | 64 |  |  | 0xfffffff03ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `error_clear` | 0x4001f8 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_global_control` | 0x400200 | rw | 64 |  |  | 0x8 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) |
 | `pio_read_address` | 0x400308 | rw | 64 | 8 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_management` | 0x4003a8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_control` | 0x4003b0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `crb_timeout` | 0x4003b8 | rw | 64 |  |  | 0xff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) |
-| `crb_timeout_prescaler` | 0x4003c0 | rw | 64 |  |  | 0xffffff (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) |
-| `crb_a` | 0x400400 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_b` | 0x400408 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_c` | 0x400410 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: offsets and stride only |
-| `crb_d` | 0x400418 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) |
+| `crb_timeout` | 0x4003b8 | rw | 64 |  |  | 0xff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_timeout_prescaler` | 0x4003c0 | rw | 64 |  |  | 0xffffff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_a` | 0x400400 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_b` | 0x400408 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_c` | 0x400410 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_d` | 0x400418 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_length_status` | 0x410000 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_source` | 0x410008 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_destination` | 0x410010 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
@@ -117,7 +117,7 @@ Link control and status. Both public Linux ports read bit 13 and skip the node's
 | 41:32 | `max_burst` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 27:26 | `data_available_select` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 25:16 | `max_retry` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
-| 14 | `remote_power` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named by the header only; no text describes it. |
+| 14 | `remote_power` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named by the Linux header only; no text describes it. The IRIX source header, which describes an earlier layout of this register, marks bits 15:14 reserved, so it does not confirm the bit. |
 | 13:12 | `link_status` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Bit 13 is link up. The meaning of the two-bit field's other values is unknown. |
 | 11 | `eight_bit_mode` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 10 | `link_enable` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
@@ -136,8 +136,8 @@ Destination of every II-detected non-BTE error interrupt. The header's struct pu
 |---|---|---|---|---|---|
 | 33 | `forwarded_pi1` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Forwarded-interrupt pending for PI1. |
 | 32 | `forwarded_pi0` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Forwarded-interrupt pending for PI0. |
-| 28 | `sent` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Cleared by the Itanium handler and by its error clear. The meaning is inferred. |
-| 24 | `enable` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Set at init by the Itanium consumer. The meaning is inferred from its name. |
+| 28 | `sent` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Cleared by the Itanium handler and by its error clear. The meaning is inferred. The IRIX source header places an interrupt-sent field at the same bit and gives it no description. |
+| 24 | `enable` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Set at init by the Itanium consumer. The meaning is inferred from its name. The IRIX source header places a field of this name at the same bit and gives it no description. |
 | 16:9 | `node` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 8 | `pi_select` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 6:0 | `level` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |

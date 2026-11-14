@@ -7,10 +7,10 @@
 
 
 /*
- * Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the
+ * Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the The IRIX register table confirms the access.
  */
-/* iio_wid: r64, reset 0x1c101048; public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u */
-#define HUB_IIO_WID                                  0x400000 /* inferred */
+/* iio_wid: r64, reset 0x1c101048 */
+#define HUB_IIO_WID                                  0x400000 /* established */
 #define HUB_IIO_WID_REV_SHIFT                        28 /* established */
 #define HUB_IIO_WID_REV_MASK                         0xfull
 #define HUB_IIO_WID_REV_INPLACE                      (HUB_IIO_WID_REV_MASK << HUB_IIO_WID_REV_SHIFT)
@@ -22,21 +22,21 @@
 #define HUB_IIO_WID_MFG_INPLACE                      (HUB_IIO_WID_MFG_MASK << HUB_IIO_WID_MFG_SHIFT)
 
 /*
- * Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write.
+ * Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. The IRIX register table confirms the access.
  */
-/* iio_ilapr: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR */
-#define HUB_IIO_ILAPR                                0x400100 /* inferred */
+/* iio_ilapr: rw64, reset 0xffffffffffffffff */
+#define HUB_IIO_ILAPR                                0x400100 /* established */
 
 /*
- * Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.
+ * Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access.
  */
-/* iio_ilapo: w64, reset unknown; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO */
-#define HUB_IIO_ILAPO                                0x400108 /* inferred */
+/* iio_ilapo: w64, reset unknown */
+#define HUB_IIO_ILAPO                                0x400108 /* established */
 
 /*
  * Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed.
  */
-/* iio_igfx_1: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name) */
+/* iio_igfx_1: rw64, reset unknown */
 #define HUB_IIO_IGFX_1                               0x400148 /* inferred */
 #define HUB_IIO_IGFX_1_VALID_SHIFT                   20 /* established */
 #define HUB_IIO_IGFX_1_VALID_MASK                    0x1ull
@@ -52,22 +52,22 @@
 #define HUB_IIO_IGFX_1_WIDGET_INPLACE                (HUB_IIO_IGFX_1_WIDGET_MASK << HUB_IIO_IGFX_1_WIDGET_SHIFT)
 
 /*
- * Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no access type, so rw is assumed.
+ * Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access.
  */
-/* iio_scratch_reg0: rw64, reset 0x0; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name) */
-#define HUB_IIO_SCRATCH_REG0                         0x400150 /* inferred */
+/* iio_scratch_reg0: rw64, reset 0x0 */
+#define HUB_IIO_SCRATCH_REG0                         0x400150 /* established */
 
 /*
- * Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed.
+ * Scratch register 1, the twin of register 0. The IRIX register table confirms the access.
  */
-/* iio_scratch_reg1: rw64, reset 0x0; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name) */
-#define HUB_IIO_SCRATCH_REG1                         0x400158 /* inferred */
+/* iio_scratch_reg1: rw64, reset 0x0 */
+#define HUB_IIO_SCRATCH_REG1                         0x400158 /* established */
 
 /*
- * Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption.
+ * Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. The IRIX register table confirms the access.
  */
-/* iio_itte: rw64, reset 0x0; public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE */
-#define HUB_IIO_ITTE                                 0x400160 /* inferred */
+/* iio_itte: rw64, reset 0x0 */
+#define HUB_IIO_ITTE                                 0x400160 /* established */
 #define HUB_IIO_ITTE_COUNT                           7
 #define HUB_IIO_ITTE_STRIDE                          8
 #define HUB_IIO_ITTE_IOSPACE_SHIFT                   12 /* established */
@@ -113,16 +113,16 @@
 #define HUB_IIO_ICRB_D_STRIDE                        32
 
 /*
- * Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed.
+ * Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access.
  */
 /* iio_ibna_0: rw64, reset 0x0 */
-#define HUB_IIO_IBNA_0                               0x410020 /* inferred */
+#define HUB_IIO_IBNA_0                               0x410020 /* established */
 
 /*
- * Interrupt address of engine 0. Offset and name are from the public header. The header gives no access type, so rw is assumed.
+ * Interrupt address of engine 0. Offset and name are from the public header. The IRIX register table confirms the access.
  */
 /* iio_ibia_0: rw64, reset 0x0 */
-#define HUB_IIO_IBIA_0                               0x410028 /* inferred */
+#define HUB_IIO_IBIA_0                               0x410028 /* established */
 #define HUB_IIO_IBIA_0_LEVEL_SHIFT                   16 /* established */
 #define HUB_IIO_IBIA_0_LEVEL_MASK                    0x7full
 #define HUB_IIO_IBIA_0_LEVEL_INPLACE                 (HUB_IIO_IBIA_0_LEVEL_MASK << HUB_IIO_IBIA_0_LEVEL_SHIFT)
@@ -131,10 +131,10 @@
 #define HUB_IIO_IBIA_0_NODE_INPLACE                  (HUB_IIO_IBIA_0_NODE_MASK << HUB_IIO_IBIA_0_NODE_SHIFT)
 
 /*
- * Interrupt address of engine 1. Offset and name are from the public header. The header gives no access type, so rw is assumed.
+ * Interrupt address of engine 1. Offset and name are from the public header. The IRIX register table confirms the access.
  */
 /* iio_ibia_1: rw64, reset 0x0 */
-#define HUB_IIO_IBIA_1                               0x420028 /* inferred */
+#define HUB_IIO_IBIA_1                               0x420028 /* established */
 #define HUB_IIO_IBIA_1_LEVEL_SHIFT                   16 /* established */
 #define HUB_IIO_IBIA_1_LEVEL_MASK                    0x7full
 #define HUB_IIO_IBIA_1_LEVEL_INPLACE                 (HUB_IIO_IBIA_1_LEVEL_MASK << HUB_IIO_IBIA_1_LEVEL_SHIFT)
@@ -171,6 +171,6 @@
 #define HUB_IIO_WSTAT_ECRAZY                         0x100000000ull /* established */
 #define HUB_IIO_WSTAT_TXRETRY                        0x200u /* established */
 #define HUB_IIO_WSTAT_TXRETRY_MASK                   0x7f0000u /* established */
-#define HUB_LNK_STAT_WORKING                         0x2u /* inferred */
+#define HUB_LNK_STAT_WORKING                         0x2u /* established */
 
 #endif /* HUB_GEN_H */

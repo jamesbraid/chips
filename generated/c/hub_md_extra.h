@@ -7,39 +7,39 @@
 
 
 /*
- * Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The header gives no access type, so rw is assumed.
+ * Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.
  */
-/* md_mem_dimm_init: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name) */
-#define HUB_MD_MEM_DIMM_INIT_OFFSET                  0x200090u /* inferred */
+/* md_mem_dimm_init: w64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
+#define HUB_MD_MEM_DIMM_INIT_OFFSET                  0x200090u /* established */
 
 /*
- * Directory DIMM mode initialisation. Same layout as the memory register. The header gives no access type, so rw is assumed.
+ * Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.
  */
-/* md_dir_dimm_init: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name) */
-#define HUB_MD_DIR_DIMM_INIT_OFFSET                  0x200098u /* inferred */
+/* md_dir_dimm_init: w64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
+#define HUB_MD_DIR_DIMM_INIT_OFFSET                  0x200098u /* established */
 
 /*
- * Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred.
+ * Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred. The IRIX register table confirms the access.
  */
-/* md_led1: w64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor) */
-#define HUB_MD_LED1_OFFSET                           0x220058u /* inferred */
+/* md_led1: w64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
+#define HUB_MD_LED1_OFFSET                           0x220058u /* established */
 
 /*
- * Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+ * Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access.
  */
-/* md_ureg1_1: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) */
-#define HUB_MD_UREG1_1_OFFSET                        0x220088u /* inferred */
+/* md_ureg1_1: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
+#define HUB_MD_UREG1_1_OFFSET                        0x220088u /* established */
 
 /*
  * Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_2: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name) */
+/* md_ureg1_2: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_2_OFFSET                        0x220090u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_3: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name) */
+/* md_ureg1_3: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_3_OFFSET                        0x220098u /* inferred */
 
 /*
@@ -51,68 +51,68 @@
 /*
  * Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_5: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name) */
+/* md_ureg1_5: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_5_OFFSET                        0x2200a8u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_6: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_6 (offset and name) */
+/* md_ureg1_6: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_6_OFFSET                        0x2200b0u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_7: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_7 (offset and name) */
+/* md_ureg1_7: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_7_OFFSET                        0x2200b8u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_8: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_8 (offset and name) */
+/* md_ureg1_8: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_8_OFFSET                        0x2200c0u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_9: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_9 (offset and name) */
+/* md_ureg1_9: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_9_OFFSET                        0x2200c8u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_10: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_10 (offset and name) */
+/* md_ureg1_10: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_10_OFFSET                       0x2200d0u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_11: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_11 (offset and name) */
+/* md_ureg1_11: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_11_OFFSET                       0x2200d8u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_12: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_12 (offset and name) */
+/* md_ureg1_12: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_12_OFFSET                       0x2200e0u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_13: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_13 (offset and name) */
+/* md_ureg1_13: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_13_OFFSET                       0x2200e8u /* inferred */
 
 /*
  * Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed.
  */
-/* md_ureg1_14: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name) */
+/* md_ureg1_14: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_14_OFFSET                       0x2200f0u /* inferred */
 
 /*
- * Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+ * Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access.
  */
-/* md_ureg1_15: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name) */
-#define HUB_MD_UREG1_15_OFFSET                       0x2200f8u /* inferred */
+/* md_ureg1_15: rw64, reset 0x0; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
+#define HUB_MD_UREG1_15_OFFSET                       0x2200f8u /* established */
 
 /*
  * Layout of the memory and directory DIMM mode initialisation registers. Both registers share this layout.
@@ -440,16 +440,16 @@
 #define HUB_HUB_MD_DIR_SHARED                        0x0u /* established */
 #define HUB_HUB_MD_DIR_UNOWNED                       0x7u /* established */
 #define HUB_HUB_MD_DIR_WAIT                          0x5u /* established */
-#define HUB_HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS      0x1e7fbc3fffffffull /* inferred */
+#define HUB_HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS      0x1e7fbc3fffffffull /* established */
 #define HUB_HUB_MD_MEM_BANKS_M_MODE                  0x8u /* established */
 #define HUB_HUB_MD_MEM_BANKS_N_MODE                  0x4u /* established */
 #define HUB_HUB_MD_MLAN_CTL_ACCESS_BYTES             0x8u /* established */
-#define HUB_HUB_MD_MLAN_CTL_RESET_DEFAULTS           0x18b100000ull /* inferred */
-#define HUB_HUB_MD_MOQ_SIZE_RESET_DEFAULTS           0x3212u /* inferred */
+#define HUB_HUB_MD_MLAN_CTL_RESET_DEFAULTS           0x18b100000ull /* established */
+#define HUB_HUB_MD_MOQ_SIZE_RESET_DEFAULTS           0x3212u /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_PREMIUM         0x7ffffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_STANDARD        0x7ffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_SHIFT                0x5u /* established */
-#define HUB_HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS    0x400u /* inferred */
+#define HUB_HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS    0x400u /* established */
 #define HUB_HUB_MD_SIZE_128MB                        0x5u /* established */
 #define HUB_HUB_MD_SIZE_16MB                         0x2u /* established */
 #define HUB_HUB_MD_SIZE_1GB                          0x8u /* established */

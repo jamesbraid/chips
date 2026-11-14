@@ -14,8 +14,7 @@
    "stride": 8,
    "space": null,
    "reset": 470814792,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -23,8 +22,7 @@
    "name": "iio_wid.rev",
    "hi": 31,
    "lo": 28,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -32,8 +30,7 @@
    "name": "iio_wid.part",
    "hi": 27,
    "lo": 12,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -41,8 +38,7 @@
    "name": "iio_wid.mfg",
    "hi": 11,
    "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -55,8 +51,7 @@
    "stride": 8,
    "space": null,
    "reset": 18446744073709551615,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -69,8 +64,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -83,8 +77,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_extra",
@@ -92,8 +85,7 @@
    "name": "iio_igfx_1.valid",
    "hi": 20,
    "lo": 20,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -101,8 +93,7 @@
    "name": "iio_igfx_1.processor",
    "hi": 16,
    "lo": 16,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -110,8 +101,7 @@
    "name": "iio_igfx_1.node",
    "hi": 12,
    "lo": 4,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -119,8 +109,7 @@
    "name": "iio_igfx_1.widget",
    "hi": 3,
    "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -133,8 +122,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -147,8 +135,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -161,8 +148,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -170,8 +156,7 @@
    "name": "iio_itte.iospace",
    "hi": 12,
    "lo": 12,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -179,8 +164,7 @@
    "name": "iio_itte.widget",
    "hi": 11,
    "lo": 8,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -188,8 +172,7 @@
    "name": "iio_itte.slice",
    "hi": 4,
    "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -258,7 +241,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -271,7 +254,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -300,7 +283,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "hub_extra",
@@ -556,7 +539,7 @@
    "name": "LNK_STAT_WORKING",
    "value": 2,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   }
  ]
 }

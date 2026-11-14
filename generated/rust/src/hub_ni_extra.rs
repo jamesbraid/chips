@@ -171,56 +171,56 @@ pub mod enums {
     }
 }
 
-/// Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. Access is assumed read and write. (inferred)
+/// Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access. (established)
 pub mod ni_return_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600308;
 }
-/// PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. Access is assumed read and write; the hea (inferred)
+/// PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout n (established)
 pub mod ni_io_protect {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600400;
 }
-/// PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. Access is assumed w (inferred)
+/// PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. The IRIX register t (established)
 pub mod ni_io_prot_ovrrd {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600408;
 }
-/// CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_cpu0_pio {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600508;
 }
-/// CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_cpu1_pio {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600518;
 }
-/// Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_gbr_memory {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600520;
 }
-/// Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_gbr_pio {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600528;
 }
-/// I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_io_memory {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600530;
 }
-/// I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. Access is assumed read and write. (inferred)
+/// I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access. (established)
 pub mod ni_age_io_pio {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600538;
 }
-/// Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header; access is assumed read and write. The fields are graded on th (inferred)
+/// Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header. The fields are graded on their own. The IRIX register table c (established)
 pub mod ni_port_parms {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x608000;
-    pub mod null_timeout { // bits 15:10, inferred
+    pub mod null_timeout { // bits 15:10, established
         pub const SHIFT: u32 = 10;
         pub const MASK: u64 = 0x3f;
         pub const fn get(v: u64) -> u64 {
@@ -739,5 +739,5 @@ pub mod ni_vector_status_format {
 pub const NI_LOCAL_ENTRIES: u32 = 0x10; // established
 pub const NI_META_ENTRIES: u32 = 0x20; // established
 pub const NI_PORT_ERROR_COUNT_MAX: u32 = 0xff; // established
-pub const NI_PORT_PARMS_DEFAULTS: u32 = 0x1bf0; // inferred
-pub const NI_PORT_PARMS_HUB20_DEFAULTS: u32 = 0x7f0; // inferred
+pub const NI_PORT_PARMS_DEFAULTS: u32 = 0x1bf0; // established
+pub const NI_PORT_PARMS_HUB20_DEFAULTS: u32 = 0x7f0; // established

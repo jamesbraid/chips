@@ -8,7 +8,7 @@
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="WIDGET_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)" register="yes" offset="0x400020" access="rw" reset="0x4011">
+  <struct name="WIDGET_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400020" access="rw" reset="0x4011">
     <doc>Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400100" access="rw" reset="0xfffffffffffffff">
@@ -51,7 +51,7 @@
     <field name="warm_reset" start="8" size="1" type="uint" grade="established"/>
     <field name="null_timeout" start="0" size="6" type="uint" grade="established"/>
   </struct>
-  <struct name="LLP_LOG" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)" register="yes" offset="0x400130" access="rw" reset="0x0">
+  <struct name="LLP_LOG" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400130" access="rw" reset="0x0">
     <doc>IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="INTERRUPT_DESTINATION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400138" access="rw" reset="0x0">
@@ -64,13 +64,13 @@
     <field name="pi_select" start="8" size="1" type="uint" grade="established"/>
     <field name="level" start="0" size="7" type="uint" grade="established"/>
   </struct>
-  <struct name="GRAPHICS_MAP" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)" register="yes" offset="0x400140" access="rw" count="2" stride="8" reset="0x0">
+  <struct name="GRAPHICS_MAP" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400140" access="rw" count="2" stride="8" reset="0x0">
     <doc>IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="SCRATCH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)" register="yes" offset="0x400150" access="rw" count="2" stride="8" reset="0x0">
+  <struct name="SCRATCH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400150" access="rw" count="2" stride="8" reset="0x0">
     <doc>IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="TRANSLATION_TABLE_ENTRY" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
+  <struct name="TRANSLATION_TABLE_ENTRY" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
     <doc>IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="PIO_REQUEST_BUFFER_W0" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400198" access="rw" reset="0xf">
@@ -101,7 +101,7 @@
     <field name="nack_counter_a" start="8" size="14" type="uint" grade="established"/>
     <field name="credits" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="CREDIT_COUNT_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)" register="yes" offset="0x4001e0" access="rw" reset="0x3ffffff">
+  <struct name="CREDIT_COUNT_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e0" access="rw" reset="0x3ffffff">
     <doc>IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="MISC_ERROR_MASK" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e8" access="rw" reset="0x111">
@@ -111,7 +111,7 @@
     <field name="bte_0_enable" start="4" size="1" type="uint" grade="established"/>
     <field name="widget_0_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)" register="yes" offset="0x4001f0" access="rw" reset="0xfffffff03ffffff">
+  <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f0" access="rw" reset="0xfffffff03ffffff">
     <doc>IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="ERROR_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f8" access="w" reset="0x0">
@@ -156,20 +156,20 @@
     <field name="command" start="8" size="8" type="uint" grade="established"/>
     <field name="entry" start="0" size="4" type="uint" grade="established"/>
   </struct>
-  <struct name="CRB_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)" register="yes" offset="0x4003b8" access="rw" reset="0xff">
+  <struct name="CRB_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003b8" access="rw" reset="0xff">
     <doc>IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)" register="yes" offset="0x4003c0" access="rw" reset="0xffffff">
+  <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003c0" access="rw" reset="0xffffff">
     <doc>IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
-  <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="0x0">
+  <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="0x0">
     <doc>First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.</doc>
   </struct>
-  <struct name="CRB_B" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="0x0">
+  <struct name="CRB_B" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400408" access="r" count="15" stride="32" reset="0x0">
   </struct>
-  <struct name="CRB_C" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: offsets and stride only" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="0x0">
+  <struct name="CRB_C" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="0x0">
   </struct>
-  <struct name="CRB_D" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="0x0">
+  <struct name="CRB_D" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="0x0">
     <doc>Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.</doc>
   </struct>
   <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="0x0">

@@ -35,8 +35,8 @@ Link-level protocol status. The header calls bit 1 link up and bit 2 remote powe
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 2 | `remote_power` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named remote power by the header. The meaning rests on the name alone. |
-| 1 | `link_up` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named link up by the header. The meaning rests on the name alone. |
+| 2 | `remote_power` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named remote power by the Linux header. The meaning rests on the name alone. The IRIX source header does not confirm it; see link_up. |
+| 1 | `link_up` | inferred |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Named link up by the Linux header. The meaning rests on the name alone. The IRIX source header, which describes an earlier layout, names the first register of this block as a status and revision word with a two-bit port status at bits 29:28, so it does not confirm these bits. |
 | 0 | `status_bit0` | unknown |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Low bit of the two-bit port status. The header gives no meaning for it. |
 
 ### Register `port_reset`

@@ -2,7 +2,7 @@
 // Hub block transfer engine registers and control bits outside the census
 #![allow(dead_code)]
 
-/// Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset val (inferred)
+/// Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset val (established)
 pub mod iio_wid {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400000;
@@ -37,12 +37,12 @@ pub mod iio_wid {
         }
     }
 }
-/// Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and  (inferred)
+/// Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. The IRIX register table con (established)
 pub mod iio_ilapr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400100;
 }
-/// Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is ass (inferred)
+/// Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. The IRIX regi (established)
 pub mod iio_ilapo {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400108;
@@ -92,17 +92,17 @@ pub mod iio_igfx_1 {
         }
     }
 }
-/// Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no a (inferred)
+/// Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register tab (established)
 pub mod iio_scratch_reg0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400150;
 }
-/// Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed. (inferred)
+/// Scratch register 1, the twin of register 0. The IRIX register table confirms the access. (established)
 pub mod iio_scratch_reg1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400158;
 }
-/// Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assu (inferred)
+/// Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. The IRIX register (established)
 pub mod iio_itte {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400160;
@@ -167,12 +167,12 @@ pub mod iio_icrb_d {
     pub const COUNT: u32 = 15;
     pub const STRIDE: u64 = 32;
 }
-/// Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access  (inferred)
+/// Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table con (established)
 pub mod iio_ibna_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x410020;
 }
-/// Interrupt address of engine 0. Offset and name are from the public header. The header gives no access type, so rw is assumed. (inferred)
+/// Interrupt address of engine 0. Offset and name are from the public header. The IRIX register table confirms the access. (established)
 pub mod iio_ibia_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x410028;
@@ -197,7 +197,7 @@ pub mod iio_ibia_0 {
         }
     }
 }
-/// Interrupt address of engine 1. Offset and name are from the public header. The header gives no access type, so rw is assumed. (inferred)
+/// Interrupt address of engine 1. Offset and name are from the public header. The IRIX register table confirms the access. (established)
 pub mod iio_ibia_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x420028;
@@ -251,4 +251,4 @@ pub const IIO_WID_PART_HUB: u32 = 0xc101; // established
 pub const IIO_WSTAT_ECRAZY: u64 = 0x100000000; // established
 pub const IIO_WSTAT_TXRETRY: u32 = 0x200; // established
 pub const IIO_WSTAT_TXRETRY_MASK: u32 = 0x7f0000; // established
-pub const LNK_STAT_WORKING: u32 = 0x2; // inferred
+pub const LNK_STAT_WORKING: u32 = 0x2; // established

@@ -24,7 +24,7 @@
 /*
  * Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* widget_control: rw64, reset 0x4011; Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset) */
+/* widget_control: rw64, reset 0x4011; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_WIDGET_CONTROL                    0x400020 /* inferred */
 
 /*
@@ -132,7 +132,7 @@
 /*
  * IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* llp_log: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset) */
+/* llp_log: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_LLP_LOG                           0x400130 /* inferred */
 
 /*
@@ -165,7 +165,7 @@
 /*
  * IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* graphics_map: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset) */
+/* graphics_map: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_GRAPHICS_MAP                      0x400140 /* inferred */
 #define BEDROCK_II_GRAPHICS_MAP_COUNT                2
 #define BEDROCK_II_GRAPHICS_MAP_STRIDE               8
@@ -173,7 +173,7 @@
 /*
  * IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* scratch: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset) */
+/* scratch: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_SCRATCH                           0x400150 /* inferred */
 #define BEDROCK_II_SCRATCH_COUNT                     2
 #define BEDROCK_II_SCRATCH_STRIDE                    8
@@ -181,7 +181,7 @@
 /*
  * IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* translation_table_entry: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset) */
+/* translation_table_entry: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY           0x400160 /* inferred */
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_COUNT     7
 #define BEDROCK_II_TRANSLATION_TABLE_ENTRY_STRIDE    8
@@ -269,7 +269,7 @@
 /*
  * IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* credit_count_timeout: rw64, reset 0x3ffffff; Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset) */
+/* credit_count_timeout: rw64, reset 0x3ffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CREDIT_COUNT_TIMEOUT              0x4001e0 /* inferred */
 
 /*
@@ -293,7 +293,7 @@
 /*
  * IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crosstalk_timeout_threshold: rw64, reset 0xfffffff03ffffff; Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset) */
+/* crosstalk_timeout_threshold: rw64, reset 0xfffffff03ffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CROSSTALK_TIMEOUT_THRESHOLD       0x4001f0 /* inferred */
 
 /*
@@ -412,29 +412,29 @@
 /*
  * IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crb_timeout: rw64, reset 0xff; Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset) */
+/* crb_timeout: rw64, reset 0xff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_TIMEOUT                       0x4003b8 /* inferred */
 
 /*
  * IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.
  */
-/* crb_timeout_prescaler: rw64, reset 0xffffff; Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset) */
+/* crb_timeout_prescaler: rw64, reset 0xffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_TIMEOUT_PRESCALER             0x4003c0 /* inferred */
 
 /*
  * First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.
  */
-/* crb_a: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_a: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_A                             0x400400 /* inferred */
 #define BEDROCK_II_CRB_A_COUNT                       15
 #define BEDROCK_II_CRB_A_STRIDE                      32
 
-/* crb_b: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_b: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_B                             0x400408 /* inferred */
 #define BEDROCK_II_CRB_B_COUNT                       15
 #define BEDROCK_II_CRB_B_STRIDE                      32
 
-/* crb_c: r64, reset 0x0; Linux 2.5.40 SN1 register headers: offsets and stride only */
+/* crb_c: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_C                             0x400410 /* inferred */
 #define BEDROCK_II_CRB_C_COUNT                       15
 #define BEDROCK_II_CRB_C_STRIDE                      32
@@ -442,7 +442,7 @@
 /*
  * Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.
  */
-/* crb_d: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only) */
+/* crb_d: r64, reset 0x0; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_CRB_D                             0x400418 /* inferred */
 #define BEDROCK_II_CRB_D_COUNT                       15
 #define BEDROCK_II_CRB_D_STRIDE                      32

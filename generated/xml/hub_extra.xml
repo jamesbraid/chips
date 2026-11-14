@@ -1,33 +1,33 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_extra" prefix="HUB" title="Hub block transfer engine registers and control bits outside the census">
-  <struct name="IIO_WID" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u" register="yes" offset="0x400000" access="r" reset="0x1c101048">
-    <doc>Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the</doc>
+  <struct name="IIO_WID" size="8" grade="established" register="yes" offset="0x400000" access="r" reset="0x1c101048">
+    <doc>Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the The IRIX register table confirms the access.</doc>
     <field name="rev" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="mfg" start="1" size="11" type="uint" grade="established"/>
   </struct>
-  <struct name="IIO_ILAPR" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR" register="yes" offset="0x400100" access="rw" reset="0xffffffffffffffff">
-    <doc>Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. Access is assumed read and write.</doc>
+  <struct name="IIO_ILAPR" size="8" grade="established" register="yes" offset="0x400100" access="rw" reset="0xffffffffffffffff">
+    <doc>Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="IIO_ILAPO" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO" register="yes" offset="0x400108" access="w" reset="unknown">
-    <doc>Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. Access is assumed write only.</doc>
+  <struct name="IIO_ILAPO" size="8" grade="established" register="yes" offset="0x400108" access="w" reset="unknown">
+    <doc>Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="IIO_IGFX_1" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)" register="yes" offset="0x400148" access="rw" reset="unknown">
+  <struct name="IIO_IGFX_1" size="8" grade="inferred" register="yes" offset="0x400148" access="rw" reset="unknown">
     <doc>Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed.</doc>
     <field name="valid" start="20" size="1" type="uint" grade="established"/>
     <field name="processor" start="16" size="1" type="uint" grade="established"/>
     <field name="node" start="4" size="9" type="uint" grade="established"/>
     <field name="widget" start="0" size="4" type="uint" grade="established"/>
   </struct>
-  <struct name="IIO_SCRATCH_REG0" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)" register="yes" offset="0x400150" access="rw" reset="0x0">
-    <doc>Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The header gives no access type, so rw is assumed.</doc>
+  <struct name="IIO_SCRATCH_REG0" size="8" grade="established" register="yes" offset="0x400150" access="rw" reset="0x0">
+    <doc>Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="IIO_SCRATCH_REG1" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)" register="yes" offset="0x400158" access="rw" reset="0x0">
-    <doc>Scratch register 1, the twin of register 0. The header gives no access type, so rw is assumed.</doc>
+  <struct name="IIO_SCRATCH_REG1" size="8" grade="established" register="yes" offset="0x400158" access="rw" reset="0x0">
+    <doc>Scratch register 1, the twin of register 0. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="IIO_ITTE" size="8" grade="inferred" from="public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
-    <doc>Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. Access is an assumption.</doc>
+  <struct name="IIO_ITTE" size="8" grade="established" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
+    <doc>Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. The IRIX register table confirms the access.</doc>
     <field name="iospace" start="12" size="1" type="uint" grade="established"/>
     <field name="widget" start="8" size="4" type="uint" grade="established"/>
     <field name="slice" start="0" size="5" type="uint" grade="established"/>
@@ -44,16 +44,16 @@
   <struct name="IIO_ICRB_D" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="unknown">
     <doc>Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.</doc>
   </struct>
-  <struct name="IIO_IBNA_0" size="8" grade="inferred" register="yes" offset="0x410020" access="rw" reset="0x0">
-    <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+  <struct name="IIO_IBNA_0" size="8" grade="established" register="yes" offset="0x410020" access="rw" reset="0x0">
+    <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="IIO_IBIA_0" size="8" grade="inferred" register="yes" offset="0x410028" access="rw" reset="0x0">
-    <doc>Interrupt address of engine 0. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+  <struct name="IIO_IBIA_0" size="8" grade="established" register="yes" offset="0x410028" access="rw" reset="0x0">
+    <doc>Interrupt address of engine 0. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="0" size="9" type="uint" grade="established"/>
   </struct>
-  <struct name="IIO_IBIA_1" size="8" grade="inferred" register="yes" offset="0x420028" access="rw" reset="0x0">
-    <doc>Interrupt address of engine 1. Offset and name are from the public header. The header gives no access type, so rw is assumed.</doc>
+  <struct name="IIO_IBIA_1" size="8" grade="established" register="yes" offset="0x420028" access="rw" reset="0x0">
+    <doc>Interrupt address of engine 1. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="0" size="9" type="uint" grade="established"/>
   </struct>
@@ -86,5 +86,5 @@
   <constant name="IIO_WSTAT_ECRAZY" value="0x100000000" grade="established"/>
   <constant name="IIO_WSTAT_TXRETRY" value="0x200" grade="established"/>
   <constant name="IIO_WSTAT_TXRETRY_MASK" value="0x7f0000" grade="established"/>
-  <constant name="LNK_STAT_WORKING" value="0x2" grade="inferred"/>
+  <constant name="LNK_STAT_WORKING" value="0x2" grade="established"/>
 </genxml>

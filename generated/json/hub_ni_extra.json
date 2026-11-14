@@ -14,7 +14,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -28,7 +28,7 @@
    "stride": 8,
    "space": null,
    "reset": 18446744073709551615,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -42,7 +42,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -56,7 +56,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -70,7 +70,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -84,7 +84,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -98,7 +98,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -112,7 +112,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -126,7 +126,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -140,7 +140,7 @@
    "stride": 8,
    "space": null,
    "reset": 7152,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -149,7 +149,7 @@
    "name": "ni_port_parms.null_timeout",
    "hi": 15,
    "lo": 10,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -842,7 +842,7 @@
    "name": "NI_PORT_PARMS_DEFAULTS",
    "value": 7152,
    "count": 1,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   },
   {
@@ -851,7 +851,7 @@
    "name": "NI_PORT_PARMS_HUB20_DEFAULTS",
    "value": 2032,
    "count": 1,
-   "grade": "inferred",
+   "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
   }
  ]

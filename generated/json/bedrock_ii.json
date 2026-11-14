@@ -56,7 +56,7 @@
    "space": null,
    "reset": 16401,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -352,7 +352,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -443,7 +443,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -457,7 +457,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -471,7 +471,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -711,7 +711,7 @@
    "space": null,
    "reset": 67108863,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -775,7 +775,7 @@
    "space": null,
    "reset": 1152921500378988543,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1102,7 +1102,7 @@
    "space": null,
    "reset": 255,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1116,7 +1116,7 @@
    "space": null,
    "reset": 16777215,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1130,7 +1130,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1144,7 +1144,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1158,7 +1158,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: offsets and stride only"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",
@@ -1172,7 +1172,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
   },
   {
    "unit": "bedrock_ii",

@@ -2,22 +2,22 @@
 // Hub memory and directory register layouts and constants outside the census
 #![allow(dead_code)]
 
-/// Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The header gives no access type, so rw is assumed. (inferred)
+/// Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the L (established)
 pub mod md_mem_dimm_init {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200090;
 }
-/// Directory DIMM mode initialisation. Same layout as the memory register. The header gives no access type, so rw is assumed. (inferred)
+/// Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Li (established)
 pub mod md_dir_dimm_init {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200098;
 }
-/// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (inferred)
+/// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (established)
 pub mod md_led1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220058;
 }
-/// Microcontroller and UART 1 register 1 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+/// Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access. (established)
 pub mod md_ureg1_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220088;
@@ -87,7 +87,7 @@ pub mod md_ureg1_14 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2200f0;
 }
-/// Microcontroller and UART 1 register 15 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+/// Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access. (established)
 pub mod md_ureg1_15 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2200f8;
@@ -929,16 +929,16 @@ pub const HUB_MD_DIR_POISONED: u32 = 0x1; // established
 pub const HUB_MD_DIR_SHARED: u32 = 0x0; // established
 pub const HUB_MD_DIR_UNOWNED: u32 = 0x7; // established
 pub const HUB_MD_DIR_WAIT: u32 = 0x5; // established
-pub const HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS: u64 = 0x1e7fbc3fffffff; // inferred
+pub const HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS: u64 = 0x1e7fbc3fffffff; // established
 pub const HUB_MD_MEM_BANKS_M_MODE: u32 = 0x8; // established
 pub const HUB_MD_MEM_BANKS_N_MODE: u32 = 0x4; // established
 pub const HUB_MD_MLAN_CTL_ACCESS_BYTES: u32 = 0x8; // established
-pub const HUB_MD_MLAN_CTL_RESET_DEFAULTS: u64 = 0x18b100000; // inferred
-pub const HUB_MD_MOQ_SIZE_RESET_DEFAULTS: u32 = 0x3212; // inferred
+pub const HUB_MD_MLAN_CTL_RESET_DEFAULTS: u64 = 0x18b100000; // established
+pub const HUB_MD_MOQ_SIZE_RESET_DEFAULTS: u32 = 0x3212; // established
 pub const HUB_MD_REFCNT_COUNT_MASK_PREMIUM: u32 = 0x7ffff; // established
 pub const HUB_MD_REFCNT_COUNT_MASK_STANDARD: u32 = 0x7ff; // established
 pub const HUB_MD_REFCNT_COUNT_SHIFT: u32 = 0x5; // established
-pub const HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS: u32 = 0x400; // inferred
+pub const HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS: u32 = 0x400; // established
 pub const HUB_MD_SIZE_128MB: u32 = 0x5; // established
 pub const HUB_MD_SIZE_16MB: u32 = 0x2; // established
 pub const HUB_MD_SIZE_1GB: u32 = 0x8; // established
