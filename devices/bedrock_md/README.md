@@ -13,6 +13,8 @@ and the self-test and ECC code tables come from the shipped boot firmware and it
 below carries a grade. A grade of established here means a published source states the fact. Inferred means a
 reasoned reading, a software expectation or a sibling-chip reading. Nothing here is a hardware read.
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Reset
 
 - The refresh enable bit is cleared on reset, so the first DIMM operation must be a mode-register write. The

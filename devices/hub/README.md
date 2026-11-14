@@ -9,6 +9,8 @@ comes from two shipped files: the IRIX 6.5.30 IP27 kernel (`unix`, linked, with 
 compared afterwards (see the last section). Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`,
 `census-sites.tsv`), config [`tools/configs/hub.json`](../../tools/configs/hub.json), header [`generated/c/hub.h`](../../generated/c/hub.h).
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Addresses (established)
 
 - The kernel and the PROM reach the Hub's own register file through two aliases of the same offsets:

@@ -13,6 +13,8 @@ ia64 L1 driver supplies the one software use described below. The configuration 
 comes from the SN1 configuration header. None of these is a hardware read, so the grades in the defs file are about
 what the sources state, not about silicon.
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Identity and node number
 
 - The revision register holds the chip identity, this node's number and the region size. Its fields are the

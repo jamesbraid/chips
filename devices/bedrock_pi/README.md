@@ -18,6 +18,8 @@ comments. The header gives names, offsets, widths and field positions, and it gi
 no reset value for any register. So every field position is graded established from the header, every behaviour a comment
 describes is graded inferred, and every reset is unknown.
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Access and reset
 
 - Every register is 64 bits wide.

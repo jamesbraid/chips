@@ -17,6 +17,8 @@ did not re-read the disassembly statements below, which are therefore unverified
 of another project, not a binary read here. Route for those: read the IP35 kernel's I/O error scan and widget probe in full.
 Every fact below is graded in the defs file or here.
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Block transfer engines
 
 Each engine has six registers (length and status, source, destination, control, notification address and

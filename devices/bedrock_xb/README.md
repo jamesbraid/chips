@@ -10,6 +10,8 @@ register names, offsets, field layouts and comments are software definitions, so
 **inferred**. None is established. The register list, fields and grades are generated from
 `devices/bedrock_xb/registers.toml` into [devices/bedrock_xb/registers.md](registers.md).
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## The block
 
 The block runs from `0x700000` to `0x700190`, 36 registers, each 64 bits wide (the header's type). Of these:

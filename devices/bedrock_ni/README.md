@@ -14,6 +14,8 @@ No Bedrock specification is held, and no read of the port on hardware is recorde
 field positions, and a few comments. The headers state no reset value for any register. So every field is graded from
 the header alone, and a comment's claim about behaviour is graded inferred.
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Link status and reset
 
 - Port status has a two-bit status field. The header names bit 1 link up and bit 2 remote power. It gives no encoding

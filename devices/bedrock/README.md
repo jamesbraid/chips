@@ -9,6 +9,8 @@ The memory-controller configuration word (bank decode, bank select, size probe) 
 What the PROM's waits and polls cost in time, how it programs the real-time counter's rate from two flash configuration words, and what the reset barrier's skew margin is: [questions/ip35-prom-poll-timing.md](../../questions/ip35-prom-poll-timing.md). The BCM5701 on the IO9, from transmit doorbell to receive completion: [questions/ip35-bcm5701-completion-latency.md](../../questions/ip35-bcm5701-completion-latency.md).
 The board-identification register at `+0x4000000`, the PROM's processor table and flash configuration block, and the network-interface port status bits the PROM and kernel read: [questions/ip35-board-word-and-config-block.md](../../questions/ip35-board-word-and-config-block.md).
 
+Reset fetch, the compatibility segment (ckseg1) and the Bedrock node number, as the PROMs and IRIX use them: [platforms/decode-reset-and-kseg1.md](../../platforms/decode-reset-and-kseg1.md).
+
 ## Window and how it is reached
 
 The kernel object keeps 64-bit literals in its literal pool. The census reads them (`.lit8`, gp 0x7ff0 for
