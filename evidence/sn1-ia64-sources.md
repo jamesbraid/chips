@@ -217,3 +217,13 @@ checked file by file.
 - No register header for Synergy beyond `synergy.h` (four interrupt-mask pairs and four performance control and counter
   pairs).
 - The files are SGI's. They carry GPL notices and 1999 to 2000 copyrights of Silicon Graphics staff.
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Library root `linux-history` at commit 381ab1f5 (v2.5.0) with `read_library`: `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.
+
+Checks: the tag-to-commit ids in the version table (all six match `git ls-remote --tags`); the row count of the file table (158 rows: 157 files under `arch/ia64/sn/` and `include/asm-ia64/sn/`, plus the one file found by name, `machvec_sn1.h`, as the text says); the descriptions of the files read above (`fprom/*`, `synergy.h`, `sn_cpuid.h` "eid bit 1 = Synergy, bit 0 = FSB slot", `smp.c` IPI stores at PI `+0x80/+0x88`, `irq.c` IRQ = bit + 64); the README line count of 86 for `fprom/README` is the page's own count (the Library reader returned 84 lines of text, a difference of trailing blank lines). Probes at tags other than v2.5.0 were not re-run; the mail ids were not re-fetched.
+
+Findings: none needing edits. Not checked: the per-tag `resolve_library` probe results and the dated mail ids.
+
+Cleared scope: the file inventory, the tag commit ids and the descriptions of the files read. Not cleared: the version-range table's probe results and mail citations.

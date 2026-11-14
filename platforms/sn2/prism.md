@@ -11,7 +11,7 @@ Altix compute nodes with ATI FireGL graphics boards attached over AGP. It shippe
 
 Sources, grades and page conventions are those of [the SN2 README](README.md). Nothing here is IRIX. Page numbers are
 printed pages. The held PDFs sit at `techpubs:library/manuals/4000/<number>/pdf/<number>.pdf` (Library root
-`techpubs`); the extra page offset between PDF page and printed page is 22 for 007-4701 and 007-4772, 26 for 007-4774.
+`techpubs`; 007-3938 is under `3000`); the extra page offset between PDF page and printed page is 22 for 007-4701 and 007-4772, 26 for 007-4774.
 
 ## Documents and revisions (established)
 
@@ -20,7 +20,7 @@ Each date is the guide's own revision record, so it dates the manual, not the fi
 | Number | Title (as printed) | Revisions | Read for this stream |
 |---|---|---|---|
 | 007-4701 | Silicon Graphics Prism Visualization System User's Guide; from -003 "for Power & Team Scalable Configurations" | -001 Oct 2004 first release; -002 Feb 2005 adds Team (routed NUMAlink), multi-Xserver, optional IO9 card; -003 May 2005 adds the FireGL X3-256 card, drops the optional L2 controller, updates XF86Config; -004 Oct 2005 adds ProPack 4 Service Pack 2 (007-4701-004 p.iii) | -003 in depth; -004 revision record and contents |
-| 007-4772 | Silicon Graphics Prism Deskside Visualization System Hardware User's Guide | -001 Apr 2005; -002 Oct 2005 adds ProPack 4 Service Pack 2 (and a diagnostics and XF86Config chapter) | -001 in depth; -002 contents and pp.120 to 122 |
+| 007-4772 | Silicon Graphics Prism Deskside Visualization System Hardware User's Guide | -001 Apr 2005; -002 Oct 2005 adds ProPack 4 Service Pack 2 (its contents list a diagnostics and an XF86Config chapter; the revision record does not say they are new) | -001 in depth; -002 contents and pp.120 to 122 |
 | 007-4774 | Silicon Graphics Prism Visualization System User's Guide for Extreme Scalable Configurations | -001 May 2005; -002 Oct 2005 adds ProPack 4 Service Pack 2 | -001 chapters 2, 3, 5, 6 in part |
 | 007-4751-001 | Obtaining Maximum Performance on Silicon Graphics Prism Visualization Systems | one revision, undated in the pages read; mentions ProPack 3 Service Pack 3 | pp.1, 5, 6, 18, 19 |
 | 007-4602-003 | SGI Scalable Graphics Compositor User's Guide | -001 May 2003, -002 Dec 2003 adds Onyx4 UltimateVision, -003 Jul 2005 adds Prism | revision record only |
@@ -204,8 +204,8 @@ Established, from the guides:
 ## What carries over from voyager
 
 [voyager](https://github.com/jamesbraid/voyager) documents the ATI R300 (FireGL X1) and R350 (FireGL X2) as IRIX 6.5.30
-drives them on the Onyx4 UltimateVision (IP35), and says it reads only the IRIX binaries, the public radeon drivers and
-AMD register references. This section uses only its public README, `devices/README.md` and `questions/open-questions.md`.
+drives them on the Onyx4 UltimateVision (IP35), and says it reads the IRIX binaries, the public IRIX 6.5.7 source, AMD register references and the
+radeon drivers. This section uses only its public README, `devices/README.md` and `questions/open-questions.md`.
 
 Could transfer, **inferred** only until a Prism board is identified:
 
@@ -219,7 +219,7 @@ Could transfer, **inferred** only until a Prism board is identified:
 
 Cannot transfer:
 
-- The bus path. voyager's Onyx4 boards sit behind a PIC-fronted PCI-X slot; voyager records the AGP aperture words as set to
+- The bus path. voyager's Onyx4 boards sit behind a PIC- or XBridge-fronted slot (voyager leaves which bridge open); voyager records the AGP aperture words as set to
   size 0 and base -1 in the IRIX stub, so no AGP aperture is in use. A Prism pipe is AGP through a TIOCA with a GART and an
   8x-only mode (above), so the memory-controller and aperture programming differs.
 - The driver. IRIX's `fglrx.o` and ATI's X server module are the IRIX side; Prism runs ATI's Linux `fglrx` with its own kernel
@@ -244,3 +244,24 @@ Do not extract it here. A listing of these would settle most of the unknowns:
 - `rpm -qa` (ProPack service-pack level; ATI driver package name and version), and the `pci.ids`/`lspci` data if saved.
 
 The open questions are in [questions/prism-open.md](../../questions/prism-open.md).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+
+Checks, all confirmed unless listed under findings:
+- Document identities and dates from each record of revision: 007-4701-003 and -004 (Oct 2004, Feb 2005, May 2005 with the FireGL X3-256 card and no L2 text, Oct 2005 ProPack 4 SP2), 007-4772-001 (Apr 2005) and -002 (Oct 2005), 007-4774-001 (May 2005) and -002 (Oct 2005), 007-4602-003 (Jul 2005 adds Prism), 007-3938-004 (p.iii adds the Prism). The 22 and 26 page offsets (007-4774-001 PDF 86 is printed p.60; 007-4772 PDF 7 is vii).
+- Smallest configurations: 007-4701-003 p.28 ("two-module system with two graphics pipes, up to 48 GB, 4 PCI/PCI-X slots"), Table 3-1 (p.60: 1 compute, 1 graphics, 4 processors, 2 GB, one SATA disk) and Table 3-2 (p.61: 8 GB, 8 to 16 processors). The deskside floor (one or two processors, one optional second pipe) matches 007-4772-001 p.7 and the page's own caveat that no SKU is named.
+- "SHUB 1.2" and "IP57 Node Card": 007-4774-001 Figure 3-3 (PDF 86, printed p.60) prints "SHUB 1.2" four times and "IP57 Node Card" four times, with `XIO` and `NI0/NI1` labels; the page grades the label as the figure's text and the generation as unknown, and records the conflict with the NUMAlink-4 text instead of resolving it. Right.
+- Board names FireGL X2PRO-256 and X3-256 are as printed; the page claims no GPU part as established (R420 and R350 are labelled external, not SGI evidence, unknown or inferred). Right.
+- TIOCA against v5.3: `TIOCA_PART_NUM 0xE020`, `TIOCA_MFGR_NUM 0x24`, `TIOCA_REV_A 1`; `PCIIO_ASIC_TYPE_TIOCA 4`; `CA_APERATURE_BASE 0x80000000` and size = `CA_AGP_MAPPED_SIZE + CA_PCI32_MAPPED_SIZE`, both `0x40000000` with the header comments saying "2GB" (the page's remark is right); 4 KiB or 16 KiB GART pages; GART prefetch disabled with the SGI bug number in the comment; AGP mode word `(0x7D<<24)|(1<<9)|(1<<5)|(1<<4)|(1<<3)|2` with "8x transfer only"; `is_shub1() && sn_sal_rev() < 0x0406` with the "4.06 or greater" message, so SHub 2 is skipped; `ca_closest_nasid`; PCDP scan comment in `setup.c`.
+- voyager statements against the three public pages: R300 on the X1, R350 on the X2, subsystem pair `1002:0152` inferred, "sg2 names the family", aperture words set to size 0 and base -1, 256 MB split 128/128 for the X2.
+
+Findings:
+1. Mechanical, fixed: the held-PDF path pattern is wrong for 007-3938 (it is under `manuals/3000`, not `4000`); the -002 deskside row said the revision "adds" a diagnostics and XF86Config chapter, but the record of revision says only ProPack 4 SP2 (the contents do list the chapters), so the row now says that.
+2. Mechanical, fixed: the voyager section said voyager "reads only" binaries, radeon drivers and AMD references; its README also lists the public IRIX 6.5.7 source. It also said voyager's boards sit behind a PIC-fronted slot; voyager's open question says PIC against XBridge is unsettled (a PIC is established only as a case the IRIX kernel handles). The page now says PIC or XBridge, left open.
+3. Not edited: `drivers/char/agp/sgi-agp.c` and its Kconfig sit outside the platform-code trees the evidence order ranks first, yet the AGP 8x-only statement is graded established. The SN2 README's recorded decision keeps the equivalent IOC4 driver rows established, so this follows precedent; the owner can relabel.
+4. Not edited: the Team module count. Table 3-2 allows 1 compute plus 2 graphics (three modules) up to 5 plus 4 (nine), while the cabling text (p.65) says four to eight modules; prism-power-team.md quotes the text only.
+5. Not checked: the 2005 mailing-list message ids and dates for the TIOCA patch series, the parts-index line numbers, the Prism XL page, 007-4663-002, 007-4784, 007-4796 (titles only) and the ATI external listings. Those statements stay as the author graded them (the external ones are not evidence).
+
+Cleared scope: document identities and dates, the revision history, configuration limits, the SHub-label handling, board names, every v5.3 TIOCA statement, the firmware requirement, and the voyager carry-over after the fixes above. Not cleared: the parts-index and mailing-list citations (finding 5).

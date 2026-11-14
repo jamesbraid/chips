@@ -73,3 +73,13 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 **Findings.** None.
 
 **Cleared:** the slot conflict note and the connector citation.
+
+### Review of the Prism additions
+
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+
+Checks: 007-4772-001 p.7 (rear panel: base I/O card, static daughter card with USB, DB-9 and `IS IN` and `IS REPEAT`, "one or (optionally) two graphics boards (pipes)", AGP-5 and AGP-6 on the Figure 1-4 rear view); the record of revision (-001 April 2005, -002 October 2005, ProPack 4 SP2) and the -002 contents (diagnostics from p.116 and XF86Config changes from p.122). The processor, NUMAlink-absence, AGP 4X/8X (p.26), compositor (p.10) and ImageSync (p.19) statements were not re-read page by page beyond p.7; they rest on the earlier review of -001. The Itanium-2 inference is marked inferred.
+
+Findings: none needing edits. The TIOCA wiring of AGP-5 and AGP-6 and the PIC question are left unknown, as they should be.
+
+Cleared scope: the rear-panel, graphics-pipe-count and revision statements and the TIOCA cross-reference. Not cleared: the p.17 to p.33 processor, AGP and display statements until re-read.

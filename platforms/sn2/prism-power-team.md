@@ -109,3 +109,13 @@ A base compute module plus one XG2N only: at most 4 processors and 48 GB (p.32).
 The chassis cabling chapters (pp.65 to 70) beyond the headline, the CR-brick-class I/O bricks (Extreme only), the L1 error
 message list (pp.124 to 129) and the technical specification tables other than A-2 and A-3. Open questions:
 [prism-open.md](../../questions/prism-open.md).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+
+Checks: Tables 3-1 and 3-2 (007-4701-003 pp.60 and 61: every limit in the page's table matches, including 17U and 39U rack counts and the optional L2 row), p.28 (two-module minimum, 16 processors, 192 GB, 28 slots), p.65 (routed systems have four to eight modules plus two routers), the record of revision (X3-256 added in -003, L2 references removed), the `gfxtopology -v` listing (007-4751-001 PDF 18, printed p.18: four lines, buses 23, 27, 39 and 43, `SG2`), and the page's reading of it (port 1 and 2 of 001c02 and 001c03; the second pipe of each XG2N lists a different brick's CPUs, correctly marked unknown). The IP57 and ring-is-NUMAlink-4 statements are inferred, not established, as graded. The TIOCA reference is to the overview, whose v5.3 facts were checked there.
+
+Findings: the Team module count is stated only from the cabling text; the table limits give three to nine modules (see the overview's review, finding 4). No mechanical errors.
+
+Cleared scope: modules, limits, topology, graphics-pipe numbering, the gfxtopology reading and its marked inferences. Not cleared: the cabling figures on pp.62 to 70 (the page says they were not read).

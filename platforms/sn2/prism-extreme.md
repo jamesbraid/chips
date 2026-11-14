@@ -65,3 +65,13 @@ Prism document. Details: [the overview](prism.md#firmware).
 
 CR-brick pinouts and rear panel (chapter 6, pp.91 to 94), IX-brick and PX-brick PCI card lists and tables (chapters 7 and 8),
 the L2 emulator commands (chapter 2). Open questions: [prism-open.md](../../questions/prism-open.md).
+
+## Review
+
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+
+Checks: 007-4774-001 Figure 3-3 (printed p.60) shows four nodes labelled "SHUB 1.2" and "IP57 Node Card", two `XIO` pads and `NI` ports per node, with two router banks; the page records exactly that text, notes that the page 59 text says NUMAlink-4, calls the conflict unknown and names a boot capture as the settling evidence. The scale, the brick table sources (pp.55 to 66 and 95 to 97) and the L1 firmware version `1.18.3-1` are as cited in the overview review (only the figure, the record of revision and the contents were re-read for this page). "IP57" is correctly said to be the Altix 350 node board name, here appearing as a node card.
+
+Findings: none that need editing. The page graded the label "established as the figure's text" and the machine's SHub generation unknown; that is the right split.
+
+Cleared scope: the scale statements, the SHub-label and IP57-label handling, and the firmware and graphics statements as sourced. Not cleared: the brick table rows other than those in the figure and p.55 to 61 (the weights, power and DIMM counts were not re-read).
