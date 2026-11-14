@@ -2,6 +2,10 @@
 
 # software
 
+| Page | Title | Summary |
+|---|---|---|
+| [sal/](sal/README.md) | SN2 SAL calls: what the Altix kernel asks of firmware | Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with function number, arguments, results... |
+
 ## kernel
 
 | Page | Title | Summary |
