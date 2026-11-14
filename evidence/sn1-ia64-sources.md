@@ -218,6 +218,33 @@ checked file by file.
   pairs).
 - The files are SGI's. They carry GPL notices and 1999 to 2000 copyrights of Silicon Graphics staff.
 
+## 2.4-series patches
+
+The table above covers only the v2.5 tree. The Linux/IA-64 project kept SGI's SN1 code in its own patch series, published
+at [kernel.org's ia64 ports directory](https://www.kernel.org/pub/linux/kernel/ports/ia64/). Each file is named for its
+base kernel and the date of the project's snapshot. The patch names are established from the directory listing; the SN1
+paths in them come from the first-pass survey. Nothing here is tested on hardware or in an emulator.
+
+- First appearance: `v2.3/linux-2.4.0-test10-ia64-001115.diff.gz` (November 2000) is the first patch in the series that
+  adds `arch/ia64/sn/` files. A patch dated `001101` sits in the same directory; it was not checked.
+- Richest set: the 2.4.16 to 2.4.18 patches, each with about 136 to 140 `arch/ia64/sn/` files. The patches are
+  `v2.4/linux-2.4.16-ia64-011126.diff.gz`, `linux-2.4.17-ia64-011226.diff.gz`, `linux-2.4.18-ia64-020226.gz`,
+  `linux-2.4.18-ia64-020410.diff.gz`, `linux-2.4.18-ia64-020508.diff.gz`, `linux-2.4.18-ia64-020622.diff.gz`,
+  `linux-2.4.18-ia64-020719.diff.gz` and `linux-2.4.18-ia64-020722.diff.gz`. The other 2.4.16 snapshots
+  (`011128`, `011214`) and the other 2.4.17 snapshots were not counted.
+- Same set in the v2.5 directory: `v2.5/linux-2.5.2-ia64-020116-dontuse.gz`, `linux-2.5.3-ia64-020207.gz` and
+  `linux-2.5.5-ia64-020307.diff.gz`, each with about 136 to 139 SN1 files.
+- What the 2.4.18 set carries, per the first-pass survey of the patch contents: `arch/ia64/sn/configs/sn1/` with
+  12 defconfigs, one of them `defconfig-prom-medusa`; the fake PROM trees `arch/ia64/sn/fprom/` and
+  `arch/ia64/sn/fakeprom/` (`main.c`, `fw-emu.c`, `fpmem.c`, `fpromasm.S`, `README` and `runsim`);
+  `include/asm-ia64/sn/simulator.h`; and the config option `CONFIG_IA64_SGI_SN1_SIM`, prompt "Enable SGI Medusa
+  Simulator Support".
+- Patch base: `linux-2.4.18-ia64-020722.diff.gz` is the most recent of the 2.4.18 set. Its diff header names vanilla
+  2.4.18 as the base, so it applies to a plain 2.4.18 tree.
+- Simulator and PROM: SGI's Medusa simulator is not public. `runsim` is a launcher script that drives the simulator, not
+  the simulator. No SN1 PROM other than the fake PROM is known. Searches of the web, archive.org and the Library found no
+  SN1 PROM image or simulator binary (2026-11-14). Unknown whether one exists elsewhere.
+
 ## Review
 
 Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Library root `linux-history` at commit 381ab1f5 (v2.5.0) with `read_library`: `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.

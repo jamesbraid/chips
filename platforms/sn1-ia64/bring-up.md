@@ -33,6 +33,13 @@ Source snapshots. All paths are in the Library's `linux-history` root. "v2.5.0" 
 | Boot disk | first IDE drive | `ROOT_DEV = 0x0301` in `sn1_setup`. | established |
 | Command line | empty, unless the fake PROM was built with `BRINGUP` | Then `init=/bin/bash`. Whether the build defined it is not stated. | established for both branches; unknown which was used |
 
+A second candidate tree is the 2.4 series. `linux-2.4.18-ia64-020722.diff.gz`, applied to vanilla 2.4.18, carries a fake
+PROM and a Medusa defconfig (`arch/ia64/sn/configs/sn1/defconfig-prom-medusa`). It is the later of the two by patch
+date: v2.5.0 predates the 2.5.2 ia64 patch of 2002-01-16, while 020722 is dated 2002-07-22. Its fake PROM is dated
+later, but its contents have not been compared with the v2.5.0 copy described in [the fake PROM section](#2-the-fake-prom).
+Neither tree is shown to boot. Compare the two before choosing a base. Details and patch names are in
+[the source evidence](../../evidence/sn1-ia64-sources.md#24-series-patches).
+
 ## 2. The fake PROM
 
 ### Which one, and how it is built and loaded
