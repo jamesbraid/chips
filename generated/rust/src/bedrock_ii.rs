@@ -1177,6 +1177,7 @@ pub mod bte_interrupt_address {
         }
     }
 }
+pub const BTE_REGISTER_SIZE: u32 = 0x30; // inferred
 pub const MANUFACTURER_BEDROCK: u32 = 0x36; // inferred
 pub const PART_BEDROCK: u32 = 0xc110; // inferred
 pub const PI0_INTERRUPT_PENDING_MODIFY: u32 = 0x1800090; // established

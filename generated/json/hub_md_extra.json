@@ -99,7 +99,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)"
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
   },
   {
    "unit": "hub_md_extra",

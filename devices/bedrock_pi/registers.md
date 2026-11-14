@@ -1033,3 +1033,9 @@ Performance counter 1 of CPU B. Forty bits wide. On overflow it wraps to zero, s
 |---|---|---|---|---|---|
 | 40 | `pcb_overflow` | established |  | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts | Set on overflow. |
 | 39:0 | `pcb_count_value` | established |  | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts | Count. |
+
+## Constants
+
+| Constant | Value | Grade | Source | Description |
+|---|---|---|---|---|
+| `PI1_BASE` | 0x200000 | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts | Offset of the second processor interface's register file from the first, in the node's register space. The unit's registers are the first interface's; the second repeats them at this distance. No public source tree states it. |

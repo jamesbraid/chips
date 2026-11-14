@@ -1369,6 +1369,15 @@
   {
    "unit": "bedrock_ii",
    "kind": "constant",
+   "name": "BTE_REGISTER_SIZE",
+   "value": 48,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+  },
+  {
+   "unit": "bedrock_ii",
+   "kind": "constant",
    "name": "MANUFACTURER_BEDROCK",
    "value": 54,
    "count": 1,

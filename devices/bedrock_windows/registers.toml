@@ -1,0 +1,19 @@
+unit = "bedrock_windows"
+prefix = "BEDROCK_WIN"
+title = "Bedrock register arrays whose extent is a fact of its own"
+doc = "Runs of consecutive Bedrock registers seen as one array each, so that the end of the run is data. Each entry overlaps the registers listed one by one in the other Bedrock units, which carry the individual names; the two views describe the same storage. The offsets, names and counts come from the IRIX register headers named in each entry."
+from = "irix-657m-src: irix/kern/sys/SN/SN1 register headers"
+public_from = ["Linux"]
+
+[c]
+offset_macro = "bare"
+
+[registers.gfx_window]
+offset = 0x300
+count = 10
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+from = "irix-657m-src irix/kern/sys/SN/SN1/snacpiregs.h, PI_GFX_PAGE_A to PI_GFX_INT_CMP_B (ten registers eight bytes apart)"
+doc = "The graphics registers of both processor slots as one window: page, credit counter, bias, interrupt counter and interrupt comparator for slot A, then the same five for slot B. The entries are also listed one by one under their own names; this is the same storage seen as an array, so that its extent is data. The entries have different reset values, so the window has none."

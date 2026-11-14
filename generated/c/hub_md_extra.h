@@ -43,9 +43,9 @@
 #define HUB_MD_UREG1_3_OFFSET                        0x220098u /* inferred */
 
 /*
- * Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+ * Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers.
  */
-/* md_ureg1_4: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name) */
+/* md_ureg1_4: rw64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_UREG1_4_OFFSET                        0x2200a0u /* inferred */
 
 /*

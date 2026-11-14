@@ -1,0 +1,20 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/bedrock_windows/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "bedrock_windows",
+   "kind": "register",
+   "name": "gfx_window",
+   "offset": 768,
+   "access": "rw",
+   "width": 64,
+   "count": 10,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  }
+ ]
+}

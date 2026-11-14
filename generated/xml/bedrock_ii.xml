@@ -202,6 +202,7 @@
     <field name="node" start="1" size="8" type="uint" grade="established"/>
     <field name="pi_select" start="0" size="1" type="uint" grade="established"/>
   </struct>
+  <constant name="BTE_REGISTER_SIZE" value="0x30" grade="inferred"/>
   <constant name="MANUFACTURER_BEDROCK" value="0x36" grade="inferred"/>
   <constant name="PART_BEDROCK" value="0xc110" grade="inferred"/>
   <constant name="PI0_INTERRUPT_PENDING_MODIFY" value="0x1800090" grade="established"/>

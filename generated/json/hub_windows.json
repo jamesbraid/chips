@@ -1,0 +1,33 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/hub_windows/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "pi_gfx_window",
+   "offset": 768,
+   "access": "rw",
+   "width": 64,
+   "count": 10,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "md_ureg1",
+   "offset": 2228352,
+   "access": "rw",
+   "width": 64,
+   "count": 16,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  }
+ ]
+}

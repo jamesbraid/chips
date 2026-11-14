@@ -19,8 +19,8 @@
   <struct name="MD_UREG1_3" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name)" register="yes" offset="0x220098" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_4" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)" register="yes" offset="0x2200a0" access="rw" reset="unknown">
-    <doc>Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
+  <struct name="MD_UREG1_4" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200a0" access="rw" reset="unknown">
+    <doc>Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers.</doc>
   </struct>
   <struct name="MD_UREG1_5" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name)" register="yes" offset="0x2200a8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>

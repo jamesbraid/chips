@@ -9,6 +9,7 @@ public_from = ["Linux 2.5.40", "Linux ia64", "OpenBSD", "Origin 3000 System Arch
 offset_macro = "bare"
 
 [constants]
+BTE_REGISTER_SIZE = { value = 0x30, grade = "inferred", from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, BTEOFF_STAT to BTEOFF_INT, and irix/kern/sys/SN/SN1/snacioregs.h, II_IBLS0 to II_IBIA0", doc = "Extent of one block transfer engine's registers: six registers eight bytes apart from the engine's base (status, source, destination, control, notification, interrupt). The source defines the six offsets and the distance from engine 0 to engine 1, the stride of the engine registers here, but no size symbol, so the size is the end of the last register; nothing is defined between it and the next engine." }
 PART_BEDROCK = { value = 0xc110, grade = "inferred", doc = "Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded." }
 MANUFACTURER_BEDROCK = { value = 0x36, grade = "inferred", doc = "Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown." }
 PROTECTION_OVERRIDE_KEY = { value = 0x53474972756c6573, grade = "established", doc = "The 64-bit key the SN1 tree names for protection_override: the ASCII string SGIrules." }

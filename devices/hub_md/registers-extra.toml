@@ -260,8 +260,8 @@ offset = 0x2200a0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)"
-doc = "Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed."
+from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_4 and the CPU_LED_ADDR macro; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)"
+doc = "Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers."
 
 [registers.md_ureg1_5]
 offset = 0x2200a8

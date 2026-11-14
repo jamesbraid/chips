@@ -32,7 +32,7 @@ pub mod md_ureg1_3 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220098;
 }
-/// Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+/// Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro (inferred)
 pub mod md_ureg1_4 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2200a0;

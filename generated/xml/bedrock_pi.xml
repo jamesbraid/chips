@@ -588,4 +588,5 @@
     <field name="pcb_overflow" start="40" size="1" type="uint" grade="established"/>
     <field name="pcb_count_value" start="0" size="40" type="uint" grade="established"/>
   </struct>
+  <constant name="PI1_BASE" value="0x200000" grade="established"/>
 </genxml>

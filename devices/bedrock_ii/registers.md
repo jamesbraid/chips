@@ -376,6 +376,7 @@ Array of 2 registers, stride 65536.
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
+| `BTE_REGISTER_SIZE` | 0x30 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Extent of one block transfer engine's registers: six registers eight bytes apart from the engine's base (status, source, destination, control, notification, interrupt). The source defines the six offsets and the distance from engine 0 to engine 1, the stride of the engine registers here, but no size symbol, so the size is the end of the last register; nothing is defined between it and the next engine. |
 | `MANUFACTURER_BEDROCK` | 0x36 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Manufacturer field value for Bedrock in the OpenBSD device table and in mainline Linux's widget table. Read on silicon unknown. |
 | `PART_BEDROCK` | 0xc110 | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded. |
 | `PI0_INTERRUPT_PENDING_MODIFY` | 0x1800090 | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts | Hard-coded target of an II interrupt packet from PI select 0, at this offset in PI0's register space on the named node (the header's interrupt-destination logic). |

@@ -17,7 +17,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_ureg1_1` | 0x220088 | rw | 64 |  |  | 0x0 (established) | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name) |
 | `md_ureg1_2` | 0x220090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name) |
 | `md_ureg1_3` | 0x220098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name) |
-| `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name) |
+| `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
 | `md_ureg1_5` | 0x2200a8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name) |
 | `md_ureg1_6` | 0x2200b0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_6 (offset and name) |
 | `md_ureg1_7` | 0x2200b8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_7 (offset and name) |
@@ -56,7 +56,7 @@ Microcontroller and UART 1 register 3 of 16; the census has register 0. The head
 
 ### Register `md_ureg1_4`
 
-Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed.
+Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers.
 
 ### Register `md_ureg1_5`
 

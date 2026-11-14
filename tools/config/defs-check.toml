@@ -29,6 +29,14 @@ prose_offsets = false
 group = "hub_pi_extra.h"
 prose_offsets = false
 
+[units.hub_windows]
+group = "hub_windows.h"
+prose_offsets = false
+
+[units.bedrock_windows]
+group = "bedrock_windows.h"
+prose_offsets = false
+
 [units.ioc3]
 group = "ioc3.h"
 prose_offsets = false
@@ -188,7 +196,13 @@ base = 0x0
 [gen.export.units.hub_pi_extra]
 base = 0x0
 
+[gen.export.units.hub_windows]
+base = 0x0
+
 [gen.export.units.bedrock]
+base = 0x0
+
+[gen.export.units.bedrock_windows]
 base = 0x0
 
 [gen.export.units.bedrock_extra]

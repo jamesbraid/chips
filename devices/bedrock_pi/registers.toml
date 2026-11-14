@@ -1307,3 +1307,6 @@ doc = "Stops the processors from issuing requests while the reply FIFO holds mor
 
 [registers.reply_level.fields]
 rl_reply_level = { bits = [5, 0], grade = "established", doc = "Threshold in entries." }
+
+[constants]
+PI1_BASE = { value = 0x200000, grade = "established", from = "shipped IRIX 6.5.30 kernel binaries: the hub error routines (hub_error_init, hub_error_clear, save_hub_err) visit a second processor-interface register file 0x200000 above the first, and the interrupt-send routine targets 0x1800090 or 0x1a00090 by slice, per devices/bedrock/README.md", doc = "Offset of the second processor interface's register file from the first, in the node's register space. The unit's registers are the first interface's; the second repeats them at this distance. No public source tree states it." }

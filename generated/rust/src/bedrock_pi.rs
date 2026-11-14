@@ -3662,3 +3662,4 @@ pub mod perf_cntr1_b {
         }
     }
 }
+pub const PI1_BASE: u32 = 0x200000; // established
