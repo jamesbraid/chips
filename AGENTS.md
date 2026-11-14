@@ -1,39 +1,31 @@
 # Rules for working on this repository
 
-The goal is a register-level account of each SGI system ASIC: every register offset software touches, its fields,
-reset expectations and access sequences, each fact labelled by how well it is known. Written so an emulator
-author or FPGA builder never needs to read the binaries.
+The goal is a register-level account of each SGI system ASIC: every register offset software touches, its fields, reset
+expectations and access sequences, each fact labelled. An emulator or FPGA author should not need the binaries.
 
 ## Labels
 
-- **established**: read in full from the shipped binary (the whole function, table or code path), or from a published
-  specification page, or from a public driver file, or from the public IRIX source tree (see Evidence order). Cite the
-  build, function and address, or the document, revision and page, or the file and version.
-- **inferred**: a reasoned reading. A reading built from call lists, store summaries, a name, a sibling chip or
-  a sibling build is inferred. Give the reasoning.
-- **unknown**: not settled. Say what route would settle it and put it in questions/README.md. Anything
-  unlabelled is unknown. "Unknown: no shipped software or published source depends on it" is a valid end state
-  for a fact (such as the reset value of a register no code reads); list the routes tried.
+- **established**: read in full from a shipped binary (the whole function, table or code path), a published
+  specification page, a public driver file or the public IRIX source tree. Cite the build, function and address, the
+  document, revision and page, or the file and version.
+- **inferred**: a reasoned reading. A reading built from call lists, store summaries, a name, a sibling chip or a
+  sibling build is inferred. Give the reasoning.
+- **unknown**: not settled. Say what route would settle it and list it in questions/README.md. Anything unlabelled is
+  unknown. "No shipped software or published source depends on it" is a valid end state; list the routes tried.
 
-Never reword an entry to change its label. A sibling chip is a neighbouring row, not evidence: a hypothesis
-from a related chip (for example PIC from Bridge and XBridge) is stated as a hypothesis, labelled inferred at
-best, and never fills a field.
+Never reword an entry to change its label. A sibling chip is a neighbouring row, not evidence: a hypothesis from a
+related chip (PIC from Bridge and XBridge) is stated as a hypothesis, inferred at best, and never fills a field.
 
 ## Sources
 
-Allowed: shipped IRIX binaries and PROM images; the public IRIX source tree, cited by path (see Evidence order);
-published specifications (cited by title, document number and revision); public Linux, OpenBSD and NetBSD drivers (by
-file and version); published patents; published `hinv` and PROM-console captures, described generically with counts;
-Usenet posts by message-id.
+Allowed: shipped IRIX binaries and PROM images; the public IRIX source tree (by path); published specifications (title,
+number, revision); public Linux, OpenBSD and NetBSD drivers (file and version); published patents; published `hinv` and
+PROM-console captures, described generically; Usenet posts by message-id.
 
-Not allowed in this repository, in any file, commit message or entry: vendor source text or internal
-identifiers beyond the function, symbol and string names the shipped binaries themselves carry; paths into
-any private store or document library; names of the emulator projects or people who work with this
-repository; machine nicknames from private archives. Findings are written in your own words. Proprietary
-binaries live in `root/` (ignored) and are never committed.
-
-Facts come from reading the binaries or, under Evidence order, the public IRIX source tree. A datasheet or note from
-another project may be used afterwards, to report agreement or disagreement, never to supply a fact.
+Not allowed in any file, commit message or entry: vendor source text or internal identifiers beyond the function,
+symbol and string names the shipped binaries carry; paths into any private store or document library; names of the
+emulator projects or people who work with this repository; machine nicknames from private archives. Write findings in
+your own words. Proprietary binaries live in `root/` (ignored) and are never committed.
 
 ## Evidence order
 
@@ -43,7 +35,7 @@ For a register or behaviour fact, take it from the highest source that states it
 2. Shipped binaries (PROMs, kernels, libraries): confirm the source matches what shipped, and the release differences (6.5.7 source, 6.5.22 and 6.5.30 binaries).
 3. Public Linux, OpenBSD and NetBSD headers and drivers: `established` once the IRIX source confirms them.
 4. Published SGI and vendor manuals.
-5. Notes from other projects (Origami datasheets, QEMU manual pages, emulator code): may confirm or contradict, never supply a fact. A fact resting only on one stays `unknown`, with the note named.
+5. Notes from other projects (other projects' datasheets, manual pages and emulator code): may confirm or contradict, never supply a fact. A fact resting only on one stays `unknown`, with the note named.
 
 Reset values: `established` when the source states a power-on default or PROM code relies on a reset state; `inferred` when the PROM depends on a value before its first write (cite the PROM address); a read after firmware initialisation is not a reset value and can only rule values out; otherwise `unknown`. A physical hardware read is a last resort, needs the repository owner's approval, and counts as a reset value only for a register firmware provably never writes. Emulator runs are model behaviour, never hardware evidence.
 
@@ -51,79 +43,54 @@ Full text and the checks that enforce it: `retools/tools/README-analysis.md#evid
 
 ## Where things go
 
-- `devices/<chip>/README.md`: one page per chip. Register entries with labels. Chips with no entry yet say so.
-- `devices/<chip>/census/`: machine-made census tables (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`).
-  Never edit by hand; fix the tool or the config and rerun.
-- `devices/<unit>/registers.toml` and `formats/<name>/format.toml`: the source of hardware facts, in TOML (format and
-  tools: `retools/tools/defs/README.md`). The census units (`devices/<chip>/registers.toml`,
-  `devices/bridge/registers.xbridge.toml`) are written by `retools/tools/chips/gen_headers.py` from the census
-  tables: never edit them, fix the census or its config and rerun. The hand-written units (`registers-extra.toml`,
-  `l1_requests`, `xio_fc`, `ice1724`) are edited by hand and each names its source in `from`. Give every item a grade.
-  `tools/config/defs-check.toml` holds the check settings.
-- `generated/`: generated from the register maps by `retools/tools/defs/defs-gen`, never edited by hand (CI fails on a
-  stale tree). `devices/<unit>/registers.md` is the reference page for each unit, the published view of the facts.
-  Consumers include `generated/c/<unit>.h`. After any register map change run `defs-gen`, then `defs-check --build`.
-- `platforms/<board>/`: one machine's topology, address map, boot and PROM; bricks are in `platforms/bricks/`.
-  `software/kernel/`: how the IRIX kernels drive a part, linking back to its `devices/` page. `questions/`: one page
-  per open question, with what would settle it. `references/documents/`: the specification index and published
-  sources; `references/code/`: the public source trees, as submodules.
-- `evidence/inventory/` and `evidence/coverage.md`: written by `retools/tools/inventory.py`. Never edit by hand.
-- `tools/`: the census configs (`tools/configs/`, one per chip, marked spec-backed or no-spec) and the bootstrap
-  stub; `tools/config/`: the inventory configuration, the pinned manifests and the allow-lists the checks read.
-- Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `scripts: ...`,
-  `tools: ...`); the body says why. No trailers of any kind.
+- `devices/<chip>/README.md`: one page per chip, register entries with labels. `devices/<chip>/census/`: machine-made
+  census tables; never edit by hand, fix the tool or config and rerun.
+- `devices/<unit>/registers.toml` and `formats/<name>/format.toml`: the source of hardware facts (format and tools:
+  `retools/tools/defs/README.md`). Census units are written by `retools/tools/chips/gen_headers.py`: never edit them.
+  Hand-written units (`registers-extra.toml`, `l1_requests`, `xio_fc`, `ice1724`) name their source in `from`. Give every
+  item a grade. `tools/config/defs-check.toml` holds the check settings.
+- `generated/` and `devices/<unit>/registers.md`: written by `retools/tools/defs/defs-gen`, never edited (CI fails on a
+  stale tree). `registers.md` is the published reference page for each unit; consumers include `generated/c/<unit>.h`. After any register map change run `defs-gen`, then `defs-check --build`.
+- `platforms/<board>/`: topology, address map, boot and PROM of one machine; bricks in `platforms/bricks/`.
+  `software/kernel/`: how IRIX drives a part. `questions/`: one page per open question. `references/`: the
+  specification index (`documents/`) and the public source trees (`code/`, submodules).
+- `evidence/inventory/`, `evidence/coverage.md`: written by `retools/tools/inventory.py`; never edit by hand.
+  `tools/configs/`: one census config per chip, marked spec-backed or no-spec. `tools/config/`: inventory settings,
+  pinned manifests and the allow-lists the checks read. `tools/setup-clone.sh` is the bootstrap stub.
+- Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `tools: ...`); the body says why.
+  No trailers of any kind.
 
 ## Done
 
-A chip row is done when every inventory row in its area is `understood` (label, role and hardware effect,
-a derivation specific to the item) or `no-software-dependency`. `evidence/inventory/README.md` has the exact
-grading rules, including the template cap, the scope filter and the unverified label. An independent audit
-samples `understood` rows and re-derives them from the binaries; the result goes in
-`evidence/inventory/audits.tsv` (written by hand; the audit procedure is in evidence/reading-brief.md).
+A chip row is done when every inventory row in its area is `understood` (label, role and hardware effect, a derivation
+specific to the item) or `no-software-dependency`. `evidence/inventory/README.md` has the grading rules. An independent
+audit re-derives a sample of `understood` rows from the binaries and records the result in `evidence/inventory/audits.tsv`
+(procedure: evidence/reading-brief.md).
 
 ## Reading MIPS code from the shipped binaries
 
-- **Delay slots.** The instruction after a branch or jump runs before the transfer. Read it as part of the
-  branch. A load in a delay slot is the argument of a call.
-- **Branch-likely** (`beql`, `bnel`, `bgezl`, ...): the delay slot runs only when the branch is taken. On the
-  fall-through path it is annulled.
-- **Argument registers.** o32 passes the first four arguments in `$4` to `$7`; n32 and 64-bit objects pass eight,
-  `$4` to `$11`. A callee that uses `$8` to `$11` as arguments is not o32.
-- **Return values** are in `$2` (and `$3`). A negative constant stored to `$2` before a return is an error code;
-  record the number, not a guess at its name.
-- **GOT and gp-relative loads.** In position-independent code a load `ld $reg,-N($28)` reads a global-offset
-  table slot at `$gp - N`; the slot holds the address of a symbol (resolve it with the relocation or the table
-  in the object). `retools/tools/resolve_got.py` does this for objects with a table. In a relocatable kernel object
-  the same load reads a literal pool entry (`.lit8`, `.srdata`) at `gp + offset`; `retools/tools/chips/scan.py` reads those
-  literals from the object (`literals` and `gp` in an image's config entry).
-- **Call-label hazard.** In a relocatable object an unrelocated `jal` shows a target of zero or the next
-  instruction. Disassemble with relocations (`objdump -r`) and name the call from the relocation. In a linked
-  image the label in the listing is the symbol at that address, which can be a neighbouring function if the
-  callee has no symbol.
-- **Jump tables.** A `jr` through a register loaded from a table in `.rodata` is a switch. Dump the table
-  (entries are code addresses, or offsets from the table base) before claiming a function's behaviour; a
-  function read without its switch arms is "inferred".
-- **Store order matters.** For a device the order of stores is part of the hardware contract (write the
-  address, then the command). Record sequences in the order the code issues them, not sorted by offset.
-- **Widths.** `lb/sb` 1, `lh/sh` 2, `lw/sw` 4, `ld/sd` 8 bytes; `lwl/lwr/swl/swr` are partial words and show a
-  misaligned or byte-lane access. Record the width with every access.
-- **Constants.** `lui` + `ori`/`addiu`, or `dli`, build a constant. A `lui` of `0x9200`-style upper halves
-  followed by shifts builds a 64-bit physical window address; resolve it before naming a register.
-- **Indexed families.** A register family reached through an index (`slot*8 + base`) is recorded at its base
-  with an index flag; its extent comes from a bound the code checks or from the specification, not from the
-  scan.
-- **Dispatch on chip type.** Shared accessors compare a type field or the part number of the identification
-  word with constants and branch to the offsets of that chip. Record each branch's offsets under that chip.
-  A site whose path names no chip is recorded as unresolved, not assigned to one.
-- **Unresolved is a result.** An access whose offset cannot be derived statically is listed with its site
-  and left unresolved. Never guess an offset.
+- A branch's delay slot runs before the transfer; read it with the branch. On a branch-likely (`beql`, `bnel`) it runs
+  only when the branch is taken. A load in a delay slot is a call argument.
+- o32 passes four arguments in `$4` to `$7`; n32 and 64-bit objects pass eight, `$4` to `$11`, so a callee that uses
+  `$8` to `$11` is not o32. Results are in `$2`, `$3`.
+  Record a negative constant stored to `$2` as the number, not a guessed name.
+- `ld $reg,-N($28)` reads a GOT slot (`retools/tools/resolve_got.py`), or a literal pool entry in a relocatable kernel
+  object (`retools/tools/chips/scan.py` reads those literals; `literals` and `gp` in an image's config entry). Disassemble
+  with relocations (`objdump -r`) and name a call from its relocation: an unrelocated `jal` shows a zero target, and in a
+  linked image the listing label can be a neighbouring function if the callee has no symbol.
+- Dump the table behind a `jr` through a `.rodata` register (entries are code addresses or offsets from the table base)
+  before claiming what a function does; otherwise inferred.
+- Store order is part of the hardware contract: record sequences as the code issues them, with the width of each access
+  (`lb/sb` 1, `lh/sh` 2, `lw/sw` 4, `ld/sd` 8; `lwl/lwr/swl/swr` are partial words).
+- `lui` plus `ori`/`addiu`, or `dli`, builds a constant; resolve a 64-bit window address before naming a register. An
+  indexed family is recorded at its base with an index flag, its extent from a bound in the code or the specification.
+- Shared accessors branch on a type field or part number: record each branch's offsets under its own chip. A site whose
+  path names no chip, or whose offset cannot be derived, is listed as unresolved. Unresolved is a result. Never guess an offset.
 
 ## Procedure for a chip
 
 1. Fill `root/` (evidence/irix-files.md) and run `retools/tools/inventory.py` to see the rows.
-2. Write the chip's census config (`tools/configs/<chip>.json`): the images, the seeds that tell the scanner
-   which functions receive the chip's window pointer, the chip-type compares, and the literal-pool settings.
-3. `retools/tools/chips/run.sh tools/configs/<chip>.json` (see tools/README.md) and read `devices/<chip>/census/census.md`.
-4. Take each register to an entry in `devices/<chip>/README.md` using `fields.tsv` and `context.tsv` as the
-   starting evidence, then read the function in full before labelling anything established.
+2. Write `tools/configs/<chip>.json`: the images, the seeds, the chip-type compares and the literal-pool settings.
+3. Run `retools/tools/chips/run.sh tools/configs/<chip>.json` (tools/README.md); read `devices/<chip>/census/census.md`.
+4. Turn each register into an entry in `devices/<chip>/README.md`; read the function in full before labelling it established.
 5. Regenerate the inventory in the same commit as the finding.
