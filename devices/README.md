@@ -85,6 +85,7 @@
 | [tio/](tio/README.md) | TIO | Mode: no-spec. |
 | [tioca/](tioca/README.md) | TIOCA | Mode: no-spec. |
 | [tiocp/](tiocp/README.md) | TIOCP | Mode: no-spec (see references/documents/specs.md). |
+| [tiocx/](tiocx/README.md) | TIOCX | Mode: no-spec. |
 | [tl16pir552/](tl16pir552/README.md) | TI TL16PIR552 parallel port (Fuel and Origin 200) | The TL16PIR552 is a dual UART and IEEE 1284 parallel-port controller with ECP and EPP support, with a 16-byte... |
 | [tsb12lv22/](tsb12lv22/README.md) | TI TSB12LV22 PCI-to-IEEE 1394 link controller | The TSB12LV22 is Texas Instruments' PCI-to-1394 link controller. |
 | [vice/](vice/README.md) | VICE | Mode: spec-backed (see references/documents/specs.md). |
