@@ -179,7 +179,7 @@ prose_offsets = false
 # is already node-relative); the Hub units, and the census and Linux-header units of both chips that span
 # several blocks, stay at base 0, so their OFFSET is the node-relative offset.
 [gen.export]
-profiles = ["rust-consts", "c-regfields"]
+profiles = ["rust-regs", "c-regfields"]
 
 [gen.export.units.hub]
 base = 0x0
