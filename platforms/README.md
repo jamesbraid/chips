@@ -63,3 +63,9 @@
 | [nasid-numbering.md](ip35/nasid-numbering.md) | Origin 3000 NASID numbering | This page covers how the IP35 (Bedrock) PROM numbers the hubs of a Bedrock system (their NASIDs), what it does with... |
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
 | [prom-md-config.md](ip35/prom-md-config.md) | IP35 PROM: every write to the memory controller's bank configuration during boot | Question. |
+
+## sn2
+
+| Page | Title | Summary |
+|---|---|---|
+| [address-map.md](sn2/address-map.md) | SN2 node physical address map | How an Altix (SN2) processor, SHub or TIO forms and decodes an address: the node number, the address-space selector... |
