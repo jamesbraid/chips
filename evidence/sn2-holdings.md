@@ -55,10 +55,23 @@ and never committed ([evidence/irix-files.md](irix-files.md) lists them with che
 | `shub1snprom.bin` | 10.40 build 62478 | 4.90 | IP41 (SHub 1) | 6291456 | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` | `snprom-10.40-62478.ia64.rpm`, ProPack 4 SP4 CD 2 |
 | `shub2snprom.bin` | 10.40 build 62478 | 1.40 | IP65 (SHub 2) | 12582912 | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` | as above |
 | `ip65prom.bin` | 10.11 build 52277 | 1.11 | IP65 (SHub 2) | 12582912 | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` | `snprom-10.11-52277.ia64.rpm`, a ProPack 4 package mirror |
+| `snprom.bin` | 3.32 build 30085 | 3.32 | IP41 (SHub 1) | 6291456 | `cce7adf38c0bb5b50d7c48c571fa4194f5b714d5c46e0e6519b2a64b2b34e0d6` | `snprom-3.32-30085.ia64.rpm`, ProPack 3 proprietary CD |
+| `snprom.bin` | 4.20 build 40503 | 4.20 | IP41 (SHub 1) | 6291456 | `0fdd129ecc2efdcfb875c873d67c9e18e57bc75b4500d6c1e72a1d9ca8dfa866` | `snprom-4.20-40503.ia64.rpm`, ProPack 3 SP6 proprietary CD |
+| `shub1snprom.bin` | 10.54 build 70399 | 5.04 | IP41 (SHub 1) | 6291456 | `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617` | `snprom-10.54-70399.ia64.rpm`, a ProPack 4 package mirror |
+| `shub2snprom.bin` | 10.54 build 70399 | not read | not read | | `3ea833181fda8968a5297043f2260d2fc255983ecca1d418292ee008b5e2c793` | as above |
 
-Other snprom packages are held but not yet read: 3.32, 4.04, 4.20 to 4.33, and 10.5 to 10.54. None of the four images
-above names IP57, the Altix 350 node board that the Prism guides also show, so which package supports the Altix 350 and
-Prism is still open. A Prism system disk image is held and may carry its own firmware.
+Every SHub 1 image above is built for `CPUBOARD=IP41` (its build-flag and banner strings say so), from 3.32 in 2004 to
+5.04 in 2008. That names the build target, not a single board. Which machines each image boots is stated by SGI's
+`README.snprom`, shipped inside each snprom package from 10.20 (2007) on and identical in substance in every later
+build: `shub1snprom.bin` supports the Altix 330, Altix 350, Altix 3300, Altix 3700, Altix 3700 Bx2, Prism Rackmount and
+Prism Deskside; `shub2snprom.bin` supports the Altix 4700, and the Altix 450 from 10.23 on. The package's install script
+keeps the SHub 1 image on nodes whose PROM version names IP41 and the SHub 2 image otherwise. This is vendor
+documentation of intent, graded established for what SGI says each image is for; that a given image boots a given
+machine is not yet shown. So the newest SHub 1 image held, SAL 5.04 from snprom 10.54, is the firmware for the Altix 350
+and both Prism variants. The 3.x and 4.x packages predate the README and name no machine.
+
+Still held but not extracted: snprom 4.04, 4.20 build 41216, 4.31 to 4.33 and the other 10.x builds. The Prism disk image
+held turned out to be a recent community Linux build for IA-64, not a factory system, and carries no SGI firmware.
 
 No L1, L2 or L3 controller firmware package for the SN2 bricks has been found under those names. sysco's readings of
 the controller firmware shipped with IRIX include SN2 brick routines, so that firmware may cover some SN2 bricks.
@@ -98,7 +111,7 @@ Prism guides (007-4772 deskside, 007-4701 Power and Team, 007-4774 Extreme) are 
 ## Gaps
 
 - No contract yet for SHub, SHub 2, TIO, TIOCA, TIOCE, TIOCX or the NUMAlink 4 router, and no SN2 machine or brick page.
-- Firmware for the Altix 350 and Prism: no held PROM image names their node board (IP57) yet.
+- Firmware: the SHub 1 image is SGI's stated PROM for the Altix 350 and Prism, but no read of its board handling yet shows how it treats an IP57 node.
 - No manual describes SHub, TIO or NUMAlink 4 at register level; the Linux code is the main source.
 - No manual found for the Altix 450, IA-64 on SN1, or UV hardware.
 - Prism graphics boards per model are not yet identified.
