@@ -144,9 +144,10 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
 - **Chip identity at run time (inferred, partly established).** The NASID comes from bits 42:32 of the SHub ID register
   `0x81_1006_0580` (`chipset_get_nasid`, established, read on almost every call). Bits 52:48 give the region size
   (`GET_SN_INFO`, firmware page), bits 45:44 are used by memory presence. `shub_probe` accepts a part number field of
-  17251 (0x4363); the SHub 1.1, 1.2 and "1.x" names and `shub_name` come from the revision field. The PROM proceeds only if
-  `0x81_1006_0580` holds a valid node id, part number 0x4363 and a revision (the revision the PROM expects is not decoded here). The field positions for part number and revision are not decoded here
-  (inferred from the SHub page's header-derived layout).
+  17251 (0x4363); the SHub 1.1, 1.2 and "1.x" names and `shub_name` come from the revision field. The part number
+  is not read from `0x81_1006_0580`: `chipset_init_chip` reads it from bits 27:12 of the word at node offset
+  `0x1_0000_0000` and offers it to four method tables, which accept `0x4363`, `0x3017`, `0x239` and `0x4422`; any other
+  value leaves a null table that later calls go through (chips `45fae66`). The revision the PROM expects is not decoded.
 - **What an IP57 changes (unknown).** No difference between IP41 and IP57 is visible in the PROM: neither the string
   `IP57` nor a table row for it exists. Differences must be in data the PROM reads (EEPROM, L1 CPU presence, DIMM
   data), not in code paths.
