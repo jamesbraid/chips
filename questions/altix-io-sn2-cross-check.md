@@ -34,6 +34,8 @@ module holds one SHub, one or two Itanium 2 processors, four PCI/PCI-X slots, an
 lowest slot; the card has a real-time interrupt input and output, an Ethernet port, and either serial (IO10) or SCSI
 (IO9). The pages read here give only the serial and SCSI split and do not say which board is standard (not checked beyond them). The guide does not name the bridge behind the four slots. SGI's Linux code supports both a PIC and a TIOCP there, so which the 350 uses is **unknown**.
 
+Added from the SAL 5.04 PROM reading: the [Altix 350 page](../platforms/sn2/altix-350.md) cites guide 007-4660-001 p.105 for a PIC on the PCI riser card (not re-read for this line). SHub 1 `shub1snprom.bin` carries PIC support: its link-credit code keys on widget part number `0xd102` (the PIC), its error decoders name PIC, and it reads an I/O riser EEPROM through the system controller (`sysctl_eeprom_io_riser`). That agrees with a PIC behind the XIO link and makes a TIOCP there unlikely, but the PROM also carries TIOCP, TIOCA and TIOCE code for other products, so it does not by itself settle which bridge a 350 has ([boot path](../software/firmware/snprom/altix350-boot-path.md#io-discovery)). Grade: inferred.
+
 What the Linux driver says about the boards ([IOC4 page](../devices/ioc4/README.md)): the master driver names IO9
 (IOC4 plus a QLogic ISP12160 SCSI controller at slot 3 of the same bus), IO10 (IOC4 plus a Vitesse VSC7174 serial-ATA controller at slot 3) and
 PCI-RT (IOC4 alone). So an IO10 carries an IOC4: the IO10 serial port and the real-time interrupt pins are IOC4 functions. The
