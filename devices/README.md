@@ -49,6 +49,8 @@
 | [isp12160/](isp12160/README.md) | QLogic ISP12160 SCSI host adapter | The ISP12160 is QLogic's dual-channel Ultra3 (Ultra160) SCSI host adapter. |
 | [isp2200/](isp2200/README.md) | QLogic ISP2200 Fibre Channel host adapter | The ISP2200 is QLogic's single-chip Fibre Channel host adapter, PCI vendor `0x1077`, device `0x2200`. |
 | [l1/](l1/README.md) | L1 and ELSC system controllers (host-visible side) | Mode: no-spec (see references/documents/specs.md: no specification is held). |
+| [l2/](l2/README.md) | L2 system controller (Origin 3000 and Altix 3000 racks; the Altix 4700 software L2) | Mode: no-spec. |
+| [l3/](l3/README.md) | L3 system controller (a console host, not a controller) | Mode: no-spec. |
 | [lh28f800su/](lh28f800su/README.md) | LH28F800SU: x16 flash command set, status and pins | Status: transcribed from the published Sharp datasheet, *LH28F800SU 8M Flash Memory*, SMT96107 (May 1996), printed... |
 | [lucent_ohci/](lucent_ohci/README.md) | AT&T/Lucent 11C1:5802 two-port OHCI USB host controller | The part is a two-port USB host controller with an OpenHCI register interface, PCI vendor `0x11c1`, device `0x5802`. |
 | [mace/](mace/README.md) | MACE | Mode: spec-backed (see references/documents/specs.md: MACE I/O ASIC Specification, chip revision 2.0, 31 May 1996... |

@@ -386,3 +386,7 @@ Corrections found while tagging. These are not fixed here.
 - **SN1 IA-64: where the Bedrock UART sits.** *[route: missing source]* Unknown: whether the port's console UART at remote register space +0x80 is a simulator model or hardware. See [questions/sn1-ia64-bedrock-uart-location.md](sn1-ia64-bedrock-uart-location.md).
 - **SN1 IA-64: what the simulator answered for the Bridge during I/O init.** *[route: software now]* Unknown: which Bridge and XBridge registers the kernel's attach path touches on widgets 14 and 15 before the simulator early return. Next: read the attach routines in the v2.5.0 commit. See [platforms/sn1-ia64/fake-prom.md](../platforms/sn1-ia64/fake-prom.md#5-open-points).
 - **SN1 IA-64: did the node ship.** *[route: missing source]* Unknown: whether any Bedrock Itanium unit left SGI and which stepping the prototypes used (prototype hardware is established). See [questions/sn1-ia64-shipped-or-prototype.md](sn1-ia64-shipped-or-prototype.md).
+
+## System controllers (added with devices/l1/host-link.md, devices/l2 and devices/l3)
+
+- **Controller host protocol: SHub 2 UART location, FIFO depth, no-argument requests, event frame, L2 routing, L2 baud, the 4700's controller link, address type 2, SAL subchannel mapping.** *[route: mixed, see the page]* Nine items, each with its next route in [questions/l1-l2-l3-host-protocol.md](l1-l2-l3-host-protocol.md).

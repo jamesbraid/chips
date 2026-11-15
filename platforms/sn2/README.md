@@ -85,6 +85,8 @@ each says, not as a clean split:
 **Controller.** Every machine has an L1 in the node or IRU and, except the 4700, an optional or required L2; the
 kernel reaches them through the PROM, not through registers. The host side is written up in the sysco repository
 (`software/firmware/l1/sn2-controller-host-protocol.md`), which also says which L1 firmware packages serve these bricks.
+The UART, framing and message layout are in [devices/l1/host-link.md](../../devices/l1/host-link.md); the L2 and L3 are
+in [devices/l2/](../../devices/l2/README.md) and [devices/l3/](../../devices/l3/README.md).
 
 ## What a Linux guest sees
 
