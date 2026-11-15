@@ -30,7 +30,7 @@ Published documents and patents. Every statement below that rests on one names i
 | same, sections 3.1 and 3.1.1 (pdf pp. 27 to 28) | SAL_A starts recovery if "the PAL_A code reports an authentication failure on the PAL_B component"; recovery code "shall authenticate a new firmware image using a PAL_A procedure" | who calls authentication |
 | same, SAL_UPDATE_PAL (pdf pp. 112 and 114) | the update call "will utilize resources within the processor and/or PAL to authenticate the contents of the new version of PAL"; on a warm reboot "it will conduct the authentication steps again" | authentication uses the processor and PAL |
 | Itanium 2 Processor Specification Update 251141-001, erratum 30 (pdf p. 11) | recovery check fails if PAL_B is missing or invalid | PAL_B is checked at recovery |
-| US 6,571,335 B1, "System and method for authentication of off-chip processor firmware code" (Intel, filed 1999-04-01, granted 2003-05-27) | the PAL code carries a DSA digital signature (a pair of numbers SIG_R and SIG_S) made over a SHA-1 digest "in response to a processor reset condition"; the signatory's public key and DSA code sit in on-chip memory; on mismatch "the electronic system is not released from the processor reset condition" | the scheme the images follow |
+| US 6,571,335 B1, "System and method for authentication of off-chip processor firmware code" (Intel, filed 1999-04-01, granted 2003-05-27) | the PAL code carries a DSA digital signature (a pair of numbers SIG_R and SIG_S) made over a SHA-1 digest "in response to a processor reset condition"; the signatory's public key and DSA code sit in on-chip memory; in one embodiment (its FIG. 7) a mismatch leaves "the electronic system ... not released from the processor reset condition", in another (FIG. 6) it reports an error or blocks execution; the hashed bytes are "the PAL code" with no byte ranges or header layout | the scheme the images follow |
 | US 6,542,981 B1, "Microcode upgrade and special function support by executing RISC instruction to invoke resident microcode" (Intel, filed 1999-12-28, granted 2003-04-01) | a special `br.ia`, gated by "one MSR to a special value", sets an error code and returns to a branch-register address; "the authentication engine achieves this by a one-way hash function or other methods"; no hash, key or signature size is given | mechanism of the `br.ia` call, no algorithm |
 
 Not found: any Intel document that defines the PAL_A header or a processor-specific `br.ia` function number. The SDM
@@ -60,8 +60,7 @@ N is the image length.
 - **48-byte tail.** The last 48 bytes of each PAL_A_spec and each PAL_B hold two 20-byte little-endian numbers, each padded
   with four zero bytes to 24: SIG_R at N-48 and a second value at N-24. The 16 bytes before the tail are a constant
   bundle. SIG_R is the same in all six SGI images and in Intel's 5.37 and 1.27; the second value differs per image.
-  Intel's 7.46 has no such tail (established by the verification failing for every coverage tried, and its last bytes
-  looking like code).
+  Intel's 7.46 carries no signature that verifies with this key (established: no tried coverage and no tail position verifies); that it has no tail at all is inferred.
 
 ## The software verifier in the generic PAL_A (established)
 
@@ -192,3 +191,31 @@ PROM, so only a test with a corrupted image separates the two, and no such hardw
 - Modulo-scheduled loops (the byte-sum helper, the multiprecision routines) decompile to `rotate_regs()` placeholders.
 - A flat-image import of the SAL runtime ELF has no symbols; `salruntime_checksum_fit` (`0x7390`) had no function and
   was not read.
+
+## Review
+
+Independent review of chips commit `416e8b5` (this page and `questions/pal-authentication-open.md`). The reviewer did not write the page and did not use the author's scripts: the verification below is a fresh big-integer and SHA-1 computation in Python written for this review, run over `shub1snprom.bin` (SAL 5.04, snprom 10.54 build 70399) and over Intel's `S870BN4C.BIN` (package `SR870BN4_1001_SUP3.ZIP`, sha256 `fb422439a42e3d06fe5286c68942c03293868cdde07891758437d4f98642d252`). Nothing was taken from the page's own tables. The route selection was read in the retools IA-64 Ghidra disassembly (every bundle of the image dumped through the module) and cross-checked with the binutils disassembly. The decompiler could not be used: `--decompile-symbol @0xffffff80`, `@0xffffda60`, `@0xffff86d6`, `@0xffff872c` and `@0xffff881c` each reported "no function matches", as the Ghidra notes say.
+
+**Reproduced independently.**
+
+- Key: p, g and y are contiguous 128-byte little-endian numbers at `0xffffa1d0`, q is 20 bytes at `0xffffa350`. p is a 1024-bit prime, q a 160-bit prime (Miller-Rabin, 64 random bases), q divides p-1, g and y are not 1 and both satisfy x^q = 1 mod p.
+- Signature layout: r is the 20 little-endian bytes at N-48 and w the 20 at N-24, each padded with four zero bytes, in all six SGI images. The 16 bytes before the tail are identical in all six, r is the same in all six, and w differs in each.
+- Verification, message SHA-1 over `[16, N-64)` (PAL_A) or `[0, N-64)` (PAL_B), H big-endian, u1 = H*w mod q, u2 = r*w mod q, check `(g^u1 * y^u2 mod p) mod q = r`: **verifies** for PAL_A 7.31, 5.37 and 1.27 and for PAL_B 7.79, 5.73 and 2.25.
+- Intel: the SR870BN4 BIOS carries two FITs; the one whose PAL entries map to the images was used, and each Intel image was located and its FIT checksum checked against Intel's own entry. PAL_A 5.37 and 1.27 are byte-identical to the SGI images and **verify**. PAL_A 7.46 has an all-zero 16-byte lead, a valid FIT checksum and **does not verify**: no combination of start offset (0 or 16), end trim (0 to 80 bytes in 16-byte steps) and tail position (every 8-byte step in the last 200 bytes) verifies.
+- Tamper tests on 5.37: a flipped bit in the body, in byte 16, and in byte N-65 each **fail**; a flipped bit in the 16-byte lead and in the 16 bytes before the tail each still **verify**. On PAL_B 7.79: a flipped bit in byte 0 or in the body fails, in the 16 bytes before the tail still verifies. Intel's 5.37 behaves the same as the SGI copy.
+- FIT checksum: for all three PAL_A images in the SGI FIT (C_V set) the byte sum plus the checksum byte is 0 mod 256, covering the lead; the same holds for Intel's 5.37, 1.27 and 7.46. The three SGI PAL_B entries have C_V clear.
+- Route (Ghidra listing, objdump agrees): `0xffffff80` is `br.few 0xffffda60`. In the FIT walk, `ld8 r82` and `ld8 r83` read an entry's two words (`0xffff85c0`), `tbit.z p0,p2=r83,24` at `0xffff86d6` branches to `0xffff8770` when bit 24 is set, and that path ends in `br.call b2=0xffffda60` at `0xffff881c` with `r32 = -2`, `r8 = r82 + 16` and `r9 = (size * 16) - 16`. With the bit clear it falls to `br.ia.sptk.few b0` at `0xffff872c` with `r5 = 1`, `r2 = r82`, `r3` = size. Bit 24 of the second word (the reserved byte) is zero in all 14 entries of this image's FIT.
+- US 6,571,335 B1, read on patents.google.com (it is not in the Library; list it for ingestion): Intel, filed 1999-04-01 and granted 2003-05-27; DSA signature as the pair SIG_R and SIG_S, SHA-1 digest, check "in response to a processor reset condition", public key and DSA code in on-chip memory.
+
+**Mechanical fixes made in this review.**
+
+1. The patent row said a mismatch leaves the system "not released from the processor reset condition". That is the patent's FIG. 7 embodiment only; FIG. 6 reports an error or blocks execution. The patent also gives no byte ranges or header layout for the hashed code. Row corrected.
+2. "Intel's 7.46 has no such tail (established ...)" overstated a negative. What was shown is that no signature verifies with this key under any tried coverage or tail position; that no tail exists is inferred. Text corrected.
+
+**Not re-read (kept at the author's grade).** The return convention at `0xffffda60` (`r8` and `r32` of 0 or -1, the msr[1779] bit 15 test), the claim that the author's interpreter reproduced the SHA-1 digest, and the PAL_A and PAL_B `br.ia` site details in [pal-msrs.md](pal-msrs.md). The `main_verify_elf_signature` note and the 16-byte lead hypothesis table were not re-derived either.
+
+**Grades.** The software check (key, layout, coverage, equation, per-image results, tamper behaviour) is **established** by computation. The route selection in the generic PAL_A is **established** from the disassembly. That the processor's `br.ia` service runs the same check is correctly **inferred**, and the patent text does not strengthen it: it describes a hash over "the PAL code" and gives no coverage, so it neither confirms nor contradicts the 16-byte lead being outside the check. The FIT checksum rule is **established** for the PAL_A images held.
+
+**Caution for a model.** This image never takes the software route, because every FIT entry has bit 24 clear. The result of the `br.ia` step in the generic PAL_A is therefore the inferred part of the contract, not the verified software routine. A CPU model that computes the verification result for it is modelling an inference. The page already says so, and says that a model returning success for every image matches all the images in this PROM.
+
+**Cleared scope:** the DSA key, the signature layout, the coverage, the verification equation and its per-image results (including Intel's three PAL_A images), the tamper behaviour, the route selection, the FIT checksum rule and the patent citation. **Not cleared:** the br.ia service's own behaviour (inferred), the return convention of the software routine, and the items listed as not re-read.
