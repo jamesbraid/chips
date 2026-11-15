@@ -662,9 +662,7 @@ It reads no general or branch register: every source is an immediate or a regist
 model-specific registers (numbers 212 and 1225; their meaning is unknown, these are processor-specific `msr` accesses
 the SDM does not define) and executes `br.ia`, the switch to the IA-32 instruction set, with `b0` set to
 `0xffffffe0`. This is an IA-32 hand-off from reset, consistent with the manual's allowance for IA-32 code in PALE_RESET
-and with the 16 bytes at `0xFFFFFFF0`. Where that IA-32 code goes (whether it returns to native code through the
-`0xFFFFFF70` vector) is **not read**: the IA-32 side at and above `0xFFFFFFE0` is not decoded and a real-mode jump to
-`f000:e05b` is physical `0xfe05b` (inferred), which is below the 16 MB firmware window, so what serves it is unknown. Treat the second half of this path as unknown.
+and with the 16 bytes at `0xFFFFFFF0`. Whether code at the `br.ia` target exists, and where control goes afterwards, is read in [the vector map](#the-vector-map) below: the target holds the two pointers, not instructions.
 
 The native path the architecture describes is at `0xFFFF83F0` (entered from the `0xFFFFFF70` bundle): `alloc
 r1=ar.pfs,96,0,0`, `mov pr=r0,...`, `mov r3=3`, `mov r71=cpuid[3]`, reads `cr.ifs`, loads `cr.ipsr = 0x100800000000`
@@ -685,3 +683,106 @@ instructions as read; whether hardware starts here or at `0xFFFFFFB0` first is t
    execute, then reach `0xFFFF83F0` for the native path (not settled how).
 4. The SDM's register list (GR20, GR32 to GR38, CFM, PSR, IVA) is what SALE_ENTRY receives (SAL_A reads r20 and r33
    to r37, see [SAL_A on SHub 1](#sal_a-on-shub-1)), not what PALE_RESET receives.
+
+### The vector map
+
+All of generic PAL_A (`0xffff8000` to `0xffffffbf`, 32 KiB) was disassembled and every function reachable from the
+vector bundles was read to its end, except the register-save variants noted below. The whole 6 MiB image was also
+disassembled and searched for any immediate or data word equal to `0xFFFFFF70`, `0xFFFFFF80`, `0xFFFFFF90`,
+`0xFFFFFFA0` or `0xFFFFFFB0`: none exists. Only the vector bundles themselves branch to the five targets (the one other
+reference is a call to the `0xFFFFFF80` target from inside generic PAL_A, below). The FIT-format entries are the table
+read above; their reserved byte is zero in every entry.
+
+| Vector | Target | What the target does | Reading |
+|---|---|---|---|
+| `0xFFFFFF50`, `0xFFFFFF60` | none | return through `b0` | stubs; no hardware use is visible (inferred) |
+| `0xFFFFFF70` | `0xFFFF83F0` | the cold-start path: sets `cr.ipsr`, `rfi`, validates and searches the FIT, hands over to processor-specific PAL_A | the only code in the image that reaches processor-specific PAL_A (established) |
+| `0xFFFFFF80` | `0xFFFFDA60` | a function with a normal prologue (`alloc r1=ar.pfs,96,0,96`) taking an argument in `r32`; also called by `br.call` from `0xFFFF8818` with `r32 = -2` | not a hardware path; software-callable PAL_A routine that works on FIT/PAL_A contents (inferred; not read in full) |
+| `0xFFFFFF90` | `0xFFFF8A80` | saves `r29`, `r30`, `r31` and `pr` into `msr` 1643, 1642 and 1641 (guarding each with a NaT test), tests bit 56 of `msr` 1640, finds a PAL_B (FIT type 1) entry, jumps to PAL_B plus `0x10080` | machine-check or INIT entry (inferred) |
+| `0xFFFFFFA0` | `0xFFFF8DA0` | the same code with the same saves, jumps to PAL_B plus `0x10070` | the other of the pair (inferred) |
+| `0xFFFFFFB0` | `0xFFFF83A0` | two `msr` writes and `br.ia` (below); nothing after it | see the conclusion |
+
+Established detail for the PAL_B hand-off at `0xFFFF8A80` and `0xFFFF8DA0`: both fall into one search loop (the two
+copies differ only in the pre-save variant chosen by predicate `p1`, and in the offset). The loop reads the FIT
+through `0xFFFFFFE0`, walks entries until type 1, and accepts the first entry whose dword at image offset `0x10114`
+gives the same CPUID family and model as `cpuid[3]` and a revision byte not below byte 1 of `msr` 1715 (the
+processor's own value, meaning unknown), then adds `0x10080` or
+`0x10070` to the image address (bit 63 set) and branches there with the old `b0` kept in `r31`. If `msr` 1640 bit 56
+is clear it takes the generic error path at `0xFFFF8120` with `r30 = 2`; a FIT type above 1 gives `r30 = 12`. Which
+of the two vectors is machine check and which is INIT is not decided by the code: a 2001 linux-ia64 post calls
+`0xFFFFFF90` PALE_CHECK (one source, software expectation), which would make `0xFFFFFFA0` PALE_INIT.
+
+### The generic PAL_A search and the hand-off (established)
+
+From `0xFFFF83F0` (entered by the `0xFFFFFF70` bundle):
+
+1. Reads `cpuid[3]`, sets `cr.ipsr` and `cr.iip` and executes `rfi` to `0xFFFF8470`, which clears `cr.iva` and
+   prepares the search registers (`r84 = 1` selects the primary FIT; the alternate is tried later).
+2. The FIT address is read from `0xFFFFFFE0` (primary) or `0xFFFFFFC8` (alternate; a zero there ends the search). The
+   first 8 bytes at that address must read `_FIT_   `. If the FIT entry's checksum-valid bit is set, the FIT is summed
+   by the routine at `0xFFFF9120` (a byte sum over sixteen-byte units; zero is valid).
+3. It then walks the 16-byte entries for type 0x0e. A match needs the processor-specific PAL_A image's dword at image
+   offset `0x14` to carry the running CPUID family and model, and the highest revision byte of those that match wins.
+   In the three images the dword reads revision minor, revision major, model, family: model 0, 1 and 2 with family
+   `0x1f` (the Itanium 2 family; model numbers 0 to 2 are McKinley, Madison, Madison 9M by the CPUID model field,
+   inferred). So `0xfffc2fc0` is the model 0 image, `0xfffc9ac0` model 1, `0xfffd0280` model 2.
+4. For a chosen image, with the FIT entry's reserved bit 24 clear (it is clear in every entry), it calls through
+   `br.ia` with the image address in `r2` and the image size in `r3`, `r5 = 1` and `b0 = 0xFFFF8730`; the code at
+   `0xFFFF8730` is native, restores the predicates and tests `r1`: nonzero rejects the image and the loop continues,
+   zero accepts it.
+5. The hand-off is a branch to the image address plus `0x300` (`0xfffc32c0`, `0xfffc9dc0`, `0xfffd0580`), reached
+   through `b2` (set at `0xFFFF890C`), with `msr` 1643 set to zero (success) or to a status 9 to 15 for the alternate-FIT and
+   error cases. Failures with nothing usable go to `0xFFFF8A10`, which also uses `br.ia`, with `b0 = 0xFFFF8A60`
+   and `r2`, `r3`, `r5` zero, and then to the error path.
+
+### The br.ia sites: what they are not (established) and what they might be (inferred)
+
+Generic PAL_A has three `br.ia` instructions: `0xFFFF83EC` (the reset site), `0xFFFF872C` and `0xFFFF8A5C`. Each
+site set `b0` to the address of
+a native bundle that begins with an `alloc` and expects to be entered afterwards: `0xFFFF8730` (which then checks `r1`
+as a result) and `0xFFFF8A60` (which then branches to the error path); the reset site instead sets `b0` to
+`0xFFFFFFE0`. Decoded as IA-32 in either the 32-bit or 16-bit default size, the bytes at `0xFFFF8730` and
+`0xFFFF8A60` are not code (they are native bundles), so `br.ia` in PAL_A is not an ordinary switch to IA-32 code
+whose target is `b0`. Reading the second site as a call whose argument registers are `r2`, `r3`, `r5` and whose result
+is `r1`, returning at `b0`, fits all three sites; what the callee is (the sixteen leading bytes of each
+processor-specific PAL_A look like an authentication value and the SDM names a PAL authentication call) is inferred,
+not shown by the code. The `msr` writes before the reset site (212 to 0, 1225 to 4) and their effect are unknown.
+
+For the reset site specifically (established): the 32 bytes at `0xFFFFFFE0` are the FIT pointer `0x80000000ffa00000`
+and the SALE_ENTRY pointer `0x80000000ffc4e000`, then the IA-32 far jump at `0xFFFFFFF0`. They do not form code in
+either default size. A straight decode from `0xFFFFFFE0` gives an `add` through `eax` (or `bx+si`), a load of `al` from
+an absolute address, more `add`s and a bad opcode, and in both sizes the instruction boundaries run past
+`0xFFFFFFF0` rather than landing on it, so a straight run does not reach the far jump. No `jmpe` (opcode `0F B8` or
+`0F 00 /6`) occurs in those 32 bytes, and the far jump itself goes to physical `0xFE05B`, below the firmware window
+(established that nothing in this image is mapped there). Executed as IA-64, the bundle at `0xFFFFFFE0` is also data.
+So nothing in the image gives an IA-32 return path to IA-64 code, and nothing in the image decides what the processor
+does after the reset-site `br.ia`.
+
+### Processor-specific PAL_A: header and entry table (established)
+
+Each of the three type-0x0e images (`0xfffc2fc0`, `0xfffc9ac0`, `0xfffd0280`) begins with 16 bytes that are not code, a
+dword whose bytes are not used by the search (offset `0x10`), the version, model and family dword at `0x14` (the search
+key), eight bytes of zero, and native code from offset `0x20` (a `mov r28=psr` bundle that is the same code as the
+generic error entry at `0xFFFF8120`). There is no entry table and no header field naming a reset entry: the only
+entry offset is the `0x300` constant inside the generic PAL_A search (`0xFFFF88F0`), and the only other fixed offset a
+caller uses is the `0x14` key. The images do not reference the `0xFFFFFF70` or `0xFFFFFFB0` vectors (none of the
+constants above appear in the image). The `0x300` entry begins by writing `msr` 1632 and then masks feature bits
+by CPUID revision before continuing; that part is not read further here.
+
+### Conclusion: which vector is the hardware reset entry
+
+- *Established*: `0xFFFFFF70` is the only entry whose code reaches processor-specific PAL_A and so the SAL; `0xFFFFFFB0`
+  is a short bundle sequence that ends in `br.ia` with a data address as its target and no instruction after it; no
+  other code branches or points to either one.
+- *Established*: the vector bundles `0xFFFFFF90` and `0xFFFFFFA0` are the two entries that hand off to PAL_B.
+  *Inferred*: they are what the SDM calls PALE_CHECK and PALE_INIT (the names are the SDM's, the pairing is from what
+  the code does).
+- *Inferred*: the SDM lists three hardware entrypoints (PALE_RESET, PALE_INIT, PALE_CHECK), and the image has four
+  that do something: `0xFFFFFF70`, `0xFFFFFF90`, `0xFFFFFFA0`, `0xFFFFFFB0`. So either `0xFFFFFF70` or `0xFFFFFFB0`
+  is not entered by the processor. Hardware entering at `0xFFFFFFB0` (the address Linux KVM uses, and that an earlier
+  Itanium board's post gives) needs the `br.ia` there to be a processor operation that continues at `0xFFFFFF70`;
+  the code shows no way for it to do so by itself. Hardware entering at `0xFFFFFF70` leaves `0xFFFFFFB0` as an
+  alternative reset path (for example the IA-32 reset case the SDM allows).
+- *Unknown*: which of the two silicon uses on a power-on reset. The image cannot settle it. A software model gets the
+  same SAL-visible result by starting at `0xFFFFFF70`, which needs only `cpuid[3]`, `cr.ifs` and a readable FIT, and by
+  not depending on the `msr` writes or `br.ia` semantics at `0xFFFFFFB0`.
