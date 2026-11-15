@@ -25,7 +25,7 @@ what the chip does when software does something else.
 ## Error capture
 
 A PCI error during ring or ATA DMA latches the address (`0x0`, `0x4`) and raises the matching bit in the other status word; the
-unit's DMA is halted. `master_id` names the unit. Software acknowledges the status bit first, then reads the address. The ATA
+unit's DMA is halted. `master_id` names the unit. The serial driver acknowledges the status bit first, then reads the address; the IDE driver reads the address first, then acknowledges (writes 3 to the status word). The ATA
 path also reads the PCI command word and writes `0x146` back to it (parity and system error reporting plus master and memory
 enable) to clear the error indicator. The bit 5 multiple-error flag is read-only information. What the chip does with a second
 error while the valid bit is still set: **unknown**.
@@ -82,10 +82,10 @@ cleared by software; the receive-full interrupt (defined, never used); reset val
   at 64 KB address boundaries and the table holds one fourth of a page of entries (256 on a 16 KB page, 64 on a 4 KB page).
 - End: write stop, poll until it reads back clear, then wait for the chip to write non-zero data into the end area, because a
   register read can overtake the last DMA write. The IRIX driver does the same ([coverage.md](coverage.md)). The two byte
-  counts (words 5 and 6) are compared; a difference of more than 8 is reported.
-- Interrupt: status bits 0 and 1 of the other word (drive interrupt, DMA error). Reading the ATA status register while the drive
-  is not busy clears the bits as a side effect when set (the driver writes 3 to the status word and rereads it); this makes the
-  status read an interrupt acknowledge. At attach the driver writes 3 to the other enable-set word to enable both sources.
+  counts (words 5 and 6) are read; when either has any of its low nine bits set and the device count exceeds the memory count by more than 8, the driver logs a warning. Nothing else is done with them.
+- Interrupt: status bits 0 and 1 of the other word (drive interrupt, DMA error). The driver's status-read routine, when the drive is not busy and
+  either bit is set, writes 3 to the status word and rereads it, so in the driver a status read is an interrupt acknowledge. That
+  is software doing the clearing; whether the chip clears the bits itself on a status read is **unknown**. At attach the driver writes 3 to the other enable-set word to enable both sources.
 - The driver restricts the drive to multiword DMA mode 2 and ignores timing, so word 0 is never written.
 
 **Unknown:** the meaning and reset value of word 0 (timing), the current-address words (3, 4), whether the high list-address word

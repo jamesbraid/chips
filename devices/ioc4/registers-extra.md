@@ -276,7 +276,7 @@ Control byte of a transmit ring entry; one per data byte. Value 0 is an invalid 
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `ATA_DMA_CONTROL` | 0x15c | established |  | index 7, byte accesses; bits below |
+| `ATA_DMA_CONTROL` | 0x15c | established |  | index 7; the SGI Linux driver accesses it as a 32-bit word; bits below |
 | `ATA_DMA_CONTROL_ACTIVE` | 0x8 | established |  | bit 3: read first by the start routine, which stops the engine before arming when set; name [I] |
 | `ATA_DMA_CONTROL_DIR_TO_MEMORY` | 0x4 | established |  | bit 2: 1 copies ATA data to memory; the direction convention rests on the public driver's comments |
 | `ATA_DMA_CONTROL_ERROR` | 0x10 | established |  | bit 4: tested; when set the start routine stores 2 and the completion routine reads it back; name [I] |
@@ -287,8 +287,8 @@ Control byte of a transmit ring entry; one per data byte. Value 0 is an invalid 
 | `ATA_DMA_CURRENT_HIGH` | 0x150 | inferred |  | index 4; named current memory address (high) by the SGI driver, which never accesses it |
 | `ATA_DMA_CURRENT_LOW` | 0x14c | inferred |  | index 3; named current memory address (low) by the SGI driver, which never accesses it |
 | `ATA_DMA_END_AREA` | 0x160 | established |  | index 8; bus address of the 128-byte end-of-transfer area |
-| `ATA_DMA_LIST_HIGH` | 0x148 | established |  | index 2; written by the packet-DMA start routine |
-| `ATA_DMA_LIST_LOW` | 0x144 | established |  | index 1; written by the packet-DMA start routine |
+| `ATA_DMA_LIST_HIGH` | 0x148 | established |  | index 2; the SGI Linux driver never writes it (low half only); the IRIX packet-DMA start routine writes it (coverage.md) |
+| `ATA_DMA_LIST_LOW` | 0x144 | established |  | index 1; address of the scatter list; written by the SGI Linux driver and the IRIX packet-DMA start routine |
 | `ATA_DMA_TIMING` | 0x140 | inferred |  | index 0; the SGI driver names it timing and the structure it overlays calls the first two words timing registers; no code in it reads or writes the word, so what it controls is unknown |
 | `EXTINT_COUNT_DIVISOR` | 0x208 | established |  | PCI clocks per COUNT tick of the external interrupt output. Period of a toggle-mode half cycle is (COUNT plus 1) times this many PCI clocks. |
 | `GPCR_DIR_MASK` | 0xff | established |  | Bits 7:0 of the generic pin control set and clear words (0x30, 0x34): pin direction, one bit per pin. |
