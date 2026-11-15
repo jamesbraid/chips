@@ -83,6 +83,7 @@
 | [seeq_8003/](seeq_8003/README.md) | SEEQ 8003 and 80C03 Ethernet controller | The SEEQ 8003 is an 8-bit Ethernet data link controller. |
 | [shub/](shub/README.md) | SHub (SN2 node controller), SHub 1 and SHub 2 | SHub is the node controller of the Altix 3000 family and its successors (SGI's SN2 platform): one chip per node that... |
 | [shub_ii/](shub_ii/README.md) | SHub 1 I/O interface (II) | The II is the part of SHub 1 that talks to Crosstalk: the unit that processor loads and stores to widgets leave... |
+| [synergy/](synergy/README.md) | Synergy (Itanium processor-bus ASIC, SN1 IA-64 node) | Mode: no-spec. |
 | [tigon/](tigon/README.md) | Tigon Ethernet controller: PCI data width | The Alteon Tigon/PCI is the Ethernet controller on SGI's IRIS Gigabit Ethernet board. |
 | [tio/](tio/README.md) | TIO | Mode: no-spec. |
 | [tioca/](tioca/README.md) | TIOCA | Mode: no-spec. |

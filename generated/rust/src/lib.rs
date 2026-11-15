@@ -63,6 +63,7 @@ pub mod seeq_8003;
 pub mod shub;
 pub mod shub2;
 pub mod shub_ii;
+pub mod synergy;
 pub mod tigon;
 pub mod tio;
 pub mod tioca;

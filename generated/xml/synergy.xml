@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/synergy/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="synergy" prefix="SYN" title="Synergy: the Itanium processor-bus ASIC of the SN1 IA-64 node (register offsets the Linux port uses)" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)">
+  <doc>Offsets are in the Synergy's own register space, all 64-bit. Every offset and access sequence comes from SGI's Linux SN1 IA-64 platform code, so they are established as software facts; field meanings beyond what a comment or an operand states are inferred or unknown. No Synergy specification is held. Reset values are unknown throughout: the only writer of a power-on state is a simulator-only fake PROM.</doc>
+  <struct name="VEC_MASK3_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2a0" access="rw" reset="unknown">
+    <doc>Interrupt vector enable mask, vectors 192 to 255, for the processor in bus slot 0. Bit n enables vector 192 plus n. The kernel sets a processor's bit here when it is in slot 0 and clears it in the matching B register. The fake PROM writes all ones to every mask register at start.</doc>
+  </struct>
+  <struct name="VEC_MASK3_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2a8" access="rw" reset="unknown">
+    <doc>Same as vec_mask3_a for the processor in bus slot 1.</doc>
+  </struct>
+  <struct name="VEC_MASK2_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2b0" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 128 to 191, slot 0.</doc>
+  </struct>
+  <struct name="VEC_MASK2_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2b8" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 128 to 191, slot 1.</doc>
+  </struct>
+  <struct name="VEC_MASK1_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2c0" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 64 to 127, slot 0. The kernel's Bedrock-pending-bit interrupts live here and in the next register.</doc>
+  </struct>
+  <struct name="VEC_MASK1_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2c8" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 64 to 127, slot 1.</doc>
+  </struct>
+  <struct name="VEC_MASK0_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2d0" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 0 to 63, slot 0.</doc>
+  </struct>
+  <struct name="VEC_MASK0_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2d8" access="rw" reset="unknown">
+    <doc>Vector enable mask, vectors 0 to 63, slot 1.</doc>
+  </struct>
+  <struct name="GBL_PERF_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x330" access="r" reset="unknown">
+    <doc>Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. So the register reads nonzero when the processor's earlier uncached stores have drained. Which bits carry that, and what the name's 'perf' means, is unknown.</doc>
+  </struct>
+  <struct name="GBL_PERF_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x338" access="r" reset="unknown">
+    <doc>Counterpart of gbl_perf_a, polled by processors on Synergy 1. See there.</doc>
+  </struct>
+  <struct name="FSB_CONFIG" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x450" access="rw" reset="unknown">
+    <doc>Written once per Synergy by the fake PROM with (nasid &lt;&lt; 16) | (synergy &lt;&lt; 9); the comment says it sets the NASID in FSB_CONFIG. The value written and the offset are established; the field meanings are inferred from the comment and the operands; every other bit is unknown.</doc>
+    <field name="nasid" start="16" size="8" type="uint" grade="inferred"/>
+    <field name="synergy" start="9" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="PERF_CNTL0_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xab0" access="rw" reset="unknown">
+    <doc>Performance control, bus 0, counter A. Only with the kernel's optional perf option. Bit 45 enables counting (the code sets it on every event word it stores, with the comment 'bit 45 is enable'); every other bit of the event select is unknown.</doc>
+    <field name="enable" start="45" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_CNTL0_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xab8" access="rw" reset="unknown">
+    <doc>Performance control, bus 0, counter B. Same layout as perf_cntl0_a.</doc>
+  </struct>
+  <struct name="PERF_CNTL1_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xac0" access="rw" reset="unknown">
+    <doc>Performance control, bus 1, counter A. Defined in the header; the kernel's multiplexer never writes it.</doc>
+  </struct>
+  <struct name="PERF_CNTL1_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xac8" access="rw" reset="unknown">
+    <doc>Performance control, bus 1, counter B. Defined, unused.</doc>
+  </struct>
+  <struct name="PERF_CNTR0_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xad0" access="rw" reset="unknown">
+    <doc>Performance counter 0, A. Read through the remote window and masked to 40 bits, then written zero after each interval.</doc>
+  </struct>
+  <struct name="PERF_CNTR0_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xad8" access="rw" reset="unknown">
+    <doc>Performance counter 0, B. Same use.</doc>
+  </struct>
+  <struct name="SYN_TAG_DISABLE_WAY" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xae0" access="rw" reset="unknown">
+    <doc>Cache-way disable mask for the L4 cache. The kernel's flush routine writes 0xff with one way's bit cleared, reads a run of 512-byte blocks through nine aliases 8 MB apart so that only that way can allocate, repeats for each of eight ways, then writes 0. That a set bit disables a way is inferred from the register's name and this use. Bits above 7 are unknown. First seen in the 2.4.16 patch of November 2001.</doc>
+    <field name="way_disable" start="0" size="8" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="PERF_CNTR1_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xaf0" access="rw" reset="unknown">
+    <doc>Performance counter 1, A. Defined, unused by the kernel.</doc>
+  </struct>
+  <struct name="PERF_CNTR1_B" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0xaf8" access="rw" reset="unknown">
+    <doc>Performance counter 1, B. Defined, unused.</doc>
+  </struct>
+  <constant name="L4_BLOCK_BYTES" value="0x200" grade="established"/>
+  <constant name="L4_BYTES" value="0x4000000" grade="established"/>
+  <constant name="L4_WAYS" value="0x8" grade="established"/>
+  <constant name="LOCAL_BASE" value="0xe0000000000" grade="established"/>
+  <constant name="PERF_COUNTER_BITS" value="0x28" grade="established"/>
+  <constant name="REMOTE_WINDOW_SYN0" value="0x34000000" grade="established"/>
+  <constant name="REMOTE_WINDOW_SYN1" value="0x35000000" grade="established"/>
+</genxml>

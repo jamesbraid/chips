@@ -1,0 +1,168 @@
+unit = "synergy"
+prefix = "SYN"
+title = "Synergy: the Itanium processor-bus ASIC of the SN1 IA-64 node (register offsets the Linux port uses)"
+doc = "Offsets are in the Synergy's own register space, all 64-bit. Every offset and access sequence comes from SGI's Linux SN1 IA-64 platform code, so they are established as software facts; field meanings beyond what a comment or an operand states are inferred or unknown. No Synergy specification is held. Reset values are unknown throughout: the only writer of a power-on state is a simulator-only fake PROM."
+from = "Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)"
+public_from = ["Linux v2.5.0", "Linux 2.4.18 IA-64 patch series"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+LOCAL_BASE = { value = 0xe0000000000, grade = "established", doc = "Physical address of the local register space as an Itanium on this bus sees it (the code's SSPEC_BASE). Which Synergy answers is the one on the issuing processor's bus; the code leaves the choice open." }
+REMOTE_WINDOW_SYN0 = { value = 0x34000000, grade = "established", doc = "Offset inside a node's hub special space of Synergy 0's registers as seen from another node: the remote register window (0x30000000 into the space) plus 0x04000000." }
+REMOTE_WINDOW_SYN1 = { value = 0x35000000, grade = "established", doc = "Same for Synergy 1: the remote register window plus 0x05000000." }
+L4_BYTES = { value = 0x4000000, grade = "established", doc = "Size of the Synergy's L4 cache as the kernel's flush routine models it: 64 MB. Whether silicon matched is not stated." }
+L4_WAYS = { value = 8, grade = "established", doc = "Associativity of the L4 cache in the kernel's model." }
+L4_BLOCK_BYTES = { value = 512, grade = "established", doc = "Block size the flush routine steps by." }
+PERF_COUNTER_BITS = { value = 40, grade = "established", doc = "The kernel masks a counter read to 40 bits (0xffffffffff). The counter may be wider; this is what software uses." }
+
+[registers.vec_mask3_a]
+offset = 0x2a0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Interrupt vector enable mask, vectors 192 to 255, for the processor in bus slot 0. Bit n enables vector 192 plus n. The kernel sets a processor's bit here when it is in slot 0 and clears it in the matching B register. The fake PROM writes all ones to every mask register at start."
+
+[registers.vec_mask3_b]
+offset = 0x2a8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Same as vec_mask3_a for the processor in bus slot 1."
+
+[registers.vec_mask2_a]
+offset = 0x2b0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 128 to 191, slot 0."
+
+[registers.vec_mask2_b]
+offset = 0x2b8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 128 to 191, slot 1."
+
+[registers.vec_mask1_a]
+offset = 0x2c0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 64 to 127, slot 0. The kernel's Bedrock-pending-bit interrupts live here and in the next register."
+
+[registers.vec_mask1_b]
+offset = 0x2c8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 64 to 127, slot 1."
+
+[registers.vec_mask0_a]
+offset = 0x2d0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 0 to 63, slot 0."
+
+[registers.vec_mask0_b]
+offset = 0x2d8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Vector enable mask, vectors 0 to 63, slot 1."
+
+[registers.gbl_perf_a]
+offset = 0x330
+access = "r"
+width = 64
+grade = "established"
+doc = "Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. So the register reads nonzero when the processor's earlier uncached stores have drained. Which bits carry that, and what the name's 'perf' means, is unknown."
+
+[registers.gbl_perf_b]
+offset = 0x338
+access = "r"
+width = 64
+grade = "established"
+doc = "Counterpart of gbl_perf_a, polled by processors on Synergy 1. See there."
+
+[registers.fsb_config]
+offset = 0x450
+access = "rw"
+width = 64
+grade = "established"
+doc = "Written once per Synergy by the fake PROM with (nasid << 16) | (synergy << 9); the comment says it sets the NASID in FSB_CONFIG. The value written and the offset are established; the field meanings are inferred from the comment and the operands; every other bit is unknown."
+
+[registers.fsb_config.fields]
+synergy = { bits = [9, 9], grade = "inferred", doc = "Synergy number, 0 or 1, as the fake PROM passes it." }
+nasid = { bits = [23, 16], grade = "inferred", doc = "Node's NASID. Seven bits in M-mode; the field width here is the byte the shift leaves, not a stated limit." }
+
+[registers.syn_tag_disable_way]
+offset = 0xae0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Cache-way disable mask for the L4 cache. The kernel's flush routine writes 0xff with one way's bit cleared, reads a run of 512-byte blocks through nine aliases 8 MB apart so that only that way can allocate, repeats for each of eight ways, then writes 0. That a set bit disables a way is inferred from the register's name and this use. Bits above 7 are unknown. First seen in the 2.4.16 patch of November 2001."
+
+[registers.syn_tag_disable_way.fields]
+way_disable = { bits = [7, 0], grade = "inferred", doc = "One bit per L4 way; a set bit takes the way out of allocation." }
+
+[registers.perf_cntl0_a]
+offset = 0xab0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance control, bus 0, counter A. Only with the kernel's optional perf option. Bit 45 enables counting (the code sets it on every event word it stores, with the comment 'bit 45 is enable'); every other bit of the event select is unknown."
+
+[registers.perf_cntl0_a.fields]
+enable = { bits = [45, 45], grade = "established", doc = "Counting enable, from the kernel's comment." }
+
+[registers.perf_cntl0_b]
+offset = 0xab8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance control, bus 0, counter B. Same layout as perf_cntl0_a."
+
+[registers.perf_cntl1_a]
+offset = 0xac0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance control, bus 1, counter A. Defined in the header; the kernel's multiplexer never writes it."
+
+[registers.perf_cntl1_b]
+offset = 0xac8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance control, bus 1, counter B. Defined, unused."
+
+[registers.perf_cntr0_a]
+offset = 0xad0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0, A. Read through the remote window and masked to 40 bits, then written zero after each interval."
+
+[registers.perf_cntr0_b]
+offset = 0xad8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 0, B. Same use."
+
+[registers.perf_cntr1_a]
+offset = 0xaf0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1, A. Defined, unused by the kernel."
+
+[registers.perf_cntr1_b]
+offset = 0xaf8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Performance counter 1, B. Defined, unused."

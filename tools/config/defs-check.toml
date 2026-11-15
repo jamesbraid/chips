@@ -145,6 +145,10 @@ prose_offsets = false
 group = "ice1724.h"
 prose_offsets = false
 
+[units.synergy]
+group = "synergy.h"
+prose_offsets = false
+
 [units.rad1]
 group = "rad1.h"
 prose_offsets = false
