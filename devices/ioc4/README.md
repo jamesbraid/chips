@@ -12,6 +12,8 @@ routine is cited as `name` at its offset in the object. No other build carries I
 read afterwards, to report agreement and conflict, never to supply a fact; the register names are the public Linux names for
 the offsets the code reached.
 
+Field layouts and driver behaviour from the SGI Linux drivers: [registers-extra.md](registers-extra.md), [linux-driver-notes.md](linux-driver-notes.md).
+
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`), config
 [`tools/configs/ioc4.json`](../../tools/configs/ioc4.json), header [`generated/c/ioc4.h`](../../generated/c/ioc4.h).
 
