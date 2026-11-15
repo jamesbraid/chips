@@ -27,7 +27,7 @@
     <field name="widget_id" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
   </struct>
   <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400100" access="rw" reset="0xfffffffffffffff">
-    <doc>One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.</doc>
+    <doc>One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.</doc>
     <field name="region_enable" start="0" size="64" type="uint" grade="established"/>
   </struct>
   <struct name="PROTECTION_OVERRIDE" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400108" access="w" reset="unknown">
@@ -368,7 +368,7 @@
     <field name="ippr0" start="0" size="32" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure"/>
   </struct>
   <constant name="BTE_REGISTER_SIZE" value="0x30" grade="inferred"/>
-  <constant name="MANUFACTURER_BEDROCK" value="0x36" grade="inferred"/>
+  <constant name="MANUFACTURER_BEDROCK" value="0x24" grade="inferred"/>
   <constant name="PART_BEDROCK" value="0xc110" grade="inferred"/>
   <constant name="PI0_INTERRUPT_PENDING_MODIFY" value="0x1800090" grade="established"/>
   <constant name="PI1_INTERRUPT_PENDING_MODIFY" value="0x1a00090" grade="established"/>

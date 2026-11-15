@@ -50,7 +50,7 @@
 #define BEDROCK_LB_REV_ID_MANUFACTURER_INPLACE       (BEDROCK_LB_REV_ID_MANUFACTURER_MASK << BEDROCK_LB_REV_ID_MANUFACTURER_SHIFT)
 
 /*
- * Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units.
+ * Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
  */
 /* cpu_permission: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) */
 #define BEDROCK_LB_CPU_PERMISSION                    0x604000 /* established */
@@ -83,7 +83,7 @@
 #define BEDROCK_LB_SOFT_RESET_SOFT_RESET_INPLACE     (BEDROCK_LB_SOFT_RESET_SOFT_RESET_MASK << BEDROCK_LB_SOFT_RESET_SOFT_RESET_SHIFT)
 
 /*
- * Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit.
+ * Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
  */
 /* region_present: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1 local-block register headers (field layouts, masks and comments), the processor-interface header (pending-1 bit 55) and the SN1 configuration header (real-time counter default); public Linux ia64 L1 driver (scratch 3 lock use) */
 #define BEDROCK_LB_REGION_PRESENT                    0x604020 /* established */

@@ -70,7 +70,7 @@
 #define BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_INPLACE  (BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_MASK << BEDROCK_II_WIDGET_CONTROL_WIDGET_ID_SHIFT)
 
 /*
- * One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.
+ * One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
  */
 /* local_access_protection: rw64, reset 0xfffffffffffffff; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_LOCAL_ACCESS_PROTECTION           0x400100 /* established */
@@ -979,7 +979,7 @@
 #define BEDROCK_II_PERFORMANCE_PROFILING_IPPR0_INPLACE (BEDROCK_II_PERFORMANCE_PROFILING_IPPR0_MASK << BEDROCK_II_PERFORMANCE_PROFILING_IPPR0_SHIFT)
 
 #define BEDROCK_II_BTE_REGISTER_SIZE                 0x30u /* inferred */
-#define BEDROCK_II_MANUFACTURER_BEDROCK              0x36u /* inferred */
+#define BEDROCK_II_MANUFACTURER_BEDROCK              0x24u /* inferred */
 #define BEDROCK_II_PART_BEDROCK                      0xc110u /* inferred */
 #define BEDROCK_II_PI0_INTERRUPT_PENDING_MODIFY      0x1800090u /* established */
 #define BEDROCK_II_PI1_INTERRUPT_PENDING_MODIFY      0x1a00090u /* established */

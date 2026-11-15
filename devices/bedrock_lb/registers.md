@@ -62,7 +62,7 @@ Revision and identity. The header says this register carries the chip identity a
 
 ### Register `cpu_permission`
 
-Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units.
+Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -90,7 +90,7 @@ A write to bit 0 resets the Bedrock with a soft reset. The header does not say w
 
 ### Register `region_present`
 
-Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit.
+Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and no other 64-bit field in the table has an all-ones reset, so the four clear bits do not look like a quirk of how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
