@@ -525,7 +525,7 @@ pub mod ni_return_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600308;
 }
-/// The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferre (established)
+/// The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Established by the header's comment (established)
 pub mod ni_vector_clear {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600380;

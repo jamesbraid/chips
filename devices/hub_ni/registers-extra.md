@@ -122,7 +122,7 @@ Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The h
 
 ### Register `ni_vector_clear`
 
-The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.
+The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Established by the header's comment, the same evidence the processor clear-on-read registers cite.
 
 ### Register `ni_io_protect`
 

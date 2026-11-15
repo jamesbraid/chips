@@ -86,7 +86,7 @@
     <doc>Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="NI_VECTOR_CLEAR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600380" access="r" reset="unknown">
-    <doc>The header describes the register as 'Vector PIO read &amp; clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.</doc>
+    <doc>The header describes the register as 'Vector PIO read &amp; clear status': a read clears, so the cor mask is all bits. Established by the header's comment, the same evidence the processor clear-on-read registers cite.</doc>
   </struct>
   <struct name="NI_IO_PROTECT" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="0xffffffffffffffff">
     <doc>PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.</doc>

@@ -380,7 +380,7 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines"
-doc = "The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred."
+doc = "The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Established by the header's comment, the same evidence the processor clear-on-read registers cite."
 cor = 0xffffffffffffffff
 
 [constants]

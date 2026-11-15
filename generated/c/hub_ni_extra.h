@@ -177,7 +177,7 @@
 #define HUB_NI_RETURN_VECTOR_OFFSET                  0x600308u /* established */
 
 /*
- * The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.
+ * The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Established by the header's comment, the same evidence the processor clear-on-read registers cite.
  */
 /* ni_vector_clear: r64, reset unknown; census: 3 sites, 3 routines */
 #define HUB_NI_VECTOR_CLEAR_OFFSET                   0x600380u /* established */
