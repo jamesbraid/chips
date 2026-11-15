@@ -585,7 +585,7 @@ value (it proves nothing about the state before it).
 
 SGI's driver of the same generation as the IRIX code carries a table of PIC workarounds, each a mask over part
 revisions where revision 1 is "A", 2 is "B" and 3 is "C" (`(1 << revision) & mask`; the `PV` numbers are SGI's erratum
-identifiers as printed in that header). The IRIX objects use the same revision test, so these entries explain code this
+identifiers as printed in `include/asm-ia64/sn/pci/pcibr_private.h`, with the uses in `arch/ia64/sn/io/sn2/pcibr/pcibr_dvr.c`, `pcibr_error.c`, `pcibr_intr.c`, `pcibr_rrb.c` and `pcibr_slot.c`, same pinned tree). The IRIX objects use the same revision test, so these entries explain code this
 page already read. All eight are **established** as what that driver does; why the chip needs them is as SGI's comments
 say, and none is a measurement.
 
@@ -595,7 +595,7 @@ say, and none is a measurement.
 | PV854827 | all revisions | fake the "widget 15 present" bit | not read in IRIX; meaning unknown |
 | PV855271 | revision 1 | virtual channel enable (device bit 25) only for 64-bit devices; the default device value leaves it off | not read |
 | PV855272 | revision 1 | runaway interrupt: drop and restore a pin's enable bit around handling | not read |
-| PV856155 | revision 1 | after a PCI-X arbitration error clear the four device-broke bits (23:20) of the arbitration register | not read |
+| PV856155 | revision 1 | after a PCI-X arbitration error write ones to the four device-broke bits (23:20) of the arbitration register (the driver's comment calls this clearing them) | not read |
 | PV856864 | revision 1 | clear enable bits 39 and 9 and set the request timeout to 0x750, so locked read tags time out sooner | yes: the same two bits and 0x750 |
 | PV856866 | revision 1 | never use read response buffers 0, 1, 8 and 9: park them on a device's virtual channel 3 | yes: 0xf000f in both buffer registers marks exactly buffers 0 and 8 (even) and 1 and 9 (odd) |
 | PV862253 | revision 1 | do not enable request-path parity checking (control bit 29) | yes: bit 29 set unless revision 1 |
@@ -717,3 +717,53 @@ Independent review on 2026-11-14 by a reviewer who did not write these pages. Re
 - All registers are `established` by name and offset with an `rw` placeholder access; the docs state it.
 
 **Cleared scope.** The Altix section of the README and the extra unit's registers and constants, as pinned to Linux v5.3. Not cleared: error-register semantics (the page correctly says SN2 code has none), PIC reset values, access directions.
+
+## Review (field layouts, revision differences, Altix comparison)
+
+Independent review on 2026-11-15 of commits aeeafe4 and 356e464 (read at main 176eaa5) by a reviewer who did not write them.
+Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md`.
+
+**How.** The pinned 2.4.37 `pic.h`, `bridge.h`, `pcibr_private.h` and the `sn2/pcibr` driver files, and the v5.3 `pic.h`,
+`pcibr_provider.h`, `pcibr_dma.c`, `pcibr_provider.c`, `pcibr_reg.c` and `tiocp.h`, were fetched as single files. A script
+parsed every `typedef union pic_*` bit-field comment and compared it with each field of the extra unit by name and bit range;
+the 20 fields that come from the `bridge.h` masks were read by hand. `pic_attach2` in the IP35 `pic.o` was decompiled in Ghidra
+(`--ghidra-export`, with `.lit8` dumped by objdump only to read the mask constants). The Altix constants and offsets were read
+against the v5.3 files.
+
+**Confirmed.**
+- All 417 fields of the 50 field words: bit ranges and names match the header unions (name differences are only the header's
+  `en_` and `logv_` prefixes on the enable and reset words). The 20 mask-derived fields (control bits 62:61, 55:40, 31:29 and
+  interrupt bits 45:42) match the `PIC_CTRL_*` and `PIC_ISR_*` masks. Interrupt status bits 63:42 are reserved in the structure,
+  as the page says.
+- Offsets and counts of every new register against v5.3 `struct pic` (0x8, 0x10, 0x30, 0x70, 0xd0, 0x300 x16 pairs, 0x400
+  blocks of 0x40, 0x638, 0xa00 and 0xb00 buffer arrays, 0x12000, type 0 and type 1 configuration windows, 0x30000, 0x40000).
+- The erratum table: all nine `PV` masks (revision 1 is `1 << 1`; PV867308 is `3 << 1`; PV854697 and PV854827 are all
+  revisions) and what each driver site does.
+- The 2.4 header's PCI-X error offsets 0xe0 to 0xf8 against its own structure at 0x600 to 0x638 and v5.3 padding at 0xe0: the contradiction is real.
+- Ghidra on `pic_attach2` (read by me): control gets 0x200000 always and 0xc0000000, or 0xe0000000 unless revision 1; the
+  bus number is shifted left 48; the interrupt reset write is 0x7f, device select 0x6db6db, request timeout 0x750 and response
+  buffer constant 0xf000f on both registers only for chip type 2 revision 1; the enable OR constant is 0x00003eff7ffffe00 and
+  the revision-1 AND constant clears bits 39 and 9; the control AND constants clear 55:48 and 62:61 with 47:40.
+- Altix constants: bit 21 page-size handling, bits 59:54 of 64-bit direct addresses, translation entry bits 4:0 and shifts 8 and 12,
+  0x40000000 and 0x80000000 window bases, swap bit 29, 48-bit against 54-bit host interrupt address, wait value 0x10f, device
+  number minus one, vector 0x33 for the bridge error interrupt, and that PCI-X mode drops prefetch and the 32-bit modes.
+- IO9 against IO10 discrimination by the device at PCI slot 3 (v4.19 `ioc4.c`), and slot 3 being internal device 2 (the
+  v5.3 table in `pic.h`).
+
+**Mechanical fixes.** The erratum table now names its source files (`pcibr_private.h` and the driver files); the extra unit's
+file-level `from` now also names the v5.3 files its constants cite; the PV856155 row says the driver writes ones to bits 23:20
+(its comment calls that clearing).
+
+**Findings not fixed.**
+- Every register in the unit is `established` by name and offset but its access direction is a placeholder `rw`; the doc
+  strings say so. A consumer reading `access` alone would be misled.
+- The ID word claim that low twelve bits are 0x049 rests on the SN2 PROM page, not rechecked here (inferred, as labelled).
+- The part 0xd112 labelling conflict (PROM page says TIOCP; header and IRIX say PIC bus 1) is correctly raised as open;
+  the PROM page itself was not edited.
+
+**Not checked.** The two SGI guide page citations for where the PIC sits (007-4566-001, 007-4660-001), the OpenBSD revision-3
+capture (taken from the existing IO9 question page, not the capture), the SN2 PROM readings, the mapping of the
+revision strings A, B, C in IRIX (inferred in the page), and the gp-relative mask loads in `pic_attach2` beyond the constants in `.lit8`.
+
+**Cleared scope.** The field words and constants in `registers-extra.toml`, the revision table, and the Origin 3000 against Altix
+comparison as graded, with the open questions left open. Not cleared: reset values, access directions, Altix revision.
