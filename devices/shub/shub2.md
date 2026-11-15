@@ -68,3 +68,30 @@ The routine at `0xff414e00` builds a global address from a 16-bit compact id: bi
 | I/O | II windows | none; TIO only |
 
 Cross-check against [address-map.md](../../platforms/sn2/address-map.md): its constants for both windows agree. Its "SHub 2 NASID shift and mask: unknown" is settled here for the firmware's view: shift `40 - V`, mask `(1 << (V + 10)) - 1`. Its question "how SHub 2 splits local and global MMR" is answered above at inferred grade.
+
+## 2. The identification register
+
+**Address.** Local `0x2_1006_0f00`, global `0x3_1006_0f00 | (nasid << (40 - V))`. PROM name `SH2_NODE_ID`. The Linux v5.3 header defines only the SHub 1 counterpart (`SH1_SHUB_ID` at `0x1_1006_0580`, revision field bits 31:28 only) and no SHub 2 identification register, so nothing here is Linux-defined; the layout below is read from the image's own field table (established as the table's content; the field meanings are inferred from the names).
+
+| Bits | PROM field name | Notes |
+|---|---|---|
+| 0 | `FORCE1` | reads 1 by its name (inferred) |
+| 11:1 | `MANUFACTURER` | no code reads it (established: no reader found in SAL_A, SAL_B or the runtime) |
+| 27:12 | `PART_NUMBER` | no reader found; value unknown |
+| 31:28 | `REVISION` | no reader found; the encoding is unknown (Linux: SHub 1 revision at the same bits) |
+| 45:32 | `NODE_ID` | the node number; the firmware reads `(value >> 32) & mask` with the mask from section 1 |
+| 47:46 | `SHARING_MODE` | read as `(value >> 46) & 3`; the firmware also writes it |
+| 53:48 | `NODES_PER_BIT` | the firmware reads bits 53:49 (5 bits) to size a bit vector, and writes the 6-bit field |
+| 54 | `SHARERS_1K` | tested by the firmware: clear selects a sharing domain of 512 nodes (log2 9) and shifts the node id by 9, set selects 2048 (log2 11) and 11 (`SN_SAL_GET_SN_INFO`, `0xff5838b0`; and the coherence-id computation) |
+| 55 | `RANGE_CHECK` | set by the firmware in a later phase |
+| 56 | `NI_PORT` | no reader found |
+| 57 | reserved | |
+| 58 | `SYSTEM_TYPE` | no reader found |
+
+Where it is read (established): SAL_A never touches it. Every later read of the node number goes through the routine at `0xff420290`, which returns `(read(0x2_1006_0f00) >> 32) & (*(table row + 0x38))`, the row being the one SAL_A left in `0x2_101d_0c00` (about 260 call sites). The runtime's `SN_SAL_GET_SN_INFO` reads it for bit 54. The interconnect phase (outside the reset path) writes it on a node: `NODE_ID` from the discovered number (14-bit field), `SHARING_MODE` in 47:46 as 0 for fewer than 32 nodes, 1 below 64, 2 below 128, else 3 (from the node count), `NODES_PER_BIT` from the sharing group size (1, 2, 4, 8, 16 or 32 per bit), and `RANGE_CHECK` set (routine `0xff4a9880`, established).
+
+**What the PROM tests.** Nothing about the part number, revision or manufacturer: no branch in the reset path or the SAL runtime depends on them (established by listing every read of the register; the SHub 1 firmware's part-number method selection at `0x1_0000_0000` has no SHub 2 counterpart found in this image). This is a difference from SHub 1, where the SAL 5.04 firmware chooses a method table by part number.
+
+**What a model must return.** Bits 45:32 = this node's NASID, even (SHub) and fitting the V in section 1. Bit 54 consistent with the intended sharing-domain size (0 for a domain of 512). Bits 47:46 and 53:48 hold whatever was last written, 0 before the firmware writes them (inferred: the firmware writes before it relies on them; no read before a write was found). The register must be writable in bits 55, 53:46 and 45:32. Part number, revision and manufacturer: any value passes the firmware; real values are unknown.
+
+**Unknown.** The real part number, revision encoding and manufacturer code; the reset value of `NODE_ID`; whether bit 58, 57:56 mean what their names say.
