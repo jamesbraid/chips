@@ -29,7 +29,7 @@ The Altix 3000 IX- and PX-brick are on [the Origin 3000 brick pages](../bricks/i
 Altix guide.
 
 The boot path of the Altix 350 from processor reset to multi-user, mapped against the reverse-engineered pages with a gap list, is
-[boot-path.md](boot-path.md).
+[boot-path.md](boot-path.md). The KLCONFIG graph the PROM builds and Linux reads is [klconfig.md](klconfig.md).
 
 ## Which chip where
 

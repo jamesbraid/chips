@@ -219,9 +219,10 @@ is quoted by the SAL page and was not re-verified there; the 350 PROM's DSDT is 
 
 **6b. klconfig and discovery.** `io_init.c`, `io_acpi_init.c`, `klconfig.h` (246 lines at v5.3: `kl_config_hdr`, `lboard_s`, `klinfo_s`, `KLTYPE_SNIA`
 and `KLTYPE_TIO`, brick types). The kernel walks the board list in `build_cnode_tables` only to find nodes that need a compact
-node number. SAL and structure facts: [software/sal](../../software/sal/README.md#structures-the-prom-fills), reviewed. The layout of the klconfig graph itself and what
-the PROM puts in it are **not started** ([sn2-sal-open](../../questions/sn2-sal-open.md)). The ProPack 2.6.5 kernel has no DWARF
-(symbols only), so structure layouts cannot be confirmed from it; the community 7.3.0 kernel is not SGI.
+node number. SAL and structure facts: [software/sal](../../software/sal/README.md#structures-the-prom-fills), reviewed. The layout of the klconfig graph, what the PROM
+writes on a one-node 350 and which three fields Linux reads are on [klconfig](klconfig.md): layouts established from v5.3 and v2.6.12
+and cross-checked against the PROM's stores; the PROM builder read; the I/O board type for a 350 and the heap address of the
+area unknown. The ProPack 2.6.5 kernel has no DWARF, so only its scan loads (offsets 20, 5, 48) confirm the layout.
 
 **6c. SHub MMRs Linux touches.** [devices/shub](../../devices/shub/README.md), [registers](../../devices/shub/registers.md), [devices/shub_ii](../../devices/shub_ii/README.md),
 [address map](address-map.md). Offsets and field positions of the registers the kernel names: established, reviewed. Meaning of
@@ -281,7 +282,7 @@ user-mapped RTC counter at v4.9.
 | 3 SAL and PAL runtime interfaces | kernel side reviewed; PROM handlers named, mostly unread; PAL procedures in progress | read the handlers the kernel needs to boot: `GET_KLCONFIG_ADDR`, `IOIF_INIT` or `GET_*_INFO`, console | rows 7 and 8 (SHub 2, SAL not read); row 9 for the shipped caller set |
 | 4 EFI | in progress (components, console string, hand-off written-unreviewed; the EFI image unread) | read the EFI component: configuration tables, boot manager, variables, console | row 7 (EFI component inside it); see inventory |
 | 5 ELILO | not started (public source only) | get the shipped loader, config and boot partition layout | not held: see inventory |
-| 6a-b Linux platform setup, SAL calls, klconfig | 6a reviewed; 6b layout not started | read `klconfig.h` against the PROM's klconfig builder | row 9 (symbols, no DWARF); row 7 |
+| 6a-b Linux platform setup, SAL calls, klconfig | 6a reviewed; 6b [written-unreviewed](klconfig.md) | independent review of klconfig; read `0xffa7e3b0` for the 350's I/O board type | row 9 (symbols, no DWARF); row 7 |
 | 6c SHub MMRs | reviewed (kernel-named registers) | name the PROM-programmed registers | row 7 |
 | 6d Interrupts, timer | reviewed (kernel side) | PROM side of interrupt allocation (2c) | row 7 |
 | 6e PCI, PIC and TIOCP | reviewed (kernel side) | PROM side of `IOIF_*` structure fill | row 7 |

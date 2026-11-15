@@ -4,8 +4,7 @@ Question. For each SN SAL call, what does the PROM actually do, and which struct
 
 Status: **unknown** beyond what the kernel passes and checks (software/sal/README.md).
 
-- Which of the pointers inside the PROM's descriptors are physical, and the `klconfig.h` layout of the KLCONFIG graph, are not settled; `klconfig.h` was fetched but not read for this contract.
-- What KLCONFIG contains beyond the board walk the kernel does: which boards, which fields.
+- Which of the pointers inside the PROM's descriptors are physical is not settled. The KLCONFIG layout and contents are on [klconfig](../platforms/sn2/klconfig.md) (open items there: heap address, the 350's I/O board type, component field meanings).
 - What `SN_SAL_IOIF_INTERRUPT` allocates in a bridge and in the SHub for a given request.
 - The SAL error-record formats the platform error print call interprets.
 - Whether the PROM can do without the calls the kernel makes but never needs (see the list of calls with no caller found); only the calls listed in "Calls needed to boot" are known to be required.
