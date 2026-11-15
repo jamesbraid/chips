@@ -5,7 +5,7 @@ node; the MIPS Origin 3000 node connects R12000s to the Bedrock directly. No spe
 (Library mail, TechPubs, or the public web) names or describes the chip outside the Linux source. Everything here comes from
 SGI's Linux port (`include/asm-ia64/sn/synergy.h`, `arch/ia64/sn/sn1/synergy.c`, `sn1/irq.c`, `sn_cpuid.h`,
 `nodepda.h`, v2.5.0 snapshot; `include/asm-ia64/sn/sn1/synergy.h` and `arch/ia64/sn/kernel/sn1/synergy.c` from v2.5.7 to
-v2.5.72, same content with small edits) and one cross-check in the Bedrock memory page. The platform context is in
+v2.5.72, same content with small edits) one cross-check in the Bedrock memory page, and the 2.4-series patches described below. The platform context is in
 [README.md](README.md).
 
 ## Where it sits
@@ -49,6 +49,31 @@ that junk-bus devices take 64-bit reads and 16-bit writes ([platforms/ip35/boot-
 Synergy: the patent names the flash. Whether the remote read and write offsets really differ by a factor of four, or the
 code has a defect on one side, is not stated.
 
+## Register map as a unit
+
+The offsets, widths and grades of every register below and in the next section are also in
+[devices/synergy/registers.md](../../devices/synergy/registers.md), generated from `devices/synergy/registers.toml`.
+
+## Further facts from the 2.4-series patches and unread v2.5.0 headers
+
+Source: SGI's SN1 code as published in the Linux/IA-64 project's 2.4.16 and 2.4.18 patch series (`linux-2.4.16-ia64-011126`,
+`linux-2.4.18-ia64-020410` and `020722`; `include/asm-ia64/sn/sn1/synergy.h`, `arch/ia64/sn/kernel/sn1/{cache.c,iomv.c,
+synergy.c,error.c}`, `arch/ia64/sn/kernel/irq.c`, `arch/ia64/sn/fakeprom/`). The v2.5.0 snapshot in the Library has neither `0xae0` nor `0x330`/`0x338`; the 2.4.18 header's register set is the v2.5.0 set plus them. Rows marked v2.5.0 come from that snapshot's headers, which the first pass did not read. The 2.4.0-test10 patch of November 2000, the first
+to carry `arch/ia64/sn/`, already has the mask registers and the fake PROM's `FSB_CONFIG` write.
+
+| Fact | Grade | Source |
+|---|---|---|
+| Register `0xae0` (`SYN_TAG_DISABLE_WAY`, from the 2.4.16 patch). The kernel's cache-flush routine writes `0xff` with bit `w` cleared, walks 512-byte blocks through nine aliases 8 MB apart, repeats for `w` = 0 to 7, and writes 0. The header sizes the Synergy's L4 at 64 MB, 8 ways, 512-byte blocks. That a set bit disables a way, and that the walk evicts a block from the one way left enabled, is the routine's evident design. | register, constants and sequence established; meaning of a set bit inferred | `cache.c`, `synergy.h` |
+| Synergy implements the Itanium `fc` instruction so that it purges the line from every processor cache and from the L4 of the other buses and from both processors on its own bus, but not from its own L4; that is why the routine above is needed. | established as the routine's own comment; the mechanism is unknown | `cache.c` |
+| Registers `0x330` and `0x338` (`GBL_PERF_A`, `GBL_PERF_B`, from the 2.4.18-020410 patch). The kernel's I/O write barrier, after reading the Bedrock revision register, polls the one for its Synergy until it is nonzero, sleeping 5 microseconds a pass. The code comment says it waits for the Bedrock PIO write status to clear. The names say performance, the use says write status. | offsets and polling established; role as write-drain status inferred; bit meaning unknown | `iomv.c`, `setup.c`, `synergy.h` |
+| Interrupt vectors 65 and 182. Vector 65 (`SGI_UART_IRQ`) stands for the Bedrock pending bits 1 to 6 together (graphics A and B, page migration, UART, and the two `CC_PEND` bits, whose function the header does not give); vector 182 (`SGI_HUB_ERROR_IRQ`) for pending bits 118 to 127, which the kernel clamps to one vector. The kernel's handler for 182 reads the second pending register and tests the crossbar, local-block, NACK, clock, correctable-error, memory-correctable, network and system-controller panic bits, and panics on each. The header says these two numbers are "not strictly accurate" and sends the reader to a Synergy specification. | established for the numbers and handlers; the flat numbering of the second pending register (bit `b` there is pending bit `64 + b`, so 54 to 63 are 118 to 127) is inferred from `182 = 118 + 64` and the handler's tests | `irq.c`, `error.c`, `intr.h` |
+| The 2.4.18 `irq_to_bit_pos` is plain `irq - 64`. The v2.5.0 version, as the review below records it, subtracts 64 again above 127, so the two trees disagree; the 2.4.18 one is the simpler. | 2.4.18 form established; v2.5.0 form as reviewed | `irq.c` |
+| Synergy-mode status of the Bedrock. A Bedrock processor-interface header comment says that "in Synergy mode" the source processor of a command is given by bit 52 of the SysAD bus (which of the two processors on that bus sent it), set by Synergy in every command; the PI keeps it in its request buffers and uses it to pick the A or B error bit and the matching error status and spool registers. The PROM configuration header says bit 8 of the high 32 mode bits is "the synergy mode bit". So Synergy sits on the Bedrock's SysAD-style processor port, and the Bedrock has a mode that reads the source processor from the bus instead of from which of two physical busses carried it. | established as the headers' statements; that Synergy speaks the R1x000 SysAD protocol is inferred | `sn1/hubpi.h`, `sn1/ip27config.h`, v2.5.0 |
+| Bedrock junk-bus defaults for Synergy: enable `0xff`, setup `0xff` (UART `0x0c` and `0x02`, flash `0x10` and `0x10`). These fill the three byte pairs of the junk-bus timing register ([devices/bedrock_md](../../devices/bedrock_md/registers.toml)), and the register's reset value in the memory page is `0xffffffffffff`, so Synergy keeps the reset setting while the UART and flash are tightened. | established as the PROM header's defaults | `sn1/ip27config.h`, v2.5.0 |
+| Uncached space has two views. The kernel's I/O and hub-special bases come in a pair that differs only in physical address bit 43: `0xc0000a...` and `0xc0000b...` against `0xc00002...` and `0xc00003...`. The code calls the first the unswizzled and the second the swizzled Synergy space. Through the unswizzled view a 32-bit register at offset `r` of a 64-bit-wide device is reached at `r ^ 4` (the PCI Bridge and crossbar register structures in the kernel pad each register with a filler word for this reason); the alternative named is to use the swizzled view and byte-swap data in software. Clearing bit 43 in a PCI ROM address is how the kernel chooses the swizzled view. The simulator is told `swizzling on`. | established as the code's behaviour; that the Synergy performs the data-lane swap, rather than the Bedrock, is inferred from the phrase "synergy space" | `pcibr.c`, `pci_bus_cvlink.c`, `xbow.h`, `bridge.h`, `addrs.h`, `runsim`, v2.5.0 |
+| The fake PROM's debug constants `SYNERGY_WIDGET` (`0xc0000e0000000000`) and `SYNERGY_SWIZZLE` (`0xc0000e0000000400`) are the uncached region base plus physical `0xe0000000000`, the same address `SSPEC_BASE` gives for the local register space. They are only printed. The physical address bits 43 to 40 of the spaces the code names are `0x2` and `0xa` (I/O, swizzled and not), `0x3` and `0xb` (hub special, swizzled and not) and `0xe` (Synergy), so bits 43 to 41 look like a space selector; that is a pattern, not something the code states. What lives at `+0x400` is not stated. | established as constants; selector reading inferred; role of `+0x400` unknown | `fakeprom/klgraph_init.c`, 2.4.18 patch; `sn1/addrs.h`, `synergy.h` |
+| Per-Synergy software state: two `synergy_da` structures per node, one per Synergy, hold the interrupt-mask bookkeeping; a hardware-graph directory `synergy/0` and `synergy/1` per node exposes the performance counters through ioctls that set an event word, read counters and set a multiplex rate. The counters are multiplexed one event at a time, one switch every N timer interrupts (default 10), and read masked to 40 bits. | established | `klgraph.c`, `synergy.c`, `sndrv.h`, 2.4.18 patch |
+
 ## What it was
 
 Question: function, which Itanium, bus conversion.
@@ -71,12 +96,12 @@ Question: function, which Itanium, bus conversion.
   of the time is the only SGI IA-64 code that carries the Synergy driver; the simulator ran with `cpu_stepping A`; the kernel
   menu offers McKinley as a processor type only as a generic choice. No source states "Merced" beside "Synergy", so
   the identification is inferred.
-- Registers beyond the known ones. Only the 8 mask registers, 8 performance registers and `FSB_CONFIG` are known. Nothing
+- Registers beyond the known ones. Only 20 offsets are known: the 8 mask registers, 8 performance registers, `FSB_CONFIG`, the L4 way mask and the two write-status registers. Nothing
   else was found in the Library, in kernel mail (2000 to 2003), or on the web.
 
 ## Not known
 
-Everything else: the `FSB_CONFIG` bits other than the two written fields, reset values, the other register offsets, the per-processor error and ECC logic, coherence and snoop
+Everything else: the layout of `GBL_PERF_A/B` and the L4 control beyond the way mask, the `FSB_CONFIG` bits other than the two written fields, reset values, the other register offsets, the per-processor error and ECC logic, coherence and snoop
 control, the interface to the Bedrock PI (processor-bus command encodings), the interrupt priority and inter-processor
 interrupt path through Synergy, and the meaning of the A and B performance event selectors. The open entry is in
 [questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md). What the fake PROM and the kernel touch in Synergy is in

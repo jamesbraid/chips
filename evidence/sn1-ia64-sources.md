@@ -214,8 +214,9 @@ checked file by file.
 
 - No Bedrock PIC or TIO and no IOC4: the I/O code handles Bridge (`0xc002`) and XBridge (`0xd002`) only, and the SN1
   hub I/O interface's part number `0xc110`. See the platform page.
-- No register header for Synergy beyond `synergy.h` (four interrupt-mask pairs and four performance control and counter
-  pairs).
+- No register header for Synergy beyond `synergy.h`. In v2.5.0 it holds four interrupt-mask pairs and four performance
+  control and counter pairs; the 2.4.16 and 2.4.18 versions add the L4 way mask (`0xae0`, from 2.4.16) and the write-status
+  pair (`0x330`, `0x338`, from 2.4.18-020410).
 - The files are SGI's. They carry GPL notices and 1999 to 2000 copyrights of Silicon Graphics staff.
 
 ## 2.4-series patches
@@ -241,6 +242,9 @@ paths in them come from the first-pass survey. Nothing here is tested on hardwar
   Simulator Support".
 - Patch base: `linux-2.4.18-ia64-020722.diff.gz` is the most recent of the 2.4.18 set. Its diff header names vanilla
   2.4.18 as the base, so it applies to a plain 2.4.18 tree.
+- Synergy read through 2026-11-15 from `linux-2.4.0-test10-ia64-001115`, `linux-2.4.16-ia64-011126`, `linux-2.4.17-ia64-011226`,
+  `linux-2.4.18-ia64-020410` and `linux-2.4.18-ia64-020722`: the first three lack the write-status registers; `0xae0` is
+  in all but the first. The patch files are fetched from the kernel.org ia64 ports directory above; the Library holds no copy.
 - Simulator and PROM: SGI's Medusa simulator is not public. `runsim` is a launcher script that drives the simulator, not
   the simulator. No SN1 PROM other than the fake PROM is known. Searches of the web, archive.org and the Library found no
   SN1 PROM image or simulator binary (2026-11-14). Unknown whether one exists elsewhere.

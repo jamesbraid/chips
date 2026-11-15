@@ -87,6 +87,9 @@ The Linux tree contains no PROM source for the Itanium node; the firmware is the
 | IPI | PI cross-call pending set and clear | A store to PI `+0x80` or `+0x88` carrying delivery mode and vector |
 | TLB flush | Cross-processor interrupt on the TLB levels (43 and 44) | The code to use SAL-reported global-purge domains is compiled out (`PTC_NOTYET`); flushes use cross calls |
 | Firmware | ARCS PROM | SAL, PAL and EFI front end over the same PROM data |
+| Uncached views | One uncached view per space | Each I/O and hub-special space has an unswizzled view (physical bit 43 set, `0xc0000a...`, `0xc0000b...`) and a swizzled one (bit 43 clear). The kernel uses the unswizzled view and XORs 32-bit register offsets with 4 ([synergy.md](synergy.md)) |
+| Write ordering | Hub uncached-write ordering as the PI page records | Before an I/O barrier the 2.4.18 kernel polls a Synergy register (`0x330`/`0x338`) until nonzero, the code comment calling it the Bedrock PIO write status ([synergy.md](synergy.md)) |
+| Error source | Which of the two processor buses raised an error picks CPU A or B | In Bedrock Synergy mode (a PROM mode bit) the source processor comes from bit 52 of the SysAD bus in every command, supplied by Synergy ([synergy.md](synergy.md)) |
 | Console | L1 and Bedrock UART | L1 protocol by default; with it off, a 16550-style console at the remote register space +0x80 with an 8-byte register stride (see [the question](../../questions/sn1-ia64-bedrock-uart-location.md)) |
 
 ## Product or prototype
