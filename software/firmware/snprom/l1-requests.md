@@ -23,8 +23,15 @@ sibling image, or a path whose gating condition was not evaluated. *unknown*: no
   bytes 0 to 3 big-endian destination word, bytes 4 and 5 request code, byte 6 argument count, then arguments (tag `0` plus 4-byte
   big-endian integer; tag `1` plus NUL-terminated string; tag `0x80|n` plus n raw bytes). The destination word is the open target
   ORed with 6 (the task). Every request on the main path is opened with target `0x0ffff000`, so the word is `0x0ffff006`
-  (established, `sysctl_cmd_open` `0xffa819c0` and each wrapper's constant); the `0x4ffff006` form exists only on the slot and slab
-  wrappers `0xffa7e6d0`/`0xffa7e900`, reached through `0xffaac4b0(4, ...)`, which this path does not call (inferred, caller list).
+  (established, `sysctl_cmd_open` `0xffa819c0` and each wrapper's constant); the `0x4ffff006` form belongs to a second wrapper set that
+  `0xffaac4b0(4, ...)` selects through the dispatch run `0xffa80210` to `0xffa80580` (the I/O board path, not read end to end; which
+  mode each caller passes was not traced): `0xffa7e3b0` (request `0x0003`, entered through `0xffa7e5e0` at `0xffa80430`), `0xffa7e6d0`
+  (request `0x0013`, with the `0x0003` fallback in `0xffa7cbe0`) and `0xffa7e900`. The target is set at `0xffa7e446`, `0xffa7e836`
+  and `0xffa7e946`. The `0xffa7e3b0` wrapper calls the `0x0003` routine `0xffa7ca10` at `0xffa7e51c` with `0x4ffff000` and has no
+  slab lookup and no type fold (those are in `0xffa7d510`, which belongs to the `0x0ffff000` set). Every other `0x0003` site
+  (`0xffa7d34c`, and `0xffa7d8ac` through `0xffa7cbe0` in the `0x0013` wrapper) passes `0x0ffff000`. Established for the constants
+  (objdump, all seven `movl ...0x4ffff000` sites); the `0x4ffff000` literal also appears at `0xffa819d6`, `0xffa855b6`, `0xffa910a6`
+  (the `0x100b` twin) and `0xffb5efc6`.
   The L1 ignores everything but the task number.
 - **Wire framing** (established, `0xffa86c90`): flag `0x7e`, one header byte, the payload with `0x7e` and `0x7d` escaped as `0x7d`
   plus the byte xor `0x20`, the complemented CRC-16 (initial `0xffff`, reflected `0x8408`, standard table at `0xffbe1190`; it runs over the
