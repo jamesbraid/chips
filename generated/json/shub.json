@@ -23,7 +23,7 @@
    "name": "chip_id.revision",
    "hi": 31,
    "lo": 28,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa0f8c0 (stored)"
   },
   {
@@ -133,7 +133,7 @@
    "kind": "register",
    "name": "md_timing_0",
    "offset": 4295032864,
-   "access": "rw",
+   "access": "w",
    "width": 64,
    "count": 1,
    "stride": 8,
@@ -147,7 +147,7 @@
    "kind": "register",
    "name": "md_timing_1",
    "offset": 4295032872,
-   "access": "rw",
+   "access": "w",
    "width": 64,
    "count": 1,
    "stride": 8,
@@ -203,7 +203,7 @@
    "kind": "register",
    "name": "md_refresh_1",
    "offset": 4295032912,
-   "access": "w",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
@@ -659,7 +659,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (reasons 1 and 2 only)"
+   "from": "SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (not reached for reason 0)"
   },
   {
    "unit": "shub",
@@ -690,7 +690,7 @@
    "name": "rtc_ctl.period",
    "hi": 13,
    "lo": 4,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period"
   },
   {

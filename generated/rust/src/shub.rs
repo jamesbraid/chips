@@ -6,7 +6,7 @@
 pub mod chip_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100000000;
-    pub mod revision { // bits 31:28, established
+    pub mod revision { // bits 31:28, inferred
         pub const SHIFT: u32 = 28;
         pub const MASK: u64 = 0xf;
         pub const fn get(v: u64) -> u64 {
@@ -72,7 +72,7 @@ pub mod md_timing_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010020;
 }
-/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written. (inferred)
+/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). (inferred)
 pub mod md_timing_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010028;
@@ -92,7 +92,7 @@ pub mod md_timing_3 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010048;
 }
-/// Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. (inferred)
+/// Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. The bring-up routine reads it (site 0xffa7761c), puts the (inferred)
 pub mod md_refresh_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010050;
@@ -447,7 +447,7 @@ pub mod rtc_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod period { // bits 13:4, established
+    pub mod period { // bits 13:4, inferred
         pub const SHIFT: u32 = 4;
         pub const MASK: u64 = 0x3ff;
         pub const fn get(v: u64) -> u64 {

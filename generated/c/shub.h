@@ -11,7 +11,7 @@
  */
 /* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read) and 0xffa0f8c0 (storage of the fields); the compare against 17251 is site 0xffa959a6 */
 #define SHUB_CHIP_ID                                 0x100000000 /* inferred */
-#define SHUB_CHIP_ID_REVISION_SHIFT                  28 /* established */
+#define SHUB_CHIP_ID_REVISION_SHIFT                  28 /* inferred */
 #define SHUB_CHIP_ID_REVISION_MASK                   0xfull
 #define SHUB_CHIP_ID_REVISION_INPLACE                (SHUB_CHIP_ID_REVISION_MASK << SHUB_CHIP_ID_REVISION_SHIFT)
 #define SHUB_CHIP_ID_PART_NUMBER_SHIFT               12 /* inferred */
@@ -58,15 +58,15 @@
 #define SHUB_MD_BANK_CFG2                            0x100010010 /* inferred */
 
 /*
- * Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file). Read then written.
+ * Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file).
  */
-/* md_timing_0: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+/* md_timing_0: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
 #define SHUB_MD_TIMING_0                             0x100010020 /* inferred */
 
 /*
- * Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written.
+ * Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file).
  */
-/* md_timing_1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+/* md_timing_1: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
 #define SHUB_MD_TIMING_1                             0x100010028 /* inferred */
 
 /*
@@ -88,9 +88,9 @@
 #define SHUB_MD_TIMING_3                             0x100010048 /* inferred */
 
 /*
- * Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout.
+ * Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. The bring-up routine reads it (site 0xffa7761c), puts the refresh interval 195 in bits 16:8 and writes it back (site 0xffa77b0c); the same word is also written to md_refresh_0 (site 0xffa77adc).
  */
-/* md_refresh_1: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+/* md_refresh_1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
 #define SHUB_MD_REFRESH_1                            0x100010050 /* inferred */
 
 /*
@@ -263,22 +263,22 @@
 #define SHUB_LB_REG_1002_0000                        0x110020000 /* established */
 
 /*
- * Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 only. The meaning of the value is unknown.
+ * Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 and for a reason above 3, not for reason 0 (or 3). The meaning of the value is unknown.
  */
-/* lb_slice_rec: r64, reset unknown; SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (reasons 1 and 2 only) */
+/* lb_slice_rec: r64, reset unknown; SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (not reached for reason 0) */
 #define SHUB_LB_SLICE_REC                            0x110030000 /* established */
 #define SHUB_LB_SLICE_REC_COUNT                      4
 #define SHUB_LB_SLICE_REC_STRIDE                     128
 
 /*
- * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (period + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+ * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
  */
 /* rtc_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
 #define SHUB_RTC_CTL                                 0x110060280 /* established */
 #define SHUB_RTC_CTL_MODE_SHIFT                      32 /* inferred */
 #define SHUB_RTC_CTL_MODE_MASK                       0x3ull
 #define SHUB_RTC_CTL_MODE_INPLACE                    (SHUB_RTC_CTL_MODE_MASK << SHUB_RTC_CTL_MODE_SHIFT)
-#define SHUB_RTC_CTL_PERIOD_SHIFT                    4 /* established */
+#define SHUB_RTC_CTL_PERIOD_SHIFT                    4 /* inferred */
 #define SHUB_RTC_CTL_PERIOD_MASK                     0x3ffull
 #define SHUB_RTC_CTL_PERIOD_INPLACE                  (SHUB_RTC_CTL_PERIOD_MASK << SHUB_RTC_CTL_PERIOD_SHIFT)
 #define SHUB_RTC_CTL_RUN_SHIFT                       0 /* inferred */

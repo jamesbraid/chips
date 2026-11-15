@@ -2,7 +2,7 @@
 
 # SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 
-SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use.
+SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use. For a register Linux does not define, a register-level grade of established covers the offset, width and direction read in the PROM image; what the register means is graded in its fields and doc, inferred unless stated.
 
 Unit `shub`, macro prefix `SHUB`.
 Default source: Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver.
@@ -20,12 +20,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_bank_cfg0` | 0x100010000 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_bank_cfg1` | 0x100010008 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_bank_cfg2` | 0x100010010 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_0` | 0x100010020 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_1` | 0x100010028 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
+| `md_timing_0` | 0x100010020 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
+| `md_timing_1` | 0x100010028 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_refresh_0` | 0x100010030 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_timing_2` | 0x100010040 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_timing_3` | 0x100010048 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_refresh_1` | 0x100010050 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
+| `md_refresh_1` | 0x100010050 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_const_58` | 0x100010058 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_ctl_60` | 0x100010060 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_const_78` | 0x100010078 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
@@ -41,7 +41,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `event_occurred` | 0x110010000 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `event_occurred_alias` | 0x110010008 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `lb_reg_1002_0000` | 0x110020000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name |
-| `lb_slice_rec` | 0x110030000 | r | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (reasons 1 and 2 only) |
+| `lb_slice_rec` | 0x110030000 | r | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (not reached for reason 0) |
 | `rtc_ctl` | 0x110060280 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field |
 | `ipi_access` | 0x110060480 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `md_clk_sel` | 0x110060500 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name |
@@ -76,7 +76,7 @@ Chip identification word at node offset 0x1_0000_0000 (memory and directory bloc
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:28 | `revision` | established |  | SAL 5.04 PROM site 0xffa0f8c0 (stored) | Revision as stored by the PROM; no value is required here. |
+| 31:28 | `revision` | inferred |  | SAL 5.04 PROM site 0xffa0f8c0 (stored) | Revision as stored by the PROM (that the field is a revision is inferred); no value is required here. |
 | 27:12 | `part_number` | inferred |  | SAL 5.04 PROM site 0xffa0f8c0 and 0xffa959a6 | Part number; the PROM expects 0x4363 (17251). Inferred: the compare's input is not traced to this word. |
 
 ### Register `md_mbist_status`
@@ -109,11 +109,11 @@ Memory controller register, unnamed; the name is ours. Per-bank configuration wo
 
 ### Register `md_timing_0`
 
-Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file). Read then written.
+Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file).
 
 ### Register `md_timing_1`
 
-Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written.
+Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file).
 
 ### Register `md_refresh_0`
 
@@ -129,7 +129,7 @@ Memory controller register, unnamed; the name is ours. Second copy of md_timing_
 
 ### Register `md_refresh_1`
 
-Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout.
+Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. The bring-up routine reads it (site 0xffa7761c), puts the refresh interval 195 in bits 16:8 and writes it back (site 0xffa77b0c); the same word is also written to md_refresh_0 (site 0xffa77adc).
 
 ### Register `md_const_58`
 
@@ -243,18 +243,18 @@ Local block register, unnamed; the name is ours (address). SAL_A writes 0x150310
 
 ### Register `lb_slice_rec`
 
-Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 only. The meaning of the value is unknown.
+Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 and for a reason above 3, not for reason 0 (or 3). The meaning of the value is unknown.
 
 Array of 4 registers, stride 128.
 
 ### Register `rtc_ctl`
 
-Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (period + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 33:32 | `mode` | inferred |  | SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1) | Read by an interconnect-phase routine that branches on 1, 2 and 3, and set to 1 by another. Written 1 by the reset entry. Meaning inferred only; name is ours. |
-| 13:4 | `period` | established |  | SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period | Tick period field: period in nanoseconds is 10 times (value + 1). Written 4 by the PROM. Name is ours. |
+| 13:4 | `period` | inferred |  | SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period | Tick period field: the PROM and the SAL runtime both compute the period in nanoseconds as 10 times (value + 1), a software expectation read in two places; that the counter really ticks at that rate is inferred. Written 4 by the PROM. Name is ours. |
 | 0 | `run` | inferred |  | SAL 5.04 PROM site 0xffa94d06 (clear), 0xffa94d26 (set), 0xffa967e6 (clear) | Clear when the PROM writes the counter to 0, set after; cleared again by an interconnect-phase routine. A run control is inferred from that order only; name is ours. |
 
 ### Register `ipi_access`
