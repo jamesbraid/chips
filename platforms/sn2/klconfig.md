@@ -29,9 +29,10 @@ below were then read in the disassembly of each routine named; where a routine w
   adds `0x10000`; the allocator checks the 8-byte value at that address is `0xbeedbabe` and prints "kl_config_info_alloc: bad
   magic" otherwise, `0xffaa4560`). So the offset inside the block is fixed and the block's own address depends on heap state:
   **unknown**. Route: trace the heap allocator (`0xffac30c0`) on a booted node, or a captured `GET_KLCONFIG_ADDR` result.
-  That the SAL call returns exactly `block + 0x10000` is **inferred**: the existing reading of the handler
-  (`salruntime_klconfig_addr`, [snprom README](../../software/firmware/snprom/README.md)) adds `0x10000` and Linux treats the
-  value as the header; the handler was not re-read here.
+  That the SAL call returns exactly `block + 0x10000` is **established**: the handler at `0xffb19c20` (`sal_02000005`) returns
+  status 0 and, in r9 (`v0`, the only word Linux uses), the word at offset `+0x20` of the node's block A plus `0x10000`; a node
+  with no memory gets status -2 and r9 0 (`software/sal/sn2-runtime.md` reads the same routine). The link routine `0xffaa5450`
+  stores the first board at block `+0x10014`, which is header `+20`.
 - **Offsets inside the structures (established).** Every link (`brd_next_any`, `brd_compts[]`, `ch_board_info`, `errinfo`) is a
   32-bit value holding the **node-local physical address** of the target (the low 32 bits with the NASID bits and bit 63
   cleared). `NODE_OFFSET_TO_LBOARD(nasid, off)` (`v5.3:klconfig.h`) is `CAC_BASE | (nasid << 38) | off`, and
@@ -202,7 +203,7 @@ Then `0xffab0f10` builds the following.
 | Board | Type, name, parent | Built by | Notes |
 |---|---|---|---|
 | I/O brick midplane | `0x42` (`KLTYPE_IOBRICK_XBOW`), name `"IOBRICK"`; geoid type 1 (module), module id from L1 request `0x0003` via `0xffa80210` | `0xffab19f0` (read in full) | one crossbar component, `struct_type` 4, `partid` and revision from widget 0's id word (bits 27:12 and 31:28), `virtid` 0, `nic` all ones, +248 the master link number from `0xffaaf630`, `errinfo` a 4-byte block (`init_klcfg_xbow`, `0xffab1800`, read in full). Link ports from 8 to 15 are recorded in the crossbar component as 12-byte records starting at +56 + 12 (`link - 8`): halfword 0, a flag byte whose bit 2 is set, and the 32-bit offset of the I/O board on that link (`0xffab1b60`; **inferred** meaning) |
-| I/O board, one per PIC bus | `brd_type` from the brick-type table below, `brd_name` the table's name, `brd_parent` (+152) the midplane board's full address, `brd_slot` from the widget address (bits 27:24, or 29:28 when bit 38 of the address is set) | `0xffabfb10` (`bridge_discover`, read in full) then `0xffaed410` or `0xffabf7c0` | for a PIC with identification `0xd102` and manufacturer 36 (bits 11:1 of the id word equal `0x24`) a second board is created for the second bus at widget base + `0x800000`; each gets a bridge component |
+| I/O board, one per PIC bus | `brd_type` from the brick-type table below, `brd_name` the table's name, `brd_parent` (+152) the midplane board's full address, `brd_slot` from the widget address (bits 27:24, or 29:28 when bit 38 of the address is set) | `0xffabfb10` (`bridge_discover`, read in full) then `0xffaed410` or `0xffabf7c0` | for a PIC with identification `0xd102` and manufacturer 36 (bits 11:1 of the id word equal `0x24`) a second board is created for the second bus at widget base + `0x800000`; each gets a bridge component. `0xffabfb10` also accepts `0xd112` for that second board, but the link walk in `0xffab0f10` only calls it for a link part of `0xd102` (decompiler reading, not cross-checked in disassembly) |
 | bridge component on each I/O board | `struct_type` 5, `flags` 1, version 2, `partid` (id bits 27:12, so `0xd102`), `revision` (id bits 31:28), `widid` and `physid` the bus number, `virtid` NASID * 16 + bus, `nic` the board's `brd_nic`, +56 `0xff`, +57 7, +104 text offset (the L1 EEPROM text), `errinfo` a 4-byte block | `0xffabf850` and `0xffabf570` (both read in full) | `brd_nic` of the board is the 64-bit hexadecimal number after `"Laser:"` in the EEPROM text, when present |
 
 No IOC4, IOC3, SCSI or Tigon component is built on this image: the strings `init_klcfg_ioc*` and `init_klcfg_tg3` that older
@@ -232,14 +233,19 @@ read through `0xffa80430` for an even NASID (a compute SHub) and `0xffa80210` fo
 | `0x7b` | `0x72` | `onboardIO` |
 | anything else | `0x70` | `WEIRDIO` |
 
-**What a one-node 350 gets: unknown, with a constraint.** On the even-NASID path the type byte is the lowercased L1
-module type from request `0x0003` with no slab fold (`0xffa80430`, `0xffa7e5e0`; the fold to `c` applies only on the odd-NASID
-path `0xffa7d510`). The [L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type) infers type `F` for a 350, which
-lowercases to `0x66` and selects board type `0x7e`, name `OpusTiobrick`. This is **inferred**; `0xffa7e3b0` (the reader behind
-`0xffa7e5e0`) was only skimmed (it calls the `0x0003` reader). One constraint holds either way: with a result of `0x70`
-the PIC branch of `0xffabfb10` would call the bridge fill with a null second board, so a working 350 must produce a type in
-`0x71` to `0x74` or `0x76` to `0x7f` (inferred from that control flow, not run). Linux does not read the board type of
-I/O boards for anything other than the SNIA and TIO test, so this does not affect boot.
+**What a one-node 350 gets: depends on one L1 reply (inferred `0x7e`, `OpusTiobrick`).** The 350's PIC has an even NASID, so
+`bridge_discover` calls `0xffa80430`, which maps the NASID to the chip object (`0xffa7fcb0`) and calls `0xffa7e5e0`, which calls
+`0xffa7e3b0` (read in full). That routine reads the cached module word and type (cache keys 8 and 9); on a miss it sends L1
+request `0x0003` through `0xffa7ca10` to the **`0x4ffff000` target** (the node path `0xffa7d1f0` uses `0x0ffff000`),
+lowercases a type letter `A` to `Z`, and caches the result. With the simulator signature in `cpuid[2]` it skips the L1 and uses rack 1, bay `0xf`,
+type `0x3d` (`IXbrick`, `0x77`). `0xffa7e5e0` only folds `0x34` and `0x61` to `0x69`; there is no slab lookup and no fold to `c`
+(those are in `0xffa7d510`, the odd-NASID path), and `0xffa7d010` packs rack `<< 16`, type `<< 8`, bay. So the type
+byte is whatever the L1 answers to `0x0003` at that target. If the 350's L1 says `F`, the board type is `0x7e`, name `OpusTiobrick`;
+that `F` is **inferred** from the L1 default (see the [L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type))
+and no 350 reply is held. One constraint holds either way: with a result of `0x70` the PIC branch of `0xffabfb10` would call the
+bridge fill with a null second board, so a working 350 must produce a type in `0x71` to `0x74` or `0x76` to `0x7f`
+(inferred from that control flow, not run). Linux does not read the board type of I/O boards for anything other than the SNIA
+and TIO test, so this does not affect boot.
 
 ### Values by source
 
@@ -310,8 +316,8 @@ Items 1 to 3 let the PROM finish building; items 4 to 6 shape the contents; item
 ## 5. Unknowns and routes
 
 1. Absolute address of KLCONFIG on a booted node (heap state): trace the allocator, or a captured `GET_KLCONFIG_ADDR` result.
-2. The brick type byte a one-node 350 reports on the even-NASID path, hence the I/O board type: read `0xffa7e3b0` in full and the
-   L1's reply for the 350; or a captured `sn_topology` / klconfig dump from a 350.
+2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000`, hence the I/O board type (`0xffa7e3b0` is read;
+   the reply is not held): a captured L1 exchange, or a `sn_topology` / klconfig dump from a 350.
 3. The component layouts beyond `klinfo_t` (hub, memory bank, CPU, bridge, crossbar): Linux does not define them. The PROM
    stores are listed above; field meanings are inferred. A routine in the PROM that reads them back (the diagnostic dump
    `klcfg`, `0xffb220a0` and `0xffb23530`) would name the fields.
@@ -320,8 +326,31 @@ Items 1 to 3 let the PROM finish building; items 4 to 6 shape the contents; item
 6. Whether SAL 5.04 builds anything for a one-node 350 beyond what is above (for example the vga component path
    `init_klcfg_vgagfx` at `0xffaf1fc0`, the routine that adds a graphics component to the master node, is not on the IO10 path as read).
    Needs the call census of `0xffaf23f0`.
-7. The 2.6.5 kernel's later reads after the type test (next-board load at offset 0) were not traced; only the three loads named
-   in section 1.
+7. (Closed in the review below: the 2.6.5 scan also loads `brd_next_any` at offset 0.)
 
 Sources read: Linux `v5.3` and `v2.6.12` `klconfig.h`, `geo.h`, `module.h`, `types.h`, `arch/ia64/sn/kernel/{setup,io_init,io_common,io_acpi_init,klconflib}.c`
 (the last at v2.6.12 only), `sn_hwperf.c`, `sn_sal.h`, `addrs.h`; the SAL 5.04 SHub 1 PROM; the held 2.6.5 kernel's `sn_setup`.
+
+## Review
+
+Independent review of this page by a reviewer who did not write it. Reviewed chips revision fc1a4eb. Linux checked at v5.3 and v2.6.12 (`klconfig.h`, `geo.h`, `types.h`, `setup.c`, `io_init.c`, `sn_sal.h`, `l1.h`; single files from raw.githubusercontent.com). The SAL 5.04 SHub 1 image (sha256 `51ccf9ad...3a34617`) was read in the IA-64 Ghidra module (`--ghidra-export --sn2-prom`); the held 2.6.5 kernel could not be exported (the exporter reads ELF files as MIPS, and a flat IA-64 export of `sn_setup` produced no function), so that check is from `ia64-linux-gnu-objdump` and is only a disassembly reading. Decompiler output was used for navigation and the stores below were read against the disassembly or the decompiled stores of each routine.
+
+**Confirmed.**
+- Layout: both `klconfig.h` files compile to a 112-byte header with `ch_board_info` at 20, a 232-byte `lboard_t` and a 56-byte `klinfo_t`, with every offset in the page's tables (`brd_type` 5, `brd_geoid` 16, `brd_nic` 40, `brd_nasid` 48, `brd_compts` 52, `brd_parent` 152, `brd_name` 193, `brd_next_same_host` 226, `brd_next_same` 228; `klinfo_t` `partid` 10, `nic` 16, `physid` 24, `virtid` 28, `widid` 32, `nasid` 34, `data` 40, `errinfo` 48). `geoid_t` is 12 bytes (`geo_cpu_t` and `geo_mem_t` grow it past the 8-byte pad array). The two headers differ only in the helper macros the page lists. The magic `0xbeedbabe` is not in either Linux tree; it is the PROM's own value and was not re-read here.
+- PROM stores: nasid +48, compts +52, name +193, parent +152 and same-host +226 are all hit by `0xffaed240`, `0xffaa1ea0`, `0xffab0f10`, `0xffaed410`, `0xffabf570`, `0xffaa5450`; the geoid is copied as 8 plus 4 bytes. Defaults in `0xffaed240` match the page.
+- Node board: type `0x11`, `brd_sversion` raised to 3, name copied to +193, hub, membank, hub UART and CPU components with the struct types, flags and offsets the page lists (checked for hub, membank and UART in decompiled stores; CPU only through the page's own reading).
+- I/O boards: widget 0 part `0xd000` or `0xd100` in `0xffab15c0`; the brick-type table in `0xffabfb10` matches row for row, including the `0x70` WEIRDIO default; the second board for `0xd102` with manufacturer `0x24`; bridge component fields in `0xffabf850` (`partid` id bits 27:12, `revision` bits 31:28, `virtid` NASID * 16 + bus, +56 `0xff`, +57 7); `brd_nic` from `Laser:` in `0xffabf570`; slot bits in `0xffaed410`.
+- Linux reads: `board_needs_cnode` tests only `KLTYPE_SNIA` and `KLTYPE_TIO`; `physical_node_map[brd->brd_nasid]`; `find_lboard_next` follows `brd_next_any`; `BUG_ON(NULL)` at v5.3 746; v2.6.12 `scan_for_ionodes` uses the same three fields. `ia64_sn_get_klconfig_addr` uses only the SAL `v0` word (status is ignored), so a status of -2 with r9 0 is the NULL case. No other file read (`io_init.c`, `io_common.c`, `sn_hwperf.c`) touches `lboard_t`.
+- Held 2.6.5 kernel (`sn_setup`, objdump): the constant `0x2000005` is loaded at two sites; the scan loads the word at +20 of the SAL result, the byte at +5 of the board (`adds -17`, `cmp4.ltu 1` selects types `0x11` and `0x12`), the halfword at +48, a `short` table lookup indexed by it, and then the word at +0 for the next board. This closes the page's unknown 7.
+
+**Findings.**
+1. The `+0x10000` result of `GET_KLCONFIG_ADDR` was graded inferred; `0xffb19c20` shows it directly. Edited to established (mechanical).
+2. The 350's I/O board type: `0xffa7e3b0` was marked skimmed. Read in full, it sends `0x0003` to target `0x4ffff000`, not `0x0ffff000`, so the [L1 request page](../../software/firmware/snprom/l1-requests.md) statement that the `0x4ffff006` form is used only by the slot and slab wrappers is wrong for this site (not edited here; another page). The type is the L1's letter lowercased, with no slab fold (the fold to `c` is only on the odd-NASID path). Under the simulator signature it is `0x3d`, `IXbrick`. For a real 350 the answer is `0x7e` `OpusTiobrick` if and only if the L1 replies `F`; that `F` is still inferred, so the page now says "depends on one L1 reply" instead of "unknown". Edited.
+3. The PIC part: `0xffabfb10` accepts `0xd112` as well as `0xd102` for the second bus, but `0xffab0f10` only dispatches to it for `0xd102`. Added to the table cell. The dispatch comes from decompiled code with confused register names and was not cross-checked in disassembly.
+4. "IP41": the PROM writes it unconditionally. `0xffaa1ea0` copies the string at image `0x1b5de0` (`TIO` sits at `0x1b5dd8`) into +193 whenever the board type is `0x11`, and no `IP57` string exists in the image. It does not describe the 350's node board, which 007-4660-001 calls IP57: it is the board-family label the PROM was built for (the same word is in the SAL banner) and matches Linux's `L1_BRICKTYPE_IP41` (`0x35`, which `0xffa7d510` folds to `c`). The page's statement stands. One unread consequence: the string `update_klcfg_cpuinfo: Can't find IP41 on nasid` says the PROM itself looks the node board up by that name, so a model should not rename it. The routine was not read.
+5. IOC4: no IOC4, IOC3, SCSI or Tigon builder string exists in this image (only the `init_klcfg_` names listed by `strings`: hub, hubuart, membnk, cpu, xbow, bridge, iobrick_xbow, iobrick_bridge, vgagfx, corelet), and the two board builders called from `0xffab0f10` are the only I/O record builders on that path. That is a name and call-path argument, not a census: `init_klcfg_corelet` is not mentioned on the page and was not traced. Grade stays inferred.
+6. `0xffaa1a10` builds memory components only when its second argument (passed through from `hwcfg_node_init`) is 0. The page lists the components as unconditional. What the argument means is unknown; for the single-node call it is the value `main_two` passes, which was not read.
+
+**Not checked.** The GET_KLCONFIG_ADDR heap address; the header magic check at `0xffaa4560`; region sizes and board and component counts in section 1; the CPU, EEPROM-text and chip-object routines beyond the page's own reading; the `corelet` and `vgagfx` callers; the L1 firmware's real reply for a 350; the v2.6.12 `klconflib.c` helpers; whether `0xffab0f10`'s `0xd102` dispatch holds in disassembly.
+
+Cleared scope: the layout tables, the PROM store offsets, the brick-type table, and the Linux and 2.6.5 read analysis. Not cleared: the "depends on one L1 reply" type claim (the `F` is unverified), finding 5, and finding 6.
