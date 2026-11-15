@@ -58,17 +58,66 @@ boundaries agree with two selections; the patent does not say which part sits at
 - What the 8-byte HSPEC stride for writes means in hardware, beyond the patent's description.
 - The command set the flash answers to, and the board's wiring from the flash to the memory
   directory unit.
+- The environment records that mark absent CPU positions A to D disabled. No source in the
+  repositories gives their offsets or bytes. The records written after a failed start need
+  the captured PROM's bytes before they can be stated.
 
 Routes that would settle these: a published Bedrock or memory directory unit specification with
 the boot-flash pages, or a read of the flash's own identification data from a board. Neither is
 in this repository.
 
+## CPU configuration block at 0x60
+
+The block is 80 bytes at flash offset 0x60. The PROM reads it through the boot-space window.
+The layout is graded observed because the iris emulator maintainer reported the PROM's
+behaviour; the disassembly of the shipped 6.210 PROM, in
+[ip35-board-word-and-config-block.md](../../questions/ip35-board-word-and-config-block.md#2-the-80-byte-configuration-block-and-its-machine-type-field),
+grades the same offsets established.
+
+| Offset | Content | Grade |
+| --- | --- | --- |
+| +0x00 | 0x15 | observed |
+| +0x04 | CPU mode word, from the speed row | observed |
+| +0x08 | `ip27conf` (0x69703237636f6e66) | observed |
+| +0x10 | CPU clock, Hz | observed |
+| +0x18 | bus clock, Hz | observed |
+| +0x20 | 0x1312d0 (1,250,000) | observed |
+| +0x28 | 1 (ECC enable) | observed |
+| +0x2c | 0x10 (flash timing) | observed |
+| +0x30 | machine type: 0, 1 or 2 | observed |
+| +0x34 | 0 (checksum adjustment; rule unknown) | observed |
+| +0x3c | 0x10 (flash write timing) | observed |
+
+The comparison, graded observed as reported: the PROM checks +0x00, 0x04, 0x08, 0x10, 0x18,
+0x28, 0x2c, 0x30 and 0x3c. The reference comes from the board's EEPROM text record, or from
+the speed row when that record is missing. A difference prints "CPU configuration values
+from board EEPROM/PSC did not match" and asks for a reflash. The disassembly's message text
+is the same.
+
+Row selection, established from the 6.210 disassembly: class 0x4000 (Fuel) uses row index
+0x20 plus the low nibble of the board word; class 0x2000 uses 0x30 plus the low nibble.
+A Tezro board word is outside class 0x4000 (the class page infers IP53 is class 0x2000), so
+the Fuel rows do not apply to it.
+
+Early mode-word check, established from the 6.210 disassembly: the reset path writes flash
++0x04 to CP0 Config and compares the readback. A mismatch disables that processor slice,
+prints a permanent-disable notice and returns to normal start-up.
+
+Reference mode words, one row each:
+
+- 800 MHz, 200 MHz bus, 4 MB cache, tap 0xa, machine type 2: 0x549baf85. Observed on a real
+  Fuel, from a public transcript of a `flash -f` run on a public firmware-update page. The
+  transcript is not a capture held in these repositories.
+- 500 MHz: the value the iris emulator uses is a chosen emulator value, not read from
+  hardware or the PROM. The PROM's own 500 MHz rows are 0x549aa985 (2 MB) and 0x549ca985
+  (8 MB).
+
 ## Not imported
 
-- The PROM's own probe of the flash, its environment or label records, and the way the PROM
-  erases and programs the flash. These need the PROM image itself to re-derive (the CPU PROM
-  payload `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, described in
-  [ip35-prom-md-config.md](prom-md-config.md)). They are not stated here until that
-  disassembly is done.
+- The PROM's own probe of the flash and the way the PROM erases and programs the flash. These
+  need the PROM image itself to re-derive (the CPU PROM payload
+  `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, described in
+  [ip35-prom-md-config.md](prom-md-config.md)). The configuration block is covered above; the
+  environment records are under Unknown.
 - The per-position command state. It does not appear in the patent text. The write stride is
   eight HSPEC bytes per PROM byte (see the table above).
