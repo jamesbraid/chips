@@ -1,0 +1,291 @@
+# SN2 PROM PAL: instructions no manual defines, event entry state and the `br.ia` call sites
+
+What the PAL code in the SAL 5.04 SHub 1 PROM (`shub1snprom.bin`, package `snprom-10.54-70399`, sha256 starting `51ccf9ad`) needs
+from a processor beyond the architected instruction set: two instruction encodings the Itanium manuals leave reserved but
+the firmware executes on its normal path, the state the hardware must hand the PAL at its event vectors, and the register
+layout at every `br.ia` in the PAL code. Companion to [pal-msrs.md](pal-msrs.md), which catalogues the `msr[]` accesses, and
+[boot-sequence.md](boot-sequence.md); part of [the snprom images](README.md).
+
+**Grades.** *established*: read from the shipped image (instruction, operands, address) or from a published manual page
+(cited by document, revision and page). *inferred*: a reading built from code behaviour, with the reasoning. *unknown*: not
+settled, with what would settle it. Nothing here says what a processor does in hardware unless a manual says it.
+
+## Method and sources
+
+- **Code reading is from Ghidra** with the IA-64 processor module in retools (`ghidra/processors/ia64`), the whole 6 MiB image
+  loaded at `0xffa00000` and every bundle disassembled; addresses are the slot addresses objdump prints (slot 0 is the bundle,
+  slot 1 is +6, slot 2 is +0xc). Every address, operand and count below was read from that listing unless it says otherwise.
+  binutils 2.44 `objdump` was used only to cross-check the module on a hand-built bundle (item 1) and to disassemble a data
+  table as bytes. Counts were produced by scripts over the Ghidra listing; the same 702 sites were also found
+  independently by a standalone decoder scan, so the count is double-checked.
+- **Manuals read** (cited as document, revision, printed page; the opcode tables were read from the rendered pages, the other manuals
+  were searched as text for the vector addresses, entry state and any PAL-only instruction):
+  Intel Itanium Architecture Software Developer's Manual rev 2.3, vol 1 (245317), vol 2 (245318), vol 3 (323207);
+  SDM specification update 248699-008; Itanium 2 Processor Reference Manual 251110 revisions -001, -002, -003;
+  Itanium 2 Processor Hardware Developer's Manual 251109-001; Itanium Processor Hardware Developer's Manual 248701-002;
+  Itanium 2 Processor Specification Update 251141-001 (the only revision of 251141 held; revision -028 was **not** read);
+  SAL Specification rev 3.4 (245359-009).
+- Public software read: GNU binutils 2.44 `opcodes/ia64-opc-m.c` (tag `binutils-2_44`, sourceware.org git) and the
+  `src/encodings/encoding.decode` table of the ski simulator (github.com/trofi/ski, master as fetched in November 2026,
+  commit not recorded).
+
+## 1. The undefined M-unit slot (`0x108000000`)
+
+### What it is (established)
+
+A 41-bit slot in an M position with major opcode 0 (bits 40:37), x3 = 0 (35:33), x2 = 2 (32:31), x4 = 1 (30:27), bit 26
+(`y`) = 0, and every other bit, including the qualifying predicate (5:0), zero. In the image it is the 41-bit value
+`0x108000000`; Ghidra prints it as `unknown.m 0x108000000` because the module deliberately assigns it no mnemonic.
+
+**Count (established, Ghidra).** 702 sites over the PAL components: generic PAL_A 1; processor-specific PAL_A 7.31 18, 5.37 22,
+1.27 22; PAL_B 7.79 211, 5.73 211, 2.25 217. Every site has `srlz.d` or `srlz.i` as the nearest preceding non-nop instruction
+(`srlz.d` 501 times, `srlz.i` 201 times). Reachability of individual sites is not proved; counts are of decoded sites.
+
+### What the manuals say
+
+**Verdict: reserved, and it faults. Established for the architecture; what an Itanium 2 does is unknown.**
+
+- SDM vol 3 Table 4-42 and Table 4-43, section 4.4.10 "System/Memory Management", printed page 3:345: opcode 0, x3 = 0 sub-table
+  indexed by x4 and x2. Row x4 = 0 holds `break.m`, `invala`, `fwb`, `srlz.d`; row x4 = 1 holds the "1-bit Ext (Table 4-46)" entry
+  at x2 = 0 and `srlz.i` at x2 = 3. The cell x4 = 1, x2 = 2 is empty and shaded the dark purple used for "Reserved if PR[qp] is 1"
+  (read from the rendered page: the text extraction loses the colour). The cell x4 = 1, x2 = 1 next to it is the same purple.
+- The legend: vol 3 section 4.1 (printed pages 3:294 to 3:295) and the section 4 introduction (printed page 3:299). "Reserved if
+  PR[qp] is 1" encodings "cause an Illegal Operation fault if the predicate register specified by the qp field of the
+  instruction (bits 5:0) is 1 and execute as a nop instruction if 0". Vol 2 section 8, the ISR description for the General Exception vector (printed page 2:192), lists "reserved major opcodes, reserved
+  sub-opcodes, or reserved instruction fields" among the causes of an Illegal Operation fault.
+- PR0 always reads as 1: vol 1 section 3.1.4 "Predicate Registers" (printed page 1:26). The slot's qp field is 0, so PR[qp] = 1 and
+  the architecture says the instruction **raises an Illegal Operation fault every time it executes**. It is not an architectural nop.
+- It is **not** `nop.m` or `hint.m`. Those share x3 = 0 and x4 = 1 but use x2 = 0 with bit 26 (`y`) choosing nop (0) or hint (1)
+  (Table 4-46 and format M48, printed page 3:349). This slot has x2 = 2. (Aside: GNU's table also lists a DAHR `mov` at x2 = 0,
+  y = 1, z = 1; that is a later extension and is not this encoding.)
+- B-unit companion: SDM vol 3 Table 4-48 "Indirect/Miscellaneous Branch Opcode Extensions" (printed page 3:350). x6 (bits 32:27)
+  = 9 is x4 = 9, x2 = 0: the cell is the teal "Reserved if PR[qp] is 1 B-unit" colour (between `rfi` at x6 = 8 and the
+  `vmsw.1` cell at x6 = 0x19 in the next column). With qp = 0 it is likewise a reserved encoding that faults.
+- Ignored cells do exist in these tables (white: execute as nop). For B-unit x4 = 1, x2 = 0 the cell is white; neither of the two
+  encodings here is in a white cell.
+- Spec updates: SDM update 248699-008 mentions only the `nop.m`/`hint.m` naming (its lines on "hint.m"); Itanium 2 update 251141-001 and
+  reference manuals 251110-001, -002 and -003 list `break.m` and `nop.m` (format M37/M48) and no other M-unit encoding.
+  None names an implementation-specific or PAL-only instruction (established for the revisions read; 251141 beyond -001 unread).
+- Side finding, not about this slot: Itanium 2 Reference Manual 251110-002 Table 4-4 "Latencies for OS Related Instructions"
+  (printed page 4-4) lists `mov from msr[r0]` and `mov to msr[r0]` rows (latency 36 for the read, 35 and 46 for write
+  serialisation). Revisions -001 and -003 do not have the msr rows. So Intel's reference manual acknowledged `msr[]` as a register
+  file in one revision. [pal-msrs.md](pal-msrs.md) says no Itanium 2 manual names these registers; the file exists, the registers still are not named.
+
+### What public software does
+
+- binutils 2.44 (`opcodes/ia64-opc-m.c`): the M0 table has `fwb` (x3 0, x4 0, x2 2), `mf` (x4 2, x2 2), `mf.a`, `srlz.d` (x4 0, x2 3),
+  `srlz.i` (x4 1, x2 3), `sync.i`, `nop.m` and `hint.m` (x4 1, x2 0, y 0 or 1), and no entry for x4 1, x2 2. It decodes as
+  data (established for the table; also checked by assembling the bundle and running the retools-container objdump, which printed
+  `data8 0x108000000`).
+- ski `encoding.decode`, table `opM0_0`, 128 entries indexed by bits 32:26: entry `0x42` (x2 2, x4 1, y 0) is `EM_ILLEGALOPQP`, the
+  same entry used for the other empty "reserved if qp" cells (for example `0x38` to `0x3F`); neighbours `0x40` is `EM_FWB`, `0x44`
+  `EM_MF`, `0x62` `EM_SRLZ_I`. So ski treats it as reserved-if-qp, as the SDM does (established for ski's table; I did not run ski on the PROM).
+
+### Patents
+
+Read on Google Patents through a page fetch that answered targeted questions (not the full text read line by line): **US 6,542,981 B1** and **US 7,660,977 B2**.
+- US 6,542,981 B1 describes a "special" `br.ia`: ordinary instructions first set a branch register with a function number, another
+  with a return address, and one MSR to "a special value"; the processor checks the MSR, and if it is set `br.ia` invokes resident
+  microcode instead of switching to IA-32. No instruction encoding, no MSR number and no PAL-only instruction is given.
+- US 7,660,977 B2 describes locking PAL/microcode updates (a `PAL_PROC_DISABLE_PAL_UPDATE` procedure, index 77) and says PAL hides
+  hardware MSRs; it defines no instruction.
+
+Seen only as search-result snippets, **not read**: US 6,848,046, US 6,775,728, US 8,214,830, US 2004/0019835 A1 (and US 7,904,751 B2
+cited by it), US 2009/0249053 A1, US 7,146,488, US 2014/0359640 A1 / WO 2013/101217 A1 / US 9,483,293. None of the snippets mentions a
+PAL-only or implementation-specific instruction. No Intel patent found says what encoding `0x108000000` is.
+
+### How the code uses it (Ghidra)
+
+Every site is `srlz` then the slot, in a group of its own; the slot has no non-zero field, so it carries no register operand (inferred:
+whatever it does, it does through machine state, not through a general register).
+
+**Nearest preceding `msr[]` write** (PAL_B 7.79, 211 sites; 5.73 has the same total and the msr[1545] / msr[1547] split differs (6 and 6); 2.25 has six more sites, all in the msr[1546] class):
+
+| Class | Sites | Notes |
+|---|---|---|
+| after a write to msr[1546] | 137 | typical shape: msr[1544] = index or 0, msr[1546] = command or data, `srlz.d`, slot |
+| after a write to msr[1545] or msr[1544] | 12 and 9 | same family, different register written last |
+| after a write to msr[1603], [1627], [1600] | 18, 2, 1 | cache-maintenance style routines that end by writing msr[1084] |
+| after a write to msr[1084] | 17 | |
+| after a write to msr[1730] | 2 | the bit-54 window (below) |
+| index not resolved or no write within 30 slots | 10 and 3 | |
+
+PAL_A: processor-specific images 7.31 / 5.37 / 1.27 have the same families (1546: 6 / 10 / 10, 1544: 5 / 4 / 4, 1730: 1 / 1 / 1, none:
+5 / 6 / 6); the generic PAL_A's single site is the one in the bit-54 window.
+
+**Nearest following `msr[]` access or branch** (PAL_B 7.79, 211 sites): read of msr[1545] 40, write to msr[1084] 28, write to
+msr[1640] 26 (the window close), read of 1559 9, 1608 5, 1058 5, 1028 3, write to 1546 8 and 1544 5, conditional branch 26,
+`br.ret` 22, `br.few` 10, none 4. 86 sites (about 41 per cent) are followed first by an `msr[]` **read**; at 79 of those the value read is fed
+to a bit test, compare or extract within 14 slots (a heuristic text match, so approximate). At the other 125 nothing is read after the slot before the
+routine writes, branches or returns. In no case does a register that the slot could have produced exist to be tested (it has none).
+
+**Windows.**
+- The generic PAL_A site, `0xffff82f6`, sits in the routine at `0xffff8210`: it clears `cr.pta` bit 0, sets msr[1553] bits 43:42 to 3,
+  sets msr[1640] bit 54, sets msr[1730] bit 43 and clears bit 36, `srlz.i`, the slot, then restores all four (written bits back,
+  `cr.pta` restored), as [pal-msrs.md](pal-msrs.md) describes. 26 PAL_B sites are followed by a msr[1640] write (the close of the same window in
+  the cases read); 2 PAL_B sites and 1 site in each processor-specific PAL_A follow a msr[1730] write. How `0xffff8210` is entered is still unknown (no static branch reaches it).
+- The `msr[1544..1547]` family with `msr[1545]` read afterwards is the commonest shape. Example (PAL_B 5.73, `0xffe8d5e6`): msr[1544]
+  and msr[1546] written, `srlz.d`, slot, msr[1545] read and split into fields, then compared (`0xffe8d620`).
+
+**The boot-path user: PAL procedure 520 (PAL_B 5.73).** SAL_B calls PAL procedure 520 at `0xffa9b586` and wants r8 = 0 back. The handler
+(`0xffea42a0`, read in Ghidra) does, in order: `rsm 0x6000` (clears psr.ic and psr.i); clears `cr.pta` bit 0 (kept in p11); sets msr[1640]
+bit 54; writes msr[1544] = 0 and msr[1546] = `0x8940000000000000`; `srlz.i`; **the slot (`0xffea4366`)**; clears bit 54; restores `cr.pta`
+and psr.ic if it was set (psr.i is not set again); then it calls, one after another through `b0` set from `ip`, five routines: `0xffe88250`,
+`0xffe885a0`, `0xffe88810`, `0xffe88970` and `0xffe89040`. The first loops four times (counter in bits 17:16 of the values written to
+msr[1544] and msr[1546], loop test at `0xffe88356`) with `srlz.d` and the slot in each pass, sets msr[1084] (`0x43c`) around the loop and puts it back, and returns;
+the second ends with msr[1544] = 0, `srlz.d` and the slot at `0xffe88656`, then returns. The third (`0xffe88810`) has no slot (it polls
+an msr with `srlz.d` and a read loop). The fourth has a slot at `0xffe88ac6`, followed by a read of an msr whose index is in r2 (`0xffe88ad6`);
+its consumer was not traced. The fifth was not read to its end. After the five, `0xffea4a96` does `mov b0=r8` (the b0 saved at entry) and
+`mov r8=0`; r8 becomes -4 or -5 only under predicates p9 and p13 (`0xffea4aa0`, `0xffea4aa6`). p9 comes from bits of msr[1536] (`0x600`) read at
+`0xffea44b0`, after the first two slots, and p13 from loop-count compares (`0xffea4b5c` and following). So r8 = 0 is the default and
+the two failure values depend on state read after the slots; **whether a slot changes that state is not excluded** (established for the path
+read, the dependence itself unknown).
+
+### What a CPU model can justify
+
+- **Established (architecture):** the encoding is reserved-if-qp in SDM rev 2.3; with qp = 0 it is an Illegal Operation fault.
+  binutils and ski agree it is not a defined instruction. The B-unit x6 = 9 slot is in the same state.
+- **Established (code):** the shipped PAL, which runs on hardware, executes it 702 times, always immediately after `srlz`, on the boot
+  path (procedure 520). PAL_A 5.37 and 1.27 and PAL_B 2.25's counterpart are byte-identical in Intel's SR870BN4 PAL according to
+  [pal-msrs.md](pal-msrs.md)'s review, so it is Intel's code, not an SGI addition (that is the review's claim; not re-checked here).
+- **Inferred:** a processor that runs this PAL to completion must not raise Illegal Operation for it. Either the hardware treats it
+  as a PAL-mode instruction or, equally consistent with the code, as an operation that completes the pending `msr[]` command
+  sequence and has no architectural result. Reason: its operands are all zero, it always follows `srlz` and an `msr[]` write
+  group, and the code never tests an output of it. A model that executes it as a nop after `srlz` would complete the 520 path,
+  but that is a statement about what the PROM needs to proceed, not about the hardware.
+- **Unknown:** whether it has any effect (for example committing the msr[1544..1547] index/command registers, flushing a pipeline
+  queue or performing the access they describe); whether msr[1545] contents after it depend on it; whether it is legal only with
+  psr.ic = 0 or in PAL physical mode; what it does outside PAL mode. What would settle it: an Itanium 2 / Madison PAL or
+  microarchitecture document that defines the PAL-private opcode space (not found in any revision read); a reading of the
+  msr[1544..1547] consumers in PAL_B to see whether a read of msr[1545] ever returns different values with and without the slot
+  (a code reading, not yet done); or a hardware trace, which this program does not take without approval.
+
+### The B-unit companion (B-unit opcode 0, x6 = 9)
+
+Ghidra prints `unknown.b 0x48000000` (bit 30 and bit 27 set: x4 = 9, x2 = 0, qp = 0). 45 sites: PAL_B 7.79 12, 5.73 12, 2.25 18;
+processor-specific PAL_A 7.31, 5.37 and 1.27 one each; none in the generic PAL_A. Every one has `srlz.i` as the nearest preceding
+non-nop instruction (established). The four sites named earlier (`0xffe0905c`, `0xffe0912c`, `0xffe0917c`, `0xffe091bc`) are in
+the exit path that restores r30, r31 and pr from msr[0], msr[1641] and msr[1642]; four more (`0xffdf7c5c`, `0xffdf7c9c`,
+`0xffdf7cec`, `0xffdf7d2c`) are in the code that saves and restores `ar.unat` through msr[0]; the rest are in other routines of the same
+kind (`0xffdfa8ec`, `0xffe0727c`, `0xffe091ec`, `0xffe23a5c`). SDM status as above (reserved if qp = 1, so faulting with qp = 0).
+Grades: encoding and sites established; behaviour unknown, and the same inference holds: a processor that completes this PAL treats it
+as non-faulting. The code after each site read is ordinary and the sites are not branch targets, which suggests it does not redirect control there (inferred, assuming it falls through).
+
+## 2. Hardware event entry state
+
+### What the SDM defines (established)
+
+The SDM specifies the state the PAL hands **to** SAL (the exit state) and a small set of resources the hardware owes the PAL. It does not
+give numeric vector addresses for PALE_CHECK, PALE_INIT or PALE_PMI, nor a register-by-register entry state; those are implementation
+dependent. What it does fix:
+
+| Event | Source | What the hardware provides |
+|---|---|---|
+| any PAL-based interruption (RESET, MCA, INIT, PMI) | vol 2 section 5.4, printed page 2:101; Table 3-2 footnotes i and j, pages 2:24 to 2:28; section 5.6 and Table 5-6 (page 2:109) | priority RESET > MCA > INIT > PMI; they do not use the IVT; PSR.ic, i, dfl, dfh, sp, di, si, db, lp, tb, cpl, is, id, da, dd, ss, ed, bn, ia, vm are 0 on an interruption; PSR.dt and PSR.it are 0 after a PAL-based one; PSR.mc becomes 1 after MCA or INIT; mfl, mfh, up, pk, rt are unchanged |
+| PALE_CHECK (MCA) | vol 2 section 11.3.1 "PALE_CHECK" (page 2:296), 11.3.1.1 (2:297) | PSR.mc = 1 on entry (set by hardware). Required resources: XR0 (min-state pointer registered with PAL_MC_REGISTER_MEM) and bank 0 GR24 to GR31 as scratch, not preserved across the event. When PSR.ic = 0 at the event, optional XIP, XPSR, XFS (stand-ins for IIP, IPSR, IFS) and XR1 to XR3 (scratch for GR24 to GR31); a model-specific `rfi` must restore from them. When PSR.ic = 1, IIP, IPSR, IIM and IFS are loaded as for any interruption. |
+| PALE_INIT (INIT) | vol 2 section 11.4 (2:306); Itanium 2 Hardware Developer's Manual 251109-001 section 5.3.2 and Table 5-7 (page 5-6) | INIT is held pending while PSR.mc = 1 and recognised at instruction boundaries; it disturbs no architectural, cache, MSR or integer or floating-point state; IP = PALE_INIT entry; IIP = IP at the INIT; IPSR = PSR at the INIT; IFS.v = 0. PSR.mc = 1 after INIT (Table 3-2 footnote i). |
+| PALE_PMI (PMI) | vol 2 section 11.5.1 (2:310) | IIP and IPSR saved by hardware; PMI events pend while PSR.ic = 0 and are delivered when PSR.ic = 1; PSR.i has no effect; the PALE_PMI entry is programmable (PAL_COPY_PAL, section 11.10.3 page 2:389); undefined if a PMI arrives before PAL registers its entrypoint. |
+| PMI and INIT vector latches | vol 2 section 11.5.1 | PMI events are latched in implementation-specific latches that the PAL reads; vector numbers 0 to 3 are for SAL, 4 to 15 for PAL; INIT delivery is enabled while PSR.mc = 0. |
+
+The SDM's PALE exit states (MCA vol 2 section 11.3.2 pages 2:297 to 2:299, INIT section 11.4.2 pages 2:306 to 2:310, PMI section 11.5.2
+page 2:312) say what PAL itself leaves for SAL: bank 0 GR16 to GR20 as handoff parameters (MCA: GR16 first free min-state address, GR17 XR0
+value, GR18 processor state parameter, GR19 rendezvous return, GR20 SALE_ENTRY parameter), CFM a zero-size frame after a `cover`,
+RSC.mode = 0 (enforced lazy), BR0 and BR1 saved, PSR.mc = 1 and all other PSR bits 0 except mfl, mfh, pk which are unchanged; PMI passes the
+vector number in GR24, XR0 in GR25 and saved RSC, B0, B1 in GR26 to GR28. These describe what the PAL provides **after** its entry code, not what
+the hardware provides before it, so they bound the PAL's save work but are not entry state. The vector entry addresses themselves are
+the firmware address-space placement of the "PAL_A block" of vol 2 Figure 11-3 and 11-4 (printed pages 2:284 and 2:285): the SDM draws
+PALE_RESET, PALE_INIT and PALE_CHECK as entry points in the PAL_A block below 4 GB minus 64 and gives no offsets (grade: not defined by the SDM).
+
+### What the generic PAL_A assumes at its vectors (Ghidra, established for the code)
+
+The vector bundles at the top of the generic PAL_A, `0xffffff50` to `0xffffffb0`, are `nop`, `nop`, `br.few` each. Branch targets:
+`0xffffff70` to `0xffff83f0`, `0xffffff80` to `0xffffda60`, `0xffffff90` to `0xffff8a80`, `0xffffffa0` to `0xffff8da0`, `0xffffffb0` to
+`0xffff83a0` (the reset stub); `0xffffff50` and `0xffffff60` are `br.few b0`.
+
+Both event paths (`0xffff8a80`, `0xffff8da0`), before any write to a general register that matters, read:
+- **p1 and p2.** The first bundles branch on p1 (`0xffff8a8c`, `0xffff8dac`) and then p2 (`0xffff8a9c`, `0xffff8dbc`) to pick one of eight
+  copies of the save block. The vector bundles do not set them, so the hardware or the previous owner of the predicate file must have, or
+  the choice is made on stale values. Which predicates the event leaves is **unknown**.
+- **r30, r31, r29 and pr.** Each save block tests r30, r31 and r29 for NaT (`tnat.z`) and stores them to `msr[0]` (r30), msr[1641]
+  (r31), msr[1643] (r29), and stores `pr` to msr[1642] with bit 0 cleared if r29 was NaT. After a PAL-based interruption PSR.bn is 0, so these are
+  bank 0 registers, inside the SDM's bank 0 GR24 to GR31 set that hardware does not preserve (section 11.3.1.1). The PAL reads them before writing them
+  and saves them, which fits preserving the bank 0 values of an interrupted handler (inferred). A NaT value is tolerated.
+- **msr[1640] bit 56.** `0xffff8bf6` and `0xffff8f16` read msr[1640] and test bit 56 (`tbit.z p14` at `0xffff8c06`, `0xffff8f26`); if clear
+  the code sets r30 = 2 (set in the same group) and branches to `0xffff8120`, which builds a PSR image in r28 (psr.mc set, psr.ic and
+  psr.i clear), copies `b0` into `cr.iip`, clears `cr.ifs.v`, sets r8 = 0, and executes `rfi`. If set it continues. (Inferred meaning of
+  bit 56: a valid-state flag, as [pal-msrs.md](pal-msrs.md) says.)
+- **Then:** the 8-byte pointer at `0xffffffe0` (the FIT), the FIT entries (PAL_B type), the PAL_B header bytes against `cpuid[3]` (bits
+  31:24, 23:16, 15:8 against the header's revision, model and family bytes) and bits 15:8 of msr[1715] (`0xffff8c96`, `0xffff8fb6`).
+- **b0.** `mov r31=b0` (`0xffff8d86`, `0xffff90b6`) saves the incoming b0 into r31, then b0 is set to the PAL_B entry and `br.few b0`.
+  The first instruction at every PAL_B entry reached this way is `mov b0=r31`. So the incoming **b0** is read and carried through (established
+  for the code); the event must leave b0 holding the interrupted b0 or a value PAL does not mind.
+- **Targets.** `0xffffff90`'s path computes PAL_B base + `0x10080` (`movl r30=0x10080` at `0xffff8d76`) and `0xffffffa0`'s path computes
+  PAL_B base + `0x10070` (`movl r30=0x10070` at `0xffff9096`). **This corrects [pal-msrs.md](pal-msrs.md), which says both
+  go to +`0x10080`.** In PAL_B 7.79 (base `0xffdc8000`) the bundles at `0xffdd8070` and `0xffdd8080` are `br.few` to `0xffe0e2f0` and `0xffe19570`; in
+  5.73 (`0xffe78000`): `0xffebf2f0` and `0xffeca570`; in 2.25 (`0xfff28000`): `0xfff712f0` and `0xfff73770`. A third bundle at +`0x10060` goes to
+  `0xffe23b00` (7.79), `0xffed4b00` (5.73), `0xfff74f00` (2.25), the target of a vector not reached by the generic PAL_A read here.
+  Each target starts `mov b0=r31`.
+  Which of the two handlers is MCA and which INIT: the SDM fixes no address. Both handlers test msr[1152] bit 18, msr[1237] bit 2 and msr[1572] bit 18 first; the `+0x10080` one (`0xffe19570` / `0xffeca570`) first copies msr[1237] bit 3 into msr[1558] bit 5,
+  the `+0x10070` one (`0xffe0e2f0` / `0xffebf2f0`) starts with `mf`.
+  I did not find a discriminator (no PSR.mc, XR0 or min-state reference in either first block), so the assignment stays **inferred**
+  (earlier note: `0xffffff90` = PALE_CHECK, `0xffffffa0` = PALE_INIT, from the register saves) and the PMI vector among the other three is **unknown**.
+  The vector at `0xffffff70` goes to the reset-return code (`alloc r1=ar.pfs` at `0xffff83f0`, which reads cpuid[3] and writes msr[0] = 0); the
+  vector at `0xffffff80` goes to `0xffffda60` and was not read.
+
+**What a CPU model must therefore provide at each entry (summary).**
+- Established by SDM: PSR.mc = 1 at MCA and INIT entry; interruption collection off (PSR.ic = 0) and PSR.i = 0; IIP, IPSR set for PMI, INIT and (when ic = 1) MCA; INIT leaves IFS.v = 0; the priority order RESET > MCA > INIT > PMI.
+- Established by the code (needed to run this PAL): an `msr[]` file readable at indices 1640 (bit 56 set to continue) and 1715 (revision byte) and writable at 0, 1641, 1642, 1643; readable `cpuid[3]`; a physically addressed 8-byte read at `0xffffffe0`; predicates p1 and p2 defined; r29, r30, r31 and `pr` captured; b0 preserved.
+- Unknown: the entry addresses the hardware jumps to (the `0xffffff50`..`0xffffffb0` vector stubs are inferred as RESET at `0xffffffb0`, INIT or CHECK at `0xffffff90` and `0xffffffa0`, with PMI not identified); the state of r29 to r31 and p1, p2 on entry; the reset value of msr[1640] bit 56. Route to settle: a Madison PAL specification that lists the vectors and entry state, or a read of the PAL_B first-block code against min-state layout (not done).
+
+## 3. The PAL_B `br.ia` sites
+
+Nine `br.ia` bundles are in the PAL_B images and six more in PAL_A (all in Ghidra). Three kinds appear. The first column is the slot-2 address.
+
+| Site | Operand register | b0 (return address) | r2 | r3 | r5 | r1 before | What happens next |
+|---|---|---|---|---|---|---|---|
+| PAL_B 7.79 `0xffe254ac` | b1 = `0x80000000ffffffe0` (set at `0xffe2547c` from r9) | `0xffe26670` (= r12 + `0x20b0`, r12 = `0xffe245c0`) | `0xffe254b0` if `cpuid[3]` revision byte (0 reads as 1) is 3 or below; `0xffe25d90` above 3 | 1 | 0 | `0x99` (`mov r1=0x99` at `0xffe252ac`) | `0xffe26670`: `alloc r2=ar.pfs,96`, restore pr from r100, then `cmp.eq p0,p2=0,r1`: if r1 is non-zero, set msr[1640] bit 59 |
+| PAL_B 5.73 `0xffed641c` | b1 = `0x80000000ffffffe0` | `0xffed75e0` (r12 = `0xffed54b0`, +`0x2130`) | `0xffed6420` (revision <= 3) or `0xffed6d00` (otherwise) | 1 | 0 | `0x99` (`0xffed62fc`) | same code at `0xffed75e0` |
+| PAL_B 2.25 `0xfff7678c` | b1 = `0x80000000ffffffe0` | `0xfff77950` (r12 = `0xfff75970`, +`0x1fe0`) | `0xfff77070` only (no revision test; the `r3 = 0`, `r2 = 0` arm is not reached by any static branch) | 1 | 0 | `0x99` (`0xfff766ac`) | same code at `0xfff77950` |
+| PAL_B 7.79 `0xffe3aae0` (5.73 `0xffeebb20`, 2.25 `0xfff8cae0`) | b0 = `0x80000000fff72c90` (5.73 `...fff73cd0`, 2.25 `...fff64c90`), set at `0xffe3aac6` | the operand itself (b0) | not set | not set | not set (r14 = `1<<30`) | not read | psr.di is set by `ssm 0x400000` and `srlz.d` immediately before; the two slots after are `br.cond` to the failure exit `0xffe3ac90`; routine has no `msr[]` access |
+| PAL_B 7.79 `0xffdff426` (5.73 `0xffeb0426`, 2.25 `0xfff62726`) | b4, predicated (p47) | n/a | n/a | n/a | n/a | n/a | neighbours decode as unrelated data (`getf`, `fwb`, `break.b`); not code (inferred) |
+| generic PAL_A `0xffff83ec` (reset stub) | b0 = r3 = `0x80000000ffffffe0` (set at `0xffff83a6`) | none set | not set | `0x80000000ffffffe0` | 1 (`0xffff83dc`) | `alloc r1=ar.pfs` follows at `0xffff83f0` | after `msr[212] = 0` and `msr[1225] = 4`, `srlz.d` |
+| generic PAL_A `0xffff872c` (FIT PAL_A check) | b0 = `0x80000000ffff8730` (`0xffff86e6`, `mov b0=r6`), the bundle after the `br.ia` | `0xffff8730` | FIT entry address (r82) | the entry's size field, bits 23:0 of the second qword (r83) | 1 | stale (`alloc r1=ar.pfs` at `0xffff83f0` is the only write between reset and here) | `0xffff8730`: `alloc r3`, then `cmp.eq p0,p21=r1,r0` and a branch on p21 (non-zero r1 goes to `0xffff8600`) |
+| generic PAL_A `0xffff8a5c` (no usable PAL_A) | b0 = `0x80000000ffff8a60` | `0xffff8a60` | 0 | 0 | 0 | not read | `0xffff8a60`: `alloc r3`, then `br.few 0xffff8120` (the error exit above) |
+| PAL_A 7.31 `0xfffc4a6c` (5.37 `0xfffcb66c`, 1.27 `0xfffd1e1c`) | b0 = r12 + `0x40`, the bundle after the `br.ia` | `0xfffc4a70` | 0 | 0 | 0 | overwritten by `alloc r1=ar.pfs` at the return | taken only when msr[1225] bit 14 or bit 2 is set (read at `0xfffc4a10`) |
+
+(msr[1225] test in PAL_B: the branch at `0xffe252dc` goes to this block when bit 14 or bit 2 of msr[1225] is set and to the loader calls when both are clear.
+That is carried over from [pal-msrs.md](pal-msrs.md) and the read at `0xffe252b6` was re-read here.)
+
+**Tables behind r2 (established, bytes; meaning inferred).** The two r2 targets in 7.79, `0xffe254b0` and `0xffe25d90`, are
+data, not instructions (they follow the `br.ia` bundle directly and run to `0xffe26670`; each is `0x8e0` = 2272 bytes). Each starts with
+a 16-byte block of high-entropy bytes, then 16-byte records whose second 64-bit word counts 1, 2, 3, ... in bits 47:40 and whose first word
+is zero at first and later non-zero (read with `objdump` as raw bytes). The size, a header plus 141 records, does not match the PAL_B loaders that write msr[1224]
+256 times ([pal-msrs.md](pal-msrs.md)), so how the two relate is **unknown**. 5.73's `0xffed6420` and `0xffed6d00` have
+the same spacing (`0x8e0`); 2.25 has one table at `0xfff77070`.
+
+### Does a consistent layout emerge?
+
+- **r2, r3, r5 are not one convention across all sites (established for the values).** Across the sites that set them (the three PAL_B first-row
+  sites, the three generic ones that set r5 and the three PAL_A-specific ones): r2 is either 0 or a pointer to an object (a FIT entry in the
+  generic PAL_A, a data table in PAL_B); r3 is 0, 1, the FIT entry's size field or the reset vector value; r5 is 0 at seven sites and 1 at the reset stub and the FIT check.
+- **Weak pattern (inferred):** where r2 is a pointer, r3 and r5 describe it: the FIT check passes (entry address, entry size, 1); PAL_B passes
+  (table address, 1, 0); the three PAL_A-specific sites and the "no PAL_A" site pass nothing (0, 0, 0). The simplest reading is r2 = pointer,
+  r3 = extent or count, r5 = a mode flag, but a function number in r3 or a selector in r5 is **not** supported: r3 is 1 in the PAL_B sites
+  and a 24-bit size in the FIT site, and the same PAL_A callee sees r5 = 1 and r5 = 0. The b0 value follows two styles: the operand is
+  `0x80000000ffffffe0` (reset stub, PAL_B first row) or it is the address of the bundle after the `br.ia` (the other PAL_A sites).
+  The patent's "function number in a branch register" is the nearest published description (US 6,542,981 B1); it does not fit r3 or r5 and is not
+  claimed to apply.
+- **r1 afterwards.** At the PAL_B site r1 is preset to `0x99`, a non-zero constant, and after the return the code tests r1 against zero and
+  sets msr[1640] bit 59 when it is non-zero (established). At the generic PAL_A FIT check r1 is tested against zero immediately after the return, with
+  no write to r1 between `0xffff83f0` and `0xffff8a80` other than that `alloc` (established). Reading (inferred): r1 is a result or status register for the call, zero meaning success, and the
+  non-zero preset in PAL_B makes a call that never writes r1 look like a failure. The specific PAL_A sites overwrite r1 with `alloc` at the return, so they
+  ignore it. What the callee puts in r1 and in any other register is **unknown**.
+- **Not claimed:** what the processor does at `br.ia` with msr[1225] in either state; whether a `br.ia` with msr[1225] set to 4 returns at all
+  (the reset stub's return path is not traced; see [boot-sequence.md](boot-sequence.md)).
+
+## Questions left (unknown)
+
+1. What the two reserved encodings do on Itanium 2 and Madison, and whether anything depends on their result (item 1).
+2. Which of the vectors at `0xffffff90` and `0xffffffa0` is MCA and which INIT, which predicates and registers each event leaves, where PMI is (item 2).
+3. The consumer of the 142-record tables and the full callee contract of `br.ia` (item 3).
+4. Whether a Madison document (or revision -028 of 251141) defines PAL-only opcodes: not in the revisions read.
