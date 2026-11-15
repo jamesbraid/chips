@@ -12,6 +12,143 @@
   </struct>
   <struct name="KM_TX_MOUSE" size="4" grade="established" register="yes" offset="0x210" access="w" reset="unknown">
   </struct>
+  <struct name="ATA_DMA_CONTROL_WORD" size="4" grade="established">
+    <doc>ATA DMA control and status (DMA block word 7). Software writes the direction alone to program a transfer, then sets start by read-modify-write. It ends a transfer by writing stop and polling until stop reads back clear. Before arming, it writes stop if active or error is set.</doc>
+    <field name="error" start="4" size="1" type="uint" grade="established"/>
+    <field name="active" start="3" size="1" type="uint" grade="established"/>
+    <field name="dir" start="2" size="1" type="uint" grade="established"/>
+    <field name="stop" start="1" size="1" type="uint" grade="established"/>
+    <field name="start" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ATA_PRD_LENGTH_WORD" size="4" grade="established">
+    <doc>Last word of a 16-byte ATA scatter list entry. Each entry is four big-endian 32-bit words: zero, the low 32 bits of the bus address, zero, this word. The driver splits entries at 64 KB boundaries so an aligned entry can hold 0x10000 bytes, which does not fit in 16 bits; how the chip reads a length of 0x10000 is unknown.</doc>
+    <field name="eol" start="31" size="1" type="uint" grade="established"/>
+    <field name="length" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPCR_WORD" size="4" grade="established">
+    <doc>Generic pin control, written through the set alias (writing a 1 sets that bit) and the clear alias (writing a 1 clears it). Pin 0 drives the external interrupt output, pin 1 is the external interrupt input, pin 3 senses keyboard and mouse presence and pins 4 to 7 select RS-232 (0) or RS-422 (1) for ports 0 to 3. The set and clear behaviour follows the register names and the SGI driver's use of the set alias; the SGI Linux driver never uses the clear alias.</doc>
+    <field name="int_out_en" start="20" size="1" type="uint" grade="established"/>
+    <field name="edge" start="8" size="8" type="uint" grade="established"/>
+    <field name="dir" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPDR_WORD" size="4" grade="established">
+    <doc>Generic pin data: the state of the eight pins.</doc>
+    <field name="gen_pin" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GPPR_WORD" size="4" grade="established">
+    <doc>One word per generic pin, eight words. Software writes 0 or 1 to drive the pin; the serial driver uses pins 4 to 7 as the transceiver mode select.</doc>
+    <field name="gen_pin" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_OUT_WORD" size="4" grade="established">
+    <doc>External interrupt output control. In toggle mode (7) the output pin inverts every count+1 ticks; one tick is 520 PCI clocks, so the square wave period is 2*(count+1)*520 PCI clocks. Bit 31 reads the current output level and is the way the SGI Linux driver measures the PCI clock. Writing zero first returns the section to its power-on state, per the driver comment.</doc>
+    <field name="int_out" start="31" size="1" type="uint" grade="established"/>
+    <field name="diag" start="30" size="1" type="uint" grade="established"/>
+    <field name="mode" start="16" size="3" type="uint" grade="established"/>
+    <field name="count" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="OTHER_IR_WORD" size="4" grade="established">
+    <doc>The other interrupt status, enable-set and enable-clear words. Bit 0 follows the drive interrupt and bit 1 is the ATA DMA PCI error; bits 5:2 are the per-port serial DMA PCI errors; the generic pin field raises one bit per generic pin.</doc>
+    <field name="gen_int" start="24" size="8" type="uint" grade="established"/>
+    <field name="rt_int" start="23" size="1" type="uint" grade="established"/>
+    <field name="kbd_int" start="6" size="1" type="uint" grade="established"/>
+    <field name="ser_memerr" start="2" size="4" type="uint" grade="established"/>
+    <field name="ata_memerr" start="1" size="1" type="uint" grade="established"/>
+    <field name="ata_int" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI_ERR_ADDR_L_WORD" size="4" grade="established">
+    <doc>Low word of the latched PCI error address. The word is read together with the high word after a DMA error interrupt. Master id 0 to 7 names a serial port (port number is the id shifted right one, bit 0 of the id is 1 for the receive ring and 0 for the transmit ring); 8 is the ATA engine; 9 to 15 are undefined. The address field holds bits 31:6 of the address.</doc>
+    <field name="addr" start="6" size="26" type="uint" grade="established"/>
+    <field name="mul_err" start="5" size="1" type="uint" grade="established"/>
+    <field name="master_id" start="1" size="4" type="uint" grade="established"/>
+    <field name="valid" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RX_STATUS_BYTE_WORD" size="1" grade="established">
+    <doc>Status byte of a receive ring entry; one per data byte. The chip writes the whole entry. Software clears the two valid bits after consuming a byte, and treats an entry with neither valid bit set in any of its four status bytes as not yet written, since the producer pointer can run ahead of the data.</doc>
+    <field name="data_valid" start="7" size="1" type="uint" grade="established"/>
+    <field name="modem_valid" start="6" size="1" type="uint" grade="established"/>
+    <field name="dcd" start="5" size="1" type="uint" grade="established"/>
+    <field name="cts" start="4" size="1" type="uint" grade="established"/>
+    <field name="brk" start="3" size="1" type="uint" grade="established"/>
+    <field name="frame_err" start="2" size="1" type="uint" grade="established"/>
+    <field name="par_err" start="1" size="1" type="uint" grade="established"/>
+    <field name="overrun" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SBBR_L_WORD" size="4" grade="established">
+    <doc>Low word of a serial ring base for one port pair. The ring group base must be aligned to its total size (four rings); software ORs the ring size into bit 0. How the chip combines base and pointer is not stated.</doc>
+    <field name="size" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SERIAL_PTR_WORD" size="4" grade="established">
+    <doc>Producer and consumer pointers are byte offsets into the ring in 8-byte steps: bits 11:3 for 4 KB rings, 9:3 for 1 KB rings. The ring is empty when producer equals consumer and full when the consumer is one entry ahead of the producer.</doc>
+    <field name="ptr" start="3" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="SHADOW_WORD" size="4" grade="established">
+    <doc>Per-port shadow of UART state. Bits 7:0 mirror the line status bits, 23:16 the modem status bits and 31:24 the modem control register. The driver writes the modem control byte to the UART and the word back here.</doc>
+    <field name="loop" start="28" size="1" type="uint" grade="established"/>
+    <field name="out2" start="27" size="1" type="uint" grade="established"/>
+    <field name="out1" start="26" size="1" type="uint" grade="established"/>
+    <field name="rts" start="25" size="1" type="uint" grade="established"/>
+    <field name="dtr" start="24" size="1" type="uint" grade="established"/>
+    <field name="dcd" start="23" size="1" type="uint" grade="established"/>
+    <field name="cts" start="20" size="1" type="uint" grade="established"/>
+    <field name="ddcd" start="19" size="1" type="uint" grade="established"/>
+    <field name="dcts" start="16" size="1" type="uint" grade="established"/>
+    <field name="rfce" start="7" size="1" type="uint" grade="established"/>
+    <field name="temt" start="6" size="1" type="uint" grade="established"/>
+    <field name="thre" start="5" size="1" type="uint" grade="established"/>
+    <field name="bi" start="4" size="1" type="uint" grade="established"/>
+    <field name="fe" start="3" size="1" type="uint" grade="established"/>
+    <field name="pe" start="2" size="1" type="uint" grade="established"/>
+    <field name="oe" start="1" size="1" type="uint" grade="established"/>
+    <field name="dr" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SIO_CR_WORD" size="4" grade="established">
+    <doc>Serial and arbitration control. Bits 3:0 are the only software-written field. Bits 9:4 are diagnostic status. The requester field encodes 0 transmit port 0, 1 receive port 0, 2 transmit port 1 and so on up to 7 receive port 3.</doc>
+    <field name="ata_diag_active" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="ata_diag_idle" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="sio_diag_idle" start="7" size="1" type="uint" grade="established"/>
+    <field name="arb_diag" start="4" size="3" type="uint" grade="established"/>
+    <field name="cmd_pulse" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="SIO_IR_PORT_WORD" size="1" grade="established">
+    <doc>One serial port's byte of the serial interrupt status, enable-set and enable-clear words. Port n occupies bits 8n+7 down to 8n. Software acknowledges tx explicit, rx timer, delta DCD and delta CTS by writing the bit to the status word; rx high is a level condition the driver cannot acknowledge; it masks the enable until the ring drains. Transmit empty is masked the same way (inferred).</doc>
+    <field name="tx_explicit" start="7" size="1" type="uint" grade="established"/>
+    <field name="intr_pass" start="6" size="1" type="uint" grade="established"/>
+    <field name="delta_cts" start="5" size="1" type="uint" grade="established"/>
+    <field name="delta_dcd" start="4" size="1" type="uint" grade="established"/>
+    <field name="rx_timer" start="3" size="1" type="uint" grade="established"/>
+    <field name="rx_high" start="2" size="1" type="uint" grade="established"/>
+    <field name="rx_full" start="1" size="1" type="uint" grade="established"/>
+    <field name="tx_mt" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SRCIR_WORD" size="4" grade="established">
+    <doc>Receive consumer pointer. Writing it with bit 31 set arms the receive timer; the timer starts on the first byte received after arming.</doc>
+    <field name="arm" start="31" size="1" type="uint" grade="established"/>
+    <field name="ptr" start="3" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="SRTR_WORD" size="4" grade="established">
+    <doc>Receive timer. The count unit is 1/16000 second, so 160 gives 10 ms.</doc>
+    <field name="current" start="16" size="12" type="uint" grade="established"/>
+    <field name="reload" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="SSCR_WORD" size="4" grade="established">
+    <doc>Serial port control. The receive threshold counts ring entries (four bytes each). The driver pauses DMA before touching the UART line control, modem control or FIFO, by writing pause and polling pause state.</doc>
+    <field name="reset" start="31" size="1" type="uint" grade="established"/>
+    <field name="pause_state" start="30" size="1" type="uint" grade="established"/>
+    <field name="dma_pause" start="29" size="1" type="uint" grade="established"/>
+    <field name="dma_en" start="28" size="1" type="uint" grade="established"/>
+    <field name="rx_drain" start="27" size="1" type="uint" grade="established"/>
+    <field name="diag" start="21" size="1" type="uint" grade="established"/>
+    <field name="rx_ring_cts" start="19" size="1" type="uint" grade="established"/>
+    <field name="rx_ring_dcd" start="18" size="1" type="uint" grade="established"/>
+    <field name="hfc_en" start="17" size="1" type="uint" grade="established"/>
+    <field name="tx_timer_busy" start="16" size="1" type="uint" grade="established"/>
+    <field name="rx_threshold" start="0" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="TX_CONTROL_BYTE_WORD" size="1" grade="established">
+    <doc>Control byte of a transmit ring entry; one per data byte. Value 0 is an invalid byte. Type 1 sends the data byte. Types 2 (data to the modem control register) and 3 (delay of the data value in milliseconds) are defined by the SGI header; the SGI Linux driver never issues them.</doc>
+    <field name="type" start="6" size="2" type="uint" grade="established"/>
+    <field name="int_when_done" start="5" size="1" type="uint" grade="established"/>
+  </struct>
   <constant name="ATA_DMA_CONTROL" value="0x15c" grade="established"/>
   <constant name="ATA_DMA_CONTROL_ACTIVE" value="0x8" grade="established"/>
   <constant name="ATA_DMA_CONTROL_DIR_TO_MEMORY" value="0x4" grade="inferred"/>

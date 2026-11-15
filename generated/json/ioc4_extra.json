@@ -70,6 +70,796 @@
   },
   {
    "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "ATA_DMA_CONTROL_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_DMA_CONTROL_WORD.error",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_DMA_CONTROL_WORD.active",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_DMA_CONTROL_WORD.dir",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_DMA_CONTROL_WORD.stop",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_DMA_CONTROL_WORD.start",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "ATA_PRD_LENGTH_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_PRD_LENGTH_WORD.eol",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "ATA_PRD_LENGTH_WORD.length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "GPCR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "GPCR_WORD.int_out_en",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "GPCR_WORD.edge",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "GPCR_WORD.dir",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "GPDR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "GPDR_WORD.gen_pin",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "GPPR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "GPPR_WORD.gen_pin",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "INT_OUT_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "INT_OUT_WORD.int_out",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "INT_OUT_WORD.diag",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "INT_OUT_WORD.mode",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "INT_OUT_WORD.count",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "OTHER_IR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.gen_int",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.rt_int",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.kbd_int",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.ser_memerr",
+   "hi": 5,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.ata_memerr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "OTHER_IR_WORD.ata_int",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "PCI_ERR_ADDR_L_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "PCI_ERR_ADDR_L_WORD.addr",
+   "hi": 31,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "PCI_ERR_ADDR_L_WORD.mul_err",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "PCI_ERR_ADDR_L_WORD.master_id",
+   "hi": 4,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "PCI_ERR_ADDR_L_WORD.valid",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "RX_STATUS_BYTE_WORD",
+   "width": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.data_valid",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.modem_valid",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.dcd",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.cts",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.brk",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.frame_err",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.par_err",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "RX_STATUS_BYTE_WORD.overrun",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SBBR_L_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SBBR_L_WORD.size",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SERIAL_PTR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SERIAL_PTR_WORD.ptr",
+   "hi": 11,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SHADOW_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.loop",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.out2",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.out1",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.rts",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.dtr",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.dcd",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.cts",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.ddcd",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.dcts",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.rfce",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.temt",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.thre",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.bi",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.fe",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.pe",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.oe",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SHADOW_WORD.dr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SIO_CR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_CR_WORD.ata_diag_active",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_CR_WORD.ata_diag_idle",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_CR_WORD.sio_diag_idle",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_CR_WORD.arb_diag",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_CR_WORD.cmd_pulse",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SIO_IR_PORT_WORD",
+   "width": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.tx_explicit",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.intr_pass",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.delta_cts",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.delta_dcd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.rx_timer",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.rx_high",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.rx_full",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SIO_IR_PORT_WORD.tx_mt",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SRCIR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SRCIR_WORD.arm",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SRCIR_WORD.ptr",
+   "hi": 11,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SRTR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SRTR_WORD.current",
+   "hi": 27,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SRTR_WORD.reload",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "SSCR_WORD",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.reset",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.pause_state",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.dma_pause",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.dma_en",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.rx_drain",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.diag",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.rx_ring_cts",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.rx_ring_dcd",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.hfc_en",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.tx_timer_busy",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "SSCR_WORD.rx_threshold",
+   "hi": 8,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "word",
+   "name": "TX_CONTROL_BYTE_WORD",
+   "width": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "TX_CONTROL_BYTE_WORD.type",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "field",
+   "name": "TX_CONTROL_BYTE_WORD.int_when_done",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
    "kind": "constant",
    "name": "ATA_DMA_CONTROL",
    "value": 348,

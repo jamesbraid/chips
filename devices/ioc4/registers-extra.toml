@@ -104,3 +104,231 @@ GPCR_INT_OUT_EN = { value = 0x100000, grade = "established", from = "SGI Linux p
 GPIO_PIN_EXT_INT_OUT = { value = 0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h (IOC4_GPCR_DIR_0 comment)", doc = "Generic pin 0 carries the external interrupt output. Pin 1 is the external interrupt input (and the edge-mode pin the header singles out), pin 3 is the keyboard and mouse presence sense, pins 4 to 7 select RS-232 (0) or RS-422 (1) for serial ports 0 to 3." }
 GPIO_PIN_SERIAL_MODE_0 = { value = 4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c lines 167-174 (IOC4_GPPR_UARTn_MODESEL_PIN) and the writes at lines 1609 and 1614 of the same file to gppr[pin]", doc = "Pin number that selects the transceiver of serial port 0; ports 1 to 3 use pins 5, 6 and 7. The driver writes 0 for RS-232 and 1 for RS-422 to the pin's own word at 0x40 plus 4n. Agrees with the pin numbers read from the IRIX serial object." }
 PCI_CLASS_CODE = { value = 0x0b4000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/misc/ioc4.c (ioc4_id_table class 0x0b4000, mask 0xffffff)", doc = "The PCI class code the Linux driver matches (base class 0x0b, subclass 0x40, interface 0), in addition to vendor 0x10a9 and device 0x100a. It is the match value of a driver, not a captured read." }
+
+# ---- field layouts: SGI Linux v5.3 ioc4.h, ioc4_serial.c, sgiioc4.c, ioc4.c
+[words.PCI_ERR_ADDR_L_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h"
+doc = "Low word of the latched PCI error address. The word is read together with the high word after a DMA error interrupt. Master id 0 to 7 names a serial port (port number is the id shifted right one, bit 0 of the id is 1 for the receive ring and 0 for the transmit ring); 8 is the ATA engine; 9 to 15 are undefined. The address field holds bits 31:6 of the address."
+
+[words.PCI_ERR_ADDR_L_WORD.fields]
+valid = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "an address was captured" }
+master_id = { bits = [4, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "unit that caused the error" }
+mul_err = { bits = [5, 5], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "more than one error occurred before the register was read" }
+addr = { bits = [31, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "address bits 31:6, in the same position as in the word" }
+
+[words.SIO_IR_PORT_WORD]
+width = 8
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "One serial port's byte of the serial interrupt status, enable-set and enable-clear words. Port n occupies bits 8n+7 down to 8n. Software acknowledges tx explicit, rx timer, delta DCD and delta CTS by writing the bit to the status word; rx high is a level condition the driver cannot acknowledge; it masks the enable until the ring drains. Transmit empty is masked the same way (inferred)."
+
+[words.SIO_IR_PORT_WORD.fields]
+tx_mt = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "transmit ring empty" }
+rx_full = { bits = [1, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "receive ring full; no software in the SGI Linux driver handles it" }
+rx_high = { bits = [2, 2], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "receive ring occupancy at or above the high-water mark; level, not acknowledged by a write" }
+rx_timer = { bits = [3, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "receive timer expired with data held; acknowledged by writing the bit" }
+delta_dcd = { bits = [4, 4], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "DCD changed; acknowledged by writing the bit" }
+delta_cts = { bits = [5, 5], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "CTS changed; acknowledged by writing the bit" }
+intr_pass = { bits = [6, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "pass-through of the port 16550 interrupt" }
+tx_explicit = { bits = [7, 7], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "a transmit entry that asked for an interrupt has been sent; acknowledged by writing the bit" }
+
+[words.OTHER_IR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "The other interrupt status, enable-set and enable-clear words. Bit 0 follows the drive interrupt and bit 1 is the ATA DMA PCI error; bits 5:2 are the per-port serial DMA PCI errors; the generic pin field raises one bit per generic pin."
+
+[words.OTHER_IR_WORD.fields]
+ata_int = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "ATA drive interrupt pass-through" }
+ata_memerr = { bits = [1, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "ATA DMA halted by a PCI error" }
+ser_memerr = { bits = [5, 2], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "serial port n DMA halted by a PCI error, bit 2+n" }
+kbd_int = { bits = [6, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "keyboard and mouse interrupt" }
+rt_int = { bits = [23, 23], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "latch of the external interrupt output section" }
+gen_int = { bits = [31, 24], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "interrupt from generic pin n, bit 24+n" }
+
+[words.SIO_CR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Serial and arbitration control. Bits 3:0 are the only software-written field. Bits 9:4 are diagnostic status. The requester field encodes 0 transmit port 0, 1 receive port 0, 2 transmit port 1 and so on up to 7 receive port 3."
+
+[words.SIO_CR_WORD.fields]
+cmd_pulse = { bits = [3, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "byte-bus strobe width; software writes 15" }
+arb_diag = { bits = [6, 4], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "PCI bus requester currently granted" }
+sio_diag_idle = { bits = [7, 7], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "set when no serial port has a bus request active; software waits for it after a reset" }
+ata_diag_idle = { bits = [8, 8], grade = "inferred", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "ATA request activity; the header comment does not say which level is idle" }
+ata_diag_active = { bits = [9, 9], grade = "inferred", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "ATA request is the arbitration winner; polarity taken from the name" }
+
+[words.INT_OUT_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/misc/ioc4.c"
+doc = "External interrupt output control. In toggle mode (7) the output pin inverts every count+1 ticks; one tick is 520 PCI clocks, so the square wave period is 2*(count+1)*520 PCI clocks. Bit 31 reads the current output level and is the way the SGI Linux driver measures the PCI clock. Writing zero first returns the section to its power-on state, per the driver comment."
+
+[words.INT_OUT_WORD.fields]
+count = { bits = [15, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "period control" }
+mode = { bits = [18, 16], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "output shape; only mode 7 (toggle) is used" }
+diag = { bits = [30, 30], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "timebase control; never set by the SGI Linux driver" }
+int_out = { bits = [31, 31], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "current value of the output" }
+
+[words.GPCR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/misc/ioc4.c"
+doc = "Generic pin control, written through the set alias (writing a 1 sets that bit) and the clear alias (writing a 1 clears it). Pin 0 drives the external interrupt output, pin 1 is the external interrupt input, pin 3 senses keyboard and mouse presence and pins 4 to 7 select RS-232 (0) or RS-422 (1) for ports 0 to 3. The set and clear behaviour follows the register names and the SGI driver's use of the set alias; the SGI Linux driver never uses the clear alias."
+
+[words.GPCR_WORD.fields]
+dir = { bits = [7, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "pin direction, 1 output" }
+edge = { bits = [15, 8], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "edge or level mode per pin; which value means edge is not stated" }
+int_out_en = { bits = [20, 20], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "enables the external interrupt output on its pin" }
+
+[words.GPDR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h"
+doc = "Generic pin data: the state of the eight pins."
+
+[words.GPDR_WORD.fields]
+gen_pin = { bits = [7, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "pin state" }
+
+[words.GPPR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h; SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "One word per generic pin, eight words. Software writes 0 or 1 to drive the pin; the serial driver uses pins 4 to 7 as the transceiver mode select."
+
+[words.GPPR_WORD.fields]
+gen_pin = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, include/linux/ioc4.h", doc = "single pin state" }
+
+[words.SBBR_L_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Low word of a serial ring base for one port pair. The ring group base must be aligned to its total size (four rings); software ORs the ring size into bit 0. How the chip combines base and pointer is not stated."
+
+[words.SBBR_L_WORD.fields]
+size = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "0 for 1 KB rings, 1 for 4 KB rings" }
+
+[words.SSCR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Serial port control. The receive threshold counts ring entries (four bytes each). The driver pauses DMA before touching the UART line control, modem control or FIFO, by writing pause and polling pause state."
+
+[words.SSCR_WORD.fields]
+rx_threshold = { bits = [8, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "receive high-water mark in ring entries" }
+tx_timer_busy = { bits = [16, 16], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "transmit timer in progress" }
+hfc_en = { bits = [17, 17], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "hardware flow control enable" }
+rx_ring_dcd = { bits = [18, 18], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "post a receive record when DCD changes" }
+rx_ring_cts = { bits = [19, 19], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "post a receive record when CTS changes; defined, not set by the driver" }
+diag = { bits = [21, 21], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "bypass the clock divider for simulation" }
+rx_drain = { bits = [27, 27], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "flush bytes held for fewer than four to the ring; cleared by the chip when the drain is done" }
+dma_en = { bits = [28, 28], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "ring DMA enable" }
+dma_pause = { bits = [29, 29], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "pause DMA" }
+pause_state = { bits = [30, 30], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "set when the pause has taken effect" }
+reset = { bits = [31, 31], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "reset the DMA channels" }
+
+[words.SERIAL_PTR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Producer and consumer pointers are byte offsets into the ring in 8-byte steps: bits 11:3 for 4 KB rings, 9:3 for 1 KB rings. The ring is empty when producer equals consumer and full when the consumer is one entry ahead of the producer."
+
+[words.SERIAL_PTR_WORD.fields]
+ptr = { bits = [11, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "ring offset in entries of 8 bytes" }
+
+[words.SRCIR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Receive consumer pointer. Writing it with bit 31 set arms the receive timer; the timer starts on the first byte received after arming."
+
+[words.SRCIR_WORD.fields]
+ptr = { bits = [11, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "consumer offset" }
+arm = { bits = [31, 31], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "arm the receive timer" }
+
+[words.SRTR_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Receive timer. The count unit is 1/16000 second, so 160 gives 10 ms."
+
+[words.SRTR_WORD.fields]
+reload = { bits = [11, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "reload value" }
+current = { bits = [27, 16], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "current count; read, never used by the driver" }
+
+[words.SHADOW_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Per-port shadow of UART state. Bits 7:0 mirror the line status bits, 23:16 the modem status bits and 31:24 the modem control register. The driver writes the modem control byte to the UART and the word back here."
+
+[words.SHADOW_WORD.fields]
+dr = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "data ready" }
+oe = { bits = [1, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "overrun error" }
+pe = { bits = [2, 2], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "parity error" }
+fe = { bits = [3, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "framing error" }
+bi = { bits = [4, 4], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "break" }
+thre = { bits = [5, 5], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "transmit holding register empty" }
+temt = { bits = [6, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "transmitter empty" }
+rfce = { bits = [7, 7], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "error character in receive FIFO" }
+dcts = { bits = [16, 16], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "delta CTS" }
+ddcd = { bits = [19, 19], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "delta DCD" }
+cts = { bits = [20, 20], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "clear to send" }
+dcd = { bits = [23, 23], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "data carrier detect" }
+dtr = { bits = [24, 24], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "DTR" }
+rts = { bits = [25, 25], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "RTS" }
+out1 = { bits = [26, 26], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "OUT1" }
+out2 = { bits = [27, 27], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "OUT2" }
+loop = { bits = [28, 28], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "loopback" }
+
+[words.RX_STATUS_BYTE_WORD]
+width = 8
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Status byte of a receive ring entry; one per data byte. The chip writes the whole entry. Software clears the two valid bits after consuming a byte, and treats an entry with neither valid bit set in any of its four status bytes as not yet written, since the producer pointer can run ahead of the data."
+
+[words.RX_STATUS_BYTE_WORD.fields]
+overrun = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "characters lost" }
+par_err = { bits = [1, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "parity error" }
+frame_err = { bits = [2, 2], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "framing error" }
+brk = { bits = [3, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "break" }
+cts = { bits = [4, 4], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "CTS state" }
+dcd = { bits = [5, 5], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "DCD state" }
+modem_valid = { bits = [6, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "DCD, CTS and overrun are valid" }
+data_valid = { bits = [7, 7], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "data byte and its error bits are valid" }
+
+[words.TX_CONTROL_BYTE_WORD]
+width = 8
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c"
+doc = "Control byte of a transmit ring entry; one per data byte. Value 0 is an invalid byte. Type 1 sends the data byte. Types 2 (data to the modem control register) and 3 (delay of the data value in milliseconds) are defined by the SGI header; the SGI Linux driver never issues them."
+
+[words.TX_CONTROL_BYTE_WORD.fields]
+int_when_done = { bits = [5, 5], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "raise tx explicit after this byte is sent" }
+type = { bits = [7, 6], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/tty/serial/ioc4_serial.c", doc = "0 invalid, 1 valid data, 2 modem control, 3 delay" }
+
+[words.ATA_DMA_CONTROL_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c"
+doc = "ATA DMA control and status (DMA block word 7). Software writes the direction alone to program a transfer, then sets start by read-modify-write. It ends a transfer by writing stop and polling until stop reads back clear. Before arming, it writes stop if active or error is set."
+
+[words.ATA_DMA_CONTROL_WORD.fields]
+start = { bits = [0, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "start the transfer" }
+stop = { bits = [1, 1], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "stop the engine; reads back clear when done" }
+dir = { bits = [2, 2], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "1 moves data from the drive to memory, 0 from memory to the drive" }
+active = { bits = [3, 3], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "a transfer is in progress" }
+error = { bits = [4, 4], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "the previous transfer ended in an error" }
+
+[words.ATA_PRD_LENGTH_WORD]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c"
+doc = "Last word of a 16-byte ATA scatter list entry. Each entry is four big-endian 32-bit words: zero, the low 32 bits of the bus address, zero, this word. The driver splits entries at 64 KB boundaries so an aligned entry can hold 0x10000 bytes, which does not fit in 16 bits; how the chip reads a length of 0x10000 is unknown."
+
+[words.ATA_PRD_LENGTH_WORD.fields]
+length = { bits = [15, 0], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "byte count" }
+eol = { bits = [31, 31], grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, drivers/ide/sgiioc4.c", doc = "last entry of the list" }

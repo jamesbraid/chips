@@ -28,6 +28,238 @@ Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding t
 
 ### Register `km_tx_mouse`
 
+## Words
+
+| Word | Width | Grade | Source |
+|---|---|---|---|
+| `ATA_DMA_CONTROL_WORD` | 32 | established |  |
+| `ATA_PRD_LENGTH_WORD` | 32 | established |  |
+| `GPCR_WORD` | 32 | established |  |
+| `GPDR_WORD` | 32 | established |  |
+| `GPPR_WORD` | 32 | established |  |
+| `INT_OUT_WORD` | 32 | established |  |
+| `OTHER_IR_WORD` | 32 | established |  |
+| `PCI_ERR_ADDR_L_WORD` | 32 | established |  |
+| `RX_STATUS_BYTE_WORD` | 8 | established |  |
+| `SBBR_L_WORD` | 32 | established |  |
+| `SERIAL_PTR_WORD` | 32 | established |  |
+| `SHADOW_WORD` | 32 | established |  |
+| `SIO_CR_WORD` | 32 | established |  |
+| `SIO_IR_PORT_WORD` | 8 | established |  |
+| `SRCIR_WORD` | 32 | established |  |
+| `SRTR_WORD` | 32 | established |  |
+| `SSCR_WORD` | 32 | established |  |
+| `TX_CONTROL_BYTE_WORD` | 8 | established |  |
+
+### Word `ATA_DMA_CONTROL_WORD`
+
+ATA DMA control and status (DMA block word 7). Software writes the direction alone to program a transfer, then sets start by read-modify-write. It ends a transfer by writing stop and polling until stop reads back clear. Before arming, it writes stop if active or error is set.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 4 | `error` | established |  |  | the previous transfer ended in an error |
+| 3 | `active` | established |  |  | a transfer is in progress |
+| 2 | `dir` | established |  |  | 1 moves data from the drive to memory, 0 from memory to the drive |
+| 1 | `stop` | established |  |  | stop the engine; reads back clear when done |
+| 0 | `start` | established |  |  | start the transfer |
+
+### Word `ATA_PRD_LENGTH_WORD`
+
+Last word of a 16-byte ATA scatter list entry. Each entry is four big-endian 32-bit words: zero, the low 32 bits of the bus address, zero, this word. The driver splits entries at 64 KB boundaries so an aligned entry can hold 0x10000 bytes, which does not fit in 16 bits; how the chip reads a length of 0x10000 is unknown.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31 | `eol` | established |  |  | last entry of the list |
+| 15:0 | `length` | established |  |  | byte count |
+
+### Word `GPCR_WORD`
+
+Generic pin control, written through the set alias (writing a 1 sets that bit) and the clear alias (writing a 1 clears it). Pin 0 drives the external interrupt output, pin 1 is the external interrupt input, pin 3 senses keyboard and mouse presence and pins 4 to 7 select RS-232 (0) or RS-422 (1) for ports 0 to 3. The set and clear behaviour follows the register names and the SGI driver's use of the set alias; the SGI Linux driver never uses the clear alias.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 20 | `int_out_en` | established |  |  | enables the external interrupt output on its pin |
+| 15:8 | `edge` | established |  |  | edge or level mode per pin; which value means edge is not stated |
+| 7:0 | `dir` | established |  |  | pin direction, 1 output |
+
+### Word `GPDR_WORD`
+
+Generic pin data: the state of the eight pins.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7:0 | `gen_pin` | established |  |  | pin state |
+
+### Word `GPPR_WORD`
+
+One word per generic pin, eight words. Software writes 0 or 1 to drive the pin; the serial driver uses pins 4 to 7 as the transceiver mode select.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `gen_pin` | established |  |  | single pin state |
+
+### Word `INT_OUT_WORD`
+
+External interrupt output control. In toggle mode (7) the output pin inverts every count+1 ticks; one tick is 520 PCI clocks, so the square wave period is 2*(count+1)*520 PCI clocks. Bit 31 reads the current output level and is the way the SGI Linux driver measures the PCI clock. Writing zero first returns the section to its power-on state, per the driver comment.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31 | `int_out` | established |  |  | current value of the output |
+| 30 | `diag` | established |  |  | timebase control; never set by the SGI Linux driver |
+| 18:16 | `mode` | established |  |  | output shape; only mode 7 (toggle) is used |
+| 15:0 | `count` | established |  |  | period control |
+
+### Word `OTHER_IR_WORD`
+
+The other interrupt status, enable-set and enable-clear words. Bit 0 follows the drive interrupt and bit 1 is the ATA DMA PCI error; bits 5:2 are the per-port serial DMA PCI errors; the generic pin field raises one bit per generic pin.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31:24 | `gen_int` | established |  |  | interrupt from generic pin n, bit 24+n |
+| 23 | `rt_int` | established |  |  | latch of the external interrupt output section |
+| 6 | `kbd_int` | established |  |  | keyboard and mouse interrupt |
+| 5:2 | `ser_memerr` | established |  |  | serial port n DMA halted by a PCI error, bit 2+n |
+| 1 | `ata_memerr` | established |  |  | ATA DMA halted by a PCI error |
+| 0 | `ata_int` | established |  |  | ATA drive interrupt pass-through |
+
+### Word `PCI_ERR_ADDR_L_WORD`
+
+Low word of the latched PCI error address. The word is read together with the high word after a DMA error interrupt. Master id 0 to 7 names a serial port (port number is the id shifted right one, bit 0 of the id is 1 for the receive ring and 0 for the transmit ring); 8 is the ATA engine; 9 to 15 are undefined. The address field holds bits 31:6 of the address.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31:6 | `addr` | established |  |  | address bits 31:6, in the same position as in the word |
+| 5 | `mul_err` | established |  |  | more than one error occurred before the register was read |
+| 4:1 | `master_id` | established |  |  | unit that caused the error |
+| 0 | `valid` | established |  |  | an address was captured |
+
+### Word `RX_STATUS_BYTE_WORD`
+
+Status byte of a receive ring entry; one per data byte. The chip writes the whole entry. Software clears the two valid bits after consuming a byte, and treats an entry with neither valid bit set in any of its four status bytes as not yet written, since the producer pointer can run ahead of the data.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7 | `data_valid` | established |  |  | data byte and its error bits are valid |
+| 6 | `modem_valid` | established |  |  | DCD, CTS and overrun are valid |
+| 5 | `dcd` | established |  |  | DCD state |
+| 4 | `cts` | established |  |  | CTS state |
+| 3 | `brk` | established |  |  | break |
+| 2 | `frame_err` | established |  |  | framing error |
+| 1 | `par_err` | established |  |  | parity error |
+| 0 | `overrun` | established |  |  | characters lost |
+
+### Word `SBBR_L_WORD`
+
+Low word of a serial ring base for one port pair. The ring group base must be aligned to its total size (four rings); software ORs the ring size into bit 0. How the chip combines base and pointer is not stated.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `size` | established |  |  | 0 for 1 KB rings, 1 for 4 KB rings |
+
+### Word `SERIAL_PTR_WORD`
+
+Producer and consumer pointers are byte offsets into the ring in 8-byte steps: bits 11:3 for 4 KB rings, 9:3 for 1 KB rings. The ring is empty when producer equals consumer and full when the consumer is one entry ahead of the producer.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 11:3 | `ptr` | established |  |  | ring offset in entries of 8 bytes |
+
+### Word `SHADOW_WORD`
+
+Per-port shadow of UART state. Bits 7:0 mirror the line status bits, 23:16 the modem status bits and 31:24 the modem control register. The driver writes the modem control byte to the UART and the word back here.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 28 | `loop` | established |  |  | loopback |
+| 27 | `out2` | established |  |  | OUT2 |
+| 26 | `out1` | established |  |  | OUT1 |
+| 25 | `rts` | established |  |  | RTS |
+| 24 | `dtr` | established |  |  | DTR |
+| 23 | `dcd` | established |  |  | data carrier detect |
+| 20 | `cts` | established |  |  | clear to send |
+| 19 | `ddcd` | established |  |  | delta DCD |
+| 16 | `dcts` | established |  |  | delta CTS |
+| 7 | `rfce` | established |  |  | error character in receive FIFO |
+| 6 | `temt` | established |  |  | transmitter empty |
+| 5 | `thre` | established |  |  | transmit holding register empty |
+| 4 | `bi` | established |  |  | break |
+| 3 | `fe` | established |  |  | framing error |
+| 2 | `pe` | established |  |  | parity error |
+| 1 | `oe` | established |  |  | overrun error |
+| 0 | `dr` | established |  |  | data ready |
+
+### Word `SIO_CR_WORD`
+
+Serial and arbitration control. Bits 3:0 are the only software-written field. Bits 9:4 are diagnostic status. The requester field encodes 0 transmit port 0, 1 receive port 0, 2 transmit port 1 and so on up to 7 receive port 3.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 9 | `ata_diag_active` | inferred |  |  | ATA request is the arbitration winner; polarity taken from the name |
+| 8 | `ata_diag_idle` | inferred |  |  | ATA request activity; the header comment does not say which level is idle |
+| 7 | `sio_diag_idle` | established |  |  | set when no serial port has a bus request active; software waits for it after a reset |
+| 6:4 | `arb_diag` | established |  |  | PCI bus requester currently granted |
+| 3:0 | `cmd_pulse` | established |  |  | byte-bus strobe width; software writes 15 |
+
+### Word `SIO_IR_PORT_WORD`
+
+One serial port's byte of the serial interrupt status, enable-set and enable-clear words. Port n occupies bits 8n+7 down to 8n. Software acknowledges tx explicit, rx timer, delta DCD and delta CTS by writing the bit to the status word; rx high is a level condition the driver cannot acknowledge; it masks the enable until the ring drains. Transmit empty is masked the same way (inferred).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7 | `tx_explicit` | established |  |  | a transmit entry that asked for an interrupt has been sent; acknowledged by writing the bit |
+| 6 | `intr_pass` | established |  |  | pass-through of the port 16550 interrupt |
+| 5 | `delta_cts` | established |  |  | CTS changed; acknowledged by writing the bit |
+| 4 | `delta_dcd` | established |  |  | DCD changed; acknowledged by writing the bit |
+| 3 | `rx_timer` | established |  |  | receive timer expired with data held; acknowledged by writing the bit |
+| 2 | `rx_high` | established |  |  | receive ring occupancy at or above the high-water mark; level, not acknowledged by a write |
+| 1 | `rx_full` | established |  |  | receive ring full; no software in the SGI Linux driver handles it |
+| 0 | `tx_mt` | established |  |  | transmit ring empty |
+
+### Word `SRCIR_WORD`
+
+Receive consumer pointer. Writing it with bit 31 set arms the receive timer; the timer starts on the first byte received after arming.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31 | `arm` | established |  |  | arm the receive timer |
+| 11:3 | `ptr` | established |  |  | consumer offset |
+
+### Word `SRTR_WORD`
+
+Receive timer. The count unit is 1/16000 second, so 160 gives 10 ms.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 27:16 | `current` | established |  |  | current count; read, never used by the driver |
+| 11:0 | `reload` | established |  |  | reload value |
+
+### Word `SSCR_WORD`
+
+Serial port control. The receive threshold counts ring entries (four bytes each). The driver pauses DMA before touching the UART line control, modem control or FIFO, by writing pause and polling pause state.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31 | `reset` | established |  |  | reset the DMA channels |
+| 30 | `pause_state` | established |  |  | set when the pause has taken effect |
+| 29 | `dma_pause` | established |  |  | pause DMA |
+| 28 | `dma_en` | established |  |  | ring DMA enable |
+| 27 | `rx_drain` | established |  |  | flush bytes held for fewer than four to the ring; cleared by the chip when the drain is done |
+| 21 | `diag` | established |  |  | bypass the clock divider for simulation |
+| 19 | `rx_ring_cts` | established |  |  | post a receive record when CTS changes; defined, not set by the driver |
+| 18 | `rx_ring_dcd` | established |  |  | post a receive record when DCD changes |
+| 17 | `hfc_en` | established |  |  | hardware flow control enable |
+| 16 | `tx_timer_busy` | established |  |  | transmit timer in progress |
+| 8:0 | `rx_threshold` | established |  |  | receive high-water mark in ring entries |
+
+### Word `TX_CONTROL_BYTE_WORD`
+
+Control byte of a transmit ring entry; one per data byte. Value 0 is an invalid byte. Type 1 sends the data byte. Types 2 (data to the modem control register) and 3 (delay of the data value in milliseconds) are defined by the SGI header; the SGI Linux driver never issues them.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7:6 | `type` | established |  |  | 0 invalid, 1 valid data, 2 modem control, 3 delay |
+| 5 | `int_when_done` | established |  |  | raise tx explicit after this byte is sent |
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
