@@ -777,7 +777,7 @@ is `r1`, returning at `b0`, fits all three sites; what the callee is (the sixtee
 processor-specific PAL_A look like an authentication value and the SDM names a PAL authentication call) is inferred,
 not shown by the code. The `msr` writes before the reset site (212 to 0, 1225 to 4) and their effect are unknown.
 
-**What the SDM defines for `br.ia` (established; rev 2.3 page numbers as given by a separate reader, see the review).**
+**What the SDM defines for `br.ia` (established; rev 2.3 page numbers checked against the rev 2.3 PDFs after the review).**
 `br.ia` is an unconditional indirect branch that sets PSR.is to 1 and begins IA-32 instruction execution at the virtual
 linear address in the branch register named by the B4 field `b2` (`b2` is 0 here, so `br.ia b0`; checked in the bundle
 bits), with EIP{31:0} = BR b2{31:0} minus CSD.base (volume 3, instruction `br`, rev 2.3 pp. 3:21 to 3:22; volume 2,
@@ -790,6 +790,15 @@ instruction (its indirect register moves are cpuid, dbr, ibr, pkr, pmc, pmd and 
 manual 251110, section 2.8, says IA-32 support is "achieved using hardware circuitry on the Itanium 2 processors",
 and the specification update 251141, erratum 70, says `br.ia` may miss the Illegal Operation fault when BSPSTORE and
 BSP differ. Neither names MSR 212 or 1225, a reset entry address or the entry state.
+
+The SDM's own description of PALE_RESET (volume 2, section 11.2.1, p. 2:289) says PAL "may optionally perform
+authentication of the PAL firmware" and that "PAL may execute IA-32 instructions to fully test and initialize the
+processor"; section 11.2.2 lists "an implementation-specific PAL procedure for PAL authentication" among the calls
+available to SALE_ENTRY at the recovery check (established, as Intel's description of PAL in general, not of this
+image). So IA-32 execution and an implementation-specific authentication step are both part of the architected
+reset flow. That supports reading the `br.ia` sites that pass an image address and size in `r2` and `r3` as entry to
+an implementation-specific authentication or self-test mechanism (inferred); the SDM does not say how it is entered,
+and what the reset-site `br.ia` runs stays unknown.
 
 For the reset site specifically (established): the 32 bytes at `0xFFFFFFE0` are the FIT pointer `0x80000000ffa00000`
 and the SALE_ENTRY pointer `0x80000000ffc4e000`, then the IA-32 far jump at `0xFFFFFFF0`. They do not form code in
@@ -875,3 +884,5 @@ Independent review of chips commits `ce97073` (NUMAlink discovery with the skip 
 **Not checked.** SDM rev 2.3 itself (Intel's download refused the request and the Library holds no copy in the roots this review could search), so the rev 2.3 page numbers on this page (2:109, 2:282 to 2:291, 2:596, 3:21 to 3:22) and its sha256 are unverified; the quoted sentences were found in rev 1.1 at different pagination, and the "Table 5-6" number is Table 5-5 there. The Itanium 2 hardware developer's manual 251109 (sections 3.2.1 and A.1.51 and their quotations) was not obtainable, so those two quotes are unverified. SAL specification 245359 was not opened. In ce97073 the bit layout of the `0x1_101d_0080` word beyond the bits listed above, the `0xffa5d6a0` mask loop and the master selection were not re-read.
 
 **Cleared scope.** The image facts at the top of memory (pointers, FIT, PAL_A entry and checksum, vector bundles, stub, native search, PAL_B hand-off offsets), the byte comparison with the Intel image, the patent and linux-ia64 quotations, the NI register accesses, polarity as corrected, and constants of the no-link route, and the four submodule pins. Not cleared: the rev 2.3 and hardware manual citations, the meaning of MSR 212 and 1225, and any claim about what the processor does after the reset `br.ia`.
+
+**Post-review check of the manual citations.** Against the rev 2.3 PDFs (volume 2, 245318; volume 3, 323207): Table 5-6, "Interruption Priorities", is on p. 2:109; the `br.ia` text in section 9.1.2 is on p. 2:596 and the `br` instruction's `ia` text on p. 3:21; PALE_RESET (section 11.2.1) and its exit state (section 11.2.2) are on pp. 2:289 to 2:290. Against the Itanium 2 hardware developer's manual 251109-001: "defined during configuration" is in section 3.2.1 (PDF p. 28) and "begins program execution at the reset-vector" in A.1.51 (PDF p. 64). All quoted as the page says. The SAL specification 245359 was not reopened.
