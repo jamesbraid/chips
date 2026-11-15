@@ -157,7 +157,7 @@ a signature, a MAC or filler.
 **What this says about the processor requirement.** An unsigned or non-Madison-signed image does ship, in production Intel
 firmware: PAL 7.46 in SR870BN4 PR1.5 "Production Release 1.5 Montecito BIOS" (release notes: "Montecito Processors, B, C0, and C1
 stepping"), PAL 7.46 and 8.30 in SR870BH2 PR2.0 build 253, PAL 7.46 in BN4C SUP3 and BH2C PR5.0, and PAL 5.01 in BH2B. They are
-Montecito PALs for a different processor. So the Madison DSA tail is **not** a rule for all Itanium 2 PAL images (established);
+Montecito PALs for a different processor. So the Madison-key DSA tail is **not** on every shipped Itanium 2 PAL image (established), which is weaker than "not required": a Montecito signature under another key or scheme is not excluded;
 whether Madison silicon refuses a Madison image without the tail is **unknown**, because no Madison image lacks it. Whether those
 Montecito PALs boot is not shown here: they shipped in a production release (vendor text), nothing more.
 
@@ -173,15 +173,14 @@ every `br.ia` confirmed in the IA-64 Ghidra module on Dell B02's generic PAL_A, 
 | Generic PAL_A FIT-walk `br.ia` (`r2` = entry, `r3` = size, `r5` = 1) | same bytes in all three builds | established |
 | Generic PAL_A "no usable PAL_A" `br.ia` (`r2` = `r3` = `r5` = 0) | same bytes in G-S and G-I; **G-B reads msr[1225] first and skips the `br.ia` unless bits 14 and 2 are both set** (SGI: unconditional) | established |
 | Specific PAL_A `br.ia` (`r2` = `r3` = `r5` = 0, gated on msr[1225] bit 14 or bit 2) | the 7.31, 5.37 and 1.27 images are byte-identical to SGI's in every vendor | established |
-| PAL_B `br.ia` x3 (Madison builds 2.14, 2.15, 2.20, 2.24, 2.25, 5.73, 7.79) | three sites in each. The msr[1225]-gated site tests bit 14 then bit 2 with the same rule in 2.14, 2.25, 5.73 and 7.79 and sets `b1` to the reset vector (`0x80000000ffffffe0`), `r5` = 0 and `r3` = 0 or 1. The first and third sites (by address) have identical 60-instruction lead-ins in the builds compared pairwise (2.14 and 2.25, 2.25 and 5.73, 5.73 and 7.79); the gated middle site differs in how `r2` and `b0` are set (offsets, and a `cpuid` revision test in 5.73 and 7.79) | established |
-| Montecito PAL_A 7.46, 5.01 and PAL_B 7.46, 8.30 | one `br.ia` each, `r2` = `r3` = `r5` = 0, `b0` an ip-relative return, gated on **msr[606] bits 1 and 2** (PAL_A also msr[763] bit 0, msr[621]); the skip path sets bits 1 and 2 of msr[606]. PAL_B 7.46 and 8.30 write msr[522] = a command, `srlz.d`, M slot, then `br.ia` | established for the code; the msr[606]-for-msr[1225] analogy is **inferred** |
+| PAL_B `br.ia` x3 (Madison builds 2.14, 2.15, 2.20, 2.24, 2.25, 5.73, 7.79) | three sites in each. The msr[1225]-gated site tests bit 14 then bit 2 with the same rule in 2.14, 2.25, 5.73 and 7.79 and sets `b1` to the reset vector (`0x80000000ffffffe0`), `r5` = 0 and `r3` = 0 or 1. The first and third sites (by address) have the same 60-instruction lead-ins in the builds compared pairwise (2.14 and 2.25, 2.25 and 5.73, 5.73 and 7.79), except one image-relative `movl` constant in the third site between 2.25, 5.73 and 7.79; the gated middle site differs in how `r2` and `b0` are set (offsets, and a `cpuid` revision test in 5.73 and 7.79) | established |
+| Montecito PAL_A 7.46, 5.01 and PAL_B 7.46, 8.30 | one `br.ia` each, `r2` = `r3` = `r5` = 0, `b0` an ip-relative return. PAL_B 7.46 and 8.30: gated on one bit of msr[606] (bit 1 when msr[763] bit 0 is clear, bit 2 when set), and the call is skipped when that bit is set; they write msr[522] = a command, `srlz.d`, M slot, then `br.ia`. PAL_A 5.01: gated on msr[622] bit 26 being clear. PAL_A 7.46: no gate (`cmp.eq p3,p4=r0,r0` forces the predicate). Both PAL_A images have a predicated block after the call that ORs bits 1 and 2 into msr[606]; in 7.46 it cannot run (see Review) | established for the code; the msr[606]-for-msr[1225] analogy is **inferred** |
 
 So the `br.ia` call, the msr[1225] gate and the "function 0, no image, result ignored" form of the specific PAL_A call are Intel
 common code for Madison, shipped unchanged by Dell, Intel and IBM. Dell B02's newer generic PAL_A shows Intel itself reading
 msr[1225] and testing bits 14 and 2 in the generic code, which strengthens msr[1225] as the gate named in
 [pal-msrs.md](../snprom/pal-msrs.md); its combining rule (both set) differs from the PAL_B and specific-PAL_A rule (either set).
-Why is **unknown**. G-B also adds, at one of the two PAL_B hand-off entries, a spin on msr[1640] bit 4 before the existing bit-56
-test (established); the other entry only gains the bit-56 test at a new address.
+Why is **unknown**. G-B also adds, at one of the two PAL_B hand-off entries, a test of msr[1640] bit 4 before the existing bit-56 test (established). It reads the register once and, when the bit is set, branches to its own bundle with no re-read, so it never leaves: a stop, not a poll (see Review). The other entry only gains the bit-56 test at a new address.
 
 ## Reserved slots: same words, same contexts
 
@@ -271,3 +270,92 @@ processor does with it.
 Tools ran from a scratch directory outside the repository: a FIT parser and carver, a DSA verifier (checked first against the six
 SGI results), the retools IA-64 decoder over each image and an msr trace. Ghidra, run through the toolchain image on carved
 copies kept untracked in `.cache/`, confirmed decode and counts as stated. No carved image or listing is stored in the repository.
+
+## Review
+
+Independent review of the commit that added this page, by a reader who did not write it. Everything below was redone from the
+vendor packages and the SGI 10.54 `shub1snprom.bin`, with a new carver and a new DSA verifier (throwaway scripts, not
+committed), and the `br.ia` and reserved-slot readings were redone in the project IA-64 Ghidra module with each component
+loaded at its FIT address. objdump was used only to cross-check the Dell B02 generic PAL_A msr[1640] site and the Montecito
+PAL_A 7.46 `br.ia` site. Grades follow the page: facts about the images are established, readings of what code means stay
+inferred.
+
+**Confirmed (established).**
+
+- **Containers.** Every input sha256 prefix matches the Inputs table. Dell A08 and B02 and the five Intel `.BIN` files decode as
+  a volume of one component with the unprogrammed areas dropped; the PAL FIT is the second `_FIT_` in each file. I re-carved Dell
+  A08, Intel BH2C and the IBM packet from scratch. IBM: 4,029 frames of `16 02 00 03`, each followed by 2 or 3 trailer bytes
+  (4,020 and 9) and `0xC0`, with a second `0xC0` before 8 frames; 4,026 stream-3 frames carry 5,636,248 bytes; the 0x98-byte
+  header has the tag `SALEFIFW` and three entries of size, 8-byte value and offset (0x60000, 0x100000 and 0x400000, the last
+  covering two images); the four images are 0x60000, 0x100000, 0x300000 and 0x100000 bytes and each FIT is found through the pointer
+  at 4 GiB - 0x20. In the Dell and Intel files the PAL_B, the first PAL_A and, in the BH2 files, all PAL_A images sit 0x1a6 past a
+  straight map; the second and third PAL_A images of the Dell and Intel BN4 files sit 0xb01a6 past it, and in the three BH2 files
+  every PAL_A image follows the 0x1a6 rule. The FIT checksum holds for every C_V-set entry and for the generic PAL_A entry (type 0x0f at 4 GiB - 0x30,
+  size 0x7fc0, address 0xffff8000) in the three files checked.
+- **Version matrix.** The 12 FIT listings, versions, order and C_V flags in the table match. PAL_A 7.31, 5.37 and 1.27 are
+  byte-identical to SGI's in every image that lists them; PAL_B 5.73 is byte-identical to SGI's in Dell A08, Intel BH2B and IBM
+  image 3; PAL_B 2.14, 2.15, 2.20, 2.24 and SGI's 2.25 are five different builds; PAL_B 7.79 is only in SGI's PROM. The three
+  generic PAL_A builds split exactly as the page says: the 0x7fc0-byte hashes with prefixes `19191cc4` (SGI, BH2C, IBM x4),
+  `6c1de461` (Dell A08, Intel SUP3, PR1.5, BH2B, BH2D) and `f925d399` (Dell B02). G-I and G-S differ in 8 bytes, all inside the first bundle.
+- **Signatures.** With the page's scheme, 33 of 33 Madison (family byte `0x1f`) PAL copies verify with the key read from their own
+  vendor image: 27 image copies in Dell, Intel and IBM firmware (eight distinct builds) plus SGI's six. The key blob (404 bytes) is identical in all 12 generic PAL_A copies; p and q test prime, q divides p-1, g and y
+  have order q. SIG_R is the same in all 33 images; the second value differs per build (10 distinct values). The seven
+  Montecito images (PAL_A 7.46 in SUP3, PR1.5, BH2C and BH2D, PAL_A 5.01, PAL_B 7.46 and 8.30) fail. A search broader than the
+  page's (both starts, end trims 0 to 128, every 4-byte-aligned r and second value in the last 160 bytes, second value direct
+  or inverted: 96,228 attempts on PAL_A 7.46, 143,748 on PAL_B 8.30, 126,852 on PAL_A 5.01, 118,800 on PAL_B 7.46) found no
+  verifying signature. PAL_A 7.46 and 5.01 have a zero 16-byte lead; the PAL_B images do not.
+- **Reserved slots and `br.ia` in Ghidra.** The Ghidra module does not decode the M word and prints it as `unknown.m
+  0x108000000` (B word `unknown.b 0x48000000`); counts by exact match are 216, 217, 217, 217, 217, 211 and 211 M words in PAL_B
+  2.14, 2.15, 2.20, 2.24, 2.25, 5.73 and 7.79 with 12, 12, 18, 18, 18, 12 and 12 B words; 139 and 142 M and 48 and 48 B in
+  Montecito PAL_B 7.46 and 8.30; 41 and 39 M and 3 and 3 B in PAL_A 7.46 and 5.01; 1 M in each generic build. The `br.ia`
+  counts (3, 3, 3, 3, 3, 3, 3 in the Madison PAL_B builds, 1 in each Montecito image, 3 in each generic build) and all the page's
+  per-build counts agree. Every Madison M and B word has `srlz` as the nearest non-nop before it. In Montecito PAL_B 7.46 and 8.30
+  the exceptions are 1 M word and 14 B words once `hint.m 0` is counted as a nop (11 more B words have a `hint.m 0` between).
+- **PAL_B msr[1225] gate, 2.14 through 7.79 (established).** In all seven builds one site reads msr[1225], tests bit 14 with
+  `tbit.z p0,p2` then ORs bit 2 into p2 with `tbit.nz.or`, and branches to the `br.ia` path when either is set. 2.14 and 2.15 are
+  identical after address masking; 2.20, 2.24 and 2.25 differ from 2.14 in two offsets; 5.73 and 7.79 add the
+  `cpuid[3]` bits 15:8 compare against 0x83 and 0x88 and choose `r3` of 0 or 1. All set `b1` to the reset vector, `r5` = 0.
+- **msr[1212] known-answer routine (established).** The routine (msr[1544] = 0, msr[1546] = command, `srlz.d`, M word, poll
+  msr[1212] bit 14, compare bits 13:0 with `r21`, compare msr[1226] with `r20`, set msr[1640] bit 59 on mismatch) is the same
+  65 instructions, after address masking, in PAL_B 2.14, 2.15, 2.20, 2.24, 2.25 and 5.73. The expected msr[1212] value is
+  0x317c (12668) in all three revision classes of those builds, and the msr[1226] value is the same in all three. In 7.79 two
+  classes use 0x317c (with two different msr[1226] values, one equal to the older builds') and the third class uses 0xbad
+  (2989) for both. The command word is the same in all seven builds.
+- **Dell B02 generic PAL_A (established).** At the "no usable PAL_A" site the code reads msr[1225], takes `tbit.z p2,p0` of bit
+  14 and `tbit.z.or` of bit 2, and branches past the `br.ia` when p2 is set, so the call runs only when both bits are set. G-S and G-I
+  call unconditionally. The two other generic `br.ia` sites are the same bytes in all three builds.
+- **Montecito msr[522] (established).** PAL_B 7.46 and 8.30 write msr[522] with the same command constant, then `srlz.d`, the
+  M word, then the `br.ia` after the ip-relative `b0` setup. 137 of 139 (7.46) and 140 of 142 (8.30) M words follow an msr[522]
+  write with only nops, `srlz` or `hint` between; one more in each follows an msr[522] write with a region-register read and write
+  in between, giving the page's 138 and 141; the other is the `mov pr=` case. In both PAL_A images every M word follows an msr[522] write.
+
+**Fixed in place (mechanical, established by the decode above).**
+
+1. **Dell B02 msr[1640] bit 4 is not a spin.** The page called it a spin. The test is `mov r31=msr[r31]`, then
+   `tbit.z p14,p15=r31,4`, then `br.cond (p15)` to its own bundle, with no second read of the register. If bit 4 is set once, the
+   processor never leaves; if clear, it goes on to the bit-56 test. Objdump shows the same. The page now says "stop, not a poll".
+   Why the code stops is **unknown**; reading it as a deliberate halt on a fault bit is **inferred**.
+2. **Montecito `br.ia` gating.** The page's "gated on msr[606] bits 1 and 2, skip path sets them" holds for none of the four
+   images as written. PAL_B 7.46 and 8.30 test one bit of msr[606], bit 1 or 2 selected by msr[763] bit 0, and skip when it is
+   set; the skip path does not write msr[606]. PAL_A 5.01 tests msr[622] bit 26. PAL_A 7.46 has no test: `cmp.eq p3,p4=r0,r0`
+   forces p3 and the call is taken; the `(p4)` block after it (msr[606] |= 6) is entered only when p4 is set, and the return
+   address is computed as the bundle after that block, so it is dead there. Objdump agrees. Table row rewritten. The msr[763] bit 0 reading in
+   PAL_A selects whether msr[621] is written, not a `br.ia` gate.
+3. **"Identical 60-instruction lead-ins".** True for the first `br.ia` site in all pairs and for the third between 2.14 and 2.25; between
+   2.25, 5.73 and 7.79 the third differs by one image-relative `movl` constant. Reworded.
+4. **"Not a rule for all Itanium 2 PAL images" (grading).** What is established is that the Madison-key DSA tail is absent from the
+   Montecito images. A Montecito signature under another key or scheme is not excluded, and the page's own Intel erratum citation
+   in [pal-authentication.md](../snprom/pal-authentication.md) (a processor authenticating PAL 7.46 at boot on the 9000 Series)
+   makes some check on those images likely. So "unsigned" is the wrong word for them: they are **not signed with the Madison
+   key**; whether they carry a signature is **unknown**; that the processor authenticates PAL 7.46 is established for that
+   erratum's text only. The sentence now says so.
+
+**Changed facts.** The msr[1640] bit 4 behaviour (stop, not a poll) and the Montecito `br.ia` gating (per image, with PAL_A 7.46
+ungated) are corrected above. Nothing else in the version matrix, container text, signatures or counts changed.
+
+**Not checked.** HP firmware (the page does not decode it). The PAL_A 7.31, 5.37 and 1.27 `br.ia` gate (bits 14 or 2 of msr[1225])
+was not re-read in Ghidra here; the images are byte-identical to SGI's, whose reading the snprom pages carry. The Dell and Intel `.REC` files. IBM frame
+trailer contents and the 8-byte values in the IBM header table. The per-site msr census for the 17 images beyond the counts above
+(msr[1546] before 145 to 151 M words, and the context-overlap figures), the predicate-consumer heuristic, and the Madison
+PAL_B first-site lead-ins beyond 2.14, 2.25, 5.73 and 7.79. Pre-existing text in `pal-authentication.md` and `pal-msrs.md`
+that speaks of Intel's "unsigned 7.46" was not edited.
