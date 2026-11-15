@@ -10,3 +10,5 @@ Status: **unknown**; the header states no reset value.
 - Whether SHub 2 keeps any of this block. The kernel does not use it on SHub 2, and SHub 2's BTEs are elsewhere.
 
 Related hypothesis, not evidence: 109 of the 119 offsets the Bedrock I/O interface records are in this block (devices/shub_ii/README.md).
+
+From the SAL 5.04 PROM reading ([PROM II setup on the main_three path](../devices/shub_ii/README.md#prom-ii-setup-on-the-main_three-path)): the PROM never programs a translation table entry, the wrapper interrupt register or the interrupt destination, so those roles stay header-only. Still unknown: what the header's `i_f` bit of the PIO request buffers does (the PROM sets it in every entry), why an L1 module type of 111 needs an LLP warm reset, what the non-II word at `0x1_1007_1080` is, and how a read of an absent widget is reported to the protected-read helper `0xffaeb170`. Route: the SHub 1 specification, or a PROM run past discovery with each of those observed.
