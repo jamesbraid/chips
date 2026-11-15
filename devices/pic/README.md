@@ -551,6 +551,94 @@ entry, 64-bit attribute and window layouts below.
 - **Bus-visible DMA addressing differs by bridge**: a PIC uses the DMA view with the NASID bits shifted down two places; a TIOCP uses
   a view with the NASID in bits 53:40 and a network address below (`PHYS_TO_TIODMA`). See [../tio/README.md](../tio/README.md).
 
+## Register field layouts (SGI's 2.4-era Linux PIC header)
+
+The layouts are in [registers-extra.md](registers-extra.md) as 64-bit words (`ID_REG`, `STATUS_REG`, `CONTROL_REG`,
+`INT_STATUS_REG` and so on), one per register or register family; the table there gives every field, its bits and its grade.
+Source: the PIC register structures in `include/asm-ia64/sn/pci/pic.h` and the control, interrupt and device masks in
+`include/asm-ia64/sn/pci/bridge.h`, both in the pinned 2.4.37-era tree (SGI platform code, GPL). Under the rule for
+this generation a field the header defines is **established** as a software definition. Three limits on that grade:
+
+- The header's own register structure leaves bits reserved that its mask list names. Control bits 62:61 (no-snoop and
+  relaxed ordering), 55:40 (bus, device and function number) and 31:29 (parity enables) come from the masks, and
+  interrupt status bits 45:42 (PCI-X unexpected completion, split timeout, split error message, split message parity
+  error) likewise. The extra unit gives each of those fields its own source line. The IRIX attach constants agree with
+  them: it clears 62:61 and 55:40, sets 31:30 and sets 29 unless the revision is 1, and its enable mask covers 45:41.
+- Names that describe an effect (`mem_swap`, `sys_end`, `f_bad_pkt`, `en_clr_pkt`) are the header's names; no source read
+  says what the two states do, so the unit's text says "name only". What a field does on the chip is not established
+  by a field name.
+- **The header contradicts itself on where the PCI-X error group sits.** Its offset list puts the PCI-X error address,
+  attribute, data and read-request-timeout registers at 0xe0 to 0xf8. Its structure in `bridge.h`, SGI's v5.3 `struct pic`
+  and the IRIX code (0x600 to 0x630, read in full above) all put the group at 0x600 and up, with a separate `pcix_timeout`
+  at 0x638 and 0xe0 to 0xf8 as padding. The census agrees with 0x600. The 0xe0 list reads as an earlier layout of the
+  chip's documentation; which layout the silicon uses at 0xe0 to 0xf8 is **unknown**, and the read-request-timeout layout
+  (`PCIX_TIMEOUT_REG`) is not attached to a slot for that reason. The attribute layout is attached to 0x608 by IRIX use
+  of that slot (inferred for the other attribute slots by shared name).
+
+**Reset values.** Only one register has a stated reset. The header's text for the interrupt enable register (0x108) says
+all bits are zero after reset. That is established as the header's statement and not a measurement; the generated
+register table stays `unknown` because the census unit is machine written and the TIOCP unit shares its configuration.
+Every other reset value is unknown. The PROM's write of zero to the enable register before the kernel runs is not a reset
+value (it proves nothing about the state before it).
+
+## Revision differences (what the 2.4-era SGI driver sources say)
+
+SGI's driver of the same generation as the IRIX code carries a table of PIC workarounds, each a mask over part
+revisions where revision 1 is "A", 2 is "B" and 3 is "C" (`(1 << revision) & mask`; the `PV` numbers are SGI's erratum
+identifiers as printed in that header). The IRIX objects use the same revision test, so these entries explain code this
+page already read. All eight are **established** as what that driver does; why the chip needs them is as SGI's comments
+say, and none is a measurement.
+
+| Erratum | Applies to | What the driver does | Matches the IRIX attach |
+|---|---|---|---|
+| PV854697 | all revisions | write 64-bit registers with 64-bit stores | yes: every PIC accessor is `ld`/`sd` |
+| PV854827 | all revisions | fake the "widget 15 present" bit | not read in IRIX; meaning unknown |
+| PV855271 | revision 1 | virtual channel enable (device bit 25) only for 64-bit devices; the default device value leaves it off | not read |
+| PV855272 | revision 1 | runaway interrupt: drop and restore a pin's enable bit around handling | not read |
+| PV856155 | revision 1 | after a PCI-X arbitration error clear the four device-broke bits (23:20) of the arbitration register | not read |
+| PV856864 | revision 1 | clear enable bits 39 and 9 and set the request timeout to 0x750, so locked read tags time out sooner | yes: the same two bits and 0x750 |
+| PV856866 | revision 1 | never use read response buffers 0, 1, 8 and 9: park them on a device's virtual channel 3 | yes: 0xf000f in both buffer registers marks exactly buffers 0 and 8 (even) and 1 and 9 (odd) |
+| PV862253 | revision 1 | do not enable request-path parity checking (control bit 29) | yes: bit 29 set unless revision 1 |
+| PV867308 | revisions 1 and 2 | treat link-layer sequence-number and CRC receive errors as fatal; SGI's comment says the case was seen only in simulation | not read |
+
+This closes the question the register-inventory section left open, why the revision-1 buffer constant reserves
+exactly those buffers: the driver comment says buffers 0, 1, 8 and 9 are unusable on revision A and are assigned to a
+virtual channel nobody uses. Revisions 2 and 3 therefore differ from revision 1 only by the dropped workarounds above,
+as far as these sources go; no source describes any other behaviour difference between revisions, and none states what
+each revision changed in silicon (unknown).
+
+## Origin 3000 PIC against the Altix PIC
+
+Both are the same register set, the same part numbers (0xd102 for bus 0, 0xd112 for bus 1, manufacturer 0x24) and the
+same widget-id format. What differs is the software that drives them, and the source for that is SGI's own code on each
+side.
+
+| Point | Origin 3000 family (IRIX, IP35 PROM) | Altix 350 and other SN2 machines (Linux) | Grade |
+|---|---|---|---|
+| Who sets the chip up | The kernel attach routine (`pic_attach2`) programs control, enable, mode, device select and clears the translation RAMs | The kernel provider adds only the page size bit, interrupt retargeting and force-interrupt writes, and keeps the device register values firmware supplies; that firmware does the rest of the set-up is inferred | established for what the kernel does; inferred for the firmware |
+| Revision handling | Reads revision from the identification word, applies the revision-1 workarounds above | The SN2 provider code read never reads the identification register or tests a revision; none of the workarounds appears in the files read | established for the files read; whether SN2 firmware applies them is unknown |
+| Revision seen on hardware | A published OpenBSD capture of an Origin 350 base I/O board reports PIC revision 3 | No capture or document states an Altix PIC revision | Origin 350: established by capture; Altix: **unknown** |
+| Second head | Block at +0x800000 of the same widget (`PIC_BUS1_OFFSET`) | One PIC structure per bus, each base supplied by firmware; no source read gives the second bus an address | inferred for the Altix correspondence |
+| Interrupt delivery | Packets to the Bedrock addressed through the destination registers | Same registers; the kernel clears the pin enable, rewrites the 48-bit address field, sets the enable and forces the pin | established |
+| Error handling | The kernel decodes the error registers (error routine, table above) | Kernel hands the error interrupt (vector 0x33) to firmware | established |
+| Page size | Control bit 21 always set (16 KiB pages) | Bit 21 set when the kernel page size is 16 KiB or more, clear for 4 KiB | established |
+| Where the PIC is | Origin 350 MPX module: on a PCI riser card (guide 007-4566-001, printed pages 135 and 138); the compute module with the IO9 is not read here. Two buses of two slots | On the PCI riser card of the compute module (guide 007-4660-001 p.105, as cited on the Altix 350 page, not re-read here); two buses of two slots | established for the MPX module and the Altix 350 |
+
+**The base I/O cards on a PIC bus.** The IO9 and the IO10 are not PIC revisions or risers. They are PCI cards in bus 1
+slot 1, and the Linux IOC4 base driver tells them apart by what sits at PCI slot 3 of the same bus: a QLogic ISP 12160 for the
+IO9 and a Vitesse VSC 7174 for the IO10, with neither for the PCI-RT card (`drivers/misc/ioc4.c`, v4.19,
+`ioc4_variant`; the file no longer exists in v5.3). PCI slot 3 is PIC internal device 2 (configuration window 3), which is
+where the Origin 350 capture puts the same ISP 12160 on its IO9, so the PIC's device numbering is the same on both machine
+families (inferred for the Altix by that correspondence). Nothing read says the IO9 or IO10 changes any PIC register or that the riser changes PIC behaviour:
+whether a riser carries a PIC of a different revision from the one on the Origin node board is unknown. The riser's own board
+record is read through the system controller by the SN2 PROM (see the [cross-check question](../../questions/altix-io-sn2-cross-check.md)); its contents are
+unknown.
+
+One conflict to resolve elsewhere: the SN2 PROM page reads part 0xd112 as the TIOCP. The SGI header names 0xd112 as the
+PIC's second bus. IRIX `pic_attach2` accepts both 0xd102 and 0xd112 as PIC. The PROM reading is inferred and the header is
+the established source, so the PROM page's label for 0xd112 should be checked (the TIOCP part is 0xe000 or 0xe010 by IRIX
+use only). See [the open question](../../questions/pic-field-and-revision-open.md).
+
 ## Reset expectations
 
 Unknown for every register: no routine reads a register before writing it in the attach sequence, apart from
@@ -611,7 +699,7 @@ with its address list.
 
 ## Open
 
-See questions/README.md: the revision-1-only steps.
+See [questions/pic-field-and-revision-open.md](../../questions/pic-field-and-revision-open.md).
 
 ## Review
 
