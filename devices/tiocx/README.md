@@ -13,15 +13,32 @@ and the corelet number the driver uses are in [../tio/registers.md](../tio/regis
 - At attach the driver resets corelet 3, enables the conveyor and registers a device with the widget's part and manufacturer numbers. A part number of zero means no bitstream is loaded;
   such a device is still registered so user space can see the state. A per-device control file accepts 1 (reset then reload), 2 (reload) and 3 (reset only).
 - Interrupts for devices on the port are allocated through a firmware call that takes the TIO NASID, the widget, a kernel vector and a target; the TIOCX error vector is `0x37`.
-- DMA from an FPGA device uses the TIO view of an address, with two bits stripped (`TIOCX_DMA_ADDR` clears bits 37:36 and keeps only the low 56 bits; the header's comment calls this stripping the address-space bits); a TIOCX-to-TIOCX view
+- DMA macros: the header also defines a DMA mask for an FPGA device (see below for what the driver actually uses), with two bits stripped (`TIOCX_DMA_ADDR` clears bits 37:36 and keeps only the low 56 bits; the header's comment calls this stripping the address-space bits); a TIOCX-to-TIOCX view
   keeps bits 35:0 and moves bits 55:38 up by two.
+
+## What sits behind the port
+
+In the public Linux tree one driver binds to it, the FPGA Core Services driver, which matches part `0xfff0` or `0xf001` with manufacturer 1 and presents the [MBCS register block](../mbcs/README.md)
+(established, `drivers/char/mbcs.c`). SGI's RASC user's guide (007-4718-007, printed pages 9 to 12) describes the port as the TIO's "SSP" and gives the packaging, see [RASC](../../platforms/sn2/rasc.md). That the SSP and the
+driver's corelet 3 are the same port is **inferred**: the guide says the FPGA connects to the TIO's SSP port and the driver calls the FPGA port the CX port, and no text equates them. Interrupts a bitstream raises
+reach the host through vectors the firmware allocates per device (the driver asks for three, one per engine); the defined vector `0x37` is not used by the files read.
+
+The exported helper `tiocx_dma_addr` (used by the Core Services driver) applies the TIO DMA view `PHYS_TO_TIODMA`, the view the TIO's other bridges use, and does not use the `TIOCX_DMA_ADDR` mask this page lists above
+(established, `tiocx.c` and `mbcs.c`). The mask is defined and unused in the files read.
+
+The shipped SN2 kernel (SLES 9 SP3, 2.6.5-7.244, symbol table read with `readelf`, not Ghidra; no function was decompiled) carries `tiocx_init`, `tiocx_match`, `cx_device_probe`, `tio_corelet_reset`,
+`tiocx_reload`, `tiocx_irq_alloc`/`_free` and the exported `cx_*` registration functions, plus `show_cxdev_control` and `store_cxdev_control` (established: the code shipped). No `mbcs` symbol is in that kernel; the
+core-services driver is not held as a module (**unknown** whether it shipped as one).
 
 ## Open
 
-Which bitstreams and products use the port (the RASC module of the Altix 350, 3700 and 4700 guides is a candidate, unproven), what a loaded bitstream's registers look like, and what the board-type constants correspond to
-are **unknown**; the RASC user's guide (007-4718-007) is held but not read for this.
+What a bitstream other than SGI's Core Services looks like on this port, and which products and board types carry it, are **unknown**; the board-type constants
+come from the controller header with no product name. Bitstream-dependent behaviour (reset values, the algorithm registers, the SSP packet format) is recorded as unknown on the
+[MBCS page](../mbcs/README.md) and in [the open questions](../../questions/tiocx-rasc-open.md).
 
 ## Review
+
+Not covered by the review below: the "What sits behind the port" section and the MBCS and RASC pages it links, added 2026-11-15.
 
 Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
 
