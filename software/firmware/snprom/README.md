@@ -150,7 +150,11 @@ labels "OEM type".
   the Itanium 2 line, revisions 4 to 7, 5 and 1 to 2) and family 0x20 (the Montecito line), fifteen steppings in the
   1.40 image and thirteen in 1.11 (established as table contents; the marketing names are inferred from Intel's CPUID
   numbering, which is not in the image). Each row also holds the minimum PAL_A and PAL_B version the SAL wants (the
-  strings "Minimum PAL A" and "Current PAL A" show them are checked and printed).
+  strings "Minimum PAL A" and "Current PAL A" show them are checked and printed). In the SHub 1 images SAL_A holds two tables.
+  The first has three rows keyed by `cpuid[3] & 0xffffff0000` (family 0x1f, models 0, 1 and 2). The second, keyed by the exact
+  `cpuid[3]` and holding the version windows, is at `0xffc51000` in SAL_A 5.04 (a copy at `0xffbe0a08` in SAL_B) and has 15 rows
+  of `0x60` bytes: seven with family 0x1f (Itanium 2 models 0, 1 and 2) and eight with family 0x20 (established, from the
+  review of [boot-sequence.md](boot-sequence.md); [images.md](images.md) lists the keys).
 - **SAL_A (0x10)**: 12 KiB (SHub 2) to 24 KiB (4.43). First-stage code that runs straight out of flash with no memory
   and no stack. Walked through below.
 - **SAL_B (0x11)**: 2.1 to 2.6 MiB of IA-64 code, linked to run in place from flash at `0xffa01000` or `0xff401000`
@@ -291,7 +295,7 @@ are inferred, not read from SAL_B.
      and branches to SAL_B offset 0, 0x20 or 0x10 for reason 0, 1 or 2.
    - **Progress codes in SAL_A, complete (established).** 48, 56 and 59 (hand-off for reasons 0, 1, 2), 176 (the error
      path), 177 (reason above 3: spin) and 178 (fatal hang: bad `r20` byte 1, FIT not found). SAL_B writes 179 and 49,
-     53, 180 later. A model can ignore these stores; software never reads them back in SAL_A.
+     53, 180 later. Nothing in SAL_A reads these stores back.
 3. **SAL_B reset entry (`0xff42fbb0` in 1.40; established for the first 100 instructions).** Writes progress codes,
    sets `gp`, makes six calls (not named, the first runs before RAM is needed) then reads PROM data at **physical RAM**
    `0x1000010`, `0x1000038` and `0x1000000` (a per-processor table at 16 MiB, so DRAM must be initialised and sized by
@@ -313,7 +317,7 @@ are inferred, not read from SAL_B.
    `*_sim_data` routines that build the rack, bay, node and slab fields from a SHub register block (offset
    `0x1003_8200`, read with the fabric vector accessor) instead of talking to hardware. This is the likely route SGI's
    own simulator used; the kernel's `SN_SAL_FAKE_PROM` call and a `CONFIG_IA64_SGI_SN_SIM` kernel option point the same
-   way. An emulator can use it only if it presents that CPUID signature, which is a project decision.
+   way. The skip applies only when the processor reports that CPUID signature.
 6. **Memory (inferred).** Names: `memctl_get_bank_sizes`, `memctl_memory_present`, `run_mbist`,
    `load_and_arm_fill_bist_mmrs`, `mdir_create_presence_vec`, a warning about "tRCD ... SHUB max of 4" and "SHUB min of
    2". DIMM data comes through the SHub's own registers (the `memctl_*` functions use only `chipset_load_mmr`), so the
@@ -329,11 +333,11 @@ are inferred, not read from SAL_B.
    `chipset_arbitrate_lmaster`: multi-node boot has a node-barrier protocol over per-node flag registers; a single
    node with no router skips it (the one-module Altix 350 case; not verified by running).
 
-**What an emulated node must answer to reach EFI (summary, SHub 2 build; the SHub 1 Altix 350 version is in
+**What the firmware needs to reach EFI (summary, SHub 2 build; the SHub 1 Altix 350 version is in
 [boot-sequence.md](boot-sequence.md)):** the SHub identification and node-identity registers, the
-SAL_A registers above (accepting writes is enough), DRAM at physical `0x1000000` with working sizing, a CFI-compatible
+SAL_A registers above (the code needs the writes accepted, nothing read back), DRAM at physical `0x1000000` with working sizing, a CFI-compatible
 flash or an error the PROM tolerates, an L1 (or the simulator escape), one working console path. PIC, TIO and IOC4
-are needed for I/O (EFI's console is the system controller or a serial UART in an IOC4), not for reaching the PROM
+are read for I/O (EFI's console is the system controller or a serial UART in an IOC4), not for reaching the PROM
 prompt. Everything beyond SAL_A is a **reading** and has not been run.
 
 ## SHub registers the first stage writes (SHub 2 SAL_A, established)

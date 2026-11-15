@@ -2,7 +2,7 @@
 
 The Altix 350 is SGI's entry IA-64 NUMA server: 2U modules that run one Linux image of up to sixteen Itanium 2
 processors in a ring of eight modules (first guide) or up to 32 through routers (second guide). It is the smallest SN2 machine with a complete published guide, so it is the
-first one an emulator can be checked against. This page covers the modules, what is on each, the chips, and the
+best documented SN2 machine. This page covers the modules, what is on each, the chips, and the
 console and interrupt paths. It holds no register facts.
 
 Sources: SGI, *Important Note: SGI IO10 PCI Option for Altix 350*, `007-4374-001`. SGI, *SGI Altix 350 System User's Guide*, `007-4660-001` (2004, cited "-001") and `007-4660-002` (cited "-002"),
@@ -15,8 +15,8 @@ A page number with no revision tag is a -001 page.
 16 processors and the IO9 base I/O card, and calls the fabric "NUMAlink". -002 (pages 66 to 72 and 105 to 114 read)
 says the standard base I/O card is the **IO10** and the IO9 is optional, names the interconnect "NUMAlink-4" and the
 node chip "Super Hub (SHub)", adds one or two NUMAlink-4 routers ("R-bricks") that join eight to sixteen modules into up
-to 32 processors and 64 PCI/PCI-X slots (-002 pp.66, 68, 69). The guide prints the memory limit as 192 GB (p.66) and 384 GB (p.68); see the Memory row below. A model of the machine as first shipped (2004)
-is the -001 one; a model of the later machine is -002.
+to 32 processors and 64 PCI/PCI-X slots (-002 pp.66, 68, 69). The guide prints the memory limit as 192 GB (p.66) and 384 GB (p.68); see the Memory row below. The machine as first shipped (2004)
+is described by -001; the later machine by -002.
 
 ## Modules
 
@@ -128,12 +128,12 @@ Established from Linux v5.3: PCI device interrupts come through the bridge provi
 README). A PIC raises an error on 0x33 (`SGI_PCIASIC_ERROR`) and the SHub I/O interface on 0x31 (`SGI_II_ERROR`).
 Which SHub interrupt register a given PIC pin lands in is not settled here.
 
-## What to build against
+## The smallest configuration
 
-For a first emulation of one base compute module: an Itanium 2 CPU (one or two), one SHub node with local memory (4,
+One base compute module is a complete system: an Itanium 2 CPU (one or two), one SHub node with local memory (4,
 8 or 12 DIMMs) and the IP57 memory groups, a PIC with two PCI-X buses of two slots, a base I/O card in bus 1 slot 1 (for the 2004 machine an IO9: IOC4 with IDE and RTC, QLogic SCSI, Ethernet;
-for the later machine an IO10: IOC4, Vitesse SATA, Ethernet), and a SAL implementation that provides at least the console and system-controller
-calls. No network ports are needed for one module. Its SHub generation is the first thing to settle.
+for the later machine an IO10: IOC4, Vitesse SATA, Ethernet), and firmware that provides at least the console and system-controller
+calls. A single module has no router and uses no network ports. Its SHub generation is the first thing to settle.
 
 ## Unknowns
 

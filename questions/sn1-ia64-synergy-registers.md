@@ -14,10 +14,10 @@ carry Synergy because the MIPS node has none.
 
 Unknown and why it matters: the remote write path splits a value into four 16-bit stores at `reg << 2` while a remote read
 uses `reg` unshifted. Which is right for hardware (and whether the simulator, the only machine the code was run on, shares the
-hardware behaviour) decides how an emulator must decode Synergy accesses.
+hardware behaviour) decides how a Synergy access is decoded.
 
-Next route: a Synergy specification or an SN1 IA-64 PROM image, neither held. A rule applies to what an emulator may rely on: for the
-simulator path the 17 known offsets are all the kernel and the fake PROM touch, so a first model needs no more
+Next route: a Synergy specification or an SN1 IA-64 PROM image, neither held. For the
+simulator path the 17 known offsets are all the kernel and the fake PROM touch
 ([fake-prom.md](../platforms/sn1-ia64/fake-prom.md)). A Linux tree older than v2.5.0 (the ia64 patch
 series of 2000) is not in the Library; its Synergy code may differ. Mail from SGI staff in the ia64 list around
 December 2000 to mid-2001 might name more registers.

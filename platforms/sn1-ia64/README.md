@@ -6,7 +6,7 @@ the Bedrock's processor interfaces and the Itanium buses. The Linux code calls i
 IP35 (the headers also say IP37). This page says what the code establishes about that machine and how its view of the
 chips differs from the MIPS view the rest of this repository takes. The files and their versions are listed in
 [evidence/sn1-ia64-sources.md](../../evidence/sn1-ia64-sources.md); paths below are from the Linux v2.5.0 snapshot
-unless a version is given. The processor-bus ASIC has its own page: [synergy.md](synergy.md). What it would take to boot Linux on an emulated node, with SGI's simulator fake PROM as the firmware, is in [fake-prom.md](fake-prom.md).
+unless a version is given. The processor-bus ASIC has its own page: [synergy.md](synergy.md). The fake PROM SGI's simulator ran, with the kernel tags and configuration it was built for, is in [fake-prom.md](fake-prom.md).
 
 Grades follow the repository rules. SGI's own Linux platform code is vendor source, so what it defines is
 `established`; what it only implies is `inferred`. Where the code is the only witness and it is written for a
@@ -74,8 +74,7 @@ The Linux tree contains no PROM source for the Itanium node; the firmware is the
 - The only firmware in the tree is a fake PROM for SGI's Medusa simulator (`arch/ia64/sn/fprom/`, renamed `fakeprom` in
   2.5.7). It reports 500 MHz as the platform base frequency and 700 MHz for the interval timer, 128 nodes and 512 CPUs at most,
   four CPUs per node, two per FSB, and builds the memory map from a per-node bank table the simulator writes into memory. Its own README says it will be replaced by the
-  real PROM. What a real SN1 PROM returned for these values is unknown. For the SN1 IA-64 bring-up target the fake PROM
-  is accepted as the firmware; what it does, builds and expects is in [fake-prom.md](fake-prom.md).
+  real PROM. What a real SN1 PROM returned for these values is unknown. What the fake PROM does, builds and expects is in [fake-prom.md](fake-prom.md).
 
 ## How this differs from the MIPS view
 
@@ -138,8 +137,7 @@ inferred. A detailed question remains in
   [questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md).
 - Where the Bedrock UART sits on real hardware: [questions/sn1-ia64-bedrock-uart-location.md](../../questions/sn1-ia64-bedrock-uart-location.md).
 - Whether any SN1 IA-64 unit left SGI, and which Itanium stepping the prototypes used: [questions/sn1-ia64-shipped-or-prototype.md](../../questions/sn1-ia64-shipped-or-prototype.md).
-- What the simulator answered for the Bridge and XBridge during the kernel's I/O initialisation, and the other unknowns of a
-  bring-up: [fake-prom.md](fake-prom.md#7-open-points-most-blocking-first).
+- What the simulator answered for the Bridge and XBridge during the kernel's I/O initialisation, and the other open points of the fake PROM page: [fake-prom.md](fake-prom.md#5-open-points).
 
 ## Review
 

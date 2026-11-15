@@ -38,7 +38,7 @@ port 2 ([question](../../questions/altix-io-sn2-cross-check.md#tioce-m40s-window
 
 Erratum PV944642: on revision A, the kernel brackets every access to a register below `0x45000` with dummy reads. Before the access it reads one register chosen by the offset
 (offset `0x0` or `0x80`: register `0xc0`; `0x148` or `0x200`: `0x28`; anything else: `0x158`). After it, when the offset is `0x100` it reads `0x38`, and for every offset
-below the limit it reads `0xb050`. The header says "reads instead of writes" is acceptable per the hardware group. An emulator can ignore the workaround; software that follows it must find those registers readable.
+below the limit it reads `0xb050`. The header says "reads instead of writes" is acceptable per the hardware group. Software that follows the workaround must find those registers readable.
 
 ## Interrupts (established)
 

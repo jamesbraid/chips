@@ -1,10 +1,10 @@
-# First-target firmware qualification
+# snprom images: which image serves which machine
 
-Which real SGI PROM image, and which minimal machine, an emulator should boot first: no synthetic firmware, no patched
-firmware, no skipped diagnostics, no invented success. The end goal is the Prism (IP57 node board, SHub 1.2 where a
-manual names it); the Altix 350 shares that node board and is the smaller machine. This page only qualifies. It adds no
-register facts: those live in [the firmware page](README.md), [the boot-path page](boot-sequence.md) and the
-device pages. An independent review is appended (section Review); its corrections are folded into the text below.
+Which SGI PROM image and package serves which machine: image identities, containers, hashes, SAL versions and build dates,
+the machine lists in SGI's `README.snprom`, the flash composition, the processor tables and the facts in the images and
+manuals that bear on the match. It adds no register facts: those live in [the firmware page](README.md), [the boot-sequence
+page](boot-sequence.md) and the device pages. The newest SHub 1 build held is read in full; the Altix 350 shares the Prism node board (IP57 node board, SHub 1.2 where a
+manual names it) and is the smaller machine. An independent review is appended (section Review); its corrections are folded into the text below.
 
 **Grades.** *established*: read in full in a shipped binary or printed in a published manual. *inferred*: reasoned,
 with the reasoning given. *unknown*: not settled, with the route that would settle it.
@@ -25,14 +25,15 @@ Pages synthesised (chips `c567510`, sysco `5d62fbd`):
 [Prism](../../../platforms/sn2/prism.md) (`06bdc20`), and in sysco `software/firmware/l1/sn2-prom-link-1.62.1.md`
 (`5d62fbd`) and `sn2-l1-1.62.1-packages.md` (`8ceefe9`).
 
-## Decision in brief
+## In brief
 
-- **Image:** `shub1snprom.bin` from snprom 10.54 build 70399, SAL 5.04, sha256
-  `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617`.
-- **Machine:** one Altix 350 base compute module: one IP57 node (one SHub 1, one Itanium 2), memory in group 0, the PIC
-  on the PCI riser, an IOC4-based base I/O card in riser slot 1, an L1 peer. No router, no second node.
-- **Not ready to boot.** Image and machine are chosen. The blockers in section 9 (PAL, SHub, L1, memory, I/O) are open
-  readings or missing contracts, not choices.
+- **Newest SHub 1 image held:** `shub1snprom.bin` from snprom 10.54 build 70399, SAL 5.04, sha256
+  `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617`. SGI's `README.snprom` in that package lists it for
+  the Altix 330, 350, 3300, 3700, 3700 Bx2 and both Prism models (vendor intent, not evidence of a boot).
+- **Altix 350 base compute module:** one IP57 node (one SHub 1, one or two Itanium 2), memory in group 0, the PIC
+  on the PCI riser, an IOC4-based base I/O card in riser slot 1, an L1 on the interface board; no router, no second node.
+- **No held image has been captured running on any machine.** What the firmware needs from PAL, the SHub, the L1, memory
+  and I/O is in the boot-sequence page; the open readings are in section 8.
 
 ## 1. Candidate images
 
@@ -61,21 +62,21 @@ name of most images was not recorded when the files were copied. A Library searc
 nothing. The route to close this is to hash the rpm in the owner's package mirror, compare it with the catalogue value,
 and check the rpm header against the extracted files.
 
-**Why the SHub 2 builds do not apply (established).** `shub2snprom.bin` and `ip65prom.bin` are built for the CPU board
+**Why the SHub 2 builds are not for the Altix 350 (established).** `shub2snprom.bin` and `ip65prom.bin` are built for the CPU board
 `IP65` with SHub 2.0, carry the string `SHUB2 does not support XIO I/O.`, and SGI's `README.snprom` lists them for the
 Altix 4700 and 450 only. The Altix 350's PIC sits behind the SHub's XIO link (007-4660-001 p.105, section 2), and the
-SHub 2 first stage touches the `0x2_xxxx_xxxx` window, not the SHub 1 window. A SHub 2 machine is a later target.
+SHub 2 first stage touches the `0x2_xxxx_xxxx` window, not the SHub 1 window.
 
-**Why 4.43 and 4.90 are fallbacks (established for the facts, inferred for the ranking).** `README.snprom` (shipped from
+**The earlier SHub 1 builds (established for the facts).** `README.snprom` (shipped from
 package 10.20) says `shub1snprom.bin` supports Altix 330, 350, 3300, 3700, 3700 Bx2, Prism Rackmount and Prism
 Deskside: a vendor statement of intent for the 10.54 package, not evidence that the image boots a given machine. 4.43
 predates it. 4.43 also has the only `sysctl_probe` that really probes the controller (a 2,000,000-tick retry) and lacks
 `SN_SAL_BTE_RECOVER` and the feature-set calls; 4.90 is the previous build of the 5.04 line. All three SHub 1 images
-carry the same three processor rows (section 2) and the same top-of-image block (section 3).
+carry the same three first-table processor rows (section 2) and the same top-of-image block (section 3).
 
-## 2. Machine candidates
+## 2. Machines the SHub 1 images serve
 
-**Altix 350, one module (recommended).** One base compute module is a complete system: IP57 node board with one SHub,
+**Altix 350, one module.** One base compute module is a complete system: IP57 node board with one SHub,
 one or two Itanium 2, at least four DIMMs (group 0 of three groups of four), four PCI/PCI-X riser slots, a base I/O
 card, an L1 on the interface board, no rack, no L2, no router (007-4660-001 pp.69 to 71, 96, 100 to 106;
 [Altix 350](../../../platforms/sn2/altix-350.md), established). The PIC ASIC is on the PCI riser card, and the riser has
@@ -85,14 +86,14 @@ two network interfaces (NI) and a local block (LB) (007-4660-002 p.112, re-read)
 IO10 has serial ATA, the IO9 SCSI (007-4660-002 p.112, re-read). Both cards use an IOC4 (the Linux IOC4 driver, graded
 established on the machine page under the repository's evidence rule).
 
-**Altix 3300 plus IX-brick (not first).** The 3300 has up to 12 Itanium 2, one IX-brick, no routers, one power bay and
+**Altix 3300 plus IX-brick.** The 3300 has up to 12 Itanium 2, one IX-brick, no routers, one power bay and
 an optional L2, in a 17U rack (007-4579-001 p.77, re-read; the machine page had not read p.77). Its C-brick is two SHub
 nodes joined internally, two processors each (p.99, `altix-3000.md`), so even the smallest 3300 has two SHubs, two
 NASIDs and an internal NUMAlink hop. The PROM's node-interconnect phase then reads network registers instead of taking
 the single-node skip of section 6, and none of those registers has a contract. The IX-brick adds three PIC adapters and
-six PCI-X buses. In its favour, its compute board is the one the images name: banner and build say IP41, and sysco infers
-the C-brick reports L1 type `5`, the IP41 board (inferred). Against the Prism goal, it shares the SHub 1 image but not
-the node board. It is a second target, after one node boots.
+six PCI-X buses. Its compute board is the one the images name: banner and build say IP41, and sysco infers
+the C-brick reports L1 type `5`, the IP41 board (inferred). It shares the SHub 1 image with Prism but not
+the node board.
 
 **Supported product, board and CPU, from the images.**
 
@@ -114,12 +115,12 @@ the node board. It is a second target, after one node boots.
   `cpuid[3]` with `0xffffff0000` before comparing, so the key is the architecture revision, family and model (family
   `0x1f`, models 0, 1 and 2) and the revision and number bytes are not compared (established from the `and` before the
   compare at `0xffc4eac0` and `0xffc4eb40`). The version words equal the PAL_A and PAL_B versions of the image's FIT
-  entries, which supports reading them as the PALs to use (inferred). The second table, at `0xffc51000`, has eight rows
-  of `0x60` bytes keyed by the exact `cpuid[3]` value: `0x1f000404`, `0x1f000504`, `0x1f000604`, `0x1f000704`,
-  `0x1f010504`, `0x1f020104`, `0x1f020204` and `0x20000104`, each with a version window (a low and a high 16-bit value,
-  repeated for the second version): 4.05, 5.05, 6.28, 7.13, 5.37, 1.27, 2.10 and 1.10 as the lows, 9.99 as the high in
-  every row. The lookup at `0xffc4eb60` tests the two version words from the first table against these windows (inferred
-  from the compare sequence). A family `0x20` (Montecito) row therefore exists in the second table but not in the first;
+  entries, which supports reading them as the PALs to use (inferred). The second table, at `0xffc51000` (a copy at `0xffbe0a08` in SAL_B), has 15 rows
+  of `0x60` bytes, ended by a zero key, keyed by the exact `cpuid[3]` value: seven rows with family `0x1f` (Itanium 2 models 0, 1 and 2: `0x1f000404`, `0x1f000504`, `0x1f000604`, `0x1f000704`,
+  `0x1f010504`, `0x1f020104` and `0x1f020204`) and eight with family `0x20` (`0x20000104` to `0x20000504`, `0x20000704`, `0x20010004` and `0x20010104`; established, from the later review of [the boot-sequence page](boot-sequence.md)). Each row has a version window (a low and a high 16-bit value,
+  repeated for the second version). For the first eight keys in the order above the lows are 4.05, 5.05, 6.28, 7.13, 5.37, 1.27, 2.10 and 1.10 and the high is 9.99 in
+  every row; the windows of the other seven rows were not re-read. The lookup at `0xffc4eb60` tests the two version words from the first table against these windows (inferred
+  from the compare sequence). A family `0x20` (Montecito) row exists in the second table but not in the first;
   with no first-table row the version words are set to -1 and every window test fails, so a family `0x20` CPU does not
   match (inferred). Names such as Madison come from Intel's numbering, not the image (inferred). What the code does after
   a failed lookup was not read (unknown).
@@ -139,7 +140,7 @@ The 6 MiB file is the flash image. It maps to the top of the 32-bit physical spa
 | `0x5f8000` to `0x5fffff` (32 KiB, `0xffff8000`) | a block no FIT entry describes, with 256 distinct byte values but 45 percent zero bytes (4.58 bits per byte; not high-entropy), containing the string "Copyright (C) 2002 Intel Corporation" at `0xffffff00` and the date string `11/02/99` at `0xfffffff5`; the word at `0xffffffd0` points to its start; the range `0xffff8000` to `0xffffffcf` is byte-identical in the three SHub 1 images, both SHub 2 images and `ip65prom.bin` (same sha256 prefix of that range; the last 48 bytes differ only in the SAL_A entry pointer) | unknown. New observation, not in the firmware page |
 | `0xffffffe0`, `0xffffffe8` | FIT pointer and SAL_A entry, both with bit 63 | read at reset (the roles agree with the SAL_A reading; the architectural reading is unread) |
 
-A model must supply the whole file as flash at those addresses, readable. A CFI command interface is needed for the
+The firmware reads the whole file as flash at those addresses. A CFI command interface is used for the
 variable store and PROM log (inferred from `cfi_*` names; the EFI image calls SAL id `0x02000008` for the variable
 store). Flash writes are not needed to reach the EFI shell (inferred). Outside FIT components, the non-erased bytes are
 the 32 KiB block (which includes the pointers at `0xffffffd0` to `0xffffffe8` and the last 16 bytes, so those are not
@@ -157,9 +158,8 @@ block is an IA-32 BIOS image for the processor's IA-32 mode is inferred from the
 - **FIT (established, re-read).** Signature `_FIT_   ` at file offset 0, 13 live entries in 5.04 plus the header and an
   empty slot. Types: 0x01 PAL_B, 0x0e PAL_A, 0x10 SAL_A, 0x11 SAL_B, 0x12 runtime, 0x13, 0x1f EFI, 0x22, 0x23. SAL_A
   checks the signature and a type-0 header and hangs with progress 178 if the scan fails.
-- **PAL must be the shipped PAL.** SAL_A reason 3 selects PAL_A and PAL_B by `cpuid[3]` and passes a field back in
-  `r37`, makes static PAL call 528 with argument 5, and spins if bit 3 of `r33` is set. A CPU that substitutes its own
-  PAL removes these. SAL_B then calls these PAL procedures (boot-path page; my count of direct `r28` immediates in
+- **The PAL is the shipped PAL.** SAL_A reason 3 selects PAL_A and PAL_B by `cpuid[3]` and passes a field back in
+  `r37`, makes static PAL call 528 with argument 5, and spins if bit 3 of `r33` is set. These steps run only with the PAL pair from the image. SAL_B then calls these PAL procedures (boot-sequence page; my count of direct `r28` immediates in
   SAL_B found the same set: 1, 2, 3, 12, 22, 26, 29, 41, 42, 0x208 and 530, plus whatever the four call wrappers
   carry): 1 CACHE_FLUSH, 2 CACHE_INFO, 3 CACHE_INIT, 4 CACHE_SUMMARY, 9 and 10 BUS_GET/SET_FEATURES, 12 FIXED_ADDR, 14
   FREQ_RATIOS, 17 and 18 PROC_GET/SET_FEATURES, 20 VERSION, 21 MC_CLEAR_LOG, 22 MC_DRAIN, 25 MC_ERROR_INFO, 26
@@ -171,18 +171,17 @@ block is an IA-32 BIOS image for the processor's IA-32 mode is inferred from the
 - **RAM at `0x1000000`.** The SAL_B reset entry (`0xffa01000` branches to `0xffa1de00`) writes progress 49 (179 if its
   argument is nonzero), then a table builder (`0xffac42d0`) fills the area at `0x1000000`, then the entry reads
   `[0x1000010 + 8 * slot]` and `[0x1000038]` for its stack and backing store, with translation off (re-read; the
-  `[0x1000000 + 8 * (9 + slot)]` read is from the boot-path page). The reads follow the builder's writes, so plain
+  `[0x1000000 + 8 * (9 + slot)]` read is from the boot-sequence page). The reads follow the builder's writes, so plain
   read/write memory at `0x1000000` is the requirement. On hardware PAL call 520 preloads 256 KiB of cache there before
-  DRAM is up (inferred). An emulator gives ordinary RAM from the first instruction; that is a model choice, not a
-  firmware fact.
+  DRAM is up (inferred).
 - **Interrupt vectors in flash.** The SHub 2 build installs its table from flash at `0xff5c0000`; the 5.04 address was
-  not re-read. Whether the CPU model needs flash executable with translation on is unknown.
+  not re-read. Whether flash must be executable with translation on is unknown.
 
 ## 5. First hardware-access prefix: reset to the first L1 exchange
 
-Order as read. "Minimum answer" is what the access must return for the code to continue (boot-path page).
+Order as read. "Value the code needs" is what the access must return for the code to continue (boot-sequence page).
 
-| # | Access | Minimum answer | Grade |
+| # | Access | Value the code needs | Grade |
 |---|---|---|---|
 | 1 | PAL_A, PAL_B, SAL_A reason 3 entry; static PAL 528 argument 5 | the real PAL | established for SAL_A's side |
 | 2 | write `0x15031010` to `0x81_1002_0000` | accept | established (constant re-read) |
@@ -193,7 +192,7 @@ Order as read. "Minimum answer" is what the access must return for the code to c
 | 7 | winner zeroes `0x81_5003_1550`, `1540`, `1560`, writes 1 to `0x81_1006_0480`, re-reads `0x81_101d_0080`, sets bits 41:39 of `0x81_101d_0100` to 7 | write then read back; bits 41:39 = 7 | established |
 | 8 | FIT scan, progress 48, read `0x81_1003_0000 + (slice & 3) * 128` into `r31`, branch to SAL_B | any value; 0 accepted | established |
 | 9 | SAL_B reset entry: progress 49, builder fills `0x1000000`, RAM reads, `main()` | RAM | established |
-| 10 | `main()`: read `0x81_1006_0580` (node id, bits 42:32; zero in the trace run); read the RAM table at `0x1000038`; progress; PAL 520 and others; a call chain that reaches the SHub identification read at node offset `0x1_0000_0000` (part number `0x4363`, revision in bits 31:28); then `sysctl_init` (called at `0xffa19c0c`, phase 0xd) | node id; valid SHub ID | call order from the `br.call` sequence of `main` (re-read, established); callee roles inferred; the interpreter trace is the boot-path page's |
+| 10 | `main()`: read `0x81_1006_0580` (node id, bits 42:32; zero in the trace run); read the RAM table at `0x1000038`; progress; PAL 520 and others; a call chain that reaches the SHub identification read at node offset `0x1_0000_0000` (part number `0x4363`, revision in bits 31:28); then `sysctl_init` (called at `0xffa19c0c`, phase 0xd) | node id; valid SHub ID | call order from the `br.call` sequence of `main` (re-read, established); callee roles inferred; the interpreter trace is the boot-sequence page's |
 | 11 | real-time clock at `0x1_101c_0000` must advance (delay loops) | advances | inferred (boot-path trace) |
 | 12 | first L1 exchange: UART init (poll line-status bit 6, up to 100000 ticks; divisor and line control; check that bits 41:39 of `0x81_101d_0100` read 7), then framed requests to task 6 | section 6 | UART offsets re-read (`0x00 0x08 0x10 0x18 0x20 0x28 0x38` from `0x8000000ffed40000`); request path established at the node side |
 
@@ -205,7 +204,7 @@ before the first L1 request, and the order of the identity queries (unknown on b
 - **L1 (mandatory, established).** Without a peer the PROM stops at progress 0x8d, "Critical system controller
   transaction failed", before memory. `sysctl_probe` in 5.04 returns 1 without touching hardware, except when `cpuid[2]`
   is `0xaeeeeeee8badbeef`: that signature makes the PROM skip the L1 and use built-in board data. It is a diagnostic skip
-  and is excluded here by rule.
+  that the normal boot does not take.
 - **L1 framing and requests (established at both ends, sysco `sn2-prom-link-1.62.1.md`).** Frames start and end with
   `0x7e`; payload bytes `0x7e` and `0x7d` go as `0x7d` plus the byte xor `0x20`; FCS-16, reflected `0x8408`, initial
   `0xffff`, residue `0xf0b8`; payload at most 127 bytes. Header: class and index byte, 32-bit big-endian address word
@@ -216,7 +215,7 @@ before the first L1 request, and the order of the identity queries (unknown on b
   command to task 3 (`version`, FRU capture, display). A reply carries a status integer first (0 success, negative
   failure). Most reply bodies are inferred.
 - **Open on the L1 side.** Which L1 CPU the 350 carries (ColdFire "Opus" or ARM "Opus TIO"; sysco, unknown), so which
-  program an emulated peer imitates; how the L1 reaches the SHub junk-bus UART (wire or JTAG chain: unknown for the
+  program the L1 runs; how the L1 reaches the SHub junk-bus UART (wire or JTAG chain: unknown for the
   IP57 family); the order of the first requests; the response header bytes; the SPD reply layout.
 - **SHub 1.** NASID and part number in `0x81_1006_0580` and at node offset `0x1_0000_0000`; the MD, PI, NI and interrupt
   blocks read in later phases. No SHub 1 register contract exists in this repository yet. Only the first-stage list in
@@ -239,8 +238,8 @@ before the first L1 request, and the order of the identity queries (unknown on b
 1. **Versions in the field against versions held.** Published Prism logs (irixnet forum thread 849, post 12, 2019-01-27)
    print "SGI SAL version 4.65"; an Altix 350 owner's notes state SAL 4.56 and SHub 1.2 (a statement, not a log:
    inferred). Neither build is held: 4.43 is 2005, 4.90 is 2007, 5.04 is 2008, so 4.56 and 4.65 fall between 4.43 and
-   4.90. No held image has been seen on a real machine, and comparing an emulated log with the Prism log compares
-   different builds. The 5.04 recommendation rests on `README.snprom`, not on observation.
+   4.90. No held image has been seen on a real machine, and a Prism log and a log of a held build come from
+   different builds. That the 5.04 image serves the Altix 350 and Prism rests on `README.snprom`, not on observation.
 2. **IO10 against IO9.** 007-4660-001 knows only the IO9 and says it is required; -002 makes the IO10 standard and the
    IO9 optional (pp.72, 112). The 4.43 EFI (2005) already has the Vitesse SATA message, so the IO10 existed in firmware
    before the 2008 build. Prism guides use the IO10 in compute modules (`prism.md`). Which card a given owner machine has
@@ -258,82 +257,32 @@ before the first L1 request, and the order of the identity queries (unknown on b
    index left by 6 and is a separate chipset accessor whose users in the UART driver were not found; sysco's page is
    corrected.
 7. **DIMM request shape (resolved in review).** The request is task 6, code `0x0006`, 8 arguments (sysco, correct). The
-   boot-path page's pair is the two constants the DIMM routine passes to the shared read: 48 is the byte count (each
-   request carries at most 64 bytes) and 4 is a fixed selector argument, so the boot-path page has the two reversed
-   (length 48, selector 4). The boot-path page is not edited here.
+   boot-sequence page's pair is the two constants the DIMM routine passes to the shared read: 48 is the byte count (each
+   request carries at most 64 bytes) and 4 is a fixed selector argument, so the boot-sequence page (now boot-sequence.md) has the two reversed
+   (length 48, selector 4). The boot-sequence page is not edited here.
 8. **Top of image.** The firmware page says what reads the last 16 bytes is unknown; they lie inside a 32 KiB
    Intel-labelled block with a pointer to its start at `0xffffffd0`, which no page records. The firmware page is not
    edited here.
 
-## 8. Minimum discriminating tests
+## 8. Open readings
 
-Each test shows the emulated machine following the shipped firmware, and is tied to a cited fact. Group F tests check
-the firmware's own behaviour at the emulated hardware. Group S tests check software expectations and must not stand in
-for group F.
+Not an order; the current list with routes is [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
 
-| Test | Observable | Source fact |
-|---|---|---|
-| F1 | SAL_A entered with reason 3 before reason 0; reason 0 hand-off writes progress 48 | boot-path SAL_A reading; table at `0xffbd7000` |
-| F2 | the PAL pair selected matches the first-table row for the CPU's family and model (revision is not compared) and passes the second table's version window | SAL_A tables, section 2 |
-| F3 | the SAL_A stores of section 5 rows 2 to 8, in order, with the election read after the `0x88` write | SAL_A 5.04, re-read |
-| F4 | history register low byte reads 0x30, then 0x31; later 0x08, 0x0c, 0x0d; LED registers receive the code (odd register OR 0x60) | progress table, SAL_A |
-| F5 | after the builder writes `0x1000000`, the entry's reads of `0x1000010` and `0x1000038` return pointers into RAM | SAL_B reset entry, re-read |
-| F6 | the first UART access is a 16550-style line-status poll at the stride-8 offsets; frames carry a valid FCS-16 (residue `0xf0b8`) and header; requests go to task 6 with codes from section 6 | UART constants, sysco link page |
-| F7 | without a CPU-presence reply with bit 0 set, the PROM stops at 0x87; with it, phase 0x16 starts DIMM requests | boot-path interpreter trace (inferred) |
-| F8 | with no L1 peer the PROM stops at 0x8d, not later; with no DIMM, at 0x80 | progress table, boot-path (negative checks that the model does not fake success) |
-| F9 | console strings, when printed: "Testing memory", "Probing memory DIMMs", "Initializing memory controller", "Installed Memory Configuration", "Loading EFI ...", "Jumping to EFI"; then "EFI Shell [Built-in]" and "Shell> " | SAL_B and EFI strings, re-read; whether each prints in a normal run is unknown |
-
-F7 and F9 rest on a trace with a stubbed controller and on string presence, so they are inferred.
-
-**S tests (software expectations).** A kernel using the SAL console calls reaches `ttySG0`. `SN_SAL_GET_SN_INFO` returns
-chip 0 and NASID mask `0x7ff`, shift 38 (read in full in 4.43; 5.04 not re-read). The SAL revision is at least 4.06
-for a TIOCA (Prism graphics; Linux v5.3 `tioca_provider.c`). The published Prism log shape (EFI 1.10, SAL header 3.2,
-ACPI OEM ids such as `XSDTSN2`) comes from a different build (4.65) and is a rough check only.
-
-## 9. Recommendation and blockers
-
-**Image: `shub1snprom.bin`, snprom 10.54 build 70399, SAL 5.04 rel081111 IP41, sha256
-`51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617`** (6291456 bytes). Reasons: SGI's note names the Altix
-350 and both Prism models for this image (established as intent); it is the newest SHub 1 build held; its first stage
-is read in full; its EFI carries both base I/O driver families. Fallbacks in order: 10.40 SAL 4.90
-(`26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06`), then 4.43
-(`035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb`).
-
-**Configuration:** one Altix 350 base compute module. One SHub 1 node (revision 1.2 if a choice is needed: the owner's
-notes and the Extreme figure say 1.2, and the 5.04 runtime names 1.1, 1.2 and 1.x). One Itanium 2 with a `cpuid[3]` in
-section 2, running the shipped PAL. DIMM group 0 populated (four DIMMs, 2 GB minimum, reported through the L1). The PIC
-on the riser, with the base I/O card in slot 1 of its first bus: an IO10 (IOC4 and Vitesse SATA; matches the Prism
-modules) or an IO9 (IOC4 and QLogic SCSI), as the owner's machine dictates. The 6 MiB image as flash at `0xffa00000`. An
-L1 peer speaking the framed link. No router, no second node, no L2. Graded: the product list is established
-as SGI's stated intent (`README.snprom`) and the module composition as the manuals' statements; the choice of this image
-and this machine is inferred from them. It is not boot proof: no held image has been run or captured on any machine. The
-I/O card choice is open (section 7, item 2).
-
-**Blockers, in the order the firmware meets them.**
-
-1. **PAL.** The shipped PAL_A and PAL_B must run on the CPU model. The PAL bytes are opaque, the meanings of 99, 520, 528
-   and 530 are unknown, and the role of the 32 KiB top block is unknown. The CPU model's fidelity to what an Itanium 2 PAL
-   expects has not been assessed. Route: read the Itanium PAL and processor reference documents (none read for this
-   page), then trace PAL_A.
-2. **SHub 1 contract.** The election relation (`0x88` to `0x80`), the ID and revision fields, the memory-controller and
-   interrupt blocks. Route: the SHub 1 contract from the Linux headers, then check the PROM's stores against it.
-3. **L1 peer.** Request order, the DIMM and EEPROM reply layouts, the CPU-presence reply, which L1 variant. Route: read
-   the call chain from `main` through `sysctl_init` to each first use (the boot-path gap list) and the ColdFire or ARM
-   handler for each code.
-4. **Memory sizing and self-test.** The completion bits and the IBLS0 address. Route: read `0xffa6f000` and the memory
-   controller functions.
-5. **Single-node skip.** The source of bit 11 of `0x81_5003_1560`. Route: phase 0xe and the environment-variable read.
-6. **I/O discovery.** `main_three`, the PIC widget reads and the riser record. Route: the PIC contract, then read
-   `0xffad7280` onward.
-7. **No hardware capture of any held build.** No log or register capture ties an image to a machine. Any physical read
-   follows the repository's rules for the owner's machines and is not proposed here.
-8. **Container hash and owner machine identity** (section 1, section 7 item 2): small, but needed to name what is being
-   emulated.
-
-None of 1 to 6 needs a firmware change or a diagnostic skip. Item 1 is the largest unknown, and decides whether the
-first boot is a PROM question or a CPU question.
+- **PAL.** The PAL bytes are opaque. The meanings of PAL procedures 99, 520, 528 and 530 are unknown beyond a guess, and so is
+  the role of the 32 KiB top block. No Itanium PAL or processor reference document was read for this page.
+- **SHub 1.** The election relation (`0x88` to `0x80`), the ID and revision fields, and the memory-controller and interrupt
+  blocks had no register contract when this page was written. The memory-test completion bits, IBLS0 and the source of the
+  single-node skip (bit 11 of `0x81_5003_1560`) were read afterwards, in [the boot-sequence page](boot-sequence.md).
+- **L1.** Request order, the DIMM and EEPROM reply layouts, the CPU-presence reply and which L1 variant the 350 carries.
+- **I/O.** `main_three` (the PIC widget reads and the riser record) was unread beyond ordering here; the boot-sequence page has
+  a later static reading of it.
+- **No hardware capture of any held build.** No log or register capture ties an image to a machine. Any physical read of the
+  owner's machines follows the repository's rules and is not proposed here.
+- **Container hash and owner machine identity** (section 1, section 7 item 2).
 
 ## Review
+
+The page reviewed below also carried a list of F and S discriminating tests, a recommendation of one image and machine as a first target, and a blocker list; those were removed from this page, and the review's remarks on them (tests F2, F4, F7 to F9, section 9) are kept as the record of what facts they rested on.
 
 Independent review of commit `9de55f3` by a reviewer who wrote none of it, read against the held binaries and the Library
 `techpubs` manuals. Tools: `ia64-linux-gnu-objdump` through `retools/tools/re-run` on the images in `root/sn2/`, Python
@@ -399,8 +348,8 @@ grading of the recommendation, the container hash); the contradictions list now 
   `0x30` first. The condition is unread.
 - Not re-verified by this review: section 5 rows 10 and 11 beyond the entry, the PAL procedure list and its call
   counts, the `SN_SAL_GET_SN_INFO` values, the 4.43 `sysctl_probe` retry count, the progress codes `0x08`, `0x0c`, `0x0d`
-  and `0x8d`/`0x87`/`0x80`, and the F7 to F9 observables. They rest on the boot-path page.
-- The boot-path page has the DIMM request's length and selector reversed (contradiction 7); the firmware page says what
+  and `0x8d`/`0x87`/`0x80`, and the F7 to F9 observables. They rest on the boot-sequence page.
+- The boot-sequence page has the DIMM request's length and selector reversed (contradiction 7); the firmware page says what
   reads the top 16 bytes is unknown (contradiction 8). Neither was edited by this review.
 
 **Cleared scope.** The candidate hashes, packages (as directory and catalogue identity), banners and build times; the

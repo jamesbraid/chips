@@ -516,7 +516,7 @@ entry, 64-bit attribute and window layouts below.
   IRIX attach sets it unconditionally (established above), so the IRIX I/O page is 16 KiB (inferred from the bit's meaning in S). Agree.
 - **Every register write is a full 64-bit write** (the header's note on erratum PV854697: the chip does not accept a
   write of just bits 31:0 of a 64-bit register). S implements set and clear of bits as read-modify-write of the whole
-  doubleword (`__sn_setq_relaxed`). This is a rule an emulator must obey, and it agrees with the IRIX path, which does 64-bit
+  doubleword (`__sn_setq_relaxed`). The chip does not accept narrower writes, and this agrees with the IRIX path, which does 64-bit
   accesses everywhere except the PROM's 32-bit sequences, which are a conflict: see the question
   [PIC erratum against the PROM's 32-bit accesses](../../questions/altix-io-sn2-cross-check.md#pic-32-bit-register-writes).
 - **Translation entry layout** (S, `pcibr_dmamap_ate32`, 1024 entries, `PCI32_ATE_*`): bit 0 valid, bit 1 coherent (PIC

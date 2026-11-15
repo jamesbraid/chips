@@ -1,6 +1,6 @@
 # SN2 SAL calls: what the Altix kernel asks of firmware
 
-Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with function number, arguments, results and what the kernel does with the answer. An emulator that models an Altix without the real PROM needs a synthetic SAL that implements at least the calls marked **boot** below and returns "not implemented" (`-1`) for the rest, which the kernel tolerates in most places.
+Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with function number, arguments, results and what the kernel does with the answer. Calls marked **boot** below are the ones the kernel needs answered to come up; the kernel tolerates "not implemented" (`-1`) from the rest in most places.
 
 **Source and grade.** The kernel's SN SAL header (`arch/ia64/include/asm/sn/sn_sal.h`, Linux v5.3) and every caller of it in the SN2 platform code, the SN PCI providers, the console, system-controller and cross-partition drivers and the hotplug driver, all at v5.3 (the SN2 platform was removed in v5.4). That is the vendor's software source: the function numbers, argument order, result use and the structures passed by physical address are **established** as definitions of what the kernel does. What the PROM does inside a call is **unknown** except where a kernel comment says. No PROM, SAL image or trace is held ([questions/sn2-sal-open.md](../../questions/sn2-sal-open.md)).
 

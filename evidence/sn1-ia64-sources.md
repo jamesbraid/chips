@@ -59,7 +59,7 @@ checked file by file.
 | `arch/ia64/sn/fprom/fprom.lds` | 97 | Linker script for the fake PROM. |
 | `arch/ia64/sn/fprom/fpromasm.S` | 315 | Fake PROM entry code and AP rendezvous. |
 | `arch/ia64/sn/fprom/fw-emu.c` | 525 | PAL, SAL and EFI emulation for the simulator (SAL frequency base 500 MHz, interval timer 700 MHz). |
-| `arch/ia64/sn/fprom/main.c` | 111 | Boot-master pick and fake PROM bring-up. |
+| `arch/ia64/sn/fprom/main.c` | 111 | Boot-master pick and fake PROM initialisation. |
 | `arch/ia64/sn/fprom/runsim` | 373 | Shell helper that sets up a Medusa run. |
 | `arch/ia64/sn/io/Makefile` | 33 | Kbuild for the I/O infrastructure. |
 | `arch/ia64/sn/io/alenlist.c` | 901 | Address/length list code for DMA scatter lists (platform-neutral). |

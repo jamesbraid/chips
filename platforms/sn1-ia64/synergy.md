@@ -65,7 +65,7 @@ Question: function, which Itanium, bus conversion.
   Bedrock-side protocol. A contemporary poster on the comp.arch Usenet group described the SN2 change as replacing "SysADs" with "Itanium FSBs" on the
   hub (Usenet `y4mdncYfzLtevg_dRVn-sw@speakeasy.net`, 2004-04-30); that describes the later SHub, not Synergy, and is a
   poster's summary, so it supports the picture only as an inference.
-- Which Itanium. First-generation Itanium (Merced). SGI's own account of the Linux bring-up says the prototype hardware
+- Which Itanium. First-generation Itanium (Merced). SGI's own account of getting Linux running says the prototype hardware
   used first-generation Itanium processors and that a 32-processor Itanium system ran by early 2001 (S. Neuner, "Scaling
   Linux to New Heights: the SGI Altix 3000 System", Linux Journal, 2003-02-01, linuxjournal.com/article/6440); the Linux code
   of the time is the only SGI IA-64 code that carries the Synergy driver; the simulator ran with `cpu_stepping A`; the kernel
@@ -79,7 +79,7 @@ Question: function, which Itanium, bus conversion.
 Everything else: the `FSB_CONFIG` bits other than the two written fields, reset values, the other register offsets, the per-processor error and ECC logic, coherence and snoop
 control, the interface to the Bedrock PI (processor-bus command encodings), the interrupt priority and inter-processor
 interrupt path through Synergy, and the meaning of the A and B performance event selectors. The open entry is in
-[questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md). What a bring-up needs from Synergy is in
+[questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md). What the fake PROM and the kernel touch in Synergy is in
 [fake-prom.md](fake-prom.md).
 
 ## Review
@@ -90,7 +90,7 @@ Checks, confirmed: every offset in the table (`0x2a0` to `0x2d8` mask pairs name
 
 Findings:
 1. Mechanical, fixed: the page said the 128 pending bits arrive as vectors 64 to 191; `bit_pos_to_irq` clamps bits above 118, so the highest vector is 182 (the README already said so).
-2. Not edited: `irq_to_bit_pos` subtracts a further 64 for vectors above 127, so a handler for a high vector clears a different pending bit than the one that raised it. That is a defect in the kernel and bears on check 11 of the bring-up page, which describes the clear without noting it.
+2. Not edited: `irq_to_bit_pos` subtracts a further 64 for vectors above 127, so a handler for a high vector clears a different pending bit than the one that raised it. That is a defect in the kernel and bears on the interrupt-end path read in [fake-prom.md](fake-prom.md), which describes the clear without noting it.
 3. Not checked: the simulator control file reading (`runsim`) beyond the `synergy_cache_type` line quoted, the Bedrock patent statement and the comp.arch post.
 
 Cleared scope: all offsets, address arithmetic, access sequences, the `FSB_CONFIG` written value and the grades on them. Not cleared: the "What it was" interpretation beyond what its grades already say is inferred.

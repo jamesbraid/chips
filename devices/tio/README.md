@@ -45,7 +45,7 @@ Registers: [registers.md](registers.md) (five named by the code).
   the node's peer NASID ("dual-porting peer"), and the largest PCI segment and bus numbers. Each PCI bus then comes from a second firmware
   call (`SN_SAL_IOIF_GET_PCIBUS_INFO`) carrying a bus record: bridge type, widget number, persistent bus and segment numbers, the legacy
   I/O and memory window addresses and the widget base. A provider is chosen from the bridge type. Interrupt vectors and the device read-ordering
-  records also come from firmware. So an emulator must supply these firmware answers, not a register walk.
+  records also come from firmware. So these come from firmware answers, not from a register walk.
 - A TIO's compact node is registered like a SHub's and has hub-device data; its error interrupt is vector `0x36` (`SGI_TIO_ERROR`, a different vector from the SHub's I/O error `0x31`
   and from the PCI bridge error `0x33`; the TIOCA error is `0x35`, the FPGA port's `0x37`). The handler calls one firmware routine and panics on a
   nonzero result; it does not read TIO error registers. The firmware owns error decode. Which registers it decodes is unknown here.

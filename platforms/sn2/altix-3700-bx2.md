@@ -25,7 +25,7 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
 - IX-brick, PX-brick, R-brick and power bay chapters follow (contents, p.viii); the L1 and L2 emulator operation is
   Chapter 2.
 
-## Notes for a model
+## Notes
 
 - The "NL4 router ASIC" is named in the guide and is a separate part from the SHub; no document held gives its
   registers. Established that it exists in the CR-brick; unknown what its port registers look like.
@@ -43,7 +43,7 @@ Findings:
 1. The guide calls the eight rear connectors "Dnet connectors" (p.72); the page said "external NUMAlink connectors". Reworded to quote the guide (mechanical).
 2. "6 TB described as the future limit" is a mild reading: p.49 gives 6 TB for a 512-processor system and says larger single-system-image configurations may be offered later; it does not call 512 a future limit. Not edited.
 
-Cleared scope: the CR-brick facts and the model notes. Not cleared: the wording in finding 2.
+Cleared scope: the CR-brick facts and the notes. Not cleared: the wording in finding 2.
 
 Findings addressed in 9995be1; renewed review needed for the changed claims.
 

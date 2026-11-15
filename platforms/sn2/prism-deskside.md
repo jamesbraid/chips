@@ -57,7 +57,7 @@ Checks against 007-4772-001 (printed pages): p.20 (four to twelve DIMMs, 2 to 24
 
 Findings:
 1. The page cites the daughter-card connector list to p.27; the connector list is on p.23 and p.27 names the connectors only in one sentence ("USB, L1 USB, serial console, and Image Sync"). Add p.23 (not edited, harmless).
-2. The guide is inconsistent about the base I/O slot: p.21 says "PCI slot 1, (the top PCI slot)" while p.27 puts the daughter board in the top slot (bus 1 slot 2) and the base I/O board in bus 1 slot 1. The page repeats "top slot (bus 1 slot 1)"; this is the guide's own wording conflict and should be noted when a model fixes slot order.
+2. The guide is inconsistent about the base I/O slot: p.21 says "PCI slot 1, (the top PCI slot)" while p.27 puts the daughter board in the top slot (bus 1 slot 2) and the base I/O board in bus 1 slot 1. The page repeats "top slot (bus 1 slot 1)"; this is the guide's own wording conflict and should be noted wherever slot order is stated.
 3. No chip claim: the TIOCA inference for AGP is correctly marked inferred.
 
 Cleared scope: all board, slot and memory facts above. Not cleared: the slot-order wording (finding 2).

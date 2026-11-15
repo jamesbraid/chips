@@ -46,7 +46,7 @@ longest transfer is 65535 lines. Addresses are cache-line aligned.
 - **Sequence (established, `bte_copy` in the SN2 BTE code).** Store the busy marker (every bit set except bit 21) in the notification word in memory, then write source,
   destination, notification address, length, and last the control word. The control write starts the engine. The kernel
   writes the length register with a plain length and no busy bit; the header says a legitimate write sets busy and clears
-  error. The kernel then waits until the notification word stops reading as the busy marker, so a model must leave that marker, not zero, in place until the transfer completes. Completion is a write of the final status word to the notification address. The kernel decides busy from the
+  error. The kernel then waits until the notification word stops reading as the busy marker, so the notification word holds that marker, not zero, until the transfer completes. Completion is a write of the final status word to the notification address. The kernel decides busy from the
   notification word it owns, and uses the status register only for "busy or error" when choosing an idle engine.
 - **Hazard from the header (inferred).** Reading the control register terminates the transfer in progress, and stopping
   one engine can disturb the other, so error recovery resets both.
@@ -100,7 +100,7 @@ Independent review of this page and [registers.toml](registers.toml) at chips co
 **Grades.** Offsets and field positions established as header definitions; role text inferred; resets unknown. No issue.
 
 **Findings (wording, not changed).**
-1. "Clear the notification word in memory" is not what `bte_copy` does: it stores the busy marker (every bit set except bit 21), and waits until the word changes. A model must see that marker, not zero, before the transfer completes.
+1. "Clear the notification word in memory" is not what `bte_copy` does: it stores the busy marker (every bit set except bit 21), and waits until the word changes. The word holds that marker, not zero, until the transfer completes.
 2. The page's claim of 109 of 119 Bedrock offsets in common was not re-derived (it needs the Bedrock page); it is graded as a hypothesis and fills no field, so it does not affect clearance.
 
 **Cleared:** offsets, counts, strides and field positions of all 60 entries; the fifteen-register use count; the 0x1c00000 arithmetic; the BTE sequence apart from finding 1. **Not cleared:** role and "inferred" text (inferred by design), the Bedrock overlap figure, and any behaviour of the BTE or CRBs on real hardware.

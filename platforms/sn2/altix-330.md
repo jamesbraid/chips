@@ -17,7 +17,7 @@ Grades: see [the SN2 README](README.md). Only the contents, the architecture tex
 - SHub blocks as on the 350: XN, PI, MD, two NI, II and LB (p.79).
 - The guide names the interconnect "NUMAlink-4" (p.57); the first 350 guide (-001) does not number it, the second (-002) does.
 
-## Differences from the 350 that matter for a model
+## Differences from the 350
 
 | Item | 330 | 350 |
 |---|---|---|

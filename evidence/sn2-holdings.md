@@ -1,7 +1,7 @@
 # SN2 and later: what the sources hold and what is missing
 
 Scope: SGI's IA-64 Altix and Prism machines (the SN2 generation: SHub 1 and SHub 2, TIO, NUMAlink 3 and 4), the IA-64
-bring-up on the SN1 Bedrock, and the x86 Altix UV hubs. This page lists the sources found on 2026-11-14 and the gaps
+platform on the SN1 Bedrock, and the x86 Altix UV hubs. This page lists the sources found on 2026-11-14 and the gaps
 they leave. Nothing on it is a register contract yet; the device and platform pages are being written from these
 sources. Grades below describe the sources, not hardware facts.
 
@@ -32,7 +32,7 @@ SGI's SN2 platform code in mainline Linux, last present at tag v5.3 (SN2 was rem
 | `drivers/char/mmtimer.c` (v4.9; gone by v5.3), `drivers/misc/ioc4.c` (v4.19) | the SHub RTC timer, IOC4 |
 
 IA-64 on SN1: 2.4-era Linux (`arch/ia64/sn/io/`, `include/asm-ia64/sn/sn1/`) carries about 40 headers for the
-Bedrock-based IA-64 bring-up, including router, L1 and ELSC interfaces. These describe the same Bedrock chips covers
+Bedrock-based IA-64 platform, including router, L1 and ELSC interfaces. These describe the same Bedrock chips covers
 for the Origin 3000, seen from IA-64.
 
 Altix UV (x86): `arch/x86/include/asm/uv/uv_hub.h` and `uv_mmrs.h`, `arch/x86/platform/uv/`, and
@@ -86,9 +86,8 @@ held turned out to be a recent community Linux build for IA-64, not a factory sy
 No L1, L2 or L3 controller firmware package for the SN2 bricks has been found under those names. sysco's readings of
 the controller firmware shipped with IRIX include SN2 brick routines, so that firmware may cover some SN2 bricks.
 
-The SN1 IA-64 prototype never shipped a PROM. For that one target the repository owner accepted SGI's simulator fake
-PROM from the Linux 2.5 tree as its firmware ([platforms/sn1-ia64/fake-prom.md](../platforms/sn1-ia64/fake-prom.md)).
-Every shipped SN2 machine is to boot real SGI firmware.
+The SN1 IA-64 prototype never shipped a PROM. The only firmware its Linux tree carries is SGI's simulator fake PROM
+from the Linux 2.5 tree ([platforms/sn1-ia64/fake-prom.md](../platforms/sn1-ia64/fake-prom.md)).
 
 ## Manuals
 
