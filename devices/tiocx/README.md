@@ -27,8 +27,7 @@ The exported helper `tiocx_dma_addr` (used by the Core Services driver) applies 
 (established, `tiocx.c` and `mbcs.c`). The mask is defined and unused in the files read.
 
 The shipped SN2 kernel (SLES 9 SP3, 2.6.5-7.244, symbol table read with `readelf`, not Ghidra; no function was decompiled) carries `tiocx_init`, `tiocx_match`, `cx_device_probe`, `tio_corelet_reset`,
-`tiocx_reload`, `tiocx_irq_alloc`/`_free` and the exported `cx_*` registration functions, plus `show_cxdev_control` and `store_cxdev_control` (established: the code shipped). No `mbcs` symbol is in that kernel; the
-core-services driver is not held as a module (**unknown** whether it shipped as one).
+`tiocx_reload`, `tiocx_irq_alloc`/`_free` and the exported `cx_*` registration functions, plus `show_cxdev_control` and `store_cxdev_control` (established: the code shipped). No `mbcs` symbol is in that kernel image: its configuration sets the Core Services driver as a module (`CONFIG_SGI_MBCS=m`) and the same release's kernel package carries `mbcs.ko` (established, see the review on the [MBCS page](../mbcs/README.md)).
 
 ## Open
 
@@ -38,7 +37,7 @@ come from the controller header with no product name. Bitstream-dependent behavi
 
 ## Review
 
-Not covered by the review below: the "What sits behind the port" section and the MBCS and RASC pages it links, added 2026-11-15.
+The "What sits behind the port" section and the MBCS and RASC pages it links were reviewed on 2026-11-15; see [the MBCS page review](../mbcs/README.md#review).
 
 Independent review on 2026-11-14 by a reviewer who did not write these pages. Revisions: chips commits 4924130..b536f7d, read at main 15a5a4e484. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md` (SGI's Linux platform code ranks first for this generation, and a fact it defines is `established` as a software definition). Sources: the Linux v5.3 files the page cites, fetched singly from the tagged tree (`drivers/misc/ioc4.c` and `include/linux/ioc4.h` at v4.19, where they still exist).
 

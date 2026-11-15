@@ -26,9 +26,8 @@ brick and which is the 4700 blade is unknown (inferred only that SA is the brick
 
 ## Whether the Core Services driver shipped as a module
 
-[missing binary] The SLES 9 SP3 SN2 kernel carries the bus code but no `mbcs` symbol, and no module is held. Routes tried: symbol table of the held kernel (readelf, not Ghidra) and the community Prism kernel, which has `mbcs.c` in its symbol table
-(a FILE entry only). Next: a ProPack module package; none is held.
+Settled by review (2026-11-15). The SLES 9 SP3 SN2 kernel configuration sets `CONFIG_SGI_MBCS=m`, and that release's kernel package (2.6.5-7.244-sn2) carries `drivers/char/mbcs.ko`; the module's constants and the driver's completion-flag bug were read in a Ghidra listing (see the review on the [MBCS page](../devices/mbcs/README.md)). What stays unknown is whether any shipped system ran it.
 
 ## The SSP packet format and the loader FPGA
 
-[unknown, no public source] The guide's SSP, SRM and SXM blocks are described in one paragraph each; the packet format, the loader FPGA's PCI interface and the download driver are not public. No software route in this repository reaches them.
+[unknown, no public source for the bit-level format] The guide's SSP, SRM and SXM blocks are described in one paragraph each, and its appendix B lists the packet types RASC uses (printed pages 229 to 231); the packet format, the loader FPGA's PCI interface and the download driver are not public. No software route in this repository reaches them.
