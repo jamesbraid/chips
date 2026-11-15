@@ -248,7 +248,8 @@ flash image is recovered, its FIT parses, and every FIT entry with C_V set passe
 first eight bytes are the ASCII tag `_CMPRM1_`. After the tag come a version word (2), a 32-bit sum of the payload bytes, the payload
 length, and zero fill. The sum is the plain byte sum of the payload and matches in all six wrappers read. The payload starts at the
 wrapper plus 0x38 (file offsets `0x60200` and, in the rx2660 and rx3600/rx6600 updaters, `0x4b0200`) and opens with two
-little-endian words, the compressed length and the original length, then the stream.
+little-endian words, the compressed length and the original length, then the stream; the wrapper's length is the compressed length plus
+those eight bytes.
 The stream is the EFI compression format of the UEFI specification (LZ77 matches with Huffman-coded literal/length and distance
 codes, in blocks that each carry their own code tables), in its original variant with a 4-bit position-code length, not the 5-bit
 variant that Tiano uses. That is why plain deflate, bzip2, LZMA and the other generic decoders found nothing. The updater itself holds no
@@ -259,8 +260,8 @@ exactly its stated original length, 8,388,608 bytes, and the FIT checksums above
 variant the code tables fail to build.
 
 **The first payload is the whole system flash (established).** The 8 MiB image is mapped so that its last byte is at `0xffffffff`. The FIT pointer at 4 GiB - 0x20, the generic PAL_A entry at 4 GiB - 0x30 and every FIT address then land on the data they
-describe (FIT checksums, PAL headers, `_FIT_` signature). The rx2620 image holds two FITs (pointers at 4 GiB - 0x20 and
-4 GiB - 0x38) with the same entries; the other images were read through the pointer at 4 GiB - 0x20. From the bottom of the image up, the layout is: EFI driver
+describe (FIT checksums, PAL headers, `_FIT_` signature). Each of the four images holds two FITs (pointers at 4 GiB - 0x20 and
+4 GiB - 0x38) with the same entries; all were read through the pointer at 4 GiB - 0x20. From the bottom of the image up, the layout is: EFI driver
 blocks (tag `DRVBLK01`, 0x20000 to 0x80000 apart, from offset 0), then the EFI core, the FIT and PAL_A images, PAL_B, SAL_B, and SAL_A,
 the generic PAL_A and the reset vectors at the top. FIT entry versions: SAL_A `0x0200` in all four, SAL_B `0x041d` in rx2620 and rx4640 and `0x0301` in rx2660 and
 rx3600/rx6600; the package names (04.29 and 0301) match them if the low byte of `0x041d` is binary (**inferred**). How the updater writes the image was read only from its message
@@ -290,7 +291,7 @@ rx4640 `PF_CDIABSYS0429EFI.tar.gz` (`0545215cd50bf10501...`), rx2660 `PF_CMERLSY
 Bold entries have family byte `0x20` (PAL_B) or do not verify (PAL_A), as for Intel's Montecito images. The PAL_B header at `+0x10114`
 holds the version as minor then major (`72 05` is 5.72), and the four bytes before it look like a BCD build date (year, century,
 day, month; **inferred**): 2005-03-09 for 5.72, 2007-03-14 for 2.25, 2007-11-06 for 9.68. The generic PAL_A is the SGI build G-S: the
-0x7fc0 bytes below the top vectors hash to `19191cc4` (sha256 prefix) in all four updaters. Only the 64 bytes at the top (FIT pointers) differ
+0x7fc0 bytes below the top vectors hash to `19191cc4` (sha256 prefix) in all four updaters. Only the 64 bytes at the top (FIT pointers and reset vectors) differ
 from SGI's. Which core HP's 9.08 and 1.08 serve is not stated by HP's text (rx2660 0.94 notes mention 12 MB cache parts); family
 byte `0x20` is the only evidence tying them to Intel's Montecito images, so the processor family is **inferred**.
 
@@ -321,7 +322,7 @@ SGI's key (the same key as in every other vendor image). The verifier is the one
 PAL_B 5.72 is a Madison build that verifies, as 5.73 does; PAL_B 2.25 verifies as in SGI's PROM. The failing images follow
 Intel's Montecito pattern: PAL_A 1.08 has the all-zero 16-byte lead of PAL_A 7.46, and the last 48 bytes of every failing image
 contain no zero byte (the Madison tail has four zero bytes after each 20-byte number). A search like the one for the Intel images, but with the second value used
-directly and not inverted, covered coverage starts 0 and 16, end trims 0 to 128 bytes in steps of 4 and every pair of 4-byte aligned
+directly and not inverted, covered the coverage starts 0 and 16, end trims 0 to 128 bytes in steps of 4 and every pair of 4-byte aligned
 20-byte values below the group order in the last 160 bytes: 55,506 attempts (PAL_A 1.08),
 51,744 (PAL_B 9.68), 59,400 (PAL_B 9.08) and 67,584 (PAL_B 1.08) found no verifying signature. PAL_A 7.46 is Intel's image and was searched
 there. A different scheme or key for these builds is not excluded (**unknown**, as for Intel's). HP adds no Madison image without
@@ -351,6 +352,39 @@ counted again.
 - Nothing new about the reserved words: no HP build has an M or B word that consumes a value, and none with a handler or retry around
   it. New builds add 5.72 (Madison) and 9.68, 9.08, 1.08 and PAL_A 1.08 (Montecito-shaped) to the 2,139 sites already counted; the "no
   evidence against a no-op" conclusion below is unchanged and rests on the same grounds.
+
+### Review
+
+Independent review of chips commit `02aa5df` (this section). The reviewer did not write it and used fresh scripts: a decompressor written from the UEFI
+specification, a FIT parser, a DSA verifier checked first on SGI's PAL_B 5.73 and 2.25, and the retools IA-64 decoder, with the updater's unpack routine
+read in the IA-64 Ghidra module on a flat image of its code sections. Extracted updaters and decoded images were deleted afterwards.
+
+**Confirmed (established).** The wrappers: six `_CMPRM1_` tags, version word 2, 32-bit byte sum equal to the sum over the stream in all six, zero fill to
+0x38. The 4-bit decoder yields 8,388,608 bytes for all four first payloads (the 5-bit variant fails to build its tables) and 8,671,401 and 9,409,647 bytes for
+the two second payloads; the decoded sha256 prefixes in the table match. The FIT of each image is at the pointer at 4 GiB - 0x20, the header sums to zero, and
+37, 52, 38 and 60 entries with C_V set pass the checksum rule. The unpack routine at `0x415360` checks the tag, compares the four sum bytes in the
+wrapper, calls LocateProtocol, the protocol's size query, two pool allocations, the protocol's Decompress and a pool free of the scratch. The version
+matrix, the PAL_B header family bytes (`0x1f` for 5.72 and 2.25, `0x20` for 9.68, 9.08 and 1.08) and dates, the SAL_A and SAL_B FIT versions, the byte
+identity within HP pairs and with SGI's 2.25, 5.37 and 1.27, with Intel's 7.46 (also present in Intel SUP3 and BH2C) and the generic PAL_A (`19191cc4`; only 26
+of the top 64 bytes differ) were recomputed. PAL_B 5.72 against SGI's 5.73 (696,256 against 696,640 bytes, first difference `0xdc0d`, 70.8%, 75.4%) and the
+chunk-overlap figures for 9.68, 9.08 and 1.08 against Intel's 8.30 and 7.46 and against one another reproduce exactly. The key in all four generic PAL_A
+images equals SGI's; the Madison images verify and the others fail as tabled. The four searches reproduce their attempt counts exactly (66 start and trim
+choices times 29, 28, 30 and 32 candidate values squared) and find nothing; the last 48 bytes of PAL_A 1.08 and PAL_B 9.68, 9.08 and 1.08 hold no zero byte, and
+PAL_A 1.08 opens with sixteen zero bytes. The M, B and `br.ia` counts and the `srlz` column match for every row (SGI's PAL_B 2.25 again gives 217, 18, 3).
+The gate shape at the one `br.ia` of 9.68, 9.08 and 1.08 and the unconditional `br.ia` of PAL_A 1.08 read as stated.
+
+**Changed.** The rx2620-only statement about two FITs: all four images hold two FITs with identical entries. The wrapper length includes the two length words
+of the payload. The top 64 bytes are the FIT pointers and the reset vectors, not only pointers. A typo in the search description.
+
+**Grades.** Every fact is graded established, inferred or unknown. The Montecito link for family byte `0x20` (and so for PAL_A 1.08 and 7.46) is **inferred**, as
+stated. The build-date reading of the four bytes before the PAL_B version is **inferred**; all three printed dates decode consistently with the day and month
+orders used.
+
+**Not checked.** The M words that follow msr[522] writes (the 125, 125 and 128 word counts, a constant trace), the msr[1225] gate at the 5.72 sites, the Ghidra
+decompilation of the unrolled byte-sum routine at `0x4151c0` (the sum was recomputed instead), the flashing code and its messages, the bank-swap reading, the
+HP install manual searches, the rx2660 and rx3600/rx6600 second payloads beyond their size, manifest start, ZIP presence and six `_FIT_` strings, whether the
+identity claims hold against IBM's images (only Dell, Intel and SGI were searched), the Intel `.REC` files, and the 4-byte zero padding of each tail
+value beyond what the verifier's success implies.
 
 ## What was not settled
 
@@ -467,7 +501,7 @@ inferred.
 **Changed facts.** The msr[1640] bit 4 behaviour (stop, not a poll) and the Montecito `br.ia` gating (per image, with PAL_A 7.46
 ungated) are corrected above. Nothing else in the version matrix, container text, signatures or counts changed.
 
-**Not checked.** The HP Integrity section (added after this review; not independently reviewed). The PAL_A 7.31, 5.37 and 1.27 `br.ia` gate (bits 14 or 2 of msr[1225])
+**Not checked.** The HP Integrity section (reviewed separately, in its own Review subsection). The PAL_A 7.31, 5.37 and 1.27 `br.ia` gate (bits 14 or 2 of msr[1225])
 was not re-read in Ghidra here; the images are byte-identical to SGI's, whose reading the snprom pages carry. The Dell and Intel `.REC` files. IBM frame
 trailer contents and the 8-byte values in the IBM header table. The per-site msr census for the 17 images beyond the counts above
 (msr[1546] before 145 to 151 M words, and the context-overlap figures), the predicate-consumer heuristic, and the Madison
