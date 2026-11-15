@@ -13,7 +13,7 @@ remove = ["registers.event_overflow", "registers.event_overflow_alias", "registe
 unit = "shub2"
 prefix = "SHUB2"
 title = "SHub 2 registers outside the I/O interface, differences from SHub 1"
-doc = "SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips."
+doc = "SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses."
 
 [patch."registers.ipi_int"]
 offset = 0x10000380
@@ -121,3 +121,820 @@ access = "rw"
 width = 64
 grade = "established"
 doc = "BTE notification address, per engine; same conversion."
+
+[add.registers.junk_bus_time]
+offset = 0x10020000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff6745d0 (write)"
+doc = "Junk-bus access timing, written once by the first-stage firmware with 0xffff_ffff_0003. Meaning of the value is inferred from the PROM name; the hardware accepts the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.address_mode]
+offset = 0x20110000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff6745e0 (read); every node-addressed access in the PROM reads it again"
+doc = "V, the node-addressing selector: the PROM reads it before forming any global or TIO address and uses it unmasked as an index into a five-entry table, so it must read 0 to 4 (devices/shub/shub2.md section 1 gives the shifts for each value). Real value unknown. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.firmware_remap]
+offset = 0x20110008
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff420910 (write of (arg & 0x1ff000000) | 1 << 60)"
+doc = "Remote flash remap: the PROM writes the enable bit and a 9-bit field it takes from bits 32:24 of its argument. Meaning of the fields is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.firmware_remap.fields]
+enable = { bits = [60, 60], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff420910 (bit 60 set by the write)", doc = "Set by the PROM's write." }
+offset = { bits = [32, 24], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff420910 (mask 0x1ff000000)", doc = "Bits 32:24 of the remap argument; meaning inferred from the PROM name." }
+
+[add.registers.processor_type]
+offset = 0x20110010
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674800 (read)"
+doc = "The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.processor_type.fields]
+code = { bits = [0, 0], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674800", doc = "Bit clear selects argument bits 2:1, bit set bits 3:2." }
+
+[add.registers.scratch1]
+offset = 0x101d0080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff6746a0 (acquire read), 0xff674536 (second check)"
+doc = "Node election word: each slice writes slice + 1 through the alias and reads it back; the winner is the one that reads its own value. Plain storage satisfies the code. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch1_alias]
+offset = 0x101d0088
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674696 (release write)"
+doc = "Write path onto the SCRATCH1 word; the relation is inferred from the use. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch2]
+offset = 0x101d0100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff674570 and 0xff674580 (SAL_A sets bits 41:39), routines 0xff49ef20, 0xff49a130, 0xff4a7a20, 0xff4a30b0"
+doc = "Firmware mailbox word for the L1 console link. Plain storage satisfies the code; the fields are how the 10.54 firmware uses it, names are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch2.fields]
+state = { bits = [41, 39], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff674570 (SAL_A sets 7), routine 0xff49ef20 (tests for 7, clears), routine 0xff49a130 (tests for at least 2)", doc = "Mailbox state." }
+sequence = { bits = [49, 42], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49ef20 (read, increment modulo 256), routine 0xff49a130 (compare)", doc = "Receive sequence byte." }
+channel = { bits = [54, 50], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49a130", doc = "Index of the channel with a pending packet." }
+rx_index = { bits = [62, 58], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a7a20 (set to 7), routine 0xff4a30b0 (read, decrement)", doc = "Index of the next byte to take from the current 8-byte receive word; 7 after reset of the link." }
+clear_bit = { bits = [63, 63], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49ef20 (cleared)", doc = "Cleared once by the firmware's handshake." }
+
+[add.registers.scratch3]
+offset = 0x101d0180
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff4221b0, 0xff422d70 (release writes of 0)"
+doc = "Release side of the second firmware lock; the alias 0x08 above is the take side. Whether a read of the alias takes the lock in hardware is unknown; a plain pair that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch3_alias]
+offset = 0x101d0188
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff4221b0, 0xff422d70 (read until 0)"
+doc = "Take side of the second firmware lock. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch4]
+offset = 0x101d0200
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff421f10 (deadline write), 0xff422020 (release write of 0)"
+doc = "Release side of the node lock that guards SCRATCH6 and SCRATCH7. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch4_alias]
+offset = 0x101d0208
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff421f10 (read until 0, 1,000,000 microsecond deadline)"
+doc = "Take side of the node lock; a plain register that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch5]
+offset = 0x101d0280
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff4221b0 (claim), 0xff422d70 (release), 0xff422800 (test)"
+doc = "Claim bits of the second firmware lock: the firmware sets a bit to claim a resource (bit 0 for the barrier, bit 7 for the console link, bit 0xf for a packet exchange). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch6]
+offset = 0x101d0300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff421430 (set or clear a bit), 0xff421ad0 (set a field), 0xff421c30, 0xff421e30 (read), 0xff4b2850, 0xff4b2c90"
+doc = "Shared firmware word guarded by the node lock: slice present and arrival bits, the barrier flag and a per-slice-pair field. Plain storage; names of the fields are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch6.fields]
+pal_flags = { bits = [24, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4b3580 (test of bit 21 + slice)", doc = "Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged." }
+slice_present = { bits = [29, 26], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2850 (sets bit 0x1a + slice), routine 0xff423920 (tests lower slices)", doc = "Slice n has started." }
+slice_arrived = { bits = [33, 30], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2c90 (sets bit 0x1e + slice)", doc = "Slice n has reached the barrier." }
+barrier_busy = { bits = [34, 34], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2c90 (bit 0x22)", doc = "Barrier in progress." }
+pair0_state = { bits = [49, 47], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2850 (field starting at bit 0x2f, width 3)", doc = "Three-bit field for even slices, set from a PAL-supplied value." }
+pair1_state = { bits = [52, 50], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2850 (field starting at bit 0x32, width 3)", doc = "Three-bit field for odd slices." }
+
+[add.registers.scratch7]
+offset = 0x101d0380
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674700 (write of 0), routine 0xff4ae770 (same lock shape as SCRATCH6)"
+doc = "Second shared firmware word with the same lock cycle as SCRATCH6. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.scratch24]
+offset = 0x101d0c00
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674650 (write), routine 0xff420290 (read)"
+doc = "Holds the address of the firmware's node-addressing table row (the low 32 bits of the row address with bit 63 set); every later node-number read loads the row through it. The firmware reads it back, so it must store all 64 bits. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.pio_rq_crd_ctl]
+offset = 0x100d8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674726 (write of 2), routine 0xff48b420 (read-modify-write)"
+doc = "PIO request credit control. The first-stage firmware writes 2; the node set-up table writes 0xf9_0000_0000 to register 0xd8, a different register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.gc_src_ctrl]
+offset = 0x10060700
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810 (writes 0x1_0000_0000 then 0x1_0000_0041), helper 0xff41ffa0 (reads bits 13:4)"
+doc = "Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.gc_src_ctrl.fields]
+source_sel = { bits = [33, 32], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810", doc = "The firmware writes 1." }
+max_count = { bits = [13, 4], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) helper 0xff41ffa0 (extr.u 4, 10)", doc = "The firmware writes 4 and reads it back for every time conversion." }
+enable_counter = { bits = [0, 0], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810 (value 0x1_0000_0041)", doc = "Set to start the counter." }
+
+[add.registers.node_id]
+offset = 0x10060f00
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff420290 (read), routine 0xff4a9880 (write), routine 0xff5838b0 (bit 54), routine 0xff4aeaa0 (bits 53:49), routine 0xff4adaf0 (bits 31:28)"
+doc = "The node's identification word. Read by the firmware to find its own node number (bits 45:32) and the sharing parameters; written during the interconnect phase. Linux v5.3 does not define it for SHub 2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.node_id.fields]
+revision = { bits = [31, 28], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4adaf0 (returns bits 31:28)", doc = "Chip revision, returned by a method of the node table and stored; no test of its value found." }
+node_id = { bits = [45, 32], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff420290 (shift 0x20, mask from the table row), routine 0xff4a9880 (write, & 0x3fff)", doc = "This node's number." }
+sharing_mode = { bits = [47, 46], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9880 (written 0, 1, 2 or 3 by node count)", doc = "Sharing mode, set from the node count." }
+nodes_per_bit = { bits = [53, 48], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4aeaa0 (reads bits 53:49), routine 0xff4a9880 (writes 1, 2, 4, 8, 16 or 32)", doc = "Nodes per sharing-vector bit." }
+sharers_1k = { bits = [54, 54], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff5838b0, routine 0xff481280", doc = "Clear selects a sharing domain of 512 nodes, set 2048." }
+range_check = { bits = [55, 55], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9880 (set)", doc = "Set by the firmware in the interconnect phase." }
+
+[add.registers.fsb_symmetric_agent_status]
+offset = 0x20020010
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff425bb0 (read twice until equal and non-zero, then bit k)"
+doc = "Which processor slices of the node are present. The firmware tests bit 0 and bit 1 for slices 0 and 1 and wants two equal non-zero reads in a row. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.fsb_symmetric_agent_status.fields]
+cpu_0_active = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff425bb0 (k = 0)", doc = "Slice 0 present (meaning from the PROM name)." }
+cpu_1_active = { bits = [1, 1], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff425bb0 (k = 1)", doc = "Slice 1 present (meaning from the PROM name)." }
+
+[add.registers.junk_bus_led_data]
+offset = 0x10030000
+count = 4
+stride = 0x80
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff420420, 0xff420760 (R64 of 0x1003_0000 | slice << 7)"
+doc = "Four registers, one per slice, 0x80 apart, that the firmware reads only to remember the progress code it last wrote while it waits on a lock. Any value is accepted. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.rack_slot_data]
+offset = 0x10038200
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674d16 (reason 3 tests bit 39), routine 0xff4a9010 (decodes bits 0, 3:1, 15:4 and 23:16)"
+doc = "Rack and slot data provided by the L1 controller; the firmware reads it only on paths this page does not reach on a normal boot. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.rack_slot_data.fields]
+bit0 = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9010", doc = "Copied to an output word." }
+code = { bits = [3, 1], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9010 (index into an eight-entry table)", doc = "Index into the table 7, 10, 13, 20, 23, 30, 33, 36." }
+number = { bits = [15, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9010 (value + 1)", doc = "Value plus one is stored." }
+byte = { bits = [23, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9010", doc = "Copied to an output word." }
+
+[add.registers.asic_to_l1_data]
+offset = 0x10038000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a29a0 (W64 of 8 bytes, first byte in bits 7:0)"
+doc = "L1 UART transmit data: eight packet bytes per write, padded with 0x7e after the frame. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.asic_to_l1_status]
+offset = 0x10038080
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a2d20 (poll), routine 0xff4a71c0"
+doc = "L1 UART transmit status: bit 0 set means busy; the firmware polls it clear before each write, 10 microseconds apart, for up to 5,000,000 microseconds. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.asic_to_l1_status.fields]
+busy = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4a2d20 (poll loop)", doc = "Set while the previous word is still being sent." }
+
+[add.registers.l1_to_asic_data]
+offset = 0x10038100
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff4a30b0, 0xff4a3930 (R64, bytes taken from bit 0 upward)"
+doc = "L1 UART receive data: eight bytes per word, the first byte in bits 7:0. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.l1_to_asic_status]
+offset = 0x10038180
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff4a30b0 (read bit 0, write 0 after the eighth byte), 0xff4a7a20 (write 0), routine 0xff4a71c0"
+doc = "L1 UART receive status: bit 0 set means a word is waiting; the firmware writes 0 to release it. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+
+[add.registers.l1_to_asic_status.fields]
+data_ready = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a30b0", doc = "A received word is waiting." }
+
+[add.registers.x_dimm_cfg]
+offset = 0x10000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) stores at sites 0xff483400 (X), 0xff483520 (Y), 0xff483640 (JNR)"
+doc = "DIMM population word. One routine (0xff482c60) merges the discovered DIMM layout into the old value: the preserved bits are 38 and above and bits 7, 15, 23 and 31, so bits 37:32 are rewritten, and the same value is written to all three registers (X, Y and JNR); bits 37:36 are then set by 0xff4856b0, which reads the Y register first. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.x_dimm_cfg.fields]
+dimm0_size = { bits = [2, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48324c (deposit, width 3 at bit 0)", doc = "DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm0_2bk = { bits = [3, 3], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48325c (deposit, width 1 at bit 3)", doc = "DIMM 0 bank-count flag." }
+dimm0_rev = { bits = [4, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483276 (deposit, width 1 at bit 4)", doc = "DIMM 0 revision flag." }
+dimm0_cs = { bits = [6, 5], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483296 (deposit, width 2 at bit 5)", doc = "DIMM 0 chip-select code, 2 bits." }
+dimm1_size = { bits = [10, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832b6 (deposit, width 3 at bit 8)", doc = "DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm1_2bk = { bits = [11, 11], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832d6 (deposit, width 1 at bit 11)", doc = "DIMM 1 bank-count flag." }
+dimm1_rev = { bits = [12, 12], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832ec (deposit, width 1 at bit 12)", doc = "DIMM 1 revision flag." }
+dimm1_cs = { bits = [14, 13], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832fc (deposit, width 2 at bit 13)", doc = "DIMM 1 chip-select code, 2 bits." }
+dimm2_size = { bits = [18, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48330c (deposit, width 3 at bit 16)", doc = "DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm2_2bk = { bits = [19, 19], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483316 (deposit, width 1 at bit 19)", doc = "DIMM 2 bank-count flag." }
+dimm2_rev = { bits = [20, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48331c (deposit, width 1 at bit 20)", doc = "DIMM 2 revision flag." }
+dimm2_cs = { bits = [22, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483326 (deposit, width 2 at bit 21)", doc = "DIMM 2 chip-select code, 2 bits." }
+dimm3_size = { bits = [26, 24], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48332c (deposit, width 3 at bit 24)", doc = "DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm3_2bk = { bits = [27, 27], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483336 (deposit, width 1 at bit 27)", doc = "DIMM 3 bank-count flag." }
+dimm3_rev = { bits = [28, 28], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48333c (deposit, width 1 at bit 28)", doc = "DIMM 3 revision flag." }
+dimm3_cs = { bits = [30, 29], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483346 (deposit, width 2 at bit 29)", doc = "DIMM 3 chip-select code, 2 bits." }
+freq = { bits = [35, 32], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48321c (deposit, width 4 at bit 32)", doc = "Memory clock code, 4 bits." }
+clk_en = { bits = [37, 36], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff485816 and 0xff485836 (both bits set in one pass over the three registers)", doc = "Two clock-enable bits the firmware sets together after the initial write cleared them." }
+
+[add.registers.y_dimm_cfg]
+offset = 0x10008
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff483520, read at site 0xff482d60"
+doc = "Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.y_dimm_cfg.fields]
+dimm0_size = { bits = [2, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48324c (deposit, width 3 at bit 0)", doc = "DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm0_2bk = { bits = [3, 3], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48325c (deposit, width 1 at bit 3)", doc = "DIMM 0 bank-count flag." }
+dimm0_rev = { bits = [4, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483276 (deposit, width 1 at bit 4)", doc = "DIMM 0 revision flag." }
+dimm0_cs = { bits = [6, 5], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483296 (deposit, width 2 at bit 5)", doc = "DIMM 0 chip-select code, 2 bits." }
+dimm1_size = { bits = [10, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832b6 (deposit, width 3 at bit 8)", doc = "DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm1_2bk = { bits = [11, 11], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832d6 (deposit, width 1 at bit 11)", doc = "DIMM 1 bank-count flag." }
+dimm1_rev = { bits = [12, 12], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832ec (deposit, width 1 at bit 12)", doc = "DIMM 1 revision flag." }
+dimm1_cs = { bits = [14, 13], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832fc (deposit, width 2 at bit 13)", doc = "DIMM 1 chip-select code, 2 bits." }
+dimm2_size = { bits = [18, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48330c (deposit, width 3 at bit 16)", doc = "DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm2_2bk = { bits = [19, 19], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483316 (deposit, width 1 at bit 19)", doc = "DIMM 2 bank-count flag." }
+dimm2_rev = { bits = [20, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48331c (deposit, width 1 at bit 20)", doc = "DIMM 2 revision flag." }
+dimm2_cs = { bits = [22, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483326 (deposit, width 2 at bit 21)", doc = "DIMM 2 chip-select code, 2 bits." }
+dimm3_size = { bits = [26, 24], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48332c (deposit, width 3 at bit 24)", doc = "DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm3_2bk = { bits = [27, 27], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483336 (deposit, width 1 at bit 27)", doc = "DIMM 3 bank-count flag." }
+dimm3_rev = { bits = [28, 28], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48333c (deposit, width 1 at bit 28)", doc = "DIMM 3 revision flag." }
+dimm3_cs = { bits = [30, 29], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483346 (deposit, width 2 at bit 29)", doc = "DIMM 3 chip-select code, 2 bits." }
+freq = { bits = [35, 32], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48321c (deposit, width 4 at bit 32)", doc = "Memory clock code, 4 bits." }
+clk_en = { bits = [37, 36], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff485816 and 0xff485836 (both bits set in one pass over the three registers)", doc = "Two clock-enable bits the firmware sets together after the initial write cleared them." }
+
+[add.registers.jnr_dimm_cfg]
+offset = 0x10010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff483640"
+doc = "Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.jnr_dimm_cfg.fields]
+dimm0_size = { bits = [2, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48324c (deposit, width 3 at bit 0)", doc = "DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm0_2bk = { bits = [3, 3], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48325c (deposit, width 1 at bit 3)", doc = "DIMM 0 bank-count flag." }
+dimm0_rev = { bits = [4, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483276 (deposit, width 1 at bit 4)", doc = "DIMM 0 revision flag." }
+dimm0_cs = { bits = [6, 5], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483296 (deposit, width 2 at bit 5)", doc = "DIMM 0 chip-select code, 2 bits." }
+dimm1_size = { bits = [10, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832b6 (deposit, width 3 at bit 8)", doc = "DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm1_2bk = { bits = [11, 11], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832d6 (deposit, width 1 at bit 11)", doc = "DIMM 1 bank-count flag." }
+dimm1_rev = { bits = [12, 12], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832ec (deposit, width 1 at bit 12)", doc = "DIMM 1 revision flag." }
+dimm1_cs = { bits = [14, 13], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4832fc (deposit, width 2 at bit 13)", doc = "DIMM 1 chip-select code, 2 bits." }
+dimm2_size = { bits = [18, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48330c (deposit, width 3 at bit 16)", doc = "DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm2_2bk = { bits = [19, 19], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483316 (deposit, width 1 at bit 19)", doc = "DIMM 2 bank-count flag." }
+dimm2_rev = { bits = [20, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48331c (deposit, width 1 at bit 20)", doc = "DIMM 2 revision flag." }
+dimm2_cs = { bits = [22, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483326 (deposit, width 2 at bit 21)", doc = "DIMM 2 chip-select code, 2 bits." }
+dimm3_size = { bits = [26, 24], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48332c (deposit, width 3 at bit 24)", doc = "DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred)." }
+dimm3_2bk = { bits = [27, 27], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483336 (deposit, width 1 at bit 27)", doc = "DIMM 3 bank-count flag." }
+dimm3_rev = { bits = [28, 28], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48333c (deposit, width 1 at bit 28)", doc = "DIMM 3 revision flag." }
+dimm3_cs = { bits = [30, 29], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483346 (deposit, width 2 at bit 29)", doc = "DIMM 3 chip-select code, 2 bits." }
+freq = { bits = [35, 32], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48321c (deposit, width 4 at bit 32)", doc = "Memory clock code, 4 bits." }
+clk_en = { bits = [37, 36], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff485816 and 0xff485836 (both bits set in one pass over the three registers)", doc = "Two clock-enable bits the firmware sets together after the initial write cleared them." }
+
+[add.registers.x_odt_cfg]
+offset = 0x10018
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff48548c (value read from Y_ODT_CFG at site 0xff48536c, bits 23:20 set)"
+doc = "On-die-termination configuration. Only the one field below is written by the memory bring-up read; it is copied from the Y register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.x_odt_cfg.fields]
+bits_23_20 = { bits = [23, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4853f6 (deposit of 0xf, width 4 at bit 20)", doc = "Four bits the firmware sets to 0xf when only DIMM 0 of the three is populated (DIMM 0 size not 7, DIMMs 1 to 3 size 7); the other bits are preserved. Name unknown." }
+
+[add.registers.y_odt_cfg]
+offset = 0x10048
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) read at site 0xff48536c, store at site 0xff4855ac"
+doc = "Same layout as X_ODT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.y_odt_cfg.fields]
+bits_23_20 = { bits = [23, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4853f6 (deposit of 0xf, width 4 at bit 20)", doc = "Four bits the firmware sets to 0xf when only DIMM 0 of the three is populated (DIMM 0 size not 7, DIMMs 1 to 3 size 7); the other bits are preserved. Name unknown." }
+
+[add.registers.x_cfg]
+offset = 0x10020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff4839a0, read-modify-writes at sites 0xff48c38c, 0xff48c4ac, 0xff48c6ec"
+doc = "Memory controller timing word. The firmware writes the same value to X and Y: 0x4856_5320_3324_110e, built from the old Y value by clearing bit 0, setting bit 1, depositing 3 at bits 7:2, replacing bits 39:8, depositing 3, 5, 6 at bits 43:40, 47:44, 51:48, setting bits 52 and 54, clearing bit 53 (set instead when the DIMM record's word at offset 8 equals 4), depositing 0x10 at bit 55 (width 7) and setting bit 62 (sites 0xff483016 to 0xff4831a0). Only bits 39:8 have a name here; the other positions are as written. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.x_cfg.fields]
+bit_0 = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48c416 (deposit of one bit at bit 0, routine 0xff48c290)", doc = "Replaced by a one-bit argument in a separate routine that rewrites both registers; the PROM name for bit 0 is a serial-mode flag." }
+ta_dlys = { bits = [39, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff483026 (mask) and 0xff483090 (or of 0x20_3324_1100)", doc = "Timing delays: the firmware replaces the whole field with 0x2033241; the name is the PROM's." }
+
+[add.registers.y_cfg]
+offset = 0x10050
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) read at site 0xff482f9c, store at site 0xff483abc"
+doc = "Same layout as X_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.y_cfg.fields]
+bit_0 = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48c416 (deposit of one bit at bit 0, routine 0xff48c290)", doc = "Replaced by a one-bit argument in a separate routine that rewrites both registers; the PROM name for bit 0 is a serial-mode flag." }
+ta_dlys = { bits = [39, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff483026 (mask) and 0xff483090 (or of 0x20_3324_1100)", doc = "Timing delays: the firmware replaces the whole field with 0x2033241; the name is the PROM's." }
+
+[add.registers.x_dqct_cfg]
+offset = 0x10028
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff483760 (value 0x254215 in bits 24:0, upper bits preserved)"
+doc = "Read and write select delays. The firmware keeps bits 63:25 and sets bits 24:0 to 0x254215 (fields below). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.x_dqct_cfg.fields]
+bits_3_0 = { bits = [3, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48303c (deposit at bit 0)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_7_4 = { bits = [7, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48309c (deposit at bit 4)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_11_8 = { bits = [11, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483106 (deposit at bit 8)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_15_12 = { bits = [15, 12], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483126 (deposit at bit 12)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_19_16 = { bits = [19, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48314c (deposit at bit 16)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_24_20 = { bits = [24, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48317c (deposit at bit 20)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+
+[add.registers.y_dqct_cfg]
+offset = 0x10058
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) read at site 0xff482e80, store at site 0xff483880"
+doc = "Same layout and value as X_DQCT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.y_dqct_cfg.fields]
+bits_3_0 = { bits = [3, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48303c (deposit at bit 0)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_7_4 = { bits = [7, 4], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48309c (deposit at bit 4)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_11_8 = { bits = [11, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483106 (deposit at bit 8)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_15_12 = { bits = [15, 12], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff483126 (deposit at bit 12)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_19_16 = { bits = [19, 16], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48314c (deposit at bit 16)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+bits_24_20 = { bits = [24, 20], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff48317c (deposit at bit 20)", doc = "Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown." }
+
+[add.registers.x_refresh_control]
+offset = 0x10030
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff4863c0"
+doc = "Refresh control. The firmware reads the Y register, replaces bits 27:8 (and clears bits 27:24 at site 0xff485d0c), merges the enable byte and writes the result to both registers. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.x_refresh_control.fields]
+enable = { bits = [7, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4862fc (deposit, width 8 at bit 0)", doc = "Enable bits; the firmware sets the field from a mask it builds." }
+interval = { bits = [16, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff485d16 and 0xff485d5c (deposit, width 9 at bit 8)", doc = "Refresh interval, 9 bits, from the DIMM data." }
+hold = { bits = [22, 17], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff485d06 (deposit, width 6 at bit 17)", doc = "Six-bit hold count from the DIMM data." }
+
+[add.registers.y_refresh_control]
+offset = 0x10060
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) reads at sites 0xff485c40 and 0xff4864dc"
+doc = "Same layout as X_REFRESH_CONTROL. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.y_refresh_control.fields]
+enable = { bits = [7, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4862fc (deposit, width 8 at bit 0)", doc = "Enable bits; the firmware sets the field from a mask it builds." }
+interval = { bits = [16, 8], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff485d16 and 0xff485d5c (deposit, width 9 at bit 8)", doc = "Refresh interval, 9 bits, from the DIMM data." }
+hold = { bits = [22, 17], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff485d06 (deposit, width 6 at bit 17)", doc = "Six-bit hold count from the DIMM data." }
+
+[add.registers.mem_red_black]
+offset = 0x10078
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff4841f0 (value 0x4e20_0400)"
+doc = "Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0 and 51:16); the code does not split the value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.misc_mem_cfg]
+offset = 0x10080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) stores at sites 0xff4814bc and 0xff48176c (read-modify-write), 0xff483e90 (value 0x0fc4_0000_00c4_c4c)"
+doc = "Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.misc_mem_cfg.fields]
+bit_58 = { bits = [58, 58], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff481696 (mask -0x400000000000001)", doc = "Cleared by a size test." }
+bit_59 = { bits = [59, 59], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4816c6 (mask -0x800000000000001)", doc = "Cleared by a size test." }
+
+[add.registers.pi_md_rq_crd_ctl]
+offset = 0x100e0
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff484f6c (value 0xc)"
+doc = "Credit depth register; the firmware writes 0xc. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.pi_md_rp_crd_ctl]
+offset = 0x100e8
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff484e50 (value 0x4)"
+doc = "Credit depth register; the firmware writes 0x4. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.xn_md_rq_crd_ctl]
+offset = 0x100f0
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff484d30 (value 0xb)"
+doc = "Credit depth register; the firmware writes 0xb. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.xn_md_rp_crd_ctl]
+offset = 0x100f8
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff484c10 (value 0x3)"
+doc = "Credit depth register; the firmware writes 0x3. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_config_dqlp]
+offset = 0x30000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff481280 (sites 0xff4813a0 read, 0xff4818d6 deposit), routine 0xff486c40 (site 0xff487100), routine 0xff482c60 (sites 0xff4848b0, 0xff4849d0)"
+doc = "Directory configuration. The firmware reads it and merges: bits 2:0 from the node count, clears bits 11 and 10 by size tests, sets bit 3 and bit 15. The DQRP twin, 0x5_0000, receives the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_config_dqlp.fields]
+sys_size = { bits = [2, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff4817fc, 0xff4818c6 and 0xff4818d6 (deposit, width 3 at bit 0; value 0 below 0x40, 1 below 0x80, 2 below 0x100, 3 below 0x200, 4 below 0x400, 5 below 0x800, 6 below 0x1000, else 7)", doc = "System size class derived from a 16-bit count the routine extracts from bits 16:1 of its argument." }
+bit_3 = { bits = [3, 3], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff486c40 (or of 8)", doc = "Set by the firmware." }
+bit_10 = { bits = [10, 10], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4816dc (mask -0x401)", doc = "Cleared by a size test." }
+bit_11 = { bits = [11, 11], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4816a6 (mask -0x801)", doc = "Cleared by a size test." }
+bit_15 = { bits = [15, 15], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (or of 0x8000)", doc = "Set by the firmware." }
+
+[add.registers.dir_config_dqrp]
+offset = 0x50000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) same routines as DIR_CONFIG_DQLP"
+doc = "Twin of DIR_CONFIG_DQLP; the firmware writes the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_locvec_dqlp]
+offset = 0x30200
+count = 8
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) loop of eight stores in routine 0xff482c60 (site 0xff483c80), value 0xffff_ffff_ffff_ffff"
+doc = "Eight local-vector registers 0x10 apart, all set to ones at initialisation. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_locvec_dqrp]
+offset = 0x50200
+count = 8
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) same loop as DIR_LOCVEC_DQLP"
+doc = "Eight registers 0x10 apart, all set to ones. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_privec_dqlp]
+offset = 0x30300
+count = 8
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4891c0 (site 0xff4892bc)"
+doc = "Eight registers 0x10 apart written with constants in order: 0x4bfff, 0xc96f25b, 0xfffffff, 0x96ffff, 0, 0, 0x4803f, 0x48000. Not all ones, so the writes do not simply open access to every node; the field layout is not read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_privec_dqrp]
+offset = 0x50300
+count = 8
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4891c0 (same values)"
+doc = "Twin of DIR_PRIVEC_DQLP, same values. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_timer_dqlp]
+offset = 0x30400
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) store at site 0xff483fb0 (value 0x1000)"
+doc = "Written once with 0x1000 (bit 12). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.dir_timer_dqrp]
+offset = 0x50400
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (value 0x1000)"
+doc = "Twin of DIR_TIMER_DQLP. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.amo_cfg_0]
+offset = 0x34800
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (sites 0xff484310 (read), 0xff484380 (or of 0xc), then stores at 0xff484430, 0xff484550, 0xff484670 and the next)"
+doc = "AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.amo_cfg_0.fields]
+bits_3_2 = { bits = [3, 2], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (or of 0xc)", doc = "Set by the firmware; the PROM name suggests the two little-endian enables." }
+
+[add.registers.amo_cfg_1]
+offset = 0x4b000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (sites 0xff484310 (read), 0xff484380 (or of 0xc), then stores at 0xff484430, 0xff484550, 0xff484670 and the next)"
+doc = "AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.amo_cfg_1.fields]
+bits_3_2 = { bits = [3, 2], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (or of 0xc)", doc = "Set by the firmware; the PROM name suggests the two little-endian enables." }
+
+[add.registers.amo_cfg_2]
+offset = 0x54800
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (sites 0xff484310 (read), 0xff484380 (or of 0xc), then stores at 0xff484430, 0xff484550, 0xff484670 and the next)"
+doc = "AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.amo_cfg_2.fields]
+bits_3_2 = { bits = [3, 2], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (or of 0xc)", doc = "Set by the firmware; the PROM name suggests the two little-endian enables." }
+
+[add.registers.amo_cfg_3]
+offset = 0x6b000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (sites 0xff484310 (read), 0xff484380 (or of 0xc), then stores at 0xff484430, 0xff484550, 0xff484670 and the next)"
+doc = "AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.amo_cfg_3.fields]
+bits_3_2 = { bits = [3, 2], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff482c60 (or of 0xc)", doc = "Set by the firmware; the PROM name suggests the two little-endian enables." }
+
+[add.registers.x_bist_h]
+offset = 0x38000
+count = 4
+stride = 0x10000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (site 0xff47c0ac)"
+doc = "Memory test pattern register, high half; written with the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.x_bist_h.fields]
+pattern = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (mask 0xffffffffff)", doc = "Test data pattern from the test description." }
+bit_40 = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x28)", doc = "One byte of the test description, in bit 40." }
+bit_41 = { bits = [41, 41], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x29)", doc = "One byte of the test description, in bit 41." }
+arm = { bits = [43, 43], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff47bfa6 (or of 0x80000000000, the high registers only)", doc = "Set on the high registers to start that port." }
+
+[add.registers.x_bist_l]
+offset = 0x38010
+count = 4
+stride = 0x10000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (site 0xff47c1cc)"
+doc = "Memory test pattern register, low half; same value without the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.x_bist_l.fields]
+pattern = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (mask 0xffffffffff)", doc = "Test data pattern from the test description." }
+bit_40 = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x28)", doc = "One byte of the test description, in bit 40." }
+bit_41 = { bits = [41, 41], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x29)", doc = "One byte of the test description, in bit 41." }
+
+[add.registers.y_bist_h]
+offset = 0x38800
+count = 4
+stride = 0x10000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (site 0xff47c2ec)"
+doc = "Y-side twin of X_BIST_H. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.y_bist_h.fields]
+pattern = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (mask 0xffffffffff)", doc = "Test data pattern from the test description." }
+bit_40 = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x28)", doc = "One byte of the test description, in bit 40." }
+bit_41 = { bits = [41, 41], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x29)", doc = "One byte of the test description, in bit 41." }
+arm = { bits = [43, 43], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff47bfa6 (or of 0x80000000000, the high registers only)", doc = "Set on the high registers to start that port." }
+
+[add.registers.y_bist_l]
+offset = 0x38810
+count = 4
+stride = 0x10000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (site 0xff47c40c)"
+doc = "Y-side twin of X_BIST_L. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.y_bist_l.fields]
+pattern = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (mask 0xffffffffff)", doc = "Test data pattern from the test description." }
+bit_40 = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x28)", doc = "One byte of the test description, in bit 40." }
+bit_41 = { bits = [41, 41], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47bf60 (a byte shifted left by 0x29)", doc = "One byte of the test description, in bit 41." }
+
+[add.registers.x_bist_err_h]
+offset = 0x38020
+count = 4
+stride = 0x10000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (read at site 0xff47d66c)"
+doc = "Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.x_bist_err_h.fields]
+pat = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (mask 0xffffffffff on the value, compared with the expected pattern)", doc = "Pattern bits the port saw; 40 bits." }
+val = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (extr.u 0x28, 1 after each read, sites such as 0xff47d6bc)", doc = "Set when the port recorded an error; the firmware reads the pattern only then." }
+
+[add.registers.x_bist_err_l]
+offset = 0x38030
+count = 4
+stride = 0x10000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (read at site 0xff47db6c)"
+doc = "Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.x_bist_err_l.fields]
+pat = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (mask 0xffffffffff on the value, compared with the expected pattern)", doc = "Pattern bits the port saw; 40 bits." }
+val = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (extr.u 0x28, 1 after each read, sites such as 0xff47d6bc)", doc = "Set when the port recorded an error; the firmware reads the pattern only then." }
+
+[add.registers.y_bist_err_h]
+offset = 0x38820
+count = 4
+stride = 0x10000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (read at site 0xff47e06c)"
+doc = "Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.y_bist_err_h.fields]
+pat = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (mask 0xffffffffff on the value, compared with the expected pattern)", doc = "Pattern bits the port saw; 40 bits." }
+val = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (extr.u 0x28, 1 after each read, sites such as 0xff47d6bc)", doc = "Set when the port recorded an error; the firmware reads the pattern only then." }
+
+[add.registers.y_bist_err_l]
+offset = 0x38830
+count = 4
+stride = 0x10000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (read at site 0xff47e56c)"
+doc = "Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx)."
+
+[add.registers.y_bist_err_l.fields]
+pat = { bits = [39, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (mask 0xffffffffff on the value, compared with the expected pattern)", doc = "Pattern bits the port saw; 40 bits." }
+val = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff47d260 (extr.u 0x28, 1 after each read, sites such as 0xff47d6bc)", doc = "Set when the port recorded an error; the firmware reads the pattern only then." }
+
+[add.registers.mmrbist_base]
+offset = 0x20080
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff41cadc, 0xff47b36c"
+doc = "Start address of a memory test block. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.mmrbist_ctl]
+offset = 0x20088
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) sites 0xff41cc66 (write of 0x11_0000_0010), 0xff41ce96 (test of bit 40)"
+doc = "Memory test control: the early path writes 0x11_0000_0010 and polls bit 40 clear (for up to 2,000,000 microseconds). The other fields of the PROM name are not read in code here. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+
+[add.registers.mmrbist_ctl.fields]
+in_progress = { bits = [40, 40], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff41ce96 (extr.u 0x28, 1)", doc = "Polled until clear after a command write." }

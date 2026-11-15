@@ -7,6 +7,606 @@
 
 
 /*
+ * DIMM population word. One routine (0xff482c60) merges the discovered DIMM layout into the old value: the preserved bits are 38 and above and bits 7, 15, 23 and 31, so bits 37:32 are rewritten, and the same value is written to all three registers (X, Y and JNR); bits 37:36 are then set by 0xff4856b0, which reads the Y register first. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* x_dimm_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_DIMM_CFG                             0x010000 /* established */
+#define SHUB2_X_DIMM_CFG_CLK_EN_SHIFT                36 /* inferred */
+#define SHUB2_X_DIMM_CFG_CLK_EN_MASK                 0x3ull
+#define SHUB2_X_DIMM_CFG_CLK_EN_INPLACE              (SHUB2_X_DIMM_CFG_CLK_EN_MASK << SHUB2_X_DIMM_CFG_CLK_EN_SHIFT)
+#define SHUB2_X_DIMM_CFG_FREQ_SHIFT                  32 /* inferred */
+#define SHUB2_X_DIMM_CFG_FREQ_MASK                   0xfull
+#define SHUB2_X_DIMM_CFG_FREQ_INPLACE                (SHUB2_X_DIMM_CFG_FREQ_MASK << SHUB2_X_DIMM_CFG_FREQ_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM3_CS_SHIFT              29 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM3_CS_MASK               0x3ull
+#define SHUB2_X_DIMM_CFG_DIMM3_CS_INPLACE            (SHUB2_X_DIMM_CFG_DIMM3_CS_MASK << SHUB2_X_DIMM_CFG_DIMM3_CS_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM3_REV_SHIFT             28 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM3_REV_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM3_REV_INPLACE           (SHUB2_X_DIMM_CFG_DIMM3_REV_MASK << SHUB2_X_DIMM_CFG_DIMM3_REV_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM3_2BK_SHIFT             27 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM3_2BK_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM3_2BK_INPLACE           (SHUB2_X_DIMM_CFG_DIMM3_2BK_MASK << SHUB2_X_DIMM_CFG_DIMM3_2BK_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM3_SIZE_SHIFT            24 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM3_SIZE_MASK             0x7ull
+#define SHUB2_X_DIMM_CFG_DIMM3_SIZE_INPLACE          (SHUB2_X_DIMM_CFG_DIMM3_SIZE_MASK << SHUB2_X_DIMM_CFG_DIMM3_SIZE_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM2_CS_SHIFT              21 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM2_CS_MASK               0x3ull
+#define SHUB2_X_DIMM_CFG_DIMM2_CS_INPLACE            (SHUB2_X_DIMM_CFG_DIMM2_CS_MASK << SHUB2_X_DIMM_CFG_DIMM2_CS_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM2_REV_SHIFT             20 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM2_REV_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM2_REV_INPLACE           (SHUB2_X_DIMM_CFG_DIMM2_REV_MASK << SHUB2_X_DIMM_CFG_DIMM2_REV_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM2_2BK_SHIFT             19 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM2_2BK_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM2_2BK_INPLACE           (SHUB2_X_DIMM_CFG_DIMM2_2BK_MASK << SHUB2_X_DIMM_CFG_DIMM2_2BK_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM2_SIZE_SHIFT            16 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM2_SIZE_MASK             0x7ull
+#define SHUB2_X_DIMM_CFG_DIMM2_SIZE_INPLACE          (SHUB2_X_DIMM_CFG_DIMM2_SIZE_MASK << SHUB2_X_DIMM_CFG_DIMM2_SIZE_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM1_CS_SHIFT              13 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM1_CS_MASK               0x3ull
+#define SHUB2_X_DIMM_CFG_DIMM1_CS_INPLACE            (SHUB2_X_DIMM_CFG_DIMM1_CS_MASK << SHUB2_X_DIMM_CFG_DIMM1_CS_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM1_REV_SHIFT             12 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM1_REV_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM1_REV_INPLACE           (SHUB2_X_DIMM_CFG_DIMM1_REV_MASK << SHUB2_X_DIMM_CFG_DIMM1_REV_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM1_2BK_SHIFT             11 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM1_2BK_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM1_2BK_INPLACE           (SHUB2_X_DIMM_CFG_DIMM1_2BK_MASK << SHUB2_X_DIMM_CFG_DIMM1_2BK_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM1_SIZE_SHIFT            8 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM1_SIZE_MASK             0x7ull
+#define SHUB2_X_DIMM_CFG_DIMM1_SIZE_INPLACE          (SHUB2_X_DIMM_CFG_DIMM1_SIZE_MASK << SHUB2_X_DIMM_CFG_DIMM1_SIZE_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM0_CS_SHIFT              5 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM0_CS_MASK               0x3ull
+#define SHUB2_X_DIMM_CFG_DIMM0_CS_INPLACE            (SHUB2_X_DIMM_CFG_DIMM0_CS_MASK << SHUB2_X_DIMM_CFG_DIMM0_CS_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM0_REV_SHIFT             4 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM0_REV_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM0_REV_INPLACE           (SHUB2_X_DIMM_CFG_DIMM0_REV_MASK << SHUB2_X_DIMM_CFG_DIMM0_REV_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM0_2BK_SHIFT             3 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM0_2BK_MASK              0x1ull
+#define SHUB2_X_DIMM_CFG_DIMM0_2BK_INPLACE           (SHUB2_X_DIMM_CFG_DIMM0_2BK_MASK << SHUB2_X_DIMM_CFG_DIMM0_2BK_SHIFT)
+#define SHUB2_X_DIMM_CFG_DIMM0_SIZE_SHIFT            0 /* inferred */
+#define SHUB2_X_DIMM_CFG_DIMM0_SIZE_MASK             0x7ull
+#define SHUB2_X_DIMM_CFG_DIMM0_SIZE_INPLACE          (SHUB2_X_DIMM_CFG_DIMM0_SIZE_MASK << SHUB2_X_DIMM_CFG_DIMM0_SIZE_SHIFT)
+
+/*
+ * Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* y_dimm_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_DIMM_CFG                             0x010008 /* established */
+#define SHUB2_Y_DIMM_CFG_CLK_EN_SHIFT                36 /* inferred */
+#define SHUB2_Y_DIMM_CFG_CLK_EN_MASK                 0x3ull
+#define SHUB2_Y_DIMM_CFG_CLK_EN_INPLACE              (SHUB2_Y_DIMM_CFG_CLK_EN_MASK << SHUB2_Y_DIMM_CFG_CLK_EN_SHIFT)
+#define SHUB2_Y_DIMM_CFG_FREQ_SHIFT                  32 /* inferred */
+#define SHUB2_Y_DIMM_CFG_FREQ_MASK                   0xfull
+#define SHUB2_Y_DIMM_CFG_FREQ_INPLACE                (SHUB2_Y_DIMM_CFG_FREQ_MASK << SHUB2_Y_DIMM_CFG_FREQ_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM3_CS_SHIFT              29 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM3_CS_MASK               0x3ull
+#define SHUB2_Y_DIMM_CFG_DIMM3_CS_INPLACE            (SHUB2_Y_DIMM_CFG_DIMM3_CS_MASK << SHUB2_Y_DIMM_CFG_DIMM3_CS_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM3_REV_SHIFT             28 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM3_REV_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM3_REV_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM3_REV_MASK << SHUB2_Y_DIMM_CFG_DIMM3_REV_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM3_2BK_SHIFT             27 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM3_2BK_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM3_2BK_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM3_2BK_MASK << SHUB2_Y_DIMM_CFG_DIMM3_2BK_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM3_SIZE_SHIFT            24 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM3_SIZE_MASK             0x7ull
+#define SHUB2_Y_DIMM_CFG_DIMM3_SIZE_INPLACE          (SHUB2_Y_DIMM_CFG_DIMM3_SIZE_MASK << SHUB2_Y_DIMM_CFG_DIMM3_SIZE_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM2_CS_SHIFT              21 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM2_CS_MASK               0x3ull
+#define SHUB2_Y_DIMM_CFG_DIMM2_CS_INPLACE            (SHUB2_Y_DIMM_CFG_DIMM2_CS_MASK << SHUB2_Y_DIMM_CFG_DIMM2_CS_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM2_REV_SHIFT             20 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM2_REV_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM2_REV_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM2_REV_MASK << SHUB2_Y_DIMM_CFG_DIMM2_REV_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM2_2BK_SHIFT             19 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM2_2BK_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM2_2BK_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM2_2BK_MASK << SHUB2_Y_DIMM_CFG_DIMM2_2BK_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM2_SIZE_SHIFT            16 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM2_SIZE_MASK             0x7ull
+#define SHUB2_Y_DIMM_CFG_DIMM2_SIZE_INPLACE          (SHUB2_Y_DIMM_CFG_DIMM2_SIZE_MASK << SHUB2_Y_DIMM_CFG_DIMM2_SIZE_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM1_CS_SHIFT              13 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM1_CS_MASK               0x3ull
+#define SHUB2_Y_DIMM_CFG_DIMM1_CS_INPLACE            (SHUB2_Y_DIMM_CFG_DIMM1_CS_MASK << SHUB2_Y_DIMM_CFG_DIMM1_CS_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM1_REV_SHIFT             12 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM1_REV_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM1_REV_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM1_REV_MASK << SHUB2_Y_DIMM_CFG_DIMM1_REV_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM1_2BK_SHIFT             11 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM1_2BK_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM1_2BK_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM1_2BK_MASK << SHUB2_Y_DIMM_CFG_DIMM1_2BK_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM1_SIZE_SHIFT            8 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM1_SIZE_MASK             0x7ull
+#define SHUB2_Y_DIMM_CFG_DIMM1_SIZE_INPLACE          (SHUB2_Y_DIMM_CFG_DIMM1_SIZE_MASK << SHUB2_Y_DIMM_CFG_DIMM1_SIZE_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM0_CS_SHIFT              5 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM0_CS_MASK               0x3ull
+#define SHUB2_Y_DIMM_CFG_DIMM0_CS_INPLACE            (SHUB2_Y_DIMM_CFG_DIMM0_CS_MASK << SHUB2_Y_DIMM_CFG_DIMM0_CS_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM0_REV_SHIFT             4 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM0_REV_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM0_REV_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM0_REV_MASK << SHUB2_Y_DIMM_CFG_DIMM0_REV_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM0_2BK_SHIFT             3 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM0_2BK_MASK              0x1ull
+#define SHUB2_Y_DIMM_CFG_DIMM0_2BK_INPLACE           (SHUB2_Y_DIMM_CFG_DIMM0_2BK_MASK << SHUB2_Y_DIMM_CFG_DIMM0_2BK_SHIFT)
+#define SHUB2_Y_DIMM_CFG_DIMM0_SIZE_SHIFT            0 /* inferred */
+#define SHUB2_Y_DIMM_CFG_DIMM0_SIZE_MASK             0x7ull
+#define SHUB2_Y_DIMM_CFG_DIMM0_SIZE_INPLACE          (SHUB2_Y_DIMM_CFG_DIMM0_SIZE_MASK << SHUB2_Y_DIMM_CFG_DIMM0_SIZE_SHIFT)
+
+/*
+ * Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* jnr_dimm_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_JNR_DIMM_CFG                           0x010010 /* established */
+#define SHUB2_JNR_DIMM_CFG_CLK_EN_SHIFT              36 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_CLK_EN_MASK               0x3ull
+#define SHUB2_JNR_DIMM_CFG_CLK_EN_INPLACE            (SHUB2_JNR_DIMM_CFG_CLK_EN_MASK << SHUB2_JNR_DIMM_CFG_CLK_EN_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_FREQ_SHIFT                32 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_FREQ_MASK                 0xfull
+#define SHUB2_JNR_DIMM_CFG_FREQ_INPLACE              (SHUB2_JNR_DIMM_CFG_FREQ_MASK << SHUB2_JNR_DIMM_CFG_FREQ_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM3_CS_SHIFT            29 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM3_CS_MASK             0x3ull
+#define SHUB2_JNR_DIMM_CFG_DIMM3_CS_INPLACE          (SHUB2_JNR_DIMM_CFG_DIMM3_CS_MASK << SHUB2_JNR_DIMM_CFG_DIMM3_CS_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM3_REV_SHIFT           28 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM3_REV_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM3_REV_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM3_REV_MASK << SHUB2_JNR_DIMM_CFG_DIMM3_REV_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM3_2BK_SHIFT           27 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM3_2BK_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM3_2BK_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM3_2BK_MASK << SHUB2_JNR_DIMM_CFG_DIMM3_2BK_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM3_SIZE_SHIFT          24 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM3_SIZE_MASK           0x7ull
+#define SHUB2_JNR_DIMM_CFG_DIMM3_SIZE_INPLACE        (SHUB2_JNR_DIMM_CFG_DIMM3_SIZE_MASK << SHUB2_JNR_DIMM_CFG_DIMM3_SIZE_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM2_CS_SHIFT            21 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM2_CS_MASK             0x3ull
+#define SHUB2_JNR_DIMM_CFG_DIMM2_CS_INPLACE          (SHUB2_JNR_DIMM_CFG_DIMM2_CS_MASK << SHUB2_JNR_DIMM_CFG_DIMM2_CS_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM2_REV_SHIFT           20 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM2_REV_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM2_REV_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM2_REV_MASK << SHUB2_JNR_DIMM_CFG_DIMM2_REV_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM2_2BK_SHIFT           19 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM2_2BK_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM2_2BK_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM2_2BK_MASK << SHUB2_JNR_DIMM_CFG_DIMM2_2BK_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM2_SIZE_SHIFT          16 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM2_SIZE_MASK           0x7ull
+#define SHUB2_JNR_DIMM_CFG_DIMM2_SIZE_INPLACE        (SHUB2_JNR_DIMM_CFG_DIMM2_SIZE_MASK << SHUB2_JNR_DIMM_CFG_DIMM2_SIZE_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM1_CS_SHIFT            13 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM1_CS_MASK             0x3ull
+#define SHUB2_JNR_DIMM_CFG_DIMM1_CS_INPLACE          (SHUB2_JNR_DIMM_CFG_DIMM1_CS_MASK << SHUB2_JNR_DIMM_CFG_DIMM1_CS_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM1_REV_SHIFT           12 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM1_REV_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM1_REV_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM1_REV_MASK << SHUB2_JNR_DIMM_CFG_DIMM1_REV_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM1_2BK_SHIFT           11 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM1_2BK_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM1_2BK_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM1_2BK_MASK << SHUB2_JNR_DIMM_CFG_DIMM1_2BK_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM1_SIZE_SHIFT          8 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM1_SIZE_MASK           0x7ull
+#define SHUB2_JNR_DIMM_CFG_DIMM1_SIZE_INPLACE        (SHUB2_JNR_DIMM_CFG_DIMM1_SIZE_MASK << SHUB2_JNR_DIMM_CFG_DIMM1_SIZE_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM0_CS_SHIFT            5 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM0_CS_MASK             0x3ull
+#define SHUB2_JNR_DIMM_CFG_DIMM0_CS_INPLACE          (SHUB2_JNR_DIMM_CFG_DIMM0_CS_MASK << SHUB2_JNR_DIMM_CFG_DIMM0_CS_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM0_REV_SHIFT           4 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM0_REV_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM0_REV_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM0_REV_MASK << SHUB2_JNR_DIMM_CFG_DIMM0_REV_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM0_2BK_SHIFT           3 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM0_2BK_MASK            0x1ull
+#define SHUB2_JNR_DIMM_CFG_DIMM0_2BK_INPLACE         (SHUB2_JNR_DIMM_CFG_DIMM0_2BK_MASK << SHUB2_JNR_DIMM_CFG_DIMM0_2BK_SHIFT)
+#define SHUB2_JNR_DIMM_CFG_DIMM0_SIZE_SHIFT          0 /* inferred */
+#define SHUB2_JNR_DIMM_CFG_DIMM0_SIZE_MASK           0x7ull
+#define SHUB2_JNR_DIMM_CFG_DIMM0_SIZE_INPLACE        (SHUB2_JNR_DIMM_CFG_DIMM0_SIZE_MASK << SHUB2_JNR_DIMM_CFG_DIMM0_SIZE_SHIFT)
+
+/*
+ * On-die-termination configuration. Only the one field below is written by the memory bring-up read; it is copied from the Y register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* x_odt_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_ODT_CFG                              0x010018 /* established */
+#define SHUB2_X_ODT_CFG_BITS_23_20_SHIFT             20 /* inferred */
+#define SHUB2_X_ODT_CFG_BITS_23_20_MASK              0xfull
+#define SHUB2_X_ODT_CFG_BITS_23_20_INPLACE           (SHUB2_X_ODT_CFG_BITS_23_20_MASK << SHUB2_X_ODT_CFG_BITS_23_20_SHIFT)
+
+/*
+ * Memory controller timing word. The firmware writes the same value to X and Y: 0x4856_5320_3324_110e, built from the old Y value by clearing bit 0, setting bit 1, depositing 3 at bits 7:2, replacing bits 39:8, depositing 3, 5, 6 at bits 43:40, 47:44, 51:48, setting bits 52 and 54, clearing bit 53 (set instead when the DIMM record's word at offset 8 equals 4), depositing 0x10 at bit 55 (width 7) and setting bit 62 (sites 0xff483016 to 0xff4831a0). Only bits 39:8 have a name here; the other positions are as written. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* x_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_CFG                                  0x010020 /* established */
+#define SHUB2_X_CFG_TA_DLYS_SHIFT                    8 /* inferred */
+#define SHUB2_X_CFG_TA_DLYS_MASK                     0xffffffffull
+#define SHUB2_X_CFG_TA_DLYS_INPLACE                  (SHUB2_X_CFG_TA_DLYS_MASK << SHUB2_X_CFG_TA_DLYS_SHIFT)
+#define SHUB2_X_CFG_BIT_0_SHIFT                      0 /* inferred */
+#define SHUB2_X_CFG_BIT_0_MASK                       0x1ull
+#define SHUB2_X_CFG_BIT_0_INPLACE                    (SHUB2_X_CFG_BIT_0_MASK << SHUB2_X_CFG_BIT_0_SHIFT)
+
+/*
+ * Read and write select delays. The firmware keeps bits 63:25 and sets bits 24:0 to 0x254215 (fields below). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* x_dqct_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_DQCT_CFG                             0x010028 /* established */
+#define SHUB2_X_DQCT_CFG_BITS_24_20_SHIFT            20 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_24_20_MASK             0x1full
+#define SHUB2_X_DQCT_CFG_BITS_24_20_INPLACE          (SHUB2_X_DQCT_CFG_BITS_24_20_MASK << SHUB2_X_DQCT_CFG_BITS_24_20_SHIFT)
+#define SHUB2_X_DQCT_CFG_BITS_19_16_SHIFT            16 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_19_16_MASK             0xfull
+#define SHUB2_X_DQCT_CFG_BITS_19_16_INPLACE          (SHUB2_X_DQCT_CFG_BITS_19_16_MASK << SHUB2_X_DQCT_CFG_BITS_19_16_SHIFT)
+#define SHUB2_X_DQCT_CFG_BITS_15_12_SHIFT            12 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_15_12_MASK             0xfull
+#define SHUB2_X_DQCT_CFG_BITS_15_12_INPLACE          (SHUB2_X_DQCT_CFG_BITS_15_12_MASK << SHUB2_X_DQCT_CFG_BITS_15_12_SHIFT)
+#define SHUB2_X_DQCT_CFG_BITS_11_8_SHIFT             8 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_11_8_MASK              0xfull
+#define SHUB2_X_DQCT_CFG_BITS_11_8_INPLACE           (SHUB2_X_DQCT_CFG_BITS_11_8_MASK << SHUB2_X_DQCT_CFG_BITS_11_8_SHIFT)
+#define SHUB2_X_DQCT_CFG_BITS_7_4_SHIFT              4 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_7_4_MASK               0xfull
+#define SHUB2_X_DQCT_CFG_BITS_7_4_INPLACE            (SHUB2_X_DQCT_CFG_BITS_7_4_MASK << SHUB2_X_DQCT_CFG_BITS_7_4_SHIFT)
+#define SHUB2_X_DQCT_CFG_BITS_3_0_SHIFT              0 /* inferred */
+#define SHUB2_X_DQCT_CFG_BITS_3_0_MASK               0xfull
+#define SHUB2_X_DQCT_CFG_BITS_3_0_INPLACE            (SHUB2_X_DQCT_CFG_BITS_3_0_MASK << SHUB2_X_DQCT_CFG_BITS_3_0_SHIFT)
+
+/*
+ * Refresh control. The firmware reads the Y register, replaces bits 27:8 (and clears bits 27:24 at site 0xff485d0c), merges the enable byte and writes the result to both registers. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* x_refresh_control: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_REFRESH_CONTROL                      0x010030 /* established */
+#define SHUB2_X_REFRESH_CONTROL_HOLD_SHIFT           17 /* inferred */
+#define SHUB2_X_REFRESH_CONTROL_HOLD_MASK            0x3full
+#define SHUB2_X_REFRESH_CONTROL_HOLD_INPLACE         (SHUB2_X_REFRESH_CONTROL_HOLD_MASK << SHUB2_X_REFRESH_CONTROL_HOLD_SHIFT)
+#define SHUB2_X_REFRESH_CONTROL_INTERVAL_SHIFT       8 /* inferred */
+#define SHUB2_X_REFRESH_CONTROL_INTERVAL_MASK        0x1ffull
+#define SHUB2_X_REFRESH_CONTROL_INTERVAL_INPLACE     (SHUB2_X_REFRESH_CONTROL_INTERVAL_MASK << SHUB2_X_REFRESH_CONTROL_INTERVAL_SHIFT)
+#define SHUB2_X_REFRESH_CONTROL_ENABLE_SHIFT         0 /* inferred */
+#define SHUB2_X_REFRESH_CONTROL_ENABLE_MASK          0xffull
+#define SHUB2_X_REFRESH_CONTROL_ENABLE_INPLACE       (SHUB2_X_REFRESH_CONTROL_ENABLE_MASK << SHUB2_X_REFRESH_CONTROL_ENABLE_SHIFT)
+
+/*
+ * Same layout as X_ODT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* y_odt_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_ODT_CFG                              0x010048 /* established */
+#define SHUB2_Y_ODT_CFG_BITS_23_20_SHIFT             20 /* inferred */
+#define SHUB2_Y_ODT_CFG_BITS_23_20_MASK              0xfull
+#define SHUB2_Y_ODT_CFG_BITS_23_20_INPLACE           (SHUB2_Y_ODT_CFG_BITS_23_20_MASK << SHUB2_Y_ODT_CFG_BITS_23_20_SHIFT)
+
+/*
+ * Same layout as X_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* y_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_CFG                                  0x010050 /* established */
+#define SHUB2_Y_CFG_TA_DLYS_SHIFT                    8 /* inferred */
+#define SHUB2_Y_CFG_TA_DLYS_MASK                     0xffffffffull
+#define SHUB2_Y_CFG_TA_DLYS_INPLACE                  (SHUB2_Y_CFG_TA_DLYS_MASK << SHUB2_Y_CFG_TA_DLYS_SHIFT)
+#define SHUB2_Y_CFG_BIT_0_SHIFT                      0 /* inferred */
+#define SHUB2_Y_CFG_BIT_0_MASK                       0x1ull
+#define SHUB2_Y_CFG_BIT_0_INPLACE                    (SHUB2_Y_CFG_BIT_0_MASK << SHUB2_Y_CFG_BIT_0_SHIFT)
+
+/*
+ * Same layout and value as X_DQCT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* y_dqct_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_DQCT_CFG                             0x010058 /* established */
+#define SHUB2_Y_DQCT_CFG_BITS_24_20_SHIFT            20 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_24_20_MASK             0x1full
+#define SHUB2_Y_DQCT_CFG_BITS_24_20_INPLACE          (SHUB2_Y_DQCT_CFG_BITS_24_20_MASK << SHUB2_Y_DQCT_CFG_BITS_24_20_SHIFT)
+#define SHUB2_Y_DQCT_CFG_BITS_19_16_SHIFT            16 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_19_16_MASK             0xfull
+#define SHUB2_Y_DQCT_CFG_BITS_19_16_INPLACE          (SHUB2_Y_DQCT_CFG_BITS_19_16_MASK << SHUB2_Y_DQCT_CFG_BITS_19_16_SHIFT)
+#define SHUB2_Y_DQCT_CFG_BITS_15_12_SHIFT            12 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_15_12_MASK             0xfull
+#define SHUB2_Y_DQCT_CFG_BITS_15_12_INPLACE          (SHUB2_Y_DQCT_CFG_BITS_15_12_MASK << SHUB2_Y_DQCT_CFG_BITS_15_12_SHIFT)
+#define SHUB2_Y_DQCT_CFG_BITS_11_8_SHIFT             8 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_11_8_MASK              0xfull
+#define SHUB2_Y_DQCT_CFG_BITS_11_8_INPLACE           (SHUB2_Y_DQCT_CFG_BITS_11_8_MASK << SHUB2_Y_DQCT_CFG_BITS_11_8_SHIFT)
+#define SHUB2_Y_DQCT_CFG_BITS_7_4_SHIFT              4 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_7_4_MASK               0xfull
+#define SHUB2_Y_DQCT_CFG_BITS_7_4_INPLACE            (SHUB2_Y_DQCT_CFG_BITS_7_4_MASK << SHUB2_Y_DQCT_CFG_BITS_7_4_SHIFT)
+#define SHUB2_Y_DQCT_CFG_BITS_3_0_SHIFT              0 /* inferred */
+#define SHUB2_Y_DQCT_CFG_BITS_3_0_MASK               0xfull
+#define SHUB2_Y_DQCT_CFG_BITS_3_0_INPLACE            (SHUB2_Y_DQCT_CFG_BITS_3_0_MASK << SHUB2_Y_DQCT_CFG_BITS_3_0_SHIFT)
+
+/*
+ * Same layout as X_REFRESH_CONTROL. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* y_refresh_control: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_REFRESH_CONTROL                      0x010060 /* established */
+#define SHUB2_Y_REFRESH_CONTROL_HOLD_SHIFT           17 /* inferred */
+#define SHUB2_Y_REFRESH_CONTROL_HOLD_MASK            0x3full
+#define SHUB2_Y_REFRESH_CONTROL_HOLD_INPLACE         (SHUB2_Y_REFRESH_CONTROL_HOLD_MASK << SHUB2_Y_REFRESH_CONTROL_HOLD_SHIFT)
+#define SHUB2_Y_REFRESH_CONTROL_INTERVAL_SHIFT       8 /* inferred */
+#define SHUB2_Y_REFRESH_CONTROL_INTERVAL_MASK        0x1ffull
+#define SHUB2_Y_REFRESH_CONTROL_INTERVAL_INPLACE     (SHUB2_Y_REFRESH_CONTROL_INTERVAL_MASK << SHUB2_Y_REFRESH_CONTROL_INTERVAL_SHIFT)
+#define SHUB2_Y_REFRESH_CONTROL_ENABLE_SHIFT         0 /* inferred */
+#define SHUB2_Y_REFRESH_CONTROL_ENABLE_MASK          0xffull
+#define SHUB2_Y_REFRESH_CONTROL_ENABLE_INPLACE       (SHUB2_Y_REFRESH_CONTROL_ENABLE_MASK << SHUB2_Y_REFRESH_CONTROL_ENABLE_SHIFT)
+
+/*
+ * Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0 and 51:16); the code does not split the value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* mem_red_black: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_MEM_RED_BLACK                          0x010078 /* established */
+
+/*
+ * Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* misc_mem_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_MISC_MEM_CFG                           0x010080 /* established */
+#define SHUB2_MISC_MEM_CFG_BIT_59_SHIFT              59 /* inferred */
+#define SHUB2_MISC_MEM_CFG_BIT_59_MASK               0x1ull
+#define SHUB2_MISC_MEM_CFG_BIT_59_INPLACE            (SHUB2_MISC_MEM_CFG_BIT_59_MASK << SHUB2_MISC_MEM_CFG_BIT_59_SHIFT)
+#define SHUB2_MISC_MEM_CFG_BIT_58_SHIFT              58 /* inferred */
+#define SHUB2_MISC_MEM_CFG_BIT_58_MASK               0x1ull
+#define SHUB2_MISC_MEM_CFG_BIT_58_INPLACE            (SHUB2_MISC_MEM_CFG_BIT_58_MASK << SHUB2_MISC_MEM_CFG_BIT_58_SHIFT)
+
+/*
+ * PIO request credit control. The first-stage firmware writes 2; the node set-up table writes 0xf9_0000_0000 to register 0xd8, a different register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* pio_rq_crd_ctl: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_PIO_RQ_CRD_CTL                         0x0100d8 /* established */
+
+/*
+ * Credit depth register; the firmware writes 0xc. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* pi_md_rq_crd_ctl: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_PI_MD_RQ_CRD_CTL                       0x0100e0 /* established */
+
+/*
+ * Credit depth register; the firmware writes 0x4. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* pi_md_rp_crd_ctl: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_PI_MD_RP_CRD_CTL                       0x0100e8 /* established */
+
+/*
+ * Credit depth register; the firmware writes 0xb. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* xn_md_rq_crd_ctl: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_XN_MD_RQ_CRD_CTL                       0x0100f0 /* established */
+
+/*
+ * Credit depth register; the firmware writes 0x3. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* xn_md_rp_crd_ctl: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_XN_MD_RP_CRD_CTL                       0x0100f8 /* established */
+
+/*
+ * Start address of a memory test block. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* mmrbist_base: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_MMRBIST_BASE                           0x020080 /* established */
+
+/*
+ * Memory test control: the early path writes 0x11_0000_0010 and polls bit 40 clear (for up to 2,000,000 microseconds). The other fields of the PROM name are not read in code here. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* mmrbist_ctl: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_MMRBIST_CTL                            0x020088 /* established */
+#define SHUB2_MMRBIST_CTL_IN_PROGRESS_SHIFT          40 /* inferred */
+#define SHUB2_MMRBIST_CTL_IN_PROGRESS_MASK           0x1ull
+#define SHUB2_MMRBIST_CTL_IN_PROGRESS_INPLACE        (SHUB2_MMRBIST_CTL_IN_PROGRESS_MASK << SHUB2_MMRBIST_CTL_IN_PROGRESS_SHIFT)
+
+/*
+ * Directory configuration. The firmware reads it and merges: bits 2:0 from the node count, clears bits 11 and 10 by size tests, sets bit 3 and bit 15. The DQRP twin, 0x5_0000, receives the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_config_dqlp: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_CONFIG_DQLP                        0x030000 /* established */
+#define SHUB2_DIR_CONFIG_DQLP_BIT_15_SHIFT           15 /* inferred */
+#define SHUB2_DIR_CONFIG_DQLP_BIT_15_MASK            0x1ull
+#define SHUB2_DIR_CONFIG_DQLP_BIT_15_INPLACE         (SHUB2_DIR_CONFIG_DQLP_BIT_15_MASK << SHUB2_DIR_CONFIG_DQLP_BIT_15_SHIFT)
+#define SHUB2_DIR_CONFIG_DQLP_BIT_11_SHIFT           11 /* inferred */
+#define SHUB2_DIR_CONFIG_DQLP_BIT_11_MASK            0x1ull
+#define SHUB2_DIR_CONFIG_DQLP_BIT_11_INPLACE         (SHUB2_DIR_CONFIG_DQLP_BIT_11_MASK << SHUB2_DIR_CONFIG_DQLP_BIT_11_SHIFT)
+#define SHUB2_DIR_CONFIG_DQLP_BIT_10_SHIFT           10 /* inferred */
+#define SHUB2_DIR_CONFIG_DQLP_BIT_10_MASK            0x1ull
+#define SHUB2_DIR_CONFIG_DQLP_BIT_10_INPLACE         (SHUB2_DIR_CONFIG_DQLP_BIT_10_MASK << SHUB2_DIR_CONFIG_DQLP_BIT_10_SHIFT)
+#define SHUB2_DIR_CONFIG_DQLP_BIT_3_SHIFT            3 /* inferred */
+#define SHUB2_DIR_CONFIG_DQLP_BIT_3_MASK             0x1ull
+#define SHUB2_DIR_CONFIG_DQLP_BIT_3_INPLACE          (SHUB2_DIR_CONFIG_DQLP_BIT_3_MASK << SHUB2_DIR_CONFIG_DQLP_BIT_3_SHIFT)
+#define SHUB2_DIR_CONFIG_DQLP_SYS_SIZE_SHIFT         0 /* inferred */
+#define SHUB2_DIR_CONFIG_DQLP_SYS_SIZE_MASK          0x7ull
+#define SHUB2_DIR_CONFIG_DQLP_SYS_SIZE_INPLACE       (SHUB2_DIR_CONFIG_DQLP_SYS_SIZE_MASK << SHUB2_DIR_CONFIG_DQLP_SYS_SIZE_SHIFT)
+
+/*
+ * Eight local-vector registers 0x10 apart, all set to ones at initialisation. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_locvec_dqlp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_LOCVEC_DQLP                        0x030200 /* established */
+#define SHUB2_DIR_LOCVEC_DQLP_COUNT                  8
+#define SHUB2_DIR_LOCVEC_DQLP_STRIDE                 16
+
+/*
+ * Eight registers 0x10 apart written with constants in order: 0x4bfff, 0xc96f25b, 0xfffffff, 0x96ffff, 0, 0, 0x4803f, 0x48000. Not all ones, so the writes do not simply open access to every node; the field layout is not read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_privec_dqlp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_PRIVEC_DQLP                        0x030300 /* established */
+#define SHUB2_DIR_PRIVEC_DQLP_COUNT                  8
+#define SHUB2_DIR_PRIVEC_DQLP_STRIDE                 16
+
+/*
+ * Written once with 0x1000 (bit 12). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_timer_dqlp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_TIMER_DQLP                         0x030400 /* established */
+
+/*
+ * AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* amo_cfg_0: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_AMO_CFG_0                              0x034800 /* established */
+#define SHUB2_AMO_CFG_0_BITS_3_2_SHIFT               2 /* inferred */
+#define SHUB2_AMO_CFG_0_BITS_3_2_MASK                0x3ull
+#define SHUB2_AMO_CFG_0_BITS_3_2_INPLACE             (SHUB2_AMO_CFG_0_BITS_3_2_MASK << SHUB2_AMO_CFG_0_BITS_3_2_SHIFT)
+
+/*
+ * Memory test pattern register, high half; written with the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* x_bist_h: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_BIST_H                               0x038000 /* established */
+#define SHUB2_X_BIST_H_COUNT                         4
+#define SHUB2_X_BIST_H_STRIDE                        65536
+#define SHUB2_X_BIST_H_ARM_SHIFT                     43 /* inferred */
+#define SHUB2_X_BIST_H_ARM_MASK                      0x1ull
+#define SHUB2_X_BIST_H_ARM_INPLACE                   (SHUB2_X_BIST_H_ARM_MASK << SHUB2_X_BIST_H_ARM_SHIFT)
+#define SHUB2_X_BIST_H_BIT_41_SHIFT                  41 /* inferred */
+#define SHUB2_X_BIST_H_BIT_41_MASK                   0x1ull
+#define SHUB2_X_BIST_H_BIT_41_INPLACE                (SHUB2_X_BIST_H_BIT_41_MASK << SHUB2_X_BIST_H_BIT_41_SHIFT)
+#define SHUB2_X_BIST_H_BIT_40_SHIFT                  40 /* inferred */
+#define SHUB2_X_BIST_H_BIT_40_MASK                   0x1ull
+#define SHUB2_X_BIST_H_BIT_40_INPLACE                (SHUB2_X_BIST_H_BIT_40_MASK << SHUB2_X_BIST_H_BIT_40_SHIFT)
+#define SHUB2_X_BIST_H_PATTERN_SHIFT                 0 /* inferred */
+#define SHUB2_X_BIST_H_PATTERN_MASK                  0xffffffffffull
+#define SHUB2_X_BIST_H_PATTERN_INPLACE               (SHUB2_X_BIST_H_PATTERN_MASK << SHUB2_X_BIST_H_PATTERN_SHIFT)
+
+/*
+ * Memory test pattern register, low half; same value without the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* x_bist_l: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_BIST_L                               0x038010 /* established */
+#define SHUB2_X_BIST_L_COUNT                         4
+#define SHUB2_X_BIST_L_STRIDE                        65536
+#define SHUB2_X_BIST_L_BIT_41_SHIFT                  41 /* inferred */
+#define SHUB2_X_BIST_L_BIT_41_MASK                   0x1ull
+#define SHUB2_X_BIST_L_BIT_41_INPLACE                (SHUB2_X_BIST_L_BIT_41_MASK << SHUB2_X_BIST_L_BIT_41_SHIFT)
+#define SHUB2_X_BIST_L_BIT_40_SHIFT                  40 /* inferred */
+#define SHUB2_X_BIST_L_BIT_40_MASK                   0x1ull
+#define SHUB2_X_BIST_L_BIT_40_INPLACE                (SHUB2_X_BIST_L_BIT_40_MASK << SHUB2_X_BIST_L_BIT_40_SHIFT)
+#define SHUB2_X_BIST_L_PATTERN_SHIFT                 0 /* inferred */
+#define SHUB2_X_BIST_L_PATTERN_MASK                  0xffffffffffull
+#define SHUB2_X_BIST_L_PATTERN_INPLACE               (SHUB2_X_BIST_L_PATTERN_MASK << SHUB2_X_BIST_L_PATTERN_SHIFT)
+
+/*
+ * Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* x_bist_err_h: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_BIST_ERR_H                           0x038020 /* established */
+#define SHUB2_X_BIST_ERR_H_COUNT                     4
+#define SHUB2_X_BIST_ERR_H_STRIDE                    65536
+#define SHUB2_X_BIST_ERR_H_VAL_SHIFT                 40 /* inferred */
+#define SHUB2_X_BIST_ERR_H_VAL_MASK                  0x1ull
+#define SHUB2_X_BIST_ERR_H_VAL_INPLACE               (SHUB2_X_BIST_ERR_H_VAL_MASK << SHUB2_X_BIST_ERR_H_VAL_SHIFT)
+#define SHUB2_X_BIST_ERR_H_PAT_SHIFT                 0 /* inferred */
+#define SHUB2_X_BIST_ERR_H_PAT_MASK                  0xffffffffffull
+#define SHUB2_X_BIST_ERR_H_PAT_INPLACE               (SHUB2_X_BIST_ERR_H_PAT_MASK << SHUB2_X_BIST_ERR_H_PAT_SHIFT)
+
+/*
+ * Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* x_bist_err_l: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_X_BIST_ERR_L                           0x038030 /* established */
+#define SHUB2_X_BIST_ERR_L_COUNT                     4
+#define SHUB2_X_BIST_ERR_L_STRIDE                    65536
+#define SHUB2_X_BIST_ERR_L_VAL_SHIFT                 40 /* inferred */
+#define SHUB2_X_BIST_ERR_L_VAL_MASK                  0x1ull
+#define SHUB2_X_BIST_ERR_L_VAL_INPLACE               (SHUB2_X_BIST_ERR_L_VAL_MASK << SHUB2_X_BIST_ERR_L_VAL_SHIFT)
+#define SHUB2_X_BIST_ERR_L_PAT_SHIFT                 0 /* inferred */
+#define SHUB2_X_BIST_ERR_L_PAT_MASK                  0xffffffffffull
+#define SHUB2_X_BIST_ERR_L_PAT_INPLACE               (SHUB2_X_BIST_ERR_L_PAT_MASK << SHUB2_X_BIST_ERR_L_PAT_SHIFT)
+
+/*
+ * Y-side twin of X_BIST_H. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* y_bist_h: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_BIST_H                               0x038800 /* established */
+#define SHUB2_Y_BIST_H_COUNT                         4
+#define SHUB2_Y_BIST_H_STRIDE                        65536
+#define SHUB2_Y_BIST_H_ARM_SHIFT                     43 /* inferred */
+#define SHUB2_Y_BIST_H_ARM_MASK                      0x1ull
+#define SHUB2_Y_BIST_H_ARM_INPLACE                   (SHUB2_Y_BIST_H_ARM_MASK << SHUB2_Y_BIST_H_ARM_SHIFT)
+#define SHUB2_Y_BIST_H_BIT_41_SHIFT                  41 /* inferred */
+#define SHUB2_Y_BIST_H_BIT_41_MASK                   0x1ull
+#define SHUB2_Y_BIST_H_BIT_41_INPLACE                (SHUB2_Y_BIST_H_BIT_41_MASK << SHUB2_Y_BIST_H_BIT_41_SHIFT)
+#define SHUB2_Y_BIST_H_BIT_40_SHIFT                  40 /* inferred */
+#define SHUB2_Y_BIST_H_BIT_40_MASK                   0x1ull
+#define SHUB2_Y_BIST_H_BIT_40_INPLACE                (SHUB2_Y_BIST_H_BIT_40_MASK << SHUB2_Y_BIST_H_BIT_40_SHIFT)
+#define SHUB2_Y_BIST_H_PATTERN_SHIFT                 0 /* inferred */
+#define SHUB2_Y_BIST_H_PATTERN_MASK                  0xffffffffffull
+#define SHUB2_Y_BIST_H_PATTERN_INPLACE               (SHUB2_Y_BIST_H_PATTERN_MASK << SHUB2_Y_BIST_H_PATTERN_SHIFT)
+
+/*
+ * Y-side twin of X_BIST_L. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* y_bist_l: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_BIST_L                               0x038810 /* established */
+#define SHUB2_Y_BIST_L_COUNT                         4
+#define SHUB2_Y_BIST_L_STRIDE                        65536
+#define SHUB2_Y_BIST_L_BIT_41_SHIFT                  41 /* inferred */
+#define SHUB2_Y_BIST_L_BIT_41_MASK                   0x1ull
+#define SHUB2_Y_BIST_L_BIT_41_INPLACE                (SHUB2_Y_BIST_L_BIT_41_MASK << SHUB2_Y_BIST_L_BIT_41_SHIFT)
+#define SHUB2_Y_BIST_L_BIT_40_SHIFT                  40 /* inferred */
+#define SHUB2_Y_BIST_L_BIT_40_MASK                   0x1ull
+#define SHUB2_Y_BIST_L_BIT_40_INPLACE                (SHUB2_Y_BIST_L_BIT_40_MASK << SHUB2_Y_BIST_L_BIT_40_SHIFT)
+#define SHUB2_Y_BIST_L_PATTERN_SHIFT                 0 /* inferred */
+#define SHUB2_Y_BIST_L_PATTERN_MASK                  0xffffffffffull
+#define SHUB2_Y_BIST_L_PATTERN_INPLACE               (SHUB2_Y_BIST_L_PATTERN_MASK << SHUB2_Y_BIST_L_PATTERN_SHIFT)
+
+/*
+ * Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* y_bist_err_h: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_BIST_ERR_H                           0x038820 /* established */
+#define SHUB2_Y_BIST_ERR_H_COUNT                     4
+#define SHUB2_Y_BIST_ERR_H_STRIDE                    65536
+#define SHUB2_Y_BIST_ERR_H_VAL_SHIFT                 40 /* inferred */
+#define SHUB2_Y_BIST_ERR_H_VAL_MASK                  0x1ull
+#define SHUB2_Y_BIST_ERR_H_VAL_INPLACE               (SHUB2_Y_BIST_ERR_H_VAL_MASK << SHUB2_Y_BIST_ERR_H_VAL_SHIFT)
+#define SHUB2_Y_BIST_ERR_H_PAT_SHIFT                 0 /* inferred */
+#define SHUB2_Y_BIST_ERR_H_PAT_MASK                  0xffffffffffull
+#define SHUB2_Y_BIST_ERR_H_PAT_INPLACE               (SHUB2_Y_BIST_ERR_H_PAT_MASK << SHUB2_Y_BIST_ERR_H_PAT_SHIFT)
+
+/*
+ * Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+ */
+/* y_bist_err_l: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_Y_BIST_ERR_L                           0x038830 /* established */
+#define SHUB2_Y_BIST_ERR_L_COUNT                     4
+#define SHUB2_Y_BIST_ERR_L_STRIDE                    65536
+#define SHUB2_Y_BIST_ERR_L_VAL_SHIFT                 40 /* inferred */
+#define SHUB2_Y_BIST_ERR_L_VAL_MASK                  0x1ull
+#define SHUB2_Y_BIST_ERR_L_VAL_INPLACE               (SHUB2_Y_BIST_ERR_L_VAL_MASK << SHUB2_Y_BIST_ERR_L_VAL_SHIFT)
+#define SHUB2_Y_BIST_ERR_L_PAT_SHIFT                 0 /* inferred */
+#define SHUB2_Y_BIST_ERR_L_PAT_MASK                  0xffffffffffull
+#define SHUB2_Y_BIST_ERR_L_PAT_INPLACE               (SHUB2_Y_BIST_ERR_L_PAT_MASK << SHUB2_Y_BIST_ERR_L_PAT_SHIFT)
+
+/*
+ * AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* amo_cfg_1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_AMO_CFG_1                              0x04b000 /* established */
+#define SHUB2_AMO_CFG_1_BITS_3_2_SHIFT               2 /* inferred */
+#define SHUB2_AMO_CFG_1_BITS_3_2_MASK                0x3ull
+#define SHUB2_AMO_CFG_1_BITS_3_2_INPLACE             (SHUB2_AMO_CFG_1_BITS_3_2_MASK << SHUB2_AMO_CFG_1_BITS_3_2_SHIFT)
+
+/*
+ * Twin of DIR_CONFIG_DQLP; the firmware writes the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_config_dqrp: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_CONFIG_DQRP                        0x050000 /* established */
+
+/*
+ * Eight registers 0x10 apart, all set to ones. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_locvec_dqrp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_LOCVEC_DQRP                        0x050200 /* established */
+#define SHUB2_DIR_LOCVEC_DQRP_COUNT                  8
+#define SHUB2_DIR_LOCVEC_DQRP_STRIDE                 16
+
+/*
+ * Twin of DIR_PRIVEC_DQLP, same values. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_privec_dqrp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_PRIVEC_DQRP                        0x050300 /* established */
+#define SHUB2_DIR_PRIVEC_DQRP_COUNT                  8
+#define SHUB2_DIR_PRIVEC_DQRP_STRIDE                 16
+
+/*
+ * Twin of DIR_TIMER_DQLP. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* dir_timer_dqrp: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_DIR_TIMER_DQRP                         0x050400 /* established */
+
+/*
+ * AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* amo_cfg_2: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_AMO_CFG_2                              0x054800 /* established */
+#define SHUB2_AMO_CFG_2_BITS_3_2_SHIFT               2 /* inferred */
+#define SHUB2_AMO_CFG_2_BITS_3_2_MASK                0x3ull
+#define SHUB2_AMO_CFG_2_BITS_3_2_INPLACE             (SHUB2_AMO_CFG_2_BITS_3_2_MASK << SHUB2_AMO_CFG_2_BITS_3_2_SHIFT)
+
+/*
+ * AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ */
+/* amo_cfg_3: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_AMO_CFG_3                              0x06b000 /* established */
+#define SHUB2_AMO_CFG_3_BITS_3_2_SHIFT               2 /* inferred */
+#define SHUB2_AMO_CFG_3_BITS_3_2_MASK                0x3ull
+#define SHUB2_AMO_CFG_3_BITS_3_2_INPLACE             (SHUB2_AMO_CFG_3_BITS_3_2_MASK << SHUB2_AMO_CFG_3_BITS_3_2_SHIFT)
+
+/*
  * Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.
  */
 /* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
@@ -113,12 +713,113 @@
 #define SHUB2_EVENT_OCCURRED_ALIAS                   0x10010008 /* established */
 
 /*
+ * Junk-bus access timing, written once by the first-stage firmware with 0xffff_ffff_0003. Meaning of the value is inferred from the PROM name; the hardware accepts the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* junk_bus_time: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_JUNK_BUS_TIME                          0x10020000 /* established */
+
+/*
+ * Four registers, one per slice, 0x80 apart, that the firmware reads only to remember the progress code it last wrote while it waits on a lock. Any value is accepted. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* junk_bus_led_data: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_JUNK_BUS_LED_DATA                      0x10030000 /* established */
+#define SHUB2_JUNK_BUS_LED_DATA_COUNT                4
+#define SHUB2_JUNK_BUS_LED_DATA_STRIDE               128
+
+/*
+ * L1 UART transmit data: eight packet bytes per write, padded with 0x7e after the frame. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* asic_to_l1_data: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_ASIC_TO_L1_DATA                        0x10038000 /* established */
+
+/*
+ * L1 UART transmit status: bit 0 set means busy; the firmware polls it clear before each write, 10 microseconds apart, for up to 5,000,000 microseconds. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* asic_to_l1_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_ASIC_TO_L1_STATUS                      0x10038080 /* established */
+#define SHUB2_ASIC_TO_L1_STATUS_BUSY_SHIFT           0 /* inferred */
+#define SHUB2_ASIC_TO_L1_STATUS_BUSY_MASK            0x1ull
+#define SHUB2_ASIC_TO_L1_STATUS_BUSY_INPLACE         (SHUB2_ASIC_TO_L1_STATUS_BUSY_MASK << SHUB2_ASIC_TO_L1_STATUS_BUSY_SHIFT)
+
+/*
+ * L1 UART receive data: eight bytes per word, the first byte in bits 7:0. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* l1_to_asic_data: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_L1_TO_ASIC_DATA                        0x10038100 /* established */
+
+/*
+ * L1 UART receive status: bit 0 set means a word is waiting; the firmware writes 0 to release it. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* l1_to_asic_status: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_L1_TO_ASIC_STATUS                      0x10038180 /* established */
+#define SHUB2_L1_TO_ASIC_STATUS_DATA_READY_SHIFT     0 /* inferred */
+#define SHUB2_L1_TO_ASIC_STATUS_DATA_READY_MASK      0x1ull
+#define SHUB2_L1_TO_ASIC_STATUS_DATA_READY_INPLACE   (SHUB2_L1_TO_ASIC_STATUS_DATA_READY_MASK << SHUB2_L1_TO_ASIC_STATUS_DATA_READY_SHIFT)
+
+/*
+ * Rack and slot data provided by the L1 controller; the firmware reads it only on paths this page does not reach on a normal boot. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* rack_slot_data: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_RACK_SLOT_DATA                         0x10038200 /* established */
+#define SHUB2_RACK_SLOT_DATA_BYTE_SHIFT              16 /* inferred */
+#define SHUB2_RACK_SLOT_DATA_BYTE_MASK               0xffull
+#define SHUB2_RACK_SLOT_DATA_BYTE_INPLACE            (SHUB2_RACK_SLOT_DATA_BYTE_MASK << SHUB2_RACK_SLOT_DATA_BYTE_SHIFT)
+#define SHUB2_RACK_SLOT_DATA_NUMBER_SHIFT            4 /* inferred */
+#define SHUB2_RACK_SLOT_DATA_NUMBER_MASK             0xfffull
+#define SHUB2_RACK_SLOT_DATA_NUMBER_INPLACE          (SHUB2_RACK_SLOT_DATA_NUMBER_MASK << SHUB2_RACK_SLOT_DATA_NUMBER_SHIFT)
+#define SHUB2_RACK_SLOT_DATA_CODE_SHIFT              1 /* inferred */
+#define SHUB2_RACK_SLOT_DATA_CODE_MASK               0x7ull
+#define SHUB2_RACK_SLOT_DATA_CODE_INPLACE            (SHUB2_RACK_SLOT_DATA_CODE_MASK << SHUB2_RACK_SLOT_DATA_CODE_SHIFT)
+#define SHUB2_RACK_SLOT_DATA_BIT0_SHIFT              0 /* inferred */
+#define SHUB2_RACK_SLOT_DATA_BIT0_MASK               0x1ull
+#define SHUB2_RACK_SLOT_DATA_BIT0_INPLACE            (SHUB2_RACK_SLOT_DATA_BIT0_MASK << SHUB2_RACK_SLOT_DATA_BIT0_SHIFT)
+
+/*
+ * Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* gc_src_ctrl: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_GC_SRC_CTRL                            0x10060700 /* established */
+#define SHUB2_GC_SRC_CTRL_SOURCE_SEL_SHIFT           32 /* established */
+#define SHUB2_GC_SRC_CTRL_SOURCE_SEL_MASK            0x3ull
+#define SHUB2_GC_SRC_CTRL_SOURCE_SEL_INPLACE         (SHUB2_GC_SRC_CTRL_SOURCE_SEL_MASK << SHUB2_GC_SRC_CTRL_SOURCE_SEL_SHIFT)
+#define SHUB2_GC_SRC_CTRL_MAX_COUNT_SHIFT            4 /* established */
+#define SHUB2_GC_SRC_CTRL_MAX_COUNT_MASK             0x3ffull
+#define SHUB2_GC_SRC_CTRL_MAX_COUNT_INPLACE          (SHUB2_GC_SRC_CTRL_MAX_COUNT_MASK << SHUB2_GC_SRC_CTRL_MAX_COUNT_SHIFT)
+#define SHUB2_GC_SRC_CTRL_ENABLE_COUNTER_SHIFT       0 /* established */
+#define SHUB2_GC_SRC_CTRL_ENABLE_COUNTER_MASK        0x1ull
+#define SHUB2_GC_SRC_CTRL_ENABLE_COUNTER_INPLACE     (SHUB2_GC_SRC_CTRL_ENABLE_COUNTER_MASK << SHUB2_GC_SRC_CTRL_ENABLE_COUNTER_SHIFT)
+
+/*
  * Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown.
  */
 /* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_IPI_ACCESS                             0x10060c00 /* established */
 #define SHUB2_IPI_ACCESS_COUNT                       4
 #define SHUB2_IPI_ACCESS_STRIDE                      128
+
+/*
+ * The node's identification word. Read by the firmware to find its own node number (bits 45:32) and the sharing parameters; written during the interconnect phase. Linux v5.3 does not define it for SHub 2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* node_id: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_NODE_ID                                0x10060f00 /* established */
+#define SHUB2_NODE_ID_RANGE_CHECK_SHIFT              55 /* established */
+#define SHUB2_NODE_ID_RANGE_CHECK_MASK               0x1ull
+#define SHUB2_NODE_ID_RANGE_CHECK_INPLACE            (SHUB2_NODE_ID_RANGE_CHECK_MASK << SHUB2_NODE_ID_RANGE_CHECK_SHIFT)
+#define SHUB2_NODE_ID_SHARERS_1K_SHIFT               54 /* established */
+#define SHUB2_NODE_ID_SHARERS_1K_MASK                0x1ull
+#define SHUB2_NODE_ID_SHARERS_1K_INPLACE             (SHUB2_NODE_ID_SHARERS_1K_MASK << SHUB2_NODE_ID_SHARERS_1K_SHIFT)
+#define SHUB2_NODE_ID_NODES_PER_BIT_SHIFT            48 /* established */
+#define SHUB2_NODE_ID_NODES_PER_BIT_MASK             0x3full
+#define SHUB2_NODE_ID_NODES_PER_BIT_INPLACE          (SHUB2_NODE_ID_NODES_PER_BIT_MASK << SHUB2_NODE_ID_NODES_PER_BIT_SHIFT)
+#define SHUB2_NODE_ID_SHARING_MODE_SHIFT             46 /* established */
+#define SHUB2_NODE_ID_SHARING_MODE_MASK              0x3ull
+#define SHUB2_NODE_ID_SHARING_MODE_INPLACE           (SHUB2_NODE_ID_SHARING_MODE_MASK << SHUB2_NODE_ID_SHARING_MODE_SHIFT)
+#define SHUB2_NODE_ID_NODE_ID_SHIFT                  32 /* established */
+#define SHUB2_NODE_ID_NODE_ID_MASK                   0x3fffull
+#define SHUB2_NODE_ID_NODE_ID_INPLACE                (SHUB2_NODE_ID_NODE_ID_MASK << SHUB2_NODE_ID_NODE_ID_SHIFT)
+#define SHUB2_NODE_ID_REVISION_SHIFT                 28 /* established */
+#define SHUB2_NODE_ID_REVISION_MASK                  0xfull
+#define SHUB2_NODE_ID_REVISION_INPLACE               (SHUB2_NODE_ID_REVISION_MASK << SHUB2_NODE_ID_REVISION_SHIFT)
 
 /*
  * Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).
@@ -130,6 +831,117 @@
 #define SHUB2_INT_CMP_COMPARE_SHIFT                  0 /* established */
 #define SHUB2_INT_CMP_COMPARE_MASK                   0x7fffffffffffffull
 #define SHUB2_INT_CMP_COMPARE_INPLACE                (SHUB2_INT_CMP_COMPARE_MASK << SHUB2_INT_CMP_COMPARE_SHIFT)
+
+/*
+ * Node election word: each slice writes slice + 1 through the alias and reads it back; the winner is the one that reads its own value. Plain storage satisfies the code. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH1                               0x101d0080 /* established */
+
+/*
+ * Write path onto the SCRATCH1 word; the relation is inferred from the use. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch1_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH1_ALIAS                         0x101d0088 /* established */
+
+/*
+ * Firmware mailbox word for the L1 console link. Plain storage satisfies the code; the fields are how the 10.54 firmware uses it, names are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch2: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH2                               0x101d0100 /* established */
+#define SHUB2_SCRATCH2_CLEAR_BIT_SHIFT               63 /* inferred */
+#define SHUB2_SCRATCH2_CLEAR_BIT_MASK                0x1ull
+#define SHUB2_SCRATCH2_CLEAR_BIT_INPLACE             (SHUB2_SCRATCH2_CLEAR_BIT_MASK << SHUB2_SCRATCH2_CLEAR_BIT_SHIFT)
+#define SHUB2_SCRATCH2_RX_INDEX_SHIFT                58 /* inferred */
+#define SHUB2_SCRATCH2_RX_INDEX_MASK                 0x1full
+#define SHUB2_SCRATCH2_RX_INDEX_INPLACE              (SHUB2_SCRATCH2_RX_INDEX_MASK << SHUB2_SCRATCH2_RX_INDEX_SHIFT)
+#define SHUB2_SCRATCH2_CHANNEL_SHIFT                 50 /* inferred */
+#define SHUB2_SCRATCH2_CHANNEL_MASK                  0x1full
+#define SHUB2_SCRATCH2_CHANNEL_INPLACE               (SHUB2_SCRATCH2_CHANNEL_MASK << SHUB2_SCRATCH2_CHANNEL_SHIFT)
+#define SHUB2_SCRATCH2_SEQUENCE_SHIFT                42 /* inferred */
+#define SHUB2_SCRATCH2_SEQUENCE_MASK                 0xffull
+#define SHUB2_SCRATCH2_SEQUENCE_INPLACE              (SHUB2_SCRATCH2_SEQUENCE_MASK << SHUB2_SCRATCH2_SEQUENCE_SHIFT)
+#define SHUB2_SCRATCH2_STATE_SHIFT                   39 /* inferred */
+#define SHUB2_SCRATCH2_STATE_MASK                    0x7ull
+#define SHUB2_SCRATCH2_STATE_INPLACE                 (SHUB2_SCRATCH2_STATE_MASK << SHUB2_SCRATCH2_STATE_SHIFT)
+
+/*
+ * Release side of the second firmware lock; the alias 0x08 above is the take side. Whether a read of the alias takes the lock in hardware is unknown; a plain pair that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch3: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH3                               0x101d0180 /* established */
+
+/*
+ * Take side of the second firmware lock. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch3_alias: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH3_ALIAS                         0x101d0188 /* established */
+
+/*
+ * Release side of the node lock that guards SCRATCH6 and SCRATCH7. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch4: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH4                               0x101d0200 /* established */
+
+/*
+ * Take side of the node lock; a plain register that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch4_alias: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH4_ALIAS                         0x101d0208 /* established */
+
+/*
+ * Claim bits of the second firmware lock: the firmware sets a bit to claim a resource (bit 0 for the barrier, bit 7 for the console link, bit 0xf for a packet exchange). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch5: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH5                               0x101d0280 /* established */
+
+/*
+ * Shared firmware word guarded by the node lock: slice present and arrival bits, the barrier flag and a per-slice-pair field. Plain storage; names of the fields are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch6: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH6                               0x101d0300 /* established */
+#define SHUB2_SCRATCH6_PAIR1_STATE_SHIFT             50 /* inferred */
+#define SHUB2_SCRATCH6_PAIR1_STATE_MASK              0x7ull
+#define SHUB2_SCRATCH6_PAIR1_STATE_INPLACE           (SHUB2_SCRATCH6_PAIR1_STATE_MASK << SHUB2_SCRATCH6_PAIR1_STATE_SHIFT)
+#define SHUB2_SCRATCH6_PAIR0_STATE_SHIFT             47 /* inferred */
+#define SHUB2_SCRATCH6_PAIR0_STATE_MASK              0x7ull
+#define SHUB2_SCRATCH6_PAIR0_STATE_INPLACE           (SHUB2_SCRATCH6_PAIR0_STATE_MASK << SHUB2_SCRATCH6_PAIR0_STATE_SHIFT)
+#define SHUB2_SCRATCH6_BARRIER_BUSY_SHIFT            34 /* inferred */
+#define SHUB2_SCRATCH6_BARRIER_BUSY_MASK             0x1ull
+#define SHUB2_SCRATCH6_BARRIER_BUSY_INPLACE          (SHUB2_SCRATCH6_BARRIER_BUSY_MASK << SHUB2_SCRATCH6_BARRIER_BUSY_SHIFT)
+#define SHUB2_SCRATCH6_SLICE_ARRIVED_SHIFT           30 /* inferred */
+#define SHUB2_SCRATCH6_SLICE_ARRIVED_MASK            0xfull
+#define SHUB2_SCRATCH6_SLICE_ARRIVED_INPLACE         (SHUB2_SCRATCH6_SLICE_ARRIVED_MASK << SHUB2_SCRATCH6_SLICE_ARRIVED_SHIFT)
+#define SHUB2_SCRATCH6_SLICE_PRESENT_SHIFT           26 /* inferred */
+#define SHUB2_SCRATCH6_SLICE_PRESENT_MASK            0xfull
+#define SHUB2_SCRATCH6_SLICE_PRESENT_INPLACE         (SHUB2_SCRATCH6_SLICE_PRESENT_MASK << SHUB2_SCRATCH6_SLICE_PRESENT_SHIFT)
+#define SHUB2_SCRATCH6_PAL_FLAGS_SHIFT               21 /* inferred */
+#define SHUB2_SCRATCH6_PAL_FLAGS_MASK                0xfull
+#define SHUB2_SCRATCH6_PAL_FLAGS_INPLACE             (SHUB2_SCRATCH6_PAL_FLAGS_MASK << SHUB2_SCRATCH6_PAL_FLAGS_SHIFT)
+
+/*
+ * Second shared firmware word with the same lock cycle as SCRATCH6. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch7: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH7                               0x101d0380 /* established */
+
+/*
+ * Holds the address of the firmware's node-addressing table row (the low 32 bits of the row address with bit 63 set); every later node-number read loads the row through it. The firmware reads it back, so it must store all 64 bits. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* scratch24: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_SCRATCH24                              0x101d0c00 /* established */
+
+/*
+ * Which processor slices of the node are present. The firmware tests bit 0 and bit 1 for slices 0 and 1 and wants two equal non-zero reads in a row. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* fsb_symmetric_agent_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS             0x20020010 /* established */
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_1_ACTIVE_SHIFT 1 /* inferred */
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_1_ACTIVE_MASK 0x1ull
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_1_ACTIVE_INPLACE (SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_1_ACTIVE_MASK << SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_1_ACTIVE_SHIFT)
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_SHIFT 0 /* inferred */
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_MASK 0x1ull
+#define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_INPLACE (SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_MASK << SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_SHIFT)
 
 /*
  * PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones.
@@ -152,6 +964,33 @@
 #define SHUB2_PIO_WRITE_STATUS_ALIAS                 0x20070208 /* inferred */
 #define SHUB2_PIO_WRITE_STATUS_ALIAS_COUNT           4
 #define SHUB2_PIO_WRITE_STATUS_ALIAS_STRIDE          128
+
+/*
+ * V, the node-addressing selector: the PROM reads it before forming any global or TIO address and uses it unmasked as an index into a five-entry table, so it must read 0 to 4 (devices/shub/shub2.md section 1 gives the shifts for each value). Real value unknown. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* address_mode: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_ADDRESS_MODE                           0x20110000 /* established */
+
+/*
+ * Remote flash remap: the PROM writes the enable bit and a 9-bit field it takes from bits 32:24 of its argument. Meaning of the fields is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* firmware_remap: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_FIRMWARE_REMAP                         0x20110008 /* established */
+#define SHUB2_FIRMWARE_REMAP_ENABLE_SHIFT            60 /* established */
+#define SHUB2_FIRMWARE_REMAP_ENABLE_MASK             0x1ull
+#define SHUB2_FIRMWARE_REMAP_ENABLE_INPLACE          (SHUB2_FIRMWARE_REMAP_ENABLE_MASK << SHUB2_FIRMWARE_REMAP_ENABLE_SHIFT)
+#define SHUB2_FIRMWARE_REMAP_OFFSET_SHIFT            24 /* established */
+#define SHUB2_FIRMWARE_REMAP_OFFSET_MASK             0x1ffull
+#define SHUB2_FIRMWARE_REMAP_OFFSET_INPLACE          (SHUB2_FIRMWARE_REMAP_OFFSET_MASK << SHUB2_FIRMWARE_REMAP_OFFSET_SHIFT)
+
+/*
+ * The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ */
+/* processor_type: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB2_PROCESSOR_TYPE                         0x20110010 /* established */
+#define SHUB2_PROCESSOR_TYPE_CODE_SHIFT              0 /* established */
+#define SHUB2_PROCESSOR_TYPE_CODE_MASK               0x1ull
+#define SHUB2_PROCESSOR_TYPE_CODE_INPLACE            (SHUB2_PROCESSOR_TYPE_CODE_MASK << SHUB2_PROCESSOR_TYPE_CODE_SHIFT)
 
 /*
  * Block transfer engine control and status, one per engine, SHub 2 (four engines, SH2_BT_ENG_CSR_0 to 3). Unlike SHub 1 the kernel starts a transfer with one store here: busy, the mode shifted left by 24, and the length in cache lines in the low bits. The kernel reads it for busy and error; the engine's error code sits in bits 41:36 (kernel's BTE_ERR_BITS).

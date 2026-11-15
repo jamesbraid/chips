@@ -2,7 +2,7 @@
 
 # SHub 2 registers outside the I/O interface, differences from SHub 1
 
-SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips.
+SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses.
 
 Unit `shub2`, macro prefix `SHUB2`.
 Default source: Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver.
@@ -13,15 +13,79 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
+| `x_dimm_cfg` | 0x10000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_dimm_cfg` | 0x10008 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `jnr_dimm_cfg` | 0x10010 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_odt_cfg` | 0x10018 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_cfg` | 0x10020 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_dqct_cfg` | 0x10028 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_refresh_control` | 0x10030 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_odt_cfg` | 0x10048 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_cfg` | 0x10050 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_dqct_cfg` | 0x10058 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_refresh_control` | 0x10060 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `mem_red_black` | 0x10078 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `misc_mem_cfg` | 0x10080 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `pio_rq_crd_ctl` | 0x100d8 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `pi_md_rq_crd_ctl` | 0x100e0 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `pi_md_rp_crd_ctl` | 0x100e8 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_rq_crd_ctl` | 0x100f0 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_rp_crd_ctl` | 0x100f8 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `mmrbist_base` | 0x20080 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `mmrbist_ctl` | 0x20088 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_config_dqlp` | 0x30000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_locvec_dqlp` | 0x30200 | w | 64 | 8 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_privec_dqlp` | 0x30300 | w | 64 | 8 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_timer_dqlp` | 0x30400 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `amo_cfg_0` | 0x34800 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_bist_h` | 0x38000 | w | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_bist_l` | 0x38010 | w | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_bist_err_h` | 0x38020 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `x_bist_err_l` | 0x38030 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_bist_h` | 0x38800 | w | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_bist_l` | 0x38810 | w | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_bist_err_h` | 0x38820 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `y_bist_err_l` | 0x38830 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `amo_cfg_1` | 0x4b000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_config_dqrp` | 0x50000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_locvec_dqrp` | 0x50200 | w | 64 | 8 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_privec_dqrp` | 0x50300 | w | 64 | 8 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `dir_timer_dqrp` | 0x50400 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `amo_cfg_2` | 0x54800 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `amo_cfg_3` | 0x6b000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ipi_int` | 0x10000380 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc_int_config` | 0x10001480 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc_int_enable` | 0x10001500 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `event_occurred` | 0x10010000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `event_occurred_alias` | 0x10010008 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `junk_bus_time` | 0x10020000 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `junk_bus_led_data` | 0x10030000 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `asic_to_l1_data` | 0x10038000 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `asic_to_l1_status` | 0x10038080 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `l1_to_asic_data` | 0x10038100 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `l1_to_asic_status` | 0x10038180 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `rack_slot_data` | 0x10038200 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `gc_src_ctrl` | 0x10060700 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ipi_access` | 0x10060c00 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `node_id` | 0x10060f00 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `int_cmp` | 0x101b0080 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch1` | 0x101d0080 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch1_alias` | 0x101d0088 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch2` | 0x101d0100 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch3` | 0x101d0180 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch3_alias` | 0x101d0188 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch4` | 0x101d0200 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch4_alias` | 0x101d0208 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch5` | 0x101d0280 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch6` | 0x101d0300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch7` | 0x101d0380 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch24` | 0x101d0c00 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `fsb_symmetric_agent_status` | 0x20020010 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status` | 0x20070200 | r | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status_alias` | 0x20070208 | w | 64 | 4 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `address_mode` | 0x20110000 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `firmware_remap` | 0x20110008 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `processor_type` | 0x20110010 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `bt_eng_csr` | 0x30040000 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `bt_eng_src` | 0x30040080 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `bt_eng_dest` | 0x30040100 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -29,6 +93,380 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `junk_bus_led` | 0xf0000000 | w | 16 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ptc` | 0x170000000 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc` | 0x2101c0000 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+
+### Register `x_dimm_cfg`
+
+DIMM population word. One routine (0xff482c60) merges the discovered DIMM layout into the old value: the preserved bits are 38 and above and bits 7, 15, 23 and 31, so bits 37:32 are rewritten, and the same value is written to all three registers (X, Y and JNR); bits 37:36 are then set by 0xff4856b0, which reads the Y register first. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 37:36 | `clk_en` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Two clock-enable bits the firmware sets together after the initial write cleared them. |
+| 35:32 | `freq` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Memory clock code, 4 bits. |
+| 30:29 | `dimm3_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 chip-select code, 2 bits. |
+| 28 | `dimm3_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 revision flag. |
+| 27 | `dimm3_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 bank-count flag. |
+| 26:24 | `dimm3_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 22:21 | `dimm2_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 chip-select code, 2 bits. |
+| 20 | `dimm2_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 revision flag. |
+| 19 | `dimm2_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 bank-count flag. |
+| 18:16 | `dimm2_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 14:13 | `dimm1_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 chip-select code, 2 bits. |
+| 12 | `dimm1_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 revision flag. |
+| 11 | `dimm1_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 bank-count flag. |
+| 10:8 | `dimm1_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 6:5 | `dimm0_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 chip-select code, 2 bits. |
+| 4 | `dimm0_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 revision flag. |
+| 3 | `dimm0_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 bank-count flag. |
+| 2:0 | `dimm0_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+
+### Register `y_dimm_cfg`
+
+Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 37:36 | `clk_en` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Two clock-enable bits the firmware sets together after the initial write cleared them. |
+| 35:32 | `freq` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Memory clock code, 4 bits. |
+| 30:29 | `dimm3_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 chip-select code, 2 bits. |
+| 28 | `dimm3_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 revision flag. |
+| 27 | `dimm3_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 bank-count flag. |
+| 26:24 | `dimm3_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 22:21 | `dimm2_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 chip-select code, 2 bits. |
+| 20 | `dimm2_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 revision flag. |
+| 19 | `dimm2_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 bank-count flag. |
+| 18:16 | `dimm2_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 14:13 | `dimm1_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 chip-select code, 2 bits. |
+| 12 | `dimm1_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 revision flag. |
+| 11 | `dimm1_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 bank-count flag. |
+| 10:8 | `dimm1_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 6:5 | `dimm0_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 chip-select code, 2 bits. |
+| 4 | `dimm0_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 revision flag. |
+| 3 | `dimm0_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 bank-count flag. |
+| 2:0 | `dimm0_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+
+### Register `jnr_dimm_cfg`
+
+Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 37:36 | `clk_en` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Two clock-enable bits the firmware sets together after the initial write cleared them. |
+| 35:32 | `freq` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Memory clock code, 4 bits. |
+| 30:29 | `dimm3_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 chip-select code, 2 bits. |
+| 28 | `dimm3_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 revision flag. |
+| 27 | `dimm3_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 bank-count flag. |
+| 26:24 | `dimm3_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 3 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 22:21 | `dimm2_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 chip-select code, 2 bits. |
+| 20 | `dimm2_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 revision flag. |
+| 19 | `dimm2_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 bank-count flag. |
+| 18:16 | `dimm2_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 2 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 14:13 | `dimm1_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 chip-select code, 2 bits. |
+| 12 | `dimm1_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 revision flag. |
+| 11 | `dimm1_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 bank-count flag. |
+| 10:8 | `dimm1_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 1 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+| 6:5 | `dimm0_cs` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 chip-select code, 2 bits. |
+| 4 | `dimm0_rev` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 revision flag. |
+| 3 | `dimm0_2bk` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 bank-count flag. |
+| 2:0 | `dimm0_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | DIMM 0 size code, 3 bits (the firmware tests 7 in the size fields, so 7 is probably an empty slot; inferred). |
+
+### Register `x_odt_cfg`
+
+On-die-termination configuration. Only the one field below is written by the memory bring-up read; it is copied from the Y register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:20 | `bits_23_20` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Four bits the firmware sets to 0xf when only DIMM 0 of the three is populated (DIMM 0 size not 7, DIMMs 1 to 3 size 7); the other bits are preserved. Name unknown. |
+
+### Register `x_cfg`
+
+Memory controller timing word. The firmware writes the same value to X and Y: 0x4856_5320_3324_110e, built from the old Y value by clearing bit 0, setting bit 1, depositing 3 at bits 7:2, replacing bits 39:8, depositing 3, 5, 6 at bits 43:40, 47:44, 51:48, setting bits 52 and 54, clearing bit 53 (set instead when the DIMM record's word at offset 8 equals 4), depositing 0x10 at bit 55 (width 7) and setting bit 62 (sites 0xff483016 to 0xff4831a0). Only bits 39:8 have a name here; the other positions are as written. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 39:8 | `ta_dlys` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Timing delays: the firmware replaces the whole field with 0x2033241; the name is the PROM's. |
+| 0 | `bit_0` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Replaced by a one-bit argument in a separate routine that rewrites both registers; the PROM name for bit 0 is a serial-mode flag. |
+
+### Register `x_dqct_cfg`
+
+Read and write select delays. The firmware keeps bits 63:25 and sets bits 24:0 to 0x254215 (fields below). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 24:20 | `bits_24_20` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 19:16 | `bits_19_16` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 15:12 | `bits_15_12` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 11:8 | `bits_11_8` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 7:4 | `bits_7_4` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 3:0 | `bits_3_0` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+
+### Register `x_refresh_control`
+
+Refresh control. The firmware reads the Y register, replaces bits 27:8 (and clears bits 27:24 at site 0xff485d0c), merges the enable byte and writes the result to both registers. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 22:17 | `hold` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Six-bit hold count from the DIMM data. |
+| 16:8 | `interval` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Refresh interval, 9 bits, from the DIMM data. |
+| 7:0 | `enable` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable bits; the firmware sets the field from a mask it builds. |
+
+### Register `y_odt_cfg`
+
+Same layout as X_ODT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:20 | `bits_23_20` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Four bits the firmware sets to 0xf when only DIMM 0 of the three is populated (DIMM 0 size not 7, DIMMs 1 to 3 size 7); the other bits are preserved. Name unknown. |
+
+### Register `y_cfg`
+
+Same layout as X_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 39:8 | `ta_dlys` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Timing delays: the firmware replaces the whole field with 0x2033241; the name is the PROM's. |
+| 0 | `bit_0` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Replaced by a one-bit argument in a separate routine that rewrites both registers; the PROM name for bit 0 is a serial-mode flag. |
+
+### Register `y_dqct_cfg`
+
+Same layout and value as X_DQCT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 24:20 | `bits_24_20` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 19:16 | `bits_19_16` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 15:12 | `bits_15_12` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 11:8 | `bits_11_8` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 7:4 | `bits_7_4` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+| 3:0 | `bits_3_0` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Delay or select field; written 5, 1, 2, 4, 5, 2 in this order from the low field up. Name unknown. |
+
+### Register `y_refresh_control`
+
+Same layout as X_REFRESH_CONTROL. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 22:17 | `hold` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Six-bit hold count from the DIMM data. |
+| 16:8 | `interval` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Refresh interval, 9 bits, from the DIMM data. |
+| 7:0 | `enable` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable bits; the firmware sets the field from a mask it builds. |
+
+### Register `mem_red_black`
+
+Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0 and 51:16); the code does not split the value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `misc_mem_cfg`
+
+Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 59 | `bit_59` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared by a size test. |
+| 58 | `bit_58` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared by a size test. |
+
+### Register `pio_rq_crd_ctl`
+
+PIO request credit control. The first-stage firmware writes 2; the node set-up table writes 0xf9_0000_0000 to register 0xd8, a different register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `pi_md_rq_crd_ctl`
+
+Credit depth register; the firmware writes 0xc. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `pi_md_rp_crd_ctl`
+
+Credit depth register; the firmware writes 0x4. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `xn_md_rq_crd_ctl`
+
+Credit depth register; the firmware writes 0xb. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `xn_md_rp_crd_ctl`
+
+Credit depth register; the firmware writes 0x3. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `mmrbist_base`
+
+Start address of a memory test block. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `mmrbist_ctl`
+
+Memory test control: the early path writes 0x11_0000_0010 and polls bit 40 clear (for up to 2,000,000 microseconds). The other fields of the PROM name are not read in code here. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `in_progress` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Polled until clear after a command write. |
+
+### Register `dir_config_dqlp`
+
+Directory configuration. The firmware reads it and merges: bits 2:0 from the node count, clears bits 11 and 10 by size tests, sets bit 3 and bit 15. The DQRP twin, 0x5_0000, receives the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 15 | `bit_15` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware. |
+| 11 | `bit_11` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared by a size test. |
+| 10 | `bit_10` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared by a size test. |
+| 3 | `bit_3` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware. |
+| 2:0 | `sys_size` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | System size class derived from a 16-bit count the routine extracts from bits 16:1 of its argument. |
+
+### Register `dir_locvec_dqlp`
+
+Eight local-vector registers 0x10 apart, all set to ones at initialisation. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+Array of 8 registers, stride 16.
+
+### Register `dir_privec_dqlp`
+
+Eight registers 0x10 apart written with constants in order: 0x4bfff, 0xc96f25b, 0xfffffff, 0x96ffff, 0, 0, 0x4803f, 0x48000. Not all ones, so the writes do not simply open access to every node; the field layout is not read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+Array of 8 registers, stride 16.
+
+### Register `dir_timer_dqlp`
+
+Written once with 0x1000 (bit 12). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `amo_cfg_0`
+
+AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:2 | `bits_3_2` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware; the PROM name suggests the two little-endian enables. |
+
+### Register `x_bist_h`
+
+Memory test pattern register, high half; written with the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 43 | `arm` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set on the high registers to start that port. |
+| 41 | `bit_41` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 41. |
+| 40 | `bit_40` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 40. |
+| 39:0 | `pattern` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Test data pattern from the test description. |
+
+### Register `x_bist_l`
+
+Memory test pattern register, low half; same value without the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 41 | `bit_41` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 41. |
+| 40 | `bit_40` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 40. |
+| 39:0 | `pattern` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Test data pattern from the test description. |
+
+### Register `x_bist_err_h`
+
+Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `val` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set when the port recorded an error; the firmware reads the pattern only then. |
+| 39:0 | `pat` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pattern bits the port saw; 40 bits. |
+
+### Register `x_bist_err_l`
+
+Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `val` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set when the port recorded an error; the firmware reads the pattern only then. |
+| 39:0 | `pat` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pattern bits the port saw; 40 bits. |
+
+### Register `y_bist_h`
+
+Y-side twin of X_BIST_H. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 43 | `arm` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set on the high registers to start that port. |
+| 41 | `bit_41` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 41. |
+| 40 | `bit_40` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 40. |
+| 39:0 | `pattern` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Test data pattern from the test description. |
+
+### Register `y_bist_l`
+
+Y-side twin of X_BIST_L. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 41 | `bit_41` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 41. |
+| 40 | `bit_40` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | One byte of the test description, in bit 40. |
+| 39:0 | `pattern` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Test data pattern from the test description. |
+
+### Register `y_bist_err_h`
+
+Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `val` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set when the port recorded an error; the firmware reads the pattern only then. |
+| 39:0 | `pat` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pattern bits the port saw; 40 bits. |
+
+### Register `y_bist_err_l`
+
+Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).
+
+Array of 4 registers, stride 65536.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `val` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set when the port recorded an error; the firmware reads the pattern only then. |
+| 39:0 | `pat` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pattern bits the port saw; 40 bits. |
+
+### Register `amo_cfg_1`
+
+AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:2 | `bits_3_2` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware; the PROM name suggests the two little-endian enables. |
+
+### Register `dir_config_dqrp`
+
+Twin of DIR_CONFIG_DQLP; the firmware writes the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `dir_locvec_dqrp`
+
+Eight registers 0x10 apart, all set to ones. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+Array of 8 registers, stride 16.
+
+### Register `dir_privec_dqrp`
+
+Twin of DIR_PRIVEC_DQLP, same values. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+Array of 8 registers, stride 16.
+
+### Register `dir_timer_dqrp`
+
+Twin of DIR_TIMER_DQLP. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+### Register `amo_cfg_2`
+
+AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:2 | `bits_3_2` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware; the PROM name suggests the two little-endian enables. |
+
+### Register `amo_cfg_3`
+
+AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:2 | `bits_3_2` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware; the PROM name suggests the two little-endian enables. |
 
 ### Register `ipi_int`
 
@@ -90,11 +528,79 @@ Pending interrupt events for the node (SHub interrupt event occurred). The kerne
 
 Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.
 
+### Register `junk_bus_time`
+
+Junk-bus access timing, written once by the first-stage firmware with 0xffff_ffff_0003. Meaning of the value is inferred from the PROM name; the hardware accepts the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `junk_bus_led_data`
+
+Four registers, one per slice, 0x80 apart, that the firmware reads only to remember the progress code it last wrote while it waits on a lock. Any value is accepted. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+Array of 4 registers, stride 128.
+
+### Register `asic_to_l1_data`
+
+L1 UART transmit data: eight packet bytes per write, padded with 0x7e after the frame. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `asic_to_l1_status`
+
+L1 UART transmit status: bit 0 set means busy; the firmware polls it clear before each write, 10 microseconds apart, for up to 5,000,000 microseconds. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `busy` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set while the previous word is still being sent. |
+
+### Register `l1_to_asic_data`
+
+L1 UART receive data: eight bytes per word, the first byte in bits 7:0. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `l1_to_asic_status`
+
+L1 UART receive status: bit 0 set means a word is waiting; the firmware writes 0 to release it. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `data_ready` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | A received word is waiting. |
+
+### Register `rack_slot_data`
+
+Rack and slot data provided by the L1 controller; the firmware reads it only on paths this page does not reach on a normal boot. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:16 | `byte` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Copied to an output word. |
+| 15:4 | `number` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Value plus one is stored. |
+| 3:1 | `code` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Index into the table 7, 10, 13, 20, 23, 30, 33, 36. |
+| 0 | `bit0` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Copied to an output word. |
+
+### Register `gc_src_ctrl`
+
+Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 33:32 | `source_sel` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The firmware writes 1. |
+| 13:4 | `max_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The firmware writes 4 and reads it back for every time conversion. |
+| 0 | `enable_counter` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set to start the counter. |
+
 ### Register `ipi_access`
 
 Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown.
 
 Array of 4 registers, stride 128.
+
+### Register `node_id`
+
+The node's identification word. Read by the firmware to find its own node number (bits 45:32) and the sharing parameters; written during the interconnect phase. Linux v5.3 does not define it for SHub 2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 55 | `range_check` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the firmware in the interconnect phase. |
+| 54 | `sharers_1k` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Clear selects a sharing domain of 512 nodes, set 2048. |
+| 53:48 | `nodes_per_bit` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Nodes per sharing-vector bit. |
+| 47:46 | `sharing_mode` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Sharing mode, set from the node count. |
+| 45:32 | `node_id` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | This node's number. |
+| 31:28 | `revision` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Chip revision, returned by a method of the node table and stored; no test of its value found. |
 
 ### Register `int_cmp`
 
@@ -105,6 +611,76 @@ Array of 3 registers, stride 128.
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 54:0 | `compare` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+
+### Register `scratch1`
+
+Node election word: each slice writes slice + 1 through the alias and reads it back; the winner is the one that reads its own value. Plain storage satisfies the code. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch1_alias`
+
+Write path onto the SCRATCH1 word; the relation is inferred from the use. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch2`
+
+Firmware mailbox word for the L1 console link. Plain storage satisfies the code; the fields are how the 10.54 firmware uses it, names are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `clear_bit` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared once by the firmware's handshake. |
+| 62:58 | `rx_index` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Index of the next byte to take from the current 8-byte receive word; 7 after reset of the link. |
+| 54:50 | `channel` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Index of the channel with a pending packet. |
+| 49:42 | `sequence` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Receive sequence byte. |
+| 41:39 | `state` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Mailbox state. |
+
+### Register `scratch3`
+
+Release side of the second firmware lock; the alias 0x08 above is the take side. Whether a read of the alias takes the lock in hardware is unknown; a plain pair that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch3_alias`
+
+Take side of the second firmware lock. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch4`
+
+Release side of the node lock that guards SCRATCH6 and SCRATCH7. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch4_alias`
+
+Take side of the node lock; a plain register that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch5`
+
+Claim bits of the second firmware lock: the firmware sets a bit to claim a resource (bit 0 for the barrier, bit 7 for the console link, bit 0xf for a packet exchange). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch6`
+
+Shared firmware word guarded by the node lock: slice present and arrival bits, the barrier flag and a per-slice-pair field. Plain storage; names of the fields are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 52:50 | `pair1_state` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Three-bit field for odd slices. |
+| 49:47 | `pair0_state` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Three-bit field for even slices, set from a PAL-supplied value. |
+| 34 | `barrier_busy` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Barrier in progress. |
+| 33:30 | `slice_arrived` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n has reached the barrier. |
+| 29:26 | `slice_present` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n has started. |
+| 24:21 | `pal_flags` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged. |
+
+### Register `scratch7`
+
+Second shared firmware word with the same lock cycle as SCRATCH6. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `scratch24`
+
+Holds the address of the firmware's node-addressing table row (the low 32 bits of the row address with bit 63 set); every later node-number read loads the row through it. The firmware reads it back, so it must store all 64 bits. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `fsb_symmetric_agent_status`
+
+Which processor slices of the node are present. The firmware tests bit 0 and bit 1 for slices 0 and 1 and wants two equal non-zero reads in a row. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 1 | `cpu_1_active` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice 1 present (meaning from the PROM name). |
+| 0 | `cpu_0_active` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice 0 present (meaning from the PROM name). |
 
 ### Register `pio_write_status`
 
@@ -122,6 +698,27 @@ Array of 4 registers, stride 128.
 Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.
 
 Array of 4 registers, stride 128.
+
+### Register `address_mode`
+
+V, the node-addressing selector: the PROM reads it before forming any global or TIO address and uses it unmasked as an index into a five-entry table, so it must read 0 to 4 (devices/shub/shub2.md section 1 gives the shifts for each value). Real value unknown. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+### Register `firmware_remap`
+
+Remote flash remap: the PROM writes the enable bit and a 9-bit field it takes from bits 32:24 of its argument. Meaning of the fields is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 60 | `enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set by the PROM's write. |
+| 32:24 | `offset` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Bits 32:24 of the remap argument; meaning inferred from the PROM name. |
+
+### Register `processor_type`
+
+The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `code` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Bit clear selects argument bits 2:1, bit set bits 3:2. |
 
 ### Register `bt_eng_csr`
 

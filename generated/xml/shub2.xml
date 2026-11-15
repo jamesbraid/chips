@@ -1,7 +1,239 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source -->
 <genxml unit="shub2" prefix="SHUB2" title="SHub 2 registers outside the I/O interface, differences from SHub 1" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver">
-  <doc>SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips.</doc>
+  <doc>SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses.</doc>
+  <struct name="X_DIMM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10000" access="rw" reset="unknown">
+    <doc>DIMM population word. One routine (0xff482c60) merges the discovered DIMM layout into the old value: the preserved bits are 38 and above and bits 7, 15, 23 and 31, so bits 37:32 are rewritten, and the same value is written to all three registers (X, Y and JNR); bits 37:36 are then set by 0xff4856b0, which reads the Y register first. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="clk_en" start="36" size="2" type="uint" grade="inferred"/>
+    <field name="freq" start="32" size="4" type="uint" grade="inferred"/>
+    <field name="dimm3_cs" start="29" size="2" type="uint" grade="inferred"/>
+    <field name="dimm3_rev" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_2bk" start="27" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_size" start="24" size="3" type="uint" grade="inferred"/>
+    <field name="dimm2_cs" start="21" size="2" type="uint" grade="inferred"/>
+    <field name="dimm2_rev" start="20" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_2bk" start="19" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_size" start="16" size="3" type="uint" grade="inferred"/>
+    <field name="dimm1_cs" start="13" size="2" type="uint" grade="inferred"/>
+    <field name="dimm1_rev" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_2bk" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_size" start="8" size="3" type="uint" grade="inferred"/>
+    <field name="dimm0_cs" start="5" size="2" type="uint" grade="inferred"/>
+    <field name="dimm0_rev" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_2bk" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_size" start="0" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_DIMM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10008" access="rw" reset="unknown">
+    <doc>Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="clk_en" start="36" size="2" type="uint" grade="inferred"/>
+    <field name="freq" start="32" size="4" type="uint" grade="inferred"/>
+    <field name="dimm3_cs" start="29" size="2" type="uint" grade="inferred"/>
+    <field name="dimm3_rev" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_2bk" start="27" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_size" start="24" size="3" type="uint" grade="inferred"/>
+    <field name="dimm2_cs" start="21" size="2" type="uint" grade="inferred"/>
+    <field name="dimm2_rev" start="20" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_2bk" start="19" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_size" start="16" size="3" type="uint" grade="inferred"/>
+    <field name="dimm1_cs" start="13" size="2" type="uint" grade="inferred"/>
+    <field name="dimm1_rev" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_2bk" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_size" start="8" size="3" type="uint" grade="inferred"/>
+    <field name="dimm0_cs" start="5" size="2" type="uint" grade="inferred"/>
+    <field name="dimm0_rev" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_2bk" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_size" start="0" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="JNR_DIMM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010" access="rw" reset="unknown">
+    <doc>Same layout and value as X_DIMM_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="clk_en" start="36" size="2" type="uint" grade="inferred"/>
+    <field name="freq" start="32" size="4" type="uint" grade="inferred"/>
+    <field name="dimm3_cs" start="29" size="2" type="uint" grade="inferred"/>
+    <field name="dimm3_rev" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_2bk" start="27" size="1" type="uint" grade="inferred"/>
+    <field name="dimm3_size" start="24" size="3" type="uint" grade="inferred"/>
+    <field name="dimm2_cs" start="21" size="2" type="uint" grade="inferred"/>
+    <field name="dimm2_rev" start="20" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_2bk" start="19" size="1" type="uint" grade="inferred"/>
+    <field name="dimm2_size" start="16" size="3" type="uint" grade="inferred"/>
+    <field name="dimm1_cs" start="13" size="2" type="uint" grade="inferred"/>
+    <field name="dimm1_rev" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_2bk" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="dimm1_size" start="8" size="3" type="uint" grade="inferred"/>
+    <field name="dimm0_cs" start="5" size="2" type="uint" grade="inferred"/>
+    <field name="dimm0_rev" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_2bk" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="dimm0_size" start="0" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_ODT_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10018" access="rw" reset="unknown">
+    <doc>On-die-termination configuration. Only the one field below is written by the memory bring-up read; it is copied from the Y register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_23_20" start="20" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10020" access="rw" reset="unknown">
+    <doc>Memory controller timing word. The firmware writes the same value to X and Y: 0x4856_5320_3324_110e, built from the old Y value by clearing bit 0, setting bit 1, depositing 3 at bits 7:2, replacing bits 39:8, depositing 3, 5, 6 at bits 43:40, 47:44, 51:48, setting bits 52 and 54, clearing bit 53 (set instead when the DIMM record's word at offset 8 equals 4), depositing 0x10 at bit 55 (width 7) and setting bit 62 (sites 0xff483016 to 0xff4831a0). Only bits 39:8 have a name here; the other positions are as written. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="ta_dlys" start="8" size="32" type="uint" grade="inferred"/>
+    <field name="bit_0" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_DQCT_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10028" access="rw" reset="unknown">
+    <doc>Read and write select delays. The firmware keeps bits 63:25 and sets bits 24:0 to 0x254215 (fields below). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_24_20" start="20" size="5" type="uint" grade="inferred"/>
+    <field name="bits_19_16" start="16" size="4" type="uint" grade="inferred"/>
+    <field name="bits_15_12" start="12" size="4" type="uint" grade="inferred"/>
+    <field name="bits_11_8" start="8" size="4" type="uint" grade="inferred"/>
+    <field name="bits_7_4" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="bits_3_0" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_REFRESH_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10030" access="rw" reset="unknown">
+    <doc>Refresh control. The firmware reads the Y register, replaces bits 27:8 (and clears bits 27:24 at site 0xff485d0c), merges the enable byte and writes the result to both registers. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="hold" start="17" size="6" type="uint" grade="inferred"/>
+    <field name="interval" start="8" size="9" type="uint" grade="inferred"/>
+    <field name="enable" start="0" size="8" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_ODT_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10048" access="rw" reset="unknown">
+    <doc>Same layout as X_ODT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_23_20" start="20" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10050" access="rw" reset="unknown">
+    <doc>Same layout as X_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="ta_dlys" start="8" size="32" type="uint" grade="inferred"/>
+    <field name="bit_0" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_DQCT_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10058" access="rw" reset="unknown">
+    <doc>Same layout and value as X_DQCT_CFG. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_24_20" start="20" size="5" type="uint" grade="inferred"/>
+    <field name="bits_19_16" start="16" size="4" type="uint" grade="inferred"/>
+    <field name="bits_15_12" start="12" size="4" type="uint" grade="inferred"/>
+    <field name="bits_11_8" start="8" size="4" type="uint" grade="inferred"/>
+    <field name="bits_7_4" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="bits_3_0" start="0" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_REFRESH_CONTROL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060" access="rw" reset="unknown">
+    <doc>Same layout as X_REFRESH_CONTROL. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="hold" start="17" size="6" type="uint" grade="inferred"/>
+    <field name="interval" start="8" size="9" type="uint" grade="inferred"/>
+    <field name="enable" start="0" size="8" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="MEM_RED_BLACK" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10078" access="w" reset="unknown">
+    <doc>Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0 and 51:16); the code does not split the value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="MISC_MEM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10080" access="rw" reset="unknown">
+    <doc>Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bit_59" start="59" size="1" type="uint" grade="inferred"/>
+    <field name="bit_58" start="58" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="PIO_RQ_CRD_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x100d8" access="rw" reset="unknown">
+    <doc>PIO request credit control. The first-stage firmware writes 2; the node set-up table writes 0xf9_0000_0000 to register 0xd8, a different register. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="PI_MD_RQ_CRD_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x100e0" access="w" reset="unknown">
+    <doc>Credit depth register; the firmware writes 0xc. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="PI_MD_RP_CRD_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x100e8" access="w" reset="unknown">
+    <doc>Credit depth register; the firmware writes 0x4. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="XN_MD_RQ_CRD_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x100f0" access="w" reset="unknown">
+    <doc>Credit depth register; the firmware writes 0xb. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="XN_MD_RP_CRD_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x100f8" access="w" reset="unknown">
+    <doc>Credit depth register; the firmware writes 0x3. The PROM name gives a 6-bit depth field. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="MMRBIST_BASE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20080" access="w" reset="unknown">
+    <doc>Start address of a memory test block. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="MMRBIST_CTL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20088" access="rw" reset="unknown">
+    <doc>Memory test control: the early path writes 0x11_0000_0010 and polls bit 40 clear (for up to 2,000,000 microseconds). The other fields of the PROM name are not read in code here. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="in_progress" start="40" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="DIR_CONFIG_DQLP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30000" access="rw" reset="unknown">
+    <doc>Directory configuration. The firmware reads it and merges: bits 2:0 from the node count, clears bits 11 and 10 by size tests, sets bit 3 and bit 15. The DQRP twin, 0x5_0000, receives the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bit_15" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="bit_11" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="bit_10" start="10" size="1" type="uint" grade="inferred"/>
+    <field name="bit_3" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="sys_size" start="0" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="DIR_LOCVEC_DQLP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30200" access="w" count="8" stride="16" reset="unknown">
+    <doc>Eight local-vector registers 0x10 apart, all set to ones at initialisation. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="DIR_PRIVEC_DQLP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30300" access="w" count="8" stride="16" reset="unknown">
+    <doc>Eight registers 0x10 apart written with constants in order: 0x4bfff, 0xc96f25b, 0xfffffff, 0x96ffff, 0, 0, 0x4803f, 0x48000. Not all ones, so the writes do not simply open access to every node; the field layout is not read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="DIR_TIMER_DQLP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30400" access="w" reset="unknown">
+    <doc>Written once with 0x1000 (bit 12). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="AMO_CFG_0" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x34800" access="rw" reset="unknown">
+    <doc>AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_3_2" start="2" size="2" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_BIST_H" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38000" access="w" count="4" stride="65536" reset="unknown">
+    <doc>Memory test pattern register, high half; written with the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="arm" start="43" size="1" type="uint" grade="inferred"/>
+    <field name="bit_41" start="41" size="1" type="uint" grade="inferred"/>
+    <field name="bit_40" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pattern" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_BIST_L" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38010" access="w" count="4" stride="65536" reset="unknown">
+    <doc>Memory test pattern register, low half; same value without the arm bit. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="bit_41" start="41" size="1" type="uint" grade="inferred"/>
+    <field name="bit_40" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pattern" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_BIST_ERR_H" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38020" access="r" count="4" stride="65536" reset="unknown">
+    <doc>Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="val" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pat" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="X_BIST_ERR_L" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38030" access="r" count="4" stride="65536" reset="unknown">
+    <doc>Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="val" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pat" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_BIST_H" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38800" access="w" count="4" stride="65536" reset="unknown">
+    <doc>Y-side twin of X_BIST_H. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="arm" start="43" size="1" type="uint" grade="inferred"/>
+    <field name="bit_41" start="41" size="1" type="uint" grade="inferred"/>
+    <field name="bit_40" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pattern" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_BIST_L" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38810" access="w" count="4" stride="65536" reset="unknown">
+    <doc>Y-side twin of X_BIST_L. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="bit_41" start="41" size="1" type="uint" grade="inferred"/>
+    <field name="bit_40" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pattern" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_BIST_ERR_H" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38820" access="r" count="4" stride="65536" reset="unknown">
+    <doc>Memory test error register, high half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="val" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pat" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="Y_BIST_ERR_L" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x38830" access="r" count="4" stride="65536" reset="unknown">
+    <doc>Memory test error register, low half, read after a failure; reads 0 on a pass. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value. Four ports 0x1_0000 apart (offsets 0x3_8xxx, 0x4_8xxx, 0x5_8xxx, 0x6_8xxx).</doc>
+    <field name="val" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="pat" start="0" size="40" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="AMO_CFG_1" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x4b000" access="rw" reset="unknown">
+    <doc>AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_3_2" start="2" size="2" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="DIR_CONFIG_DQRP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x50000" access="rw" reset="unknown">
+    <doc>Twin of DIR_CONFIG_DQLP; the firmware writes the same value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="DIR_LOCVEC_DQRP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x50200" access="w" count="8" stride="16" reset="unknown">
+    <doc>Eight registers 0x10 apart, all set to ones. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="DIR_PRIVEC_DQRP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x50300" access="w" count="8" stride="16" reset="unknown">
+    <doc>Twin of DIR_PRIVEC_DQLP, same values. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="DIR_TIMER_DQRP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x50400" access="w" reset="unknown">
+    <doc>Twin of DIR_TIMER_DQLP. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+  </struct>
+  <struct name="AMO_CFG_2" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x54800" access="rw" reset="unknown">
+    <doc>AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_3_2" start="2" size="2" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="AMO_CFG_3" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x6b000" access="rw" reset="unknown">
+    <doc>AMO cache configuration: the firmware reads it and sets bits 3:2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <field name="bits_3_2" start="2" size="2" type="uint" grade="inferred"/>
+  </struct>
   <struct name="IPI_INT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10000380" access="w" reset="unknown">
     <doc>Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.</doc>
     <field name="send" start="63" size="1" type="uint" grade="established"/>
@@ -41,12 +273,103 @@
   <struct name="EVENT_OCCURRED_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010008" access="w" reset="unknown">
     <doc>Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.</doc>
   </struct>
+  <struct name="JUNK_BUS_TIME" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10020000" access="w" reset="unknown">
+    <doc>Junk-bus access timing, written once by the first-stage firmware with 0xffff_ffff_0003. Meaning of the value is inferred from the PROM name; the hardware accepts the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="JUNK_BUS_LED_DATA" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10030000" access="r" count="4" stride="128" reset="unknown">
+    <doc>Four registers, one per slice, 0x80 apart, that the firmware reads only to remember the progress code it last wrote while it waits on a lock. Any value is accepted. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="ASIC_TO_L1_DATA" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10038000" access="w" reset="unknown">
+    <doc>L1 UART transmit data: eight packet bytes per write, padded with 0x7e after the frame. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="ASIC_TO_L1_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10038080" access="r" reset="unknown">
+    <doc>L1 UART transmit status: bit 0 set means busy; the firmware polls it clear before each write, 10 microseconds apart, for up to 5,000,000 microseconds. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="busy" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="L1_TO_ASIC_DATA" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10038100" access="r" reset="unknown">
+    <doc>L1 UART receive data: eight bytes per word, the first byte in bits 7:0. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="L1_TO_ASIC_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10038180" access="rw" reset="unknown">
+    <doc>L1 UART receive status: bit 0 set means a word is waiting; the firmware writes 0 to release it. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="data_ready" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="RACK_SLOT_DATA" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10038200" access="r" reset="unknown">
+    <doc>Rack and slot data provided by the L1 controller; the firmware reads it only on paths this page does not reach on a normal boot. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="byte" start="16" size="8" type="uint" grade="inferred"/>
+    <field name="number" start="4" size="12" type="uint" grade="inferred"/>
+    <field name="code" start="1" size="3" type="uint" grade="inferred"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="GC_SRC_CTRL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060700" access="rw" reset="unknown">
+    <doc>Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="source_sel" start="32" size="2" type="uint" grade="established"/>
+    <field name="max_count" start="4" size="10" type="uint" grade="established"/>
+    <field name="enable_counter" start="0" size="1" type="uint" grade="established"/>
+  </struct>
   <struct name="IPI_ACCESS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060c00" access="rw" count="4" stride="128" reset="unknown">
     <doc>Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown.</doc>
+  </struct>
+  <struct name="NODE_ID" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060f00" access="rw" reset="unknown">
+    <doc>The node's identification word. Read by the firmware to find its own node number (bits 45:32) and the sharing parameters; written during the interconnect phase. Linux v5.3 does not define it for SHub 2. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="range_check" start="55" size="1" type="uint" grade="established"/>
+    <field name="sharers_1k" start="54" size="1" type="uint" grade="established"/>
+    <field name="nodes_per_bit" start="48" size="6" type="uint" grade="established"/>
+    <field name="sharing_mode" start="46" size="2" type="uint" grade="established"/>
+    <field name="node_id" start="32" size="14" type="uint" grade="established"/>
+    <field name="revision" start="28" size="4" type="uint" grade="established"/>
   </struct>
   <struct name="INT_CMP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101b0080" access="rw" count="3" stride="128" reset="0x0">
     <doc>Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).</doc>
     <field name="compare" start="0" size="55" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH1" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0080" access="rw" reset="unknown">
+    <doc>Node election word: each slice writes slice + 1 through the alias and reads it back; the winner is the one that reads its own value. Plain storage satisfies the code. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH1_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0088" access="w" reset="unknown">
+    <doc>Write path onto the SCRATCH1 word; the relation is inferred from the use. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH2" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0100" access="rw" reset="unknown">
+    <doc>Firmware mailbox word for the L1 console link. Plain storage satisfies the code; the fields are how the 10.54 firmware uses it, names are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="clear_bit" start="63" size="1" type="uint" grade="inferred"/>
+    <field name="rx_index" start="58" size="5" type="uint" grade="inferred"/>
+    <field name="channel" start="50" size="5" type="uint" grade="inferred"/>
+    <field name="sequence" start="42" size="8" type="uint" grade="inferred"/>
+    <field name="state" start="39" size="3" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SCRATCH3" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0180" access="w" reset="unknown">
+    <doc>Release side of the second firmware lock; the alias 0x08 above is the take side. Whether a read of the alias takes the lock in hardware is unknown; a plain pair that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH3_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0188" access="r" reset="unknown">
+    <doc>Take side of the second firmware lock. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH4" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0200" access="w" reset="unknown">
+    <doc>Release side of the node lock that guards SCRATCH6 and SCRATCH7. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH4_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0208" access="r" reset="unknown">
+    <doc>Take side of the node lock; a plain register that always reads 0 satisfies every access. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH5" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0280" access="rw" reset="unknown">
+    <doc>Claim bits of the second firmware lock: the firmware sets a bit to claim a resource (bit 0 for the barrier, bit 7 for the console link, bit 0xf for a packet exchange). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH6" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0300" access="rw" reset="unknown">
+    <doc>Shared firmware word guarded by the node lock: slice present and arrival bits, the barrier flag and a per-slice-pair field. Plain storage; names of the fields are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="pair1_state" start="50" size="3" type="uint" grade="inferred"/>
+    <field name="pair0_state" start="47" size="3" type="uint" grade="inferred"/>
+    <field name="barrier_busy" start="34" size="1" type="uint" grade="inferred"/>
+    <field name="slice_arrived" start="30" size="4" type="uint" grade="inferred"/>
+    <field name="slice_present" start="26" size="4" type="uint" grade="inferred"/>
+    <field name="pal_flags" start="21" size="4" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="SCRATCH7" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0380" access="rw" reset="unknown">
+    <doc>Second shared firmware word with the same lock cycle as SCRATCH6. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="SCRATCH24" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x101d0c00" access="rw" reset="unknown">
+    <doc>Holds the address of the firmware's node-addressing table row (the low 32 bits of the row address with bit 63 set); every later node-number read loads the row through it. The firmware reads it back, so it must store all 64 bits. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="FSB_SYMMETRIC_AGENT_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20020010" access="r" reset="unknown">
+    <doc>Which processor slices of the node are present. The firmware tests bit 0 and bit 1 for slices 0 and 1 and wants two equal non-zero reads in a row. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="cpu_1_active" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="cpu_0_active" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="PIO_WRITE_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070200" access="r" count="4" stride="128" reset="unknown">
     <doc>PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones.</doc>
@@ -55,6 +378,18 @@
   </struct>
   <struct name="PIO_WRITE_STATUS_ALIAS" size="8" grade="inferred" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070208" access="w" count="4" stride="128" reset="unknown">
     <doc>Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.</doc>
+  </struct>
+  <struct name="ADDRESS_MODE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20110000" access="r" reset="unknown">
+    <doc>V, the node-addressing selector: the PROM reads it before forming any global or TIO address and uses it unmasked as an index into a five-entry table, so it must read 0 to 4 (devices/shub/shub2.md section 1 gives the shifts for each value). Real value unknown. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+  </struct>
+  <struct name="FIRMWARE_REMAP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20110008" access="w" reset="unknown">
+    <doc>Remote flash remap: the PROM writes the enable bit and a 9-bit field it takes from bits 32:24 of its argument. Meaning of the fields is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="enable" start="60" size="1" type="uint" grade="established"/>
+    <field name="offset" start="24" size="9" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROCESSOR_TYPE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20110010" access="r" reset="unknown">
+    <doc>The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="code" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="BT_ENG_CSR" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040000" access="rw" count="4" stride="65536" reset="unknown">
     <doc>Block transfer engine control and status, one per engine, SHub 2 (four engines, SH2_BT_ENG_CSR_0 to 3). Unlike SHub 1 the kernel starts a transfer with one store here: busy, the mode shifted left by 24, and the length in cache lines in the low bits. The kernel reads it for busy and error; the engine's error code sits in bits 41:36 (kernel's BTE_ERR_BITS).</doc>
