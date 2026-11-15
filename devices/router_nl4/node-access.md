@@ -33,7 +33,7 @@ code (below).
    lock on node %d". Whether it then carries on was not determined (the call is to the PROM's message routine, which is
    a panic in other uses), and the lock's own implementation was not read.
 2. Store 0 to `VEC_STATUS` (clears `STATUS_VALID`), read it back; if bit 63 is still set, release the lock and fail.
-3. Poll `VEC_STATUS` until bit 63 reads clear, at most 1,024 reads. If it never clears the routine waits
+3. Poll `VEC_PARMS` until its `BUSY` bit (63) reads clear, at most 1,024 reads. If it never clears the routine waits
    (100 units, then growing by a factor of 4) and tries again, at most 8 times, then fails.
 4. Store `0xdeadbeefdeadbeef` to `VEC_RDDATA` (poison, so a stale reply is recognisable).
 5. Store the route (all nibbles but the first, see below) to `VEC_ROUTE`.

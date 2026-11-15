@@ -36,9 +36,12 @@ flags). 753 registers parse with no gap, and the first register's 25 fields end 
 Names come from a string pool in the same image.
 
 Flag values carried by the fields (inferred from the fields that carry each): 0 reserved; 1 read-only status; 0xb
-read-write; 7 read-write with a bit that looks self-clearing or arming (the test-control and capture-arm bits, the
-`START` bit of the vector request); 9 read-only alias of a status register; 8 and 0xf the scratch alias variants. The
-register lists in registers.toml turn this into `r` or `rw`.
+read-write; 7 read-write with a bit that looks self-clearing or arming (the test-control, capture-arm, force-debit and
+`ARM_FORCE_CB_ERROR` bits and `PORT_PERF_WIN.CLEAR`); 8 and 0xf only the scratch alias registers (8 on the 64-bit and
+8-bit aliases, 0xf on the two 1-bit ones). The router table has no flag 9; that value marks the node's
+`VEC_STATUS_ALIAS` (node-access.md). The register lists in registers.toml turn this into `r` or `rw` by bit 1
+(writable); flag 8 has neither bit, so the `r` recorded for the eight 64-bit and 8-bit scratch aliases is a default,
+not a reading, and their access is **unknown**.
 
 ## Generations (what the "R-brick" family is)
 
@@ -48,7 +51,9 @@ register lists in registers.toml turn this into `r` or `rw`.
 | NUMAlink 4 router | `0x239` (569) | Altix 350 router option, 3700 Bx2 CR-brick, 4700 and 450 IRU routers, Dense router module | established: the PROM's per-chip match function compares the identification halfword with 569 and its name entry is `NL4router` |
 
 The PROM dispatches on the chip identification word through a table of per-chip method tables. The SHub 2 images
-hold three entries (SHub 2, `0x239`, TIO `0x4422`); the SHub 1 images hold four (SHub 1 `0x4363`, `0x3017`, `0x239`,
+hold three entries (SHub 2, `0x239`, TIO `0x4422`) in that table, though the SHub 2 image's discovery code also
+compares a chip's part number with `0x3017` at six sites (for example `0xff45b4bc`, `0xff4b8f9c`), so it knows the
+NUMAlink 3 router part too; the SHub 1 images hold four (SHub 1 `0x4363`, `0x3017`, `0x239`,
 `0x4422`). Read in full: the three compare constants in the SHub 2 image and the name each entry returns; the SHub 1
 compare constants were located but its name entries were not read, so the pairing of `0x3017` with `NL3router` there is
 inferred from the strings.
@@ -131,7 +136,7 @@ the tables was read.
 ## Identity and link reads
 
 - **Register 0 (established, field positions; both PROM readings).** `CHIP_REVISION` bits 31:28, `PART_NUMBER` 27:12,
-  `MFG_ID` 11:1, bit 0 reads as 1 (named `FORCE1`). The PROM's link check reads this word with a vector read and stores
+  `MFG_ID` 11:1, bit 0 named `FORCE1` (that it reads as 1 is inferred from the name only). The PROM's link check reads this word with a vector read and stores
   bits 27:12 and 31:28 as the chip's part number and revision, then picks the chip's method table
   from the part number. The same word carries `PORTA_LINK_UP` to `PORTH_LINK_UP` at bits 32 to 39, `INPORT` 43:40 (the
   port the request came in on, inferred), `POSITION` 47:44, per-port error flags `PORTA_ERROR` to `PORTH_ERROR` at bits
@@ -170,7 +175,8 @@ the router configuration routines are `nl4r_init_global`, `nl4r_config_global` a
 "error on vector access"), `nl4r_fence_ports` (takes the router lock, fences ports, releases it) and `nl4r_mip_clear`
 (clears "MIP" state when a link goes down, using SHub bits `0xd`, `0xe`, `0xf` of the PROM's own flag word). What values
 they program, read in full for the first and third (SHub 2 SAL 10.54): `nl4r_init_global` writes zero to the local-block
-error and first-error registers (`0x2000`, `0x2010`, `0x2020`, `0x2030`, `0x2050`, `0x2060`), writes `0xc000000000000000`
+first-error (`0x2000`), error summary (`0x2010`), first-error (`0x2020`), report mask (`0x2030`) and error detail
+(`0x2050`, `0x2060`) registers, writes `0xc000000000000000`
 (`FORCE_EN` and `CLEAR`) to `PORT_PERF_WIN`, and sets `FREE` in all sixteen reply-gather buffers (`0x4f00` to
 `0x4f78`, stride 8). `nl4r_config_port` takes a port number n and, at `0x7000000 + n * 0x1000000` plus the port-block
 offset, zeroes the error summary and first-error words, writes 1 to the error-detail-clear register, zeroes both link
@@ -202,3 +208,61 @@ Open items are listed in [../../questions/numalink4-router-open.md](../../questi
   output and once in the objdump listing of the image.
 - The SHub 1 PROM's vector registers sit at the same relative positions with a `0x1_0000_0000` bias (node-access.md);
   the field layouts agree except the status register's source field, which is 14 bits in SHub 1 and 16 in SHub 2.
+
+## Review
+
+**Reviewed.** Commits 35b9caf and 6843841 on chips main, checked from the held images and the cited Linux files. Binary
+claims were re-run: Ghidra (`--sn2-prom`) on SHub 2 SAL 10.54 for the vector routine at `0xff419e80` and the
+port-configuration routine at `0xff4c8580`; objdump to cross-check the vector routine's constants, the chip-match
+functions (`0xff4a9540`, `0xff4af370`) and the global-initialisation routine around `0xff4c7d30`. The register table
+was re-parsed independently (not from the writer's script): record layout of 16-byte registers and 8-byte fields, found
+from the table's descriptor in the image. Linux v5.3 `sn_hwperf.c`, `sn_hwperf.h`, `sn_sal.h`, `klconfig.h`,
+`module.h`, `shub_mmr.h` and v2.6.24 `shubio.h` were fetched and read; manual pages were read in the Library at the
+printed page numbers.
+
+**Confirmed.**
+- All 753 registers of the 10.54 SHub 2 `R4_` table agree with registers.toml: every number, every non-reserved
+  field's bit range and flags value, and the `r`/`rw` derivation from the flags (no mismatch in 5,323 fields). No
+  duplicate numbers; the table ends after `SCRATCH9_ALIAS`.
+- SHub 2 and SHub 1 vector registers (numbers, field ranges, the 14 versus 16 bit `SOURCE` field), NI link block
+  registers, NI table addresses (NI1 at +0x2000 on SHub 2, +0x1000 on SHub 1) and table sizes from the spacing.
+- The NUMAlink 3 `RR_` table: global registers 0x0 to 0x48, `RR_VECTOR_HW_BAR` at `0x8000`, and the port-block offsets
+  (PARMS 0x10000/0x10800, ERROR_CLEAR +0x88, tables +0x100/+0x200) match the formula.
+- Vector routine: `0x10067080`, `0x10067100`, `0x10074000`, `0x10074100`, `0x1c8`, poison value, 1,024 polls, 5,000,000
+  lock timeout, the retry factor of 4 up to 8 tries, the status decode (types 4/5/6 give -4/-5/-6, other types -3,
+  success only for type 0 with matching tag and address), `NI_PORT` from the first nibble minus one, the `0xf` in nibble
+  8 when the rest is zero, and the route-0 local path. Ghidra and objdump agree.
+- Chip-match functions: `0x239` compare, and the state-word register number 4096 for the router and `0x901d0080` for TIO.
+- Port configuration: the six table entries are the writes the page lists, including `0x5c0000000006` (bits 46, 44, 43,
+  42, 2, 1 are the named report-mask bits). Global initialisation: seven table writes (one is `PORT_PERF_WIN` with
+  `0xc000000000000000`) then sixteen writes of bit 63 at `0x4f00` stride 8 (objdump reading).
+- Linux: SAL op numbers, the object and port structures, name matching for NL3/NL4 routers, the `LLP3`/`LLP4` printing and
+  its comment, the klconfig router class and types, `MODULE_RBRICK` 1, no router register in `shub_mmr.h` or `shubio.h`.
+- Manuals: the Dense router module (007-4823-001 printed p.61) has an L1 controller and four router ASICs; the R-brick
+  (007-4579-001 printed pp.135, 140) is an eight-port crossbar with link connectors 1 to 8 or A to H.
+- Notes files `*-open.md` index row in questions/README.md and devices/README.md row exist.
+
+**Mechanical fixes (made here).**
+- node-access.md, read sequence step 3: the first poll reads `VEC_PARMS` (`BUSY`, bit 63), not `VEC_STATUS`
+  (movl `0x10067080` before the loop in objdump; the decompiler agrees).
+- README flag list: the router table has no flag 9 (it is the node's `VEC_STATUS_ALIAS` flag); flag 7 examples widened.
+- Access rule for flag 8 (scratch aliases): they carry neither flag bit, so the recorded `r` is a default; text and unit
+  doc corrected.
+- `FORCE1` value, and the global-initialisation list now names `0x2030` as the report mask.
+
+**Findings not fixed.**
+- The SHub 2 PROM compares part number `0x3017` at six sites (`0xff45b4bc`, `0xff45f2ac` area, `0xff465ffc`,
+  `0xff46b930`, `0xff46bf2c`, `0xff4b8f9c`), so the SHub 2 firmware's discovery code handles NUMAlink 3 routers too. Whether
+  an SHub 2 system can contain one is unknown. Added as a note; not read further.
+- The 8-bit and 64-bit scratch alias registers (flag 8) are probably write-only variants; the generated `r` is unproven.
+- Block-select claim (bits 27:24) holds for all 753 registers (blocks 0, 1, 2, 8 to 15), but block 2 also holds six
+  arbiter and queue test-point selects at `0x2002700` to `0x2002800` and block 1 holds `LB1_TEST_POINT_SELECT_512` at
+  `0x1002700`, which the address table omits (diagnostic only).
+
+**Not checked.** The 10.40, 10.11 and 4.43 tables (only the strings were confirmed present); the SHub 1 dispatch table
+and its four entries; the name pointer returned by the router match function; SAL `hwperf_op` and any ProPack module
+use of router registers; `nl4r_config_global` (still unread); 2.6.x and ProPack kernel files; manual pp.65 and 66.
+
+**Cleared scope.** Register numbers, names, bit ranges and flags (established as table contents, 10.54 SHub 2 image); vector
+send and read sequence; node link and vector registers; what Linux does and does not do with routers; open
+questions as listed. Roles, reset values and all "inferred" or "unknown" items stay as graded.
