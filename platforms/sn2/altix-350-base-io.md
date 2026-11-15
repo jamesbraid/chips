@@ -1,6 +1,7 @@
 # Altix 350 base I/O cards: IO9, IO10 and the PCI riser
 
-Every Altix 350 base compute module carries one base I/O card in the lowest slot of its PCI riser. The card is either
+A base I/O card sits in the lowest slot of the PCI riser of the lowest base compute module of an Altix 350 (at most one
+per module; the guides require it in the lowest module only). The card is either
 the IO9 (the 2004 machine) or the IO10 (standard on the later machine, with the IO9 optional). This page records which
 PCI devices each card carries, how the cards sit behind the PIC on the riser, what the SGI Linux platform code and the
 held PROM say about the riser's identity record, which console the PROM expects, and how a device interrupt reaches the
@@ -24,7 +25,7 @@ itself. Everything graded here follows [AGENTS.md](../../AGENTS.md): **establish
 | What the IO9 carries | An IOC4, a QLogic ISP 12160 SCSI controller at PCI slot 3 of the card's bus, and a 10/100/1000 Ethernet port | established for the IOC4 and the ISP 12160 (`v5.3:drivers/misc/ioc4.c`, `ioc4_variant`); Ethernet controller part **unknown** (see below) |
 | What the IO10 carries | An IOC4, a Vitesse VSC 7174 serial ATA controller at PCI slot 3 of the card's bus, a 36-pin serial connector and an Ethernet port | established for the IOC4 and the VSC 7174; Ethernet controller part **unknown** |
 | Riser identity record | The PROM reads no record from the riser as such on an Altix 350. The record it reads for a base I/O node comes from the system controller (device 1), in the format of an IPMI board information area | established for the reader; which physical EEPROM device 1 is: **unknown** |
-| Console the PROM expects | The system controller's console (or the SHub's own junk-bus UART). Neither the IO9's nor the IO10's IOC4 is a boot console | established from the console selector; the Linux console calls reach the same device |
+| Console the PROM expects | One of the PROM's system-controller console objects (named SysCt). Neither the IO9's nor the IO10's IOC4 is a boot console | established from the console selector; the Linux console calls reach the same device |
 | Interrupt route | Device INTx pin, PIC interrupt pin (one of eight), crosstalk write to a SHub address chosen by the PROM, vector 0x3c to 0xe6 on a CPU | established as a chain; the pin each device uses on the 350: **unknown** (inferred from a sibling card, below) |
 
 ## The riser and where the card sits
@@ -44,9 +45,9 @@ many of the four drawn slots remain for add-in cards (the diagram shows four, th
 four slots.
 
 The PIC bus numbers the kernel sees come from the PROM, one per PIC bus (`sal_get_pcibus_info`, id
-`SN_SAL_IOIF_GET_PCIBUS_INFO`; `v5.3:arch/ia64/sn/kernel/io_init.c`), and the kernel treats the base I/O module's first
-bus specially only for hot plug, where it refuses operations on the base card slot of an IX or IA brick
-(`v5.3:drivers/pci/hotplug/sgi_hotplug.c`, `sn_pci_slot_valid`). Nothing in the kernel names the 350's base card slot.
+`SN_SAL_IOIF_GET_PCIBUS_INFO`; `v5.3:arch/ia64/sn/kernel/io_init.c`), and the kernel treats one bus specially only for hot plug: on an IX or IA brick, segment 1 bus 0, it refuses every
+device number but 1 (`v5.3:drivers/pci/hotplug/sgi_hotplug.c`, `sn_pci_slot_valid`). Those are not the 350's brick
+types, and nothing in the kernel names the 350's base card slot.
 Established as a reading; no consequence for the 350.
 
 ## The IO9
@@ -174,17 +175,18 @@ for this page.
 
 - **No card-specific code.** The SHub 1 images carry no string naming an IO9 or an IO10. The PROM's I/O knowledge is by
   bridge part: the widget id register at widget 0 is read, a crossbar (part `0xd000` or `0xd100`) is walked, and a PIC
-  (part `0xd102`) is initialised through `0xffab0c00` once for each of its two buses, at the widget base and base
+  (part `0xd102`, or `0xd112`, with manufacturer field 0x24; the second bus is checked the same way) is initialised through `0xffab0c00` once for each of its two buses, at the widget base and base
   `+ 0x80_0000` (`0xffab15c0`, `0xffab0f10`, `0xffabfb10`; established, read in full in
   [the boot path page](../../software/firmware/snprom/boot-sequence.md)). The kernel and the PROM tell the cards apart by
   contents only (the Linux `ioc4_variant` above).
 - **Where the base I/O node is chosen.** `io_baseio_master_nasid_set` (`0xffb60bb0`, decompiler output) takes a node's
-  L1 module id and keeps the node whose id, ignoring the low byte, is the lowest, with the lower NASID breaking ties; it
+  L1 module id and keeps the node whose id, ignoring bits 15:8, is the lowest, with the lower NASID breaking ties; it
   stores the module id and NASID in the PROM's node data. That agrees with both guides ("the lowest base compute module",
   -001 p.104). The kernel's call for the answer, `SN_SAL_GET_MASTER_BASEIO_NASID` (id `0x0200003c`), has no caller in
-  the files read, and the handler in this image (`0xffb60910`) returns status 0 with a value taken from the node data
-  (decompiler output and listing; where the value comes from was not traced). Established for the selection rule, inferred
-  for what the handler returns.
+  the files read, and the handler in this image (`0xffb60910`) returns status 0 and the 64-bit word the selection
+  routine stores in the node data at offset 0x28, NASID in the low 16 bits and module id above (read in Ghidra and
+  in an objdump listing). Established for the selection rule and for what the handler returns. The kernel header says the
+  NASID is in the result; whether the stored word equals a bare NASID is not read.
 - **The PCI walk that finds the IOC4 is not on the boot path.** The "IOC3/IOC4 devices must be located in one of the
   first 3 slots of a pci bus" check and the IOC4 byte-order setup sit in a driver block reached through the SAL
   procedure table, not from the code that runs before the EFI hand-off
@@ -195,8 +197,9 @@ for this page.
 ### Console
 
 - **The boot console is not on the base I/O card.** The console probe (`0xffa1fca0`) walks the specification string
-  `rpd` (`0xffbba0a0`) and asks each console object in order: `p` (`0xffae9200`) goes to the system controller, `r` (`0xffaea490`, not decompiled here; the
-  [boot path page](../../software/firmware/snprom/boot-sequence.md) puts it on the same path) likewise, `d` (`0xffaeaff0`) is the SHub's junk-bus UART, and `e` is the EFI callback console. The `p` probe
+  `rpd` (`0xffbba0a0`) and asks the console object for each letter in that order, `r` (`0xffaea490`), `p` (`0xffae9200`),
+  `d` (`0xffaeaff0`). The console object table (`0xffbe8648`) names them "SysCt (RT)", "SysCt" and "SysCt(dir)"; none is
+  the junk-bus UART. A fourth object, `e`, "EfiCB", is in the table but not in the string. The `p` probe
   ends in a test that the PROM is not running under a simulator (`0xffa806d0`, a signature compare on the processor's
   identification register; the middle call `0xffa805e0` was not read). The first object whose probe succeeds becomes the console (established, read in full).
   No IOC4 UART is on the list.
@@ -244,8 +247,8 @@ The route, each step established from SGI's Linux code except where marked.
 4. **The SHub delivers a vector.** The kernel acknowledges by reading the SHub event-occurred register and writing its
    alias (`sn_ack_irq`, `v5.3:arch/ia64/sn/kernel/irq.c`); the exact SHub register bits are with the SHub pages.
   
-5. **Lost-interrupt workaround.** Because a PIC does not resend, the kernel polls every device interrupt it has once per
-   timer tick: if the PIC status bit for a pin is set, the CPU has the vector neither pending nor in service, and the
+5. **Lost-interrupt workaround.** Because a PIC does not resend, on SHub 1 each CPU's timer interrupt polls the device interrupts of its range once every 100 ticks
+   (`SN_LB_INT_WAR_INTERVAL`, `v5.3:arch/ia64/sn/kernel/sn2/timer_interrupt.c`): if the PIC status bit for a pin is set, the CPU has the vector neither pending nor in service, and the
    pin was already set at the previous poll, it forces an interrupt by writing the pin's force register
    (`sn_check_intr`, `sn_lb_int_war_check`). Established. A model must keep that register write observable: a PIC that
    ignores it leaves an IOC4 interrupt stuck if a packet is dropped.
@@ -279,3 +282,75 @@ the per-device records.
 
 None to the SHub pages. Two additions to the SAL page, owned by another stream: the console calls' forwarding to the
 active console object (`0xffb5c9c0` and the four other thin handlers above), and the master base I/O node rule.
+
+## Review
+
+Independent review of the page at commit `4d01e69`'s tree, by a reader who did not write it. Method: every cited Linux file
+re-fetched at v5.3 and read at the cited lines; the guides re-read at the printed pages cited (007-4660-001 pp.99, 100,
+104, 105; 007-4660-002 pp.108, 112 to 115; 007-4374-001 pp.1 and 2); the held SNPROM 10.54 build 70399 image re-read in
+Ghidra with the repository's IA-64 module (decompiler output taken as navigation, each claim then checked against
+constants and strings in the image), with an objdump listing only for the handler at `0xffb60910`; the PROM string
+claims re-counted in the 4.43, 10.40 and 10.54 images; the shipped kernel's configuration lines re-read. About 45 facts
+sampled.
+
+### Confirmed
+
+- Linux v5.3: `ioc4_variant` (QLogic 0x1077/0x1216 at slot 3 for IO9, Vitesse 0x1725/0x7174 at slot 3 for IO10, else
+  PCI-RT); variant values 0x0900, 0x0901, 0x1000; IOC4 0x10a9/0x100a with class mask 0x0b4000; serial and IDE attach
+  skip only PCI-RT (`ioc4_serial.c` 2788, `sgiioc4.c` 609); the mode-select pins 4 to 7 for the four UARTs; the Vitesse
+  "4 port DPA SATA" comment; qla1280 supporting the 12160.
+- Linux v5.3: `L1_BOARDTYPE_BASEIO` 0x0300 and `PCIX3SLOT` 0x0500, `ia64_sn_sysctl_ioboard_get`; SAL ids 0x02000028,
+  0x0200002b, 0x0200003c, 0x0200004a, 0x02000056, 0x02000057; operations 1, 2, 3 of the interrupt call; vectors 0x3c to
+  0xe6, 0x31, 0x33, 0xe9; ASIC types PIC 2, TIOCP 3, TIOCA 4, TIOCE 5; the PIC offsets (status 0x100, per-pin address
+  0x130+8n, error view 0x170, force 0x180 and 0x1c0+8n); `pcibr_target_interrupt` order; `sn_ack_irq` event register and
+  alias.
+- Guides: IO9 connectors, IOC-4 features, "bus 1 slot 1" and lowest module (-001 p.104, -002 p.114); riser contents and
+  the nonstandard connector (-001 p.105, -002 p.115); 133 MHz (-002 p.115); logic diagram (-001 p.99); node-board serial ID
+  EEPROM only (-001 p.100, -002 p.108); SATA versus SCSI drives (-002 p.115); IO10 text, 36-pin MDR connector and its
+  pinout (007-4374-001 pp.1 and 2). Both -002 p.112 and 007-4374-001 also say the card goes in PCI slot 1, the bottom
+  slot, which the page's "lowest slot" already means.
+- PROM 10.54: `io_mfg_info` (`0xffaf1ee0`) picks `0xffaeccd0` for an odd NASID and `0xffaecd80` for an even one, which call
+  `0xffa84fd0` and `0xffa85550`; masks 0x0ffff000 and 0x4ffff000; device 98 for module type 0x6f; mask rewrite for 0x6d and
+  0x6f in `0xffa819c0`; `0xffa85200` is the only caller of `0xffa85120` (device 98); the board area reader `0xffa84990`
+  (version, length in 8-byte units with zero an error, language, time, type/length fields, 0xc1 terminator, zero sum);
+  `io_baseio_master_nasid_set` selection rule and tie-break; interrupt handler `0xffb1f970` with the provider table and the
+  "NULL provider pointer" message; the `rpd` string, the POD menu strings and the string counts in 4.43, 10.40 and 10.54.
+- Shipped kernel configuration lines (`TIGON3`, `BLK_DEV_SGIIOC4`, `SCSI_SATA_VITESSE`, `SCSI_QLOGIC_1280` as modules).
+
+### Mechanical fixes (made in this commit)
+
+- The opening sentence said every base compute module carries a base I/O card. The guides require one in the lowest module
+  and allow at most one per module (-002 p.112, p.114); reworded.
+- Hot plug: the kernel refuses every device number except 1 on segment 1 bus 0 of an IX or IA brick, not "the base card
+  slot"; those brick types are not the 350's.
+- Console: the spec string is walked `r`, `p`, `d`, not `p`, `r`, `d`; the console object table names all three
+  "SysCt (RT)", "SysCt", "SysCt(dir)", so `d` is not the junk-bus UART (that name appears only in the POD menu), and `e`
+  ("EfiCB") is in the table but not in the string. Short-answer row changed to match.
+- Master base I/O node: the selection compares the module id with bits 15:8 ignored (the mask is `0xffffffffffff00ff`),
+  not the low byte; the handler `0xffb60910` returns the word stored by the selection routine (NASID in the low 16 bits,
+  module id above), now established from the listing instead of inferred.
+- Lost-interrupt workaround: runs only on SHub 1, from each CPU's timer interrupt, once every 100 ticks and over that
+  CPU's interrupt range, not once per tick (`timer_interrupt.c`, `SN_LB_INT_WAR_INTERVAL`).
+- The bridge discoverer accepts PIC part 0xd112 as well as 0xd102 (manufacturer field 0x24 for both).
+
+### Findings not fixed
+
+- The kernel header says the master base I/O NASID is the call's result, while the PROM handler returns the whole stored
+  word (NASID plus module id shifted by 16). Both agree only when the module id field is zero or a reader masks it. No
+  caller was found in the files read; settling it needs the SAL runtime or a kernel that calls it.
+- "The Altix rule slot 3 agrees with the middle one" of the Origin 350 captures compares a Linux PCI device number with a
+  capture's "configuration window", whose offset from the logical device number the IO9 placement question itself leaves
+  open. The agreement is weaker than the page's wording; it stays inferred.
+- The `p` probe at `0xffae9200` only tests that the PROM is not running under a simulator and records a value; nothing
+  read ties "SysCt" to a particular UART. "Console on the system controller" rests on the object names and the Altix 350
+  page, not on a traced UART access.
+- The riser-EEPROM paragraph still ends where the evidence does: no riser EEPROM is named by any guide or read by the
+  PROM, and the symbol placement for `sysctl_eeprom_io_riser` (runtime symbol to image address) was not re-derived; the
+  call-graph part (`0xffa85120` has one caller, device 98) was.
+
+### Cleared scope
+
+The page's wiring and identity claims at the grade given in the table above, with the corrections in this section: IO9 and
+IO10 contents by the Linux variant test and the guides; the PIC-behind-riser layout; the board record format; the base I/O
+node selection rule; the interrupt chain from the PIC pin to the SAL allocator. Not cleared: the Ethernet part and slots,
+the INTx to pin map, and anything in the compressed SAL runtime, none of which was read.
