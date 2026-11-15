@@ -327,3 +327,7 @@ prose_offsets = false
 [units.uv_gru]
 group = "uv_gru.h"
 prose_offsets = false
+
+[units.uv_bau]
+group = "uv_bau.h"
+prose_offsets = false

@@ -78,6 +78,7 @@ pub mod uv2;
 pub mod uv3;
 pub mod uv4;
 pub mod uv5;
+pub mod uv_bau;
 pub mod uv_gru;
 pub mod vice;
 pub mod xbow;

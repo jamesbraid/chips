@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/uv_bau/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="uv_bau" prefix="UV_BAU" title="UV broadcast assist unit (BAU): descriptor, payload queue and constants" from="Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)">
+  <doc>The BAU registers are in the per-generation hub units (names containing BAU). This unit holds what the registers point at: the 64-byte activation descriptor and the destination payload queue entry, plus the constants the TLB shootdown driver uses. Positions come from the driver's bitfield structs, packed least-significant first in 32-bit units. Role text paraphrases the driver and is inferred.</doc>
+  <struct name="DESC_HDR_HI" size="8" grade="established" from="Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)">
+    <doc>High dword of the UV2 and UV3 message header, bit positions counted from the dword (header bit minus 64).</doc>
+    <field name="command" start="56" size="8" type="uint" grade="established"/>
+    <field name="multilevel" start="31" size="1" type="uint" grade="established"/>
+    <field name="chaining" start="30" size="1" type="uint" grade="established"/>
+    <field name="sequence" start="14" size="16" type="uint" grade="established"/>
+    <field name="fairness" start="11" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="DESC_HDR_LO" size="8" grade="established" from="Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)">
+    <doc>Low dword of the UV2 and UV3 message header (descriptor bytes 0x30 to 0x37, the message header at the top of the 64-byte descriptor). Only fields the driver sets or reads are listed; the rest are reserved or payload.</doc>
+    <field name="swack_flag" start="52" size="1" type="uint" grade="established"/>
+    <field name="canceled" start="25" size="1" type="uint" grade="established"/>
+    <field name="msg_type" start="22" size="3" type="uint" grade="established"/>
+    <field name="replied_to" start="21" size="1" type="uint" grade="established"/>
+    <field name="dest_subnodeid" start="15" size="5" type="uint" grade="established"/>
+    <field name="base_dest_nasid" start="0" size="15" type="uint" grade="established"/>
+  </struct>
+  <constant name="DESC_BYTES" value="0x40" grade="established"/>
+  <constant name="DESC_QUALIFIER" value="0x534749" grade="established"/>
+  <constant name="DISTRIBUTION_BITS" value="0x100" grade="established"/>
+  <constant name="DS_ACTIVE" value="0x1" grade="established"/>
+  <constant name="DS_DESTINATION_TIMEOUT" value="0x2" grade="established"/>
+  <constant name="DS_IDLE" value="0x0" grade="established"/>
+  <constant name="DS_SOURCE_TIMEOUT" value="0x3" grade="established"/>
+  <constant name="ITEMS_PER_SET" value="0x8" grade="established"/>
+  <constant name="LB_SUBNODEID" value="0x10" grade="established"/>
+  <constant name="MSG_NOOP" value="0x0" grade="established"/>
+  <constant name="MSG_REGULAR" value="0x1" grade="established"/>
+  <constant name="MSG_RETRY" value="0x2" grade="established"/>
+  <constant name="NUM_SETS" value="0x40" grade="established"/>
+  <constant name="PAYLOADQ_GNODE_SHIFT" value="0x31" grade="established"/>
+  <constant name="PAYLOAD_QUEUE_ENTRIES" value="0x14" grade="established"/>
+  <constant name="PAYLOAD_QUEUE_ENTRY_BYTES" value="0x20" grade="established"/>
+  <constant name="SW_ACK_RESOURCES" value="0x8" grade="established"/>
+  <constant name="UV1_ENDPOINT_COMMAND" value="0x38" grade="established"/>
+  <constant name="UV1_SOFT_ACK_PERIOD" value="0x9" grade="established"/>
+  <constant name="UV2_DESC_BUSY" value="0x2" grade="established"/>
+  <constant name="UV2_DESC_DEST_PUT_ERR" value="0x7" grade="established"/>
+  <constant name="UV2_DESC_DEST_STRONG_NACK" value="0x5" grade="established"/>
+  <constant name="UV2_DESC_DEST_TIMEOUT" value="0x4" grade="established"/>
+  <constant name="UV2_DESC_IDLE" value="0x0" grade="established"/>
+  <constant name="UV2_DESC_SOURCE_TIMEOUT" value="0x6" grade="established"/>
+  <constant name="UV2_ENDPOINT_COMMAND" value="0x28" grade="established"/>
+  <constant name="UV2_SOFT_ACK_PERIOD" value="0xf" grade="established"/>
+</genxml>

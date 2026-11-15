@@ -1,0 +1,365 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/uv_bau/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "uv_bau",
+   "kind": "word",
+   "name": "DESC_HDR_HI",
+   "width": 64,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_HI.command",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_HI.multilevel",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_HI.chaining",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_HI.sequence",
+   "hi": 29,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_HI.fairness",
+   "hi": 13,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "word",
+   "name": "DESC_HDR_LO",
+   "width": 64,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.swack_flag",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.canceled",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.msg_type",
+   "hi": 24,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.replied_to",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.dest_subnodeid",
+   "hi": 19,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "field",
+   "name": "DESC_HDR_LO.base_dest_nasid",
+   "hi": 14,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DESC_BYTES",
+   "value": 64,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DESC_QUALIFIER",
+   "value": 5457737,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DISTRIBUTION_BITS",
+   "value": 256,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DS_ACTIVE",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DS_DESTINATION_TIMEOUT",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DS_IDLE",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "DS_SOURCE_TIMEOUT",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "ITEMS_PER_SET",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "LB_SUBNODEID",
+   "value": 16,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "MSG_NOOP",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "MSG_REGULAR",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "MSG_RETRY",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "NUM_SETS",
+   "value": 64,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "PAYLOADQ_GNODE_SHIFT",
+   "value": 49,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "PAYLOAD_QUEUE_ENTRIES",
+   "value": 20,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "PAYLOAD_QUEUE_ENTRY_BYTES",
+   "value": 32,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "SW_ACK_RESOURCES",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV1_ENDPOINT_COMMAND",
+   "value": 56,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV1_SOFT_ACK_PERIOD",
+   "value": 9,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_BUSY",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_DEST_PUT_ERR",
+   "value": 7,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_DEST_STRONG_NACK",
+   "value": 5,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_DEST_TIMEOUT",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_IDLE",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_DESC_SOURCE_TIMEOUT",
+   "value": 6,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_ENDPOINT_COMMAND",
+   "value": 40,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  },
+  {
+   "unit": "uv_bau",
+   "kind": "constant",
+   "name": "UV2_SOFT_ACK_PERIOD",
+   "value": 15,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+  }
+ ]
+}

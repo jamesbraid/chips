@@ -1,0 +1,61 @@
+unit = "uv_bau"
+prefix = "UV_BAU"
+title = "UV broadcast assist unit (BAU): descriptor, payload queue and constants"
+doc = "The BAU registers are in the per-generation hub units (names containing BAU). This unit holds what the registers point at: the 64-byte activation descriptor and the destination payload queue entry, plus the constants the TLB shootdown driver uses. Positions come from the driver's bitfield structs, packed least-significant first in 32-bit units. Role text paraphrases the driver and is inferred."
+from = "Linux v5.4 SGI UV broadcast assist unit header and TLB shootdown driver (GPL)"
+public_from = ["Linux v5.4 SGI UV"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+DESC_BYTES = { value = 64, grade = "established", doc = "Size of one activation descriptor." }
+ITEMS_PER_SET = { value = 8, grade = "established", doc = "Descriptors per set; a set is 512 bytes and the driver uses the first of each." }
+NUM_SETS = { value = 64, grade = "established", doc = "Descriptor sets, selected by the 6-bit index written to the activation control register." }
+DISTRIBUTION_BITS = { value = 256, grade = "established", doc = "Destination bit vector in bytes 0 to 31 of the descriptor: bit n is the node whose number is the base destination nasid plus n times 2 (multi-unicast mode, multilevel flag 0)." }
+PAYLOAD_QUEUE_ENTRIES = { value = 20, grade = "established", doc = "Entries the driver allots to the destination payload queue." }
+PAYLOAD_QUEUE_ENTRY_BYTES = { value = 32, grade = "established", doc = "Bytes per queue entry in software acknowledge mode; 17 usable, the software ack vector in byte 15." }
+SW_ACK_RESOURCES = { value = 8, grade = "established", doc = "Destination software acknowledge resources, one pending and one timeout bit each in the acknowledge register." }
+LB_SUBNODEID = { value = 0x10, grade = "established", doc = "Destination subnode id every descriptor carries: the local block." }
+UV1_ENDPOINT_COMMAND = { value = 0x38, grade = "established", doc = "Command code of the endpoint interrupt message on UV1." }
+UV2_ENDPOINT_COMMAND = { value = 0x28, grade = "established", doc = "Command code of the endpoint interrupt message on UV2 and later." }
+PAYLOADQ_GNODE_SHIFT = { value = 49, grade = "established", doc = "Position of the home node number in the payload queue first pointer before UV4." }
+DESC_QUALIFIER = { value = 0x534749, grade = "established", doc = "UV4 payload qualifier the source sets so the destination can verify the origin (ASCII SGI)." }
+MSG_NOOP = { value = 0, grade = "established", doc = "Software message type." }
+MSG_REGULAR = { value = 1, grade = "established", doc = "Software message type: first transmission." }
+MSG_RETRY = { value = 2, grade = "established", doc = "Software message type: retransmission." }
+DS_IDLE = { value = 0, grade = "established", doc = "UV1 two-bit descriptor status in the activation status registers: idle." }
+DS_ACTIVE = { value = 1, grade = "established", doc = "UV1 descriptor status: active." }
+DS_DESTINATION_TIMEOUT = { value = 2, grade = "established", doc = "UV1 descriptor status: destination timeout." }
+DS_SOURCE_TIMEOUT = { value = 3, grade = "established", doc = "UV1 descriptor status: source timeout." }
+UV2_DESC_IDLE = { value = 0, grade = "established", doc = "UV2 and later: status from the three status registers combined as error, busy, aux error: idle." }
+UV2_DESC_BUSY = { value = 2, grade = "established", doc = "UV2 descriptor state: busy." }
+UV2_DESC_DEST_TIMEOUT = { value = 4, grade = "established", doc = "UV2 descriptor state: software ack timeout at the destination." }
+UV2_DESC_DEST_STRONG_NACK = { value = 5, grade = "established", doc = "UV2 descriptor state: destination rejected the interrupt." }
+UV2_DESC_SOURCE_TIMEOUT = { value = 6, grade = "established", doc = "UV2 descriptor state: source side timeout." }
+UV2_DESC_DEST_PUT_ERR = { value = 7, grade = "established", doc = "UV2 descriptor state: destination side put failed." }
+UV1_SOFT_ACK_PERIOD = { value = 9, grade = "established", doc = "Soft ack timeout period the driver programs on UV1." }
+UV2_SOFT_ACK_PERIOD = { value = 15, grade = "established", doc = "Soft ack timeout period the driver programs on UV2 and UV3." }
+
+[words.DESC_HDR_LO]
+width = 64
+grade = "established"
+doc = "Low dword of the UV2 and UV3 message header (descriptor bytes 0x30 to 0x37, the message header at the top of the 64-byte descriptor). Only fields the driver sets or reads are listed; the rest are reserved or payload."
+[words.DESC_HDR_LO.fields]
+base_dest_nasid = { bits = [14, 0], grade = "established", doc = "Nasid of the first destination in the distribution vector." }
+dest_subnodeid = { bits = [19, 15], grade = "established", doc = "Must be 0x10, the local block." }
+replied_to = { bits = [21, 21], grade = "established", doc = "Sent as 0; the destination sets it when it has answered." }
+msg_type = { bits = [24, 22], grade = "established", doc = "Software message type." }
+canceled = { bits = [25, 25], grade = "established", doc = "Message canceled; the resource is to be freed." }
+swack_flag = { bits = [52, 52], grade = "established", doc = "Destination interrupt waits for a software acknowledge." }
+
+[words.DESC_HDR_HI]
+width = 64
+grade = "established"
+doc = "High dword of the UV2 and UV3 message header, bit positions counted from the dword (header bit minus 64)."
+[words.DESC_HDR_HI.fields]
+fairness = { bits = [13, 11], grade = "established", doc = "Usually zero." }
+sequence = { bits = [29, 14], grade = "established", doc = "Message sequence number." }
+chaining = { bits = [30, 30], grade = "established", doc = "Next descriptor is part of this activation." }
+multilevel = { bits = [31, 31], grade = "established", doc = "Multilevel multicast format; zero for TLB shootdowns." }
+command = { bits = [63, 56], grade = "established", doc = "Message type, the endpoint interrupt command." }
