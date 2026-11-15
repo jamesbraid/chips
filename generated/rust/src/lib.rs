@@ -55,6 +55,7 @@ pub mod r14000_perf_counters;
 pub mod r5000_cp0;
 pub mod r5000_identity;
 pub mod rad1;
+pub mod router_nl4;
 pub mod router_origin2000;
 pub mod router_origin3000;
 pub mod router_origin3000_extra;

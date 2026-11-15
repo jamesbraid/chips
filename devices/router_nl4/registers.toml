@@ -1,0 +1,3945 @@
+unit = "router_nl4"
+prefix = "ROUTER_NL4"
+title = "NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them"
+doc = "Register numbers, names and bit ranges come from the register description table that the SN2 PROM images carry for the NUMAlink 4 router (names with the prefix R4_, here without it). The table gives each register's number in the router's own register space, its name and its fields with bit positions and a small flags value. It states no reset values and no semantics, so every reset is unknown, roles are inferred from the names, and an access of r or rw is inferred from the flags (bit 0 set on every readable field, bit 1 on every writable one). Width 64 is inferred: every number is a multiple of 8 and the SHub's own vector accesses are doublewords. The eight ports are lettered A to H in the PROM and indexed 0 to 7 here (the PROM's own port number is the index plus one). A per-port register is recorded at port A with count 8; the stride is the one the table shows (the port-block distance for registers inside the port blocks, 8 for the per-port registers kept in the global block). The prose is in devices/router_nl4/README.md."
+from = "SN2 PROM 10.54 (shub2snprom image) NUMAlink 4 router register description table; the same table is in every SHub 2 and SHub 1 image read"
+public_from = ["SGI SN2 PROM image 10.54"]
+
+[constants]
+MAX_PORTS = { value = 8, grade = "established", doc = "Ports lettered A to H in the table; the Dense router and the R-brick manuals describe an eight-port crossbar (007-4823-001 p.61)." }
+PORT_BLOCK_STRIDE = { value = 0x1000000, grade = "established", doc = "Distance between one port's block and the next for every register inside the port blocks (port A first, port H last)." }
+
+[registers.status_rev_id]
+offset = 0x0
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_STATUS_REV_ID. Offset and field positions read from the table; role inferred from the names."
+
+[registers.status_rev_id.fields]
+local_pok = { bits = [57, 57], grade = "established", doc = "Flags 0x1." }
+lb_error = { bits = [56, 56], grade = "established", doc = "Flags 0x1." }
+porth_error = { bits = [55, 55], grade = "established", doc = "Flags 0x1." }
+portg_error = { bits = [54, 54], grade = "established", doc = "Flags 0x1." }
+portf_error = { bits = [53, 53], grade = "established", doc = "Flags 0x1." }
+porte_error = { bits = [52, 52], grade = "established", doc = "Flags 0x1." }
+portd_error = { bits = [51, 51], grade = "established", doc = "Flags 0x1." }
+portc_error = { bits = [50, 50], grade = "established", doc = "Flags 0x1." }
+portb_error = { bits = [49, 49], grade = "established", doc = "Flags 0x1." }
+porta_error = { bits = [48, 48], grade = "established", doc = "Flags 0x1." }
+position = { bits = [47, 44], grade = "established", doc = "Flags 0x1." }
+inport = { bits = [43, 40], grade = "established", doc = "Flags 0x1." }
+porth_link_up = { bits = [39, 39], grade = "established", doc = "Flags 0x1." }
+portg_link_up = { bits = [38, 38], grade = "established", doc = "Flags 0x1." }
+portf_link_up = { bits = [37, 37], grade = "established", doc = "Flags 0x1." }
+porte_link_up = { bits = [36, 36], grade = "established", doc = "Flags 0x1." }
+portd_link_up = { bits = [35, 35], grade = "established", doc = "Flags 0x1." }
+portc_link_up = { bits = [34, 34], grade = "established", doc = "Flags 0x1." }
+portb_link_up = { bits = [33, 33], grade = "established", doc = "Flags 0x1." }
+porta_link_up = { bits = [32, 32], grade = "established", doc = "Flags 0x1." }
+chip_revision = { bits = [31, 28], grade = "established", doc = "Flags 0x1." }
+part_number = { bits = [27, 12], grade = "established", doc = "Flags 0x1." }
+mfg_id = { bits = [11, 1], grade = "established", doc = "Flags 0x1." }
+force1 = { bits = [0, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.global_parm0]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_GLOBAL_PARM0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.global_parm0.fields]
+porth_dateline = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+portg_dateline = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+portf_dateline = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+porte_dateline = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+portd_dateline = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+portc_dateline = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+portb_dateline = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+porta_dateline = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+deadlock_to_val = { bits = [15, 12], grade = "established", doc = "Flags 0xb." }
+tail_to_val = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+use_oldest_age_enable = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+inherit_age_enable = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+pass2_arb_enable = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+preferred_enable = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+most_eligible_enable = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+bypass_enable = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.global_parm1]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_GLOBAL_PARM1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.global_parm1.fields]
+deadlock_to_tick = { bits = [20, 16], grade = "established", doc = "Flags 0xb." }
+send_to_tick = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+tail_to_tick = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.asic_to_l1_status]
+offset = 0x30
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ASIC_TO_L1_STATUS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.asic_to_l1_status.fields]
+status = { bits = [0, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.asic_to_l1_data]
+offset = 0x38
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ASIC_TO_L1_DATA. Offset and field positions read from the table; role inferred from the names."
+
+[registers.asic_to_l1_data.fields]
+data = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.l1_to_asic_status]
+offset = 0x40
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_L1_TO_ASIC_STATUS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.l1_to_asic_status.fields]
+status = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.l1_to_asic_data]
+offset = 0x48
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_L1_TO_ASIC_DATA. Offset and field positions read from the table; role inferred from the names."
+
+[registers.l1_to_asic_data.fields]
+data = { bits = [63, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.lb_dateline]
+offset = 0x4000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_DATELINE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_dateline.fields]
+en = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_preage]
+offset = 0x4010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_PREAGE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_preage.fields]
+age = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.pio_time_out]
+offset = 0x4020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PIO_TIME_OUT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.pio_time_out.fields]
+value = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_0]
+offset = 0x4e00
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_0.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_1]
+offset = 0x4e08
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_1.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_2]
+offset = 0x4e10
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_2.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_3]
+offset = 0x4e18
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_3. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_3.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_4]
+offset = 0x4e20
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_4. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_4.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_5]
+offset = 0x4e28
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_5. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_5.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_6]
+offset = 0x4e30
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_6. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_6.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_7]
+offset = 0x4e38
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_7. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_7.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_8]
+offset = 0x4e40
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_8. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_8.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_9]
+offset = 0x4e48
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_9. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_9.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_10]
+offset = 0x4e50
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_10. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_10.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_11]
+offset = 0x4e58
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_11. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_11.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_12]
+offset = 0x4e60
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_12. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_12.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_13]
+offset = 0x4e68
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_13. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_13.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_14]
+offset = 0x4e70
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_14. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_14.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_trans_table_15]
+offset = 0x4e78
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_TRANS_TABLE_15. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_trans_table_15.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+to = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+self_inc_en = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+vec_up_en = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+vec_low_en = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+vec_idx = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+action = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+cmd_out = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cmd_in = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_dest_table]
+offset = 0x4e80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_DEST_TABLE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_dest_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+dir1 = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+dir0 = { bits = [20, 16], grade = "established", doc = "Flags 0xb." }
+node_id = { bits = [13, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_rep_gather_buf]
+offset = 0x4f00
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_REP_GATHER_BUF. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_rep_gather_buf.fields]
+free = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+err = { bits = [61, 61], grade = "established", doc = "Flags 0xb." }
+forced_suppl = { bits = [60, 60], grade = "established", doc = "Flags 0x1." }
+mcast_done = { bits = [59, 59], grade = "established", doc = "Flags 0x1." }
+echo = { bits = [58, 50], grade = "established", doc = "Flags 0x1." }
+source_node = { bits = [49, 36], grade = "established", doc = "Flags 0x1." }
+timer = { bits = [35, 32], grade = "established", doc = "Flags 0x1." }
+dir1 = { bits = [28, 24], grade = "established", doc = "Flags 0x1." }
+dir0 = { bits = [20, 16], grade = "established", doc = "Flags 0x1." }
+exp_suppl = { bits = [15, 8], grade = "established", doc = "Flags 0x1." }
+act_suppl = { bits = [7, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.mcast_gather_config]
+offset = 0x4f80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_GATHER_CONFIG. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_gather_config.fields]
+gather_to_tick = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+lut_pair = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_dest_vec_0]
+offset = 0x4f90
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_DEST_VEC_0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_dest_vec_0.fields]
+exp_count = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+bit_map = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_dest_vec_1]
+offset = 0x4f98
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_DEST_VEC_1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_dest_vec_1.fields]
+exp_count = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+bit_map = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_dest_vec_2]
+offset = 0x4fa0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_DEST_VEC_2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_dest_vec_2.fields]
+exp_count = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+bit_map = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.mcast_dest_vec_3]
+offset = 0x4fa8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_MCAST_DEST_VEC_3. Offset and field positions read from the table; role inferred from the names."
+
+[registers.mcast_dest_vec_3.fields]
+exp_count = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+bit_map = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_local_table]
+offset = 0x5000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_LOCAL_TABLE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_local_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+dir1 = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_global_table]
+offset = 0x6000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_GLOBAL_TABLE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_global_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+dir1 = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.rtc_source]
+offset = 0x1001900
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_RTC_SOURCE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.rtc_source.fields]
+porth_rtc_select = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+portg_rtc_select = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+portf_rtc_select = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+porte_rtc_select = { bits = [23, 20], grade = "established", doc = "Flags 0xb." }
+portd_rtc_select = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+portc_rtc_select = { bits = [15, 12], grade = "established", doc = "Flags 0xb." }
+portb_rtc_select = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+porta_rtc_select = { bits = [7, 4], grade = "established", doc = "Flags 0xb." }
+lb_rtc_select = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.rtc_intrn_cntrl]
+offset = 0x1001908
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_RTC_INTRN_CNTRL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.rtc_intrn_cntrl.fields]
+count = { bits = [25, 16], grade = "established", doc = "Flags 0x1." }
+max_count = { bits = [9, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.throttle_interval]
+offset = 0x1001910
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_INTERVAL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_interval.fields]
+count = { bits = [29, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.throttle_time]
+offset = 0x1001918
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_TIME. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_time.fields]
+count = { bits = [29, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.throttle_status]
+offset = 0x1001920
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_STATUS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_status.fields]
+time = { bits = [61, 32], grade = "established", doc = "Flags 0x1." }
+interval = { bits = [29, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.throttle_skip]
+offset = 0x1001928
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_SKIP. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_skip.fields]
+next = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.debug_port_config]
+offset = 0x1001930
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_DEBUG_PORT_CONFIG. Offset and field positions read from the table; role inferred from the names."
+
+[registers.debug_port_config.fields]
+en = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.vbit_emul]
+offset = 0x1001938
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_VBIT_EMUL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.vbit_emul.fields]
+v_bit_emulation = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_vc0_n_count_init]
+offset = 0x2000010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x20
+doc = "PROM register R4_PORTA_VC0_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_vc0_n_count_init.fields]
+n_init_input_port_lb = { bits = [33, 32], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_vc1_n_count_init]
+offset = 0x2000018
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x20
+doc = "PROM register R4_PORTA_VC1_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_vc1_n_count_init.fields]
+n_init_input_port_lb = { bits = [33, 32], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_vc2_n_count_init]
+offset = 0x2000020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x20
+doc = "PROM register R4_PORTA_VC2_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_vc2_n_count_init.fields]
+n_init_input_port_lb = { bits = [33, 32], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_vc3_n_count_init]
+offset = 0x2000028
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x20
+doc = "PROM register R4_PORTA_VC3_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_vc3_n_count_init.fields]
+n_init_input_port_lb = { bits = [33, 32], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbl_vc0_n_count_init]
+offset = 0x2000120
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBL_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbl_vc0_n_count_init.fields]
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbl_vc1_n_count_init]
+offset = 0x2000128
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBL_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbl_vc1_n_count_init.fields]
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbl_vc2_n_count_init]
+offset = 0x2000130
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBL_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbl_vc2_n_count_init.fields]
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbl_vc3_n_count_init]
+offset = 0x2000138
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBL_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbl_vc3_n_count_init.fields]
+n_init_input_port_h = { bits = [29, 28], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_g = { bits = [25, 24], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_b = { bits = [5, 4], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_a = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbr_vc0_n_count_init]
+offset = 0x2000140
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBR_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbr_vc0_n_count_init.fields]
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbr_vc1_n_count_init]
+offset = 0x2000148
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBR_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbr_vc1_n_count_init.fields]
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbr_vc2_n_count_init]
+offset = 0x2000150
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBR_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbr_vc2_n_count_init.fields]
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbr_vc3_n_count_init]
+offset = 0x2000158
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBR_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbr_vc3_n_count_init.fields]
+n_init_input_port_f = { bits = [21, 20], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_e = { bits = [17, 16], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_d = { bits = [13, 12], grade = "established", doc = "Flags 0xb." }
+n_init_input_port_c = { bits = [9, 8], grade = "established", doc = "Flags 0xb." }
+
+[registers.porta_d_count_init]
+offset = 0x2000400
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.porta_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portb_d_count_init]
+offset = 0x2000408
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portb_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portg_d_count_init]
+offset = 0x2000410
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portg_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.porth_d_count_init]
+offset = 0x2000418
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.porth_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portc_d_count_init]
+offset = 0x2000428
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portc_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portd_d_count_init]
+offset = 0x2000430
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portd_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.porte_d_count_init]
+offset = 0x2000438
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.porte_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portf_d_count_init]
+offset = 0x2000440
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portf_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbl_d_count_init]
+offset = 0x2000420
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBL_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbl_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.portlb_arbr_d_count_init]
+offset = 0x2000448
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORTLB_ARBR_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.portlb_arbr_d_count_init.fields]
+d_init_vc3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+d_init_vc2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+d_init_vc1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+d_init_vc0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.age_rate_port]
+offset = 0x2000600
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x10
+doc = "PROM register R4_AGE_RATE_PORTA; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.age_rate_port.fields]
+age_rate_enable = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+age_range_7_trigger = { bits = [60, 56], grade = "established", doc = "Flags 0xb." }
+age_range_6_trigger = { bits = [52, 48], grade = "established", doc = "Flags 0xb." }
+age_range_5_trigger = { bits = [44, 40], grade = "established", doc = "Flags 0xb." }
+age_range_4_trigger = { bits = [36, 32], grade = "established", doc = "Flags 0xb." }
+age_range_3_trigger = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+age_range_2_trigger = { bits = [20, 16], grade = "established", doc = "Flags 0xb." }
+age_range_1_trigger = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+age_range_0_trigger = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.age_rate_portlb]
+offset = 0x2000680
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_AGE_RATE_PORTLB. Offset and field positions read from the table; role inferred from the names."
+
+[registers.age_rate_portlb.fields]
+age_rate_enable = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+age_range_7_trigger = { bits = [60, 56], grade = "established", doc = "Flags 0xb." }
+age_range_6_trigger = { bits = [52, 48], grade = "established", doc = "Flags 0xb." }
+age_range_5_trigger = { bits = [44, 40], grade = "established", doc = "Flags 0xb." }
+age_range_4_trigger = { bits = [36, 32], grade = "established", doc = "Flags 0xb." }
+age_range_3_trigger = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+age_range_2_trigger = { bits = [20, 16], grade = "established", doc = "Flags 0xb." }
+age_range_1_trigger = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+age_range_0_trigger = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.throttle_enable_arbl]
+offset = 0x2000500
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_ENABLE_ARBL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_enable_arbl.fields]
+inputh_vc3_enable = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+inputh_vc2_enable = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+inputh_vc1_enable = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+inputh_vc0_enable = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+inputg_vc3_enable = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+inputg_vc2_enable = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+inputg_vc1_enable = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+inputg_vc0_enable = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+inputf_vc3_enable = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+inputf_vc2_enable = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+inputf_vc1_enable = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+inputf_vc0_enable = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+inpute_vc3_enable = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+inpute_vc2_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+inpute_vc1_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inpute_vc0_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+inputd_vc3_enable = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+inputd_vc2_enable = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+inputd_vc1_enable = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+inputd_vc0_enable = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+inputc_vc3_enable = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+inputc_vc2_enable = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+inputc_vc1_enable = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+inputc_vc0_enable = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+inputb_vc3_enable = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+inputb_vc2_enable = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+inputb_vc1_enable = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+inputb_vc0_enable = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+inputa_vc3_enable = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+inputa_vc2_enable = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+inputa_vc1_enable = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+inputa_vc0_enable = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.throttle_enable_arbr]
+offset = 0x2000508
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_THROTTLE_ENABLE_ARBR. Offset and field positions read from the table; role inferred from the names."
+
+[registers.throttle_enable_arbr.fields]
+inputh_vc3_enable = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+inputh_vc2_enable = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+inputh_vc1_enable = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+inputh_vc0_enable = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+inputg_vc3_enable = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+inputg_vc2_enable = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+inputg_vc1_enable = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+inputg_vc0_enable = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+inputf_vc3_enable = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+inputf_vc2_enable = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+inputf_vc1_enable = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+inputf_vc0_enable = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+inpute_vc3_enable = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+inpute_vc2_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+inpute_vc1_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inpute_vc0_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+inputd_vc3_enable = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+inputd_vc2_enable = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+inputd_vc1_enable = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+inputd_vc0_enable = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+inputc_vc3_enable = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+inputc_vc2_enable = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+inputc_vc1_enable = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+inputc_vc0_enable = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+inputb_vc3_enable = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+inputb_vc2_enable = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+inputb_vc1_enable = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+inputb_vc0_enable = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+inputa_vc3_enable = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+inputa_vc2_enable = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+inputa_vc1_enable = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+inputa_vc0_enable = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_local_table]
+offset = 0x8000000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LOCAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_local_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+dir0 = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_global_table]
+offset = 0x8001000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_GLOBAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_global_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+dir0 = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_neighbor_table]
+offset = 0x8001800
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_NEIGHBOR_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_neighbor_table.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+neighbor_id = { bits = [13, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_parms]
+offset = 0x8001840
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PARMS; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_parms.fields]
+spare = { bits = [37, 30], grade = "established", doc = "Flags 0xb." }
+v_bit_emulation = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+new_dir_spray_enable = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+dir_spray_enable = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+extend_enable = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+extend_shub_input = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+extend_shub_dir_vec = { bits = [24, 17], grade = "established", doc = "Flags 0xb." }
+arm_force_cb_error = { bits = [16, 16], grade = "established", doc = "Flags 0x7." }
+linkreset_on_bufferoverflow = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+eatuntiltail_on_bufferoverflow = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+linkreset_on_fifooverflow = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+send_deadlock_eat_enable_vch3 = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+send_deadlock_eat_enable_vch2 = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+send_deadlock_eat_enable_vch1 = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+send_deadlock_eat_enable_vch0 = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+tail_to_error_tail_enable_vch3 = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+tail_to_error_tail_enable_vch2 = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+tail_to_error_tail_enable_vch1 = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+tail_to_error_tail_enable_vch0 = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+mip_reset_enable = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_val = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_spray_dir]
+offset = 0x8001848
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_SPRAY_DIR; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_spray_dir.fields]
+dir7 = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+dir6 = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+dir5 = { bits = [47, 40], grade = "established", doc = "Flags 0xb." }
+dir4 = { bits = [39, 32], grade = "established", doc = "Flags 0xb." }
+dir3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+dir2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+dir1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_spray_cmd_3f_0]
+offset = 0x8001850
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_SPRAY_CMD_3F_0; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_spray_cmd_3f_0.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_spray_cmd_7f_40]
+offset = 0x8001858
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_SPRAY_CMD_7F_40; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_spray_cmd_7f_40.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_spray_cmd_bf_80]
+offset = 0x8001860
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_SPRAY_CMD_BF_80; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_spray_cmd_bf_80.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_spray_cmd_ff_c0]
+offset = 0x8001868
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_SPRAY_CMD_FF_C0; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_spray_cmd_ff_c0.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_llp_config]
+offset = 0x8001888
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_config.fields]
+enable_rmt_ft_upd = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+enable_tuning = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+ac_encode = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+enablelink = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+bitmode32 = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_llp_test_ctl]
+offset = 0x8001890
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_TEST_CTL; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_test_ctl.fields]
+cb_error = { bits = [62, 62], grade = "established", doc = "Flags 0xb." }
+captured = { bits = [61, 61], grade = "established", doc = "Flags 0xb." }
+fakesnerror = { bits = [60, 60], grade = "established", doc = "Flags 0x7." }
+send_sn_error = { bits = [59, 59], grade = "established", doc = "Flags 0x7." }
+send_cb_error = { bits = [58, 58], grade = "established", doc = "Flags 0x7." }
+capture_cb_only = { bits = [57, 57], grade = "established", doc = "Flags 0xb." }
+arm_capture = { bits = [56, 56], grade = "established", doc = "Flags 0x7." }
+noise_mode = { bits = [55, 54], grade = "established", doc = "Flags 0xb." }
+lfsr_mode = { bits = [53, 52], grade = "established", doc = "Flags 0xb." }
+wire_sel = { bits = [49, 44], grade = "established", doc = "Flags 0xb." }
+send_test_mode = { bits = [41, 40], grade = "established", doc = "Flags 0xb." }
+pattern = { bits = [39, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_llp_state]
+offset = 0x8001898
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_state.fields]
+link_send_fsm_state = { bits = [15, 10], grade = "established", doc = "Flags 0x1." }
+link_rcv_fsm_state = { bits = [9, 4], grade = "established", doc = "Flags 0x1." }
+link_reset_state = { bits = [3, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_llp_err1]
+offset = 0x80018a0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_ERR1; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_err1.fields]
+retry_count = { bits = [63, 48], grade = "established", doc = "Flags 0xb." }
+rx_cb_err_count = { bits = [47, 16], grade = "established", doc = "Flags 0xb." }
+rx_sn_err_count = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_llp_err2]
+offset = 0x80018a8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_ERR2; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_err2.fields]
+coresentbadcrc_count = { bits = [33, 28], grade = "established", doc = "Flags 0xb." }
+squash = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+reset_timeout = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+retry_timeout = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+wire_overflow = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+wire_cnt = { bits = [23, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_llp_capt_wd1]
+offset = 0x80018b0
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_CAPT_WD1; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_capt_wd1.fields]
+data = { bits = [63, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_llp_capt_wd2]
+offset = 0x80018b8
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_CAPT_WD2; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_capt_wd2.fields]
+data = { bits = [63, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_llp_capt_sbcb]
+offset = 0x80018c0
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_CAPT_SBCB; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_capt_sbcb.fields]
+faked_all_sn_errors = { bits = [34, 34], grade = "established", doc = "Flags 0x1." }
+sent_all_sn_errors = { bits = [33, 33], grade = "established", doc = "Flags 0x1." }
+sent_all_cb_errors = { bits = [32, 32], grade = "established", doc = "Flags 0x1." }
+captured_rcv_crc = { bits = [31, 16], grade = "established", doc = "Flags 0x1." }
+captured_rcvsbsn = { bits = [15, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_credit]
+offset = 0x80018c8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_CREDIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_credit.fields]
+send_limit_vch3 = { bits = [62, 56], grade = "established", doc = "Flags 0xb." }
+send_limit_vch2 = { bits = [54, 48], grade = "established", doc = "Flags 0xb." }
+send_limit_vch1 = { bits = [46, 40], grade = "established", doc = "Flags 0xb." }
+send_limit_vch0 = { bits = [38, 32], grade = "established", doc = "Flags 0xb." }
+rcv_initial_vch3 = { bits = [29, 24], grade = "established", doc = "Flags 0xb." }
+rcv_initial_vch2 = { bits = [21, 16], grade = "established", doc = "Flags 0xb." }
+rcv_initial_vch1 = { bits = [13, 8], grade = "established", doc = "Flags 0xb." }
+rcv_initial_vch0 = { bits = [5, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_debit]
+offset = 0x80018d0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_DEBIT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_debit.fields]
+en_short_interval = { bits = [36, 36], grade = "established", doc = "Flags 0xb." }
+en_xmitbuf_threshold = { bits = [35, 35], grade = "established", doc = "Flags 0xb." }
+credit_only_interval = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+force_debit_vch3 = { bits = [30, 30], grade = "established", doc = "Flags 0x7." }
+withhold_vch3 = { bits = [29, 24], grade = "established", doc = "Flags 0xb." }
+force_debit_vch2 = { bits = [22, 22], grade = "established", doc = "Flags 0x7." }
+withhold_vch2 = { bits = [21, 16], grade = "established", doc = "Flags 0xb." }
+force_debit_vch1 = { bits = [14, 14], grade = "established", doc = "Flags 0x7." }
+withhold_vch1 = { bits = [13, 8], grade = "established", doc = "Flags 0xb." }
+force_debit_vch0 = { bits = [6, 6], grade = "established", doc = "Flags 0x7." }
+withhold_vch0 = { bits = [5, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_credit_state]
+offset = 0x80018d8
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_CREDIT_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_credit_state.fields]
+credits_vch3 = { bits = [63, 56], grade = "established", doc = "Flags 0x1." }
+credits_vch2 = { bits = [55, 48], grade = "established", doc = "Flags 0x1." }
+credits_vch1 = { bits = [47, 40], grade = "established", doc = "Flags 0x1." }
+credits_vch0 = { bits = [39, 32], grade = "established", doc = "Flags 0x1." }
+debits_vch3 = { bits = [29, 24], grade = "established", doc = "Flags 0x1." }
+debits_vch2 = { bits = [21, 16], grade = "established", doc = "Flags 0x1." }
+debits_vch1 = { bits = [13, 8], grade = "established", doc = "Flags 0x1." }
+debits_vch0 = { bits = [5, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_llp_pkt]
+offset = 0x80018e0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_LLP_PKT; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_llp_pkt.fields]
+count = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.hard_reset]
+offset = 0x1003000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_HARD_RESET. Offset and field positions read from the table; role inferred from the names."
+
+[registers.hard_reset.fields]
+hard_reset = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.soft_reset]
+offset = 0x1003008
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SOFT_RESET. Offset and field positions read from the table; role inferred from the names."
+
+[registers.soft_reset.fields]
+soft_reset = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.port_reset]
+offset = 0x1003010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORT_RESET. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_reset.fields]
+port_warm_reset = { bits = [9, 9], grade = "established", doc = "Flags 0x7." }
+porth_link_reset = { bits = [8, 8], grade = "established", doc = "Flags 0x7." }
+portg_link_reset = { bits = [7, 7], grade = "established", doc = "Flags 0x7." }
+portf_link_reset = { bits = [6, 6], grade = "established", doc = "Flags 0x7." }
+porte_link_reset = { bits = [5, 5], grade = "established", doc = "Flags 0x7." }
+portd_link_reset = { bits = [4, 4], grade = "established", doc = "Flags 0x7." }
+portc_link_reset = { bits = [3, 3], grade = "established", doc = "Flags 0x7." }
+portb_link_reset = { bits = [2, 2], grade = "established", doc = "Flags 0x7." }
+porta_link_reset = { bits = [1, 1], grade = "established", doc = "Flags 0x7." }
+lb_reset = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.protection_config]
+offset = 0x1003018
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROTECTION_CONFIG. Offset and field positions read from the table; role inferred from the names."
+
+[registers.protection_config.fields]
+lb_force_local_lut = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+porth_force_local_lut = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+portg_force_local_lut = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+portf_force_local_lut = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+porte_force_local_lut = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+portd_force_local_lut = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+portc_force_local_lut = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+portb_force_local_lut = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+porta_force_local_lut = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+node_id = { bits = [21, 8], grade = "established", doc = "Flags 0xb." }
+porth_local_reset_en = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+portg_local_reset_en = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+portf_local_reset_en = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+porte_local_reset_en = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+portd_local_reset_en = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+portc_local_reset_en = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+portb_local_reset_en = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+porta_local_reset_en = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_rst_mask]
+offset = 0x1003020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x8
+doc = "PROM register R4_PORTA_RST_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_rst_mask.fields]
+from_porth = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+from_portg = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+from_portf = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+from_porte = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+from_portd = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+from_portc = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+from_portb = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+from_porta = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_error_summary]
+offset = 0x8002200
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_ERROR_SUMMARY; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_error_summary.fields]
+extend_turn_err = { bits = [46, 46], grade = "established", doc = "Flags 0xb." }
+coresentbadcrc_cnt_non_zero = { bits = [45, 45], grade = "established", doc = "Flags 0xb." }
+retry_cnt_non_zero = { bits = [44, 44], grade = "established", doc = "Flags 0xb." }
+cb_error_cnt_non_zero = { bits = [43, 43], grade = "established", doc = "Flags 0xb." }
+sn_error_cnt_non_zero = { bits = [42, 42], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch3 = { bits = [41, 41], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch2 = { bits = [40, 40], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch1 = { bits = [39, 39], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch0 = { bits = [38, 38], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch3 = { bits = [37, 37], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch2 = { bits = [36, 36], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch1 = { bits = [35, 35], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch0 = { bits = [34, 34], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch3 = { bits = [33, 33], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch2 = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch1 = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch0 = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch3 = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch2 = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch1 = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch0 = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch3 = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch2 = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch1 = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch0 = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch3 = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch1 = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch3 = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch2 = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch1 = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch0 = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch3 = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch2 = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch1 = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch0 = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch3 = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch2 = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch1 = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch0 = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch3 = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch2 = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch1 = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch0 = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+retry_to = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+rcv_link_reset = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+rcv_warm_reset = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+power_not_ok = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_first_error]
+offset = 0x8002210
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_FIRST_ERROR; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_first_error.fields]
+extend_turn_err = { bits = [46, 46], grade = "established", doc = "Flags 0xb." }
+coresentbadcrc_cnt_non_zero = { bits = [45, 45], grade = "established", doc = "Flags 0xb." }
+retry_cnt_non_zero = { bits = [44, 44], grade = "established", doc = "Flags 0xb." }
+cb_error_cnt_non_zero = { bits = [43, 43], grade = "established", doc = "Flags 0xb." }
+sn_error_cnt_non_zero = { bits = [42, 42], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch3 = { bits = [41, 41], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch2 = { bits = [40, 40], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch1 = { bits = [39, 39], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch0 = { bits = [38, 38], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch3 = { bits = [37, 37], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch2 = { bits = [36, 36], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch1 = { bits = [35, 35], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch0 = { bits = [34, 34], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch3 = { bits = [33, 33], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch2 = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch1 = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch0 = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch3 = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch2 = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch1 = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch0 = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch3 = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch2 = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch1 = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch0 = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch3 = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch1 = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch3 = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch2 = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch1 = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch0 = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch3 = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch2 = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch1 = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch0 = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch3 = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch2 = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch1 = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch0 = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch3 = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch2 = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch1 = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch0 = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+retry_to = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+rcv_link_reset = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+rcv_warm_reset = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+power_not_ok = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_error_report_mask]
+offset = 0x8002218
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_ERROR_REPORT_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_error_report_mask.fields]
+extend_turn_err = { bits = [46, 46], grade = "established", doc = "Flags 0xb." }
+coresentbadcrc_cnt_non_zero = { bits = [45, 45], grade = "established", doc = "Flags 0xb." }
+retry_cnt_non_zero = { bits = [44, 44], grade = "established", doc = "Flags 0xb." }
+cb_error_cnt_non_zero = { bits = [43, 43], grade = "established", doc = "Flags 0xb." }
+sn_error_cnt_non_zero = { bits = [42, 42], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch3 = { bits = [41, 41], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch2 = { bits = [40, 40], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch1 = { bits = [39, 39], grade = "established", doc = "Flags 0xb." }
+rcv_tail_to_vch0 = { bits = [38, 38], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch3 = { bits = [37, 37], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch2 = { bits = [36, 36], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch1 = { bits = [35, 35], grade = "established", doc = "Flags 0xb." }
+send_deadlock_to_vch0 = { bits = [34, 34], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch3 = { bits = [33, 33], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch2 = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch1 = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+damq_deadlock_to_vch0 = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch3 = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch2 = { bits = [28, 28], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch1 = { bits = [27, 27], grade = "established", doc = "Flags 0xb." }
+invalid_global_lu_vch0 = { bits = [26, 26], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch3 = { bits = [25, 25], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch2 = { bits = [24, 24], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch1 = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+invalid_local_lu_vch0 = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch3 = { bits = [21, 21], grade = "established", doc = "Flags 0xb." }
+dateline_error_vch1 = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch3 = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch2 = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch1 = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+illegal_dir_vch0 = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch3 = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch2 = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch1 = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+credit_overflow_vch0 = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch3 = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch2 = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch1 = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+fifo_overflow_vch0 = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch3 = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch2 = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch1 = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+buffer_overflow_vch0 = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+retry_to = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+rcv_link_reset = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+rcv_warm_reset = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+power_not_ok = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_error_detail]
+offset = 0x8002000
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_ERROR_DETAIL; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_error_detail.fields]
+detail = { bits = [63, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.port_error_detail_clear]
+offset = 0x8002100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_ERROR_DETAIL_CLEAR; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_error_detail_clear.fields]
+enable = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.asic_first_error]
+offset = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ASIC_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names."
+
+[registers.asic_first_error.fields]
+lb_error = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+porth_error = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+portg_error = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+portf_error = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+porte_error = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+portd_error = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+portc_error = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+portb_error = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+porta_error = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.asic_first_error_timestamp]
+offset = 0x2008
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ASIC_FIRST_ERROR_TIMESTAMP. Offset and field positions read from the table; role inferred from the names."
+
+[registers.asic_first_error_timestamp.fields]
+rtc_value = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_error_summary]
+offset = 0x2010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_ERROR_SUMMARY. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_error_summary.fields]
+vch3_deadlock_to = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+vch2_deadlock_to = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+vch1_deadlock_to = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+vch0_deadlock_to = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+gather_spur_err = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+gather_to = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+gather_err = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+rep_bad_next_dir = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+rep_bad_this_dir = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+rep_msg_len_err = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+bad_rep_msg = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+rep_sb_error = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+req_bad_next_dir = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+req_bad_this_dir = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+jtag_pio_err = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+pio_chn_to = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+pio_unexp_valid = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+pio_bad_addr = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+req_msg_len_err = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+bad_req_msg = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+req_sb_error = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_first_error]
+offset = 0x2020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_first_error.fields]
+vch3_deadlock_to = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+vch2_deadlock_to = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+vch1_deadlock_to = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+vch0_deadlock_to = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+gather_spur_err = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+gather_to = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+gather_err = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+rep_bad_next_dir = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+rep_bad_this_dir = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+rep_msg_len_err = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+bad_rep_msg = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+rep_sb_error = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+req_bad_next_dir = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+req_bad_this_dir = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+jtag_pio_err = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+pio_chn_to = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+pio_unexp_valid = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+pio_bad_addr = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+req_msg_len_err = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+bad_req_msg = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+req_sb_error = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_error_report_mask]
+offset = 0x2030
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_ERROR_REPORT_MASK. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_error_report_mask.fields]
+vch3_deadlock_to = { bits = [20, 20], grade = "established", doc = "Flags 0xb." }
+vch2_deadlock_to = { bits = [19, 19], grade = "established", doc = "Flags 0xb." }
+vch1_deadlock_to = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+vch0_deadlock_to = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+gather_spur_err = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+gather_to = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+gather_err = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+rep_bad_next_dir = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+rep_bad_this_dir = { bits = [12, 12], grade = "established", doc = "Flags 0xb." }
+rep_msg_len_err = { bits = [11, 11], grade = "established", doc = "Flags 0xb." }
+bad_rep_msg = { bits = [10, 10], grade = "established", doc = "Flags 0xb." }
+rep_sb_error = { bits = [9, 9], grade = "established", doc = "Flags 0xb." }
+req_bad_next_dir = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+req_bad_this_dir = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+jtag_pio_err = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+pio_chn_to = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+pio_unexp_valid = { bits = [4, 4], grade = "established", doc = "Flags 0xb." }
+pio_bad_addr = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+req_msg_len_err = { bits = [2, 2], grade = "established", doc = "Flags 0xb." }
+bad_req_msg = { bits = [1, 1], grade = "established", doc = "Flags 0xb." }
+req_sb_error = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_error_detail_1]
+offset = 0x2050
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_ERROR_DETAIL_1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_error_detail_1.fields]
+command = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+echo3_0 = { bits = [55, 52], grade = "established", doc = "Flags 0xb." }
+address = { bits = [51, 3], grade = "established", doc = "Flags 0xb." }
+dest_chiplet = { bits = [1, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb_error_detail_2]
+offset = 0x2060
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB_ERROR_DETAIL_2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb_error_detail_2.fields]
+supplemental = { bits = [63, 48], grade = "established", doc = "Flags 0xb." }
+src_chiplet = { bits = [47, 46], grade = "established", doc = "Flags 0xb." }
+source = { bits = [45, 32], grade = "established", doc = "Flags 0xb." }
+dir3_0 = { bits = [31, 28], grade = "established", doc = "Flags 0xb." }
+echo7_4 = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+echo8 = { bits = [23, 23], grade = "established", doc = "Flags 0xb." }
+dir4 = { bits = [22, 22], grade = "established", doc = "Flags 0xb." }
+destination = { bits = [21, 8], grade = "established", doc = "Flags 0xb." }
+age = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_win]
+offset = 0x1003100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PORT_PERF_WIN. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_win.fields]
+force_en = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+clear = { bits = [62, 62], grade = "established", doc = "Flags 0x7." }
+cnt = { bits = [59, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_arm_mask]
+offset = 0x1004000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_ARM_MASK. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_arm_mask.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_counter_presets]
+offset = 0x1004080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_COUNTER_PRESETS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_counter_presets.fields]
+count_8a = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+count_8b = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+count_16 = { bits = [47, 32], grade = "established", doc = "Flags 0xb." }
+count_32 = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_decrement_ctl]
+offset = 0x1004100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_DECREMENT_CTL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_decrement_ctl.fields]
+ctl = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_diag_msg_ctl]
+offset = 0x1004180
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_DIAG_MSG_CTL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_diag_msg_ctl.fields]
+enable = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_disarm_mask]
+offset = 0x1004200
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_DISARM_MASK. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_disarm_mask.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_enable_ctl]
+offset = 0x1004280
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_ENABLE_CTL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_enable_ctl.fields]
+ctl = { bits = [15, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_software_arm]
+offset = 0x1004300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_SOFTWARE_ARM. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_software_arm.fields]
+bit7 = { bits = [7, 7], grade = "established", doc = "Flags 0x7." }
+bit6 = { bits = [6, 6], grade = "established", doc = "Flags 0x7." }
+bit5 = { bits = [5, 5], grade = "established", doc = "Flags 0x7." }
+bit4 = { bits = [4, 4], grade = "established", doc = "Flags 0x7." }
+bit3 = { bits = [3, 3], grade = "established", doc = "Flags 0x7." }
+bit2 = { bits = [2, 2], grade = "established", doc = "Flags 0x7." }
+bit1 = { bits = [1, 1], grade = "established", doc = "Flags 0x7." }
+bit0 = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.tsf_software_disarm]
+offset = 0x1004380
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_SOFTWARE_DISARM. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_software_disarm.fields]
+bit7 = { bits = [7, 7], grade = "established", doc = "Flags 0x7." }
+bit6 = { bits = [6, 6], grade = "established", doc = "Flags 0x7." }
+bit5 = { bits = [5, 5], grade = "established", doc = "Flags 0x7." }
+bit4 = { bits = [4, 4], grade = "established", doc = "Flags 0x7." }
+bit3 = { bits = [3, 3], grade = "established", doc = "Flags 0x7." }
+bit2 = { bits = [2, 2], grade = "established", doc = "Flags 0x7." }
+bit1 = { bits = [1, 1], grade = "established", doc = "Flags 0x7." }
+bit0 = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.tsf_software_triggered]
+offset = 0x1004400
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_SOFTWARE_TRIGGERED. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_software_triggered.fields]
+bit7 = { bits = [7, 7], grade = "established", doc = "Flags 0x7." }
+bit6 = { bits = [6, 6], grade = "established", doc = "Flags 0x7." }
+bit5 = { bits = [5, 5], grade = "established", doc = "Flags 0x7." }
+bit4 = { bits = [4, 4], grade = "established", doc = "Flags 0x7." }
+bit3 = { bits = [3, 3], grade = "established", doc = "Flags 0x7." }
+bit2 = { bits = [2, 2], grade = "established", doc = "Flags 0x7." }
+bit1 = { bits = [1, 1], grade = "established", doc = "Flags 0x7." }
+bit0 = { bits = [0, 0], grade = "established", doc = "Flags 0x7." }
+
+[registers.tsf_trigger_mask]
+offset = 0x1004480
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_TRIGGER_MASK. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_trigger_mask.fields]
+mask = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_armed_state]
+offset = 0x1005000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_ARMED_STATE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_armed_state.fields]
+state = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_counter_value]
+offset = 0x1005080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_COUNTER_VALUE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_counter_value.fields]
+count_8a = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+count_8b = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+count_16 = { bits = [47, 32], grade = "established", doc = "Flags 0xb." }
+count_32 = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.tsf_triggered_state]
+offset = 0x1005100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_TSF_TRIGGERED_STATE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.tsf_triggered_state.fields]
+state = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.root_test_point_select]
+offset = 0x1006000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ROOT_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.root_test_point_select.fields]
+trigger_enable = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.root_test_point_compare]
+offset = 0x1006008
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ROOT_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.root_test_point_compare.fields]
+compare_pattern = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+compare_mask = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.root_test_point_trigger_select]
+offset = 0x1006010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ROOT_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.root_test_point_trigger_select.fields]
+trigger7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+trigger7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+trigger6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+trigger6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+trigger5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+trigger5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+trigger4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+trigger4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+trigger3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+trigger3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+trigger2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+trigger2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+trigger1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+trigger1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+trigger0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+trigger0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch1_test_point_select]
+offset = 0x1006020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH1_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch1_test_point_select.fields]
+trigger_enable = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch1_test_point_compare]
+offset = 0x1006028
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH1_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch1_test_point_compare.fields]
+compare_pattern = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+compare_mask = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch1_test_point_trigger_select]
+offset = 0x1006030
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH1_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch1_test_point_trigger_select.fields]
+trigger7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+trigger7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+trigger6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+trigger6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+trigger5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+trigger5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+trigger4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+trigger4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+trigger3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+trigger3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+trigger2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+trigger2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+trigger1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+trigger1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+trigger0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+trigger0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch2_test_point_select]
+offset = 0x1006040
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH2_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch2_test_point_select.fields]
+trigger_enable = { bits = [63, 63], grade = "established", doc = "Flags 0xb." }
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch2_test_point_compare]
+offset = 0x1006048
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH2_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch2_test_point_compare.fields]
+compare_pattern = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+compare_mask = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch2_test_point_trigger_select]
+offset = 0x1006050
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH2_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch2_test_point_trigger_select.fields]
+trigger7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+trigger7_chiplet_sel = { bits = [58, 56], grade = "established", doc = "Flags 0xb." }
+trigger6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+trigger6_chiplet_sel = { bits = [50, 48], grade = "established", doc = "Flags 0xb." }
+trigger5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+trigger5_chiplet_sel = { bits = [42, 40], grade = "established", doc = "Flags 0xb." }
+trigger4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+trigger4_chiplet_sel = { bits = [34, 32], grade = "established", doc = "Flags 0xb." }
+trigger3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+trigger3_chiplet_sel = { bits = [26, 24], grade = "established", doc = "Flags 0xb." }
+trigger2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+trigger2_chiplet_sel = { bits = [18, 16], grade = "established", doc = "Flags 0xb." }
+trigger1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+trigger1_chiplet_sel = { bits = [10, 8], grade = "established", doc = "Flags 0xb." }
+trigger0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+trigger0_chiplet_sel = { bits = [2, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.branch1_debug_data]
+offset = 0x1007100
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH1_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch1_debug_data.fields]
+trig = { bits = [63, 32], grade = "established", doc = "Flags 0x1." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.branch2_debug_data]
+offset = 0x1007108
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_BRANCH2_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names."
+
+[registers.branch2_debug_data.fields]
+trig = { bits = [63, 32], grade = "established", doc = "Flags 0x1." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.root_debug_data]
+offset = 0x1007110
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ROOT_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names."
+
+[registers.root_debug_data.fields]
+trig = { bits = [63, 32], grade = "established", doc = "Flags 0x1." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0x1." }
+
+[registers.stop_clk_control]
+offset = 0x1008000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_STOP_CLK_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.stop_clk_control.fields]
+enable = { bits = [8, 8], grade = "established", doc = "Flags 0xb." }
+mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.stop_clk_delay_phase]
+offset = 0x1008080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_STOP_CLK_DELAY_PHASE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.stop_clk_delay_phase.fields]
+delay = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count0_control]
+offset = 0x1080000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT0_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count0_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count1_control]
+offset = 0x1090000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT1_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count1_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count2_control]
+offset = 0x10a0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT2_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count2_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count3_control]
+offset = 0x10b0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT3_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count3_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count4_control]
+offset = 0x10c0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT4_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count4_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count5_control]
+offset = 0x10d0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT5_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count5_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count6_control]
+offset = 0x10e0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT6_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count6_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_count7_control]
+offset = 0x10f0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNT7_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_count7_control.fields]
+clr_enable = { bits = [32, 32], grade = "established", doc = "Flags 0xb." }
+clr_mode = { bits = [31, 31], grade = "established", doc = "Flags 0xb." }
+clr_polarity = { bits = [30, 30], grade = "established", doc = "Flags 0xb." }
+clr_event = { bits = [29, 29], grade = "established", doc = "Flags 0xb." }
+clr_stimulus = { bits = [28, 24], grade = "established", doc = "Flags 0xb." }
+peak_det_enable = { bits = [18, 18], grade = "established", doc = "Flags 0xb." }
+dec_enable = { bits = [17, 17], grade = "established", doc = "Flags 0xb." }
+inc_enable = { bits = [16, 16], grade = "established", doc = "Flags 0xb." }
+dn_mode = { bits = [15, 15], grade = "established", doc = "Flags 0xb." }
+dn_polarity = { bits = [14, 14], grade = "established", doc = "Flags 0xb." }
+dn_event = { bits = [13, 13], grade = "established", doc = "Flags 0xb." }
+dn_stimulus = { bits = [12, 8], grade = "established", doc = "Flags 0xb." }
+up_mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+up_polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+up_event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+up_stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_dn_control]
+offset = 0x1100000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_DN_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_dn_control.fields]
+mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_peak_control]
+offset = 0x1100080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_PEAK_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_peak_control.fields]
+polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+stimulus = { bits = [3, 3], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_range]
+offset = 0x1100100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_RANGE. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_range.fields]
+range7 = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+range6 = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+range5 = { bits = [47, 40], grade = "established", doc = "Flags 0xb." }
+range4 = { bits = [39, 32], grade = "established", doc = "Flags 0xb." }
+range3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+range2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+range1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+range0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_up_control]
+offset = 0x1100180
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_UP_CONTROL. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_up_control.fields]
+mode = { bits = [7, 7], grade = "established", doc = "Flags 0xb." }
+polarity = { bits = [6, 6], grade = "established", doc = "Flags 0xb." }
+event = { bits = [5, 5], grade = "established", doc = "Flags 0xb." }
+stimulus = { bits = [4, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_0]
+offset = 0x1100200
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_0.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_1]
+offset = 0x1100208
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_1.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_2]
+offset = 0x1100210
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_2.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_3]
+offset = 0x1100218
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_3. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_3.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_4]
+offset = 0x1100220
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_4. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_4.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_5]
+offset = 0x1100228
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_5. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_5.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_6]
+offset = 0x1100230
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_6. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_6.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_7]
+offset = 0x1100238
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_7. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_7.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_8]
+offset = 0x1100240
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_8. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_8.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_9]
+offset = 0x1100248
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_9. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_9.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_10]
+offset = 0x1100250
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_10. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_10.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_11]
+offset = 0x1100258
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_11. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_11.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_12]
+offset = 0x1100260
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_12. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_12.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_13]
+offset = 0x1100268
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_13. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_13.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_14]
+offset = 0x1100270
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_14. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_14.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.perf_trig_pattern_15]
+offset = 0x1100278
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERF_TRIG_PATTERN_15. Offset and field positions read from the table; role inferred from the names."
+
+[registers.perf_trig_pattern_15.fields]
+bit_en = { bits = [63, 32], grade = "established", doc = "Flags 0xb." }
+data = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter0]
+offset = 0x1110000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter0.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter1]
+offset = 0x1120000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter1.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter2]
+offset = 0x1130000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter2.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter3]
+offset = 0x1140000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER3. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter3.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter4]
+offset = 0x1150000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER4. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter4.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter5]
+offset = 0x1160000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER5. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter5.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter6]
+offset = 0x1170000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER6. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter6.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.performance_counter7]
+offset = 0x1180000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PERFORMANCE_COUNTER7. Offset and field positions read from the table; role inferred from the names."
+
+[registers.performance_counter7.fields]
+count = { bits = [31, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_counter]
+offset = 0x1190000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_COUNTER. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_counter.fields]
+counter = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.profile_peak]
+offset = 0x1190080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_PROFILE_PEAK. Offset and field positions read from the table; role inferred from the names."
+
+[registers.profile_peak.fields]
+counter = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb0_test_point_select_512]
+offset = 0x2700
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb0_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.lb1_test_point_select_512]
+offset = 0x1002700
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_LB1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.lb1_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.arbl_test_point_select_512]
+offset = 0x2002700
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ARBL_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.arbl_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.arbr_test_point_select_512]
+offset = 0x2002720
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_ARBR_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.arbr_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.cdq0_test_point_select_512]
+offset = 0x2002740
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_CDQ0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.cdq0_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.cdq1_test_point_select_512]
+offset = 0x2002760
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_CDQ1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.cdq1_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.cdq2_test_point_select_512]
+offset = 0x2002780
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_CDQ2_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.cdq2_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.cdq3_test_point_select_512]
+offset = 0x2002800
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_CDQ3_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names."
+
+[registers.cdq3_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_test_point_select_512]
+offset = 0x8002700
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_TEST_POINT_SELECT_512; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_test_point_select_512.fields]
+nibble7_nibble_sel = { bits = [62, 60], grade = "established", doc = "Flags 0xb." }
+nibble7_chiplet_sel = { bits = [59, 56], grade = "established", doc = "Flags 0xb." }
+nibble6_nibble_sel = { bits = [54, 52], grade = "established", doc = "Flags 0xb." }
+nibble6_chiplet_sel = { bits = [51, 48], grade = "established", doc = "Flags 0xb." }
+nibble5_nibble_sel = { bits = [46, 44], grade = "established", doc = "Flags 0xb." }
+nibble5_chiplet_sel = { bits = [43, 40], grade = "established", doc = "Flags 0xb." }
+nibble4_nibble_sel = { bits = [38, 36], grade = "established", doc = "Flags 0xb." }
+nibble4_chiplet_sel = { bits = [35, 32], grade = "established", doc = "Flags 0xb." }
+nibble3_nibble_sel = { bits = [30, 28], grade = "established", doc = "Flags 0xb." }
+nibble3_chiplet_sel = { bits = [27, 24], grade = "established", doc = "Flags 0xb." }
+nibble2_nibble_sel = { bits = [22, 20], grade = "established", doc = "Flags 0xb." }
+nibble2_chiplet_sel = { bits = [19, 16], grade = "established", doc = "Flags 0xb." }
+nibble1_nibble_sel = { bits = [14, 12], grade = "established", doc = "Flags 0xb." }
+nibble1_chiplet_sel = { bits = [11, 8], grade = "established", doc = "Flags 0xb." }
+nibble0_nibble_sel = { bits = [6, 4], grade = "established", doc = "Flags 0xb." }
+nibble0_chiplet_sel = { bits = [3, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_config]
+offset = 0x8007000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_config.fields]
+diag = { bits = [58, 45], grade = "established", doc = "Flags 0xb." }
+en = { bits = [44, 8], grade = "established", doc = "Flags 0xb." }
+dir = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cmd_lo]
+offset = 0x8007008
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CMD_LO; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cmd_lo.fields]
+cnt7 = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+cnt6 = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+cnt5 = { bits = [47, 40], grade = "established", doc = "Flags 0xb." }
+cnt4 = { bits = [39, 32], grade = "established", doc = "Flags 0xb." }
+cnt3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+cnt2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+cnt1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cnt0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cmd_up]
+offset = 0x8007010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CMD_UP; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cmd_up.fields]
+cnt7 = { bits = [63, 56], grade = "established", doc = "Flags 0xb." }
+cnt6 = { bits = [55, 48], grade = "established", doc = "Flags 0xb." }
+cnt5 = { bits = [47, 40], grade = "established", doc = "Flags 0xb." }
+cnt4 = { bits = [39, 32], grade = "established", doc = "Flags 0xb." }
+cnt3 = { bits = [31, 24], grade = "established", doc = "Flags 0xb." }
+cnt2 = { bits = [23, 16], grade = "established", doc = "Flags 0xb." }
+cnt1 = { bits = [15, 8], grade = "established", doc = "Flags 0xb." }
+cnt0 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr0]
+offset = 0x8007018
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR0; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr0.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr1]
+offset = 0x8007020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR1; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr1.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr2]
+offset = 0x8007028
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR2; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr2.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr3]
+offset = 0x8007030
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR3; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr3.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr4]
+offset = 0x8007038
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR4; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr4.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr5]
+offset = 0x8007040
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR5; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr5.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr6]
+offset = 0x8007048
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR6; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr6.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr7]
+offset = 0x8007050
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR7; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr7.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr8]
+offset = 0x8007058
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR8; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr8.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr9]
+offset = 0x8007060
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR9; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr9.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr10]
+offset = 0x8007068
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR10; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr10.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr11]
+offset = 0x8007070
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR11; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr11.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr12]
+offset = 0x8007078
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR12; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr12.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr13]
+offset = 0x8007080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR13; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr13.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr14]
+offset = 0x8007088
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR14; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr14.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr15]
+offset = 0x8007090
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR15; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr15.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr16]
+offset = 0x8007098
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR16; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr16.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr17]
+offset = 0x80070a0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR17; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr17.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr18]
+offset = 0x80070a8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR18; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr18.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr19]
+offset = 0x80070b0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR19; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr19.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr20]
+offset = 0x80070b8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR20; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr20.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr21]
+offset = 0x80070c0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR21; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr21.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr22]
+offset = 0x80070c8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR22; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr22.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr23]
+offset = 0x80070d0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR23; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr23.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr24]
+offset = 0x80070d8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR24; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr24.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr25]
+offset = 0x80070e0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR25; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr25.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr26]
+offset = 0x80070e8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR26; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr26.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr27]
+offset = 0x80070f0
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR27; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr27.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr28]
+offset = 0x80070f8
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR28; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr28.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr29]
+offset = 0x8007100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR29; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr29.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr30]
+offset = 0x8007108
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR30; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr30.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr31]
+offset = 0x8007110
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR31; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr31.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr32]
+offset = 0x8007118
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR32; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr32.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr33]
+offset = 0x8007120
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR33; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr33.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr34]
+offset = 0x8007128
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR34; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr34.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr35]
+offset = 0x8007130
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR35; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr35.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.port_perf_cntr36]
+offset = 0x8007138
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+count = 8
+stride = 0x1000000
+doc = "PROM register R4_PORTA_PERF_CNTR36; one per port A to H. Offset and field positions read from the table; role inferred from the names."
+
+[registers.port_perf_cntr36.fields]
+cnt = { bits = [47, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch0]
+offset = 0x1000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH0. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch0.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch0_alias]
+offset = 0x1008
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH0_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch0_alias.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch1]
+offset = 0x1010
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH1. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch1.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch1_alias]
+offset = 0x1018
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH1_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch1_alias.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch2]
+offset = 0x1020
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH2. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch2.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch2_alias]
+offset = 0x1028
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH2_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch2_alias.fields]
+scratch_64 = { bits = [63, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch3]
+offset = 0x1030
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH3. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch3.fields]
+scratch_1 = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch3_alias]
+offset = 0x1038
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH3_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch3_alias.fields]
+scratch_1 = { bits = [0, 0], grade = "established", doc = "Flags 0xf." }
+
+[registers.scratch4]
+offset = 0x1040
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH4. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch4.fields]
+scratch_1 = { bits = [0, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch4_alias]
+offset = 0x1048
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH4_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch4_alias.fields]
+scratch_1 = { bits = [0, 0], grade = "established", doc = "Flags 0xf." }
+
+[registers.scratch5]
+offset = 0x1050
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH5. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch5.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch5_alias]
+offset = 0x1058
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH5_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch5_alias.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch6]
+offset = 0x1060
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH6. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch6.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch6_alias]
+offset = 0x1068
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH6_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch6_alias.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch7]
+offset = 0x1070
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH7. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch7.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch7_alias]
+offset = 0x1078
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH7_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch7_alias.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch8]
+offset = 0x1080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH8. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch8.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch8_alias]
+offset = 0x1088
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH8_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch8_alias.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0x8." }
+
+[registers.scratch9]
+offset = 0x1090
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH9. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch9.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0xb." }
+
+[registers.scratch9_alias]
+offset = 0x1098
+access = "r"
+width = 64
+grade = "established"
+reset = "unknown"
+doc = "PROM register R4_SCRATCH9_ALIAS. Offset and field positions read from the table; role inferred from the names."
+
+[registers.scratch9_alias.fields]
+scratch_8 = { bits = [7, 0], grade = "established", doc = "Flags 0x8." }

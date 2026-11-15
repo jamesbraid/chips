@@ -1,0 +1,2102 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/router_nl4/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="router_nl4" prefix="ROUTER_NL4" title="NUMAlink 4 router (R4): global, local-block and per-port registers, as the SN2 PROM's error and dump tables name them">
+  <doc>Register numbers, names and bit ranges come from the register description table that the SN2 PROM images carry for the NUMAlink 4 router (names with the prefix R4_, here without it). The table gives each register's number in the router's own register space, its name and its fields with bit positions and a small flags value. It states no reset values and no semantics, so every reset is unknown, roles are inferred from the names, and an access of r or rw is inferred from the flags (bit 0 set on every readable field, bit 1 on every writable one). Width 64 is inferred: every number is a multiple of 8 and the SHub's own vector accesses are doublewords. The eight ports are lettered A to H in the PROM and indexed 0 to 7 here (the PROM's own port number is the index plus one). A per-port register is recorded at port A with count 8; the stride is the one the table shows (the port-block distance for registers inside the port blocks, 8 for the per-port registers kept in the global block). The prose is in devices/router_nl4/README.md.</doc>
+  <struct name="STATUS_REV_ID" size="8" grade="established" register="yes" offset="0x0" access="r" reset="unknown">
+    <doc>PROM register R4_STATUS_REV_ID. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="local_pok" start="57" size="1" type="uint" grade="established"/>
+    <field name="lb_error" start="56" size="1" type="uint" grade="established"/>
+    <field name="porth_error" start="55" size="1" type="uint" grade="established"/>
+    <field name="portg_error" start="54" size="1" type="uint" grade="established"/>
+    <field name="portf_error" start="53" size="1" type="uint" grade="established"/>
+    <field name="porte_error" start="52" size="1" type="uint" grade="established"/>
+    <field name="portd_error" start="51" size="1" type="uint" grade="established"/>
+    <field name="portc_error" start="50" size="1" type="uint" grade="established"/>
+    <field name="portb_error" start="49" size="1" type="uint" grade="established"/>
+    <field name="porta_error" start="48" size="1" type="uint" grade="established"/>
+    <field name="position" start="44" size="4" type="uint" grade="established"/>
+    <field name="inport" start="40" size="4" type="uint" grade="established"/>
+    <field name="porth_link_up" start="39" size="1" type="uint" grade="established"/>
+    <field name="portg_link_up" start="38" size="1" type="uint" grade="established"/>
+    <field name="portf_link_up" start="37" size="1" type="uint" grade="established"/>
+    <field name="porte_link_up" start="36" size="1" type="uint" grade="established"/>
+    <field name="portd_link_up" start="35" size="1" type="uint" grade="established"/>
+    <field name="portc_link_up" start="34" size="1" type="uint" grade="established"/>
+    <field name="portb_link_up" start="33" size="1" type="uint" grade="established"/>
+    <field name="porta_link_up" start="32" size="1" type="uint" grade="established"/>
+    <field name="chip_revision" start="28" size="4" type="uint" grade="established"/>
+    <field name="part_number" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg_id" start="1" size="11" type="uint" grade="established"/>
+    <field name="force1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GLOBAL_PARM0" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>PROM register R4_GLOBAL_PARM0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="porth_dateline" start="23" size="1" type="uint" grade="established"/>
+    <field name="portg_dateline" start="22" size="1" type="uint" grade="established"/>
+    <field name="portf_dateline" start="21" size="1" type="uint" grade="established"/>
+    <field name="porte_dateline" start="20" size="1" type="uint" grade="established"/>
+    <field name="portd_dateline" start="19" size="1" type="uint" grade="established"/>
+    <field name="portc_dateline" start="18" size="1" type="uint" grade="established"/>
+    <field name="portb_dateline" start="17" size="1" type="uint" grade="established"/>
+    <field name="porta_dateline" start="16" size="1" type="uint" grade="established"/>
+    <field name="deadlock_to_val" start="12" size="4" type="uint" grade="established"/>
+    <field name="tail_to_val" start="8" size="4" type="uint" grade="established"/>
+    <field name="use_oldest_age_enable" start="5" size="1" type="uint" grade="established"/>
+    <field name="inherit_age_enable" start="4" size="1" type="uint" grade="established"/>
+    <field name="pass2_arb_enable" start="3" size="1" type="uint" grade="established"/>
+    <field name="preferred_enable" start="2" size="1" type="uint" grade="established"/>
+    <field name="most_eligible_enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="bypass_enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GLOBAL_PARM1" size="8" grade="established" register="yes" offset="0x20" access="rw" reset="unknown">
+    <doc>PROM register R4_GLOBAL_PARM1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="deadlock_to_tick" start="16" size="5" type="uint" grade="established"/>
+    <field name="send_to_tick" start="8" size="5" type="uint" grade="established"/>
+    <field name="tail_to_tick" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASIC_TO_L1_STATUS" size="8" grade="established" register="yes" offset="0x30" access="r" reset="unknown">
+    <doc>PROM register R4_ASIC_TO_L1_STATUS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="status" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASIC_TO_L1_DATA" size="8" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
+    <doc>PROM register R4_ASIC_TO_L1_DATA. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="data" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="L1_TO_ASIC_STATUS" size="8" grade="established" register="yes" offset="0x40" access="rw" reset="unknown">
+    <doc>PROM register R4_L1_TO_ASIC_STATUS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="status" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="L1_TO_ASIC_DATA" size="8" grade="established" register="yes" offset="0x48" access="r" reset="unknown">
+    <doc>PROM register R4_L1_TO_ASIC_DATA. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="data" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH0" size="8" grade="established" register="yes" offset="0x1000" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH0_ALIAS" size="8" grade="established" register="yes" offset="0x1008" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH0_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH1" size="8" grade="established" register="yes" offset="0x1010" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH1_ALIAS" size="8" grade="established" register="yes" offset="0x1018" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH1_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH2" size="8" grade="established" register="yes" offset="0x1020" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH2_ALIAS" size="8" grade="established" register="yes" offset="0x1028" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH2_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_64" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH3" size="8" grade="established" register="yes" offset="0x1030" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH3. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH3_ALIAS" size="8" grade="established" register="yes" offset="0x1038" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH3_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH4" size="8" grade="established" register="yes" offset="0x1040" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH4. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH4_ALIAS" size="8" grade="established" register="yes" offset="0x1048" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH4_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH5" size="8" grade="established" register="yes" offset="0x1050" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH5. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH5_ALIAS" size="8" grade="established" register="yes" offset="0x1058" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH5_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH6" size="8" grade="established" register="yes" offset="0x1060" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH6. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH6_ALIAS" size="8" grade="established" register="yes" offset="0x1068" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH6_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH7" size="8" grade="established" register="yes" offset="0x1070" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH7. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH7_ALIAS" size="8" grade="established" register="yes" offset="0x1078" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH7_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH8" size="8" grade="established" register="yes" offset="0x1080" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH8. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH8_ALIAS" size="8" grade="established" register="yes" offset="0x1088" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH8_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH9" size="8" grade="established" register="yes" offset="0x1090" access="rw" reset="unknown">
+    <doc>PROM register R4_SCRATCH9. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH9_ALIAS" size="8" grade="established" register="yes" offset="0x1098" access="r" reset="unknown">
+    <doc>PROM register R4_SCRATCH9_ALIAS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="scratch_8" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASIC_FIRST_ERROR" size="8" grade="established" register="yes" offset="0x2000" access="rw" reset="unknown">
+    <doc>PROM register R4_ASIC_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="lb_error" start="8" size="1" type="uint" grade="established"/>
+    <field name="porth_error" start="7" size="1" type="uint" grade="established"/>
+    <field name="portg_error" start="6" size="1" type="uint" grade="established"/>
+    <field name="portf_error" start="5" size="1" type="uint" grade="established"/>
+    <field name="porte_error" start="4" size="1" type="uint" grade="established"/>
+    <field name="portd_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="portc_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="portb_error" start="1" size="1" type="uint" grade="established"/>
+    <field name="porta_error" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ASIC_FIRST_ERROR_TIMESTAMP" size="8" grade="established" register="yes" offset="0x2008" access="rw" reset="unknown">
+    <doc>PROM register R4_ASIC_FIRST_ERROR_TIMESTAMP. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="rtc_value" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_ERROR_SUMMARY" size="8" grade="established" register="yes" offset="0x2010" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_ERROR_SUMMARY. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="vch3_deadlock_to" start="20" size="1" type="uint" grade="established"/>
+    <field name="vch2_deadlock_to" start="19" size="1" type="uint" grade="established"/>
+    <field name="vch1_deadlock_to" start="18" size="1" type="uint" grade="established"/>
+    <field name="vch0_deadlock_to" start="17" size="1" type="uint" grade="established"/>
+    <field name="gather_spur_err" start="16" size="1" type="uint" grade="established"/>
+    <field name="gather_to" start="15" size="1" type="uint" grade="established"/>
+    <field name="gather_err" start="14" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_next_dir" start="13" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_this_dir" start="12" size="1" type="uint" grade="established"/>
+    <field name="rep_msg_len_err" start="11" size="1" type="uint" grade="established"/>
+    <field name="bad_rep_msg" start="10" size="1" type="uint" grade="established"/>
+    <field name="rep_sb_error" start="9" size="1" type="uint" grade="established"/>
+    <field name="req_bad_next_dir" start="8" size="1" type="uint" grade="established"/>
+    <field name="req_bad_this_dir" start="7" size="1" type="uint" grade="established"/>
+    <field name="jtag_pio_err" start="6" size="1" type="uint" grade="established"/>
+    <field name="pio_chn_to" start="5" size="1" type="uint" grade="established"/>
+    <field name="pio_unexp_valid" start="4" size="1" type="uint" grade="established"/>
+    <field name="pio_bad_addr" start="3" size="1" type="uint" grade="established"/>
+    <field name="req_msg_len_err" start="2" size="1" type="uint" grade="established"/>
+    <field name="bad_req_msg" start="1" size="1" type="uint" grade="established"/>
+    <field name="req_sb_error" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_FIRST_ERROR" size="8" grade="established" register="yes" offset="0x2020" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_FIRST_ERROR. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="vch3_deadlock_to" start="20" size="1" type="uint" grade="established"/>
+    <field name="vch2_deadlock_to" start="19" size="1" type="uint" grade="established"/>
+    <field name="vch1_deadlock_to" start="18" size="1" type="uint" grade="established"/>
+    <field name="vch0_deadlock_to" start="17" size="1" type="uint" grade="established"/>
+    <field name="gather_spur_err" start="16" size="1" type="uint" grade="established"/>
+    <field name="gather_to" start="15" size="1" type="uint" grade="established"/>
+    <field name="gather_err" start="14" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_next_dir" start="13" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_this_dir" start="12" size="1" type="uint" grade="established"/>
+    <field name="rep_msg_len_err" start="11" size="1" type="uint" grade="established"/>
+    <field name="bad_rep_msg" start="10" size="1" type="uint" grade="established"/>
+    <field name="rep_sb_error" start="9" size="1" type="uint" grade="established"/>
+    <field name="req_bad_next_dir" start="8" size="1" type="uint" grade="established"/>
+    <field name="req_bad_this_dir" start="7" size="1" type="uint" grade="established"/>
+    <field name="jtag_pio_err" start="6" size="1" type="uint" grade="established"/>
+    <field name="pio_chn_to" start="5" size="1" type="uint" grade="established"/>
+    <field name="pio_unexp_valid" start="4" size="1" type="uint" grade="established"/>
+    <field name="pio_bad_addr" start="3" size="1" type="uint" grade="established"/>
+    <field name="req_msg_len_err" start="2" size="1" type="uint" grade="established"/>
+    <field name="bad_req_msg" start="1" size="1" type="uint" grade="established"/>
+    <field name="req_sb_error" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_ERROR_REPORT_MASK" size="8" grade="established" register="yes" offset="0x2030" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_ERROR_REPORT_MASK. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="vch3_deadlock_to" start="20" size="1" type="uint" grade="established"/>
+    <field name="vch2_deadlock_to" start="19" size="1" type="uint" grade="established"/>
+    <field name="vch1_deadlock_to" start="18" size="1" type="uint" grade="established"/>
+    <field name="vch0_deadlock_to" start="17" size="1" type="uint" grade="established"/>
+    <field name="gather_spur_err" start="16" size="1" type="uint" grade="established"/>
+    <field name="gather_to" start="15" size="1" type="uint" grade="established"/>
+    <field name="gather_err" start="14" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_next_dir" start="13" size="1" type="uint" grade="established"/>
+    <field name="rep_bad_this_dir" start="12" size="1" type="uint" grade="established"/>
+    <field name="rep_msg_len_err" start="11" size="1" type="uint" grade="established"/>
+    <field name="bad_rep_msg" start="10" size="1" type="uint" grade="established"/>
+    <field name="rep_sb_error" start="9" size="1" type="uint" grade="established"/>
+    <field name="req_bad_next_dir" start="8" size="1" type="uint" grade="established"/>
+    <field name="req_bad_this_dir" start="7" size="1" type="uint" grade="established"/>
+    <field name="jtag_pio_err" start="6" size="1" type="uint" grade="established"/>
+    <field name="pio_chn_to" start="5" size="1" type="uint" grade="established"/>
+    <field name="pio_unexp_valid" start="4" size="1" type="uint" grade="established"/>
+    <field name="pio_bad_addr" start="3" size="1" type="uint" grade="established"/>
+    <field name="req_msg_len_err" start="2" size="1" type="uint" grade="established"/>
+    <field name="bad_req_msg" start="1" size="1" type="uint" grade="established"/>
+    <field name="req_sb_error" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_ERROR_DETAIL_1" size="8" grade="established" register="yes" offset="0x2050" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_ERROR_DETAIL_1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="command" start="56" size="8" type="uint" grade="established"/>
+    <field name="echo3_0" start="52" size="4" type="uint" grade="established"/>
+    <field name="address" start="3" size="49" type="uint" grade="established"/>
+    <field name="dest_chiplet" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_ERROR_DETAIL_2" size="8" grade="established" register="yes" offset="0x2060" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_ERROR_DETAIL_2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="supplemental" start="48" size="16" type="uint" grade="established"/>
+    <field name="src_chiplet" start="46" size="2" type="uint" grade="established"/>
+    <field name="source" start="32" size="14" type="uint" grade="established"/>
+    <field name="dir3_0" start="28" size="4" type="uint" grade="established"/>
+    <field name="echo7_4" start="24" size="4" type="uint" grade="established"/>
+    <field name="echo8" start="23" size="1" type="uint" grade="established"/>
+    <field name="dir4" start="22" size="1" type="uint" grade="established"/>
+    <field name="destination" start="8" size="14" type="uint" grade="established"/>
+    <field name="age" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB0_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2700" access="rw" reset="unknown">
+    <doc>PROM register R4_LB0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_DATELINE" size="8" grade="established" register="yes" offset="0x4000" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_DATELINE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="en" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_PREAGE" size="8" grade="established" register="yes" offset="0x4010" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_PREAGE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="age" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_TIME_OUT" size="8" grade="established" register="yes" offset="0x4020" access="rw" reset="unknown">
+    <doc>PROM register R4_PIO_TIME_OUT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="value" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_0" size="8" grade="established" register="yes" offset="0x4e00" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_1" size="8" grade="established" register="yes" offset="0x4e08" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_2" size="8" grade="established" register="yes" offset="0x4e10" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_3" size="8" grade="established" register="yes" offset="0x4e18" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_3. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_4" size="8" grade="established" register="yes" offset="0x4e20" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_4. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_5" size="8" grade="established" register="yes" offset="0x4e28" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_5. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_6" size="8" grade="established" register="yes" offset="0x4e30" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_6. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_7" size="8" grade="established" register="yes" offset="0x4e38" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_7. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_8" size="8" grade="established" register="yes" offset="0x4e40" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_8. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_9" size="8" grade="established" register="yes" offset="0x4e48" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_9. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_10" size="8" grade="established" register="yes" offset="0x4e50" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_10. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_11" size="8" grade="established" register="yes" offset="0x4e58" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_11. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_12" size="8" grade="established" register="yes" offset="0x4e60" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_12. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_13" size="8" grade="established" register="yes" offset="0x4e68" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_13. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_14" size="8" grade="established" register="yes" offset="0x4e70" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_14. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_TRANS_TABLE_15" size="8" grade="established" register="yes" offset="0x4e78" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_TRANS_TABLE_15. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="to" start="28" size="4" type="uint" grade="established"/>
+    <field name="self_inc_en" start="26" size="1" type="uint" grade="established"/>
+    <field name="vec_up_en" start="25" size="1" type="uint" grade="established"/>
+    <field name="vec_low_en" start="24" size="1" type="uint" grade="established"/>
+    <field name="vec_idx" start="20" size="2" type="uint" grade="established"/>
+    <field name="action" start="16" size="3" type="uint" grade="established"/>
+    <field name="cmd_out" start="8" size="8" type="uint" grade="established"/>
+    <field name="cmd_in" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_DEST_TABLE" size="8" grade="established" register="yes" offset="0x4e80" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_DEST_TABLE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="dir1" start="24" size="5" type="uint" grade="established"/>
+    <field name="dir0" start="16" size="5" type="uint" grade="established"/>
+    <field name="node_id" start="0" size="14" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_REP_GATHER_BUF" size="8" grade="established" register="yes" offset="0x4f00" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_REP_GATHER_BUF. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="free" start="63" size="1" type="uint" grade="established"/>
+    <field name="err" start="61" size="1" type="uint" grade="established"/>
+    <field name="forced_suppl" start="60" size="1" type="uint" grade="established"/>
+    <field name="mcast_done" start="59" size="1" type="uint" grade="established"/>
+    <field name="echo" start="50" size="9" type="uint" grade="established"/>
+    <field name="source_node" start="36" size="14" type="uint" grade="established"/>
+    <field name="timer" start="32" size="4" type="uint" grade="established"/>
+    <field name="dir1" start="24" size="5" type="uint" grade="established"/>
+    <field name="dir0" start="16" size="5" type="uint" grade="established"/>
+    <field name="exp_suppl" start="8" size="8" type="uint" grade="established"/>
+    <field name="act_suppl" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_GATHER_CONFIG" size="8" grade="established" register="yes" offset="0x4f80" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_GATHER_CONFIG. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="gather_to_tick" start="8" size="5" type="uint" grade="established"/>
+    <field name="lut_pair" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_DEST_VEC_0" size="8" grade="established" register="yes" offset="0x4f90" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_DEST_VEC_0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="exp_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="bit_map" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_DEST_VEC_1" size="8" grade="established" register="yes" offset="0x4f98" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_DEST_VEC_1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="exp_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="bit_map" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_DEST_VEC_2" size="8" grade="established" register="yes" offset="0x4fa0" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_DEST_VEC_2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="exp_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="bit_map" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="MCAST_DEST_VEC_3" size="8" grade="established" register="yes" offset="0x4fa8" access="rw" reset="unknown">
+    <doc>PROM register R4_MCAST_DEST_VEC_3. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="exp_count" start="16" size="8" type="uint" grade="established"/>
+    <field name="bit_map" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_LOCAL_TABLE" size="8" grade="established" register="yes" offset="0x5000" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_LOCAL_TABLE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="dir1" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_GLOBAL_TABLE" size="8" grade="established" register="yes" offset="0x6000" access="rw" reset="unknown">
+    <doc>PROM register R4_LB_GLOBAL_TABLE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="dir1" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC_SOURCE" size="8" grade="established" register="yes" offset="0x1001900" access="rw" reset="unknown">
+    <doc>PROM register R4_RTC_SOURCE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="porth_rtc_select" start="32" size="4" type="uint" grade="established"/>
+    <field name="portg_rtc_select" start="28" size="4" type="uint" grade="established"/>
+    <field name="portf_rtc_select" start="24" size="4" type="uint" grade="established"/>
+    <field name="porte_rtc_select" start="20" size="4" type="uint" grade="established"/>
+    <field name="portd_rtc_select" start="16" size="4" type="uint" grade="established"/>
+    <field name="portc_rtc_select" start="12" size="4" type="uint" grade="established"/>
+    <field name="portb_rtc_select" start="8" size="4" type="uint" grade="established"/>
+    <field name="porta_rtc_select" start="4" size="4" type="uint" grade="established"/>
+    <field name="lb_rtc_select" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC_INTRN_CNTRL" size="8" grade="established" register="yes" offset="0x1001908" access="rw" reset="unknown">
+    <doc>PROM register R4_RTC_INTRN_CNTRL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="16" size="10" type="uint" grade="established"/>
+    <field name="max_count" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_INTERVAL" size="8" grade="established" register="yes" offset="0x1001910" access="rw" reset="unknown">
+    <doc>PROM register R4_THROTTLE_INTERVAL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="30" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_TIME" size="8" grade="established" register="yes" offset="0x1001918" access="rw" reset="unknown">
+    <doc>PROM register R4_THROTTLE_TIME. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="30" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_STATUS" size="8" grade="established" register="yes" offset="0x1001920" access="r" reset="unknown">
+    <doc>PROM register R4_THROTTLE_STATUS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="time" start="32" size="30" type="uint" grade="established"/>
+    <field name="interval" start="0" size="30" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_SKIP" size="8" grade="established" register="yes" offset="0x1001928" access="rw" reset="unknown">
+    <doc>PROM register R4_THROTTLE_SKIP. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="next" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEBUG_PORT_CONFIG" size="8" grade="established" register="yes" offset="0x1001930" access="rw" reset="unknown">
+    <doc>PROM register R4_DEBUG_PORT_CONFIG. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="en" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="VBIT_EMUL" size="8" grade="established" register="yes" offset="0x1001938" access="rw" reset="unknown">
+    <doc>PROM register R4_VBIT_EMUL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="v_bit_emulation" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB1_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x1002700" access="rw" reset="unknown">
+    <doc>PROM register R4_LB1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="HARD_RESET" size="8" grade="established" register="yes" offset="0x1003000" access="rw" reset="unknown">
+    <doc>PROM register R4_HARD_RESET. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="hard_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SOFT_RESET" size="8" grade="established" register="yes" offset="0x1003008" access="rw" reset="unknown">
+    <doc>PROM register R4_SOFT_RESET. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="soft_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_RESET" size="8" grade="established" register="yes" offset="0x1003010" access="rw" reset="unknown">
+    <doc>PROM register R4_PORT_RESET. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="port_warm_reset" start="9" size="1" type="uint" grade="established"/>
+    <field name="porth_link_reset" start="8" size="1" type="uint" grade="established"/>
+    <field name="portg_link_reset" start="7" size="1" type="uint" grade="established"/>
+    <field name="portf_link_reset" start="6" size="1" type="uint" grade="established"/>
+    <field name="porte_link_reset" start="5" size="1" type="uint" grade="established"/>
+    <field name="portd_link_reset" start="4" size="1" type="uint" grade="established"/>
+    <field name="portc_link_reset" start="3" size="1" type="uint" grade="established"/>
+    <field name="portb_link_reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="porta_link_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="lb_reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROTECTION_CONFIG" size="8" grade="established" register="yes" offset="0x1003018" access="rw" reset="unknown">
+    <doc>PROM register R4_PROTECTION_CONFIG. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="lb_force_local_lut" start="30" size="1" type="uint" grade="established"/>
+    <field name="porth_force_local_lut" start="29" size="1" type="uint" grade="established"/>
+    <field name="portg_force_local_lut" start="28" size="1" type="uint" grade="established"/>
+    <field name="portf_force_local_lut" start="27" size="1" type="uint" grade="established"/>
+    <field name="porte_force_local_lut" start="26" size="1" type="uint" grade="established"/>
+    <field name="portd_force_local_lut" start="25" size="1" type="uint" grade="established"/>
+    <field name="portc_force_local_lut" start="24" size="1" type="uint" grade="established"/>
+    <field name="portb_force_local_lut" start="23" size="1" type="uint" grade="established"/>
+    <field name="porta_force_local_lut" start="22" size="1" type="uint" grade="established"/>
+    <field name="node_id" start="8" size="14" type="uint" grade="established"/>
+    <field name="porth_local_reset_en" start="7" size="1" type="uint" grade="established"/>
+    <field name="portg_local_reset_en" start="6" size="1" type="uint" grade="established"/>
+    <field name="portf_local_reset_en" start="5" size="1" type="uint" grade="established"/>
+    <field name="porte_local_reset_en" start="4" size="1" type="uint" grade="established"/>
+    <field name="portd_local_reset_en" start="3" size="1" type="uint" grade="established"/>
+    <field name="portc_local_reset_en" start="2" size="1" type="uint" grade="established"/>
+    <field name="portb_local_reset_en" start="1" size="1" type="uint" grade="established"/>
+    <field name="porta_local_reset_en" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_RST_MASK" size="8" grade="established" register="yes" offset="0x1003020" access="rw" count="8" stride="8" reset="unknown">
+    <doc>PROM register R4_PORTA_RST_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="from_porth" start="7" size="1" type="uint" grade="established"/>
+    <field name="from_portg" start="6" size="1" type="uint" grade="established"/>
+    <field name="from_portf" start="5" size="1" type="uint" grade="established"/>
+    <field name="from_porte" start="4" size="1" type="uint" grade="established"/>
+    <field name="from_portd" start="3" size="1" type="uint" grade="established"/>
+    <field name="from_portc" start="2" size="1" type="uint" grade="established"/>
+    <field name="from_portb" start="1" size="1" type="uint" grade="established"/>
+    <field name="from_porta" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_WIN" size="8" grade="established" register="yes" offset="0x1003100" access="rw" reset="unknown">
+    <doc>PROM register R4_PORT_PERF_WIN. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="force_en" start="63" size="1" type="uint" grade="established"/>
+    <field name="clear" start="62" size="1" type="uint" grade="established"/>
+    <field name="cnt" start="0" size="60" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_ARM_MASK" size="8" grade="established" register="yes" offset="0x1004000" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_ARM_MASK. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_COUNTER_PRESETS" size="8" grade="established" register="yes" offset="0x1004080" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_COUNTER_PRESETS. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count_8a" start="56" size="8" type="uint" grade="established"/>
+    <field name="count_8b" start="48" size="8" type="uint" grade="established"/>
+    <field name="count_16" start="32" size="16" type="uint" grade="established"/>
+    <field name="count_32" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_DECREMENT_CTL" size="8" grade="established" register="yes" offset="0x1004100" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_DECREMENT_CTL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="ctl" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_DIAG_MSG_CTL" size="8" grade="established" register="yes" offset="0x1004180" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_DIAG_MSG_CTL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="enable" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_DISARM_MASK" size="8" grade="established" register="yes" offset="0x1004200" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_DISARM_MASK. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_ENABLE_CTL" size="8" grade="established" register="yes" offset="0x1004280" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_ENABLE_CTL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="ctl" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_SOFTWARE_ARM" size="8" grade="established" register="yes" offset="0x1004300" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_SOFTWARE_ARM. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit7" start="7" size="1" type="uint" grade="established"/>
+    <field name="bit6" start="6" size="1" type="uint" grade="established"/>
+    <field name="bit5" start="5" size="1" type="uint" grade="established"/>
+    <field name="bit4" start="4" size="1" type="uint" grade="established"/>
+    <field name="bit3" start="3" size="1" type="uint" grade="established"/>
+    <field name="bit2" start="2" size="1" type="uint" grade="established"/>
+    <field name="bit1" start="1" size="1" type="uint" grade="established"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_SOFTWARE_DISARM" size="8" grade="established" register="yes" offset="0x1004380" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_SOFTWARE_DISARM. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit7" start="7" size="1" type="uint" grade="established"/>
+    <field name="bit6" start="6" size="1" type="uint" grade="established"/>
+    <field name="bit5" start="5" size="1" type="uint" grade="established"/>
+    <field name="bit4" start="4" size="1" type="uint" grade="established"/>
+    <field name="bit3" start="3" size="1" type="uint" grade="established"/>
+    <field name="bit2" start="2" size="1" type="uint" grade="established"/>
+    <field name="bit1" start="1" size="1" type="uint" grade="established"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_SOFTWARE_TRIGGERED" size="8" grade="established" register="yes" offset="0x1004400" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_SOFTWARE_TRIGGERED. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit7" start="7" size="1" type="uint" grade="established"/>
+    <field name="bit6" start="6" size="1" type="uint" grade="established"/>
+    <field name="bit5" start="5" size="1" type="uint" grade="established"/>
+    <field name="bit4" start="4" size="1" type="uint" grade="established"/>
+    <field name="bit3" start="3" size="1" type="uint" grade="established"/>
+    <field name="bit2" start="2" size="1" type="uint" grade="established"/>
+    <field name="bit1" start="1" size="1" type="uint" grade="established"/>
+    <field name="bit0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_TRIGGER_MASK" size="8" grade="established" register="yes" offset="0x1004480" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_TRIGGER_MASK. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_ARMED_STATE" size="8" grade="established" register="yes" offset="0x1005000" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_ARMED_STATE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="state" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_COUNTER_VALUE" size="8" grade="established" register="yes" offset="0x1005080" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_COUNTER_VALUE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count_8a" start="56" size="8" type="uint" grade="established"/>
+    <field name="count_8b" start="48" size="8" type="uint" grade="established"/>
+    <field name="count_16" start="32" size="16" type="uint" grade="established"/>
+    <field name="count_32" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="TSF_TRIGGERED_STATE" size="8" grade="established" register="yes" offset="0x1005100" access="rw" reset="unknown">
+    <doc>PROM register R4_TSF_TRIGGERED_STATE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="state" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="ROOT_TEST_POINT_SELECT" size="8" grade="established" register="yes" offset="0x1006000" access="rw" reset="unknown">
+    <doc>PROM register R4_ROOT_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger_enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="ROOT_TEST_POINT_COMPARE" size="8" grade="established" register="yes" offset="0x1006008" access="rw" reset="unknown">
+    <doc>PROM register R4_ROOT_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="compare_pattern" start="32" size="32" type="uint" grade="established"/>
+    <field name="compare_mask" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="ROOT_TEST_POINT_TRIGGER_SELECT" size="8" grade="established" register="yes" offset="0x1006010" access="rw" reset="unknown">
+    <doc>PROM register R4_ROOT_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="trigger7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="trigger6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="trigger6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="trigger5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="trigger5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="trigger4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="trigger4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="trigger3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="trigger3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="trigger2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="trigger2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="trigger1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="trigger1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="trigger0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="trigger0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH1_TEST_POINT_SELECT" size="8" grade="established" register="yes" offset="0x1006020" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH1_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger_enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH1_TEST_POINT_COMPARE" size="8" grade="established" register="yes" offset="0x1006028" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH1_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="compare_pattern" start="32" size="32" type="uint" grade="established"/>
+    <field name="compare_mask" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH1_TEST_POINT_TRIGGER_SELECT" size="8" grade="established" register="yes" offset="0x1006030" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH1_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="trigger7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="trigger6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="trigger6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="trigger5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="trigger5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="trigger4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="trigger4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="trigger3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="trigger3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="trigger2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="trigger2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="trigger1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="trigger1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="trigger0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="trigger0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH2_TEST_POINT_SELECT" size="8" grade="established" register="yes" offset="0x1006040" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH2_TEST_POINT_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger_enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH2_TEST_POINT_COMPARE" size="8" grade="established" register="yes" offset="0x1006048" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH2_TEST_POINT_COMPARE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="compare_pattern" start="32" size="32" type="uint" grade="established"/>
+    <field name="compare_mask" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH2_TEST_POINT_TRIGGER_SELECT" size="8" grade="established" register="yes" offset="0x1006050" access="rw" reset="unknown">
+    <doc>PROM register R4_BRANCH2_TEST_POINT_TRIGGER_SELECT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trigger7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="trigger7_chiplet_sel" start="56" size="3" type="uint" grade="established"/>
+    <field name="trigger6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="trigger6_chiplet_sel" start="48" size="3" type="uint" grade="established"/>
+    <field name="trigger5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="trigger5_chiplet_sel" start="40" size="3" type="uint" grade="established"/>
+    <field name="trigger4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="trigger4_chiplet_sel" start="32" size="3" type="uint" grade="established"/>
+    <field name="trigger3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="trigger3_chiplet_sel" start="24" size="3" type="uint" grade="established"/>
+    <field name="trigger2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="trigger2_chiplet_sel" start="16" size="3" type="uint" grade="established"/>
+    <field name="trigger1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="trigger1_chiplet_sel" start="8" size="3" type="uint" grade="established"/>
+    <field name="trigger0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="trigger0_chiplet_sel" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH1_DEBUG_DATA" size="8" grade="established" register="yes" offset="0x1007100" access="r" reset="unknown">
+    <doc>PROM register R4_BRANCH1_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trig" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="BRANCH2_DEBUG_DATA" size="8" grade="established" register="yes" offset="0x1007108" access="r" reset="unknown">
+    <doc>PROM register R4_BRANCH2_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trig" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="ROOT_DEBUG_DATA" size="8" grade="established" register="yes" offset="0x1007110" access="r" reset="unknown">
+    <doc>PROM register R4_ROOT_DEBUG_DATA. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="trig" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="STOP_CLK_CONTROL" size="8" grade="established" register="yes" offset="0x1008000" access="rw" reset="unknown">
+    <doc>PROM register R4_STOP_CLK_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="enable" start="8" size="1" type="uint" grade="established"/>
+    <field name="mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="event" start="5" size="1" type="uint" grade="established"/>
+    <field name="stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="STOP_CLK_DELAY_PHASE" size="8" grade="established" register="yes" offset="0x1008080" access="rw" reset="unknown">
+    <doc>PROM register R4_STOP_CLK_DELAY_PHASE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="delay" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT0_CONTROL" size="8" grade="established" register="yes" offset="0x1080000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT0_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT1_CONTROL" size="8" grade="established" register="yes" offset="0x1090000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT1_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT2_CONTROL" size="8" grade="established" register="yes" offset="0x10a0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT2_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT3_CONTROL" size="8" grade="established" register="yes" offset="0x10b0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT3_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT4_CONTROL" size="8" grade="established" register="yes" offset="0x10c0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT4_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT5_CONTROL" size="8" grade="established" register="yes" offset="0x10d0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT5_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT6_CONTROL" size="8" grade="established" register="yes" offset="0x10e0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT6_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNT7_CONTROL" size="8" grade="established" register="yes" offset="0x10f0000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNT7_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="clr_enable" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_mode" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_polarity" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_event" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_stimulus" start="24" size="5" type="uint" grade="established"/>
+    <field name="peak_det_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="dec_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inc_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="dn_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="dn_polarity" start="14" size="1" type="uint" grade="established"/>
+    <field name="dn_event" start="13" size="1" type="uint" grade="established"/>
+    <field name="dn_stimulus" start="8" size="5" type="uint" grade="established"/>
+    <field name="up_mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="up_polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="up_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="up_stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_DN_CONTROL" size="8" grade="established" register="yes" offset="0x1100000" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_DN_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="event" start="5" size="1" type="uint" grade="established"/>
+    <field name="stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_PEAK_CONTROL" size="8" grade="established" register="yes" offset="0x1100080" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_PEAK_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="event" start="5" size="1" type="uint" grade="established"/>
+    <field name="stimulus" start="3" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_RANGE" size="8" grade="established" register="yes" offset="0x1100100" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_RANGE. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="range7" start="56" size="8" type="uint" grade="established"/>
+    <field name="range6" start="48" size="8" type="uint" grade="established"/>
+    <field name="range5" start="40" size="8" type="uint" grade="established"/>
+    <field name="range4" start="32" size="8" type="uint" grade="established"/>
+    <field name="range3" start="24" size="8" type="uint" grade="established"/>
+    <field name="range2" start="16" size="8" type="uint" grade="established"/>
+    <field name="range1" start="8" size="8" type="uint" grade="established"/>
+    <field name="range0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_UP_CONTROL" size="8" grade="established" register="yes" offset="0x1100180" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_UP_CONTROL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mode" start="7" size="1" type="uint" grade="established"/>
+    <field name="polarity" start="6" size="1" type="uint" grade="established"/>
+    <field name="event" start="5" size="1" type="uint" grade="established"/>
+    <field name="stimulus" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_0" size="8" grade="established" register="yes" offset="0x1100200" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_1" size="8" grade="established" register="yes" offset="0x1100208" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_2" size="8" grade="established" register="yes" offset="0x1100210" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_3" size="8" grade="established" register="yes" offset="0x1100218" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_3. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_4" size="8" grade="established" register="yes" offset="0x1100220" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_4. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_5" size="8" grade="established" register="yes" offset="0x1100228" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_5. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_6" size="8" grade="established" register="yes" offset="0x1100230" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_6. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_7" size="8" grade="established" register="yes" offset="0x1100238" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_7. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_8" size="8" grade="established" register="yes" offset="0x1100240" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_8. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_9" size="8" grade="established" register="yes" offset="0x1100248" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_9. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_10" size="8" grade="established" register="yes" offset="0x1100250" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_10. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_11" size="8" grade="established" register="yes" offset="0x1100258" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_11. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_12" size="8" grade="established" register="yes" offset="0x1100260" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_12. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_13" size="8" grade="established" register="yes" offset="0x1100268" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_13. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_14" size="8" grade="established" register="yes" offset="0x1100270" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_14. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERF_TRIG_PATTERN_15" size="8" grade="established" register="yes" offset="0x1100278" access="rw" reset="unknown">
+    <doc>PROM register R4_PERF_TRIG_PATTERN_15. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="bit_en" start="32" size="32" type="uint" grade="established"/>
+    <field name="data" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER0" size="8" grade="established" register="yes" offset="0x1110000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER0. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER1" size="8" grade="established" register="yes" offset="0x1120000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER1. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER2" size="8" grade="established" register="yes" offset="0x1130000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER2. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER3" size="8" grade="established" register="yes" offset="0x1140000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER3. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER4" size="8" grade="established" register="yes" offset="0x1150000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER4. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER5" size="8" grade="established" register="yes" offset="0x1160000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER5. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER6" size="8" grade="established" register="yes" offset="0x1170000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER6. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_COUNTER7" size="8" grade="established" register="yes" offset="0x1180000" access="rw" reset="unknown">
+    <doc>PROM register R4_PERFORMANCE_COUNTER7. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_COUNTER" size="8" grade="established" register="yes" offset="0x1190000" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_COUNTER. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="counter" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PROFILE_PEAK" size="8" grade="established" register="yes" offset="0x1190080" access="rw" reset="unknown">
+    <doc>PROM register R4_PROFILE_PEAK. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="counter" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_VC0_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000010" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PROM register R4_PORTA_VC0_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_lb" start="32" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_VC1_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000018" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PROM register R4_PORTA_VC1_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_lb" start="32" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_VC2_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000020" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PROM register R4_PORTA_VC2_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_lb" start="32" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_VC3_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000028" access="rw" count="8" stride="32" reset="unknown">
+    <doc>PROM register R4_PORTA_VC3_N_COUNT_INIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_lb" start="32" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBL_VC0_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000120" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBL_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBL_VC1_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000128" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBL_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBL_VC2_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000130" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBL_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBL_VC3_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000138" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBL_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_h" start="28" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_g" start="24" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_b" start="4" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_a" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBR_VC0_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000140" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBR_VC0_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBR_VC1_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000148" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBR_VC1_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBR_VC2_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000150" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBR_VC2_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBR_VC3_N_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000158" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBR_VC3_N_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="n_init_input_port_f" start="20" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_e" start="16" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_d" start="12" size="2" type="uint" grade="established"/>
+    <field name="n_init_input_port_c" start="8" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTA_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000400" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTB_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000408" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTG_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000410" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTH_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000418" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBL_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000420" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBL_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTC_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000428" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTD_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000430" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTE_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000438" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTF_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000440" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTA_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORTLB_ARBR_D_COUNT_INIT" size="8" grade="established" register="yes" offset="0x2000448" access="rw" reset="unknown">
+    <doc>PROM register R4_PORTLB_ARBR_D_COUNT_INIT. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="d_init_vc3" start="24" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc2" start="16" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc1" start="8" size="8" type="uint" grade="established"/>
+    <field name="d_init_vc0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_ENABLE_ARBL" size="8" grade="established" register="yes" offset="0x2000500" access="rw" reset="unknown">
+    <doc>PROM register R4_THROTTLE_ENABLE_ARBL. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="inputh_vc3_enable" start="31" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc2_enable" start="30" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc1_enable" start="29" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc0_enable" start="28" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc3_enable" start="27" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc2_enable" start="26" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc1_enable" start="25" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc0_enable" start="24" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc3_enable" start="23" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc2_enable" start="22" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc1_enable" start="21" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc0_enable" start="20" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc3_enable" start="19" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc2_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc1_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc0_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc3_enable" start="15" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc2_enable" start="14" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc1_enable" start="13" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc0_enable" start="12" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc3_enable" start="11" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc2_enable" start="10" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc1_enable" start="9" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc0_enable" start="8" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc3_enable" start="7" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc2_enable" start="6" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc1_enable" start="5" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc0_enable" start="4" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc3_enable" start="3" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc2_enable" start="2" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc1_enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc0_enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="THROTTLE_ENABLE_ARBR" size="8" grade="established" register="yes" offset="0x2000508" access="rw" reset="unknown">
+    <doc>PROM register R4_THROTTLE_ENABLE_ARBR. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="inputh_vc3_enable" start="31" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc2_enable" start="30" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc1_enable" start="29" size="1" type="uint" grade="established"/>
+    <field name="inputh_vc0_enable" start="28" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc3_enable" start="27" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc2_enable" start="26" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc1_enable" start="25" size="1" type="uint" grade="established"/>
+    <field name="inputg_vc0_enable" start="24" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc3_enable" start="23" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc2_enable" start="22" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc1_enable" start="21" size="1" type="uint" grade="established"/>
+    <field name="inputf_vc0_enable" start="20" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc3_enable" start="19" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc2_enable" start="18" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc1_enable" start="17" size="1" type="uint" grade="established"/>
+    <field name="inpute_vc0_enable" start="16" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc3_enable" start="15" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc2_enable" start="14" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc1_enable" start="13" size="1" type="uint" grade="established"/>
+    <field name="inputd_vc0_enable" start="12" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc3_enable" start="11" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc2_enable" start="10" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc1_enable" start="9" size="1" type="uint" grade="established"/>
+    <field name="inputc_vc0_enable" start="8" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc3_enable" start="7" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc2_enable" start="6" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc1_enable" start="5" size="1" type="uint" grade="established"/>
+    <field name="inputb_vc0_enable" start="4" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc3_enable" start="3" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc2_enable" start="2" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc1_enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="inputa_vc0_enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="AGE_RATE_PORT" size="8" grade="established" register="yes" offset="0x2000600" access="rw" count="8" stride="16" reset="unknown">
+    <doc>PROM register R4_AGE_RATE_PORTA; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="age_rate_enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="age_range_7_trigger" start="56" size="5" type="uint" grade="established"/>
+    <field name="age_range_6_trigger" start="48" size="5" type="uint" grade="established"/>
+    <field name="age_range_5_trigger" start="40" size="5" type="uint" grade="established"/>
+    <field name="age_range_4_trigger" start="32" size="5" type="uint" grade="established"/>
+    <field name="age_range_3_trigger" start="24" size="5" type="uint" grade="established"/>
+    <field name="age_range_2_trigger" start="16" size="5" type="uint" grade="established"/>
+    <field name="age_range_1_trigger" start="8" size="5" type="uint" grade="established"/>
+    <field name="age_range_0_trigger" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="AGE_RATE_PORTLB" size="8" grade="established" register="yes" offset="0x2000680" access="rw" reset="unknown">
+    <doc>PROM register R4_AGE_RATE_PORTLB. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="age_rate_enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="age_range_7_trigger" start="56" size="5" type="uint" grade="established"/>
+    <field name="age_range_6_trigger" start="48" size="5" type="uint" grade="established"/>
+    <field name="age_range_5_trigger" start="40" size="5" type="uint" grade="established"/>
+    <field name="age_range_4_trigger" start="32" size="5" type="uint" grade="established"/>
+    <field name="age_range_3_trigger" start="24" size="5" type="uint" grade="established"/>
+    <field name="age_range_2_trigger" start="16" size="5" type="uint" grade="established"/>
+    <field name="age_range_1_trigger" start="8" size="5" type="uint" grade="established"/>
+    <field name="age_range_0_trigger" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="ARBL_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002700" access="rw" reset="unknown">
+    <doc>PROM register R4_ARBL_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="ARBR_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002720" access="rw" reset="unknown">
+    <doc>PROM register R4_ARBR_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CDQ0_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002740" access="rw" reset="unknown">
+    <doc>PROM register R4_CDQ0_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CDQ1_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002760" access="rw" reset="unknown">
+    <doc>PROM register R4_CDQ1_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CDQ2_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002780" access="rw" reset="unknown">
+    <doc>PROM register R4_CDQ2_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="CDQ3_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x2002800" access="rw" reset="unknown">
+    <doc>PROM register R4_CDQ3_TEST_POINT_SELECT_512. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LOCAL_TABLE" size="8" grade="established" register="yes" offset="0x8000000" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LOCAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="dir0" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_GLOBAL_TABLE" size="8" grade="established" register="yes" offset="0x8001000" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_GLOBAL_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="dir0" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_NEIGHBOR_TABLE" size="8" grade="established" register="yes" offset="0x8001800" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_NEIGHBOR_TABLE; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="neighbor_id" start="0" size="14" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PARMS" size="8" grade="established" register="yes" offset="0x8001840" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PARMS; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="spare" start="30" size="8" type="uint" grade="established"/>
+    <field name="v_bit_emulation" start="29" size="1" type="uint" grade="established"/>
+    <field name="new_dir_spray_enable" start="28" size="1" type="uint" grade="established"/>
+    <field name="dir_spray_enable" start="27" size="1" type="uint" grade="established"/>
+    <field name="extend_enable" start="26" size="1" type="uint" grade="established"/>
+    <field name="extend_shub_input" start="25" size="1" type="uint" grade="established"/>
+    <field name="extend_shub_dir_vec" start="17" size="8" type="uint" grade="established"/>
+    <field name="arm_force_cb_error" start="16" size="1" type="uint" grade="established"/>
+    <field name="linkreset_on_bufferoverflow" start="15" size="1" type="uint" grade="established"/>
+    <field name="eatuntiltail_on_bufferoverflow" start="14" size="1" type="uint" grade="established"/>
+    <field name="linkreset_on_fifooverflow" start="13" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_eat_enable_vch3" start="12" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_eat_enable_vch2" start="11" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_eat_enable_vch1" start="10" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_eat_enable_vch0" start="9" size="1" type="uint" grade="established"/>
+    <field name="tail_to_error_tail_enable_vch3" start="8" size="1" type="uint" grade="established"/>
+    <field name="tail_to_error_tail_enable_vch2" start="7" size="1" type="uint" grade="established"/>
+    <field name="tail_to_error_tail_enable_vch1" start="6" size="1" type="uint" grade="established"/>
+    <field name="tail_to_error_tail_enable_vch0" start="5" size="1" type="uint" grade="established"/>
+    <field name="mip_reset_enable" start="4" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_val" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SPRAY_DIR" size="8" grade="established" register="yes" offset="0x8001848" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_SPRAY_DIR; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="dir7" start="56" size="8" type="uint" grade="established"/>
+    <field name="dir6" start="48" size="8" type="uint" grade="established"/>
+    <field name="dir5" start="40" size="8" type="uint" grade="established"/>
+    <field name="dir4" start="32" size="8" type="uint" grade="established"/>
+    <field name="dir3" start="24" size="8" type="uint" grade="established"/>
+    <field name="dir2" start="16" size="8" type="uint" grade="established"/>
+    <field name="dir1" start="8" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SPRAY_CMD_3F_0" size="8" grade="established" register="yes" offset="0x8001850" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_SPRAY_CMD_3F_0; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SPRAY_CMD_7F_40" size="8" grade="established" register="yes" offset="0x8001858" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_SPRAY_CMD_7F_40; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SPRAY_CMD_BF_80" size="8" grade="established" register="yes" offset="0x8001860" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_SPRAY_CMD_BF_80; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_SPRAY_CMD_FF_C0" size="8" grade="established" register="yes" offset="0x8001868" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_SPRAY_CMD_FF_C0; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="mask" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_CONFIG" size="8" grade="established" register="yes" offset="0x8001888" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="enable_rmt_ft_upd" start="4" size="1" type="uint" grade="established"/>
+    <field name="enable_tuning" start="3" size="1" type="uint" grade="established"/>
+    <field name="ac_encode" start="2" size="1" type="uint" grade="established"/>
+    <field name="enablelink" start="1" size="1" type="uint" grade="established"/>
+    <field name="bitmode32" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_TEST_CTL" size="8" grade="established" register="yes" offset="0x8001890" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_TEST_CTL; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cb_error" start="62" size="1" type="uint" grade="established"/>
+    <field name="captured" start="61" size="1" type="uint" grade="established"/>
+    <field name="fakesnerror" start="60" size="1" type="uint" grade="established"/>
+    <field name="send_sn_error" start="59" size="1" type="uint" grade="established"/>
+    <field name="send_cb_error" start="58" size="1" type="uint" grade="established"/>
+    <field name="capture_cb_only" start="57" size="1" type="uint" grade="established"/>
+    <field name="arm_capture" start="56" size="1" type="uint" grade="established"/>
+    <field name="noise_mode" start="54" size="2" type="uint" grade="established"/>
+    <field name="lfsr_mode" start="52" size="2" type="uint" grade="established"/>
+    <field name="wire_sel" start="44" size="6" type="uint" grade="established"/>
+    <field name="send_test_mode" start="40" size="2" type="uint" grade="established"/>
+    <field name="pattern" start="0" size="40" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_STATE" size="8" grade="established" register="yes" offset="0x8001898" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="link_send_fsm_state" start="10" size="6" type="uint" grade="established"/>
+    <field name="link_rcv_fsm_state" start="4" size="6" type="uint" grade="established"/>
+    <field name="link_reset_state" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_ERR1" size="8" grade="established" register="yes" offset="0x80018a0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_ERR1; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="retry_count" start="48" size="16" type="uint" grade="established"/>
+    <field name="rx_cb_err_count" start="16" size="32" type="uint" grade="established"/>
+    <field name="rx_sn_err_count" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_ERR2" size="8" grade="established" register="yes" offset="0x80018a8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_ERR2; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="coresentbadcrc_count" start="28" size="6" type="uint" grade="established"/>
+    <field name="squash" start="27" size="1" type="uint" grade="established"/>
+    <field name="reset_timeout" start="26" size="1" type="uint" grade="established"/>
+    <field name="retry_timeout" start="25" size="1" type="uint" grade="established"/>
+    <field name="wire_overflow" start="24" size="1" type="uint" grade="established"/>
+    <field name="wire_cnt" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_CAPT_WD1" size="8" grade="established" register="yes" offset="0x80018b0" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_CAPT_WD1; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="data" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_CAPT_WD2" size="8" grade="established" register="yes" offset="0x80018b8" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_CAPT_WD2; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="data" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_CAPT_SBCB" size="8" grade="established" register="yes" offset="0x80018c0" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_CAPT_SBCB; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="faked_all_sn_errors" start="34" size="1" type="uint" grade="established"/>
+    <field name="sent_all_sn_errors" start="33" size="1" type="uint" grade="established"/>
+    <field name="sent_all_cb_errors" start="32" size="1" type="uint" grade="established"/>
+    <field name="captured_rcv_crc" start="16" size="16" type="uint" grade="established"/>
+    <field name="captured_rcvsbsn" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_CREDIT" size="8" grade="established" register="yes" offset="0x80018c8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_CREDIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="send_limit_vch3" start="56" size="7" type="uint" grade="established"/>
+    <field name="send_limit_vch2" start="48" size="7" type="uint" grade="established"/>
+    <field name="send_limit_vch1" start="40" size="7" type="uint" grade="established"/>
+    <field name="send_limit_vch0" start="32" size="7" type="uint" grade="established"/>
+    <field name="rcv_initial_vch3" start="24" size="6" type="uint" grade="established"/>
+    <field name="rcv_initial_vch2" start="16" size="6" type="uint" grade="established"/>
+    <field name="rcv_initial_vch1" start="8" size="6" type="uint" grade="established"/>
+    <field name="rcv_initial_vch0" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_DEBIT" size="8" grade="established" register="yes" offset="0x80018d0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_DEBIT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="en_short_interval" start="36" size="1" type="uint" grade="established"/>
+    <field name="en_xmitbuf_threshold" start="35" size="1" type="uint" grade="established"/>
+    <field name="credit_only_interval" start="32" size="3" type="uint" grade="established"/>
+    <field name="force_debit_vch3" start="30" size="1" type="uint" grade="established"/>
+    <field name="withhold_vch3" start="24" size="6" type="uint" grade="established"/>
+    <field name="force_debit_vch2" start="22" size="1" type="uint" grade="established"/>
+    <field name="withhold_vch2" start="16" size="6" type="uint" grade="established"/>
+    <field name="force_debit_vch1" start="14" size="1" type="uint" grade="established"/>
+    <field name="withhold_vch1" start="8" size="6" type="uint" grade="established"/>
+    <field name="force_debit_vch0" start="6" size="1" type="uint" grade="established"/>
+    <field name="withhold_vch0" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_CREDIT_STATE" size="8" grade="established" register="yes" offset="0x80018d8" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_CREDIT_STATE; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="credits_vch3" start="56" size="8" type="uint" grade="established"/>
+    <field name="credits_vch2" start="48" size="8" type="uint" grade="established"/>
+    <field name="credits_vch1" start="40" size="8" type="uint" grade="established"/>
+    <field name="credits_vch0" start="32" size="8" type="uint" grade="established"/>
+    <field name="debits_vch3" start="24" size="6" type="uint" grade="established"/>
+    <field name="debits_vch2" start="16" size="6" type="uint" grade="established"/>
+    <field name="debits_vch1" start="8" size="6" type="uint" grade="established"/>
+    <field name="debits_vch0" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_LLP_PKT" size="8" grade="established" register="yes" offset="0x80018e0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_LLP_PKT; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="count" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERROR_DETAIL" size="8" grade="established" register="yes" offset="0x8002000" access="r" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_ERROR_DETAIL; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="detail" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERROR_DETAIL_CLEAR" size="8" grade="established" register="yes" offset="0x8002100" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_ERROR_DETAIL_CLEAR; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERROR_SUMMARY" size="8" grade="established" register="yes" offset="0x8002200" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_ERROR_SUMMARY; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="extend_turn_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="coresentbadcrc_cnt_non_zero" start="45" size="1" type="uint" grade="established"/>
+    <field name="retry_cnt_non_zero" start="44" size="1" type="uint" grade="established"/>
+    <field name="cb_error_cnt_non_zero" start="43" size="1" type="uint" grade="established"/>
+    <field name="sn_error_cnt_non_zero" start="42" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch3" start="41" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch2" start="40" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch1" start="39" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch0" start="38" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch3" start="37" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch2" start="36" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch1" start="35" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch0" start="34" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch3" start="33" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch2" start="32" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch1" start="31" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch0" start="30" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch3" start="29" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch2" start="28" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch1" start="27" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch0" start="26" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch3" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch2" start="24" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch1" start="23" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch0" start="22" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch3" start="21" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch1" start="20" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch3" start="19" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch2" start="18" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch1" start="17" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch0" start="16" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch3" start="15" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch2" start="14" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch1" start="13" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch0" start="12" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch3" start="11" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch2" start="10" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch1" start="9" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch0" start="8" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch3" start="7" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch2" start="6" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch1" start="5" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch0" start="4" size="1" type="uint" grade="established"/>
+    <field name="retry_to" start="3" size="1" type="uint" grade="established"/>
+    <field name="rcv_link_reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="rcv_warm_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="power_not_ok" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_FIRST_ERROR" size="8" grade="established" register="yes" offset="0x8002210" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_FIRST_ERROR; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="extend_turn_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="coresentbadcrc_cnt_non_zero" start="45" size="1" type="uint" grade="established"/>
+    <field name="retry_cnt_non_zero" start="44" size="1" type="uint" grade="established"/>
+    <field name="cb_error_cnt_non_zero" start="43" size="1" type="uint" grade="established"/>
+    <field name="sn_error_cnt_non_zero" start="42" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch3" start="41" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch2" start="40" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch1" start="39" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch0" start="38" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch3" start="37" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch2" start="36" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch1" start="35" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch0" start="34" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch3" start="33" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch2" start="32" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch1" start="31" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch0" start="30" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch3" start="29" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch2" start="28" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch1" start="27" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch0" start="26" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch3" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch2" start="24" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch1" start="23" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch0" start="22" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch3" start="21" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch1" start="20" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch3" start="19" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch2" start="18" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch1" start="17" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch0" start="16" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch3" start="15" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch2" start="14" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch1" start="13" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch0" start="12" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch3" start="11" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch2" start="10" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch1" start="9" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch0" start="8" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch3" start="7" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch2" start="6" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch1" start="5" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch0" start="4" size="1" type="uint" grade="established"/>
+    <field name="retry_to" start="3" size="1" type="uint" grade="established"/>
+    <field name="rcv_link_reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="rcv_warm_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="power_not_ok" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_ERROR_REPORT_MASK" size="8" grade="established" register="yes" offset="0x8002218" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_ERROR_REPORT_MASK; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="extend_turn_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="coresentbadcrc_cnt_non_zero" start="45" size="1" type="uint" grade="established"/>
+    <field name="retry_cnt_non_zero" start="44" size="1" type="uint" grade="established"/>
+    <field name="cb_error_cnt_non_zero" start="43" size="1" type="uint" grade="established"/>
+    <field name="sn_error_cnt_non_zero" start="42" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch3" start="41" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch2" start="40" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch1" start="39" size="1" type="uint" grade="established"/>
+    <field name="rcv_tail_to_vch0" start="38" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch3" start="37" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch2" start="36" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch1" start="35" size="1" type="uint" grade="established"/>
+    <field name="send_deadlock_to_vch0" start="34" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch3" start="33" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch2" start="32" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch1" start="31" size="1" type="uint" grade="established"/>
+    <field name="damq_deadlock_to_vch0" start="30" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch3" start="29" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch2" start="28" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch1" start="27" size="1" type="uint" grade="established"/>
+    <field name="invalid_global_lu_vch0" start="26" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch3" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch2" start="24" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch1" start="23" size="1" type="uint" grade="established"/>
+    <field name="invalid_local_lu_vch0" start="22" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch3" start="21" size="1" type="uint" grade="established"/>
+    <field name="dateline_error_vch1" start="20" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch3" start="19" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch2" start="18" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch1" start="17" size="1" type="uint" grade="established"/>
+    <field name="illegal_dir_vch0" start="16" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch3" start="15" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch2" start="14" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch1" start="13" size="1" type="uint" grade="established"/>
+    <field name="credit_overflow_vch0" start="12" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch3" start="11" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch2" start="10" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch1" start="9" size="1" type="uint" grade="established"/>
+    <field name="fifo_overflow_vch0" start="8" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch3" start="7" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch2" start="6" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch1" start="5" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow_vch0" start="4" size="1" type="uint" grade="established"/>
+    <field name="retry_to" start="3" size="1" type="uint" grade="established"/>
+    <field name="rcv_link_reset" start="2" size="1" type="uint" grade="established"/>
+    <field name="rcv_warm_reset" start="1" size="1" type="uint" grade="established"/>
+    <field name="power_not_ok" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_TEST_POINT_SELECT_512" size="8" grade="established" register="yes" offset="0x8002700" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_TEST_POINT_SELECT_512; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="nibble7_nibble_sel" start="60" size="3" type="uint" grade="established"/>
+    <field name="nibble7_chiplet_sel" start="56" size="4" type="uint" grade="established"/>
+    <field name="nibble6_nibble_sel" start="52" size="3" type="uint" grade="established"/>
+    <field name="nibble6_chiplet_sel" start="48" size="4" type="uint" grade="established"/>
+    <field name="nibble5_nibble_sel" start="44" size="3" type="uint" grade="established"/>
+    <field name="nibble5_chiplet_sel" start="40" size="4" type="uint" grade="established"/>
+    <field name="nibble4_nibble_sel" start="36" size="3" type="uint" grade="established"/>
+    <field name="nibble4_chiplet_sel" start="32" size="4" type="uint" grade="established"/>
+    <field name="nibble3_nibble_sel" start="28" size="3" type="uint" grade="established"/>
+    <field name="nibble3_chiplet_sel" start="24" size="4" type="uint" grade="established"/>
+    <field name="nibble2_nibble_sel" start="20" size="3" type="uint" grade="established"/>
+    <field name="nibble2_chiplet_sel" start="16" size="4" type="uint" grade="established"/>
+    <field name="nibble1_nibble_sel" start="12" size="3" type="uint" grade="established"/>
+    <field name="nibble1_chiplet_sel" start="8" size="4" type="uint" grade="established"/>
+    <field name="nibble0_nibble_sel" start="4" size="3" type="uint" grade="established"/>
+    <field name="nibble0_chiplet_sel" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CONFIG" size="8" grade="established" register="yes" offset="0x8007000" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CONFIG; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="diag" start="45" size="14" type="uint" grade="established"/>
+    <field name="en" start="8" size="37" type="uint" grade="established"/>
+    <field name="dir" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CMD_LO" size="8" grade="established" register="yes" offset="0x8007008" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CMD_LO; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt7" start="56" size="8" type="uint" grade="established"/>
+    <field name="cnt6" start="48" size="8" type="uint" grade="established"/>
+    <field name="cnt5" start="40" size="8" type="uint" grade="established"/>
+    <field name="cnt4" start="32" size="8" type="uint" grade="established"/>
+    <field name="cnt3" start="24" size="8" type="uint" grade="established"/>
+    <field name="cnt2" start="16" size="8" type="uint" grade="established"/>
+    <field name="cnt1" start="8" size="8" type="uint" grade="established"/>
+    <field name="cnt0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CMD_UP" size="8" grade="established" register="yes" offset="0x8007010" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CMD_UP; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt7" start="56" size="8" type="uint" grade="established"/>
+    <field name="cnt6" start="48" size="8" type="uint" grade="established"/>
+    <field name="cnt5" start="40" size="8" type="uint" grade="established"/>
+    <field name="cnt4" start="32" size="8" type="uint" grade="established"/>
+    <field name="cnt3" start="24" size="8" type="uint" grade="established"/>
+    <field name="cnt2" start="16" size="8" type="uint" grade="established"/>
+    <field name="cnt1" start="8" size="8" type="uint" grade="established"/>
+    <field name="cnt0" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR0" size="8" grade="established" register="yes" offset="0x8007018" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR0; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR1" size="8" grade="established" register="yes" offset="0x8007020" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR1; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR2" size="8" grade="established" register="yes" offset="0x8007028" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR2; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR3" size="8" grade="established" register="yes" offset="0x8007030" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR3; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR4" size="8" grade="established" register="yes" offset="0x8007038" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR4; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR5" size="8" grade="established" register="yes" offset="0x8007040" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR5; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR6" size="8" grade="established" register="yes" offset="0x8007048" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR6; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR7" size="8" grade="established" register="yes" offset="0x8007050" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR7; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR8" size="8" grade="established" register="yes" offset="0x8007058" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR8; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR9" size="8" grade="established" register="yes" offset="0x8007060" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR9; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR10" size="8" grade="established" register="yes" offset="0x8007068" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR10; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR11" size="8" grade="established" register="yes" offset="0x8007070" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR11; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR12" size="8" grade="established" register="yes" offset="0x8007078" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR12; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR13" size="8" grade="established" register="yes" offset="0x8007080" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR13; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR14" size="8" grade="established" register="yes" offset="0x8007088" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR14; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR15" size="8" grade="established" register="yes" offset="0x8007090" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR15; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR16" size="8" grade="established" register="yes" offset="0x8007098" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR16; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR17" size="8" grade="established" register="yes" offset="0x80070a0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR17; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR18" size="8" grade="established" register="yes" offset="0x80070a8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR18; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR19" size="8" grade="established" register="yes" offset="0x80070b0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR19; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR20" size="8" grade="established" register="yes" offset="0x80070b8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR20; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR21" size="8" grade="established" register="yes" offset="0x80070c0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR21; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR22" size="8" grade="established" register="yes" offset="0x80070c8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR22; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR23" size="8" grade="established" register="yes" offset="0x80070d0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR23; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR24" size="8" grade="established" register="yes" offset="0x80070d8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR24; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR25" size="8" grade="established" register="yes" offset="0x80070e0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR25; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR26" size="8" grade="established" register="yes" offset="0x80070e8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR26; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR27" size="8" grade="established" register="yes" offset="0x80070f0" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR27; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR28" size="8" grade="established" register="yes" offset="0x80070f8" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR28; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR29" size="8" grade="established" register="yes" offset="0x8007100" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR29; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR30" size="8" grade="established" register="yes" offset="0x8007108" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR30; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR31" size="8" grade="established" register="yes" offset="0x8007110" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR31; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR32" size="8" grade="established" register="yes" offset="0x8007118" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR32; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR33" size="8" grade="established" register="yes" offset="0x8007120" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR33; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR34" size="8" grade="established" register="yes" offset="0x8007128" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR34; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR35" size="8" grade="established" register="yes" offset="0x8007130" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR35; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="PORT_PERF_CNTR36" size="8" grade="established" register="yes" offset="0x8007138" access="rw" count="8" stride="16777216" reset="unknown">
+    <doc>PROM register R4_PORTA_PERF_CNTR36; one per port A to H. Offset and field positions read from the table; role inferred from the names.</doc>
+    <field name="cnt" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <constant name="MAX_PORTS" value="0x8" grade="established"/>
+  <constant name="PORT_BLOCK_STRIDE" value="0x1000000" grade="established"/>
+</genxml>

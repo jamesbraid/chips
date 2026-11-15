@@ -76,6 +76,7 @@
 | [r5000_identity/](r5000_identity/registers.md) | MIPS R5000 family processor identity, reset entries, cache geometry and TLB size | Constants for the R5000 processor line as the NEC VR5000 user's manual and the MIPS R5000 overview describe it: the... |
 | [rad1/](rad1/README.md) | SGI RAD audio controller, PCI 10a9:0005 (stub) | Mode: no-spec. |
 | [router/](router/README.md) | Router (SN0 and SN1 network router) | Mode: no-spec (see references/documents/specs.md: no specification is held). |
+| [router_nl4/](router_nl4/README.md) | NUMAlink 4 router (R-brick, CR-brick, Dense router module, IRU routers) | The NUMAlink 4 router is the eight-port crossbar that joins SHub 2 and TIO nodes in the later Altix machines. |
 | [router_origin2000/](router_origin2000/README.md) | Origin 2000 network router (CrayLink) | The router is the six-port CrayLink switch that joins the Hubs of an Origin 2000 or Onyx2 module and, through... |
 | [router_origin3000/](router_origin3000/registers.md) | network router as the Origin 3000 kernel reaches it (register numbers of a vector access) | Offsets and widths are established: a load or store in the cited routine reaches that offset with that width. |
 | [router_origin3000_rbrick/](router_origin3000_rbrick/registers.md) | Origin 3000 R-brick router registers outside the census (vector space) | Router register fields and link addresses that the shipped firmware and kernel use, and that the census of the... |
