@@ -195,11 +195,11 @@
 /* hub_ifdr_fix_value: r64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_HUB_IFDR_FIX_VALUE                       0x2000d0 /* established */
 
-/* hub_ifdr_fix_value_2000d8: r64, reset 0x0; census: 1 sites, 1 routines */
-#define HUB_HUB_IFDR_FIX_VALUE_2000D8                0x2000d8 /* established */
+/* hub_reply_queue_depth: r64, reset 0x0; census: 1 sites, 1 routines */
+#define HUB_HUB_REPLY_QUEUE_DEPTH                    0x2000d8 /* established */
 
-/* per_hub_init_2000e0: rw64, reset 0x0; census: 3 sites, 1 routines */
-#define HUB_PER_HUB_INIT_2000E0                      0x2000e0 /* established */
+/* hub_rev_war_ctrl: rw64, reset 0x0; census: 3 sites, 1 routines */
+#define HUB_HUB_REV_WAR_CTRL                         0x2000e0 /* established */
 
 /* md_perf_sel: w64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_PERF_SEL                              0x210000 /* established */
@@ -294,20 +294,25 @@
 /* iio_ictp: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_IIO_ICTP                                 0x4003c0 /* established */
 
-/* iio_icrb0_a: rw64, reset unknown; census: 14 sites, 9 routines */
-#define HUB_IIO_ICRB0_A                              0x400400 /* established */
+/* iio_icrb_a: rw64, reset unknown; census: 14 sites, 9 routines */
+#define HUB_IIO_ICRB_A                               0x400400 /* established */
+#define HUB_IIO_ICRB_A_COUNT                         15
+#define HUB_IIO_ICRB_A_STRIDE                        32
 
-/* iio_icrb0_b: rw64, reset unknown; census: 11 sites, 6 routines */
-#define HUB_IIO_ICRB0_B                              0x400408 /* established */
+/* iio_icrb_b: rw64, reset unknown; census: 11 sites, 6 routines */
+#define HUB_IIO_ICRB_B                               0x400408 /* established */
+#define HUB_IIO_ICRB_B_COUNT                         15
+#define HUB_IIO_ICRB_B_STRIDE                        32
 
-/* iio_icrb0_c: r64, reset unknown; census: 6 sites, 5 routines */
-#define HUB_IIO_ICRB0_C                              0x400410 /* established */
+/* iio_icrb_c: r64, reset unknown; census: 6 sites, 5 routines */
+#define HUB_IIO_ICRB_C                               0x400410 /* established */
+#define HUB_IIO_ICRB_C_COUNT                         15
+#define HUB_IIO_ICRB_C_STRIDE                        32
 
-/* iio_icrb0_d: r64, reset unknown; census: 2 sites, 2 routines */
-#define HUB_IIO_ICRB0_D                              0x400418 /* established */
-
-/* iio_icrb1_b: r64, reset unknown; census: 1 sites, 1 routines */
-#define HUB_IIO_ICRB1_B                              0x400428 /* established */
+/* iio_icrb_d: r64, reset unknown; census: 2 sites, 2 routines */
+#define HUB_IIO_ICRB_D                               0x400418 /* established */
+#define HUB_IIO_ICRB_D_COUNT                         15
+#define HUB_IIO_ICRB_D_STRIDE                        32
 
 /* iio_ibls_0: rw64, reset 0x0; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed) */
 #define HUB_IIO_IBLS_0                               0x410000 /* established */
@@ -399,12 +404,13 @@
 /* ni_local_table0: w64, reset unknown; census: 1 sites, 1 routines */
 #define HUB_NI_LOCAL_TABLE0                          0x638100 /* established */
 
-#define HUB_HUB_IFDR_FIX_VALUE_2000D8_B_6_0          0x7fu /* inferred */
 #define HUB_HUB_IFDR_FIX_VALUE_B_6_0                 0x7fu /* inferred */
 #define HUB_HUB_PIOMAP_ALLOC_B_3_0                   0xfu /* inferred */
 #define HUB_HUB_PIOMAP_ALLOC_B_4_0                   0x1fu /* inferred */
 #define HUB_HUB_PIOMAP_ALLOC_B_7_0                   0xffu /* inferred */
 #define HUB_HUB_PIOMAP_ALLOC_V_300                   0x300u /* inferred */
+#define HUB_HUB_REPLY_QUEUE_DEPTH_B_6_0              0x7fu /* inferred */
+#define HUB_HUB_REV_WAR_CTRL_V_100                   0x100u /* inferred */
 #define HUB_IIO_IBCN_V_2                             0x2u /* inferred */
 #define HUB_IIO_IBCT_1_V_10                          0x10u /* inferred */
 #define HUB_IIO_IBLS_1_V_1                           0x1u /* inferred */
@@ -412,12 +418,12 @@
 #define HUB_IIO_ICDR_B_4                             0x10u /* inferred */
 #define HUB_IIO_ICDR_V_10                            0x10u /* inferred */
 #define HUB_IIO_ICMR_V_40                            0x40u /* inferred */
-#define HUB_IIO_ICRB0_A_B_0                          0x1u /* inferred */
-#define HUB_IIO_ICRB0_A_B_2_0                        0x7u /* inferred */
-#define HUB_IIO_ICRB0_A_B_3_0                        0xfu /* inferred */
-#define HUB_IIO_ICRB0_A_B_4_0                        0x1fu /* inferred */
-#define HUB_IIO_ICRB0_B_B_1_0                        0x3u /* inferred */
-#define HUB_IIO_ICRB0_B_B_4_0                        0x1fu /* inferred */
+#define HUB_IIO_ICRB_A_B_0                           0x1u /* inferred */
+#define HUB_IIO_ICRB_A_B_2_0                         0x7u /* inferred */
+#define HUB_IIO_ICRB_A_B_3_0                         0xfu /* inferred */
+#define HUB_IIO_ICRB_A_B_4_0                         0x1fu /* inferred */
+#define HUB_IIO_ICRB_B_B_1_0                         0x3u /* inferred */
+#define HUB_IIO_ICRB_B_B_4_0                         0x1fu /* inferred */
 #define HUB_IIO_ICTO_V_FF                            0xffu /* inferred */
 #define HUB_IIO_ICTP_V_1000                          0x1000u /* inferred */
 #define HUB_IIO_IECLR_V_20000                        0x20000u /* inferred */
@@ -528,7 +534,6 @@
 #define HUB_NI_STATUS_REV_ID_B_3_0                   0xfu /* inferred */
 #define HUB_NI_STATUS_REV_ID_B_7_0                   0xffu /* inferred */
 #define HUB_NI_STATUS_REV_ID_B_8_0                   0x1ffu /* inferred */
-#define HUB_PER_HUB_INIT_2000E0_V_100                0x100u /* inferred */
 #define HUB_PI_CALIAS_SIZE_V_1                       0x1u /* inferred */
 #define HUB_PI_CALIAS_SIZE_V_2                       0x2u /* inferred */
 #define HUB_PI_ERR_INT_PEND_V_FF0000                 0xff0000u /* inferred */

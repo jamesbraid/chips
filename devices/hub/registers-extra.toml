@@ -150,46 +150,6 @@ reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_SCRATCH_REG1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
 doc = "Scratch register 1, the twin of register 0. The IRIX register table confirms the access."
 
-[registers.iio_icrb_a]
-offset = 0x400400
-access = "rw"
-width = 64
-count = 15
-stride = 0x20
-grade = "inferred"
-from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
-doc = "Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred."
-
-[registers.iio_icrb_b]
-offset = 0x400408
-access = "rw"
-width = 64
-count = 15
-stride = 0x20
-grade = "inferred"
-from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
-doc = "Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred."
-
-[registers.iio_icrb_c]
-offset = 0x400410
-access = "r"
-width = 64
-count = 15
-stride = 0x20
-grade = "inferred"
-from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
-doc = "Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred."
-
-[registers.iio_icrb_d]
-offset = 0x400418
-access = "r"
-width = 64
-count = 15
-stride = 0x20
-grade = "inferred"
-from = "public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart"
-doc = "Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred."
-
 [constants]
 # Control/terminate bits. The census carries the notify value (0x10) only as an inferred
 # constant. The names and the zero-fill and poison bits are from the public header.

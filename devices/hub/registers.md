@@ -76,8 +76,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_mlan_ctl` | 0x2000a8 | rw | 64 |  |  | 0x18b100002 (established) | established | census: 6 sites, 1 routines |
 | `per_hub_init` | 0x2000c8 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
 | `hub_ifdr_fix_value` | 0x2000d0 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
-| `hub_ifdr_fix_value_2000d8` | 0x2000d8 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
-| `per_hub_init_2000e0` | 0x2000e0 | rw | 64 |  |  | 0x0 (established) | established | census: 3 sites, 1 routines |
+| `hub_reply_queue_depth` | 0x2000d8 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
+| `hub_rev_war_ctrl` | 0x2000e0 | rw | 64 |  |  | 0x0 (established) | established | census: 3 sites, 1 routines |
 | `md_perf_sel` | 0x210000 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
 | `md_perf_cnt0` | 0x210010 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `md_ureg0_0` | 0x220000 | rw | 64 |  |  | unknown | established | census: 6 sites, 2 routines (w); census: 22 sites, 6 routines (rw, indexed) |
@@ -109,11 +109,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `iio_iccr` | 0x4003b0 | rw | 64 |  |  | 0x0 (established) | established | census: 7 sites, 1 routines |
 | `iio_icto` | 0x4003b8 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
 | `iio_ictp` | 0x4003c0 | w | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
-| `iio_icrb0_a` | 0x400400 | rw | 64 |  |  | unknown | established | census: 14 sites, 9 routines |
-| `iio_icrb0_b` | 0x400408 | rw | 64 |  |  | unknown | established | census: 11 sites, 6 routines |
-| `iio_icrb0_c` | 0x400410 | r | 64 |  |  | unknown | established | census: 6 sites, 5 routines |
-| `iio_icrb0_d` | 0x400418 | r | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `iio_icrb1_b` | 0x400428 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
+| `iio_icrb_a` | 0x400400 | rw | 64 | 15 |  | unknown | established | census: 14 sites, 9 routines |
+| `iio_icrb_b` | 0x400408 | rw | 64 | 15 |  | unknown | established | census: 11 sites, 6 routines |
+| `iio_icrb_c` | 0x400410 | r | 64 | 15 |  | unknown | established | census: 6 sites, 5 routines |
+| `iio_icrb_d` | 0x400418 | r | 64 | 15 |  | unknown | established | census: 2 sites, 2 routines |
 | `iio_ibls_0` | 0x410000 | rw | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed) |
 | `iio_ibsa_0` | 0x410008 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
 | `iio_ibda_0` | 0x410010 | r | 64 |  |  | 0x0 (established) | established | census: 1 sites, 1 routines |
@@ -271,9 +270,9 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `hub_ifdr_fix_value`
 
-### Register `hub_ifdr_fix_value_2000d8`
+### Register `hub_reply_queue_depth`
 
-### Register `per_hub_init_2000e0`
+### Register `hub_rev_war_ctrl`
 
 ### Register `md_perf_sel`
 
@@ -337,15 +336,21 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `iio_ictp`
 
-### Register `iio_icrb0_a`
+### Register `iio_icrb_a`
 
-### Register `iio_icrb0_b`
+Array of 15 registers, stride 32.
 
-### Register `iio_icrb0_c`
+### Register `iio_icrb_b`
 
-### Register `iio_icrb0_d`
+Array of 15 registers, stride 32.
 
-### Register `iio_icrb1_b`
+### Register `iio_icrb_c`
+
+Array of 15 registers, stride 32.
+
+### Register `iio_icrb_d`
+
+Array of 15 registers, stride 32.
 
 ### Register `iio_ibls_0`
 
@@ -411,12 +416,13 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `HUB_IFDR_FIX_VALUE_2000D8_B_6_0` | 0x7f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `HUB_IFDR_FIX_VALUE_B_6_0` | 0x7f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `HUB_PIOMAP_ALLOC_B_3_0` | 0xf | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `HUB_PIOMAP_ALLOC_B_4_0` | 0x1f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `HUB_PIOMAP_ALLOC_B_7_0` | 0xff | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `HUB_PIOMAP_ALLOC_V_300` | 0x300 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `HUB_REPLY_QUEUE_DEPTH_B_6_0` | 0x7f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `HUB_REV_WAR_CTRL_V_100` | 0x100 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_IBCN_V_2` | 0x2 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_IBCT_1_V_10` | 0x10 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_IBLS_1_V_1` | 0x1 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
@@ -424,12 +430,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `IIO_ICDR_B_4` | 0x10 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_ICDR_V_10` | 0x10 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_ICMR_V_40` | 0x40 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_A_B_0` | 0x1 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_A_B_2_0` | 0x7 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_A_B_3_0` | 0xf | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_A_B_4_0` | 0x1f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_B_B_1_0` | 0x3 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `IIO_ICRB0_B_B_4_0` | 0x1f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_A_B_0` | 0x1 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_A_B_2_0` | 0x7 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_A_B_3_0` | 0xf | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_A_B_4_0` | 0x1f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_B_B_1_0` | 0x3 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
+| `IIO_ICRB_B_B_4_0` | 0x1f | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_ICTO_V_FF` | 0xff | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_ICTP_V_1000` | 0x1000 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `IIO_IECLR_V_20000` | 0x20000 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
@@ -540,7 +546,6 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `NI_STATUS_REV_ID_B_3_0` | 0xf | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `NI_STATUS_REV_ID_B_7_0` | 0xff | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `NI_STATUS_REV_ID_B_8_0` | 0x1ff | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
-| `PER_HUB_INIT_2000E0_V_100` | 0x100 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `PI_CALIAS_SIZE_V_1` | 0x1 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `PI_CALIAS_SIZE_V_2` | 0x2 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |
 | `PI_ERR_INT_PEND_V_FF0000` | 0xff0000 | inferred | census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names) |  |

@@ -579,7 +579,7 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRQQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8268"
 
-[registers.hub_ifdr_fix_value_2000d8]
+[registers.hub_reply_queue_depth]
 offset = 0x2000d8
 access = "r"
 width = 64
@@ -589,7 +589,7 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRPQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8280"
 
-[registers.per_hub_init_2000e0]
+[registers.hub_rev_war_ctrl]
 offset = 0x2000e0
 access = "rw"
 width = 64
@@ -879,40 +879,41 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICTP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7db8"
 
-[registers.iio_icrb0_a]
+[registers.iio_icrb_a]
 offset = 0x400400
 access = "rw"
 width = 64
 grade = "established"
 from = "census: 14 sites, 9 routines"
+count = 15
+stride = 32
 
-[registers.iio_icrb0_b]
+[registers.iio_icrb_b]
 offset = 0x400408
 access = "rw"
 width = 64
 grade = "established"
 from = "census: 11 sites, 6 routines"
+count = 15
+stride = 32
 
-[registers.iio_icrb0_c]
+[registers.iio_icrb_c]
 offset = 0x400410
 access = "r"
 width = 64
 grade = "established"
 from = "census: 6 sites, 5 routines"
+count = 15
+stride = 32
 
-[registers.iio_icrb0_d]
+[registers.iio_icrb_d]
 offset = 0x400418
 access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
-
-[registers.iio_icrb1_b]
-offset = 0x400428
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
+count = 15
+stride = 32
 
 # ---- II block transfer engines 0 and 1
 [registers.iio_ibls_0]
@@ -1173,12 +1174,13 @@ grade = "established"
 from = "census: 1 sites, 1 routines"
 
 [constants]
-HUB_IFDR_FIX_VALUE_2000D8_B_6_0 = { value = 0x7f, grade = "inferred" }
 HUB_IFDR_FIX_VALUE_B_6_0 = { value = 0x7f, grade = "inferred" }
 HUB_PIOMAP_ALLOC_B_3_0 = { value = 0xf, grade = "inferred" }
 HUB_PIOMAP_ALLOC_B_4_0 = { value = 0x1f, grade = "inferred" }
 HUB_PIOMAP_ALLOC_B_7_0 = { value = 0xff, grade = "inferred" }
 HUB_PIOMAP_ALLOC_V_300 = { value = 0x300, grade = "inferred" }
+HUB_REPLY_QUEUE_DEPTH_B_6_0 = { value = 0x7f, grade = "inferred" }
+HUB_REV_WAR_CTRL_V_100 = { value = 0x100, grade = "inferred" }
 IIO_IBCN_V_2 = { value = 0x2, grade = "inferred" }
 IIO_IBCT_1_V_10 = { value = 0x10, grade = "inferred" }
 IIO_IBLS_1_V_1 = { value = 0x1, grade = "inferred" }
@@ -1186,12 +1188,12 @@ IIO_IBLS_1_V_100000 = { value = 0x100000, grade = "inferred" }
 IIO_ICDR_B_4 = { value = 0x10, grade = "inferred" }
 IIO_ICDR_V_10 = { value = 0x10, grade = "inferred" }
 IIO_ICMR_V_40 = { value = 0x40, grade = "inferred" }
-IIO_ICRB0_A_B_0 = { value = 0x1, grade = "inferred" }
-IIO_ICRB0_A_B_2_0 = { value = 0x7, grade = "inferred" }
-IIO_ICRB0_A_B_3_0 = { value = 0xf, grade = "inferred" }
-IIO_ICRB0_A_B_4_0 = { value = 0x1f, grade = "inferred" }
-IIO_ICRB0_B_B_1_0 = { value = 0x3, grade = "inferred" }
-IIO_ICRB0_B_B_4_0 = { value = 0x1f, grade = "inferred" }
+IIO_ICRB_A_B_0 = { value = 0x1, grade = "inferred" }
+IIO_ICRB_A_B_2_0 = { value = 0x7, grade = "inferred" }
+IIO_ICRB_A_B_3_0 = { value = 0xf, grade = "inferred" }
+IIO_ICRB_A_B_4_0 = { value = 0x1f, grade = "inferred" }
+IIO_ICRB_B_B_1_0 = { value = 0x3, grade = "inferred" }
+IIO_ICRB_B_B_4_0 = { value = 0x1f, grade = "inferred" }
 IIO_ICTO_V_FF = { value = 0xff, grade = "inferred" }
 IIO_ICTP_V_1000 = { value = 0x1000, grade = "inferred" }
 IIO_IECLR_V_20000 = { value = 0x20000, grade = "inferred" }
@@ -1302,7 +1304,6 @@ NI_STATUS_REV_ID_B_0 = { value = 0x1, grade = "inferred" }
 NI_STATUS_REV_ID_B_3_0 = { value = 0xf, grade = "inferred" }
 NI_STATUS_REV_ID_B_7_0 = { value = 0xff, grade = "inferred" }
 NI_STATUS_REV_ID_B_8_0 = { value = 0x1ff, grade = "inferred" }
-PER_HUB_INIT_2000E0_V_100 = { value = 0x100, grade = "inferred" }
 PI_CALIAS_SIZE_V_1 = { value = 0x1, grade = "inferred" }
 PI_CALIAS_SIZE_V_2 = { value = 0x2, grade = "inferred" }
 PI_ERR_INT_PEND_V_FF0000 = { value = 0xff0000, grade = "inferred" }

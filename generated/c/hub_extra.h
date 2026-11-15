@@ -81,38 +81,6 @@
 #define HUB_IIO_ITTE_SLICE_INPLACE                   (HUB_IIO_ITTE_SLICE_MASK << HUB_IIO_ITTE_SLICE_SHIFT)
 
 /*
- * Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
- */
-/* iio_icrb_a: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
-#define HUB_IIO_ICRB_A                               0x400400 /* inferred */
-#define HUB_IIO_ICRB_A_COUNT                         15
-#define HUB_IIO_ICRB_A_STRIDE                        32
-
-/*
- * Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
- */
-/* iio_icrb_b: rw64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
-#define HUB_IIO_ICRB_B                               0x400408 /* inferred */
-#define HUB_IIO_ICRB_B_COUNT                         15
-#define HUB_IIO_ICRB_B_STRIDE                        32
-
-/*
- * Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
- */
-/* iio_icrb_c: r64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
-#define HUB_IIO_ICRB_C                               0x400410 /* inferred */
-#define HUB_IIO_ICRB_C_COUNT                         15
-#define HUB_IIO_ICRB_C_STRIDE                        32
-
-/*
- * Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
- */
-/* iio_icrb_d: r64, reset unknown; public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart */
-#define HUB_IIO_ICRB_D                               0x400418 /* inferred */
-#define HUB_IIO_ICRB_D_COUNT                         15
-#define HUB_IIO_ICRB_D_STRIDE                        32
-
-/*
  * Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access.
  */
 /* iio_ibna_0: rw64, reset 0x0 */

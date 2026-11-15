@@ -888,7 +888,7 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "hub_ifdr_fix_value_2000d8",
+   "name": "hub_reply_queue_depth",
    "offset": 2097368,
    "access": "r",
    "width": 64,
@@ -902,7 +902,7 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "per_hub_init_2000e0",
+   "name": "hub_rev_war_ctrl",
    "offset": 2097376,
    "access": "rw",
    "width": 64,
@@ -1350,12 +1350,12 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "iio_icrb0_a",
+   "name": "iio_icrb_a",
    "offset": 4195328,
    "access": "rw",
    "width": 64,
-   "count": 1,
-   "stride": 8,
+   "count": 15,
+   "stride": 32,
    "space": null,
    "reset": "unknown",
    "grade": "established",
@@ -1364,12 +1364,12 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "iio_icrb0_b",
+   "name": "iio_icrb_b",
    "offset": 4195336,
    "access": "rw",
    "width": 64,
-   "count": 1,
-   "stride": 8,
+   "count": 15,
+   "stride": 32,
    "space": null,
    "reset": "unknown",
    "grade": "established",
@@ -1378,12 +1378,12 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "iio_icrb0_c",
+   "name": "iio_icrb_c",
    "offset": 4195344,
    "access": "r",
    "width": 64,
-   "count": 1,
-   "stride": 8,
+   "count": 15,
+   "stride": 32,
    "space": null,
    "reset": "unknown",
    "grade": "established",
@@ -1392,30 +1392,16 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "iio_icrb0_d",
+   "name": "iio_icrb_d",
    "offset": 4195352,
    "access": "r",
    "width": 64,
-   "count": 1,
-   "stride": 8,
+   "count": 15,
+   "stride": 32,
    "space": null,
    "reset": "unknown",
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "iio_icrb1_b",
-   "offset": 4195368,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
   },
   {
    "unit": "hub",
@@ -1840,15 +1826,6 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "HUB_IFDR_FIX_VALUE_2000D8_B_6_0",
-   "value": 127,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
    "name": "HUB_IFDR_FIX_VALUE_B_6_0",
    "value": 127,
    "count": 1,
@@ -1887,6 +1864,24 @@
    "kind": "constant",
    "name": "HUB_PIOMAP_ALLOC_V_300",
    "value": 768,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
+  },
+  {
+   "unit": "hub",
+   "kind": "constant",
+   "name": "HUB_REPLY_QUEUE_DEPTH_B_6_0",
+   "value": 127,
+   "count": 1,
+   "grade": "inferred",
+   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
+  },
+  {
+   "unit": "hub",
+   "kind": "constant",
+   "name": "HUB_REV_WAR_CTRL_V_100",
+   "value": 256,
    "count": 1,
    "grade": "inferred",
    "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
@@ -1957,7 +1952,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_A_B_0",
+   "name": "IIO_ICRB_A_B_0",
    "value": 1,
    "count": 1,
    "grade": "inferred",
@@ -1966,7 +1961,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_A_B_2_0",
+   "name": "IIO_ICRB_A_B_2_0",
    "value": 7,
    "count": 1,
    "grade": "inferred",
@@ -1975,7 +1970,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_A_B_3_0",
+   "name": "IIO_ICRB_A_B_3_0",
    "value": 15,
    "count": 1,
    "grade": "inferred",
@@ -1984,7 +1979,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_A_B_4_0",
+   "name": "IIO_ICRB_A_B_4_0",
    "value": 31,
    "count": 1,
    "grade": "inferred",
@@ -1993,7 +1988,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_B_B_1_0",
+   "name": "IIO_ICRB_B_B_1_0",
    "value": 3,
    "count": 1,
    "grade": "inferred",
@@ -2002,7 +1997,7 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "IIO_ICRB0_B_B_4_0",
+   "name": "IIO_ICRB_B_B_4_0",
    "value": 31,
    "count": 1,
    "grade": "inferred",
@@ -2994,15 +2989,6 @@
    "kind": "constant",
    "name": "NI_STATUS_REV_ID_B_8_0",
    "value": 511,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PER_HUB_INIT_2000E0_V_100",
-   "value": 256,
    "count": 1,
    "grade": "inferred",
    "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"

@@ -32,18 +32,6 @@
     <field name="widget" start="8" size="4" type="uint" grade="established"/>
     <field name="slice" start="0" size="5" type="uint" grade="established"/>
   </struct>
-  <struct name="IIO_ICRB_A" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart" register="yes" offset="0x400400" access="rw" count="15" stride="32" reset="unknown">
-    <doc>Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.</doc>
-  </struct>
-  <struct name="IIO_ICRB_B" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart" register="yes" offset="0x400408" access="rw" count="15" stride="32" reset="unknown">
-    <doc>Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.</doc>
-  </struct>
-  <struct name="IIO_ICRB_C" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart" register="yes" offset="0x400410" access="r" count="15" stride="32" reset="unknown">
-    <doc>Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.</doc>
-  </struct>
-  <struct name="IIO_ICRB_D" size="8" grade="inferred" from="public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="unknown">
-    <doc>Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.</doc>
-  </struct>
   <struct name="IIO_IBNA_0" size="8" grade="established" register="yes" offset="0x410020" access="rw" reset="0x0">
     <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
   </struct>

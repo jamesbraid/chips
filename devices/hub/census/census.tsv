@@ -80,8 +80,8 @@ variant	space	offset	idx	name	access_seen	widths	halves	sites	functions	images	e
 ?		0x2000a8	1	MD_MLAN_CTL	rw	8	0	6	1	ip27-unix	sub_c00000000006a4d0@06a538	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x2000c8	1		w	8	0	1	1	ip27-unix	per_hub_init@026ca8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x2000d0	1		r	8	0	1	1	ip27-unix	hub_ifdr_fix_value@028fb0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x2000d8	1		r	8	0	1	1	ip27-unix	hub_ifdr_fix_value@028fc0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x2000e0	1		rw	8	0	3	1	ip27-unix	per_hub_init@026d4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x2000d8	1	HUB_REPLY_QUEUE_DEPTH	r	8	0	1	1	ip27-unix	hub_ifdr_fix_value@028fc0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x2000e0	1	HUB_REV_WAR_CTRL	rw	8	0	3	1	ip27-unix	per_hub_init@026d4c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x210000	1	MD_PERF_SEL	w	8	0	2	2	ip27-unix	md_perf_start_count@05b9d4	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x210010	0	MD_PERF_CNT0	w	8	0	1	1	ip27-prom	prom_c00000001fc00000@c0087c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x220000	0	MD_UREG0_0	w	8	0	6	2	ip27-prom	prom_c00000001fc00000@c008d8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
@@ -121,10 +121,10 @@ variant	space	offset	idx	name	access_seen	widths	halves	sites	functions	images	e
 ?		0x4003b0	1	IIO_ICCR	rw	8	0	7	1	ip27-unix	bte_crb_error_handler@03adb0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x4003b8	1	IIO_ICTO	w	8	0	1	1	ip27-unix	per_hub_init@026db0	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x4003c0	1	IIO_ICTP	w	8	0	1	1	ip27-unix	per_hub_init@026da8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x400400	1	IIO_ICRB0_A	rw	8	0	14	9	ip27-unix	hub_widgetdev_shutdown@027988	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x400408	1	IIO_ICRB0_B	rw	8	0	11	6	ip27-unix	crbx@02833c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x400410	1	IIO_ICRB0_C	r	8	0	6	5	ip27-unix	crbx@028344	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
-?		0x400418	1	IIO_ICRB0_D	r	8	0	2	2	ip27-unix	crbx@02834c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x400400	1	IIO_ICRB_A	rw	8	0	14	9	ip27-unix	hub_widgetdev_shutdown@027988	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x400408	1	IIO_ICRB_B	rw	8	0	11	6	ip27-unix	crbx@02833c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x400410	1	IIO_ICRB_C	r	8	0	6	5	ip27-unix	crbx@028344	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
+?		0x400418	1	IIO_ICRB_D	r	8	0	2	2	ip27-unix	crbx@02834c	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x400428	0	IIO_ICRB1_B	r	8	0	1	1	ip27-unix	save_hub_err_ext@02fd44	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x410000	0	IIO_IBLS_0	r	8	0	1	1	ip27-unix	save_hub_io_error@02fc38	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries
 ?		0x410000	1	IIO_IBLS_0	w	8	0	1	1	ip27-unix	bte_stall_node@03b0e8	n/a		n/a		n/a	no-spec mode: no datasheet or model compared		no-spec: inventory from the binaries

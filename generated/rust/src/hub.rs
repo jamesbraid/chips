@@ -318,12 +318,12 @@ pub mod hub_ifdr_fix_value {
     pub const OFFSET: u64 = 0x2000d0;
 }
 /// (established)
-pub mod hub_ifdr_fix_value_2000d8 {
+pub mod hub_reply_queue_depth {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2000d8;
 }
 /// (established)
-pub mod per_hub_init_2000e0 {
+pub mod hub_rev_war_ctrl {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x2000e0;
 }
@@ -483,29 +483,32 @@ pub mod iio_ictp {
     pub const OFFSET: u64 = 0x4003c0;
 }
 /// (established)
-pub mod iio_icrb0_a {
+pub mod iio_icrb_a {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400400;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
 }
 /// (established)
-pub mod iio_icrb0_b {
+pub mod iio_icrb_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400408;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
 }
 /// (established)
-pub mod iio_icrb0_c {
+pub mod iio_icrb_c {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400410;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
 }
 /// (established)
-pub mod iio_icrb0_d {
+pub mod iio_icrb_d {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400418;
-}
-/// (established)
-pub mod iio_icrb1_b {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400428;
+    pub const COUNT: u32 = 15;
+    pub const STRIDE: u64 = 32;
 }
 /// (established)
 pub mod iio_ibls_0 {
@@ -657,12 +660,13 @@ pub mod ni_local_table0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x638100;
 }
-pub const HUB_IFDR_FIX_VALUE_2000D8_B_6_0: u32 = 0x7f; // inferred
 pub const HUB_IFDR_FIX_VALUE_B_6_0: u32 = 0x7f; // inferred
 pub const HUB_PIOMAP_ALLOC_B_3_0: u32 = 0xf; // inferred
 pub const HUB_PIOMAP_ALLOC_B_4_0: u32 = 0x1f; // inferred
 pub const HUB_PIOMAP_ALLOC_B_7_0: u32 = 0xff; // inferred
 pub const HUB_PIOMAP_ALLOC_V_300: u32 = 0x300; // inferred
+pub const HUB_REPLY_QUEUE_DEPTH_B_6_0: u32 = 0x7f; // inferred
+pub const HUB_REV_WAR_CTRL_V_100: u32 = 0x100; // inferred
 pub const IIO_IBCN_V_2: u32 = 0x2; // inferred
 pub const IIO_IBCT_1_V_10: u32 = 0x10; // inferred
 pub const IIO_IBLS_1_V_1: u32 = 0x1; // inferred
@@ -670,12 +674,12 @@ pub const IIO_IBLS_1_V_100000: u32 = 0x100000; // inferred
 pub const IIO_ICDR_B_4: u32 = 0x10; // inferred
 pub const IIO_ICDR_V_10: u32 = 0x10; // inferred
 pub const IIO_ICMR_V_40: u32 = 0x40; // inferred
-pub const IIO_ICRB0_A_B_0: u32 = 0x1; // inferred
-pub const IIO_ICRB0_A_B_2_0: u32 = 0x7; // inferred
-pub const IIO_ICRB0_A_B_3_0: u32 = 0xf; // inferred
-pub const IIO_ICRB0_A_B_4_0: u32 = 0x1f; // inferred
-pub const IIO_ICRB0_B_B_1_0: u32 = 0x3; // inferred
-pub const IIO_ICRB0_B_B_4_0: u32 = 0x1f; // inferred
+pub const IIO_ICRB_A_B_0: u32 = 0x1; // inferred
+pub const IIO_ICRB_A_B_2_0: u32 = 0x7; // inferred
+pub const IIO_ICRB_A_B_3_0: u32 = 0xf; // inferred
+pub const IIO_ICRB_A_B_4_0: u32 = 0x1f; // inferred
+pub const IIO_ICRB_B_B_1_0: u32 = 0x3; // inferred
+pub const IIO_ICRB_B_B_4_0: u32 = 0x1f; // inferred
 pub const IIO_ICTO_V_FF: u32 = 0xff; // inferred
 pub const IIO_ICTP_V_1000: u32 = 0x1000; // inferred
 pub const IIO_IECLR_V_20000: u32 = 0x20000; // inferred
@@ -786,7 +790,6 @@ pub const NI_STATUS_REV_ID_B_0: u32 = 0x1; // inferred
 pub const NI_STATUS_REV_ID_B_3_0: u32 = 0xf; // inferred
 pub const NI_STATUS_REV_ID_B_7_0: u32 = 0xff; // inferred
 pub const NI_STATUS_REV_ID_B_8_0: u32 = 0x1ff; // inferred
-pub const PER_HUB_INIT_2000E0_V_100: u32 = 0x100; // inferred
 pub const PI_CALIAS_SIZE_V_1: u32 = 0x1; // inferred
 pub const PI_CALIAS_SIZE_V_2: u32 = 0x2; // inferred
 pub const PI_ERR_INT_PEND_V_FF0000: u32 = 0xff0000; // inferred

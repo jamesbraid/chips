@@ -139,34 +139,6 @@ pub mod iio_itte {
         }
     }
 }
-/// Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
-pub mod iio_icrb_a {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400400;
-    pub const COUNT: u32 = 15;
-    pub const STRIDE: u64 = 32;
-}
-/// Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
-pub mod iio_icrb_b {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400408;
-    pub const COUNT: u32 = 15;
-    pub const STRIDE: u64 = 32;
-}
-/// Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
-pub mod iio_icrb_c {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400410;
-    pub const COUNT: u32 = 15;
-    pub const STRIDE: u64 = 32;
-}
-/// Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individu (inferred)
-pub mod iio_icrb_d {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400418;
-    pub const COUNT: u32 = 15;
-    pub const STRIDE: u64 = 32;
-}
 /// Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table con (established)
 pub mod iio_ibna_0 {
     pub const WIDTH: u32 = 64;

@@ -153,6 +153,8 @@
   "0x200088": "MD_MISC_ERROR_CLR",
   "0x2000a0": "MD_MOQ_SIZE",
   "0x2000a8": "MD_MLAN_CTL",
+  "0x2000d8": "HUB_REPLY_QUEUE_DEPTH",
+  "0x2000e0": "HUB_REV_WAR_CTRL",
   "0x210000": "MD_PERF_SEL",
   "0x210010": "MD_PERF_CNT0",
   "0x220000": "MD_UREG0_0",
@@ -181,11 +183,10 @@
   "0x4003b0": "IIO_ICCR",
   "0x4003b8": "IIO_ICTO",
   "0x4003c0": "IIO_ICTP",
-  "0x400400": "IIO_ICRB0_A",
-  "0x400408": "IIO_ICRB0_B",
-  "0x400410": "IIO_ICRB0_C",
-  "0x400418": "IIO_ICRB0_D",
-  "0x400428": "IIO_ICRB1_B",
+  "0x400400": "IIO_ICRB_A",
+  "0x400408": "IIO_ICRB_B",
+  "0x400410": "IIO_ICRB_C",
+  "0x400418": "IIO_ICRB_D",
   "0x410000": "IIO_IBLS_0",
   "0x410008": "IIO_IBSA_0",
   "0x410010": "IIO_IBDA_0",
@@ -219,8 +220,15 @@
  },
  "name_source": "the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)",
  "header_skip": [
-  "0x0"
+  "0x0",
+  "0x400428"
  ],
- "note_names": "names are the public Linux Hub header names matched by offset after the census, plus the shipped kernel's own CRB entry names (ICRB0_A and so on); row 0x0 with the index flag is a base plus a caller-supplied offset, not PI_CPU_PROTECT, and is left unnamed",
+ "register_arrays": {
+  "0x400400": {"count": 15, "stride": 32},
+  "0x400408": {"count": 15, "stride": 32},
+  "0x400410": {"count": 15, "stride": 32},
+  "0x400418": {"count": 15, "stride": 32}
+ },
+ "note_names": "names are the public Linux Hub header names matched by offset after the census, plus two names of ours for offsets neither the Linux SN0 headers nor the OpenBSD sgi sources name (HUB_REPLY_QUEUE_DEPTH at 0x2000d8, from the queue-depth poll that also reads 0x2000d0; HUB_REV_WAR_CTRL at 0x2000e0, from the revision-gated workaround write); the CRB words are arrays of 15 entries 0x20 apart (the Linux IIO_ICRB_A(x) macros and IIO_NUM_CRBS), so the shipped entry 1 word B row (0x400428) is skipped; row 0x0 with the index flag is a base plus a caller-supplied offset, not PI_CPU_PROTECT, and is left unnamed",
  "register_resets": "tools/configs/hub-resets.json"
 }

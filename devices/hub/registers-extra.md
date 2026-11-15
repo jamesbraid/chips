@@ -17,10 +17,6 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `iio_scratch_reg0` | 0x400150 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `iio_scratch_reg1` | 0x400158 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `iio_itte` | 0x400160 | rw | 64 | 7 |  | 0x0 (established) | established |  |
-| `iio_icrb_a` | 0x400400 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_A(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
-| `iio_icrb_b` | 0x400408 | rw | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_B(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
-| `iio_icrb_c` | 0x400410 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_C(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
-| `iio_icrb_d` | 0x400418 | r | 64 | 15 |  | unknown | inferred | public Linux SN0 Hub I/O header, pinned linux tree: IIO_ICRB_D(x) macro, 15 entries (IIO_NUM_CRBS) four words apart |
 | `iio_ibna_0` | 0x410020 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `iio_ibia_0` | 0x410028 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `iio_ibia_1` | 0x420028 | rw | 64 |  |  | 0x0 (established) | established |  |
@@ -73,30 +69,6 @@ Array of 7 registers, stride 8.
 | 12 | `iospace` | established |  |  | I/O space bit, bit 12 (IIO_ITTE_IOSP). Set selects the widget's I/O space, clear its memory space. |
 | 11:8 | `widget` | established |  |  | Target widget number, bits 11:8 (IIO_ITTE_WIDGET_MASK, shift 8). |
 | 4:0 | `slice` | established |  |  | Slice field, bits 4:0 (IIO_ITTE_OFFSET_MASK in the public header). |
-
-### Register `iio_icrb_a`
-
-Word A of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
-
-Array of 15 registers, stride 32.
-
-### Register `iio_icrb_b`
-
-Word B of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so the access is carried over from the census row of entry 0 (read-write) and is inferred.
-
-Array of 15 registers, stride 32.
-
-### Register `iio_icrb_c`
-
-Word C of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
-
-Array of 15 registers, stride 32.
-
-### Register `iio_icrb_d`
-
-Word D of the I/O interface's CRB entries. Entry x (0 to 14) is at this offset plus 0x20 times x; the census names entry 0 and a few siblings individually. The header gives no access type, so read-only is carried over from the census row of entry 0 and is inferred.
-
-Array of 15 registers, stride 32.
 
 ### Register `iio_ibna_0`
 

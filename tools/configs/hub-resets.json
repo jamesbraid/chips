@@ -3,7 +3,7 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRQQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8268",
   "value": 0
  },
- "hub_ifdr_fix_value_2000d8": {
+ "hub_reply_queue_depth": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CRPQD (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8280",
   "value": 0
  },
@@ -171,7 +171,7 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CACR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8250",
   "value": 0
  },
- "per_hub_init_2000e0": {
+ "hub_rev_war_ctrl": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8298",
   "value": 0
  },
