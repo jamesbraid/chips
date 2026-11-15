@@ -337,7 +337,7 @@ pub mod control2 {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_status1). The header gives no access direction or reset value; access rw is a pla (established)
+/// Name and offset are the vendor header's definition (struct member ca_status1). Access r: inferred from the name (a status word); the code read never t (established)
 pub mod status1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x18;
@@ -402,7 +402,7 @@ pub mod status1 {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_status2). The header gives no access direction or reset value; access rw is a pla (established)
+/// Name and offset are the vendor header's definition (struct member ca_status2). Access r: inferred from the name (a status word); the code read never t (established)
 pub mod status2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x20;
@@ -562,12 +562,12 @@ pub mod gart_aperature {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_gfx_detach). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_gfx_detach). Software never touches this register in the code read, so access dir (established)
 pub mod gfx_detach {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x30;
 }
-/// Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). The header gives no access direction or reset value; access rw i (established)
+/// Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). Software never touches this register in the code read, so access (established)
 pub mod inta_dest_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x38;
@@ -592,7 +592,7 @@ pub mod inta_dest_addr {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). The header gives no access direction or reset value; access rw i (established)
+/// Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). Software never touches this register in the code read, so access (established)
 pub mod intb_dest_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x40;
@@ -617,7 +617,7 @@ pub mod intb_dest_addr {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). The header gives no access direction or reset value; access r (established)
+/// Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). Software never touches this register in the code read, so acc (established)
 pub mod err_int_dest_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x48;
@@ -642,7 +642,7 @@ pub mod err_int_dest_addr {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_int_status). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_int_status). Software never touches this register in the code read, so access dir (established)
 pub mod int_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x50;
@@ -1012,7 +1012,7 @@ pub mod int_status_alias {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_mult_error). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_mult_error). Software never touches this register in the code read, so access dir (established)
 pub mod mult_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60;
@@ -1382,7 +1382,7 @@ pub mod mult_error_alias {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_first_error). The header gives no access direction or reset value; access rw is a (established)
+/// Name and offset are the vendor header's definition (struct member ca_first_error). Software never touches this register in the code read, so access di (established)
 pub mod first_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x70;
@@ -1752,7 +1752,7 @@ pub mod int_mask {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). The header gives no access direction or reset value; access rw  (established)
+/// Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). Software never touches this register in the code read, so acces (established)
 pub mod crm_pkterr_type {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x80;
@@ -2017,7 +2017,7 @@ pub mod crm_pkterr_type {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). The header gives no access direction or reset value; acce (established)
+/// Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). Software never touches this register in the code read, so (established)
 pub mod crm_pkterr_type_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x88;
@@ -2282,7 +2282,7 @@ pub mod crm_pkterr_type_alias {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). The header gives no access direction or reset value; acce (established)
+/// Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). Software never touches this register in the code read, so (established)
 pub mod crm_ct_error_detail_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x90;
@@ -2387,7 +2387,7 @@ pub mod crm_ct_error_detail_1 {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). The header gives no access direction or reset value; acce (established)
+/// Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). Software never touches this register in the code read, so (established)
 pub mod crm_ct_error_detail_2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x98;
@@ -2402,7 +2402,7 @@ pub mod crm_ct_error_detail_2 {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_crm_tnumto). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_crm_tnumto). Software never touches this register in the code read, so access dir (established)
 pub mod crm_tnumto {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xa0;
@@ -2427,7 +2427,7 @@ pub mod crm_tnumto {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_gart_err). The header gives no access direction or reset value; access rw is a pl (established)
+/// Name and offset are the vendor header's definition (struct member ca_gart_err). Software never touches this register in the code read, so access direc (established)
 pub mod gart_err {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xa8;
@@ -2452,7 +2452,7 @@ pub mod gart_err {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_pcierr_type). The header gives no access direction or reset value; access rw is a (established)
+/// Name and offset are the vendor header's definition (struct member ca_pcierr_type). Software never touches this register in the code read, so access di (established)
 pub mod pcierr_type {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb0;
@@ -2587,17 +2587,17 @@ pub mod pcierr_type {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_pcierr_addr). The header gives no access direction or reset value; access rw is a (established)
+/// Name and offset are the vendor header's definition (struct member ca_pcierr_addr). Software never touches this register in the code read, so access di (established)
 pub mod pcierr_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb8;
 }
-/// Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). The header gives no access direction or reset value; access rw (established)
+/// Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). Software never touches this register in the code read, so acce (established)
 pub mod pci_rd_buf_flush {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xd8;
 }
-/// Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). The header gives no access direction or reset value; access r (established)
+/// Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). Software never touches this register in the code read, so acc (established)
 pub mod pci_dma_addr_extn {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xe0;
@@ -2657,17 +2657,17 @@ pub mod agp_dma_addr_extn {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_force_inta). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_force_inta). Software never touches this register in the code read, so access dir (established)
 pub mod force_inta {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xf0;
 }
-/// Name and offset are the vendor header's definition (struct member ca_force_intb). The header gives no access direction or reset value; access rw is a  (established)
+/// Name and offset are the vendor header's definition (struct member ca_force_intb). Software never touches this register in the code read, so access dir (established)
 pub mod force_intb {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xf8;
 }
-/// Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). The header gives no access direction or reset value; access rw (established)
+/// Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). Software never touches this register in the code read, so acce (established)
 pub mod debug_vector_sel {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100;
@@ -2822,7 +2822,7 @@ pub mod debug_vector_sel {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). The header gives no access direction or reset value; access  (established)
+/// Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). Software never touches this register in the code read, so ac (established)
 pub mod debug_mux_core_sel {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x108;
@@ -2987,7 +2987,7 @@ pub mod debug_mux_core_sel {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). The header gives no access direction or reset value; access r (established)
+/// Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). Software never touches this register in the code read, so acc (established)
 pub mod debug_mux_pci_sel {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110;
@@ -3152,7 +3152,7 @@ pub mod debug_mux_pci_sel {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). The header gives no access direction or reset value; access rw (established)
+/// Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). Software never touches this register in the code read, so acce (established)
 pub mod debug_domain_sel {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x118;
@@ -3202,7 +3202,7 @@ pub mod gart_ptr_table {
         }
     }
 }
-/// Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). The header gives no access direction or reset value; access rw is (established)
+/// Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). Software never touches this register in the code read, so access  (established)
 pub mod gart_tlb_addr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x208;

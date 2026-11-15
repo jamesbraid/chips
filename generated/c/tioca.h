@@ -7,13 +7,13 @@
 
 
 /*
- * Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). The header gives no access direction or reset value; access rw is a placeholder.
+ * Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). Access r: inferred from the name and role (an identification word); no code reads or writes it, since the kernel takes the revision from the firmware's bus record. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
-/* id: rw64, reset unknown */
+/* id: r64, reset unknown */
 #define TIOCA_ID                                     0x000000 /* established */
 
 /*
- * Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). Access rw: established as a software expectation, because the provider changes single bits by reading the register back and writing it (read-modify-write). Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* control1: rw64, reset unknown */
 #define TIOCA_CONTROL1                               0x000008 /* established */
@@ -73,7 +73,7 @@
 #define TIOCA_CONTROL1_SYS_BIG_END_INPLACE           (TIOCA_CONTROL1_SYS_BIG_END_MASK << TIOCA_CONTROL1_SYS_BIG_END_SHIFT)
 
 /*
- * Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). Access rw: established as a software expectation, because the provider changes single bits by reading the register back and writing it (read-modify-write). The flush bit is read back after setting. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* control2: rw64, reset unknown */
 #define TIOCA_CONTROL2                               0x000010 /* established */
@@ -121,9 +121,9 @@
 #define TIOCA_CONTROL2_AGP_LATENCY_TO_INPLACE        (TIOCA_CONTROL2_AGP_LATENCY_TO_MASK << TIOCA_CONTROL2_AGP_LATENCY_TO_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_status1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_status1). Access r: inferred from the name (a status word); the code read never touches it. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
-/* status1: rw64, reset unknown */
+/* status1: r64, reset unknown */
 #define TIOCA_STATUS1                                0x000018 /* established */
 #define TIOCA_STATUS1_GART_TLB_VAL_SHIFT             16 /* established */
 #define TIOCA_STATUS1_GART_TLB_VAL_MASK              0xffull
@@ -145,9 +145,9 @@
 #define TIOCA_STATUS1_CORELET_ID_INPLACE             (TIOCA_STATUS1_CORELET_ID_MASK << TIOCA_STATUS1_CORELET_ID_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_status2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_status2). Access r: inferred from the name (a status word); the code read never touches it. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
-/* status2: rw64, reset unknown */
+/* status2: r64, reset unknown */
 #define TIOCA_STATUS2                                0x000020 /* established */
 #define TIOCA_STATUS2_PDMA_RDBUFF_AVAIL_SHIFT        56 /* established */
 #define TIOCA_STATUS2_PDMA_RDBUFF_AVAIL_MASK         0x3ull
@@ -181,7 +181,7 @@
 #define TIOCA_STATUS2_GFX_CREDIT_AVAIL_INPLACE       (TIOCA_STATUS2_GFX_CREDIT_AVAIL_MASK << TIOCA_STATUS2_GFX_CREDIT_AVAIL_SHIFT)
 
 /*
- * GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). The header gives no access direction or reset value; access rw is a placeholder.
+ * GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). Software only writes it (one 64-bit store, last in GART setup, after the table is built). Writability: established. Readability and any bit that reads back differently: unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* gart_aperature: rw64, reset unknown */
 #define TIOCA_GART_APERATURE                         0x000028 /* established */
@@ -202,13 +202,13 @@
 #define TIOCA_GART_APERATURE_GART_AP_ENB_AGP_INPLACE (TIOCA_GART_APERATURE_GART_AP_ENB_AGP_MASK << TIOCA_GART_APERATURE_GART_AP_ENB_AGP_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_gfx_detach). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_gfx_detach). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* gfx_detach: rw64, reset unknown */
 #define TIOCA_GFX_DETACH                             0x000030 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* inta_dest_addr: rw64, reset unknown */
 #define TIOCA_INTA_DEST_ADDR                         0x000038 /* established */
@@ -220,7 +220,7 @@
 #define TIOCA_INTA_DEST_ADDR_INT_DEST_ADDR_INPLACE   (TIOCA_INTA_DEST_ADDR_INT_DEST_ADDR_MASK << TIOCA_INTA_DEST_ADDR_INT_DEST_ADDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* intb_dest_addr: rw64, reset unknown */
 #define TIOCA_INTB_DEST_ADDR                         0x000040 /* established */
@@ -232,7 +232,7 @@
 #define TIOCA_INTB_DEST_ADDR_INT_DEST_ADDR_INPLACE   (TIOCA_INTB_DEST_ADDR_INT_DEST_ADDR_MASK << TIOCA_INTB_DEST_ADDR_INT_DEST_ADDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* err_int_dest_addr: rw64, reset unknown */
 #define TIOCA_ERR_INT_DEST_ADDR                      0x000048 /* established */
@@ -244,7 +244,7 @@
 #define TIOCA_ERR_INT_DEST_ADDR_INT_DEST_ADDR_INPLACE (TIOCA_ERR_INT_DEST_ADDR_INT_DEST_ADDR_MASK << TIOCA_ERR_INT_DEST_ADDR_INT_DEST_ADDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_int_status). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_int_status). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* int_status: rw64, reset unknown */
 #define TIOCA_INT_STATUS                             0x000050 /* established */
@@ -304,7 +304,7 @@
 #define TIOCA_INT_STATUS_PCI_ERR_INPLACE             (TIOCA_INT_STATUS_PCI_ERR_MASK << TIOCA_INT_STATUS_PCI_ERR_SHIFT)
 
 /*
- * Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder.
+ * Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The provider writes the single bit it wants cleared to this register to drop residual GART fetch errors before unmasking. That a written 1 clears the matching status bit is inferred from the provider's own comment (clear residual errors first); readability is unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* int_status_alias: rw64, reset unknown */
 #define TIOCA_INT_STATUS_ALIAS                       0x000058 /* established */
@@ -364,7 +364,7 @@
 #define TIOCA_INT_STATUS_ALIAS_PCI_ERR_INPLACE       (TIOCA_INT_STATUS_ALIAS_PCI_ERR_MASK << TIOCA_INT_STATUS_ALIAS_PCI_ERR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_mult_error). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_mult_error). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* mult_error: rw64, reset unknown */
 #define TIOCA_MULT_ERROR                             0x000060 /* established */
@@ -424,7 +424,7 @@
 #define TIOCA_MULT_ERROR_PCI_ERR_INPLACE             (TIOCA_MULT_ERROR_PCI_ERR_MASK << TIOCA_MULT_ERROR_PCI_ERR_SHIFT)
 
 /*
- * Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The header gives no access direction or reset value; access rw is a placeholder.
+ * Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The provider writes the single bit it wants cleared here beside the status alias write. That a written 1 clears the bit in the multiple-error register is inferred from the provider's comment; readability is unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* mult_error_alias: rw64, reset unknown */
 #define TIOCA_MULT_ERROR_ALIAS                       0x000068 /* established */
@@ -484,7 +484,7 @@
 #define TIOCA_MULT_ERROR_ALIAS_PCI_ERR_INPLACE       (TIOCA_MULT_ERROR_ALIAS_PCI_ERR_MASK << TIOCA_MULT_ERROR_ALIAS_PCI_ERR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_first_error). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_first_error). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* first_error: rw64, reset unknown */
 #define TIOCA_FIRST_ERROR                            0x000070 /* established */
@@ -544,7 +544,7 @@
 #define TIOCA_FIRST_ERROR_PCI_ERR_INPLACE            (TIOCA_FIRST_ERROR_PCI_ERR_MASK << TIOCA_FIRST_ERROR_PCI_ERR_SHIFT)
 
 /*
- * Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+ * Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). Access rw: established as a software expectation (read-modify-write). The provider clears the GART fetch error bit to unmask it, so a set bit masks the interrupt: inferred from the unmask comment. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* int_mask: rw64, reset unknown */
 #define TIOCA_INT_MASK                               0x000078 /* established */
@@ -604,7 +604,7 @@
 #define TIOCA_INT_MASK_PCI_ERR_INPLACE               (TIOCA_INT_MASK_PCI_ERR_MASK << TIOCA_INT_MASK_PCI_ERR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* crm_pkterr_type: rw64, reset unknown */
 #define TIOCA_CRM_PKTERR_TYPE                        0x000080 /* established */
@@ -688,7 +688,7 @@
 #define TIOCA_CRM_PKTERR_TYPE_CRM_PKTERR_SBERR_HDR_INPLACE (TIOCA_CRM_PKTERR_TYPE_CRM_PKTERR_SBERR_HDR_MASK << TIOCA_CRM_PKTERR_TYPE_CRM_PKTERR_SBERR_HDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* crm_pkterr_type_alias: rw64, reset unknown */
 #define TIOCA_CRM_PKTERR_TYPE_ALIAS                  0x000088 /* established */
@@ -772,7 +772,7 @@
 #define TIOCA_CRM_PKTERR_TYPE_ALIAS_CRM_PKTERR_SBERR_HDR_INPLACE (TIOCA_CRM_PKTERR_TYPE_ALIAS_CRM_PKTERR_SBERR_HDR_MASK << TIOCA_CRM_PKTERR_TYPE_ALIAS_CRM_PKTERR_SBERR_HDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* crm_ct_error_detail_1: rw64, reset unknown */
 #define TIOCA_CRM_CT_ERROR_DETAIL_1                  0x000090 /* established */
@@ -808,7 +808,7 @@
 #define TIOCA_CRM_CT_ERROR_DETAIL_1_PKT_TYPE_INPLACE (TIOCA_CRM_CT_ERROR_DETAIL_1_PKT_TYPE_MASK << TIOCA_CRM_CT_ERROR_DETAIL_1_PKT_TYPE_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* crm_ct_error_detail_2: rw64, reset unknown */
 #define TIOCA_CRM_CT_ERROR_DETAIL_2                  0x000098 /* established */
@@ -817,7 +817,7 @@
 #define TIOCA_CRM_CT_ERROR_DETAIL_2_PKT_ADDR_INPLACE (TIOCA_CRM_CT_ERROR_DETAIL_2_PKT_ADDR_MASK << TIOCA_CRM_CT_ERROR_DETAIL_2_PKT_ADDR_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_crm_tnumto). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_crm_tnumto). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* crm_tnumto: rw64, reset unknown */
 #define TIOCA_CRM_TNUMTO                             0x0000a0 /* established */
@@ -829,7 +829,7 @@
 #define TIOCA_CRM_TNUMTO_CRM_TNUMTO_VAL_INPLACE      (TIOCA_CRM_TNUMTO_CRM_TNUMTO_VAL_MASK << TIOCA_CRM_TNUMTO_CRM_TNUMTO_VAL_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_gart_err). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_gart_err). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* gart_err: rw64, reset unknown */
 #define TIOCA_GART_ERR                               0x0000a8 /* established */
@@ -841,7 +841,7 @@
 #define TIOCA_GART_ERR_GART_ERR_SOURCE_INPLACE       (TIOCA_GART_ERR_GART_ERR_SOURCE_MASK << TIOCA_GART_ERR_GART_ERR_SOURCE_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_pcierr_type). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_pcierr_type). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* pcierr_type: rw64, reset unknown */
 #define TIOCA_PCIERR_TYPE                            0x0000b0 /* established */
@@ -886,19 +886,19 @@
 #define TIOCA_PCIERR_TYPE_PCIERR_DATA_INPLACE        (TIOCA_PCIERR_TYPE_PCIERR_DATA_MASK << TIOCA_PCIERR_TYPE_PCIERR_DATA_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_pcierr_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_pcierr_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* pcierr_addr: rw64, reset unknown */
 #define TIOCA_PCIERR_ADDR                            0x0000b8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* pci_rd_buf_flush: rw64, reset unknown */
 #define TIOCA_PCI_RD_BUF_FLUSH                       0x0000d8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* pci_dma_addr_extn: rw64, reset unknown */
 #define TIOCA_PCI_DMA_ADDR_EXTN                      0x0000e0 /* established */
@@ -916,7 +916,7 @@
 #define TIOCA_PCI_DMA_ADDR_EXTN_UPPER_NODE_OFFSET_INPLACE (TIOCA_PCI_DMA_ADDR_EXTN_UPPER_NODE_OFFSET_MASK << TIOCA_PCI_DMA_ADDR_EXTN_UPPER_NODE_OFFSET_SHIFT)
 
 /*
- * AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.
+ * AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The 48-bit direct AGP path reads it (established), so it is readable. Whether software or firmware writes it is not shown by the code read; rw stays as the widest access, write direction unknown. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* agp_dma_addr_extn: rw64, reset unknown */
 #define TIOCA_AGP_DMA_ADDR_EXTN                      0x0000e8 /* established */
@@ -925,19 +925,19 @@
 #define TIOCA_AGP_DMA_ADDR_EXTN_AGP_DMA_NODE_ID_INPLACE (TIOCA_AGP_DMA_ADDR_EXTN_AGP_DMA_NODE_ID_MASK << TIOCA_AGP_DMA_ADDR_EXTN_AGP_DMA_NODE_ID_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_force_inta). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_force_inta). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* force_inta: rw64, reset unknown */
 #define TIOCA_FORCE_INTA                             0x0000f0 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_force_intb). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_force_intb). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* force_intb: rw64, reset unknown */
 #define TIOCA_FORCE_INTB                             0x0000f8 /* established */
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* debug_vector_sel: rw64, reset unknown */
 #define TIOCA_DEBUG_VECTOR_SEL                       0x000100 /* established */
@@ -988,7 +988,7 @@
 #define TIOCA_DEBUG_VECTOR_SEL_DEBUG_MN_VSEL_INPLACE (TIOCA_DEBUG_VECTOR_SEL_DEBUG_MN_VSEL_MASK << TIOCA_DEBUG_VECTOR_SEL_DEBUG_MN_VSEL_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* debug_mux_core_sel: rw64, reset unknown */
 #define TIOCA_DEBUG_MUX_CORE_SEL                     0x000108 /* established */
@@ -1042,7 +1042,7 @@
 #define TIOCA_DEBUG_MUX_CORE_SEL_DEBUG_MSEL0_INPLACE (TIOCA_DEBUG_MUX_CORE_SEL_DEBUG_MSEL0_MASK << TIOCA_DEBUG_MUX_CORE_SEL_DEBUG_MSEL0_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* debug_mux_pci_sel: rw64, reset unknown */
 #define TIOCA_DEBUG_MUX_PCI_SEL                      0x000110 /* established */
@@ -1096,7 +1096,7 @@
 #define TIOCA_DEBUG_MUX_PCI_SEL_DEBUG_MSEL0_INPLACE  (TIOCA_DEBUG_MUX_PCI_SEL_DEBUG_MSEL0_MASK << TIOCA_DEBUG_MUX_PCI_SEL_DEBUG_MSEL0_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* debug_domain_sel: rw64, reset unknown */
 #define TIOCA_DEBUG_DOMAIN_SEL                       0x000118 /* established */
@@ -1108,7 +1108,7 @@
 #define TIOCA_DEBUG_DOMAIN_SEL_DEBUG_DOMAIN_L_INPLACE (TIOCA_DEBUG_DOMAIN_SEL_DEBUG_DOMAIN_L_MASK << TIOCA_DEBUG_DOMAIN_SEL_DEBUG_DOMAIN_L_SHIFT)
 
 /*
- * GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). The header gives no access direction or reset value; access rw is a placeholder.
+ * GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). Software only writes it (the table's coretalk address ORed with 1, last store of GART setup). Writability: established. Readability: unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* gart_ptr_table: rw64, reset unknown */
 #define TIOCA_GART_PTR_TABLE                         0x000200 /* established */
@@ -1120,7 +1120,7 @@
 #define TIOCA_GART_PTR_TABLE_GART_PTR_VAL_INPLACE    (TIOCA_GART_PTR_TABLE_GART_PTR_VAL_MASK << TIOCA_GART_PTR_TABLE_GART_PTR_VAL_SHIFT)
 
 /*
- * Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). The header gives no access direction or reset value; access rw is a placeholder.
+ * Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
  */
 /* gart_tlb_addr: rw64, reset unknown */
 #define TIOCA_GART_TLB_ADDR                          0x000208 /* established */

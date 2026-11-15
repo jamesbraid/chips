@@ -2,7 +2,7 @@
 
 # TIOCA (TIO AGP bridge), as SGI's Linux Altix platform code defines it
 
-Names, offsets and bit fields are the definitions of SGI's Linux Altix platform code (header, AGP and PCI provider, v5.3). The TIOCA's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one.
+Names, offsets and bit fields are the definitions of SGI's Linux Altix platform code (header, AGP and PCI provider, v5.3). The TIOCA's own register specification is not held. The header gives no access direction and no reset value for any register. Each row states its access and the grade of that reading from what the provider does; no reset value is known.
 
 Unit `tioca`, macro prefix `TIOCA`.
 
@@ -12,11 +12,11 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `id` | 0x0 | rw | 64 |  |  | unknown | established |  |
+| `id` | 0x0 | r | 64 |  |  | unknown | established |  |
 | `control1` | 0x8 | rw | 64 |  |  | unknown | established |  |
 | `control2` | 0x10 | rw | 64 |  |  | unknown | established |  |
-| `status1` | 0x18 | rw | 64 |  |  | unknown | established |  |
-| `status2` | 0x20 | rw | 64 |  |  | unknown | established |  |
+| `status1` | 0x18 | r | 64 |  |  | unknown | established |  |
+| `status2` | 0x20 | r | 64 |  |  | unknown | established |  |
 | `gart_aperature` | 0x28 | rw | 64 |  |  | unknown | established |  |
 | `gfx_detach` | 0x30 | rw | 64 |  |  | unknown | established |  |
 | `inta_dest_addr` | 0x38 | rw | 64 |  |  | unknown | established |  |
@@ -50,11 +50,11 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `id`
 
-Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). The header gives no access direction or reset value; access rw is a placeholder.
+Widget identification word (part 0xe020, manufacturer 0x24, revision A = 1 per the header constants). The kernel keeps the revision the firmware reports in the bus record, not a value read here, and uses it to select four workarounds named in the provider header. Name and offset are the vendor header's definition (struct member ca_id). Access r: inferred from the name and role (an identification word); no code reads or writes it, since the kernel takes the revision from the firmware's bus record. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `control1`
 
-Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). The header gives no access direction or reset value; access rw is a placeholder.
+Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a provider comment ties it to PV895469 with a question mark) when it initialises the GART, and sets bit 6 (AGP fast write enable) when every function on the bus supports fast writes. Everything else is untouched. Name and offset are the vendor header's definition (struct member ca_control1). Access rw: established as a software expectation, because the provider changes single bits by reading the register back and writing it (read-modify-write). Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -79,7 +79,7 @@ Control 1. The provider sets bit 42 (AGP DMA operation combining delay enable; a
 
 ### Register `control2`
 
-Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). The header gives no access direction or reset value; access rw is a placeholder.
+Control 2. The provider programs GART memory parameter 2 (cached, coherent GART table), clears both GART prefetch enables, and sets the GART TLB flush bit (36) to flush explicitly. On revision A hardware it pulses the flush with the memory parameter cleared first (PV910244: the flush is ignored while the table is cached), then restores the parameter. Name and offset are the vendor header's definition (struct member ca_control2). Access rw: established as a software expectation, because the provider changes single bits by reading the register back and writing it (read-modify-write). The flush bit is read back after setting. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -100,7 +100,7 @@ Control 2. The provider programs GART memory parameter 2 (cached, coherent GART 
 
 ### Register `status1`
 
-Name and offset are the vendor header's definition (struct member ca_status1). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_status1). Access r: inferred from the name (a status word); the code read never touches it. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -113,7 +113,7 @@ Name and offset are the vendor header's definition (struct member ca_status1). T
 
 ### Register `status2`
 
-Name and offset are the vendor header's definition (struct member ca_status2). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_status2). Access r: inferred from the name (a status word); the code read never touches it. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -130,7 +130,7 @@ Name and offset are the vendor header's definition (struct member ca_status2). T
 
 ### Register `gart_aperature`
 
-GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). The header gives no access direction or reset value; access rw is a placeholder.
+GART aperture. The provider writes size, page-size and enable bits plus the bus base in one 64-bit store: size field 0x3ff for 4 MiB, one bit fewer set per doubling down to 0x000 for 4 GiB (the field is the complement of the size in 4 MiB units); bit 1 set when the kernel page is 16 KiB; enable bits 0 (AGP) and 2 (PCI); the bus base ORed in unshifted (the base field starts at bit 22, and the base 0x80000000 falls inside it). The name is spelled aperature in the header. Name and offset are the vendor header's definition (struct member ca_gart_aperature). Software only writes it (one 64-bit store, last in GART setup, after the table is built). Writability: established. Readability and any bit that reads back differently: unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -142,11 +142,11 @@ GART aperture. The provider writes size, page-size and enable bits plus the bus 
 
 ### Register `gfx_detach`
 
-Name and offset are the vendor header's definition (struct member ca_gfx_detach). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_gfx_detach). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `inta_dest_addr`
 
-Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_inta_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -155,7 +155,7 @@ Name and offset are the vendor header's definition (struct member ca_inta_dest_a
 
 ### Register `intb_dest_addr`
 
-Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_intb_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -164,7 +164,7 @@ Name and offset are the vendor header's definition (struct member ca_intb_dest_a
 
 ### Register `err_int_dest_addr`
 
-Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_err_int_dest_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -173,7 +173,7 @@ Name and offset are the vendor header's definition (struct member ca_err_int_des
 
 ### Register `int_status`
 
-Name and offset are the vendor header's definition (struct member ca_int_status). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_int_status). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -198,7 +198,7 @@ Name and offset are the vendor header's definition (struct member ca_int_status)
 
 ### Register `int_status_alias`
 
-Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder.
+Interrupt status write alias. The provider writes the GART fetch error bit here to clear it (the alias is the write-to-clear form of ca_int_status; the name says alias, the clear role is the provider's use). Name and offset are the vendor header's definition (struct member ca_int_status_alias). The provider writes the single bit it wants cleared to this register to drop residual GART fetch errors before unmasking. That a written 1 clears the matching status bit is inferred from the provider's own comment (clear residual errors first); readability is unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -223,7 +223,7 @@ Interrupt status write alias. The provider writes the GART fetch error bit here 
 
 ### Register `mult_error`
 
-Name and offset are the vendor header's definition (struct member ca_mult_error). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_mult_error). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -248,7 +248,7 @@ Name and offset are the vendor header's definition (struct member ca_mult_error)
 
 ### Register `mult_error_alias`
 
-Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The header gives no access direction or reset value; access rw is a placeholder.
+Multiple-error write alias. The provider writes the GART fetch error bit here to clear it, together with the status alias. Name and offset are the vendor header's definition (struct member ca_mult_error_alias). The provider writes the single bit it wants cleared here beside the status alias write. That a written 1 clears the bit in the multiple-error register is inferred from the provider's comment; readability is unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -273,7 +273,7 @@ Multiple-error write alias. The provider writes the GART fetch error bit here to
 
 ### Register `first_error`
 
-Name and offset are the vendor header's definition (struct member ca_first_error). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_first_error). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -298,7 +298,7 @@ Name and offset are the vendor header's definition (struct member ca_first_error
 
 ### Register `int_mask`
 
-Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). The header gives no access direction or reset value; access rw is a placeholder.
+Interrupt mask. The provider clears the GART fetch error bit (enables it); the sense of the mask bit is the provider's use. Name and offset are the vendor header's definition (struct member ca_int_mask). Access rw: established as a software expectation (read-modify-write). The provider clears the GART fetch error bit to unmask it, so a set bit masks the interrupt: inferred from the unmask comment. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -323,7 +323,7 @@ Interrupt mask. The provider clears the GART fetch error bit (enables it); the s
 
 ### Register `crm_pkterr_type`
 
-Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -356,7 +356,7 @@ Name and offset are the vendor header's definition (struct member ca_crm_pkterr_
 
 ### Register `crm_pkterr_type_alias`
 
-Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_crm_pkterr_type_alias). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -389,7 +389,7 @@ Name and offset are the vendor header's definition (struct member ca_crm_pkterr_
 
 ### Register `crm_ct_error_detail_1`
 
-Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_1). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -406,7 +406,7 @@ Name and offset are the vendor header's definition (struct member ca_crm_ct_erro
 
 ### Register `crm_ct_error_detail_2`
 
-Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_crm_ct_error_detail_2). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -414,7 +414,7 @@ Name and offset are the vendor header's definition (struct member ca_crm_ct_erro
 
 ### Register `crm_tnumto`
 
-Name and offset are the vendor header's definition (struct member ca_crm_tnumto). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_crm_tnumto). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -423,7 +423,7 @@ Name and offset are the vendor header's definition (struct member ca_crm_tnumto)
 
 ### Register `gart_err`
 
-Name and offset are the vendor header's definition (struct member ca_gart_err). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_gart_err). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -432,7 +432,7 @@ Name and offset are the vendor header's definition (struct member ca_gart_err). 
 
 ### Register `pcierr_type`
 
-Name and offset are the vendor header's definition (struct member ca_pcierr_type). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_pcierr_type). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -452,15 +452,15 @@ Name and offset are the vendor header's definition (struct member ca_pcierr_type
 
 ### Register `pcierr_addr`
 
-Name and offset are the vendor header's definition (struct member ca_pcierr_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_pcierr_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `pci_rd_buf_flush`
 
-Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_pci_rd_buf_flush). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `pci_dma_addr_extn`
 
-Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_pci_dma_addr_extn). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -471,7 +471,7 @@ Name and offset are the vendor header's definition (struct member ca_pci_dma_add
 
 ### Register `agp_dma_addr_extn`
 
-AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The header gives no access direction or reset value; access rw is a placeholder.
+AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires its node-id field to equal the upper node bits of the target; the node-id field is 16 bits wide at bit 20, which overlaps the pio-mem-type bit 28 the header also names (see the unit page). Name and offset are the vendor header's definition (struct member ca_agp_dma_addr_extn). The 48-bit direct AGP path reads it (established), so it is readable. Whether software or firmware writes it is not shown by the code read; rw stays as the widest access, write direction unknown. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -479,15 +479,15 @@ AGP DMA address extension. The 48-bit direct AGP DMA path reads it and requires 
 
 ### Register `force_inta`
 
-Name and offset are the vendor header's definition (struct member ca_force_inta). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_force_inta). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `force_intb`
 
-Name and offset are the vendor header's definition (struct member ca_force_intb). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_force_intb). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 ### Register `debug_vector_sel`
 
-Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_debug_vector_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -509,7 +509,7 @@ Name and offset are the vendor header's definition (struct member ca_debug_vecto
 
 ### Register `debug_mux_core_sel`
 
-Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_debug_mux_core_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -532,7 +532,7 @@ Name and offset are the vendor header's definition (struct member ca_debug_mux_c
 
 ### Register `debug_mux_pci_sel`
 
-Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_debug_mux_pci_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -555,7 +555,7 @@ Name and offset are the vendor header's definition (struct member ca_debug_mux_p
 
 ### Register `debug_domain_sel`
 
-Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_debug_domain_sel). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -564,7 +564,7 @@ Name and offset are the vendor header's definition (struct member ca_debug_domai
 
 ### Register `gart_ptr_table`
 
-GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). The header gives no access direction or reset value; access rw is a placeholder.
+GART table pointer. The provider stores the coretalk address of the page table ORed with 1 (bit 0 valid). Table entries are 8 bytes: the coretalk page address shifted right 12, with bit 63 set for valid. Name and offset are the vendor header's definition (struct member ca_gart_ptr_table). Software only writes it (the table's coretalk address ORed with 1, last store of GART setup). Writability: established. Readability: unknown, so rw stays as the widest access. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -573,7 +573,7 @@ GART table pointer. The provider stores the coretalk address of the page table O
 
 ### Register `gart_tlb_addr`
 
-Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). The header gives no access direction or reset value; access rw is a placeholder.
+Name and offset are the vendor header's definition (struct member ca_gart_tlb_addr). Software never touches this register in the code read, so access direction is unknown and rw is a placeholder. Reset value unknown: the header and provider state none, and no firmware reading has been done.
 
 Array of 8 registers, stride 8.
 

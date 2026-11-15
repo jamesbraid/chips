@@ -66,3 +66,7 @@ is narrower than the header says or the PIO memory type bit lives elsewhere. Nex
 [missing source] The TIOCE provider gives the 40-bit super-page mappings the bus window `0x8000000000` to `0xffffffffff` (512 GiB) but allocates 32 entries per port of 16 GiB and
 computes the bus address as the window base plus the global entry index times 16 GiB. For port 2 (entries 32 to 63) that is at or past the end of the window. Either the window is
 larger than the constants say, port 2 maps differently, or the allocation is wrong for port 2. Next: a TIOCE register specification.
+
+## TIOCA reset values and register access
+
+[missing source] No TIOCA register has a known reset value, and the direction of every register the provider does not touch (all but eight) is unknown. The header, provider and AGP driver (Linux v5.3, and the unchanged header at v2.6.12, v2.6.18 and v2.6.26) state neither. Routes tried: the three source files and `sgi-agp.c`. Next: the SNPROM images' TIOCA setup code in Ghidra for registers firmware relies on before its first write, or the TIO AEGIS Programmers' Reference.
