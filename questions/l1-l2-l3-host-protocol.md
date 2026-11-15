@@ -10,10 +10,10 @@ and [devices/l3/README.md](../devices/l3/README.md).
    IRIX object seems to assume 16, neither measured. Next: the part's datasheet (the 16550 variant is not named in
    any source read) or a read of the UART's identification registers.
 3. **No-argument requests.** *[route: software now]* Linux v2.5.0's builder omits the argument-count byte when a request
-   has no arguments; the SN2 PROM builder and the L1 receivers read a count byte. Next: the SN1 PROM request builder
-   for a no-argument code (for example `0x0003`) and the ARM L1's length check.
+   has no arguments, and so does the SN2 PROM builder (`0xffa81f40`, read in Ghidra); the open part is the receivers. The sysco ColdFire parser reads the count only for frames of 8 bytes or more.
+   Next: the SN1 PROM request builder for a no-argument code (for example `0x0003`) and the ARM L1's length check.
 4. **Event frame versus request body.** *[route: software now]* The SN2 kernel's event record has a four-byte code and
-   argument count at offset 8; a request has a two-byte code and count at offset 6. Next: where the PROM turns an L1
+   argument count at offset 8, the same layout the Bedrock-side Linux v2.5.0 `sc_event` reads; a request has a two-byte code and count at offset 6. Next: where the PROM turns an L1
    event frame into the record it hands the kernel (the `0x1007` event-subchannel request and the receive path of the
    SAL `IROUTER_OP`), once a SAL runtime beyond the boot path is read.
 5. **Routing of L2-addressed traffic from a node.** *[route: software now]* How the L1 and the PROM handle a target

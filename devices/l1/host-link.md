@@ -61,7 +61,7 @@ base is `0x80` into the local special space, so the first column adds that.
 | 3 | `+0x98` | `REG_LCR` | bits 1:0 word length (3 is 8 bits), bit 2 stop bits (0 is one), bit 7 divisor latch access | established |
 | 4 | `+0xa0` | `REG_MCR` | bit 1 request to send, bit 5 automatic flow control; both software builds write `0x22` | established |
 | 5 | `+0xa8` | `REG_LSR` | bit 0 data ready, bit 1 overrun, bit 2 parity error, bit 3 framing error, bit 4 break, bit 5 transmit holding empty, bit 6 transmit shift register empty | established |
-| 6 | `+0xb0` | `REG_MSR` | bit 4 clear to send. The Linux v2.5.0 transmit path waits for bit 5 of LSR and bit 4 of MSR before each byte (`UART_PUTC_READY`, `PUTCHAR`). The IRIX `l1.o` census has no access at `+0xb0`, so IRIX does not read it | established for Linux; the IRIX absence is observed from the census, not a statement about IRIX behaviour elsewhere |
+| 6 | `+0xb0` | `REG_MSR` | bit 4 clear to send. Linux v2.5.0 tests bit 5 of LSR and bit 4 of MSR together (`UART_PUTC_READY`) only when its software FIFO budget is spent (see transmit pacing), and before every byte on its direct console-output routine (`PUTCHAR` in `l1_serial_out`). The IRIX `l1.o` census has no access at `+0xb0`, so IRIX does not read it | established for Linux; the IRIX absence is observed from the census, not a statement about IRIX behaviour elsewhere |
 | 7 | `+0xb8` | `REG_SCR` | scratch. The SHub 1 PROM uses index 7 as the scratch word of its own UART driver (boot-sequence page); not read by the Bedrock code | inferred |
 
 **Initialisation order** (Linux `uart_init`, matched step for step by IRIX `uart_init`, [README.md](README.md)):
@@ -111,7 +111,7 @@ Established at both ends of the link: Linux v2.5.0 `brl1_send` and `brl1_receive
 | idle (after reset or an error) | go to flag | stay | stay |
 | flag | stay (repeated flags are fine) | error: protocol, go to idle | a valid header goes to header; an invalid one is a protocol error, go to idle |
 | header | (transient: picks the subchannel queue; for a non-console frame it reserves one length byte and keeps the header byte as the first body byte; if the queue has less than two bytes of room it waits) | | go to body |
-| body | end of frame: a body of fewer than two bytes is discarded as a protocol error; check the CRC against the residue and discard on a mismatch; otherwise drop the two CRC bytes, store the length, commit the frame, notify the owner, go to flag | go to escape | store the byte |
+| body | end of frame: a frame with too little after the header is discarded as a protocol error (the test counts the two check bytes, and for message packets the reserved length byte and the kept header byte too, so a console frame needs at least two bytes and a message frame at least one); check the CRC against the residue and discard on a mismatch; otherwise drop the two CRC bytes, store the length, commit the frame, notify the owner, go to flag | go to escape | store the byte |
 | escape | error: protocol, go to flag | error: protocol, go to idle | xor with `0x20` and store, go to body |
 
 Error codes returned by `brl1_receive`: valid 0, queue full -1, bad CRC -2, protocol -3, no message -4, link error -5
@@ -138,12 +138,13 @@ must be response or event. The SN2 L1 firmware compares byte 0 of what it receiv
 | 0 to 3 | console for processor 0 to 3 of the node (`SC_CONS_CPU0` to `3`) | established |
 | 4 | system console (`SC_CONS_SYSTEM`, equal to `CPUS_PER_NODE`) | established |
 | 5 to 15 | reserved; incoming packets are discarded | established |
-| 16 | the first command subchannel (`BRL1_CMD_SUBCH`); `sc_open` hands out the first free one from 16 up, 17 to 30 are the rest | established |
-| 31 | event subchannel (`BRL1_EVENT_SUBCH`) | established for the name; no code in v2.5.0 opens it. The SN2 kernel's event path uses a subchannel it opens through the PROM (below) |
+| 16 | the first command subchannel (`BRL1_CMD_SUBCH`); `sc_open` hands out the first free one from 16 up, so 17 to 31 follow unless taken (31 is taken once `sc_listen` has run) | established |
+| 31 | event subchannel (`BRL1_EVENT_SUBCH`) | established. `sc_listen` in v2.5.0 `l1.c` reserves it, then sends request `0x1007` (`L1_REQ_EVENT_SUBCH`, task general, local target) with the integer 31 so the L1 sends events there. The SN2 kernel's event path uses a subchannel it opens through the PROM (below) |
 
 Console data packets carry plain bytes with no message body; the header byte is stripped on receive and the bytes go to
 the console queue. Message packets keep the header byte and a prepended length in the receive queue. The queues are 128
-bytes (`BRL1_QSIZE`), 32 input queues (`BRL1_IQS`) and 4 output queues (`BRL1_OQS`) per link. Established.
+bytes (`BRL1_QSIZE`); each of the 32 subchannels has an input queue pointer, and a link has 4 output queues (`BRL1_OQS`).
+`BRL1_IQS` (32) is defined but the link structure does not use it. Established.
 
 ## Message body
 
@@ -161,9 +162,14 @@ Request, response and event bodies carry big-endian integers and typed arguments
 | 7 | n | arguments |
 
 When a request has no arguments Linux's builder returns after the request code and writes no count byte. The shipped
-SN2 PROM's builder (sysco: `sysctl_cmd_construct_req`) and the L1 receivers read a count byte unconditionally
-(sysco: the L1 returns -100 for a count of zero in one path). Whether a short body is accepted as "no arguments" is
-**unknown**; see [../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md).
+SN2 PROM's builder (`sysctl_cmd_construct_req`, `0xffa81f40` in the SAL 5.04 SAL_B, read in Ghidra for this review) also
+omits the count byte when its argument-word parameter is zero: it writes the four-byte target, the two-byte code, and the
+count byte and arguments only inside the nonzero case, so a no-argument request is 6 bytes there too (established; this
+corrects the earlier statement that it read a count unconditionally). On the receive side the sysco ColdFire parser reads the count byte only when the frame is at least 8
+bytes, so a seven-byte frame with no count byte parses as no arguments there (`node-link-sn1-vs-sn2.md`, ColdFire
+`request_frame_parse`); the ARM L1 answers -100 at entry when its argument count field is zero (`sn2-prom-link-1.62.1.md`),
+and whether that field equals the wire count byte is not stated. Whether a short body is accepted as "no arguments" by
+every controller is **unknown**; see [../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md).
 
 ### Target address word
 
@@ -217,9 +223,11 @@ IRIX meaning disagree for that code; the README keeps the conflict open.
 On SN2 the kernel parses a pushed event as: source address (4 bytes), event code (4 bytes), argument count 2, an integer
 argument (the ESP code), then an ASCII argument (the text); class, severity and component are the bit fields of the
 code. Established, `snsc_event.c` and `snsc.h` at Linux v5.3. The layout differs from a request body: the code is four
-bytes where a request has two, so the count sits at offset 8, not 6. How the event relates to the request body on the
-wire (the source address replacing the target, the code widened) is **unknown**: the SN2 kernel sees the bytes after the
-PROM has handled them. The class values are power `0x1000`, fan `0x2000`, temperature `0x3000`, environment `0x4000`,
+bytes where a request has two, so the count sits at offset 8, not 6. The same layout is read by the Bedrock-side Linux
+v2.5.0 `sc_event` (source word, four-byte code, one count byte, then arguments, dispatched on the source word's task field,
+compiled only under `LINUX_KERNEL_THREADS`), so the event layout is one format across both generations, established. How
+the event relates to the request body on the wire (the source address replacing the target, the code widened) is
+**unknown**: the SN2 kernel sees the bytes after the PROM has handled them. The class values are power `0x1000`, fan `0x2000`, temperature `0x3000`, environment `0x4000`,
 test fault `0x5000`, test warning `0x6000`, power-down notify `0x8000`; sysco
 `sn2-controller-host-protocol.md` lists the severities.
 
@@ -267,3 +275,82 @@ Whether a running PROM needs the model to answer within a deadline is establishe
 
 Listed in [../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md): the SHub 2 UART location, the
 no-argument request, the event frame, the subchannel mapping and the hardware FIFO depth.
+
+## Review
+
+Independent review of this page, [../l2/README.md](../l2/README.md), [../l3/README.md](../l3/README.md) and
+[../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md), by a reviewer who did not write them.
+
+**What was reviewed and how.** About 60 statements were checked against their cited source.
+Linux v2.5.0 (`linux-history` snapshot 381ab1f5): `l1.c` read in full, `l1.h` and `uart16550.h`.
+Linux v5.3 single files: `sn_sal.h`, `intr.h`, `snsc.c`, `snsc.h`, `snsc_event.c`, `sn_console.c`, `shub_mmr.h`.
+Manual pages read in the Library: 007-3938-005 printed pp. 1 to 5, 8 to 10, 12 to 15, 19 to 20, 50 and 137; 007-4579-001
+pp. 37, 39, 44, 71 and 72, 64; 007-4340-003 pp. 3 to 5 and 7. The sysco notes the pages quote were opened to check the
+quoted lines and file names (the cross-linked files exist; the framing format directory is in sysco, not here). A Ghidra export
+of the SHub 1 PROM 10.54 image was attempted for the PROM claims; its result is below. The IRIX `l1.o` readings
+(base address, `+0x800098` interrupt bit, 16-byte FIFO, `brl1_send` and `crc16_calc` addresses) were taken from the
+[README.md](README.md) and not re-read; objdump was not used.
+
+**Confirmed (Linux v2.5.0).** Register indexes 0 to 7 and their names; interrupt-enable bits 0 to 3; interrupt identity values
+`0x00`, `0x02`, `0x04`, `0x06`, `0x0c`; line control `0x80` to open the divisor latch and `0x03` for 8N1; modem control
+`0x22` (RTS plus auto flow control); line status bits 0 to 6; modem status CTS at bit 4; divisor 12 MHz over 16 times the
+baud rate, 13 at 57,600; initialisation order (wait for LSR bit 6 up to 100000 ticks, divisor high then low, line control,
+modem control, interrupt enable 0, FIFO control 1 then 7); UART at special-space offset `0x80` with `reg << 3` spacing and
+the router UART through `RR_JBUS1`; the software FIFO budget `0xf0` for the local UART only and a per-byte LSR check for
+router UARTs; the console lock (level 16 in `MD_PERF_CNT0`, test-and-set on local scratch register 3, 0x1500000 ticks, about
+30 s); flag `0x7e`, escape `0x7d`, xor `0x20`, the CRC (initial `0xffff`, residue `0xf0b8`, first table entries, complemented,
+low byte first, check bytes escaped, header byte not escaped); the 127-byte clamp and 264-byte buffer; type mask `0xe0`,
+subchannel mask `0x1f`, the three type values, the console header byte `0x44`, `VALID_HDR`; subchannels 0 to 4, 5 to 15
+discarded, 16 command; all receive-state transitions and the seven error codes; request, response and argument layouts; the
+no-argument request omitting the count byte in `sc_construct_msg`; status codes; the address word fields and masks,
+`0x0ffff000`, `0x4ffff000` and task numbers 1 to 6; the request-code names and values quoted. Linux v5.3: `SGI_UART_VECTOR` 0xe9
+and its shared use by the console and both subchannel drivers, `SH_EVENT_OCCURRED_UART_INT` at bit 20, the eight
+`SAL_IROUTER_*` operations, `CHUNKSIZE` 127, the event parse order and class constants, SHub 1 and SHub 2 LED addresses,
+and that `sn_console.c` and `snsc*.c` use only SAL calls. Manuals: the L2 role, peers, ports (table 2-2), firmware layout
+and recovery, power sequencing by the L2, address form `a.b.c.d:x:y`, command pass-through, three console modes, the
+Altix 4700 software L2 and its `l2` and `! init 4` commands, the list of systems with an L2, the SGIconsole connection types
+and limits (64 serial, 19 Ethernet, 64 partitions).
+
+**Ghidra readings.** `sysctl_cmd_construct_req` (`0xffa81f40`) and `sysctl_cmd_interpret_resp` (`0xffa82270`) in
+`shub1snprom.bin` of SNPROM 10.54 build 70399 (SAL 5.04), exported with the SN2 PROM loader. Confirmed: request is target
+word (handle value ORed with the task argument), big-endian code at offset 4, count byte at offset 6 and arguments from 7,
+only when arguments are present; argument tags `0x00` (four bytes, big-endian), `0x01` (string), `0x80 | n`; reply is a
+big-endian status, then for status 0 a count byte at offset 4 and arguments from 5, with -32 for a tag mismatch and -33 for a
+count mismatch; status -106 reads a second word at offset 6 and returns it minus 106000 (0x19e10). Not obtained: Ghidra
+found no function at `0xffaeaff0` (`direct_probe`) in that image, and the UART register offsets were not re-read.
+
+**Mechanical fixes made in place.**
+
+- The MSR row said Linux waits for LSR bit 5 and MSR bit 4 before each byte. `UART_PUTC_READY` is tested only when the
+  software budget is empty; the per-byte test is in `l1_serial_out` only.
+- Subchannel 31 was said to be opened by no v2.5.0 code. `sc_listen` reserves it and sends request `0x1007` with 31.
+  `sc_open` can also hand out 31 (the loop runs to 31), so the "17 to 30" range was wrong.
+- "32 input queues" is not a structure in the code: `BRL1_IQS` is defined and unused; each subchannel has one input queue pointer.
+- The frame-length test at end of frame was described as "fewer than two bytes". The test counts the check bytes, and for
+  message packets the reserved length byte and header byte, so the minimum differs between console and message frames.
+- The no-argument paragraph said the SN2 PROM builder and the L1 receivers read a count byte unconditionally. The Ghidra
+  reading shows the PROM builder omits it for no arguments, as Linux does; the sysco ColdFire parser reads it only for frames
+  of at least 8 bytes. The paragraph now says so.
+- Event layout: the same source, four-byte code, count layout is read by the Bedrock-side `sc_event`, so it is one format.
+- L2 page: L1 index above 0 and console-selection order were stated more firmly than the guide does; now marked inferred or
+  "not stated". The "no SN2-era L2 image is held" sentence was too strong (sysco compares L2 1.62.0).
+- L3 page: a manual citation was attributed to the wrong guide (p. 71 is in 007-4579-001), and the SGIconsole-as-L3 pairing
+  was graded established from a manual that never uses the word L3; it is inferred.
+
+**Findings not fixed (change meaning or need other sources).**
+
+1. The IRIX binary facts on this page rest on the README and sysco and were not re-read here. The SN2 PROM UART offsets
+   (junk-bus `0x7_fed4_0000`) are quoted from the boot-sequence page and not re-read; the message layout was (Ghidra readings
+   above).
+2. The `0x5000_1006` request (type 5, bay 1) sits in the page as role unknown. Linux v2.5.0 `l1.h` has no type 5 either, so
+   the open item stands.
+3. Event dispatch in v2.5.0 `sc_event` is compiled only under `LINUX_KERNEL_THREADS`. Whether that macro was ever set in a
+   shipped SN1 kernel is unknown, so "established" for the event format means the code, not that it ran.
+4. The Altix 3000 L2 page grades the "firmware assumed 1.x" statement inferred; correct, but the 1.62.0 comparison in sysco
+   might settle whether the 3000 shipped a later L2 than 1.44.0. Nobody has read it for that.
+
+**Cleared scope.** The Linux-derived register file, framing, header byte, message body, address word, status and request-code
+statements; the SN2 Linux call layer; the L2 and L3 manual-derived tables, as corrected above; the open-question list (all
+nine items are real; item 3 is largely answered for senders (both Linux and the SN2 PROM omit the count byte for no
+arguments) and now has the ColdFire receive note, and item 4 has the Bedrock-side event layout). **Not cleared:** every statement that depends on a shipped binary reading (IRIX `l1.o`, the SN2
+PROM, the ARM and ColdFire L1 images, the L2 image), which this review took on the quoted pages' own grades.

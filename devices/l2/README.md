@@ -19,9 +19,9 @@ Connectivity Guide*, 007-4340-003, pp. 3 to 5 (printed); Linux v2.5.0 `include/a
 | One L2 is mounted at the top of a rack and uses no rack units; rack 001 carries a touch display on its rear door. The display offers power up, power down, reset, NMI and destination selection, and shows the firmware version and serial number (`SGI L2 Controller, Firmware V1.17.7`). | established (007-4579-001 pp. 37 to 44) |
 | Ports: four downstream USB ports (an L2 is the USB master; each goes to an R-brick's hub or, with no R-brick, to a C-brick's L1), one 10/100 Ethernet port, a console RS-232 port and a modem RS-232 port at 115 kbaud, the touch display, and power from the power distribution strip. | established (007-4579-001 p. 39) |
 | The L2 firmware has two parts, a boot image and a kernel image. There is no second copy to fall back to; a bad kernel image is not run, and the L2 can be reflashed from its console port (`flashsc --l2recover`). The L1, by contrast, has a boot image and two images, A and B, and runs the newer valid one. | established (007-4579-001 pp. 71 to 72) |
-| Brick names are `rrrbss.p`: rack, brick type letter, slot, and partition when partitioned. A brick's L2-level address is `a.b.c.d:x:y`, the L2's IP address, USB port number and an L1 index (0 is the L1 on that USB cable; higher numbers are attached through it). | established (007-3938-005 pp. 9 to 10; 007-4579-001 pp. 62 to 63) |
+| Brick names are `rrrbss.p`: rack, brick type letter, slot, and partition when partitioned. A brick's L2-level address is `a.b.c.d:x:y`, the L2's IP address, USB port number and an L1 index (0 is the L1 on that USB cable; the guide says only that other values are system and device specific, and its `config verbose` example, p. 50, lists attached bricks under higher indexes, which is a reading, inferred). | established (007-3938-005 pp. 9 to 10; 007-4579-001 pp. 62 to 63) |
 | Commands the L2 does not understand pass to the L1s of the current destination (`rack <list> slot <list>`, `partition <n>`; default all racks and slots). The L2 interprets `power`, `config`, `select`, `destination` and similar. | established (007-3938-005 pp. 10 to 13, 137) |
-| Operating modes on the console port: L2 prompt, console mode (Ctrl-D, all input to the selected system console) and L1 mode (`l1`, input to one L1); Ctrl-T escapes. The L2 picks the console from the last brick and subchannel that produced output and, failing that, the lowest rack and slot. | established (007-3938-005 pp. 8 to 15) |
+| Operating modes on the console port: L2 prompt, console mode (Ctrl-D, all input to the selected system console) and L1 mode (`l1`, input to one L1); Ctrl-T escapes. The L2 picks the console from two things, the last brick and subchannel that produced output and the brick with the lowest rack and slot; the guide does not say which wins. | established (007-3938-005 pp. 8 to 15) |
 
 ## Hardware and firmware, as shipped (quoted from sysco)
 
@@ -70,9 +70,11 @@ The NUMAlink 4 cables carry the 4700's controller traffic between enclosures by 
 ## Open
 
 [../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md) lists the PROM's routing of L2
-traffic, the console-baud conflict and the 4700's LVDS path. No SN2-era L2 image is held, so the Altix 3000 L2 firmware
+traffic, the console-baud conflict and the 4700's LVDS path. No Altix 3000 product L2 image is named as such, so the Altix 3000 L2 firmware
 is assumed to be the 1.x line sysco reads (inferred from the manual's firmware-version strings, 007-4579-001 p. 44:
-`V1.17.7`; 007-3938-005 p. 5 for the 4700 change), not read.
+`V1.17.7`; 007-3938-005 p. 5 for the 4700 change). Sysco reads 1.44.0 in full and compares L2 1.62.0 from the
+Internal Support Tools 3.24 disc (the set that carries the L1 1.62.1 the SN2 PROM link page reads) against 1.48.0 in
+its `evidence/version-diffs.md`; this page did not read that comparison.
 
 ## Related pages in the sysco repository
 
