@@ -3,7 +3,7 @@
 What the SGI Altix and Prism firmware images in hand are made of (four read in full, four more builds listed, one of
 them read from reset to the EFI console), which machines they target, what the processor does before the EFI console appears, which SAL
 calls they answer, and which SHub registers the first stage writes. The path an Altix 350 or Prism node takes from reset
-to the EFI console, read in the newest SHub 1 image, is in the SAL 5.04 boot-path reading to follow. Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
+to the EFI console, read in the newest SHub 1 image, is in [altix350-boot-path.md](altix350-boot-path.md). Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
 built in the retools toolchain image. Nothing here is copied from the images: names are function and string names the
 binaries carry, addresses and numbers are quoted as facts.
 
@@ -30,7 +30,7 @@ Four more images are in the root and listed in [evidence/irix-files.md](../../..
 `snprom.bin` from snprom 3.32 (SAL 3.32) and 4.20 (SAL 4.20), both IP41 and SHub 1, and `shub1snprom.bin` (SAL 5.04, built
 2008-11-11, IP41, SHub 1) and `shub2snprom.bin` (not read) from snprom 10.54. The SAL 5.04 image is the newest SHub 1
 build held and is the one SGI's own `README.snprom` says boots the Altix 350 and both Prism models; its FIT and first
-stage are read in the SAL 5.04 boot-path reading to follow. The component tables below are for the first four.
+stage are read in [altix350-boot-path.md](altix350-boot-path.md). The component tables below are for the first four.
 
 **How an image says which SHub it targets (established).** Three independent places agree in each image. The SAL_A
 (first-stage) component starts with a banner string `SGI SAL Version <major>.<minor> rel<yymmdd> IP41|IP65 built ...`;
@@ -192,7 +192,7 @@ by what the hardware reports.
   `shub2snprom.bin` the Altix 4700 and 450 (established as SGI's statement of intent; see
   [evidence/sn2-holdings.md](../../../evidence/sn2-holdings.md#system-firmware)). So the SHub 1 image's `IP41` is a
   build target covering boards the string does not name, and how it tells an IP57 from an IP41 at run time is a
-  question for the SAL 5.04 boot-path reading to follow. The SAL_B of all four also
+  question for [altix350-boot-path.md](altix350-boot-path.md). The SAL_B of all four also
   contains a literal board identity string `Part:030-1604-001;Name:IP41;...` and an `IBRICK` one (a built-in default
   or test record; used when EEPROM info is missing, inferred from the "Could not retrieve EEPROM info" messages next
   to it).
@@ -224,7 +224,7 @@ by what the hardware reports.
    leaves the SHub generation of its IP57 board unknown; `README.snprom` puts the machine on the SHub 1 image, so the
    Altix 350 is a SHub 1 machine (inferred from that statement and the SHub 2 image's "no XIO" string).
 2. It is the newest SHub 1 build held (2008-11-11) and the last of its line in the root.
-3. Its first stage was read in full (the SAL 5.04 boot-path reading to follow).
+3. Its first stage was read in full ([altix350-boot-path.md](altix350-boot-path.md)).
 
 **What this does not settle.** The SHub 2 images (`shub2snprom.bin`, `ip65prom.bin`) are for the Altix 4700 and 450 and
 are not a candidate for a one-node Altix 350 or Prism: the 1.40 image says "SHUB2 does not support XIO I/O.", and the
@@ -330,7 +330,7 @@ are inferred, not read from SAL_B.
    node with no router skips it (the one-module Altix 350 case; not verified by running).
 
 **What an emulated node must answer to reach EFI (summary, SHub 2 build; the SHub 1 Altix 350 version is in
-the SAL 5.04 boot-path reading to follow):** the SHub identification and node-identity registers, the
+[altix350-boot-path.md](altix350-boot-path.md)):** the SHub identification and node-identity registers, the
 SAL_A registers above (accepting writes is enough), DRAM at physical `0x1000000` with working sizing, a CFI-compatible
 flash or an error the PROM tolerates, an L1 (or the simulator escape), one working console path. PIC, TIO and IOC4
 are needed for I/O (EFI's console is the system controller or a serial UART in an IOC4), not for reaching the PROM
@@ -368,7 +368,7 @@ For SHub 1 (`snprom.bin`, `shub1snprom.bin`) the SAL_A constants are the `0x81_x
 `0x81_101d_0080`, `0x81_101d_0088`, `0x81_101d_0100`, `0x81_1006_0480` (`SH1_IPI_ACCESS` in the kernel header),
 `0x81_2001_0100`, `0x81_5003_1500` to `0x81_5003_1560`, and the window `0x87_fed0_0000` to `0x87_fed3_0000`; the constants in the 4.43 and 4.90 builds were listed
 from the instructions only (**inferred**). The SAL 5.04 SHub 1 first stage has since been read in full, in order, in
-the SAL 5.04 reading to follow, which supersedes this list for that build.
+[altix350-boot-path.md](altix350-boot-path.md#sal_a-on-shub-1), which supersedes this list for that build.
 
 Further SHub 2 locations the symbolised code uses, with what the PROM does at each (inferred from function names and
 the constants in them): `0x2_1006_0f00` and `0x2_101d_0c00` (read for the node's NASID, `chipset_get_nasid`),
@@ -561,7 +561,7 @@ What the 2.6.5 SN2 kernel looks for (`efi_init`, `ia64_sal_init`, `acpi_boot_ini
 ## What is not covered
 
 The ordered reading of both SAL_B init paths, which EFI configuration tables are installed, and the exact register
-accesses of memory sizing are the open items of the SAL 5.04 boot-path reading to follow for SAL 5.04; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
+accesses of memory sizing are the open items of [altix350-boot-path.md](altix350-boot-path.md) for SAL 5.04; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
 The images, the root layout and the kernel in use are listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels).
 
 ## Review
@@ -585,4 +585,4 @@ Independent review of chips commits `98bcb20..fe7f0ae` (this page, [questions/sn
 
 **Cleared scope:** the image layout tables, checksums, product-compatibility strings (with the `IP41` qualification), the dispatch table and kernel call comparison, and the `SN_SAL_GET_SN_INFO` handler except region size. **Not cleared:** the SHub 2 SAL_A register list as a complete ordered account, the region-size source, the boot-first recommendation and Prism or Altix 350 statements, and the list in irix-files.md as the root's full contents. The three PROM-view lines on the other pages are cleared for the mask, shift and sharing-domain content they state and for the `SH2_IPI_ACCESS` writes; the address-map line attributes the global window `0x3_0000_0000` to the first-stage firmware, but the first stage does not use it (the runtime does), so reword it when the page is corrected.
 
-**Findings addressed in 35203df; renewed review needed.** Items 1 to 4 of the SHub 2 SAL_A list, the region-size source, the `sysctl_probe` per-build statement, the stale root listing, the boot-first recommendation and the Prism and Altix 350 statements, and the address-map line are corrected there. The reviewer's clearance above stands for what it cleared; the corrected claims are not cleared until reviewed again.
+**Findings addressed in ec38a7e; renewed review needed.** Items 1 to 4 of the SHub 2 SAL_A list, the region-size source, the `sysctl_probe` per-build statement, the stale root listing, the boot-first recommendation and the Prism and Altix 350 statements, and the address-map line are corrected there. The reviewer's clearance above stands for what it cleared; the corrected claims are not cleared until reviewed again.
