@@ -164,3 +164,52 @@ The fatal-error branch (`PAL r35` bit 2 set and bits 1:0 not zero: `0xff6740d6` 
 - The clock control is `0x1006_0700` (`SH2_GC_SRC_CTRL`), a different offset from SHub 1's `0x1006_0280`, with the same start sequence.
 - The node number is read from `0x1006_0f00` bits 45:32, not `0x1006_0580` bits 42:32; the part number from offset 0 as before (`0x254` first).
 - The firmware's node-addressing table row is held in a SHub register (`SCRATCH24`) instead of a constant.
+
+## 4. Memory and directory registers the bring-up programs
+
+Scope: the registers `main` reaches between "Init memory..." (progress `0x16`) and "Testing memory ........" (`0xff47a970`, the routine that prints it). Found by reading the register-offset constants in every routine of that phase and following the callers in the order of `main` (`0xff42b9c0`); the routines are the memory discovery and configuration group at `0xff440a50` to `0xff4863c0`, the directory group at `0xff488140` to `0xff48a750`, and the test group at `0xff47b270` to `0xff4809e0`. What was read in full: the access list below by offset and direction; what was **not** read in full: the values the discovery computes from the L1's DIMM data (the DIMM and refresh timing arithmetic), so a value column says "from the DIMM data" where that applies. A model that accepts every write to these registers and returns what each section says lets the test pass. The memory itself is plain RAM behind the node's memory space (section 1).
+
+All offsets are in the local window (add `0x2_0000_0000`) or, for another node, the global form of section 1. SHub 2 splits memory into an X side and a Y side (two DIMM groups) and a "JNR" (junior) side; the directory and the queue ports come in left and right pairs (`DQLP`, `DQLS`, `DQRP`, `DQRS`, PROM names; the meaning of "P" and "S" is unknown). SHub 1 had one memory block and one directory block at `0x1_0001_0000` to `0x1_0183_0200`; none of those offsets exist here.
+
+### Memory configuration
+
+| Offset | PROM name | What the firmware does | Grade |
+|---|---|---|---|
+| `0x1_0000` / `0x1_0008` / `0x1_0010` | `SH2_X_DIMM_CFG`, `SH2_Y_DIMM_CFG`, `SH2_JNR_DIMM_CFG` | write the discovered DIMM population: for DIMMn (n = 0 to 3): `SIZE` (3 bits), `2BK`, `REV`, `CS` (2 bits); `FREQ` bits 35:32; `CLK_EN_LEFT/RIGHT` bits 36 and 37; `TOG_DIRC_BA` bit 38. Read back later in the test (`0xff47a970` reads `0x1_0010`) | established (access); inferred (field meanings from names) |
+| `0x1_0018` / `0x1_0048` | `SH2_X_ODT_CFG`, `SH2_Y_ODT_CFG` | write on-die-termination masks (`ODT_RD0..3`, `ODT_WT0..3`, `ODT_IDLE`, enables); values from DIMM count | established (access); unknown (values) |
+| `0x1_0020` / `0x1_0050` | `SH2_X_CFG`, `SH2_Y_CFG` | write timing delays (`TA_DLYS` bits 39:8), `MODE_SERIAL` bit 0 and bus bubbles; one RMW at `0xff48c38c` sets or clears single bits (`CLR_DIR_CACHE` bit 61 pulsed) | established (access); unknown (values) |
+| `0x1_0028` / `0x1_0058` | `SH2_X_DQCT_CFG`, `SH2_Y_DQCT_CFG` | write read/write select delays (4-bit fields, `RD_SEL`, `WT_SEL`, `DTA_RD_SEL`...) | established (access); unknown (values) |
+| `0x1_0030` / `0x1_0060` | `SH2_X_REFRESH_CONTROL`, `SH2_Y_REFRESH_CONTROL` | write refresh `INTERVAL` bits 16:8, `HOLD` bits 22:17, `ENABLE` bits 7:0; `INTERLEAVE` bit 23 and `HALF_RATE` 27:24. A DIMM-dependent computation; the firmware prints a warning if `tRCD` is outside 2 to 4 | established (access); unknown (values) |
+| `0x1_0078` | `SH2_MEM_RED_BLACK` | write `TIME` bits 15:0 and `ERR_TIME` bits 51:16 | established (access); unknown (values) |
+| `0x1_0080` | `SH2_MISC_MEM_CFG` | RMW: node-id mask bits 61:55, `DISABLED_VICTIMS` 49:44, `DISABLED_WRITE_TNUMS` 40:36, `DISABLED_READ_TNUMS` 32:28, thresholds, `NM_INT_EN_0..3` bits 10, 11, 18, 19 | established (access); unknown (values) |
+| `0x1_00d8`, `0x1_00e0`, `0x1_00e8`, `0x1_00f0`, `0x1_00f8` | `SH2_PIO_RQ_CRD_CTL`, `SH2_PI_MD_RQ_CRD_CTL`, `SH2_PI_MD_RP_CRD_CTL`, `SH2_XN_MD_RQ_CRD_CTL`, `SH2_XN_MD_RP_CRD_CTL` | credit depths (`DEPTH` bits 5:0); SAL_A already wrote the first to 2 | established (access); unknown (values) |
+| `0x2_5003_1240` | scratch word | the PROM stores the board type here after checking the DIMM layout (`0xff4824e0`); values `0x7b`, `0x200`, `0xa00`, `0xe00` are the accepted boards, anything else stops with "unknown board type" | established |
+
+### Directory registers (DQLP at `0x3_xxxx`, DQRP at `0x5_xxxx`, same layout)
+
+| Offset (DQLP / DQRP) | PROM name | What the firmware does | Grade |
+|---|---|---|---|
+| `0x3_0000` / `0x5_0000` | `SH2_MD_DQLP_MMR_DIR_CONFIG` (`DQRP`) | write `SYS_SIZE` bits 2:0, `EN_DIRECC` 3, `EN_DIRPOIS` 4, `TIO_CHIPLET` 7:6, `RDSHD_TO_RDEXC_MASK` 14:8, `SHARERS_1K` 16 (the same bit as bit 54 of `SH2_NODE_ID`, section 2). `SYS_SIZE` is derived from the node count | established (access); inferred (meaning) |
+| `0x3_0100` / `0x5_0100` (+0x10, +0x20, +0x30) | `..._DIR_PRESVEC0..3` | written by the routine at `0xff4886c0` after reading `SH2_NODE_ID` bits 47:46: the presence-vector layout for the node's sharing mode | established (access); unknown (values) |
+| `0x3_0200` / `0x5_0200` (+0x10 to +0x70) | `..._DIR_LOCVEC0..7` | local vector, written by `0xff488140` | established (access); unknown (values) |
+| `0x3_0300` / `0x5_0300` (+0x10 to +0x70) | `..._DIR_PRIVEC0..7` | eight privilege vectors, each `IN` bits 13:0 and `OUT` bits 27:14; written by `0xff4891c0` to open access to all nodes. These are the "directory privilege vectors" Linux names for SHub 1 (`SH1_MD_DQLP_MMR_DIR_PRIVEC0`) | established (access) |
+| `0x3_0400` / `0x5_0400` | `..._DIR_TIMER` | write `TIMER_EN` bit 12 and `TIMER_DIV` 11:0 | established (access); unknown (values) |
+| `0x3_4800`, `0x4_b000`, `0x5_4800`, `0x6_b000` | `..._AMO_CFG` | AMO cache configuration: `EN_XAMOECC` bit 0, `EN_YAMOECC` 1, `EN_XLITTLE_END` 2, `EN_YLITTLE_END` 3 | established (access); unknown (values) |
+| `0x2_0000` to `0x2_0038` | `SH2_X_TAG0..7` | the directory cache tag array; written (cleared) once per entry by `0xff42e140` and others | established (access); inferred (role) |
+
+### The memory test engine
+
+The "Testing memory" phase drives a self-test block (the PROM calls it MBIST) through the registers below. The output "MBIST_ERR, FRU..., ADDR:" and "MBIST TIMEOUT Byte Address" come from it.
+
+| Offset | PROM name | Direction and use | Grade |
+|---|---|---|---|
+| `0x2_0080` | `SH2_MMRBIST_BASE` | write the start address | established (access); inferred (meaning) |
+| `0x2_0088` | `SH2_MMRBIST_CTL` | write the command word, then poll. Fields: `BLOCK_LENGTH` 30:0, `CMD` 38:32 (7 bits), `IN_PROGRESS` 40, `FAIL` 41, `MEM_IDLE` 42, `RESET_STATE` 44, `PIO_MODE_ADDR_DEC` 45, `PIO_MODE_STRIDE_ORDER` 49:46, `PIO_MODE_STOP_ON_ERR` 50. One early use (`0xff41c990`): W `0x11_0000_0010` (`CMD` 0x10, `BLOCK_LENGTH` 16, bit 40 set) then poll until a bit clears, with a 2,000,000-microsecond limit. The test loop (`0xff47bb60`) polls this register for `FAIL` (bit 41) after each block | established (access); inferred (field use) |
+| `0x3_8000`, `0x3_8010`, `0x3_8800`, `0x3_8810` (DQLP) and the same at `0x4_8xxx`, `0x5_8xxx`, `0x6_8xxx` (DQLS, DQRP, DQRS) | `..._XBIST_H`, `_XBIST_L`, `_YBIST_H`, `_YBIST_L` | data pattern: `PAT` bits 31:0, `INV` 40, `ROT` 41, `RANDOM` 42; `ARM` bit 43 in the `_H` registers starts that port (`0xff47bf60` writes all sixteen, with `0x80000000000` = ARM set and `CMD` byte from the node's test description) | established (access); inferred (field use) |
+| `0x3_8020`, `0x3_8030`, `0x3_8820`, `0x3_8830` (and the three other ports) | `..._XBIST_ERR_H`, `_L`, `YBIST_ERR_H`, `_L` | read on failure: `PAT` 31:0, `VAL` 40, `MORE` 41 | established (access) |
+| `0xb8`, `0xc0` | `SH2_MEM_ERROR_SUMMARY`, `_ALIAS` | read after a failure and acknowledged through the alias (`0xff4809e0`) | established (access); inferred (acknowledge) |
+| `0x1_0010`, `0x1_0001_0010` | `SH2_JNR_DIMM_CFG` | the test routine reads it (`0xff47a970`) before announcing the test | established |
+
+**What a model must return to pass.** `0x2_0088` must show `IN_PROGRESS` (bit 40) clear soon after the command write (it is polled with a 2,000,000-microsecond limit, `0xff41c990`), `FAIL` (bit 41) clear, and `MEM_IDLE` (bit 42) may be anything. The `XBIST` and `YBIST` registers must hold what was written (the firmware does not read the pattern registers back on a pass). Error registers read 0 on a pass. With "Skipping memory test, as requested" (the console option) the PROM does not write these.
+
+**Not read.** The numeric values written to the timing registers, the way the firmware chooses `CMD` and `BLOCK_LENGTH` per DIMM, the order of the sixteen BIST writes against the `ARM` writes, the exact poll loop in `0xff47bb60` (which of two registers it reads second), and the DIMM discovery over the L1 (it is serial traffic to the L1 controller, not chip registers). These are **unknown** here; the questions page should list them.
