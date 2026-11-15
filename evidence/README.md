@@ -4,6 +4,7 @@
 
 | Page | Title | Summary |
 |---|---|---|
+| [asic-coverage.md](asic-coverage.md) | SGI ASIC coverage audit | A coverage audit of the SGI-designed ASICs and option-board chips in this repository, dated 2026-11-15 and grouped... |
 | [audio-survey.md](audio-survey.md) | Audio options of the Fuel, Tezro and Octane | Scope: which audio hardware the SGI documents and the IRIX 6.5.30 IP30 and IP35 driver objects tie to the Fuel (IP35... |
 | [binaries-scope-chip-drivers.md](binaries-scope-chip-drivers.md) | Chip driver objects in the kernel builds | Each entry classifies one shipped object of the IP27, IP30, IP32 or IP35 kernel build that the function scope keeps... |
 | [binaries-scope-filesystem.md](binaries-scope-filesystem.md) | File-system objects in the kernel builds | Each entry classifies one shipped file of the four kernel builds (IP27, IP30, IP32, IP35) whose routines are... |
