@@ -5,10 +5,9 @@ the Linux platform headers are the only register source.
 
 1. **Reset values and side effects.** The kernel header states none, and no UV firmware is held. Route: a UV BIOS or
    hub datasheet; a UV system capture (needs approval). Status: unknown.
-2. **UV3 second MMIOH overlay register address.** The v5.4 header gives `rh_gam_mmioh_overlay_config0` and
-   `rh_gam_mmioh_overlay_config1` the same address 0x1603000. The UV3 register map keeps 0x1604000 for the second one,
-   inferred from the 0x1000 spacing of the redirect tables and of the UV4 pair. Route: the v4.x headers at each tag
-   (not read), a UV3 PROM, or a published UV3 register manual.
+2. **UV3 second MMIOH overlay register address.** Settled in review: the v5.4 header repeats 0x1603000 for both
+   overlay registers, the v6.6 header gives the second one 0x1604000, and the UV3 map uses that (established). Kept only
+   as a record of the v5.4 discrepancy.
 3. **Descriptor layout order.** The header comment places the 16-byte message payload at descriptor bytes 0x20 to 0x2f
    and the header at 0x30 to 0x3f; the descriptor struct declares header first, then payload. Route: the destination
    payload queue layout on hardware, or a manual.

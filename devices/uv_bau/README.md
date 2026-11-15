@@ -40,9 +40,10 @@ follows from bitfield order. UV5 has no BAU registers in the header.
 
 ## Message formats
 
-Distribution vector, 32 bytes: one bit per destination, even node ids from the base. Header, 16 bytes (UV1 and the UV2
-and UV3 forms differ; both in [registers.toml](registers.toml)). Payload, 16 bytes with 12 usable: the address (or all
+Distribution vector, 32 bytes: one bit per destination, even node ids from the base. Header, 16 bytes (the UV1 form
+differs from the UV2 and UV3 form; only the UV2 and UV3 form is in [registers.toml](registers.toml)). Payload, 16 bytes with 12 usable: the address (or all
 TLBs), sending cpu, ack count; UV4 adds a 24-bit qualifier the source sets to the value for the ASCII string SGI. The
+UV1 header, the payload words and the queue entry layout are not yet in the register file. The
 queue entry carries the address, sender, ack count filled in by hardware, replied-to bit, message type, cancel bit, the
 software-ack vector and the sequence number.
 

@@ -64,7 +64,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `rh_gam_alias_2_redirect_config` | 0x16000f0 | rw | 64 |  |  | unknown | established | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
 | `rh_gam_mmioh_overlay_config0` | 0x1603000 | rw | 64 |  |  | unknown | established | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
 | `rh_gam_mmioh_redirect_config0` | 0x1603800 | rw | 64 | 128 |  | unknown | established | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
-| `rh_gam_mmioh_overlay_config1` | 0x1604000 | rw | 64 |  |  | unknown | inferred | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
+| `rh_gam_mmioh_overlay_config1` | 0x1604000 | rw | 64 |  |  | unknown | established | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
 | `rh_gam_mmioh_redirect_config1` | 0x1604800 | rw | 64 | 128 |  | unknown | established | Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header |
 
 ### Register `node_id`
@@ -692,7 +692,7 @@ Array of 128 registers, stride 8.
 
 ### Register `rh_gam_mmioh_overlay_config1`
 
-Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. The UV3 redirect tables sit 0x1000 apart (0x1603800 and 0x1604800) and the UV4 overlay pair is 0x1000 apart, so 0x1604000 is inferred. Fields are the header struct for this register.
+Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, which is used. Fields are the header struct for this register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

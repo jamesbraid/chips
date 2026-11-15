@@ -3221,7 +3221,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
+   "grade": "established",
    "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
   },
   {

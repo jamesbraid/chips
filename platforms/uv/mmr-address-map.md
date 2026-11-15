@@ -82,7 +82,7 @@ control registers move from 0x401080 (UV1) to 0xc01080 (UV2 and UV3) to 0x601080
 | `rh_gam_alias_2_redirect_config` | 0x16000f0 | 0x16000f0 | 0x16000f0 | 0x4800f0 | - |
 | `rh_gam_mmioh_overlay_config0` | - | - | 0x1603000 | 0x483000 | - |
 | `rh_gam_mmioh_redirect_config0` | - | - | 0x1603800 | 0x483800 | - |
-| `rh_gam_mmioh_overlay_config1` | - | - | 0x1603000 | 0x484000 | - |
+| `rh_gam_mmioh_overlay_config1` | - | - | 0x1604000 | 0x484000 | - |
 | `rh_gam_mmioh_redirect_config1` | - | - | 0x1604800 | 0x484800 | - |
 | `gr0_gam_gr_config` | - | - | - | 0x600028 | 0x600028 |
 | `gr1_tlb_mmr_control` | 0x801080 | 0x1001080 | 0x1001080 | 0x701080 | - |

@@ -59,8 +59,8 @@ equality and inequality poll; masked compare exchange). Element types are byte, 
 (types 4, 5 and 7 are not defined in the driver). All values are in the constants of the register map.
 
 Exception causes in the extended control block are bit masks (listed in the CBE word). The driver retries an exception
-only when every set cause is in the retry group: execution hardware error, TLB hardware error, request timeout,
-non-fatal response, response data error (established, `gru_instructions.h`).
+only when every set cause is in the retry group: execution hardware error, TLB hardware error, requester-side request
+timeout, non-fatal response (requester or home side), response data error (requester or home side) (established, `gru_instructions.h`).
 
 ## Unknown
 

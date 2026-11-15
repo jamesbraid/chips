@@ -37,7 +37,8 @@ the system controller listing a rack as `UV1000` with blades named `IP93` and ba
 and `IP93-DISK` (established as manual text, rev 005 printed page 8). The manual also says partitioning needs no cable
 changes and is done with commands to the system controller, that hardware memory firewalls protect each partition, and
 that a GRU no-fault mode lets one partition reach another safely (established as manual text, printed pages 3 to 4).
-It does not state a hub register fact.
+It does not state a hub register fact. Its partitioning example shows the system controller reporting a NUMAlink 5
+rate of 5.0 (`hwcfg` output, rev 005 printed page 10, established as manual text; the unit is not stated).
 
 ## Address spaces the CPU sees
 
@@ -46,7 +47,7 @@ All values are established from `v5.4`/`v6.6` `uv_hub.h` unless marked.
 | Space | UV1 | UV2 and UV3 | UV4 and UV5 |
 |---|---|---|---|
 | Local MMR window (this hub's registers, 8-byte registers) | 0xf4000000, 64 MiB | 0xfa000000, 32 MiB | 0xfa000000, 32 MiB |
-| Global MMR32 window (any hub, reduced register set, `pnode << 15` ORed in) | 0xf8000000, 64 MiB | 0xfc000000, 32 MiB | none |
+| Global MMR32 window (any hub, reduced register set, `pnode << 15` ORed in) | 0xf8000000, 64 MiB | 0xfc000000, 32 MiB | UV4: 0xfc000000, 16 MiB in v5.4, set to none in v6.6; UV5: none |
 | Global MMR64 window (any hub, all MMRs) | high in the physical map, base from firmware or the MMR overlay register, `pnode << 26` by default | same | same |
 | Local bus (system controller interface window) | 0x1c00000, 4 MiB; 64 one-byte slots at its top | same | same |
 
@@ -108,3 +109,42 @@ the value is **unknown** here.
 ## Open items
 
 [questions/uv-open.md](../../questions/uv-open.md).
+
+## Review
+
+Independent review of the UV1 to UV5 hub maps, the GRU and BAU pages and this platform page. Sources re-read: Linux
+v5.4 and v6.6 `uv_mmrs.h`, `uv_hub.h`, `x2apic_uv_x.c`, `bios.h`, `uv_time.c`, `uv_nmi.c`, `tlb_uv.c`, `uv_bau.h`, the
+v6.6 `drivers/misc/sgi-gru` files, v3.10 for the part number, and 007-5629-005 printed pages 3, 4, 8 and 10. No binary
+was read, so no Ghidra work applies.
+
+**Confirmed.**
+- Every register offset in all five maps, all 228 (47, 49, 53, 54, 25), the UV3 second MMIOH overlay one against v6.6, by compiling the header's own
+  address macros per generation and comparing to `registers.toml`; the mmr-address-map table against the five files.
+- Over 1,100 field bit positions against the header's `_MASK` macros (all agree); the remaining struct-only fields
+  (descriptor base page address and node id for UV1 to UV4 and UV4A, BAU, GRU TLB control, UV4 event word 1) by hand
+  against the struct or mask text.
+- Part numbers, revision bases and the subtract-one rule for UV2 and UV4, window bases and sizes, M, N and gnode
+  derivation, the BIOS table versions and calls, and the NMI, RTC and IPI claims.
+- GRU: all handle and instruction word positions (control block word 0, fault, global, context and extended handles),
+  every constant, opcode, status and cause list against the v6.6 headers; the UV1 and UV2 only gate. BAU: constants, both
+  header halves, queue entry size, and the init sequence against `tlb_uv.c`.
+- Manual claims (UV1000, IP93 names, firewalls, GRU no-fault) at the cited pages.
+
+**Mechanical fixes.**
+- UV3 `rh_gam_mmioh_overlay_config1` is 0x1604000 and **established**: the v6.6 header defines it. It had been graded
+  inferred from the v5.4 duplicate address. The offset was already right; the grade, the address map row, the import script and open question 2 are fixed.
+- The window table said UV4 has no 32-bit global MMR window. v5.4 defines 0xfc000000, 16 MiB; v6.6 sets it to none.
+- BAU page claimed the UV1 header and queue entry words are in `registers.toml`; only the UV2 and UV3 header is.
+- GRU retry group named "request timeout" and "non-fatal response" without the side the driver checks.
+- Added the NUMAlink 5 rate line from the manual.
+
+**Findings not fixed.**
+- The BAU header words say bytes 0x30 to 0x37 as established, but open question 3 says the layout order is unresolved
+  (the struct puts the header first). The offset in the word docs should be read as the header comment's claim.
+- The BAU register file lacks the UV1 header, the payload words and the queue entry; these are fully defined in
+  `uv_bau.h` and could be added.
+- The GRU driver's ia64 branch hard-codes a window base marked as a placeholder; the page does not mention it.
+
+**Cleared scope.** Register offsets, field positions, access letters, constants and platform facts above, as
+definitions in SGI-written Linux code at the cited tags. Not cleared: reset values, behaviour beyond the driver, NUMAlink
+physical facts (no source held beyond the manual's rate line).

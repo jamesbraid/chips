@@ -707,8 +707,8 @@ nasid = { bits = [14, 0], grade = "established", doc = "Access RW in the header.
 offset = 0x1604000
 access = "rw"
 width = 64
-grade = "inferred"
-doc = "Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. The UV3 redirect tables sit 0x1000 apart (0x1603800 and 0x1604800) and the UV4 overlay pair is 0x1000 apart, so 0x1604000 is inferred. Fields are the header struct for this register."
+grade = "established"
+doc = "Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, which is used. Fields are the header struct for this register."
 [registers.rh_gam_mmioh_overlay_config1.fields]
 base = { bits = [45, 26], grade = "established", doc = "Access RW in the header." }
 m_io = { bits = [51, 46], grade = "established", doc = "Access RW in the header." }

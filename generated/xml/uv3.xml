@@ -432,8 +432,8 @@
     <doc>Header name UVH_RH_GAM_MMIOH_REDIRECT_CONFIG0.</doc>
     <field name="nasid" start="0" size="15" type="uint" grade="established"/>
   </struct>
-  <struct name="RH_GAM_MMIOH_OVERLAY_CONFIG1" size="8" grade="inferred" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1604000" access="rw" reset="unknown">
-    <doc>Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. The UV3 redirect tables sit 0x1000 apart (0x1603800 and 0x1604800) and the UV4 overlay pair is 0x1000 apart, so 0x1604000 is inferred. Fields are the header struct for this register.</doc>
+  <struct name="RH_GAM_MMIOH_OVERLAY_CONFIG1" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1604000" access="rw" reset="unknown">
+    <doc>Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, which is used. Fields are the header struct for this register.</doc>
     <field name="enable" start="63" size="1" type="uint" grade="established"/>
     <field name="n_io" start="52" size="4" type="uint" grade="established"/>
     <field name="m_io" start="46" size="6" type="uint" grade="established"/>

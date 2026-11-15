@@ -3031,7 +3031,7 @@ pub mod rh_gam_mmioh_redirect_config0 {
         }
     }
 }
-/// Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. (inferred)
+/// Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, whic (established)
 pub mod rh_gam_mmioh_overlay_config1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1604000;

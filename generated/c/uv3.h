@@ -1148,10 +1148,10 @@
 #define UV3_RH_GAM_MMIOH_REDIRECT_CONFIG0_NASID_INPLACE (UV3_RH_GAM_MMIOH_REDIRECT_CONFIG0_NASID_MASK << UV3_RH_GAM_MMIOH_REDIRECT_CONFIG0_NASID_SHIFT)
 
 /*
- * Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. The UV3 redirect tables sit 0x1000 apart (0x1603800 and 0x1604800) and the UV4 overlay pair is 0x1000 apart, so 0x1604000 is inferred. Fields are the header struct for this register.
+ * Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, which is used. Fields are the header struct for this register.
  */
 /* rh_gam_mmioh_overlay_config1: rw64, reset unknown; Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header */
-#define UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1             0x1604000 /* inferred */
+#define UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1             0x1604000 /* established */
 #define UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1_ENABLE_SHIFT 63 /* established */
 #define UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1_ENABLE_MASK 0x1ull
 #define UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1_ENABLE_INPLACE (UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1_ENABLE_MASK << UV3_RH_GAM_MMIOH_OVERLAY_CONFIG1_ENABLE_SHIFT)

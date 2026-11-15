@@ -80,8 +80,8 @@ if gen == '3':
     lines.append('offset = 0x1604000')
     lines.append('access = "rw"')
     lines.append('width = 64')
-    lines.append('grade = "inferred"')
-    lines.append('doc = "Second MMIOH overlay register. The v5.4 header gives this register the same address as the first (0x1603000), which cannot be right for two registers. The UV3 redirect tables sit 0x1000 apart (0x1603800 and 0x1604800) and the UV4 overlay pair is 0x1000 apart, so 0x1604000 is inferred. Fields are the header struct for this register."')
+    lines.append('grade = "established"')
+    lines.append('doc = "Second MMIOH overlay register. The v5.4 header gives it the same address as the first (0x1603000), a copy error; the v6.6 header gives 0x1604000, which is used. Fields are the header struct for this register."')
     lines.append('[registers.rh_gam_mmioh_overlay_config1.fields]')
     for fn, hi, lo, a in d['UVH_RH_GAM_MMIOH_OVERLAY_CONFIG1']['3']['fields']:
         lines.append(f'{fn} = {{ bits = [{hi}, {lo}], grade = "established", doc = "Access {a} in the header." }}')
