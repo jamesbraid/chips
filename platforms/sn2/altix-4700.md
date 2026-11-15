@@ -55,8 +55,9 @@ shared graphics option guide `007-4954-001` covers both, not read).
 ## Open
 
 - The IA blade's chips and the way its SAS/SATA and Ethernet attach (guide prints connectors only).
-- Whether the 4700 and 450 carry TIO nodes as separate NASIDs in the hardware map the kernel reads (Linux can show it;
-  README).
+- Which blades carry a TIO. The kernel gives each TIO its own node number and NASID (established, [discovery](altix-4700-discovery.md#the-configuration-graph)); which blade holds one is unknown, see [the open questions](../../questions/altix-4700-open.md).
+
+Further pages: [the IRU, blades and routers](altix-4700-iru.md), [how Linux discovers them](altix-4700-discovery.md), and [graphics attachment](graphics-attachment.md).
 
 ## Review
 

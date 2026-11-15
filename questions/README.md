@@ -379,6 +379,7 @@ Corrections found while tagging. These are not fixed here.
 - **SN2 PROM: init path and hardware answers.** *[route: software now]* Unknown: the ordered init path of SAL_B, whether boot continues without a system controller, the SHub 1 first-stage order, register names, which EFI tables the PROM installs. Next: follow the SAL_B call graph with the symbolised runtime as a name key. Page: [sn2-prom-open.md](sn2-prom-open.md).
 
 - **Silicon Graphics Prism: SHub generation, TIOCA wiring, GPU part, PROM.** *[route: missing source]* Unknown: the SHub generation of each shape (the Extreme figure says 1.2), how many TIOCAs an XG2N carries and how they attach, the ATI chip and PCI IDs of the X2PRO-256 and X3-256, the PROM that supports Prism. See [questions/prism-open.md](prism-open.md).
+- **Altix 4700 and 450: router wiring, expansion-blade bridges, base I/O chips, board codes.** *[route: missing source]* Unknown: which router port each blade slot uses, which bridge each expansion blade carries, the IA blade's controllers, the slab numbering, the 450's SHub generation and the graphics blade's bridge. See [questions/altix-4700-open.md](altix-4700-open.md).
 
 ## SN1 on IA-64 (added with platforms/sn1-ia64)
 

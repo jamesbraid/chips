@@ -19,8 +19,8 @@ lists each with what was read. Nothing here comes from IRIX: Altix and Prism ran
 | Altix 330 | 007-4790-001 (2005) | 1U compute module | NUMAlink-4, one port | [altix-330.md](altix-330.md) |
 | Altix 3300, 3700 | 007-4579-001 (2003) | C-brick, 3U, two nodes | "NUMA 3", R-brick router | [altix-3000.md](altix-3000.md) |
 | Altix 3700 Bx2 | 007-4377-002 (2004) | CR-brick, 4U, up to four nodes and two routers | NUMAlink-4 | [altix-3700-bx2.md](altix-3700-bx2.md) |
-| Altix 4700, Altix 450 | 007-4823-001 (2006), 007-4857-001 | blades in a 10U or 5U IRU | NUMAlink 4 | [altix-4700.md](altix-4700.md) |
-| Silicon Graphics Prism | 007-4772-001 | deskside node board | not read | [prism-deskside.md](prism-deskside.md) |
+| Altix 4700, Altix 450 | 007-4823-001 (2006), 007-4857-001 | blades in a 10U or 5U IRU | NUMAlink 4 | [altix-4700.md](altix-4700.md), [IRU](altix-4700-iru.md), [discovery](altix-4700-discovery.md) |
+| Silicon Graphics Prism | 007-4772-001 | deskside node board | not read | [prism-deskside.md](prism-deskside.md), [graphics](graphics-attachment.md) |
 
 The rackmount and scalable Prism guides (007-4701, 007-4774) and the Altix 450 body were only partly read; the
 machine pages say where. Brick pages for the CR-brick and the 350 modules are inside their machine pages for now.
