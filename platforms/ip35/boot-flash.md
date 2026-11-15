@@ -3,7 +3,7 @@
 The IP35 node controller (Bedrock) drives a boot flash that holds the CPU PROM code and the
 system configuration and error records. This page records what the published sources settle
 about the flash's size, its two selections and the windows that reach it, and what they leave
-open. Nothing here was read from a fitted flash part or a board.
+open. Except for the environment records, which match a captured Origin 300 boot, nothing here was read from a fitted flash part or a board.
 
 Grades: **established** (a published patent or a public header, quoted or cited below),
 **inferred** (a reasoned reading), **unknown** (not settled, with the route that would settle it).
