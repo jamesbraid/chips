@@ -392,3 +392,7 @@ Corrections found while tagging. These are not fixed here.
 
 - **Controller host protocol: SHub 2 UART location, FIFO depth, no-argument requests, event frame, L2 routing, L2 baud, the 4700's controller link, address type 2, SAL subchannel mapping.** *[route: mixed, see the page]* Nine items, each with its next route in [questions/l1-l2-l3-host-protocol.md](l1-l2-l3-host-protocol.md).
 - **TIOCX and RASC: bitstream-dependent registers.** *[route: missing source; some unknown]* The Core Services register block is defined by the vendor driver, but the algorithm-defined register offsets, reset values, the second part number, the board-type mapping and the SSP packet format are not public (the RASC guide lists the packet types and a sample register sequence; see the review on the MBCS page). See [tiocx-rasc-open.md](tiocx-rasc-open.md).
+
+## Altix 350 base I/O cards (added with platforms/sn2/altix-350-base-io)
+
+- **Altix 350 base I/O cards.** *[route: mixed]* Unknown: the Ethernet part and slot on the IO9 and IO10, the PCI slot numbers of the riser, the INTx to PIC pin map, the L1 module type byte of the 350, which device the PROM's I/O record comes from, and the IOC4 NVRAM and time-of-day access. See [questions/altix-base-io-cards.md](altix-base-io-cards.md).
