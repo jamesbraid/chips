@@ -64,6 +64,573 @@
   <struct name="INT_ATE_MP" size="8" grade="established" register="yes" offset="0x12000" access="rw" count="1024" stride="8" reset="unknown">
     <doc>Second copy of the internal translation entries with manual parity generation (`p_int_ate_ram_mp`); the census register `int_ate` is the automatic-parity copy. No IRIX routine reaches this range. Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>
   </struct>
+  <struct name="ARB_REG" size="8" grade="established">
+    <doc>Arbitration: request wait tick and enable, grant freeze, bridge high and low priority enables, and device-broke bits (names only).</doc>
+    <field name="dev_broke" start="20" size="4" type="uint" grade="established"/>
+    <field name="req_wait_tick" start="16" size="2" type="uint" grade="established"/>
+    <field name="req_wait_en" start="8" size="4" type="uint" grade="established"/>
+    <field name="disarb" start="7" size="1" type="uint" grade="established"/>
+    <field name="freeze_gnt" start="6" size="1" type="uint" grade="established"/>
+    <field name="en_bridge_hi" start="3" size="2" type="uint" grade="established"/>
+    <field name="en_bridge_lo" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_FLUSH_WO_TOUCH_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: flushes with no data used. A word write clears it.</doc>
+    <field name="notouch_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_FLUSH_W_TOUCH_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: flushes after at least one data use. A word write clears it.</doc>
+    <field name="touch_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_INFLIGHT_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: bus clocks a request spent in flight. A word write clears it.</doc>
+    <field name="inflight_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_MATCH_LOWER_REG" size="8" grade="established">
+    <doc>Read response buffer address match, lower word.</doc>
+    <field name="filled" start="63" size="1" type="uint" grade="established"/>
+    <field name="armed" start="62" size="1" type="uint" grade="established"/>
+    <field name="flush" start="61" size="1" type="uint" grade="established"/>
+    <field name="xerr" start="60" size="1" type="uint" grade="established"/>
+    <field name="pkterr" start="59" size="1" type="uint" grade="established"/>
+    <field name="timeout" start="58" size="1" type="uint" grade="established"/>
+    <field name="prefetch" start="57" size="1" type="uint" grade="established"/>
+    <field name="precise" start="56" size="1" type="uint" grade="established"/>
+    <field name="dw_be" start="48" size="8" type="uint" grade="established"/>
+    <field name="upp_addr" start="32" size="16" type="uint" grade="established"/>
+    <field name="low_addr" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_MATCH_UPPER_REG" size="8" grade="established">
+    <doc>Read response buffer address match, upper word: buffer state flags and the upper address and byte enables.</doc>
+    <field name="filled" start="31" size="1" type="uint" grade="established"/>
+    <field name="armed" start="30" size="1" type="uint" grade="established"/>
+    <field name="flush" start="29" size="1" type="uint" grade="established"/>
+    <field name="xerr" start="28" size="1" type="uint" grade="established"/>
+    <field name="pkterr" start="27" size="1" type="uint" grade="established"/>
+    <field name="timeout" start="26" size="1" type="uint" grade="established"/>
+    <field name="prefetch" start="25" size="1" type="uint" grade="established"/>
+    <field name="precise" start="24" size="1" type="uint" grade="established"/>
+    <field name="dw_be" start="16" size="8" type="uint" grade="established"/>
+    <field name="upp_addr" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_MAX_LATENCY_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: longest request latency in bus clocks. A word write clears it.</doc>
+    <field name="max_latency_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_MAX_RETRY_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: largest retry count for one request. A word write clears it.</doc>
+    <field name="max_retry_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_PREFETCH_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: requests from the prefetcher. A word write clears it.</doc>
+    <field name="prefetch_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUF_TOTAL_RETRY_REG" size="8" grade="established">
+    <doc>Performance counter, per even buffer block: PCI retries that matched the buffer tag. A word write clears it.</doc>
+    <field name="retry_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="BUS_TIMEOUT_REG" size="8" grade="established">
+    <doc>PIO retry control: retry hold-off and retry count for programmed I/O to the PCI bus. IRIX clears the low ten bits for one specific device pair (meaning unknown).</doc>
+    <field name="pci_retry_hld" start="16" size="5" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="CMD_WORD_REG" size="8" grade="established">
+    <doc>Held Crosstalk command word. Same layout is used for the bus-side error word and the link-side error word (request FIFO overflow, unexpected response).</doc>
+    <field name="didn" start="28" size="4" type="uint" grade="established"/>
+    <field name="sidn" start="24" size="4" type="uint" grade="established"/>
+    <field name="pactyp" start="20" size="4" type="uint" grade="established"/>
+    <field name="tnum" start="15" size="5" type="uint" grade="established"/>
+    <field name="coherent" start="14" size="1" type="uint" grade="established"/>
+    <field name="ds" start="12" size="2" type="uint" grade="established"/>
+    <field name="gbr" start="11" size="1" type="uint" grade="established"/>
+    <field name="vbpm" start="10" size="1" type="uint" grade="established"/>
+    <field name="error" start="9" size="1" type="uint" grade="established"/>
+    <field name="barrier" start="8" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CONTROL_REG" size="8" grade="established">
+    <doc>Widget control. Fields from the register structure plus the mask definitions in bridge.h for the bits the structure leaves reserved (bus, device and function number, parity enables, no-snoop and relaxed ordering). IRIX attach writes bits 55:48, 31:29 and 21 (see README, "Control register").</doc>
+    <field name="no_snoop" start="62" size="1" type="uint" grade="established"/>
+    <field name="relax_order" start="61" size="1" type="uint" grade="established"/>
+    <field name="bus_num" start="48" size="8" type="uint" grade="established"/>
+    <field name="dev_num" start="43" size="5" type="uint" grade="established"/>
+    <field name="fun_num" start="40" size="3" type="uint" grade="established"/>
+    <field name="par_en_ate" start="31" size="1" type="uint" grade="established"/>
+    <field name="par_en_resp" start="30" size="1" type="uint" grade="established"/>
+    <field name="par_en_req" start="29" size="1" type="uint" grade="established"/>
+    <field name="rst_pin_n" start="24" size="4" type="uint" grade="established"/>
+    <field name="mem_swap" start="22" size="1" type="uint" grade="established"/>
+    <field name="page_size" start="21" size="1" type="uint" grade="established"/>
+    <field name="f_bad_pkt" start="16" size="1" type="uint" grade="established"/>
+    <field name="llp_xbar_crd" start="12" size="4" type="uint" grade="established"/>
+    <field name="clr_rllp_cnt" start="11" size="1" type="uint" grade="established"/>
+    <field name="clr_tllp_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="sys_end" start="9" size="1" type="uint" grade="established"/>
+    <field name="pci_speed" start="4" size="2" type="uint" grade="established"/>
+    <field name="widget_id" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEVICE_REG" size="8" grade="established">
+    <doc>Per-device control. Bit 19 is swap_direct (README, "Device-register bit 19").</doc>
+    <field name="en_virtual1" start="29" size="1" type="uint" grade="established"/>
+    <field name="en_error_lock" start="28" size="1" type="uint" grade="established"/>
+    <field name="en_page_chk" start="27" size="1" type="uint" grade="established"/>
+    <field name="force_pci_par" start="26" size="1" type="uint" grade="established"/>
+    <field name="en_virtual0" start="25" size="1" type="uint" grade="established"/>
+    <field name="dir_wrt_gen" start="23" size="1" type="uint" grade="established"/>
+    <field name="dev_size" start="22" size="1" type="uint" grade="established"/>
+    <field name="real_time" start="21" size="1" type="uint" grade="established"/>
+    <field name="swap_direct" start="19" size="1" type="uint" grade="established"/>
+    <field name="prefetch" start="18" size="1" type="uint" grade="established"/>
+    <field name="precise" start="17" size="1" type="uint" grade="established"/>
+    <field name="coherent" start="16" size="1" type="uint" grade="established"/>
+    <field name="barrier" start="15" size="1" type="uint" grade="established"/>
+    <field name="gbr" start="14" size="1" type="uint" grade="established"/>
+    <field name="dev_swap" start="13" size="1" type="uint" grade="established"/>
+    <field name="dev_io_mem" start="12" size="1" type="uint" grade="established"/>
+    <field name="dev_off" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="DIR_MAP_REG" size="8" grade="established">
+    <doc>Direct map: relocates a 2 GiB PCI window onto Crosstalk. IRIX writes widget at 23:20, offset at 16:0 (in units of 2 GiB) and bit 17 only for a translation equal to 0x20000000.</doc>
+    <field name="dir_w_id" start="20" size="4" type="uint" grade="established"/>
+    <field name="dir_add512" start="17" size="1" type="uint" grade="established"/>
+    <field name="dir_off" start="0" size="17" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_INT_VIEW_REG" size="8" grade="established">
+    <doc>Error interrupt view: records an error whether or not it is enabled. Cleared by any write to the interrupt reset register.</doc>
+    <field name="int_ram_perr" start="41" size="1" type="uint" grade="established"/>
+    <field name="bus_arb_broke" start="40" size="1" type="uint" grade="established"/>
+    <field name="pci_x_req_tout" start="39" size="1" type="uint" grade="established"/>
+    <field name="pci_x_tabort" start="38" size="1" type="uint" grade="established"/>
+    <field name="pci_x_perr" start="37" size="1" type="uint" grade="established"/>
+    <field name="pci_x_serr" start="36" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mretry" start="35" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mtout" start="34" size="1" type="uint" grade="established"/>
+    <field name="pci_x_da_parity" start="33" size="1" type="uint" grade="established"/>
+    <field name="pci_x_ad_parity" start="32" size="1" type="uint" grade="established"/>
+    <field name="pmu_page_fault" start="30" size="1" type="uint" grade="established"/>
+    <field name="unexpected_resp" start="29" size="1" type="uint" grade="established"/>
+    <field name="bad_xresp_packet" start="28" size="1" type="uint" grade="established"/>
+    <field name="bad_xreq_packet" start="27" size="1" type="uint" grade="established"/>
+    <field name="resp_xtalk_error" start="26" size="1" type="uint" grade="established"/>
+    <field name="req_xtalk_error" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_access" start="24" size="1" type="uint" grade="established"/>
+    <field name="unsupported_xop" start="23" size="1" type="uint" grade="established"/>
+    <field name="xreq_fifo_oflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_snerror" start="21" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cberror" start="20" size="1" type="uint" grade="established"/>
+    <field name="llp_rcty" start="19" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_retry" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_tcty" start="17" size="1" type="uint" grade="established"/>
+    <field name="pci_abort" start="15" size="1" type="uint" grade="established"/>
+    <field name="pci_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_serr" start="13" size="1" type="uint" grade="established"/>
+    <field name="pci_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="pci_master_tout" start="11" size="1" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="xread_req_tout" start="9" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_LOWER_REG" size="8" grade="established">
+    <doc>Widget error address, lower word: the address held when a bus-side error is logged; bits 47:32 repeat the upper word.</doc>
+    <field name="upp_addr" start="32" size="16" type="uint" grade="established"/>
+    <field name="low_addr" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_UPPER_REG" size="8" grade="established">
+    <doc>Widget error address, upper word: the upper 16 address bits held when a bus-side error is logged. Held until the error group is cleared.</doc>
+    <field name="upp_addr" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="ID_REG" size="8" grade="established">
+    <doc>Widget identification. Layout of the JTAG-style identification word: revision, part number, manufacturer. Bit 0 has no field in the header. The compare value in the SN2 PROM for the low twelve bits is 0x049, which would make bit 0 read one (inferred, see README).</doc>
+    <field name="rev_num" start="28" size="4" type="uint" grade="established"/>
+    <field name="part_num" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg_num" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_ADDR_REG" size="8" grade="established">
+    <doc>Per-pin host address: 48-bit destination address and the 8-bit vector (bit position) in the host register.</doc>
+    <field name="int_fld" start="48" size="8" type="uint" grade="established"/>
+    <field name="int_addr" start="0" size="48" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_DEST_LOWER_REG" size="8" grade="established">
+    <doc>Interrupt destination, lower word: full destination address and the target widget. IRIX reads and writes target widget bits 51:48.</doc>
+    <field name="target_id" start="48" size="4" type="uint" grade="established"/>
+    <field name="upp_addr" start="32" size="16" type="uint" grade="established"/>
+    <field name="low_addr" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_DEST_UPPER_REG" size="8" grade="established">
+    <doc>Interrupt destination, upper word: the high 16 bits of the host address plus the target widget.</doc>
+    <field name="target_id" start="16" size="4" type="uint" grade="established"/>
+    <field name="upp_addr" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_DEVICE_REG" size="8" grade="established">
+    <doc>Interrupt device select: three bits per pin naming the device whose buffers a pin interrupt flushes. IRIX attach writes 0x6db6db, which is device 3 in every field.</doc>
+    <field name="int7_dev" start="21" size="3" type="uint" grade="established"/>
+    <field name="int6_dev" start="18" size="3" type="uint" grade="established"/>
+    <field name="int5_dev" start="15" size="3" type="uint" grade="established"/>
+    <field name="int4_dev" start="12" size="3" type="uint" grade="established"/>
+    <field name="int3_dev" start="9" size="3" type="uint" grade="established"/>
+    <field name="int2_dev" start="6" size="3" type="uint" grade="established"/>
+    <field name="int1_dev" start="3" size="3" type="uint" grade="established"/>
+    <field name="int0_dev" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_ENABLE_REG" size="8" grade="established">
+    <doc>Interrupt enable: bit n enables the status bit n. The header says all bits are zero after reset. IRIX attach ORs in 0x00003eff7ffffe00 (bits 30:9, 39:32 and 45:41); bit 40 (arbitration failure) and the low byte stay clear.</doc>
+    <field name="pcix_split_msg_pe" start="45" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_emsg" start="44" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_to" start="43" size="1" type="uint" grade="established"/>
+    <field name="pcix_unex_comp" start="42" size="1" type="uint" grade="established"/>
+    <field name="int_ram_perr" start="41" size="1" type="uint" grade="established"/>
+    <field name="bus_arb_broke" start="40" size="1" type="uint" grade="established"/>
+    <field name="pci_x_req_tout" start="39" size="1" type="uint" grade="established"/>
+    <field name="pci_x_tabort" start="38" size="1" type="uint" grade="established"/>
+    <field name="pci_x_perr" start="37" size="1" type="uint" grade="established"/>
+    <field name="pci_x_serr" start="36" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mretry" start="35" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mtout" start="34" size="1" type="uint" grade="established"/>
+    <field name="pci_x_da_parity" start="33" size="1" type="uint" grade="established"/>
+    <field name="pci_x_ad_parity" start="32" size="1" type="uint" grade="established"/>
+    <field name="pmu_page_fault" start="30" size="1" type="uint" grade="established"/>
+    <field name="unexpected_resp" start="29" size="1" type="uint" grade="established"/>
+    <field name="bad_xresp_packet" start="28" size="1" type="uint" grade="established"/>
+    <field name="bad_xreq_packet" start="27" size="1" type="uint" grade="established"/>
+    <field name="resp_xtalk_error" start="26" size="1" type="uint" grade="established"/>
+    <field name="req_xtalk_error" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_access" start="24" size="1" type="uint" grade="established"/>
+    <field name="unsupported_xop" start="23" size="1" type="uint" grade="established"/>
+    <field name="xreq_fifo_oflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_snerror" start="21" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cberror" start="20" size="1" type="uint" grade="established"/>
+    <field name="llp_rcty" start="19" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_retry" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_tcty" start="17" size="1" type="uint" grade="established"/>
+    <field name="pci_abort" start="15" size="1" type="uint" grade="established"/>
+    <field name="pci_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_serr" start="13" size="1" type="uint" grade="established"/>
+    <field name="pci_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="pci_master_tout" start="11" size="1" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="xread_req_tout" start="9" size="1" type="uint" grade="established"/>
+    <field name="int_state" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_HOST_ERR_REG" size="8" grade="established">
+    <doc>Host error field: the bit position in the host interrupt register that an error sets.</doc>
+    <field name="bridge_err_fld" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_MODE_REG" size="8" grade="established">
+    <doc>Interrupt mode: one bit per pin. IRIX attach writes zero.</doc>
+    <field name="clr_pkt" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_RESET_REG" size="8" grade="established">
+    <doc>Interrupt reset: write only. A one at an error bit clears that bit and rearms the error registers; bit 6 clears the multiple-error indication. Bits 6:0 carry the Bridge-family group strobes in bridge.h and 0x7f clears all of them: IRIX attach writes 0x7f. Whether a PIC honours the group strobes is unknown (README, "Open").</doc>
+    <field name="pcix_split_msg_pe" start="45" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_emsg" start="44" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_to" start="43" size="1" type="uint" grade="established"/>
+    <field name="pcix_unex_comp" start="42" size="1" type="uint" grade="established"/>
+    <field name="int_ram_perr" start="41" size="1" type="uint" grade="established"/>
+    <field name="bus_arb_broke" start="40" size="1" type="uint" grade="established"/>
+    <field name="pci_x_req_tout" start="39" size="1" type="uint" grade="established"/>
+    <field name="pci_x_tabort" start="38" size="1" type="uint" grade="established"/>
+    <field name="pci_x_perr" start="37" size="1" type="uint" grade="established"/>
+    <field name="pci_x_serr" start="36" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mretry" start="35" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mtout" start="34" size="1" type="uint" grade="established"/>
+    <field name="pci_x_da_parity" start="33" size="1" type="uint" grade="established"/>
+    <field name="pci_x_ad_parity" start="32" size="1" type="uint" grade="established"/>
+    <field name="pmu_page_fault" start="30" size="1" type="uint" grade="established"/>
+    <field name="unexpected_resp" start="29" size="1" type="uint" grade="established"/>
+    <field name="bad_xresp_packet" start="28" size="1" type="uint" grade="established"/>
+    <field name="bad_xreq_packet" start="27" size="1" type="uint" grade="established"/>
+    <field name="resp_xtalk_error" start="26" size="1" type="uint" grade="established"/>
+    <field name="req_xtalk_error" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_access" start="24" size="1" type="uint" grade="established"/>
+    <field name="unsupported_xop" start="23" size="1" type="uint" grade="established"/>
+    <field name="xreq_fifo_oflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_snerror" start="21" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cberror" start="20" size="1" type="uint" grade="established"/>
+    <field name="llp_rcty" start="19" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_retry" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_tcty" start="17" size="1" type="uint" grade="established"/>
+    <field name="pci_abort" start="15" size="1" type="uint" grade="established"/>
+    <field name="pci_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_serr" start="13" size="1" type="uint" grade="established"/>
+    <field name="pci_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="pci_master_tout" start="11" size="1" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="xread_req_tout" start="9" size="1" type="uint" grade="established"/>
+    <field name="multi_clr" start="6" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_STATUS_REG" size="8" grade="established">
+    <doc>Interrupt status: read only. Bits 7:0 are the live level of the eight interrupt pins. The remaining bits latch error conditions when the matching enable bit is set. Bits 45:42 are named in bridge.h but are reserved in the register structure.</doc>
+    <field name="pcix_split_msg_pe" start="45" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_emsg" start="44" size="1" type="uint" grade="established"/>
+    <field name="pcix_split_to" start="43" size="1" type="uint" grade="established"/>
+    <field name="pcix_unex_comp" start="42" size="1" type="uint" grade="established"/>
+    <field name="int_ram_perr" start="41" size="1" type="uint" grade="established"/>
+    <field name="bus_arb_broke" start="40" size="1" type="uint" grade="established"/>
+    <field name="pci_x_req_tout" start="39" size="1" type="uint" grade="established"/>
+    <field name="pci_x_tabort" start="38" size="1" type="uint" grade="established"/>
+    <field name="pci_x_perr" start="37" size="1" type="uint" grade="established"/>
+    <field name="pci_x_serr" start="36" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mretry" start="35" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mtout" start="34" size="1" type="uint" grade="established"/>
+    <field name="pci_x_da_parity" start="33" size="1" type="uint" grade="established"/>
+    <field name="pci_x_ad_parity" start="32" size="1" type="uint" grade="established"/>
+    <field name="pmu_page_fault" start="30" size="1" type="uint" grade="established"/>
+    <field name="unexpected_resp" start="29" size="1" type="uint" grade="established"/>
+    <field name="bad_xresp_packet" start="28" size="1" type="uint" grade="established"/>
+    <field name="bad_xreq_packet" start="27" size="1" type="uint" grade="established"/>
+    <field name="resp_xtalk_error" start="26" size="1" type="uint" grade="established"/>
+    <field name="req_xtalk_error" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_access" start="24" size="1" type="uint" grade="established"/>
+    <field name="unsupported_xop" start="23" size="1" type="uint" grade="established"/>
+    <field name="xreq_fifo_oflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_snerror" start="21" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cberror" start="20" size="1" type="uint" grade="established"/>
+    <field name="llp_rcty" start="19" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_retry" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_tcty" start="17" size="1" type="uint" grade="established"/>
+    <field name="pci_abort" start="15" size="1" type="uint" grade="established"/>
+    <field name="pci_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_serr" start="13" size="1" type="uint" grade="established"/>
+    <field name="pci_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="pci_master_tout" start="11" size="1" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="xread_req_tout" start="9" size="1" type="uint" grade="established"/>
+    <field name="int_state" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="LINK_ERR_ADDR_REG" size="8" grade="established">
+    <doc>Link-side error address.</doc>
+    <field name="upp_addr" start="32" size="16" type="uint" grade="established"/>
+    <field name="low_addr" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="LLP_CFG_REG" size="8" grade="established">
+    <doc>Link-layer configuration; valid on the first bus only (head 0).</doc>
+    <field name="llp_maxretry" start="16" size="10" type="uint" grade="established"/>
+    <field name="llp_nulltimeout" start="10" size="6" type="uint" grade="established"/>
+    <field name="llp_maxburst" start="0" size="10" type="uint" grade="established"/>
+  </struct>
+  <struct name="MAP_FAULT_REG" size="8" grade="established">
+    <doc>Page map fault address: PCI address bits 21:4 and device number of a translation that faulted.</doc>
+    <field name="pci_addr" start="4" size="18" type="uint" grade="established"/>
+    <field name="pci_dev_num" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="MULT_INT_REG" size="8" grade="established">
+    <doc>Multiple interrupt: set when a condition recurs before it is cleared. Bit 6 of the reset register clears it.</doc>
+    <field name="int_ram_perr" start="41" size="1" type="uint" grade="established"/>
+    <field name="bus_arb_broke" start="40" size="1" type="uint" grade="established"/>
+    <field name="pci_x_req_tout" start="39" size="1" type="uint" grade="established"/>
+    <field name="pci_x_tabort" start="38" size="1" type="uint" grade="established"/>
+    <field name="pci_x_perr" start="37" size="1" type="uint" grade="established"/>
+    <field name="pci_x_serr" start="36" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mretry" start="35" size="1" type="uint" grade="established"/>
+    <field name="pci_x_mtout" start="34" size="1" type="uint" grade="established"/>
+    <field name="pci_x_da_parity" start="33" size="1" type="uint" grade="established"/>
+    <field name="pci_x_ad_parity" start="32" size="1" type="uint" grade="established"/>
+    <field name="pmu_page_fault" start="30" size="1" type="uint" grade="established"/>
+    <field name="unexpected_resp" start="29" size="1" type="uint" grade="established"/>
+    <field name="bad_xresp_packet" start="28" size="1" type="uint" grade="established"/>
+    <field name="bad_xreq_packet" start="27" size="1" type="uint" grade="established"/>
+    <field name="resp_xtalk_error" start="26" size="1" type="uint" grade="established"/>
+    <field name="req_xtalk_error" start="25" size="1" type="uint" grade="established"/>
+    <field name="invalid_access" start="24" size="1" type="uint" grade="established"/>
+    <field name="unsupported_xop" start="23" size="1" type="uint" grade="established"/>
+    <field name="xreq_fifo_oflow" start="22" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_snerror" start="21" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cberror" start="20" size="1" type="uint" grade="established"/>
+    <field name="llp_rcty" start="19" size="1" type="uint" grade="established"/>
+    <field name="llp_tx_retry" start="18" size="1" type="uint" grade="established"/>
+    <field name="llp_tcty" start="17" size="1" type="uint" grade="established"/>
+    <field name="pci_abort" start="15" size="1" type="uint" grade="established"/>
+    <field name="pci_parity" start="14" size="1" type="uint" grade="established"/>
+    <field name="pci_serr" start="13" size="1" type="uint" grade="established"/>
+    <field name="pci_perr" start="12" size="1" type="uint" grade="established"/>
+    <field name="pci_master_tout" start="11" size="1" type="uint" grade="established"/>
+    <field name="pci_retry_cnt" start="10" size="1" type="uint" grade="established"/>
+    <field name="xread_req_tout" start="9" size="1" type="uint" grade="established"/>
+    <field name="int_state" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIX_ERR_ATTR_REG" size="8" grade="established">
+    <doc>PCI-X error attribute (the 2.4-era offset list and the Altix structure differ on where it sits; IRIX reaches the bus error attribute at 0x608). Assuming the split-completion and DMA-request error attributes (0x620, 0x628) share the layout is inferred from the names only.</doc>
+    <field name="bus_cmd" start="44" size="4" type="uint" grade="established"/>
+    <field name="byte_cnt" start="32" size="12" type="uint" grade="established"/>
+    <field name="ns" start="30" size="1" type="uint" grade="established"/>
+    <field name="ro" start="29" size="1" type="uint" grade="established"/>
+    <field name="tag" start="24" size="5" type="uint" grade="established"/>
+    <field name="bus_num" start="16" size="8" type="uint" grade="established"/>
+    <field name="dev_num" start="11" size="5" type="uint" grade="established"/>
+    <field name="fun_num" start="8" size="3" type="uint" grade="established"/>
+    <field name="l_byte_cnt" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIX_READ_BUF_ATTR_REG" size="8" grade="established">
+    <doc>PCI-X read buffer attribute.</doc>
+    <field name="bus_cmd" start="44" size="4" type="uint" grade="established"/>
+    <field name="byte_cnt" start="32" size="12" type="uint" grade="established"/>
+    <field name="entry_valid" start="31" size="1" type="uint" grade="established"/>
+    <field name="ns" start="30" size="1" type="uint" grade="established"/>
+    <field name="ro" start="29" size="1" type="uint" grade="established"/>
+    <field name="tag" start="24" size="5" type="uint" grade="established"/>
+    <field name="bus_num" start="16" size="8" type="uint" grade="established"/>
+    <field name="dev_num" start="11" size="5" type="uint" grade="established"/>
+    <field name="fun_num" start="8" size="3" type="uint" grade="established"/>
+    <field name="f_buffer_index" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIX_TIMEOUT_REG" size="8" grade="established">
+    <doc>PCI-X read request timeout error pointer (read buffer structure and location). The 2.4-era offset list puts it in the low register page, but the Altix structure puts the PCI-X error group at 0x600 and up. Which slot holds this layout is unknown (README, revision differences).</doc>
+    <field name="rd_buff_loc" start="4" size="5" type="uint" grade="established"/>
+    <field name="rd_buff_struct" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_ATTR_REG" size="8" grade="established">
+    <doc>PCI-X write buffer attribute.</doc>
+    <field name="bus_cmd" start="44" size="4" type="uint" grade="established"/>
+    <field name="byte_cnt" start="32" size="12" type="uint" grade="established"/>
+    <field name="entry_valid" start="31" size="1" type="uint" grade="established"/>
+    <field name="ns" start="30" size="1" type="uint" grade="established"/>
+    <field name="ro" start="29" size="1" type="uint" grade="established"/>
+    <field name="tag" start="24" size="5" type="uint" grade="established"/>
+    <field name="bus_num" start="16" size="8" type="uint" grade="established"/>
+    <field name="dev_num" start="11" size="5" type="uint" grade="established"/>
+    <field name="fun_num" start="8" size="3" type="uint" grade="established"/>
+    <field name="f_buffer_index" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCIX_WRITE_BUF_VALID_REG" size="8" grade="established">
+    <doc>PCI-X write buffer valid cache lines.</doc>
+    <field name="wrt_valid_buff" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI_ERR_LOWER_REG" size="8" grade="established">
+    <doc>PCI bus error address, lower word, with the requester identity. IRIX reads it for the bus address of the error.</doc>
+    <field name="pci_xtalk_did" start="56" size="4" type="uint" grade="established"/>
+    <field name="pci_dac" start="53" size="1" type="uint" grade="established"/>
+    <field name="pci_dev_master" start="52" size="1" type="uint" grade="established"/>
+    <field name="pci_vdev" start="51" size="1" type="uint" grade="established"/>
+    <field name="pci_dev_num" start="48" size="3" type="uint" grade="established"/>
+    <field name="pci_uaddr_err" start="32" size="16" type="uint" grade="established"/>
+    <field name="pci_laddr_err" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI_ERR_UPPER_REG" size="8" grade="established">
+    <doc>PCI bus error address, upper word, with the requester identity.</doc>
+    <field name="pci_xtalk_did" start="24" size="4" type="uint" grade="established"/>
+    <field name="pci_dac" start="21" size="1" type="uint" grade="established"/>
+    <field name="pci_dev_master" start="20" size="1" type="uint" grade="established"/>
+    <field name="pci_vdev" start="19" size="1" type="uint" grade="established"/>
+    <field name="pci_dev_num" start="16" size="3" type="uint" grade="established"/>
+    <field name="pci_uaddr_err" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RAM_PERR_REG" size="8" grade="established">
+    <doc>Internal RAM parity error log: failing entry address and per-RAM error flags.</doc>
+    <field name="ate_err_addr" start="48" size="10" type="uint" grade="established"/>
+    <field name="rd_resp_err_addr" start="32" size="9" type="uint" grade="established"/>
+    <field name="wrt_resp_err_addr" start="24" size="8" type="uint" grade="established"/>
+    <field name="ate_err" start="21" size="1" type="uint" grade="established"/>
+    <field name="rd_resp_err" start="20" size="1" type="uint" grade="established"/>
+    <field name="wrt_resp_err" start="19" size="1" type="uint" grade="established"/>
+    <field name="dbe_ate" start="16" size="3" type="uint" grade="established"/>
+    <field name="dbe_rd" start="8" size="8" type="uint" grade="established"/>
+    <field name="dbe_wrt" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="REQ_TIMEOUT_REG" size="8" grade="established">
+    <doc>Request timeout reload value. The timer ticks every 32 PCI clocks (960 ns at 33 MHz). IRIX writes 0x750 on revision 1 only.</doc>
+    <field name="time_out" start="0" size="20" type="uint" grade="established"/>
+  </struct>
+  <struct name="RESP_CLEAR_REG" size="8" grade="established">
+    <doc>Read response buffer clear: write a one to discard a buffer.</doc>
+    <field name="rrb_clear" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RESP_ERR_LOWER_REG" size="8" grade="established">
+    <doc>Response-buffer error address, lower word, with the device and buffer number.</doc>
+    <field name="dev_num" start="52" size="3" type="uint" grade="established"/>
+    <field name="buff_num" start="48" size="4" type="uint" grade="established"/>
+    <field name="upp_addr" start="32" size="16" type="uint" grade="established"/>
+    <field name="low_addr" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="RESP_ERR_UPPER_REG" size="8" grade="established">
+    <doc>Response-buffer error address, upper word, with the device and buffer number of the failing entry.</doc>
+    <field name="dev_num" start="20" size="3" type="uint" grade="established"/>
+    <field name="buff_num" start="16" size="4" type="uint" grade="established"/>
+    <field name="upp_addr" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RESP_STATUS_REG" size="8" grade="established">
+    <doc>Read response buffer status: one valid bit and one in-use bit per buffer.</doc>
+    <field name="rrb_valid" start="16" size="16" type="uint" grade="established"/>
+    <field name="rrb_inuse" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RRB_EVEN_REG" size="8" grade="established">
+    <doc>Read response buffer allocation, even devices. Buffers 0,2,...,14, four bits each: enable, 2-bit virtual channel, device-pair bit.</doc>
+    <field name="buff_14_en" start="31" size="1" type="uint" grade="established"/>
+    <field name="buff_14_vdev" start="29" size="2" type="uint" grade="established"/>
+    <field name="buff_14_pdev" start="28" size="1" type="uint" grade="established"/>
+    <field name="buff_12_en" start="27" size="1" type="uint" grade="established"/>
+    <field name="buff_12_vdev" start="25" size="2" type="uint" grade="established"/>
+    <field name="buff_12_pdev" start="24" size="1" type="uint" grade="established"/>
+    <field name="buff_10_en" start="23" size="1" type="uint" grade="established"/>
+    <field name="buff_10_vdev" start="21" size="2" type="uint" grade="established"/>
+    <field name="buff_10_pdev" start="20" size="1" type="uint" grade="established"/>
+    <field name="buff_8_en" start="19" size="1" type="uint" grade="established"/>
+    <field name="buff_8_vdev" start="17" size="2" type="uint" grade="established"/>
+    <field name="buff_8_pdev" start="16" size="1" type="uint" grade="established"/>
+    <field name="buff_6_en" start="15" size="1" type="uint" grade="established"/>
+    <field name="buff_6_vdev" start="13" size="2" type="uint" grade="established"/>
+    <field name="buff_6_pdev" start="12" size="1" type="uint" grade="established"/>
+    <field name="buff_4_en" start="11" size="1" type="uint" grade="established"/>
+    <field name="buff_4_vdev" start="9" size="2" type="uint" grade="established"/>
+    <field name="buff_4_pdev" start="8" size="1" type="uint" grade="established"/>
+    <field name="buff_2_en" start="7" size="1" type="uint" grade="established"/>
+    <field name="buff_2_vdev" start="5" size="2" type="uint" grade="established"/>
+    <field name="buff_2_pdev" start="4" size="1" type="uint" grade="established"/>
+    <field name="buff_0_en" start="3" size="1" type="uint" grade="established"/>
+    <field name="buff_0_vdev" start="1" size="2" type="uint" grade="established"/>
+    <field name="buff_0_pdev" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RRB_ODD_REG" size="8" grade="established">
+    <doc>Read response buffer allocation, odd devices. Buffers 1,3,...,15, four bits each.</doc>
+    <field name="buff_15_en" start="31" size="1" type="uint" grade="established"/>
+    <field name="buff_15_vdev" start="29" size="2" type="uint" grade="established"/>
+    <field name="buff_15_pdev" start="28" size="1" type="uint" grade="established"/>
+    <field name="buff_13_en" start="27" size="1" type="uint" grade="established"/>
+    <field name="buff_13_vdev" start="25" size="2" type="uint" grade="established"/>
+    <field name="buff_13_pdev" start="24" size="1" type="uint" grade="established"/>
+    <field name="buff_11_en" start="23" size="1" type="uint" grade="established"/>
+    <field name="buff_11_vdev" start="21" size="2" type="uint" grade="established"/>
+    <field name="buff_11_pdev" start="20" size="1" type="uint" grade="established"/>
+    <field name="buff_9_en" start="19" size="1" type="uint" grade="established"/>
+    <field name="buff_9_vdev" start="17" size="2" type="uint" grade="established"/>
+    <field name="buff_9_pdev" start="16" size="1" type="uint" grade="established"/>
+    <field name="buff_7_en" start="15" size="1" type="uint" grade="established"/>
+    <field name="buff_7_vdev" start="13" size="2" type="uint" grade="established"/>
+    <field name="buff_7_pdev" start="12" size="1" type="uint" grade="established"/>
+    <field name="buff_5_en" start="11" size="1" type="uint" grade="established"/>
+    <field name="buff_5_vdev" start="9" size="2" type="uint" grade="established"/>
+    <field name="buff_5_pdev" start="8" size="1" type="uint" grade="established"/>
+    <field name="buff_3_en" start="7" size="1" type="uint" grade="established"/>
+    <field name="buff_3_vdev" start="5" size="2" type="uint" grade="established"/>
+    <field name="buff_3_pdev" start="4" size="1" type="uint" grade="established"/>
+    <field name="buff_1_en" start="3" size="1" type="uint" grade="established"/>
+    <field name="buff_1_vdev" start="1" size="2" type="uint" grade="established"/>
+    <field name="buff_1_pdev" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="STATUS_REG" size="8" grade="established">
+    <doc>Widget status. Bus-side status. Bits 35:33 carry the PCI-X mode report; the low byte is the live level of the miscellaneous PCI inputs.</doc>
+    <field name="pci_x_speed" start="34" size="2" type="uint" grade="established"/>
+    <field name="pci_x_active" start="33" size="1" type="uint" grade="established"/>
+    <field name="llp_rec_cnt" start="24" size="8" type="uint" grade="established"/>
+    <field name="llp_tx_cnt" start="16" size="8" type="uint" grade="established"/>
+    <field name="rx_credit_cnt" start="12" size="4" type="uint" grade="established"/>
+    <field name="tx_credit_cnt" start="8" size="4" type="uint" grade="established"/>
+    <field name="pci_misc_input" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="TEST_PIN_CTRL_REG" size="8" grade="established">
+    <doc>Test pin control: selects output function and value for the test pins. Diagnostic only.</doc>
+    <field name="tdata_out" start="16" size="8" type="uint" grade="established"/>
+    <field name="sel_tpin_7" start="14" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_6" start="12" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_5" start="10" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_4" start="8" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_3" start="6" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_2" start="4" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_1" start="2" size="2" type="uint" grade="established"/>
+    <field name="sel_tpin_0" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="TYPE1_CFG_REG" size="8" grade="established">
+    <doc>Type-1 configuration address bits: supplies the secondary bus and device number of a type-1 configuration cycle.</doc>
+    <field name="bus_num" start="16" size="8" type="uint" grade="established"/>
+    <field name="dev_num" start="11" size="5" type="uint" grade="established"/>
+  </struct>
   <constant name="ATE_ADDR_SHIFT" value="0xc" grade="established"/>
   <constant name="ATE_BARRIER" value="0x10" grade="established"/>
   <constant name="ATE_COHERENT" value="0x2" grade="established"/>

@@ -236,3 +236,773 @@ CFG_TYPE0_BASE = { value = 0x20000, grade = "established", from = "SGI Linux pla
 CFG_TYPE1_BASE = { value = 0x28000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_type1_cfg)", doc = "Base of the 0x1000-byte type-1 configuration window." }
 PCI_IACK_BASE = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_pci_iack)", doc = "Eight-byte PCI interrupt acknowledge cycle window. No code read uses it." }
 PCIX_SPECIAL_CYCLE_BASE = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, pic.h (p_pcix_cycle)", doc = "Eight-byte PCI-X special cycle window. No code read uses it." }
+
+# ---- register field layouts (SGI Linux 2.4-era PIC header, unions pic_*_u_t, plus bridge.h masks)
+
+[words.ID_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_id_reg_u)"
+doc = "Widget identification. Layout of the JTAG-style identification word: revision, part number, manufacturer. Bit 0 has no field in the header. The compare value in the SN2 PROM for the low twelve bits is 0x049, which would make bit 0 read one (inferred, see README)."
+[words.ID_REG.fields]
+rev_num = { bits = [31, 28], grade = "established", doc = "Part revision. IRIX attach accepts 1, 2 and 3 and names them A, B and C. The public header calls 1 revision A." }
+part_num = { bits = [27, 12], grade = "established", doc = "Part number. The header names 0xd102 for bus 0 and 0xd112 for bus 1 (macros PIC_WIDGET_PART_NUM_BUS0 and _BUS1) and tests both with manufacturer 0x24. Which register address returns the 0xd112 value is inferred: the bus-1 block sits 0x800000 above bus 0 (PIC_BUS1_OFFSET)." }
+mfg_num = { bits = [11, 1], grade = "established", doc = "Manufacturer number, 0x24 (36). IRIX and the SN1 IA-64 PROM both compare it against 36." }
+
+[words.STATUS_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_stat_reg_u)"
+doc = "Widget status. Bus-side status. Bits 35:33 carry the PCI-X mode report; the low byte is the live level of the miscellaneous PCI inputs."
+[words.STATUS_REG.fields]
+pci_x_speed = { bits = [35, 34], grade = "established", doc = "PCI-X bus speed code." }
+pci_x_active = { bits = [33, 33], grade = "established", doc = "The bus is running in PCI-X mode." }
+llp_rec_cnt = { bits = [31, 24], grade = "established", doc = "Link-layer receive counter." }
+llp_tx_cnt = { bits = [23, 16], grade = "established", doc = "Link-layer transmit counter." }
+rx_credit_cnt = { bits = [15, 12], grade = "established", doc = "Receive credit count." }
+tx_credit_cnt = { bits = [11, 8], grade = "established", doc = "Transmit credit count." }
+pci_misc_input = { bits = [7, 0], grade = "established", doc = "Level of the PCI miscellaneous input pins. README records the interrupt pin sense in the interrupt status register, not here." }
+
+[words.ERR_UPPER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_upper_bus_err_u)"
+doc = "Widget error address, upper word: the upper 16 address bits held when a bus-side error is logged. Held until the error group is cleared."
+[words.ERR_UPPER_REG.fields]
+upp_addr = { bits = [15, 0], grade = "established" }
+
+[words.ERR_LOWER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_lower_bus_err_u)"
+doc = "Widget error address, lower word: the address held when a bus-side error is logged; bits 47:32 repeat the upper word."
+[words.ERR_LOWER_REG.fields]
+upp_addr = { bits = [47, 32], grade = "established" }
+low_addr = { bits = [31, 0], grade = "established" }
+
+[words.CONTROL_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_control_reg_u)"
+doc = "Widget control. Fields from the register structure plus the mask definitions in bridge.h for the bits the structure leaves reserved (bus, device and function number, parity enables, no-snoop and relaxed ordering). IRIX attach writes bits 55:48, 31:29 and 21 (see README, \"Control register\")."
+[words.CONTROL_REG.fields]
+no_snoop = { bits = [62, 62], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "No-snoop control bit (PIC_CTRL_NO_SNOOP). Effect on PCI-X attributes is inferred from the name. IRIX attach clears bits 62:61." }
+relax_order = { bits = [61, 61], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Relaxed-ordering control bit (PIC_CTRL_RELAX_ORDER); effect inferred from the name." }
+bus_num = { bits = [55, 48], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Bus number field (PIC_CTRL_BUS_NUM). IRIX attach clears bits 55:48 and writes the caller value there (established); that it is the bus number the PIC presents in PCI-X attributes is inferred." }
+dev_num = { bits = [47, 43], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Device number field (PIC_CTRL_DEV_NUM). IRIX attach clears bits 47:40, which covers this field and the function field." }
+fun_num = { bits = [42, 40], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Function number field (PIC_CTRL_FUN_NUM)." }
+par_en_ate = { bits = [31, 31], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Parity enable, translation RAM (PIC_CTRL_PAR_EN_ATE). IRIX attach sets bits 31:30 always." }
+par_en_resp = { bits = [30, 30], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Parity enable, response RAM (PIC_CTRL_PAR_EN_RESP)." }
+par_en_req = { bits = [29, 29], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Parity enable, request path (PIC_CTRL_PAR_EN_REQ). IRIX attach sets it unless the revision is 1 (established). The public workaround list says revision A must not enable write-request RAM parity checking; tying the two is inferred (README, \"Revision differences\")." }
+rst_pin_n = { bits = [27, 24], grade = "established", doc = "PCI reset pins, one bit per pin (name and the four-bit mask in bridge.h only)." }
+mem_swap = { bits = [22, 22], grade = "established", doc = "Memory byte swap (name only)." }
+page_size = { bits = [21, 21], grade = "established", doc = "Translation page size: set for 16 KiB I/O pages, clear for 4 KiB. The Altix kernel sets it from its page size; IRIX attach sets it always." }
+f_bad_pkt = { bits = [16, 16], grade = "established", doc = "Force bad packet (name only)." }
+llp_xbar_crd = { bits = [15, 12], grade = "established", doc = "Link-layer crossbar credit count." }
+clr_rllp_cnt = { bits = [11, 11], grade = "established", doc = "Clear the receive link-layer counter." }
+clr_tllp_cnt = { bits = [10, 10], grade = "established", doc = "Clear the transmit link-layer counter." }
+sys_end = { bits = [9, 9], grade = "established", doc = "System endianness select (name only; the sense of the two states is not stated)." }
+pci_speed = { bits = [5, 4], grade = "established", doc = "PCI bus speed field. IRIX reads bits 5:4 through its speed accessor (established); the code values are not stated." }
+widget_id = { bits = [3, 0], grade = "established", doc = "This widget number on the Crosstalk link (inferred from the name; IRIX attach merges the widget number into the register)." }
+
+[words.REQ_TIMEOUT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_pci_req_to_u)"
+doc = "Request timeout reload value. The timer ticks every 32 PCI clocks (960 ns at 33 MHz). IRIX writes 0x750 on revision 1 only."
+[words.REQ_TIMEOUT_REG.fields]
+time_out = { bits = [19, 0], grade = "established" }
+
+[words.INT_DEST_UPPER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_int_desc_upper_u)"
+doc = "Interrupt destination, upper word: the high 16 bits of the host address plus the target widget."
+[words.INT_DEST_UPPER_REG.fields]
+target_id = { bits = [19, 16], grade = "established" }
+upp_addr = { bits = [15, 0], grade = "established" }
+
+[words.INT_DEST_LOWER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_int_desc_lower_u)"
+doc = "Interrupt destination, lower word: full destination address and the target widget. IRIX reads and writes target widget bits 51:48."
+[words.INT_DEST_LOWER_REG.fields]
+target_id = { bits = [51, 48], grade = "established" }
+upp_addr = { bits = [47, 32], grade = "established" }
+low_addr = { bits = [31, 0], grade = "established" }
+
+[words.CMD_WORD_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_cmd_word_bus_err_u)"
+doc = "Held Crosstalk command word. Same layout is used for the bus-side error word and the link-side error word (request FIFO overflow, unexpected response)."
+[words.CMD_WORD_REG.fields]
+didn = { bits = [31, 28], grade = "established" }
+sidn = { bits = [27, 24], grade = "established" }
+pactyp = { bits = [23, 20], grade = "established" }
+tnum = { bits = [19, 15], grade = "established" }
+coherent = { bits = [14, 14], grade = "established" }
+ds = { bits = [13, 12], grade = "established" }
+gbr = { bits = [11, 11], grade = "established" }
+vbpm = { bits = [10, 10], grade = "established" }
+error = { bits = [9, 9], grade = "established" }
+barrier = { bits = [8, 8], grade = "established" }
+
+[words.LLP_CFG_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_llp_cfg_u)"
+doc = "Link-layer configuration; valid on the first bus only (head 0)."
+[words.LLP_CFG_REG.fields]
+llp_maxretry = { bits = [25, 16], grade = "established" }
+llp_nulltimeout = { bits = [15, 10], grade = "established" }
+llp_maxburst = { bits = [9, 0], grade = "established" }
+
+[words.RESP_ERR_UPPER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_pci_rbuf_err_upper_u)"
+doc = "Response-buffer error address, upper word, with the device and buffer number of the failing entry."
+[words.RESP_ERR_UPPER_REG.fields]
+dev_num = { bits = [22, 20], grade = "established" }
+buff_num = { bits = [19, 16], grade = "established" }
+upp_addr = { bits = [15, 0], grade = "established" }
+
+[words.RESP_ERR_LOWER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_pci_rbuf_err_lower_u)"
+doc = "Response-buffer error address, lower word, with the device and buffer number."
+[words.RESP_ERR_LOWER_REG.fields]
+dev_num = { bits = [54, 52], grade = "established" }
+buff_num = { bits = [51, 48], grade = "established" }
+upp_addr = { bits = [47, 32], grade = "established" }
+low_addr = { bits = [31, 0], grade = "established" }
+
+[words.TEST_PIN_CTRL_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_test_pin_cntl_u)"
+doc = "Test pin control: selects output function and value for the test pins. Diagnostic only."
+[words.TEST_PIN_CTRL_REG.fields]
+tdata_out = { bits = [23, 16], grade = "established" }
+sel_tpin_7 = { bits = [15, 14], grade = "established" }
+sel_tpin_6 = { bits = [13, 12], grade = "established" }
+sel_tpin_5 = { bits = [11, 10], grade = "established" }
+sel_tpin_4 = { bits = [9, 8], grade = "established" }
+sel_tpin_3 = { bits = [7, 6], grade = "established" }
+sel_tpin_2 = { bits = [5, 4], grade = "established" }
+sel_tpin_1 = { bits = [3, 2], grade = "established" }
+sel_tpin_0 = { bits = [1, 0], grade = "established" }
+
+[words.LINK_ERR_ADDR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_addr_lkerr_u)"
+doc = "Link-side error address."
+[words.LINK_ERR_ADDR_REG.fields]
+upp_addr = { bits = [47, 32], grade = "established" }
+low_addr = { bits = [31, 0], grade = "established" }
+
+[words.DIR_MAP_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_dir_map_u)"
+doc = "Direct map: relocates a 2 GiB PCI window onto Crosstalk. IRIX writes widget at 23:20, offset at 16:0 (in units of 2 GiB) and bit 17 only for a translation equal to 0x20000000."
+[words.DIR_MAP_REG.fields]
+dir_w_id = { bits = [23, 20], grade = "established", doc = "Target widget number for the direct window." }
+dir_add512 = { bits = [17, 17], grade = "established", doc = "Add 512 MiB to the base." }
+dir_off = { bits = [16, 0], grade = "established", doc = "Window offset, 2 GiB units (bit 0 is Crosstalk address bit 31)." }
+
+[words.MAP_FAULT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_map_fault_u)"
+doc = "Page map fault address: PCI address bits 21:4 and device number of a translation that faulted."
+[words.MAP_FAULT_REG.fields]
+pci_addr = { bits = [21, 4], grade = "established" }
+pci_dev_num = { bits = [2, 0], grade = "established" }
+
+[words.ARB_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_arb_u)"
+doc = "Arbitration: request wait tick and enable, grant freeze, bridge high and low priority enables, and device-broke bits (names only)."
+[words.ARB_REG.fields]
+dev_broke = { bits = [23, 20], grade = "established" }
+req_wait_tick = { bits = [17, 16], grade = "established" }
+req_wait_en = { bits = [11, 8], grade = "established" }
+disarb = { bits = [7, 7], grade = "established" }
+freeze_gnt = { bits = [6, 6], grade = "established" }
+en_bridge_hi = { bits = [4, 3], grade = "established" }
+en_bridge_lo = { bits = [1, 0], grade = "established" }
+
+[words.RAM_PERR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_ram_perr_u)"
+doc = "Internal RAM parity error log: failing entry address and per-RAM error flags."
+[words.RAM_PERR_REG.fields]
+ate_err_addr = { bits = [57, 48], grade = "established" }
+rd_resp_err_addr = { bits = [40, 32], grade = "established" }
+wrt_resp_err_addr = { bits = [31, 24], grade = "established" }
+ate_err = { bits = [21, 21], grade = "established" }
+rd_resp_err = { bits = [20, 20], grade = "established" }
+wrt_resp_err = { bits = [19, 19], grade = "established" }
+dbe_ate = { bits = [18, 16], grade = "established" }
+dbe_rd = { bits = [15, 8], grade = "established" }
+dbe_wrt = { bits = [7, 0], grade = "established" }
+
+[words.BUS_TIMEOUT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_bus_timeout_u)"
+doc = "PIO retry control: retry hold-off and retry count for programmed I/O to the PCI bus. IRIX clears the low ten bits for one specific device pair (meaning unknown)."
+[words.BUS_TIMEOUT_REG.fields]
+pci_retry_hld = { bits = [20, 16], grade = "established" }
+pci_retry_cnt = { bits = [9, 0], grade = "established" }
+
+[words.TYPE1_CFG_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_type1_cfg_u)"
+doc = "Type-1 configuration address bits: supplies the secondary bus and device number of a type-1 configuration cycle."
+[words.TYPE1_CFG_REG.fields]
+bus_num = { bits = [23, 16], grade = "established" }
+dev_num = { bits = [15, 11], grade = "established" }
+
+[words.PCI_ERR_UPPER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_pci_err_upper_u)"
+doc = "PCI bus error address, upper word, with the requester identity."
+[words.PCI_ERR_UPPER_REG.fields]
+pci_xtalk_did = { bits = [27, 24], grade = "established" }
+pci_dac = { bits = [21, 21], grade = "established" }
+pci_dev_master = { bits = [20, 20], grade = "established" }
+pci_vdev = { bits = [19, 19], grade = "established" }
+pci_dev_num = { bits = [18, 16], grade = "established" }
+pci_uaddr_err = { bits = [15, 0], grade = "established" }
+
+[words.PCI_ERR_LOWER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_pci_err_lower_u)"
+doc = "PCI bus error address, lower word, with the requester identity. IRIX reads it for the bus address of the error."
+[words.PCI_ERR_LOWER_REG.fields]
+pci_xtalk_did = { bits = [59, 56], grade = "established" }
+pci_dac = { bits = [53, 53], grade = "established" }
+pci_dev_master = { bits = [52, 52], grade = "established" }
+pci_vdev = { bits = [51, 51], grade = "established" }
+pci_dev_num = { bits = [50, 48], grade = "established" }
+pci_uaddr_err = { bits = [47, 32], grade = "established" }
+pci_laddr_err = { bits = [31, 0], grade = "established" }
+
+[words.PCIX_ERR_ATTR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_pcix_err_attr_u)"
+doc = "PCI-X error attribute (the 2.4-era offset list and the Altix structure differ on where it sits; IRIX reaches the bus error attribute at 0x608). Assuming the split-completion and DMA-request error attributes (0x620, 0x628) share the layout is inferred from the names only."
+[words.PCIX_ERR_ATTR_REG.fields]
+bus_cmd = { bits = [47, 44], grade = "established" }
+byte_cnt = { bits = [43, 32], grade = "established" }
+ns = { bits = [30, 30], grade = "established" }
+ro = { bits = [29, 29], grade = "established" }
+tag = { bits = [28, 24], grade = "established" }
+bus_num = { bits = [23, 16], grade = "established" }
+dev_num = { bits = [15, 11], grade = "established" }
+fun_num = { bits = [10, 8], grade = "established" }
+l_byte_cnt = { bits = [7, 0], grade = "established" }
+
+[words.PCIX_TIMEOUT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_pcix_read_req_to_u)"
+doc = "PCI-X read request timeout error pointer (read buffer structure and location). The 2.4-era offset list puts it in the low register page, but the Altix structure puts the PCI-X error group at 0x600 and up. Which slot holds this layout is unknown (README, revision differences)."
+[words.PCIX_TIMEOUT_REG.fields]
+rd_buff_loc = { bits = [8, 4], grade = "established" }
+rd_buff_struct = { bits = [3, 0], grade = "established" }
+
+[words.INT_STATUS_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_status_u)"
+doc = "Interrupt status: read only. Bits 7:0 are the live level of the eight interrupt pins. The remaining bits latch error conditions when the matching enable bit is set. Bits 45:42 are named in bridge.h but are reserved in the register structure."
+[words.INT_STATUS_REG.fields]
+pcix_split_msg_pe = { bits = [45, 45], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "PCI-X split message parity error." }
+pcix_split_emsg = { bits = [44, 44], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "PCI-X split error message received." }
+pcix_split_to = { bits = [43, 43], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "PCI-X split completion timeout." }
+pcix_unex_comp = { bits = [42, 42], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "PCI-X unexpected completion." }
+int_ram_perr = { bits = [41, 41], grade = "established" }
+bus_arb_broke = { bits = [40, 40], grade = "established", doc = "Bus arbitration failure." }
+pci_x_req_tout = { bits = [39, 39], grade = "established" }
+pci_x_tabort = { bits = [38, 38], grade = "established" }
+pci_x_perr = { bits = [37, 37], grade = "established" }
+pci_x_serr = { bits = [36, 36], grade = "established" }
+pci_x_mretry = { bits = [35, 35], grade = "established" }
+pci_x_mtout = { bits = [34, 34], grade = "established", doc = "PCI-X master timeout." }
+pci_x_da_parity = { bits = [33, 33], grade = "established" }
+pci_x_ad_parity = { bits = [32, 32], grade = "established" }
+pmu_page_fault = { bits = [30, 30], grade = "established" }
+unexpected_resp = { bits = [29, 29], grade = "established" }
+bad_xresp_packet = { bits = [28, 28], grade = "established" }
+bad_xreq_packet = { bits = [27, 27], grade = "established" }
+resp_xtalk_error = { bits = [26, 26], grade = "established" }
+req_xtalk_error = { bits = [25, 25], grade = "established" }
+invalid_access = { bits = [24, 24], grade = "established" }
+unsupported_xop = { bits = [23, 23], grade = "established" }
+xreq_fifo_oflow = { bits = [22, 22], grade = "established" }
+llp_rec_snerror = { bits = [21, 21], grade = "established" }
+llp_rec_cberror = { bits = [20, 20], grade = "established" }
+llp_rcty = { bits = [19, 19], grade = "established" }
+llp_tx_retry = { bits = [18, 18], grade = "established" }
+llp_tcty = { bits = [17, 17], grade = "established" }
+pci_abort = { bits = [15, 15], grade = "established" }
+pci_parity = { bits = [14, 14], grade = "established" }
+pci_serr = { bits = [13, 13], grade = "established" }
+pci_perr = { bits = [12, 12], grade = "established" }
+pci_master_tout = { bits = [11, 11], grade = "established", doc = "PCI master timeout, recorded only when the enable bit is set. An unclaimed configuration cycle is the usual cause (inferred, README)." }
+pci_retry_cnt = { bits = [10, 10], grade = "established" }
+xread_req_tout = { bits = [9, 9], grade = "established" }
+int_state = { bits = [7, 0], grade = "established", doc = "Current level of interrupt pins 7 to 0 (active high for a pin driven low)." }
+
+[words.INT_ENABLE_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_enable_u)"
+doc = "Interrupt enable: bit n enables the status bit n. The header says all bits are zero after reset. IRIX attach ORs in 0x00003eff7ffffe00 (bits 30:9, 39:32 and 45:41); bit 40 (arbitration failure) and the low byte stay clear."
+[words.INT_ENABLE_REG.fields]
+pcix_split_msg_pe = { bits = [45, 45], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Enable for PCI-X split message parity error." }
+pcix_split_emsg = { bits = [44, 44], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Enable for PCI-X split error message." }
+pcix_split_to = { bits = [43, 43], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Enable for PCI-X split completion timeout." }
+pcix_unex_comp = { bits = [42, 42], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Enable for PCI-X unexpected completion." }
+int_ram_perr = { bits = [41, 41], grade = "established" }
+bus_arb_broke = { bits = [40, 40], grade = "established" }
+pci_x_req_tout = { bits = [39, 39], grade = "established" }
+pci_x_tabort = { bits = [38, 38], grade = "established" }
+pci_x_perr = { bits = [37, 37], grade = "established" }
+pci_x_serr = { bits = [36, 36], grade = "established" }
+pci_x_mretry = { bits = [35, 35], grade = "established" }
+pci_x_mtout = { bits = [34, 34], grade = "established" }
+pci_x_da_parity = { bits = [33, 33], grade = "established" }
+pci_x_ad_parity = { bits = [32, 32], grade = "established" }
+pmu_page_fault = { bits = [30, 30], grade = "established" }
+unexpected_resp = { bits = [29, 29], grade = "established" }
+bad_xresp_packet = { bits = [28, 28], grade = "established" }
+bad_xreq_packet = { bits = [27, 27], grade = "established" }
+resp_xtalk_error = { bits = [26, 26], grade = "established" }
+req_xtalk_error = { bits = [25, 25], grade = "established" }
+invalid_access = { bits = [24, 24], grade = "established" }
+unsupported_xop = { bits = [23, 23], grade = "established" }
+xreq_fifo_oflow = { bits = [22, 22], grade = "established" }
+llp_rec_snerror = { bits = [21, 21], grade = "established" }
+llp_rec_cberror = { bits = [20, 20], grade = "established" }
+llp_rcty = { bits = [19, 19], grade = "established" }
+llp_tx_retry = { bits = [18, 18], grade = "established" }
+llp_tcty = { bits = [17, 17], grade = "established" }
+pci_abort = { bits = [15, 15], grade = "established" }
+pci_parity = { bits = [14, 14], grade = "established" }
+pci_serr = { bits = [13, 13], grade = "established" }
+pci_perr = { bits = [12, 12], grade = "established" }
+pci_master_tout = { bits = [11, 11], grade = "established" }
+pci_retry_cnt = { bits = [10, 10], grade = "established" }
+xread_req_tout = { bits = [9, 9], grade = "established" }
+int_state = { bits = [7, 0], grade = "established" }
+
+[words.INT_RESET_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_rst_u)"
+doc = "Interrupt reset: write only. A one at an error bit clears that bit and rearms the error registers; bit 6 clears the multiple-error indication. Bits 6:0 carry the Bridge-family group strobes in bridge.h and 0x7f clears all of them: IRIX attach writes 0x7f. Whether a PIC honours the group strobes is unknown (README, \"Open\")."
+[words.INT_RESET_REG.fields]
+pcix_split_msg_pe = { bits = [45, 45], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Clear PCI-X split message parity error." }
+pcix_split_emsg = { bits = [44, 44], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Clear PCI-X split error message." }
+pcix_split_to = { bits = [43, 43], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Clear PCI-X split completion timeout." }
+pcix_unex_comp = { bits = [42, 42], grade = "established", from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/bridge.h (PIC_CTRL_ / PIC_ISR_ masks)", doc = "Clear PCI-X unexpected completion." }
+int_ram_perr = { bits = [41, 41], grade = "established" }
+bus_arb_broke = { bits = [40, 40], grade = "established" }
+pci_x_req_tout = { bits = [39, 39], grade = "established" }
+pci_x_tabort = { bits = [38, 38], grade = "established" }
+pci_x_perr = { bits = [37, 37], grade = "established" }
+pci_x_serr = { bits = [36, 36], grade = "established" }
+pci_x_mretry = { bits = [35, 35], grade = "established" }
+pci_x_mtout = { bits = [34, 34], grade = "established" }
+pci_x_da_parity = { bits = [33, 33], grade = "established" }
+pci_x_ad_parity = { bits = [32, 32], grade = "established" }
+pmu_page_fault = { bits = [30, 30], grade = "established" }
+unexpected_resp = { bits = [29, 29], grade = "established" }
+bad_xresp_packet = { bits = [28, 28], grade = "established" }
+bad_xreq_packet = { bits = [27, 27], grade = "established" }
+resp_xtalk_error = { bits = [26, 26], grade = "established" }
+req_xtalk_error = { bits = [25, 25], grade = "established" }
+invalid_access = { bits = [24, 24], grade = "established" }
+unsupported_xop = { bits = [23, 23], grade = "established" }
+xreq_fifo_oflow = { bits = [22, 22], grade = "established" }
+llp_rec_snerror = { bits = [21, 21], grade = "established" }
+llp_rec_cberror = { bits = [20, 20], grade = "established" }
+llp_rcty = { bits = [19, 19], grade = "established" }
+llp_tx_retry = { bits = [18, 18], grade = "established" }
+llp_tcty = { bits = [17, 17], grade = "established" }
+pci_abort = { bits = [15, 15], grade = "established" }
+pci_parity = { bits = [14, 14], grade = "established" }
+pci_serr = { bits = [13, 13], grade = "established" }
+pci_perr = { bits = [12, 12], grade = "established" }
+pci_master_tout = { bits = [11, 11], grade = "established" }
+pci_retry_cnt = { bits = [10, 10], grade = "established" }
+xread_req_tout = { bits = [9, 9], grade = "established" }
+multi_clr = { bits = [6, 6], grade = "established" }
+
+[words.INT_MODE_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_mode_u)"
+doc = "Interrupt mode: one bit per pin. IRIX attach writes zero."
+[words.INT_MODE_REG.fields]
+clr_pkt = { bits = [7, 0], grade = "established", doc = "Per-pin mode bit named enable-clear-packet. IRIX attach writes zero. What it changes is covered under the interrupt-packet section of the README (unknown beyond the name)." }
+
+[words.INT_DEVICE_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_device_u)"
+doc = "Interrupt device select: three bits per pin naming the device whose buffers a pin interrupt flushes. IRIX attach writes 0x6db6db, which is device 3 in every field."
+[words.INT_DEVICE_REG.fields]
+int7_dev = { bits = [23, 21], grade = "established" }
+int6_dev = { bits = [20, 18], grade = "established" }
+int5_dev = { bits = [17, 15], grade = "established" }
+int4_dev = { bits = [14, 12], grade = "established" }
+int3_dev = { bits = [11, 9], grade = "established" }
+int2_dev = { bits = [8, 6], grade = "established" }
+int1_dev = { bits = [5, 3], grade = "established" }
+int0_dev = { bits = [2, 0], grade = "established" }
+
+[words.INT_HOST_ERR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_host_err_u)"
+doc = "Host error field: the bit position in the host interrupt register that an error sets."
+[words.INT_HOST_ERR_REG.fields]
+bridge_err_fld = { bits = [7, 0], grade = "established" }
+
+[words.INT_ADDR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_int_addr_u)"
+doc = "Per-pin host address: 48-bit destination address and the 8-bit vector (bit position) in the host register."
+[words.INT_ADDR_REG.fields]
+int_fld = { bits = [55, 48], grade = "established", doc = "Vector." }
+int_addr = { bits = [47, 0], grade = "established", doc = "Destination address." }
+
+[words.ERR_INT_VIEW_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_err_int_view_u)"
+doc = "Error interrupt view: records an error whether or not it is enabled. Cleared by any write to the interrupt reset register."
+[words.ERR_INT_VIEW_REG.fields]
+int_ram_perr = { bits = [41, 41], grade = "established" }
+bus_arb_broke = { bits = [40, 40], grade = "established" }
+pci_x_req_tout = { bits = [39, 39], grade = "established" }
+pci_x_tabort = { bits = [38, 38], grade = "established" }
+pci_x_perr = { bits = [37, 37], grade = "established" }
+pci_x_serr = { bits = [36, 36], grade = "established" }
+pci_x_mretry = { bits = [35, 35], grade = "established" }
+pci_x_mtout = { bits = [34, 34], grade = "established" }
+pci_x_da_parity = { bits = [33, 33], grade = "established" }
+pci_x_ad_parity = { bits = [32, 32], grade = "established" }
+pmu_page_fault = { bits = [30, 30], grade = "established" }
+unexpected_resp = { bits = [29, 29], grade = "established" }
+bad_xresp_packet = { bits = [28, 28], grade = "established" }
+bad_xreq_packet = { bits = [27, 27], grade = "established" }
+resp_xtalk_error = { bits = [26, 26], grade = "established" }
+req_xtalk_error = { bits = [25, 25], grade = "established" }
+invalid_access = { bits = [24, 24], grade = "established" }
+unsupported_xop = { bits = [23, 23], grade = "established" }
+xreq_fifo_oflow = { bits = [22, 22], grade = "established" }
+llp_rec_snerror = { bits = [21, 21], grade = "established" }
+llp_rec_cberror = { bits = [20, 20], grade = "established" }
+llp_rcty = { bits = [19, 19], grade = "established" }
+llp_tx_retry = { bits = [18, 18], grade = "established" }
+llp_tcty = { bits = [17, 17], grade = "established" }
+pci_abort = { bits = [15, 15], grade = "established" }
+pci_parity = { bits = [14, 14], grade = "established" }
+pci_serr = { bits = [13, 13], grade = "established" }
+pci_perr = { bits = [12, 12], grade = "established" }
+pci_master_tout = { bits = [11, 11], grade = "established" }
+pci_retry_cnt = { bits = [10, 10], grade = "established" }
+xread_req_tout = { bits = [9, 9], grade = "established" }
+
+[words.MULT_INT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_mult_int_u)"
+doc = "Multiple interrupt: set when a condition recurs before it is cleared. Bit 6 of the reset register clears it."
+[words.MULT_INT_REG.fields]
+int_ram_perr = { bits = [41, 41], grade = "established" }
+bus_arb_broke = { bits = [40, 40], grade = "established" }
+pci_x_req_tout = { bits = [39, 39], grade = "established" }
+pci_x_tabort = { bits = [38, 38], grade = "established" }
+pci_x_perr = { bits = [37, 37], grade = "established" }
+pci_x_serr = { bits = [36, 36], grade = "established" }
+pci_x_mretry = { bits = [35, 35], grade = "established" }
+pci_x_mtout = { bits = [34, 34], grade = "established" }
+pci_x_da_parity = { bits = [33, 33], grade = "established" }
+pci_x_ad_parity = { bits = [32, 32], grade = "established" }
+pmu_page_fault = { bits = [30, 30], grade = "established" }
+unexpected_resp = { bits = [29, 29], grade = "established" }
+bad_xresp_packet = { bits = [28, 28], grade = "established" }
+bad_xreq_packet = { bits = [27, 27], grade = "established" }
+resp_xtalk_error = { bits = [26, 26], grade = "established" }
+req_xtalk_error = { bits = [25, 25], grade = "established" }
+invalid_access = { bits = [24, 24], grade = "established" }
+unsupported_xop = { bits = [23, 23], grade = "established" }
+xreq_fifo_oflow = { bits = [22, 22], grade = "established" }
+llp_rec_snerror = { bits = [21, 21], grade = "established" }
+llp_rec_cberror = { bits = [20, 20], grade = "established" }
+llp_rcty = { bits = [19, 19], grade = "established" }
+llp_tx_retry = { bits = [18, 18], grade = "established" }
+llp_tcty = { bits = [17, 17], grade = "established" }
+pci_abort = { bits = [15, 15], grade = "established" }
+pci_parity = { bits = [14, 14], grade = "established" }
+pci_serr = { bits = [13, 13], grade = "established" }
+pci_perr = { bits = [12, 12], grade = "established" }
+pci_master_tout = { bits = [11, 11], grade = "established" }
+pci_retry_cnt = { bits = [10, 10], grade = "established" }
+xread_req_tout = { bits = [9, 9], grade = "established" }
+int_state = { bits = [7, 0], grade = "established" }
+
+[words.DEVICE_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_device_reg_u)"
+doc = "Per-device control. Bit 19 is swap_direct (README, \"Device-register bit 19\")."
+[words.DEVICE_REG.fields]
+en_virtual1 = { bits = [29, 29], grade = "established" }
+en_error_lock = { bits = [28, 28], grade = "established" }
+en_page_chk = { bits = [27, 27], grade = "established" }
+force_pci_par = { bits = [26, 26], grade = "established" }
+en_virtual0 = { bits = [25, 25], grade = "established" }
+dir_wrt_gen = { bits = [23, 23], grade = "established" }
+dev_size = { bits = [22, 22], grade = "established" }
+real_time = { bits = [21, 21], grade = "established" }
+swap_direct = { bits = [19, 19], grade = "established", doc = "Byte swap of the 32-bit direct window." }
+prefetch = { bits = [18, 18], grade = "established" }
+precise = { bits = [17, 17], grade = "established" }
+coherent = { bits = [16, 16], grade = "established" }
+barrier = { bits = [15, 15], grade = "established" }
+gbr = { bits = [14, 14], grade = "established" }
+dev_swap = { bits = [13, 13], grade = "established" }
+dev_io_mem = { bits = [12, 12], grade = "established" }
+dev_off = { bits = [11, 0], grade = "established", doc = "Device offset, 12 bits." }
+
+[words.RRB_EVEN_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_even_resp_u)"
+doc = "Read response buffer allocation, even devices. Buffers 0,2,...,14, four bits each: enable, 2-bit virtual channel, device-pair bit."
+[words.RRB_EVEN_REG.fields]
+buff_14_en = { bits = [31, 31], grade = "established" }
+buff_14_vdev = { bits = [30, 29], grade = "established" }
+buff_14_pdev = { bits = [28, 28], grade = "established" }
+buff_12_en = { bits = [27, 27], grade = "established" }
+buff_12_vdev = { bits = [26, 25], grade = "established" }
+buff_12_pdev = { bits = [24, 24], grade = "established" }
+buff_10_en = { bits = [23, 23], grade = "established" }
+buff_10_vdev = { bits = [22, 21], grade = "established" }
+buff_10_pdev = { bits = [20, 20], grade = "established" }
+buff_8_en = { bits = [19, 19], grade = "established" }
+buff_8_vdev = { bits = [18, 17], grade = "established" }
+buff_8_pdev = { bits = [16, 16], grade = "established" }
+buff_6_en = { bits = [15, 15], grade = "established" }
+buff_6_vdev = { bits = [14, 13], grade = "established" }
+buff_6_pdev = { bits = [12, 12], grade = "established" }
+buff_4_en = { bits = [11, 11], grade = "established" }
+buff_4_vdev = { bits = [10, 9], grade = "established" }
+buff_4_pdev = { bits = [8, 8], grade = "established" }
+buff_2_en = { bits = [7, 7], grade = "established" }
+buff_2_vdev = { bits = [6, 5], grade = "established" }
+buff_2_pdev = { bits = [4, 4], grade = "established" }
+buff_0_en = { bits = [3, 3], grade = "established" }
+buff_0_vdev = { bits = [2, 1], grade = "established" }
+buff_0_pdev = { bits = [0, 0], grade = "established" }
+
+[words.RRB_ODD_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_odd_resp_u)"
+doc = "Read response buffer allocation, odd devices. Buffers 1,3,...,15, four bits each."
+[words.RRB_ODD_REG.fields]
+buff_15_en = { bits = [31, 31], grade = "established" }
+buff_15_vdev = { bits = [30, 29], grade = "established" }
+buff_15_pdev = { bits = [28, 28], grade = "established" }
+buff_13_en = { bits = [27, 27], grade = "established" }
+buff_13_vdev = { bits = [26, 25], grade = "established" }
+buff_13_pdev = { bits = [24, 24], grade = "established" }
+buff_11_en = { bits = [23, 23], grade = "established" }
+buff_11_vdev = { bits = [22, 21], grade = "established" }
+buff_11_pdev = { bits = [20, 20], grade = "established" }
+buff_9_en = { bits = [19, 19], grade = "established" }
+buff_9_vdev = { bits = [18, 17], grade = "established" }
+buff_9_pdev = { bits = [16, 16], grade = "established" }
+buff_7_en = { bits = [15, 15], grade = "established" }
+buff_7_vdev = { bits = [14, 13], grade = "established" }
+buff_7_pdev = { bits = [12, 12], grade = "established" }
+buff_5_en = { bits = [11, 11], grade = "established" }
+buff_5_vdev = { bits = [10, 9], grade = "established" }
+buff_5_pdev = { bits = [8, 8], grade = "established" }
+buff_3_en = { bits = [7, 7], grade = "established" }
+buff_3_vdev = { bits = [6, 5], grade = "established" }
+buff_3_pdev = { bits = [4, 4], grade = "established" }
+buff_1_en = { bits = [3, 3], grade = "established" }
+buff_1_vdev = { bits = [2, 1], grade = "established" }
+buff_1_pdev = { bits = [0, 0], grade = "established" }
+
+[words.RESP_STATUS_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_resp_status_u)"
+doc = "Read response buffer status: one valid bit and one in-use bit per buffer."
+[words.RESP_STATUS_REG.fields]
+rrb_valid = { bits = [31, 16], grade = "established" }
+rrb_inuse = { bits = [15, 0], grade = "established" }
+
+[words.RESP_CLEAR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_resp_clear_u)"
+doc = "Read response buffer clear: write a one to discard a buffer."
+[words.RESP_CLEAR_REG.fields]
+rrb_clear = { bits = [15, 0], grade = "established" }
+
+[words.BUF_MATCH_UPPER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_buf_upper_addr_match_u)"
+doc = "Read response buffer address match, upper word: buffer state flags and the upper address and byte enables."
+[words.BUF_MATCH_UPPER_REG.fields]
+filled = { bits = [31, 31], grade = "established" }
+armed = { bits = [30, 30], grade = "established" }
+flush = { bits = [29, 29], grade = "established" }
+xerr = { bits = [28, 28], grade = "established" }
+pkterr = { bits = [27, 27], grade = "established" }
+timeout = { bits = [26, 26], grade = "established" }
+prefetch = { bits = [25, 25], grade = "established" }
+precise = { bits = [24, 24], grade = "established" }
+dw_be = { bits = [23, 16], grade = "established" }
+upp_addr = { bits = [15, 0], grade = "established" }
+
+[words.BUF_MATCH_LOWER_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_p_buf_lower_addr_match_u)"
+doc = "Read response buffer address match, lower word."
+[words.BUF_MATCH_LOWER_REG.fields]
+filled = { bits = [63, 63], grade = "established" }
+armed = { bits = [62, 62], grade = "established" }
+flush = { bits = [61, 61], grade = "established" }
+xerr = { bits = [60, 60], grade = "established" }
+pkterr = { bits = [59, 59], grade = "established" }
+timeout = { bits = [58, 58], grade = "established" }
+prefetch = { bits = [57, 57], grade = "established" }
+precise = { bits = [56, 56], grade = "established" }
+dw_be = { bits = [55, 48], grade = "established" }
+upp_addr = { bits = [47, 32], grade = "established" }
+low_addr = { bits = [31, 0], grade = "established" }
+
+[words.BUF_FLUSH_W_TOUCH_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_flush_w_touch_u)"
+doc = "Performance counter, per even buffer block: flushes after at least one data use. A word write clears it."
+[words.BUF_FLUSH_W_TOUCH_REG.fields]
+touch_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_FLUSH_WO_TOUCH_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_flush_wo_touch_u)"
+doc = "Performance counter, per even buffer block: flushes with no data used. A word write clears it."
+[words.BUF_FLUSH_WO_TOUCH_REG.fields]
+notouch_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_INFLIGHT_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_inflight_u)"
+doc = "Performance counter, per even buffer block: bus clocks a request spent in flight. A word write clears it."
+[words.BUF_INFLIGHT_REG.fields]
+inflight_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_PREFETCH_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_prefetch_u)"
+doc = "Performance counter, per even buffer block: requests from the prefetcher. A word write clears it."
+[words.BUF_PREFETCH_REG.fields]
+prefetch_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_TOTAL_RETRY_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_total_pci_retry_u)"
+doc = "Performance counter, per even buffer block: PCI retries that matched the buffer tag. A word write clears it."
+[words.BUF_TOTAL_RETRY_REG.fields]
+retry_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_MAX_RETRY_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_max_pci_retry_u)"
+doc = "Performance counter, per even buffer block: largest retry count for one request. A word write clears it."
+[words.BUF_MAX_RETRY_REG.fields]
+max_retry_cnt = { bits = [15, 0], grade = "established" }
+
+[words.BUF_MAX_LATENCY_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_max_latency_u)"
+doc = "Performance counter, per even buffer block: longest request latency in bus clocks. A word write clears it."
+[words.BUF_MAX_LATENCY_REG.fields]
+max_latency_cnt = { bits = [15, 0], grade = "established" }
+
+[words.PCIX_READ_BUF_ATTR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_px_read_buf_attr_u)"
+doc = "PCI-X read buffer attribute."
+[words.PCIX_READ_BUF_ATTR_REG.fields]
+bus_cmd = { bits = [47, 44], grade = "established" }
+byte_cnt = { bits = [43, 32], grade = "established" }
+entry_valid = { bits = [31, 31], grade = "established" }
+ns = { bits = [30, 30], grade = "established" }
+ro = { bits = [29, 29], grade = "established" }
+tag = { bits = [28, 24], grade = "established" }
+bus_num = { bits = [23, 16], grade = "established" }
+dev_num = { bits = [15, 11], grade = "established" }
+fun_num = { bits = [10, 8], grade = "established" }
+f_buffer_index = { bits = [5, 0], grade = "established" }
+
+[words.PCIX_WRITE_BUF_ATTR_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_px_write_buf_attr_u)"
+doc = "PCI-X write buffer attribute."
+[words.PCIX_WRITE_BUF_ATTR_REG.fields]
+bus_cmd = { bits = [47, 44], grade = "established" }
+byte_cnt = { bits = [43, 32], grade = "established" }
+entry_valid = { bits = [31, 31], grade = "established" }
+ns = { bits = [30, 30], grade = "established" }
+ro = { bits = [29, 29], grade = "established" }
+tag = { bits = [28, 24], grade = "established" }
+bus_num = { bits = [23, 16], grade = "established" }
+dev_num = { bits = [15, 11], grade = "established" }
+fun_num = { bits = [10, 8], grade = "established" }
+f_buffer_index = { bits = [5, 0], grade = "established" }
+
+[words.PCIX_WRITE_BUF_VALID_REG]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-2.4.37 pin e0dbf803698f, include/asm-ia64/sn/pci/pic.h (typedef pic_px_write_buf_valid_u)"
+doc = "PCI-X write buffer valid cache lines."
+[words.PCIX_WRITE_BUF_VALID_REG.fields]
+wrt_valid_buff = { bits = [31, 0], grade = "established" }
+

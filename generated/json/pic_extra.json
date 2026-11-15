@@ -278,6 +278,3692 @@
   },
   {
    "unit": "pic_extra",
+   "kind": "word",
+   "name": "ARB_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.dev_broke",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.req_wait_tick",
+   "hi": 17,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.req_wait_en",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.disarb",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.freeze_gnt",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.en_bridge_hi",
+   "hi": 4,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ARB_REG.en_bridge_lo",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_FLUSH_WO_TOUCH_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_FLUSH_WO_TOUCH_REG.notouch_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_FLUSH_W_TOUCH_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_FLUSH_W_TOUCH_REG.touch_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_INFLIGHT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_INFLIGHT_REG.inflight_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_MATCH_LOWER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.filled",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.armed",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.flush",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.xerr",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.pkterr",
+   "hi": 59,
+   "lo": 59,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.timeout",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.prefetch",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.precise",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.dw_be",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.upp_addr",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_LOWER_REG.low_addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_MATCH_UPPER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.filled",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.armed",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.flush",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.xerr",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.pkterr",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.timeout",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.prefetch",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.precise",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.dw_be",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MATCH_UPPER_REG.upp_addr",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_MAX_LATENCY_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MAX_LATENCY_REG.max_latency_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_MAX_RETRY_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_MAX_RETRY_REG.max_retry_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_PREFETCH_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_PREFETCH_REG.prefetch_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUF_TOTAL_RETRY_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUF_TOTAL_RETRY_REG.retry_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "BUS_TIMEOUT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUS_TIMEOUT_REG.pci_retry_hld",
+   "hi": 20,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "BUS_TIMEOUT_REG.pci_retry_cnt",
+   "hi": 9,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "CMD_WORD_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.didn",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.sidn",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.pactyp",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.tnum",
+   "hi": 19,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.coherent",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.ds",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.gbr",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.vbpm",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.error",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CMD_WORD_REG.barrier",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "CONTROL_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.no_snoop",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.relax_order",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.bus_num",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.dev_num",
+   "hi": 47,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.fun_num",
+   "hi": 42,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.par_en_ate",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.par_en_resp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.par_en_req",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.rst_pin_n",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.mem_swap",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.page_size",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.f_bad_pkt",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.llp_xbar_crd",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.clr_rllp_cnt",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.clr_tllp_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.sys_end",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.pci_speed",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "CONTROL_REG.widget_id",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "DEVICE_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.en_virtual1",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.en_error_lock",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.en_page_chk",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.force_pci_par",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.en_virtual0",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.dir_wrt_gen",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.dev_size",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.real_time",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.swap_direct",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.prefetch",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.precise",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.coherent",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.barrier",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.gbr",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.dev_swap",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.dev_io_mem",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DEVICE_REG.dev_off",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "DIR_MAP_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DIR_MAP_REG.dir_w_id",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DIR_MAP_REG.dir_add512",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "DIR_MAP_REG.dir_off",
+   "hi": 16,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "ERR_INT_VIEW_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.int_ram_perr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.bus_arb_broke",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_req_tout",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_tabort",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_perr",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_serr",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_mretry",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_mtout",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_da_parity",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_x_ad_parity",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pmu_page_fault",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.unexpected_resp",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.bad_xresp_packet",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.bad_xreq_packet",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.resp_xtalk_error",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.req_xtalk_error",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.invalid_access",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.unsupported_xop",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.xreq_fifo_oflow",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.llp_rec_snerror",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.llp_rec_cberror",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.llp_rcty",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.llp_tx_retry",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.llp_tcty",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_abort",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_parity",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_serr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_master_tout",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.pci_retry_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_INT_VIEW_REG.xread_req_tout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "ERR_LOWER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_LOWER_REG.upp_addr",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_LOWER_REG.low_addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "ERR_UPPER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ERR_UPPER_REG.upp_addr",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "ID_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ID_REG.rev_num",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ID_REG.part_num",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "ID_REG.mfg_num",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_ADDR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ADDR_REG.int_fld",
+   "hi": 55,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ADDR_REG.int_addr",
+   "hi": 47,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_DEST_LOWER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEST_LOWER_REG.target_id",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEST_LOWER_REG.upp_addr",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEST_LOWER_REG.low_addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_DEST_UPPER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEST_UPPER_REG.target_id",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEST_UPPER_REG.upp_addr",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_DEVICE_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int7_dev",
+   "hi": 23,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int6_dev",
+   "hi": 20,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int5_dev",
+   "hi": 17,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int4_dev",
+   "hi": 14,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int3_dev",
+   "hi": 11,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int2_dev",
+   "hi": 8,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int1_dev",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_DEVICE_REG.int0_dev",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_ENABLE_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pcix_split_msg_pe",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pcix_split_emsg",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pcix_split_to",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pcix_unex_comp",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.int_ram_perr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.bus_arb_broke",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_req_tout",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_tabort",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_perr",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_serr",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_mretry",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_mtout",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_da_parity",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_x_ad_parity",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pmu_page_fault",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.unexpected_resp",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.bad_xresp_packet",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.bad_xreq_packet",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.resp_xtalk_error",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.req_xtalk_error",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.invalid_access",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.unsupported_xop",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.xreq_fifo_oflow",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.llp_rec_snerror",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.llp_rec_cberror",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.llp_rcty",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.llp_tx_retry",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.llp_tcty",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_abort",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_parity",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_serr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_master_tout",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.pci_retry_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.xread_req_tout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_ENABLE_REG.int_state",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_HOST_ERR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_HOST_ERR_REG.bridge_err_fld",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_MODE_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_MODE_REG.clr_pkt",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_RESET_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pcix_split_msg_pe",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pcix_split_emsg",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pcix_split_to",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pcix_unex_comp",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.int_ram_perr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.bus_arb_broke",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_req_tout",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_tabort",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_perr",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_serr",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_mretry",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_mtout",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_da_parity",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_x_ad_parity",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pmu_page_fault",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.unexpected_resp",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.bad_xresp_packet",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.bad_xreq_packet",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.resp_xtalk_error",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.req_xtalk_error",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.invalid_access",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.unsupported_xop",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.xreq_fifo_oflow",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.llp_rec_snerror",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.llp_rec_cberror",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.llp_rcty",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.llp_tx_retry",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.llp_tcty",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_abort",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_parity",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_serr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_master_tout",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.pci_retry_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.xread_req_tout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_RESET_REG.multi_clr",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "INT_STATUS_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pcix_split_msg_pe",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pcix_split_emsg",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pcix_split_to",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pcix_unex_comp",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.int_ram_perr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.bus_arb_broke",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_req_tout",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_tabort",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_perr",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_serr",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_mretry",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_mtout",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_da_parity",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_x_ad_parity",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pmu_page_fault",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.unexpected_resp",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.bad_xresp_packet",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.bad_xreq_packet",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.resp_xtalk_error",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.req_xtalk_error",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.invalid_access",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.unsupported_xop",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.xreq_fifo_oflow",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.llp_rec_snerror",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.llp_rec_cberror",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.llp_rcty",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.llp_tx_retry",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.llp_tcty",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_abort",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_parity",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_serr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_master_tout",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.pci_retry_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.xread_req_tout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "INT_STATUS_REG.int_state",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "LINK_ERR_ADDR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "LINK_ERR_ADDR_REG.upp_addr",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "LINK_ERR_ADDR_REG.low_addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "LLP_CFG_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "LLP_CFG_REG.llp_maxretry",
+   "hi": 25,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "LLP_CFG_REG.llp_nulltimeout",
+   "hi": 15,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "LLP_CFG_REG.llp_maxburst",
+   "hi": 9,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "MAP_FAULT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MAP_FAULT_REG.pci_addr",
+   "hi": 21,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MAP_FAULT_REG.pci_dev_num",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "MULT_INT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.int_ram_perr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.bus_arb_broke",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_req_tout",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_tabort",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_perr",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_serr",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_mretry",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_mtout",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_da_parity",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_x_ad_parity",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pmu_page_fault",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.unexpected_resp",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.bad_xresp_packet",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.bad_xreq_packet",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.resp_xtalk_error",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.req_xtalk_error",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.invalid_access",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.unsupported_xop",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.xreq_fifo_oflow",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.llp_rec_snerror",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.llp_rec_cberror",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.llp_rcty",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.llp_tx_retry",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.llp_tcty",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_abort",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_parity",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_serr",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_perr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_master_tout",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.pci_retry_cnt",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.xread_req_tout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "MULT_INT_REG.int_state",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCIX_ERR_ATTR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.bus_cmd",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.byte_cnt",
+   "hi": 43,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.ns",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.ro",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.tag",
+   "hi": 28,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.bus_num",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.dev_num",
+   "hi": 15,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.fun_num",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_ERR_ATTR_REG.l_byte_cnt",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCIX_READ_BUF_ATTR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.bus_cmd",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.byte_cnt",
+   "hi": 43,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.entry_valid",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.ns",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.ro",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.tag",
+   "hi": 28,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.bus_num",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.dev_num",
+   "hi": 15,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.fun_num",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_READ_BUF_ATTR_REG.f_buffer_index",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCIX_TIMEOUT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_TIMEOUT_REG.rd_buff_loc",
+   "hi": 8,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_TIMEOUT_REG.rd_buff_struct",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCIX_WRITE_BUF_ATTR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.bus_cmd",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.byte_cnt",
+   "hi": 43,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.entry_valid",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.ns",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.ro",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.tag",
+   "hi": 28,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.bus_num",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.dev_num",
+   "hi": 15,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.fun_num",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_ATTR_REG.f_buffer_index",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCIX_WRITE_BUF_VALID_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCIX_WRITE_BUF_VALID_REG.wrt_valid_buff",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCI_ERR_LOWER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_xtalk_did",
+   "hi": 59,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_dac",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_dev_master",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_vdev",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_dev_num",
+   "hi": 50,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_uaddr_err",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_LOWER_REG.pci_laddr_err",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "PCI_ERR_UPPER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_xtalk_did",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_dac",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_dev_master",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_vdev",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_dev_num",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "PCI_ERR_UPPER_REG.pci_uaddr_err",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RAM_PERR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.ate_err_addr",
+   "hi": 57,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.rd_resp_err_addr",
+   "hi": 40,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.wrt_resp_err_addr",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.ate_err",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.rd_resp_err",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.wrt_resp_err",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.dbe_ate",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.dbe_rd",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RAM_PERR_REG.dbe_wrt",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "REQ_TIMEOUT_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "REQ_TIMEOUT_REG.time_out",
+   "hi": 19,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RESP_CLEAR_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_CLEAR_REG.rrb_clear",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RESP_ERR_LOWER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_LOWER_REG.dev_num",
+   "hi": 54,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_LOWER_REG.buff_num",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_LOWER_REG.upp_addr",
+   "hi": 47,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_LOWER_REG.low_addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RESP_ERR_UPPER_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_UPPER_REG.dev_num",
+   "hi": 22,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_UPPER_REG.buff_num",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_ERR_UPPER_REG.upp_addr",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RESP_STATUS_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_STATUS_REG.rrb_valid",
+   "hi": 31,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RESP_STATUS_REG.rrb_inuse",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RRB_EVEN_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_14_en",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_14_vdev",
+   "hi": 30,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_14_pdev",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_12_en",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_12_vdev",
+   "hi": 26,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_12_pdev",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_10_en",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_10_vdev",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_10_pdev",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_8_en",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_8_vdev",
+   "hi": 18,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_8_pdev",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_6_en",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_6_vdev",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_6_pdev",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_4_en",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_4_vdev",
+   "hi": 10,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_4_pdev",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_2_en",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_2_vdev",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_2_pdev",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_0_en",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_0_vdev",
+   "hi": 2,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_EVEN_REG.buff_0_pdev",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "RRB_ODD_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_15_en",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_15_vdev",
+   "hi": 30,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_15_pdev",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_13_en",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_13_vdev",
+   "hi": 26,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_13_pdev",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_11_en",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_11_vdev",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_11_pdev",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_9_en",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_9_vdev",
+   "hi": 18,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_9_pdev",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_7_en",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_7_vdev",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_7_pdev",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_5_en",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_5_vdev",
+   "hi": 10,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_5_pdev",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_3_en",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_3_vdev",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_3_pdev",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_1_en",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_1_vdev",
+   "hi": 2,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "RRB_ODD_REG.buff_1_pdev",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "STATUS_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.pci_x_speed",
+   "hi": 35,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.pci_x_active",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.llp_rec_cnt",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.llp_tx_cnt",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.rx_credit_cnt",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.tx_credit_cnt",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "STATUS_REG.pci_misc_input",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "TEST_PIN_CTRL_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.tdata_out",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_7",
+   "hi": 15,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_6",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_5",
+   "hi": 11,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_4",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_3",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_2",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_1",
+   "hi": 3,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TEST_PIN_CTRL_REG.sel_tpin_0",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "word",
+   "name": "TYPE1_CFG_REG",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TYPE1_CFG_REG.bus_num",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "field",
+   "name": "TYPE1_CFG_REG.dev_num",
+   "hi": 15,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
    "kind": "constant",
    "name": "ATE_ADDR_SHIFT",
    "value": 12,
