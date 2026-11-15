@@ -1,0 +1,2182 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/mbcs/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "id",
+   "offset": 0,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "id.bitstream_rev",
+   "hi": 35,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "id.part_num",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "id.mfg_id",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "id.always_one",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "status",
+   "offset": 8,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.alg_half_speed_sel",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.pending_int_reqs",
+   "hi": 59,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.alg_done",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.alg_pipe_running",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.alg_waiting",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.wr_dma_done",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.wr_dma_in_progress",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.rd_dma_done",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.rd_dma_in_progress",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.cm_req_credits",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.ice_req_credits",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.ice_rsp_credits",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.pending_writes",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "status.pending_reads",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "err_detail1",
+   "offset": 16,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.data_error_bit",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.head_error_bit",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.head_cw_error",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.pio_or_memory",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.read_type",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.gfx_cred",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.byte_enable",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.tnum",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.data_size",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.source_id",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail1.packet_type",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "err_detail2",
+   "offset": 24,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_detail2.address",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "control",
+   "offset": 32,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_done_clr",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_sram2_locked",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_sram1_locked",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_sram0_locked",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_done_int_en",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_done_amo_en",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_wait_step",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_clr",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.wr_dma_clr",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.rd_dma_clr",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.alg_go",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.wr_dma_go",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.rd_dma_go",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.force_gap_war",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.prescalar_byp",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.rearm_stat_regs",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.credit_limit",
+   "hi": 27,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.address_mode",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.max_trans",
+   "hi": 8,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "control.cm_id",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "req_timeout",
+   "offset": 40,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "req_timeout.time_out",
+   "hi": 23,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "err_int_dest",
+   "offset": 56,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_dest.int_vector",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_dest.address",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "targ_flush",
+   "offset": 80,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "err_status",
+   "offset": 96,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.wr_dma_prog_err",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rd_dma_prog_err",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.int_gen_tnum_tout",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.int_gen_rsp_err",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram2_perr",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram1_perr",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram0_perr",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram2_access_conflict",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram1_access_conflict",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ram0_access_conflict",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.alg_data_underflow",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.alg_data_overflow",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.wr_dma_multi_tnum_tou",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.wr_dma_tnum_tout",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.wr_dma_err_rsp",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rd_dma_multi_tnum_tou",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rd_dma_tnum_tout",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rd_dma_err_rsp",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rx_bad_didn",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.cm2hcm_rsp_cred_of",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.cm2hcm_req_cred_of",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.data_flit_sb_err",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.missing_tail",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.early_tail",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.early_term",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.req_range_dsize_inv",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.pio_req_addr_inv",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.req_addr_align_inv",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.head_cmd_err_bit",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.head_inv_rd_type",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.missing_head",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.head_sb_err",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.rsp_pactype_inv",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.head_inv_data_size",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.request_timeout",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.buffer_overflow",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.bad_datavalid",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.bad_length",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.unexpected_rsp",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.unsupported_req",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ecc_mbe",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_status.ecc_sbe",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "clr_err_stat",
+   "offset": 104,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_wr_dma_prog_err",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rd_dma_prog_err",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_int_gen_tnum_tout",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_int_gen_rsp_err",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram2_perr",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram1_perr",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram0_perr",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram2_access_confl",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram1_access_confl",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ram0_access_confl",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_alg_data_underflo",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_alg_data_overflow",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_wr_dma_multi_tnum",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_wr_dma_tnum_tout",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_wr_dma_err_rsp",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rd_dma_multi_tnum",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rd_dma_tnum_tout",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rd_dma_err_rsp",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rx_bad_didn",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_cm2hcm_rsp_cred_o",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_cm2hcm_req_cred_o",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_data_flit_sb_err",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_missing_tail",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_early_tail",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_early_term",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_req_range_dsize_i",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_pio_req_addr_inv",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_req_addr_align_in",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_head_cmd_err_bit",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_head_inv_rd_type",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_missing_head",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_head_sb_err",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_rsp_pactype_inv",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_head_inv_data_siz",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_request_timeout",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_buffer_overflow",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_bad_datavalid",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_bad_length",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_unexpected_rsp",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_unsupported_req",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ecc_mbe",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "clr_err_stat.clr_ecc_sbe",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "err_int_en",
+   "offset": 112,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_wr_dma_prog_er",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rd_dma_prog_er",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_int_gen_tnum_t",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_int_gen_rsp_er",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram2_perr",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram1_perr",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram0_perr",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram2_access_co",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram1_access_co",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ram0_access_co",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_alg_data_under",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_alg_data_overf",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_wr_dma_multi_t",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_wr_dma_tnum_to",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_wr_dma_err_rsp",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rd_dma_multi_t",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rd_dma_tnum_to",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rd_dma_err_rsp",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rx_bad_didn",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_cm2hcm_rsp_cre",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_cm2hcm_req_cre",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_data_flit_sb_e",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_missing_tail",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_early_tail",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_early_term",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_req_range_dsiz",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_pio_req_addr_i",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_req_addr_align",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_head_cmd_err_b",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_head_inv_rd_ty",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_missing_head",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_head_sb_err",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_rsp_pactype_in",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_head_inv_data_",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_request_timeou",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_buffer_overflo",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_bad_datavalid",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_bad_length",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_unexpected_rsp",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_unsupported_re",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ecc_mbe",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "err_int_en.int_en_ecc_sbe",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_sys_addr",
+   "offset": 256,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_sys_addr.dma_sys_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_loc_addr",
+   "offset": 264,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_loc_addr.dma_ram_sel",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_loc_addr.dma_ram_addr",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_ctrl",
+   "offset": 272,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_ctrl.pio_mem_n",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_ctrl.done_int_en",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_ctrl.done_amo_en",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_ctrl.dma_op_length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_amo_dest",
+   "offset": 280,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_amo_dest.dma_amo_mod_type",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_amo_dest.dma_amo_sys_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_int_dest",
+   "offset": 288,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_int_dest.int_vector",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_int_dest.address",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "rd_dma_aux_stat",
+   "offset": 304,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_aux_stat.pending_reqs_left",
+   "hi": 45,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_aux_stat.lrsp_buff_empty",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "rd_dma_aux_stat.op_num_pacs_left",
+   "hi": 16,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_sys_addr",
+   "offset": 512,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_sys_addr.dma_sys_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_loc_addr",
+   "offset": 520,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_loc_addr.dma_ram_sel",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_loc_addr.dma_ram_addr",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_ctrl",
+   "offset": 528,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_ctrl.pio_mem_n",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_ctrl.done_int_en",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_ctrl.done_amo_en",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_ctrl.dma_op_length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_amo_dest",
+   "offset": 536,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_amo_dest.dma_amo_mod_type",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_amo_dest.dma_amo_sys_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_int_dest",
+   "offset": 544,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_int_dest.int_vector",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_int_dest.address",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "wr_dma_aux_stat",
+   "offset": 560,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_aux_stat.pending_reqs_left",
+   "hi": 45,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_aux_stat.lreq_buff_empty",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "wr_dma_aux_stat.op_num_pacs_left",
+   "hi": 16,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "alg_amo_dest",
+   "offset": 768,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_amo_dest.dma_amo_mod_type",
+   "hi": 58,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_amo_dest.dma_amo_sys_addr",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "alg_int_dest",
+   "offset": 776,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_int_dest.int_vector",
+   "hi": 63,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_int_dest.address",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "alg_offsets",
+   "offset": 784,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_offsets.sram2_offset",
+   "hi": 22,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_offsets.sram1_offset",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_offsets.sram0_offset",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "register",
+   "name": "alg_step",
+   "offset": 792,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "field",
+   "name": "alg_step.alg_step_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "CACHELINE_SIZE",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "DEBUG_START",
+   "value": 1048576,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "ERR_INT_EN_DRIVER",
+   "value": 1125899898323199,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "GSCR_START",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "MFG_NUM",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "PART_NUM",
+   "value": 65520,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "PART_NUM_ALG0",
+   "value": 61441,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "RAM0_START",
+   "value": 2097152,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "RAM1_START",
+   "value": 4194304,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "RAM2_START",
+   "value": 6291456,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "REQ_TOUT_MASK",
+   "value": 16777215,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "mbcs",
+   "kind": "constant",
+   "name": "SRAM_SIZE",
+   "value": 1048576,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

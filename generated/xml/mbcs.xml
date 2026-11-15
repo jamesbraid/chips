@@ -1,0 +1,314 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/mbcs/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="mbcs" prefix="MBCS" title="RASC Core Services (MBCS): the register block a Core Services FPGA bitstream presents on the TIO FPGA port, as SGI's Linux driver defines it">
+  <doc>Offsets, widths and field positions are the definitions of SGI's Linux FPGA Core Services driver header (v5.3). They describe the Core Services block that SGI's RASC bitstreams contain; other bitstreams on the same port need not have it. The header gives no reset value and no access direction: access is what the driver does (r read, w written, rw read-modify-write or an unused placeholder), reset is unknown throughout. Offsets are from the base of the FPGA port's 256 MiB small window.</doc>
+  <struct name="ID" size="8" grade="established" register="yes" offset="0x0" access="r" reset="unknown">
+    <doc>Identification word of the core. Its low bits are the same widget identification layout the TIO driver reads at offset 0 of the port's window: bit 0 is one, manufacturer in 11:1, part number in 27:12. The core adds an 8-bit bitstream revision in 35:28. The MBCS driver never reads this register; the layout is the header's.</doc>
+    <field name="bitstream_rev" start="28" size="8" type="uint" grade="established"/>
+    <field name="part_num" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg_id" start="1" size="11" type="uint" grade="established"/>
+    <field name="always_one" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="STATUS" size="8" grade="established" register="yes" offset="0x8" access="r" reset="unknown">
+    <doc>Core status. The driver's one interrupt handler reads it and tests the read-DMA-done, write-DMA-done and algorithm-done bits; it reads nothing else.</doc>
+    <field name="alg_half_speed_sel" start="63" size="1" type="uint" grade="established"/>
+    <field name="pending_int_reqs" start="52" size="8" type="uint" grade="established"/>
+    <field name="alg_done" start="48" size="1" type="uint" grade="established"/>
+    <field name="alg_pipe_running" start="47" size="1" type="uint" grade="established"/>
+    <field name="alg_waiting" start="46" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_done" start="45" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_in_progress" start="44" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_done" start="42" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_in_progress" start="41" size="1" type="uint" grade="established"/>
+    <field name="cm_req_credits" start="32" size="8" type="uint" grade="established"/>
+    <field name="ice_req_credits" start="24" size="8" type="uint" grade="established"/>
+    <field name="ice_rsp_credits" start="16" size="8" type="uint" grade="established"/>
+    <field name="pending_writes" start="8" size="8" type="uint" grade="established"/>
+    <field name="pending_reads" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_DETAIL1" size="8" grade="established" register="yes" offset="0x10" access="rw" reset="unknown">
+    <doc>Captured detail of the first error (header name `cm_error_detail1`). The driver writes zero at attach and never reads it. Access rw is a placeholder.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="data_error_bit" start="49" size="1" type="uint" grade="established"/>
+    <field name="head_error_bit" start="48" size="1" type="uint" grade="established"/>
+    <field name="head_cw_error" start="35" size="1" type="uint" grade="established"/>
+    <field name="pio_or_memory" start="34" size="1" type="uint" grade="established"/>
+    <field name="read_type" start="32" size="2" type="uint" grade="established"/>
+    <field name="gfx_cred" start="24" size="8" type="uint" grade="established"/>
+    <field name="byte_enable" start="16" size="8" type="uint" grade="established"/>
+    <field name="tnum" start="8" size="8" type="uint" grade="established"/>
+    <field name="data_size" start="6" size="2" type="uint" grade="established"/>
+    <field name="source_id" start="4" size="2" type="uint" grade="established"/>
+    <field name="packet_type" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_DETAIL2" size="8" grade="established" register="yes" offset="0x18" access="rw" reset="unknown">
+    <doc>Captured address of the first error. The driver does not touch it. Access rw is a placeholder.</doc>
+    <field name="address" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="CONTROL" size="8" grade="established" register="yes" offset="0x20" access="rw" reset="unknown">
+    <doc>Core control. Every driver access is read, change a bit, write back. The go bits start an engine, the clr bits stop one and clear its status, `alg_done_clr` clears the algorithm-done status. Whether the go and clr bits read back as set is unknown.</doc>
+    <field name="alg_done_clr" start="51" size="1" type="uint" grade="established"/>
+    <field name="alg_sram2_locked" start="50" size="1" type="uint" grade="established"/>
+    <field name="alg_sram1_locked" start="49" size="1" type="uint" grade="established"/>
+    <field name="alg_sram0_locked" start="48" size="1" type="uint" grade="established"/>
+    <field name="alg_done_int_en" start="46" size="1" type="uint" grade="established"/>
+    <field name="alg_done_amo_en" start="45" size="1" type="uint" grade="established"/>
+    <field name="alg_wait_step" start="44" size="1" type="uint" grade="established"/>
+    <field name="alg_clr" start="41" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_clr" start="40" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_clr" start="39" size="1" type="uint" grade="established"/>
+    <field name="alg_go" start="38" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_go" start="37" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_go" start="36" size="1" type="uint" grade="established"/>
+    <field name="force_gap_war" start="35" size="1" type="uint" grade="established"/>
+    <field name="prescalar_byp" start="34" size="1" type="uint" grade="established"/>
+    <field name="rearm_stat_regs" start="33" size="1" type="uint" grade="established"/>
+    <field name="credit_limit" start="20" size="8" type="uint" grade="established"/>
+    <field name="address_mode" start="12" size="1" type="uint" grade="established"/>
+    <field name="max_trans" start="4" size="5" type="uint" grade="established"/>
+    <field name="cm_id" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="REQ_TIMEOUT" size="8" grade="established" register="yes" offset="0x28" access="rw" reset="unknown">
+    <doc>Request time-out. The driver reads it, sets the 24-bit time-out field to all ones and writes it back.</doc>
+    <field name="time_out" start="0" size="24" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_INT_DEST" size="8" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
+    <doc>Destination of the error interrupt: a 56-bit address and an 8-bit vector (the same format as every interrupt destination register of the core). The driver never programs it. Access rw is a placeholder.</doc>
+    <field name="int_vector" start="56" size="8" type="uint" grade="established"/>
+    <field name="address" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="TARG_FLUSH" size="8" grade="established" register="yes" offset="0x50" access="rw" reset="unknown">
+    <doc>Target flush (header name `MBCS_CM_TARG_FL`). The header gives it an offset and a reserved slot but no layout; the driver does not touch it. Access rw is a placeholder.</doc>
+  </struct>
+  <struct name="ERR_STATUS" size="8" grade="established" register="yes" offset="0x60" access="r" reset="unknown">
+    <doc>Error status, one bit per condition. The driver reads it at attach and writes the value it read to `clr_err_stat`.</doc>
+    <field name="wr_dma_prog_err" start="49" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_prog_err" start="48" size="1" type="uint" grade="established"/>
+    <field name="int_gen_tnum_tout" start="47" size="1" type="uint" grade="established"/>
+    <field name="int_gen_rsp_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="ram2_perr" start="45" size="1" type="uint" grade="established"/>
+    <field name="ram1_perr" start="44" size="1" type="uint" grade="established"/>
+    <field name="ram0_perr" start="43" size="1" type="uint" grade="established"/>
+    <field name="ram2_access_conflict" start="42" size="1" type="uint" grade="established"/>
+    <field name="ram1_access_conflict" start="41" size="1" type="uint" grade="established"/>
+    <field name="ram0_access_conflict" start="40" size="1" type="uint" grade="established"/>
+    <field name="alg_data_underflow" start="39" size="1" type="uint" grade="established"/>
+    <field name="alg_data_overflow" start="38" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_multi_tnum_tou" start="37" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_tnum_tout" start="36" size="1" type="uint" grade="established"/>
+    <field name="wr_dma_err_rsp" start="35" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_multi_tnum_tou" start="34" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_tnum_tout" start="33" size="1" type="uint" grade="established"/>
+    <field name="rd_dma_err_rsp" start="32" size="1" type="uint" grade="established"/>
+    <field name="rx_bad_didn" start="31" size="1" type="uint" grade="established"/>
+    <field name="cm2hcm_rsp_cred_of" start="30" size="1" type="uint" grade="established"/>
+    <field name="cm2hcm_req_cred_of" start="29" size="1" type="uint" grade="established"/>
+    <field name="data_flit_sb_err" start="28" size="1" type="uint" grade="established"/>
+    <field name="missing_tail" start="27" size="1" type="uint" grade="established"/>
+    <field name="early_tail" start="26" size="1" type="uint" grade="established"/>
+    <field name="early_term" start="25" size="1" type="uint" grade="established"/>
+    <field name="req_range_dsize_inv" start="24" size="1" type="uint" grade="established"/>
+    <field name="pio_req_addr_inv" start="23" size="1" type="uint" grade="established"/>
+    <field name="req_addr_align_inv" start="22" size="1" type="uint" grade="established"/>
+    <field name="head_cmd_err_bit" start="21" size="1" type="uint" grade="established"/>
+    <field name="head_inv_rd_type" start="20" size="1" type="uint" grade="established"/>
+    <field name="missing_head" start="19" size="1" type="uint" grade="established"/>
+    <field name="head_sb_err" start="18" size="1" type="uint" grade="established"/>
+    <field name="rsp_pactype_inv" start="17" size="1" type="uint" grade="established"/>
+    <field name="head_inv_data_size" start="16" size="1" type="uint" grade="established"/>
+    <field name="request_timeout" start="7" size="1" type="uint" grade="established"/>
+    <field name="buffer_overflow" start="6" size="1" type="uint" grade="established"/>
+    <field name="bad_datavalid" start="5" size="1" type="uint" grade="established"/>
+    <field name="bad_length" start="4" size="1" type="uint" grade="established"/>
+    <field name="unexpected_rsp" start="3" size="1" type="uint" grade="established"/>
+    <field name="unsupported_req" start="2" size="1" type="uint" grade="established"/>
+    <field name="ecc_mbe" start="1" size="1" type="uint" grade="established"/>
+    <field name="ecc_sbe" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CLR_ERR_STAT" size="8" grade="established" register="yes" offset="0x68" access="w" reset="unknown">
+    <doc>Clear error status: bit n clears bit n of `err_status` (the driver writes back the value it read from `err_status`; the header's field names carry a clr_ prefix).</doc>
+    <field name="clr_wr_dma_prog_err" start="49" size="1" type="uint" grade="established"/>
+    <field name="clr_rd_dma_prog_err" start="48" size="1" type="uint" grade="established"/>
+    <field name="clr_int_gen_tnum_tout" start="47" size="1" type="uint" grade="established"/>
+    <field name="clr_int_gen_rsp_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="clr_ram2_perr" start="45" size="1" type="uint" grade="established"/>
+    <field name="clr_ram1_perr" start="44" size="1" type="uint" grade="established"/>
+    <field name="clr_ram0_perr" start="43" size="1" type="uint" grade="established"/>
+    <field name="clr_ram2_access_confl" start="42" size="1" type="uint" grade="established"/>
+    <field name="clr_ram1_access_confl" start="41" size="1" type="uint" grade="established"/>
+    <field name="clr_ram0_access_confl" start="40" size="1" type="uint" grade="established"/>
+    <field name="clr_alg_data_underflo" start="39" size="1" type="uint" grade="established"/>
+    <field name="clr_alg_data_overflow" start="38" size="1" type="uint" grade="established"/>
+    <field name="clr_wr_dma_multi_tnum" start="37" size="1" type="uint" grade="established"/>
+    <field name="clr_wr_dma_tnum_tout" start="36" size="1" type="uint" grade="established"/>
+    <field name="clr_wr_dma_err_rsp" start="35" size="1" type="uint" grade="established"/>
+    <field name="clr_rd_dma_multi_tnum" start="34" size="1" type="uint" grade="established"/>
+    <field name="clr_rd_dma_tnum_tout" start="33" size="1" type="uint" grade="established"/>
+    <field name="clr_rd_dma_err_rsp" start="32" size="1" type="uint" grade="established"/>
+    <field name="clr_rx_bad_didn" start="31" size="1" type="uint" grade="established"/>
+    <field name="clr_cm2hcm_rsp_cred_o" start="30" size="1" type="uint" grade="established"/>
+    <field name="clr_cm2hcm_req_cred_o" start="29" size="1" type="uint" grade="established"/>
+    <field name="clr_data_flit_sb_err" start="28" size="1" type="uint" grade="established"/>
+    <field name="clr_missing_tail" start="27" size="1" type="uint" grade="established"/>
+    <field name="clr_early_tail" start="26" size="1" type="uint" grade="established"/>
+    <field name="clr_early_term" start="25" size="1" type="uint" grade="established"/>
+    <field name="clr_req_range_dsize_i" start="24" size="1" type="uint" grade="established"/>
+    <field name="clr_pio_req_addr_inv" start="23" size="1" type="uint" grade="established"/>
+    <field name="clr_req_addr_align_in" start="22" size="1" type="uint" grade="established"/>
+    <field name="clr_head_cmd_err_bit" start="21" size="1" type="uint" grade="established"/>
+    <field name="clr_head_inv_rd_type" start="20" size="1" type="uint" grade="established"/>
+    <field name="clr_missing_head" start="19" size="1" type="uint" grade="established"/>
+    <field name="clr_head_sb_err" start="18" size="1" type="uint" grade="established"/>
+    <field name="clr_rsp_pactype_inv" start="17" size="1" type="uint" grade="established"/>
+    <field name="clr_head_inv_data_siz" start="16" size="1" type="uint" grade="established"/>
+    <field name="clr_request_timeout" start="7" size="1" type="uint" grade="established"/>
+    <field name="clr_buffer_overflow" start="6" size="1" type="uint" grade="established"/>
+    <field name="clr_bad_datavalid" start="5" size="1" type="uint" grade="established"/>
+    <field name="clr_bad_length" start="4" size="1" type="uint" grade="established"/>
+    <field name="clr_unexpected_rsp" start="3" size="1" type="uint" grade="established"/>
+    <field name="clr_unsupported_req" start="2" size="1" type="uint" grade="established"/>
+    <field name="clr_ecc_mbe" start="1" size="1" type="uint" grade="established"/>
+    <field name="clr_ecc_sbe" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ERR_INT_EN" size="8" grade="established" register="yes" offset="0x70" access="w" reset="unknown">
+    <doc>Error interrupt enable, one bit per `err_status` condition. The driver writes 0x3ffffff7e00ff at attach: every defined condition enabled except bits 16 and 23.</doc>
+    <field name="int_en_wr_dma_prog_er" start="49" size="1" type="uint" grade="established"/>
+    <field name="int_en_rd_dma_prog_er" start="48" size="1" type="uint" grade="established"/>
+    <field name="int_en_int_gen_tnum_t" start="47" size="1" type="uint" grade="established"/>
+    <field name="int_en_int_gen_rsp_er" start="46" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram2_perr" start="45" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram1_perr" start="44" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram0_perr" start="43" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram2_access_co" start="42" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram1_access_co" start="41" size="1" type="uint" grade="established"/>
+    <field name="int_en_ram0_access_co" start="40" size="1" type="uint" grade="established"/>
+    <field name="int_en_alg_data_under" start="39" size="1" type="uint" grade="established"/>
+    <field name="int_en_alg_data_overf" start="38" size="1" type="uint" grade="established"/>
+    <field name="int_en_wr_dma_multi_t" start="37" size="1" type="uint" grade="established"/>
+    <field name="int_en_wr_dma_tnum_to" start="36" size="1" type="uint" grade="established"/>
+    <field name="int_en_wr_dma_err_rsp" start="35" size="1" type="uint" grade="established"/>
+    <field name="int_en_rd_dma_multi_t" start="34" size="1" type="uint" grade="established"/>
+    <field name="int_en_rd_dma_tnum_to" start="33" size="1" type="uint" grade="established"/>
+    <field name="int_en_rd_dma_err_rsp" start="32" size="1" type="uint" grade="established"/>
+    <field name="int_en_rx_bad_didn" start="31" size="1" type="uint" grade="established"/>
+    <field name="int_en_cm2hcm_rsp_cre" start="30" size="1" type="uint" grade="established"/>
+    <field name="int_en_cm2hcm_req_cre" start="29" size="1" type="uint" grade="established"/>
+    <field name="int_en_data_flit_sb_e" start="28" size="1" type="uint" grade="established"/>
+    <field name="int_en_missing_tail" start="27" size="1" type="uint" grade="established"/>
+    <field name="int_en_early_tail" start="26" size="1" type="uint" grade="established"/>
+    <field name="int_en_early_term" start="25" size="1" type="uint" grade="established"/>
+    <field name="int_en_req_range_dsiz" start="24" size="1" type="uint" grade="established"/>
+    <field name="int_en_pio_req_addr_i" start="23" size="1" type="uint" grade="established"/>
+    <field name="int_en_req_addr_align" start="22" size="1" type="uint" grade="established"/>
+    <field name="int_en_head_cmd_err_b" start="21" size="1" type="uint" grade="established"/>
+    <field name="int_en_head_inv_rd_ty" start="20" size="1" type="uint" grade="established"/>
+    <field name="int_en_missing_head" start="19" size="1" type="uint" grade="established"/>
+    <field name="int_en_head_sb_err" start="18" size="1" type="uint" grade="established"/>
+    <field name="int_en_rsp_pactype_in" start="17" size="1" type="uint" grade="established"/>
+    <field name="int_en_head_inv_data_" start="16" size="1" type="uint" grade="established"/>
+    <field name="int_en_request_timeou" start="7" size="1" type="uint" grade="established"/>
+    <field name="int_en_buffer_overflo" start="6" size="1" type="uint" grade="established"/>
+    <field name="int_en_bad_datavalid" start="5" size="1" type="uint" grade="established"/>
+    <field name="int_en_bad_length" start="4" size="1" type="uint" grade="established"/>
+    <field name="int_en_unexpected_rsp" start="3" size="1" type="uint" grade="established"/>
+    <field name="int_en_unsupported_re" start="2" size="1" type="uint" grade="established"/>
+    <field name="int_en_ecc_mbe" start="1" size="1" type="uint" grade="established"/>
+    <field name="int_en_ecc_sbe" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_SYS_ADDR" size="8" grade="established" register="yes" offset="0x100" access="w" reset="unknown">
+    <doc>Read DMA (host memory to local RAM) system address: 56 bits of a TIO-view DMA address.</doc>
+    <field name="dma_sys_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_LOC_ADDR" size="8" grade="established" register="yes" offset="0x108" access="w" reset="unknown">
+    <doc>Read DMA local address: a 21-bit offset in a RAM and a 2-bit RAM select.</doc>
+    <field name="dma_ram_sel" start="21" size="2" type="uint" grade="established"/>
+    <field name="dma_ram_addr" start="0" size="21" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_CTRL" size="8" grade="established" register="yes" offset="0x110" access="w" reset="unknown">
+    <doc>Read DMA control: length in 128-byte units, completion AMO and interrupt enables, and a peer I/O select.</doc>
+    <field name="pio_mem_n" start="37" size="1" type="uint" grade="established"/>
+    <field name="done_int_en" start="35" size="1" type="uint" grade="established"/>
+    <field name="done_amo_en" start="34" size="1" type="uint" grade="established"/>
+    <field name="dma_op_length" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_AMO_DEST" size="8" grade="established" register="yes" offset="0x118" access="w" reset="unknown">
+    <doc>Read DMA completion atomic-memory-operation destination: a 56-bit address and a 3-bit modifier type.</doc>
+    <field name="dma_amo_mod_type" start="56" size="3" type="uint" grade="established"/>
+    <field name="dma_amo_sys_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_INT_DEST" size="8" grade="established" register="yes" offset="0x120" access="w" reset="unknown">
+    <doc>Read DMA completion interrupt destination.</doc>
+    <field name="int_vector" start="56" size="8" type="uint" grade="established"/>
+    <field name="address" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="RD_DMA_AUX_STAT" size="8" grade="established" register="yes" offset="0x130" access="rw" reset="unknown">
+    <doc>Read DMA auxiliary status. The driver does not touch it. Access rw is a placeholder.</doc>
+    <field name="pending_reqs_left" start="40" size="6" type="uint" grade="established"/>
+    <field name="lrsp_buff_empty" start="22" size="1" type="uint" grade="established"/>
+    <field name="op_num_pacs_left" start="0" size="17" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_SYS_ADDR" size="8" grade="established" register="yes" offset="0x200" access="w" reset="unknown">
+    <doc>Write DMA (local RAM to host memory) system address.</doc>
+    <field name="dma_sys_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_LOC_ADDR" size="8" grade="established" register="yes" offset="0x208" access="w" reset="unknown">
+    <doc>Write DMA local address.</doc>
+    <field name="dma_ram_sel" start="21" size="2" type="uint" grade="established"/>
+    <field name="dma_ram_addr" start="0" size="21" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_CTRL" size="8" grade="established" register="yes" offset="0x210" access="w" reset="unknown">
+    <doc>Write DMA control.</doc>
+    <field name="pio_mem_n" start="37" size="1" type="uint" grade="established"/>
+    <field name="done_int_en" start="35" size="1" type="uint" grade="established"/>
+    <field name="done_amo_en" start="34" size="1" type="uint" grade="established"/>
+    <field name="dma_op_length" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_AMO_DEST" size="8" grade="established" register="yes" offset="0x218" access="w" reset="unknown">
+    <doc>Write DMA completion atomic-memory-operation destination.</doc>
+    <field name="dma_amo_mod_type" start="56" size="3" type="uint" grade="established"/>
+    <field name="dma_amo_sys_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_INT_DEST" size="8" grade="established" register="yes" offset="0x220" access="w" reset="unknown">
+    <doc>Write DMA completion interrupt destination.</doc>
+    <field name="int_vector" start="56" size="8" type="uint" grade="established"/>
+    <field name="address" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="WR_DMA_AUX_STAT" size="8" grade="established" register="yes" offset="0x230" access="rw" reset="unknown">
+    <doc>Write DMA auxiliary status. The driver does not touch it. Access rw is a placeholder.</doc>
+    <field name="pending_reqs_left" start="40" size="6" type="uint" grade="established"/>
+    <field name="lreq_buff_empty" start="21" size="1" type="uint" grade="established"/>
+    <field name="op_num_pacs_left" start="0" size="17" type="uint" grade="established"/>
+  </struct>
+  <struct name="ALG_AMO_DEST" size="8" grade="established" register="yes" offset="0x300" access="w" reset="unknown">
+    <doc>Algorithm-done atomic-memory-operation destination.</doc>
+    <field name="dma_amo_mod_type" start="56" size="3" type="uint" grade="established"/>
+    <field name="dma_amo_sys_addr" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="ALG_INT_DEST" size="8" grade="established" register="yes" offset="0x308" access="w" reset="unknown">
+    <doc>Algorithm-done interrupt destination.</doc>
+    <field name="int_vector" start="56" size="8" type="uint" grade="established"/>
+    <field name="address" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="ALG_OFFSETS" size="8" grade="established" register="yes" offset="0x310" access="rw" reset="unknown">
+    <doc>Offsets of the three RAMs as the algorithm sees them (header names `sram0_offset` and so on, seven bits each at 6:0, 14:8 and 22:16). The driver declares the layout and never writes it. Access rw is a placeholder.</doc>
+    <field name="sram2_offset" start="16" size="7" type="uint" grade="established"/>
+    <field name="sram1_offset" start="8" size="7" type="uint" grade="established"/>
+    <field name="sram0_offset" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="ALG_STEP" size="8" grade="established" register="yes" offset="0x318" access="w" reset="unknown">
+    <doc>Algorithm step count for debug stepping (16 bits). The driver writes the value it holds, zero unless something set it, before every algorithm start.</doc>
+    <field name="alg_step_cnt" start="0" size="16" type="uint" grade="established"/>
+  </struct>
+  <constant name="CACHELINE_SIZE" value="0x80" grade="established"/>
+  <constant name="DEBUG_START" value="0x100000" grade="established"/>
+  <constant name="ERR_INT_EN_DRIVER" value="0x3ffffff7e00ff" grade="established"/>
+  <constant name="GSCR_START" value="0x0" grade="established"/>
+  <constant name="MFG_NUM" value="0x1" grade="established"/>
+  <constant name="PART_NUM" value="0xfff0" grade="established"/>
+  <constant name="PART_NUM_ALG0" value="0xf001" grade="established"/>
+  <constant name="RAM0_START" value="0x200000" grade="established"/>
+  <constant name="RAM1_START" value="0x400000" grade="established"/>
+  <constant name="RAM2_START" value="0x600000" grade="established"/>
+  <constant name="REQ_TOUT_MASK" value="0xffffff" grade="established"/>
+  <constant name="SRAM_SIZE" value="0x100000" grade="established"/>
+</genxml>

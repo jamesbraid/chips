@@ -54,6 +54,7 @@
 | [lh28f800su/](lh28f800su/README.md) | LH28F800SU: x16 flash command set, status and pins | Status: transcribed from the published Sharp datasheet, *LH28F800SU 8M Flash Memory*, SMT96107 (May 1996), printed... |
 | [lucent_ohci/](lucent_ohci/README.md) | AT&T/Lucent 11C1:5802 two-port OHCI USB host controller | The part is a two-port USB host controller with an OpenHCI register interface, PCI vendor `0x11c1`, device `0x5802`. |
 | [mace/](mace/README.md) | MACE | Mode: spec-backed (see references/documents/specs.md: MACE I/O ASIC Specification, chip revision 2.0, 31 May 1996... |
+| [mbcs/](mbcs/README.md) | MBCS (RASC Core Services) | Mode: no-spec. |
 | [menet/](menet/README.md) | MENET: the four-port Fast Ethernet and asynchronous serial XIO board | The MENET (part 030-0873) is an XIO board for the Origin 2000 and Onyx2. |
 | [mscsi/](mscsi/README.md) | MSCSI: the four-channel SCSI XIO board | The MSCSI is an XIO board for the Origin 2000 and Onyx2, and for the GIGAchannel of the Origin 200. |
 | [octane-pci-module/](octane-pci-module/README.md) | OCTANE PCI module (the Octane PCI card cage) | The OCTANE PCI module is the optional three-slot PCI card cage of the Octane and Octane2. |

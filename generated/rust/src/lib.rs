@@ -41,6 +41,7 @@ pub mod lh28f800su;
 pub mod lucent_ohci;
 pub mod mace;
 pub mod mace_extra;
+pub mod mbcs;
 pub mod pic;
 pub mod pic_extra;
 pub mod r10000_config;

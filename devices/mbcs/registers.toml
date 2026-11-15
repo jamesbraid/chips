@@ -1,0 +1,507 @@
+unit = "mbcs"
+prefix = "MBCS"
+title = "RASC Core Services (MBCS): the register block a Core Services FPGA bitstream presents on the TIO FPGA port, as SGI's Linux driver defines it"
+doc = "Offsets, widths and field positions are the definitions of SGI's Linux FPGA Core Services driver header (v5.3). They describe the Core Services block that SGI's RASC bitstreams contain; other bitstreams on the same port need not have it. The header gives no reset value and no access direction: access is what the driver does (r read, w written, rw read-modify-write or an unused placeholder), reset is unknown throughout. Offsets are from the base of the FPGA port's 256 MiB small window."
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: drivers/char/mbcs.h, drivers/char/mbcs.c"
+public_from = ["census:"]
+
+[c]
+offset_macro = "bare"
+
+[registers.id]
+offset = 0x0
+access = "r"
+width = 64
+grade = "established"
+doc = "Identification word of the core. Its low bits are the same widget identification layout the TIO driver reads at offset 0 of the port's window: bit 0 is one, manufacturer in 11:1, part number in 27:12. The core adds an 8-bit bitstream revision in 35:28. The MBCS driver never reads this register; the layout is the header's."
+
+[registers.id.fields]
+always_one = { bits = [0, 0], grade = "established" }
+mfg_id = { bits = [11, 1], grade = "established" }
+part_num = { bits = [27, 12], grade = "established" }
+bitstream_rev = { bits = [35, 28], grade = "established" }
+
+
+[registers.status]
+offset = 0x8
+access = "r"
+width = 64
+grade = "established"
+doc = "Core status. The driver's one interrupt handler reads it and tests the read-DMA-done, write-DMA-done and algorithm-done bits; it reads nothing else."
+
+[registers.status.fields]
+pending_reads = { bits = [7, 0], grade = "established" }
+pending_writes = { bits = [15, 8], grade = "established" }
+ice_rsp_credits = { bits = [23, 16], grade = "established" }
+ice_req_credits = { bits = [31, 24], grade = "established" }
+cm_req_credits = { bits = [39, 32], grade = "established" }
+rd_dma_in_progress = { bits = [41, 41], grade = "established" }
+rd_dma_done = { bits = [42, 42], grade = "established" }
+wr_dma_in_progress = { bits = [44, 44], grade = "established" }
+wr_dma_done = { bits = [45, 45], grade = "established" }
+alg_waiting = { bits = [46, 46], grade = "established" }
+alg_pipe_running = { bits = [47, 47], grade = "established" }
+alg_done = { bits = [48, 48], grade = "established" }
+pending_int_reqs = { bits = [59, 52], grade = "established" }
+alg_half_speed_sel = { bits = [63, 63], grade = "established" }
+
+
+[registers.err_detail1]
+offset = 0x10
+access = "rw"
+width = 64
+grade = "established"
+doc = "Captured detail of the first error (header name `cm_error_detail1`). The driver writes zero at attach and never reads it. Access rw is a placeholder."
+
+[registers.err_detail1.fields]
+packet_type = { bits = [3, 0], grade = "established" }
+source_id = { bits = [5, 4], grade = "established" }
+data_size = { bits = [7, 6], grade = "established" }
+tnum = { bits = [15, 8], grade = "established" }
+byte_enable = { bits = [23, 16], grade = "established" }
+gfx_cred = { bits = [31, 24], grade = "established" }
+read_type = { bits = [33, 32], grade = "established" }
+pio_or_memory = { bits = [34, 34], grade = "established" }
+head_cw_error = { bits = [35, 35], grade = "established" }
+head_error_bit = { bits = [48, 48], grade = "established" }
+data_error_bit = { bits = [49, 49], grade = "established" }
+valid = { bits = [63, 63], grade = "established" }
+
+
+[registers.err_detail2]
+offset = 0x18
+access = "rw"
+width = 64
+grade = "established"
+doc = "Captured address of the first error. The driver does not touch it. Access rw is a placeholder."
+
+[registers.err_detail2.fields]
+address = { bits = [55, 0], grade = "established" }
+
+
+[registers.control]
+offset = 0x20
+access = "rw"
+width = 64
+grade = "established"
+doc = "Core control. Every driver access is read, change a bit, write back. The go bits start an engine, the clr bits stop one and clear its status, `alg_done_clr` clears the algorithm-done status. Whether the go and clr bits read back as set is unknown."
+
+[registers.control.fields]
+cm_id = { bits = [1, 0], grade = "established" }
+max_trans = { bits = [8, 4], grade = "established" }
+address_mode = { bits = [12, 12], grade = "established" }
+credit_limit = { bits = [27, 20], grade = "established" }
+rearm_stat_regs = { bits = [33, 33], grade = "established" }
+prescalar_byp = { bits = [34, 34], grade = "established" }
+force_gap_war = { bits = [35, 35], grade = "established" }
+rd_dma_go = { bits = [36, 36], grade = "established" }
+wr_dma_go = { bits = [37, 37], grade = "established" }
+alg_go = { bits = [38, 38], grade = "established" }
+rd_dma_clr = { bits = [39, 39], grade = "established" }
+wr_dma_clr = { bits = [40, 40], grade = "established" }
+alg_clr = { bits = [41, 41], grade = "established" }
+alg_wait_step = { bits = [44, 44], grade = "established" }
+alg_done_amo_en = { bits = [45, 45], grade = "established" }
+alg_done_int_en = { bits = [46, 46], grade = "established" }
+alg_sram0_locked = { bits = [48, 48], grade = "established" }
+alg_sram1_locked = { bits = [49, 49], grade = "established" }
+alg_sram2_locked = { bits = [50, 50], grade = "established" }
+alg_done_clr = { bits = [51, 51], grade = "established" }
+
+
+[registers.req_timeout]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+doc = "Request time-out. The driver reads it, sets the 24-bit time-out field to all ones and writes it back."
+
+[registers.req_timeout.fields]
+time_out = { bits = [23, 0], grade = "established" }
+
+
+[registers.err_int_dest]
+offset = 0x38
+access = "rw"
+width = 64
+grade = "established"
+doc = "Destination of the error interrupt: a 56-bit address and an 8-bit vector (the same format as every interrupt destination register of the core). The driver never programs it. Access rw is a placeholder."
+
+[registers.err_int_dest.fields]
+address = { bits = [55, 0], grade = "established" }
+int_vector = { bits = [63, 56], grade = "established" }
+
+
+[registers.targ_flush]
+offset = 0x50
+access = "rw"
+width = 64
+grade = "established"
+doc = "Target flush (header name `MBCS_CM_TARG_FL`). The header gives it an offset and a reserved slot but no layout; the driver does not touch it. Access rw is a placeholder."
+
+
+[registers.err_status]
+offset = 0x60
+access = "r"
+width = 64
+grade = "established"
+doc = "Error status, one bit per condition. The driver reads it at attach and writes the value it read to `clr_err_stat`."
+
+[registers.err_status.fields]
+ecc_sbe = { bits = [0, 0], grade = "established" }
+ecc_mbe = { bits = [1, 1], grade = "established" }
+unsupported_req = { bits = [2, 2], grade = "established" }
+unexpected_rsp = { bits = [3, 3], grade = "established" }
+bad_length = { bits = [4, 4], grade = "established" }
+bad_datavalid = { bits = [5, 5], grade = "established" }
+buffer_overflow = { bits = [6, 6], grade = "established" }
+request_timeout = { bits = [7, 7], grade = "established" }
+head_inv_data_size = { bits = [16, 16], grade = "established" }
+rsp_pactype_inv = { bits = [17, 17], grade = "established" }
+head_sb_err = { bits = [18, 18], grade = "established" }
+missing_head = { bits = [19, 19], grade = "established" }
+head_inv_rd_type = { bits = [20, 20], grade = "established" }
+head_cmd_err_bit = { bits = [21, 21], grade = "established" }
+req_addr_align_inv = { bits = [22, 22], grade = "established" }
+pio_req_addr_inv = { bits = [23, 23], grade = "established" }
+req_range_dsize_inv = { bits = [24, 24], grade = "established" }
+early_term = { bits = [25, 25], grade = "established" }
+early_tail = { bits = [26, 26], grade = "established" }
+missing_tail = { bits = [27, 27], grade = "established" }
+data_flit_sb_err = { bits = [28, 28], grade = "established" }
+cm2hcm_req_cred_of = { bits = [29, 29], grade = "established" }
+cm2hcm_rsp_cred_of = { bits = [30, 30], grade = "established" }
+rx_bad_didn = { bits = [31, 31], grade = "established" }
+rd_dma_err_rsp = { bits = [32, 32], grade = "established" }
+rd_dma_tnum_tout = { bits = [33, 33], grade = "established" }
+rd_dma_multi_tnum_tou = { bits = [34, 34], grade = "established" }
+wr_dma_err_rsp = { bits = [35, 35], grade = "established" }
+wr_dma_tnum_tout = { bits = [36, 36], grade = "established" }
+wr_dma_multi_tnum_tou = { bits = [37, 37], grade = "established" }
+alg_data_overflow = { bits = [38, 38], grade = "established" }
+alg_data_underflow = { bits = [39, 39], grade = "established" }
+ram0_access_conflict = { bits = [40, 40], grade = "established" }
+ram1_access_conflict = { bits = [41, 41], grade = "established" }
+ram2_access_conflict = { bits = [42, 42], grade = "established" }
+ram0_perr = { bits = [43, 43], grade = "established" }
+ram1_perr = { bits = [44, 44], grade = "established" }
+ram2_perr = { bits = [45, 45], grade = "established" }
+int_gen_rsp_err = { bits = [46, 46], grade = "established" }
+int_gen_tnum_tout = { bits = [47, 47], grade = "established" }
+rd_dma_prog_err = { bits = [48, 48], grade = "established" }
+wr_dma_prog_err = { bits = [49, 49], grade = "established" }
+
+
+[registers.clr_err_stat]
+offset = 0x68
+access = "w"
+width = 64
+grade = "established"
+doc = "Clear error status: bit n clears bit n of `err_status` (the driver writes back the value it read from `err_status`; the header's field names carry a clr_ prefix)."
+
+[registers.clr_err_stat.fields]
+clr_ecc_sbe = { bits = [0, 0], grade = "established" }
+clr_ecc_mbe = { bits = [1, 1], grade = "established" }
+clr_unsupported_req = { bits = [2, 2], grade = "established" }
+clr_unexpected_rsp = { bits = [3, 3], grade = "established" }
+clr_bad_length = { bits = [4, 4], grade = "established" }
+clr_bad_datavalid = { bits = [5, 5], grade = "established" }
+clr_buffer_overflow = { bits = [6, 6], grade = "established" }
+clr_request_timeout = { bits = [7, 7], grade = "established" }
+clr_head_inv_data_siz = { bits = [16, 16], grade = "established" }
+clr_rsp_pactype_inv = { bits = [17, 17], grade = "established" }
+clr_head_sb_err = { bits = [18, 18], grade = "established" }
+clr_missing_head = { bits = [19, 19], grade = "established" }
+clr_head_inv_rd_type = { bits = [20, 20], grade = "established" }
+clr_head_cmd_err_bit = { bits = [21, 21], grade = "established" }
+clr_req_addr_align_in = { bits = [22, 22], grade = "established" }
+clr_pio_req_addr_inv = { bits = [23, 23], grade = "established" }
+clr_req_range_dsize_i = { bits = [24, 24], grade = "established" }
+clr_early_term = { bits = [25, 25], grade = "established" }
+clr_early_tail = { bits = [26, 26], grade = "established" }
+clr_missing_tail = { bits = [27, 27], grade = "established" }
+clr_data_flit_sb_err = { bits = [28, 28], grade = "established" }
+clr_cm2hcm_req_cred_o = { bits = [29, 29], grade = "established" }
+clr_cm2hcm_rsp_cred_o = { bits = [30, 30], grade = "established" }
+clr_rx_bad_didn = { bits = [31, 31], grade = "established" }
+clr_rd_dma_err_rsp = { bits = [32, 32], grade = "established" }
+clr_rd_dma_tnum_tout = { bits = [33, 33], grade = "established" }
+clr_rd_dma_multi_tnum = { bits = [34, 34], grade = "established" }
+clr_wr_dma_err_rsp = { bits = [35, 35], grade = "established" }
+clr_wr_dma_tnum_tout = { bits = [36, 36], grade = "established" }
+clr_wr_dma_multi_tnum = { bits = [37, 37], grade = "established" }
+clr_alg_data_overflow = { bits = [38, 38], grade = "established" }
+clr_alg_data_underflo = { bits = [39, 39], grade = "established" }
+clr_ram0_access_confl = { bits = [40, 40], grade = "established" }
+clr_ram1_access_confl = { bits = [41, 41], grade = "established" }
+clr_ram2_access_confl = { bits = [42, 42], grade = "established" }
+clr_ram0_perr = { bits = [43, 43], grade = "established" }
+clr_ram1_perr = { bits = [44, 44], grade = "established" }
+clr_ram2_perr = { bits = [45, 45], grade = "established" }
+clr_int_gen_rsp_err = { bits = [46, 46], grade = "established" }
+clr_int_gen_tnum_tout = { bits = [47, 47], grade = "established" }
+clr_rd_dma_prog_err = { bits = [48, 48], grade = "established" }
+clr_wr_dma_prog_err = { bits = [49, 49], grade = "established" }
+
+
+[registers.err_int_en]
+offset = 0x70
+access = "w"
+width = 64
+grade = "established"
+doc = "Error interrupt enable, one bit per `err_status` condition. The driver writes 0x3ffffff7e00ff at attach: every defined condition enabled except bits 16 and 23."
+
+[registers.err_int_en.fields]
+int_en_ecc_sbe = { bits = [0, 0], grade = "established" }
+int_en_ecc_mbe = { bits = [1, 1], grade = "established" }
+int_en_unsupported_re = { bits = [2, 2], grade = "established" }
+int_en_unexpected_rsp = { bits = [3, 3], grade = "established" }
+int_en_bad_length = { bits = [4, 4], grade = "established" }
+int_en_bad_datavalid = { bits = [5, 5], grade = "established" }
+int_en_buffer_overflo = { bits = [6, 6], grade = "established" }
+int_en_request_timeou = { bits = [7, 7], grade = "established" }
+int_en_head_inv_data_ = { bits = [16, 16], grade = "established" }
+int_en_rsp_pactype_in = { bits = [17, 17], grade = "established" }
+int_en_head_sb_err = { bits = [18, 18], grade = "established" }
+int_en_missing_head = { bits = [19, 19], grade = "established" }
+int_en_head_inv_rd_ty = { bits = [20, 20], grade = "established" }
+int_en_head_cmd_err_b = { bits = [21, 21], grade = "established" }
+int_en_req_addr_align = { bits = [22, 22], grade = "established" }
+int_en_pio_req_addr_i = { bits = [23, 23], grade = "established" }
+int_en_req_range_dsiz = { bits = [24, 24], grade = "established" }
+int_en_early_term = { bits = [25, 25], grade = "established" }
+int_en_early_tail = { bits = [26, 26], grade = "established" }
+int_en_missing_tail = { bits = [27, 27], grade = "established" }
+int_en_data_flit_sb_e = { bits = [28, 28], grade = "established" }
+int_en_cm2hcm_req_cre = { bits = [29, 29], grade = "established" }
+int_en_cm2hcm_rsp_cre = { bits = [30, 30], grade = "established" }
+int_en_rx_bad_didn = { bits = [31, 31], grade = "established" }
+int_en_rd_dma_err_rsp = { bits = [32, 32], grade = "established" }
+int_en_rd_dma_tnum_to = { bits = [33, 33], grade = "established" }
+int_en_rd_dma_multi_t = { bits = [34, 34], grade = "established" }
+int_en_wr_dma_err_rsp = { bits = [35, 35], grade = "established" }
+int_en_wr_dma_tnum_to = { bits = [36, 36], grade = "established" }
+int_en_wr_dma_multi_t = { bits = [37, 37], grade = "established" }
+int_en_alg_data_overf = { bits = [38, 38], grade = "established" }
+int_en_alg_data_under = { bits = [39, 39], grade = "established" }
+int_en_ram0_access_co = { bits = [40, 40], grade = "established" }
+int_en_ram1_access_co = { bits = [41, 41], grade = "established" }
+int_en_ram2_access_co = { bits = [42, 42], grade = "established" }
+int_en_ram0_perr = { bits = [43, 43], grade = "established" }
+int_en_ram1_perr = { bits = [44, 44], grade = "established" }
+int_en_ram2_perr = { bits = [45, 45], grade = "established" }
+int_en_int_gen_rsp_er = { bits = [46, 46], grade = "established" }
+int_en_int_gen_tnum_t = { bits = [47, 47], grade = "established" }
+int_en_rd_dma_prog_er = { bits = [48, 48], grade = "established" }
+int_en_wr_dma_prog_er = { bits = [49, 49], grade = "established" }
+
+
+[registers.rd_dma_sys_addr]
+offset = 0x100
+access = "w"
+width = 64
+grade = "established"
+doc = "Read DMA (host memory to local RAM) system address: 56 bits of a TIO-view DMA address."
+
+[registers.rd_dma_sys_addr.fields]
+dma_sys_addr = { bits = [55, 0], grade = "established" }
+
+
+[registers.rd_dma_loc_addr]
+offset = 0x108
+access = "w"
+width = 64
+grade = "established"
+doc = "Read DMA local address: a 21-bit offset in a RAM and a 2-bit RAM select."
+
+[registers.rd_dma_loc_addr.fields]
+dma_ram_addr = { bits = [20, 0], grade = "established" }
+dma_ram_sel = { bits = [22, 21], grade = "established" }
+
+
+[registers.rd_dma_ctrl]
+offset = 0x110
+access = "w"
+width = 64
+grade = "established"
+doc = "Read DMA control: length in 128-byte units, completion AMO and interrupt enables, and a peer I/O select."
+
+[registers.rd_dma_ctrl.fields]
+dma_op_length = { bits = [15, 0], grade = "established" }
+done_amo_en = { bits = [34, 34], grade = "established" }
+done_int_en = { bits = [35, 35], grade = "established" }
+pio_mem_n = { bits = [37, 37], grade = "established" }
+
+
+[registers.rd_dma_amo_dest]
+offset = 0x118
+access = "w"
+width = 64
+grade = "established"
+doc = "Read DMA completion atomic-memory-operation destination: a 56-bit address and a 3-bit modifier type."
+
+[registers.rd_dma_amo_dest.fields]
+dma_amo_sys_addr = { bits = [55, 0], grade = "established" }
+dma_amo_mod_type = { bits = [58, 56], grade = "established" }
+
+
+[registers.rd_dma_int_dest]
+offset = 0x120
+access = "w"
+width = 64
+grade = "established"
+doc = "Read DMA completion interrupt destination."
+
+[registers.rd_dma_int_dest.fields]
+address = { bits = [55, 0], grade = "established" }
+int_vector = { bits = [63, 56], grade = "established" }
+
+
+[registers.rd_dma_aux_stat]
+offset = 0x130
+access = "rw"
+width = 64
+grade = "established"
+doc = "Read DMA auxiliary status. The driver does not touch it. Access rw is a placeholder."
+
+[registers.rd_dma_aux_stat.fields]
+op_num_pacs_left = { bits = [16, 0], grade = "established" }
+lrsp_buff_empty = { bits = [22, 22], grade = "established" }
+pending_reqs_left = { bits = [45, 40], grade = "established" }
+
+
+[registers.wr_dma_sys_addr]
+offset = 0x200
+access = "w"
+width = 64
+grade = "established"
+doc = "Write DMA (local RAM to host memory) system address."
+
+[registers.wr_dma_sys_addr.fields]
+dma_sys_addr = { bits = [55, 0], grade = "established" }
+
+
+[registers.wr_dma_loc_addr]
+offset = 0x208
+access = "w"
+width = 64
+grade = "established"
+doc = "Write DMA local address."
+
+[registers.wr_dma_loc_addr.fields]
+dma_ram_addr = { bits = [20, 0], grade = "established" }
+dma_ram_sel = { bits = [22, 21], grade = "established" }
+
+
+[registers.wr_dma_ctrl]
+offset = 0x210
+access = "w"
+width = 64
+grade = "established"
+doc = "Write DMA control."
+
+[registers.wr_dma_ctrl.fields]
+dma_op_length = { bits = [15, 0], grade = "established" }
+done_amo_en = { bits = [34, 34], grade = "established" }
+done_int_en = { bits = [35, 35], grade = "established" }
+pio_mem_n = { bits = [37, 37], grade = "established" }
+
+
+[registers.wr_dma_amo_dest]
+offset = 0x218
+access = "w"
+width = 64
+grade = "established"
+doc = "Write DMA completion atomic-memory-operation destination."
+
+[registers.wr_dma_amo_dest.fields]
+dma_amo_sys_addr = { bits = [55, 0], grade = "established" }
+dma_amo_mod_type = { bits = [58, 56], grade = "established" }
+
+
+[registers.wr_dma_int_dest]
+offset = 0x220
+access = "w"
+width = 64
+grade = "established"
+doc = "Write DMA completion interrupt destination."
+
+[registers.wr_dma_int_dest.fields]
+address = { bits = [55, 0], grade = "established" }
+int_vector = { bits = [63, 56], grade = "established" }
+
+
+[registers.wr_dma_aux_stat]
+offset = 0x230
+access = "rw"
+width = 64
+grade = "established"
+doc = "Write DMA auxiliary status. The driver does not touch it. Access rw is a placeholder."
+
+[registers.wr_dma_aux_stat.fields]
+op_num_pacs_left = { bits = [16, 0], grade = "established" }
+lreq_buff_empty = { bits = [21, 21], grade = "established" }
+pending_reqs_left = { bits = [45, 40], grade = "established" }
+
+
+[registers.alg_amo_dest]
+offset = 0x300
+access = "w"
+width = 64
+grade = "established"
+doc = "Algorithm-done atomic-memory-operation destination."
+
+[registers.alg_amo_dest.fields]
+dma_amo_sys_addr = { bits = [55, 0], grade = "established" }
+dma_amo_mod_type = { bits = [58, 56], grade = "established" }
+
+
+[registers.alg_int_dest]
+offset = 0x308
+access = "w"
+width = 64
+grade = "established"
+doc = "Algorithm-done interrupt destination."
+
+[registers.alg_int_dest.fields]
+address = { bits = [55, 0], grade = "established" }
+int_vector = { bits = [63, 56], grade = "established" }
+
+
+[registers.alg_offsets]
+offset = 0x310
+access = "rw"
+width = 64
+grade = "established"
+doc = "Offsets of the three RAMs as the algorithm sees them (header names `sram0_offset` and so on, seven bits each at 6:0, 14:8 and 22:16). The driver declares the layout and never writes it. Access rw is a placeholder."
+
+[registers.alg_offsets.fields]
+sram0_offset = { bits = [6, 0], grade = "established" }
+sram1_offset = { bits = [14, 8], grade = "established" }
+sram2_offset = { bits = [22, 16], grade = "established" }
+
+
+[registers.alg_step]
+offset = 0x318
+access = "w"
+width = 64
+grade = "established"
+doc = "Algorithm step count for debug stepping (16 bits). The driver writes the value it holds, zero unless something set it, before every algorithm start."
+
+[registers.alg_step.fields]
+alg_step_cnt = { bits = [15, 0], grade = "established" }
+
+
+[constants]
+PART_NUM = { value = 0xfff0, grade = "established", from = "SGI Linux platform code, drivers/char/mbcs.h (MBCS_PART_NUM)", doc = "Part number the Core Services driver binds to, with manufacturer 1." }
+PART_NUM_ALG0 = { value = 0xf001, grade = "established", from = "SGI Linux platform code, drivers/char/mbcs.h (MBCS_PART_NUM_ALG0)", doc = "Second part number the driver binds to, with manufacturer 1. The header names it ALG0; what distinguishes it from the first is unknown." }
+MFG_NUM = { value = 0x1, grade = "established", from = "SGI Linux platform code, drivers/char/mbcs.h (MBCS_MFG_NUM)", doc = "Manufacturer number of both ids." }
+GSCR_START = { value = 0x0, grade = "established", doc = "Start of the first region of the window, which holds the registers above. The driver maps one page of it to user space, uncached. The name is not expanded in the source." }
+DEBUG_START = { value = 0x100000, grade = "established", doc = "Start of the debug register region. By the driver's own comment the first debug register holds the algorithm number and revision; the algorithm sysfs file prints its high then low 32 bits." }
+RAM0_START = { value = 0x200000, grade = "established", doc = "Start of local RAM 0 in the window." }
+RAM1_START = { value = 0x400000, grade = "established", doc = "Start of local RAM 1 in the window." }
+RAM2_START = { value = 0x600000, grade = "established", doc = "Start of local RAM 2 in the window." }
+SRAM_SIZE = { value = 0x100000, grade = "established", doc = "Size the driver gives the character device for seeking (1 MiB). It is the driver's limit, not a stated RAM size." }
+CACHELINE_SIZE = { value = 128, grade = "established", doc = "Unit of the DMA length fields: the driver rounds a byte count up to 128-byte units." }
+REQ_TOUT_MASK = { value = 0xffffff, grade = "established", doc = "Value the driver writes to the time-out field (all 24 bits)." }
+ERR_INT_EN_DRIVER = { value = 0x3ffffff7e00ff, grade = "established", doc = "Value the driver writes to err_int_en. Its comment says only bit 23 (the PIO request address invalid error) is turned off; the constant also leaves bit 16 clear. Bits 8 to 15 are not defined conditions." }

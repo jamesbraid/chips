@@ -53,6 +53,10 @@ prose_offsets = false
 group = "mace.h"
 prose_offsets = false
 
+[units.mbcs]
+group = "mbcs.h"
+prose_offsets = false
+
 [units.pic]
 group = "pic.h"
 prose_offsets = false
