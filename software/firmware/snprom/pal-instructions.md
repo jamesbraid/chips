@@ -295,25 +295,25 @@ The processor-specific PAL_A 5.37 (image `0xfffc9ac0`, entered at +`0x300` = `0x
 ### The stop site (established)
 
 - Bundle `0xfffca400`: template 0x0b (`M;MI;`, stops after slot 0 and slot 2). Slot 0 `nop.m`, **slot 1 at `0xfffca406` is the reserved word `0x108000000`** (the stop is at slot index ri = 1), slot 2 `nop.i`. The qualifying predicate of all three slots is 0 (PR0), so the slot is the architecturally faulting encoding of section 1.
-- Context class (section 1's table): **after a write to msr[1546]** (`mov msr[r27]=r12` at `0xfffca3f0`, r27 = 1546, then `srlz.d`). msr[1544] is not written in this routine. It is the second of the 22 reserved slots in this image and the first on the entry path.
+- Context class (section 1's table): **after a write to msr[1546]** (`mov msr[r27]=r12` at `0xfffca3f0`, r27 = 1546, a stop, then `srlz.d`, a `nop.i` and the `nop.m` of the slot's bundle, a stop, then the slot with its `nop.i`, a stop). msr[1544] is not written in this routine. It is the second of the 22 reserved slots in this image and the first on the entry path.
 - After the slot: msr[1558] is read, bit 13 cleared and written back (`0xfffca410` to `0xfffca430`); msr[1608] to msr[1612] are read and each compared with zero. Any nonzero value branches to `0xfffca690`, which calls `0xfffcd6f0`, sets msr[1416] bit 53, msr[1084] bit 8 and msr[1640] bit 62 and leaves to `0xfffcb260` (an error exit, inferred from the flags). All zero falls through to the msr[0] bit 6 and bit 11 tests and a `br` to `0xfffcd850`, whose return point `0xfffca520` composes a second msr[1546] write (row 8 of the same table, msr[1544] = 0) and a second reserved slot at `0xfffca626`.
-- **Dependence (established for the code, inferred for meaning):** the slot has no register operands, nothing after it tests a general register it could have written. The code branches only on msr[1608..1612], state the msr[1546] command may change. So the code relies on the slot as ordering or a side effect, not on a result. Whether the slot is needed for those reads to be zero is **unknown**.
+- **Dependence (established for the code, inferred for meaning):** the slot has no register operands, nothing after it tests a general register it could have written. The code branches only on msr[1608..1612], state the msr[1546] command may change, and on predicates set before the slot. The destination registers of an undefined encoding are not known, so "it writes no register or predicate" is not shown; only that none is named and that every register the code tests later is loaded again after the slot. So the code relies on the slot as ordering or a side effect, not on a result. Whether the slot is needed for those reads to be zero is **unknown**. The PAL_B routine at `0xffde3430` (7.79) has the same shape: msr[1544] and msr[1546] written, `srlz.d`, a slot at `0xffde3466`, then five msr reads from one of four banks at `0x640`, `0x648`, `0x650`, `0x658` (five registers each), returned to its caller untested. msr[1608..1612] is the second bank. That supports reading the msr[1546] write as a command and msr[1608..1612] as its status (**inferred**), and does not say what the slot does.
 
 ### Path from the entry to the stop
 
 1. `0xfffc9dc0`: msr[1632] = `0x660` (its own index), `srlz.d`. Read msr[0].
 2. msr[0] is masked with `cpuid[3]` revision byte (bits 15:8): above 1 clears `0x2488`, above 3 clears `0x10010` (compares at `0xfffc9e00` to `0xfffc9e7c`). Written back at `0xfffc9ed6`.
 3. msr[1504] read, bits 58 and 19 set, written (`0xfffc9eb6`). msr[1152] read, bit 18 set only if msr[0] bit 22 is set, written (`0xfffc9ef0`). msr[1536] read, bit 15 set, written (`0xfffc9f10`). msr[1572] read, bit 15 set, written (`0xfffc9f50`). None branches on the value.
-4. FIT walk: the pointer at physical `0xffffffe0`, signature check (failure goes to `0xfffcb600`), checksum if the header entry's C_V bit is set (it is), msr[1640] = 0 (`0xfffca000`). For each type 1 (PAL_B) entry: msr[1715] read (`0xfffca0b0`); skip unless the entry address has its low 11 bits clear; read the PAL_B header word at entry + `0x10114`; skip the entry if its revision byte (bits 15:8) is below msr[1715] bits 15:8, or its family (31:24) or model (23:16) differs from `cpuid[3]`. The three PAL_B headers are family 0x1f, models 0, 1, 2, revision bytes 7, 5, 2 (7.79, 5.73, 2.25). No match ends at `0xfffcb600`.
+4. FIT walk: the pointer at physical `0xffffffe0`, signature check (failure goes to `0xfffcb600`), checksum if the header entry's C_V bit is set (it is), msr[1640] = 0 (`0xfffca000`). For each type 1 (PAL_B) entry: msr[1715] read (`0xfffca0b0`); skip unless the entry address has its low 11 bits clear (the three PAL_B entries have C_V clear, so no PAL_B checksum is computed; the PAL_A entries have it set); read the PAL_B header word at entry + `0x10114`; skip the entry if its revision byte (bits 15:8) is below msr[1715] bits 15:8, or its family (31:24) or model (23:16) differs from `cpuid[3]`. The three PAL_B headers are family 0x1f, models 0, 1, 2, revision bytes 7, 5, 2 (7.79, 5.73, 2.25). No match ends at `0xfffcb600`.
 5. msr[0] bit 21 set goes to `0xfffca720`, bit 7 set goes to `0xfffca4c0`; both skip the stop site.
-6. msr[1536] read again (`0xfffca220`), bits 59:48 used as a 12-bit mask: zero selects fixed fields (r22 = `0xbfff`, r23 = 0) and goes straight on; nonzero finds a run of bits and builds r22 and r23 from it, repeating (loop back from `0xfffca4bc`); all twelve set skips the site to `0xfffca4c0`.
+6. msr[1536] read again (`0xfffca220`), bits 59:48 used as a 12-bit mask: zero selects fixed fields (r22 = `0xbfff`, r23 = 0) and goes straight on; nonzero scans for the first run of clear bits (each bit stands for two units: r26 steps by 2 to `0x18`), sets r23 to the run's first position and the run's end minus 1 into bits 17:11 of r22, and a second pass is started from `0xfffca4bc` when the run ended on a set bit and not at the top. All twelve set skips the site to `0xfffca4c0`. Only the zero mask and the single-run case were traced; the second pass adds 1 to r26 and was not followed.
 7. msr[1559] read (`0xfffca346`); bits 26:22 index a table of 16-bit entries inside the image (row 12 here). The write at `0xfffca3f0` follows.
 
 ### Each msr read (grades: code established, meaning inferred, hardware value unknown)
 
 | msr | site | branch on value? | emulator 0 | other values |
 |---|---|---|---|---|
-| 0 | `0xfffc9de0`, `0xfffca1c0`, `0xfffca1e0` | yes, bit 21 and bit 7 skip the stop site; revision-masked bits 13, 10, 7, 3, 16, 4 are cleared by the write-back; bit 22 gates the msr[1152] bit | passes | bit 21 or 7 set: skip. The generic PAL_A reset stub writes msr[0] = 0 (`0xffff8406`), so 0 is what a reset boot hands over |
+| 0 | `0xfffc9de0`, `0xfffca1c0`, `0xfffca1e0` | yes, bit 21 and bit 7 skip the stop site; revision-masked bits 13, 10, 7, 3, 16, 4 are cleared by the write-back (bit 7 only when the `cpuid[3]` revision byte is above 1, so the bit 7 skip needs a revision byte of 0 or 1); bit 22 gates the msr[1152] bit | passes | bit 21 or 7 set: skip. The generic PAL_A reset stub writes msr[0] = 0 (`0xffff8406`), so 0 is what a reset boot hands over |
 | 1504 | `0xfffc9eb6` | no | read-modify-write | any value reaches the site |
 | 1152 | `0xfffc9ef0` | no (bit 18 set if msr[0] bit 22) | writes 0 | any |
 | 1536 | `0xfffc9f10` and `0xfffca220` | first: no. second: bits 59:48 | mask 0: the fixed value | nonzero: other r22/r23; all ones: skip |
@@ -325,7 +325,7 @@ What a real Madison returns for any of these is **unknown**: no source held name
 
 ### The values written to msr[1546]
 
-Established from the code, no hardware naming: msr[1546] is never read anywhere in the PAL (the counts in [pal-msrs.md](pal-msrs.md) show 0 reads), so there is no read-modify-write mask and no test of its bits.
+Established from the code, no hardware naming: no read of msr[1546] with a resolvable constant index exists anywhere in the PAL (0 of the resolved reads, against 651 resolved writes; the counts in [pal-msrs.md](pal-msrs.md) agree), so there is no read-modify-write mask and no test of its bits. About 70 reads take a computed index (offsets from `0x640` and `0x6a8`, table entries, a caller-supplied register); none was shown to reach 1546, and none was excluded.
 
 - `0x908000000000bfff` (`0xfffca3f0`) is built with `dep` instructions: bit 63 = 1; bits 60:58 = 4 (constant); bits 57:53 from the table (4, so bit 55); bits 52:46 = 0; bit 43 = 1 only when msr[1559] bits 23:22 are 1 or 2; bits 41:29 from the table (0 at index 0); bits 22:18 = r23 (run start, 0); bits 15:0 = r22 (`0x7ff` with `r26 - 1` at bit 11: run end, here 0x17). Zero elsewhere.
 - `0x8940000000000000` (PAL procedure 520) is a constant: bits 63, 59, 56, 54. The loop of the first called routine puts a counter in bits 17:16 of it.
@@ -333,7 +333,7 @@ Established from the code, no hardware naming: msr[1546] is never read anywhere 
 
 ### Is the site on every boot?
 
-Reached on the normal PALE_RESET path, not created by zero reads: the reset stub zeroes msr[0], the FIT header and a PAL_B match are needed, and only msr[1536] bits 59:48 all set or msr[0] bits 21 or 7 set would skip it. The zero reads make the value written simple (single run, zero table fields); with a real msr[1559] index in 7 to 24 (inferred, since only those table entries are nonzero) the value differs. Whether msr[1608..1612] read zero afterwards on hardware is unknown. An emulator must return zero there to stay on the main path.
+Reached on the normal PALE_RESET path, not created by zero reads, **only on a processor whose `cpuid[3]` has family 0x1f and model 1**: the generic search takes PAL_A 7.31 for model 0 and PAL_A 1.27 for model 2, and PAL_B 5.73 is the model 1 PAL_B. The reset stub zeroes msr[0], the FIT header and a PAL_B match are needed, and only msr[1536] bits 59:48 all set or msr[0] bits 21 or 7 set would skip it. The zero reads make the value written simple (single run, zero table fields); with a real msr[1559] index in 7 to 24 (inferred, since only those table entries are nonzero) the value differs. Whether msr[1608..1612] read zero afterwards on hardware is unknown. An emulator must return zero there to stay on the main path.
 
 ## Questions left (unknown)
 
@@ -379,3 +379,45 @@ Independent review of chips commit `adac12b` (this page), examined at that commi
 **Grades.** Architectural statements (reserved cells, fault rule, `br.ia` semantics, PR0) are **established** by SDM rev 2.3. Site counts, operand values, table equality and code order are **established** (image). The reading that the reserved slots complete the msr command sequence, that the two `br.ia` routes load one structure, and the patent mapping are **inferred**. Nothing about what Madison does is established.
 
 **Cleared scope.** Reserved-encoding verdict and counts, the 520 sequence, the generic PAL_A vector reading and the PAL_B stub targets, and the row 1 and row 2 register layouts, as corrected above.
+
+## Review (PAL_A 5.37 first reserved slot)
+
+Independent review of chips commit `612b72b` (section 4), examined at that commit. The reviewer did not write the page. Method: load `shub1snprom.bin` (`snprom-10.54-70399`, sha256 starting `51ccf9ad`) through the retools Ghidra module (retools main), dump every slot, and re-read the entry path from `0xfffc9dc0` to the slot and the code after it from that listing, with scripts that do not use the page's tables; decode the bundle words from the image bytes; compare the 5.37 image with the Intel package. `objdump` was not needed.
+
+**Confirmed (established).**
+
+- Stop site. The bundle at `0xfffca400` has template 0x0b; slot 0 is `nop.m`, slot 1 is the word `0x108000000` (x2 = 2, x4 = 1, every other field 0), slot 2 is `nop.i`, and the qp field of all three is 0. It follows `mov msr[r27]=r12` (`0xfffca3f0`, r27 = `0x60a`), a stop, then `srlz.d`, `nop.i` and `nop.m` in one group, a stop, then the slot with its `nop.i` in a group of their own. The slot is not alone in its group: `nop.i` shares it.
+- After the slot: msr[1558] (`0x616`) read, bit 13 cleared, written back (`0xfffca410` to `0xfffca430`); msr[`0x648`] to msr[`0x64c`] read, the first four compared with 0 in r15 and the fifth in r16, any difference branching to `0xfffca690`. That routine calls `0xfffcd6f0`, sets msr[1416] bit 53, msr[1084] bit 8 and msr[1640] bit 62, and goes to `0xfffcb260`.
+- msr[0]: `cpuid[3]` revision byte above 1 clears `0x2488`, above 3 clears `0x10010` (unsigned compares at `0xfffc9e1c` and `0xfffc9e6c`); the masked value is written back at `0xfffc9ed6`; bit 22 of it gates the msr[1152] bit 18 (`0xfffc9ee6`); bit 21 goes to `0xfffca720` and bit 7 to `0xfffca4c0` (`0xfffca1cc`, `0xfffca1ec`). The reset stub writes msr[0] = 0 at `0xffff8406`.
+- Pure read-modify-write: msr[1504] (bits 58, 19), msr[1152] (bit 18, conditional), msr[1536] first access (bit 15), msr[1572] (bit 15), msr[1558] (bit 13 cleared). None is tested.
+- msr[1536] bits 59:48: `extr.u` at `0xfffca22c`, zero gives r22 = `0xbfff`, r23 = 0, r26 = `0x18`; nonzero runs the scan loops; no clear bit among the twelve exits to `0xfffca4c0`.
+- msr[1715] bits 15:8 (`0xfffca0b0`, `0xfffca0ec`) is compared with the PAL_B header revision byte by signed `cmp.lt` at `0xfffca130`: 0 skips nothing, a value above 5 skips the 5.73 entry, and no entry left goes to `0xfffcb600`. The three header words, read from the image, are `0x1f000779`, `0x1f010573`, `0x1f020225` (family, model, revision byte 7, 5, 2).
+- msr[1559] bits 26:22 (`0xfffca37c`) index 16-bit entries: the base is `0xfffcce70`, the first load is that entry (value 4, so bit 55 of msr[1546]) for every index, the second is at `2 * (index - 7)` from it. Entries are zero for index 0 to 6 and 25 up, and nonzero for 7 to 24. Bit 43 is 1 for index bits 1:0 equal to 1 or 2.
+- The composition of `0x908000000000bfff`: the `dep` fields at `0xfffca3c0` to `0xfffca3ec` give bit 63, bits 60:58 = 4, bits 57:53 = 4, bits 52:46 = 0, bits 41:29 from the table (0), bits 22:18 = r23 (0) and bits 15:0 = r22 (`0xbfff`); `r22 = 0x7ff` with `0x17` at bit 11 gives the same value. Every field position and width in the page matches.
+- Entry state: FIT pointer at `0xffffffe0` points at a header with `_FIT_` and C_V set; entries 4, 5, 6 are PAL_A 7.31, 5.37, 1.27 (type 0xe, C_V set) and entries 1, 2, 3 are the PAL_B images (C_V clear). The 5.37 entry is 0x67c units of 16 bytes, which is the 0x67c0 bytes of the Intel comparison.
+- The Intel package: `S870BN4C.BIN` (sha256 starting `fb422439`, from package `SR870BN4_1001_SUP3.ZIP`) holds the 0x67c0 bytes of the 5.37 image byte for byte (compared from the image's first byte to its last, and no further), the slot's bundle included.
+
+**Mechanical fixes made in this review (section 4).**
+
+- The instruction-group context is now exact (a stop between the msr write and `srlz.d`; the slot shares its group with a `nop.i`).
+- The bit 7 skip needs a `cpuid[3]` revision byte of 0 or 1, because the write-back clears bit 7 above that.
+- The PAL_B entries have C_V clear, so no PAL_B checksum runs.
+- The msr[1536] scan: it looks for the first run of clear bits, each bit standing for two units, and the page said only "a run of bits". The second-pass loop adds 1 to r26, which makes it odd while the compare is against `0x18`; only the zero and single-run cases were traced and the page now says so.
+- "Never read anywhere" is narrowed to reads with a constant index.
+- "Reached on every reset boot" is narrowed to family 0x1f, model 1.
+
+**Findings that change a verdict.**
+
+1. **Reachability is per processor model.** The generic search (`0xffff8636` to `0xffff869c`) compares the image header's family and model with `cpuid[3]`. PAL_A 5.37 is the model 1 image (header word `0x1f010537`); model 0 runs 7.31 and model 2 runs 1.27, each with its own copies of the same pattern. A model of another processor never reaches this site.
+2. **Computed-index reads exist (changes "established").** About 70 `mov rN=msr[rM]` reads take their index from an `add`, a table load or a caller register (for example `0xffe07ab0`, `0xffde3510`, `0xffde4f60`). The ones read in context add to `0x640` or `0x6a8`, or load from the same 16-bit table as the 5.37 site; none was shown to give 1546 and none was excluded. Only the constant-index reading is established.
+3. **The status-bank pattern (new evidence, inferred).** The PAL_B 7.79 routine at `0xffde3430` writes msr[1544] and msr[1546] with the same field layout as the 5.37 value, runs `srlz.d`, the slot at `0xffde3466`, then reads five msr from the bank selected by two bits of an argument (`0x640`, `0x648`, `0x650`, `0x658`, five each), and returns them. The 5.37 site reads the second bank, `0x648` to `0x64c`, and tests for zero. So the msr[1546] write acts like a command and msr[1608..1612] like its status; the slot lies between them.
+
+**Grade for "the slot can be treated as a no-op ordering point": inferred, not established.**
+
+- Established: the slot has no named register operand; its group holds only `nop.i`; the code after it tests only msr[1608..1612] (and predicates set before it) and reloads every general register it compares; the slot executes with qp = 0 on the normal path, so a model must not fault on it.
+- Not established: that the slot does nothing. The encoding is architecturally reserved, so nothing defines its effects, including any implicit register, predicate or msr write. It sits between a command write and its status read in every instance checked, which is also what a trigger or completion point would look like.
+- What a model can do on this evidence: execute it without a fault and without changing a general register, and return 0 for msr[1608..1612] so the path continues. That is a sufficient behaviour for this path, grade inferred. It is not what the hardware does (unknown), and a non-zero status on hardware would take the error exit.
+
+**Not checked.** The second slot at `0xfffca626` and the code at `0xfffcd850`; the multi-run second pass of the msr[1536] scan; the 15-write statistic over msr[1546] values in PAL_A 5.37 and PAL_B 5.73; whether other entries (events, INIT) reach the `0x300` entry with msr[0] non-zero; the origin of the msr[1715] and msr[1536] values on hardware (unknown).
+
+**Cleared scope.** The stop site and its context, the code after it, the per-register reads and the table, the msr[1546] composition, and the Intel byte match, as corrected above. The no-op reading is cleared as inferred only.
