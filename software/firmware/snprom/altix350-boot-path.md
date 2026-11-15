@@ -89,9 +89,7 @@ storage.
 has code that switches PSR for virtual mode; it has no read of `0x81_1003_0000` and no `0x81_2000_0000` write. 5.04 added
 the error path stores and the `r31` read. A model built for 5.04 covers 4.43's list.
 
-**Minimum answers for SAL_A.** Nothing needs a particular value except `0x81_101d_0080`: after the write to
-`0x81_101d_0088` the read must return the same value for the single processor (a plain read/write register does), and
-`0x81_101d_0100` must hold what was written (bits 41:39 = 7), since the UART bring-up checks them (below). All the
+**Minimum answers for SAL_A.** Nothing needs a particular value except two. First, the election: SAL_A writes `0x81_101d_0088` and reads `0x81_101d_0080`, which are different addresses, so a plain read/write register at 0x80 does not satisfy it. The single processor must read back at 0x80 the value it wrote at 0x88; whether 0x88 aliases 0x80 or is a first-writer latch is **unknown** (the reset value is unread; the error path ORs bits into 0x80, so 0x80 is also writable). Second, `0x81_101d_0100` must hold what was written (bits 41:39 = 7), since the UART bring-up checks them (below). All the
 others accept writes; reads of `0x81_5003_15x0`, `0x81_1003_0000` may return 0.
 
 ## PAL boundary
@@ -111,12 +109,7 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
 - **What SAL_A needs in registers on entry:** `r20` (byte 0 reason, byte 1 0 or 7), `r33` to `r37` (bit 3 of `r33`,
   bits 1:0 of `r33` give the processor position; bit 2 and low bits of `r35` flag a fault; `r34` the PAL entry used for
   the static call; `r36` the return address; `r37` returned).
-- **PAL procedures the firmware calls (direct index immediates in SAL_B, established):** 1, 2, 3, 8, 12, 16, 22, 29, 32,
-  41, 42, 48, 64, 76, 224, 384, 530, 608, 1040, 1072, 1088, 2472, 3088. Architected names, from recollection of the public Linux `pal.h` and not checked against it: 1 cache flush, 2 cache info, 3 cache init, 8 VM summary, 12 fixed address, 16 platform address,
-  22 MC drain, 29 halt light, 32 PMI entry point, 41 prefetch visibility, 42 logical to physical, 48 get hardware policy.
-  The others are not mapped here (implementation-specific or unnamed; 528 in SAL_A is also one). Calls through the
-  wrapper `cpu_MakeStaticPALCall`, `Stacked` and `Phys` variants take their index from the caller and were not
-  enumerated, so this list is a lower bound.
+- **PAL procedures the firmware calls:** re-enumerated in [PAL procedures SAL_B calls](#pal-procedures-sal_b-calls) below, which replaces the earlier list (the earlier list mixed structure offsets with indexes).
 - **PAL data the firmware reads:** `cpuid[3]` (masked `0xffffff0000` for the family and model, full value for the stepping
   table), `cpuid[2]` (the signature below), `cr.lid`, and the processor ID layout above (slice in bits 26:23).
 - **CPU ID signature (fact only).** `cpuid[2] == 0xaeeeeeee8badbeef` appears at 65 sites in SAL_B (the uncompressed part of the image) and 31 in the SAL runtime;
@@ -129,8 +122,8 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
   klconfig builder passes the fixed string "IP41" as the compute board's name (inferred: the helper that receives it was not read to its copy). The
   string `Part:030-1604-001;Name:IP41;Serial:KHD563;Revision:-D;` in SAL_B is used only when `cpuid[2]` carries the
   signature above (read in `init_klcfg_hub`); otherwise the record comes from the board EEPROM through the system
-  controller. An IP57 node is therefore handled as "IP41" in klconfig unless the EEPROM read fails (error "Could not
-  retrieve EEPROM info on nasid %d", which is non-fatal there).
+  controller. The klconfig board name is the fixed string either way; the EEPROM supplies only part, serial and revision (a failed EEPROM read prints "Could not
+  retrieve EEPROM info on nasid %d" and is non-fatal there). So there is no IP41 or IP57 branch.
 - **How it reads the board record (established):** `sysctl_cmd_open`, a request, and `read_board_ia`, which fetches the
   board "info area" from the L1 (checks a length byte and a checksum; messages "eeprom length byte of ZERO", "bad
   checksum", "error reading info area from L1"). Part, name, serial and revision strings are formatted from it. So board
@@ -150,7 +143,7 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
 - **Link (established, runtime names).** The L1 is reached through a 16550-style UART in the SHub junk bus: registers at
   local offset `0x7_fed4_0000 + 8 * n` (n = 16550 register index: 0 data, 1 interrupt enable at `+0x08`, 3 line control
   `+0x18`, 5 line status `+0x28`, 7 scratch `+0x38`); the node-addressed form is `0xf_fed4_0000` with the NASID in
-  bits above 38. `sc_uart_init` waits for line-status bit 6 (transmitter empty) with a 100000-tick limit before
+  bits above 38. The two address forms are two windows onto the same registers (inferred): the local window is bit 39 (`0x80_0000_0000`) plus the offset, as SAL_A uses for the LED registers (`0x87_fed1_0000` = window plus `0x7_fed1_0000`); the global window is bit 35 (`0x8_0000_0000`) plus the offset with the NASID at bit 38 and above, as SAL_B and the runtime use (`0xf_fed4_0000` = window plus `0x7_fed4_0000`). Both carry bit 63 for uncached physical access. `sc_uart_init` waits for line-status bit 6 (transmitter empty) with a 100000-tick limit before
   programming divisor and control. `sc_uart_init` and `l1sc_init` check that bits 41:39 of `0x81_101d_0100` read 7 (the
   value SAL_A set), and `sc_shub_state_reg` and `sc_shub_pushed_data_reg` name that register.
 - **Probe.** `sysctl_probe` in SAL 5.04 returns 0 on the CPU ID signature and 1 otherwise, with no hardware access
@@ -242,6 +235,83 @@ The ordered MMR list of the memory controller, interconnect and I/O discovery ph
 L1 command-id names, the contents of the I/O-widget register reads, what the PAL index 528 call does, and the `node id`
 install write. Each is listed in [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
 
+## PAL procedures SAL_B calls
+
+Re-enumerated for SAL 5.04 SAL_B (`0xffa01000` to `0xffc4e000`) from every call site of the four PAL wrappers and every immediate loaded into `r28` that reaches a PAL entry. Names are the numbering in Linux `arch/ia64/include/asm/pal.h` (Library root `linux-history`), whose header says it follows the Intel Itanium Architecture Software Developer's Manual rev 2.2. The manual itself is not held, so the names are the kernel's transcription of it (software expectation), not read from the manual. Earlier text listed 8, 32, 48, 64, 76, 224, 384, 608, 1040, 1072, 1088, 2472 and 3088; those are `adds rX=N,rY` structure offsets and are not PAL indexes.
+
+**Wrappers (established, read).** Index is the first argument. `0xffa1d870`: static-register call (sets `r28` to `r31` from its four arguments and enters the inner routine `0xffa1d8c0`, which gets the entry point from `cpu_GetPALProcEntryPoint`, `0xffa1d430`, and branches to it). `0xffa1d960`: stacked-register call. `0xffa1da00`: static call in physical mode (its inner routine is `0xffa1da50`; it turns off translation with a return-from-interrupt when needed). `0xffa1dc20`: stacked call in physical mode. A few routines set `r28` themselves and call an inner routine directly.
+
+| Index | PAL.h name | Where SAL_B asks (call site or routine) | Notes |
+|---|---|---|---|
+| 1 | PAL_CACHE_FLUSH | `salruntime_cache_flush` `0xffb1643c`; `0xffaeb360`, `0xffaeb400`, `0xffaeb450` | established |
+| 2 | PAL_CACHE_INFO | `0xffaec15c`; `0xffa6ac40` (`memctl_get_bank_sizes`); `0xffaeb450` | established |
+| 3 | PAL_CACHE_INIT | `0xffaeb3b0`; `0xffaeb7c0` (args -1 and 3) | established |
+| 4 | PAL_CACHE_SUMMARY | `0xffb0eb7c`, `0xffb2126c` | established |
+| 9 | PAL_BUS_GET_FEATURES | `0xffb10dac`; `0xffa9f9cc` | established |
+| 10 | PAL_BUS_SET_FEATURES | `0xffb10e5c` | established |
+| 12 | PAL_FIXED_ADDR | `0xffa9af30` | established |
+| 14 | PAL_FREQ_RATIOS | `0xffa9edbc` | established |
+| 17 | PAL_PROC_GET_FEATURES | `0xffa9c12c`, `0xffb20d9c` | established |
+| 18 | PAL_PROC_SET_FEATURES | `0xffa9c2fc` | established |
+| 20 | PAL_VERSION | `0xffb214fc` | established |
+| 21 | PAL_MC_CLEAR_LOG | `0xffa0742c` (`proc_error_handler`) | established |
+| 22 | PAL_MC_DRAIN | `0xffae6fbc`; `0xffb20860` | established |
+| 25 | PAL_MC_ERROR_INFO | `0xffa05b1c`, `0xffa05c6c`, `0xffa0605c`, `0xffa3819c` | established |
+| 26 | PAL_MC_RESUME | `0xffa37ff6` (`movl r28=0x1a`, then a branch to `b0` returns to PAL) | established |
+| 29 | PAL_HALT_LIGHT | `0xffa9acd0`, `0xffaeb8d0` (idle loop) | established |
+| 30 | PAL_COPY_INFO | `0xffa9e78c` | established |
+| 32 | PAL_PMI_ENTRYPOINT | `0xffa3deec` | established |
+| 37 | PAL_MEM_FOR_TEST | `0xffac701c` (in the jump to RAM), `0xffb21a7c` | established |
+| 41 | PAL_PREFETCH_VISIBILITY | `0xffb20c40` | established |
+| 42 | PAL_LOGICAL_TO_PHYSICAL | `0xffa9ad80`, `0xffa9ae00`, `0xffa9ae80`, `0xffa9af90` | established |
+| 99 | not in pal.h | `0xffa9c44c` | unknown; between the architected 51 and 256 |
+| 256 | PAL_COPY_PAL | `0xffa9e94c`, `0xffa9ea6c`, `0xffa9eb9c` | established |
+| 258 | PAL_TEST_PROC | `0xffb20c1c` | established |
+| 259 | PAL_CACHE_READ | `0xffb0ed3c` | established |
+| 260 | PAL_CACHE_WRITE | `0xffb0f23c` (`cache_inject`) | established |
+| 520 (0x208) | not in pal.h | `0xffa9b586`: arguments `0x1000000` and `0x40000`, from `0xffa9b210` right after the first progress codes | implementation-specific; inferred to be the cache-preload step (progress 0x32 and 0x34): its arguments are `0x1000000` and `0x40000`, the 256 KiB the PROM then uses as RAM; not in pal.h |
+| 530 (0x212) | not in pal.h | `0xffaeb560`: one argument, skipped when it is 0 | implementation-specific, unknown meaning |
+| 528 (0x210) | not in pal.h | SAL_A reason 3 only (static call, argument 5) | implementation-specific, unknown meaning |
+
+Notes. 99, 520, 528 and 530 are the numbers not in `pal.h`; they are implementation-specific or unnamed here (**unknown**). Index 99 is the first argument of the wrapper call at `0xffa9c44c` (loaded as `mov r36=99` with the pointer in the next argument; the argument position was matched to the caller's frame, not run). The earlier text listed 530 as a direct call; it is reached only through the routine at `0xffaeb560`. Indexes that arrive in a variable (`0xffa9e32c`, `0xffa9fa9c`, and the wrappers themselves) were not resolved, so the list is the static set. The interpreter run described below executed PAL calls 3, 9, 10, 12, 17 (nineteen times), 18, 29, 42 and 520 before the memory phase.
+
+An emulated CPU that supplies its own PAL needs to answer, before the first progress code above 0x15: 520 (any success), 12, 42 (logical-to-physical, one processor), 1 to 3 and 37 (jump to RAM). The rest are reached by error, MCA, idle and late-test paths.
+
+## Memory discovery: what is read, and what an interpreter run of the image shows
+
+**Method and its limit.** The disassembly of SAL_B was executed by a small interpreter written for this reading (integer subset, one processor, no devices) with the SHub ID registers, the real-time clock and a stubbed system controller set to the values below. It is a trace of the shipped binary under stated inputs, not hardware behaviour; it shows what the code does with those inputs. Graded **inferred** unless the code was also read.
+
+**Inputs the run needed (each one a minimum answer):**
+- SHub identification at node offset `0x1_0000_0000`, read by `chipset_init_chip` (`0xffa0f8c0`) through a bounded read helper: revision in bits 31:28, 16-bit part number from bit 12. The part number must be `0x4363` (17251; the check at `0xffa959a6`). A JTAG-style layout with bit 0 set and a manufacturer in bits 11:1 was used; the manufacturer field is not checked in the paths run (unknown). `0x81_1006_0580` must carry the node id in bits 42:32 (zero used). **Established** (read).
+- The real-time clock at `0x1_101c_0000` must advance (delay loops compare it).
+- The system controller answers. The PROM made eight requests through `sysctl_cmd_command_timeout` (`0xffa82a10`) before memory; a success status with an all-zero body was enough for all of them except `sysctl_cpu_presence` (`0xffae8660`), whose result is a per-processor presence mask. With a zero mask `main_early_disable` (`0xffad34a0`) treats processor 0 as disabled and stops at progress 0x87 ("Disabled by environment variable"); bit 0 must be set. The disable bitmask is also read from the environment variable `DisabledCpus` (flash variable store).
+- Result on this input: 0x13 to 0x15 pass, 0x16 starts.
+
+**Phase 0x16: DIMM discovery (`mdir_fill_node_dimmcfg`, `0xffa77bb0`; name from the string it prints; established by reading).** For each of four banks and four buses (sixteen DIMM slots) it calls `0xffa7bd60`, which calls `sysctl_eeprom_dimm` (`0xffa85470`): open a system controller transaction (target `0x0ffff000`), send one eeprom request (`0xffa84680`, request length 4, id 48; sub-request layout not read), close. A successful reply sets bit (bank, bus) in a per-bank presence word. DIMM data therefore arrives only through the L1: size, banks and speed come from the SPD bytes the L1 returns, then `0xffa76290` converts them per bank. With empty replies the PROM prints, per slot, "WARNING: Bank n, Bus m, Freq 200, tRCD=0 < SHUB min of 2. Setting tRCD to 2." (Freq 200 and the clamp to tRCD 3 are PROM defaults: "INFO: tRCD setting 2 is not supported. Setting tRCD to 3."), then "Installed Memory Configuration", "DIMM0 Not Installed" to "DIMM3 Not Installed", "Memory Speed: 200 Mhz, CAS Latency: 2.0, tRCD: 3".  **The SPD fields used (size, banks, speed) and their byte positions are not decoded**; this is the first gap an implementer must close, and needs a captured L1 reply or the sysco side.
+
+**Phase 0x16/0x17: controller set-up (`0xffa76bf0`, "Initializing memory controller"; established as the register list, values depend on the DIMM data).** It takes the nasid and a per-bank configuration record and, in order: reads `0x9_0001_0008`, `0x9_0001_0048`, `0x9_0001_0040` (global window, node `n` in bits 38 and up; node offsets `0x1_0001_0008`, `0x1_0001_0048`, `0x1_0001_0040`) and merges fields from the record into them; writes `0x1_0001_0000`, `0x1_0001_0008`, `0x1_0001_0010`, `0x1_0001_0028`, `0x1_0001_0048`, `0x1_0001_0020`, `0x1_0001_0040`; calls `0xffa0ecd0` (tests a bit of `0x81_5003_1550`, a per-processor bit word whose meaning is inferred) and then, per processor, stores to `0x1_0003_0200`, `0x1_0005_0200` (value `0x4000000000` or 0) and the pair `0x1_0183_0200`, `0x1_0185_0200`, per processor (loop of up to eight); later stores to `0x1_0003_0400` and `0x1_0005_0400`; the SHub page lists `0x1_0003_0300` and `0x1_0005_0300` as the kernel's privilege vectors, so these neighbours are not named there; calls `mdir_create_presence_vec` (`0xffa79310`) and `mdir_create_privilege_vecs` (`0xffa79960`); then reads the node id register (`0x1_1006_0580`) and writes `0x1_0001_0060`, `0x1_0001_0058` (value `0x4004e20`) and `0x1_0001_0078`. These are the MD block registers (bits 31:28 of the offset are 0). Values written are mostly merged fields of the DIMM record and were not decoded; the order above is the order of the stores in the function.
+
+**Phase 0x17: test and initialise.** Printed in order: "Testing memory ........................" then, on a node with memory, the MBIST per bank; and "Initializing memory .......". With no DIMM present the run printed "MBIST TIMEOUT Byte Address = 0", "memctl_mbist_credit_war(): BTE TIMEOUT ERROR. IBLS0:0x100008" and "No memory on node %I" (fatal 0x80 on a master node). The MBIST completion bits it polls were not decoded: **unknown**. The workaround function `memctl_mbist_credit_war` reads an I/O-interface status register named IBLS0 (the run saw it as `0x100008`; the register address was not identified).
+
+**Minimum answer for memory (inferred, incomplete):** (a) the L1 returns success and DIMM records for at least one slot; (b) the MD registers listed read back what was written (a plain store model); (c) the MBIST completion bits read as done, not timeout; (d) the bits of `0x81_5003_1550` the PROM itself sets staying readable. klconfig memory records are built after this and were not read.
+
+## Single-node interconnect: the skip
+
+`main_two` reaches progress 0x1c ("Discovering node interconnect") and calls `0xffa47870` (named `intcon_*` by the runtime signature). On the master node it prints "Discovering NUMAlink connectivity ........." and enters `0xffa47290`, which builds a configuration record (tag `0x50434647`, "PCFG") and calls a chip routine through a function pointer, then calls `0xffa450e0` and `0xffa975e0`. `0xffa975e0(11)` returns bit 11 of `0x81_5003_1560`; if it is set the PROM prints "*** Skipping NUMAlink discovery" and returns without reading any NI register. SAL_A zeroes that register on the winning processor after the election, so the skip bit is set later (by the debug-switch phase 0xe or an environment variable; not read). **Minimum answer (inferred):** make bit 11 of `0x81_5003_1560` read as set after phase 0xe. The route taken when it is clear reads NI registers and prints "shub_port_status: vector 0x0/0 NI1 from %I failed"; the NI register offsets were not decoded. The interpreter run ended at memory (progress 0x80), before `main_two`, so the single-node answer above is from reading `0xffa47290` only.
+
+## I/O discovery
+
+Not advanced beyond the section above in this pass; the interpreter run did not reach `main_three`. The reads that find the PIC (widget id register, part `0xd102`, link credits `0xffab0130`), the riser EEPROM through the L1 (`sysctl_eeprom_io_riser`), the PCI walk behind the PIC and the console choice remain **unknown** in detail; see the open list below.
+
+## Gaps remaining before "Loading EFI"
+
+1. SPD byte positions and the L1 eeprom reply layout (`0xffa84680` request; reply parsed at `0xffa76290`, `0xffa7b1b0`, `0xffa7b310`, `0xffa7b410`, `0xffa7b6c0`, `0xffa7b7e0`): needed for phase 0x16.
+2. MBIST completion bits and the IBLS0 register address (0x17).
+3. Source of bit 11 of `0x81_5003_1560` (single-node skip) and the NI registers on the non-skip path.
+4. The whole of `main_three`: widget id read, credits, riser EEPROM, PCI walk, console selection.
+5. PAL 99, 520, 528, 530 meanings.
+6. The `0x81_101d_0080` and `0x81_101d_0088` relation.
+
 ## Review
 
 Independent review of chips commits `ec38a7e`, `4bb8d3a`, `cb0fe84` and `b8fa253` (this page, the firmware page fixes, `questions/sn2-prom-open.md`, `evidence/irix-files.md`), examined at `b8fa253`. The reviewer did not write the page. Method: parse the FIT of `shub1snprom.bin` (SAL 5.04) and disassemble it with the retools `ia64-linux-gnu-objdump`; decompress the SAL runtime component (type 0x12) and read its dynamic symbols; compare other builds by instruction patterns. Nothing was taken from the page's own tables. PAL numbering was checked against the Linux `arch/ia64/include/asm/pal.h` in the Library `linux-history` root (it says it follows the Intel IA-64 SDM), not from memory.
@@ -274,3 +344,7 @@ Independent review of chips commits `ec38a7e`, `4bb8d3a`, `cb0fe84` and `b8fa253
 **Grades.** The SAL_A reading, progress table, FIT, UART offsets, probe functions and board-record selection are correctly **established** (read in full). The names of SAL_B functions come from matching the runtime and stay **inferred**, as the page says (the die routine at `0xffad2cb0` is named by the call shape). Memory, I/O, console and EFI hand-off statements are **inferred**.
 
 **Cleared scope:** progress-code table and reason codes; SAL_A on SHub 1 as a register list and order (except the election minimum answer); FIT and PAL pair listing; L1 death path (0x8d) and UART location, stride and probe; board-identity claim (no IP41 or IP57 branch, built-in record only under the signature); PIC part 0xd102 keying; the README fixes (SHub 2 SAL_A, region size, recommendation, per-build probe for 4.43, 4.90, 5.04, 1.11, 1.40, hashes). **Not cleared:** the PAL index list, the election minimum answer, the IP57 sentence, memory, I/O and EFI hand-off detail, and per-build probe for 3.32 and 4.20.
+
+### Addressed after the review
+
+The PAL index list was re-enumerated (see [PAL procedures SAL_B calls](#pal-procedures-sal_b-calls)); the election minimum answer now says the 0x80 and 0x88 relation is unknown; the IP57 sentence was rewritten; and the two address forms are reconciled in the L1 section. The 4.43 comparison, the hand-off function, the command-id list and the per-build probe for 3.32 and 4.20 are still inferred, as the review asked. The memory, interconnect and I/O sections added after the review rest on an interpreter trace of the image and partial reading; only the items marked established were read in full.
