@@ -19,7 +19,7 @@
 #define SHUB_CHIP_ID_PART_NUMBER_INPLACE             (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
 
 /*
- * Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again and then md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
+ * Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again; with bit 36 set it runs a diagnosis (site 0xffa708e0) that reads bit 36 once more, with bit 36 clear it reads md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
  */
 /* md_mbist_status: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux v5.3 name */
 #define SHUB_MD_MBIST_STATUS                         0x100000080 /* established */
@@ -31,7 +31,7 @@
 #define SHUB_MD_MBIST_STATUS_FAIL_ADDR_INPLACE       (SHUB_MD_MBIST_STATUS_FAIL_ADDR_MASK << SHUB_MD_MBIST_STATUS_FAIL_ADDR_SHIFT)
 
 /*
- * Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run, so it needs no particular value. Its layout is unknown.
+ * Memory test engine other-error value; the name is ours. Read only in the failure report, and only when bit 36 of md_mbist_status is found clear (the report then prints that the failure was not a compare error); not read on a passing run, so it needs no particular value. Its layout is unknown.
  */
 /* md_mbist_err: r64, reset unknown; SAL 5.04 PROM site 0xffa725f6 (read in the failure report); no Linux v5.3 name */
 #define SHUB_MD_MBIST_ERR                            0x1000000b8 /* established */
@@ -47,43 +47,43 @@
  */
 /* md_bank_cfg0: w64, reset unknown; SAL 5.04 PROM site 0xffa7701c (write); no Linux v5.3 name */
 #define SHUB_MD_BANK_CFG0                            0x100010000 /* established */
-#define SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT           32 /* established */
+#define SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG0_TIMING_IDX_MASK            0xfull
 #define SHUB_MD_BANK_CFG0_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG0_TIMING_IDX_MASK << SHUB_MD_BANK_CFG0_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG0_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG0_B3_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG0_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B3_FIELD_MASK << SHUB_MD_BANK_CFG0_B3_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG0_B3_RANK_SHIFT              27 /* established */
+#define SHUB_MD_BANK_CFG0_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG0_B3_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG0_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B3_RANK_MASK << SHUB_MD_BANK_CFG0_B3_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT           24 /* established */
+#define SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG0_B3_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG0_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B3_DENSITY_MASK << SHUB_MD_BANK_CFG0_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG0_B2_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG0_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B2_FIELD_MASK << SHUB_MD_BANK_CFG0_B2_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG0_B2_RANK_SHIFT              19 /* established */
+#define SHUB_MD_BANK_CFG0_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG0_B2_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG0_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B2_RANK_MASK << SHUB_MD_BANK_CFG0_B2_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT           16 /* established */
+#define SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG0_B2_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG0_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B2_DENSITY_MASK << SHUB_MD_BANK_CFG0_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG0_B1_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG0_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B1_FIELD_MASK << SHUB_MD_BANK_CFG0_B1_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG0_B1_RANK_SHIFT              11 /* established */
+#define SHUB_MD_BANK_CFG0_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG0_B1_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG0_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B1_RANK_MASK << SHUB_MD_BANK_CFG0_B1_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT           8 /* established */
+#define SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG0_B1_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG0_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B1_DENSITY_MASK << SHUB_MD_BANK_CFG0_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG0_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG0_B0_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG0_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG0_B0_FIELD_MASK << SHUB_MD_BANK_CFG0_B0_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG0_B0_RANK_SHIFT              3 /* established */
+#define SHUB_MD_BANK_CFG0_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG0_B0_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG0_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG0_B0_RANK_MASK << SHUB_MD_BANK_CFG0_B0_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT           0 /* established */
+#define SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG0_B0_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG0_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG0_B0_DENSITY_MASK << SHUB_MD_BANK_CFG0_B0_DENSITY_SHIFT)
 
@@ -92,43 +92,43 @@
  */
 /* md_bank_cfg1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c3c (read), 0xffa7704c (write), 0xffa6dedc and 0xffa7ab9c (reads for the bank size); no Linux v5.3 name */
 #define SHUB_MD_BANK_CFG1                            0x100010008 /* established */
-#define SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT           32 /* established */
+#define SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG1_TIMING_IDX_MASK            0xfull
 #define SHUB_MD_BANK_CFG1_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG1_TIMING_IDX_MASK << SHUB_MD_BANK_CFG1_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG1_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG1_B3_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG1_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B3_FIELD_MASK << SHUB_MD_BANK_CFG1_B3_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG1_B3_RANK_SHIFT              27 /* established */
+#define SHUB_MD_BANK_CFG1_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG1_B3_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG1_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B3_RANK_MASK << SHUB_MD_BANK_CFG1_B3_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT           24 /* established */
+#define SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG1_B3_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG1_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B3_DENSITY_MASK << SHUB_MD_BANK_CFG1_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG1_B2_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG1_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B2_FIELD_MASK << SHUB_MD_BANK_CFG1_B2_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG1_B2_RANK_SHIFT              19 /* established */
+#define SHUB_MD_BANK_CFG1_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG1_B2_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG1_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B2_RANK_MASK << SHUB_MD_BANK_CFG1_B2_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT           16 /* established */
+#define SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG1_B2_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG1_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B2_DENSITY_MASK << SHUB_MD_BANK_CFG1_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG1_B1_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG1_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B1_FIELD_MASK << SHUB_MD_BANK_CFG1_B1_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG1_B1_RANK_SHIFT              11 /* established */
+#define SHUB_MD_BANK_CFG1_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG1_B1_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG1_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B1_RANK_MASK << SHUB_MD_BANK_CFG1_B1_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT           8 /* established */
+#define SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG1_B1_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG1_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B1_DENSITY_MASK << SHUB_MD_BANK_CFG1_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG1_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG1_B0_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG1_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG1_B0_FIELD_MASK << SHUB_MD_BANK_CFG1_B0_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG1_B0_RANK_SHIFT              3 /* established */
+#define SHUB_MD_BANK_CFG1_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG1_B0_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG1_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG1_B0_RANK_MASK << SHUB_MD_BANK_CFG1_B0_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT           0 /* established */
+#define SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG1_B0_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG1_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG1_B0_DENSITY_MASK << SHUB_MD_BANK_CFG1_B0_DENSITY_SHIFT)
 
@@ -137,43 +137,43 @@
  */
 /* md_bank_cfg2: rw64, reset unknown; SAL 5.04 PROM site 0xffa7707c (write), 0xffa6f2fc and 0xffa7838c (reads); no Linux v5.3 name */
 #define SHUB_MD_BANK_CFG2                            0x100010010 /* established */
-#define SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT           32 /* established */
+#define SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT           32 /* inferred */
 #define SHUB_MD_BANK_CFG2_TIMING_IDX_MASK            0xfull
 #define SHUB_MD_BANK_CFG2_TIMING_IDX_INPLACE         (SHUB_MD_BANK_CFG2_TIMING_IDX_MASK << SHUB_MD_BANK_CFG2_TIMING_IDX_SHIFT)
 #define SHUB_MD_BANK_CFG2_B3_FIELD_SHIFT             29 /* established */
 #define SHUB_MD_BANK_CFG2_B3_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG2_B3_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B3_FIELD_MASK << SHUB_MD_BANK_CFG2_B3_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG2_B3_RANK_SHIFT              27 /* established */
+#define SHUB_MD_BANK_CFG2_B3_RANK_SHIFT              27 /* inferred */
 #define SHUB_MD_BANK_CFG2_B3_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG2_B3_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B3_RANK_MASK << SHUB_MD_BANK_CFG2_B3_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT           24 /* established */
+#define SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT           24 /* inferred */
 #define SHUB_MD_BANK_CFG2_B3_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG2_B3_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B3_DENSITY_MASK << SHUB_MD_BANK_CFG2_B3_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B2_FIELD_SHIFT             21 /* established */
 #define SHUB_MD_BANK_CFG2_B2_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG2_B2_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B2_FIELD_MASK << SHUB_MD_BANK_CFG2_B2_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG2_B2_RANK_SHIFT              19 /* established */
+#define SHUB_MD_BANK_CFG2_B2_RANK_SHIFT              19 /* inferred */
 #define SHUB_MD_BANK_CFG2_B2_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG2_B2_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B2_RANK_MASK << SHUB_MD_BANK_CFG2_B2_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT           16 /* established */
+#define SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT           16 /* inferred */
 #define SHUB_MD_BANK_CFG2_B2_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG2_B2_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B2_DENSITY_MASK << SHUB_MD_BANK_CFG2_B2_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B1_FIELD_SHIFT             13 /* established */
 #define SHUB_MD_BANK_CFG2_B1_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG2_B1_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B1_FIELD_MASK << SHUB_MD_BANK_CFG2_B1_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG2_B1_RANK_SHIFT              11 /* established */
+#define SHUB_MD_BANK_CFG2_B1_RANK_SHIFT              11 /* inferred */
 #define SHUB_MD_BANK_CFG2_B1_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG2_B1_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B1_RANK_MASK << SHUB_MD_BANK_CFG2_B1_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT           8 /* established */
+#define SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT           8 /* inferred */
 #define SHUB_MD_BANK_CFG2_B1_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG2_B1_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B1_DENSITY_MASK << SHUB_MD_BANK_CFG2_B1_DENSITY_SHIFT)
 #define SHUB_MD_BANK_CFG2_B0_FIELD_SHIFT             5 /* established */
 #define SHUB_MD_BANK_CFG2_B0_FIELD_MASK              0x3ull
 #define SHUB_MD_BANK_CFG2_B0_FIELD_INPLACE           (SHUB_MD_BANK_CFG2_B0_FIELD_MASK << SHUB_MD_BANK_CFG2_B0_FIELD_SHIFT)
-#define SHUB_MD_BANK_CFG2_B0_RANK_SHIFT              3 /* established */
+#define SHUB_MD_BANK_CFG2_B0_RANK_SHIFT              3 /* inferred */
 #define SHUB_MD_BANK_CFG2_B0_RANK_MASK               0x1ull
 #define SHUB_MD_BANK_CFG2_B0_RANK_INPLACE            (SHUB_MD_BANK_CFG2_B0_RANK_MASK << SHUB_MD_BANK_CFG2_B0_RANK_SHIFT)
-#define SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT           0 /* established */
+#define SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT           0 /* inferred */
 #define SHUB_MD_BANK_CFG2_B0_DENSITY_MASK            0x7ull
 #define SHUB_MD_BANK_CFG2_B0_DENSITY_INPLACE         (SHUB_MD_BANK_CFG2_B0_DENSITY_MASK << SHUB_MD_BANK_CFG2_B0_DENSITY_SHIFT)
 
@@ -182,13 +182,13 @@
  */
 /* md_timing_0: w64, reset unknown; SAL 5.04 PROM site 0xffa7710c (write); no Linux v5.3 name */
 #define SHUB_MD_TIMING_0                             0x100010020 /* established */
-#define SHUB_MD_TIMING_0_TRCD4_SHIFT                 54 /* established */
+#define SHUB_MD_TIMING_0_TRCD4_SHIFT                 54 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD4_MASK                  0x1ull
 #define SHUB_MD_TIMING_0_TRCD4_INPLACE               (SHUB_MD_TIMING_0_TRCD4_MASK << SHUB_MD_TIMING_0_TRCD4_SHIFT)
-#define SHUB_MD_TIMING_0_TRCD2_SHIFT                 53 /* established */
+#define SHUB_MD_TIMING_0_TRCD2_SHIFT                 53 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD2_MASK                  0x1ull
 #define SHUB_MD_TIMING_0_TRCD2_INPLACE               (SHUB_MD_TIMING_0_TRCD2_MASK << SHUB_MD_TIMING_0_TRCD2_SHIFT)
-#define SHUB_MD_TIMING_0_TRCD3_SHIFT                 52 /* established */
+#define SHUB_MD_TIMING_0_TRCD3_SHIFT                 52 /* inferred */
 #define SHUB_MD_TIMING_0_TRCD3_MASK                  0x1ull
 #define SHUB_MD_TIMING_0_TRCD3_INPLACE               (SHUB_MD_TIMING_0_TRCD3_MASK << SHUB_MD_TIMING_0_TRCD3_SHIFT)
 #define SHUB_MD_TIMING_0_ROW_C_SHIFT                 48 /* established */
@@ -203,8 +203,8 @@
 #define SHUB_MD_TIMING_0_ROW_LO_SHIFT                8 /* established */
 #define SHUB_MD_TIMING_0_ROW_LO_MASK                 0xffffffffull
 #define SHUB_MD_TIMING_0_ROW_LO_INPLACE              (SHUB_MD_TIMING_0_ROW_LO_MASK << SHUB_MD_TIMING_0_ROW_LO_SHIFT)
-#define SHUB_MD_TIMING_0_CONST_LO_SHIFT              0 /* established */
-#define SHUB_MD_TIMING_0_CONST_LO_MASK               0xffull
+#define SHUB_MD_TIMING_0_CONST_LO_SHIFT              1 /* established */
+#define SHUB_MD_TIMING_0_CONST_LO_MASK               0x7full
 #define SHUB_MD_TIMING_0_CONST_LO_INPLACE            (SHUB_MD_TIMING_0_CONST_LO_MASK << SHUB_MD_TIMING_0_CONST_LO_SHIFT)
 
 /*
@@ -239,13 +239,13 @@
 #define SHUB_MD_REFRESH_0_BANK_SMALL_SHIFT           24 /* established */
 #define SHUB_MD_REFRESH_0_BANK_SMALL_MASK            0xfull
 #define SHUB_MD_REFRESH_0_BANK_SMALL_INPLACE         (SHUB_MD_REFRESH_0_BANK_SMALL_MASK << SHUB_MD_REFRESH_0_BANK_SMALL_SHIFT)
-#define SHUB_MD_REFRESH_0_TRFC_SHIFT                 17 /* established */
+#define SHUB_MD_REFRESH_0_TRFC_SHIFT                 17 /* inferred */
 #define SHUB_MD_REFRESH_0_TRFC_MASK                  0x3full
 #define SHUB_MD_REFRESH_0_TRFC_INPLACE               (SHUB_MD_REFRESH_0_TRFC_MASK << SHUB_MD_REFRESH_0_TRFC_SHIFT)
-#define SHUB_MD_REFRESH_0_INTERVAL_SHIFT             8 /* established */
+#define SHUB_MD_REFRESH_0_INTERVAL_SHIFT             8 /* inferred */
 #define SHUB_MD_REFRESH_0_INTERVAL_MASK              0x1ffull
 #define SHUB_MD_REFRESH_0_INTERVAL_INPLACE           (SHUB_MD_REFRESH_0_INTERVAL_MASK << SHUB_MD_REFRESH_0_INTERVAL_SHIFT)
-#define SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT            0 /* established */
+#define SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT            0 /* inferred */
 #define SHUB_MD_REFRESH_0_CS_ENABLE_MASK             0xffull
 #define SHUB_MD_REFRESH_0_CS_ENABLE_INPLACE          (SHUB_MD_REFRESH_0_CS_ENABLE_MASK << SHUB_MD_REFRESH_0_CS_ENABLE_SHIFT)
 
@@ -254,13 +254,13 @@
  */
 /* md_timing_2: rw64, reset unknown; SAL 5.04 PROM site 0xffa76c9c (read), 0xffa7713c (write); no Linux v5.3 name */
 #define SHUB_MD_TIMING_2                             0x100010040 /* established */
-#define SHUB_MD_TIMING_2_TRCD4_SHIFT                 54 /* established */
+#define SHUB_MD_TIMING_2_TRCD4_SHIFT                 54 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD4_MASK                  0x1ull
 #define SHUB_MD_TIMING_2_TRCD4_INPLACE               (SHUB_MD_TIMING_2_TRCD4_MASK << SHUB_MD_TIMING_2_TRCD4_SHIFT)
-#define SHUB_MD_TIMING_2_TRCD2_SHIFT                 53 /* established */
+#define SHUB_MD_TIMING_2_TRCD2_SHIFT                 53 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD2_MASK                  0x1ull
 #define SHUB_MD_TIMING_2_TRCD2_INPLACE               (SHUB_MD_TIMING_2_TRCD2_MASK << SHUB_MD_TIMING_2_TRCD2_SHIFT)
-#define SHUB_MD_TIMING_2_TRCD3_SHIFT                 52 /* established */
+#define SHUB_MD_TIMING_2_TRCD3_SHIFT                 52 /* inferred */
 #define SHUB_MD_TIMING_2_TRCD3_MASK                  0x1ull
 #define SHUB_MD_TIMING_2_TRCD3_INPLACE               (SHUB_MD_TIMING_2_TRCD3_MASK << SHUB_MD_TIMING_2_TRCD3_SHIFT)
 #define SHUB_MD_TIMING_2_ROW_C_SHIFT                 48 /* established */
@@ -275,8 +275,8 @@
 #define SHUB_MD_TIMING_2_ROW_LO_SHIFT                8 /* established */
 #define SHUB_MD_TIMING_2_ROW_LO_MASK                 0xffffffffull
 #define SHUB_MD_TIMING_2_ROW_LO_INPLACE              (SHUB_MD_TIMING_2_ROW_LO_MASK << SHUB_MD_TIMING_2_ROW_LO_SHIFT)
-#define SHUB_MD_TIMING_2_CONST_LO_SHIFT              0 /* established */
-#define SHUB_MD_TIMING_2_CONST_LO_MASK               0xffull
+#define SHUB_MD_TIMING_2_CONST_LO_SHIFT              1 /* established */
+#define SHUB_MD_TIMING_2_CONST_LO_MASK               0x7full
 #define SHUB_MD_TIMING_2_CONST_LO_INPLACE            (SHUB_MD_TIMING_2_CONST_LO_MASK << SHUB_MD_TIMING_2_CONST_LO_SHIFT)
 
 /*
@@ -311,13 +311,13 @@
 #define SHUB_MD_REFRESH_1_BANK_SMALL_SHIFT           24 /* established */
 #define SHUB_MD_REFRESH_1_BANK_SMALL_MASK            0xfull
 #define SHUB_MD_REFRESH_1_BANK_SMALL_INPLACE         (SHUB_MD_REFRESH_1_BANK_SMALL_MASK << SHUB_MD_REFRESH_1_BANK_SMALL_SHIFT)
-#define SHUB_MD_REFRESH_1_TRFC_SHIFT                 17 /* established */
+#define SHUB_MD_REFRESH_1_TRFC_SHIFT                 17 /* inferred */
 #define SHUB_MD_REFRESH_1_TRFC_MASK                  0x3full
 #define SHUB_MD_REFRESH_1_TRFC_INPLACE               (SHUB_MD_REFRESH_1_TRFC_MASK << SHUB_MD_REFRESH_1_TRFC_SHIFT)
-#define SHUB_MD_REFRESH_1_INTERVAL_SHIFT             8 /* established */
+#define SHUB_MD_REFRESH_1_INTERVAL_SHIFT             8 /* inferred */
 #define SHUB_MD_REFRESH_1_INTERVAL_MASK              0x1ffull
 #define SHUB_MD_REFRESH_1_INTERVAL_INPLACE           (SHUB_MD_REFRESH_1_INTERVAL_MASK << SHUB_MD_REFRESH_1_INTERVAL_SHIFT)
-#define SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT            0 /* established */
+#define SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT            0 /* inferred */
 #define SHUB_MD_REFRESH_1_CS_ENABLE_MASK             0xffull
 #define SHUB_MD_REFRESH_1_CS_ENABLE_INPLACE          (SHUB_MD_REFRESH_1_CS_ENABLE_MASK << SHUB_MD_REFRESH_1_CS_ENABLE_SHIFT)
 
@@ -334,7 +334,7 @@
 #define SHUB_MD_CTL_60                               0x100010060 /* established */
 
 /*
- * Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which runs only with bit 8 of the debug-switch word set). Equal: nothing. Value below the argument: writes the argument back (sign-extended from 32 bits), zero-fills the last 1/32 of the bank with engine operation 48 and then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
+ * Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which always runs). Equal: nothing. Value below the argument: zero-fills the last 1/32 of the bank with engine operation 48, then writes the argument back (sign-extended from 32 bits), then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear; a timeout prints a message and returns). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
  */
 /* md_reg_0001_0068: rw64, reset unknown; SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes) */
 #define SHUB_MD_REG_0001_0068                        0x100010068 /* established */
@@ -370,7 +370,7 @@
 #define SHUB_MD_MBIST_CTL_VALUE_INPLACE              (SHUB_MD_MBIST_CTL_VALUE_MASK << SHUB_MD_MBIST_CTL_VALUE_SHIFT)
 
 /*
- * MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
+ * MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
  */
 /* md_reg_0003_0000: rw64, reset unknown; SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name */
 #define SHUB_MD_REG_0003_0000                        0x100030000 /* established */

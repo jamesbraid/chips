@@ -94,7 +94,7 @@ Chip identification word at node offset 0x1_0000_0000 (memory and directory bloc
 
 ### Register `md_mbist_status`
 
-Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again and then md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
+Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again; with bit 36 set it runs a diagnosis (site 0xffa708e0) that reads bit 36 once more, with bit 36 clear it reads md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -103,7 +103,7 @@ Memory test engine status; the name is ours. Written 0 before every engine start
 
 ### Register `md_mbist_err`
 
-Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run, so it needs no particular value. Its layout is unknown.
+Memory test engine other-error value; the name is ours. Read only in the failure report, and only when bit 36 of md_mbist_status is found clear (the report then prints that the failure was not a compare error); not read on a passing run, so it needs no particular value. Its layout is unknown.
 
 ### Register `md_mbist_mask`
 
@@ -115,19 +115,19 @@ Memory controller register, unnamed; the name is ours. One of three registers (o
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 35:32 | `timing_idx` | inferred |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
 | 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 27 | `b3_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 19 | `b2_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 11 | `b1_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 3 | `b0_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 
 ### Register `md_bank_cfg1`
 
@@ -135,19 +135,19 @@ Memory controller register, unnamed; the name is ours. One of three registers (o
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 35:32 | `timing_idx` | inferred |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
 | 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 27 | `b3_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 19 | `b2_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 11 | `b1_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 3 | `b0_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 
 ### Register `md_bank_cfg2`
 
@@ -155,19 +155,19 @@ Memory controller register, unnamed; the name is ours. One of three registers (o
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 35:32 | `timing_idx` | inferred |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
 | 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 27 | `b3_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 19 | `b2_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 11 | `b1_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 | 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
-| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
-| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 3 | `b0_rank` | inferred |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | inferred |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
 
 ### Register `md_timing_0`
 
@@ -175,14 +175,14 @@ Memory controller register, unnamed; the name is ours. Timing word built from a 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 54 | `trcd4` | established |  | SAL 5.04 PROM site 0xffa77536 | Set instead of trcd3 for a tRCD of 4. Name is ours. |
-| 53 | `trcd2` | established |  | SAL 5.04 PROM site 0xffa76e16 | Set instead of trcd3 for a tRCD of 2. Name is ours. |
-| 52 | `trcd3` | established |  | SAL 5.04 PROM site 0xffa76d86 | Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours. |
+| 54 | `trcd4` | inferred |  | SAL 5.04 PROM site 0xffa77536 | Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 4, read as a tRCD of 4 clocks (inferred). Name is ours. |
+| 53 | `trcd2` | inferred |  | SAL 5.04 PROM site 0xffa76e16 | Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 2, read as a tRCD of 2 clocks (inferred). Name is ours. |
+| 52 | `trcd3` | inferred |  | SAL 5.04 PROM site 0xffa76d86 | Always set. Read as the base case for a DIMM-record value of 3, the tRCD in clocks (the reading as tRCD is inferred). Name is ours. |
 | 51:48 | `row_c` | established |  | SAL 5.04 PROM site 0xffa76e3c | 16-bit value at row offset 12. Name is ours. |
 | 47:44 | `row_b` | established |  | SAL 5.04 PROM site 0xffa76e26 | 16-bit value at row offset 10. Name is ours. |
 | 43:40 | `row_a` | established |  | SAL 5.04 PROM site 0xffa76df6 | 16-bit value at row offset 8. Name is ours. |
 | 39:8 | `row_lo` | established |  | SAL 5.04 PROM site 0xffa76d46 | Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours. |
-| 7:0 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours. |
+| 7:1 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x01 in this field: bit 1 set, bits 7:2 cleared; bit 0 keeps its old value. Name is ours. |
 
 ### Register `md_timing_1`
 
@@ -204,9 +204,9 @@ Memory controller register, unnamed; the name is ours. One word is written to bo
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 27:24 | `bank_small` | established |  | SAL 5.04 PROM site 0xffa77a8c | Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours. |
-| 22:17 | `trfc` | established |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
-| 16:8 | `interval` | established |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
-| 7:0 | `cs_enable` | established |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
+| 22:17 | `trfc` | inferred |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
+| 16:8 | `interval` | inferred |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
+| 7:0 | `cs_enable` | inferred |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
 
 ### Register `md_timing_2`
 
@@ -214,14 +214,14 @@ Memory controller register, unnamed; the name is ours. Timing word built from a 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 54 | `trcd4` | established |  | SAL 5.04 PROM site 0xffa77536 | Set instead of trcd3 for a tRCD of 4. Name is ours. |
-| 53 | `trcd2` | established |  | SAL 5.04 PROM site 0xffa76e16 | Set instead of trcd3 for a tRCD of 2. Name is ours. |
-| 52 | `trcd3` | established |  | SAL 5.04 PROM site 0xffa76d86 | Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours. |
+| 54 | `trcd4` | inferred |  | SAL 5.04 PROM site 0xffa77536 | Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 4, read as a tRCD of 4 clocks (inferred). Name is ours. |
+| 53 | `trcd2` | inferred |  | SAL 5.04 PROM site 0xffa76e16 | Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 2, read as a tRCD of 2 clocks (inferred). Name is ours. |
+| 52 | `trcd3` | inferred |  | SAL 5.04 PROM site 0xffa76d86 | Always set. Read as the base case for a DIMM-record value of 3, the tRCD in clocks (the reading as tRCD is inferred). Name is ours. |
 | 51:48 | `row_c` | established |  | SAL 5.04 PROM site 0xffa76e3c | 16-bit value at row offset 12. Name is ours. |
 | 47:44 | `row_b` | established |  | SAL 5.04 PROM site 0xffa76e26 | 16-bit value at row offset 10. Name is ours. |
 | 43:40 | `row_a` | established |  | SAL 5.04 PROM site 0xffa76df6 | 16-bit value at row offset 8. Name is ours. |
 | 39:8 | `row_lo` | established |  | SAL 5.04 PROM site 0xffa76d46 | Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours. |
-| 7:0 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours. |
+| 7:1 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x01 in this field: bit 1 set, bits 7:2 cleared; bit 0 keeps its old value. Name is ours. |
 
 ### Register `md_timing_3`
 
@@ -243,9 +243,9 @@ Memory controller register, unnamed; the name is ours. One word is written to bo
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 27:24 | `bank_small` | established |  | SAL 5.04 PROM site 0xffa77a8c | Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours. |
-| 22:17 | `trfc` | established |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
-| 16:8 | `interval` | established |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
-| 7:0 | `cs_enable` | established |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
+| 22:17 | `trfc` | inferred |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
+| 16:8 | `interval` | inferred |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
+| 7:0 | `cs_enable` | inferred |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
 
 ### Register `md_const_58`
 
@@ -257,7 +257,7 @@ Memory controller register, unnamed; the name is ours. Written 0x4047 when the S
 
 ### Register `md_reg_0001_0068`
 
-Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which runs only with bit 8 of the debug-switch word set). Equal: nothing. Value below the argument: writes the argument back (sign-extended from 32 bits), zero-fills the last 1/32 of the bank with engine operation 48 and then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
+Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which always runs). Equal: nothing. Value below the argument: zero-fills the last 1/32 of the bank with engine operation 48, then writes the argument back (sign-extended from 32 bits), then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear; a timeout prints a message and returns). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
 
 ### Register `md_const_78`
 
@@ -280,7 +280,7 @@ Memory test and DRAM initialisation engine control; the name is ours. The PROM s
 
 ### Register `md_reg_0003_0000`
 
-MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
+MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
 
 ### Register `md_reg_0003_0200`
 

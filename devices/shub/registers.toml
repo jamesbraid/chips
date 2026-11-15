@@ -488,7 +488,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux v5.3 name"
-doc = "Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again and then md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md."
+doc = "Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again; with bit 36 set it runs a diagnosis (site 0xffa708e0) that reads bit 36 once more, with bit 36 clear it reads md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md."
 
 [registers.md_mbist_status.fields]
 cmp_err = { bits = [36, 36], grade = "inferred", from = "SAL 5.04 PROM sites 0xffa702c0 and 0xffa72500", doc = "Set means the compare of an operation 16 run failed. Name is ours." }
@@ -510,7 +510,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa725f6 (read in the failure report); no Linux v5.3 name"
-doc = "Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run, so it needs no particular value. Its layout is unknown."
+doc = "Memory test engine other-error value; the name is ours. Read only in the failure report, and only when bit 36 of md_mbist_status is found clear (the report then prints that the failure was not a compare error); not read on a passing run, so it needs no particular value. Its layout is unknown."
 
 [registers.md_dir_access_lp]
 offset = 0x100031000
@@ -550,18 +550,18 @@ from = "SAL 5.04 PROM site 0xffa7701c (write); no Linux v5.3 name"
 doc = "Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). This one is never read; accept the store. See memory-init.md."
 
 [registers.md_bank_cfg0.fields]
-timing_idx = { bits = [35, 32], grade = "established", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
-b0_density = { bits = [2, 0], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b0_rank = { bits = [3, 3], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+timing_idx = { bits = [35, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
+b0_density = { bits = [2, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b0_rank = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b0_field = { bits = [6, 5], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b1_density = { bits = [10, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b1_rank = { bits = [11, 11], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b1_density = { bits = [10, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b1_rank = { bits = [11, 11], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b1_field = { bits = [14, 13], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b2_density = { bits = [18, 16], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b2_rank = { bits = [19, 19], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b2_density = { bits = [18, 16], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b2_rank = { bits = [19, 19], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b2_field = { bits = [22, 21], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b3_density = { bits = [26, 24], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b3_rank = { bits = [27, 27], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b3_density = { bits = [26, 24], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b3_rank = { bits = [27, 27], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b3_field = { bits = [30, 29], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
 
 [registers.md_bank_cfg1]
@@ -574,18 +574,18 @@ from = "SAL 5.04 PROM site 0xffa76c3c (read), 0xffa7704c (write), 0xffa6dedc and
 doc = "Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). Read first by the set-up, then by the memory test and the credit routine to find each bank's size: it must read back what was written. See memory-init.md."
 
 [registers.md_bank_cfg1.fields]
-timing_idx = { bits = [35, 32], grade = "established", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
-b0_density = { bits = [2, 0], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b0_rank = { bits = [3, 3], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+timing_idx = { bits = [35, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
+b0_density = { bits = [2, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b0_rank = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b0_field = { bits = [6, 5], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b1_density = { bits = [10, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b1_rank = { bits = [11, 11], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b1_density = { bits = [10, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b1_rank = { bits = [11, 11], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b1_field = { bits = [14, 13], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b2_density = { bits = [18, 16], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b2_rank = { bits = [19, 19], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b2_density = { bits = [18, 16], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b2_rank = { bits = [19, 19], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b2_field = { bits = [22, 21], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b3_density = { bits = [26, 24], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b3_rank = { bits = [27, 27], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b3_density = { bits = [26, 24], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b3_rank = { bits = [27, 27], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b3_field = { bits = [30, 29], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
 
 [registers.md_bank_cfg2]
@@ -598,18 +598,18 @@ from = "SAL 5.04 PROM site 0xffa7707c (write), 0xffa6f2fc and 0xffa7838c (reads)
 doc = "Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). The memory test driver reads it to skip banks whose density index is 7, and the size sum reads it too: it must read back what was written. See memory-init.md."
 
 [registers.md_bank_cfg2.fields]
-timing_idx = { bits = [35, 32], grade = "established", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
-b0_density = { bits = [2, 0], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b0_rank = { bits = [3, 3], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+timing_idx = { bits = [35, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)", doc = "Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours." }
+b0_density = { bits = [2, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b0_rank = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b0_field = { bits = [6, 5], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b1_density = { bits = [10, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b1_rank = { bits = [11, 11], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b1_density = { bits = [10, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b1_rank = { bits = [11, 11], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b1_field = { bits = [14, 13], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b2_density = { bits = [18, 16], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b2_rank = { bits = [19, 19], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b2_density = { bits = [18, 16], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b2_rank = { bits = [19, 19], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b2_field = { bits = [22, 21], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
-b3_density = { bits = [26, 24], grade = "established", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
-b3_rank = { bits = [27, 27], grade = "established", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
+b3_density = { bits = [26, 24], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)", doc = "Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours." }
+b3_rank = { bits = [27, 27], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76f06 (bank 0)", doc = "Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours." }
 b3_field = { bits = [30, 29], grade = "established", from = "SAL 5.04 PROM site 0xffa76f56 (bank 0)", doc = "Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours." }
 
 [registers.md_timing_0]
@@ -622,14 +622,14 @@ from = "SAL 5.04 PROM site 0xffa7710c (write); no Linux v5.3 name"
 doc = "Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Never read. Must return: plain storage. See memory-init.md."
 
 [registers.md_timing_0.fields]
-const_lo = { bits = [7, 0], grade = "established", from = "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6", doc = "Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours." }
+const_lo = { bits = [7, 1], grade = "established", from = "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6", doc = "Always 0x01 in this field: bit 1 set, bits 7:2 cleared; bit 0 keeps its old value. Name is ours." }
 row_lo = { bits = [39, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa76d46", doc = "Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours." }
 row_a = { bits = [43, 40], grade = "established", from = "SAL 5.04 PROM site 0xffa76df6", doc = "16-bit value at row offset 8. Name is ours." }
 row_b = { bits = [47, 44], grade = "established", from = "SAL 5.04 PROM site 0xffa76e26", doc = "16-bit value at row offset 10. Name is ours." }
 row_c = { bits = [51, 48], grade = "established", from = "SAL 5.04 PROM site 0xffa76e3c", doc = "16-bit value at row offset 12. Name is ours." }
-trcd3 = { bits = [52, 52], grade = "established", from = "SAL 5.04 PROM site 0xffa76d86", doc = "Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours." }
-trcd2 = { bits = [53, 53], grade = "established", from = "SAL 5.04 PROM site 0xffa76e16", doc = "Set instead of trcd3 for a tRCD of 2. Name is ours." }
-trcd4 = { bits = [54, 54], grade = "established", from = "SAL 5.04 PROM site 0xffa77536", doc = "Set instead of trcd3 for a tRCD of 4. Name is ours." }
+trcd3 = { bits = [52, 52], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76d86", doc = "Always set. Read as the base case for a DIMM-record value of 3, the tRCD in clocks (the reading as tRCD is inferred). Name is ours." }
+trcd2 = { bits = [53, 53], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76e16", doc = "Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 2, read as a tRCD of 2 clocks (inferred). Name is ours." }
+trcd4 = { bits = [54, 54], grade = "inferred", from = "SAL 5.04 PROM site 0xffa77536", doc = "Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 4, read as a tRCD of 4 clocks (inferred). Name is ours." }
 
 [registers.md_timing_1]
 offset = 0x100010028
@@ -658,9 +658,9 @@ from = "SAL 5.04 PROM site 0xffa77adc (write); no Linux v5.3 name"
 doc = "Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Never read. See memory-init.md."
 
 [registers.md_refresh_0.fields]
-cs_enable = { bits = [7, 0], grade = "established", from = "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)", doc = "One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours." }
-interval = { bits = [16, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)", doc = "Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours." }
-trfc = { bits = [22, 17], grade = "established", from = "SAL 5.04 PROM site 0xffa776ec", doc = "tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours." }
+cs_enable = { bits = [7, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)", doc = "One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours." }
+interval = { bits = [16, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)", doc = "Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours." }
+trfc = { bits = [22, 17], grade = "inferred", from = "SAL 5.04 PROM site 0xffa776ec", doc = "tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours." }
 bank_small = { bits = [27, 24], grade = "established", from = "SAL 5.04 PROM site 0xffa77a8c", doc = "Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours." }
 
 [registers.md_timing_2]
@@ -673,14 +673,14 @@ from = "SAL 5.04 PROM site 0xffa76c9c (read), 0xffa7713c (write); no Linux v5.3 
 doc = "Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Read once before the write, so any value is accepted before the first write. See memory-init.md."
 
 [registers.md_timing_2.fields]
-const_lo = { bits = [7, 0], grade = "established", from = "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6", doc = "Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours." }
+const_lo = { bits = [7, 1], grade = "established", from = "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6", doc = "Always 0x01 in this field: bit 1 set, bits 7:2 cleared; bit 0 keeps its old value. Name is ours." }
 row_lo = { bits = [39, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa76d46", doc = "Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours." }
 row_a = { bits = [43, 40], grade = "established", from = "SAL 5.04 PROM site 0xffa76df6", doc = "16-bit value at row offset 8. Name is ours." }
 row_b = { bits = [47, 44], grade = "established", from = "SAL 5.04 PROM site 0xffa76e26", doc = "16-bit value at row offset 10. Name is ours." }
 row_c = { bits = [51, 48], grade = "established", from = "SAL 5.04 PROM site 0xffa76e3c", doc = "16-bit value at row offset 12. Name is ours." }
-trcd3 = { bits = [52, 52], grade = "established", from = "SAL 5.04 PROM site 0xffa76d86", doc = "Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours." }
-trcd2 = { bits = [53, 53], grade = "established", from = "SAL 5.04 PROM site 0xffa76e16", doc = "Set instead of trcd3 for a tRCD of 2. Name is ours." }
-trcd4 = { bits = [54, 54], grade = "established", from = "SAL 5.04 PROM site 0xffa77536", doc = "Set instead of trcd3 for a tRCD of 4. Name is ours." }
+trcd3 = { bits = [52, 52], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76d86", doc = "Always set. Read as the base case for a DIMM-record value of 3, the tRCD in clocks (the reading as tRCD is inferred). Name is ours." }
+trcd2 = { bits = [53, 53], grade = "inferred", from = "SAL 5.04 PROM site 0xffa76e16", doc = "Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 2, read as a tRCD of 2 clocks (inferred). Name is ours." }
+trcd4 = { bits = [54, 54], grade = "inferred", from = "SAL 5.04 PROM site 0xffa77536", doc = "Also set (bit 52 stays set) when the DIMM-record value at offset 8 is 4, read as a tRCD of 4 clocks (inferred). Name is ours." }
 
 [registers.md_timing_3]
 offset = 0x100010048
@@ -709,9 +709,9 @@ from = "SAL 5.04 PROM site 0xffa7761c (read), 0xffa77b0c (write); no Linux v5.3 
 doc = "Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Read once, before the write; keep what was written. See memory-init.md."
 
 [registers.md_refresh_1.fields]
-cs_enable = { bits = [7, 0], grade = "established", from = "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)", doc = "One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours." }
-interval = { bits = [16, 8], grade = "established", from = "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)", doc = "Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours." }
-trfc = { bits = [22, 17], grade = "established", from = "SAL 5.04 PROM site 0xffa776ec", doc = "tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours." }
+cs_enable = { bits = [7, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)", doc = "One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours." }
+interval = { bits = [16, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)", doc = "Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours." }
+trfc = { bits = [22, 17], grade = "inferred", from = "SAL 5.04 PROM site 0xffa776ec", doc = "tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours." }
 bank_small = { bits = [27, 24], grade = "established", from = "SAL 5.04 PROM site 0xffa77a8c", doc = "Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours." }
 
 [registers.md_const_58]
@@ -768,7 +768,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes)"
-doc = "Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which runs only with bit 8 of the debug-switch word set). Equal: nothing. Value below the argument: writes the argument back (sign-extended from 32 bits), zero-fills the last 1/32 of the bank with engine operation 48 and then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md."
+doc = "Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which always runs). Equal: nothing. Value below the argument: zero-fills the last 1/32 of the bank with engine operation 48, then writes the argument back (sign-extended from 32 bits), then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear; a timeout prints a message and returns). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md."
 
 # Words the memory bring-up touches that the first batch did not name; read in full at the sites given.
 
@@ -779,7 +779,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name"
-doc = "MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised)."
+doc = "MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised)."
 
 [registers.md_reg_0005_0000]
 offset = 0x100050000

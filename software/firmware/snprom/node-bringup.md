@@ -60,14 +60,14 @@ bits 19:16):
 | `0x1_0001_0000`, `_0008`, `_0010` | write (008 read first) | per-bank config: timing index in bits 35:32; one byte per bank at bit 8k: bits 2:0 density index (7 = empty), bit 3 rank code, bits 6:5 bank number | none |
 | `0x1_0001_0020`, `_0040` | read, write | timing fields from a 32-byte flash table row; bits 7:0 = 0x02; one of bits 52, 53, 54 for tRCD 3, 2, 4 | none |
 | `0x1_0001_0028`, `_0048` | read, write | six 4-bit timing fields | none |
-| `0x1_0001_0030`, `_0050` | write | refresh interval 195 in bits 16:8 (overridable by the `MemoryRefresh` variable), tRFC clocks in bits 22:17, per-bank enables | none |
+| `0x1_0001_0030`, `_0050` | write (`_0050` is read first and merged, `0xffa7761c`) | refresh interval 195 in bits 16:8 (overridable by the `MemoryRefresh` variable), tRFC clocks in bits 22:17, per-bank enables | none |
 | `0x1_0001_0058`, `_0078` | write | constants `0x400_4e20`, `0x24` | none |
 | `0x1_0001_0060` | write | `0x4047` when SHub ID revision (31:28 of `0x1_1006_0580`) is above 2, else `0x4045` | none |
 | `0x1_0003_0200`..`_0270`, `0x1_0005_0200`..`_0270` | write | eight words each, all ones in the traced run; role not decoded | none |
 | `0x1_0003_0400`, `0x1_0005_0400` | write | `0x1000` | none |
 | `0x1_0003_0100`..`_0130`, `0x1_0005_0100`..`_0130` | write | presence vector (`mdir_create_presence_vec`, `0xffa79310`): 1, 0, 0, 0 | none |
 | `0x1_0003_0300`..`_0370`, `0x1_0005_0300`..`_0370` | write | privilege vectors (`mdir_create_privilege_vecs`, `0xffa79960`) | `SH1_MD_DQLP_MMR_DIR_PRIVEC0` (`0x1_0003_0300`), `SH1_MD_DQRP_MMR_DIR_PRIVEC0` (`0x1_0005_0300`) |
-| `0x1_0183_0200`, `0x1_0185_0200` | write | per-processor pair, loop of up to eight (role not decoded) | none |
+| `0x1_0183_0200`, `0x1_0185_0200` | not stored | the arm that would form these addresses is unreachable: it is taken when bit 32 of `0x1_0003_0200 + 16 * n` (or `0x1_0005_0200 + 16 * n`) is clear and that bit is always set; see [memory-init.md](../../../devices/shub/memory-init.md) | none |
 
 The 0x0003 and 0x0005 blocks are named in the PROM's error text as the directory queue ports for "DQLP" and "DQRP"
 (strings in the image, established as strings); that the two blocks are those ports is inferred from the Linux names.
@@ -78,7 +78,7 @@ by writing `0x1_0002_0080` (address or command word), `0x1_0000_0080` (0), `0x1_
 `0x1_0002_0088` with bit 40 (go), operation code in bits 38:32, value in bits 30:0. `0xffa6fc60` polls `0x1_0002_0088`
 until `(value & 0x300_0000_0000) != 0x100_0000_0000`, with a deadline of 20,000,000 ticks of the clock at `0x1_101c_0000`
 (timeout: "MBIST TIMEOUT"). After the poll the caller reads bit 41 of `0x1_0002_0088` and then bit 36 of `0x1_0000_0080` on every pass (`0xffa70290`, `0xffa702c0`);
-either set is failure (-2). The error report (`0xffa72500`) reads bit 36 again and, if set, `0x1_0000_00b8`. DRAM initialisation uses the same register with operation codes 7, 2, 0, 0, 2, 1, 1, 0 for the first bank
+either set is failure (-2). The error report (`0xffa72500`) reads bit 36 again and, if it is clear, reads `0x1_0000_00b8` (a failure that was not a compare error); if it is set the report runs a diagnosis. DRAM initialisation uses the same register with operation codes 7, 2, 0, 0, 2, 1, 1, 0 for the first bank
 (the command words are in [boot-sequence.md](boot-sequence.md#memory-discovery-what-is-read-and-what-an-interpreter-run-of-the-image-shows);
 their DRAM meaning is inferred) and the memory test with operation codes 48 and 16. The test driver (`0xffa6f000`) reads
 each bank's config byte from `0x1_0001_0010`, skips banks whose density index is 7, and honours a skip mode ("Skipping
@@ -323,9 +323,9 @@ uses before the controller is up is RAM-less cache preload at `0x1000000`, see [
 | `0x1_0000_0000` chip identification | `chipset_init_chip` `0xffa0f8c0` | bounded read must not fault; part number (value >> 12, 16 bits) 17251 = `0x4363`; revision in bits 31:28 | established (check at `0xffa959a6`) |
 | `0x1_1006_0580` SHub ID (`SH1_SHUB_ID`) | `0xffa0dcf0` and about 15 more sites | read-write; bits 42:32 NASID (any value at reset; must read back what `0xffa95a30` writes); bits 31:28 revision (3 in the trace; above 2 selects the `0x4047` and `0x3b03f7` values); bits 52:48 and 45:44 stored | established as reads and writes; reset value unknown |
 | `0x1_1006_0500` | `0xffa77e0c` | bits 1:0 = 0 (200 MHz) or 1 to 3; must be a supported pair with the DIMM CAS | established |
-| `0x1_0001_00xx`, `0x1_0003_xxxx`, `0x1_0005_xxxx`, `0x1_0183_0200`, `0x1_0185_0200` | `0xffa76bf0` | store what is written; zero before the first store | inferred (trace) |
+| `0x1_0001_00xx`, `0x1_0003_xxxx`, `0x1_0005_xxxx` | `0xffa76bf0` | store what is written; zero before the first store | inferred (trace) |
 | `0x1_0002_0088` MBIST control | `0xffa6fc60`, `0xffa6fb30` | after a write with bit 40 set, bit 40 reads 0 within 20,000,000 clock ticks; bit 41 never set | established (logic), inferred (hardware) |
-| `0x1_0002_0080`, `0x1_0000_0080`, `0x1_0000_00c0` | `0xffa6fb30` | plain storage; bit 36 of `0x1_0000_0080` is read after every engine run in the memory test and must read 0 (set is failure) | established |
+| `0x1_0002_0080`, `0x1_0000_0080`, `0x1_0000_00c0` | `0xffa6fb30` | plain storage; bit 36 of `0x1_0000_0080` is read after each operation-16 pass of the memory test (not after the other operations) and must read 0 (set is failure) | established |
 | `0x1_0003_1000`, `0x1_0005_1000` | `0xffa6b060` | plain storage; engine completes as above | established |
 | IBLS0 `0x8_01c1_0000` | `0xffa7a960` | bit 20 reads 0 after a write with it set | established |
 | `0x1_101c_0000` RTC (`SH1_RTC`) | every delay loop | monotonically advancing 55-bit counter | established |
@@ -347,7 +347,7 @@ uses before the controller is up is RAM-less cache preload at `0x1000000`, see [
 
 - Reset value and any side effect on read of `0x1_1006_0580`, `0x1_101d_0208`, `0x1_101d_0080` and `0x88`.
 - Where and when the PI table-called functions and `0xffa976e0` run, and what their bits mean.
-- The role of the `0x1_0003_0200` and `0x1_0183_0200` families, and of the `0x1_0001_00xx` per-bank values beyond field
+- The role of the `0x1_0003_0200` family, and of the `0x1_0001_00xx` per-bank values beyond field
   positions; the DRAM command meaning of the engine operation codes.
 - Which NASID `intcon_assign_numbers` finally writes for one node (the default reading says 0, whole function unread).
 - Whether the real L1 returns SPD for ids 14, 15, 22, 23 on any brick type.

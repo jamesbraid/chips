@@ -115,7 +115,7 @@
    "name": "md_bank_cfg0.timing_idx",
    "hi": 35,
    "lo": 32,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
   },
   {
@@ -133,7 +133,7 @@
    "name": "md_bank_cfg0.b3_rank",
    "hi": 27,
    "lo": 27,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -142,7 +142,7 @@
    "name": "md_bank_cfg0.b3_density",
    "hi": 26,
    "lo": 24,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -160,7 +160,7 @@
    "name": "md_bank_cfg0.b2_rank",
    "hi": 19,
    "lo": 19,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -169,7 +169,7 @@
    "name": "md_bank_cfg0.b2_density",
    "hi": 18,
    "lo": 16,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -187,7 +187,7 @@
    "name": "md_bank_cfg0.b1_rank",
    "hi": 11,
    "lo": 11,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -196,7 +196,7 @@
    "name": "md_bank_cfg0.b1_density",
    "hi": 10,
    "lo": 8,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -214,7 +214,7 @@
    "name": "md_bank_cfg0.b0_rank",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -223,7 +223,7 @@
    "name": "md_bank_cfg0.b0_density",
    "hi": 2,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -246,7 +246,7 @@
    "name": "md_bank_cfg1.timing_idx",
    "hi": 35,
    "lo": 32,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
   },
   {
@@ -264,7 +264,7 @@
    "name": "md_bank_cfg1.b3_rank",
    "hi": 27,
    "lo": 27,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -273,7 +273,7 @@
    "name": "md_bank_cfg1.b3_density",
    "hi": 26,
    "lo": 24,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -291,7 +291,7 @@
    "name": "md_bank_cfg1.b2_rank",
    "hi": 19,
    "lo": 19,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -300,7 +300,7 @@
    "name": "md_bank_cfg1.b2_density",
    "hi": 18,
    "lo": 16,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -318,7 +318,7 @@
    "name": "md_bank_cfg1.b1_rank",
    "hi": 11,
    "lo": 11,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -327,7 +327,7 @@
    "name": "md_bank_cfg1.b1_density",
    "hi": 10,
    "lo": 8,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -345,7 +345,7 @@
    "name": "md_bank_cfg1.b0_rank",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -354,7 +354,7 @@
    "name": "md_bank_cfg1.b0_density",
    "hi": 2,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -377,7 +377,7 @@
    "name": "md_bank_cfg2.timing_idx",
    "hi": 35,
    "lo": 32,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
   },
   {
@@ -395,7 +395,7 @@
    "name": "md_bank_cfg2.b3_rank",
    "hi": 27,
    "lo": 27,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -404,7 +404,7 @@
    "name": "md_bank_cfg2.b3_density",
    "hi": 26,
    "lo": 24,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -422,7 +422,7 @@
    "name": "md_bank_cfg2.b2_rank",
    "hi": 19,
    "lo": 19,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -431,7 +431,7 @@
    "name": "md_bank_cfg2.b2_density",
    "hi": 18,
    "lo": 16,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -449,7 +449,7 @@
    "name": "md_bank_cfg2.b1_rank",
    "hi": 11,
    "lo": 11,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -458,7 +458,7 @@
    "name": "md_bank_cfg2.b1_density",
    "hi": 10,
    "lo": 8,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -476,7 +476,7 @@
    "name": "md_bank_cfg2.b0_rank",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
   },
   {
@@ -485,7 +485,7 @@
    "name": "md_bank_cfg2.b0_density",
    "hi": 2,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
@@ -508,7 +508,7 @@
    "name": "md_timing_0.trcd4",
    "hi": 54,
    "lo": 54,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa77536"
   },
   {
@@ -517,7 +517,7 @@
    "name": "md_timing_0.trcd2",
    "hi": 53,
    "lo": 53,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76e16"
   },
   {
@@ -526,7 +526,7 @@
    "name": "md_timing_0.trcd3",
    "hi": 52,
    "lo": 52,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76d86"
   },
   {
@@ -570,7 +570,7 @@
    "kind": "field",
    "name": "md_timing_0.const_lo",
    "hi": 7,
-   "lo": 0,
+   "lo": 1,
    "grade": "established",
    "from": "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6"
   },
@@ -671,7 +671,7 @@
    "name": "md_refresh_0.trfc",
    "hi": 22,
    "lo": 17,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa776ec"
   },
   {
@@ -680,7 +680,7 @@
    "name": "md_refresh_0.interval",
    "hi": 16,
    "lo": 8,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)"
   },
   {
@@ -689,7 +689,7 @@
    "name": "md_refresh_0.cs_enable",
    "hi": 7,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)"
   },
   {
@@ -712,7 +712,7 @@
    "name": "md_timing_2.trcd4",
    "hi": 54,
    "lo": 54,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa77536"
   },
   {
@@ -721,7 +721,7 @@
    "name": "md_timing_2.trcd2",
    "hi": 53,
    "lo": 53,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76e16"
   },
   {
@@ -730,7 +730,7 @@
    "name": "md_timing_2.trcd3",
    "hi": 52,
    "lo": 52,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa76d86"
   },
   {
@@ -774,7 +774,7 @@
    "kind": "field",
    "name": "md_timing_2.const_lo",
    "hi": 7,
-   "lo": 0,
+   "lo": 1,
    "grade": "established",
    "from": "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6"
   },
@@ -875,7 +875,7 @@
    "name": "md_refresh_1.trfc",
    "hi": 22,
    "lo": 17,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa776ec"
   },
   {
@@ -884,7 +884,7 @@
    "name": "md_refresh_1.interval",
    "hi": 16,
    "lo": 8,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)"
   },
   {
@@ -893,7 +893,7 @@
    "name": "md_refresh_1.cs_enable",
    "hi": 7,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)"
   },
   {

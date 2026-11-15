@@ -52,7 +52,7 @@ pub mod md_mbist_status {
         }
     }
 }
-/// Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a p (established)
+/// Memory test engine other-error value; the name is ours. Read only in the failure report, and only when bit 36 of md_mbist_status is found clear (the r (established)
 pub mod md_mbist_err {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1000000b8;
@@ -66,7 +66,7 @@ pub mod md_mbist_mask {
 pub mod md_bank_cfg0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010000;
-    pub mod timing_idx { // bits 35:32, established
+    pub mod timing_idx { // bits 35:32, inferred
         pub const SHIFT: u32 = 32;
         pub const MASK: u64 = 0xf;
         pub const fn get(v: u64) -> u64 {
@@ -86,7 +86,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_rank { // bits 27:27, established
+    pub mod b3_rank { // bits 27:27, inferred
         pub const SHIFT: u32 = 27;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -96,7 +96,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_density { // bits 26:24, established
+    pub mod b3_density { // bits 26:24, inferred
         pub const SHIFT: u32 = 24;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -116,7 +116,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_rank { // bits 19:19, established
+    pub mod b2_rank { // bits 19:19, inferred
         pub const SHIFT: u32 = 19;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -126,7 +126,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_density { // bits 18:16, established
+    pub mod b2_density { // bits 18:16, inferred
         pub const SHIFT: u32 = 16;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -146,7 +146,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_rank { // bits 11:11, established
+    pub mod b1_rank { // bits 11:11, inferred
         pub const SHIFT: u32 = 11;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -156,7 +156,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_density { // bits 10:8, established
+    pub mod b1_density { // bits 10:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -176,7 +176,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_rank { // bits 3:3, established
+    pub mod b0_rank { // bits 3:3, inferred
         pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -186,7 +186,7 @@ pub mod md_bank_cfg0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_density { // bits 2:0, established
+    pub mod b0_density { // bits 2:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -201,7 +201,7 @@ pub mod md_bank_cfg0 {
 pub mod md_bank_cfg1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010008;
-    pub mod timing_idx { // bits 35:32, established
+    pub mod timing_idx { // bits 35:32, inferred
         pub const SHIFT: u32 = 32;
         pub const MASK: u64 = 0xf;
         pub const fn get(v: u64) -> u64 {
@@ -221,7 +221,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_rank { // bits 27:27, established
+    pub mod b3_rank { // bits 27:27, inferred
         pub const SHIFT: u32 = 27;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -231,7 +231,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_density { // bits 26:24, established
+    pub mod b3_density { // bits 26:24, inferred
         pub const SHIFT: u32 = 24;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -251,7 +251,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_rank { // bits 19:19, established
+    pub mod b2_rank { // bits 19:19, inferred
         pub const SHIFT: u32 = 19;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -261,7 +261,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_density { // bits 18:16, established
+    pub mod b2_density { // bits 18:16, inferred
         pub const SHIFT: u32 = 16;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -281,7 +281,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_rank { // bits 11:11, established
+    pub mod b1_rank { // bits 11:11, inferred
         pub const SHIFT: u32 = 11;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -291,7 +291,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_density { // bits 10:8, established
+    pub mod b1_density { // bits 10:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -311,7 +311,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_rank { // bits 3:3, established
+    pub mod b0_rank { // bits 3:3, inferred
         pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -321,7 +321,7 @@ pub mod md_bank_cfg1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_density { // bits 2:0, established
+    pub mod b0_density { // bits 2:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -336,7 +336,7 @@ pub mod md_bank_cfg1 {
 pub mod md_bank_cfg2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010010;
-    pub mod timing_idx { // bits 35:32, established
+    pub mod timing_idx { // bits 35:32, inferred
         pub const SHIFT: u32 = 32;
         pub const MASK: u64 = 0xf;
         pub const fn get(v: u64) -> u64 {
@@ -356,7 +356,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_rank { // bits 27:27, established
+    pub mod b3_rank { // bits 27:27, inferred
         pub const SHIFT: u32 = 27;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -366,7 +366,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b3_density { // bits 26:24, established
+    pub mod b3_density { // bits 26:24, inferred
         pub const SHIFT: u32 = 24;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -386,7 +386,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_rank { // bits 19:19, established
+    pub mod b2_rank { // bits 19:19, inferred
         pub const SHIFT: u32 = 19;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -396,7 +396,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b2_density { // bits 18:16, established
+    pub mod b2_density { // bits 18:16, inferred
         pub const SHIFT: u32 = 16;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -416,7 +416,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_rank { // bits 11:11, established
+    pub mod b1_rank { // bits 11:11, inferred
         pub const SHIFT: u32 = 11;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -426,7 +426,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b1_density { // bits 10:8, established
+    pub mod b1_density { // bits 10:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -446,7 +446,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_rank { // bits 3:3, established
+    pub mod b0_rank { // bits 3:3, inferred
         pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -456,7 +456,7 @@ pub mod md_bank_cfg2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod b0_density { // bits 2:0, established
+    pub mod b0_density { // bits 2:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {
@@ -471,7 +471,7 @@ pub mod md_bank_cfg2 {
 pub mod md_timing_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010020;
-    pub mod trcd4 { // bits 54:54, established
+    pub mod trcd4 { // bits 54:54, inferred
         pub const SHIFT: u32 = 54;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -481,7 +481,7 @@ pub mod md_timing_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trcd2 { // bits 53:53, established
+    pub mod trcd2 { // bits 53:53, inferred
         pub const SHIFT: u32 = 53;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -491,7 +491,7 @@ pub mod md_timing_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trcd3 { // bits 52:52, established
+    pub mod trcd3 { // bits 52:52, inferred
         pub const SHIFT: u32 = 52;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -541,9 +541,9 @@ pub mod md_timing_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod const_lo { // bits 7:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0xff;
+    pub mod const_lo { // bits 7:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x7f;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -631,7 +631,7 @@ pub mod md_refresh_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trfc { // bits 22:17, established
+    pub mod trfc { // bits 22:17, inferred
         pub const SHIFT: u32 = 17;
         pub const MASK: u64 = 0x3f;
         pub const fn get(v: u64) -> u64 {
@@ -641,7 +641,7 @@ pub mod md_refresh_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod interval { // bits 16:8, established
+    pub mod interval { // bits 16:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u64 = 0x1ff;
         pub const fn get(v: u64) -> u64 {
@@ -651,7 +651,7 @@ pub mod md_refresh_0 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod cs_enable { // bits 7:0, established
+    pub mod cs_enable { // bits 7:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xff;
         pub const fn get(v: u64) -> u64 {
@@ -666,7 +666,7 @@ pub mod md_refresh_0 {
 pub mod md_timing_2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010040;
-    pub mod trcd4 { // bits 54:54, established
+    pub mod trcd4 { // bits 54:54, inferred
         pub const SHIFT: u32 = 54;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -676,7 +676,7 @@ pub mod md_timing_2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trcd2 { // bits 53:53, established
+    pub mod trcd2 { // bits 53:53, inferred
         pub const SHIFT: u32 = 53;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -686,7 +686,7 @@ pub mod md_timing_2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trcd3 { // bits 52:52, established
+    pub mod trcd3 { // bits 52:52, inferred
         pub const SHIFT: u32 = 52;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -736,9 +736,9 @@ pub mod md_timing_2 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod const_lo { // bits 7:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0xff;
+    pub mod const_lo { // bits 7:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x7f;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -826,7 +826,7 @@ pub mod md_refresh_1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod trfc { // bits 22:17, established
+    pub mod trfc { // bits 22:17, inferred
         pub const SHIFT: u32 = 17;
         pub const MASK: u64 = 0x3f;
         pub const fn get(v: u64) -> u64 {
@@ -836,7 +836,7 @@ pub mod md_refresh_1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod interval { // bits 16:8, established
+    pub mod interval { // bits 16:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u64 = 0x1ff;
         pub const fn get(v: u64) -> u64 {
@@ -846,7 +846,7 @@ pub mod md_refresh_1 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod cs_enable { // bits 7:0, established
+    pub mod cs_enable { // bits 7:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xff;
         pub const fn get(v: u64) -> u64 {
@@ -927,7 +927,7 @@ pub mod md_mbist_ctl {
         }
     }
 }
-/// MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets b (established)
+/// MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to t (established)
 pub mod md_reg_0003_0000 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100030000;
