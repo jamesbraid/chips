@@ -15,7 +15,7 @@ lists each with what was read. Nothing here comes from IRIX: Altix and Prism ran
 
 | Machine | Guide read | Node enclosure | Interconnect as the guide names it | Page |
 |---|---|---|---|---|
-| Altix 350 | 007-4660-001 (2004), 007-4660-002 | 2U base compute, CPU expansion and CMPX modules, IP57 node board | "NUMAlink" in -001, NUMAlink-4 in -002; 3.2 GB/s each direction | [altix-350.md](altix-350.md) |
+| Altix 350 | 007-4660-001 (2004), 007-4660-002 | 2U base compute, CPU expansion and CMPX modules, IP57 node board | "NUMAlink" in -001, NUMAlink-4 in -002; 3.2 GB/s each direction | [altix-350.md](altix-350.md) ; base I/O cards: [altix-350-base-io.md](altix-350-base-io.md) |
 | Altix 330 | 007-4790-001 (2005) | 1U compute module | NUMAlink-4, one port | [altix-330.md](altix-330.md) |
 | Altix 3300, 3700 | 007-4579-001 (2003) | C-brick, 3U, two nodes | "NUMA 3", R-brick router | [altix-3000.md](altix-3000.md) |
 | Altix 3700 Bx2 | 007-4377-002 (2004) | CR-brick, 4U, up to four nodes and two routers | NUMAlink-4 | [altix-3700-bx2.md](altix-3700-bx2.md) |

@@ -79,6 +79,8 @@ for a Bedrock on the 350.
 | NUMAlink | Two ports per module, 3.2 GB/s each direction (-001 pp.109, 112) | established. -002 calls it NUMAlink-4 (pp.66, 69), so for the later machine the router generation is known by name; -001 left it unnumbered |
 | L1 controller | On the interface board with the power-supply interface and NUMAlink connectors (-001 p.105; -002 p.114) | established |
 
+The base I/O cards have [their own page](altix-350-base-io.md): PCI devices, riser, console and interrupt route.
+
 ### IO10 against IO9 (established, -002 pp.72, 112 to 114)
 
 | | IO10 (standard) | IO9 (optional) |
