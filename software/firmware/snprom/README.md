@@ -586,3 +586,20 @@ Independent review of chips commits `98bcb20..fe7f0ae` (this page, [questions/sn
 **Cleared scope:** the image layout tables, checksums, product-compatibility strings (with the `IP41` qualification), the dispatch table and kernel call comparison, and the `SN_SAL_GET_SN_INFO` handler except region size. **Not cleared:** the SHub 2 SAL_A register list as a complete ordered account, the region-size source, the boot-first recommendation and Prism or Altix 350 statements, and the list in irix-files.md as the root's full contents. The three PROM-view lines on the other pages are cleared for the mask, shift and sharing-domain content they state and for the `SH2_IPI_ACCESS` writes; the address-map line attributes the global window `0x3_0000_0000` to the first-stage firmware, but the first stage does not use it (the runtime does), so reword it when the page is corrected.
 
 **Findings addressed in ec38a7e; renewed review needed.** Items 1 to 4 of the SHub 2 SAL_A list, the region-size source, the `sysctl_probe` per-build statement, the stale root listing, the boot-first recommendation and the Prism and Altix 350 statements, and the address-map line are corrected there. The reviewer's clearance above stands for what it cleared; the corrected claims are not cleared until reviewed again.
+
+### Renewed review
+
+Independent review of chips commits `ec38a7e`, `4bb8d3a`, `cb0fe84` and `b8fa253`, examined at `b8fa253`, by a reviewer who did not write them. Details and method are in the [Review section of the boot-path page](altix350-boot-path.md#review).
+
+**Checks and results.**
+
+- **SHub 2 SAL_A list and order:** the earlier items (the `0x2_2011_0010` read feeding `cr.lid`, the 176 error path, progress codes 48, 56, 59, 176, 177, 178, PAL pair only on reason 3 after the identity writes) agree with the SHub 1 SAL 5.04 first stage, which has the same control structure and was read in full; I did not re-read the 1.40 SHub 2 SAL_A bundle by bundle. Election direction (the matching processor is the winner, and sets bits 41:39) holds in the SHub 1 code.
+- **Progress codes:** 176 is "PAL early self-test failed" and 177 "SAL entered with invalid function code" in the PROM's own table, consistent with the stated meanings.
+- **GET_SN_INFO region size:** the register `0x2_0003_0000` is loaded in the 10.40 SHub 2 SAL_B; pass.
+- **`sysctl_probe` per build:** 5.04 and 4.90 compare `cpuid[2]` only (read); 4.43 has the 2,000,000-tick retry (located); 3.32, 4.20, 1.11 and 1.40 not re-derived.
+- **irix-files.md:** all six new rows match `root/sn2/SHA256SUMS` in hash and size.
+- **README.snprom and recommendation:** the package note lists Altix 330, 350, 3300, 3700, 3700 Bx2, Prism Rackmount and Deskside for `shub1snprom.bin` and Altix 4700 and 450 for `shub2snprom.bin`; the recommendation of the SAL 5.04 SHub 1 image follows.
+- **Global window attribution:** SAL_A SHub 2 uses `0x2_...` addresses; the runtime constants for `0x3_...` were not re-read.
+
+**Cleared scope:** the SHub 2 SAL_A corrections as far as they are shared with the read SHub 1 code, the region-size source, the 4.43, 4.90 and 5.04 `sysctl_probe` statements, the hash and size rows, the README.snprom reading and image recommendation. **Not cleared:** the `sysctl_probe` statement for 3.32 and 4.20, the 1.40 first-stage list as a bundle-level re-read, and the global-window attribution in the address-map line. Findings on the new boot-path page are listed there.
+

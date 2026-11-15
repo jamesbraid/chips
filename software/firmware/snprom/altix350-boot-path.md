@@ -40,12 +40,13 @@ complete, 0x1b late tests, 0x1c discovering node interconnect, 0x1d assigning NA
 install, 0x24 discovering I/O, 0x25 partitioning info, 0x26 final init, 0x27 "Jumping to next segment (EFI or IOprom)",
 0x28 waiting on the EFI callback console, 0x30 calling SAL_B for a reset event, 0x31 SAL_RESET entered, 0x32 and 0x34
 cache preload, 0x35 about to call main(), 0x38 entered due to MCA, 0x3b due to INIT, 0x44 copying PROM to RAM, 0x48
-jumping to EFI, 0x49 to 0x4f EFI start-up ("Installing EFI memory map", "base EFI devices", "console drivers",
+jumping to EFI, 0x49 to 0x4f EFI start-up (0x49 "Jump to EFI complete", 0x4a early return, then "Installing EFI memory map", "base EFI devices", "console drivers",
 "SN-specific EFI devices", "EFI initialization complete"), 0x50 EFI idle loop, 0x51 and 0x52 flashing. Fatal codes 0x80
 to 0x90 include 0x80 no memory on node, 0x81 write to system controller timed out, 0x83 local master arbitration failed,
 0x85 cannot initialise klconfig, 0x89 system controller communication init failed, 0x8d critical system controller
-transaction failed, 0x8f NUMAlink discovery failed. Codes 0xb0 to 0xb4 (176 to 180) are written by SAL_A and the SAL_B
-entry and are not in the table.
+transaction failed, 0x8f NUMAlink discovery failed. Codes 0xb0 to 0xb4 (176 to 180) are in the table too: 0xb0 "PAL early self-test failed", 0xb1 "SAL entered with invalid
+function code", 0xb2 "SAL invoked for firmware recovery", 0xb3 "SAL_RESET called with bad parameters", 0xb4 "main() returned";
+SAL_A and the SAL_B entry write them.
 
 This also fixes the SAL_A reason codes: SAL_A writes 48 (0x30, reset) for reason 0, 56 (0x38, MCA) for reason 1 and 59
 (0x3b, INIT) for reason 2, so reason 0 is reset, 1 is machine check, 2 is INIT (established, from the table and the
@@ -118,7 +119,7 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
   enumerated, so this list is a lower bound.
 - **PAL data the firmware reads:** `cpuid[3]` (masked `0xffffff0000` for the family and model, full value for the stepping
   table), `cpuid[2]` (the signature below), `cr.lid`, and the processor ID layout above (slice in bits 26:23).
-- **CPU ID signature (fact only).** `cpuid[2] == 0xaeeeeeee8badbeef` is tested at 65 sites in SAL_B and in the runtime;
+- **CPU ID signature (fact only).** `cpuid[2] == 0xaeeeeeee8badbeef` appears at 65 sites in SAL_B (the uncompressed part of the image) and 31 in the SAL runtime;
   with it the firmware skips the L1 UART, returns built-in board data, and makes `sysctl_cmd_command_timeout` fail at
   once with -24. It is not recommended here.
 
@@ -240,3 +241,36 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
 The ordered MMR list of the memory controller, interconnect and I/O discovery phases, the single-node route skip, the
 L1 command-id names, the contents of the I/O-widget register reads, what the PAL index 528 call does, and the `node id`
 install write. Each is listed in [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
+
+## Review
+
+Independent review of chips commits `ec38a7e`, `4bb8d3a`, `cb0fe84` and `b8fa253` (this page, the firmware page fixes, `questions/sn2-prom-open.md`, `evidence/irix-files.md`), examined at `b8fa253`. The reviewer did not write the page. Method: parse the FIT of `shub1snprom.bin` (SAL 5.04) and disassemble it with the retools `ia64-linux-gnu-objdump`; decompress the SAL runtime component (type 0x12) and read its dynamic symbols; compare other builds by instruction patterns. Nothing was taken from the page's own tables. PAL numbering was checked against the Linux `arch/ia64/include/asm/pal.h` in the Library `linux-history` root (it says it follows the Intel IA-64 SDM), not from memory.
+
+**Confirmed (re-read in the binary).**
+
+- FIT: PAL_B 7.79, 5.73, 2.25; PAL_A 7.31, 5.37, 1.27; SAL_A `0xffc4e000` (16 KiB), SAL_B `0xffa01000`, runtime, EFI types; reset-vector words at `0xFFFFFFE0` and `0xFFFFFFE8`. SHA-256 matches `root/sn2/SHA256SUMS`.
+- SAL_A in full: every register write and value in the SHub 1 list, in the stated order and condition (`0x81_1002_0000` = `0x15031010`; bit 24 of `0x81_2001_0100`; `0x81_5003_1510/1530` ORed with `0x60` into `0x87_fed1_0000` and `0x87_fed3_0000`; election at `0x81_101d_0088` and `0x81_101d_0080`; winner zeroes `0x81_5003_1550/1540/1560`, writes 1 to `0x81_1006_0480`, later sets bits 41:39 of `0x81_101d_0100` to 7; error path with 176; FIT scan; `r31` read at `0x81_1003_0000 + (slice & 3) * 128`). `cr.lid` field is 4 bits at 26:23. Election direction (the processor whose value reads back is the winner and does the writes) is correct. PAL pair is chosen only on reason 3, after the node set-up. Reason 3 has the `psr.db` set, the stub returning 1, the spin on `r33` bit 3 and PAL index 528 with argument 5. Reasons 1 and 2 go to SAL_B at offsets 0x20 and 0x10, above 3 gives 177, the fatal hang is 178.
+- Progress table at `0xffbd7000`: read in full (pairs of code and string). Every code and message the page quotes matches, including 0x8d, 0x89, 0x80 to 0x90 and 0x30, 0x38, 0x3b. Reason numbering follows from it.
+- Main sequence: SAL_B reset entry stub at `0xffa01000` branches to `0xffa1de00` (progress 49 then 53, reads `0x1000010 + 8 * cpu`, `0x1000038`, `0x1000000 + 8 * (9 + cpu)`, calls `0xffac42d0` and `main` at `0xffa19a20`); progress writers in main, main_two (`0xffa1ade0`) and main_three (`0xffad7280`) carry the quoted code ranges.
+- L1: UART stride 8 and registers (IER `+0x08`, LCR `+0x18`, LSR `+0x28`, scratch `+0x38`) in the runtime's `sc_uart_init`; `direct_probe` writes 0x55 then 0xaa to scratch, master node only; `sc_uart_init` checks bits 41:39 of `0x81_101d_0100` equal 7. `sysctl_probe` in 5.04 (SAL_B `0xffa806d0` and runtime) returns 0 on the signature and 1 otherwise, no hardware access. `sysctl_cmd_command_timeout` (SAL_B `0xffa82a10`): -24 at once on the signature; up to 50 tries, 500-tick wait, retry while -26; on -24 from the receive it calls the die routine with 141 (0x8d). 4.43's probe (2,000,000-tick retry) differs from 5.04's.
+- Board identity: the `Part:030-1604-001;Name:IP41...` record is selected only when `cpuid[2]` equals the signature (`0xffaa14f6` to `0xffaa1530`; otherwise the EEPROM branch); "IP41" is a fixed string passed in `hwcfg_node_init` (`0xffaa2040`); `IP57` is absent from SAL_A, SAL_B and the decompressed runtime, ELF and driver components. `chipset_get_nasid` reads bits 42:32 of `0x81_1006_0580`. `shub_probe`-style compare against 17251 exists (`0xffa959a6`).
+- PIC: part 0xd102 (53506) compared at `0xffab0260` in the function at `0xffab0130`, and at many later sites.
+- Fixes in the earlier commits: SHub 2 region size from `0x2_0003_0000` (constant present in the 10.40 SHub 2 SAL_B), README.snprom contents and the Prism and Altix 350 recommendation, irix-files.md hashes and sizes (all six new rows match the root, `sha256sum -c` clean).
+
+**Mechanical fixes made in this review.**
+
+1. The page said codes 0xb0 to 0xb4 are "not in the table". They are (0xb0 "PAL early self-test failed", 0xb1 "SAL entered with invalid function code", 0xb2 "SAL invoked for firmware recovery", 0xb3 "SAL_RESET called with bad parameters", 0xb4 "main() returned"). This also supports reading `r35` as a PAL-reported fault (176). Text corrected.
+2. The signature "is tested at 65 sites in SAL_B and in the runtime": 65 is the SAL_B count; the runtime has 31 more. Text corrected.
+3. 0x49 and 0x4a are "Jump to EFI complete" and "Taking early return path from EFI"; the memory-map message is 0x4b. Text corrected.
+
+**Findings not fixed (author to correct before these claims stand).**
+
+1. **PAL index list is wrong and should not be "established".** The 23-number list mixes real PAL indexes with structure offsets: most of 8, 32, 48, 64, 76, 224, 384, 608, 1040, 1072, 1088, 2472 and 3088 occur only as `adds rX=N,rY` field offsets (for example `adds r28=1072,r32`, `adds r28=2472,r32` are pointer arithmetic, not a PAL call). Direct `r28` immediates feeding a PAL entry are fewer (1, 2, 3, 12, 16, 22, 29, 41, 42 and, in SAL_A, 528; 0x208 at `0xffa9b586`, 530 not shown reaching a call). Indexes also reach PAL through the wrappers at `0xffa1d870`, `0xffa1d960`, `0xffa1da00` and `0xffa1dc20`; call sites pass among others 9, 10, 14, 17, 18, 20, 22, 25, 30, 37, 256, 258 and 259. The progress table's own strings (PAL_COPY_INFO, PAL_MEM_FOR_TEST, PAL_TEST_PROC) agree. The names in the page for the architected numbers do match `pal.h` (1 cache flush, 2 cache info, 3 cache init, 8 VM summary, 12 fixed address, 16 platform address, 22 MC drain, 29 halt light, 32 PMI entry point, 41 prefetch visibility, 42 logical to physical, 48 get HW policy); the claim that they were "not checked" can now read "checked against `pal.h`". A PAL boundary list needs a fresh enumeration of the call sites; until then it is inferred, not established, and the lower-bound caveat is understated.
+2. **Election minimum answer.** The page says the read of `0x81_101d_0080` returns the written value "for a plain read/write register". The code writes `0x81_101d_0088` and reads `0x81_101d_0080`, which are different addresses; a plain register at 0x80 does not reflect a write to 0x88. The model needs 0x88 to update what 0x80 reads (alias, or a first-writer latch; the reset value is unread). The error path ORs bits into 0x80, so 0x80 is writable. Grade: the register relation is unknown.
+3. **IP57 sentence.** "An IP57 node is therefore handled as IP41 in klconfig unless the EEPROM read fails" is not what the code shows: the klconfig board name is the fixed string either way, and the EEPROM supplies part, serial and revision. The conclusion that no IP41 or IP57 branch exists stands; rewrite the sentence.
+4. **Address forms.** SAL_A uses `0x80_0000_0000 + 0x7_fed1_0000` for the LED registers (bit 39) while the runtime's UART form is `0xf_fed4_0000` (bit 35 plus the local offset, with the NASID shifted to bit 38 in `sysctl` code). The page calls the second the "node-addressed form" without reconciling the two windows.
+5. **Not verified, so keep as inferred:** the hand-off function at `0xffaf8c50` (its callee writes a progress value 72 only indirectly; the 0x44 to 0x48 stores were not located inside it), the 4.43 comparison sentence, per-build `sysctl_probe` for 3.32 and 4.20 (the 4.43 retry and 5.04, 4.90 compare-only were confirmed; I did not isolate the 3.32 and 4.20 functions), the SAL_B command-id list, memory and I/O discovery paragraphs, and the address-map line about the runtime's global-window constants.
+
+**Grades.** The SAL_A reading, progress table, FIT, UART offsets, probe functions and board-record selection are correctly **established** (read in full). The names of SAL_B functions come from matching the runtime and stay **inferred**, as the page says (the die routine at `0xffad2cb0` is named by the call shape). Memory, I/O, console and EFI hand-off statements are **inferred**.
+
+**Cleared scope:** progress-code table and reason codes; SAL_A on SHub 1 as a register list and order (except the election minimum answer); FIT and PAL pair listing; L1 death path (0x8d) and UART location, stride and probe; board-identity claim (no IP41 or IP57 branch, built-in record only under the signature); PIC part 0xd102 keying; the README fixes (SHub 2 SAL_A, region size, recommendation, per-build probe for 4.43, 4.90, 5.04, 1.11, 1.40, hashes). **Not cleared:** the PAL index list, the election minimum answer, the IP57 sentence, memory, I/O and EFI hand-off detail, and per-build probe for 3.32 and 4.20.
