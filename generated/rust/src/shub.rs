@@ -2,7 +2,7 @@
 // SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 #![allow(dead_code)]
 
-/// Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's  (inferred)
+/// Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's  (established)
 pub mod chip_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100000000;
@@ -16,7 +16,7 @@ pub mod chip_id {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod part_number { // bits 27:12, inferred
+    pub mod part_number { // bits 27:12, established
         pub const SHIFT: u32 = 12;
         pub const MASK: u64 = 0xffff;
         pub const fn get(v: u64) -> u64 {

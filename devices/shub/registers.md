@@ -13,7 +13,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `chip_id` | 0x100000000 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0be1c (read) and 0xffa0f8c0 (storage of the fields); the compare against 17251 is site 0xffa959a6 |
+| `chip_id` | 0x100000000 | r | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0 (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against 17251) |
 | `md_mbist_status` | 0x100000080 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read on failure per the earlier reviewed reading; no Linux v5.3 name |
 | `md_mbist_err` | 0x1000000b8 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa725f6 (read in the failure report, per the earlier reviewed reading); no Linux v5.3 name |
 | `md_mbist_mask` | 0x1000000c0 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name |
@@ -72,12 +72,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `chip_id`
 
-Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. The part number is compared with 17251 (0x4363) site 0xffa959a6, reached through a table, so that this word feeds the compare is inferred. A bounded read that returns the part number satisfies the PROM.
+Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. It then offers the part number to four method tables in turn, each of which accepts one value (0x4363, 0x3017, 0x239, 0x4422), and keeps the first match; a part number outside the four stores a null table that two later callers call through without a test. Established covers the access and that chain, read in full; that the field is a part number is inferred, and which chips the other three values belong to is unknown. A bounded read that returns 0x4363 selects the first table.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 31:28 | `revision` | inferred |  | SAL 5.04 PROM site 0xffa0f8c0 (stored) | Revision as stored by the PROM (that the field is a revision is inferred); no value is required here. |
-| 27:12 | `part_number` | inferred |  | SAL 5.04 PROM site 0xffa0f8c0 and 0xffa959a6 | Part number; the PROM expects 0x4363 (17251). Inferred: the compare's input is not traced to this word. |
+| 27:12 | `part_number` | established |  | SAL 5.04 PROM site 0xffa0f8c0, 0xffa0f7e0 and 0xffa959a6 | Part number, as the PROM names it (inferred). Software expectation, read in full: 0x4363 (17251) selects the first of four method tables; 0x3017, 0x239 and 0x4422 select the others, and any other value ends in a call through a null table. Established is the required value, not what the number identifies. |
 
 ### Register `md_mbist_status`
 

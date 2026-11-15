@@ -7,14 +7,14 @@
 
 
 /*
- * Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. The part number is compared with 17251 (0x4363) site 0xffa959a6, reached through a table, so that this word feeds the compare is inferred. A bounded read that returns the part number satisfies the PROM.
+ * Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. It then offers the part number to four method tables in turn, each of which accepts one value (0x4363, 0x3017, 0x239, 0x4422), and keeps the first match; a part number outside the four stores a null table that two later callers call through without a test. Established covers the access and that chain, read in full; that the field is a part number is inferred, and which chips the other three values belong to is unknown. A bounded read that returns 0x4363 selects the first table.
  */
-/* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read) and 0xffa0f8c0 (storage of the fields); the compare against 17251 is site 0xffa959a6 */
-#define SHUB_CHIP_ID                                 0x100000000 /* inferred */
+/* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0 (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against 17251) */
+#define SHUB_CHIP_ID                                 0x100000000 /* established */
 #define SHUB_CHIP_ID_REVISION_SHIFT                  28 /* inferred */
 #define SHUB_CHIP_ID_REVISION_MASK                   0xfull
 #define SHUB_CHIP_ID_REVISION_INPLACE                (SHUB_CHIP_ID_REVISION_MASK << SHUB_CHIP_ID_REVISION_SHIFT)
-#define SHUB_CHIP_ID_PART_NUMBER_SHIFT               12 /* inferred */
+#define SHUB_CHIP_ID_PART_NUMBER_SHIFT               12 /* established */
 #define SHUB_CHIP_ID_PART_NUMBER_MASK                0xffffull
 #define SHUB_CHIP_ID_PART_NUMBER_INPLACE             (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
 

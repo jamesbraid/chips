@@ -14,8 +14,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0be1c (read) and 0xffa0f8c0 (storage of the fields); the compare against 17251 is site 0xffa959a6"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0 (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against 17251)"
   },
   {
    "unit": "shub",
@@ -32,8 +32,8 @@
    "name": "chip_id.part_number",
    "hi": 27,
    "lo": 12,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0f8c0 and 0xffa959a6"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa0f8c0, 0xffa0f7e0 and 0xffa959a6"
   },
   {
    "unit": "shub",
