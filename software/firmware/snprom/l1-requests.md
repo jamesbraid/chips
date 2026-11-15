@@ -112,7 +112,7 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   caller at `0xffa1f62c` is followed at once by the return (established, re-read in the review). **Resolved against sysco's first
   reading:** `0xffad2cb0` does not return for the boot processor, so the PROM parks (see "Resolution of the sysco conflict" below, and
   sysco `331df54`). A model that stays silent for `0x100b` reproduces the 1.62.1 L1 but parks the boot processor; what ends the wait on
-  a real brick is not known. A model that answers it (status 0, no arguments) is accepted by the PROM, as an approximation.
+  a real brick is not known. A model that answers it (status 0, no arguments) is accepted by the PROM, as an approximation. Real boots of builds 4.56, 4.65 and 4.80 passed this wait with the same die and park code ("Real boots and the other PROM builds" below).
 - **Blank L1:** same, no reply. Grade: request, arguments, reader, no reply from L1 1.62.1: established; the PROM parks the boot
   processor after the missed reply: established for the code; what ends the wait on real hardware: unknown.
 
@@ -293,7 +293,7 @@ all resolved).
 | Order | Code | Arguments | Reply the PROM needs | Grade |
 |---|---|---|---|---|
 | 0 | none (link start) | UART at `0x8000000ffed40000`, divisor 1, 8N1, FIFO `0xc7`, MCR `0x22`; state register `0x81_101d_0100` bits 41:39 = 7 | no handshake | established |
-| 1 | `0x100b` | ints 1, 5, 4 | status 0, 0 args accepted; the L1 sends none, the PROM times out (3,000,000 ticks), runs the `0x8d` die routine and ignores the `-24` | established; effect of the die routine unknown (see review) |
+| 1 | `0x100b` | ints 1, 5, 4 | status 0, 0 args accepted; the L1 sends none, the PROM times out (3,000,000 ticks), runs the `0x8d` die routine, which parks the boot processor (SAL 4.55 to 5.04; SAL 4.43 and earlier return `-24` without the die call; 4.04 not examined) | established for the code; what ends the wait on hardware: unknown |
 | 2 | `0x1005` | string "Prom starting..." | status 0, 0 args (errors ignored) | established |
 | 3 | `0x0003` | none | status 0, 2 ints (module word, type letter) | established |
 | 4 | `0x000e` | none | status 0, 1 int (slab; 0 turns type `f` into `c`) | established |
@@ -361,7 +361,7 @@ Independent review of chips commit `77d39fb` (this page), examined at `77d39fb`.
 
 **Silence: which requests tolerate a missing reply.** Every request goes through `0xffa82c10`/`0xffa82a10`. A missing reply ends in `0xffa82730` returning `-24` after the timeout, and the die routine `0xffad2cb0` runs before any caller sees the `-24`. The routine writes `ERR 8d` text to the display (only while the display flag is set), clears the display flag, writes four progress indicator updates, then calls `0xffa9fc70(nasid, 0, 0)`. That writes `0x1_0001_0000_0000` to `0x1_2000_0000` and clears bits 29:26 of the scratch word at `0x1_5003_1550`. When the node is the local node and the parameters are zero it then calls `0xffa9fba0(nasid, own slice)`, which for the calling processor calls `0xffaeb7c0`. That routine sets a flag, switches state with `rfi` to `0xffaeb8b0`, calls PAL index 3 (cache init) and loops forever on PAL index 29 (halt light) at `0xffaeb8d0`. Nothing in the die path returns on that route. The simulator signature path returns `-24` earlier and never reaches it.
 
-- On this reading no request tolerates silence on real hardware: a missing reply to any of them parks the boot processor, whatever the caller does with the status. This includes `0x100b`, whose caller at `0xffa1f62c` ignores the result; the die routine has already run. Sysco `12e3608` read `0xffad2cb0` as returning ("no halt was found"), because it did not follow the tail through `0xffa9fc70`; sysco `331df54` corrects that and a second reading confirms the park (see the resolution below). The L1 side (no reply from 1.62.1) and the PROM side (the die routine parks the processor) both hold, so a PROM 5.04 image on a silent L1 parks at its first request, and what happens on real bricks is not explained by the code read. Nobody has run the pair. For an implementer: answer `0x100b` with status 0 and no arguments as an approximation, and treat the real wait-ending mechanism as unknown.
+- On this reading no request tolerates silence on real hardware: a missing reply to any of them parks the boot processor, whatever the caller does with the status. This is the 5.04 reading (builds 4.55 to 5.04 share it, next section). It includes `0x100b`, whose caller at `0xffa1f62c` ignores the result; the die routine has already run. Sysco `12e3608` read `0xffad2cb0` as returning ("no halt was found"), because it did not follow the tail through `0xffa9fc70`; sysco `331df54` corrects that and a second reading confirms the park (see the resolution below). The L1 side (no reply from 1.62.1) and the PROM side (the die routine parks the processor) both hold, so a PROM 5.04 image on a silent L1 parks at its first request, and what happens on real bricks is not explained by the code read. Nobody has run the pair. For an implementer: answer `0x100b` with status 0 and no arguments as an approximation, and treat the real wait-ending mechanism as unknown.
 - Error replies (a negative status or a wrong argument count, not silence) are tolerated as follows. Ignored by the caller: `0x1005` and `0x100b`. Fallback value: `0x0003` (unknown type), `0x000e` (type becomes `c`), `0x0013` (`-101` falls back to `0x0003`; other errors give `0xff`), `0x0009` (becomes 0 with a printed warning), `0x0001` (console prompt about the switches), `0x0012` (value forced to `0x800`), `0x0008` (default text), `0x0015` (not otherwise tested), `0x0006` for DIMMs (slot absent) and for the board area (a message, then the boot goes on). Not tolerated: `0x0010`, whose presence-and-enable bit for the processor's own slice must be set or that processor is parked at progress `0x87`; and "No memory on node" (progress `0x80`) if every DIMM slot errors.
 
 **Resolution of the sysco conflict.** Settled by a second reading in Ghidra of both programs (the IA-64 export of `shub1snprom.bin` and the ARM `l1` of L1 1.62.1), with `ia64-linux-gnu-objdump` as the cross-check for every branch. The sysco page was the one in error and now says so (sysco `331df54`).
@@ -370,8 +370,73 @@ Independent review of chips commit `77d39fb` (this page), examined at `77d39fb`.
 - **The L1 is silent (established, re-read).** `syscom_process_inbound_request` (`0xc2284`) adds the code as argument 0, so the node's frame (count byte 3) arrives with the count 4 that `0xcb474` requires. The destination `0x0ffff006` is the local wildcard with task 6, registered as a direct function by `L1ReqInit`. The handler never calls `ARG__START`, and the router tail replies only when the reply-count word is set. `PPPRead` only de-frames; no layer acknowledges. The ColdFire handlers read in sysco also send nothing, so no L1 package read answers `0x100b`.
 - **Candidates closed.** A reply by another path in the ARM L1 (generic acknowledgement, PPP layer, another task or subchannel): none found. A different argument count: not sent, the builder is called with three integers. Wait skipped on a real boot: only by the simulator signature. The receiver (`0xffa87830`) completes a slot on any frame whose CRC residue is `0xf0b8` (`0xffa89de0`) and whose header byte is the slot's; it does not read the code or body.
 - **The L1's frame sources, enumerated (established for ARM L1 1.62.1; sysco `sn2-prom-link-1.62.1.md`, section "What could end the wait").** Only four routines write to the node link: the request, event, response and chunked-response writers. Responses (`0x20 | subchannel`) need a request that carries a reply, and the `0x100b` handler sends none. Events (`0x40 | subchannel`) need the event word, which is -1 after every L1 start and after a node power-down, and is set only by the node's own `0x1007` (or restored after an L1 soft reset). Request frames to the node carry typed console characters. No periodic, heartbeat or link-up frame exists. Nothing the PROM sends before `0x100b` (it sends no byte at all during link start) prompts a frame. The ARM L1 1.44.0 handler has the same structure and no reply. The one frame that could complete slot `n` is an event with header `0x40 | n` from a stale event word after a warm restart, which cannot be the first-power-up path.
-- **Still unknown.** What ends the wait on first power-up of a real brick. The code read shows no frame that can, so either the real bricks ran an L1 that answers `0x100b` (none read does) or the PROM read here is not what they booted. The ColdFire L1's initial event word was not read. The tick is inferred to be one microsecond (the timer `0xffa0da70` divides the SHub clock count times its period register by 1000), so the wait is 3 seconds; the period register was not checked against a manual. Nobody has run the pair. The `0x100b` grades above stand: no reply from the L1, established; node parks on silence, established for the code; effect on hardware, unknown.
+- **Still unknown.** What ends the wait on first power-up of a real brick. The real boots below show that it ends, for builds 4.56, 4.65 and 4.80, which carry the same wait, die and park code as 5.04. The code read still shows no L1 frame that can end it (ARM 1.44.0 and 1.62.1, ColdFire handlers). The L1 build fitted in an Altix 350 module is not established (see below). The tick is inferred to be one microsecond (the timer `0xffa0da70` divides the SHub clock count times its period register by 1000), so the wait is 3 seconds; the period register was not checked against a manual.
 - **For a model.** A silent model is the faithful L1 and makes the PROM stop at its first request. To boot, answer with a status 0, zero-argument frame whose header byte is `0x20` plus the slot (5 plus the slice for the boot processor), and record that as an approximation rather than hardware behaviour. For slice 0 the wire frame is `7e 25 00 00 00 00 00 68 66 7e` (payload `25` then status 0 and count 0; FCS computed and checked against the `0xf0b8` residue).
+
+### Real boots and the other PROM builds
+
+Added 2026-11-15. Sources: the published logs listed here, and every SHub 1 image in the holdings, 29 builds from 3.32 to 5.04 (the
+header of each carries `SGI SAL Version X.YY relDATE`; the SAL number is the number the Linux kernel prints, so a log names a build).
+
+**What the published logs show (established as observations; no log reaches before EFI).**
+
+| Log | Machine | SAL printed | Build it names |
+|---|---|---|---|
+| irixnet forum thread 849, page 2 (two serial captures, posted 2019): `SAL 3.2: SGI SN2 version 4.65`, `SGI SAL version 4.65`, `ttySG0 ... SGI SN L1` | Prism | 4.65 | snprom 10.15 (SAL 4.65, built 2006-12-04) |
+| linux-ia64 list, 2007-08-01, SGI engineer, message `Pine.LNX.4.64.0707312246390.14878@schroedinger.engr.sgi.com`: `SAL 2.9: SGI SN2 version 4.80`, four logical nodes | SHub 1 test system | 4.80 | snprom 10.30 (SAL 4.80, built 2007-04-12) |
+| linux-ia64 list, 2005-11-18, messages `200511180316.jAI3G9g06785@unix-os.sc.intel.com` and `8110.1132286958@kao2.melbourne.sgi.com`: `SAL 2.9: SGI SN2 version 4.4` | Altix | 4.04 (the kernel prints the minor byte with `%x`, so `4.4` is minor `0x04`; 4.40 would print `4.40`) | snprom 4.04 (built 2004-12-03), held, not examined; inferred |
+| owner's page, nsafran.com, Altix 350: SAL 4.56 (statement, not a capture) | Altix 350 | 4.56 | snprom 10.6 (SAL 4.56, built 2006-06-15); inferred |
+| linux-ia64 list 2008 (`20080422223049.GA8765@sgi.com`, `20080624143922.GK10123@sgi.com`): `SAL 3.2: SGI SN2 version 1.42` and `1.50` | Altix 4700 class | 1.42, 1.50 | SHub 2 series, not read here |
+
+Every log starts at the EFI banner or the kernel's own first line. The PROM's text never appears, because `0x1005` ("Prom starting...")
+and the later progress texts go to the L1 display (request `0x1005` is display text), not the serial console. No log has a timestamp or
+a visible delay before the kernel starts, and none shows an error from the PROM. So the logs establish exactly this and no more: real
+machines running SAL 4.65 and 4.80 (and, by the owner's word, 4.56) reached EFI. They do not show whether those boots waited 3 s.
+No Altix 330, Altix 3000 or Altix 350 console capture from power-on, and no L1 log, is held; the linux-ia64 and other mail archives, the forum and
+owner-site captures held, and the Altix and ProPack manuals were searched for the PROM and L1 start-up strings
+("Prom starting", "Init memory", "ERR 8d", "SGI SN L1", "L1 running", "L1 booting").
+
+**What the `0x100b` request does in each build (established, objdump of every image; the die chain read to the same shape in the builds marked R below).**
+
+| SAL builds (snprom) | `0x100b` goes through | On a missing reply |
+|---|---|---|
+| 3.32, 4.20, 4.31, 4.32, 4.33, 4.43 (4.04 not examined) | the plain send-and-wait (in 4.43 `0xffa380c0`), which has no die call | returns `-24`; the caller drops it; boot continues after the 3 s wait. Read in Ghidra for 4.43; the other five by the absence of the `0x8d` setup in the routine |
+| 4.55 (10.5) through 5.04 (10.54): all 23 builds | a send-and-wait that calls the die routine on `-24` (5.04 `0xffa82a10`; 4.80 `0xffa82670`; 4.65 `0xffa81cc0`; 4.56 `0xffa81080`) | `ERR 8d`, node reset request, halt loop (R: 4.56, 4.65, 4.80, 4.90, 5.04) |
+
+In 4.43 a retry wrapper (`0xffa329d0`, six callers) already ended in this die routine's counterpart (`0xffa58380` with `0x8d`); the
+version report (`0x100b`) was among the other call sites of the plain routine (20 call sites in all). Between SAL 4.43 (2005-12-02) and SAL 4.55
+(2006-06-05) the two were merged, so from 4.55 on the version report is no longer fire-and-forget. The send routine passes the same
+3,000,000-tick timeout (`0x2dc6c0`) in every build checked (4.43, 4.55, 4.56, 4.65, 4.80, 4.90, 5.04). The die chain in 4.56, 4.65 and 4.80 is the 5.04 one under other addresses: the die routine
+(`0xffad1f70`, `0xffad2b00`, `0xffad37d0`) calls a routine that writes `0x1_0001_0000_0000` to `0x1_2000_0000`, tests the local node
+and the slice in `cr.lid`, and enters the halt routine.
+
+**The park path's inputs at `sysctl_init` (established, Ghidra and objdump of 5.04).** Nothing the boot processor holds from earlier
+stages changes the outcome; the only state read is hardware:
+
+- the simulator signature, `cpuid[2] == 0xaeeeeeee8badbeef` (`0xffa82a10`): the send returns `-24` at once and never reaches the wait;
+- the slot's reply-ready byte (`slot * 0x98 + 0x211`, set by the receiver on a good frame for slot `5 + slice`) and the node timer
+  (`0xffa0da70`): no frame for 3,000,000 ticks gives `-24` (`0xffa82730`);
+- the die routine `0xffad2cb0(nasid, 0x8d)`: the node's state object (nasid from its first halfword; the object found through
+  `0xffa7fcb0`) for the `ERR 8d` display text, which is shown only if the object's tag at `+0xeb0` is `0x4c015343` and then clears flag bit 6;
+  four progress-indicator writes (`0xffa0e0d0`); then `0xffa9fc70(nasid, 0, 0)`;
+- `0xffa9fc70`: its arguments are the constants 0 and 0 here, so the tests reduce to one: the SHub ID register at `0x1_1006_0580`
+  (bits 42:32, read by `0xffa0dcf0`) equals `nasid`, which it does for the node's own nasid. It also writes the node reset request
+  and clears bits 29:26 of the scratch word `0x1_5003_1550`. Then `0xffa9fba0(nasid, slice)` repeats the node test and compares the
+  slice (`cr.lid` bits 26:23) with itself, so it is true for the calling processor, and enters the halt routine `0xffaeb7c0`;
+- the halt routine: marks the slice (`0xffa0eae0`), `rfi`, PAL cache init, then PAL halt in a loop.
+
+No master or slave flag, no scratch-word value and no per-slice record is read on this path. So the boot processor reaches the halt loop on any
+real first boot whose wait times out (established for the code). One caveat: the node reset request write could itself reset the node
+before the loop is reached. What that register write does on hardware was not read; if it resets the node, the failure looks like a boot
+loop with a 3 s period rather than a stop. Either way the boot does not continue.
+
+**Conclusion (graded).**
+
+- Established (logs): SAL 4.65 and 4.80 PROMs booted real hardware to EFI while carrying the die-on-silence code for `0x100b`, with the same park path as 5.04; SAL 4.56 did the same on an Altix 350 by its owner's word (inferred). So a missing reply is not what happened on those machines: something completed the wait. Whether SAL 5.04 itself boots real hardware is not shown by any held log; it differs from 4.80 only in addresses and small changes, not in this path (inferred).
+- Established: no L1 frame source found in the ARM L1 1.44.0 and 1.62.1, and no ColdFire `0x100b` handler read (`brick-request-handlers.md` in the sysco repository), sends a frame that could do it on a cold start. The logs and the code therefore disagree for the L1 builds read; the L1 build on those machines is the missing piece.
+- Inferred: the L1 on those machines was 1.37.25 or newer. Every build from 4.33 to 5.04 contains the text "Check L1 firmware version. Must be at least 1.37.25" (printed when the PROM's I/O-port set-up fails; it is a requirement of that feature, not of `0x100b`). The ARM readings in sysco that reach that range are 1.38.4 and 1.40.5; neither was read for the `0x100b` handler body (the compare `[sp-680] == 0x100b` exists in 1.38.4 at `0x88680`; its target was not read).
+- Unknown: which L1 build an Altix 350 module carries. The 350 guide (007-4660-001) and the L1 and L2 guide (007-3938-005) print module prompts such as `001c01-L1>`, the L1 display text "L1 running", and L1 messages, and name no firmware version or processor. Both candidate families are in the 1.62.1 package (ColdFire `O`, ARM `F`).
+- Unknown: what ends the wait. Candidates not excluded: an L1 build before 1.44.0 that replies (the ARM 1.38.4 and 1.40.5 handlers, and ColdFire builds from 1.37.25 on, were not read); a ColdFire L1 whose event word starts at a value other than -1 (the ColdFire clear routine `0xffe3d4ec` stores -1 and then calls the NVRAM setter with `0x13`; the word at `0x30006d14` has two direct references in package 5 of the 6.5.30 container, the test and that store, and no direct store of a power-on value was found, so its initial value was not determined); a frame from another source on first power-up. A model should therefore keep the approximation above.
 
 **Findings not fixed (author to settle before these claims stand).**
 
