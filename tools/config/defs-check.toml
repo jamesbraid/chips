@@ -211,21 +211,27 @@ profiles = ["rust-regs", "c-regfields"]
 
 [gen.export.units.hub]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.hub_extra]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.hub_md_extra]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.hub_ni_extra]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.hub_pi_extra]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.hub_windows]
 base = 0x0
+rust_file = "hub"
 
 [gen.export.units.bedrock]
 base = 0x0
