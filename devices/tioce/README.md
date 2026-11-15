@@ -48,6 +48,12 @@ the destination (vector in bits 63:56, destination coretalk address below), clea
 always). Revision A hardware cannot do that (erratum PV945826): the provider reads the interrupt status and, if the source is set, writes the interrupt data (`1 << 8` plus the kernel vector)
 straight to the destination address with an ordinary store.
 
+## Field layouts (established unless noted)
+
+Bit layouts the header defines are fields of their registers, each graded. Registers with fields: interrupt status and mask (one bit per source, listed above), error summary and mask (62 sources, bits 0 to 61), force interrupt, upstream engine control (write-merge enables and timer, parity and malform disables), page map (enables and a 3-bit page-size code, 0 = 4 KiB through 4 = 256 KiB), the two pipe select and mask registers (three 19-bit selectors at bits 0, 20 and 40, each a traffic class, bus, device and function match), the two PCIe control registers (names follow the slot-capability abbreviations of the public PCIe specification, **inferred**), downstream engine configuration and request status, and the first gearbox configuration register. The status alias, error alias, second pipe registers' sub-selectors and the barrier-flush selectors (4-bit spacing only) are **inferred**. Interrupt destination: the vector at bit 56 and up is inferred; the width of the address part is **unknown**. Whether a set error-mask bit enables or masks a source is **unknown**. The header gives bit layouts for no other register.
+
+The remaining header defines are constants: identifiers, the address windows and the enhanced-configuration bus, device and function masks (bits 27:20, 19:15 and 14:12). The memory window length is defined as a symbol from another header (TIO widget window size, not in the files read) and is **unknown** here.
+
 ## Not covered
 
 PCIe configuration space (the header lists a PCI compatible window from `0x04000000` and an enhanced window from `0x10000000`, constants `PIO_*`), the link-training states and every debug register: the

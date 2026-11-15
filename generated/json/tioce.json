@@ -148,6 +148,166 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_pm_pme_msg",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_pm_pme_msg",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.pcie_msg_slot_3",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.pcie_msg_slot_2",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.pcie_msg_slot_1",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.pcie_msg_slot_0",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_intd",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_intc",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_intb",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_inta",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_intd",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_intc",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_intb",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_inta",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port2_hotplug_event",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.port1_hotplug_event",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.pcie_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.lsi2_ip_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.lsi1_ip_error",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status.ce_error",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "adm_int_status_alias",
    "offset": 96,
@@ -161,6 +321,166 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_pm_pme_msg",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_pm_pme_msg",
+   "hi": 22,
+   "lo": 22,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.pcie_msg_slot_3",
+   "hi": 17,
+   "lo": 17,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.pcie_msg_slot_2",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.pcie_msg_slot_1",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.pcie_msg_slot_0",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_intd",
+   "hi": 13,
+   "lo": 13,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_intc",
+   "hi": 12,
+   "lo": 12,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_intb",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_inta",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_intd",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_intc",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_intb",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_inta",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port2_hotplug_event",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.port1_hotplug_event",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.pcie_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.lsi2_ip_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.lsi1_ip_error",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_status_alias.ce_error",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "adm_int_mask",
    "offset": 104,
@@ -170,6 +490,166 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_pm_pme_msg",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_pm_pme_msg",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.pcie_msg_slot_3",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.pcie_msg_slot_2",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.pcie_msg_slot_1",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.pcie_msg_slot_0",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_intd",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_intc",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_intb",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_inta",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_intd",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_intc",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_intb",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_inta",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port2_hotplug_event",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.port1_hotplug_event",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.pcie_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.lsi2_ip_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.lsi1_ip_error",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_mask.ce_error",
+   "hi": 0,
+   "lo": 0,
    "grade": "established"
   },
   {
@@ -200,6 +680,78 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.always",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port2_intd",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port2_intc",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port2_intb",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port2_inta",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port1_intd",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port1_intc",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port1_intb",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_force_int.port1_inta",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "adm_ure_ups_buf_barrier_flush",
    "offset": 128,
@@ -210,6 +762,70 @@
    "space": null,
    "reset": "unknown",
    "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port2_pipe3",
+   "hi": 31,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port2_pipe2",
+   "hi": 27,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port2_pipe1",
+   "hi": 23,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port2_pipe0",
+   "hi": 19,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port1_pipe3",
+   "hi": 15,
+   "lo": 12,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port1_pipe2",
+   "hi": 11,
+   "lo": 8,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port1_pipe1",
+   "hi": 7,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_ure_ups_buf_barrier_flush.port1_pipe0",
+   "hi": 3,
+   "lo": 0,
+   "grade": "inferred"
   },
   {
    "unit": "tioce",
@@ -226,6 +842,14 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "adm_int_dest.vector",
+   "hi": 63,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "adm_error_summary",
    "offset": 256,
@@ -235,6 +859,502 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port2_pcie_fat_err",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port2_pcie_nfat_err",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port2_pcie_cor_err",
+   "hi": 59,
+   "lo": 59,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port1_pcie_fat_err",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port1_pcie_nfat_err",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.port1_pcie_cor_err",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_posted_d_cred_max_err",
+   "hi": 55,
+   "lo": 55,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_posted_hd_cred_max_err",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_nposted_d_cred_max_err",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_nposted_hd_cred_max_err",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_comp_d_cred_max_err",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_comp_hd_cred_max_err",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_inf_nposted_cred_updt_err",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_inf_posted_cred_updt_err",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_inf_compl_cred_updt_err",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl2_min_pdata_credit_err",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_posted_d_cred_max_err",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_posted_hd_cred_max_err",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_nposted_d_cred_max_err",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_nposted_hd_cred_max_err",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_comp_d_cred_max_err",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_comp_hd_cred_max_err",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_inf_nposted_cred_updt_err",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_inf_posted_cred_updt_err",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_inf_compl_cred_updt_err",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dtl1_min_pdata_credit_err",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.adm_sram_pe",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.adm_credit_oflow",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.mmr_addr_error",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.mmr_access_error",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.adm_ssp_req_timeout",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.adm_ssp_rsp_unexp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_sram_pe",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_credit_oflow",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_ate40_page_fault",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_ate3240_page_fault",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_ssp_rd_req_timeout",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_ssp_wr_req_timeout",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ure_ssp_rsp_unexp",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_rsp_sideband",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_rsp_short",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_rsp_long",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_rsp_invalid",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dre_sram_pe",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dre_credit_oflow",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.pcie_err_compl",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.pcie_unexp_compl",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.pcie_compl_timeout",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_bad_be",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_addr_err",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_sideband",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_short",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_oflow",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_long",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.dre_ssp_req_inval",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.cxm_credit_oflow",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_mbe",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_sbe",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_protocol_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_rsp_header",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.ssp_req_header",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary.crm_ssp_req_invalid",
+   "hi": 0,
+   "lo": 0,
    "grade": "established"
   },
   {
@@ -252,6 +1372,502 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port2_pcie_fat_err",
+   "hi": 61,
+   "lo": 61,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port2_pcie_nfat_err",
+   "hi": 60,
+   "lo": 60,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port2_pcie_cor_err",
+   "hi": 59,
+   "lo": 59,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port1_pcie_fat_err",
+   "hi": 58,
+   "lo": 58,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port1_pcie_nfat_err",
+   "hi": 57,
+   "lo": 57,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.port1_pcie_cor_err",
+   "hi": 56,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_posted_d_cred_max_err",
+   "hi": 55,
+   "lo": 55,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_posted_hd_cred_max_err",
+   "hi": 54,
+   "lo": 54,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_nposted_d_cred_max_err",
+   "hi": 53,
+   "lo": 53,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_nposted_hd_cred_max_err",
+   "hi": 52,
+   "lo": 52,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_comp_d_cred_max_err",
+   "hi": 51,
+   "lo": 51,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_comp_hd_cred_max_err",
+   "hi": 50,
+   "lo": 50,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_inf_nposted_cred_updt_err",
+   "hi": 49,
+   "lo": 49,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_inf_posted_cred_updt_err",
+   "hi": 48,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_inf_compl_cred_updt_err",
+   "hi": 47,
+   "lo": 47,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl2_min_pdata_credit_err",
+   "hi": 46,
+   "lo": 46,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_posted_d_cred_max_err",
+   "hi": 45,
+   "lo": 45,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_posted_hd_cred_max_err",
+   "hi": 44,
+   "lo": 44,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_nposted_d_cred_max_err",
+   "hi": 43,
+   "lo": 43,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_nposted_hd_cred_max_err",
+   "hi": 42,
+   "lo": 42,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_comp_d_cred_max_err",
+   "hi": 41,
+   "lo": 41,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_comp_hd_cred_max_err",
+   "hi": 40,
+   "lo": 40,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_inf_nposted_cred_updt_err",
+   "hi": 39,
+   "lo": 39,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_inf_posted_cred_updt_err",
+   "hi": 38,
+   "lo": 38,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_inf_compl_cred_updt_err",
+   "hi": 37,
+   "lo": 37,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dtl1_min_pdata_credit_err",
+   "hi": 36,
+   "lo": 36,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.adm_sram_pe",
+   "hi": 35,
+   "lo": 35,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.adm_credit_oflow",
+   "hi": 34,
+   "lo": 34,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.mmr_addr_error",
+   "hi": 33,
+   "lo": 33,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.mmr_access_error",
+   "hi": 32,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.adm_ssp_req_timeout",
+   "hi": 31,
+   "lo": 31,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.adm_ssp_rsp_unexp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_sram_pe",
+   "hi": 29,
+   "lo": 29,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_credit_oflow",
+   "hi": 28,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_ate40_page_fault",
+   "hi": 27,
+   "lo": 27,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_ate3240_page_fault",
+   "hi": 26,
+   "lo": 26,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_ssp_rd_req_timeout",
+   "hi": 25,
+   "lo": 25,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_ssp_wr_req_timeout",
+   "hi": 24,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ure_ssp_rsp_unexp",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_rsp_sideband",
+   "hi": 22,
+   "lo": 22,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_rsp_short",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_rsp_long",
+   "hi": 20,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_rsp_invalid",
+   "hi": 19,
+   "lo": 19,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dre_sram_pe",
+   "hi": 18,
+   "lo": 18,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dre_credit_oflow",
+   "hi": 17,
+   "lo": 17,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.pcie_err_compl",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.pcie_unexp_compl",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.pcie_compl_timeout",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_bad_be",
+   "hi": 13,
+   "lo": 13,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_addr_err",
+   "hi": 12,
+   "lo": 12,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_sideband",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_short",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_oflow",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_long",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.dre_ssp_req_inval",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.cxm_credit_oflow",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_mbe",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_sbe",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_protocol_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_rsp_header",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.ssp_req_header",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_summary_alias.crm_ssp_req_invalid",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "adm_error_mask",
    "offset": 272,
@@ -261,6 +1877,502 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port2_pcie_fat_err",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port2_pcie_nfat_err",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port2_pcie_cor_err",
+   "hi": 59,
+   "lo": 59,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port1_pcie_fat_err",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port1_pcie_nfat_err",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.port1_pcie_cor_err",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_posted_d_cred_max_err",
+   "hi": 55,
+   "lo": 55,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_posted_hd_cred_max_err",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_nposted_d_cred_max_err",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_nposted_hd_cred_max_err",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_comp_d_cred_max_err",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_comp_hd_cred_max_err",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_inf_nposted_cred_updt_err",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_inf_posted_cred_updt_err",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_inf_compl_cred_updt_err",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl2_min_pdata_credit_err",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_posted_d_cred_max_err",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_posted_hd_cred_max_err",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_nposted_d_cred_max_err",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_nposted_hd_cred_max_err",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_comp_d_cred_max_err",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_comp_hd_cred_max_err",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_inf_nposted_cred_updt_err",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_inf_posted_cred_updt_err",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_inf_compl_cred_updt_err",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dtl1_min_pdata_credit_err",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.adm_sram_pe",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.adm_credit_oflow",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.mmr_addr_error",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.mmr_access_error",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.adm_ssp_req_timeout",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.adm_ssp_rsp_unexp",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_sram_pe",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_credit_oflow",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_ate40_page_fault",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_ate3240_page_fault",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_ssp_rd_req_timeout",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_ssp_wr_req_timeout",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ure_ssp_rsp_unexp",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_rsp_sideband",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_rsp_short",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_rsp_long",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_rsp_invalid",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dre_sram_pe",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dre_credit_oflow",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.pcie_err_compl",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.pcie_unexp_compl",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.pcie_compl_timeout",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_bad_be",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_addr_err",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_sideband",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_short",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_oflow",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_long",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.dre_ssp_req_inval",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.cxm_credit_oflow",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_mbe",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_sbe",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_protocol_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_rsp_header",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.ssp_req_header",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "adm_error_mask.crm_ssp_req_invalid",
+   "hi": 0,
+   "lo": 0,
    "grade": "established"
   },
   {
@@ -1708,6 +3820,78 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.slf_ts",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rvrs_clk",
+   "hi": 21,
+   "lo": 20,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rvrs_lb",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.lpbk_en",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.lpbk_sel",
+   "hi": 17,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rxl0s_flt",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rxl0s_adj",
+   "hi": 14,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rxl0s_smp",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "lsi_gb_cfg1.rxl0s_ths",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "lsi_gb_cfg2",
    "offset": 10248,
@@ -2111,6 +4295,134 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.unsup_disable",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.malform_disable",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.dns_hdr_par_disable",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.dns_dat_par_disable",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.rspq_par_disable",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.rci_par_disable",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.ate_par_disable",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.ups_hdr2_par_disable",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.ups_dat2_par_disable",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.ups_hdr1_par_disable",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.ups_dat1_par_disable",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.rspq_bypass_disable",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.wrt_mrg_timer",
+   "hi": 22,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.wrt_mrg_enable2",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.wrt_mrg_enable1",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_control.rd_mrg_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "ure_status",
    "offset": 45112,
@@ -2189,6 +4501,65 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "ure_page_map.pagesize",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "enum_value",
+   "name": "ure_page_map.pagesize.4k",
+   "value": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "enum_value",
+   "name": "ure_page_map.pagesize.16k",
+   "value": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "enum_value",
+   "name": "ure_page_map.pagesize.64k",
+   "value": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "enum_value",
+   "name": "ure_page_map.pagesize.128k",
+   "value": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "enum_value",
+   "name": "ure_page_map.pagesize.256k",
+   "value": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_page_map.ate40_enable",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_page_map.ate3240_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "ure_dir_map",
    "offset": 45176,
@@ -2215,6 +4586,102 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel3_tc",
+   "hi": 58,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel3_bus",
+   "hi": 55,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel3_dev",
+   "hi": 47,
+   "lo": 43,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel3_fnc",
+   "hi": 42,
+   "lo": 40,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel2_tc",
+   "hi": 38,
+   "lo": 36,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel2_bus",
+   "hi": 35,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel2_dev",
+   "hi": 27,
+   "lo": 23,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel2_fnc",
+   "hi": 22,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel1_tc",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel1_bus",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel1_dev",
+   "hi": 7,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel1.sel1_fnc",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "ure_pipe_mask1",
    "offset": 45200,
@@ -2225,6 +4692,30 @@
    "space": null,
    "reset": "unknown",
    "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask1.mask3",
+   "hi": 58,
+   "lo": 40,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask1.mask2",
+   "hi": 38,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask1.mask1",
+   "hi": 18,
+   "lo": 0,
+   "grade": "inferred"
   },
   {
    "unit": "tioce",
@@ -2241,6 +4732,102 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel3_tc",
+   "hi": 58,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel3_bus",
+   "hi": 55,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel3_dev",
+   "hi": 47,
+   "lo": 43,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel3_fnc",
+   "hi": 42,
+   "lo": 40,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel2_tc",
+   "hi": 38,
+   "lo": 36,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel2_bus",
+   "hi": 35,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel2_dev",
+   "hi": 27,
+   "lo": 23,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel2_fnc",
+   "hi": 22,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel1_tc",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel1_bus",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel1_dev",
+   "hi": 7,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_sel2.sel1_fnc",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "ure_pipe_mask2",
    "offset": 45216,
@@ -2251,6 +4838,30 @@
    "space": null,
    "reset": "unknown",
    "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask2.mask3",
+   "hi": 58,
+   "lo": 40,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask2.mask2",
+   "hi": 38,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pipe_mask2.mask1",
+   "hi": 18,
+   "lo": 0,
+   "grade": "inferred"
   },
   {
    "unit": "tioce",
@@ -2670,6 +5281,54 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.pn2",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.pn1",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.scc",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.elal1",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.elal",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control1.si",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "ure_pcie_control2",
    "offset": 45480,
@@ -2679,6 +5338,94 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.psn2",
+   "hi": 44,
+   "lo": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.psn1",
+   "hi": 31,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.spls",
+   "hi": 16,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.splv",
+   "hi": 14,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.hpc",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.hps",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.pip",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.aip",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.msp",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.pcp",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "ure_pcie_control2.abp",
+   "hi": 0,
+   "lo": 0,
    "grade": "established"
   },
   {
@@ -3229,6 +5976,38 @@
   },
   {
    "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config1.sup_io_comp_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config1.sup_config_comp_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config1.dyn_ro_enable",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config1.ro_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
    "kind": "register",
    "name": "dre_config2",
    "offset": 262288,
@@ -3251,6 +6030,38 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config_req_status.config_request_active",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config_req_status.config_completion_valid",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config_req_status.downstream_config_error",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "field",
+   "name": "dre_config_req_status.last_config_completion",
+   "hi": 2,
+   "lo": 0,
    "grade": "established"
   },
   {
@@ -3412,742 +6223,6 @@
   {
    "unit": "tioce",
    "kind": "constant",
-   "name": "ADM_ERR_ADM_CREDIT_OFLOW",
-   "value": 17179869184,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_ADM_SRAM_PE",
-   "value": 34359738368,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_ADM_SSP_REQ_TIMEOUT",
-   "value": 2147483648,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_ADM_SSP_RSP_UNEXP",
-   "value": 1073741824,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_CRM_SSP_REQ_INVALID",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_CXM_CREDIT_OFLOW",
-   "value": 64,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DRE_CREDIT_OFLOW",
-   "value": 131072,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DRE_SRAM_PE",
-   "value": 262144,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DRE_SSP_REQ_INVAL",
-   "value": 128,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR",
-   "value": 2199023255552,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR",
-   "value": 1099511627776,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR",
-   "value": 137438953472,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR",
-   "value": 549755813888,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR",
-   "value": 274877906944,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR",
-   "value": 68719476736,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR",
-   "value": 8796093022208,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR",
-   "value": 4398046511104,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR",
-   "value": 35184372088832,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR",
-   "value": 17592186044416,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR",
-   "value": 2251799813685248,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR",
-   "value": 1125899906842624,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR",
-   "value": 140737488355328,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR",
-   "value": 562949953421312,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR",
-   "value": 281474976710656,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR",
-   "value": 70368744177664,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR",
-   "value": 9007199254740992,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR",
-   "value": 4503599627370496,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR",
-   "value": 36028797018963968,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR",
-   "value": 18014398509481984,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_MMR_ACCESS_ERROR",
-   "value": 4294967296,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_MMR_ADDR_ERROR",
-   "value": 8589934592,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PCIE_COMPL_TIMEOUT",
-   "value": 16384,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PCIE_ERR_COMPL",
-   "value": 65536,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PCIE_UNEXP_COMPL",
-   "value": 32768,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT1_PCIE_COR_ERR",
-   "value": 72057594037927936,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT1_PCIE_FAT_ERR",
-   "value": 288230376151711744,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT1_PCIE_NFAT_ERR",
-   "value": 144115188075855872,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT2_PCIE_COR_ERR",
-   "value": 576460752303423488,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT2_PCIE_FAT_ERR",
-   "value": 2305843009213693952,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_PORT2_PCIE_NFAT_ERR",
-   "value": 1152921504606846976,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_MBE",
-   "value": 32,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_PROTOCOL_ERROR",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_ADDR_ERR",
-   "value": 4096,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_BAD_BE",
-   "value": 8192,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_HEADER",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_LONG",
-   "value": 256,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_OFLOW",
-   "value": 512,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_SHORT",
-   "value": 1024,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_REQ_SIDEBAND",
-   "value": 2048,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_RSP_HEADER",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_RSP_INVALID",
-   "value": 524288,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_RSP_LONG",
-   "value": 1048576,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_RSP_SHORT",
-   "value": 2097152,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_RSP_SIDEBAND",
-   "value": 4194304,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_SSP_SBE",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_ATE3240_PAGE_FAULT",
-   "value": 67108864,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_ATE40_PAGE_FAULT",
-   "value": 134217728,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_CREDIT_OFLOW",
-   "value": 268435456,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_SRAM_PE",
-   "value": 536870912,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_SSP_RD_REQ_TIMEOUT",
-   "value": 33554432,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_SSP_RSP_UNEXP",
-   "value": 8388608,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_ERR_URE_SSP_WR_REQ_TIMEOUT",
-   "value": 16777216,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_ALWAYS_SHFT",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT",
-   "value": 0,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT",
-   "value": 3,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT",
-   "value": 5,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT",
-   "value": 6,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT",
-   "value": 7,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_CE_ERROR_SHFT",
-   "value": 0,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_LSI1_IP_ERROR_SHFT",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_LSI2_IP_ERROR_SHFT",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_ERROR_SHFT",
-   "value": 3,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_MSG_SHFT",
-   "value": 14,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_MSG_SLOT_0_SHFT",
-   "value": 14,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_MSG_SLOT_1_SHFT",
-   "value": 15,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_MSG_SLOT_2_SHFT",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_MSG_SLOT_3_SHFT",
-   "value": 17,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT1_DEV_A_SHFT",
-   "value": 6,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT1_DEV_B_SHFT",
-   "value": 7,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT1_DEV_C_SHFT",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT1_DEV_D_SHFT",
-   "value": 9,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT2_DEV_A_SHFT",
-   "value": 10,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT2_DEV_B_SHFT",
-   "value": 11,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT2_DEV_C_SHFT",
-   "value": 12,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PCIE_PORT2_DEV_D_SHFT",
-   "value": 13,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PORT1_HOTPLUG_EVENT_SHFT",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PORT1_PM_PME_MSG_SHFT",
-   "value": 22,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PORT2_HOTPLUG_EVENT_SHFT",
-   "value": 5,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "ADM_INT_PORT2_PM_PME_MSG_SHFT",
-   "value": 23,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
    "name": "BUS_SRC_ID_SHFT",
    "value": 8,
    "count": 1,
@@ -4172,64 +6247,8 @@
   {
    "unit": "tioce",
    "kind": "constant",
-   "name": "DRE_CONFIG_COMPLETION_VALID",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_CONFIG_REQUEST_ACTIVE",
-   "value": 32,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_DOWNSTREAM_CONFIG_ERROR",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_DYN_RO_ENABLE",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_LAST_CONFIG_COMPLETION",
-   "value": 7,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_RO_ENABLE",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_SUP_CONFIG_COMP_ERROR",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "DRE_SUP_IO_COMP_ERROR",
-   "value": 8,
+   "name": "E_CONFIG_BUS_MASK",
+   "value": 267386880,
    "count": 1,
    "grade": "established"
   },
@@ -4244,8 +6263,24 @@
   {
    "unit": "tioce",
    "kind": "constant",
+   "name": "E_CONFIG_DEVICE_MASK",
+   "value": 1015808,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "constant",
    "name": "E_CONFIG_DEVICE_SHFT",
    "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tioce",
+   "kind": "constant",
+   "name": "E_CONFIG_FUNC_MASK",
+   "value": 28672,
    "count": 1,
    "grade": "established"
   },
@@ -4278,158 +6313,6 @@
    "kind": "constant",
    "name": "HOST_BRIDGE_VENDOR_ID",
    "value": 4265,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "INTR_VECTOR_SHFT",
-   "value": 56,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_LPBK_EN_MASK",
-   "value": 262144,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_LPBK_EN_SHFT",
-   "value": 18,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_LPBK_SEL_MASK",
-   "value": 196608,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_LPBK_SEL_SHFT",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RVRS_CLK_MASK",
-   "value": 3145728,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RVRS_CLK_SHFT",
-   "value": 20,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RVRS_LB_MASK",
-   "value": 524288,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RVRS_LB_SHFT",
-   "value": 19,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_ADJ_MASK",
-   "value": 28672,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_ADJ_SHFT",
-   "value": 12,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_FLT_MASK",
-   "value": 32768,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_FLT_SHFT",
-   "value": 15,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_SMP_MASK",
-   "value": 3840,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_SMP_SHFT",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_THS_MASK",
-   "value": 255,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_RXL0S_THS_SHFT",
-   "value": 0,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_SLF_TS_MASK",
-   "value": 251658240,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "LSI_GB_CFG1_SLF_TS_SHFT",
-   "value": 24,
    "count": 1,
    "grade": "established"
   },
@@ -4574,342 +6457,6 @@
    "kind": "constant",
    "name": "SRC_ID",
    "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ABP",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_AIP",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ATE3240_ENABLE",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ATE40_ENABLE",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ATE_PAR_DISABLE",
-   "value": 68719476736,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_DNS_DAT_PAR_DISABLE",
-   "value": 549755813888,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_DNS_HDR_PAR_DISABLE",
-   "value": 1099511627776,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ELAL1_SHFT",
-   "value": 8,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_ELAL_SHFT",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_HPC",
-   "value": 64,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_HPS",
-   "value": 32,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_MALFORM_DISABLE",
-   "value": 17592186044416,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_MASK1_SHFT",
-   "value": 0,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_MASK2_SHFT",
-   "value": 20,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_MASK3_SHFT",
-   "value": 40,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_MSP",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PAGESIZE_SHFT",
-   "value": 4,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PCP",
-   "value": 2,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PIP",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PN1_SHFT",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PN2_SHFT",
-   "value": 24,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PSN1_SHFT",
-   "value": 19,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_PSN2_SHFT",
-   "value": 32,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_RCI_PAR_DISABLE",
-   "value": 137438953472,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_RD_MRG_ENABLE",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_RSPQ_BYPASS_DISABLE",
-   "value": 16777216,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_RSPQ_PAR_DISABLE",
-   "value": 274877906944,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SCC",
-   "value": 4096,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SEL1_SHFT",
-   "value": 0,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SEL2_SHFT",
-   "value": 20,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SEL3_SHFT",
-   "value": 40,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SI",
-   "value": 1,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SPLS_SHFT",
-   "value": 15,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_SPLV_SHFT",
-   "value": 7,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_UNSUP_DISABLE",
-   "value": 35184372088832,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_UPS_DAT1_PAR_DISABLE",
-   "value": 4294967296,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_UPS_DAT2_PAR_DISABLE",
-   "value": 17179869184,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_UPS_HDR1_PAR_DISABLE",
-   "value": 8589934592,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_UPS_HDR2_PAR_DISABLE",
-   "value": 34359738368,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_WRT_MRG_ENABLE1",
-   "value": 16,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_WRT_MRG_ENABLE2",
-   "value": 32,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "tioce",
-   "kind": "constant",
-   "name": "URE_WRT_MRG_TIMER_SHFT",
-   "value": 12,
    "count": 1,
    "grade": "established"
   },

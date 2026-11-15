@@ -1,7 +1,14 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tioce/registers.toml by defs-gen - do not edit, change the source -->
 <genxml unit="tioce" prefix="TIOCE" title="TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it">
-  <doc>Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit masks the header defines are listed as constants with the comment that precedes them, not attached to registers.</doc>
+  <doc>Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit layouts the header defines are fields of their registers. Where the header names a register with its masks (interrupt status and mask, error summary and mask, force interrupt, the upstream engine control, page map, pipe select and mask, PCIe control, gearbox configuration, downstream engine configuration) the fields are established; the same layout on a sibling register (an alias, say) is inferred and said so on the register. Constants keep the plain values (identifiers, address windows, enhanced configuration masks).</doc>
+  <enum name="ure_pagesize">
+    <value name="4k" value="0" grade="established"/>
+    <value name="16k" value="1" grade="established"/>
+    <value name="64k" value="2" grade="established"/>
+    <value name="128k" value="3" grade="established"/>
+    <value name="256k" value="4" grade="established"/>
+  </enum>
   <struct name="ADM_ID" size="8" grade="established" register="yes" offset="0x0" access="rw" reset="unknown">
     <doc>Widget identification word: part 0xce00, source id 1, revision A = 1 (header constants). Revision A needs the access workaround described on the unit page. Name and offset are the vendor header's definition (struct member ce_adm_id). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
@@ -33,34 +40,298 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_adm_ssp_debug_sel). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="ADM_INT_STATUS" size="8" grade="established" register="yes" offset="0x58" access="rw" reset="unknown">
-    <doc>Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines the bit position of every source. Bit 14 is also named as the first message slot. Bits 18 to 21 and above 23 have no definition.</doc>
+    <field name="port2_pm_pme_msg" start="23" size="1" type="uint" grade="established"/>
+    <field name="port1_pm_pme_msg" start="22" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_3" start="17" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_2" start="16" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_1" start="15" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_0" start="14" size="1" type="uint" grade="established"/>
+    <field name="port2_intd" start="13" size="1" type="uint" grade="established"/>
+    <field name="port2_intc" start="12" size="1" type="uint" grade="established"/>
+    <field name="port2_intb" start="11" size="1" type="uint" grade="established"/>
+    <field name="port2_inta" start="10" size="1" type="uint" grade="established"/>
+    <field name="port1_intd" start="9" size="1" type="uint" grade="established"/>
+    <field name="port1_intc" start="8" size="1" type="uint" grade="established"/>
+    <field name="port1_intb" start="7" size="1" type="uint" grade="established"/>
+    <field name="port1_inta" start="6" size="1" type="uint" grade="established"/>
+    <field name="port2_hotplug_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="port1_hotplug_event" start="4" size="1" type="uint" grade="established"/>
+    <field name="pcie_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="lsi2_ip_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="lsi1_ip_error" start="1" size="1" type="uint" grade="established"/>
+    <field name="ce_error" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADM_INT_STATUS_ALIAS" size="8" grade="established" register="yes" offset="0x60" access="rw" reset="unknown">
-    <doc>Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header gives positions only for the status and mask registers. The provider writes all ones here at attach, after a load and OR, to clear stale interrupts, which reads as a write-to-clear alias of the status word (inferred from the provider comment, not stated by the header).</doc>
+    <field name="port2_pm_pme_msg" start="23" size="1" type="uint" grade="inferred"/>
+    <field name="port1_pm_pme_msg" start="22" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_msg_slot_3" start="17" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_msg_slot_2" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_msg_slot_1" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_msg_slot_0" start="14" size="1" type="uint" grade="inferred"/>
+    <field name="port2_intd" start="13" size="1" type="uint" grade="inferred"/>
+    <field name="port2_intc" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="port2_intb" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="port2_inta" start="10" size="1" type="uint" grade="inferred"/>
+    <field name="port1_intd" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="port1_intc" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="port1_intb" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="port1_inta" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="port2_hotplug_event" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="port1_hotplug_event" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_error" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="lsi2_ip_error" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="lsi1_ip_error" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="ce_error" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="ADM_INT_MASK" size="8" grade="established" register="yes" offset="0x68" access="rw" reset="unknown">
-    <doc>Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines these positions for the mask and the status register alike. The provider sets a bit before retargeting a source and clears it afterwards.</doc>
+    <field name="port2_pm_pme_msg" start="23" size="1" type="uint" grade="established"/>
+    <field name="port1_pm_pme_msg" start="22" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_3" start="17" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_2" start="16" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_1" start="15" size="1" type="uint" grade="established"/>
+    <field name="pcie_msg_slot_0" start="14" size="1" type="uint" grade="established"/>
+    <field name="port2_intd" start="13" size="1" type="uint" grade="established"/>
+    <field name="port2_intc" start="12" size="1" type="uint" grade="established"/>
+    <field name="port2_intb" start="11" size="1" type="uint" grade="established"/>
+    <field name="port2_inta" start="10" size="1" type="uint" grade="established"/>
+    <field name="port1_intd" start="9" size="1" type="uint" grade="established"/>
+    <field name="port1_intc" start="8" size="1" type="uint" grade="established"/>
+    <field name="port1_intb" start="7" size="1" type="uint" grade="established"/>
+    <field name="port1_inta" start="6" size="1" type="uint" grade="established"/>
+    <field name="port2_hotplug_event" start="5" size="1" type="uint" grade="established"/>
+    <field name="port1_hotplug_event" start="4" size="1" type="uint" grade="established"/>
+    <field name="pcie_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="lsi2_ip_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="lsi1_ip_error" start="1" size="1" type="uint" grade="established"/>
+    <field name="ce_error" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADM_INT_PENDING" size="8" grade="established" register="yes" offset="0x70" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_adm_int_pending). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="ADM_FORCE_INT" size="8" grade="established" register="yes" offset="0x78" access="rw" reset="unknown">
-    <doc>Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: bits 0 to 7 are the four interrupt pins of each port, bit 8 forces unconditionally. These positions differ from the status register, and the provider maps between them explicitly.</doc>
+    <field name="always" start="8" size="1" type="uint" grade="established"/>
+    <field name="port2_intd" start="7" size="1" type="uint" grade="established"/>
+    <field name="port2_intc" start="6" size="1" type="uint" grade="established"/>
+    <field name="port2_intb" start="5" size="1" type="uint" grade="established"/>
+    <field name="port2_inta" start="4" size="1" type="uint" grade="established"/>
+    <field name="port1_intd" start="3" size="1" type="uint" grade="established"/>
+    <field name="port1_intc" start="2" size="1" type="uint" grade="established"/>
+    <field name="port1_intb" start="1" size="1" type="uint" grade="established"/>
+    <field name="port1_inta" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADM_URE_UPS_BUF_BARRIER_FLUSH" size="8" grade="established" register="yes" offset="0x80" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header gives only the shift of each of eight selectors (one per pipe of each port), spaced four bits apart. The four-bit width is inferred from the spacing. The provider never touches it.</doc>
+    <field name="port2_pipe3" start="28" size="4" type="uint" grade="inferred"/>
+    <field name="port2_pipe2" start="24" size="4" type="uint" grade="inferred"/>
+    <field name="port2_pipe1" start="20" size="4" type="uint" grade="inferred"/>
+    <field name="port2_pipe0" start="16" size="4" type="uint" grade="inferred"/>
+    <field name="port1_pipe3" start="12" size="4" type="uint" grade="inferred"/>
+    <field name="port1_pipe2" start="8" size="4" type="uint" grade="inferred"/>
+    <field name="port1_pipe1" start="4" size="4" type="uint" grade="inferred"/>
+    <field name="port1_pipe0" start="0" size="4" type="uint" grade="inferred"/>
   </struct>
   <struct name="ADM_INT_DEST" size="8" grade="established" register="yes" offset="0x88" access="rw" count="15" stride="8" reset="unknown">
-    <doc>Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder. The vector field is inferred: the header gives only the shift 56 and the provider ORs the vector over the destination address; bit 63 as the top is the end of the word, not a header fact. The extent of the address part is unknown.</doc>
+    <field name="vector" start="56" size="8" type="uint" grade="inferred"/>
   </struct>
   <struct name="ADM_ERROR_SUMMARY" size="8" grade="established" register="yes" offset="0x100" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: one bit per error source, bits 0 to 61.</doc>
+    <field name="port2_pcie_fat_err" start="61" size="1" type="uint" grade="established"/>
+    <field name="port2_pcie_nfat_err" start="60" size="1" type="uint" grade="established"/>
+    <field name="port2_pcie_cor_err" start="59" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_fat_err" start="58" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_nfat_err" start="57" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_cor_err" start="56" size="1" type="uint" grade="established"/>
+    <field name="dtl2_posted_d_cred_max_err" start="55" size="1" type="uint" grade="established"/>
+    <field name="dtl2_posted_hd_cred_max_err" start="54" size="1" type="uint" grade="established"/>
+    <field name="dtl2_nposted_d_cred_max_err" start="53" size="1" type="uint" grade="established"/>
+    <field name="dtl2_nposted_hd_cred_max_err" start="52" size="1" type="uint" grade="established"/>
+    <field name="dtl2_comp_d_cred_max_err" start="51" size="1" type="uint" grade="established"/>
+    <field name="dtl2_comp_hd_cred_max_err" start="50" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_nposted_cred_updt_err" start="49" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_posted_cred_updt_err" start="48" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_compl_cred_updt_err" start="47" size="1" type="uint" grade="established"/>
+    <field name="dtl2_min_pdata_credit_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="dtl1_posted_d_cred_max_err" start="45" size="1" type="uint" grade="established"/>
+    <field name="dtl1_posted_hd_cred_max_err" start="44" size="1" type="uint" grade="established"/>
+    <field name="dtl1_nposted_d_cred_max_err" start="43" size="1" type="uint" grade="established"/>
+    <field name="dtl1_nposted_hd_cred_max_err" start="42" size="1" type="uint" grade="established"/>
+    <field name="dtl1_comp_d_cred_max_err" start="41" size="1" type="uint" grade="established"/>
+    <field name="dtl1_comp_hd_cred_max_err" start="40" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_nposted_cred_updt_err" start="39" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_posted_cred_updt_err" start="38" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_compl_cred_updt_err" start="37" size="1" type="uint" grade="established"/>
+    <field name="dtl1_min_pdata_credit_err" start="36" size="1" type="uint" grade="established"/>
+    <field name="adm_sram_pe" start="35" size="1" type="uint" grade="established"/>
+    <field name="adm_credit_oflow" start="34" size="1" type="uint" grade="established"/>
+    <field name="mmr_addr_error" start="33" size="1" type="uint" grade="established"/>
+    <field name="mmr_access_error" start="32" size="1" type="uint" grade="established"/>
+    <field name="adm_ssp_req_timeout" start="31" size="1" type="uint" grade="established"/>
+    <field name="adm_ssp_rsp_unexp" start="30" size="1" type="uint" grade="established"/>
+    <field name="ure_sram_pe" start="29" size="1" type="uint" grade="established"/>
+    <field name="ure_credit_oflow" start="28" size="1" type="uint" grade="established"/>
+    <field name="ure_ate40_page_fault" start="27" size="1" type="uint" grade="established"/>
+    <field name="ure_ate3240_page_fault" start="26" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_rd_req_timeout" start="25" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_wr_req_timeout" start="24" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_rsp_unexp" start="23" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_sideband" start="22" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_short" start="21" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_long" start="20" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_invalid" start="19" size="1" type="uint" grade="established"/>
+    <field name="dre_sram_pe" start="18" size="1" type="uint" grade="established"/>
+    <field name="dre_credit_oflow" start="17" size="1" type="uint" grade="established"/>
+    <field name="pcie_err_compl" start="16" size="1" type="uint" grade="established"/>
+    <field name="pcie_unexp_compl" start="15" size="1" type="uint" grade="established"/>
+    <field name="pcie_compl_timeout" start="14" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_bad_be" start="13" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_addr_err" start="12" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_sideband" start="11" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_short" start="10" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_oflow" start="9" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_long" start="8" size="1" type="uint" grade="established"/>
+    <field name="dre_ssp_req_inval" start="7" size="1" type="uint" grade="established"/>
+    <field name="cxm_credit_oflow" start="6" size="1" type="uint" grade="established"/>
+    <field name="ssp_mbe" start="5" size="1" type="uint" grade="established"/>
+    <field name="ssp_sbe" start="4" size="1" type="uint" grade="established"/>
+    <field name="ssp_protocol_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_header" start="2" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_header" start="1" size="1" type="uint" grade="established"/>
+    <field name="crm_ssp_req_invalid" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADM_ERROR_SUMMARY_ALIAS" size="8" grade="established" register="yes" offset="0x108" access="rw" reset="unknown">
-    <doc>Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header assigns bits to the summary and mask registers only. The provider writes all ones here at attach with the same clear-transient-errors intent as the status alias; the one-bit-per-source layout is carried over from the summary by that role, not stated.</doc>
+    <field name="port2_pcie_fat_err" start="61" size="1" type="uint" grade="inferred"/>
+    <field name="port2_pcie_nfat_err" start="60" size="1" type="uint" grade="inferred"/>
+    <field name="port2_pcie_cor_err" start="59" size="1" type="uint" grade="inferred"/>
+    <field name="port1_pcie_fat_err" start="58" size="1" type="uint" grade="inferred"/>
+    <field name="port1_pcie_nfat_err" start="57" size="1" type="uint" grade="inferred"/>
+    <field name="port1_pcie_cor_err" start="56" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_posted_d_cred_max_err" start="55" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_posted_hd_cred_max_err" start="54" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_nposted_d_cred_max_err" start="53" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_nposted_hd_cred_max_err" start="52" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_comp_d_cred_max_err" start="51" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_comp_hd_cred_max_err" start="50" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_inf_nposted_cred_updt_err" start="49" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_inf_posted_cred_updt_err" start="48" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_inf_compl_cred_updt_err" start="47" size="1" type="uint" grade="inferred"/>
+    <field name="dtl2_min_pdata_credit_err" start="46" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_posted_d_cred_max_err" start="45" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_posted_hd_cred_max_err" start="44" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_nposted_d_cred_max_err" start="43" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_nposted_hd_cred_max_err" start="42" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_comp_d_cred_max_err" start="41" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_comp_hd_cred_max_err" start="40" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_inf_nposted_cred_updt_err" start="39" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_inf_posted_cred_updt_err" start="38" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_inf_compl_cred_updt_err" start="37" size="1" type="uint" grade="inferred"/>
+    <field name="dtl1_min_pdata_credit_err" start="36" size="1" type="uint" grade="inferred"/>
+    <field name="adm_sram_pe" start="35" size="1" type="uint" grade="inferred"/>
+    <field name="adm_credit_oflow" start="34" size="1" type="uint" grade="inferred"/>
+    <field name="mmr_addr_error" start="33" size="1" type="uint" grade="inferred"/>
+    <field name="mmr_access_error" start="32" size="1" type="uint" grade="inferred"/>
+    <field name="adm_ssp_req_timeout" start="31" size="1" type="uint" grade="inferred"/>
+    <field name="adm_ssp_rsp_unexp" start="30" size="1" type="uint" grade="inferred"/>
+    <field name="ure_sram_pe" start="29" size="1" type="uint" grade="inferred"/>
+    <field name="ure_credit_oflow" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="ure_ate40_page_fault" start="27" size="1" type="uint" grade="inferred"/>
+    <field name="ure_ate3240_page_fault" start="26" size="1" type="uint" grade="inferred"/>
+    <field name="ure_ssp_rd_req_timeout" start="25" size="1" type="uint" grade="inferred"/>
+    <field name="ure_ssp_wr_req_timeout" start="24" size="1" type="uint" grade="inferred"/>
+    <field name="ure_ssp_rsp_unexp" start="23" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_rsp_sideband" start="22" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_rsp_short" start="21" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_rsp_long" start="20" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_rsp_invalid" start="19" size="1" type="uint" grade="inferred"/>
+    <field name="dre_sram_pe" start="18" size="1" type="uint" grade="inferred"/>
+    <field name="dre_credit_oflow" start="17" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_err_compl" start="16" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_unexp_compl" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="pcie_compl_timeout" start="14" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_bad_be" start="13" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_addr_err" start="12" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_sideband" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_short" start="10" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_oflow" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_long" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="dre_ssp_req_inval" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="cxm_credit_oflow" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_mbe" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_sbe" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_protocol_error" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_rsp_header" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="ssp_req_header" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="crm_ssp_req_invalid" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="ADM_ERROR_MASK" size="8" grade="established" register="yes" offset="0x110" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: same bit assignment as the summary register. The header does not say whether a set bit enables or masks the source (unknown).</doc>
+    <field name="port2_pcie_fat_err" start="61" size="1" type="uint" grade="established"/>
+    <field name="port2_pcie_nfat_err" start="60" size="1" type="uint" grade="established"/>
+    <field name="port2_pcie_cor_err" start="59" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_fat_err" start="58" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_nfat_err" start="57" size="1" type="uint" grade="established"/>
+    <field name="port1_pcie_cor_err" start="56" size="1" type="uint" grade="established"/>
+    <field name="dtl2_posted_d_cred_max_err" start="55" size="1" type="uint" grade="established"/>
+    <field name="dtl2_posted_hd_cred_max_err" start="54" size="1" type="uint" grade="established"/>
+    <field name="dtl2_nposted_d_cred_max_err" start="53" size="1" type="uint" grade="established"/>
+    <field name="dtl2_nposted_hd_cred_max_err" start="52" size="1" type="uint" grade="established"/>
+    <field name="dtl2_comp_d_cred_max_err" start="51" size="1" type="uint" grade="established"/>
+    <field name="dtl2_comp_hd_cred_max_err" start="50" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_nposted_cred_updt_err" start="49" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_posted_cred_updt_err" start="48" size="1" type="uint" grade="established"/>
+    <field name="dtl2_inf_compl_cred_updt_err" start="47" size="1" type="uint" grade="established"/>
+    <field name="dtl2_min_pdata_credit_err" start="46" size="1" type="uint" grade="established"/>
+    <field name="dtl1_posted_d_cred_max_err" start="45" size="1" type="uint" grade="established"/>
+    <field name="dtl1_posted_hd_cred_max_err" start="44" size="1" type="uint" grade="established"/>
+    <field name="dtl1_nposted_d_cred_max_err" start="43" size="1" type="uint" grade="established"/>
+    <field name="dtl1_nposted_hd_cred_max_err" start="42" size="1" type="uint" grade="established"/>
+    <field name="dtl1_comp_d_cred_max_err" start="41" size="1" type="uint" grade="established"/>
+    <field name="dtl1_comp_hd_cred_max_err" start="40" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_nposted_cred_updt_err" start="39" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_posted_cred_updt_err" start="38" size="1" type="uint" grade="established"/>
+    <field name="dtl1_inf_compl_cred_updt_err" start="37" size="1" type="uint" grade="established"/>
+    <field name="dtl1_min_pdata_credit_err" start="36" size="1" type="uint" grade="established"/>
+    <field name="adm_sram_pe" start="35" size="1" type="uint" grade="established"/>
+    <field name="adm_credit_oflow" start="34" size="1" type="uint" grade="established"/>
+    <field name="mmr_addr_error" start="33" size="1" type="uint" grade="established"/>
+    <field name="mmr_access_error" start="32" size="1" type="uint" grade="established"/>
+    <field name="adm_ssp_req_timeout" start="31" size="1" type="uint" grade="established"/>
+    <field name="adm_ssp_rsp_unexp" start="30" size="1" type="uint" grade="established"/>
+    <field name="ure_sram_pe" start="29" size="1" type="uint" grade="established"/>
+    <field name="ure_credit_oflow" start="28" size="1" type="uint" grade="established"/>
+    <field name="ure_ate40_page_fault" start="27" size="1" type="uint" grade="established"/>
+    <field name="ure_ate3240_page_fault" start="26" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_rd_req_timeout" start="25" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_wr_req_timeout" start="24" size="1" type="uint" grade="established"/>
+    <field name="ure_ssp_rsp_unexp" start="23" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_sideband" start="22" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_short" start="21" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_long" start="20" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_invalid" start="19" size="1" type="uint" grade="established"/>
+    <field name="dre_sram_pe" start="18" size="1" type="uint" grade="established"/>
+    <field name="dre_credit_oflow" start="17" size="1" type="uint" grade="established"/>
+    <field name="pcie_err_compl" start="16" size="1" type="uint" grade="established"/>
+    <field name="pcie_unexp_compl" start="15" size="1" type="uint" grade="established"/>
+    <field name="pcie_compl_timeout" start="14" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_bad_be" start="13" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_addr_err" start="12" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_sideband" start="11" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_short" start="10" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_oflow" start="9" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_long" start="8" size="1" type="uint" grade="established"/>
+    <field name="dre_ssp_req_inval" start="7" size="1" type="uint" grade="established"/>
+    <field name="cxm_credit_oflow" start="6" size="1" type="uint" grade="established"/>
+    <field name="ssp_mbe" start="5" size="1" type="uint" grade="established"/>
+    <field name="ssp_sbe" start="4" size="1" type="uint" grade="established"/>
+    <field name="ssp_protocol_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="ssp_rsp_header" start="2" size="1" type="uint" grade="established"/>
+    <field name="ssp_req_header" start="1" size="1" type="uint" grade="established"/>
+    <field name="crm_ssp_req_invalid" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="ADM_FIRST_ERROR" size="8" grade="established" register="yes" offset="0x118" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_adm_first_error). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -393,7 +664,16 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_lsi_ltssm_stat_wr_en). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="LSI_GB_CFG1" size="8" grade="established" register="yes" offset="0x2800" access="rw" count="2" stride="4096" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks (gearbox configuration). Meanings of the fields are unknown beyond their names.</doc>
+    <field name="slf_ts" start="24" size="4" type="uint" grade="established"/>
+    <field name="rvrs_clk" start="20" size="2" type="uint" grade="established"/>
+    <field name="rvrs_lb" start="19" size="1" type="uint" grade="established"/>
+    <field name="lpbk_en" start="18" size="1" type="uint" grade="established"/>
+    <field name="lpbk_sel" start="16" size="2" type="uint" grade="established"/>
+    <field name="rxl0s_flt" start="15" size="1" type="uint" grade="established"/>
+    <field name="rxl0s_adj" start="12" size="3" type="uint" grade="established"/>
+    <field name="rxl0s_smp" start="8" size="4" type="uint" grade="established"/>
+    <field name="rxl0s_ths" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="LSI_GB_CFG2" size="8" grade="established" register="yes" offset="0x2808" access="rw" count="2" stride="4096" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -486,7 +766,23 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_credit_limit). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="URE_CONTROL" size="8" grade="established" register="yes" offset="0xb030" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: write-merge timer is the eleven-bit mask at bit 12; the rest are single bits. The parity-disable and malform-disable bits are the header names; their effects are not described.</doc>
+    <field name="unsup_disable" start="45" size="1" type="uint" grade="established"/>
+    <field name="malform_disable" start="44" size="1" type="uint" grade="established"/>
+    <field name="dns_hdr_par_disable" start="40" size="1" type="uint" grade="established"/>
+    <field name="dns_dat_par_disable" start="39" size="1" type="uint" grade="established"/>
+    <field name="rspq_par_disable" start="38" size="1" type="uint" grade="established"/>
+    <field name="rci_par_disable" start="37" size="1" type="uint" grade="established"/>
+    <field name="ate_par_disable" start="36" size="1" type="uint" grade="established"/>
+    <field name="ups_hdr2_par_disable" start="35" size="1" type="uint" grade="established"/>
+    <field name="ups_dat2_par_disable" start="34" size="1" type="uint" grade="established"/>
+    <field name="ups_hdr1_par_disable" start="33" size="1" type="uint" grade="established"/>
+    <field name="ups_dat1_par_disable" start="32" size="1" type="uint" grade="established"/>
+    <field name="rspq_bypass_disable" start="24" size="1" type="uint" grade="established"/>
+    <field name="wrt_mrg_timer" start="12" size="11" type="uint" grade="established"/>
+    <field name="wrt_mrg_enable2" start="5" size="1" type="uint" grade="established"/>
+    <field name="wrt_mrg_enable1" start="4" size="1" type="uint" grade="established"/>
+    <field name="rd_mrg_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="URE_STATUS" size="8" grade="established" register="yes" offset="0xb038" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -504,22 +800,55 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_ssp_err_addr). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="URE_PAGE_MAP" size="8" grade="established" register="yes" offset="0xb070" access="rw" reset="unknown">
-    <doc>Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header. The pagesize field holds the encodings the header names (0 to 4); 5 to 7 are unknown. The provider uses 4.</doc>
+    <field name="pagesize" start="4" size="3" type="ure_pagesize" grade="established"/>
+    <field name="ate40_enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="ate3240_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="URE_DIR_MAP" size="8" grade="established" register="yes" offset="0xb078" access="rw" count="2" stride="8" reset="unknown">
     <doc>Upstream request engine direct map, one per port. For 32-bit direct DMA the provider stores the target's coretalk address with the low 30 bits cleared (a 1 GiB-aligned base), reads it back to flush, and refcounts users: a second user needs the same base. Name and offset are the vendor header's definition (struct member ce_ure_dir_map). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="URE_PIPE_SEL1" size="8" grade="established" register="yes" offset="0xb088" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit selectors at bits 0, 20 and 40 (header selector masks). Within a selector the header defines traffic class, bus, device and function masks at bits 18:16, 15:8, 7:3 and 2:0; they sum to 19 bits. The layout is established for the first selector, whose position the macros give; for the second and third it is inferred from the identical selector width. Meaning of each selector (a source id match for a pipe) is inferred from the register name.</doc>
+    <field name="sel3_tc" start="56" size="3" type="uint" grade="inferred"/>
+    <field name="sel3_bus" start="48" size="8" type="uint" grade="inferred"/>
+    <field name="sel3_dev" start="43" size="5" type="uint" grade="inferred"/>
+    <field name="sel3_fnc" start="40" size="3" type="uint" grade="inferred"/>
+    <field name="sel2_tc" start="36" size="3" type="uint" grade="inferred"/>
+    <field name="sel2_bus" start="28" size="8" type="uint" grade="inferred"/>
+    <field name="sel2_dev" start="23" size="5" type="uint" grade="inferred"/>
+    <field name="sel2_fnc" start="20" size="3" type="uint" grade="inferred"/>
+    <field name="sel1_tc" start="16" size="3" type="uint" grade="established"/>
+    <field name="sel1_bus" start="8" size="8" type="uint" grade="established"/>
+    <field name="sel1_dev" start="3" size="5" type="uint" grade="established"/>
+    <field name="sel1_fnc" start="0" size="3" type="uint" grade="established"/>
   </struct>
   <struct name="URE_PIPE_MASK1" size="8" grade="established" register="yes" offset="0xb090" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit mask fields at bits 0, 20 and 40 from the header masks. That each mask applies to the selector of the same index is inferred from naming.</doc>
+    <field name="mask3" start="40" size="19" type="uint" grade="inferred"/>
+    <field name="mask2" start="20" size="19" type="uint" grade="inferred"/>
+    <field name="mask1" start="0" size="19" type="uint" grade="inferred"/>
   </struct>
   <struct name="URE_PIPE_SEL2" size="8" grade="established" register="yes" offset="0xb098" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder. Same selector layout as the first pipe select register (see there); the header comment covers both under one name. Selector two and three sub-layout is inferred.</doc>
+    <field name="sel3_tc" start="56" size="3" type="uint" grade="inferred"/>
+    <field name="sel3_bus" start="48" size="8" type="uint" grade="inferred"/>
+    <field name="sel3_dev" start="43" size="5" type="uint" grade="inferred"/>
+    <field name="sel3_fnc" start="40" size="3" type="uint" grade="inferred"/>
+    <field name="sel2_tc" start="36" size="3" type="uint" grade="inferred"/>
+    <field name="sel2_bus" start="28" size="8" type="uint" grade="inferred"/>
+    <field name="sel2_dev" start="23" size="5" type="uint" grade="inferred"/>
+    <field name="sel2_fnc" start="20" size="3" type="uint" grade="inferred"/>
+    <field name="sel1_tc" start="16" size="3" type="uint" grade="established"/>
+    <field name="sel1_bus" start="8" size="8" type="uint" grade="established"/>
+    <field name="sel1_dev" start="3" size="5" type="uint" grade="established"/>
+    <field name="sel1_fnc" start="0" size="3" type="uint" grade="established"/>
   </struct>
   <struct name="URE_PIPE_MASK2" size="8" grade="established" register="yes" offset="0xb0a0" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder. Same layout as the first pipe mask register; the header comment covers both.</doc>
+    <field name="mask3" start="40" size="19" type="uint" grade="inferred"/>
+    <field name="mask2" start="20" size="19" type="uint" grade="inferred"/>
+    <field name="mask1" start="0" size="19" type="uint" grade="inferred"/>
   </struct>
   <struct name="URE_PCIE1_CREDITS_SENT" size="8" grade="established" register="yes" offset="0xb0a8" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_sent). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -615,10 +944,27 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_buf_flush23). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="URE_PCIE_CONTROL1" size="8" grade="established" register="yes" offset="0xb1a0" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. Names ELAL, PN and SI match the PCI Express capability fields of the same abbreviations (exit latency, port number, slot implemented); that reading is inferred from the names and unconfirmed.</doc>
+    <field name="pn2" start="24" size="8" type="uint" grade="established"/>
+    <field name="pn1" start="16" size="8" type="uint" grade="established"/>
+    <field name="scc" start="12" size="1" type="uint" grade="established"/>
+    <field name="elal1" start="8" size="3" type="uint" grade="established"/>
+    <field name="elal" start="4" size="3" type="uint" grade="established"/>
+    <field name="si" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="URE_PCIE_CONTROL2" size="8" grade="established" register="yes" offset="0xb1a8" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. The names abp, pcp, msp, aip, pip, hps, hpc, splv, spls and psn match the slot capabilities fields of the public PCI Express specification (attention button, power controller, MRL sensor, attention and power indicators, hot-plug surprise and capable, slot power limit value and scale, physical slot number); that reading is inferred from the names. The provider never writes these.</doc>
+    <field name="psn2" start="32" size="13" type="uint" grade="established"/>
+    <field name="psn1" start="19" size="13" type="uint" grade="established"/>
+    <field name="spls" start="15" size="2" type="uint" grade="established"/>
+    <field name="splv" start="7" size="8" type="uint" grade="established"/>
+    <field name="hpc" start="6" size="1" type="uint" grade="established"/>
+    <field name="hps" start="5" size="1" type="uint" grade="established"/>
+    <field name="pip" start="4" size="1" type="uint" grade="established"/>
+    <field name="aip" start="3" size="1" type="uint" grade="established"/>
+    <field name="msp" start="2" size="1" type="uint" grade="established"/>
+    <field name="pcp" start="1" size="1" type="uint" grade="established"/>
+    <field name="abp" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="URE_MAINT_UPS_DAT1_DATA63_0" size="8" grade="established" register="yes" offset="0xc000" access="rw" count="512" stride="8" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -744,13 +1090,21 @@
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_req_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="DRE_CONFIG1" size="8" grade="established" register="yes" offset="0x40088" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder. Header-defined bits 0 to 3. The address mode field starts at bit 4 (constant DRE_ADDR_MODE_SHFT); its width and values are unknown, so it is not a field.</doc>
+    <field name="sup_io_comp_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="sup_config_comp_error" start="2" size="1" type="uint" grade="established"/>
+    <field name="dyn_ro_enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="ro_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="DRE_CONFIG2" size="8" grade="established" register="yes" offset="0x40090" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_config2). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
   <struct name="DRE_CONFIG_REQ_STATUS" size="8" grade="established" register="yes" offset="0x40098" access="rw" reset="unknown">
-    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder.</doc>
+    <doc>Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks.</doc>
+    <field name="config_request_active" start="5" size="1" type="uint" grade="established"/>
+    <field name="config_completion_valid" start="4" size="1" type="uint" grade="established"/>
+    <field name="downstream_config_error" start="3" size="1" type="uint" grade="established"/>
+    <field name="last_config_completion" start="0" size="3" type="uint" grade="established"/>
   </struct>
   <struct name="DRE_DYN_FIFO" size="8" grade="established" register="yes" offset="0x40100" access="rw" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_dyn_fifo). The header gives no access direction or reset value; access rw is a placeholder.</doc>
@@ -788,134 +1142,18 @@
   <struct name="DRE_MAINT_US_WRT_RSP" size="8" grade="established" register="yes" offset="0x44300" access="rw" count="32" stride="8" reset="unknown">
     <doc>Name and offset are the vendor header's definition (struct member ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset value; access rw is a placeholder.</doc>
   </struct>
-  <constant name="ADM_ERR_ADM_CREDIT_OFLOW" value="0x400000000" grade="established"/>
-  <constant name="ADM_ERR_ADM_SRAM_PE" value="0x800000000" grade="established"/>
-  <constant name="ADM_ERR_ADM_SSP_REQ_TIMEOUT" value="0x80000000" grade="established"/>
-  <constant name="ADM_ERR_ADM_SSP_RSP_UNEXP" value="0x40000000" grade="established"/>
-  <constant name="ADM_ERR_CRM_SSP_REQ_INVALID" value="0x1" grade="established"/>
-  <constant name="ADM_ERR_CXM_CREDIT_OFLOW" value="0x40" grade="established"/>
-  <constant name="ADM_ERR_DRE_CREDIT_OFLOW" value="0x20000" grade="established"/>
-  <constant name="ADM_ERR_DRE_SRAM_PE" value="0x40000" grade="established"/>
-  <constant name="ADM_ERR_DRE_SSP_REQ_INVAL" value="0x80" grade="established"/>
-  <constant name="ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR" value="0x20000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR" value="0x10000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR" value="0x2000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR" value="0x8000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR" value="0x4000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR" value="0x1000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR" value="0x80000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR" value="0x40000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR" value="0x200000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR" value="0x100000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR" value="0x8000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR" value="0x4000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR" value="0x800000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR" value="0x2000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR" value="0x1000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR" value="0x400000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR" value="0x20000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR" value="0x10000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR" value="0x80000000000000" grade="established"/>
-  <constant name="ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR" value="0x40000000000000" grade="established"/>
-  <constant name="ADM_ERR_MMR_ACCESS_ERROR" value="0x100000000" grade="established"/>
-  <constant name="ADM_ERR_MMR_ADDR_ERROR" value="0x200000000" grade="established"/>
-  <constant name="ADM_ERR_PCIE_COMPL_TIMEOUT" value="0x4000" grade="established"/>
-  <constant name="ADM_ERR_PCIE_ERR_COMPL" value="0x10000" grade="established"/>
-  <constant name="ADM_ERR_PCIE_UNEXP_COMPL" value="0x8000" grade="established"/>
-  <constant name="ADM_ERR_PORT1_PCIE_COR_ERR" value="0x100000000000000" grade="established"/>
-  <constant name="ADM_ERR_PORT1_PCIE_FAT_ERR" value="0x400000000000000" grade="established"/>
-  <constant name="ADM_ERR_PORT1_PCIE_NFAT_ERR" value="0x200000000000000" grade="established"/>
-  <constant name="ADM_ERR_PORT2_PCIE_COR_ERR" value="0x800000000000000" grade="established"/>
-  <constant name="ADM_ERR_PORT2_PCIE_FAT_ERR" value="0x2000000000000000" grade="established"/>
-  <constant name="ADM_ERR_PORT2_PCIE_NFAT_ERR" value="0x1000000000000000" grade="established"/>
-  <constant name="ADM_ERR_SSP_MBE" value="0x20" grade="established"/>
-  <constant name="ADM_ERR_SSP_PROTOCOL_ERROR" value="0x8" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_ADDR_ERR" value="0x1000" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_BAD_BE" value="0x2000" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_HEADER" value="0x2" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_LONG" value="0x100" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_OFLOW" value="0x200" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_SHORT" value="0x400" grade="established"/>
-  <constant name="ADM_ERR_SSP_REQ_SIDEBAND" value="0x800" grade="established"/>
-  <constant name="ADM_ERR_SSP_RSP_HEADER" value="0x4" grade="established"/>
-  <constant name="ADM_ERR_SSP_RSP_INVALID" value="0x80000" grade="established"/>
-  <constant name="ADM_ERR_SSP_RSP_LONG" value="0x100000" grade="established"/>
-  <constant name="ADM_ERR_SSP_RSP_SHORT" value="0x200000" grade="established"/>
-  <constant name="ADM_ERR_SSP_RSP_SIDEBAND" value="0x400000" grade="established"/>
-  <constant name="ADM_ERR_SSP_SBE" value="0x10" grade="established"/>
-  <constant name="ADM_ERR_URE_ATE3240_PAGE_FAULT" value="0x4000000" grade="established"/>
-  <constant name="ADM_ERR_URE_ATE40_PAGE_FAULT" value="0x8000000" grade="established"/>
-  <constant name="ADM_ERR_URE_CREDIT_OFLOW" value="0x10000000" grade="established"/>
-  <constant name="ADM_ERR_URE_SRAM_PE" value="0x20000000" grade="established"/>
-  <constant name="ADM_ERR_URE_SSP_RD_REQ_TIMEOUT" value="0x2000000" grade="established"/>
-  <constant name="ADM_ERR_URE_SSP_RSP_UNEXP" value="0x800000" grade="established"/>
-  <constant name="ADM_ERR_URE_SSP_WR_REQ_TIMEOUT" value="0x1000000" grade="established"/>
-  <constant name="ADM_FORCE_INT_ALWAYS_SHFT" value="0x8" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT" value="0x0" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT" value="0x1" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT" value="0x2" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT" value="0x3" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT" value="0x4" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT" value="0x5" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT" value="0x6" grade="established"/>
-  <constant name="ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT" value="0x7" grade="established"/>
-  <constant name="ADM_INT_CE_ERROR_SHFT" value="0x0" grade="established"/>
-  <constant name="ADM_INT_LSI1_IP_ERROR_SHFT" value="0x1" grade="established"/>
-  <constant name="ADM_INT_LSI2_IP_ERROR_SHFT" value="0x2" grade="established"/>
-  <constant name="ADM_INT_PCIE_ERROR_SHFT" value="0x3" grade="established"/>
-  <constant name="ADM_INT_PCIE_MSG_SHFT" value="0xe" grade="established"/>
-  <constant name="ADM_INT_PCIE_MSG_SLOT_0_SHFT" value="0xe" grade="established"/>
-  <constant name="ADM_INT_PCIE_MSG_SLOT_1_SHFT" value="0xf" grade="established"/>
-  <constant name="ADM_INT_PCIE_MSG_SLOT_2_SHFT" value="0x10" grade="established"/>
-  <constant name="ADM_INT_PCIE_MSG_SLOT_3_SHFT" value="0x11" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT1_DEV_A_SHFT" value="0x6" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT1_DEV_B_SHFT" value="0x7" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT1_DEV_C_SHFT" value="0x8" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT1_DEV_D_SHFT" value="0x9" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT2_DEV_A_SHFT" value="0xa" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT2_DEV_B_SHFT" value="0xb" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT2_DEV_C_SHFT" value="0xc" grade="established"/>
-  <constant name="ADM_INT_PCIE_PORT2_DEV_D_SHFT" value="0xd" grade="established"/>
-  <constant name="ADM_INT_PORT1_HOTPLUG_EVENT_SHFT" value="0x4" grade="established"/>
-  <constant name="ADM_INT_PORT1_PM_PME_MSG_SHFT" value="0x16" grade="established"/>
-  <constant name="ADM_INT_PORT2_HOTPLUG_EVENT_SHFT" value="0x5" grade="established"/>
-  <constant name="ADM_INT_PORT2_PM_PME_MSG_SHFT" value="0x17" grade="established"/>
   <constant name="BUS_SRC_ID_SHFT" value="0x8" grade="established"/>
   <constant name="DEV_SRC_ID_SHFT" value="0x3" grade="established"/>
   <constant name="DRE_ADDR_MODE_SHFT" value="0x4" grade="established"/>
-  <constant name="DRE_CONFIG_COMPLETION_VALID" value="0x10" grade="established"/>
-  <constant name="DRE_CONFIG_REQUEST_ACTIVE" value="0x20" grade="established"/>
-  <constant name="DRE_DOWNSTREAM_CONFIG_ERROR" value="0x8" grade="established"/>
-  <constant name="DRE_DYN_RO_ENABLE" value="0x2" grade="established"/>
-  <constant name="DRE_LAST_CONFIG_COMPLETION" value="0x7" grade="established"/>
-  <constant name="DRE_RO_ENABLE" value="0x1" grade="established"/>
-  <constant name="DRE_SUP_CONFIG_COMP_ERROR" value="0x4" grade="established"/>
-  <constant name="DRE_SUP_IO_COMP_ERROR" value="0x8" grade="established"/>
+  <constant name="E_CONFIG_BUS_MASK" value="0xff00000" grade="established"/>
   <constant name="E_CONFIG_BUS_SHFT" value="0x14" grade="established"/>
+  <constant name="E_CONFIG_DEVICE_MASK" value="0xf8000" grade="established"/>
   <constant name="E_CONFIG_DEVICE_SHFT" value="0xf" grade="established"/>
+  <constant name="E_CONFIG_FUNC_MASK" value="0x7000" grade="established"/>
   <constant name="E_CONFIG_FUNC_SHFT" value="0xc" grade="established"/>
   <constant name="FNC_SRC_ID_SHFT" value="0x0" grade="established"/>
   <constant name="HOST_BRIDGE_DEVICE_ID" value="0x4001" grade="established"/>
   <constant name="HOST_BRIDGE_VENDOR_ID" value="0x10a9" grade="established"/>
-  <constant name="INTR_VECTOR_SHFT" value="0x38" grade="established"/>
-  <constant name="LSI_GB_CFG1_LPBK_EN_MASK" value="0x40000" grade="established"/>
-  <constant name="LSI_GB_CFG1_LPBK_EN_SHFT" value="0x12" grade="established"/>
-  <constant name="LSI_GB_CFG1_LPBK_SEL_MASK" value="0x30000" grade="established"/>
-  <constant name="LSI_GB_CFG1_LPBK_SEL_SHFT" value="0x10" grade="established"/>
-  <constant name="LSI_GB_CFG1_RVRS_CLK_MASK" value="0x300000" grade="established"/>
-  <constant name="LSI_GB_CFG1_RVRS_CLK_SHFT" value="0x14" grade="established"/>
-  <constant name="LSI_GB_CFG1_RVRS_LB_MASK" value="0x80000" grade="established"/>
-  <constant name="LSI_GB_CFG1_RVRS_LB_SHFT" value="0x13" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_ADJ_MASK" value="0x7000" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_ADJ_SHFT" value="0xc" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_FLT_MASK" value="0x8000" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_FLT_SHFT" value="0xf" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_SMP_MASK" value="0xf00" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_SMP_SHFT" value="0x8" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_THS_MASK" value="0xff" grade="established"/>
-  <constant name="LSI_GB_CFG1_RXL0S_THS_SHFT" value="0x0" grade="established"/>
-  <constant name="LSI_GB_CFG1_SLF_TS_MASK" value="0xf000000" grade="established"/>
-  <constant name="LSI_GB_CFG1_SLF_TS_SHFT" value="0x18" grade="established"/>
   <constant name="NUM_M3240_ATES" value="0x800" grade="established"/>
   <constant name="NUM_M40_ATES" value="0x1000" grade="established"/>
   <constant name="NUM_PORTS" value="0x2" grade="established"/>
@@ -934,48 +1172,6 @@
   <constant name="PKT_TRAFIC_SHRT" value="0x10" grade="established"/>
   <constant name="REV_A" value="0x1" grade="established"/>
   <constant name="SRC_ID" value="0x1" grade="established"/>
-  <constant name="URE_ABP" value="0x1" grade="established"/>
-  <constant name="URE_AIP" value="0x8" grade="established"/>
-  <constant name="URE_ATE3240_ENABLE" value="0x1" grade="established"/>
-  <constant name="URE_ATE40_ENABLE" value="0x2" grade="established"/>
-  <constant name="URE_ATE_PAR_DISABLE" value="0x1000000000" grade="established"/>
-  <constant name="URE_DNS_DAT_PAR_DISABLE" value="0x8000000000" grade="established"/>
-  <constant name="URE_DNS_HDR_PAR_DISABLE" value="0x10000000000" grade="established"/>
-  <constant name="URE_ELAL1_SHFT" value="0x8" grade="established"/>
-  <constant name="URE_ELAL_SHFT" value="0x4" grade="established"/>
-  <constant name="URE_HPC" value="0x40" grade="established"/>
-  <constant name="URE_HPS" value="0x20" grade="established"/>
-  <constant name="URE_MALFORM_DISABLE" value="0x100000000000" grade="established"/>
-  <constant name="URE_MASK1_SHFT" value="0x0" grade="established"/>
-  <constant name="URE_MASK2_SHFT" value="0x14" grade="established"/>
-  <constant name="URE_MASK3_SHFT" value="0x28" grade="established"/>
-  <constant name="URE_MSP" value="0x4" grade="established"/>
-  <constant name="URE_PAGESIZE_SHFT" value="0x4" grade="established"/>
-  <constant name="URE_PCP" value="0x2" grade="established"/>
-  <constant name="URE_PIP" value="0x10" grade="established"/>
-  <constant name="URE_PN1_SHFT" value="0x10" grade="established"/>
-  <constant name="URE_PN2_SHFT" value="0x18" grade="established"/>
-  <constant name="URE_PSN1_SHFT" value="0x13" grade="established"/>
-  <constant name="URE_PSN2_SHFT" value="0x20" grade="established"/>
-  <constant name="URE_RCI_PAR_DISABLE" value="0x2000000000" grade="established"/>
-  <constant name="URE_RD_MRG_ENABLE" value="0x1" grade="established"/>
-  <constant name="URE_RSPQ_BYPASS_DISABLE" value="0x1000000" grade="established"/>
-  <constant name="URE_RSPQ_PAR_DISABLE" value="0x4000000000" grade="established"/>
-  <constant name="URE_SCC" value="0x1000" grade="established"/>
-  <constant name="URE_SEL1_SHFT" value="0x0" grade="established"/>
-  <constant name="URE_SEL2_SHFT" value="0x14" grade="established"/>
-  <constant name="URE_SEL3_SHFT" value="0x28" grade="established"/>
-  <constant name="URE_SI" value="0x1" grade="established"/>
-  <constant name="URE_SPLS_SHFT" value="0xf" grade="established"/>
-  <constant name="URE_SPLV_SHFT" value="0x7" grade="established"/>
-  <constant name="URE_UNSUP_DISABLE" value="0x200000000000" grade="established"/>
-  <constant name="URE_UPS_DAT1_PAR_DISABLE" value="0x100000000" grade="established"/>
-  <constant name="URE_UPS_DAT2_PAR_DISABLE" value="0x400000000" grade="established"/>
-  <constant name="URE_UPS_HDR1_PAR_DISABLE" value="0x200000000" grade="established"/>
-  <constant name="URE_UPS_HDR2_PAR_DISABLE" value="0x800000000" grade="established"/>
-  <constant name="URE_WRT_MRG_ENABLE1" value="0x10" grade="established"/>
-  <constant name="URE_WRT_MRG_ENABLE2" value="0x20" grade="established"/>
-  <constant name="URE_WRT_MRG_TIMER_SHFT" value="0xc" grade="established"/>
   <constant name="VIRT_PPB_DEVICE_ID" value="0x4002" grade="established"/>
   <constant name="VIRT_PPB_VENDOR_ID" value="0x10a9" grade="established"/>
 </genxml>

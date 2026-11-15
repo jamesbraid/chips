@@ -2,6 +2,47 @@
 // TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it
 #![allow(dead_code)]
 
+pub mod enums {
+    pub mod ure_pagesize {
+        pub const V4K: u32 = 0; // established
+        pub const V16K: u32 = 1; // established
+        pub const V64K: u32 = 2; // established
+        pub const V128K: u32 = 3; // established
+        pub const V256K: u32 = 4; // established
+        #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+        pub enum Value {
+            V4k,
+            V16k,
+            V64k,
+            V128k,
+            V256k,
+            Other(u32),
+        }
+        impl Value {
+            pub const fn from_raw(v: u32) -> Self {
+                match v {
+                    0 => Self::V4k,
+                    1 => Self::V16k,
+                    2 => Self::V64k,
+                    3 => Self::V128k,
+                    4 => Self::V256k,
+                    _ => Self::Other(v),
+                }
+            }
+            pub const fn raw(self) -> u32 {
+                match self {
+                    Self::V4k => 0,
+                    Self::V16k => 1,
+                    Self::V64k => 2,
+                    Self::V128k => 3,
+                    Self::V256k => 4,
+                    Self::Other(v) => v,
+                }
+            }
+        }
+    }
+}
+
 /// Widget identification word: part 0xce00, source id 1, revision A = 1 (header constants). Revision A needs the access workaround described on the unit  (established)
 pub mod adm_id {
     pub const WIDTH: u32 = 64;
@@ -56,16 +97,616 @@ pub mod adm_ssp_debug_sel {
 pub mod adm_int_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x58;
+    pub mod port2_pm_pme_msg { // bits 23:23, established
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pm_pme_msg { // bits 22:22, established
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_3 { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_2 { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_1 { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_0 { // bits 14:14, established
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intd { // bits 13:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intc { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intb { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_inta { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intd { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intc { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intb { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_inta { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_hotplug_event { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_hotplug_event { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi2_ip_error { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi1_ip_error { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_error { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use (established)
 pub mod adm_int_status_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x60;
+    pub mod port2_pm_pme_msg { // bits 23:23, inferred
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pm_pme_msg { // bits 22:22, inferred
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_3 { // bits 17:17, inferred
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_2 { // bits 16:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_1 { // bits 15:15, inferred
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_0 { // bits 14:14, inferred
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intd { // bits 13:13, inferred
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intc { // bits 12:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intb { // bits 11:11, inferred
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_inta { // bits 10:10, inferred
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intd { // bits 9:9, inferred
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intc { // bits 8:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intb { // bits 7:7, inferred
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_inta { // bits 6:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_hotplug_event { // bits 5:5, inferred
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_hotplug_event { // bits 4:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_error { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi2_ip_error { // bits 2:2, inferred
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi1_ip_error { // bits 1:1, inferred
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_error { // bits 0:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is r (established)
 pub mod adm_int_mask {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x68;
+    pub mod port2_pm_pme_msg { // bits 23:23, established
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pm_pme_msg { // bits 22:22, established
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_3 { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_2 { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_1 { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_msg_slot_0 { // bits 14:14, established
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intd { // bits 13:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intc { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intb { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_inta { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intd { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intc { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intb { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_inta { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_hotplug_event { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_hotplug_event { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi2_ip_error { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lsi1_ip_error { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_error { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_adm_int_pending). The header gives no access direction or reset value; access rw  (established)
 pub mod adm_int_pending {
@@ -76,11 +717,181 @@ pub mod adm_int_pending {
 pub mod adm_force_int {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x78;
+    pub mod always { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intd { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intc { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_intb { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_inta { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intd { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intc { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_intb { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_inta { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset val (established)
 pub mod adm_ure_ups_buf_barrier_flush {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x80;
+    pub mod port2_pipe3 { // bits 31:28, inferred
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pipe2 { // bits 27:24, inferred
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pipe1 { // bits 23:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pipe0 { // bits 19:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pipe3 { // bits 15:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pipe2 { // bits 11:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pipe1 { // bits 7:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pipe0 { // bits 3:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed (established)
 pub mod adm_int_dest {
@@ -88,21 +899,1891 @@ pub mod adm_int_dest {
     pub const OFFSET: u64 = 0x88;
     pub const COUNT: u32 = 15;
     pub const STRIDE: u64 = 8;
+    pub mod vector { // bits 63:56, inferred
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access r (established)
 pub mod adm_error_summary {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100;
+    pub mod port2_pcie_fat_err { // bits 61:61, established
+        pub const SHIFT: u32 = 61;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_nfat_err { // bits 60:60, established
+        pub const SHIFT: u32 = 60;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_cor_err { // bits 59:59, established
+        pub const SHIFT: u32 = 59;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_fat_err { // bits 58:58, established
+        pub const SHIFT: u32 = 58;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_nfat_err { // bits 57:57, established
+        pub const SHIFT: u32 = 57;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_cor_err { // bits 56:56, established
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_d_cred_max_err { // bits 55:55, established
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_hd_cred_max_err { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_d_cred_max_err { // bits 53:53, established
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_hd_cred_max_err { // bits 52:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_d_cred_max_err { // bits 51:51, established
+        pub const SHIFT: u32 = 51;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_hd_cred_max_err { // bits 50:50, established
+        pub const SHIFT: u32 = 50;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_nposted_cred_updt_err { // bits 49:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_posted_cred_updt_err { // bits 48:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_compl_cred_updt_err { // bits 47:47, established
+        pub const SHIFT: u32 = 47;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_min_pdata_credit_err { // bits 46:46, established
+        pub const SHIFT: u32 = 46;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_d_cred_max_err { // bits 45:45, established
+        pub const SHIFT: u32 = 45;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_hd_cred_max_err { // bits 44:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_d_cred_max_err { // bits 43:43, established
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_hd_cred_max_err { // bits 42:42, established
+        pub const SHIFT: u32 = 42;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_d_cred_max_err { // bits 41:41, established
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_hd_cred_max_err { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_nposted_cred_updt_err { // bits 39:39, established
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_posted_cred_updt_err { // bits 38:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_compl_cred_updt_err { // bits 37:37, established
+        pub const SHIFT: u32 = 37;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_min_pdata_credit_err { // bits 36:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_sram_pe { // bits 35:35, established
+        pub const SHIFT: u32 = 35;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_credit_oflow { // bits 34:34, established
+        pub const SHIFT: u32 = 34;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_addr_error { // bits 33:33, established
+        pub const SHIFT: u32 = 33;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_access_error { // bits 32:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_req_timeout { // bits 31:31, established
+        pub const SHIFT: u32 = 31;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_rsp_unexp { // bits 30:30, established
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_sram_pe { // bits 29:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_credit_oflow { // bits 28:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate40_page_fault { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate3240_page_fault { // bits 26:26, established
+        pub const SHIFT: u32 = 26;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rd_req_timeout { // bits 25:25, established
+        pub const SHIFT: u32 = 25;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_wr_req_timeout { // bits 24:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rsp_unexp { // bits 23:23, established
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_sideband { // bits 22:22, established
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_short { // bits 21:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_long { // bits 20:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_invalid { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_sram_pe { // bits 18:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_credit_oflow { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_err_compl { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_unexp_compl { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_compl_timeout { // bits 14:14, established
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_bad_be { // bits 13:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_addr_err { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_sideband { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_short { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_oflow { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_long { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_ssp_req_inval { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cxm_credit_oflow { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_mbe { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_sbe { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_protocol_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_header { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_header { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod crm_ssp_req_invalid { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (s (established)
 pub mod adm_error_summary_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x108;
+    pub mod port2_pcie_fat_err { // bits 61:61, inferred
+        pub const SHIFT: u32 = 61;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_nfat_err { // bits 60:60, inferred
+        pub const SHIFT: u32 = 60;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_cor_err { // bits 59:59, inferred
+        pub const SHIFT: u32 = 59;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_fat_err { // bits 58:58, inferred
+        pub const SHIFT: u32 = 58;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_nfat_err { // bits 57:57, inferred
+        pub const SHIFT: u32 = 57;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_cor_err { // bits 56:56, inferred
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_d_cred_max_err { // bits 55:55, inferred
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_hd_cred_max_err { // bits 54:54, inferred
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_d_cred_max_err { // bits 53:53, inferred
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_hd_cred_max_err { // bits 52:52, inferred
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_d_cred_max_err { // bits 51:51, inferred
+        pub const SHIFT: u32 = 51;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_hd_cred_max_err { // bits 50:50, inferred
+        pub const SHIFT: u32 = 50;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_nposted_cred_updt_err { // bits 49:49, inferred
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_posted_cred_updt_err { // bits 48:48, inferred
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_compl_cred_updt_err { // bits 47:47, inferred
+        pub const SHIFT: u32 = 47;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_min_pdata_credit_err { // bits 46:46, inferred
+        pub const SHIFT: u32 = 46;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_d_cred_max_err { // bits 45:45, inferred
+        pub const SHIFT: u32 = 45;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_hd_cred_max_err { // bits 44:44, inferred
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_d_cred_max_err { // bits 43:43, inferred
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_hd_cred_max_err { // bits 42:42, inferred
+        pub const SHIFT: u32 = 42;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_d_cred_max_err { // bits 41:41, inferred
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_hd_cred_max_err { // bits 40:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_nposted_cred_updt_err { // bits 39:39, inferred
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_posted_cred_updt_err { // bits 38:38, inferred
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_compl_cred_updt_err { // bits 37:37, inferred
+        pub const SHIFT: u32 = 37;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_min_pdata_credit_err { // bits 36:36, inferred
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_sram_pe { // bits 35:35, inferred
+        pub const SHIFT: u32 = 35;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_credit_oflow { // bits 34:34, inferred
+        pub const SHIFT: u32 = 34;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_addr_error { // bits 33:33, inferred
+        pub const SHIFT: u32 = 33;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_access_error { // bits 32:32, inferred
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_req_timeout { // bits 31:31, inferred
+        pub const SHIFT: u32 = 31;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_rsp_unexp { // bits 30:30, inferred
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_sram_pe { // bits 29:29, inferred
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_credit_oflow { // bits 28:28, inferred
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate40_page_fault { // bits 27:27, inferred
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate3240_page_fault { // bits 26:26, inferred
+        pub const SHIFT: u32 = 26;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rd_req_timeout { // bits 25:25, inferred
+        pub const SHIFT: u32 = 25;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_wr_req_timeout { // bits 24:24, inferred
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rsp_unexp { // bits 23:23, inferred
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_sideband { // bits 22:22, inferred
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_short { // bits 21:21, inferred
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_long { // bits 20:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_invalid { // bits 19:19, inferred
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_sram_pe { // bits 18:18, inferred
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_credit_oflow { // bits 17:17, inferred
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_err_compl { // bits 16:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_unexp_compl { // bits 15:15, inferred
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_compl_timeout { // bits 14:14, inferred
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_bad_be { // bits 13:13, inferred
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_addr_err { // bits 12:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_sideband { // bits 11:11, inferred
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_short { // bits 10:10, inferred
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_oflow { // bits 9:9, inferred
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_long { // bits 8:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_ssp_req_inval { // bits 7:7, inferred
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cxm_credit_oflow { // bits 6:6, inferred
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_mbe { // bits 5:5, inferred
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_sbe { // bits 4:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_protocol_error { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_header { // bits 2:2, inferred
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_header { // bits 1:1, inferred
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod crm_ssp_req_invalid { // bits 0:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw i (established)
 pub mod adm_error_mask {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110;
+    pub mod port2_pcie_fat_err { // bits 61:61, established
+        pub const SHIFT: u32 = 61;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_nfat_err { // bits 60:60, established
+        pub const SHIFT: u32 = 60;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port2_pcie_cor_err { // bits 59:59, established
+        pub const SHIFT: u32 = 59;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_fat_err { // bits 58:58, established
+        pub const SHIFT: u32 = 58;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_nfat_err { // bits 57:57, established
+        pub const SHIFT: u32 = 57;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port1_pcie_cor_err { // bits 56:56, established
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_d_cred_max_err { // bits 55:55, established
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_posted_hd_cred_max_err { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_d_cred_max_err { // bits 53:53, established
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_nposted_hd_cred_max_err { // bits 52:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_d_cred_max_err { // bits 51:51, established
+        pub const SHIFT: u32 = 51;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_comp_hd_cred_max_err { // bits 50:50, established
+        pub const SHIFT: u32 = 50;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_nposted_cred_updt_err { // bits 49:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_posted_cred_updt_err { // bits 48:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_inf_compl_cred_updt_err { // bits 47:47, established
+        pub const SHIFT: u32 = 47;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl2_min_pdata_credit_err { // bits 46:46, established
+        pub const SHIFT: u32 = 46;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_d_cred_max_err { // bits 45:45, established
+        pub const SHIFT: u32 = 45;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_posted_hd_cred_max_err { // bits 44:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_d_cred_max_err { // bits 43:43, established
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_nposted_hd_cred_max_err { // bits 42:42, established
+        pub const SHIFT: u32 = 42;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_d_cred_max_err { // bits 41:41, established
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_comp_hd_cred_max_err { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_nposted_cred_updt_err { // bits 39:39, established
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_posted_cred_updt_err { // bits 38:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_inf_compl_cred_updt_err { // bits 37:37, established
+        pub const SHIFT: u32 = 37;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dtl1_min_pdata_credit_err { // bits 36:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_sram_pe { // bits 35:35, established
+        pub const SHIFT: u32 = 35;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_credit_oflow { // bits 34:34, established
+        pub const SHIFT: u32 = 34;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_addr_error { // bits 33:33, established
+        pub const SHIFT: u32 = 33;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mmr_access_error { // bits 32:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_req_timeout { // bits 31:31, established
+        pub const SHIFT: u32 = 31;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adm_ssp_rsp_unexp { // bits 30:30, established
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_sram_pe { // bits 29:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_credit_oflow { // bits 28:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate40_page_fault { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ate3240_page_fault { // bits 26:26, established
+        pub const SHIFT: u32 = 26;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rd_req_timeout { // bits 25:25, established
+        pub const SHIFT: u32 = 25;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_wr_req_timeout { // bits 24:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ure_ssp_rsp_unexp { // bits 23:23, established
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_sideband { // bits 22:22, established
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_short { // bits 21:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_long { // bits 20:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_invalid { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_sram_pe { // bits 18:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_credit_oflow { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_err_compl { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_unexp_compl { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcie_compl_timeout { // bits 14:14, established
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_bad_be { // bits 13:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_addr_err { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_sideband { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_short { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_oflow { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_long { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dre_ssp_req_inval { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cxm_credit_oflow { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_mbe { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_sbe { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_protocol_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_rsp_header { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ssp_req_header { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod crm_ssp_req_invalid { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_adm_first_error). The header gives no access direction or reset value; access rw  (established)
 pub mod adm_first_error {
@@ -824,6 +3505,96 @@ pub mod lsi_gb_cfg1 {
     pub const OFFSET: u64 = 0x2800;
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 4096;
+    pub mod slf_ts { // bits 27:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rvrs_clk { // bits 21:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rvrs_lb { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lpbk_en { // bits 18:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod lpbk_sel { // bits 17:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rxl0s_flt { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rxl0s_adj { // bits 14:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rxl0s_smp { // bits 11:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rxl0s_ths { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg2). The header gives no access direction or reset value; access rw is a (established)
 pub mod lsi_gb_cfg2 {
@@ -1013,6 +3784,166 @@ pub mod ure_credit_limit {
 pub mod ure_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb030;
+    pub mod unsup_disable { // bits 45:45, established
+        pub const SHIFT: u32 = 45;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod malform_disable { // bits 44:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dns_hdr_par_disable { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dns_dat_par_disable { // bits 39:39, established
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rspq_par_disable { // bits 38:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rci_par_disable { // bits 37:37, established
+        pub const SHIFT: u32 = 37;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ate_par_disable { // bits 36:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ups_hdr2_par_disable { // bits 35:35, established
+        pub const SHIFT: u32 = 35;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ups_dat2_par_disable { // bits 34:34, established
+        pub const SHIFT: u32 = 34;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ups_hdr1_par_disable { // bits 33:33, established
+        pub const SHIFT: u32 = 33;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ups_dat1_par_disable { // bits 32:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rspq_bypass_disable { // bits 24:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wrt_mrg_timer { // bits 22:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wrt_mrg_enable2 { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wrt_mrg_enable1 { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rd_mrg_enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_status). The header gives no access direction or reset value; access rw is a  (established)
 pub mod ure_status {
@@ -1043,6 +3974,37 @@ pub mod ure_ssp_err_addr {
 pub mod ure_page_map {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb070;
+    pub mod pagesize { // bits 6:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+        pub use super::super::enums::ure_pagesize::Value;
+    }
+    pub mod ate40_enable { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ate3240_enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Upstream request engine direct map, one per port. For 32-bit direct DMA the provider stores the target's coretalk address with the low 30 bits cleared (established)
 pub mod ure_dir_map {
@@ -1055,21 +4017,321 @@ pub mod ure_dir_map {
 pub mod ure_pipe_sel1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb088;
+    pub mod sel3_tc { // bits 58:56, inferred
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_bus { // bits 55:48, inferred
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_dev { // bits 47:43, inferred
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_fnc { // bits 42:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_tc { // bits 38:36, inferred
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_bus { // bits 35:28, inferred
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_dev { // bits 27:23, inferred
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_fnc { // bits 22:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_tc { // bits 18:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_bus { // bits 15:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_dev { // bits 7:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_fnc { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw i (established)
 pub mod ure_pipe_mask1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb090;
+    pub mod mask3 { // bits 58:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mask2 { // bits 38:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mask1 { // bits 18:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is (established)
 pub mod ure_pipe_sel2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb098;
+    pub mod sel3_tc { // bits 58:56, inferred
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_bus { // bits 55:48, inferred
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_dev { // bits 47:43, inferred
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel3_fnc { // bits 42:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_tc { // bits 38:36, inferred
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_bus { // bits 35:28, inferred
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_dev { // bits 27:23, inferred
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel2_fnc { // bits 22:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_tc { // bits 18:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_bus { // bits 15:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_dev { // bits 7:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sel1_fnc { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw i (established)
 pub mod ure_pipe_mask2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb0a0;
+    pub mod mask3 { // bits 58:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mask2 { // bits 38:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mask1 { // bits 18:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_pcie1_credits_sent). The header gives no access direction or reset value; acc (established)
 pub mod ure_pcie1_credits_sent {
@@ -1230,11 +4492,181 @@ pub mod ure_buf_flush23 {
 pub mod ure_pcie_control1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb1a0;
+    pub mod pn2 { // bits 31:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pn1 { // bits 23:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod scc { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod elal1 { // bits 10:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod elal { // bits 6:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod si { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access r (established)
 pub mod ure_pcie_control2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xb1a8;
+    pub mod psn2 { // bits 44:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1fff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod psn1 { // bits 31:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1fff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod spls { // bits 16:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod splv { // bits 14:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod hpc { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod hps { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pip { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod aip { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod msp { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pcp { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod abp { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_ure_maint_ups_dat1_data63_0). The header gives no access direction or reset value (established)
 pub mod ure_maint_ups_dat1_data63_0 {
@@ -1497,6 +4929,46 @@ pub mod dre_req_status {
 pub mod dre_config1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x40088;
+    pub mod sup_io_comp_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sup_config_comp_error { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dyn_ro_enable { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ro_enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_dre_config2). The header gives no access direction or reset value; access rw is a (established)
 pub mod dre_config2 {
@@ -1507,6 +4979,46 @@ pub mod dre_config2 {
 pub mod dre_config_req_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x40098;
+    pub mod config_request_active { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod config_completion_valid { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod downstream_config_error { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod last_config_completion { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Name and offset are the vendor header's definition (struct member ce_dre_dyn_fifo). The header gives no access direction or reset value; access rw is  (established)
 pub mod dre_dyn_fifo {
@@ -1588,134 +5100,18 @@ pub mod dre_maint_us_wrt_rsp {
     pub const COUNT: u32 = 32;
     pub const STRIDE: u64 = 8;
 }
-pub const ADM_ERR_ADM_CREDIT_OFLOW: u64 = 0x400000000; // established
-pub const ADM_ERR_ADM_SRAM_PE: u64 = 0x800000000; // established
-pub const ADM_ERR_ADM_SSP_REQ_TIMEOUT: u32 = 0x80000000; // established
-pub const ADM_ERR_ADM_SSP_RSP_UNEXP: u32 = 0x40000000; // established
-pub const ADM_ERR_CRM_SSP_REQ_INVALID: u32 = 0x1; // established
-pub const ADM_ERR_CXM_CREDIT_OFLOW: u32 = 0x40; // established
-pub const ADM_ERR_DRE_CREDIT_OFLOW: u32 = 0x20000; // established
-pub const ADM_ERR_DRE_SRAM_PE: u32 = 0x40000; // established
-pub const ADM_ERR_DRE_SSP_REQ_INVAL: u32 = 0x80; // established
-pub const ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR: u64 = 0x20000000000; // established
-pub const ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR: u64 = 0x10000000000; // established
-pub const ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR: u64 = 0x2000000000; // established
-pub const ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR: u64 = 0x8000000000; // established
-pub const ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR: u64 = 0x4000000000; // established
-pub const ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR: u64 = 0x1000000000; // established
-pub const ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR: u64 = 0x80000000000; // established
-pub const ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR: u64 = 0x40000000000; // established
-pub const ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR: u64 = 0x200000000000; // established
-pub const ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR: u64 = 0x100000000000; // established
-pub const ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR: u64 = 0x8000000000000; // established
-pub const ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR: u64 = 0x4000000000000; // established
-pub const ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR: u64 = 0x800000000000; // established
-pub const ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR: u64 = 0x2000000000000; // established
-pub const ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR: u64 = 0x1000000000000; // established
-pub const ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR: u64 = 0x400000000000; // established
-pub const ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR: u64 = 0x20000000000000; // established
-pub const ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR: u64 = 0x10000000000000; // established
-pub const ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR: u64 = 0x80000000000000; // established
-pub const ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR: u64 = 0x40000000000000; // established
-pub const ADM_ERR_MMR_ACCESS_ERROR: u64 = 0x100000000; // established
-pub const ADM_ERR_MMR_ADDR_ERROR: u64 = 0x200000000; // established
-pub const ADM_ERR_PCIE_COMPL_TIMEOUT: u32 = 0x4000; // established
-pub const ADM_ERR_PCIE_ERR_COMPL: u32 = 0x10000; // established
-pub const ADM_ERR_PCIE_UNEXP_COMPL: u32 = 0x8000; // established
-pub const ADM_ERR_PORT1_PCIE_COR_ERR: u64 = 0x100000000000000; // established
-pub const ADM_ERR_PORT1_PCIE_FAT_ERR: u64 = 0x400000000000000; // established
-pub const ADM_ERR_PORT1_PCIE_NFAT_ERR: u64 = 0x200000000000000; // established
-pub const ADM_ERR_PORT2_PCIE_COR_ERR: u64 = 0x800000000000000; // established
-pub const ADM_ERR_PORT2_PCIE_FAT_ERR: u64 = 0x2000000000000000; // established
-pub const ADM_ERR_PORT2_PCIE_NFAT_ERR: u64 = 0x1000000000000000; // established
-pub const ADM_ERR_SSP_MBE: u32 = 0x20; // established
-pub const ADM_ERR_SSP_PROTOCOL_ERROR: u32 = 0x8; // established
-pub const ADM_ERR_SSP_REQ_ADDR_ERR: u32 = 0x1000; // established
-pub const ADM_ERR_SSP_REQ_BAD_BE: u32 = 0x2000; // established
-pub const ADM_ERR_SSP_REQ_HEADER: u32 = 0x2; // established
-pub const ADM_ERR_SSP_REQ_LONG: u32 = 0x100; // established
-pub const ADM_ERR_SSP_REQ_OFLOW: u32 = 0x200; // established
-pub const ADM_ERR_SSP_REQ_SHORT: u32 = 0x400; // established
-pub const ADM_ERR_SSP_REQ_SIDEBAND: u32 = 0x800; // established
-pub const ADM_ERR_SSP_RSP_HEADER: u32 = 0x4; // established
-pub const ADM_ERR_SSP_RSP_INVALID: u32 = 0x80000; // established
-pub const ADM_ERR_SSP_RSP_LONG: u32 = 0x100000; // established
-pub const ADM_ERR_SSP_RSP_SHORT: u32 = 0x200000; // established
-pub const ADM_ERR_SSP_RSP_SIDEBAND: u32 = 0x400000; // established
-pub const ADM_ERR_SSP_SBE: u32 = 0x10; // established
-pub const ADM_ERR_URE_ATE3240_PAGE_FAULT: u32 = 0x4000000; // established
-pub const ADM_ERR_URE_ATE40_PAGE_FAULT: u32 = 0x8000000; // established
-pub const ADM_ERR_URE_CREDIT_OFLOW: u32 = 0x10000000; // established
-pub const ADM_ERR_URE_SRAM_PE: u32 = 0x20000000; // established
-pub const ADM_ERR_URE_SSP_RD_REQ_TIMEOUT: u32 = 0x2000000; // established
-pub const ADM_ERR_URE_SSP_RSP_UNEXP: u32 = 0x800000; // established
-pub const ADM_ERR_URE_SSP_WR_REQ_TIMEOUT: u32 = 0x1000000; // established
-pub const ADM_FORCE_INT_ALWAYS_SHFT: u32 = 0x8; // established
-pub const ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT: u32 = 0x0; // established
-pub const ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT: u32 = 0x1; // established
-pub const ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT: u32 = 0x2; // established
-pub const ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT: u32 = 0x3; // established
-pub const ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT: u32 = 0x4; // established
-pub const ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT: u32 = 0x5; // established
-pub const ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT: u32 = 0x6; // established
-pub const ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT: u32 = 0x7; // established
-pub const ADM_INT_CE_ERROR_SHFT: u32 = 0x0; // established
-pub const ADM_INT_LSI1_IP_ERROR_SHFT: u32 = 0x1; // established
-pub const ADM_INT_LSI2_IP_ERROR_SHFT: u32 = 0x2; // established
-pub const ADM_INT_PCIE_ERROR_SHFT: u32 = 0x3; // established
-pub const ADM_INT_PCIE_MSG_SHFT: u32 = 0xe; // established
-pub const ADM_INT_PCIE_MSG_SLOT_0_SHFT: u32 = 0xe; // established
-pub const ADM_INT_PCIE_MSG_SLOT_1_SHFT: u32 = 0xf; // established
-pub const ADM_INT_PCIE_MSG_SLOT_2_SHFT: u32 = 0x10; // established
-pub const ADM_INT_PCIE_MSG_SLOT_3_SHFT: u32 = 0x11; // established
-pub const ADM_INT_PCIE_PORT1_DEV_A_SHFT: u32 = 0x6; // established
-pub const ADM_INT_PCIE_PORT1_DEV_B_SHFT: u32 = 0x7; // established
-pub const ADM_INT_PCIE_PORT1_DEV_C_SHFT: u32 = 0x8; // established
-pub const ADM_INT_PCIE_PORT1_DEV_D_SHFT: u32 = 0x9; // established
-pub const ADM_INT_PCIE_PORT2_DEV_A_SHFT: u32 = 0xa; // established
-pub const ADM_INT_PCIE_PORT2_DEV_B_SHFT: u32 = 0xb; // established
-pub const ADM_INT_PCIE_PORT2_DEV_C_SHFT: u32 = 0xc; // established
-pub const ADM_INT_PCIE_PORT2_DEV_D_SHFT: u32 = 0xd; // established
-pub const ADM_INT_PORT1_HOTPLUG_EVENT_SHFT: u32 = 0x4; // established
-pub const ADM_INT_PORT1_PM_PME_MSG_SHFT: u32 = 0x16; // established
-pub const ADM_INT_PORT2_HOTPLUG_EVENT_SHFT: u32 = 0x5; // established
-pub const ADM_INT_PORT2_PM_PME_MSG_SHFT: u32 = 0x17; // established
 pub const BUS_SRC_ID_SHFT: u32 = 0x8; // established
 pub const DEV_SRC_ID_SHFT: u32 = 0x3; // established
 pub const DRE_ADDR_MODE_SHFT: u32 = 0x4; // established
-pub const DRE_CONFIG_COMPLETION_VALID: u32 = 0x10; // established
-pub const DRE_CONFIG_REQUEST_ACTIVE: u32 = 0x20; // established
-pub const DRE_DOWNSTREAM_CONFIG_ERROR: u32 = 0x8; // established
-pub const DRE_DYN_RO_ENABLE: u32 = 0x2; // established
-pub const DRE_LAST_CONFIG_COMPLETION: u32 = 0x7; // established
-pub const DRE_RO_ENABLE: u32 = 0x1; // established
-pub const DRE_SUP_CONFIG_COMP_ERROR: u32 = 0x4; // established
-pub const DRE_SUP_IO_COMP_ERROR: u32 = 0x8; // established
+pub const E_CONFIG_BUS_MASK: u32 = 0xff00000; // established
 pub const E_CONFIG_BUS_SHFT: u32 = 0x14; // established
+pub const E_CONFIG_DEVICE_MASK: u32 = 0xf8000; // established
 pub const E_CONFIG_DEVICE_SHFT: u32 = 0xf; // established
+pub const E_CONFIG_FUNC_MASK: u32 = 0x7000; // established
 pub const E_CONFIG_FUNC_SHFT: u32 = 0xc; // established
 pub const FNC_SRC_ID_SHFT: u32 = 0x0; // established
 pub const HOST_BRIDGE_DEVICE_ID: u32 = 0x4001; // established
 pub const HOST_BRIDGE_VENDOR_ID: u32 = 0x10a9; // established
-pub const INTR_VECTOR_SHFT: u32 = 0x38; // established
-pub const LSI_GB_CFG1_LPBK_EN_MASK: u32 = 0x40000; // established
-pub const LSI_GB_CFG1_LPBK_EN_SHFT: u32 = 0x12; // established
-pub const LSI_GB_CFG1_LPBK_SEL_MASK: u32 = 0x30000; // established
-pub const LSI_GB_CFG1_LPBK_SEL_SHFT: u32 = 0x10; // established
-pub const LSI_GB_CFG1_RVRS_CLK_MASK: u32 = 0x300000; // established
-pub const LSI_GB_CFG1_RVRS_CLK_SHFT: u32 = 0x14; // established
-pub const LSI_GB_CFG1_RVRS_LB_MASK: u32 = 0x80000; // established
-pub const LSI_GB_CFG1_RVRS_LB_SHFT: u32 = 0x13; // established
-pub const LSI_GB_CFG1_RXL0S_ADJ_MASK: u32 = 0x7000; // established
-pub const LSI_GB_CFG1_RXL0S_ADJ_SHFT: u32 = 0xc; // established
-pub const LSI_GB_CFG1_RXL0S_FLT_MASK: u32 = 0x8000; // established
-pub const LSI_GB_CFG1_RXL0S_FLT_SHFT: u32 = 0xf; // established
-pub const LSI_GB_CFG1_RXL0S_SMP_MASK: u32 = 0xf00; // established
-pub const LSI_GB_CFG1_RXL0S_SMP_SHFT: u32 = 0x8; // established
-pub const LSI_GB_CFG1_RXL0S_THS_MASK: u32 = 0xff; // established
-pub const LSI_GB_CFG1_RXL0S_THS_SHFT: u32 = 0x0; // established
-pub const LSI_GB_CFG1_SLF_TS_MASK: u32 = 0xf000000; // established
-pub const LSI_GB_CFG1_SLF_TS_SHFT: u32 = 0x18; // established
 pub const NUM_M3240_ATES: u32 = 0x800; // established
 pub const NUM_M40_ATES: u32 = 0x1000; // established
 pub const NUM_PORTS: u32 = 0x2; // established
@@ -1734,47 +5130,5 @@ pub const PIO_MMR_LEN: u32 = 0x4000000; // established
 pub const PKT_TRAFIC_SHRT: u32 = 0x10; // established
 pub const REV_A: u32 = 0x1; // established
 pub const SRC_ID: u32 = 0x1; // established
-pub const URE_ABP: u32 = 0x1; // established
-pub const URE_AIP: u32 = 0x8; // established
-pub const URE_ATE3240_ENABLE: u32 = 0x1; // established
-pub const URE_ATE40_ENABLE: u32 = 0x2; // established
-pub const URE_ATE_PAR_DISABLE: u64 = 0x1000000000; // established
-pub const URE_DNS_DAT_PAR_DISABLE: u64 = 0x8000000000; // established
-pub const URE_DNS_HDR_PAR_DISABLE: u64 = 0x10000000000; // established
-pub const URE_ELAL1_SHFT: u32 = 0x8; // established
-pub const URE_ELAL_SHFT: u32 = 0x4; // established
-pub const URE_HPC: u32 = 0x40; // established
-pub const URE_HPS: u32 = 0x20; // established
-pub const URE_MALFORM_DISABLE: u64 = 0x100000000000; // established
-pub const URE_MASK1_SHFT: u32 = 0x0; // established
-pub const URE_MASK2_SHFT: u32 = 0x14; // established
-pub const URE_MASK3_SHFT: u32 = 0x28; // established
-pub const URE_MSP: u32 = 0x4; // established
-pub const URE_PAGESIZE_SHFT: u32 = 0x4; // established
-pub const URE_PCP: u32 = 0x2; // established
-pub const URE_PIP: u32 = 0x10; // established
-pub const URE_PN1_SHFT: u32 = 0x10; // established
-pub const URE_PN2_SHFT: u32 = 0x18; // established
-pub const URE_PSN1_SHFT: u32 = 0x13; // established
-pub const URE_PSN2_SHFT: u32 = 0x20; // established
-pub const URE_RCI_PAR_DISABLE: u64 = 0x2000000000; // established
-pub const URE_RD_MRG_ENABLE: u32 = 0x1; // established
-pub const URE_RSPQ_BYPASS_DISABLE: u32 = 0x1000000; // established
-pub const URE_RSPQ_PAR_DISABLE: u64 = 0x4000000000; // established
-pub const URE_SCC: u32 = 0x1000; // established
-pub const URE_SEL1_SHFT: u32 = 0x0; // established
-pub const URE_SEL2_SHFT: u32 = 0x14; // established
-pub const URE_SEL3_SHFT: u32 = 0x28; // established
-pub const URE_SI: u32 = 0x1; // established
-pub const URE_SPLS_SHFT: u32 = 0xf; // established
-pub const URE_SPLV_SHFT: u32 = 0x7; // established
-pub const URE_UNSUP_DISABLE: u64 = 0x200000000000; // established
-pub const URE_UPS_DAT1_PAR_DISABLE: u64 = 0x100000000; // established
-pub const URE_UPS_DAT2_PAR_DISABLE: u64 = 0x400000000; // established
-pub const URE_UPS_HDR1_PAR_DISABLE: u64 = 0x200000000; // established
-pub const URE_UPS_HDR2_PAR_DISABLE: u64 = 0x800000000; // established
-pub const URE_WRT_MRG_ENABLE1: u32 = 0x10; // established
-pub const URE_WRT_MRG_ENABLE2: u32 = 0x20; // established
-pub const URE_WRT_MRG_TIMER_SHFT: u32 = 0xc; // established
 pub const VIRT_PPB_DEVICE_ID: u32 = 0x4002; // established
 pub const VIRT_PPB_VENDOR_ID: u32 = 0x10a9; // established

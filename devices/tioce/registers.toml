@@ -1,7 +1,7 @@
 unit = "tioce"
 prefix = "TIOCE"
 title = "TIOCE (TIO PCI Express bridge), as SGI's Linux Altix platform code defines it"
-doc = "Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit masks the header defines are listed as constants with the comment that precedes them, not attached to registers."
+doc = "Names and offsets are the definitions of SGI's Linux Altix platform code (header and provider, v5.3). The TIOCE's own register specification is not held. The header gives no access direction and no reset value for any register; rows say what the provider does where it touches one. Bit layouts the header defines are fields of their registers. Where the header names a register with its masks (interrupt status and mask, error summary and mask, force interrupt, the upstream engine control, page map, pipe select and mask, PCIe control, gearbox configuration, downstream engine configuration) the fields are established; the same layout on a sibling register (an alias, say) is inferred and said so on the register. Constants keep the plain values (identifiers, address windows, enhanced configuration masks)."
 from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e: arch/ia64/include/asm/sn/tioce.h, tioce_provider.h, arch/ia64/sn/pci/tioce_provider.c"
 public_from = ["census:"]
 
@@ -83,21 +83,87 @@ offset = 0x58
 access = "rw"
 width = 64
 grade = "established"
-doc = "Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Interrupt status. Bit n is the interrupt source named by the header (error, link 1 and 2 errors, PCIe error, hot-plug events per port, INTA to INTD of each port, message slots 0 to 3, power-management events). The provider reads it on revision A before forcing an interrupt. Name and offset are the vendor header's definition (struct member ce_adm_int_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines the bit position of every source. Bit 14 is also named as the first message slot. Bits 18 to 21 and above 23 have no definition."
+
+[registers.adm_int_status.fields]
+ce_error = { bits = [0, 0], grade = "established" }
+lsi1_ip_error = { bits = [1, 1], grade = "established" }
+lsi2_ip_error = { bits = [2, 2], grade = "established" }
+pcie_error = { bits = [3, 3], grade = "established" }
+port1_hotplug_event = { bits = [4, 4], grade = "established" }
+port2_hotplug_event = { bits = [5, 5], grade = "established" }
+port1_inta = { bits = [6, 6], grade = "established" }
+port1_intb = { bits = [7, 7], grade = "established" }
+port1_intc = { bits = [8, 8], grade = "established" }
+port1_intd = { bits = [9, 9], grade = "established" }
+port2_inta = { bits = [10, 10], grade = "established" }
+port2_intb = { bits = [11, 11], grade = "established" }
+port2_intc = { bits = [12, 12], grade = "established" }
+port2_intd = { bits = [13, 13], grade = "established" }
+pcie_msg_slot_0 = { bits = [14, 14], grade = "established" }
+pcie_msg_slot_1 = { bits = [15, 15], grade = "established" }
+pcie_msg_slot_2 = { bits = [16, 16], grade = "established" }
+pcie_msg_slot_3 = { bits = [17, 17], grade = "established" }
+port1_pm_pme_msg = { bits = [22, 22], grade = "established" }
+port2_pm_pme_msg = { bits = [23, 23], grade = "established" }
 
 [registers.adm_int_status_alias]
 offset = 0x60
 access = "rw"
 width = 64
 grade = "established"
-doc = "Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Interrupt status alias. The provider sets every bit through it at attach to clear transients (the alias is the write path to clear; role from that use). Name and offset are the vendor header's definition (struct member ce_adm_int_status_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header gives positions only for the status and mask registers. The provider writes all ones here at attach, after a load and OR, to clear stale interrupts, which reads as a write-to-clear alias of the status word (inferred from the provider comment, not stated by the header)."
+
+[registers.adm_int_status_alias.fields]
+ce_error = { bits = [0, 0], grade = "inferred" }
+lsi1_ip_error = { bits = [1, 1], grade = "inferred" }
+lsi2_ip_error = { bits = [2, 2], grade = "inferred" }
+pcie_error = { bits = [3, 3], grade = "inferred" }
+port1_hotplug_event = { bits = [4, 4], grade = "inferred" }
+port2_hotplug_event = { bits = [5, 5], grade = "inferred" }
+port1_inta = { bits = [6, 6], grade = "inferred" }
+port1_intb = { bits = [7, 7], grade = "inferred" }
+port1_intc = { bits = [8, 8], grade = "inferred" }
+port1_intd = { bits = [9, 9], grade = "inferred" }
+port2_inta = { bits = [10, 10], grade = "inferred" }
+port2_intb = { bits = [11, 11], grade = "inferred" }
+port2_intc = { bits = [12, 12], grade = "inferred" }
+port2_intd = { bits = [13, 13], grade = "inferred" }
+pcie_msg_slot_0 = { bits = [14, 14], grade = "inferred" }
+pcie_msg_slot_1 = { bits = [15, 15], grade = "inferred" }
+pcie_msg_slot_2 = { bits = [16, 16], grade = "inferred" }
+pcie_msg_slot_3 = { bits = [17, 17], grade = "inferred" }
+port1_pm_pme_msg = { bits = [22, 22], grade = "inferred" }
+port2_pm_pme_msg = { bits = [23, 23], grade = "inferred" }
 
 [registers.adm_int_mask]
 offset = 0x68
 access = "rw"
 width = 64
 grade = "established"
-doc = "Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Interrupt mask. The provider sets a source bit, writes its destination, then clears the bit, so a set bit blocks the source while the destination is rewritten. Name and offset are the vendor header's definition (struct member ce_adm_int_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header defines these positions for the mask and the status register alike. The provider sets a bit before retargeting a source and clears it afterwards."
+
+[registers.adm_int_mask.fields]
+ce_error = { bits = [0, 0], grade = "established" }
+lsi1_ip_error = { bits = [1, 1], grade = "established" }
+lsi2_ip_error = { bits = [2, 2], grade = "established" }
+pcie_error = { bits = [3, 3], grade = "established" }
+port1_hotplug_event = { bits = [4, 4], grade = "established" }
+port2_hotplug_event = { bits = [5, 5], grade = "established" }
+port1_inta = { bits = [6, 6], grade = "established" }
+port1_intb = { bits = [7, 7], grade = "established" }
+port1_intc = { bits = [8, 8], grade = "established" }
+port1_intd = { bits = [9, 9], grade = "established" }
+port2_inta = { bits = [10, 10], grade = "established" }
+port2_intb = { bits = [11, 11], grade = "established" }
+port2_intc = { bits = [12, 12], grade = "established" }
+port2_intd = { bits = [13, 13], grade = "established" }
+pcie_msg_slot_0 = { bits = [14, 14], grade = "established" }
+pcie_msg_slot_1 = { bits = [15, 15], grade = "established" }
+pcie_msg_slot_2 = { bits = [16, 16], grade = "established" }
+pcie_msg_slot_3 = { bits = [17, 17], grade = "established" }
+port1_pm_pme_msg = { bits = [22, 22], grade = "established" }
+port2_pm_pme_msg = { bits = [23, 23], grade = "established" }
 
 [registers.adm_int_pending]
 offset = 0x70
@@ -111,14 +177,35 @@ offset = 0x78
 access = "rw"
 width = 64
 grade = "established"
-doc = "Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Force interrupt. Bits 0 to 7 force INTA to INTD of port 1 then port 2; bit 8 forces always. The bit numbering differs from the status register, and the provider maps explicitly. Revision A does not use it (workaround). Name and offset are the vendor header's definition (struct member ce_adm_force_int). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: bits 0 to 7 are the four interrupt pins of each port, bit 8 forces unconditionally. These positions differ from the status register, and the provider maps between them explicitly."
+
+[registers.adm_force_int.fields]
+port1_inta = { bits = [0, 0], grade = "established" }
+port1_intb = { bits = [1, 1], grade = "established" }
+port1_intc = { bits = [2, 2], grade = "established" }
+port1_intd = { bits = [3, 3], grade = "established" }
+port2_inta = { bits = [4, 4], grade = "established" }
+port2_intb = { bits = [5, 5], grade = "established" }
+port2_intc = { bits = [6, 6], grade = "established" }
+port2_intd = { bits = [7, 7], grade = "established" }
+always = { bits = [8, 8], grade = "established" }
 
 [registers.adm_ure_ups_buf_barrier_flush]
 offset = 0x80
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_ure_ups_buf_barrier_flush). The header gives no access direction or reset value; access rw is a placeholder. Field layout: the header gives only the shift of each of eight selectors (one per pipe of each port), spaced four bits apart. The four-bit width is inferred from the spacing. The provider never touches it."
+
+[registers.adm_ure_ups_buf_barrier_flush.fields]
+port1_pipe0 = { bits = [3, 0], grade = "inferred" }
+port1_pipe1 = { bits = [7, 4], grade = "inferred" }
+port1_pipe2 = { bits = [11, 8], grade = "inferred" }
+port1_pipe3 = { bits = [15, 12], grade = "inferred" }
+port2_pipe0 = { bits = [19, 16], grade = "inferred" }
+port2_pipe1 = { bits = [23, 20], grade = "inferred" }
+port2_pipe2 = { bits = [27, 24], grade = "inferred" }
+port2_pipe3 = { bits = [31, 28], grade = "inferred" }
 
 [registers.adm_int_dest]
 offset = 0x88
@@ -127,28 +214,223 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Interrupt destination, one per source (the header declares fifteen). The provider writes the kernel vector in bits 63:56 (shift INTR_VECTOR_SHFT) ORed with the destination coretalk address of the target CPU, indexed by interrupt source bit. Name and offset are the vendor header's definition (struct member ce_adm_int_dest). The header gives no access direction or reset value; access rw is a placeholder. The vector field is inferred: the header gives only the shift 56 and the provider ORs the vector over the destination address; bit 63 as the top is the end of the word, not a header fact. The extent of the address part is unknown."
+
+[registers.adm_int_dest.fields]
+vector = { bits = [63, 56], grade = "inferred" }
 
 [registers.adm_error_summary]
 offset = 0x100
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_summary). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: one bit per error source, bits 0 to 61."
+
+[registers.adm_error_summary.fields]
+crm_ssp_req_invalid = { bits = [0, 0], grade = "established" }
+ssp_req_header = { bits = [1, 1], grade = "established" }
+ssp_rsp_header = { bits = [2, 2], grade = "established" }
+ssp_protocol_error = { bits = [3, 3], grade = "established" }
+ssp_sbe = { bits = [4, 4], grade = "established" }
+ssp_mbe = { bits = [5, 5], grade = "established" }
+cxm_credit_oflow = { bits = [6, 6], grade = "established" }
+dre_ssp_req_inval = { bits = [7, 7], grade = "established" }
+ssp_req_long = { bits = [8, 8], grade = "established" }
+ssp_req_oflow = { bits = [9, 9], grade = "established" }
+ssp_req_short = { bits = [10, 10], grade = "established" }
+ssp_req_sideband = { bits = [11, 11], grade = "established" }
+ssp_req_addr_err = { bits = [12, 12], grade = "established" }
+ssp_req_bad_be = { bits = [13, 13], grade = "established" }
+pcie_compl_timeout = { bits = [14, 14], grade = "established" }
+pcie_unexp_compl = { bits = [15, 15], grade = "established" }
+pcie_err_compl = { bits = [16, 16], grade = "established" }
+dre_credit_oflow = { bits = [17, 17], grade = "established" }
+dre_sram_pe = { bits = [18, 18], grade = "established" }
+ssp_rsp_invalid = { bits = [19, 19], grade = "established" }
+ssp_rsp_long = { bits = [20, 20], grade = "established" }
+ssp_rsp_short = { bits = [21, 21], grade = "established" }
+ssp_rsp_sideband = { bits = [22, 22], grade = "established" }
+ure_ssp_rsp_unexp = { bits = [23, 23], grade = "established" }
+ure_ssp_wr_req_timeout = { bits = [24, 24], grade = "established" }
+ure_ssp_rd_req_timeout = { bits = [25, 25], grade = "established" }
+ure_ate3240_page_fault = { bits = [26, 26], grade = "established" }
+ure_ate40_page_fault = { bits = [27, 27], grade = "established" }
+ure_credit_oflow = { bits = [28, 28], grade = "established" }
+ure_sram_pe = { bits = [29, 29], grade = "established" }
+adm_ssp_rsp_unexp = { bits = [30, 30], grade = "established" }
+adm_ssp_req_timeout = { bits = [31, 31], grade = "established" }
+mmr_access_error = { bits = [32, 32], grade = "established" }
+mmr_addr_error = { bits = [33, 33], grade = "established" }
+adm_credit_oflow = { bits = [34, 34], grade = "established" }
+adm_sram_pe = { bits = [35, 35], grade = "established" }
+dtl1_min_pdata_credit_err = { bits = [36, 36], grade = "established" }
+dtl1_inf_compl_cred_updt_err = { bits = [37, 37], grade = "established" }
+dtl1_inf_posted_cred_updt_err = { bits = [38, 38], grade = "established" }
+dtl1_inf_nposted_cred_updt_err = { bits = [39, 39], grade = "established" }
+dtl1_comp_hd_cred_max_err = { bits = [40, 40], grade = "established" }
+dtl1_comp_d_cred_max_err = { bits = [41, 41], grade = "established" }
+dtl1_nposted_hd_cred_max_err = { bits = [42, 42], grade = "established" }
+dtl1_nposted_d_cred_max_err = { bits = [43, 43], grade = "established" }
+dtl1_posted_hd_cred_max_err = { bits = [44, 44], grade = "established" }
+dtl1_posted_d_cred_max_err = { bits = [45, 45], grade = "established" }
+dtl2_min_pdata_credit_err = { bits = [46, 46], grade = "established" }
+dtl2_inf_compl_cred_updt_err = { bits = [47, 47], grade = "established" }
+dtl2_inf_posted_cred_updt_err = { bits = [48, 48], grade = "established" }
+dtl2_inf_nposted_cred_updt_err = { bits = [49, 49], grade = "established" }
+dtl2_comp_hd_cred_max_err = { bits = [50, 50], grade = "established" }
+dtl2_comp_d_cred_max_err = { bits = [51, 51], grade = "established" }
+dtl2_nposted_hd_cred_max_err = { bits = [52, 52], grade = "established" }
+dtl2_nposted_d_cred_max_err = { bits = [53, 53], grade = "established" }
+dtl2_posted_hd_cred_max_err = { bits = [54, 54], grade = "established" }
+dtl2_posted_d_cred_max_err = { bits = [55, 55], grade = "established" }
+port1_pcie_cor_err = { bits = [56, 56], grade = "established" }
+port1_pcie_nfat_err = { bits = [57, 57], grade = "established" }
+port1_pcie_fat_err = { bits = [58, 58], grade = "established" }
+port2_pcie_cor_err = { bits = [59, 59], grade = "established" }
+port2_pcie_nfat_err = { bits = [60, 60], grade = "established" }
+port2_pcie_fat_err = { bits = [61, 61], grade = "established" }
 
 [registers.adm_error_summary_alias]
 offset = 0x108
 access = "rw"
 width = 64
 grade = "established"
-doc = "Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Error summary alias. The provider sets every bit through it at attach to clear transient errors. Name and offset are the vendor header's definition (struct member ce_adm_error_summary_alias). The header gives no access direction or reset value; access rw is a placeholder. Field layout is inferred: the header assigns bits to the summary and mask registers only. The provider writes all ones here at attach with the same clear-transient-errors intent as the status alias; the one-bit-per-source layout is carried over from the summary by that role, not stated."
+
+[registers.adm_error_summary_alias.fields]
+crm_ssp_req_invalid = { bits = [0, 0], grade = "inferred" }
+ssp_req_header = { bits = [1, 1], grade = "inferred" }
+ssp_rsp_header = { bits = [2, 2], grade = "inferred" }
+ssp_protocol_error = { bits = [3, 3], grade = "inferred" }
+ssp_sbe = { bits = [4, 4], grade = "inferred" }
+ssp_mbe = { bits = [5, 5], grade = "inferred" }
+cxm_credit_oflow = { bits = [6, 6], grade = "inferred" }
+dre_ssp_req_inval = { bits = [7, 7], grade = "inferred" }
+ssp_req_long = { bits = [8, 8], grade = "inferred" }
+ssp_req_oflow = { bits = [9, 9], grade = "inferred" }
+ssp_req_short = { bits = [10, 10], grade = "inferred" }
+ssp_req_sideband = { bits = [11, 11], grade = "inferred" }
+ssp_req_addr_err = { bits = [12, 12], grade = "inferred" }
+ssp_req_bad_be = { bits = [13, 13], grade = "inferred" }
+pcie_compl_timeout = { bits = [14, 14], grade = "inferred" }
+pcie_unexp_compl = { bits = [15, 15], grade = "inferred" }
+pcie_err_compl = { bits = [16, 16], grade = "inferred" }
+dre_credit_oflow = { bits = [17, 17], grade = "inferred" }
+dre_sram_pe = { bits = [18, 18], grade = "inferred" }
+ssp_rsp_invalid = { bits = [19, 19], grade = "inferred" }
+ssp_rsp_long = { bits = [20, 20], grade = "inferred" }
+ssp_rsp_short = { bits = [21, 21], grade = "inferred" }
+ssp_rsp_sideband = { bits = [22, 22], grade = "inferred" }
+ure_ssp_rsp_unexp = { bits = [23, 23], grade = "inferred" }
+ure_ssp_wr_req_timeout = { bits = [24, 24], grade = "inferred" }
+ure_ssp_rd_req_timeout = { bits = [25, 25], grade = "inferred" }
+ure_ate3240_page_fault = { bits = [26, 26], grade = "inferred" }
+ure_ate40_page_fault = { bits = [27, 27], grade = "inferred" }
+ure_credit_oflow = { bits = [28, 28], grade = "inferred" }
+ure_sram_pe = { bits = [29, 29], grade = "inferred" }
+adm_ssp_rsp_unexp = { bits = [30, 30], grade = "inferred" }
+adm_ssp_req_timeout = { bits = [31, 31], grade = "inferred" }
+mmr_access_error = { bits = [32, 32], grade = "inferred" }
+mmr_addr_error = { bits = [33, 33], grade = "inferred" }
+adm_credit_oflow = { bits = [34, 34], grade = "inferred" }
+adm_sram_pe = { bits = [35, 35], grade = "inferred" }
+dtl1_min_pdata_credit_err = { bits = [36, 36], grade = "inferred" }
+dtl1_inf_compl_cred_updt_err = { bits = [37, 37], grade = "inferred" }
+dtl1_inf_posted_cred_updt_err = { bits = [38, 38], grade = "inferred" }
+dtl1_inf_nposted_cred_updt_err = { bits = [39, 39], grade = "inferred" }
+dtl1_comp_hd_cred_max_err = { bits = [40, 40], grade = "inferred" }
+dtl1_comp_d_cred_max_err = { bits = [41, 41], grade = "inferred" }
+dtl1_nposted_hd_cred_max_err = { bits = [42, 42], grade = "inferred" }
+dtl1_nposted_d_cred_max_err = { bits = [43, 43], grade = "inferred" }
+dtl1_posted_hd_cred_max_err = { bits = [44, 44], grade = "inferred" }
+dtl1_posted_d_cred_max_err = { bits = [45, 45], grade = "inferred" }
+dtl2_min_pdata_credit_err = { bits = [46, 46], grade = "inferred" }
+dtl2_inf_compl_cred_updt_err = { bits = [47, 47], grade = "inferred" }
+dtl2_inf_posted_cred_updt_err = { bits = [48, 48], grade = "inferred" }
+dtl2_inf_nposted_cred_updt_err = { bits = [49, 49], grade = "inferred" }
+dtl2_comp_hd_cred_max_err = { bits = [50, 50], grade = "inferred" }
+dtl2_comp_d_cred_max_err = { bits = [51, 51], grade = "inferred" }
+dtl2_nposted_hd_cred_max_err = { bits = [52, 52], grade = "inferred" }
+dtl2_nposted_d_cred_max_err = { bits = [53, 53], grade = "inferred" }
+dtl2_posted_hd_cred_max_err = { bits = [54, 54], grade = "inferred" }
+dtl2_posted_d_cred_max_err = { bits = [55, 55], grade = "inferred" }
+port1_pcie_cor_err = { bits = [56, 56], grade = "inferred" }
+port1_pcie_nfat_err = { bits = [57, 57], grade = "inferred" }
+port1_pcie_fat_err = { bits = [58, 58], grade = "inferred" }
+port2_pcie_cor_err = { bits = [59, 59], grade = "inferred" }
+port2_pcie_nfat_err = { bits = [60, 60], grade = "inferred" }
+port2_pcie_fat_err = { bits = [61, 61], grade = "inferred" }
 
 [registers.adm_error_mask]
 offset = 0x110
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_adm_error_mask). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: same bit assignment as the summary register. The header does not say whether a set bit enables or masks the source (unknown)."
+
+[registers.adm_error_mask.fields]
+crm_ssp_req_invalid = { bits = [0, 0], grade = "established" }
+ssp_req_header = { bits = [1, 1], grade = "established" }
+ssp_rsp_header = { bits = [2, 2], grade = "established" }
+ssp_protocol_error = { bits = [3, 3], grade = "established" }
+ssp_sbe = { bits = [4, 4], grade = "established" }
+ssp_mbe = { bits = [5, 5], grade = "established" }
+cxm_credit_oflow = { bits = [6, 6], grade = "established" }
+dre_ssp_req_inval = { bits = [7, 7], grade = "established" }
+ssp_req_long = { bits = [8, 8], grade = "established" }
+ssp_req_oflow = { bits = [9, 9], grade = "established" }
+ssp_req_short = { bits = [10, 10], grade = "established" }
+ssp_req_sideband = { bits = [11, 11], grade = "established" }
+ssp_req_addr_err = { bits = [12, 12], grade = "established" }
+ssp_req_bad_be = { bits = [13, 13], grade = "established" }
+pcie_compl_timeout = { bits = [14, 14], grade = "established" }
+pcie_unexp_compl = { bits = [15, 15], grade = "established" }
+pcie_err_compl = { bits = [16, 16], grade = "established" }
+dre_credit_oflow = { bits = [17, 17], grade = "established" }
+dre_sram_pe = { bits = [18, 18], grade = "established" }
+ssp_rsp_invalid = { bits = [19, 19], grade = "established" }
+ssp_rsp_long = { bits = [20, 20], grade = "established" }
+ssp_rsp_short = { bits = [21, 21], grade = "established" }
+ssp_rsp_sideband = { bits = [22, 22], grade = "established" }
+ure_ssp_rsp_unexp = { bits = [23, 23], grade = "established" }
+ure_ssp_wr_req_timeout = { bits = [24, 24], grade = "established" }
+ure_ssp_rd_req_timeout = { bits = [25, 25], grade = "established" }
+ure_ate3240_page_fault = { bits = [26, 26], grade = "established" }
+ure_ate40_page_fault = { bits = [27, 27], grade = "established" }
+ure_credit_oflow = { bits = [28, 28], grade = "established" }
+ure_sram_pe = { bits = [29, 29], grade = "established" }
+adm_ssp_rsp_unexp = { bits = [30, 30], grade = "established" }
+adm_ssp_req_timeout = { bits = [31, 31], grade = "established" }
+mmr_access_error = { bits = [32, 32], grade = "established" }
+mmr_addr_error = { bits = [33, 33], grade = "established" }
+adm_credit_oflow = { bits = [34, 34], grade = "established" }
+adm_sram_pe = { bits = [35, 35], grade = "established" }
+dtl1_min_pdata_credit_err = { bits = [36, 36], grade = "established" }
+dtl1_inf_compl_cred_updt_err = { bits = [37, 37], grade = "established" }
+dtl1_inf_posted_cred_updt_err = { bits = [38, 38], grade = "established" }
+dtl1_inf_nposted_cred_updt_err = { bits = [39, 39], grade = "established" }
+dtl1_comp_hd_cred_max_err = { bits = [40, 40], grade = "established" }
+dtl1_comp_d_cred_max_err = { bits = [41, 41], grade = "established" }
+dtl1_nposted_hd_cred_max_err = { bits = [42, 42], grade = "established" }
+dtl1_nposted_d_cred_max_err = { bits = [43, 43], grade = "established" }
+dtl1_posted_hd_cred_max_err = { bits = [44, 44], grade = "established" }
+dtl1_posted_d_cred_max_err = { bits = [45, 45], grade = "established" }
+dtl2_min_pdata_credit_err = { bits = [46, 46], grade = "established" }
+dtl2_inf_compl_cred_updt_err = { bits = [47, 47], grade = "established" }
+dtl2_inf_posted_cred_updt_err = { bits = [48, 48], grade = "established" }
+dtl2_inf_nposted_cred_updt_err = { bits = [49, 49], grade = "established" }
+dtl2_comp_hd_cred_max_err = { bits = [50, 50], grade = "established" }
+dtl2_comp_d_cred_max_err = { bits = [51, 51], grade = "established" }
+dtl2_nposted_hd_cred_max_err = { bits = [52, 52], grade = "established" }
+dtl2_nposted_d_cred_max_err = { bits = [53, 53], grade = "established" }
+dtl2_posted_hd_cred_max_err = { bits = [54, 54], grade = "established" }
+dtl2_posted_d_cred_max_err = { bits = [55, 55], grade = "established" }
+port1_pcie_cor_err = { bits = [56, 56], grade = "established" }
+port1_pcie_nfat_err = { bits = [57, 57], grade = "established" }
+port1_pcie_fat_err = { bits = [58, 58], grade = "established" }
+port2_pcie_cor_err = { bits = [59, 59], grade = "established" }
+port2_pcie_nfat_err = { bits = [60, 60], grade = "established" }
+port2_pcie_fat_err = { bits = [61, 61], grade = "established" }
 
 [registers.adm_first_error]
 offset = 0x118
@@ -1091,7 +1373,18 @@ stride = 0x1000
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_lsi_gb_cfg1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks (gearbox configuration). Meanings of the fields are unknown beyond their names."
+
+[registers.lsi_gb_cfg1.fields]
+rxl0s_ths = { bits = [7, 0], grade = "established" }
+rxl0s_smp = { bits = [11, 8], grade = "established" }
+rxl0s_adj = { bits = [14, 12], grade = "established" }
+rxl0s_flt = { bits = [15, 15], grade = "established" }
+lpbk_sel = { bits = [17, 16], grade = "established" }
+lpbk_en = { bits = [18, 18], grade = "established" }
+rvrs_lb = { bits = [19, 19], grade = "established" }
+rvrs_clk = { bits = [21, 20], grade = "established" }
+slf_ts = { bits = [27, 24], grade = "established" }
 
 [registers.lsi_gb_cfg2]
 offset = 0x2808
@@ -1342,7 +1635,25 @@ offset = 0xb030
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_control). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header: write-merge timer is the eleven-bit mask at bit 12; the rest are single bits. The parity-disable and malform-disable bits are the header names; their effects are not described."
+
+[registers.ure_control.fields]
+rd_mrg_enable = { bits = [0, 0], grade = "established" }
+wrt_mrg_enable1 = { bits = [4, 4], grade = "established" }
+wrt_mrg_enable2 = { bits = [5, 5], grade = "established" }
+wrt_mrg_timer = { bits = [22, 12], grade = "established" }
+rspq_bypass_disable = { bits = [24, 24], grade = "established" }
+ups_dat1_par_disable = { bits = [32, 32], grade = "established" }
+ups_hdr1_par_disable = { bits = [33, 33], grade = "established" }
+ups_dat2_par_disable = { bits = [34, 34], grade = "established" }
+ups_hdr2_par_disable = { bits = [35, 35], grade = "established" }
+ate_par_disable = { bits = [36, 36], grade = "established" }
+rci_par_disable = { bits = [37, 37], grade = "established" }
+rspq_par_disable = { bits = [38, 38], grade = "established" }
+dns_dat_par_disable = { bits = [39, 39], grade = "established" }
+dns_hdr_par_disable = { bits = [40, 40], grade = "established" }
+malform_disable = { bits = [44, 44], grade = "established" }
+unsup_disable = { bits = [45, 45], grade = "established" }
 
 [registers.ure_status]
 offset = 0xb038
@@ -1384,7 +1695,12 @@ offset = 0xb070
 access = "rw"
 width = 64
 grade = "established"
-doc = "Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Upstream request engine page size map. The provider clears the page-size field and sets it to the 256 KiB encoding (4) at attach, the largest the code uses; the 32/40-bit entries are then 256 KiB pages. Name and offset are the vendor header's definition (struct member ce_ure_page_map). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header. The pagesize field holds the encodings the header names (0 to 4); 5 to 7 are unknown. The provider uses 4."
+
+[registers.ure_page_map.fields]
+ate3240_enable = { bits = [0, 0], grade = "established" }
+ate40_enable = { bits = [1, 1], grade = "established" }
+pagesize = { bits = [6, 4], grade = "established", enum = "ure_pagesize" }
 
 [registers.ure_dir_map]
 offset = 0xb078
@@ -1400,28 +1716,66 @@ offset = 0xb088
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit selectors at bits 0, 20 and 40 (header selector masks). Within a selector the header defines traffic class, bus, device and function masks at bits 18:16, 15:8, 7:3 and 2:0; they sum to 19 bits. The layout is established for the first selector, whose position the macros give; for the second and third it is inferred from the identical selector width. Meaning of each selector (a source id match for a pipe) is inferred from the register name."
+
+[registers.ure_pipe_sel1.fields]
+sel1_tc = { bits = [18, 16], grade = "established" }
+sel1_bus = { bits = [15, 8], grade = "established" }
+sel1_dev = { bits = [7, 3], grade = "established" }
+sel1_fnc = { bits = [2, 0], grade = "established" }
+sel2_tc = { bits = [38, 36], grade = "inferred" }
+sel2_bus = { bits = [35, 28], grade = "inferred" }
+sel2_dev = { bits = [27, 23], grade = "inferred" }
+sel2_fnc = { bits = [22, 20], grade = "inferred" }
+sel3_tc = { bits = [58, 56], grade = "inferred" }
+sel3_bus = { bits = [55, 48], grade = "inferred" }
+sel3_dev = { bits = [47, 43], grade = "inferred" }
+sel3_fnc = { bits = [42, 40], grade = "inferred" }
 
 [registers.ure_pipe_mask1]
 offset = 0xb090
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask1). The header gives no access direction or reset value; access rw is a placeholder. Three 19-bit mask fields at bits 0, 20 and 40 from the header masks. That each mask applies to the selector of the same index is inferred from naming."
+
+[registers.ure_pipe_mask1.fields]
+mask1 = { bits = [18, 0], grade = "inferred" }
+mask2 = { bits = [38, 20], grade = "inferred" }
+mask3 = { bits = [58, 40], grade = "inferred" }
 
 [registers.ure_pipe_sel2]
 offset = 0xb098
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_sel2). The header gives no access direction or reset value; access rw is a placeholder. Same selector layout as the first pipe select register (see there); the header comment covers both under one name. Selector two and three sub-layout is inferred."
+
+[registers.ure_pipe_sel2.fields]
+sel1_tc = { bits = [18, 16], grade = "established" }
+sel1_bus = { bits = [15, 8], grade = "established" }
+sel1_dev = { bits = [7, 3], grade = "established" }
+sel1_fnc = { bits = [2, 0], grade = "established" }
+sel2_tc = { bits = [38, 36], grade = "inferred" }
+sel2_bus = { bits = [35, 28], grade = "inferred" }
+sel2_dev = { bits = [27, 23], grade = "inferred" }
+sel2_fnc = { bits = [22, 20], grade = "inferred" }
+sel3_tc = { bits = [58, 56], grade = "inferred" }
+sel3_bus = { bits = [55, 48], grade = "inferred" }
+sel3_dev = { bits = [47, 43], grade = "inferred" }
+sel3_fnc = { bits = [42, 40], grade = "inferred" }
 
 [registers.ure_pipe_mask2]
 offset = 0xb0a0
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pipe_mask2). The header gives no access direction or reset value; access rw is a placeholder. Same layout as the first pipe mask register; the header comment covers both."
+
+[registers.ure_pipe_mask2.fields]
+mask1 = { bits = [18, 0], grade = "inferred" }
+mask2 = { bits = [38, 20], grade = "inferred" }
+mask3 = { bits = [58, 40], grade = "inferred" }
 
 [registers.ure_pcie1_credits_sent]
 offset = 0xb0a8
@@ -1645,14 +1999,35 @@ offset = 0xb1a0
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control1). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. Names ELAL, PN and SI match the PCI Express capability fields of the same abbreviations (exit latency, port number, slot implemented); that reading is inferred from the names and unconfirmed."
+
+[registers.ure_pcie_control1.fields]
+si = { bits = [0, 0], grade = "established" }
+elal = { bits = [6, 4], grade = "established" }
+elal1 = { bits = [10, 8], grade = "established" }
+scc = { bits = [12, 12], grade = "established" }
+pn1 = { bits = [23, 16], grade = "established" }
+pn2 = { bits = [31, 24], grade = "established" }
 
 [registers.ure_pcie_control2]
 offset = 0xb1a8
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_ure_pcie_control2). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks. The names abp, pcp, msp, aip, pip, hps, hpc, splv, spls and psn match the slot capabilities fields of the public PCI Express specification (attention button, power controller, MRL sensor, attention and power indicators, hot-plug surprise and capable, slot power limit value and scale, physical slot number); that reading is inferred from the names. The provider never writes these."
+
+[registers.ure_pcie_control2.fields]
+abp = { bits = [0, 0], grade = "established" }
+pcp = { bits = [1, 1], grade = "established" }
+msp = { bits = [2, 2], grade = "established" }
+aip = { bits = [3, 3], grade = "established" }
+pip = { bits = [4, 4], grade = "established" }
+hps = { bits = [5, 5], grade = "established" }
+hpc = { bits = [6, 6], grade = "established" }
+splv = { bits = [14, 7], grade = "established" }
+spls = { bits = [16, 15], grade = "established" }
+psn1 = { bits = [31, 19], grade = "established" }
+psn2 = { bits = [44, 32], grade = "established" }
 
 [registers.ure_maint_ups_dat1_data63_0]
 offset = 0xc000
@@ -1998,7 +2373,13 @@ offset = 0x40088
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_config1). The header gives no access direction or reset value; access rw is a placeholder. Header-defined bits 0 to 3. The address mode field starts at bit 4 (constant DRE_ADDR_MODE_SHFT); its width and values are unknown, so it is not a field."
+
+[registers.dre_config1.fields]
+ro_enable = { bits = [0, 0], grade = "established" }
+dyn_ro_enable = { bits = [1, 1], grade = "established" }
+sup_config_comp_error = { bits = [2, 2], grade = "established" }
+sup_io_comp_error = { bits = [3, 3], grade = "established" }
 
 [registers.dre_config2]
 offset = 0x40090
@@ -2012,7 +2393,13 @@ offset = 0x40098
 access = "rw"
 width = 64
 grade = "established"
-doc = "Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder."
+doc = "Name and offset are the vendor header's definition (struct member ce_dre_config_req_status). The header gives no access direction or reset value; access rw is a placeholder. Field layout from the header masks."
+
+[registers.dre_config_req_status.fields]
+last_config_completion = { bits = [2, 0], grade = "established" }
+downstream_config_error = { bits = [3, 3], grade = "established" }
+config_completion_valid = { bits = [4, 4], grade = "established" }
+config_request_active = { bits = [5, 5], grade = "established" }
 
 [registers.dre_dyn_fifo]
 offset = 0x40100
@@ -2118,6 +2505,9 @@ width = 64
 grade = "established"
 doc = "Name and offset are the vendor header's definition (struct member ce_dre_maint_us_wrt_rsp). The header gives no access direction or reset value; access rw is a placeholder."
 
+[enums.ure_pagesize]
+values = { 4k = { value = 0, grade = "established" }, 16k = { value = 1, grade = "established" }, 64k = { value = 2, grade = "established" }, 128k = { value = 3, grade = "established" }, 256k = { value = 4, grade = "established" } }
+
 [constants]
 PART_NUM = { value = 0xce00, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_PART_NUM)", doc = "Header comment: CE ASIC part & mfgr information" }
 SRC_ID = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_SRC_ID)", doc = "Header comment: CE ASIC part & mfgr information" }
@@ -2129,172 +2519,11 @@ HOST_BRIDGE_DEVICE_ID = { value = 0x4001, grade = "established", from = "SGI Lin
 NUM_M40_ATES = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M40_ATES)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
 NUM_M3240_ATES = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_M3240_ATES)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
 NUM_PORTS = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (TIOCE_NUM_PORTS)", doc = "Array extent of a register array in the header struct; the header has no comment here" }
-LSI_GB_CFG1_RXL0S_THS_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_THS_MASK = { value = 0xff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_THS_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_SMP_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_SMP_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_SMP_MASK = { value = 0xf00, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_SMP_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_ADJ_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_ADJ_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_ADJ_MASK = { value = 0x7000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_ADJ_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_FLT_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_FLT_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RXL0S_FLT_MASK = { value = 0x8000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RXL0S_FLT_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_LPBK_SEL_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_SEL_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_LPBK_SEL_MASK = { value = 0x30000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_SEL_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_LPBK_EN_SHFT = { value = 0x12, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_EN_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_LPBK_EN_MASK = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_LPBK_EN_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RVRS_LB_SHFT = { value = 0x13, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_LB_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RVRS_LB_MASK = { value = 0x80000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_LB_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RVRS_CLK_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_CLK_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_RVRS_CLK_MASK = { value = 0x300000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_RVRS_CLK_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_SLF_TS_SHFT = { value = 0x18, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_SLF_TS_SHFT)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-LSI_GB_CFG1_SLF_TS_MASK = { value = 0xf000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_LSI_GB_CFG1_SLF_TS_MASK)", doc = "Header comment: ce_lsiX_gb_cfg1 register bit masks & shifts" }
-ADM_INT_CE_ERROR_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_CE_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_LSI1_IP_ERROR_SHFT = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_LSI1_IP_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_LSI2_IP_ERROR_SHFT = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_LSI2_IP_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_ERROR_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_ERROR_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PORT1_HOTPLUG_EVENT_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT1_HOTPLUG_EVENT_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PORT2_HOTPLUG_EVENT_SHFT = { value = 0x5, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT2_HOTPLUG_EVENT_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT1_DEV_A_SHFT = { value = 0x6, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_A_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT1_DEV_B_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_B_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT1_DEV_C_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_C_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT1_DEV_D_SHFT = { value = 0x9, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT1_DEV_D_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT2_DEV_A_SHFT = { value = 0xa, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_A_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT2_DEV_B_SHFT = { value = 0xb, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_B_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT2_DEV_C_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_C_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_PORT2_DEV_D_SHFT = { value = 0xd, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_PORT2_DEV_D_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_MSG_SHFT = { value = 0xe, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_MSG_SLOT_0_SHFT = { value = 0xe, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_0_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_MSG_SLOT_1_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_1_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_MSG_SLOT_2_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_2_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PCIE_MSG_SLOT_3_SHFT = { value = 0x11, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PCIE_MSG_SLOT_3_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PORT1_PM_PME_MSG_SHFT = { value = 0x16, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT1_PM_PME_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_INT_PORT2_PM_PME_MSG_SHFT = { value = 0x17, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_INT_PORT2_PM_PME_MSG_SHFT)", doc = "Header comment: ce_adm_int_mask/ce_adm_int_status register bit defines" }
-ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_A_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_B_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_C_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT1_DEV_D_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_A_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT = { value = 0x5, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_B_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT = { value = 0x6, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_C_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_PCIE_PORT2_DEV_D_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-ADM_FORCE_INT_ALWAYS_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_FORCE_INT_ALWAYS_SHFT)", doc = "Header comment: ce_adm_force_int register bit defines" }
-INTR_VECTOR_SHFT = { value = 0x38, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (INTR_VECTOR_SHFT)", doc = "Header comment: ce_adm_int_dest register bit masks & shifts" }
-ADM_ERR_CRM_SSP_REQ_INVALID = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_CRM_SSP_REQ_INVALID)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_HEADER = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_HEADER)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_RSP_HEADER = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_HEADER)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_PROTOCOL_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_PROTOCOL_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_SBE = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_SBE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_MBE = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_MBE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_CXM_CREDIT_OFLOW = { value = 0x40, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_CXM_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DRE_SSP_REQ_INVAL = { value = 0x80, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_SSP_REQ_INVAL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_LONG = { value = 0x100, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_LONG)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_OFLOW = { value = 0x200, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_SHORT = { value = 0x400, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_SHORT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_SIDEBAND = { value = 0x800, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_SIDEBAND)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_ADDR_ERR = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_ADDR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_REQ_BAD_BE = { value = 0x2000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_REQ_BAD_BE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PCIE_COMPL_TIMEOUT = { value = 0x4000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_COMPL_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PCIE_UNEXP_COMPL = { value = 0x8000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_UNEXP_COMPL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PCIE_ERR_COMPL = { value = 0x10000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PCIE_ERR_COMPL)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DRE_CREDIT_OFLOW = { value = 0x20000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DRE_SRAM_PE = { value = 0x40000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DRE_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_RSP_INVALID = { value = 0x80000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_INVALID)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_RSP_LONG = { value = 0x100000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_LONG)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_RSP_SHORT = { value = 0x200000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_SHORT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_SSP_RSP_SIDEBAND = { value = 0x400000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_SSP_RSP_SIDEBAND)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_SSP_RSP_UNEXP = { value = 0x800000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_RSP_UNEXP)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_SSP_WR_REQ_TIMEOUT = { value = 0x1000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_WR_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_SSP_RD_REQ_TIMEOUT = { value = 0x2000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SSP_RD_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_ATE3240_PAGE_FAULT = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_ATE3240_PAGE_FAULT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_ATE40_PAGE_FAULT = { value = 0x8000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_ATE40_PAGE_FAULT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_CREDIT_OFLOW = { value = 0x10000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_URE_SRAM_PE = { value = 0x20000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_URE_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_ADM_SSP_RSP_UNEXP = { value = 0x40000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SSP_RSP_UNEXP)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_ADM_SSP_REQ_TIMEOUT = { value = 0x80000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SSP_REQ_TIMEOUT)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_MMR_ACCESS_ERROR = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_MMR_ACCESS_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_MMR_ADDR_ERROR = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_MMR_ADDR_ERROR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_ADM_CREDIT_OFLOW = { value = 0x400000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_CREDIT_OFLOW)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_ADM_SRAM_PE = { value = 0x800000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_ADM_SRAM_PE)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR = { value = 0x1000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_MIN_PDATA_CREDIT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR = { value = 0x2000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_COMPL_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR = { value = 0x4000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_POSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR = { value = 0x8000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_INF_NPOSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR = { value = 0x10000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_COMP_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR = { value = 0x20000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_COMP_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR = { value = 0x40000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_NPOSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR = { value = 0x80000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_NPOSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR = { value = 0x100000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_POSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR = { value = 0x200000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL1_POSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR = { value = 0x400000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_MIN_PDATA_CREDIT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR = { value = 0x800000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_COMPL_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR = { value = 0x1000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_POSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR = { value = 0x2000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_INF_NPOSTED_CRED_UPDT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR = { value = 0x4000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_COMP_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR = { value = 0x8000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_COMP_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR = { value = 0x10000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_NPOSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR = { value = 0x20000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_NPOSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR = { value = 0x40000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_POSTED_HD_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR = { value = 0x80000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_DTL2_POSTED_D_CRED_MAX_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT1_PCIE_COR_ERR = { value = 0x100000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_COR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT1_PCIE_NFAT_ERR = { value = 0x200000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_NFAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT1_PCIE_FAT_ERR = { value = 0x400000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT1_PCIE_FAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT2_PCIE_COR_ERR = { value = 0x800000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_COR_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT2_PCIE_NFAT_ERR = { value = 0x1000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_NFAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-ADM_ERR_PORT2_PCIE_FAT_ERR = { value = 0x2000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_ADM_ERR_PORT2_PCIE_FAT_ERR)", doc = "Header comment: ce_adm_error_mask and ce_adm_error_summary register bit masks" }
-DRE_RO_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_RO_ENABLE)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
-DRE_DYN_RO_ENABLE = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_DYN_RO_ENABLE)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
-DRE_SUP_CONFIG_COMP_ERROR = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_SUP_CONFIG_COMP_ERROR)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
-DRE_SUP_IO_COMP_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_SUP_IO_COMP_ERROR)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
 DRE_ADDR_MODE_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_ADDR_MODE_SHFT)", doc = "Header comment: ce_dre_config1 register bit masks and shifts" }
-DRE_LAST_CONFIG_COMPLETION = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_LAST_CONFIG_COMPLETION)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
-DRE_DOWNSTREAM_CONFIG_ERROR = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_DOWNSTREAM_CONFIG_ERROR)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
-DRE_CONFIG_COMPLETION_VALID = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_CONFIG_COMPLETION_VALID)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
-DRE_CONFIG_REQUEST_ACTIVE = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_DRE_CONFIG_REQUEST_ACTIVE)", doc = "Header comment: ce_dre_config_req_status register bit masks" }
-URE_RD_MRG_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RD_MRG_ENABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_WRT_MRG_ENABLE1 = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_ENABLE1)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_WRT_MRG_ENABLE2 = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_ENABLE2)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_WRT_MRG_TIMER_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_WRT_MRG_TIMER_SHFT)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_RSPQ_BYPASS_DISABLE = { value = 0x1000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RSPQ_BYPASS_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_UPS_DAT1_PAR_DISABLE = { value = 0x100000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_DAT1_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_UPS_HDR1_PAR_DISABLE = { value = 0x200000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_HDR1_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_UPS_DAT2_PAR_DISABLE = { value = 0x400000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_DAT2_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_UPS_HDR2_PAR_DISABLE = { value = 0x800000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UPS_HDR2_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_ATE_PAR_DISABLE = { value = 0x1000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_RCI_PAR_DISABLE = { value = 0x2000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RCI_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_RSPQ_PAR_DISABLE = { value = 0x4000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_RSPQ_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_DNS_DAT_PAR_DISABLE = { value = 0x8000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_DNS_DAT_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_DNS_HDR_PAR_DISABLE = { value = 0x10000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_DNS_HDR_PAR_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_MALFORM_DISABLE = { value = 0x100000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MALFORM_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_UNSUP_DISABLE = { value = 0x200000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_UNSUP_DISABLE)", doc = "Header comment: ce_ure_control register bit masks & shifts" }
-URE_ATE3240_ENABLE = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE3240_ENABLE)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
-URE_ATE40_ENABLE = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ATE40_ENABLE)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
-URE_PAGESIZE_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PAGESIZE_SHFT)", doc = "Header comment: ce_ure_page_map register bit masks & shifts" }
 PKT_TRAFIC_SHRT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (PKT_TRAFIC_SHRT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
 BUS_SRC_ID_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (BUS_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
 DEV_SRC_ID_SHFT = { value = 0x3, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (DEV_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
 FNC_SRC_ID_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (FNC_SRC_ID_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
-URE_SEL1_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL1_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
-URE_SEL2_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL2_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
-URE_SEL3_SHFT = { value = 0x28, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SEL3_SHFT)", doc = "Header comment: ce_ure_pipe_sel register bit masks & shifts" }
-URE_MASK1_SHFT = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK1_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
-URE_MASK2_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK2_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
-URE_MASK3_SHFT = { value = 0x28, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MASK3_SHFT)", doc = "Header comment: ce_ure_pipe_mask register bit masks & shifts" }
-URE_SI = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SI)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_ELAL_SHFT = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ELAL_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_ELAL1_SHFT = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ELAL1_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_SCC = { value = 0x1000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SCC)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_PN1_SHFT = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PN1_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_PN2_SHFT = { value = 0x18, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PN2_SHFT)", doc = "Header comment: ce_ure_pcie_control1 register bit masks & shifts" }
-URE_ABP = { value = 0x1, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_ABP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_PCP = { value = 0x2, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PCP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_MSP = { value = 0x4, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_MSP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_AIP = { value = 0x8, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_AIP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_PIP = { value = 0x10, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PIP)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_HPS = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_HPS)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_HPC = { value = 0x40, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_HPC)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_SPLV_SHFT = { value = 0x7, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SPLV_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_SPLS_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_SPLS_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_PSN1_SHFT = { value = 0x13, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PSN1_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
-URE_PSN2_SHFT = { value = 0x20, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_URE_PSN2_SHFT)", doc = "Header comment: ce_ure_pcie_control2 register bit masks & shifts" }
 PIO_MMR = { value = 0x0, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MMR)", doc = "Header comment: Local CE Registers Space" }
 PIO_MMR_LEN = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_MMR_LEN)", doc = "Header comment: Local CE Registers Space" }
 PIO_CONFIG_SPACE = { value = 0x4000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_PIO_CONFIG_SPACE)", doc = "Header comment: PCI Compatible Config Space" }
@@ -2309,3 +2538,6 @@ PIO_MEM_SPACE = { value = 0x200000000, grade = "established", from = "SGI Linux 
 E_CONFIG_BUS_SHFT = { value = 0x14, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_BUS_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }
 E_CONFIG_DEVICE_SHFT = { value = 0xf, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_DEVICE_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }
 E_CONFIG_FUNC_SHFT = { value = 0xc, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_FUNC_SHFT)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks" }
+E_CONFIG_BUS_MASK = { value = 0xff00000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_BUS_MASK)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks. Bits of an enhanced configuration space offset that select the bus number." }
+E_CONFIG_DEVICE_MASK = { value = 0xf8000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_DEVICE_MASK)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks. Bits of an enhanced configuration space offset that select the device number." }
+E_CONFIG_FUNC_MASK = { value = 0x7000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tioce.h (CE_E_CONFIG_FUNC_MASK)", doc = "Header comment: CE PCI Enhanced Config Space shifts & masks. Bits of an enhanced configuration space offset that select the func number." }
