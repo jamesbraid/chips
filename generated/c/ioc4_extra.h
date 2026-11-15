@@ -12,6 +12,20 @@
 /* gpdr: rw32, reset unknown */
 #define IOC4_GPDR                                    0x000038 /* established */
 
+/*
+ * ATA command block: the eight ATA task-file registers, one per 32-bit slot, each accessed as a byte; index 7 is status on read and command on write. Whether the data register at index 0 is accessed as 16 or 32 bits is decided by the IDE core, not read here.
+ */
+/* ata_cmd: rw32, reset unknown */
+#define IOC4_ATA_CMD                                 0x000100 /* established */
+#define IOC4_ATA_CMD_COUNT                           8
+#define IOC4_ATA_CMD_STRIDE                          4
+
+/*
+ * ATA control block: alternate status on read, device control on write.
+ */
+/* ata_ctl: rw32, reset unknown */
+#define IOC4_ATA_CTL                                 0x000120 /* established */
+
 /* km_rx_kbd: r32, reset unknown */
 #define IOC4_KM_RX_KBD                               0x000204 /* established */
 
@@ -383,17 +397,17 @@
 
 #define IOC4_ATA_DMA_CONTROL                         0x15cu /* established */
 #define IOC4_ATA_DMA_CONTROL_ACTIVE                  0x8u /* established */
-#define IOC4_ATA_DMA_CONTROL_DIR_TO_MEMORY           0x4u /* inferred */
+#define IOC4_ATA_DMA_CONTROL_DIR_TO_MEMORY           0x4u /* established */
 #define IOC4_ATA_DMA_CONTROL_ERROR                   0x10u /* established */
 #define IOC4_ATA_DMA_CONTROL_START                   0x1u /* established */
 #define IOC4_ATA_DMA_CONTROL_STOP                    0x2u /* established */
-#define IOC4_ATA_DMA_COUNT_DEVICE                    0x154u /* inferred */
-#define IOC4_ATA_DMA_COUNT_MEMORY                    0x158u /* inferred */
-#define IOC4_ATA_DMA_CURRENT_HIGH                    0x150u /* unknown */
-#define IOC4_ATA_DMA_CURRENT_LOW                     0x14cu /* unknown */
-#define IOC4_ATA_DMA_END_AREA                        0x160u /* inferred */
-#define IOC4_ATA_DMA_LIST_HIGH                       0x148u /* inferred */
-#define IOC4_ATA_DMA_LIST_LOW                        0x144u /* inferred */
+#define IOC4_ATA_DMA_COUNT_DEVICE                    0x154u /* established */
+#define IOC4_ATA_DMA_COUNT_MEMORY                    0x158u /* established */
+#define IOC4_ATA_DMA_CURRENT_HIGH                    0x150u /* inferred */
+#define IOC4_ATA_DMA_CURRENT_LOW                     0x14cu /* inferred */
+#define IOC4_ATA_DMA_END_AREA                        0x160u /* established */
+#define IOC4_ATA_DMA_LIST_HIGH                       0x148u /* established */
+#define IOC4_ATA_DMA_LIST_LOW                        0x144u /* established */
 #define IOC4_ATA_DMA_TIMING                          0x140u /* inferred */
 #define IOC4_EXTINT_COUNT_DIVISOR                    0x208u /* established */
 #define IOC4_GPCR_DIR_MASK                           0xffu /* established */

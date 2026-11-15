@@ -7,6 +7,18 @@ pub mod gpdr {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x38;
 }
+/// ATA command block: the eight ATA task-file registers, one per 32-bit slot, each accessed as a byte; index 7 is status on read and command on write. Wh (established)
+pub mod ata_cmd {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x100;
+    pub const COUNT: u32 = 8;
+    pub const STRIDE: u64 = 4;
+}
+/// ATA control block: alternate status on read, device control on write. (established)
+pub mod ata_ctl {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x120;
+}
 /// (established)
 pub mod km_rx_kbd {
     pub const WIDTH: u32 = 32;
@@ -931,17 +943,17 @@ pub mod tx_control_byte_word {
 }
 pub const ATA_DMA_CONTROL: u32 = 0x15c; // established
 pub const ATA_DMA_CONTROL_ACTIVE: u32 = 0x8; // established
-pub const ATA_DMA_CONTROL_DIR_TO_MEMORY: u32 = 0x4; // inferred
+pub const ATA_DMA_CONTROL_DIR_TO_MEMORY: u32 = 0x4; // established
 pub const ATA_DMA_CONTROL_ERROR: u32 = 0x10; // established
 pub const ATA_DMA_CONTROL_START: u32 = 0x1; // established
 pub const ATA_DMA_CONTROL_STOP: u32 = 0x2; // established
-pub const ATA_DMA_COUNT_DEVICE: u32 = 0x154; // inferred
-pub const ATA_DMA_COUNT_MEMORY: u32 = 0x158; // inferred
-pub const ATA_DMA_CURRENT_HIGH: u32 = 0x150; // unknown
-pub const ATA_DMA_CURRENT_LOW: u32 = 0x14c; // unknown
-pub const ATA_DMA_END_AREA: u32 = 0x160; // inferred
-pub const ATA_DMA_LIST_HIGH: u32 = 0x148; // inferred
-pub const ATA_DMA_LIST_LOW: u32 = 0x144; // inferred
+pub const ATA_DMA_COUNT_DEVICE: u32 = 0x154; // established
+pub const ATA_DMA_COUNT_MEMORY: u32 = 0x158; // established
+pub const ATA_DMA_CURRENT_HIGH: u32 = 0x150; // inferred
+pub const ATA_DMA_CURRENT_LOW: u32 = 0x14c; // inferred
+pub const ATA_DMA_END_AREA: u32 = 0x160; // established
+pub const ATA_DMA_LIST_HIGH: u32 = 0x148; // established
+pub const ATA_DMA_LIST_LOW: u32 = 0x144; // established
 pub const ATA_DMA_TIMING: u32 = 0x140; // inferred
 pub const EXTINT_COUNT_DIVISOR: u32 = 0x208; // established
 pub const GPCR_DIR_MASK: u32 = 0xff; // established

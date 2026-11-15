@@ -19,6 +19,32 @@
   {
    "unit": "ioc4_extra",
    "kind": "register",
+   "name": "ata_cmd",
+   "offset": 256,
+   "access": "rw",
+   "width": 32,
+   "count": 8,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
+   "name": "ata_ctl",
+   "offset": 288,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "ioc4_extra",
+   "kind": "register",
    "name": "km_rx_kbd",
    "offset": 516,
    "access": "r",
@@ -880,7 +906,7 @@
    "name": "ATA_DMA_CONTROL_DIR_TO_MEMORY",
    "value": 4,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -912,7 +938,7 @@
    "name": "ATA_DMA_COUNT_DEVICE",
    "value": 340,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -920,7 +946,7 @@
    "name": "ATA_DMA_COUNT_MEMORY",
    "value": 344,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -928,7 +954,7 @@
    "name": "ATA_DMA_CURRENT_HIGH",
    "value": 336,
    "count": 1,
-   "grade": "unknown"
+   "grade": "inferred"
   },
   {
    "unit": "ioc4_extra",
@@ -936,7 +962,7 @@
    "name": "ATA_DMA_CURRENT_LOW",
    "value": 332,
    "count": 1,
-   "grade": "unknown"
+   "grade": "inferred"
   },
   {
    "unit": "ioc4_extra",
@@ -944,7 +970,7 @@
    "name": "ATA_DMA_END_AREA",
    "value": 352,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -952,7 +978,7 @@
    "name": "ATA_DMA_LIST_HIGH",
    "value": 328,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",
@@ -960,7 +986,7 @@
    "name": "ATA_DMA_LIST_LOW",
    "value": 324,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "ioc4_extra",

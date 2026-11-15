@@ -4,6 +4,12 @@
   <struct name="GPDR" size="4" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
     <doc>Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding the state of the eight generic pins. Offset and name are established by the header and the PROM store; no Linux driver code read touches it, and what a write does is unknown.</doc>
   </struct>
+  <struct name="ATA_CMD" size="4" grade="established" register="yes" offset="0x100" access="rw" count="8" stride="4" reset="unknown">
+    <doc>ATA command block: the eight ATA task-file registers, one per 32-bit slot, each accessed as a byte; index 7 is status on read and command on write. Whether the data register at index 0 is accessed as 16 or 32 bits is decided by the IDE core, not read here.</doc>
+  </struct>
+  <struct name="ATA_CTL" size="4" grade="established" register="yes" offset="0x120" access="rw" reset="unknown">
+    <doc>ATA control block: alternate status on read, device control on write.</doc>
+  </struct>
   <struct name="KM_RX_KBD" size="4" grade="established" register="yes" offset="0x204" access="r" reset="unknown">
   </struct>
   <struct name="KM_RX_MOUSE" size="4" grade="established" register="yes" offset="0x208" access="r" reset="unknown">
@@ -151,17 +157,17 @@
   </struct>
   <constant name="ATA_DMA_CONTROL" value="0x15c" grade="established"/>
   <constant name="ATA_DMA_CONTROL_ACTIVE" value="0x8" grade="established"/>
-  <constant name="ATA_DMA_CONTROL_DIR_TO_MEMORY" value="0x4" grade="inferred"/>
+  <constant name="ATA_DMA_CONTROL_DIR_TO_MEMORY" value="0x4" grade="established"/>
   <constant name="ATA_DMA_CONTROL_ERROR" value="0x10" grade="established"/>
   <constant name="ATA_DMA_CONTROL_START" value="0x1" grade="established"/>
   <constant name="ATA_DMA_CONTROL_STOP" value="0x2" grade="established"/>
-  <constant name="ATA_DMA_COUNT_DEVICE" value="0x154" grade="inferred"/>
-  <constant name="ATA_DMA_COUNT_MEMORY" value="0x158" grade="inferred"/>
-  <constant name="ATA_DMA_CURRENT_HIGH" value="0x150" grade="unknown"/>
-  <constant name="ATA_DMA_CURRENT_LOW" value="0x14c" grade="unknown"/>
-  <constant name="ATA_DMA_END_AREA" value="0x160" grade="inferred"/>
-  <constant name="ATA_DMA_LIST_HIGH" value="0x148" grade="inferred"/>
-  <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="inferred"/>
+  <constant name="ATA_DMA_COUNT_DEVICE" value="0x154" grade="established"/>
+  <constant name="ATA_DMA_COUNT_MEMORY" value="0x158" grade="established"/>
+  <constant name="ATA_DMA_CURRENT_HIGH" value="0x150" grade="inferred"/>
+  <constant name="ATA_DMA_CURRENT_LOW" value="0x14c" grade="inferred"/>
+  <constant name="ATA_DMA_END_AREA" value="0x160" grade="established"/>
+  <constant name="ATA_DMA_LIST_HIGH" value="0x148" grade="established"/>
+  <constant name="ATA_DMA_LIST_LOW" value="0x144" grade="established"/>
   <constant name="ATA_DMA_TIMING" value="0x140" grade="inferred"/>
   <constant name="EXTINT_COUNT_DIVISOR" value="0x208" grade="established"/>
   <constant name="GPCR_DIR_MASK" value="0xff" grade="established"/>
