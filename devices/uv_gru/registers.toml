@@ -1,0 +1,189 @@
+unit = "uv_gru"
+prefix = "UV_GRU"
+title = "UV global reference unit (GRU): chiplet memory map, handles and instruction word"
+doc = "The GRU is reached through memory-mapped handles, not a flat register file. Constants are the driver's layout numbers. Words are the handle and control-block dwords; positions come from the driver's bitfield structs read least-significant first within each 64-bit dword, which the driver's own comments and shift macros confirm for the control-block word and are otherwise inferred from the declared field order and widths under the x86-64 and ia64 ABIs. Role text paraphrases the driver and is inferred."
+from = "Linux v6.6 SGI GRU driver (GPL): handle, instruction and architecture headers"
+public_from = ["Linux v6.6 drivers/misc/sgi-gru"]
+
+[c]
+offset_macro = "bare"
+
+[constants]
+CHIPLET_SIZE = { value = 0x8000000, grade = "established", doc = "Bytes of address space per GRU chiplet (128 MiB)." }
+MCS_BASE = { value = 0x4000000, grade = "established", doc = "Offset of the handle area (the memory control section) inside a chiplet." }
+TFM_BASE = { value = 0x4000000, grade = "established", doc = "Offset of the TLB fault maps." }
+TGH_BASE = { value = 0x4008000, grade = "established", doc = "Offset of the TLB global handles." }
+CBE_BASE = { value = 0x4010000, grade = "established", doc = "Offset of the control block extended handles." }
+TFH_BASE = { value = 0x4018000, grade = "established", doc = "Offset of the TLB fault handles." }
+CCH_BASE = { value = 0x4020000, grade = "established", doc = "Offset of the context configuration handles." }
+HANDLE_STRIDE = { value = 256, grade = "established", doc = "Distance between consecutive handles of one kind; each handle uses the first 64 bytes." }
+HANDLE_BYTES = { value = 64, grade = "established", doc = "Meaningful bytes per handle." }
+GSEG_STRIDE = { value = 0x400000, grade = "established", doc = "Distance between the user segments (one per context) from the chiplet base." }
+GSEG_PAGESIZE = { value = 0x40000, grade = "established", doc = "Size of the user mapping of one segment: control blocks then data segment." }
+CB_BASE = { value = 0, grade = "established", doc = "Control blocks start at the segment base, one per handle stride." }
+DS_BASE = { value = 0x20000, grade = "established", doc = "Data segment offset within a user segment." }
+NUM_CB = { value = 128, grade = "established", doc = "Control blocks per chiplet (and CBE and TFH handles)." }
+NUM_DSR_BYTES = { value = 32768, grade = "established", doc = "Data segment bytes per chiplet." }
+NUM_CCH = { value = 16, grade = "established", doc = "Contexts per chiplet (one context configuration handle each)." }
+NUM_TFM = { value = 16, grade = "established", doc = "TLB fault maps per chiplet." }
+NUM_TGH = { value = 24, grade = "established", doc = "TLB global handles per chiplet." }
+CACHE_LINE = { value = 64, grade = "established", doc = "GRU cache line, and the unit of data segment indexing." }
+CHIPLETS_PER_HUB = { value = 2, grade = "established", doc = "Chiplets per hub; chiplet address is base plus chiplet size times (2 times pnode plus chiplet)." }
+DSR_AU_BYTES = { value = 1024, grade = "established", doc = "Allocation unit of data segment space." }
+CBR_AU_SIZE = { value = 2, grade = "established", doc = "Control blocks per allocation unit." }
+GRU_PADDR_SHIFT = { value = 12, grade = "established", doc = "Shift for the page frame field of a TLB dropin; not the actual page size." }
+SUPPORTED_BELOW_HUB_REVISION = { value = 5, grade = "established", doc = "The Linux driver runs the GRU only on hubs with software revision below 5 (UV1 and UV2); UV3 and later never use this driver." }
+OP_NOP = { value = 0x00, grade = "established", doc = "Instruction opcode." }
+OP_BCOPY = { value = 0x01, grade = "established", doc = "Block copy." }
+OP_VLOAD = { value = 0x02, grade = "established", doc = "Vector load." }
+OP_IVLOAD = { value = 0x03, grade = "established", doc = "Indirect vector load." }
+OP_VSTORE = { value = 0x04, grade = "established", doc = "Vector store." }
+OP_IVSTORE = { value = 0x05, grade = "established", doc = "Indirect vector store." }
+OP_VSET = { value = 0x06, grade = "established", doc = "Vector set." }
+OP_IVSET = { value = 0x07, grade = "established", doc = "Indirect vector set." }
+OP_MESQ = { value = 0x08, grade = "established", doc = "Message queue operation." }
+OP_GAMXR = { value = 0x09, grade = "established", doc = "Masked compare exchange (arithmetic unit)." }
+OP_GAMIR = { value = 0x0a, grade = "established", doc = "Atomic operation with implicit operands." }
+OP_GAMIRR = { value = 0x0b, grade = "established", doc = "Registered atomic operation with implicit operands." }
+OP_GAMER = { value = 0x0c, grade = "established", doc = "Atomic operation with explicit operands." }
+OP_GAMERR = { value = 0x0d, grade = "established", doc = "Registered atomic operation with explicit operands." }
+OP_BSTORE = { value = 0x0e, grade = "established", doc = "Block store." }
+OP_VFLUSH = { value = 0x0f, grade = "established", doc = "Vector flush." }
+XTYPE_B = { value = 0, grade = "established", doc = "Transfer element: byte." }
+XTYPE_S = { value = 1, grade = "established", doc = "Transfer element: 2 bytes." }
+XTYPE_W = { value = 2, grade = "established", doc = "Transfer element: 4 bytes." }
+XTYPE_DW = { value = 3, grade = "established", doc = "Transfer element: 8 bytes." }
+XTYPE_CL = { value = 6, grade = "established", doc = "Transfer element: one 64-byte cache line." }
+IAA_RAM = { value = 0, grade = "established", doc = "Access attribute: coherent RAM." }
+IAA_MMIO = { value = 1, grade = "established", doc = "Access attribute: noncoherent memory-mapped I/O." }
+IAA_NCRAM = { value = 2, grade = "established", doc = "Access attribute: noncoherent RAM." }
+IAA_REGISTER = { value = 3, grade = "established", doc = "Access attribute: memory-mapped registers." }
+CBS_IDLE = { value = 0, grade = "established", doc = "Control block status: idle." }
+CBS_EXCEPTION = { value = 1, grade = "established", doc = "Control block status: terminated with an exception." }
+CBS_ACTIVE = { value = 2, grade = "established", doc = "Control block status: executing." }
+CBS_CALL_OS = { value = 3, grade = "established", doc = "Control block status: needs operating system help (a TLB miss)." }
+TFHOP_NOOP = { value = 0, grade = "established", doc = "TFH opcode." }
+TFHOP_RESTART = { value = 1, grade = "established", doc = "TFH opcode: restart the control block." }
+TFHOP_WRITE_ONLY = { value = 2, grade = "established", doc = "TFH opcode: write the TLB entry, do not restart." }
+TFHOP_WRITE_RESTART = { value = 3, grade = "established", doc = "TFH opcode: write the TLB entry and restart." }
+TFHOP_EXCEPTION = { value = 4, grade = "established", doc = "TFH opcode: fail the control block with an exception." }
+TFHOP_USER_POLLING_MODE = { value = 7, grade = "established", doc = "TFH opcode: user polling mode." }
+CCHOP_START = { value = 1, grade = "established", doc = "CCH opcode: start the context." }
+CCHOP_ALLOCATE = { value = 2, grade = "established", doc = "CCH opcode: allocate control blocks and data segment." }
+CCHOP_INTERRUPT = { value = 3, grade = "established", doc = "CCH opcode: interrupt the context." }
+CCHOP_DEALLOCATE = { value = 4, grade = "established", doc = "CCH opcode: release the resources." }
+CCHOP_INTERRUPT_SYNC = { value = 5, grade = "established", doc = "CCH opcode: interrupt and wait." }
+TGHOP_TLBINV = { value = 1, grade = "established", doc = "TGH opcode: invalidate TLB entries." }
+GAA_RAM = { value = 0, grade = "established", doc = "TLB entry global address attribute: RAM." }
+GAA_MMIO = { value = 1, grade = "established", doc = "TLB entry global address attribute: MMIO." }
+GAA_NCRAM = { value = 2, grade = "established", doc = "TLB entry global address attribute: noncoherent RAM." }
+GAA_REGISTER = { value = 3, grade = "established", doc = "TLB entry global address attribute: registers." }
+
+[words.CB_DW0]
+width = 64
+grade = "established"
+doc = "First dword of a control block (the instruction word). Software fills dwords 1 to 7 first, then stores this one with the start bit set and flushes the line; the hardware overwrites status and substatus on completion. Positions agree with the driver's own shift macros for the low fields; the high fields follow the bitfield order."
+[words.CB_DW0.fields]
+icmd = { bits = [0, 0], grade = "established", doc = "Start: set when the instruction is issued." }
+ima = { bits = [3, 1], grade = "established", doc = "Instruction mode: bit 0 delay read responses until status changes, bit 1 unmapped (bypass TLB, OS only), bit 2 interrupt on completion." }
+xtype = { bits = [10, 8], grade = "established", doc = "Element type, see the XTYPE constants." }
+iaa0 = { bits = [12, 11], grade = "established", doc = "Access attribute of the first address." }
+iaa1 = { bits = [14, 13], grade = "established", doc = "Access attribute of the second address." }
+opc = { bits = [23, 16], grade = "established", doc = "Opcode, see the OP constants." }
+exopc = { bits = [31, 24], grade = "established", doc = "Extended opcode: the atomic operation for the GAM opcodes." }
+tri0 = { bits = [53, 32], grade = "inferred", doc = "Data segment byte offset operand (idef2). The driver's mask for the field is 18 bits while the struct declares 22; the struct width is used and the difference is open." }
+istatus = { bits = [57, 56], grade = "established", doc = "Status written by the hardware, see CBS constants." }
+isubstatus = { bits = [61, 58], grade = "inferred", doc = "Substatus: low 3 bits are the message queue result (0 none, 1 overflow, 2 queue limit, 3 page overflow, 4 AMO nacked, 5 put nacked), bit 3 implicit abort active." }
+tlb_fault_color = { bits = [63, 63], grade = "inferred", doc = "Toggles to distinguish successive TLB faults of one control block." }
+
+[words.TFH_DW0]
+width = 64
+grade = "inferred"
+doc = "TLB fault handle, dword 0. The OS reads the cause here after a TLB miss and issues an opcode to fill the TLB."
+[words.TFH_DW0.fields]
+cmd = { bits = [0, 0], grade = "inferred" }
+delresp = { bits = [1, 1], grade = "inferred" }
+opc = { bits = [6, 4], grade = "inferred", doc = "TFHOP opcode." }
+status = { bits = [17, 16], grade = "inferred", doc = "0 idle, 1 exception, 2 active." }
+state = { bits = [22, 20], grade = "inferred", doc = "0 inactive, 1 idle, 2 miss user polling, 3 miss FMM, 4 hardware error, 5 write TLB, 6 restart CBR." }
+cause = { bits = [29, 24], grade = "inferred", doc = "0 none, 1 TLB miss, 2 TLB modify, 3 to 6 hardware errors, 7 instruction exception, 8 uncorrectable error." }
+cb_int = { bits = [30, 30], grade = "inferred" }
+indexway = { bits = [43, 32], grade = "inferred", doc = "TLB index and way to replace." }
+ctxnum = { bits = [51, 48], grade = "inferred" }
+
+[words.TFH_DW2]
+width = 64
+grade = "inferred"
+doc = "TLB fault handle, dword 2: the missing address space id on read, the fill address space id and attributes on write."
+[words.TFH_DW2.fields]
+missasid = { bits = [23, 0], grade = "inferred" }
+fillasid = { bits = [55, 32], grade = "inferred" }
+dirty = { bits = [56, 56], grade = "inferred" }
+gaa = { bits = [58, 57], grade = "inferred", doc = "See the GAA constants." }
+
+[words.TFH_DW3]
+width = 64
+grade = "inferred"
+doc = "TLB fault handle, dword 3: page frame and page size of the entry to write. Dword 1 holds the missing virtual address, dword 4 the virtual address to fill."
+[words.TFH_DW3.fields]
+pfn = { bits = [40, 0], grade = "inferred", doc = "Physical address shifted right by 12, whatever the page size." }
+pagesize = { bits = [52, 48], grade = "inferred", doc = "Encoded size: 4k=0, 16k=1, 64k=2, 256k=3, 1m=4, 2m=5, 4m=6, 16m=7, 64m=8 (the driver's conversion macro)." }
+
+[words.TGH_DW0]
+width = 64
+grade = "inferred"
+doc = "TLB global handle, dword 0: used to flush GRU TLB entries after the kernel changes a mapping. Dword 1 is the virtual address, dword 4 the context bitmap."
+[words.TGH_DW0.fields]
+cmd = { bits = [0, 0], grade = "inferred" }
+delresp = { bits = [1, 1], grade = "inferred" }
+opc = { bits = [2, 2], grade = "inferred", doc = "0 no-op, 1 invalidate." }
+status = { bits = [17, 16], grade = "inferred" }
+state = { bits = [22, 20], grade = "inferred" }
+cause = { bits = [26, 24], grade = "inferred" }
+
+[words.TGH_DW2]
+width = 64
+grade = "inferred"
+doc = "TLB global handle, dword 2."
+[words.TGH_DW2.fields]
+asid = { bits = [23, 0], grade = "inferred" }
+pagesize = { bits = [36, 32], grade = "inferred" }
+global = { bits = [48, 48], grade = "inferred" }
+
+[words.TGH_DW3]
+width = 64
+grade = "inferred"
+doc = "TLB global handle, dword 3: address mask and the count of pages to purge."
+[words.TGH_DW3.fields]
+vaddrmask = { bits = [38, 0], grade = "inferred" }
+n = { bits = [57, 48], grade = "inferred" }
+
+[words.CCH_DW0]
+width = 64
+grade = "inferred"
+doc = "Context configuration handle, dword 0: allocates control blocks and data segment to a context and routes its interrupts. Dword 1 is the control block allocation map, dwords 2 to 5 the eight address space ids, dwords 6 and 7 the eight page size availability masks."
+[words.CCH_DW0.fields]
+cmd = { bits = [0, 0], grade = "inferred" }
+delresp = { bits = [1, 1], grade = "inferred" }
+opc = { bits = [4, 2], grade = "inferred", doc = "CCHOP opcode." }
+unmap_enable = { bits = [5, 5], grade = "inferred" }
+req_slice_set_enable = { bits = [6, 6], grade = "inferred" }
+req_slice = { bits = [8, 7], grade = "inferred" }
+cb_int_enable = { bits = [9, 9], grade = "inferred" }
+tlb_int_enable = { bits = [10, 10], grade = "inferred" }
+tfm_fault_bit_enable = { bits = [11, 11], grade = "inferred" }
+tlb_int_select = { bits = [15, 12], grade = "inferred", doc = "Which of the 16 TLB interrupt configuration registers the context's faults use." }
+status = { bits = [17, 16], grade = "inferred" }
+state = { bits = [19, 18], grade = "inferred", doc = "0 inactive, 1 mapped, 2 active, 3 interrupted." }
+cause = { bits = [27, 24], grade = "inferred", doc = "1 to 12: region register write error, illegal opcode, invalid start, invalid allocation, invalid deallocation, invalid interrupt, handle busy, no CBRs to allocate, bad TFM config, CBR oversubscribed, DSR oversubscribed, CBR deallocation error." }
+tfm_done_bit_enable = { bits = [28, 28], grade = "inferred" }
+dsr_allocation_map = { bits = [63, 32], grade = "inferred" }
+
+[words.CBE_DW7]
+width = 64
+grade = "inferred"
+doc = "Control block extended handle, dword 7: the hardware's view of the active control block."
+[words.CBE_DW7.fields]
+ecause = { bits = [51, 32], grade = "inferred", doc = "Bit mask of exception causes: bit 0 named RI in the driver (meaning not stated), 1 invalid instruction, 2 unmapped mode forbidden, 3 PE check data error, 4 IAA/GAA mismatch, 5 data segment limit, 6 OS-fatal TLB fault, 7 execution hardware error, 8 TLB hardware error, 9 and 10 request timeouts, 11 to 14 response errors, 15 address decode error, 16 to 18 data errors, 19 forced error." }
+cbrstate = { bits = [55, 52], grade = "inferred", doc = "0 inactive, 1 idle, 2 PE check, 3 queued, 4 wait response, 5 interrupted, 6 to 9 interrupted or busy on a TLB miss, 10 request issue, 11 busy interrupt." }
+cbrexecstatus = { bits = [63, 56], grade = "inferred", doc = "Bits: 0 abort occurred, 1 interrupt occurred, 2 pending, 3 queued, 4 TLB invalidate, 5 exception, 6 CB interrupt pending." }

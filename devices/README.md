@@ -98,6 +98,7 @@
 | [uv3/](uv3/README.md) | UV3 (UV 300 generation) hub registers | Per-generation hub MMR map: part numbers 0x9578 and 0x4321. |
 | [uv4/](uv4/README.md) | UV4 (UV 400 generation, including UV4A) hub registers | Per-generation hub MMR map: part number 0x99a1. |
 | [uv5/](uv5/README.md) | UV5 (UV 500 generation) hub registers | Per-generation hub MMR map: part number 0xa171. |
+| [uv_gru/](uv_gru/README.md) | UV global reference unit (GRU) | The GRU is a per-hub engine that lets a user program issue loads, stores, block copies, message-queue operations and... |
 | [vice/](vice/README.md) | VICE | Mode: spec-backed (see references/documents/specs.md). |
 | [xbow/](xbow/README.md) | Xbow (Crossbow) | Mode: spec-backed (see references/documents/specs.md: Crossbow ASIC Specification, revision 12.0; its register map... |
 | [xframe/](xframe/README.md) | Neterion Xframe 10-Gigabit Ethernet controller | The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. |

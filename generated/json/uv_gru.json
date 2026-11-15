@@ -1,0 +1,1062 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/uv_gru/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "CBE_DW7",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CBE_DW7.cbrexecstatus",
+   "hi": 63,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CBE_DW7.cbrstate",
+   "hi": 55,
+   "lo": 52,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CBE_DW7.ecause",
+   "hi": 51,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "CB_DW0",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.tlb_fault_color",
+   "hi": 63,
+   "lo": 63,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.isubstatus",
+   "hi": 61,
+   "lo": 58,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.istatus",
+   "hi": 57,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.tri0",
+   "hi": 53,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.exopc",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.opc",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.iaa1",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.iaa0",
+   "hi": 12,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.xtype",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.ima",
+   "hi": 3,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CB_DW0.icmd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "CCH_DW0",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.dsr_allocation_map",
+   "hi": 63,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.tfm_done_bit_enable",
+   "hi": 28,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.cause",
+   "hi": 27,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.state",
+   "hi": 19,
+   "lo": 18,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.status",
+   "hi": 17,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.tlb_int_select",
+   "hi": 15,
+   "lo": 12,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.tfm_fault_bit_enable",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.tlb_int_enable",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.cb_int_enable",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.req_slice",
+   "hi": 8,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.req_slice_set_enable",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.unmap_enable",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.opc",
+   "hi": 4,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.delresp",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "CCH_DW0.cmd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TFH_DW0",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.ctxnum",
+   "hi": 51,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.indexway",
+   "hi": 43,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.cb_int",
+   "hi": 30,
+   "lo": 30,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.cause",
+   "hi": 29,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.state",
+   "hi": 22,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.status",
+   "hi": 17,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.opc",
+   "hi": 6,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.delresp",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW0.cmd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TFH_DW2",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW2.gaa",
+   "hi": 58,
+   "lo": 57,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW2.dirty",
+   "hi": 56,
+   "lo": 56,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW2.fillasid",
+   "hi": 55,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW2.missasid",
+   "hi": 23,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TFH_DW3",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW3.pagesize",
+   "hi": 52,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TFH_DW3.pfn",
+   "hi": 40,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TGH_DW0",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.cause",
+   "hi": 26,
+   "lo": 24,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.state",
+   "hi": 22,
+   "lo": 20,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.status",
+   "hi": 17,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.opc",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.delresp",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW0.cmd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TGH_DW2",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW2.global",
+   "hi": 48,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW2.pagesize",
+   "hi": 36,
+   "lo": 32,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW2.asid",
+   "hi": 23,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "word",
+   "name": "TGH_DW3",
+   "width": 64,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW3.n",
+   "hi": 57,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "field",
+   "name": "TGH_DW3.vaddrmask",
+   "hi": 38,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CACHE_LINE",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBE_BASE",
+   "value": 67174400,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBR_AU_SIZE",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBS_ACTIVE",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBS_CALL_OS",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBS_EXCEPTION",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CBS_IDLE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CB_BASE",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCHOP_ALLOCATE",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCHOP_DEALLOCATE",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCHOP_INTERRUPT",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCHOP_INTERRUPT_SYNC",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCHOP_START",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CCH_BASE",
+   "value": 67239936,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CHIPLETS_PER_HUB",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "CHIPLET_SIZE",
+   "value": 134217728,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "DSR_AU_BYTES",
+   "value": 1024,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "DS_BASE",
+   "value": 131072,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GAA_MMIO",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GAA_NCRAM",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GAA_RAM",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GAA_REGISTER",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GRU_PADDR_SHIFT",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GSEG_PAGESIZE",
+   "value": 262144,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "GSEG_STRIDE",
+   "value": 4194304,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "HANDLE_BYTES",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "HANDLE_STRIDE",
+   "value": 256,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "IAA_MMIO",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "IAA_NCRAM",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "IAA_RAM",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "IAA_REGISTER",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "MCS_BASE",
+   "value": 67108864,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "NUM_CB",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "NUM_CCH",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "NUM_DSR_BYTES",
+   "value": 32768,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "NUM_TFM",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "NUM_TGH",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_BCOPY",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_BSTORE",
+   "value": 14,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_GAMER",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_GAMERR",
+   "value": 13,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_GAMIR",
+   "value": 10,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_GAMIRR",
+   "value": 11,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_GAMXR",
+   "value": 9,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_IVLOAD",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_IVSET",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_IVSTORE",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_MESQ",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_NOP",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_VFLUSH",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_VLOAD",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_VSET",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "OP_VSTORE",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "SUPPORTED_BELOW_HUB_REVISION",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_EXCEPTION",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_NOOP",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_RESTART",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_USER_POLLING_MODE",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_WRITE_ONLY",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFHOP_WRITE_RESTART",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFH_BASE",
+   "value": 67207168,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TFM_BASE",
+   "value": 67108864,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TGHOP_TLBINV",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "TGH_BASE",
+   "value": 67141632,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "XTYPE_B",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "XTYPE_CL",
+   "value": 6,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "XTYPE_DW",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "XTYPE_S",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "uv_gru",
+   "kind": "constant",
+   "name": "XTYPE_W",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

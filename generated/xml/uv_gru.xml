@@ -1,0 +1,156 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/uv_gru/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="uv_gru" prefix="UV_GRU" title="UV global reference unit (GRU): chiplet memory map, handles and instruction word">
+  <doc>The GRU is reached through memory-mapped handles, not a flat register file. Constants are the driver's layout numbers. Words are the handle and control-block dwords; positions come from the driver's bitfield structs read least-significant first within each 64-bit dword, which the driver's own comments and shift macros confirm for the control-block word and are otherwise inferred from the declared field order and widths under the x86-64 and ia64 ABIs. Role text paraphrases the driver and is inferred.</doc>
+  <struct name="CBE_DW7" size="8" grade="inferred">
+    <doc>Control block extended handle, dword 7: the hardware's view of the active control block.</doc>
+    <field name="cbrexecstatus" start="56" size="8" type="uint" grade="inferred"/>
+    <field name="cbrstate" start="52" size="4" type="uint" grade="inferred"/>
+    <field name="ecause" start="32" size="20" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="CB_DW0" size="8" grade="established">
+    <doc>First dword of a control block (the instruction word). Software fills dwords 1 to 7 first, then stores this one with the start bit set and flushes the line; the hardware overwrites status and substatus on completion. Positions agree with the driver's own shift macros for the low fields; the high fields follow the bitfield order.</doc>
+    <field name="tlb_fault_color" start="63" size="1" type="uint" grade="inferred"/>
+    <field name="isubstatus" start="58" size="4" type="uint" grade="inferred"/>
+    <field name="istatus" start="56" size="2" type="uint" grade="established"/>
+    <field name="tri0" start="32" size="22" type="uint" grade="inferred"/>
+    <field name="exopc" start="24" size="8" type="uint" grade="established"/>
+    <field name="opc" start="16" size="8" type="uint" grade="established"/>
+    <field name="iaa1" start="13" size="2" type="uint" grade="established"/>
+    <field name="iaa0" start="11" size="2" type="uint" grade="established"/>
+    <field name="xtype" start="8" size="3" type="uint" grade="established"/>
+    <field name="ima" start="1" size="3" type="uint" grade="established"/>
+    <field name="icmd" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CCH_DW0" size="8" grade="inferred">
+    <doc>Context configuration handle, dword 0: allocates control blocks and data segment to a context and routes its interrupts. Dword 1 is the control block allocation map, dwords 2 to 5 the eight address space ids, dwords 6 and 7 the eight page size availability masks.</doc>
+    <field name="dsr_allocation_map" start="32" size="32" type="uint" grade="inferred"/>
+    <field name="tfm_done_bit_enable" start="28" size="1" type="uint" grade="inferred"/>
+    <field name="cause" start="24" size="4" type="uint" grade="inferred"/>
+    <field name="state" start="18" size="2" type="uint" grade="inferred"/>
+    <field name="status" start="16" size="2" type="uint" grade="inferred"/>
+    <field name="tlb_int_select" start="12" size="4" type="uint" grade="inferred"/>
+    <field name="tfm_fault_bit_enable" start="11" size="1" type="uint" grade="inferred"/>
+    <field name="tlb_int_enable" start="10" size="1" type="uint" grade="inferred"/>
+    <field name="cb_int_enable" start="9" size="1" type="uint" grade="inferred"/>
+    <field name="req_slice" start="7" size="2" type="uint" grade="inferred"/>
+    <field name="req_slice_set_enable" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="unmap_enable" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="opc" start="2" size="3" type="uint" grade="inferred"/>
+    <field name="delresp" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="cmd" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TFH_DW0" size="8" grade="inferred">
+    <doc>TLB fault handle, dword 0. The OS reads the cause here after a TLB miss and issues an opcode to fill the TLB.</doc>
+    <field name="ctxnum" start="48" size="4" type="uint" grade="inferred"/>
+    <field name="indexway" start="32" size="12" type="uint" grade="inferred"/>
+    <field name="cb_int" start="30" size="1" type="uint" grade="inferred"/>
+    <field name="cause" start="24" size="6" type="uint" grade="inferred"/>
+    <field name="state" start="20" size="3" type="uint" grade="inferred"/>
+    <field name="status" start="16" size="2" type="uint" grade="inferred"/>
+    <field name="opc" start="4" size="3" type="uint" grade="inferred"/>
+    <field name="delresp" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="cmd" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TFH_DW2" size="8" grade="inferred">
+    <doc>TLB fault handle, dword 2: the missing address space id on read, the fill address space id and attributes on write.</doc>
+    <field name="gaa" start="57" size="2" type="uint" grade="inferred"/>
+    <field name="dirty" start="56" size="1" type="uint" grade="inferred"/>
+    <field name="fillasid" start="32" size="24" type="uint" grade="inferred"/>
+    <field name="missasid" start="0" size="24" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TFH_DW3" size="8" grade="inferred">
+    <doc>TLB fault handle, dword 3: page frame and page size of the entry to write. Dword 1 holds the missing virtual address, dword 4 the virtual address to fill.</doc>
+    <field name="pagesize" start="48" size="5" type="uint" grade="inferred"/>
+    <field name="pfn" start="0" size="41" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TGH_DW0" size="8" grade="inferred">
+    <doc>TLB global handle, dword 0: used to flush GRU TLB entries after the kernel changes a mapping. Dword 1 is the virtual address, dword 4 the context bitmap.</doc>
+    <field name="cause" start="24" size="3" type="uint" grade="inferred"/>
+    <field name="state" start="20" size="3" type="uint" grade="inferred"/>
+    <field name="status" start="16" size="2" type="uint" grade="inferred"/>
+    <field name="opc" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="delresp" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="cmd" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TGH_DW2" size="8" grade="inferred">
+    <doc>TLB global handle, dword 2.</doc>
+    <field name="global" start="48" size="1" type="uint" grade="inferred"/>
+    <field name="pagesize" start="32" size="5" type="uint" grade="inferred"/>
+    <field name="asid" start="0" size="24" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="TGH_DW3" size="8" grade="inferred">
+    <doc>TLB global handle, dword 3: address mask and the count of pages to purge.</doc>
+    <field name="n" start="48" size="10" type="uint" grade="inferred"/>
+    <field name="vaddrmask" start="0" size="39" type="uint" grade="inferred"/>
+  </struct>
+  <constant name="CACHE_LINE" value="0x40" grade="established"/>
+  <constant name="CBE_BASE" value="0x4010000" grade="established"/>
+  <constant name="CBR_AU_SIZE" value="0x2" grade="established"/>
+  <constant name="CBS_ACTIVE" value="0x2" grade="established"/>
+  <constant name="CBS_CALL_OS" value="0x3" grade="established"/>
+  <constant name="CBS_EXCEPTION" value="0x1" grade="established"/>
+  <constant name="CBS_IDLE" value="0x0" grade="established"/>
+  <constant name="CB_BASE" value="0x0" grade="established"/>
+  <constant name="CCHOP_ALLOCATE" value="0x2" grade="established"/>
+  <constant name="CCHOP_DEALLOCATE" value="0x4" grade="established"/>
+  <constant name="CCHOP_INTERRUPT" value="0x3" grade="established"/>
+  <constant name="CCHOP_INTERRUPT_SYNC" value="0x5" grade="established"/>
+  <constant name="CCHOP_START" value="0x1" grade="established"/>
+  <constant name="CCH_BASE" value="0x4020000" grade="established"/>
+  <constant name="CHIPLETS_PER_HUB" value="0x2" grade="established"/>
+  <constant name="CHIPLET_SIZE" value="0x8000000" grade="established"/>
+  <constant name="DSR_AU_BYTES" value="0x400" grade="established"/>
+  <constant name="DS_BASE" value="0x20000" grade="established"/>
+  <constant name="GAA_MMIO" value="0x1" grade="established"/>
+  <constant name="GAA_NCRAM" value="0x2" grade="established"/>
+  <constant name="GAA_RAM" value="0x0" grade="established"/>
+  <constant name="GAA_REGISTER" value="0x3" grade="established"/>
+  <constant name="GRU_PADDR_SHIFT" value="0xc" grade="established"/>
+  <constant name="GSEG_PAGESIZE" value="0x40000" grade="established"/>
+  <constant name="GSEG_STRIDE" value="0x400000" grade="established"/>
+  <constant name="HANDLE_BYTES" value="0x40" grade="established"/>
+  <constant name="HANDLE_STRIDE" value="0x100" grade="established"/>
+  <constant name="IAA_MMIO" value="0x1" grade="established"/>
+  <constant name="IAA_NCRAM" value="0x2" grade="established"/>
+  <constant name="IAA_RAM" value="0x0" grade="established"/>
+  <constant name="IAA_REGISTER" value="0x3" grade="established"/>
+  <constant name="MCS_BASE" value="0x4000000" grade="established"/>
+  <constant name="NUM_CB" value="0x80" grade="established"/>
+  <constant name="NUM_CCH" value="0x10" grade="established"/>
+  <constant name="NUM_DSR_BYTES" value="0x8000" grade="established"/>
+  <constant name="NUM_TFM" value="0x10" grade="established"/>
+  <constant name="NUM_TGH" value="0x18" grade="established"/>
+  <constant name="OP_BCOPY" value="0x1" grade="established"/>
+  <constant name="OP_BSTORE" value="0xe" grade="established"/>
+  <constant name="OP_GAMER" value="0xc" grade="established"/>
+  <constant name="OP_GAMERR" value="0xd" grade="established"/>
+  <constant name="OP_GAMIR" value="0xa" grade="established"/>
+  <constant name="OP_GAMIRR" value="0xb" grade="established"/>
+  <constant name="OP_GAMXR" value="0x9" grade="established"/>
+  <constant name="OP_IVLOAD" value="0x3" grade="established"/>
+  <constant name="OP_IVSET" value="0x7" grade="established"/>
+  <constant name="OP_IVSTORE" value="0x5" grade="established"/>
+  <constant name="OP_MESQ" value="0x8" grade="established"/>
+  <constant name="OP_NOP" value="0x0" grade="established"/>
+  <constant name="OP_VFLUSH" value="0xf" grade="established"/>
+  <constant name="OP_VLOAD" value="0x2" grade="established"/>
+  <constant name="OP_VSET" value="0x6" grade="established"/>
+  <constant name="OP_VSTORE" value="0x4" grade="established"/>
+  <constant name="SUPPORTED_BELOW_HUB_REVISION" value="0x5" grade="established"/>
+  <constant name="TFHOP_EXCEPTION" value="0x4" grade="established"/>
+  <constant name="TFHOP_NOOP" value="0x0" grade="established"/>
+  <constant name="TFHOP_RESTART" value="0x1" grade="established"/>
+  <constant name="TFHOP_USER_POLLING_MODE" value="0x7" grade="established"/>
+  <constant name="TFHOP_WRITE_ONLY" value="0x2" grade="established"/>
+  <constant name="TFHOP_WRITE_RESTART" value="0x3" grade="established"/>
+  <constant name="TFH_BASE" value="0x4018000" grade="established"/>
+  <constant name="TFM_BASE" value="0x4000000" grade="established"/>
+  <constant name="TGHOP_TLBINV" value="0x1" grade="established"/>
+  <constant name="TGH_BASE" value="0x4008000" grade="established"/>
+  <constant name="XTYPE_B" value="0x0" grade="established"/>
+  <constant name="XTYPE_CL" value="0x6" grade="established"/>
+  <constant name="XTYPE_DW" value="0x3" grade="established"/>
+  <constant name="XTYPE_S" value="0x1" grade="established"/>
+  <constant name="XTYPE_W" value="0x2" grade="established"/>
+</genxml>
