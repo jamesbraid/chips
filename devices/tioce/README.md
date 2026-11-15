@@ -3,7 +3,7 @@
 Mode: **no-spec**. The TIOCE is a dual-port **PCI Express bridge** of the TIO generation: widget part number `0xce00`, source id 1, revision A = 1.
 No specification is held. What the register header calls the CE ("CE Programmer's Reference Overview" is its source document) and the provider code
 show the following. All facts are SGI's Linux Altix platform code (linux-5.3 pin 4d856f72c10e), so they are **established** as software definitions, never as
-measurements. Registers: [registers.md](registers.md) (262 register entries and 190 named constants).
+measurements. Registers: [registers.md](registers.md) (262 register entries, 20 of them with field layouts, and 32 named constants).
 
 ## What the code says it is
 
@@ -75,3 +75,19 @@ Independent review on 2026-11-14 by a reviewer who did not write these pages. Re
 - No copied comments beyond short section labels quoted as "Header comment: ..." in constant docs; those are two to six words of header text. Acceptable, but a later pass could drop the quoting.
 
 **Cleared scope.** Register names, offsets, counts and strides; the 190 constants; the DMA, workaround and interrupt descriptions. Not cleared: the omitted macros above, reset values, access direction, and the PCIe configuration windows' behaviour (the page marks them not covered).
+
+### Review of the field layouts, 2026-11-15
+
+Independent review by a reviewer who did not write the field work. Revision: chips commit 7d9a943 on main. Sources: `arch/ia64/include/asm/sn/tioce.h` and `arch/ia64/sn/pci/tioce_provider.c` at Linux v5.3, fetched singly. No binaries read, so no Ghidra readings.
+
+**Checked.** By script against the header: the 62 error-source bits (names and positions) on the summary, mask and alias registers; the 20 interrupt-source positions on status, alias and mask (bit 14 doubling as message and slot 0); the nine force-interrupt bits; the eight barrier-flush shifts; the nine gearbox configuration fields; the 16 upstream control bits and the 11-bit write-merge timer at bit 12; page map enables and the 3-bit page-size code with encodings 0 to 4; the three 19-bit pipe selectors and masks at bits 0, 20 and 40 with the 18:16, 15:8, 7:3, 2:0 sub-layout; the 6 and 11 fields of the two PCIe control registers; the downstream configuration and request-status bits. Every one of the 161 constants dropped by the commit maps to a field: each mask has a field of the same bit range and each shift is a field's low bit; no field overlaps another or exceeds bit 63. The three kept enhanced-configuration masks match the header (0xff00000, 0xf8000, 0x7000). Provider facts: attach writes ones to the status and error summary aliases and zero to the completion error address; retarget ORs the vector at shift 56 over the crosstalk address; the page-size field is cleared and set to 256 KiB (4).
+
+**Mechanical fixes.** The page header counted 190 constants; 32 remain. Reworded to the current counts.
+
+**Findings not fixed.**
+- The task description counted 37 header defines absent from the map. The commit does not add them as constants: bit masks became fields, the `_SET(n)`, `PIPE_BUS` style helper macros and the `CE_URE_*_PAGESIZE` values (now the enum) are not carried, and `CE_PIO_MEM_SPACE_LEN` (a symbol from another header) is still absent. This is sound for a register map, but the 37 are not literally added.
+- `ure_pipe_mask1` and `ure_pipe_mask2` fields `mask1` to `mask3` are graded inferred although the header defines `CE_URE_MASK1_MASK` to `MASK3_MASK` at those exact positions. The bit ranges are established; only the role (applies to the selector of the same index) is inferred. The grade is conservative, not wrong. Likewise `sel2` and `sel3` sub-fields: the header gives only the three whole 19-bit selector masks, and the tc, bus, device and function split at 16/8/3/0 exists only for the first selector, so inferred is right.
+- The expansion of ELAL and ELAL1 ("exit latency") is a guess from the names; the PCIe link capability has separate L0s and L1 exit latencies, which would fit ELAL and ELAL1, but nothing in the header says so. It stays inferred and unconfirmed.
+- `ure_control` bits 12 to 22 are an 11-bit timer by header mask; the unit of the timer is unknown.
+
+**Cleared scope.** The field positions, widths and grades above; the page-size enum values; the counts. Not cleared: field semantics beyond names, reset values, access direction.
