@@ -14,6 +14,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `widget_id` | 0x400000 | r | 64 |  |  | 0x1c110049 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `widget_status` | 0x400008 | r | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure |
 | `widget_control` | 0x400020 | rw | 64 |  |  | 0x4011 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `local_access_protection` | 0x400100 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `protection_override` | 0x400108 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
@@ -33,7 +34,17 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `crosstalk_timeout_threshold` | 0x4001f0 | rw | 64 |  |  | 0xfffffff03ffffff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `error_clear` | 0x4001f8 | w | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_global_control` | 0x400200 | rw | 64 |  |  | 0x8 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset) |
+| `crosstalk_spurious_message` | 0x400208 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure |
+| `crosstalk_spurious_sideband` | 0x400210 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure |
+| `llp_channel_test` | 0x400218 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure |
+| `incoming_error_header_1` | 0x400220 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure |
+| `incoming_error_header_2` | 0x400228 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure |
+| `prb_counter_adjust` | 0x400300 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure |
 | `pio_read_address` | 0x400308 | rw | 64 | 8 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `pio_deallocation` | 0x400388 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure |
+| `crb_deallocation` | 0x400390 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure |
+| `ioq_fifo_depth` | 0x400398 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure |
+| `iiq_arbitration` | 0x4003a0 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure |
 | `request_buffer_management` | 0x4003a8 | rw | 64 |  |  | unknown | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `request_buffer_control` | 0x4003b0 | rw | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `crb_timeout` | 0x4003b8 | rw | 64 |  |  | 0xff (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
@@ -42,12 +53,17 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `crb_b` | 0x400408 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `crb_c` | 0x400410 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `crb_d` | 0x400418 | r | 64 | 15 |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `crb_spurious_message_low` | 0x400600 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure |
+| `crb_spurious_message_high` | 0x400608 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure |
+| `debug_submenu_select` | 0x400610 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure |
 | `bte_length_status` | 0x410000 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_source` | 0x410008 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_destination` | 0x410010 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_control` | 0x410018 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_notification_address` | 0x410020 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `bte_interrupt_address` | 0x410028 | rw | 64 | 2 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
+| `performance_control` | 0x430000 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure |
+| `performance_profiling` | 0x430008 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure |
 
 ### Register `widget_id`
 
@@ -59,9 +75,31 @@ Widget identification. Echoes the manufacturer and revision fields of the local 
 | 27:12 | `part` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 11:1 | `manufacturer` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 
+### Register `widget_status`
+
+Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 32 | `crazy` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_crazy of the header's ii_wstat structure, 1 bit. |
+| 23:16 | `llp_tx_cnt` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_llp_tx_cnt of the header's ii_wstat structure, 8 bits. |
+| 9 | `tx_mx_rty` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit. |
+| 5 | `xt_tail_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_tail_to of the header's ii_wstat structure, 1 bit. |
+| 4 | `xt_crd_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_crd_to of the header's ii_wstat structure, 1 bit. |
+| 3:0 | `pending` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_pending of the header's ii_wstat structure, 4 bits. |
+
 ### Register `widget_control`
 
-Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.
+Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 22:18 | `e_thresh` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_e_thresh of the header's ii_wcr structure, 5 bits. |
+| 17 | `dir_con` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_dir_con of the header's ii_wcr structure, 1 bit. |
+| 16 | `f_bad_pkt` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_f_bad_pkt of the header's ii_wcr structure, 1 bit. |
+| 15:13 | `dst_credit` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_dst_crd of the header's ii_wcr structure, 3 bits. |
+| 4 | `tag_mode` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_tag of the header's ii_wcr structure, 1 bit. |
+| 3:0 | `widget_id` | established |  | Linux 2.5.40 SN1 register headers: ii_wcr structure | Member w_wid of the header's ii_wcr structure, 4 bits. |
 
 ### Register `local_access_protection`
 
@@ -156,9 +194,15 @@ Array of 2 registers, stride 8.
 
 ### Register `translation_table_entry`
 
-IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
 
 Array of 7 registers, stride 8.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 12 | `io_space` | established |  | Linux 2.5.40 SN1 register headers: ii_itte1 structure | Member i_iosp of the header's ii_itte1 structure, 1 bit. |
+| 11:8 | `widget_number` | established |  | Linux 2.5.40 SN1 register headers: ii_itte1 structure | Member i_w_num of the header's ii_itte1 structure, 4 bits. |
+| 4:0 | `offset` | established |  | Linux 2.5.40 SN1 register headers: ii_itte1 structure | Member i_offset of the header's ii_itte1 structure, 5 bits. |
 
 ### Register `pio_request_buffer_w0`
 
@@ -200,7 +244,11 @@ Array of 8 registers, stride 8.
 
 ### Register `credit_count_timeout`
 
-IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 25:0 | `timeout` | established |  | Linux 2.5.40 SN1 register headers: ii_ixcc structure | Member i_time_out of the header's ii_ixcc structure, 26 bits. |
 
 ### Register `misc_error_mask`
 
@@ -215,7 +263,13 @@ Write-one-to-set per the header. The header's description says the hub clears ea
 
 ### Register `crosstalk_timeout_threshold`
 
-IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 59:55 | `read_response_timeout` | established |  | Linux 2.5.40 SN1 register headers: ii_ixtt structure | Member i_rrsp_to of the header's ii_ixtt structure, 5 bits. |
+| 54:32 | `read_response_prescale` | established |  | Linux 2.5.40 SN1 register headers: ii_ixtt structure | Member i_rrsp_ps of the header's ii_ixtt structure, 23 bits. |
+| 25:0 | `tail_timeout` | established |  | Linux 2.5.40 SN1 register headers: ii_ixtt structure | Member i_tail_to of the header's ii_ixtt structure, 26 bits. |
 
 ### Register `error_clear`
 
@@ -235,7 +289,88 @@ Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium pro
 
 ### Register `bte_global_control`
 
-IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 8 | `soft_reset` | established |  | Linux 2.5.40 SN1 register headers: ii_ibcr structure | Member i_soft_reset of the header's ii_ibcr structure, 1 bit. |
+| 3:0 | `count` | established |  | Linux 2.5.40 SN1 register headers: ii_ibcr structure | Member i_count of the header's ii_ibcr structure, 4 bits. |
+
+### Register `crosstalk_spurious_message`
+
+Crosstalk spurious message: the header fields of the last incoming Crosstalk packet that was dropped. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSM; the header's short name is IXSM.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:60 | `didn` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_didn of the header's ii_ixsm structure, 4 bits. |
+| 59:56 | `sidn` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_sidn of the header's ii_ixsm structure, 4 bits. |
+| 55:52 | `pactyp` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_pactyp of the header's ii_ixsm structure, 4 bits. |
+| 51:47 | `tnum` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_tnum of the header's ii_ixsm structure, 5 bits. |
+| 46 | `ct` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_ct of the header's ii_ixsm structure, 1 bit. |
+| 45:44 | `ds` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_ds of the header's ii_ixsm structure, 2 bits. |
+| 43 | `gbr` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_gbr of the header's ii_ixsm structure, 1 bit. |
+| 42 | `vbpm` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_vbpm of the header's ii_ixsm structure, 1 bit. |
+| 41 | `error` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_error of the header's ii_ixsm structure, 1 bit. |
+| 40 | `bo` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_bo of the header's ii_ixsm structure, 1 bit. |
+| 39:36 | `alt_pactyp` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_alt_pactyp of the header's ii_ixsm structure, 4 bits. |
+| 35:33 | `tag` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_tag of the header's ii_ixsm structure, 3 bits. |
+| 31:0 | `byte_en` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure | Member i_byte_en of the header's ii_ixsm structure, 32 bits. |
+
+### Register `crosstalk_spurious_sideband`
+
+Crosstalk spurious sideband. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSS; the header's short name is IXSS.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `valid` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure | Member i_valid of the header's ii_ixss structure, 1 bit. |
+| 7:0 | `sideband` | established |  | Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure | Member i_sideband of the header's ii_ixss structure, 8 bits. |
+
+### Register `llp_channel_test`
+
+Link layer channel test. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ILCT; the header's short name is ILCT.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 54 | `test_err_capture` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_err_capture of the header's ii_ilct structure, 1 bit. |
+| 53 | `test_clear` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_clear of the header's ii_ilct structure, 1 bit. |
+| 52:50 | `test_flit` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_flit of the header's ii_ilct structure, 3 bits. |
+| 49 | `test_cberr` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_cberr of the header's ii_ilct structure, 1 bit. |
+| 48 | `test_valid` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_valid of the header's ii_ilct structure, 1 bit. |
+| 47:28 | `test_data` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_data of the header's ii_ilct structure, 20 bits. |
+| 27:20 | `test_mask` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_mask of the header's ii_ilct structure, 8 bits. |
+| 19:0 | `test_seed` | established |  | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure | Member i_test_seed of the header's ii_ilct structure, 20 bits. |
+
+### Register `incoming_error_header_1`
+
+Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 44 | `valid` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_valid of the header's ii_iieph1 structure, 1 bit. |
+| 40 | `overrun` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_overrun of the header's ii_iieph1 structure, 1 bit. |
+| 35:32 | `err_type` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_err_type of the header's ii_iieph1 structure, 4 bits. |
+| 30:20 | `source` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_source of the header's ii_iieph1 structure, 11 bits. |
+| 18:8 | `suppl` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_suppl of the header's ii_iieph1 structure, 11 bits. |
+| 6:0 | `command` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_command of the header's ii_iieph1 structure, 7 bits. |
+
+### Register `incoming_error_header_2`
+
+Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 40 | `tail` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure | Member i_tail of the header's ii_iieph2 structure, 1 bit. |
+| 37:0 | `address` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure | Member i_address of the header's ii_iieph2 structure, 38 bits. |
+
+### Register `prb_counter_adjust`
+
+PRB counter adjust. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCA; the header's short name is IPCA.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 9:8 | `field` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure | Member i_field of the header's ii_ipca structure, 2 bits. |
+| 4 | `adjust` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure | Member i_adjust of the header's ii_ipca structure, 1 bit. |
+| 3:0 | `wid` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure | Member i_wid of the header's ii_ipca structure, 4 bits. |
 
 ### Register `pio_read_address`
 
@@ -251,6 +386,45 @@ Array of 8 registers, stride 8.
 | 51:44 | `source` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 43:41 | `initiator` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 40:3 | `address` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
+
+### Register `pio_deallocation`
+
+PIO deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPDR; the header's short name is IPDR.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 5 | `init_rpcnt` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure | Member i_init_rpcnt of the header's ii_ipdr structure, 1 bit. |
+| 4 | `pnd` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure | Member i_pnd of the header's ii_ipdr structure, 1 bit. |
+| 2:0 | `te` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure | Member i_te of the header's ii_ipdr structure, 3 bits. |
+
+### Register `crb_deallocation`
+
+CRB entry deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICDR; the header's short name is ICDR.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 4 | `pnd` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure | Member i_pnd of the header's ii_icdr structure, 1 bit. |
+| 3:0 | `crb_num` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure | Member i_crb_num of the header's ii_icdr structure, 4 bits. |
+
+### Register `ioq_fifo_depth`
+
+IOQ FIFO depth. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IFDR; the header's short name is IFDR.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 15 | `set_ioq_rp` | established |  | Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure | Member i_set_ioq_rp of the header's ii_ifdr structure, 1 bit. |
+| 14:8 | `ioq_max_rp` | established |  | Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure | Member i_ioq_max_rp of the header's ii_ifdr structure, 7 bits. |
+| 7 | `set_ioq_rq` | established |  | Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure | Member i_set_ioq_rq of the header's ii_ifdr structure, 1 bit. |
+| 6:0 | `ioq_max_rq` | established |  | Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure | Member i_ioq_max_rq of the header's ii_ifdr structure, 7 bits. |
+
+### Register `iiq_arbitration`
+
+IIQ arbitration parameters. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIAP; the header's short name is IIAP.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 13:8 | `rp_mls` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure | Member i_rp_mls of the header's ii_iiap structure, 6 bits. |
+| 5:0 | `rq_mls` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure | Member i_rq_mls of the header's ii_iiap structure, 6 bits. |
 
 ### Register `request_buffer_management`
 
@@ -280,11 +454,19 @@ Software control of the request buffers. It has priority over crosstalk and BTE 
 
 ### Register `crb_timeout`
 
-IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7:0 | `timeout` | established |  | Linux 2.5.40 SN1 register headers: ii_icto structure | Member i_timeout of the header's ii_icto structure, 8 bits. |
 
 ### Register `crb_timeout_prescaler`
 
-IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.
+IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:0 | `prescale` | established |  | Linux 2.5.40 SN1 register headers: ii_ictp structure | Member i_prescale of the header's ii_ictp structure, 24 bits. |
 
 ### Register `crb_a`
 
@@ -305,6 +487,71 @@ Array of 15 registers, stride 32.
 Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.
 
 Array of 15 registers, stride 32.
+
+### Register `crb_spurious_message_low`
+
+CRB spurious message, low word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSML; the header's short name is ICSML.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `overflow` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure | Member i_overflow of the header's ii_icsml structure, 1 bit. |
+| 59:49 | `newsuppl_ex` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure | Member i_newsuppl_ex of the header's ii_icsml structure, 11 bits. |
+| 48:38 | `tt_ack_cnt` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure | Member i_tt_ack_cnt of the header's ii_icsml structure, 11 bits. |
+| 37:0 | `tt_addr` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure | Member i_tt_addr of the header's ii_icsml structure, 38 bits. |
+
+### Register `crb_spurious_message_high`
+
+CRB spurious message, high word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSMH; the header's short name is ICSMH.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 58:56 | `tt_init` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_init of the header's ii_icsmh structure, 3 bits. |
+| 55:49 | `tt_device` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_device of the header's ii_icsmh structure, 7 bits. |
+| 48 | `rqcnt_ge_2` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rqcnt_ge_2 of the header's ii_icsmh structure, 1 bit. |
+| 47 | `rqcnt_lt_2` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rqcnt_lt_2 of the header's ii_icsmh structure, 1 bit. |
+| 46 | `rqcnt_ge_18` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rqcnt_ge_18 of the header's ii_icsmh structure, 1 bit. |
+| 45 | `rqcnt_lt_18` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rqcnt_lt_18 of the header's ii_icsmh structure, 1 bit. |
+| 44 | `rpcnt_ge_2` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_ge_2 of the header's ii_icsmh structure, 1 bit. |
+| 43 | `rpcnt_lt_2` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_lt_2 of the header's ii_icsmh structure, 1 bit. |
+| 42 | `rpcnt_ge_18` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_ge_18 of the header's ii_icsmh structure, 1 bit. |
+| 41 | `rpcnt_lt_18` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_lt_18 of the header's ii_icsmh structure, 1 bit. |
+| 40 | `rpcnt_ge_34` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_ge_34 of the header's ii_icsmh structure, 1 bit. |
+| 39 | `rpcnt_lt_34` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_rpcnt_lt_34 of the header's ii_icsmh structure, 1 bit. |
+| 38 | `match` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_match of the header's ii_icsmh structure, 1 bit. |
+| 37 | `cbn` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_cbn of the header's ii_icsmh structure, 1 bit. |
+| 36 | `tt_bte_num` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_bte_num of the header's ii_icsmh structure, 1 bit. |
+| 35 | `tt_respreqd` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_respreqd of the header's ii_icsmh structure, 1 bit. |
+| 34 | `tt_use_old` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_use_old of the header's ii_icsmh structure, 1 bit. |
+| 33:32 | `tt_imsgtype` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_imsgtype of the header's ii_icsmh structure, 2 bits. |
+| 31:24 | `tt_imsg` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_imsg of the header's ii_icsmh structure, 8 bits. |
+| 23 | `g_stall_ib` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_g_stall_ib of the header's ii_icsmh structure, 1 bit. |
+| 22 | `g_stall_il` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_g_stall_il of the header's ii_icsmh structure, 1 bit. |
+| 21 | `g_stall_bte0` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_g_stall_bte0 of the header's ii_icsmh structure, 1 bit. |
+| 20 | `g_stall_bte1` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_g_stall_bte1 of the header's ii_icsmh structure, 1 bit. |
+| 19 | `tt_intvn` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_intvn of the header's ii_icsmh structure, 1 bit. |
+| 18 | `tt_resp` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_resp of the header's ii_icsmh structure, 1 bit. |
+| 17 | `tt_ack` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_ack of the header's ii_icsmh structure, 1 bit. |
+| 16 | `tt_hold` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_hold of the header's ii_icsmh structure, 1 bit. |
+| 15 | `tt_wb` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_wb of the header's ii_icsmh structure, 1 bit. |
+| 14:10 | `tt_exc` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_exc of the header's ii_icsmh structure, 5 bits. |
+| 9 | `plusg` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_plusg of the header's ii_icsmh structure, 1 bit. |
+| 8 | `plusz` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_plusz of the header's ii_icsmh structure, 1 bit. |
+| 7 | `mnusz` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_mnusz of the header's ii_icsmh structure, 1 bit. |
+| 6 | `mnusg` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_mnusg of the header's ii_icsmh structure, 1 bit. |
+| 5 | `sync` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_sync of the header's ii_icsmh structure, 1 bit. |
+| 4 | `ft_active_o` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_ft_active_o of the header's ii_icsmh structure, 1 bit. |
+| 3 | `ft_wact_o` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_ft_wact_o of the header's ii_icsmh structure, 1 bit. |
+| 2 | `ft_cwact_o` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_ft_cwact_o of the header's ii_icsmh structure, 1 bit. |
+| 1 | `xerr` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_xerr of the header's ii_icsmh structure, 1 bit. |
+| 0 | `tt_vld` | established |  | Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure | Member i_tt_vld of the header's ii_icsmh structure, 1 bit. |
+
+### Register `debug_submenu_select`
+
+Debug submenu select. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IDBSS; the header's short name is IDBSS.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 2:0 | `submenu` | established |  | Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure | Member i_submenu of the header's ii_idbss structure, 3 bits. |
 
 ### Register `bte_length_status`
 
@@ -371,6 +618,25 @@ Array of 2 registers, stride 65536.
 | 22:16 | `level` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 8:1 | `node` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
 | 0 | `pi_select` | established |  | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |  |
+
+### Register `performance_control`
+
+Performance control. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCR; the header's short name is IPCR.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 15:8 | `icct` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure | Member i_icct of the header's ii_ipcr structure, 8 bits. |
+| 7:4 | `ippr1_c` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure | Member i_ippr1_c of the header's ii_ipcr structure, 4 bits. |
+| 3:0 | `ippr0_c` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure | Member i_ippr0_c of the header's ii_ipcr structure, 4 bits. |
+
+### Register `performance_profiling`
+
+Performance profiling. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPPR; the header's short name is IPPR.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:32 | `ippr1` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure | Member i_ippr1 of the header's ii_ippr structure, 32 bits. |
+| 31:0 | `ippr0` | established |  | Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure | Member i_ippr0 of the header's ii_ippr structure, 32 bits. |
 
 ## Constants
 

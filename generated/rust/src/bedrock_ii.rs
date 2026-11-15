@@ -37,10 +37,135 @@ pub mod widget_id {
         }
     }
 }
+/// Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and  (inferred)
+pub mod widget_status {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400008;
+    pub mod crazy { // bits 32:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod llp_tx_cnt { // bits 23:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tx_mx_rty { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod xt_tail_to { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod xt_crd_to { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pending { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded he (inferred)
 pub mod widget_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400020;
+    pub mod e_thresh { // bits 22:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dir_con { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod f_bad_pkt { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dst_credit { // bits 15:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tag_mode { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod widget_id { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM regis (established)
 pub mod local_access_protection {
@@ -392,6 +517,36 @@ pub mod translation_table_entry {
     pub const OFFSET: u64 = 0x400160;
     pub const COUNT: u32 = 7;
     pub const STRIDE: u64 = 8;
+    pub mod io_space { // bits 12:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod widget_number { // bits 11:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod offset { // bits 4:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written a (established)
 pub mod pio_request_buffer_w0 {
@@ -625,10 +780,20 @@ pub mod pio_request_buffer_w8 {
         }
     }
 }
-/// IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+/// IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the h (inferred)
 pub mod credit_count_timeout {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4001e0;
+    pub mod timeout { // bits 25:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that s (inferred)
 pub mod misc_error_mask {
@@ -675,10 +840,40 @@ pub mod misc_error_mask {
         }
     }
 }
-/// IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+/// IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the head (inferred)
 pub mod crosstalk_timeout_threshold {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4001f0;
+    pub mod read_response_timeout { // bits 59:55, established
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod read_response_prescale { // bits 54:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x7fffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tail_timeout { // bits 25:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero. (established)
 pub mod error_clear {
@@ -779,6 +974,396 @@ pub mod error_clear {
 pub mod bte_global_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400200;
+    pub mod soft_reset { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod count { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Crosstalk spurious message: the header fields of the last incoming Crosstalk packet that was dropped. The register's name and layout are from the head (inferred)
+pub mod crosstalk_spurious_message {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400208;
+    pub mod didn { // bits 63:60, established
+        pub const SHIFT: u32 = 60;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sidn { // bits 59:56, established
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pactyp { // bits 55:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tnum { // bits 51:47, established
+        pub const SHIFT: u32 = 47;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ct { // bits 46:46, established
+        pub const SHIFT: u32 = 46;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ds { // bits 45:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod gbr { // bits 43:43, established
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod vbpm { // bits 42:42, established
+        pub const SHIFT: u32 = 42;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod error { // bits 41:41, established
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bo { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod alt_pactyp { // bits 39:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tag { // bits 35:33, established
+        pub const SHIFT: u32 = 33;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod byte_en { // bits 31:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Crosstalk spurious sideband. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is (inferred)
+pub mod crosstalk_spurious_sideband {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400210;
+    pub mod valid { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sideband { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Link layer channel test. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is gra (inferred)
+pub mod llp_channel_test {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400218;
+    pub mod test_err_capture { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_clear { // bits 53:53, established
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_flit { // bits 52:50, established
+        pub const SHIFT: u32 = 50;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_cberr { // bits 49:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_valid { // bits 48:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_data { // bits 47:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0xfffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_mask { // bits 27:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod test_seed { // bits 19:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xfffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the re (inferred)
+pub mod incoming_error_header_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400220;
+    pub mod valid { // bits 44:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overrun { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod err_type { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod source { // bits 30:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod suppl { // bits 18:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod command { // bits 6:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the re (inferred)
+pub mod incoming_error_header_2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400228;
+    pub mod tail { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod address { // bits 37:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3fffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// PRB counter adjust. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded i (inferred)
+pub mod prb_counter_adjust {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400300;
+    pub mod field { // bits 9:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod adjust { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wid { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded. (established)
 pub mod pio_read_address {
@@ -839,6 +1424,136 @@ pub mod pio_read_address {
     pub mod address { // bits 40:3, established
         pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x3fffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// PIO deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inf (inferred)
+pub mod pio_deallocation {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400388;
+    pub mod init_rpcnt { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pnd { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod te { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// CRB entry deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is grad (inferred)
+pub mod crb_deallocation {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400390;
+    pub mod pnd { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod crb_num { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// IOQ FIFO depth. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded infer (inferred)
+pub mod ioq_fifo_depth {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400398;
+    pub mod set_ioq_rp { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ioq_max_rp { // bits 14:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod set_ioq_rq { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ioq_max_rq { // bits 6:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// IIQ arbitration parameters. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is  (inferred)
+pub mod iiq_arbitration {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x4003a0;
+    pub mod rp_mls { // bits 13:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rq_mls { // bits 5:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3f;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -977,15 +1692,35 @@ pub mod request_buffer_control {
         }
     }
 }
-/// IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+/// IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure;  (inferred)
 pub mod crb_timeout {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4003b8;
+    pub mod timeout { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. (inferred)
+/// IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's s (inferred)
 pub mod crb_timeout_prescaler {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4003c0;
+    pub mod prescale { // bits 23:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The head (inferred)
 pub mod crb_a {
@@ -1014,6 +1749,461 @@ pub mod crb_d {
     pub const OFFSET: u64 = 0x400418;
     pub const COUNT: u32 = 15;
     pub const STRIDE: u64 = 32;
+}
+/// CRB spurious message, low word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register (inferred)
+pub mod crb_spurious_message_low {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400600;
+    pub mod overflow { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod newsuppl_ex { // bits 59:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_ack_cnt { // bits 48:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_addr { // bits 37:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3fffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// CRB spurious message, high word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the registe (inferred)
+pub mod crb_spurious_message_high {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400608;
+    pub mod tt_init { // bits 58:56, established
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_device { // bits 55:49, established
+        pub const SHIFT: u32 = 49;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rqcnt_ge_2 { // bits 48:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rqcnt_lt_2 { // bits 47:47, established
+        pub const SHIFT: u32 = 47;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rqcnt_ge_18 { // bits 46:46, established
+        pub const SHIFT: u32 = 46;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rqcnt_lt_18 { // bits 45:45, established
+        pub const SHIFT: u32 = 45;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_ge_2 { // bits 44:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_lt_2 { // bits 43:43, established
+        pub const SHIFT: u32 = 43;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_ge_18 { // bits 42:42, established
+        pub const SHIFT: u32 = 42;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_lt_18 { // bits 41:41, established
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_ge_34 { // bits 40:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rpcnt_lt_34 { // bits 39:39, established
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#match { // bits 38:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cbn { // bits 37:37, established
+        pub const SHIFT: u32 = 37;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_bte_num { // bits 36:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_respreqd { // bits 35:35, established
+        pub const SHIFT: u32 = 35;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_use_old { // bits 34:34, established
+        pub const SHIFT: u32 = 34;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_imsgtype { // bits 33:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_imsg { // bits 31:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod g_stall_ib { // bits 23:23, established
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod g_stall_il { // bits 22:22, established
+        pub const SHIFT: u32 = 22;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod g_stall_bte0 { // bits 21:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod g_stall_bte1 { // bits 20:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_intvn { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_resp { // bits 18:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_ack { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_hold { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_wb { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_exc { // bits 14:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod plusg { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod plusz { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mnusz { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mnusg { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sync { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ft_active_o { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ft_wact_o { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ft_cwact_o { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod xerr { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod tt_vld { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Debug submenu select. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded (inferred)
+pub mod debug_submenu_select {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x400610;
+    pub mod submenu { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded (established)
 pub mod bte_length_status {
@@ -1169,6 +2359,66 @@ pub mod bte_interrupt_address {
     pub mod pi_select { // bits 0:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Performance control. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded  (inferred)
+pub mod performance_control {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x430000;
+    pub mod icct { // bits 15:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ippr1_c { // bits 7:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ippr0_c { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Performance profiling. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is grade (inferred)
+pub mod performance_profiling {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x430008;
+    pub mod ippr1 { // bits 63:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ippr0 { // bits 31:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xffffffff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }

@@ -121,7 +121,14 @@ grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry XB_POQ1_ERROR at image offset 0x1617d0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-doc = "Error record for the PI1 output queue. The header gives no field layout for it."
+doc = "Error record for the PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so)."
+rsvd = 0xffffffffffffcccc
+
+[registers.xb_poq1_error.fields]
+invalid_xsel = { bits = [1, 0], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_invalid_xsel of the header's xb_poq0_error structure, 2 bits." }
+overflow = { bits = [5, 4], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_overflow of the header's xb_poq0_error structure, 2 bits." }
+underflow = { bits = [9, 8], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_underflow of the header's xb_poq0_error structure, 2 bits." }
+tail_timeout = { bits = [13, 12], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_tail_timeout of the header's xb_poq0_error structure, 2 bits." }
 
 [registers.xb_piq1_error]
 offset = 0x700038
@@ -131,7 +138,12 @@ grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry XB_PIQ1_ERROR at image offset 0x1617e8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-doc = "Error record for the PI1 input queue. The header gives no field layout for it."
+doc = "Error record for the PI1 input queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so)."
+rsvd = 0xffffffffffffffcc
+
+[registers.xb_piq1_error.fields]
+overflow = { bits = [1, 0], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_overflow of the header's xb_piq0_error structure, 2 bits." }
+deadlock_timeout = { bits = [5, 4], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member pe_deadlock_timeout of the header's xb_piq0_error structure, 2 bits." }
 
 [registers.xb_mp0_error]
 offset = 0x700040
@@ -156,7 +168,13 @@ grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry XB_MP1_ERROR at image offset 0x161818 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-doc = "Error record for the memory-to-PI1 output queue. The header gives no field layout for it."
+doc = "Error record for the memory-to-PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so)."
+rsvd = 0xffffffffffffcccf
+
+[registers.xb_mp1_error.fields]
+overflow = { bits = [5, 4], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member me_overflow of the header's xb_mp0_error structure, 2 bits." }
+underflow = { bits = [9, 8], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member me_underflow of the header's xb_mp0_error structure, 2 bits." }
+tail_timeout = { bits = [13, 12], grade = "inferred", from = "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)", doc = "Member me_tail_timeout of the header's xb_mp0_error structure, 2 bits." }
 
 [registers.xb_mmq_error]
 offset = 0x700050

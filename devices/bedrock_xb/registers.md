@@ -124,11 +124,23 @@ Error record for the PI0 input queue. The header says the processor-interface in
 
 ### Register `xb_poq1_error`
 
-Error record for the PI1 output queue. The header gives no field layout for it.
+Error record for the PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_tail_timeout of the header's xb_poq0_error structure, 2 bits. |
+| 9:8 | `underflow` | inferred |  | Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_underflow of the header's xb_poq0_error structure, 2 bits. |
+| 5:4 | `overflow` | inferred |  | Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_overflow of the header's xb_poq0_error structure, 2 bits. |
+| 1:0 | `invalid_xsel` | inferred |  | Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_invalid_xsel of the header's xb_poq0_error structure, 2 bits. |
 
 ### Register `xb_piq1_error`
 
-Error record for the PI1 input queue. The header gives no field layout for it.
+Error record for the PI1 input queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 5:4 | `deadlock_timeout` | inferred |  | Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_deadlock_timeout of the header's xb_piq0_error structure, 2 bits. |
+| 1:0 | `overflow` | inferred |  | Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member pe_overflow of the header's xb_piq0_error structure, 2 bits. |
 
 ### Register `xb_mp0_error`
 
@@ -142,7 +154,13 @@ Error record for the memory-to-PI0 output queue. The header notes the crossbar s
 
 ### Register `xb_mp1_error`
 
-Error record for the memory-to-PI1 output queue. The header gives no field layout for it.
+Error record for the memory-to-PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 13:12 | `tail_timeout` | inferred |  | Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member me_tail_timeout of the header's xb_mp0_error structure, 2 bits. |
+| 9:8 | `underflow` | inferred |  | Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member me_underflow of the header's xb_mp0_error structure, 2 bits. |
+| 5:4 | `overflow` | inferred |  | Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own) | Member me_overflow of the header's xb_mp0_error structure, 2 bits. |
 
 ### Register `xb_mmq_error`
 

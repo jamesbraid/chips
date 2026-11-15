@@ -409,15 +409,75 @@ pub mod xb_piq0_error {
         }
     }
 }
-/// Error record for the PI1 output queue. The header gives no field layout for it. (inferred)
+/// Error record for the PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this (inferred)
 pub mod xb_poq1_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x700030;
+    pub mod tail_timeout { // bits 13:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod underflow { // bits 9:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overflow { // bits 5:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod invalid_xsel { // bits 1:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Error record for the PI1 input queue. The header gives no field layout for it. (inferred)
+/// Error record for the PI1 input queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this  (inferred)
 pub mod xb_piq1_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x700038;
+    pub mod deadlock_timeout { // bits 5:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overflow { // bits 1:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Error record for the memory-to-PI0 output queue. The header notes the crossbar select is decoded on the memory side of this queue, so no invalid-selec (inferred)
 pub mod xb_mp0_error {
@@ -454,10 +514,40 @@ pub mod xb_mp0_error {
         }
     }
 }
-/// Error record for the memory-to-PI1 output queue. The header gives no field layout for it. (inferred)
+/// Error record for the memory-to-PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance regist (inferred)
 pub mod xb_mp1_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x700048;
+    pub mod tail_timeout { // bits 13:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod underflow { // bits 9:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overflow { // bits 5:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Error record for the memory output queue that carries miscellaneous traffic to LB, NI and II. The header gives no field layout for it. (inferred)
 pub mod xb_mmq_error {

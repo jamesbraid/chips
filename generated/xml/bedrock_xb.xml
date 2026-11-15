@@ -67,10 +67,16 @@
     <field name="overflow" start="0" size="2" type="uint" grade="inferred"/>
   </struct>
   <struct name="XB_POQ1_ERROR" size="8" grade="inferred" from="Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS" register="yes" offset="0x700030" access="rw" reset="0x0">
-    <doc>Error record for the PI1 output queue. The header gives no field layout for it.</doc>
+    <doc>Error record for the PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).</doc>
+    <field name="tail_timeout" start="12" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="underflow" start="8" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="overflow" start="4" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="invalid_xsel" start="0" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
   </struct>
   <struct name="XB_PIQ1_ERROR" size="8" grade="inferred" from="Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS" register="yes" offset="0x700038" access="rw" reset="0x0">
-    <doc>Error record for the PI1 input queue. The header gives no field layout for it.</doc>
+    <doc>Error record for the PI1 input queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).</doc>
+    <field name="deadlock_timeout" start="4" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="overflow" start="0" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
   </struct>
   <struct name="XB_MP0_ERROR" size="8" grade="inferred" from="Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS" register="yes" offset="0x700040" access="rw" reset="0x0">
     <doc>Error record for the memory-to-PI0 output queue. The header notes the crossbar select is decoded on the memory side of this queue, so no invalid-select field is defined.</doc>
@@ -79,7 +85,10 @@
     <field name="overflow" start="4" size="2" type="uint" grade="inferred"/>
   </struct>
   <struct name="XB_MP1_ERROR" size="8" grade="inferred" from="Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS" register="yes" offset="0x700048" access="rw" reset="0x0">
-    <doc>Error record for the memory-to-PI1 output queue. The header gives no field layout for it.</doc>
+    <doc>Error record for the memory-to-PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).</doc>
+    <field name="tail_timeout" start="12" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="underflow" start="8" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
+    <field name="overflow" start="4" size="2" type="uint" grade="inferred" from="Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"/>
   </struct>
   <struct name="XB_MMQ_ERROR" size="8" grade="inferred" from="Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS" register="yes" offset="0x700050" access="rw" reset="0x0">
     <doc>Error record for the memory output queue that carries miscellaneous traffic to LB, NI and II. The header gives no field layout for it.</doc>

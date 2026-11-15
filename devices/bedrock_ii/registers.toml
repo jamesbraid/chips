@@ -425,7 +425,16 @@ reset = 0x4011
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_WCR at image offset 0x15fa48 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_WCR (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
-doc = "Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xffffffffff801fe0
+
+[registers.widget_control.fields]
+widget_id = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_wid of the header's ii_wcr structure, 4 bits." }
+tag_mode = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_tag of the header's ii_wcr structure, 1 bit." }
+dst_credit = { bits = [15, 13], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_dst_crd of the header's ii_wcr structure, 3 bits." }
+f_bad_pkt = { bits = [16, 16], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_f_bad_pkt of the header's ii_wcr structure, 1 bit." }
+dir_con = { bits = [17, 17], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_dir_con of the header's ii_wcr structure, 1 bit." }
+e_thresh = { bits = [22, 18], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_wcr structure", doc = "Member w_e_thresh of the header's ii_wcr structure, 5 bits." }
 
 [registers.llp_log]
 offset = 0x400130
@@ -475,7 +484,13 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_ITTE1 to II_ITTE7 at image offset 0x15fb80 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ITTE1 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
-doc = "IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xffffffffffffe0e0
+
+[registers.translation_table_entry.fields]
+offset = { bits = [4, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_itte1 structure", doc = "Member i_offset of the header's ii_itte1 structure, 5 bits." }
+widget_number = { bits = [11, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_itte1 structure", doc = "Member i_w_num of the header's ii_itte1 structure, 4 bits." }
+io_space = { bits = [12, 12], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_itte1 structure", doc = "Member i_iosp of the header's ii_itte1 structure, 1 bit." }
 
 [registers.credit_count_timeout]
 offset = 0x4001e0
@@ -486,7 +501,11 @@ reset = 0x3ffffff
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IXCC at image offset 0x15fd00 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IXCC (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
-doc = "IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xfffffffffc000000
+
+[registers.credit_count_timeout.fields]
+timeout = { bits = [25, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ixcc structure", doc = "Member i_time_out of the header's ii_ixcc structure, 26 bits." }
 
 [registers.crosstalk_timeout_threshold]
 offset = 0x4001f0
@@ -497,7 +516,13 @@ reset = 0xfffffff03ffffff
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IXTT at image offset 0x15fd30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IXTT (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
-doc = "IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xf0000000fc000000
+
+[registers.crosstalk_timeout_threshold.fields]
+tail_timeout = { bits = [25, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ixtt structure", doc = "Member i_tail_to of the header's ii_ixtt structure, 26 bits." }
+read_response_prescale = { bits = [54, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ixtt structure", doc = "Member i_rrsp_ps of the header's ii_ixtt structure, 23 bits." }
+read_response_timeout = { bits = [59, 55], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ixtt structure", doc = "Member i_rrsp_to of the header's ii_ixtt structure, 5 bits." }
 
 [registers.bte_global_control]
 offset = 0x400200
@@ -508,7 +533,12 @@ reset = 0x8
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IBCR at image offset 0x15fd60 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)"
-doc = "IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xfffffffffffffef0
+
+[registers.bte_global_control.fields]
+count = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ibcr structure", doc = "Member i_count of the header's ii_ibcr structure, 4 bits." }
+soft_reset = { bits = [8, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ibcr structure", doc = "Member i_soft_reset of the header's ii_ibcr structure, 1 bit." }
 
 [registers.crb_timeout]
 offset = 0x4003b8
@@ -519,7 +549,11 @@ reset = 0xff
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_ICTO at image offset 0x15ff58 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICTO (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
-doc = "IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xffffffffffffff00
+
+[registers.crb_timeout.fields]
+timeout = { bits = [7, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_icto structure", doc = "Member i_timeout of the header's ii_icto structure, 8 bits." }
 
 [registers.crb_timeout_prescaler]
 offset = 0x4003c0
@@ -530,7 +564,11 @@ reset = 0xffffff
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_ICTP at image offset 0x15ff70 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICTP (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
-doc = "IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here."
+doc = "IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
+rsvd = 0xffffffffff000000
+
+[registers.crb_timeout_prescaler.fields]
+prescale = { bits = [23, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: ii_ictp structure", doc = "Member i_prescale of the header's ii_ictp structure, 24 bits." }
 
 [registers.crb_d]
 offset = 0x400418
@@ -544,3 +582,287 @@ reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_D to II_ICRBE_D at image offset 0x15ffd0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
 from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICRB0_D (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
 doc = "Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred."
+
+[registers.widget_status]
+offset = 0x400008
+access = "r"
+width = 64
+grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_WSTAT at image offset 0x15fa30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"
+doc = "Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT."
+rsvd = 0xfffffffeff00fdc0
+
+[registers.widget_status.fields]
+pending = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_pending of the header's ii_wstat structure, 4 bits." }
+xt_crd_to = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_crd_to of the header's ii_wstat structure, 1 bit." }
+xt_tail_to = { bits = [5, 5], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_tail_to of the header's ii_wstat structure, 1 bit." }
+tx_mx_rty = { bits = [9, 9], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit." }
+llp_tx_cnt = { bits = [23, 16], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_llp_tx_cnt of the header's ii_wstat structure, 8 bits." }
+crazy = { bits = [32, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_crazy of the header's ii_wstat structure, 1 bit." }
+
+[registers.crosstalk_spurious_message]
+offset = 0x400208
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"
+doc = "Crosstalk spurious message: the header fields of the last incoming Crosstalk packet that was dropped. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSM; the header's short name is IXSM."
+rsvd = 0x100000000
+
+[registers.crosstalk_spurious_message.fields]
+byte_en = { bits = [31, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_byte_en of the header's ii_ixsm structure, 32 bits." }
+tag = { bits = [35, 33], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_tag of the header's ii_ixsm structure, 3 bits." }
+alt_pactyp = { bits = [39, 36], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_alt_pactyp of the header's ii_ixsm structure, 4 bits." }
+bo = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_bo of the header's ii_ixsm structure, 1 bit." }
+error = { bits = [41, 41], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_error of the header's ii_ixsm structure, 1 bit." }
+vbpm = { bits = [42, 42], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_vbpm of the header's ii_ixsm structure, 1 bit." }
+gbr = { bits = [43, 43], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_gbr of the header's ii_ixsm structure, 1 bit." }
+ds = { bits = [45, 44], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_ds of the header's ii_ixsm structure, 2 bits." }
+ct = { bits = [46, 46], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_ct of the header's ii_ixsm structure, 1 bit." }
+tnum = { bits = [51, 47], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_tnum of the header's ii_ixsm structure, 5 bits." }
+pactyp = { bits = [55, 52], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_pactyp of the header's ii_ixsm structure, 4 bits." }
+sidn = { bits = [59, 56], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_sidn of the header's ii_ixsm structure, 4 bits." }
+didn = { bits = [63, 60], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure", doc = "Member i_didn of the header's ii_ixsm structure, 4 bits." }
+
+[registers.crosstalk_spurious_sideband]
+offset = 0x400210
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure"
+doc = "Crosstalk spurious sideband. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSS; the header's short name is IXSS."
+rsvd = 0x7fffffffffffff00
+
+[registers.crosstalk_spurious_sideband.fields]
+sideband = { bits = [7, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure", doc = "Member i_sideband of the header's ii_ixss structure, 8 bits." }
+valid = { bits = [63, 63], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure", doc = "Member i_valid of the header's ii_ixss structure, 1 bit." }
+
+[registers.llp_channel_test]
+offset = 0x400218
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"
+doc = "Link layer channel test. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ILCT; the header's short name is ILCT."
+rsvd = 0xff80000000000000
+
+[registers.llp_channel_test.fields]
+test_seed = { bits = [19, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_seed of the header's ii_ilct structure, 20 bits." }
+test_mask = { bits = [27, 20], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_mask of the header's ii_ilct structure, 8 bits." }
+test_data = { bits = [47, 28], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_data of the header's ii_ilct structure, 20 bits." }
+test_valid = { bits = [48, 48], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_valid of the header's ii_ilct structure, 1 bit." }
+test_cberr = { bits = [49, 49], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_cberr of the header's ii_ilct structure, 1 bit." }
+test_flit = { bits = [52, 50], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_flit of the header's ii_ilct structure, 3 bits." }
+test_clear = { bits = [53, 53], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_clear of the header's ii_ilct structure, 1 bit." }
+test_err_capture = { bits = [54, 54], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure", doc = "Member i_test_err_capture of the header's ii_ilct structure, 1 bit." }
+
+[registers.incoming_error_header_1]
+offset = 0x400220
+access = "rw"
+width = 64
+grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH1 at image offset 0x15fdc0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+doc = "Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1."
+rsvd = 0xffffeef080080080
+
+[registers.incoming_error_header_1.fields]
+command = { bits = [6, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_command of the header's ii_iieph1 structure, 7 bits." }
+suppl = { bits = [18, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_suppl of the header's ii_iieph1 structure, 11 bits." }
+source = { bits = [30, 20], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_source of the header's ii_iieph1 structure, 11 bits." }
+err_type = { bits = [35, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_err_type of the header's ii_iieph1 structure, 4 bits." }
+overrun = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_overrun of the header's ii_iieph1 structure, 1 bit." }
+valid = { bits = [44, 44], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_valid of the header's ii_iieph1 structure, 1 bit." }
+
+[registers.incoming_error_header_2]
+offset = 0x400228
+access = "rw"
+width = 64
+grade = "inferred"
+reset = 0x0
+reset_grade = "established"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH2 at image offset 0x15fdd8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"
+doc = "Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2."
+rsvd = 0xfffffec000000000
+
+[registers.incoming_error_header_2.fields]
+address = { bits = [37, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure", doc = "Member i_address of the header's ii_iieph2 structure, 38 bits." }
+tail = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure", doc = "Member i_tail of the header's ii_iieph2 structure, 1 bit." }
+
+[registers.prb_counter_adjust]
+offset = 0x400300
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure"
+doc = "PRB counter adjust. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCA; the header's short name is IPCA."
+rsvd = 0xfffffffffffffce0
+
+[registers.prb_counter_adjust.fields]
+wid = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure", doc = "Member i_wid of the header's ii_ipca structure, 4 bits." }
+adjust = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure", doc = "Member i_adjust of the header's ii_ipca structure, 1 bit." }
+field = { bits = [9, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure", doc = "Member i_field of the header's ii_ipca structure, 2 bits." }
+
+[registers.pio_deallocation]
+offset = 0x400388
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure"
+doc = "PIO deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPDR; the header's short name is IPDR."
+rsvd = 0xffffffffffffffc8
+
+[registers.pio_deallocation.fields]
+te = { bits = [2, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure", doc = "Member i_te of the header's ii_ipdr structure, 3 bits." }
+pnd = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure", doc = "Member i_pnd of the header's ii_ipdr structure, 1 bit." }
+init_rpcnt = { bits = [5, 5], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure", doc = "Member i_init_rpcnt of the header's ii_ipdr structure, 1 bit." }
+
+[registers.crb_deallocation]
+offset = 0x400390
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure"
+doc = "CRB entry deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICDR; the header's short name is ICDR."
+rsvd = 0xffffffffffffffe0
+
+[registers.crb_deallocation.fields]
+crb_num = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure", doc = "Member i_crb_num of the header's ii_icdr structure, 4 bits." }
+pnd = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure", doc = "Member i_pnd of the header's ii_icdr structure, 1 bit." }
+
+[registers.ioq_fifo_depth]
+offset = 0x400398
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure"
+doc = "IOQ FIFO depth. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IFDR; the header's short name is IFDR."
+rsvd = 0xffffffffffff0000
+
+[registers.ioq_fifo_depth.fields]
+ioq_max_rq = { bits = [6, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure", doc = "Member i_ioq_max_rq of the header's ii_ifdr structure, 7 bits." }
+set_ioq_rq = { bits = [7, 7], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure", doc = "Member i_set_ioq_rq of the header's ii_ifdr structure, 1 bit." }
+ioq_max_rp = { bits = [14, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure", doc = "Member i_ioq_max_rp of the header's ii_ifdr structure, 7 bits." }
+set_ioq_rp = { bits = [15, 15], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure", doc = "Member i_set_ioq_rp of the header's ii_ifdr structure, 1 bit." }
+
+[registers.iiq_arbitration]
+offset = 0x4003a0
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure"
+doc = "IIQ arbitration parameters. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIAP; the header's short name is IIAP."
+rsvd = 0xffffffffffffc0c0
+
+[registers.iiq_arbitration.fields]
+rq_mls = { bits = [5, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure", doc = "Member i_rq_mls of the header's ii_iiap structure, 6 bits." }
+rp_mls = { bits = [13, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure", doc = "Member i_rp_mls of the header's ii_iiap structure, 6 bits." }
+
+[registers.crb_spurious_message_low]
+offset = 0x400600
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure"
+doc = "CRB spurious message, low word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSML; the header's short name is ICSML."
+rsvd = 0x7000000000000000
+
+[registers.crb_spurious_message_low.fields]
+tt_addr = { bits = [37, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure", doc = "Member i_tt_addr of the header's ii_icsml structure, 38 bits." }
+tt_ack_cnt = { bits = [48, 38], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure", doc = "Member i_tt_ack_cnt of the header's ii_icsml structure, 11 bits." }
+newsuppl_ex = { bits = [59, 49], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure", doc = "Member i_newsuppl_ex of the header's ii_icsml structure, 11 bits." }
+overflow = { bits = [63, 63], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure", doc = "Member i_overflow of the header's ii_icsml structure, 1 bit." }
+
+[registers.crb_spurious_message_high]
+offset = 0x400608
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"
+doc = "CRB spurious message, high word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSMH; the header's short name is ICSMH."
+rsvd = 0xf800000000000000
+
+[registers.crb_spurious_message_high.fields]
+tt_vld = { bits = [0, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_vld of the header's ii_icsmh structure, 1 bit." }
+xerr = { bits = [1, 1], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_xerr of the header's ii_icsmh structure, 1 bit." }
+ft_cwact_o = { bits = [2, 2], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_ft_cwact_o of the header's ii_icsmh structure, 1 bit." }
+ft_wact_o = { bits = [3, 3], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_ft_wact_o of the header's ii_icsmh structure, 1 bit." }
+ft_active_o = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_ft_active_o of the header's ii_icsmh structure, 1 bit." }
+sync = { bits = [5, 5], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_sync of the header's ii_icsmh structure, 1 bit." }
+mnusg = { bits = [6, 6], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_mnusg of the header's ii_icsmh structure, 1 bit." }
+mnusz = { bits = [7, 7], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_mnusz of the header's ii_icsmh structure, 1 bit." }
+plusz = { bits = [8, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_plusz of the header's ii_icsmh structure, 1 bit." }
+plusg = { bits = [9, 9], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_plusg of the header's ii_icsmh structure, 1 bit." }
+tt_exc = { bits = [14, 10], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_exc of the header's ii_icsmh structure, 5 bits." }
+tt_wb = { bits = [15, 15], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_wb of the header's ii_icsmh structure, 1 bit." }
+tt_hold = { bits = [16, 16], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_hold of the header's ii_icsmh structure, 1 bit." }
+tt_ack = { bits = [17, 17], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_ack of the header's ii_icsmh structure, 1 bit." }
+tt_resp = { bits = [18, 18], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_resp of the header's ii_icsmh structure, 1 bit." }
+tt_intvn = { bits = [19, 19], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_intvn of the header's ii_icsmh structure, 1 bit." }
+g_stall_bte1 = { bits = [20, 20], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_g_stall_bte1 of the header's ii_icsmh structure, 1 bit." }
+g_stall_bte0 = { bits = [21, 21], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_g_stall_bte0 of the header's ii_icsmh structure, 1 bit." }
+g_stall_il = { bits = [22, 22], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_g_stall_il of the header's ii_icsmh structure, 1 bit." }
+g_stall_ib = { bits = [23, 23], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_g_stall_ib of the header's ii_icsmh structure, 1 bit." }
+tt_imsg = { bits = [31, 24], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_imsg of the header's ii_icsmh structure, 8 bits." }
+tt_imsgtype = { bits = [33, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_imsgtype of the header's ii_icsmh structure, 2 bits." }
+tt_use_old = { bits = [34, 34], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_use_old of the header's ii_icsmh structure, 1 bit." }
+tt_respreqd = { bits = [35, 35], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_respreqd of the header's ii_icsmh structure, 1 bit." }
+tt_bte_num = { bits = [36, 36], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_bte_num of the header's ii_icsmh structure, 1 bit." }
+cbn = { bits = [37, 37], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_cbn of the header's ii_icsmh structure, 1 bit." }
+match = { bits = [38, 38], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_match of the header's ii_icsmh structure, 1 bit." }
+rpcnt_lt_34 = { bits = [39, 39], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_lt_34 of the header's ii_icsmh structure, 1 bit." }
+rpcnt_ge_34 = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_ge_34 of the header's ii_icsmh structure, 1 bit." }
+rpcnt_lt_18 = { bits = [41, 41], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_lt_18 of the header's ii_icsmh structure, 1 bit." }
+rpcnt_ge_18 = { bits = [42, 42], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_ge_18 of the header's ii_icsmh structure, 1 bit." }
+rpcnt_lt_2 = { bits = [43, 43], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_lt_2 of the header's ii_icsmh structure, 1 bit." }
+rpcnt_ge_2 = { bits = [44, 44], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rpcnt_ge_2 of the header's ii_icsmh structure, 1 bit." }
+rqcnt_lt_18 = { bits = [45, 45], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rqcnt_lt_18 of the header's ii_icsmh structure, 1 bit." }
+rqcnt_ge_18 = { bits = [46, 46], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rqcnt_ge_18 of the header's ii_icsmh structure, 1 bit." }
+rqcnt_lt_2 = { bits = [47, 47], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rqcnt_lt_2 of the header's ii_icsmh structure, 1 bit." }
+rqcnt_ge_2 = { bits = [48, 48], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_rqcnt_ge_2 of the header's ii_icsmh structure, 1 bit." }
+tt_device = { bits = [55, 49], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_device of the header's ii_icsmh structure, 7 bits." }
+tt_init = { bits = [58, 56], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure", doc = "Member i_tt_init of the header's ii_icsmh structure, 3 bits." }
+
+[registers.debug_submenu_select]
+offset = 0x400610
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure"
+doc = "Debug submenu select. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IDBSS; the header's short name is IDBSS."
+rsvd = 0xfffffffffffffff8
+
+[registers.debug_submenu_select.fields]
+submenu = { bits = [2, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure", doc = "Member i_submenu of the header's ii_idbss structure, 3 bits." }
+
+[registers.performance_control]
+offset = 0x430000
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure"
+doc = "Performance control. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCR; the header's short name is IPCR."
+rsvd = 0xffffffffffff0000
+
+[registers.performance_control.fields]
+ippr0_c = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure", doc = "Member i_ippr0_c of the header's ii_ipcr structure, 4 bits." }
+ippr1_c = { bits = [7, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure", doc = "Member i_ippr1_c of the header's ii_ipcr structure, 4 bits." }
+icct = { bits = [15, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure", doc = "Member i_icct of the header's ii_ipcr structure, 8 bits." }
+
+[registers.performance_profiling]
+offset = 0x430008
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure"
+doc = "Performance profiling. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPPR; the header's short name is IPPR."
+
+[registers.performance_profiling.fields]
+ippr0 = { bits = [31, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure", doc = "Member i_ippr0 of the header's ii_ippr structure, 32 bits." }
+ippr1 = { bits = [63, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure", doc = "Member i_ippr1 of the header's ii_ippr structure, 32 bits." }

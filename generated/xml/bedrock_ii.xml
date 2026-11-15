@@ -8,8 +8,23 @@
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
   </struct>
+  <struct name="WIDGET_STATUS" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure" register="yes" offset="0x400008" access="r" reset="0x0">
+    <doc>Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.</doc>
+    <field name="crazy" start="32" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+    <field name="llp_tx_cnt" start="16" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+    <field name="tx_mx_rty" start="9" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+    <field name="xt_tail_to" start="5" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+    <field name="xt_crd_to" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+    <field name="pending" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"/>
+  </struct>
   <struct name="WIDGET_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400020" access="rw" reset="0x4011">
-    <doc>Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="e_thresh" start="18" size="5" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
+    <field name="dir_con" start="17" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
+    <field name="f_bad_pkt" start="16" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
+    <field name="dst_credit" start="13" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
+    <field name="tag_mode" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
+    <field name="widget_id" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_wcr structure"/>
   </struct>
   <struct name="LOCAL_ACCESS_PROTECTION" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400100" access="rw" reset="0xfffffffffffffff">
     <doc>One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias.</doc>
@@ -71,7 +86,10 @@
     <doc>IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
   </struct>
   <struct name="TRANSLATION_TABLE_ENTRY" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
-    <doc>IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="io_space" start="12" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_itte1 structure"/>
+    <field name="widget_number" start="8" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_itte1 structure"/>
+    <field name="offset" start="0" size="5" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_itte1 structure"/>
   </struct>
   <struct name="PIO_REQUEST_BUFFER_W0" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400198" access="rw" reset="0xf">
     <doc>Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected.</doc>
@@ -102,7 +120,8 @@
     <field name="credits" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="CREDIT_COUNT_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e0" access="rw" reset="0x3ffffff">
-    <doc>IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="timeout" start="0" size="26" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ixcc structure"/>
   </struct>
   <struct name="MISC_ERROR_MASK" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001e8" access="rw" reset="0x111">
     <doc>Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.</doc>
@@ -112,7 +131,10 @@
     <field name="widget_0_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="CROSSTALK_TIMEOUT_THRESHOLD" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f0" access="rw" reset="0xfffffff03ffffff">
-    <doc>IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="read_response_timeout" start="55" size="5" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ixtt structure"/>
+    <field name="read_response_prescale" start="32" size="23" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ixtt structure"/>
+    <field name="tail_timeout" start="0" size="26" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ixtt structure"/>
   </struct>
   <struct name="ERROR_CLEAR" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4001f8" access="w" reset="0x0">
     <doc>Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero.</doc>
@@ -127,7 +149,61 @@
     <field name="request_buffer_0" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="BTE_GLOBAL_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)" register="yes" offset="0x400200" access="rw" reset="0x8">
-    <doc>IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="soft_reset" start="8" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ibcr structure"/>
+    <field name="count" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ibcr structure"/>
+  </struct>
+  <struct name="CROSSTALK_SPURIOUS_MESSAGE" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure" register="yes" offset="0x400208" access="rw" reset="unknown">
+    <doc>Crosstalk spurious message: the header fields of the last incoming Crosstalk packet that was dropped. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSM; the header's short name is IXSM.</doc>
+    <field name="didn" start="60" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="sidn" start="56" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="pactyp" start="52" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="tnum" start="47" size="5" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="ct" start="46" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="ds" start="44" size="2" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="gbr" start="43" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="vbpm" start="42" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="error" start="41" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="bo" start="40" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="alt_pactyp" start="36" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="tag" start="33" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+    <field name="byte_en" start="0" size="32" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure"/>
+  </struct>
+  <struct name="CROSSTALK_SPURIOUS_SIDEBAND" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure" register="yes" offset="0x400210" access="rw" reset="unknown">
+    <doc>Crosstalk spurious sideband. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IXSS; the header's short name is IXSS.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure"/>
+    <field name="sideband" start="0" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure"/>
+  </struct>
+  <struct name="LLP_CHANNEL_TEST" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure" register="yes" offset="0x400218" access="rw" reset="unknown">
+    <doc>Link layer channel test. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ILCT; the header's short name is ILCT.</doc>
+    <field name="test_err_capture" start="54" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_clear" start="53" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_flit" start="50" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_cberr" start="49" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_valid" start="48" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_data" start="28" size="20" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_mask" start="20" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+    <field name="test_seed" start="0" size="20" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure"/>
+  </struct>
+  <struct name="INCOMING_ERROR_HEADER_1" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure" register="yes" offset="0x400220" access="rw" reset="0x0">
+    <doc>Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.</doc>
+    <field name="valid" start="44" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+    <field name="overrun" start="40" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+    <field name="err_type" start="32" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+    <field name="source" start="20" size="11" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+    <field name="suppl" start="8" size="11" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+    <field name="command" start="0" size="7" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"/>
+  </struct>
+  <struct name="INCOMING_ERROR_HEADER_2" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure" register="yes" offset="0x400228" access="rw" reset="0x0">
+    <doc>Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.</doc>
+    <field name="tail" start="40" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"/>
+    <field name="address" start="0" size="38" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"/>
+  </struct>
+  <struct name="PRB_COUNTER_ADJUST" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure" register="yes" offset="0x400300" access="rw" reset="unknown">
+    <doc>PRB counter adjust. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCA; the header's short name is IPCA.</doc>
+    <field name="field" start="8" size="2" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure"/>
+    <field name="adjust" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure"/>
+    <field name="wid" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure"/>
   </struct>
   <struct name="PIO_READ_ADDRESS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400308" access="rw" count="8" stride="8" reset="0x0">
     <doc>Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded.</doc>
@@ -137,6 +213,29 @@
     <field name="source" start="44" size="8" type="uint" grade="established"/>
     <field name="initiator" start="41" size="3" type="uint" grade="established"/>
     <field name="address" start="3" size="38" type="uint" grade="established"/>
+  </struct>
+  <struct name="PIO_DEALLOCATION" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure" register="yes" offset="0x400388" access="rw" reset="unknown">
+    <doc>PIO deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPDR; the header's short name is IPDR.</doc>
+    <field name="init_rpcnt" start="5" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure"/>
+    <field name="pnd" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure"/>
+    <field name="te" start="0" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure"/>
+  </struct>
+  <struct name="CRB_DEALLOCATION" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure" register="yes" offset="0x400390" access="rw" reset="unknown">
+    <doc>CRB entry deallocation. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICDR; the header's short name is ICDR.</doc>
+    <field name="pnd" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure"/>
+    <field name="crb_num" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICDR (name and offset), ii_icdr structure"/>
+  </struct>
+  <struct name="IOQ_FIFO_DEPTH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure" register="yes" offset="0x400398" access="rw" reset="unknown">
+    <doc>IOQ FIFO depth. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IFDR; the header's short name is IFDR.</doc>
+    <field name="set_ioq_rp" start="15" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure"/>
+    <field name="ioq_max_rp" start="8" size="7" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure"/>
+    <field name="set_ioq_rq" start="7" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure"/>
+    <field name="ioq_max_rq" start="0" size="7" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IFDR (name and offset), ii_ifdr structure"/>
+  </struct>
+  <struct name="IIQ_ARBITRATION" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure" register="yes" offset="0x4003a0" access="rw" reset="unknown">
+    <doc>IIQ arbitration parameters. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIAP; the header's short name is IIAP.</doc>
+    <field name="rp_mls" start="8" size="6" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure"/>
+    <field name="rq_mls" start="0" size="6" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IIAP (name and offset), ii_iiap structure"/>
   </struct>
   <struct name="REQUEST_BUFFER_MANAGEMENT" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003a8" access="rw" reset="unknown">
     <doc>Request buffer management. The header warns that writing it while the buffers are not quiescent can have catastrophic side effects. The Itanium probe writes a count of 0xf and nothing else.</doc>
@@ -157,10 +256,12 @@
     <field name="entry" start="0" size="4" type="uint" grade="established"/>
   </struct>
   <struct name="CRB_TIMEOUT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003b8" access="rw" reset="0xff">
-    <doc>IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="timeout" start="0" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_icto structure"/>
   </struct>
   <struct name="CRB_TIMEOUT_PRESCALER" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x4003c0" access="rw" reset="0xffffff">
-    <doc>IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here.</doc>
+    <doc>IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only).</doc>
+    <field name="prescale" start="0" size="24" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: ii_ictp structure"/>
   </struct>
   <struct name="CRB_A" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400400" access="r" count="15" stride="32" reset="0x0">
     <doc>First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here.</doc>
@@ -171,6 +272,59 @@
   </struct>
   <struct name="CRB_D" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400418" access="r" count="15" stride="32" reset="0x0">
     <doc>Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred.</doc>
+  </struct>
+  <struct name="CRB_SPURIOUS_MESSAGE_LOW" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure" register="yes" offset="0x400600" access="rw" reset="unknown">
+    <doc>CRB spurious message, low word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSML; the header's short name is ICSML.</doc>
+    <field name="overflow" start="63" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure"/>
+    <field name="newsuppl_ex" start="49" size="11" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure"/>
+    <field name="tt_ack_cnt" start="38" size="11" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure"/>
+    <field name="tt_addr" start="0" size="38" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSML (name and offset), ii_icsml structure"/>
+  </struct>
+  <struct name="CRB_SPURIOUS_MESSAGE_HIGH" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure" register="yes" offset="0x400608" access="rw" reset="unknown">
+    <doc>CRB spurious message, high word. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_ICSMH; the header's short name is ICSMH.</doc>
+    <field name="tt_init" start="56" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_device" start="49" size="7" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rqcnt_ge_2" start="48" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rqcnt_lt_2" start="47" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rqcnt_ge_18" start="46" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rqcnt_lt_18" start="45" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_ge_2" start="44" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_lt_2" start="43" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_ge_18" start="42" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_lt_18" start="41" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_ge_34" start="40" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="rpcnt_lt_34" start="39" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="match" start="38" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="cbn" start="37" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_bte_num" start="36" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_respreqd" start="35" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_use_old" start="34" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_imsgtype" start="32" size="2" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_imsg" start="24" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="g_stall_ib" start="23" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="g_stall_il" start="22" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="g_stall_bte0" start="21" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="g_stall_bte1" start="20" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_intvn" start="19" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_resp" start="18" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_ack" start="17" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_hold" start="16" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_wb" start="15" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_exc" start="10" size="5" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="plusg" start="9" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="plusz" start="8" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="mnusz" start="7" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="mnusg" start="6" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="sync" start="5" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="ft_active_o" start="4" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="ft_wact_o" start="3" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="ft_cwact_o" start="2" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="xerr" start="1" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+    <field name="tt_vld" start="0" size="1" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_ICSMH (name and offset), ii_icsmh structure"/>
+  </struct>
+  <struct name="DEBUG_SUBMENU_SELECT" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure" register="yes" offset="0x400610" access="rw" reset="unknown">
+    <doc>Debug submenu select. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IDBSS; the header's short name is IDBSS.</doc>
+    <field name="submenu" start="0" size="3" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IDBSS (name and offset), ii_idbss structure"/>
   </struct>
   <struct name="BTE_LENGTH_STATUS" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x410000" access="rw" count="2" stride="65536" reset="0x0">
     <doc>One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end.</doc>
@@ -201,6 +355,17 @@
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="1" size="8" type="uint" grade="established"/>
     <field name="pi_select" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PERFORMANCE_CONTROL" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure" register="yes" offset="0x430000" access="rw" reset="unknown">
+    <doc>Performance control. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPCR; the header's short name is IPCR.</doc>
+    <field name="icct" start="8" size="8" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure"/>
+    <field name="ippr1_c" start="4" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure"/>
+    <field name="ippr0_c" start="0" size="4" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPCR (name and offset), ii_ipcr structure"/>
+  </struct>
+  <struct name="PERFORMANCE_PROFILING" size="8" grade="inferred" from="Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure" register="yes" offset="0x430008" access="rw" reset="unknown">
+    <doc>Performance profiling. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. No reset is recorded. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IPPR; the header's short name is IPPR.</doc>
+    <field name="ippr1" start="32" size="32" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure"/>
+    <field name="ippr0" start="0" size="32" type="uint" grade="established" from="Linux 2.5.40 SN1 register headers: IIO_IPPR (name and offset), ii_ippr structure"/>
   </struct>
   <constant name="BTE_REGISTER_SIZE" value="0x30" grade="inferred"/>
   <constant name="MANUFACTURER_BEDROCK" value="0x36" grade="inferred"/>

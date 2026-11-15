@@ -149,16 +149,34 @@
 #define BEDROCK_XB_PIQ0_ERROR_OVERFLOW_INPLACE       (BEDROCK_XB_PIQ0_ERROR_OVERFLOW_MASK << BEDROCK_XB_PIQ0_ERROR_OVERFLOW_SHIFT)
 
 /*
- * Error record for the PI1 output queue. The header gives no field layout for it.
+ * Error record for the PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
  */
 /* xb_poq1_error: rw64, reset 0x0; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_POQ1_ERROR                        0x700030 /* inferred */
+#define BEDROCK_XB_POQ1_ERROR_TAIL_TIMEOUT_SHIFT     12 /* inferred */
+#define BEDROCK_XB_POQ1_ERROR_TAIL_TIMEOUT_MASK      0x3ull
+#define BEDROCK_XB_POQ1_ERROR_TAIL_TIMEOUT_INPLACE   (BEDROCK_XB_POQ1_ERROR_TAIL_TIMEOUT_MASK << BEDROCK_XB_POQ1_ERROR_TAIL_TIMEOUT_SHIFT)
+#define BEDROCK_XB_POQ1_ERROR_UNDERFLOW_SHIFT        8 /* inferred */
+#define BEDROCK_XB_POQ1_ERROR_UNDERFLOW_MASK         0x3ull
+#define BEDROCK_XB_POQ1_ERROR_UNDERFLOW_INPLACE      (BEDROCK_XB_POQ1_ERROR_UNDERFLOW_MASK << BEDROCK_XB_POQ1_ERROR_UNDERFLOW_SHIFT)
+#define BEDROCK_XB_POQ1_ERROR_OVERFLOW_SHIFT         4 /* inferred */
+#define BEDROCK_XB_POQ1_ERROR_OVERFLOW_MASK          0x3ull
+#define BEDROCK_XB_POQ1_ERROR_OVERFLOW_INPLACE       (BEDROCK_XB_POQ1_ERROR_OVERFLOW_MASK << BEDROCK_XB_POQ1_ERROR_OVERFLOW_SHIFT)
+#define BEDROCK_XB_POQ1_ERROR_INVALID_XSEL_SHIFT     0 /* inferred */
+#define BEDROCK_XB_POQ1_ERROR_INVALID_XSEL_MASK      0x3ull
+#define BEDROCK_XB_POQ1_ERROR_INVALID_XSEL_INPLACE   (BEDROCK_XB_POQ1_ERROR_INVALID_XSEL_MASK << BEDROCK_XB_POQ1_ERROR_INVALID_XSEL_SHIFT)
 
 /*
- * Error record for the PI1 input queue. The header gives no field layout for it.
+ * Error record for the PI1 input queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
  */
 /* xb_piq1_error: rw64, reset 0x0; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_PIQ1_ERROR                        0x700038 /* inferred */
+#define BEDROCK_XB_PIQ1_ERROR_DEADLOCK_TIMEOUT_SHIFT 4 /* inferred */
+#define BEDROCK_XB_PIQ1_ERROR_DEADLOCK_TIMEOUT_MASK  0x3ull
+#define BEDROCK_XB_PIQ1_ERROR_DEADLOCK_TIMEOUT_INPLACE (BEDROCK_XB_PIQ1_ERROR_DEADLOCK_TIMEOUT_MASK << BEDROCK_XB_PIQ1_ERROR_DEADLOCK_TIMEOUT_SHIFT)
+#define BEDROCK_XB_PIQ1_ERROR_OVERFLOW_SHIFT         0 /* inferred */
+#define BEDROCK_XB_PIQ1_ERROR_OVERFLOW_MASK          0x3ull
+#define BEDROCK_XB_PIQ1_ERROR_OVERFLOW_INPLACE       (BEDROCK_XB_PIQ1_ERROR_OVERFLOW_MASK << BEDROCK_XB_PIQ1_ERROR_OVERFLOW_SHIFT)
 
 /*
  * Error record for the memory-to-PI0 output queue. The header notes the crossbar select is decoded on the memory side of this queue, so no invalid-select field is defined.
@@ -176,10 +194,19 @@
 #define BEDROCK_XB_MP0_ERROR_OVERFLOW_INPLACE        (BEDROCK_XB_MP0_ERROR_OVERFLOW_MASK << BEDROCK_XB_MP0_ERROR_OVERFLOW_SHIFT)
 
 /*
- * Error record for the memory-to-PI1 output queue. The header gives no field layout for it.
+ * Error record for the memory-to-PI1 output queue. The header gives no field layout for it. The header gives a layout only for the first-instance register of this pair; this one is assumed to share it (inferred from the matching names and the matching clear registers; no header text says so).
  */
 /* xb_mp1_error: rw64, reset 0x0; Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS */
 #define BEDROCK_XB_MP1_ERROR                         0x700048 /* inferred */
+#define BEDROCK_XB_MP1_ERROR_TAIL_TIMEOUT_SHIFT      12 /* inferred */
+#define BEDROCK_XB_MP1_ERROR_TAIL_TIMEOUT_MASK       0x3ull
+#define BEDROCK_XB_MP1_ERROR_TAIL_TIMEOUT_INPLACE    (BEDROCK_XB_MP1_ERROR_TAIL_TIMEOUT_MASK << BEDROCK_XB_MP1_ERROR_TAIL_TIMEOUT_SHIFT)
+#define BEDROCK_XB_MP1_ERROR_UNDERFLOW_SHIFT         8 /* inferred */
+#define BEDROCK_XB_MP1_ERROR_UNDERFLOW_MASK          0x3ull
+#define BEDROCK_XB_MP1_ERROR_UNDERFLOW_INPLACE       (BEDROCK_XB_MP1_ERROR_UNDERFLOW_MASK << BEDROCK_XB_MP1_ERROR_UNDERFLOW_SHIFT)
+#define BEDROCK_XB_MP1_ERROR_OVERFLOW_SHIFT          4 /* inferred */
+#define BEDROCK_XB_MP1_ERROR_OVERFLOW_MASK           0x3ull
+#define BEDROCK_XB_MP1_ERROR_OVERFLOW_INPLACE        (BEDROCK_XB_MP1_ERROR_OVERFLOW_MASK << BEDROCK_XB_MP1_ERROR_OVERFLOW_SHIFT)
 
 /*
  * Error record for the memory output queue that carries miscellaneous traffic to LB, NI and II. The header gives no field layout for it.

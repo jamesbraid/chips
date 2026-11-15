@@ -373,6 +373,42 @@
   },
   {
    "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_poq1_error.tail_timeout",
+   "hi": 13,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_poq1_error.underflow",
+   "hi": 9,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_poq1_error.overflow",
+   "hi": 5,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_poq1_error.invalid_xsel",
+   "hi": 1,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_poq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
    "kind": "register",
    "name": "xb_piq1_error",
    "offset": 7340088,
@@ -384,6 +420,24 @@
    "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_piq1_error.deadlock_timeout",
+   "hi": 5,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_piq1_error.overflow",
+   "hi": 1,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_piq0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
   },
   {
    "unit": "bedrock_xb",
@@ -439,6 +493,33 @@
    "reset": 0,
    "grade": "inferred",
    "from": "Linux 2.5.40 public SN1 crossbar register headers: register names, offsets and field layouts, first-error source codes, XBP_RESET_DEFAULTS and XBP_ACTIVE_DEFAULTS"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_mp1_error.tail_timeout",
+   "hi": 13,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_mp1_error.underflow",
+   "hi": 9,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
+  },
+  {
+   "unit": "bedrock_xb",
+   "kind": "field",
+   "name": "xb_mp1_error.overflow",
+   "hi": 5,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "Linux 2.5.40 SN1 register headers: xb_mp0_error structure, applied to the matching second-instance register by name (the header gives no structure of its own)"
   },
   {
    "unit": "bedrock_xb",
