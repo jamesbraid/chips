@@ -1,0 +1,377 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/uv1/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="uv1" prefix="UV1" title="UV1 (UV 1000 generation) hub MMR map" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header">
+  <doc>Offsets are relative to the hub local MMR window (or the pnode-indexed global window). Offsets, field positions and access letters are definitions in SGI-written Linux platform code. Field positions are the header bitfield structs read least-significant first; reserved and undefined bits are omitted. Role text is a paraphrase of how the kernel uses the register and is inferred. Reset values are unknown: the header states none.</doc>
+  <struct name="NODE_ID" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x0" access="rw" reset="unknown">
+    <doc>Header name UVH_NODE_ID. Hub identity: part number, revision, manufacturer and the node id the hub was given. Software reads it at offset 0 to tell the hub generation.</doc>
+    <field name="ni_port" start="56" size="4" type="uint" grade="established"/>
+    <field name="nodes_per_bit" start="48" size="7" type="uint" grade="established"/>
+    <field name="node_id" start="32" size="15" type="uint" grade="established"/>
+    <field name="revision" start="28" size="4" type="uint" grade="established"/>
+    <field name="part_number" start="12" size="16" type="uint" grade="established"/>
+    <field name="manufacturer" start="1" size="11" type="uint" grade="established"/>
+    <field name="force1" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="NODE_PRESENT_TABLE" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1400" access="rw" count="16" stride="8" reset="unknown">
+    <doc>Header name UVH_NODE_PRESENT_TABLE.</doc>
+    <field name="nodes" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_CMPB" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x22080" access="rw" reset="unknown">
+    <doc>Header name UVH_INT_CMPB. RTC comparator B: the timer interrupt fires when the clock reaches this value.</doc>
+    <field name="real_time_cmpb" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_CMPC" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x22100" access="rw" reset="unknown">
+    <doc>Header name UVH_INT_CMPC.</doc>
+    <field name="real_time_cmpc" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_CMPD" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x22180" access="rw" reset="unknown">
+    <doc>Header name UVH_INT_CMPD.</doc>
+    <field name="real_time_cmpd" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="IPI_INT" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x60500" access="rw" reset="unknown">
+    <doc>Header name UVH_IPI_INT. Send an inter-processor interrupt: the sender writes the target apic id, vector and a send bit in the target hub global MMR window.</doc>
+    <field name="send" start="63" size="1" type="uint" grade="established"/>
+    <field name="apic_id" start="16" size="32" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="delivery_mode" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="EXTIO_INT0_BROADCAST" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61448" access="rw" reset="unknown">
+    <doc>Header name UVH_EXTIO_INT0_BROADCAST.</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC1_INT_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x615c0" access="rw" reset="unknown">
+    <doc>Header name UVH_RTC1_INT_CONFIG. Delivery configuration (vector, apic id) for the RTC comparator interrupt.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="BAU_DATA_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61680" access="rw" reset="unknown">
+    <doc>Header name UVH_BAU_DATA_CONFIG. Where the hub sends a broadcast assist unit message interrupt: vector, delivery mode and apic id.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="BAU_DATA_BROADCAST" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61688" access="rw" reset="unknown">
+    <doc>Header name UVH_BAU_DATA_BROADCAST. Enable broadcast of BAU message interrupts to both sockets of the hub (UV2 and later).</doc>
+    <field name="enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR0_TLB_INT0_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61b00" access="rw" reset="unknown">
+    <doc>Header name UVH_GR0_TLB_INT0_CONFIG.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR0_TLB_INT1_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61b40" access="rw" reset="unknown">
+    <doc>Header name UVH_GR0_TLB_INT1_CONFIG.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR1_TLB_INT0_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61f00" access="rw" reset="unknown">
+    <doc>Header name UVH_GR1_TLB_INT0_CONFIG.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR1_TLB_INT1_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x61f40" access="rw" reset="unknown">
+    <doc>Header name UVH_GR1_TLB_INT1_CONFIG.</doc>
+    <field name="apic_id" start="32" size="32" type="uint" grade="established"/>
+    <field name="m" start="16" size="1" type="uint" grade="established"/>
+    <field name="t" start="15" size="1" type="uint" grade="established"/>
+    <field name="p" start="13" size="1" type="uint" grade="established"/>
+    <field name="status" start="12" size="1" type="uint" grade="established"/>
+    <field name="destmode" start="11" size="1" type="uint" grade="established"/>
+    <field name="dm" start="8" size="3" type="uint" grade="established"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="EVENT_OCCURRED0" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x70000" access="rw" reset="unknown">
+    <doc>Header name UVH_EVENT_OCCURRED0. Pending hub events (error and interrupt summary bits). The ALIAS register at +8 clears bits when written.</doc>
+    <field name="power_management_req" start="56" size="1" type="uint" grade="established"/>
+    <field name="bau_data" start="55" size="1" type="uint" grade="established"/>
+    <field name="rtc3" start="54" size="1" type="uint" grade="established"/>
+    <field name="rtc2" start="53" size="1" type="uint" grade="established"/>
+    <field name="rtc1" start="52" size="1" type="uint" grade="established"/>
+    <field name="rtc0" start="51" size="1" type="uint" grade="established"/>
+    <field name="profile_int" start="50" size="1" type="uint" grade="established"/>
+    <field name="extio_int3" start="49" size="1" type="uint" grade="established"/>
+    <field name="extio_int2" start="48" size="1" type="uint" grade="established"/>
+    <field name="extio_int1" start="47" size="1" type="uint" grade="established"/>
+    <field name="extio_int0" start="46" size="1" type="uint" grade="established"/>
+    <field name="ipi_int" start="45" size="1" type="uint" grade="established"/>
+    <field name="la_seq_trigger" start="44" size="1" type="uint" grade="established"/>
+    <field name="ltc_int" start="43" size="1" type="uint" grade="established"/>
+    <field name="l1_to_asic" start="42" size="1" type="uint" grade="established"/>
+    <field name="asic_to_l1" start="41" size="1" type="uint" grade="established"/>
+    <field name="stop_clock" start="40" size="1" type="uint" grade="established"/>
+    <field name="l1_nmi_int" start="39" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_15" start="38" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_14" start="37" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_13" start="36" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_12" start="35" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_11" start="34" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_10" start="33" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_9" start="32" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_8" start="31" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_7" start="30" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_6" start="29" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_5" start="28" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_4" start="27" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_3" start="26" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_2" start="25" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_1" start="24" size="1" type="uint" grade="established"/>
+    <field name="lb_irq_int_0" start="23" size="1" type="uint" grade="established"/>
+    <field name="system_shutdown_int" start="22" size="1" type="uint" grade="established"/>
+    <field name="rh_vpi_int" start="21" size="1" type="uint" grade="established"/>
+    <field name="si_aoerr1" start="20" size="1" type="uint" grade="established"/>
+    <field name="xn_aoerr1" start="19" size="1" type="uint" grade="established"/>
+    <field name="rh_aoerr1" start="18" size="1" type="uint" grade="established"/>
+    <field name="lh_aoerr1" start="17" size="1" type="uint" grade="established"/>
+    <field name="gr1_aoerr1" start="16" size="1" type="uint" grade="established"/>
+    <field name="gr0_aoerr1" start="15" size="1" type="uint" grade="established"/>
+    <field name="lb_aoerr1" start="14" size="1" type="uint" grade="established"/>
+    <field name="si_aoerr0" start="13" size="1" type="uint" grade="established"/>
+    <field name="xn_aoerr0" start="12" size="1" type="uint" grade="established"/>
+    <field name="rh_aoerr0" start="11" size="1" type="uint" grade="established"/>
+    <field name="lh_aoerr0" start="10" size="1" type="uint" grade="established"/>
+    <field name="gr1_aoerr0" start="9" size="1" type="uint" grade="established"/>
+    <field name="gr0_aoerr0" start="8" size="1" type="uint" grade="established"/>
+    <field name="lb_aoerr0" start="7" size="1" type="uint" grade="established"/>
+    <field name="si_hcerr" start="6" size="1" type="uint" grade="established"/>
+    <field name="xn_hcerr" start="5" size="1" type="uint" grade="established"/>
+    <field name="rh_hcerr" start="4" size="1" type="uint" grade="established"/>
+    <field name="lh_hcerr" start="3" size="1" type="uint" grade="established"/>
+    <field name="gr1_hcerr" start="2" size="1" type="uint" grade="established"/>
+    <field name="gr0_hcerr" start="1" size="1" type="uint" grade="established"/>
+    <field name="lb_hcerr" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="EVENT_OCCURRED0_ALIAS" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x70008" access="rw" reset="unknown">
+    <doc>Header name UVH_EVENT_OCCURRED0_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it.</doc>
+  </struct>
+  <struct name="SCRATCH5" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x2d0200" access="rw" reset="unknown">
+    <doc>Header name UVH_SCRATCH5. Scratch register firmware and kernel share: carries the TSC sync state and the NMI request bit.</doc>
+    <field name="scratch5" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="SCRATCH5_ALIAS" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x2d0208" access="rw" reset="unknown">
+    <doc>Header name UVH_SCRATCH5_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it.</doc>
+  </struct>
+  <struct name="SCRATCH5_ALIAS_2" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x2d0210" access="rw" reset="unknown">
+    <doc>Header name UVH_SCRATCH5_ALIAS_2. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it.</doc>
+  </struct>
+  <struct name="LB_BAU_SB_DESCRIPTOR_BASE" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320010" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_SB_DESCRIPTOR_BASE. Base of the 64 sets of selective-broadcast descriptors in memory: page address and the home node id.</doc>
+    <field name="node_id" start="49" size="14" type="uint" grade="established"/>
+    <field name="page_address" start="12" size="31" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_SB_ACTIVATION_CONTROL" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320020" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_SB_ACTIVATION_CONTROL. Start a broadcast: a push bit plus the index of the descriptor set.</doc>
+    <field name="init" start="63" size="1" type="uint" grade="established"/>
+    <field name="push" start="62" size="1" type="uint" grade="established"/>
+    <field name="index" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_SB_ACTIVATION_STATUS_0" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320030" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_SB_ACTIVATION_STATUS_0.</doc>
+    <field name="status" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_SB_ACTIVATION_STATUS_1" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320040" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_SB_ACTIVATION_STATUS_1.</doc>
+    <field name="status" start="0" size="64" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_INTD_PAYLOAD_QUEUE_FIRST" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320050" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_FIRST.</doc>
+    <field name="node_id" start="49" size="14" type="uint" grade="established"/>
+    <field name="address" start="4" size="39" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_INTD_PAYLOAD_QUEUE_LAST" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320060" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_LAST.</doc>
+    <field name="address" start="4" size="39" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_INTD_PAYLOAD_QUEUE_TAIL" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320070" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_TAIL.</doc>
+    <field name="address" start="4" size="39" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320080" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE.</doc>
+    <field name="timeout_7" start="15" size="1" type="uint" grade="established"/>
+    <field name="timeout_6" start="14" size="1" type="uint" grade="established"/>
+    <field name="timeout_5" start="13" size="1" type="uint" grade="established"/>
+    <field name="timeout_4" start="12" size="1" type="uint" grade="established"/>
+    <field name="timeout_3" start="11" size="1" type="uint" grade="established"/>
+    <field name="timeout_2" start="10" size="1" type="uint" grade="established"/>
+    <field name="timeout_1" start="9" size="1" type="uint" grade="established"/>
+    <field name="timeout_0" start="8" size="1" type="uint" grade="established"/>
+    <field name="pending_7" start="7" size="1" type="uint" grade="established"/>
+    <field name="pending_6" start="6" size="1" type="uint" grade="established"/>
+    <field name="pending_5" start="5" size="1" type="uint" grade="established"/>
+    <field name="pending_4" start="4" size="1" type="uint" grade="established"/>
+    <field name="pending_3" start="3" size="1" type="uint" grade="established"/>
+    <field name="pending_2" start="2" size="1" type="uint" grade="established"/>
+    <field name="pending_1" start="1" size="1" type="uint" grade="established"/>
+    <field name="pending_0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE_ALIAS" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320088" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it.</doc>
+  </struct>
+  <struct name="LB_TARGET_PHYSICAL_APIC_ID_MASK" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320130" access="rw" reset="unknown">
+    <doc>Header name UV1H_LB_TARGET_PHYSICAL_APIC_ID_MASK.</doc>
+    <field name="bit_enables" start="0" size="32" type="uint" grade="established"/>
+  </struct>
+  <struct name="LB_BAU_MISC_CONTROL" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x320170" access="rw" reset="unknown">
+    <doc>Header name UVH_LB_BAU_MISC_CONTROL. BAU mode control: software acknowledge mode, acknowledge timeout period and per-generation workarounds.</doc>
+    <field name="fun" start="48" size="16" type="uint" grade="established"/>
+    <field name="enable_programmed_initial_priority" start="28" size="1" type="uint" grade="established"/>
+    <field name="use_incoming_priority" start="27" size="1" type="uint" grade="established"/>
+    <field name="programmed_initial_priority" start="24" size="3" type="uint" grade="established"/>
+    <field name="suppress_dest_registration" start="23" size="1" type="uint" grade="established"/>
+    <field name="vga_io_port_16_bit_decode" start="22" size="1" type="uint" grade="established"/>
+    <field name="vga_io_port_decode_enable" start="21" size="1" type="uint" grade="established"/>
+    <field name="enable_dual_mapping_mode" start="20" size="1" type="uint" grade="established"/>
+    <field name="intd_soft_ack_timeout_period" start="16" size="4" type="uint" grade="established"/>
+    <field name="enable_intd_soft_ack_mode" start="15" size="1" type="uint" grade="established"/>
+    <field name="descriptor_fetch_mode" start="14" size="1" type="uint" grade="established"/>
+    <field name="qpi_agent_presence_vector" start="11" size="3" type="uint" grade="established"/>
+    <field name="force_lock_nop" start="10" size="1" type="uint" grade="established"/>
+    <field name="force_broadcast" start="9" size="1" type="uint" grade="established"/>
+    <field name="apic_mode" start="8" size="1" type="uint" grade="established"/>
+    <field name="rejection_delay" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="RTC" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x340000" access="rw" reset="unknown">
+    <doc>Header name UVH_RTC. Real-time clock counter, replicated across the cache lines of its page from UV2 on so sockets can read it in parallel.</doc>
+    <field name="real_time_clock" start="0" size="56" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR0_TLB_MMR_CONTROL" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x401080" access="rw" reset="unknown">
+    <doc>Header name UVH_GR0_TLB_MMR_CONTROL.</doc>
+    <field name="mmr_inj_tlblruv" start="60" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbrreg" start="56" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbpgsize" start="54" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbram" start="52" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_con" start="48" size="1" type="uint" grade="established"/>
+    <field name="mmr_read" start="31" size="1" type="uint" grade="established"/>
+    <field name="mmr_write" start="30" size="1" type="uint" grade="established"/>
+    <field name="mmr_hash_index_en" start="20" size="1" type="uint" grade="established"/>
+    <field name="auto_valid_en" start="16" size="1" type="uint" grade="established"/>
+    <field name="mem_sel" start="12" size="2" type="uint" grade="established"/>
+    <field name="index" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR0_TLB_MMR_READ_DATA_HI" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x4010a0" access="r" reset="unknown">
+    <doc>Header name UVH_GR0_TLB_MMR_READ_DATA_HI.</doc>
+    <field name="larger" start="44" size="1" type="uint" grade="established"/>
+    <field name="dirty" start="43" size="1" type="uint" grade="established"/>
+    <field name="gaa" start="41" size="2" type="uint" grade="established"/>
+    <field name="pfn" start="0" size="41" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR0_TLB_MMR_READ_DATA_LO" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x4010a8" access="r" reset="unknown">
+    <doc>Header name UVH_GR0_TLB_MMR_READ_DATA_LO.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="asid" start="39" size="24" type="uint" grade="established"/>
+    <field name="vpn" start="0" size="39" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR1_TLB_MMR_CONTROL" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x801080" access="rw" reset="unknown">
+    <doc>Header name UVH_GR1_TLB_MMR_CONTROL.</doc>
+    <field name="mmr_inj_tlblruv" start="60" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbrreg" start="56" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbpgsize" start="54" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_tlbram" start="52" size="1" type="uint" grade="established"/>
+    <field name="mmr_inj_con" start="48" size="1" type="uint" grade="established"/>
+    <field name="mmr_read" start="31" size="1" type="uint" grade="established"/>
+    <field name="mmr_write" start="30" size="1" type="uint" grade="established"/>
+    <field name="mmr_hash_index_en" start="20" size="1" type="uint" grade="established"/>
+    <field name="auto_valid_en" start="16" size="1" type="uint" grade="established"/>
+    <field name="mem_sel" start="12" size="2" type="uint" grade="established"/>
+    <field name="index" start="0" size="12" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR1_TLB_MMR_READ_DATA_HI" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x8010a0" access="r" reset="unknown">
+    <doc>Header name UVH_GR1_TLB_MMR_READ_DATA_HI.</doc>
+    <field name="larger" start="44" size="1" type="uint" grade="established"/>
+    <field name="dirty" start="43" size="1" type="uint" grade="established"/>
+    <field name="gaa" start="41" size="2" type="uint" grade="established"/>
+    <field name="pfn" start="0" size="41" type="uint" grade="established"/>
+  </struct>
+  <struct name="GR1_TLB_MMR_READ_DATA_LO" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x8010a8" access="r" reset="unknown">
+    <doc>Header name UVH_GR1_TLB_MMR_READ_DATA_LO.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established"/>
+    <field name="asid" start="39" size="24" type="uint" grade="established"/>
+    <field name="vpn" start="0" size="39" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ADDR_MAP_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1600000" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ADDR_MAP_CONFIG. Address map shape: number of node-offset (m) and node-number (n) bits.</doc>
+    <field name="mmiol_cfg" start="12" size="1" type="uint" grade="established"/>
+    <field name="n_skt" start="6" size="4" type="uint" grade="established"/>
+    <field name="m_skt" start="0" size="6" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_GRU_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1600010" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_GRU_OVERLAY_CONFIG. Base and enable of the GRU window.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="n_gru" start="52" size="4" type="uint" grade="established"/>
+    <field name="gr4" start="48" size="1" type="uint" grade="established"/>
+    <field name="base" start="28" size="18" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_MMR_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1600028" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_MMR_OVERLAY_CONFIG. Base and enable of the global MMR window.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="dual_hub" start="46" size="1" type="uint" grade="established"/>
+    <field name="base" start="26" size="20" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_MMIOH_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x1600030" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_MMIOH_OVERLAY_CONFIG.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="n_io" start="52" size="4" type="uint" grade="established"/>
+    <field name="m_io" start="46" size="6" type="uint" grade="established"/>
+    <field name="base" start="30" size="16" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_0_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000c8" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_0_OVERLAY_CONFIG.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="m_alias" start="48" size="5" type="uint" grade="established"/>
+    <field name="base" start="24" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_0_REDIRECT_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000d0" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_0_REDIRECT_CONFIG.</doc>
+    <field name="dest_base" start="24" size="22" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_1_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000d8" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_1_OVERLAY_CONFIG.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="m_alias" start="48" size="5" type="uint" grade="established"/>
+    <field name="base" start="24" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_1_REDIRECT_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000e0" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_1_REDIRECT_CONFIG.</doc>
+    <field name="dest_base" start="24" size="22" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_2_OVERLAY_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000e8" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_2_OVERLAY_CONFIG.</doc>
+    <field name="enable" start="63" size="1" type="uint" grade="established"/>
+    <field name="m_alias" start="48" size="5" type="uint" grade="established"/>
+    <field name="base" start="24" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="RH_GAM_ALIAS_2_REDIRECT_CONFIG" size="8" grade="established" from="Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header" register="yes" offset="0x16000f0" access="rw" reset="unknown">
+    <doc>Header name UVH_RH_GAM_ALIAS_2_REDIRECT_CONFIG.</doc>
+    <field name="dest_base" start="24" size="22" type="uint" grade="established"/>
+  </struct>
+</genxml>

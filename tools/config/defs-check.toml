@@ -303,3 +303,23 @@ profiles = ["c-clean"]
 
 [allowlists]
 leak = "tools/config/defs-leak-allow.txt"
+
+[units.uv1]
+group = "uv1.h"
+prose_offsets = false
+
+[units.uv2]
+group = "uv2.h"
+prose_offsets = false
+
+[units.uv3]
+group = "uv3.h"
+prose_offsets = false
+
+[units.uv4]
+group = "uv4.h"
+prose_offsets = false
+
+[units.uv5]
+group = "uv5.h"
+prose_offsets = false

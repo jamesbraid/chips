@@ -1,0 +1,2744 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/uv1/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "node_id",
+   "offset": 0,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.ni_port",
+   "hi": 59,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.nodes_per_bit",
+   "hi": 54,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.node_id",
+   "hi": 46,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.revision",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.part_number",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.manufacturer",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_id.force1",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "node_present_table",
+   "offset": 5120,
+   "access": "rw",
+   "width": 64,
+   "count": 16,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "node_present_table.nodes",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "int_cmpb",
+   "offset": 139392,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "int_cmpb.real_time_cmpb",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "int_cmpc",
+   "offset": 139520,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "int_cmpc.real_time_cmpc",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "int_cmpd",
+   "offset": 139648,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "int_cmpd.real_time_cmpd",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "ipi_int",
+   "offset": 394496,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "ipi_int.send",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "ipi_int.apic_id",
+   "hi": 47,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "ipi_int.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "ipi_int.delivery_mode",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "ipi_int.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "extio_int0_broadcast",
+   "offset": 398408,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "extio_int0_broadcast.enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rtc1_int_config",
+   "offset": 398784,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc1_int_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "bau_data_config",
+   "offset": 398976,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "bau_data_broadcast",
+   "offset": 398984,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "bau_data_broadcast.enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr0_tlb_int0_config",
+   "offset": 400128,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int0_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr0_tlb_int1_config",
+   "offset": 400192,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_int1_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr1_tlb_int0_config",
+   "offset": 401152,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int0_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr1_tlb_int1_config",
+   "offset": 401216,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.apic_id",
+   "hi": 63,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.m",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.t",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.p",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.status",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.destmode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.dm",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_int1_config.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "event_occurred0",
+   "offset": 458752,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.power_management_req",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.bau_data",
+   "hi": 55,
+   "lo": 55,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rtc3",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rtc2",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rtc1",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rtc0",
+   "hi": 51,
+   "lo": 51,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.profile_int",
+   "hi": 50,
+   "lo": 50,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.extio_int3",
+   "hi": 49,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.extio_int2",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.extio_int1",
+   "hi": 47,
+   "lo": 47,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.extio_int0",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.ipi_int",
+   "hi": 45,
+   "lo": 45,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.la_seq_trigger",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.ltc_int",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.l1_to_asic",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.asic_to_l1",
+   "hi": 41,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.stop_clock",
+   "hi": 40,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.l1_nmi_int",
+   "hi": 39,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_15",
+   "hi": 38,
+   "lo": 38,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_14",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_13",
+   "hi": 36,
+   "lo": 36,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_12",
+   "hi": 35,
+   "lo": 35,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_11",
+   "hi": 34,
+   "lo": 34,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_10",
+   "hi": 33,
+   "lo": 33,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_9",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_8",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_7",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_6",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_5",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_4",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_3",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_2",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_1",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_irq_int_0",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.system_shutdown_int",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rh_vpi_int",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.si_aoerr1",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.xn_aoerr1",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rh_aoerr1",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lh_aoerr1",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr1_aoerr1",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr0_aoerr1",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_aoerr1",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.si_aoerr0",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.xn_aoerr0",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rh_aoerr0",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lh_aoerr0",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr1_aoerr0",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr0_aoerr0",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_aoerr0",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.si_hcerr",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.xn_hcerr",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.rh_hcerr",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lh_hcerr",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr1_hcerr",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.gr0_hcerr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "event_occurred0.lb_hcerr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "event_occurred0_alias",
+   "offset": 458760,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "scratch5",
+   "offset": 2949632,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "scratch5.scratch5",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "scratch5_alias",
+   "offset": 2949640,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "scratch5_alias_2",
+   "offset": 2949648,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_sb_descriptor_base",
+   "offset": 3276816,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_descriptor_base.node_id",
+   "hi": 62,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_descriptor_base.page_address",
+   "hi": 42,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_sb_activation_control",
+   "offset": 3276832,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_activation_control.init",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_activation_control.push",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_activation_control.index",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_sb_activation_status_0",
+   "offset": 3276848,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_activation_status_0.status",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_sb_activation_status_1",
+   "offset": 3276864,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_sb_activation_status_1.status",
+   "hi": 63,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_intd_payload_queue_first",
+   "offset": 3276880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_payload_queue_first.node_id",
+   "hi": 62,
+   "lo": 49,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_payload_queue_first.address",
+   "hi": 42,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_intd_payload_queue_last",
+   "offset": 3276896,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_payload_queue_last.address",
+   "hi": 42,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_intd_payload_queue_tail",
+   "offset": 3276912,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_payload_queue_tail.address",
+   "hi": 42,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_intd_software_acknowledge",
+   "offset": 3276928,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_7",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_6",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_5",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_4",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_3",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_2",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_1",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.timeout_0",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_7",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_6",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_5",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_4",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_3",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_2",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_1",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_intd_software_acknowledge.pending_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_intd_software_acknowledge_alias",
+   "offset": 3276936,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_target_physical_apic_id_mask",
+   "offset": 3277104,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_target_physical_apic_id_mask.bit_enables",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "lb_bau_misc_control",
+   "offset": 3277168,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.fun",
+   "hi": 63,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.enable_programmed_initial_priority",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.use_incoming_priority",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.programmed_initial_priority",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.suppress_dest_registration",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.vga_io_port_16_bit_decode",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.vga_io_port_decode_enable",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.enable_dual_mapping_mode",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.intd_soft_ack_timeout_period",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.enable_intd_soft_ack_mode",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.descriptor_fetch_mode",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.qpi_agent_presence_vector",
+   "hi": 13,
+   "lo": 11,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.force_lock_nop",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.force_broadcast",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.apic_mode",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "lb_bau_misc_control.rejection_delay",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rtc",
+   "offset": 3407872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rtc.real_time_clock",
+   "hi": 55,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr0_tlb_mmr_control",
+   "offset": 4198528,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_inj_tlblruv",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_inj_tlbrreg",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_inj_tlbpgsize",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_inj_tlbram",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_inj_con",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_read",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_write",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mmr_hash_index_en",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.auto_valid_en",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.mem_sel",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_control.index",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr0_tlb_mmr_read_data_hi",
+   "offset": 4198560,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_hi.larger",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_hi.dirty",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_hi.gaa",
+   "hi": 42,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_hi.pfn",
+   "hi": 40,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr0_tlb_mmr_read_data_lo",
+   "offset": 4198568,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_lo.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_lo.asid",
+   "hi": 62,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr0_tlb_mmr_read_data_lo.vpn",
+   "hi": 38,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr1_tlb_mmr_control",
+   "offset": 8392832,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_inj_tlblruv",
+   "hi": 60,
+   "lo": 60,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_inj_tlbrreg",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_inj_tlbpgsize",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_inj_tlbram",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_inj_con",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_read",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_write",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mmr_hash_index_en",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.auto_valid_en",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.mem_sel",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_control.index",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr1_tlb_mmr_read_data_hi",
+   "offset": 8392864,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_hi.larger",
+   "hi": 44,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_hi.dirty",
+   "hi": 43,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_hi.gaa",
+   "hi": 42,
+   "lo": 41,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_hi.pfn",
+   "hi": 40,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "gr1_tlb_mmr_read_data_lo",
+   "offset": 8392872,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_lo.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_lo.asid",
+   "hi": 62,
+   "lo": 39,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "gr1_tlb_mmr_read_data_lo.vpn",
+   "hi": 38,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_addr_map_config",
+   "offset": 23068672,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_addr_map_config.mmiol_cfg",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_addr_map_config.n_skt",
+   "hi": 9,
+   "lo": 6,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_addr_map_config.m_skt",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_gru_overlay_config",
+   "offset": 23068688,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_gru_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_gru_overlay_config.n_gru",
+   "hi": 55,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_gru_overlay_config.gr4",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_gru_overlay_config.base",
+   "hi": 45,
+   "lo": 28,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_mmr_overlay_config",
+   "offset": 23068712,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmr_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmr_overlay_config.dual_hub",
+   "hi": 46,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmr_overlay_config.base",
+   "hi": 45,
+   "lo": 26,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_mmioh_overlay_config",
+   "offset": 23068720,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmioh_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmioh_overlay_config.n_io",
+   "hi": 55,
+   "lo": 52,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmioh_overlay_config.m_io",
+   "hi": 51,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_mmioh_overlay_config.base",
+   "hi": 45,
+   "lo": 30,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_0_overlay_config",
+   "offset": 23068872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_0_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_0_overlay_config.m_alias",
+   "hi": 52,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_0_overlay_config.base",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_0_redirect_config",
+   "offset": 23068880,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_0_redirect_config.dest_base",
+   "hi": 45,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_1_overlay_config",
+   "offset": 23068888,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_1_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_1_overlay_config.m_alias",
+   "hi": 52,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_1_overlay_config.base",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_1_redirect_config",
+   "offset": 23068896,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_1_redirect_config.dest_base",
+   "hi": 45,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_2_overlay_config",
+   "offset": 23068904,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_2_overlay_config.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_2_overlay_config.m_alias",
+   "hi": 52,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_2_overlay_config.base",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "register",
+   "name": "rh_gam_alias_2_redirect_config",
+   "offset": 23068912,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  },
+  {
+   "unit": "uv1",
+   "kind": "field",
+   "name": "rh_gam_alias_2_redirect_config.dest_base",
+   "hi": 45,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+  }
+ ]
+}

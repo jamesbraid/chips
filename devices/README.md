@@ -93,6 +93,11 @@
 | [tiocx/](tiocx/README.md) | TIOCX | Mode: no-spec. |
 | [tl16pir552/](tl16pir552/README.md) | TI TL16PIR552 parallel port (Fuel and Origin 200) | The TL16PIR552 is a dual UART and IEEE 1284 parallel-port controller with ECP and EPP support, with a 16-byte... |
 | [tsb12lv22/](tsb12lv22/README.md) | TI TSB12LV22 PCI-to-IEEE 1394 link controller | The TSB12LV22 is Texas Instruments' PCI-to-1394 link controller. |
+| [uv1/](uv1/README.md) | UV1 (UV 1000 generation) hub registers | Per-generation hub MMR map: part number 0x88a5. |
+| [uv2/](uv2/README.md) | UV2 (UV 2000 and 3000 generation) hub registers | Per-generation hub MMR map: part numbers 0x8eb8 and 0x1111. |
+| [uv3/](uv3/README.md) | UV3 (UV 300 generation) hub registers | Per-generation hub MMR map: part numbers 0x9578 and 0x4321. |
+| [uv4/](uv4/README.md) | UV4 (UV 400 generation, including UV4A) hub registers | Per-generation hub MMR map: part number 0x99a1. |
+| [uv5/](uv5/README.md) | UV5 (UV 500 generation) hub registers | Per-generation hub MMR map: part number 0xa171. |
 | [vice/](vice/README.md) | VICE | Mode: spec-backed (see references/documents/specs.md). |
 | [xbow/](xbow/README.md) | Xbow (Crossbow) | Mode: spec-backed (see references/documents/specs.md: Crossbow ASIC Specification, revision 12.0; its register map... |
 | [xframe/](xframe/README.md) | Neterion Xframe 10-Gigabit Ethernet controller | The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. |

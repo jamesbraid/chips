@@ -1,0 +1,614 @@
+unit = "uv1"
+prefix = "UV1"
+title = "UV1 (UV 1000 generation) hub MMR map"
+doc = "Offsets are relative to the hub local MMR window (or the pnode-indexed global window). Offsets, field positions and access letters are definitions in SGI-written Linux platform code. Field positions are the header bitfield structs read least-significant first; reserved and undefined bits are omitted. Role text is a paraphrase of how the kernel uses the register and is inferred. Reset values are unknown: the header states none."
+from = "Linux v5.4 SGI UV platform MMR header (GPL); UV5 rows from the v6.6 header"
+public_from = ["Linux v5.4 SGI UV platform", "Linux v6.6 SGI UV platform"]
+
+[c]
+offset_macro = "bare"
+
+[registers.node_id]
+offset = 0x0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_NODE_ID. Hub identity: part number, revision, manufacturer and the node id the hub was given. Software reads it at offset 0 to tell the hub generation."
+[registers.node_id.fields]
+force1 = { bits = [0, 0], grade = "established", doc = "Access RO in the header." }
+manufacturer = { bits = [11, 1], grade = "established", doc = "Access RO in the header." }
+part_number = { bits = [27, 12], grade = "established", doc = "Access RO in the header." }
+revision = { bits = [31, 28], grade = "established", doc = "Access RO in the header." }
+node_id = { bits = [46, 32], grade = "established", doc = "Access RW in the header." }
+nodes_per_bit = { bits = [54, 48], grade = "established", doc = "Access RW in the header." }
+ni_port = { bits = [59, 56], grade = "established", doc = "Access RO in the header." }
+
+[registers.node_present_table]
+offset = 0x1400
+access = "rw"
+width = 64
+grade = "established"
+count = 16
+stride = 8
+doc = "Header name UVH_NODE_PRESENT_TABLE."
+[registers.node_present_table.fields]
+nodes = { bits = [63, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.int_cmpb]
+offset = 0x22080
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_INT_CMPB. RTC comparator B: the timer interrupt fires when the clock reaches this value."
+[registers.int_cmpb.fields]
+real_time_cmpb = { bits = [55, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.int_cmpc]
+offset = 0x22100
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_INT_CMPC."
+[registers.int_cmpc.fields]
+real_time_cmpc = { bits = [55, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.int_cmpd]
+offset = 0x22180
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_INT_CMPD."
+[registers.int_cmpd.fields]
+real_time_cmpd = { bits = [55, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.ipi_int]
+offset = 0x60500
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_IPI_INT. Send an inter-processor interrupt: the sender writes the target apic id, vector and a send bit in the target hub global MMR window."
+[registers.ipi_int.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+delivery_mode = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [47, 16], grade = "established", doc = "Access RW in the header." }
+send = { bits = [63, 63], grade = "established", doc = "Access WP in the header." }
+
+[registers.extio_int0_broadcast]
+offset = 0x61448
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_EXTIO_INT0_BROADCAST."
+[registers.extio_int0_broadcast.fields]
+enable = { bits = [0, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.rtc1_int_config]
+offset = 0x615c0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RTC1_INT_CONFIG. Delivery configuration (vector, apic id) for the RTC comparator interrupt."
+[registers.rtc1_int_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.bau_data_config]
+offset = 0x61680
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_BAU_DATA_CONFIG. Where the hub sends a broadcast assist unit message interrupt: vector, delivery mode and apic id."
+[registers.bau_data_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.bau_data_broadcast]
+offset = 0x61688
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_BAU_DATA_BROADCAST. Enable broadcast of BAU message interrupts to both sockets of the hub (UV2 and later)."
+[registers.bau_data_broadcast.fields]
+enable = { bits = [0, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr0_tlb_int0_config]
+offset = 0x61b00
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR0_TLB_INT0_CONFIG."
+[registers.gr0_tlb_int0_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr0_tlb_int1_config]
+offset = 0x61b40
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR0_TLB_INT1_CONFIG."
+[registers.gr0_tlb_int1_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr1_tlb_int0_config]
+offset = 0x61f00
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR1_TLB_INT0_CONFIG."
+[registers.gr1_tlb_int0_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr1_tlb_int1_config]
+offset = 0x61f40
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR1_TLB_INT1_CONFIG."
+[registers.gr1_tlb_int1_config.fields]
+vector = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+dm = { bits = [10, 8], grade = "established", doc = "Access RW in the header." }
+destmode = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+status = { bits = [12, 12], grade = "established", doc = "Access RO in the header." }
+p = { bits = [13, 13], grade = "established", doc = "Access RO in the header." }
+t = { bits = [15, 15], grade = "established", doc = "Access RO in the header." }
+m = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+apic_id = { bits = [63, 32], grade = "established", doc = "Access RW in the header." }
+
+[registers.event_occurred0]
+offset = 0x70000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_EVENT_OCCURRED0. Pending hub events (error and interrupt summary bits). The ALIAS register at +8 clears bits when written."
+[registers.event_occurred0.fields]
+lb_hcerr = { bits = [0, 0], grade = "established", doc = "Access RW in the header." }
+gr0_hcerr = { bits = [1, 1], grade = "established", doc = "Access RW in the header." }
+gr1_hcerr = { bits = [2, 2], grade = "established", doc = "Access RW in the header." }
+lh_hcerr = { bits = [3, 3], grade = "established", doc = "Access RW in the header." }
+rh_hcerr = { bits = [4, 4], grade = "established", doc = "Access RW in the header." }
+xn_hcerr = { bits = [5, 5], grade = "established", doc = "Access RW in the header." }
+si_hcerr = { bits = [6, 6], grade = "established", doc = "Access RW in the header." }
+lb_aoerr0 = { bits = [7, 7], grade = "established", doc = "Access RW in the header." }
+gr0_aoerr0 = { bits = [8, 8], grade = "established", doc = "Access RW in the header." }
+gr1_aoerr0 = { bits = [9, 9], grade = "established", doc = "Access RW in the header." }
+lh_aoerr0 = { bits = [10, 10], grade = "established", doc = "Access RW in the header." }
+rh_aoerr0 = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+xn_aoerr0 = { bits = [12, 12], grade = "established", doc = "Access RW in the header." }
+si_aoerr0 = { bits = [13, 13], grade = "established", doc = "Access RW in the header." }
+lb_aoerr1 = { bits = [14, 14], grade = "established", doc = "Access RW in the header." }
+gr0_aoerr1 = { bits = [15, 15], grade = "established", doc = "Access RW in the header." }
+gr1_aoerr1 = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+lh_aoerr1 = { bits = [17, 17], grade = "established", doc = "Access RW in the header." }
+rh_aoerr1 = { bits = [18, 18], grade = "established", doc = "Access RW in the header." }
+xn_aoerr1 = { bits = [19, 19], grade = "established", doc = "Access RW in the header." }
+si_aoerr1 = { bits = [20, 20], grade = "established", doc = "Access RW in the header." }
+rh_vpi_int = { bits = [21, 21], grade = "established", doc = "Access RW in the header." }
+system_shutdown_int = { bits = [22, 22], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_0 = { bits = [23, 23], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_1 = { bits = [24, 24], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_2 = { bits = [25, 25], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_3 = { bits = [26, 26], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_4 = { bits = [27, 27], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_5 = { bits = [28, 28], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_6 = { bits = [29, 29], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_7 = { bits = [30, 30], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_8 = { bits = [31, 31], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_9 = { bits = [32, 32], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_10 = { bits = [33, 33], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_11 = { bits = [34, 34], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_12 = { bits = [35, 35], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_13 = { bits = [36, 36], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_14 = { bits = [37, 37], grade = "established", doc = "Access RW in the header." }
+lb_irq_int_15 = { bits = [38, 38], grade = "established", doc = "Access RW in the header." }
+l1_nmi_int = { bits = [39, 39], grade = "established", doc = "Access RW in the header." }
+stop_clock = { bits = [40, 40], grade = "established", doc = "Access RW in the header." }
+asic_to_l1 = { bits = [41, 41], grade = "established", doc = "Access RW in the header." }
+l1_to_asic = { bits = [42, 42], grade = "established", doc = "Access RW in the header." }
+ltc_int = { bits = [43, 43], grade = "established", doc = "Access RW in the header." }
+la_seq_trigger = { bits = [44, 44], grade = "established", doc = "Access RW in the header." }
+ipi_int = { bits = [45, 45], grade = "established", doc = "Access RW in the header." }
+extio_int0 = { bits = [46, 46], grade = "established", doc = "Access RW in the header." }
+extio_int1 = { bits = [47, 47], grade = "established", doc = "Access RW in the header." }
+extio_int2 = { bits = [48, 48], grade = "established", doc = "Access RW in the header." }
+extio_int3 = { bits = [49, 49], grade = "established", doc = "Access RW in the header." }
+profile_int = { bits = [50, 50], grade = "established", doc = "Access RW in the header." }
+rtc0 = { bits = [51, 51], grade = "established", doc = "Access RW in the header." }
+rtc1 = { bits = [52, 52], grade = "established", doc = "Access RW in the header." }
+rtc2 = { bits = [53, 53], grade = "established", doc = "Access RW in the header." }
+rtc3 = { bits = [54, 54], grade = "established", doc = "Access RW in the header." }
+bau_data = { bits = [55, 55], grade = "established", doc = "Access RW in the header." }
+power_management_req = { bits = [56, 56], grade = "established", doc = "Access RW in the header." }
+
+[registers.event_occurred0_alias]
+offset = 0x70008
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_EVENT_OCCURRED0_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it."
+
+[registers.scratch5]
+offset = 0x2d0200
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_SCRATCH5. Scratch register firmware and kernel share: carries the TSC sync state and the NMI request bit."
+[registers.scratch5.fields]
+scratch5 = { bits = [63, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.scratch5_alias]
+offset = 0x2d0208
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_SCRATCH5_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it."
+
+[registers.scratch5_alias_2]
+offset = 0x2d0210
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_SCRATCH5_ALIAS_2. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it."
+
+[registers.lb_bau_sb_descriptor_base]
+offset = 0x320010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_SB_DESCRIPTOR_BASE. Base of the 64 sets of selective-broadcast descriptors in memory: page address and the home node id."
+[registers.lb_bau_sb_descriptor_base.fields]
+page_address = { bits = [42, 12], grade = "established", doc = "Access RW in the header." }
+node_id = { bits = [62, 49], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_sb_activation_control]
+offset = 0x320020
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_SB_ACTIVATION_CONTROL. Start a broadcast: a push bit plus the index of the descriptor set."
+[registers.lb_bau_sb_activation_control.fields]
+index = { bits = [5, 0], grade = "established", doc = "Access RW in the header." }
+push = { bits = [62, 62], grade = "established", doc = "Access WP in the header." }
+init = { bits = [63, 63], grade = "established", doc = "Access WP in the header." }
+
+[registers.lb_bau_sb_activation_status_0]
+offset = 0x320030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_SB_ACTIVATION_STATUS_0."
+[registers.lb_bau_sb_activation_status_0.fields]
+status = { bits = [63, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_sb_activation_status_1]
+offset = 0x320040
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_SB_ACTIVATION_STATUS_1."
+[registers.lb_bau_sb_activation_status_1.fields]
+status = { bits = [63, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_intd_payload_queue_first]
+offset = 0x320050
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_FIRST."
+[registers.lb_bau_intd_payload_queue_first.fields]
+address = { bits = [42, 4], grade = "established", doc = "Access RW in the header." }
+node_id = { bits = [62, 49], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_intd_payload_queue_last]
+offset = 0x320060
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_LAST."
+[registers.lb_bau_intd_payload_queue_last.fields]
+address = { bits = [42, 4], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_intd_payload_queue_tail]
+offset = 0x320070
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_INTD_PAYLOAD_QUEUE_TAIL."
+[registers.lb_bau_intd_payload_queue_tail.fields]
+address = { bits = [42, 4], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_intd_software_acknowledge]
+offset = 0x320080
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE."
+[registers.lb_bau_intd_software_acknowledge.fields]
+pending_0 = { bits = [0, 0], grade = "established", doc = "Access RW in the header." }
+pending_1 = { bits = [1, 1], grade = "established", doc = "Access RW in the header." }
+pending_2 = { bits = [2, 2], grade = "established", doc = "Access RW in the header." }
+pending_3 = { bits = [3, 3], grade = "established", doc = "Access RW in the header." }
+pending_4 = { bits = [4, 4], grade = "established", doc = "Access RW in the header." }
+pending_5 = { bits = [5, 5], grade = "established", doc = "Access RW in the header." }
+pending_6 = { bits = [6, 6], grade = "established", doc = "Access RW in the header." }
+pending_7 = { bits = [7, 7], grade = "established", doc = "Access RW in the header." }
+timeout_0 = { bits = [8, 8], grade = "established", doc = "Access RW in the header." }
+timeout_1 = { bits = [9, 9], grade = "established", doc = "Access RW in the header." }
+timeout_2 = { bits = [10, 10], grade = "established", doc = "Access RW in the header." }
+timeout_3 = { bits = [11, 11], grade = "established", doc = "Access RW in the header." }
+timeout_4 = { bits = [12, 12], grade = "established", doc = "Access RW in the header." }
+timeout_5 = { bits = [13, 13], grade = "established", doc = "Access RW in the header." }
+timeout_6 = { bits = [14, 14], grade = "established", doc = "Access RW in the header." }
+timeout_7 = { bits = [15, 15], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_intd_software_acknowledge_alias]
+offset = 0x320088
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_INTD_SOFTWARE_ACKNOWLEDGE_ALIAS. Alias of the preceding register used by software to clear or acknowledge bits; the header defines no fields for it."
+
+[registers.lb_target_physical_apic_id_mask]
+offset = 0x320130
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UV1H_LB_TARGET_PHYSICAL_APIC_ID_MASK."
+[registers.lb_target_physical_apic_id_mask.fields]
+bit_enables = { bits = [31, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.lb_bau_misc_control]
+offset = 0x320170
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_LB_BAU_MISC_CONTROL. BAU mode control: software acknowledge mode, acknowledge timeout period and per-generation workarounds."
+[registers.lb_bau_misc_control.fields]
+rejection_delay = { bits = [7, 0], grade = "established", doc = "Access RW in the header." }
+apic_mode = { bits = [8, 8], grade = "established", doc = "Access RW in the header." }
+force_broadcast = { bits = [9, 9], grade = "established", doc = "Access RW in the header." }
+force_lock_nop = { bits = [10, 10], grade = "established", doc = "Access RW in the header." }
+qpi_agent_presence_vector = { bits = [13, 11], grade = "established", doc = "Access RW in the header." }
+descriptor_fetch_mode = { bits = [14, 14], grade = "established", doc = "Access RW in the header." }
+enable_intd_soft_ack_mode = { bits = [15, 15], grade = "established", doc = "Access RW in the header." }
+intd_soft_ack_timeout_period = { bits = [19, 16], grade = "established", doc = "Access RW in the header." }
+enable_dual_mapping_mode = { bits = [20, 20], grade = "established", doc = "Access RW in the header." }
+vga_io_port_decode_enable = { bits = [21, 21], grade = "established", doc = "Access RW in the header." }
+vga_io_port_16_bit_decode = { bits = [22, 22], grade = "established", doc = "Access RW in the header." }
+suppress_dest_registration = { bits = [23, 23], grade = "established", doc = "Access RW in the header." }
+programmed_initial_priority = { bits = [26, 24], grade = "established", doc = "Access RW in the header." }
+use_incoming_priority = { bits = [27, 27], grade = "established", doc = "Access RW in the header." }
+enable_programmed_initial_priority = { bits = [28, 28], grade = "established", doc = "Access RW in the header." }
+fun = { bits = [63, 48], grade = "established", doc = "Access RW in the header." }
+
+[registers.rtc]
+offset = 0x340000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RTC. Real-time clock counter, replicated across the cache lines of its page from UV2 on so sockets can read it in parallel."
+[registers.rtc.fields]
+real_time_clock = { bits = [55, 0], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr0_tlb_mmr_control]
+offset = 0x401080
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR0_TLB_MMR_CONTROL."
+[registers.gr0_tlb_mmr_control.fields]
+index = { bits = [11, 0], grade = "established", doc = "Access RW in the header." }
+mem_sel = { bits = [13, 12], grade = "established", doc = "Access RW in the header." }
+auto_valid_en = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+mmr_hash_index_en = { bits = [20, 20], grade = "established", doc = "Access RW in the header." }
+mmr_write = { bits = [30, 30], grade = "established", doc = "Access WP in the header." }
+mmr_read = { bits = [31, 31], grade = "established", doc = "Access WP in the header." }
+mmr_inj_con = { bits = [48, 48], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbram = { bits = [52, 52], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbpgsize = { bits = [54, 54], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbrreg = { bits = [56, 56], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlblruv = { bits = [60, 60], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr0_tlb_mmr_read_data_hi]
+offset = 0x4010a0
+access = "r"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR0_TLB_MMR_READ_DATA_HI."
+[registers.gr0_tlb_mmr_read_data_hi.fields]
+pfn = { bits = [40, 0], grade = "established", doc = "Access RO in the header." }
+gaa = { bits = [42, 41], grade = "established", doc = "Access RO in the header." }
+dirty = { bits = [43, 43], grade = "established", doc = "Access RO in the header." }
+larger = { bits = [44, 44], grade = "established", doc = "Access RO in the header." }
+
+[registers.gr0_tlb_mmr_read_data_lo]
+offset = 0x4010a8
+access = "r"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR0_TLB_MMR_READ_DATA_LO."
+[registers.gr0_tlb_mmr_read_data_lo.fields]
+vpn = { bits = [38, 0], grade = "established", doc = "Access RO in the header." }
+asid = { bits = [62, 39], grade = "established", doc = "Access RO in the header." }
+valid = { bits = [63, 63], grade = "established", doc = "Access RO in the header." }
+
+[registers.gr1_tlb_mmr_control]
+offset = 0x801080
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR1_TLB_MMR_CONTROL."
+[registers.gr1_tlb_mmr_control.fields]
+index = { bits = [11, 0], grade = "established", doc = "Access RW in the header." }
+mem_sel = { bits = [13, 12], grade = "established", doc = "Access RW in the header." }
+auto_valid_en = { bits = [16, 16], grade = "established", doc = "Access RW in the header." }
+mmr_hash_index_en = { bits = [20, 20], grade = "established", doc = "Access RW in the header." }
+mmr_write = { bits = [30, 30], grade = "established", doc = "Access WP in the header." }
+mmr_read = { bits = [31, 31], grade = "established", doc = "Access WP in the header." }
+mmr_inj_con = { bits = [48, 48], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbram = { bits = [52, 52], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbpgsize = { bits = [54, 54], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlbrreg = { bits = [56, 56], grade = "established", doc = "Access RW in the header." }
+mmr_inj_tlblruv = { bits = [60, 60], grade = "established", doc = "Access RW in the header." }
+
+[registers.gr1_tlb_mmr_read_data_hi]
+offset = 0x8010a0
+access = "r"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR1_TLB_MMR_READ_DATA_HI."
+[registers.gr1_tlb_mmr_read_data_hi.fields]
+pfn = { bits = [40, 0], grade = "established", doc = "Access RO in the header." }
+gaa = { bits = [42, 41], grade = "established", doc = "Access RO in the header." }
+dirty = { bits = [43, 43], grade = "established", doc = "Access RO in the header." }
+larger = { bits = [44, 44], grade = "established", doc = "Access RO in the header." }
+
+[registers.gr1_tlb_mmr_read_data_lo]
+offset = 0x8010a8
+access = "r"
+width = 64
+grade = "established"
+doc = "Header name UVH_GR1_TLB_MMR_READ_DATA_LO."
+[registers.gr1_tlb_mmr_read_data_lo.fields]
+vpn = { bits = [38, 0], grade = "established", doc = "Access RO in the header." }
+asid = { bits = [62, 39], grade = "established", doc = "Access RO in the header." }
+valid = { bits = [63, 63], grade = "established", doc = "Access RO in the header." }
+
+[registers.rh_gam_addr_map_config]
+offset = 0x1600000
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ADDR_MAP_CONFIG. Address map shape: number of node-offset (m) and node-number (n) bits."
+[registers.rh_gam_addr_map_config.fields]
+m_skt = { bits = [5, 0], grade = "established", doc = "Access RW in the header." }
+n_skt = { bits = [9, 6], grade = "established", doc = "Access RW in the header." }
+mmiol_cfg = { bits = [12, 12], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_gru_overlay_config]
+offset = 0x1600010
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_GRU_OVERLAY_CONFIG. Base and enable of the GRU window."
+[registers.rh_gam_gru_overlay_config.fields]
+base = { bits = [45, 28], grade = "established", doc = "Access RW in the header." }
+gr4 = { bits = [48, 48], grade = "established", doc = "Access RW in the header." }
+n_gru = { bits = [55, 52], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_mmr_overlay_config]
+offset = 0x1600028
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_MMR_OVERLAY_CONFIG. Base and enable of the global MMR window."
+[registers.rh_gam_mmr_overlay_config.fields]
+base = { bits = [45, 26], grade = "established", doc = "Access RW in the header." }
+dual_hub = { bits = [46, 46], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_mmioh_overlay_config]
+offset = 0x1600030
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_MMIOH_OVERLAY_CONFIG."
+[registers.rh_gam_mmioh_overlay_config.fields]
+base = { bits = [45, 30], grade = "established", doc = "Access RW in the header." }
+m_io = { bits = [51, 46], grade = "established", doc = "Access RW in the header." }
+n_io = { bits = [55, 52], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_0_overlay_config]
+offset = 0x16000c8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_0_OVERLAY_CONFIG."
+[registers.rh_gam_alias_0_overlay_config.fields]
+base = { bits = [31, 24], grade = "established", doc = "Access RW in the header." }
+m_alias = { bits = [52, 48], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_0_redirect_config]
+offset = 0x16000d0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_0_REDIRECT_CONFIG."
+[registers.rh_gam_alias_0_redirect_config.fields]
+dest_base = { bits = [45, 24], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_1_overlay_config]
+offset = 0x16000d8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_1_OVERLAY_CONFIG."
+[registers.rh_gam_alias_1_overlay_config.fields]
+base = { bits = [31, 24], grade = "established", doc = "Access RW in the header." }
+m_alias = { bits = [52, 48], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_1_redirect_config]
+offset = 0x16000e0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_1_REDIRECT_CONFIG."
+[registers.rh_gam_alias_1_redirect_config.fields]
+dest_base = { bits = [45, 24], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_2_overlay_config]
+offset = 0x16000e8
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_2_OVERLAY_CONFIG."
+[registers.rh_gam_alias_2_overlay_config.fields]
+base = { bits = [31, 24], grade = "established", doc = "Access RW in the header." }
+m_alias = { bits = [52, 48], grade = "established", doc = "Access RW in the header." }
+enable = { bits = [63, 63], grade = "established", doc = "Access RW in the header." }
+
+[registers.rh_gam_alias_2_redirect_config]
+offset = 0x16000f0
+access = "rw"
+width = 64
+grade = "established"
+doc = "Header name UVH_RH_GAM_ALIAS_2_REDIRECT_CONFIG."
+[registers.rh_gam_alias_2_redirect_config.fields]
+dest_base = { bits = [45, 24], grade = "established", doc = "Access RW in the header." }
