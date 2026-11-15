@@ -235,30 +235,39 @@ rust_file = "hub"
 
 [gen.export.units.bedrock]
 base = 0x0
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_windows]
 base = 0x0
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_extra]
 base = 0x0
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_pi]
 base = 0x0
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_ii]
 base = 0x400000
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_lb]
 base = 0x600000
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_md]
 base = 0x780000
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_ni]
 base = 0x680000
+rust_file = "bedrock"
 
 [gen.export.units.bedrock_xb]
 base = 0x700000
+rust_file = "bedrock"
 
 [allowlists]
 leak = "tools/config/defs-leak-allow.txt"
