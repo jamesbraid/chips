@@ -50,7 +50,7 @@ sibling image, or a path whose gating condition was not evaluated. *unknown*: no
   routine calls the node-die routine `0xffad2cb0` with progress code `0x8d` ("Critical system controller transaction failed").
   Every request below goes through this routine (`0xffa82c10` is `0xffa82a10` with the timeout), so the die call precedes whatever the
   request's own caller does with the `-24`. As read in the review below, the die routine shows `ERR 8d` on the display, then writes
-  the node reset request (`0x1_0001_0000_0000` to `0x1_2000_0000`) and, for the local node and the calling processor's own slice,
+  a write of `0x1_0001_0000_0000` to `0x1_2000_0000` (called the node reset request on this page; that it resets anything is not established, see "The park path's inputs") and, for the local node and the calling processor's own slice,
   does not return: it enters `0xffaeb7c0` (cache init, `rfi`, then an endless `PAL_HALT_LIGHT` loop at `0xffaeb8d0`). Read the review
   section "Silence" before relying on a model that withholds a reply. This applies to `0x100b` as well.
 - **Gating.** Most requests are made only by the node's master processor (`0xffa0ff30` returns 1 when no lower-numbered processor is
@@ -378,13 +378,13 @@ Independent review of chips commit `77d39fb` (this page), examined at `77d39fb`.
 Added 2026-11-15. Sources: the published logs listed here, and every SHub 1 image in the holdings, 29 builds from 3.32 to 5.04 (the
 header of each carries `SGI SAL Version X.YY relDATE`; the SAL number is the number the Linux kernel prints, so a log names a build).
 
-**What the published logs show (established as observations; no log reaches before EFI).**
+**What the published logs show (established as observations; no log reaches before EFI).** In a Linux boot line such as `SAL 3.2: SGI SN2 version 4.65`, 3.2 is the SAL specification revision and 4.65 is SGI's SN2 PROM build version. "SAL 4.xx" on this page always means that build version, never the specification revision.
 
 | Log | Machine | SAL printed | Build it names |
 |---|---|---|---|
-| irixnet forum thread 849, page 2 (two serial captures, posted 2019): `SAL 3.2: SGI SN2 version 4.65`, `SGI SAL version 4.65`, `ttySG0 ... SGI SN L1` | Prism | 4.65 | snprom 10.15 (SAL 4.65, built 2006-12-04) |
-| linux-ia64 list, 2007-08-01, SGI engineer, message `Pine.LNX.4.64.0707312246390.14878@schroedinger.engr.sgi.com`: `SAL 2.9: SGI SN2 version 4.80`, four logical nodes | SHub 1 test system | 4.80 | snprom 10.30 (SAL 4.80, built 2007-04-12) |
-| linux-ia64 list, 2005-11-18, messages `200511180316.jAI3G9g06785@unix-os.sc.intel.com` and `8110.1132286958@kao2.melbourne.sgi.com`: `SAL 2.9: SGI SN2 version 4.4` | Altix | 4.04 (the kernel prints the minor byte with `%x`, so `4.4` is minor `0x04`; 4.40 would print `4.40`) | snprom 4.04 (built 2004-12-03), held, not examined; inferred |
+| Library `boot-logs/irixnet-thread-849-page-2-prism-sal-465-boot.html` (irixnet forum thread 849, page 2; two serial captures, posted 2019): `SAL 3.2: SGI SN2 version 4.65`, `SGI SAL version 4.65`, `ttySG0 ... SGI SN L1` | Prism | 4.65 | snprom 10.15 (SAL 4.65, built 2006-12-04) |
+| Library `boot-logs/linux-ia64-list/`, linux-ia64 list, 2007-08-01, SGI engineer, message `Pine.LNX.4.64.0707312246390.14878@schroedinger.engr.sgi.com`: `SAL 2.9: SGI SN2 version 4.80`, four logical nodes | SHub 1 test system | 4.80 | snprom 10.30 (SAL 4.80, built 2007-04-12) |
+| Library `boot-logs/linux-ia64-list/`, linux-ia64 list, 2005-11-18, messages `200511180316.jAI3G9g06785@unix-os.sc.intel.com` and `8110.1132286958@kao2.melbourne.sgi.com`: `SAL 2.9: SGI SN2 version 4.4` | Altix | 4.04 (the kernel prints the minor byte with `%x`, so `4.4` is minor `0x04`; 4.40 would print `4.40`) | snprom 4.04 (built 2004-12-03), held, not examined; inferred |
 | owner's page, nsafran.com, Altix 350: SAL 4.56 (statement, not a capture) | Altix 350 | 4.56 | snprom 10.6 (SAL 4.56, built 2006-06-15); inferred |
 | linux-ia64 list 2008 (`20080422223049.GA8765@sgi.com`, `20080624143922.GK10123@sgi.com`): `SAL 3.2: SGI SN2 version 1.42` and `1.50` | Altix 4700 class | 1.42, 1.50 | SHub 2 series, not read here |
 
@@ -400,8 +400,10 @@ owner-site captures held, and the Altix and ProPack manuals were searched for th
 
 | SAL builds (snprom) | `0x100b` goes through | On a missing reply |
 |---|---|---|
-| 3.32, 4.20, 4.31, 4.32, 4.33, 4.43 (4.04 not examined) | the plain send-and-wait (in 4.43 `0xffa380c0`), which has no die call | returns `-24`; the caller drops it; boot continues after the 3 s wait. Read in Ghidra for 4.43; the other five by the absence of the `0x8d` setup in the routine |
+| 3.32, 4.20, 4.31, 4.32, 4.33, 4.43 (4.04 not examined) | the plain send-and-wait (in 4.43 `0xffa380c0`), which has no die call | returns `-24`; the caller drops it; boot continues after the 3 s wait. Read in Ghidra for 4.43 and 4.20 (next paragraph); 3.32, 4.31, 4.32 and 4.33 by the absence of the `0x8d` setup in the routine (4.31 to 4.33 are not in the image set held here, so they are unchecked in Ghidra) |
 | 4.55 (10.5) through 5.04 (10.54): all 23 builds | a send-and-wait that calls the die routine on `-24` (5.04 `0xffa82a10`; 4.80 `0xffa82670`; 4.65 `0xffa81cc0`; 4.56 `0xffa81080`) | `ERR 8d`, node reset request, halt loop (R: 4.56, 4.65, 4.80, 4.90, 5.04) |
+
+**Ghidra reading of 4.43 and 4.20 (established, 2026-11-15, whole-image decompile).** In 4.43 the `0x100b` routine is `0xffad0c70` (twin `0xffad0e70` for target `0x4ffff000`, called through `0xffad1070`); it builds the request with code `0x100b` and sends it through `0xffa380c0`. That routine retries a partial send up to 50 times, then calls the receive `0xffa37e00` with the timeout `3000000`, which returns `-24` on the deadline; neither contains a die call or the `0x8d` code, and `0xffad0c70` closes the slot and returns the `-24`. Its only caller, `0xffa89b50`, is a void function that drops the result. The 4.20 image has the same shape: routine `0xffac8f70` (code `0x100b`), wait `0xffa34970`, receive `0xffa346b0` (also `3000000`), caller `0xffa847c0` drops it. So in both builds a missing reply costs the 3 s and boot continues. SAL 4.33 is not among the images held here; it stays at the objdump absence reading.
 
 In 4.43 a retry wrapper (`0xffa329d0`, six callers) already ended in this die routine's counterpart (`0xffa58380` with `0x8d`); the
 version report (`0x100b`) was among the other call sites of the plain routine (20 call sites in all). Between SAL 4.43 (2005-12-02) and SAL 4.55
@@ -426,17 +428,16 @@ stages changes the outcome; the only state read is hardware:
 - the halt routine: marks the slice (`0xffa0eae0`), `rfi`, PAL cache init, then PAL halt in a loop.
 
 No master or slave flag, no scratch-word value and no per-slice record is read on this path. So the boot processor reaches the halt loop on any
-real first boot whose wait times out (established for the code). One caveat: the node reset request write could itself reset the node
-before the loop is reached. What that register write does on hardware was not read; if it resets the node, the failure looks like a boot
-loop with a 3 s period rather than a stop. Either way the boot does not continue.
+real first boot whose wait times out (established for the code). One caveat: the write to `0x1_2000_0000` could itself reset the node
+before the loop is reached, which would look like a boot loop with a 3 s period rather than a stop. Whether it does is **unknown**: the register is the unnamed `pi_reg_2000_0000` in [registers.md](../../../devices/shub/registers.md); the routine that sets the PROM's configuration bits in it (OR `0x3f1` or `0x3b03f7`, bracketed by bit 24 of `pi_reg_2001_0100`) shows it is a processor-interface control register, and the die write sets bits 48 and 32 instead. The Linux `shub_mmr.h` has no register at that address, and no SGI manual in the Library names it. The name `SH2_CRB_MESSAGE_CONTROL` on the SHub 2 page is not backed by a source the Library holds. Nothing read says the write resets the node; nothing excludes it. Either way the boot does not continue.
 
 **Conclusion (graded).**
 
 - Established (logs): SAL 4.65 and 4.80 PROMs booted real hardware to EFI while carrying the die-on-silence code for `0x100b`, with the same park path as 5.04; SAL 4.56 did the same on an Altix 350 by its owner's word (inferred). So a missing reply is not what happened on those machines: something completed the wait. Whether SAL 5.04 itself boots real hardware is not shown by any held log; it differs from 4.80 only in addresses and small changes, not in this path (inferred).
 - Established: no L1 frame source found in the ARM L1 1.44.0 and 1.62.1, and no ColdFire `0x100b` handler read (`brick-request-handlers.md` in the sysco repository), sends a frame that could do it on a cold start. The logs and the code therefore disagree for the L1 builds read; the L1 build on those machines is the missing piece.
-- Inferred: the L1 on those machines was 1.37.25 or newer. Every build from 4.33 to 5.04 contains the text "Check L1 firmware version. Must be at least 1.37.25" (printed when the PROM's I/O-port set-up fails; it is a requirement of that feature, not of `0x100b`). The ARM readings in sysco that reach that range are 1.38.4 and 1.40.5; neither was read for the `0x100b` handler body (the compare `[sp-680] == 0x100b` exists in 1.38.4 at `0x88680`; its target was not read).
+- Inferred: the L1 on those machines was 1.37.25 or newer. Every build from 4.33 to 5.04 contains the text "Check L1 firmware version. Must be at least 1.37.25" (printed when the PROM's I/O-port set-up fails; it is a requirement of that feature, not of `0x100b`). The ARM readings in sysco that reach that range are 1.38.4 (2005-06) and 1.40.5 (2005-12). Both `0x100b` handlers were read in Ghidra on 2026-11-15 and send no reply (sysco `arm-prom-version-request-1.38.4-1.40.5.md`; 1.38.4 handler `0x8abb0`, 1.40.5 handler `0x8b460`): established. Both predate SAL 4.55 (2006-06), and no L1 build between 1.40.5 and 1.44.0 is held.
 - Unknown: which L1 build an Altix 350 module carries. The 350 guide (007-4660-001) and the L1 and L2 guide (007-3938-005) print module prompts such as `001c01-L1>`, the L1 display text "L1 running", and L1 messages, and name no firmware version or processor. Both candidate families are in the 1.62.1 package (ColdFire `O`, ARM `F`).
-- Unknown: what ends the wait. Candidates not excluded: an L1 build before 1.44.0 that replies (the ARM 1.38.4 and 1.40.5 handlers, and ColdFire builds from 1.37.25 on, were not read); a ColdFire L1 whose event word starts at a value other than -1 (the ColdFire clear routine `0xffe3d4ec` stores -1 and then calls the NVRAM setter with `0x13`; the word at `0x30006d14` has two direct references in package 5 of the 6.5.30 container, the test and that store, and no direct store of a power-on value was found, so its initial value was not determined); a frame from another source on first power-up. A model should therefore keep the approximation above.
+- Unknown: what ends the wait. Candidates not excluded: an L1 build that replies and is not held (ARM 1.38.4, 1.40.5, 1.44.0, 1.60.3 and 1.62.1 do not; ColdFire builds from 1.37.25 on were not read); a ColdFire L1 whose event word starts at a value other than -1 (the ColdFire clear routine `0xffe3d4ec` stores -1 and then calls the NVRAM setter with `0x13`; the word at `0x30006d14` has two direct references in package 5 of the 6.5.30 container, the test and that store, and no direct store of a power-on value was found, so its initial value was not determined); a frame from another source on first power-up. A model should therefore keep the approximation above.
 
 **Findings not fixed (author to settle before these claims stand).**
 
