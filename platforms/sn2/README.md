@@ -23,7 +23,8 @@ lists each with what was read. Nothing here comes from IRIX: Altix and Prism ran
 | Silicon Graphics Prism | 007-4772-001 | deskside node board | not read | [prism-deskside.md](prism-deskside.md), [graphics](graphics-attachment.md) |
 
 The rackmount and scalable Prism guides (007-4701, 007-4774) and the Altix 450 body were only partly read; the
-machine pages say where. Brick pages for the CR-brick and the 350 modules are inside their machine pages for now.
+machine pages say where. What each brick and module contains is on [bricks.md](bricks.md), and how the PROM and Linux name and find them is on
+[brick-identity.md](brick-identity.md).
 The Altix 3000 IX- and PX-brick are on [the Origin 3000 brick pages](../bricks/ixbrick.md), which already cite the
 Altix guide.
 

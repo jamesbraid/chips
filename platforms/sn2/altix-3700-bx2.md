@@ -25,6 +25,8 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
 - IX-brick, PX-brick, R-brick and power bay chapters follow (contents, p.viii); the L1 and L2 emulator operation is
   Chapter 2.
 
+Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in [brick-identity.md](brick-identity.md).
+
 ## Notes
 
 - The "NL4 router ASIC" is named in the guide and is a separate part from the SHub; no document held gives its

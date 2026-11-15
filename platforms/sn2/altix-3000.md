@@ -25,6 +25,8 @@ README](README.md). Read: contents, pp.79 to 82 (models and architecture), pp.99
   chip named SHub there and "Super-Bedrock" in the user's guide. Inferred that SC-brick and C-brick are one brick (same
   node count, DIMM slots and ports).
 
+Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in [brick-identity.md](brick-identity.md).
+
 ## Chips
 
 | Chip | Grade and source |

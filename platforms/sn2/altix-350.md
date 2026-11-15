@@ -46,6 +46,9 @@ guide says the module "can serve as a standalone Altix 350 system" (p.96).
 | PCI/PCI-X slots | 4, three free after the base I/O card | 32 (-001); 64 (-002) | -001 p.71; -002 p.66 |
 | Processor clock | 1.0 GHz | 1.5 GHz | p.101 |
 
+The modules side by side are in [bricks.md](bricks.md); their identity in the hardware map is in
+[brick-identity.md](brick-identity.md).
+
 ## Node: IP57
 
 Each module has one **IP57** node board holding the SHub, one or two Itanium 2 sockets (CPU A and CPU B), twelve DIMM
