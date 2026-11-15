@@ -151,7 +151,7 @@ For each register: where the PROM sees it, the unit by address block, the Linux 
 | `0x81_1003_0000 + 0x80*(slice & 3)` | local, LB | unnamed; label `lb_slice_rec` (ours) | any 64-bit value; the low byte becomes a progress code | established (read); unknown (meaning) |
 | `0x81_1006_0480` | local, LB | `SH1_IPI_ACCESS` | accepts 1 | established |
 | `0x81_1006_0280` | local, LB | unnamed; label `rtc_ctl` (ours) | reads back the stored value (bits 13:4 give the tick period); written before its first read | established (use); inferred (bit roles) |
-| `0x81_101c_0000` | local, LB | `SH1_RTC` | accepts a write of 0, then a 55-bit counter that advances | established (access) |
+| `0x81_101c_0000` | local, LB | `SH1_RTC` | accepts a write of 0, then a 55-bit counter that advances. When `cpuid[2]` equals `0xaeeeeeee8badbeef` (the PROM's clock-time routine `0xffa0da70` and the runtime's `chipset_rtc_time` test it, apparently a simulator marker: inferred) each counter tick counts as 128 in the time calculation (shift left by 7 before scaling, re-read at `0xffa0dad6`); the review reports a different frequency path for that value in `salruntime_freq_base`, not re-read here | established (access); inferred (the marker's meaning) |
 | `0x87_fed0_0000` + `N*0x10000` (N = 0 to 3) | local junk bus | `SH1_REAL_JUNK_BUS_LED0` to `LED3` | 16-bit writes accepted; not read | established |
 | `0x9_2002_0080 + (nasid << 38)` | global, PI | unnamed; label `pi_slice_present` (ours) | bit `slice` clear for every slice but the running one; later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor), and the own-slice bit they expect was not traced, so a model should set it | established (access); inferred (meaning) |
 | `0x9_0000_0000 + (nasid << 38)` (offset `0x1_0000_0000`) | global, MD block by address | unnamed; label `chip_id_word` (ours) | bits 27:12 = `0x4363` (software expectation: selects the first method table; `0x3017`, `0x239` and `0x4422` select the others, any other value calls through a null table) and bits 31:28 the revision | established (access and requirement); inferred (meaning) |
@@ -268,3 +268,5 @@ Resolved after review: devices/shub: add the second firmware lock pair and the f
 Resolved after review: devices/shub: add the three bring-up registers the first batch missed
 
 Resolved after review: firmware/snprom: correct the reason-0 read of the per-slice word on the other pages
+
+Resolved after review: devices/shub: note the cpuid[2] branch that rescales the real-time clock
