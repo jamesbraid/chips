@@ -67,6 +67,18 @@
 	path = references/code/elilo
 	url = https://github.com/spinl0ck/elilo.git
 	shallow = true
+[submodule "references/code/edk2"]
+	path = references/code/edk2
+	url = https://github.com/tianocore/edk2.git
+	shallow = true
+[submodule "references/code/edk"]
+	path = references/code/edk
+	url = https://github.com/tianocore/edk.git
+	shallow = true
+[submodule "references/code/gnu-efi"]
+	path = references/code/gnu-efi
+	url = https://git.code.sf.net/p/gnu-efi/code
+	shallow = true
 [submodule "retools"]
 	path = retools
 	url = ../sgi-retools.git
