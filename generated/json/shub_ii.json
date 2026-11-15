@@ -3690,6 +3690,24 @@
   {
    "unit": "shub_ii",
    "kind": "constant",
+   "name": "CRB_TIMEOUT_PRESCALE_PROM",
+   "value": 2097151,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "ERROR_CLEAR_ALL",
+   "value": 8796093022207,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
    "name": "HUB_WIDGET_ID_MAX",
    "value": 15,
    "count": 1,
@@ -3852,6 +3870,15 @@
   {
    "unit": "shub_ii",
    "kind": "constant",
+   "name": "LLP_NULLTO_PROM",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
    "name": "NUM_BIG_WINDOWS",
    "value": 6,
    "count": 1,
@@ -3890,6 +3917,24 @@
    "kind": "constant",
    "name": "WARM_RESET",
    "value": 256,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "WCR_DST_CRD_PROM",
+   "value": 4,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "WIDGET_ACCESS_OPEN",
+   "value": 65281,
    "count": 1,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"

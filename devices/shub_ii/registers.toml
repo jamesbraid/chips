@@ -36,6 +36,11 @@ ICRB_INIT_NET = { value = 2, grade = "established", doc = "CRB initiator: the ne
 ICRB_INIT_CRB = { value = 3, grade = "established", doc = "CRB initiator 3; the header marks it with a question mark." }
 ICRB_INIT_BTE1 = { value = 5, grade = "established", doc = "CRB initiator: BTE 1. Bit 2 of the initiator is the BTE number (kernel hub error code)." }
 PROTECTION_OVERRIDE_KEY = { value = 0x53474972756c6573, grade = "established", doc = "Value written to the local access protection override register: the ASCII string SGIrules (header text)." }
+WIDGET_ACCESS_OPEN = { value = 0xff01, grade = "established", doc = "Value the SAL 5.04 PROM writes to both the outbound and the inbound widget access register (site 0xffab30e0): widget 0 and widgets 8 to F open. Which bits that opens is the header's field layout (inferred)." }
+ERROR_CLEAR_ALL = { value = 0x7ffffffffff, grade = "established", doc = "Value the SAL 5.04 PROM writes to the error clear register (site 0xffab1cc0): bits 42:0, every defined clear bit." }
+CRB_TIMEOUT_PRESCALE_PROM = { value = 0x1fffff, grade = "established", doc = "Value the SAL 5.04 PROM writes to the CRB timeout prescaler (site 0xffab1cc0)." }
+LLP_NULLTO_PROM = { value = 3, grade = "established", doc = "Value the SAL 5.04 PROM leaves in the nullto field of the LLP control and status register (site 0xffab3780)." }
+WCR_DST_CRD_PROM = { value = 4, grade = "established", doc = "Destination credit count the SAL 5.04 PROM leaves in the widget control register (site 0xffab3580)." }
 
 
 [registers.widget_id]
@@ -55,7 +60,7 @@ offset = 0x400008
 access = "rw"
 width = 64
 grade = "established"
-doc = "Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT."
+doc = "Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT. SAL 5.04 PROM: written 0 once, in its set-up routine (site 0xffab1cc0)."
 
 [registers.widget_status.fields]
 pending = { bits = [3, 0], grade = "established" }
@@ -70,7 +75,7 @@ offset = 0x400020
 access = "rw"
 width = 64
 grade = "established"
-doc = "Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR."
+doc = "Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR. SAL 5.04 PROM: read-modify-write, each followed by a read back and a 10 ms wait: wid from bits 9:6 of the widget 0 status with tag cleared (site 0xffab33e0), dir_con cleared (site 0xffab3320), tag set (site 0xffab3260), dst_crd set to 4 (site 0xffab3580); wid is read to find the master link (site 0xffab3720)."
 
 [registers.widget_control.fields]
 wid = { bits = [3, 0], grade = "established" }
@@ -105,7 +110,7 @@ offset = 0x400110
 access = "rw"
 width = 64
 grade = "established"
-doc = "Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA."
+doc = "Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA. SAL 5.04 PROM: written 0xff01 (site 0xffab30e0)."
 
 [registers.outbound_widget_access.fields]
 w0_oac = { bits = [0, 0], grade = "established" }
@@ -116,7 +121,7 @@ offset = 0x400118
 access = "rw"
 width = 64
 grade = "established"
-doc = "Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA."
+doc = "Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA. SAL 5.04 PROM: written 0xff01 (site 0xffab30e0)."
 
 [registers.inbound_widget_access.fields]
 w0_iac = { bits = [0, 0], grade = "established" }
@@ -144,7 +149,7 @@ offset = 0x400128
 access = "rw"
 width = 64
 grade = "established"
-doc = "LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR."
+doc = "LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1) is tested as the I/O brick attached indication (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170)."
 
 [registers.llp_control_status.fields]
 nullto = { bits = [5, 0], grade = "established" }
@@ -162,7 +167,7 @@ offset = 0x400130
 access = "rw"
 width = 64
 grade = "established"
-doc = "LLP log: status of the link error rate. Header name IIO_ILLR."
+doc = "LLP log: status of the link error rate. Header name IIO_ILLR. SAL 5.04 PROM: written 0 (site 0xffab1cc0)."
 
 [registers.llp_log.fields]
 sn_cnt = { bits = [15, 0], grade = "established" }
@@ -191,7 +196,7 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX."
+doc = "Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX. SAL 5.04 PROM: instance 0 written 2 and instance 1 written 3 (site 0xffab1cc0)."
 
 [registers.graphics_map.fields]
 w_num = { bits = [3, 0], grade = "established" }
@@ -218,7 +223,7 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7."
+doc = "Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7. SAL 5.04 PROM: all seven written 0 (site 0xffab1cc0); it programs no translation and uses no big window."
 
 [registers.itte.fields]
 offset = { bits = [4, 0], grade = "established" }
@@ -232,7 +237,7 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF)."
+doc = "PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF). SAL 5.04 PROM: f_bit set by read-modify-write in entry 0 and in entries 8 to F (site 0xffab1cc0); the header gives f_bit no meaning."
 
 [registers.prb.fields]
 c_bit = { bits = [7, 0], grade = "established" }
@@ -287,7 +292,7 @@ offset = 0x4001f8
 access = "w"
 width = 64
 grade = "established"
-doc = "Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR."
+doc = "Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, every defined clear bit (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40)."
 
 [registers.error_clear.fields]
 e_prb_0 = { bits = [0, 0], grade = "established" }
@@ -383,7 +388,7 @@ offset = 0x400220
 access = "rw"
 width = 64
 grade = "established"
-doc = "Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1."
+doc = "Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1. SAL 5.04 PROM: written 0 (site 0xffab1cc0)."
 
 [registers.error_packet_header_1.fields]
 command = { bits = [6, 0], grade = "established" }
@@ -398,7 +403,7 @@ offset = 0x400228
 access = "rw"
 width = 64
 grade = "established"
-doc = "Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2."
+doc = "Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2. SAL 5.04 PROM: written 0 (site 0xffab1cc0)."
 
 [registers.error_packet_header_2.fields]
 address = { bits = [49, 3], grade = "established" }
@@ -463,7 +468,7 @@ offset = 0x400250
 access = "rw"
 width = 64
 grade = "established"
-doc = "Wrapper control. Header name IIO_IWC."
+doc = "Wrapper control. Header name IIO_IWC. SAL 5.04 PROM: dma_byte_swap cleared by read-modify-write, no wait (site 0xffaad720)."
 
 [registers.wrapper_control.fields]
 dma_byte_swap = { bits = [0, 0], grade = "established" }
@@ -491,7 +496,7 @@ offset = 0x400260
 access = "rw"
 width = 64
 grade = "established"
-doc = "Wrapper error interrupt mask. Header name IIO_IWEIM."
+doc = "Wrapper error interrupt mask. Header name IIO_IWEIM. SAL 5.04 PROM: ioq_req_overflow (bit 15) set by read-modify-write (site 0xffab1cc0)."
 
 [registers.wrapper_error_interrupt_mask.fields]
 intr_timed_out = { bits = [0, 0], grade = "established" }
@@ -527,7 +532,7 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A."
+doc = "PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A. SAL 5.04 PROM: each entry read (value discarded), then written 0 (site 0xffab1cc0)."
 
 [registers.pio_read_entry_a.fields]
 widget = { bits = [57, 54], grade = "established" }
@@ -541,7 +546,7 @@ stride = 0x8
 access = "rw"
 width = 64
 grade = "established"
-doc = "PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B."
+doc = "PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B. SAL 5.04 PROM: each entry read (value discarded), then written 0 (site 0xffab1cc0)."
 
 [registers.pio_read_entry_b.fields]
 address = { bits = [49, 3], grade = "established" }
@@ -640,7 +645,7 @@ offset = 0x4003c0
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP."
+doc = "CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP. SAL 5.04 PROM: written 0x1fffff (site 0xffab1cc0)."
 
 [registers.crb_timeout_prescaler.fields]
 prescale = { bits = [23, 0], grade = "established" }
@@ -652,7 +657,7 @@ stride = 0x30
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base."
+doc = "CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0)."
 
 [registers.crb_a.fields]
 iow = { bits = [0, 0], grade = "established" }
@@ -668,7 +673,7 @@ stride = 0x30
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base."
+doc = "CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0)."
 
 [registers.crb_b.fields]
 xt_err = { bits = [0, 0], grade = "established" }
@@ -699,7 +704,7 @@ stride = 0x30
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base."
+doc = "CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0)."
 
 [registers.crb_c.fields]
 source = { bits = [14, 0], grade = "established" }
@@ -718,7 +723,7 @@ stride = 0x30
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base."
+doc = "CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0)."
 
 [registers.crb_d.fields]
 pa_be = { bits = [42, 0], grade = "established" }
@@ -734,7 +739,7 @@ stride = 0x30
 access = "rw"
 width = 64
 grade = "established"
-doc = "CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base."
+doc = "CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0)."
 
 [registers.crb_e.fields]
 timeout = { bits = [7, 0], grade = "established" }
@@ -749,7 +754,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error."
+doc = "BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error. SAL 5.04 PROM: read and written 0 in both engines (site 0xffab1cc0)."
 
 [registers.bte_length_status.fields]
 length = { bits = [15, 0], grade = "established" }
@@ -763,7 +768,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed."
+doc = "BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0)."
 
 [registers.bte_source.fields]
 addr = { bits = [48, 7], grade = "established" }
@@ -775,7 +780,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed."
+doc = "BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0)."
 
 [registers.bte_destination.fields]
 addr = { bits = [48, 7], grade = "established" }
@@ -787,7 +792,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode."
+doc = "BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress."
 
 [registers.bte_control.fields]
 zerofill = { bits = [0, 0], grade = "established" }
@@ -801,7 +806,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word."
+doc = "BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0)."
 
 [registers.bte_notify.fields]
 addr = { bits = [48, 7], grade = "established" }
@@ -813,7 +818,7 @@ stride = 0x10000
 access = "rw"
 width = 64
 grade = "established"
-doc = "BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1."
+doc = "BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0)."
 
 [registers.bte_interrupt.fields]
 node_id = { bits = [11, 1], grade = "established" }
@@ -824,7 +829,7 @@ offset = 0x430000
 access = "rw"
 width = 64
 grade = "established"
-doc = "I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR."
+doc = "I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR. SAL 5.04 PROM: written 0 (site 0xffab1cc0)."
 
 [registers.perf_control.fields]
 ippr0_c = { bits = [3, 0], grade = "established" }
@@ -836,7 +841,7 @@ offset = 0x430008
 access = "rw"
 width = 64
 grade = "established"
-doc = "I/O performance profiling: the counter values. Header name IIO_IPPR."
+doc = "I/O performance profiling: the counter values. Header name IIO_IPPR. SAL 5.04 PROM: read once, value discarded (site 0xffab1cc0)."
 
 [registers.perf_profile.fields]
 ippr0 = { bits = [31, 0], grade = "established" }

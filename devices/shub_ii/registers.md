@@ -86,7 +86,7 @@ Crosstalk widget identification. Echoes the revision and manufacturer fields of 
 
 ### Register `widget_status`
 
-Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT.
+Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeout, retry limit and similar link faults, plus a pending count. Cleared by the mechanisms the header lists per field. Header name IIO_WSTAT. SAL 5.04 PROM: written 0 once, in its set-up routine (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -99,7 +99,7 @@ Widget status: error flags the II sets on a Crosstalk credit timeout, tail timeo
 
 ### Register `widget_control`
 
-Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR.
+Widget control: Crosstalk flow control. Holds the widget id the II answers to, tag mode, destination credit count, a force-bad-packet debug bit, the direct-connect bit and the elasticity threshold. Header name IIO_WCR. SAL 5.04 PROM: read-modify-write, each followed by a read back and a 10 ms wait: wid from bits 9:6 of the widget 0 status with tag cleared (site 0xffab33e0), dir_con cleared (site 0xffab3320), tag set (site 0xffab3260), dst_crd set to 4 (site 0xffab3580); wid is read to find the master link (site 0xffab3720).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -128,7 +128,7 @@ Protection override: writing the 64-bit ASCII string SGIrules sets the requester
 
 ### Register `outbound_widget_access`
 
-Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA.
+Outbound widget access: one bit per widget qualifying PIO and graphics writes the SHub launches toward that widget, on top of the local access protection register. Header name IIO_IOWA. SAL 5.04 PROM: written 0xff01 (site 0xffab30e0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -137,7 +137,7 @@ Outbound widget access: one bit per widget qualifying PIO and graphics writes th
 
 ### Register `inbound_widget_access`
 
-Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA.
+Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA. SAL 5.04 PROM: written 0xff01 (site 0xffab30e0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -161,7 +161,7 @@ Inbound device error mask: per-device (up to eight per widget) enable bits for D
 
 ### Register `llp_control_status`
 
-LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR.
+LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1) is tested as the I/O brick attached indication (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -177,7 +177,7 @@ LLP control and status: programmable control and observation fields for the link
 
 ### Register `llp_log`
 
-LLP log: status of the link error rate. Header name IIO_ILLR.
+LLP log: status of the link error rate. Header name IIO_ILLR. SAL 5.04 PROM: written 0 (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -200,7 +200,7 @@ Interrupt destination for II-detected non-BTE error interrupts: vector level, ta
 
 ### Register `graphics_map`
 
-Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX.
+Graphics node and widget map: matches write responses coming back from a graphics widget to the processor that issued the write, so the response can be turned into a flow-control credit for that processor. Two instances. Header name IIO_IGFX. SAL 5.04 PROM: instance 0 written 2 and instance 1 written 3 (site 0xffab1cc0).
 
 Array of 2 registers, stride 8.
 
@@ -223,7 +223,7 @@ Array of 2 registers, stride 8.
 
 ### Register `itte`
 
-Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7.
+Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7. SAL 5.04 PROM: all seven written 0 (site 0xffab1cc0); it programs no translation and uses no big window.
 
 Array of 7 registers, stride 8.
 
@@ -235,7 +235,7 @@ Array of 7 registers, stride 8.
 
 ### Register `prb`
 
-PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF).
+PIO request buffer for one widget (widget 0 and widgets 8 to F): the state the II keeps to manage PIO flow control on Crosstalk and toward the router network, including a spurious-read and spurious-write indicator. Nine entries, widget 0 first and widgets 8 to F after it, at an 8-byte stride (header names IIO_IPRB0, IIO_IPRB8 to IIO_IPRBF). SAL 5.04 PROM: f_bit set by read-modify-write in entry 0 and in entries 8 to F (site 0xffab1cc0); the header gives f_bit no meaning.
 
 Array of 9 registers, stride 8.
 
@@ -284,7 +284,7 @@ Crosstalk timeout threshold: read response timeout, its prescaler and the tail-f
 
 ### Register `error_clear`
 
-Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR.
+Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, every defined clear bit (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -370,7 +370,7 @@ LLP channel test: access to the LLP's test port. Header name IIO_ILCT.
 
 ### Register `error_packet_header_1`
 
-Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1.
+Header, part 1, of an illegal incoming network packet, with a valid flag, an overrun flag and an error type (short or long request or reply). Header name IIO_IIEPH1. SAL 5.04 PROM: written 0 (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -383,7 +383,7 @@ Header, part 1, of an illegal incoming network packet, with a valid flag, an ove
 
 ### Register `error_packet_header_2`
 
-Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2.
+Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2. SAL 5.04 PROM: written 0 (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -438,7 +438,7 @@ Wrapper error log. Header name IIO_IWEL.
 
 ### Register `wrapper_control`
 
-Wrapper control. Header name IIO_IWC.
+Wrapper control. Header name IIO_IWC. SAL 5.04 PROM: dma_byte_swap cleared by read-modify-write, no wait (site 0xffaad720).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -462,7 +462,7 @@ Wrapper status. Header name IIO_IWS.
 
 ### Register `wrapper_error_interrupt_mask`
 
-Wrapper error interrupt mask. Header name IIO_IWEIM.
+Wrapper error interrupt mask. Header name IIO_IWEIM. SAL 5.04 PROM: ioq_req_overflow (bit 15) set by read-modify-write (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -492,7 +492,7 @@ PRB counter adjust: a write moves a field of the matching widget's PRB entry up 
 
 ### Register `pio_read_entry_a`
 
-PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A.
+PIO read table entry, part A: what the II remembers about an outstanding PIO read so it can build the network reply when Crosstalk answers. Eight entries. Header names IIO_IPRTE0_A to IIO_IPRTE7_A. SAL 5.04 PROM: each entry read (value discarded), then written 0 (site 0xffab1cc0).
 
 Array of 8 registers, stride 8.
 
@@ -504,7 +504,7 @@ Array of 8 registers, stride 8.
 
 ### Register `pio_read_entry_b`
 
-PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B.
+PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B. SAL 5.04 PROM: each entry read (value discarded), then written 0 (site 0xffab1cc0).
 
 Array of 8 registers, stride 8.
 
@@ -589,7 +589,7 @@ CRB timeout: the maximum timeout value. Header name IIO_ICTO.
 
 ### Register `crb_timeout_prescaler`
 
-CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP.
+CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP. SAL 5.04 PROM: written 0x1fffff (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -597,7 +597,7 @@ CRB timeout prescaler: how often the per-CRB timeout counters advance. Header na
 
 ### Register `crb_a`
 
-CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base.
+CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0).
 
 Array of 15 registers, stride 48.
 
@@ -611,7 +611,7 @@ Array of 15 registers, stride 48.
 
 ### Register `crb_b`
 
-CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base.
+CRB entry doubleword B (header IIO_ICRB0_B to IIO_ICRBE_B): holds the mark bit that flags an error entry, the 3-bit error code, the initiator and the incoming message type. The kernel reads it for every CRB when an II error interrupt arrives, clears the mark and then frees the entry through the deallocation register. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0).
 
 Array of 15 registers, stride 48.
 
@@ -640,7 +640,7 @@ Array of 15 registers, stride 48.
 
 ### Register `crb_c`
 
-CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base.
+CRB entry doubleword C (header IIO_ICRB0_C to IIO_ICRBE_C): the kernel reads the BTE number from it when the entry belongs to a BTE operation. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0).
 
 Array of 15 registers, stride 48.
 
@@ -657,7 +657,7 @@ Array of 15 registers, stride 48.
 
 ### Register `crb_d`
 
-CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base.
+CRB entry doubleword D (header IIO_ICRB0_D to IIO_ICRBE_D): carries the BTE-operation flag the kernel tests to tell BTE entries from others, and the per-entry timeout counter. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0).
 
 Array of 15 registers, stride 48.
 
@@ -671,7 +671,7 @@ Array of 15 registers, stride 48.
 
 ### Register `crb_e`
 
-CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base.
+CRB entry doubleword E (header IIO_ICRB0_E to IIO_ICRBE_E): read by the error handler together with the other four. Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries written 0 (site 0xffab1cc0).
 
 Array of 15 registers, stride 48.
 
@@ -758,7 +758,7 @@ Debug submenu select: selects what the SHub debug unit shows from the II. Header
 
 ### Register `bte_length_status`
 
-BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error.
+BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error. SAL 5.04 PROM: read and written 0 in both engines (site 0xffab1cc0).
 
 Array of 2 registers, stride 65536.
 
@@ -770,7 +770,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_source`
 
-BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed.
+BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
 
 Array of 2 registers, stride 65536.
 
@@ -780,7 +780,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_destination`
 
-BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed.
+BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
 
 Array of 2 registers, stride 65536.
 
@@ -790,7 +790,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_control`
 
-BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode.
+BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress.
 
 Array of 2 registers, stride 65536.
 
@@ -802,7 +802,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_notify`
 
-BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word.
+BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
 
 Array of 2 registers, stride 65536.
 
@@ -812,7 +812,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_interrupt`
 
-BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1.
+BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
 
 Array of 2 registers, stride 65536.
 
@@ -823,7 +823,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `perf_control`
 
-I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR.
+I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR. SAL 5.04 PROM: written 0 (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -833,7 +833,7 @@ I/O performance control: selects which of 17 quantities each of the two performa
 
 ### Register `perf_profile`
 
-I/O performance profiling: the counter values. Header name IIO_IPPR.
+I/O performance profiling: the counter values. Header name IIO_IPPR. SAL 5.04 PROM: read once, value discarded (site 0xffab1cc0).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -848,6 +848,8 @@ I/O performance profiling: the counter values. Header name IIO_IPPR.
 | `BTE_LEN_BITS` | 0x10 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Width of the length field of the BTE status register; the kernel's longest transfer is 65535 cache lines (BTE_LEN_MASK shifted by the line size). |
 | `BTE_LINE_BYTES` | 0x80 | inferred | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | BTE unit of transfer. The kernel shifts the byte length by the L1 cache line size of the CPU (128 bytes on Itanium 2); the header's own text says lines are 128 bytes. |
 | `CRB_STRIDE` | 0x30 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Distance between CRB entries: each entry takes six 8-byte slots, of which five (A to E) are registers (header macro IIO_ICRB_A: base plus 6 times 8 times the index). |
+| `CRB_TIMEOUT_PRESCALE_PROM` | 0x1fffff | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to the CRB timeout prescaler (site 0xffab1cc0). |
+| `ERROR_CLEAR_ALL` | 0x7ffffffffff | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to the error clear register (site 0xffab1cc0): bits 42:0, every defined clear bit. |
 | `HUB_WIDGET_ID_MAX` | 0xf | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Highest widget number. |
 | `ICRB_ECODE_AERR` | 0x3 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB error code: access (protection) error. |
 | `ICRB_ECODE_DERR` | 0x0 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB error code: directory error caused by an II access. |
@@ -866,8 +868,11 @@ I/O performance profiling: the counter values. Header name IIO_IPPR.
 | `ICRB_INIT_CRB` | 0x3 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB initiator 3; the header marks it with a question mark. |
 | `ICRB_INIT_NET` | 0x2 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB initiator: the network (the header calls it SN1net). |
 | `ICRB_INIT_XTALK` | 0x0 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB initiator: Crosstalk. |
+| `LLP_NULLTO_PROM` | 0x3 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM leaves in the nullto field of the LLP control and status register (site 0xffab3780). |
 | `NUM_BIG_WINDOWS` | 0x6 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Big windows the kernel treats as real; the seventh entry stands in for small window 0 (header comment: a permanent workaround for a processor-interface defect). |
 | `NUM_CRBS` | 0xf | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Number of CRB entries, numbered 0 to 14 (the header's IIO_NUM_CRBS). |
 | `NUM_ITTES` | 0x7 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Number of big-window translation entries. The header's manual numbering is 1 to 7, the kernel's 0 to 6. |
 | `PROTECTION_OVERRIDE_KEY` | 0x53474972756c6573 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value written to the local access protection override register: the ASCII string SGIrules (header text). |
 | `WARM_RESET` | 0x100 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Bit 8 of the LLP control and status register; the header names it ILCSR_WARM_RESET. Same position as the warm_reset field. |
+| `WCR_DST_CRD_PROM` | 0x4 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Destination credit count the SAL 5.04 PROM leaves in the widget control register (site 0xffab3580). |
+| `WIDGET_ACCESS_OPEN` | 0xff01 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to both the outbound and the inbound widget access register (site 0xffab30e0): widget 0 and widgets 8 to F open. Which bits that opens is the header's field layout (inferred). |

@@ -222,7 +222,7 @@ pub mod outbound_widget_access {
         }
     }
 }
-/// Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA. (established)
+/// Inbound widget access: qualifies requests a widget sends toward the SHub. Meant for software to fence off a misbehaving widget. Header name IIO_IIWA.  (established)
 pub mod inbound_widget_access {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400118;
@@ -332,7 +332,7 @@ pub mod inbound_device_error_mask {
         }
     }
 }
-/// LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. (established)
+/// LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 (established)
 pub mod llp_control_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400128;
@@ -427,7 +427,7 @@ pub mod llp_control_status {
         }
     }
 }
-/// LLP log: status of the link error rate. Header name IIO_ILLR. (established)
+/// LLP log: status of the link error rate. Header name IIO_ILLR. SAL 5.04 PROM: written 0 (site 0xffab1cc0). (established)
 pub mod llp_log {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400130;
@@ -1440,7 +1440,7 @@ pub mod error_packet_header_1 {
         }
     }
 }
-/// Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2. (established)
+/// Header, part 2, of an illegal incoming network packet. Header name IIO_IIEPH2. SAL 5.04 PROM: written 0 (site 0xffab1cc0). (established)
 pub mod error_packet_header_2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400228;
@@ -1665,7 +1665,7 @@ pub mod wrapper_error_log {
         }
     }
 }
-/// Wrapper control. Header name IIO_IWC. (established)
+/// Wrapper control. Header name IIO_IWC. SAL 5.04 PROM: dma_byte_swap cleared by read-modify-write, no wait (site 0xffaad720). (established)
 pub mod wrapper_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400250;
@@ -1775,7 +1775,7 @@ pub mod wrapper_status {
         }
     }
 }
-/// Wrapper error interrupt mask. Header name IIO_IWEIM. (established)
+/// Wrapper error interrupt mask. Header name IIO_IWEIM. SAL 5.04 PROM: ioq_req_overflow (bit 15) set by read-modify-write (site 0xffab1cc0). (established)
 pub mod wrapper_error_interrupt_mask {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400260;
@@ -1982,7 +1982,7 @@ pub mod pio_read_entry_a {
         }
     }
 }
-/// PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B. (established)
+/// PIO read table entry, part B. Eight entries. Header names IIO_IPRTE0_B to IIO_IPRTE7_B. SAL 5.04 PROM: each entry read (value discarded), then written (established)
 pub mod pio_read_entry_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400348;
@@ -2294,7 +2294,7 @@ pub mod crb_timeout {
         }
     }
 }
-/// CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP. (established)
+/// CRB timeout prescaler: how often the per-CRB timeout counters advance. Header name IIO_ICTP. SAL 5.04 PROM: written 0x1fffff (site 0xffab1cc0). (established)
 pub mod crb_timeout_prescaler {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4003c0;
@@ -2309,7 +2309,7 @@ pub mod crb_timeout_prescaler {
         }
     }
 }
-/// CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base. (established)
+/// CRB entry doubleword A (header IIO_ICRB0_A to IIO_ICRBE_A). Fifteen entries at a 0x30 stride; entry 0 is the base. SAL 5.04 PROM: all fifteen entries  (established)
 pub mod crb_a {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400400;
@@ -3396,7 +3396,7 @@ pub mod bte_interrupt {
         }
     }
 }
-/// I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR. (established)
+/// I/O performance control: selects which of 17 quantities each of the two performance counters measures. Header name IIO_IPCR. SAL 5.04 PROM: written 0  (established)
 pub mod perf_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x430000;
@@ -3431,7 +3431,7 @@ pub mod perf_control {
         }
     }
 }
-/// I/O performance profiling: the counter values. Header name IIO_IPPR. (established)
+/// I/O performance profiling: the counter values. Header name IIO_IPPR. SAL 5.04 PROM: read once, value discarded (site 0xffab1cc0). (established)
 pub mod perf_profile {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x430008;
@@ -3460,6 +3460,8 @@ pub const BTE_ENGINES: u32 = 0x2; // established
 pub const BTE_LEN_BITS: u32 = 0x10; // established
 pub const BTE_LINE_BYTES: u32 = 0x80; // inferred
 pub const CRB_STRIDE: u32 = 0x30; // established
+pub const CRB_TIMEOUT_PRESCALE_PROM: u32 = 0x1fffff; // established
+pub const ERROR_CLEAR_ALL: u64 = 0x7ffffffffff; // established
 pub const HUB_WIDGET_ID_MAX: u32 = 0xf; // established
 pub const ICRB_ECODE_AERR: u32 = 0x3; // established
 pub const ICRB_ECODE_DERR: u32 = 0x0; // established
@@ -3478,8 +3480,11 @@ pub const ICRB_INIT_BTE1: u32 = 0x5; // established
 pub const ICRB_INIT_CRB: u32 = 0x3; // established
 pub const ICRB_INIT_NET: u32 = 0x2; // established
 pub const ICRB_INIT_XTALK: u32 = 0x0; // established
+pub const LLP_NULLTO_PROM: u32 = 0x3; // established
 pub const NUM_BIG_WINDOWS: u32 = 0x6; // established
 pub const NUM_CRBS: u32 = 0xf; // established
 pub const NUM_ITTES: u32 = 0x7; // established
 pub const PROTECTION_OVERRIDE_KEY: u64 = 0x53474972756c6573; // established
 pub const WARM_RESET: u32 = 0x100; // established
+pub const WCR_DST_CRD_PROM: u32 = 0x4; // established
+pub const WIDGET_ACCESS_OPEN: u32 = 0xff01; // established
