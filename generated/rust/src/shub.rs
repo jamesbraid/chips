@@ -1029,6 +1029,11 @@ pub mod md_dir_access_rp {
         }
     }
 }
+/// Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role infe (established)
+pub mod int_node_id_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000300;
+}
 /// Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR windo (established)
 pub mod ipi_int {
     pub const WIDTH: u32 = 64;
@@ -1093,6 +1098,85 @@ pub mod ipi_int {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE). The PROM writes 1 before it sends wake-up messages and never reads it. That (established)
+pub mod ipi_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000400;
+}
+/// Destination of local interrupt n (0 to 5): the ipi_int message layout without the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and  (established)
+pub mod local_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000480;
+    pub const COUNT: u32 = 6;
+    pub const STRIDE: u64 = 256;
+    pub mod idx { // bits 59:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod base { // bits 49:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1fffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pid { // bits 19:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod agent { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#type { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps (established)
+pub mod local_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000500;
+    pub const COUNT: u32 = 6;
+    pub const STRIDE: u64 = 256;
+}
+/// Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_ (established)
+pub mod rtc0_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110001380;
+}
+/// Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read. (established)
+pub mod rtc0_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110001400;
 }
 /// Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and  (established)
 pub mod rtc_int_config {
@@ -1232,8 +1316,58 @@ pub mod event_occurred {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod rtc0_int { // bits 23:23, inferred
+        pub const SHIFT: u32 = 23;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit21 { // bits 21:21, inferred
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod uart_int { // bits 20:20, established
         pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit8 { // bits 8:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit5 { // bits 5:5, inferred
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit3 { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
@@ -1247,6 +1381,16 @@ pub mod event_occurred {
 pub mod event_occurred_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110010008;
+}
+/// Second event word next to event_occurred; only its alias is written by the PROM. (inferred)
+pub mod event_overflow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110010080;
+}
+/// Clear alias of event_overflow. The PROM writes 8 together with the same write to event_occurred_alias. Accepting the write is enough. (established)
+pub mod event_overflow_alias {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110010088;
 }
 /// Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image (established)
 pub mod lb_reg_1002_0000 {
@@ -1406,6 +1550,16 @@ pub mod ptc {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (u (inferred)
+pub mod ptc_parms {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101a0100;
+}
+/// Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown. (established)
+pub mod int_cmpa {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101b0000;
 }
 /// Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for proce (established)
 pub mod int_cmp {

@@ -472,6 +472,12 @@
 #define SHUB_MD_DIR_ACCESS_RP_VALUE_INPLACE          (SHUB_MD_DIR_ACCESS_RP_VALUE_MASK << SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT)
 
 /*
+ * Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role inferred.
+ */
+/* int_node_id_config: rw64, reset unknown; SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0) */
+#define SHUB_INT_NODE_ID_CONFIG                      0x110000300 /* established */
+
+/*
  * Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.
  */
 /* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
@@ -494,6 +500,55 @@
 #define SHUB_IPI_INT_TYPE_SHIFT                      0 /* established */
 #define SHUB_IPI_INT_TYPE_MASK                       0x7ull
 #define SHUB_IPI_INT_TYPE_INPLACE                    (SHUB_IPI_INT_TYPE_MASK << SHUB_IPI_INT_TYPE_SHIFT)
+
+/*
+ * Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE). The PROM writes 1 before it sends wake-up messages and never reads it. That delivery depends on it is inferred.
+ */
+/* ipi_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads */
+#define SHUB_IPI_INT_ENABLE                          0x110000400 /* established */
+
+/*
+ * Destination of local interrupt n (0 to 5): the ipi_int message layout without the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and 1 (slice pairs 0/1 and 2/3), type 5 (INIT) to interrupts 2 and 3 (slices 0 and 2) and vector 0xe9 (Linux SGI_UART_VECTOR) to interrupt 5. Never read. The pairing of these offsets with the PROM's SH_LOCAL_INTn_CONFIG names is by table order (inferred).
+ */
+/* local_int_config: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9) */
+#define SHUB_LOCAL_INT_CONFIG                        0x110000480 /* established */
+#define SHUB_LOCAL_INT_CONFIG_COUNT                  6
+#define SHUB_LOCAL_INT_CONFIG_STRIDE                 256
+#define SHUB_LOCAL_INT_CONFIG_IDX_SHIFT              52 /* established */
+#define SHUB_LOCAL_INT_CONFIG_IDX_MASK               0xffull
+#define SHUB_LOCAL_INT_CONFIG_IDX_INPLACE            (SHUB_LOCAL_INT_CONFIG_IDX_MASK << SHUB_LOCAL_INT_CONFIG_IDX_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_BASE_SHIFT             21 /* established */
+#define SHUB_LOCAL_INT_CONFIG_BASE_MASK              0x1fffffffull
+#define SHUB_LOCAL_INT_CONFIG_BASE_INPLACE           (SHUB_LOCAL_INT_CONFIG_BASE_MASK << SHUB_LOCAL_INT_CONFIG_BASE_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_PID_SHIFT              4 /* established */
+#define SHUB_LOCAL_INT_CONFIG_PID_MASK               0xffffull
+#define SHUB_LOCAL_INT_CONFIG_PID_INPLACE            (SHUB_LOCAL_INT_CONFIG_PID_MASK << SHUB_LOCAL_INT_CONFIG_PID_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_AGENT_SHIFT            3 /* established */
+#define SHUB_LOCAL_INT_CONFIG_AGENT_MASK             0x1ull
+#define SHUB_LOCAL_INT_CONFIG_AGENT_INPLACE          (SHUB_LOCAL_INT_CONFIG_AGENT_MASK << SHUB_LOCAL_INT_CONFIG_AGENT_SHIFT)
+#define SHUB_LOCAL_INT_CONFIG_TYPE_SHIFT             0 /* established */
+#define SHUB_LOCAL_INT_CONFIG_TYPE_MASK              0x7ull
+#define SHUB_LOCAL_INT_CONFIG_TYPE_INPLACE           (SHUB_LOCAL_INT_CONFIG_TYPE_MASK << SHUB_LOCAL_INT_CONFIG_TYPE_SHIFT)
+
+/*
+ * Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps to an event_occurred bit is unknown. Never read.
+ */
+/* local_int_enable: rw64, reset unknown; SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5) */
+#define SHUB_LOCAL_INT_ENABLE                        0x110000500 /* established */
+#define SHUB_LOCAL_INT_ENABLE_COUNT                  6
+#define SHUB_LOCAL_INT_ENABLE_STRIDE                 256
+
+/*
+ * Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read.
+ */
+/* rtc0_int_config: rw64, reset unknown; SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr */
+#define SHUB_RTC0_INT_CONFIG                         0x110001380 /* established */
+
+/*
+ * Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read.
+ */
+/* rtc0_int_enable: rw64, reset unknown; SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0) */
+#define SHUB_RTC0_INT_ENABLE                         0x110001400 /* established */
 
 /*
  * Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it.
@@ -530,9 +585,9 @@
 #define SHUB_RTC_INT_ENABLE_ENABLE_INPLACE           (SHUB_RTC_INT_ENABLE_ENABLE_MASK << SHUB_RTC_INT_ENABLE_ENABLE_SHIFT)
 
 /*
- * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown.
+ * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.
  */
-/* event_occurred: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_EVENT_OCCURRED                          0x110010000 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT1_SHIFT            30 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT1_MASK             0x1ull
@@ -552,15 +607,42 @@
 #define SHUB_EVENT_OCCURRED_RTC1_INT_SHIFT           24 /* established */
 #define SHUB_EVENT_OCCURRED_RTC1_INT_MASK            0x1ull
 #define SHUB_EVENT_OCCURRED_RTC1_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC1_INT_MASK << SHUB_EVENT_OCCURRED_RTC1_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_RTC0_INT_SHIFT           23 /* inferred */
+#define SHUB_EVENT_OCCURRED_RTC0_INT_MASK            0x1ull
+#define SHUB_EVENT_OCCURRED_RTC0_INT_INPLACE         (SHUB_EVENT_OCCURRED_RTC0_INT_MASK << SHUB_EVENT_OCCURRED_RTC0_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT21_SHIFT              21 /* inferred */
+#define SHUB_EVENT_OCCURRED_BIT21_MASK               0x1ull
+#define SHUB_EVENT_OCCURRED_BIT21_INPLACE            (SHUB_EVENT_OCCURRED_BIT21_MASK << SHUB_EVENT_OCCURRED_BIT21_SHIFT)
 #define SHUB_EVENT_OCCURRED_UART_INT_SHIFT           20 /* established */
 #define SHUB_EVENT_OCCURRED_UART_INT_MASK            0x1ull
 #define SHUB_EVENT_OCCURRED_UART_INT_INPLACE         (SHUB_EVENT_OCCURRED_UART_INT_MASK << SHUB_EVENT_OCCURRED_UART_INT_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT8_SHIFT               8 /* inferred */
+#define SHUB_EVENT_OCCURRED_BIT8_MASK                0x1ull
+#define SHUB_EVENT_OCCURRED_BIT8_INPLACE             (SHUB_EVENT_OCCURRED_BIT8_MASK << SHUB_EVENT_OCCURRED_BIT8_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT5_SHIFT               5 /* inferred */
+#define SHUB_EVENT_OCCURRED_BIT5_MASK                0x1ull
+#define SHUB_EVENT_OCCURRED_BIT5_INPLACE             (SHUB_EVENT_OCCURRED_BIT5_MASK << SHUB_EVENT_OCCURRED_BIT5_SHIFT)
+#define SHUB_EVENT_OCCURRED_BIT3_SHIFT               3 /* inferred */
+#define SHUB_EVENT_OCCURRED_BIT3_MASK                0x1ull
+#define SHUB_EVENT_OCCURRED_BIT3_INPLACE             (SHUB_EVENT_OCCURRED_BIT3_MASK << SHUB_EVENT_OCCURRED_BIT3_SHIFT)
 
 /*
  * Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.
  */
 /* event_occurred_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_EVENT_OCCURRED_ALIAS                    0x110010008 /* established */
+
+/*
+ * Second event word next to event_occurred; only its alias is written by the PROM.
+ */
+/* event_overflow: rw64, reset unknown; SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it */
+#define SHUB_EVENT_OVERFLOW                          0x110010080 /* inferred */
+
+/*
+ * Clear alias of event_overflow. The PROM writes 8 together with the same write to event_occurred_alias. Accepting the write is enough.
+ */
+/* event_overflow_alias: w64, reset unknown; SAL 5.04 PROM site 0xffa0bb46 (write 8) */
+#define SHUB_EVENT_OVERFLOW_ALIAS                    0x110010088 /* established */
 
 /*
  * Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image holds no other reference to the address, so it is never read back. The meaning of the value is unknown; a plain write-accepting register satisfies the PROM.
@@ -643,6 +725,18 @@
 #define SHUB_PTC_TYPE_BIT_SHIFT                      0 /* inferred */
 #define SHUB_PTC_TYPE_BIT_MASK                       0x1ull
 #define SHUB_PTC_TYPE_BIT_INPLACE                    (SHUB_PTC_TYPE_BIT_MASK << SHUB_PTC_TYPE_BIT_SHIFT)
+
+/*
+ * Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the packing and meaning (a timeout) are not decoded. Neither the PROM nor the runtime stores to ptc itself.
+ */
+/* ptc_parms: rw64, reset unknown; SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS */
+#define SHUB_PTC_PARMS                               0x1101a0100 /* inferred */
+
+/*
+ * Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown.
+ */
+/* int_cmpa: rw64, reset unknown; SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks) */
+#define SHUB_INT_CMPA                                0x1101b0000 /* established */
 
 /*
  * Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).

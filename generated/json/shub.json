@@ -1233,6 +1233,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "int_node_id_config",
+   "offset": 4563403520,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "ipi_int",
    "offset": 4563403648,
    "access": "w",
@@ -1297,6 +1311,121 @@
    "lo": 0,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "ipi_int_enable",
+   "offset": 4563403776,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "local_int_config",
+   "offset": 4563403904,
+   "access": "rw",
+   "width": 64,
+   "count": 6,
+   "stride": 256,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "local_int_config.idx",
+   "hi": 59,
+   "lo": 52,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "local_int_config.base",
+   "hi": 49,
+   "lo": 21,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "local_int_config.pid",
+   "hi": 19,
+   "lo": 4,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "local_int_config.agent",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "local_int_config.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "local_int_enable",
+   "offset": 4563404032,
+   "access": "rw",
+   "width": 64,
+   "count": 6,
+   "stride": 256,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "rtc0_int_config",
+   "offset": 4563407744,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "rtc0_int_enable",
+   "offset": 4563407872,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0)"
   },
   {
    "unit": "shub",
@@ -1385,7 +1514,7 @@
    "kind": "register",
    "name": "event_occurred",
    "offset": 4563468288,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
@@ -1451,11 +1580,56 @@
   {
    "unit": "shub",
    "kind": "field",
+   "name": "event_occurred.rtc0_int",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "event_occurred.bit21",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
    "name": "event_occurred.uart_int",
    "hi": 20,
    "lo": 20,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "event_occurred.bit8",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "event_occurred.bit5",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "event_occurred.bit3",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46"
   },
   {
    "unit": "shub",
@@ -1470,6 +1644,34 @@
    "reset": "unknown",
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "event_overflow",
+   "offset": 4563468416,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "event_overflow_alias",
+   "offset": 4563468424,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa0bb46 (write 8)"
   },
   {
    "unit": "shub",
@@ -1676,6 +1878,34 @@
    "lo": 0,
    "grade": "inferred",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "ptc_parms",
+   "offset": 4565106944,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "int_cmpa",
+   "offset": 4565172224,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks)"
   },
   {
    "unit": "shub",

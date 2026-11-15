@@ -65,9 +65,9 @@
 #define SHUB2_RTC_INT_ENABLE_ENABLE_INPLACE          (SHUB2_RTC_INT_ENABLE_ENABLE_MASK << SHUB2_RTC_INT_ENABLE_ENABLE_SHIFT)
 
 /*
- * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown.
+ * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.
  */
-/* event_occurred: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_EVENT_OCCURRED                         0x10010000 /* established */
 #define SHUB2_EVENT_OCCURRED_II_INT1_SHIFT           30 /* established */
 #define SHUB2_EVENT_OCCURRED_II_INT1_MASK            0x1ull
@@ -87,9 +87,24 @@
 #define SHUB2_EVENT_OCCURRED_RTC1_INT_SHIFT          24 /* established */
 #define SHUB2_EVENT_OCCURRED_RTC1_INT_MASK           0x1ull
 #define SHUB2_EVENT_OCCURRED_RTC1_INT_INPLACE        (SHUB2_EVENT_OCCURRED_RTC1_INT_MASK << SHUB2_EVENT_OCCURRED_RTC1_INT_SHIFT)
+#define SHUB2_EVENT_OCCURRED_RTC0_INT_SHIFT          23 /* inferred */
+#define SHUB2_EVENT_OCCURRED_RTC0_INT_MASK           0x1ull
+#define SHUB2_EVENT_OCCURRED_RTC0_INT_INPLACE        (SHUB2_EVENT_OCCURRED_RTC0_INT_MASK << SHUB2_EVENT_OCCURRED_RTC0_INT_SHIFT)
+#define SHUB2_EVENT_OCCURRED_BIT21_SHIFT             21 /* inferred */
+#define SHUB2_EVENT_OCCURRED_BIT21_MASK              0x1ull
+#define SHUB2_EVENT_OCCURRED_BIT21_INPLACE           (SHUB2_EVENT_OCCURRED_BIT21_MASK << SHUB2_EVENT_OCCURRED_BIT21_SHIFT)
 #define SHUB2_EVENT_OCCURRED_UART_INT_SHIFT          20 /* established */
 #define SHUB2_EVENT_OCCURRED_UART_INT_MASK           0x1ull
 #define SHUB2_EVENT_OCCURRED_UART_INT_INPLACE        (SHUB2_EVENT_OCCURRED_UART_INT_MASK << SHUB2_EVENT_OCCURRED_UART_INT_SHIFT)
+#define SHUB2_EVENT_OCCURRED_BIT8_SHIFT              8 /* inferred */
+#define SHUB2_EVENT_OCCURRED_BIT8_MASK               0x1ull
+#define SHUB2_EVENT_OCCURRED_BIT8_INPLACE            (SHUB2_EVENT_OCCURRED_BIT8_MASK << SHUB2_EVENT_OCCURRED_BIT8_SHIFT)
+#define SHUB2_EVENT_OCCURRED_BIT5_SHIFT              5 /* inferred */
+#define SHUB2_EVENT_OCCURRED_BIT5_MASK               0x1ull
+#define SHUB2_EVENT_OCCURRED_BIT5_INPLACE            (SHUB2_EVENT_OCCURRED_BIT5_MASK << SHUB2_EVENT_OCCURRED_BIT5_SHIFT)
+#define SHUB2_EVENT_OCCURRED_BIT3_SHIFT              3 /* inferred */
+#define SHUB2_EVENT_OCCURRED_BIT3_MASK               0x1ull
+#define SHUB2_EVENT_OCCURRED_BIT3_INPLACE            (SHUB2_EVENT_OCCURRED_BIT3_MASK << SHUB2_EVENT_OCCURRED_BIT3_SHIFT)
 
 /*
  * Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.

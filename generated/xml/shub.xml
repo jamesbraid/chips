@@ -186,6 +186,9 @@
     <doc>As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours.</doc>
     <field name="value" start="55" size="9" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa6b076"/>
   </struct>
+  <struct name="INT_NODE_ID_CONFIG" size="8" grade="established" from="SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0)" register="yes" offset="0x110000300" access="rw" reset="unknown">
+    <doc>Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role inferred.</doc>
+  </struct>
   <struct name="IPI_INT" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x110000380" access="w" reset="unknown">
     <doc>Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.</doc>
     <field name="send" start="63" size="1" type="uint" grade="established"/>
@@ -194,6 +197,26 @@
     <field name="pid" start="4" size="16" type="uint" grade="established"/>
     <field name="agent" start="3" size="1" type="uint" grade="established"/>
     <field name="type" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="IPI_INT_ENABLE" size="8" grade="established" from="SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads" register="yes" offset="0x110000400" access="rw" reset="unknown">
+    <doc>Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE). The PROM writes 1 before it sends wake-up messages and never reads it. That delivery depends on it is inferred.</doc>
+  </struct>
+  <struct name="LOCAL_INT_CONFIG" size="8" grade="established" from="SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)" register="yes" offset="0x110000480" access="rw" count="6" stride="256" reset="unknown">
+    <doc>Destination of local interrupt n (0 to 5): the ipi_int message layout without the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and 1 (slice pairs 0/1 and 2/3), type 5 (INIT) to interrupts 2 and 3 (slices 0 and 2) and vector 0xe9 (Linux SGI_UART_VECTOR) to interrupt 5. Never read. The pairing of these offsets with the PROM's SH_LOCAL_INTn_CONFIG names is by table order (inferred).</doc>
+    <field name="idx" start="52" size="8" type="uint" grade="established"/>
+    <field name="base" start="21" size="29" type="uint" grade="established"/>
+    <field name="pid" start="4" size="16" type="uint" grade="established"/>
+    <field name="agent" start="3" size="1" type="uint" grade="established"/>
+    <field name="type" start="0" size="3" type="uint" grade="established"/>
+  </struct>
+  <struct name="LOCAL_INT_ENABLE" size="8" grade="established" from="SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5)" register="yes" offset="0x110000500" access="rw" count="6" stride="256" reset="unknown">
+    <doc>Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps to an event_occurred bit is unknown. Never read.</doc>
+  </struct>
+  <struct name="RTC0_INT_CONFIG" size="8" grade="established" from="SAL 5.04 PROM site 0xffa31966 (pid &lt;&lt; 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr" register="yes" offset="0x110001380" access="rw" reset="unknown">
+    <doc>Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read.</doc>
+  </struct>
+  <struct name="RTC0_INT_ENABLE" size="8" grade="established" from="SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0)" register="yes" offset="0x110001400" access="rw" reset="unknown">
+    <doc>Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read.</doc>
   </struct>
   <struct name="RTC_INT_CONFIG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x110001480" access="rw" count="3" stride="256" reset="0x0">
     <doc>Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it.</doc>
@@ -207,18 +230,29 @@
     <doc>Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order.</doc>
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="EVENT_OCCURRED" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x110010000" access="r" reset="unknown">
-    <doc>Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown.</doc>
+  <struct name="EVENT_OCCURRED" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x110010000" access="rw" reset="unknown">
+    <doc>Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.</doc>
     <field name="ii_int1" start="30" size="1" type="uint" grade="established"/>
     <field name="ii_int0" start="29" size="1" type="uint" grade="established"/>
     <field name="ipi_int" start="28" size="1" type="uint" grade="established"/>
     <field name="rtc3_int" start="26" size="1" type="uint" grade="established"/>
     <field name="rtc2_int" start="25" size="1" type="uint" grade="established"/>
     <field name="rtc1_int" start="24" size="1" type="uint" grade="established"/>
+    <field name="rtc0_int" start="23" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared)"/>
+    <field name="bit21" start="21" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000)"/>
     <field name="uart_int" start="20" size="1" type="uint" grade="established"/>
+    <field name="bit8" start="8" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef)"/>
+    <field name="bit5" start="5" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef)"/>
+    <field name="bit3" start="3" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46"/>
   </struct>
   <struct name="EVENT_OCCURRED_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x110010008" access="w" reset="unknown">
     <doc>Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.</doc>
+  </struct>
+  <struct name="EVENT_OVERFLOW" size="8" grade="inferred" from="SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it" register="yes" offset="0x110010080" access="rw" reset="unknown">
+    <doc>Second event word next to event_occurred; only its alias is written by the PROM.</doc>
+  </struct>
+  <struct name="EVENT_OVERFLOW_ALIAS" size="8" grade="established" from="SAL 5.04 PROM site 0xffa0bb46 (write 8)" register="yes" offset="0x110010088" access="w" reset="unknown">
+    <doc>Clear alias of event_overflow. The PROM writes 8 together with the same write to event_occurred_alias. Accepting the write is enough.</doc>
   </struct>
   <struct name="LB_REG_1002_0000" size="8" grade="established" from="SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name" register="yes" offset="0x110020000" access="w" reset="unknown">
     <doc>Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image holds no other reference to the address, so it is never read back. The meaning of the value is unknown; a plain write-accepting register satisfies the PROM.</doc>
@@ -252,6 +286,12 @@
     <field name="rid" start="8" size="55" type="uint" grade="inferred"/>
     <field name="ps" start="2" size="6" type="uint" grade="inferred"/>
     <field name="type_bit" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="PTC_PARMS" size="8" grade="inferred" from="SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS" register="yes" offset="0x1101a0100" access="rw" reset="unknown">
+    <doc>Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the packing and meaning (a timeout) are not decoded. Neither the PROM nor the runtime stores to ptc itself.</doc>
+  </struct>
+  <struct name="INT_CMPA" size="8" grade="established" from="SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks)" register="yes" offset="0x1101b0000" access="rw" reset="unknown">
+    <doc>Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown.</doc>
   </struct>
   <struct name="INT_CMP" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x1101b0080" access="rw" count="3" stride="128" reset="0x0">
     <doc>Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).</doc>

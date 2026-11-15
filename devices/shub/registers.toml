@@ -44,13 +44,18 @@ doc = "Which processors may send interprocessor interrupts to this one (header t
 
 [registers.event_occurred]
 offset = 0x110010000
-access = "r"
+access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-doc = "Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown."
+doc = "Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md."
 
 [registers.event_occurred.fields]
+bit3 = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46", doc = "The PROM writes 8 to the alias (and to the overflow alias) of another node when it clears a processor-interface error before a remote access. Role inferred; name is ours." }
+bit5 = { bits = [5, 5], grade = "inferred", from = "SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef)", doc = "In the PROM's error mask 0x7ef; the PROM also writes this bit to the register itself in its express-path workaround. Name is ours." }
+bit8 = { bits = [8, 8], grade = "inferred", from = "SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef)", doc = "As bit 5. Name is ours." }
+bit21 = { bits = [21, 21], grade = "inferred", from = "SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000)", doc = "Read by the PROM's INIT handling before it forwards INIT to the other processors, cleared through the alias. Meaning unknown; name is ours." }
+rtc0_int = { bits = [23, 23], grade = "inferred", from = "SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared)", doc = "Pending RTC comparator 0 interrupt, from the sequence and from Linux numbering comparators 1 to 3 as bits 24 to 26. Name is ours." }
 uart_int = { bits = [20, 20], grade = "established", doc = "Pending junk-bus UART interrupt." }
 rtc1_int = { bits = [24, 24], grade = "established", doc = "Pending RTC comparator 1 interrupt." }
 rtc2_int = { bits = [25, 25], grade = "established", doc = "Pending RTC comparator 2 interrupt." }
@@ -214,6 +219,110 @@ width = 16
 grade = "established"
 reset = "unknown"
 doc = "Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20."
+
+# Interrupt delivery registers the SAL 5.04 PROM and its SAL runtime program after the console start.
+# Linux v5.3 names none of them; every name below is ours. See interrupts.md.
+
+[registers.event_overflow]
+offset = 0x110010080
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it"
+doc = "Second event word next to event_occurred; only its alias is written by the PROM."
+
+[registers.event_overflow_alias]
+offset = 0x110010088
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa0bb46 (write 8)"
+doc = "Clear alias of event_overflow. The PROM writes 8 together with the same write to event_occurred_alias. Accepting the write is enough."
+
+[registers.ipi_int_enable]
+offset = 0x110000400
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads"
+doc = "Enable for ipi_int delivery (the PROM's table names it SH_IPI_INT_ENABLE). The PROM writes 1 before it sends wake-up messages and never reads it. That delivery depends on it is inferred."
+
+[registers.int_node_id_config]
+offset = 0x110000300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0)"
+doc = "Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role inferred."
+
+[registers.local_int_config]
+offset = 0x110000480
+count = 6
+stride = 0x100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9)"
+doc = "Destination of local interrupt n (0 to 5): the ipi_int message layout without the send bit. The PROM writes type 2 (PMI) vector 1 to interrupts 0 and 1 (slice pairs 0/1 and 2/3), type 5 (INIT) to interrupts 2 and 3 (slices 0 and 2) and vector 0xe9 (Linux SGI_UART_VECTOR) to interrupt 5. Never read. The pairing of these offsets with the PROM's SH_LOCAL_INTn_CONFIG names is by table order (inferred)."
+
+[registers.local_int_config.fields]
+type = { bits = [2, 0], grade = "established" }
+agent = { bits = [3, 3], grade = "established" }
+pid = { bits = [19, 4], grade = "established" }
+base = { bits = [49, 21], grade = "established" }
+idx = { bits = [59, 52], grade = "established" }
+
+[registers.local_int_enable]
+offset = 0x110000500
+count = 6
+stride = 0x100
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5)"
+doc = "Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the bits it treats as error events), 0x4000 and 0x2000. How a mask bit maps to an event_occurred bit is unknown. Never read."
+
+[registers.rtc0_int_config]
+offset = 0x110001380
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr"
+doc = "Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read."
+
+[registers.rtc0_int_enable]
+offset = 0x110001400
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0)"
+doc = "Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read."
+
+[registers.int_cmpa]
+offset = 0x1101b0000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks)"
+doc = "Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown."
+
+[registers.ptc_parms]
+offset = 0x1101a0100
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+doc = "Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the packing and meaning (a timeout) are not decoded. Neither the PROM nor the runtime stores to ptc itself."
 
 # Registers the SHub 1 PROM touches from reset to the console start (SAL 5.04). Linux v5.3 names none
 # of them; every name below is ours and says so. Offsets and use are from the PROM sites in each entry.

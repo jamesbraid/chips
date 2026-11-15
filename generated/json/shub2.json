@@ -158,7 +158,7 @@
    "kind": "register",
    "name": "event_occurred",
    "offset": 268500992,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
@@ -224,11 +224,56 @@
   {
    "unit": "shub2",
    "kind": "field",
+   "name": "event_occurred.rtc0_int",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared)"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.bit21",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000)"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
    "name": "event_occurred.uart_int",
    "hi": 20,
    "lo": 20,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.bit8",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef)"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.bit5",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef)"
+  },
+  {
+   "unit": "shub2",
+   "kind": "field",
+   "name": "event_occurred.bit3",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46"
   },
   {
    "unit": "shub2",

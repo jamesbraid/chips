@@ -23,15 +23,20 @@
     <doc>Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order.</doc>
     <field name="enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="EVENT_OCCURRED" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010000" access="r" reset="unknown">
-    <doc>Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them. Only bits the header names are recorded; the others are unknown.</doc>
+  <struct name="EVENT_OCCURRED" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010000" access="rw" reset="unknown">
+    <doc>Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.</doc>
     <field name="ii_int1" start="30" size="1" type="uint" grade="established"/>
     <field name="ii_int0" start="29" size="1" type="uint" grade="established"/>
     <field name="ipi_int" start="28" size="1" type="uint" grade="established"/>
     <field name="rtc3_int" start="26" size="1" type="uint" grade="established"/>
     <field name="rtc2_int" start="25" size="1" type="uint" grade="established"/>
     <field name="rtc1_int" start="24" size="1" type="uint" grade="established"/>
+    <field name="rtc0_int" start="23" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared)"/>
+    <field name="bit21" start="21" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000)"/>
     <field name="uart_int" start="20" size="1" type="uint" grade="established"/>
+    <field name="bit8" start="8" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef)"/>
+    <field name="bit5" start="5" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef)"/>
+    <field name="bit3" start="3" size="1" type="uint" grade="inferred" from="SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46"/>
   </struct>
   <struct name="EVENT_OCCURRED_ALIAS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10010008" access="w" reset="unknown">
     <doc>Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.</doc>
