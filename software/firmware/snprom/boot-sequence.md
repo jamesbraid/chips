@@ -581,8 +581,8 @@ expects. Architecture from the Intel Itanium Architecture Software Developer's M
 document 245318 (fetched from Intel's public PDF; the Library holds no copy; sha256 `f08296c0...949b029`). Image read with the
 retools `ia64-linux-gnu-objdump`, the top 256 bytes of the file and the 32 KiB block at `0xffff8000` taken as bundles.
 
-**Grades.** *established*: stated by the manual, or read in full from the image. *software expectation*: from a public
-driver. *inferred*: everything else.
+**Grades.** *established*: stated by the manual, or read in full from the image. *observed*: seen on real hardware by a
+third party. *software expectation*: from a public driver. *inferred*: everything else.
 
 ### What the manual fixes (established)
 
@@ -639,12 +639,40 @@ The vector bundles sit at 16-byte spacing just below the PAL_A FIT entry:
 | `0xFFFFFFA0` | `br.few` | `0xFFFF8DA0` |
 | `0xFFFFFFB0` | `[MBB]` `br.cond.spnt.few`, `br.many` (both the same target) | `0xFFFF83A0` |
 
-**Which one is PALE_RESET (software expectation).** The Linux KVM ia64 code defines `PALE_RESET_ENTRY` as
-`0x80000000ffffffb0` (`arch/ia64/kvm/kvm-ia64.c`, Library `linux-history`), and a 2001 linux-ia64 post names
-`...FFFFFF90` as PALE_CHECK and `...FFFFFFB0` as PALE_RESET on an earlier Itanium board. The image agrees in shape: the
-`0xFFFFFFB0` bundle is the only one with a two-branch bundle, and `0xFFFFFFA0`, `0xFFFFFF90` and `0xFFFFFF80` match the
-INIT, CHECK and PMI vector spacing. Taking `0xFFFFFFB0` as the entry: the processor's first bundle is the one at
-physical `0xFFFFFFB0` (the PROM's own pointers carry bit 63 for uncached; the vectors are not read through them).
+**Which one is PALE_RESET (inferred).** Three public sources and the image's own layout agree on `0xFFFFFFB0`; none
+states it for Itanium 2.
+
+- Intel patent US 7,305,544 B2, "Interleaved boot block to support multiple processor architectures" (FIG. 6
+  description; <https://patents.google.com/patent/US7305544B2/en>). The IA-32 reset vector is "by way of example"
+  `0xFFFFFFF0`; the Itanium-processor-family reset vector is "for example" `0xFFFFFFB0`; the processor then runs "a basic
+  initialization and check under PAL-A" and passes control to a SAL-A entry point. The FIG. 4 text calls the reset
+  vector "a PAL-A entry point", and the FIG. 3 text says the vector locations "may be hardwired into the CPUs". Established
+  as Intel's description; the address is given as an example, not as a specification.
+- linux-ia64 list, 2001-12-10, thread "[Linux-ia64] Hard hangs with 2.4.16" (Library root `linux-ia64-list`, message
+  id `marc-linux-ia64-105590698805668@msgid-missing`). An IBM engineer who had an ITP debugger on Intel Lion (Merced)
+  systems corrects an earlier line: `0x80000000FFFFFF90` is PALE_CHECK and `0x80000000FFFFFFB0` is PALE_RESET.
+  Observed on Itanium (Merced), not Itanium 2.
+- Itanium 2 Processor Hardware Developer's Manual 251109 (Library `docs/library/cache/cpu/itanium/`): after RESET# is
+  deasserted "each processor begins execution at the power-on reset vector defined during configuration" (section 3.2.1,
+  p. 3-4; PDF page 28), and, unless outputs are tristated during configuration, "the processor begins program execution
+  at the reset-vector" (appendix A.1.51, p. A-12; PDF page 64). It gives no address.
+- SDM volume 2, revision 2.3, Table 5-6 (p. 2:109): RESET is an abort and takes the PALE_RESET vector.
+- Intel's own server BIOS carries the same PAL_A (established, byte comparison; script run for this page). The Intel
+  SR870BN4 (Tiger4) BIOS image `S870BN4C.BIN` from package `SR870BN4_1001_SUP3.ZIP` (5,111,342 bytes, sha256
+  `fb422439a42e3d06fe5286c68942c03293868cdde07891758437d4f98642d252`; taken from a Wayback capture of Intel's
+  download) ends at physical 4 GiB like the SGI image. The 0x70 bytes of SGI's vector region (`0xFFFFFF50` to
+  `0xFFFFFFBF`) occur byte for byte exactly once in it, at file offset `0x4dfd7e`, its own top-of-flash vector region.
+  Of the 511 aligned 64-byte windows of SGI's generic PAL_A (`0xffff8000` to `0xffffffbf`), 510 occur in the Intel
+  image; the one that does not is the first, at `0xffff8000`. In the top 64 bytes (`0xFFFFFFC0` to `0xFFFFFFFF`) the
+  two images differ only in the alternate FIT address, the PAL_A FIT entry's version and checksum bytes, the FIT and
+  SALE_ENTRY pointers, the date string ("11/02/99" on SGI, "01/01/01" on Intel) and the final byte. So the generic
+  PAL_A and its hardware entry vectors are Intel's common code, the same on SGI and Intel platforms. That makes
+  Intel's patent and the ITP trace evidence about this PAL_A's vector layout; the reset address for Madison stays
+  inferred, because neither names Madison silicon.
+- The image's layout: `0xFFFFFF90` and `0xFFFFFFA0` hand off to PAL_B and are the CHECK and INIT pair, and
+  `0xFFFFFFB0` is the only two-branch bundle, as in the patent's vector. Taking `0xFFFFFFB0` as the entry: the
+  processor's first bundle is the one at physical `0xFFFFFFB0` (the PROM's own pointers carry bit 63 for uncached; the
+  vectors are not read through them).
 
 ### The code at the entry (established decode, inferred meaning)
 
@@ -661,8 +689,8 @@ br.ia.sptk b0
 It reads no general or branch register: every source is an immediate or a register it wrote. It writes two
 model-specific registers (numbers 212 and 1225; their meaning is unknown, these are processor-specific `msr` accesses
 the SDM does not define) and executes `br.ia`, the switch to the IA-32 instruction set, with `b0` set to
-`0xffffffe0`. This is an IA-32 hand-off from reset, consistent with the manual's allowance for IA-32 code in PALE_RESET
-and with the 16 bytes at `0xFFFFFFF0`. Whether code at the `br.ia` target exists, and where control goes afterwards, is read in [the vector map](#the-vector-map) below: the target holds the two pointers, not instructions.
+`0xffffffe0`. The reading as an IA-32 hand-off is superseded: see [the br.ia sites](#the-bria-sites-what-they-are-not-established-and-what-they-might-be-inferred)
+and the conclusion. Whether code at the `br.ia` target exists, and where control goes afterwards, is read in [the vector map](#the-vector-map) below: the target holds the two pointers, not instructions.
 
 The native path the architecture describes is at `0xFFFF83F0` (entered from the `0xFFFFFF70` bundle): `alloc
 r1=ar.pfs,96,0,0`, `mov pr=r0,...`, `mov r3=3`, `mov r71=cpuid[3]`, reads `cr.ifs`, loads `cr.ipsr = 0x100800000000`
@@ -675,7 +703,7 @@ instructions as read; whether hardware starts here or at `0xFFFFFFB0` first is t
 
 ### Answer for an IA-64 CPU model
 
-1. The first instruction fetched is the bundle at physical `0xFFFFFFB0` (software expectation, not stated by the SDM),
+1. The first instruction fetched is the bundle at physical `0xFFFFFFB0` (inferred; the SDM gives no address, Intel's patent and a Merced trace do),
    uncached firmware space, executing in place from flash.
 2. It branches to `0xFFFF83A0` in the generic PAL_A (`0xffff8000` to `0xffffffbf`, FIT entry at `0xFFFFFFD0`, type 0x0f).
 3. No register is read at entry; the processor's reset state (PSR bits, ITC, IP) is only the processor manual's
@@ -709,8 +737,9 @@ gives the same CPUID family and model as `cpuid[3]` and a revision byte not belo
 processor's own value, meaning unknown), then adds `0x10080` or
 `0x10070` to the image address (bit 63 set) and branches there with the old `b0` kept in `r31`. If `msr` 1640 bit 56
 is clear it takes the generic error path at `0xFFFF8120` with `r30 = 2`; a FIT type above 1 gives `r30 = 12`. Which
-of the two vectors is machine check and which is INIT is not decided by the code: a 2001 linux-ia64 post calls
-`0xFFFFFF90` PALE_CHECK (one source, software expectation), which would make `0xFFFFFFA0` PALE_INIT.
+of the two vectors is machine check and which is INIT is not decided by the code: a 2001 linux-ia64 post, from
+an ITP on Merced systems, calls `0xFFFFFF90` PALE_CHECK (observed on Itanium, see above), which would make
+`0xFFFFFFA0` PALE_INIT.
 
 ### The generic PAL_A search and the hand-off (established)
 
@@ -777,12 +806,20 @@ by CPUID revision before continuing; that part is not read further here.
 - *Established*: the vector bundles `0xFFFFFF90` and `0xFFFFFFA0` are the two entries that hand off to PAL_B.
   *Inferred*: they are what the SDM calls PALE_CHECK and PALE_INIT (the names are the SDM's, the pairing is from what
   the code does).
-- *Inferred*: the SDM lists three hardware entrypoints (PALE_RESET, PALE_INIT, PALE_CHECK), and the image has four
-  that do something: `0xFFFFFF70`, `0xFFFFFF90`, `0xFFFFFFA0`, `0xFFFFFFB0`. So either `0xFFFFFF70` or `0xFFFFFFB0`
-  is not entered by the processor. Hardware entering at `0xFFFFFFB0` (the address Linux KVM uses, and that an earlier
-  Itanium board's post gives) needs the `br.ia` there to be a processor operation that continues at `0xFFFFFF70`;
-  the code shows no way for it to do so by itself. Hardware entering at `0xFFFFFF70` leaves `0xFFFFFFB0` as an
-  alternative reset path (for example the IA-32 reset case the SDM allows).
-- *Unknown*: which of the two silicon uses on a power-on reset. The image cannot settle it. A software model gets the
-  same SAL-visible result by starting at `0xFFFFFF70`, which needs only `cpuid[3]`, `cr.ifs` and a readable FIT, and by
-  not depending on the `msr` writes or `br.ia` semantics at `0xFFFFFFB0`.
+- *Inferred, strongly supported*: PALE_RESET is at `0xFFFFFFB0` for Madison, from Intel's patent, the Merced trace and
+  this image's vector layout, with `0xFFFFFF90` and `0xFFFFFFA0` as the PAL_B hand-offs (sources above). The SDM's three
+  hardware entrypoints (PALE_RESET, PALE_INIT, PALE_CHECK) then map to `0xFFFFFFB0`, `0xFFFFFFA0` and `0xFFFFFF90`, and
+  `0xFFFFFF70` would be reached only through the `0xFFFFFFB0` stub, not directly by the processor.
+- *Established decode, unknown effect*: elsewhere in this PAL_A `br.ia` behaves as a processor-internal service call
+  (arguments `r2`, `r3`, `r5`, result `r1`, continue at `b0`). The `0xFFFFFFB0` stub passes `r5 = 1` with `b0 =
+  0xffffffe0`, the address of the FIT pointer. What the processor does then is unknown; continuation into the
+  `0xFFFFFF70` cold-start path is the consistent inferred reading, since that is the only code that reaches
+  processor-specific PAL_A.
+- *Inferred*: the entry instruction set is IA-64. Entry register and PSR state is not stated in any public source read
+  (the SDM defines only the state handed to SALE_ENTRY).
+- A software model gets the same SAL-visible result by starting at `0xFFFFFF70`, which needs only `cpuid[3]`, `cr.ifs`
+  and a readable FIT, and by not depending on the `msr` writes or `br.ia` semantics at `0xFFFFFFB0`.
+
+**Leads.** An HP zx2000 emulator at <https://thebrokenpipe.com/ia64/zx2000/> reportedly boots real zx2000 firmware
+(binary only; another project's work, so confirmation only, not a source).
+
