@@ -27,15 +27,180 @@ pub mod chip_id {
         }
     }
 }
+/// Memory test engine status; the name is ours. Written 0 at engine start. The memory-test loop reads bit 36 after every engine run (site 0xffa702c0) and (inferred)
+pub mod md_mbist_status {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100000080;
+    pub mod cmp_err { // bits 36:36, inferred
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a p (inferred)
+pub mod md_mbist_err {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1000000b8;
+}
+/// Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts. (inferred)
+pub mod md_mbist_mask {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1000000c0;
+}
+/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 0 of the memory controller set-up (node-bringup.md: timing index in (inferred)
+pub mod md_bank_cfg0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010000;
+}
+/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 1; read once first, then written. (inferred)
+pub mod md_bank_cfg1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010008;
+}
+/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 2; the memory test driver reads each bank's config byte here and sk (inferred)
+pub mod md_bank_cfg2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010010;
+}
+/// Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or (inferred)
+pub mod md_timing_0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010020;
+}
+/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written. (inferred)
+pub mod md_timing_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010028;
+}
+/// Memory controller register, unnamed; the name is ours. Refresh interval 195 in bits 16:8 (overridable by the MemoryRefresh variable), tRFC clocks in b (inferred)
+pub mod md_refresh_0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010030;
+}
+/// Memory controller register, unnamed; the name is ours. Paired with md_timing_0 (same layout, per node-bringup.md); read then written. (inferred)
+pub mod md_timing_2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010040;
+}
+/// Memory controller register, unnamed; the name is ours. Second copy of md_timing_1's layout; read then written. (inferred)
+pub mod md_timing_3 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010048;
+}
+/// Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. (inferred)
+pub mod md_refresh_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010050;
+}
+/// Memory controller register, unnamed; the name is ours. Written with the constant 0x4004e20 (node-bringup.md). (inferred)
+pub mod md_const_58 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010058;
+}
+/// Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision spl (inferred)
+pub mod md_ctl_60 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010060;
+}
+/// Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md). (inferred)
+pub mod md_const_78 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010078;
+}
+/// Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's word before md_mbist_ctl. The meaning (inferred)
+pub mod md_mbist_cmd {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100020080;
+}
+/// Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status an (inferred)
+pub mod md_mbist_ctl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100020088;
+    pub mod fail { // bits 41:41, inferred
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod go { // bits 40:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod op { // bits 38:32, inferred
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod value { // bits 30:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7fffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege  (established)
 pub mod md_dqlp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100030300;
 }
+/// Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offs (established)
+pub mod md_dir_access_lp {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100031000;
+    pub mod value { // bits 63:55, inferred
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names. (established)
 pub mod md_dqrp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050300;
+}
+/// As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours. (established)
+pub mod md_dir_access_rp {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100051000;
+    pub mod value { // bits 63:55, inferred
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR windo (established)
 pub mod ipi_int {
@@ -308,6 +473,21 @@ pub mod ipi_access {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110060480;
 }
+/// DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (20 (inferred)
+pub mod md_clk_sel {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060500;
+    pub mod sel { // bits 1:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in t (established)
 pub mod shub_id {
     pub const WIDTH: u32 = 64;
@@ -467,12 +647,42 @@ pub mod lb_lock_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0208;
 }
+/// Processor interface register, unnamed; the name is ours. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when th (established)
+pub mod pi_reg_2000_0000 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120000000;
+}
+/// Processor interface register, unnamed; the name is ours. A routine reached through a table that also writes pi_cam_control reads this register and wri (inferred)
+pub mod pi_reg_2000_0180 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120000180;
+}
 /// Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. S (established)
 pub mod pi_reg_2001_0100 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120010100;
     pub mod bit24 { // bits 24:24, inferred
         pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit17 { // bits 17:17, inferred
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit3 { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
@@ -511,6 +721,21 @@ pub mod pi_slice_present {
 pub mod pi_cam_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120050300;
+}
+/// Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control  (inferred)
+pub mod pi_reg_2006_0100 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060100;
+}
+/// Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100. (inferred)
+pub mod pi_reg_2006_0180 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060180;
+}
+/// Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100. (inferred)
+pub mod pi_reg_2006_0200 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060200;
 }
 /// PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O wr (established)
 pub mod pio_write_status {

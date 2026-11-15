@@ -19,16 +19,151 @@
 #define SHUB_CHIP_ID_PART_NUMBER_INPLACE             (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
 
 /*
+ * Memory test engine status; the name is ours. Written 0 at engine start. The memory-test loop reads bit 36 after every engine run (site 0xffa702c0) and treats it set as failure (-2), so it must read 0 on a passing run; the error report reads it again and then md_mbist_err. The directory write does not test it. The flag name (compare error) is inferred.
+ */
+/* md_mbist_status: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read on failure per the earlier reviewed reading; no Linux v5.3 name */
+#define SHUB_MD_MBIST_STATUS                         0x100000080 /* inferred */
+#define SHUB_MD_MBIST_STATUS_CMP_ERR_SHIFT           36 /* inferred */
+#define SHUB_MD_MBIST_STATUS_CMP_ERR_MASK            0x1ull
+#define SHUB_MD_MBIST_STATUS_CMP_ERR_INPLACE         (SHUB_MD_MBIST_STATUS_CMP_ERR_MASK << SHUB_MD_MBIST_STATUS_CMP_ERR_SHIFT)
+
+/*
+ * Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run.
+ */
+/* md_mbist_err: r64, reset unknown; SAL 5.04 PROM site 0xffa725f6 (read in the failure report, per the earlier reviewed reading); no Linux v5.3 name */
+#define SHUB_MD_MBIST_ERR                            0x1000000b8 /* inferred */
+
+/*
+ * Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts.
+ */
+/* md_mbist_mask: w64, reset unknown; SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name */
+#define SHUB_MD_MBIST_MASK                           0x1000000c0 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Per-bank configuration word 0 of the memory controller set-up (node-bringup.md: timing index in bits 35:32 and one byte per bank at bit 8k with density index in 2:0, rank code in 3 and bank number in 6:5; not re-read for this file).
+ */
+/* md_bank_cfg0: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_BANK_CFG0                            0x100010000 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Per-bank configuration word 1; read once first, then written.
+ */
+/* md_bank_cfg1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_BANK_CFG1                            0x100010008 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Per-bank configuration word 2; the memory test driver reads each bank's config byte here and skips banks whose density index is 7 (empty).
+ */
+/* md_bank_cfg2: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_BANK_CFG2                            0x100010010 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file). Read then written.
+ */
+/* md_timing_0: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_TIMING_0                             0x100010020 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written.
+ */
+/* md_timing_1: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_TIMING_1                             0x100010028 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Refresh interval 195 in bits 16:8 (overridable by the MemoryRefresh variable), tRFC clocks in bits 22:17 and per-bank enables (node-bringup.md; not re-read for this file).
+ */
+/* md_refresh_0: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_REFRESH_0                            0x100010030 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Paired with md_timing_0 (same layout, per node-bringup.md); read then written.
+ */
+/* md_timing_2: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_TIMING_2                             0x100010040 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Second copy of md_timing_1's layout; read then written.
+ */
+/* md_timing_3: rw64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_TIMING_3                             0x100010048 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout.
+ */
+/* md_refresh_1: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_REFRESH_1                            0x100010050 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Written with the constant 0x4004e20 (node-bringup.md).
+ */
+/* md_const_58: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_CONST_58                             0x100010058 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision split as pi_reg_2000_0000's OR value).
+ */
+/* md_ctl_60: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_CTL_60                               0x100010060 /* inferred */
+
+/*
+ * Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md).
+ */
+/* md_const_78: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
+#define SHUB_MD_CONST_78                             0x100010078 /* inferred */
+
+/*
+ * Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's word before md_mbist_ctl. The meaning of the word is unknown; it is plain storage as far as the PROM shows.
+ */
+/* md_mbist_cmd: w64, reset unknown; SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name */
+#define SHUB_MD_MBIST_CMD                            0x100020080 /* inferred */
+
+/*
+ * Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and all ones to md_mbist_mask, then this register with go set, an operation code in bits 38:32 and a 31-bit value. It then polls: while (value & 0x300_0000_0000) equals 0x100_0000_0000 (go set, fail clear) it waits; it stops when go clears or fail sets, with a deadline of 20,000,000 microseconds on the PROM's own clock routine (the routine site 0xffa0da70 returns microseconds). Fail set afterwards is an error. A model where go clears at once and fail never sets satisfies the code.
+ */
+/* md_mbist_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c (poll), 0xffa6b1dc (failure test); no Linux v5.3 name */
+#define SHUB_MD_MBIST_CTL                            0x100020088 /* inferred */
+#define SHUB_MD_MBIST_CTL_FAIL_SHIFT                 41 /* inferred */
+#define SHUB_MD_MBIST_CTL_FAIL_MASK                  0x1ull
+#define SHUB_MD_MBIST_CTL_FAIL_INPLACE               (SHUB_MD_MBIST_CTL_FAIL_MASK << SHUB_MD_MBIST_CTL_FAIL_SHIFT)
+#define SHUB_MD_MBIST_CTL_GO_SHIFT                   40 /* inferred */
+#define SHUB_MD_MBIST_CTL_GO_MASK                    0x1ull
+#define SHUB_MD_MBIST_CTL_GO_INPLACE                 (SHUB_MD_MBIST_CTL_GO_MASK << SHUB_MD_MBIST_CTL_GO_SHIFT)
+#define SHUB_MD_MBIST_CTL_OP_SHIFT                   32 /* inferred */
+#define SHUB_MD_MBIST_CTL_OP_MASK                    0x7full
+#define SHUB_MD_MBIST_CTL_OP_INPLACE                 (SHUB_MD_MBIST_CTL_OP_MASK << SHUB_MD_MBIST_CTL_OP_SHIFT)
+#define SHUB_MD_MBIST_CTL_VALUE_SHIFT                0 /* inferred */
+#define SHUB_MD_MBIST_CTL_VALUE_MASK                 0x7fffffffull
+#define SHUB_MD_MBIST_CTL_VALUE_INPLACE              (SHUB_MD_MBIST_CTL_VALUE_MASK << SHUB_MD_MBIST_CTL_VALUE_SHIFT)
+
+/*
  * Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
  */
 /* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300 /* established */
 
 /*
+ * Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status.
+ */
+/* md_dir_access_lp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name */
+#define SHUB_MD_DIR_ACCESS_LP                        0x100031000 /* established */
+#define SHUB_MD_DIR_ACCESS_LP_VALUE_SHIFT            55 /* inferred */
+#define SHUB_MD_DIR_ACCESS_LP_VALUE_MASK             0x1ffull
+#define SHUB_MD_DIR_ACCESS_LP_VALUE_INPLACE          (SHUB_MD_DIR_ACCESS_LP_VALUE_MASK << SHUB_MD_DIR_ACCESS_LP_VALUE_SHIFT)
+
+/*
  * Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names.
  */
 /* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300 /* established */
+
+/*
+ * As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours.
+ */
+/* md_dir_access_rp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name */
+#define SHUB_MD_DIR_ACCESS_RP                        0x100051000 /* established */
+#define SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT            55 /* inferred */
+#define SHUB_MD_DIR_ACCESS_RP_VALUE_MASK             0x1ffull
+#define SHUB_MD_DIR_ACCESS_RP_VALUE_INPLACE          (SHUB_MD_DIR_ACCESS_RP_VALUE_MASK << SHUB_MD_DIR_ACCESS_RP_VALUE_SHIFT)
 
 /*
  * Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.
@@ -157,6 +292,15 @@
 #define SHUB_IPI_ACCESS                              0x110060480 /* established */
 
 /*
+ * DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (200, 160, 133 and 100 MHz for 0 to 3, per the earlier reading). The chosen clock and the DIMM's CAS latency must be a pair the PROM supports or it prints that the memory bus speed is not supported. In the local block by address. Linux does not define it: the position and use are as observed in the PROM, the meaning (bus clock select) is inferred.
+ */
+/* md_clk_sel: r64, reset unknown; SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name */
+#define SHUB_MD_CLK_SEL                              0x110060500 /* inferred */
+#define SHUB_MD_CLK_SEL_SEL_SHIFT                    0 /* inferred */
+#define SHUB_MD_CLK_SEL_SEL_MASK                     0x3ull
+#define SHUB_MD_CLK_SEL_SEL_INPLACE                  (SHUB_MD_CLK_SEL_SEL_MASK << SHUB_MD_CLK_SEL_SEL_SHIFT)
+
+/*
  * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32; the reset value is unknown. See prom-reset.md.
  */
 /* shub_id: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
@@ -248,6 +392,18 @@
 #define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
 
 /*
+ * Processor interface register, unnamed; the name is ours. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again. SAL_A's error path writes 0x1000100000000 here (bits 48 and 32) and spins. What the bits mean is unknown; that the OR value splits at revision 2 is established (the same split as the memory controller's 0x4047 and 0x4045).
+ */
+/* pi_reg_2000_0000: rw64, reset unknown; SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path); no Linux v5.3 name */
+#define SHUB_PI_REG_2000_0000                        0x120000000 /* established */
+
+/*
+ * Processor interface register, unnamed; the name is ours. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. Meaning unknown.
+ */
+/* pi_reg_2000_0180: rw64, reset unknown; SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696; no Linux v5.3 name */
+#define SHUB_PI_REG_2000_0180                        0x120000180 /* inferred */
+
+/*
  * Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written.
  */
 /* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
@@ -255,6 +411,12 @@
 #define SHUB_PI_REG_2001_0100_BIT24_SHIFT            24 /* inferred */
 #define SHUB_PI_REG_2001_0100_BIT24_MASK             0x1ull
 #define SHUB_PI_REG_2001_0100_BIT24_INPLACE          (SHUB_PI_REG_2001_0100_BIT24_MASK << SHUB_PI_REG_2001_0100_BIT24_SHIFT)
+#define SHUB_PI_REG_2001_0100_BIT17_SHIFT            17 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT17_MASK             0x1ull
+#define SHUB_PI_REG_2001_0100_BIT17_INPLACE          (SHUB_PI_REG_2001_0100_BIT17_MASK << SHUB_PI_REG_2001_0100_BIT17_SHIFT)
+#define SHUB_PI_REG_2001_0100_BIT3_SHIFT             3 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT3_MASK              0x1ull
+#define SHUB_PI_REG_2001_0100_BIT3_INPLACE           (SHUB_PI_REG_2001_0100_BIT3_MASK << SHUB_PI_REG_2001_0100_BIT3_SHIFT)
 
 /*
  * Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and tests bit slice; a set bit makes the PROM count that processor present and wait for it (up to 5,000,000 microseconds). On a one-processor node the bit for every other slice must read 0. The meaning (processor present) is inferred from that use. Later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor); the own-slice bit they expect was not traced, so a model should set it.
@@ -269,10 +431,28 @@
 #define SHUB_PI_SLICE_PRESENT_PRESENT_INPLACE        (SHUB_PI_SLICE_PRESENT_PRESENT_MASK << SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT)
 
 /*
- * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown.
+ * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown.
  */
 /* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_PI_CAM_CONTROL                          0x120050300 /* established */
+
+/*
+ * Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control write; the value is stored for a later report. Any value is tolerated (inferred; the consumer was not traced).
+ */
+/* pi_reg_2006_0100: r64, reset unknown; SAL 5.04 PROM site 0xffa246a6 (read after the pi_cam_control write); no Linux v5.3 name */
+#define SHUB_PI_REG_2006_0100                        0x120060100 /* inferred */
+
+/*
+ * Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100.
+ */
+/* pi_reg_2006_0180: r64, reset unknown; SAL 5.04 PROM site 0xffa246d6; no Linux v5.3 name */
+#define SHUB_PI_REG_2006_0180                        0x120060180 /* inferred */
+
+/*
+ * Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100.
+ */
+/* pi_reg_2006_0200: r64, reset unknown; SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name */
+#define SHUB_PI_REG_2006_0200                        0x120060200 /* inferred */
 
 /*
  * PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.

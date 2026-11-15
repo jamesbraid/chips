@@ -171,7 +171,7 @@ access = "w"
 width = 64
 grade = "established"
 reset = "unknown"
-doc = "Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown."
+doc = "Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown."
 
 [registers.ptc]
 offset = 0x1101a0000
@@ -238,6 +238,8 @@ doc = "Processor interface register, unnamed (the block is inferred from the nei
 
 [registers.pi_reg_2001_0100.fields]
 bit24 = { bits = [24, 24], grade = "inferred", from = "SAL 5.04 PROM site 0xffc4e816 and 0xffa97796", doc = "Set by SAL_A; set before and cleared after the PROM's writes to 0x120000000 in a SAL_B routine. Role inferred from that bracket; name is ours." }
+bit3 = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)", doc = "Set, cleared and tested by SAL_B routines (read-modify-write); role not decoded. Name is ours." }
+bit17 = { bits = [17, 17], grade = "inferred", from = "SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)", doc = "Set by a local SAL_B routine and tested across nodes, so it carries a per-node flag; role not decoded. Name is ours." }
 
 [registers.cpu_hist]
 offset = 0x150031500
@@ -375,3 +377,254 @@ doc = "Chip identification word at node offset 0x1_0000_0000 (memory and directo
 [registers.chip_id.fields]
 part_number = { bits = [27, 12], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0f8c0 and 0xffa959a6", doc = "Part number; the PROM expects 0x4363 (17251). Inferred: the compare's input is not traced to this word." }
 revision = { bits = [31, 28], grade = "established", from = "SAL 5.04 PROM site 0xffa0f8c0 (stored)", doc = "Revision as stored by the PROM; no value is required here." }
+
+# Registers the single-node bring-up uses before memory is up (SAL 5.04, node-bringup.md; graded as that page grades
+# them, mostly inferred). Linux v5.3 names none of them; every name below is ours and says so. Where the field layout was
+# re-read in the image for this file it is given; otherwise only the access and the offset are recorded.
+
+[registers.pi_reg_2000_0000]
+offset = 0x120000000
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path); no Linux v5.3 name"
+doc = "Processor interface register, unnamed; the name is ours. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again. SAL_A's error path writes 0x1000100000000 here (bits 48 and 32) and spins. What the bits mean is unknown; that the OR value splits at revision 2 is established (the same split as the memory controller's 0x4047 and 0x4045)."
+
+[registers.pi_reg_2000_0180]
+offset = 0x120000180
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696; no Linux v5.3 name"
+doc = "Processor interface register, unnamed; the name is ours. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. Meaning unknown."
+
+[registers.pi_reg_2006_0100]
+offset = 0x120060100
+access = "r"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa246a6 (read after the pi_cam_control write); no Linux v5.3 name"
+doc = "Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control write; the value is stored for a later report. Any value is tolerated (inferred; the consumer was not traced)."
+
+[registers.pi_reg_2006_0180]
+offset = 0x120060180
+access = "r"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa246d6; no Linux v5.3 name"
+doc = "Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100."
+
+[registers.pi_reg_2006_0200]
+offset = 0x120060200
+access = "r"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name"
+doc = "Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100."
+
+[registers.md_clk_sel]
+offset = 0x110060500
+access = "r"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name"
+doc = "DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (200, 160, 133 and 100 MHz for 0 to 3, per the earlier reading). The chosen clock and the DIMM's CAS latency must be a pair the PROM supports or it prints that the memory bus speed is not supported. In the local block by address. Linux does not define it: the position and use are as observed in the PROM, the meaning (bus clock select) is inferred."
+
+[registers.md_clk_sel.fields]
+sel = { bits = [1, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa77e20", doc = "Clock table index. Name is ours." }
+
+[registers.md_mbist_cmd]
+offset = 0x100020080
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name"
+doc = "Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's word before md_mbist_ctl. The meaning of the word is unknown; it is plain storage as far as the PROM shows."
+
+[registers.md_mbist_ctl]
+offset = 0x100020088
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c (poll), 0xffa6b1dc (failure test); no Linux v5.3 name"
+doc = "Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and all ones to md_mbist_mask, then this register with go set, an operation code in bits 38:32 and a 31-bit value. It then polls: while (value & 0x300_0000_0000) equals 0x100_0000_0000 (go set, fail clear) it waits; it stops when go clears or fail sets, with a deadline of 20,000,000 microseconds on the PROM's own clock routine (the routine site 0xffa0da70 returns microseconds). Fail set afterwards is an error. A model where go clears at once and fail never sets satisfies the code."
+
+[registers.md_mbist_ctl.fields]
+value = { bits = [30, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6fbe6 (mask 0x7fffffff)", doc = "Operand written with the operation. Name is ours." }
+op = { bits = [38, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6fc26 (seven-bit deposit at bit 32)", doc = "Operation code: 64 for the directory write, 48 and 16 for the memory test, 7, 2, 0, 0, 2, 1, 1, 0 for the first DRAM initialisation sequence (earlier reading, meaning inferred). Name is ours." }
+go = { bits = [40, 40], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6fc16 (constant 0x10000000000) and the poll site 0xffa6fd40", doc = "Written 1 to start; reads 1 while the engine runs. The PROM waits for it to clear. Name is ours." }
+fail = { bits = [41, 41], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6fd40 (mask 0x30000000000) and 0xffa6b1e6 (bit test)", doc = "Set when the operation failed; the PROM stops polling when it sets and reports an error. Name is ours." }
+
+[registers.md_mbist_status]
+offset = 0x100000080
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read on failure per the earlier reviewed reading; no Linux v5.3 name"
+doc = "Memory test engine status; the name is ours. Written 0 at engine start. The memory-test loop reads bit 36 after every engine run (site 0xffa702c0) and treats it set as failure (-2), so it must read 0 on a passing run; the error report reads it again and then md_mbist_err. The directory write does not test it. The flag name (compare error) is inferred."
+
+[registers.md_mbist_status.fields]
+cmp_err = { bits = [36, 36], grade = "inferred", from = "SAL 5.04 PROM site 0xffa702c0 and 0xffa72500, per the node-bringup.md review", doc = "Set means the engine run failed. Name is ours." }
+
+[registers.md_mbist_mask]
+offset = 0x1000000c0
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name"
+doc = "Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts."
+
+[registers.md_mbist_err]
+offset = 0x1000000b8
+access = "r"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa725f6 (read in the failure report, per the earlier reviewed reading); no Linux v5.3 name"
+doc = "Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run."
+
+[registers.md_dir_access_lp]
+offset = 0x100031000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name"
+doc = "Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status."
+
+[registers.md_dir_access_lp.fields]
+value = { bits = [63, 55], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6b076 (shift left 55)", doc = "The caller's value shifted left 55. The width of the field is inferred from the shift; name is ours." }
+
+[registers.md_dir_access_rp]
+offset = 0x100051000
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name"
+doc = "As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours."
+
+[registers.md_dir_access_rp.fields]
+value = { bits = [63, 55], grade = "inferred", from = "SAL 5.04 PROM site 0xffa6b076", doc = "As md_dir_access_lp. Name is ours." }
+
+# Memory controller block (offsets 0x1_0001_0000 to 0x1_0001_0078), programmed by the memory initialisation routine at
+# site 0xffa76bf0 from the DIMM data the L1 returns. Registers, not fields: the layouts in the docs are node-bringup.md's
+# reading and were not re-read for this file, so every entry is graded inferred.
+
+[registers.md_bank_cfg0]
+offset = 0x100010000
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Per-bank configuration word 0 of the memory controller set-up (node-bringup.md: timing index in bits 35:32 and one byte per bank at bit 8k with density index in 2:0, rank code in 3 and bank number in 6:5; not re-read for this file)."
+
+[registers.md_bank_cfg1]
+offset = 0x100010008
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Per-bank configuration word 1; read once first, then written."
+
+[registers.md_bank_cfg2]
+offset = 0x100010010
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Per-bank configuration word 2; the memory test driver reads each bank's config byte here and skips banks whose density index is 7 (empty)."
+
+[registers.md_timing_0]
+offset = 0x100010020
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file). Read then written."
+
+[registers.md_timing_1]
+offset = 0x100010028
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). Read then written."
+
+[registers.md_refresh_0]
+offset = 0x100010030
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Refresh interval 195 in bits 16:8 (overridable by the MemoryRefresh variable), tRFC clocks in bits 22:17 and per-bank enables (node-bringup.md; not re-read for this file)."
+
+[registers.md_timing_2]
+offset = 0x100010040
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Paired with md_timing_0 (same layout, per node-bringup.md); read then written."
+
+[registers.md_timing_3]
+offset = 0x100010048
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Second copy of md_timing_1's layout; read then written."
+
+[registers.md_refresh_1]
+offset = 0x100010050
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout."
+
+[registers.md_const_58]
+offset = 0x100010058
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Written with the constant 0x4004e20 (node-bringup.md)."
+
+[registers.md_ctl_60]
+offset = 0x100010060
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision split as pi_reg_2000_0000's OR value)."
+
+[registers.md_const_78]
+offset = 0x100010078
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+doc = "Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md)."
