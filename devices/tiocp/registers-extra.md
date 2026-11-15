@@ -232,6 +232,95 @@ Read response RAM, parity bank. Offset and name are the header definition. Acces
 
 Array of 512 registers, stride 8.
 
+## Words
+
+| Word | Width | Grade | Source |
+|---|---|---|---|
+| `ATE` | 64 | established |  |
+| `CONTROL_BITS` | 64 | established |  |
+| `DEVICE_BITS` | 64 | established |  |
+| `ID` | 32 | established |  |
+| `INT_ADDR` | 64 | established |  |
+| `INT_PIN_BITS` | 64 | established |  |
+| `PCI32_MAPPED_ADDR` | 32 | established |  |
+| `PCI64_DMA_ADDR` | 64 | established |  |
+
+### Word `ATE`
+
+Low flag bits of an internal address translation entry, the 64-bit word the provider stores at the translation RAM (the internal translation RAM). The page address is the physical page number placed at bit 12 (PCI32_ATE_ADDR_SHFT is 12; the kernel ORs the page-aligned address in directly). The top of the address field and any other bits are not defined by the code (unknown). Bit 1 is a different property on the PIC (coherent).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 4 | `bar` | established |  |  | BAR attribute, set for consistent mappings; the code does not expand the name. |
+| 3 | `pref` | established |  |  | Prefetch. The kernel clears it in PCI-X mode. |
+| 2 | `msi` | established |  |  | Mapping is for a message-signalled interrupt. |
+| 1 | `pio` | established |  |  | TIOCP only: programmed I/O. Set together with msi when the mapping is for a message-signalled interrupt. |
+| 0 | `valid` | established |  |  | Entry valid. |
+
+### Word `CONTROL_BITS`
+
+The one bit of the control register (census register at 0x20, `cp_control`) that the Linux provider sets by name; no other control field is defined by code read for this page.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 21 | `page_size` | established |  |  | I/O page size: the provider clears it for kernel pages below 16 KiB (4 KiB I/O pages) and sets it otherwise (16 KiB). |
+
+### Word `DEVICE_BITS`
+
+The one bit of a device register (`cp_device[n]`) the Linux provider tests. It tests a copy the firmware supplied, not a read of the register.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 19 | `swap_dir` | established |  |  | Direct-mapped swap: when set the provider sets the swap bit in the 32-bit mapped address it hands out. |
+
+### Word `ID`
+
+Widget identification word as the Linux code splits every Crosstalk-style widget id: the same layout the PIC page records. The TIOCP's own part number is not named by the v5.3 code (unknown here; the IRIX accessors accept two, see the chip page). Bit 0 and the layout of the upper half of the 64-bit register are not defined by the code.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 31:28 | `rev` | established |  |  | Revision. The flush workaround is keyed by the revision of the TIO, not of this widget. |
+| 27:12 | `part` | established |  |  |  |
+| 11:1 | `mfg` | established |  |  |  |
+
+### Word `INT_ADDR`
+
+Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the destination field, then ORs in the Crosstalk address the pin's interrupt write goes to, masked to the field. Other bits are preserved and not defined by the code.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 53:0 | `addr` | established |  |  | Destination address of the interrupt write; 48 bits on the PIC. |
+
+### Word `INT_PIN_BITS`
+
+Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 7:0 | `pin` | established |  |  | Pin n at bit n, n from 0 to 7 (the arrays have eight entries). |
+
+### Word `PCI32_MAPPED_ADDR`
+
+A 32-bit bus address the provider hands out for a translation-entry mapping: 0x40000000 plus the offset in the page plus the I/O page size times the entry index, with bit 29 set when the device's endian swap is on. Addresses from 0x80000000 are the 2 GiB direct window (PCI32_DIRECT_BASE) instead. The kernel refuses the 2 GiB direct window in PCI-X mode on either chip and refuses entry mappings in PCI-X mode on the PIC only, so the TIOCP maps 32-bit addresses through entries there.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 29 | `swap` | established |  |  | Swap on: set by the provider when the device register has its direction-swap bit. |
+
+### Word `PCI64_DMA_ADDR`
+
+The 64-bit direct DMA address a device is given: the DMA view of the memory address with attribute bits ORed in. On the PIC bits 63:60 name the target widget instead of the command type. Memory address width and the meaning of bits 63:62 are not defined by the code (unknown).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 61:60 | `cmdtype` | established |  |  | Command type: 1 memory, 3 message-signalled interrupt (constants PCI64_CMDTYPE_MEM and _MSI). |
+| 59 | `pref` | established |  |  | Prefetch. The kernel clears it in PCI-X mode. |
+| 58 | `prec` | established |  |  | PREC attribute. Declared; no code read sets it. |
+| 57 | `virtual` | established |  |  | Virtual channel 1. The kernel sets it in conventional PCI mode for functions other than zero. |
+| 56 | `bar` | established |  |  | BAR attribute, set for consistent mappings; the code does not expand the name. |
+| 55 | `swap` | established |  |  | Byte swap. Declared; no code read sets it. |
+| 54 | `virtual1` | established |  |  | Second virtual-channel bit. Declared; no code read sets it. |
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |

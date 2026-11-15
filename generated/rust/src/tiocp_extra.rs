@@ -221,6 +221,238 @@ pub mod rd_resp_parity {
     pub const COUNT: u32 = 512;
     pub const STRIDE: u64 = 8;
 }
+/// Low flag bits of an internal address translation entry, the 64-bit word the provider stores at the translation RAM (the internal translation RAM). The (established)
+pub mod ate {
+    pub const WIDTH: u32 = 64;
+    pub mod bar { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pref { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod msi { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pio { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod valid { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// The one bit of the control register (census register at 0x20, `cp_control`) that the Linux provider sets by name; no other control field is defined by (established)
+pub mod control_bits {
+    pub const WIDTH: u32 = 64;
+    pub mod page_size { // bits 21:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// The one bit of a device register (`cp_device[n]`) the Linux provider tests. It tests a copy the firmware supplied, not a read of the register. (established)
+pub mod device_bits {
+    pub const WIDTH: u32 = 64;
+    pub mod swap_dir { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Widget identification word as the Linux code splits every Crosstalk-style widget id: the same layout the PIC page records. The TIOCP's own part number (established)
+pub mod id {
+    pub const WIDTH: u32 = 32;
+    pub mod rev { // bits 31:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u32 = 0xf;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod part { // bits 27:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u32 = 0xffff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mfg { // bits 11:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u32 = 0x7ff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the destination field, then ORs in the Crosstalk address the pin's interrup (established)
+pub mod int_addr {
+    pub const WIDTH: u32 = 64;
+    pub mod addr { // bits 53:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3fffffffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address regist (established)
+pub mod int_pin_bits {
+    pub const WIDTH: u32 = 64;
+    pub mod pin { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// A 32-bit bus address the provider hands out for a translation-entry mapping: 0x40000000 plus the offset in the page plus the I/O page size times the e (established)
+pub mod pci32_mapped_addr {
+    pub const WIDTH: u32 = 32;
+    pub mod swap { // bits 29:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// The 64-bit direct DMA address a device is given: the DMA view of the memory address with attribute bits ORed in. On the PIC bits 63:60 name the target (established)
+pub mod pci64_dma_addr {
+    pub const WIDTH: u32 = 64;
+    pub mod cmdtype { // bits 61:60, established
+        pub const SHIFT: u32 = 60;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pref { // bits 59:59, established
+        pub const SHIFT: u32 = 59;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod prec { // bits 58:58, established
+        pub const SHIFT: u32 = 58;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#virtual { // bits 57:57, established
+        pub const SHIFT: u32 = 57;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bar { // bits 56:56, established
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod swap { // bits 55:55, established
+        pub const SHIFT: u32 = 55;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod virtual1 { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 pub const ATE_MSI: u32 = 0x4; // established
 pub const ATE_PIO: u32 = 0x2; // established
 pub const CFG_TYPE0_BASE: u32 = 0x21000; // established

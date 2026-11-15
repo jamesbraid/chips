@@ -260,6 +260,114 @@
 #define TIOCP_RD_RESP_PARITY_COUNT                   512
 #define TIOCP_RD_RESP_PARITY_STRIDE                  8
 
+/*
+ * Low flag bits of an internal address translation entry, the 64-bit word the provider stores at the translation RAM (the internal translation RAM). The page address is the physical page number placed at bit 12 (PCI32_ATE_ADDR_SHFT is 12; the kernel ORs the page-aligned address in directly). The top of the address field and any other bits are not defined by the code (unknown). Bit 1 is a different property on the PIC (coherent).
+ */
+/* word ATE: 64 bits */
+#define TIOCP_ATE_WIDTH                              64 /* established */
+#define TIOCP_ATE_BAR_SHIFT                          4 /* established */
+#define TIOCP_ATE_BAR_MASK                           0x1ull
+#define TIOCP_ATE_BAR_INPLACE                        (TIOCP_ATE_BAR_MASK << TIOCP_ATE_BAR_SHIFT)
+#define TIOCP_ATE_PREF_SHIFT                         3 /* established */
+#define TIOCP_ATE_PREF_MASK                          0x1ull
+#define TIOCP_ATE_PREF_INPLACE                       (TIOCP_ATE_PREF_MASK << TIOCP_ATE_PREF_SHIFT)
+#define TIOCP_ATE_MSI_SHIFT                          2 /* established */
+#define TIOCP_ATE_MSI_MASK                           0x1ull
+#define TIOCP_ATE_MSI_INPLACE                        (TIOCP_ATE_MSI_MASK << TIOCP_ATE_MSI_SHIFT)
+#define TIOCP_ATE_PIO_SHIFT                          1 /* established */
+#define TIOCP_ATE_PIO_MASK                           0x1ull
+#define TIOCP_ATE_PIO_INPLACE                        (TIOCP_ATE_PIO_MASK << TIOCP_ATE_PIO_SHIFT)
+#define TIOCP_ATE_VALID_SHIFT                        0 /* established */
+#define TIOCP_ATE_VALID_MASK                         0x1ull
+#define TIOCP_ATE_VALID_INPLACE                      (TIOCP_ATE_VALID_MASK << TIOCP_ATE_VALID_SHIFT)
+
+/*
+ * The one bit of the control register (census register at 0x20, `cp_control`) that the Linux provider sets by name; no other control field is defined by code read for this page.
+ */
+/* word CONTROL_BITS: 64 bits */
+#define TIOCP_CONTROL_BITS_WIDTH                     64 /* established */
+#define TIOCP_CONTROL_BITS_PAGE_SIZE_SHIFT           21 /* established */
+#define TIOCP_CONTROL_BITS_PAGE_SIZE_MASK            0x1ull
+#define TIOCP_CONTROL_BITS_PAGE_SIZE_INPLACE         (TIOCP_CONTROL_BITS_PAGE_SIZE_MASK << TIOCP_CONTROL_BITS_PAGE_SIZE_SHIFT)
+
+/*
+ * The one bit of a device register (`cp_device[n]`) the Linux provider tests. It tests a copy the firmware supplied, not a read of the register.
+ */
+/* word DEVICE_BITS: 64 bits */
+#define TIOCP_DEVICE_BITS_WIDTH                      64 /* established */
+#define TIOCP_DEVICE_BITS_SWAP_DIR_SHIFT             19 /* established */
+#define TIOCP_DEVICE_BITS_SWAP_DIR_MASK              0x1ull
+#define TIOCP_DEVICE_BITS_SWAP_DIR_INPLACE           (TIOCP_DEVICE_BITS_SWAP_DIR_MASK << TIOCP_DEVICE_BITS_SWAP_DIR_SHIFT)
+
+/*
+ * Widget identification word as the Linux code splits every Crosstalk-style widget id: the same layout the PIC page records. The TIOCP's own part number is not named by the v5.3 code (unknown here; the IRIX accessors accept two, see the chip page). Bit 0 and the layout of the upper half of the 64-bit register are not defined by the code.
+ */
+/* word ID: 32 bits */
+#define TIOCP_ID_WIDTH                               32 /* established */
+#define TIOCP_ID_REV_SHIFT                           28 /* established */
+#define TIOCP_ID_REV_MASK                            0xfu
+#define TIOCP_ID_REV_INPLACE                         (TIOCP_ID_REV_MASK << TIOCP_ID_REV_SHIFT)
+#define TIOCP_ID_PART_SHIFT                          12 /* established */
+#define TIOCP_ID_PART_MASK                           0xffffu
+#define TIOCP_ID_PART_INPLACE                        (TIOCP_ID_PART_MASK << TIOCP_ID_PART_SHIFT)
+#define TIOCP_ID_MFG_SHIFT                           1 /* established */
+#define TIOCP_ID_MFG_MASK                            0x7ffu
+#define TIOCP_ID_MFG_INPLACE                         (TIOCP_ID_MFG_MASK << TIOCP_ID_MFG_SHIFT)
+
+/*
+ * Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the destination field, then ORs in the Crosstalk address the pin's interrupt write goes to, masked to the field. Other bits are preserved and not defined by the code.
+ */
+/* word INT_ADDR: 64 bits */
+#define TIOCP_INT_ADDR_WIDTH                         64 /* established */
+#define TIOCP_INT_ADDR_ADDR_SHIFT                    0 /* established */
+#define TIOCP_INT_ADDR_ADDR_MASK                     0x3fffffffffffffull
+#define TIOCP_INT_ADDR_ADDR_INPLACE                  (TIOCP_INT_ADDR_ADDR_MASK << TIOCP_INT_ADDR_ADDR_SHIFT)
+
+/*
+ * Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown).
+ */
+/* word INT_PIN_BITS: 64 bits */
+#define TIOCP_INT_PIN_BITS_WIDTH                     64 /* established */
+#define TIOCP_INT_PIN_BITS_PIN_SHIFT                 0 /* established */
+#define TIOCP_INT_PIN_BITS_PIN_MASK                  0xffull
+#define TIOCP_INT_PIN_BITS_PIN_INPLACE               (TIOCP_INT_PIN_BITS_PIN_MASK << TIOCP_INT_PIN_BITS_PIN_SHIFT)
+
+/*
+ * A 32-bit bus address the provider hands out for a translation-entry mapping: 0x40000000 plus the offset in the page plus the I/O page size times the entry index, with bit 29 set when the device's endian swap is on. Addresses from 0x80000000 are the 2 GiB direct window (PCI32_DIRECT_BASE) instead. The kernel refuses the 2 GiB direct window in PCI-X mode on either chip and refuses entry mappings in PCI-X mode on the PIC only, so the TIOCP maps 32-bit addresses through entries there.
+ */
+/* word PCI32_MAPPED_ADDR: 32 bits */
+#define TIOCP_PCI32_MAPPED_ADDR_WIDTH                32 /* established */
+#define TIOCP_PCI32_MAPPED_ADDR_SWAP_SHIFT           29 /* established */
+#define TIOCP_PCI32_MAPPED_ADDR_SWAP_MASK            0x1u
+#define TIOCP_PCI32_MAPPED_ADDR_SWAP_INPLACE         (TIOCP_PCI32_MAPPED_ADDR_SWAP_MASK << TIOCP_PCI32_MAPPED_ADDR_SWAP_SHIFT)
+
+/*
+ * The 64-bit direct DMA address a device is given: the DMA view of the memory address with attribute bits ORed in. On the PIC bits 63:60 name the target widget instead of the command type. Memory address width and the meaning of bits 63:62 are not defined by the code (unknown).
+ */
+/* word PCI64_DMA_ADDR: 64 bits */
+#define TIOCP_PCI64_DMA_ADDR_WIDTH                   64 /* established */
+#define TIOCP_PCI64_DMA_ADDR_CMDTYPE_SHIFT           60 /* established */
+#define TIOCP_PCI64_DMA_ADDR_CMDTYPE_MASK            0x3ull
+#define TIOCP_PCI64_DMA_ADDR_CMDTYPE_INPLACE         (TIOCP_PCI64_DMA_ADDR_CMDTYPE_MASK << TIOCP_PCI64_DMA_ADDR_CMDTYPE_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_PREF_SHIFT              59 /* established */
+#define TIOCP_PCI64_DMA_ADDR_PREF_MASK               0x1ull
+#define TIOCP_PCI64_DMA_ADDR_PREF_INPLACE            (TIOCP_PCI64_DMA_ADDR_PREF_MASK << TIOCP_PCI64_DMA_ADDR_PREF_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_PREC_SHIFT              58 /* established */
+#define TIOCP_PCI64_DMA_ADDR_PREC_MASK               0x1ull
+#define TIOCP_PCI64_DMA_ADDR_PREC_INPLACE            (TIOCP_PCI64_DMA_ADDR_PREC_MASK << TIOCP_PCI64_DMA_ADDR_PREC_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL_SHIFT           57 /* established */
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL_MASK            0x1ull
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL_INPLACE         (TIOCP_PCI64_DMA_ADDR_VIRTUAL_MASK << TIOCP_PCI64_DMA_ADDR_VIRTUAL_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_BAR_SHIFT               56 /* established */
+#define TIOCP_PCI64_DMA_ADDR_BAR_MASK                0x1ull
+#define TIOCP_PCI64_DMA_ADDR_BAR_INPLACE             (TIOCP_PCI64_DMA_ADDR_BAR_MASK << TIOCP_PCI64_DMA_ADDR_BAR_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_SWAP_SHIFT              55 /* established */
+#define TIOCP_PCI64_DMA_ADDR_SWAP_MASK               0x1ull
+#define TIOCP_PCI64_DMA_ADDR_SWAP_INPLACE            (TIOCP_PCI64_DMA_ADDR_SWAP_MASK << TIOCP_PCI64_DMA_ADDR_SWAP_SHIFT)
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL1_SHIFT          54 /* established */
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL1_MASK           0x1ull
+#define TIOCP_PCI64_DMA_ADDR_VIRTUAL1_INPLACE        (TIOCP_PCI64_DMA_ADDR_VIRTUAL1_MASK << TIOCP_PCI64_DMA_ADDR_VIRTUAL1_SHIFT)
+
 #define TIOCP_ATE_MSI                                0x4u /* established */
 #define TIOCP_ATE_PIO                                0x2u /* established */
 #define TIOCP_CFG_TYPE0_BASE                         0x21000u /* established */

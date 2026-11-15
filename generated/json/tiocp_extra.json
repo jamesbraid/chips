@@ -460,6 +460,222 @@
   },
   {
    "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "ATE",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ATE.bar",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ATE.pref",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ATE.msi",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ATE.pio",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ATE.valid",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "CONTROL_BITS",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "CONTROL_BITS.page_size",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "DEVICE_BITS",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "DEVICE_BITS.swap_dir",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "ID",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ID.rev",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ID.part",
+   "hi": 27,
+   "lo": 12,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "ID.mfg",
+   "hi": 11,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "INT_ADDR",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "INT_ADDR.addr",
+   "hi": 53,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "INT_PIN_BITS",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "INT_PIN_BITS.pin",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "PCI32_MAPPED_ADDR",
+   "width": 32,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI32_MAPPED_ADDR.swap",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "word",
+   "name": "PCI64_DMA_ADDR",
+   "width": 64,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.cmdtype",
+   "hi": 61,
+   "lo": 60,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.pref",
+   "hi": 59,
+   "lo": 59,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.prec",
+   "hi": 58,
+   "lo": 58,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.virtual",
+   "hi": 57,
+   "lo": 57,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.bar",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.swap",
+   "hi": 55,
+   "lo": 55,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
+   "kind": "field",
+   "name": "PCI64_DMA_ADDR.virtual1",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established"
+  },
+  {
+   "unit": "tiocp_extra",
    "kind": "constant",
    "name": "ATE_MSI",
    "value": 4,

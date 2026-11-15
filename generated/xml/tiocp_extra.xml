@@ -107,6 +107,50 @@
   <struct name="RD_RESP_PARITY" size="8" grade="established" register="yes" offset="0x1e000" access="rw" count="512" stride="8" reset="unknown">
     <doc>Read response RAM, parity bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown.</doc>
   </struct>
+  <struct name="ATE" size="8" grade="established">
+    <doc>Low flag bits of an internal address translation entry, the 64-bit word the provider stores at the translation RAM (the internal translation RAM). The page address is the physical page number placed at bit 12 (PCI32_ATE_ADDR_SHFT is 12; the kernel ORs the page-aligned address in directly). The top of the address field and any other bits are not defined by the code (unknown). Bit 1 is a different property on the PIC (coherent).</doc>
+    <field name="bar" start="4" size="1" type="uint" grade="established"/>
+    <field name="pref" start="3" size="1" type="uint" grade="established"/>
+    <field name="msi" start="2" size="1" type="uint" grade="established"/>
+    <field name="pio" start="1" size="1" type="uint" grade="established"/>
+    <field name="valid" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="CONTROL_BITS" size="8" grade="established">
+    <doc>The one bit of the control register (census register at 0x20, `cp_control`) that the Linux provider sets by name; no other control field is defined by code read for this page.</doc>
+    <field name="page_size" start="21" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="DEVICE_BITS" size="8" grade="established">
+    <doc>The one bit of a device register (`cp_device[n]`) the Linux provider tests. It tests a copy the firmware supplied, not a read of the register.</doc>
+    <field name="swap_dir" start="19" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="ID" size="4" grade="established">
+    <doc>Widget identification word as the Linux code splits every Crosstalk-style widget id: the same layout the PIC page records. The TIOCP's own part number is not named by the v5.3 code (unknown here; the IRIX accessors accept two, see the chip page). Bit 0 and the layout of the upper half of the 64-bit register are not defined by the code.</doc>
+    <field name="rev" start="28" size="4" type="uint" grade="established"/>
+    <field name="part" start="12" size="16" type="uint" grade="established"/>
+    <field name="mfg" start="1" size="11" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_ADDR" size="8" grade="established">
+    <doc>Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the destination field, then ORs in the Crosstalk address the pin's interrupt write goes to, masked to the field. Other bits are preserved and not defined by the code.</doc>
+    <field name="addr" start="0" size="54" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_PIN_BITS" size="8" grade="established">
+    <doc>Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown).</doc>
+    <field name="pin" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI32_MAPPED_ADDR" size="4" grade="established">
+    <doc>A 32-bit bus address the provider hands out for a translation-entry mapping: 0x40000000 plus the offset in the page plus the I/O page size times the entry index, with bit 29 set when the device's endian swap is on. Addresses from 0x80000000 are the 2 GiB direct window (PCI32_DIRECT_BASE) instead. The kernel refuses the 2 GiB direct window in PCI-X mode on either chip and refuses entry mappings in PCI-X mode on the PIC only, so the TIOCP maps 32-bit addresses through entries there.</doc>
+    <field name="swap" start="29" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PCI64_DMA_ADDR" size="8" grade="established">
+    <doc>The 64-bit direct DMA address a device is given: the DMA view of the memory address with attribute bits ORed in. On the PIC bits 63:60 name the target widget instead of the command type. Memory address width and the meaning of bits 63:62 are not defined by the code (unknown).</doc>
+    <field name="cmdtype" start="60" size="2" type="uint" grade="established"/>
+    <field name="pref" start="59" size="1" type="uint" grade="established"/>
+    <field name="prec" start="58" size="1" type="uint" grade="established"/>
+    <field name="virtual" start="57" size="1" type="uint" grade="established"/>
+    <field name="bar" start="56" size="1" type="uint" grade="established"/>
+    <field name="swap" start="55" size="1" type="uint" grade="established"/>
+    <field name="virtual1" start="54" size="1" type="uint" grade="established"/>
+  </struct>
   <constant name="ATE_MSI" value="0x4" grade="established"/>
   <constant name="ATE_PIO" value="0x2" grade="established"/>
   <constant name="CFG_TYPE0_BASE" value="0x21000" grade="established"/>

@@ -332,6 +332,92 @@ grade = "established"
 from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (struct tiocp)"
 doc = "Read response RAM, parity bank. Offset and name are the header definition. Access direction is not stated; no code read reaches it, so its behaviour is unknown."
 
+# ---- software-defined words (layouts the provider builds; no register of their own)
+
+[words.ID]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/sn/include/xtalk/xwidgetdev.h (WIDGET_*), arch/ia64/include/asm/sn/pcibr_provider.h"
+doc = "Widget identification word as the Linux code splits every Crosstalk-style widget id: the same layout the PIC page records. The TIOCP's own part number is not named by the v5.3 code (unknown here; the IRIX accessors accept two, see the chip page). Bit 0 and the layout of the upper half of the 64-bit register are not defined by the code."
+
+[words.ID.fields]
+rev = { bits = [31, 28], grade = "established", doc = "Revision. The flush workaround is keyed by the revision of the TIO, not of this widget." }
+part = { bits = [27, 12], grade = "established" }
+mfg = { bits = [11, 1], grade = "established" }
+
+[words.INT_PIN_BITS]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/sn/pci/pcibr/pcibr_provider.c (pcibr_target_interrupt, pcibr_force_interrupt), pcibr_reg.c"
+doc = "Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown)."
+
+[words.INT_PIN_BITS.fields]
+pin = { bits = [7, 0], grade = "established", doc = "Pin n at bit n, n from 0 to 7 (the arrays have eight entries)." }
+
+[words.INT_ADDR]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_HOST_INTR_ADDR), arch/ia64/sn/pci/pcibr/pcibr_reg.c (pcireg_intr_addr_addr_set)"
+doc = "Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the destination field, then ORs in the Crosstalk address the pin's interrupt write goes to, masked to the field. Other bits are preserved and not defined by the code."
+
+[words.INT_ADDR.fields]
+addr = { bits = [53, 0], grade = "established", doc = "Destination address of the interrupt write; 48 bits on the PIC." }
+
+[words.ATE]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCI32_ATE_*), arch/ia64/sn/pci/pcibr/pcibr_dma.c"
+doc = "Low flag bits of an internal address translation entry, the 64-bit word the provider stores at the translation RAM (the internal translation RAM). The page address is the physical page number placed at bit 12 (PCI32_ATE_ADDR_SHFT is 12; the kernel ORs the page-aligned address in directly). The top of the address field and any other bits are not defined by the code (unknown). Bit 1 is a different property on the PIC (coherent)."
+
+[words.ATE.fields]
+valid = { bits = [0, 0], grade = "established", doc = "Entry valid." }
+pio = { bits = [1, 1], grade = "established", doc = "TIOCP only: programmed I/O. Set together with msi when the mapping is for a message-signalled interrupt." }
+msi = { bits = [2, 2], grade = "established", doc = "Mapping is for a message-signalled interrupt." }
+pref = { bits = [3, 3], grade = "established", doc = "Prefetch. The kernel clears it in PCI-X mode." }
+bar = { bits = [4, 4], grade = "established", doc = "BAR attribute, set for consistent mappings; the code does not expand the name." }
+
+[words.PCI64_DMA_ADDR]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCI64_ATTR_*), tiocp.h, arch/ia64/sn/pci/pcibr/pcibr_dma.c (pcibr_dmatrans_direct64)"
+doc = "The 64-bit direct DMA address a device is given: the DMA view of the memory address with attribute bits ORed in. On the PIC bits 63:60 name the target widget instead of the command type. Memory address width and the meaning of bits 63:62 are not defined by the code (unknown)."
+
+[words.PCI64_DMA_ADDR.fields]
+cmdtype = { bits = [61, 60], grade = "established", doc = "Command type: 1 memory, 3 message-signalled interrupt (constants PCI64_CMDTYPE_MEM and _MSI)." }
+pref = { bits = [59, 59], grade = "established", doc = "Prefetch. The kernel clears it in PCI-X mode." }
+prec = { bits = [58, 58], grade = "established", doc = "PREC attribute. Declared; no code read sets it." }
+virtual = { bits = [57, 57], grade = "established", doc = "Virtual channel 1. The kernel sets it in conventional PCI mode for functions other than zero." }
+bar = { bits = [56, 56], grade = "established", doc = "BAR attribute, set for consistent mappings; the code does not expand the name." }
+swap = { bits = [55, 55], grade = "established", doc = "Byte swap. Declared; no code read sets it." }
+virtual1 = { bits = [54, 54], grade = "established", doc = "Second virtual-channel bit. Declared; no code read sets it." }
+
+[words.PCI32_MAPPED_ADDR]
+width = 32
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCI32_MAPPED_BASE, ATE_SWAPSHIFT), pcibr_dma.c (pcibr_dmamap_ate32)"
+doc = "A 32-bit bus address the provider hands out for a translation-entry mapping: 0x40000000 plus the offset in the page plus the I/O page size times the entry index, with bit 29 set when the device's endian swap is on. Addresses from 0x80000000 are the 2 GiB direct window (PCI32_DIRECT_BASE) instead. The kernel refuses the 2 GiB direct window in PCI-X mode on either chip and refuses entry mappings in PCI-X mode on the PIC only, so the TIOCP maps 32-bit addresses through entries there."
+
+[words.PCI32_MAPPED_ADDR.fields]
+swap = { bits = [29, 29], grade = "established", doc = "Swap on: set by the provider when the device register has its direction-swap bit." }
+
+[words.CONTROL_BITS]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCIBR_CTRL_PAGE_SIZE), arch/ia64/sn/pci/pcibr/pcibr_provider.c (pcibr_bus_fixup)"
+doc = "The one bit of the control register (census register at 0x20, `cp_control`) that the Linux provider sets by name; no other control field is defined by code read for this page."
+
+[words.CONTROL_BITS.fields]
+page_size = { bits = [21, 21], grade = "established", doc = "I/O page size: the provider clears it for kernel pages below 16 KiB (4 KiB I/O pages) and sets it otherwise (16 KiB)." }
+
+[words.DEVICE_BITS]
+width = 64
+grade = "established"
+from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/pcibr_provider.h (PCIBR_DEV_SWAP_DIR), pcibr_dma.c (pcibr_dmamap_ate32)"
+doc = "The one bit of a device register (`cp_device[n]`) the Linux provider tests. It tests a copy the firmware supplied, not a read of the register."
+
+[words.DEVICE_BITS.fields]
+swap_dir = { bits = [19, 19], grade = "established", doc = "Direct-mapped swap: when set the provider sets the swap bit in the 32-bit mapped address it hands out." }
+
 [constants]
 HOST_INTR_ADDR_MASK = { value = 0x3fffffffffffff, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_HOST_INTR_ADDR)", doc = "Mask of the destination address field of a per-pin interrupt address register: 54 bits on the TIOCP, 48 on the PIC." }
 PCI64_CMDTYPE_MEM = { value = 0x1000000000000000, grade = "established", from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/include/asm/sn/tiocp.h (TIOCP_PCI64_CMDTYPE_MEM)", doc = "Command type 1, memory, in bits 61:60 of a 64-bit direct address. Instead of the PIC's target widget field." }
