@@ -259,7 +259,7 @@ Layout of the slot identity and status register. The header also defines an SN00
 | 5 | `net_sync` | established |  | public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*) | Network sync bit, bit 5. |
 | 4 | `fprom_ready` | established |  | public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*) | Flash PROM ready bit, bit 4. The header's comment names it as the flash PROM ready bit. |
 | 3 | `i2c_intr` | established |  | public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*) | I2C interrupt bit, bit 3. |
-| 2:0 | `sn0_slot_id` | established |  | public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*) | Slot ID, bits 2:0 (mask 7 in the header). |
+| 2:0 | `hub_slot_id` | established |  | public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*) | Slot ID, bits 2:0 (mask 7 in the header). |
 
 ### Register `md_led0`
 

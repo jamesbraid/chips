@@ -378,9 +378,9 @@
 #define HUB_MD_SLOTID_USTAT_I2C_INTR_SHIFT           3 /* established */
 #define HUB_MD_SLOTID_USTAT_I2C_INTR_MASK            0x1ull
 #define HUB_MD_SLOTID_USTAT_I2C_INTR_INPLACE         (HUB_MD_SLOTID_USTAT_I2C_INTR_MASK << HUB_MD_SLOTID_USTAT_I2C_INTR_SHIFT)
-#define HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_SHIFT        0 /* established */
-#define HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_MASK         0x7ull
-#define HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_INPLACE      (HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_MASK << HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_SHIFT)
+#define HUB_MD_SLOTID_USTAT_HUB_SLOT_ID_SHIFT        0 /* established */
+#define HUB_MD_SLOTID_USTAT_HUB_SLOT_ID_MASK         0x7ull
+#define HUB_MD_SLOTID_USTAT_HUB_SLOT_ID_INPLACE      (HUB_MD_SLOTID_USTAT_HUB_SLOT_ID_MASK << HUB_MD_SLOTID_USTAT_HUB_SLOT_ID_SHIFT)
 
 /* md_led0: w64, reset unknown; census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed) */
 #define HUB_MD_LED0_OFFSET                           0x220050u /* established */

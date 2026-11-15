@@ -151,7 +151,7 @@
     <field name="net_sync" start="5" size="1" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"/>
     <field name="fprom_ready" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"/>
     <field name="i2c_intr" start="3" size="1" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"/>
-    <field name="sn0_slot_id" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"/>
+    <field name="hub_slot_id" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"/>
   </struct>
   <struct name="MD_LED0" size="8" grade="established" from="census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)" register="yes" offset="0x220050" access="w" reset="unknown">
     <field name="led" start="0" size="8" type="uint" grade="inferred" from="public Linux SN0 Hub memory/directory header: field layout and masks"/>

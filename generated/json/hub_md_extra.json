@@ -1536,7 +1536,7 @@
   {
    "unit": "hub_md_extra",
    "kind": "field",
-   "name": "md_slotid_ustat.sn0_slot_id",
+   "name": "md_slotid_ustat.hub_slot_id",
    "hi": 2,
    "lo": 0,
    "grade": "established",

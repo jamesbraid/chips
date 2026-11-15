@@ -982,7 +982,7 @@ pub mod md_slotid_ustat {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod sn0_slot_id { // bits 2:0, established
+    pub mod hub_slot_id { // bits 2:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7;
         pub const fn get(v: u64) -> u64 {

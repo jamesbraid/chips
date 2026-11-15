@@ -281,7 +281,7 @@ core_clk = { bits = [6, 6], grade = "established", doc = "Core clock bit, bit 6.
 net_sync = { bits = [5, 5], grade = "established", doc = "Network sync bit, bit 5.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
 fprom_ready = { bits = [4, 4], grade = "established", doc = "Flash PROM ready bit, bit 4. The header's comment names it as the flash PROM ready bit.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
 i2c_intr = { bits = [3, 3], grade = "established", doc = "I2C interrupt bit, bit 3.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
-sn0_slot_id = { bits = [2, 0], grade = "established", doc = "Slot ID, bits 2:0 (mask 7 in the header).", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+hub_slot_id = { bits = [2, 0], grade = "established", doc = "Slot ID, bits 2:0 (mask 7 in the header).", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
 
 [registers.md_dir_error]
 offset = 0x200050
