@@ -17,8 +17,10 @@ with what would settle it. Nothing here says what hardware does unless a manual 
 *Established.* `0xffe7f100` is the bundle `nop.m; mov r7=0xcccc; br.few 0xffe7f100` (it branches to itself). It is the second half of
 a routine that starts at `0xffe7f000` and that every fatal path of PAL_B 5.73 leaves through:
 
-- `0xffe7f000` to `0xffe7f03c`: `r28` = `psr` with bit 35 set and bits 13 and 14 cleared (`dep` at `0xffe7f00c`, `0xffe7f016`,
-  `0xffe7f01c`), then `br.few 0xffe96bd0` with `b0` = `0xffe7f040`. `0xffe96bd0` is the PAL's return-to-physical-mode helper: `rsm 0x6000`,
+- `0xffe7f000` to `0xffe7f03c`: `r28` = `psr` after three deposits (`0xffe7f00c`, `0xffe7f016`, `0xffe7f01c`): bit 35 set, then two
+  deposits of zero whose encoded length is 64 at positions 13 and 14 (`dep r28=0,r28,13,64`). Taking the architectural rule that a field past
+  bit 63 is truncated (recalled from the SDM, not re-read here, so **inferred**), they clear bits 63:13, bit 35 included, leaving `psr` bits 12:0; read as
+  one-bit clears they would clear only bits 13 and 14. Either way `psr.ic` and `psr.i` end clear. Then `br.few 0xffe96bd0` with `b0` = `0xffe7f040`. `0xffe96bd0` is the PAL's return-to-physical-mode helper: `rsm 0x6000`,
   `cr.iip` = `b0`, `cr.ipsr` = `r28`, `rfi`. It touches no MSR and no memory.
 - `0xffe7f040` to `0xffe7f06c`: read the doubleword at physical `0xffffffe0` (the FIT pointer, `0x80000000ffa00000` in this image),
   add `0x18`, read that doubleword (the size/version word of FIT entry 1) and `tbit.z p0,p6=r2,0x19`, so p6 is set when bit 25 is
@@ -72,59 +74,130 @@ other code in this page tests it; its meaning is **unknown** (the read of msr[16
 `0xb8000000000080` and drops the result, `r2` is overwritten at `0xffee0326`). Bit 56 is the "state valid" bit the hand-offs test
 (pal-msrs.md); bit 59 is set at the `br.ia` return only when `r1` is non-zero (pal-instructions.md), clear here.
 
-**The table** (established; entries are link addresses minus `0x88000`, resolved from the twelve qwords at `0xffee06f0`):
+**The table** (established; entries are link addresses minus `0x88000`, resolved from the thirteen qwords at `0xffee06f0`):
 `0xffee7c60`, `0xffee1e20`, `0xffeec200`, `0xffee8960`, `0xffee1010`, `0xffee1ee0`, `0xffee26f0`, `0xffeeb7c0`, `0xffee2b70`, `0xffef2990`,
 `0xffef2e80`, `0xffef2c40`, `0xffef3290`, then a zero qword. The loop (`0xffee03a0` to `0xffee03dc`) loads each offset, adds `r6`, loads
-`b0`, calls it with `r8 = 0`, `r9 = 0` and ORs `r9` into `r12` (the call at `0xffee03c0`). No entry read in this page touches an MSR: the four entries read (`0xffee7c60`, `0xffee1e20`, `0xffeec200`, `0xffee8960`) contain none in
-their bodies, and the sub-test routines `0xffee0cc0`, `0xffee0760`, `0xffee2170` that entry 3 calls contain none either (checked by
-scanning each body for `msr[`). That agrees with the model seeing no MSR access between the `0xffee0390` write and the spin.
+`b0`, calls it with `r8 = 0`, `r9 = 0` and ORs `r9` into `r12` (the call at `0xffee03c0`). On the passing path of entries 1 to 9 there is no MSR access and no reserved M or B word (a flow scan from each entry address over the listing, following
+direct branches and calls, found none; the same scan finds both in entries 12 and 13, which the skip bits keep from running). Two arms
+are not on that path: a failing group 35/34 in entry 9 reads and writes msr[1640] (`0xffee3432`, `0xffee3452`: bit 60 set) before its result call, and
+the result routine's own `mov r37=msr[r37]` at `0xffebf140` (see below). Entry 8 does contain one B-unit word that is not a defined opcode
+(`0xffeeb83e`, major opcode 10, which binutils 2.44 prints as `data8`), apparently deliberately: a fault test, not a reserved no-op (section 3).
 
-Each entry is a test group guarded by one bit of `r13` (a **set** bit skips the group): `0xffee7c60` bit 44 (`0xffee7cbc`), `0xffee1e20`
-bit 43 (`0xffee1e2c`) and bit 39 (`0xffee1eec`), `0xffeec200` bit 42 (`0xffeec20c`), `0xffee8960` bit 41 (`0xffee897c`).
-`r13 = 0xe030ffffffff` has bits 47:45, 37:36 and 31:0 set, so groups 44 to 38 (except 37 and 36) and 35:32 run. A group runs
-its sub-tests in order and stops at the first that returns `r8 != 0` (`cmp.eq p7,p6=r8,r0`, then `(p6) br 0xffeec280` in group 42).
-Then it calls the result routine `0xffebf000` with `r9 = 0` on success and a constant whose low two bits are `3` on failure (group 42:
-`0xffeec296`, `r9 = 0x400000003`; group 44: `0xffee7d36`, `0x100000003`; group 43: `0xffee1e56`, `0x200000003`).
+Each entry is a test group guarded by one bit of `r13` (a **set** bit skips the group; read as `tbit.z p0,p1=r13,N` then `(p1) br`):
+entry 1 `0xffee7c60` bit 44, entry 2 `0xffee1e20` bit 43, entry 3 `0xffeec200` bit 42, entry 4 `0xffee8960` bit 41, entry 5 `0xffee1010` bit
+40, entry 6 `0xffee1ee0` bit 39, entry 7 `0xffee26f0` bit 38, entry 8 `0xffeeb7c0` bits 33 and 32, entry 9 `0xffee2b70` bits 35 and 34, entries 10 to
+13 bits 16 to 30 (three to five bits each, checked in the listing). `r13 = 0xe030ffffffff` has bits 47:45, 37:36 and 31:0 set, so entries 1 to 9 run
+(bits 44 to 38 and 35:32 are clear) and entries 10 to 13 are skipped. A group runs its sub-tests in order and stops at the first that
+returns `r8 != 0` (`cmp.eq p7,p6=r8,r0`, then `(p6) br 0xffeec280` in group 42). Then it calls the result routine `0xffebf000` with
+`r9 = 0` on success and a constant whose low two bits are `3` on failure (group 42: `0xffeec296`, `r9 = 0x400000003`; group 44: `0xffee7d36`,
+`0x100000003`; group 43: `0xffee1e56`, `0x200000003`). Only `r8 < 0` is fatal (below), so a positive nonzero `r8` from a sub-test is
+passed on as a failure code that the result routine does not act on.
 
 **The result routine `0xffebf000`** (not a test; established). `p8 = (r8 < 0)`. On failure (`p8`) it clears the top half of `ar.k7`, sets
 bits 31:28 to 1 and ORs in the second argument shifted left 32, then stores that to the doubleword at `cr.iva + 0x100b0` if that word is
 non-zero. It reads `cr.iva + 0x100c0` (`r37`) and `cr.iva + 0x100d0` (`r38`). With `cr.iva = 0x80000000ffe78000` those are image addresses
 `0xffe880b0` (0 in this image), `0xffe880c0` (0) and `0xffe880d0` (a pointer, `0x80000000fff10000`). Because the word at `0xffe880c0` is zero the
-bundle at `0xffebf09c` branches to `0xffebf0f0`, where `p13` stays set when `p8` is set and `r9[1:0] = 3` (`0xffebf096`) and bit 59 of the
+bundle at `0xffebf09c` branches to `0xffebf0f0`, which skips the arm at `0xffebf0a0` to `0xffebf0ec` (a `p12`-guarded call to `0xffebf130`, which reads msr[1559]); at `0xffebf0f0` `p13` stays set when `p8` is set and `r9[1:0] = 3` (`0xffebf096`) and bit 59 of the
 zero `r37` is clear (`0xffebf0f6`). `0xffebf10c: (p13) br.cond 0xffebf2a0` then goes to `0xffe7f000`. So with the shipped contents a failed group (`r8 < 0`,
 `r9[1:0] = 3`) is fatal and a passed group (`r8 = 0`) returns. This is established for the zero words read from the image; those flash words are not
 written by the PAL on this path (the store at `0xffebf086` needs `r36 != 0`).
 
 ## 3. What the groups test, and what a healthy processor returns
 
-*Established.* The failing group is not identified by the code; it depends on which instruction the model executes wrongly. The code
-tells what each candidate checks. Group 42 (`0xffeec200`, the third entry and the first one the model's trace names):
+*Established* for the instructions and constants; *inferred* where a sentence says what an emulator needs. The failing group is not identified
+by the code; it depends on which instruction the model executes wrongly. Entries 1 to 9 run. Entry 3 (`0xffeec200`, group 42) is read in
+full; entries 1, 2 and 8 are summarised from a lighter read (entry 2 and entry 8 matter because they run before or after it).
+
+- **Entry 1** (`0xffee7c60`, bit 44), skimmed: branch-register moves, both banks of `r16` to `r31` through `bsw.0`/`bsw.1`, stacked-register
+  frames with `br.call`/`alloc`, and an edit of `rrb.gr` in a saved `ar.pfs` (`0xffee8920`).
+- **Entry 2** (`0xffee1e20`, bit 43) executes three `break` instructions with immediate `0x195631` in one bundle, in the M, I and B slots.
+  Each must fault to the break vector at `cr.iva + 0x2c00` (`0xffe7ac00`). The handler reads `cr.isr` (slot number in bits 42:41), reads
+  the faulting bundle at `cr.iip` and pulls the immediate out of that slot, then does `r14 = r14 << (slot+1) + (slot+1)` and returns with
+  `rfi` to the next slot (`cr.iip` advances a bundle after slot 2). Starting from `r14 = 311` the three breaks must leave `r14 = 19955`
+  (`cmp.eq p7,p6=r14,r34`, `0xffee1e82`), else `r8 = -1`. The same handler takes `0x195871`, `0x195872` and `0x195873` (OR into,
+  AND-NOT out of, or replace the saved `cr.ipsr`) and sends any other immediate to `0xffe7ec10`. An emulator that does not deliver the break
+  fault, reports the wrong slot in `isr.ei`, or restarts at the wrong slot fails here, before entry 3.
+- **Entry 3** (`0xffeec200`, bit 42) first sets `r8 = -1` and `r9 = 0x400000003`, then calls these sub-tests in order and stops at the first
+  `r8 != 0`:
 
 | Sub-test | Address | Checks |
 |---|---|---|
-| 1 | `0xffeec2d0` | compare-type forms (`cmp.eq/lt/ltu/ge/gt/le`, `.and`, `.or`, `.or.andcm`) against fixed operands and branch on each predicate; `mov pr=` with masks, readback of `pr` for values `-1`, `0xffffffff`, `0xffff0000ffff`, `0xff00ff00ff00ff`, `0xf0f0...`, `0x3333...`, `0x5555...`, 0 (`pr` bit 0 reads 1); 48 predicated adds over `p9` to `p63` after `mov pr=r0,-2` (all 0) and after `mov pr=r34,-4` (each register 7, except `r43` 6); `br.call` of `0xffeec990`, which decrements `rrb.pr` in the saved `ar.pfs` (wrapping 0 to `0x2f`), and predicated adds over `p16` to `p18`, `p62`, `p63` expecting `4, 8, 0, 1, 2` |
-| 2 | `0xffee0cc0` | branch-register moves with patterns (`0x5555555555555555`) |
-| 3 | `0xffee0760` | `ar.k0` to `ar.k7` write and read-back |
-| 4 | `0xffee2170` | control-register write and read-back (`cr.dcr`, `cr.itm`, `cr.iva`, `cr.pta`, ...) with `rsm 0x6000` and `psr` handling |
+| 1 | `0xffeec2d0` | predicate and compare semantics, in the stages below |
+| 2 | `0xffee0cc0` | branch registers `b0` to `b7`: write and read back `16` to `23` and the patterns `0`, `-1`, `0x5555...`, `~0x5555...`; then eight indirect `br` through `b0` to `b7` that must each run their target once (sum `255`) |
+| 3 | `0xffee0760` with helper `0xffee0b20` | application registers (below) |
+| 4 | `0xffee2170` with helper `0xffee2530` | control registers (below) |
 
-Sub-tests 2 to 4 were read to their first instructions only; what each accepts back from the implemented-bit masks is **unknown**
-(route: read the compares after each read-back, `0xffee0cc0` to `0xffee1010`, `0xffee0760` to `0xffee0cc0`, `0xffee2170` to `0xffee26f0`).
-Sub-test 1 is a pure architectural test: any processor with correct predicate, compare and `rrb.pr` rotation semantics returns `r8 = 0` and `r9 = 0`. That includes
-restoring `rrb.pr` from `ar.pfs` on `br.ret`, the thing sub-test 1's last stage exercises (the routine at `0xffeec990` edits
-the saved `ar.pfs`).
+**Sub-test 1, `0xffeec2d0`, exactly.** It sets `r8 = 0` at `0xffeec320` (after the first stage) and every failure jumps to `0xffeec310`
+(`r8 = -1`, `br 0xffeec970`), so `r8` is `-1` if any stage below fails and `0` otherwise. The failure tests are all of one shape: a
+`cmp.ne.or p1,p0=...` or a predicate read by `(p) br.cond 0xffeec310`. Stages:
 
-**What a healthy processor returns.** For the stop not to occur, every group that runs (all of them except those whose `r13` bit is set)
-must leave `r8 = 0` at its result call. No MSR, memory or SAL value is read by these groups, so no value can be "supplied": only correct instruction behaviour avoids the stop. The
-bit-set skip in `r13` is not available to a model: `r13` is `r37` as returned by SAL_A ORed with `0xe030ffff8000`.
+1. `0xffeec2e2` to `0xffeec3b8`: `cmp.eq`, `cmp.lt` (immediate `-1`), `cmp.ltu` and `cmp.lt` against `r0`, each with both result predicates in
+   both orders; the true predicate must be set and the complement clear.
+2. `0xffeec3c2` to `0xffeec48e`: with `r34 = -1`, `r35 = 1` and `p1 p3 p5 p7` preset to 1, the parallel forms `cmp.*.and`, `cmp.*.or` and
+   `cmp.*.or.andcm` (with `.andcm` clearing the second target when the condition is true) must leave `p1 p4 p5 p8` set and `p2 p3 p6 p7` clear.
+3. `0xffeec492` to `0xffeec5ae`: `mov pr=rN,0xfffffffffffffffe` (mask excludes `p0`) then `mov rM=pr` for `-1`, `0xffffffff`, `0xffff0000ffff`,
+   `0xff00ff00ff00ff`, `0xf0f0f0f0f0f0f0f`, `0x3333...`, `0x5555...` and `0`; each readback must equal the input (the odd patterns
+   all have bit 0 set, and `pr` bit 0 reads 1; the last input is `1`, compared with the readback after `mov pr=r0`).
+4. `0xffeec5b2` to `0xffeec73e`: after `mov pr=r0,-2` (`p1` to `p63` all 0), 55 predicated adds (`p9` to `p63`, each adding 1 to one of `r36` to
+   `r43`) must all be skipped; every counter stays 0.
+5. `0xffeec748` to `0xffeec89e`: after `mov pr=r34,-4` (`r34 = -1`, mask excludes `p0` and `p1`, so `p2` to `p63` all 1), the same 55 adds
+   must all run: `r36` to `r42` equal 7 and `r43` equals 6.
+6. `0xffeec8a2` to `0xffeec96e`, the rotating-predicate stage: `mov pr=r0,-2`, then `p62` set; four groups of predicated `adds` over `p16`, `p17`,
+   `p18`, `p62`, `p63` with increments 1, 2, 4, 8, separated by three `br.call` of `0xffeec990`. That routine reads `rrb.pr` (bits 37:32) from
+   its own `ar.pfs`, decrements it (a value of 0 becomes 47) and returns with `mov ar.pfs`/`br.ret`, so each return restores one more rotation
+   of the predicate file in the caller. A single set predicate (physical `p62`) then appears as logical `p62`, `p63`, `p16`, `p17` after 0, 1, 2, 3
+   returns, so the final compares (the last at `0xffeec96e`) need `r36 = 4`, `r37 = 8`, `r38 = 0`, `r39 = 1`, `r40 = 2`. This needs `br.call` to clear
+   `rrb` in the callee, `ar.pfs` to carry the callee's edit of `rrb.pr`, and `br.ret` to load it into `cfm`.
+
+The compare that decides `r8` is therefore whichever stage 1 to 6 fails first; the last one, taken only if everything before it passed, is
+`cmp.ne.or p1,p0=2,r40` followed by `(p01) br.cond 0xffeec310` at `0xffeec96e`. I re-derived stages 2 and 6 by hand and every other stage
+by reading; I did not run the routine.
+
+**Sub-test 3, `0xffee0760`.** Reads `ar.k0` to `ar.k7`, `ar.rsc`, `ar.bspstore`, `ar.rnat`, `ar.unat`, `ar.lc`, `ar.fpsr` and saves them. The
+helper `0xffee0b20` is called four times with `r32 = 0, -1, 0x5555..., ~0x5555...` and `r33`/`r34` taken from fixed `ar.fpsr` and `ar.pfs`
+patterns. It writes `ar.k0` to `ar.k7`, `ar.bspstore` (with `ar.rsc = 0`), `ar.rnat`, `ar.pfs`, `ar.ccv`, `ar.unat`, `ar.lc`, `ar.fpsr`, `ar.ec`
+and `ar.rsc`, and demands: `ar.k*`, `ar.ccv`, `ar.unat`, `ar.lc` read back exactly; `ar.bspstore` as `r32 & -8`; `ar.rnat` with bit 63 clear;
+`ar.rsc` as `r32 & 0x3fff001f` (this can set `mode` to 3, so an emulator must not act on the RSE for those instants); `ar.ec` as `r32 & 63`;
+`ar.fpsr` and `ar.pfs` as written. **`ar.itc` must also differ between two reads** (`0xffee0b82` and `0xffee0bf2` in the helper;
+`0xffee08f2` and `0xffee09b2` in the caller): a model whose `ar.itc` is frozen between instructions fails here with `r8 = -1`. The caller
+then sets `ar.k0` to `ar.k7` to `16` to `23`, `ar.rsc` `24`, `ar.bspstore` `32`, `ar.rnat` `33`, `ar.ccv` `34`, `ar.unat` `35`, `ar.fpsr` `36`,
+`ar.pfs` `38`, `ar.lc` `39`, `ar.ec` `40` and expects each back.
+
+**Sub-test 4, `0xffee2170`.** Runs with `rsm 0x6000`. Reads `cr.dcr`, `cr.itm`, `cr.iva`, `cr.pta`, `cr.ipsr`, `cr.iip`, `cr.ifa`, `cr.itir`, `cr.ifs`,
+`cr.lid`, `cr.tpr`, `cr.itv`, `cr.pmv`, `cr.lrr0`, `cr.lrr1` and `cr.cmcv` to save them. Helper `0xffee2530` runs four times with a pattern
+in `r32` (`0`, `-1`, `0x5555...`, `~0x5555...`), a `cr.pta` value (`64`, `0xffffffffffff81fd`, `0x5555555555550155`,
+`0xaaaaaaaaaaaa81a8`) and a `cr.ifs` value. It writes the pattern to `cr.itm`, `cr.iva`, `cr.iip`, `cr.ifa` and to `cr.dcr`, `cr.ipsr`,
+`cr.itir`, `cr.lid`, `cr.tpr`, `cr.itv`, `cr.pmv`, `cr.cmcv`, `cr.lrr0` and `cr.lrr1` after the test ANDs it with a per-register constant
+(`0x7f07`, `0x1fff0ffee03e` with bit 41 cleared for `-1`, `0x7f000000fffffffc`, `0xffff0000`, `0x100f0`, `0x100ff`, `0x127ff`), and then
+requires the written value back exactly. The constants keep the test inside bits it expects to be implemented; the readback is not masked.
+Two readbacks are real rules: `cr.iva` reads with bits 14:0 clear, and `cr.pta`, `cr.ifs`, `cr.itm`, `cr.iip`, `cr.ifa` return all 64
+bits. The caller's second pass writes small values (`cr.dcr` 1, `cr.itm` 2, `cr.iva` 0x8000, `cr.pta` 112, `cr.ipsr` 6, `cr.iip` 4,
+`cr.ifa` 5, `cr.itir` 8, `cr.ifs` 9, `cr.lid` 0x10000, `cr.tpr` 16 and then 17 to 21 for `cr.itv`, `cr.pmv`, `cr.lrr0`, `cr.lrr1`,
+`cr.cmcv`) and expects each back, then restores every saved value, including `cr.lid`. Whether the constants match the Madison implemented
+bits is **unknown**.
+
+**Entry 8** (`0xffeeb7c0`, bits 33 and 32), skimmed, not traced through its handlers: a run of instructions that must trap or fault (the B-unit
+word at `0xffeeb83e`, `psr.tb` set and then a taken branch, `chk.s.i`, `break.i 0x195871` and others), each followed by branches to the
+failure exit `0xffeebcd0` that must not be reached. The test sets one bit of `r14` before each and expects `r14 = 0` after the handler
+has run. An emulator must raise the architecturally correct trap or fault for each; for the B-unit word that is inferred to be an
+illegal-operation fault (major opcode 10 is not a defined B-unit opcode).
+
+**What a healthy processor returns.** For the stop not to occur, every group that runs (entries 1 to 9) must leave `r8 >= 0` at its result
+call. No MSR, memory or SAL value is read by these groups, so no value can be "supplied": only correct instruction behaviour avoids the stop
+(including breaks and faults, an advancing `ar.itc`, the `ar.*` and `cr.*` implemented-bit rules and `rrb.pr` handling). The bit-set skip
+in `r13` is not available to a model: `r13` is `r37` as returned by SAL_A ORed with `0xe030ffff8000`.
 
 ## 4. What SAL_A puts into `r37` (reason 3)
 
 *Established.* At `0xffc4e310` the reason-3 path (`dep.z r3=r20,0,8` equals 3) calls `0xffc4eaa0`, then `0xffc4e330` to `0xffc4e34c`: `r8 = [r8 + 0x40]`,
-`shr.u r8=r8,16`, `or r37=r8,r37`, `mov b6=r36`, `br.few b6`. No SHub register, no L1 value, no debug-switch word is read on the way (the
-SHub accesses of SAL_A are in the reason-0 path and in the common node set-up before this point, none of which reaches `r37`).
+`shr.u r8=r8,16`, `or r37=r8,r37`, `mov b6=r36`, `br.few b6`. The only write to `r37` in the SAL_A code reachable from its entry `0xffc4e030` (271 bundles, direct branches and calls followed; the
+only indirect transfers are the final `br b6`, a spin, a `br b0` return and the PAL call 528, which returns `r8 = -1` per pal-msrs.md) is that `or`.
+No SHub register, no L1 value, no debug-switch word reaches it: the other SHub accesses on the way are writes of progress codes or sit
+in the error block that `r35` bits 1:0 = 0 skips. The `or` is reached only for sub-id `0` or `7` in `r20` bits 15:8; any other sub-id
+branches at `0xffc4e30c` to `0xffc4e6f0`, which this review did not follow.
 `0xffc4eaa0` searches the table at `0xffc51648` (three triples for PAL pairs 7.31/7.79, 5.37/5.73, 1.27/2.25, terminated by `-1`) and then
-the 96-byte record table at `0xffc51000` for the record whose first doubleword equals the full `cpuid[3]` (for the 5.73 pair `0x1f010504`) and whose
-version windows contain the pair. The doubleword at record + `0x40` is `0x51` in all 15 records (and in the terminating zero record that follows them, at `0xffc515e0`), so the value ORed into `r37` is **0** in every case:
+the 96-byte (0x60) record table at `0xffc51000` for the record whose first doubleword equals the full `cpuid[3]` (for the 5.73 pair `0x1f010504`) and whose
+version windows contain the pair. The 64-bit doubleword at record + `0x40` is `0x51` in all 15 records (and in the terminating zero record at `0xffc515a0`, whose `+0x40` field is at `0xffc515e0`; a cpuid that matches no record stops there), so the value ORed into `r37` is **0** in every case:
 `r37` comes back as the value PAL handed in, `0xe030ffffffff` (`movl` at `0xffed7a76`), and `r13 = 0xe030ffffffff`. Bit 42 is therefore clear
 and group 42 always runs on this PROM, whatever the SHub, L1 or switch state. This answers the "which input sets bit 42" question: none does.
 
@@ -132,12 +205,14 @@ and group 42 always runs on this PROM, whatever the SHub, L1 or switch state. Th
 
 1. *Deliberate halt?* Yes (established): a stop with the marker `r7 = 0xcccc`, no report out. The error recorded is in `ar.k7` (bits 31:28 = 1, upper half =
    second argument of the result call) (established); nothing reads it before the stop.
-2. *Path.* The indirect call at `0xffee03c0` calls table entries (section 2); no table entry uses msr[1640] after `0xffee0390`. The
+2. *Path.* The indirect call at `0xffee03c0` calls table entries (section 2); no entry on the passing path uses msr[1640] after `0xffee0390`
+   (a failing group 35/34 in entry 9 does, section 2). The
    msr[1640] write at `0xffee0390` is not on the decision path (established). The decision is `r8 < 0` with `r9[1:0] = 3` at one of the
    result calls (established); which sub-test fails in the model is **unknown** without a trace of `r8` after each group.
    Meaning of msr[1640] bits 63, 59, 56: bit 56 and 59 as in pal-msrs.md and pal-instructions.md; bit 63 **unknown**.
-3. *Model-estimated values on the path.* None: no MSR read, reserved slot, `br.ia` table load or SHub read occurs between `0xffee0390`
-   and `0xffe7f100` (established by scanning every body on the path for `msr[` and reserved opcodes). The estimated values the model supplies earlier
+3. *Model-estimated values on the path.* None on the passing path of entries 1 to 9: no MSR read, reserved slot, `br.ia` table load or SHub read occurs between `0xffee0390`
+   and `0xffe7f100` (a flow scan of each entry's reachable bundles for `msr[` and the two reserved words; section 2 names the failure arms
+   that do read or write an MSR). Entries 12 and 13, which hold reserved slots, are skipped by `r13` bits 16 to 30. The estimated values the model supplies earlier
    (msr[1212], msr[1226], the `br.ia` return `r1 = 0`) decide only that execution reaches `0xffed75e0` and, via msr[0] bit 17 clear, the table.
    The M-word `0x108000000` appears on the other arm (`0xffe7f1f6`) and in the return path before the table (`0xffed87d6`); the model runs it as a no-op there,
    which is **inferred** harmless for this stop because nothing between it and the table depends on its effect.
@@ -148,3 +223,43 @@ and group 42 always runs on this PROM, whatever the SHub, L1 or switch state. Th
 - Meaning of msr[1640] bit 63 and of the FIT entry reserved bit 25 that selects between the two stops.
 - Whether a debugger or L1 reads `r30` or `r7` after the stop (nothing in the PROM does).
 - Why the entry at `PAL_B + 0x100a0` is the target the generic PAL_A hand-off uses for the msr[1779] bit 15 case.
+
+## Review
+
+Independent review of `9a454ef` (this page), examined at that revision. The reviewer did not write the page. Read in the retools
+`ia64-linux-gnu-objdump` listing of the whole image (bundle-level, flow followed with a small scan script) and byte reads of the record
+and FIT tables. The Ghidra decompile of `0xffeec2d0` and `0xffee0b20` was tried and came out as constant-return stubs with
+"unreachable block" warnings, so Ghidra was not used as the listing; no instruction-by-instruction comparison against it was made.
+
+**Confirmed.**
+- SAL_A reason 3: the only write to `r37` in code reachable from `0xffc4e030` is `or r37=r8,r37` at `0xffc4e34c`. `r8` is a 64-bit load at
+  record + `0x40`, shifted right 16; all 15 records and the terminator hold `0x51` there, so the OR adds 0 and bit 42 stays clear. PAL sets
+  `r37 = 0xe030ffffffff` at `0xffed7a78` and nothing between that and the SAL_A call writes it.
+- PAL_B: `r13` is rewritten at `0xffed8878` and `0xffed8892` (link-to-run delta) and then only by `mov r13=r37` at `0xffed88ee`, on the
+  msr[0] bit 17 clear arm; nothing writes `r13` from there to `0xffee03a0`. The OR with `0xe030ffff8000` at `0xffed885e` comes first.
+- Table: the loop, `r6`, `r7 = 0xffee06f0`, the zero terminator, and the per-entry `tbit` on `r13` (skip when set). Entry 3 uses bit 42.
+- Failure route: `r8 < 0` with `r9[1:0] = 3` reaches `0xffebf2a0` (`0xffebf10c`), which builds `0xffe7f000` from `ip`. The three words read from the
+  image (`0xffe880b0`, `0xffe880c0`, `0xffe880d0`) are as stated, and `0xffe880c0 = 0` skips the `p12` arm.
+- `0xffe7f000`: the FIT pointer, `tbit.z p0,p6=r2,25` on the qword `0x000107790000a8dc` (bit 25 clear), the 0xcccc spin, no store. All
+  five entry sites; the four non-computed ones are reached as listed.
+- Entries 1 to 3, the result routine and the sub-test callees contain no reserved M word, no reserved B word and no `msr[`
+  access on the passing path.
+- Sub-test 1 stages 2 and 6 re-derived by hand; they pass on correct semantics.
+
+**Changed.**
+- Thirteen table entries, not twelve; `0xffee1ee0` (bit 39) is its own entry, not part of `0xffee1e20`; full bit map added.
+- The two `dep` at `0xffe7f016` and `0xffe7f01c` have length 64, not 1; the stated `psr` value rewritten as inferred.
+- Sub-test 1: 55 adds per pass, not 48; stages, predicate masks, `rrb.pr` handling and the single compare that decides `r8` written out.
+- Sub-tests 2 to 4 filled in; `ar.itc` must advance (sub-test 3); entry 2 is a `break` handler test and entry 8 a fault test, neither
+  mentioned before. The statement that no entry touches an MSR now says "on the passing path" and names the two exceptions.
+- The terminator record address (`0xffc515a0`) and the sub-id condition for reaching the SAL_A `or`.
+
+**Not checked.**
+- Entries 1 and 8 beyond a skim; entries 4 to 7 and 9 for what they test (only scanned for MSR, reserved and undecodable words).
+- The SAL_A sub-id branch to `0xffc4e6f0`, and PAL's source for `r20` bits 15:8 (msr[1643] when no `p16`-`p22`).
+- Whether the SDM truncates a deposit past bit 63 as assumed; the SDM was not opened.
+- The GR35 field positions in boot-sequence.md and the GR37 field layout: Figure 11-9 and 11-10 could not be opened here (the SDM was
+  not found under the Library roots I could reach). `ia` = bit 17 agrees with the PAL code (msr[1640] bit 59 is set from the `br.ia`
+  return and lands in `r35` bit 17). The rest of the GR35 decode, and the layout `test_control` 46:0, `cs` 47, reserved 63:48, 0 = run,
+  1 = skip are consistent with the code (`0xe030ffff8000` sets bit 47, and a set bit skips a group) but are not confirmed against the figure.
+- The result routine's second argument (`ar.k7` upper half) and the real-hardware meaning of any value; no run was made.
