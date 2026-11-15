@@ -144,10 +144,10 @@ So: the Ethernet controller on the Altix IO9 and IO10 is **unknown**; a Broadcom
 hypothesis, inferred from the three items above and the sibling card. No Altix capture of `lspci` is held.
 
 - If the Ethernet part is a BCM5701 (inferred above, not established), its register reference is the Broadcom "BCM57XX Host
-  Programmer Interface Specification", 57XX-PG105-R. The Library holds no copy (techpubs search, 2026-11-15). The web was
-  not checked.
-- No public VSC 7174 datasheet is known to this page. The Library holds none (techpubs search, 2026-11-15), and the web was
-  not checked. Linux `sata_vsc.c` is the only source for that part here.
+  Programmer Interface Specification", 57XX-PG105-R, which the Library holds among its datasheets. No standalone BCM5701
+  datasheet is public; the Linux `tg3` driver is the other reference.
+- No public VSC 7174 datasheet exists: a Library and web search (2026-11-15) found none. Linux `sata_vsc.c` is the only
+  source for that part here.
 
 ## The riser identity record
 
