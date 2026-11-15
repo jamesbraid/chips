@@ -125,7 +125,7 @@ not held here; the byte numbers are those the PROM reads.
 
 ## SPD contents for a 2 GiB node
 
-What an emulated L1 has to put in the SPD bytes so that SAL 5.04 sizes one bank of four DIMMs as 2 GiB. The L1 side (request, reply frame, error statuses, the checksum in byte 63) is in the controller repository's page `software/firmware/l1/sn2-dimm-spd-request.md`. This section was read from `shub1snprom.bin` (SAL_B, base `0xffa00000`). The SPD layout is not held in the Library (no JEDEC document is there), so each byte's meaning below is **inferred from how the PROM uses it**, not cited to a standard.
+What an emulated L1 has to put in the SPD bytes so that SAL 5.04 sizes one bank of four DIMMs as 2 GiB. The L1 side (request, reply frame, error statuses, the checksum in byte 63) is in the controller repository's page `software/firmware/l1/sn2-dimm-spd-request.md`. This section was read from `shub1snprom.bin` (SAL_B, base `0xffa00000`). Byte meanings are cited to Micron PC3200 DIMM datasheets (the note at the end of this section); how the PROM uses each byte is read from the firmware.
 
 **Which ids, in what order (established).** `mdir_fill_node_dimmcfg` (`0xffa77bb0`) walks bank 0 to 3 in the outer loop and slot 0 to 3 in the inner loop, and calls `0xffa7bd60` for each of the 16 pairs, which reaches the L1 reader through `sysctl_eeprom_dimm` (`0xffa85470`). The device id is `8 + 8*(slot & 1) + 2*bank + (slot >> 1)`:
 
@@ -140,7 +140,7 @@ All sixteen are asked, in this order; the only caller of `mdir_fill_node_dimmcfg
 
 **How the reply is parsed (established, `0xffa82270`, with the chunk loop `0xffa843f0`).** The reader sends selector 4, offset 0 and length min(48, 64) = 48 in one request and hands the reply (class byte already dropped) to the parser with two expected arguments: one integer and one raw block. The parser reads the status from bytes 0 to 3 (big-endian); a nonzero status is returned as the error (status -106 is combined with a further four bytes). Then it reads the count from byte 4, which must be exactly 2 (otherwise -33). The first argument's tag must be `0x00`, followed by four bytes (any other tag gives -32). The second argument is a raw block: the parser takes the length from the low 7 bits of its tag byte, does not test bit 7, and copies that many bytes to the slot's 256-byte buffer (buffers are 256 bytes apart, 1024 per bank). The integer is the L1's "bytes left"; after the one request the reader finds that 48 bytes are done and does not use it. The slot reads as absent if any step fails: the caller treats only return 0 as success (a status -107 gives return code 3, everything else 1, and the caller does not tell them apart). I saw no length test (inferred: a reply shorter than 48 bytes leaves the buffer's earlier contents in the bytes after it, which the PROM would then read) and no SPD checksum test in the PROM (reviewed above); the checksum matters only because the L1 refuses a record with a bad one.
 
-**The eight bytes (established where the consumer was read in full; meanings inferred from use).** Bytes 0 to 4, 6 to 8, 10 to 17, 19 to 22, 24, 26 to 28, 30, 32 to 41 and 43 to 47 are never read by the PROM and may hold anything; byte 63 matters only to the L1.
+**The eight bytes (consumers established where read in full; meanings established by Micron datasheets for the values shown, see the note below the example).** Bytes 0 to 4, 6 to 8, 10 to 17, 19 to 22, 24, 26 to 28, 30, 32 to 41 and 43 to 47 are never read by the PROM and may hold anything; byte 63 matters only to the L1.
 
 | Byte | Used as | Consumer | Values that matter |
 |---|---|---|---|
@@ -186,6 +186,14 @@ The index and the clock then select the timing row (`0xffa76630`): at 200 MHz in
 Latency index 3 at 200 MHz selects timing index 8 (the table row 8 has its valid halfword set). Banks 1 to 3 have a presence word of 0 and size as empty. The result is a 2 GiB node.
 
 The PROM's own stand-in for a DIMM (the simulator path `0xffa7b940`, not reached on real hardware) builds a buffer with byte 18 = `0x0c`, byte 9 = `0x75`, byte 23 = `0xa0`, byte 29 = `0x49` and a density and rank pair, and sets byte 63 to the sum of bytes 0 to 62. At 133 MHz that gives CL 2.5, which is another valid shape for the same bank (byte 5 = 1, byte 31 = `0x80`).
+
+**Datasheet check.** Byte meanings above are from Micron MT8VDDT6464A, *128MB, 256MB, 512MB (x64, SR): PC3200 184-Pin DDR UDIMM*, Rev. E, Table 17 (pp. 23-24; the 512 MB column), and MT9VDDT6472A, *128MB, 256MB, 512MB (x72, ECC, SR), PC3200 184-Pin DDR SDRAM UDIMM*, Rev. B, Table 21 (pp. 25-26; 512 MB column). Both agree with each other on every byte the PROM reads. Neither table gives the bit positions in byte 18 or the 2-bit fraction in byte 29; those stay inferred.
+
+- Example byte 29 is `0x48` (18 ns). Table 17 gives `0x3C` (15 ns) for these parts; `0x48` is not in either table.
+- Example byte 63 is `0x50`, which holds only with the other bytes zero. Table 17 gives `0xC1` and Table 21 `0xD3` for these parts; the sum rule reproduces both from the table bytes.
+- The example's one rank matches: byte 5 is `0x01` in both tables (the title says SR). The "usually two-rank" note does not apply to these parts.
+- Bytes 9, 18, 23, 25, 31 and 42 match Table 17 (`0x50`, `0x1C`, `0x60`, `0x75`, `0x80`, `0x46`).
+- Table 17 gives `0x20`, `0x40`, `0x80` for 128, 256 and 512 MB per rank. The page's codes `0x10`, `0x01` and `0x02` are not in the datasheets.
 
 ## Review (SPD contents)
 
