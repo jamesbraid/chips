@@ -11,7 +11,7 @@ stated. The chip's role, placement and the platform around it are in
 - One Synergy per Itanium front-side bus, two per node, each between one Bedrock processor interface and two Itanium slots.
 - Reached at physical `0xe0000000000` plus the offset by a processor on its bus (one 64-bit store), and from any node through
   the Bedrock's hub special space at the remote register window plus `0x04000000` or `0x05000000` (a write is four 64-bit
-  stores of 16 bits each at offset times four; a read is one load at the plain offset).
+  stores at offset times four, the value shifted right by 48, 32, 16 and 0, so likely 16 bits each; a read is one load at the plain offset).
 - Registers the software touches: eight interrupt vector masks (A and B per 64 vectors), `FSB_CONFIG` (`0x450`), a cache-way
   disable mask for its L4 (`0xae0`), two registers polled as a PIO write barrier (`0x330`, `0x338`), and eight performance
   registers.

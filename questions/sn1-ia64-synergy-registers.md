@@ -17,6 +17,6 @@ uses `reg` unshifted. Which is right for hardware (and whether the simulator, th
 hardware behaviour) decides how a Synergy access is decoded.
 
 Next route: a Synergy specification or an SN1 IA-64 PROM image, neither held. For the
-simulator path the 17 known offsets are all the kernel and the fake PROM touch
+simulator path the 20 known offsets are all the kernel and the fake PROM touch
 ([fake-prom.md](../platforms/sn1-ia64/fake-prom.md)). The 2.4.0-test10 (November 2000), 2.4.16, 2.4.17 and 2.4.18 patch series of the Linux/IA-64 project were read for Synergy (2026-11-15); they add `0xae0`, `0x330` and `0x338` and nothing else. Mail from SGI staff in the ia64 list around
 December 2000 to mid-2001 might name more registers.

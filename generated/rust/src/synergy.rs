@@ -92,7 +92,7 @@ pub mod perf_cntl0_a {
         }
     }
 }
-/// Performance control, bus 0, counter B. Same layout as perf_cntl0_a. (established)
+/// Performance control, counter B. The header labels it bus 0, but the kernel's multiplexer writes it through Synergy 1 (and CNTL0_A through Synergy 0),  (established)
 pub mod perf_cntl0_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xab8;
@@ -112,7 +112,7 @@ pub mod perf_cntr0_a {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xad0;
 }
-/// Performance counter 0, B. Same use. (established)
+/// Performance counter 0, B. Same use, but read and cleared through Synergy 1 while counter 0 A is read through Synergy 0, so the header's 'FSB0' label f (established)
 pub mod perf_cntr0_b {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xad8;

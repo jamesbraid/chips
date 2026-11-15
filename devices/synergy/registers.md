@@ -68,7 +68,7 @@ Vector enable mask, vectors 0 to 63, slot 1.
 
 ### Register `gbl_perf_a`
 
-Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. So the register reads nonzero when the processor's earlier uncached stores have drained. Which bits carry that, and what the name's 'perf' means, is unknown.
+Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. The loop therefore implies the register reads nonzero when the processor's earlier uncached stores have drained, but the comment says 'clear', so the polarity is unsettled. Which bits carry that, and what the name's 'perf' means, is unknown.
 
 ### Register `gbl_perf_b`
 
@@ -93,7 +93,7 @@ Performance control, bus 0, counter A. Only with the kernel's optional perf opti
 
 ### Register `perf_cntl0_b`
 
-Performance control, bus 0, counter B. Same layout as perf_cntl0_a.
+Performance control, counter B. The header labels it bus 0, but the kernel's multiplexer writes it through Synergy 1 (and CNTL0_A through Synergy 0), the same event word to both, so 'B' may mean Synergy 1; unknown. Same layout as perf_cntl0_a.
 
 ### Register `perf_cntl1_a`
 
@@ -109,7 +109,7 @@ Performance counter 0, A. Read through the remote window and masked to 40 bits, 
 
 ### Register `perf_cntr0_b`
 
-Performance counter 0, B. Same use.
+Performance counter 0, B. Same use, but read and cleared through Synergy 1 while counter 0 A is read through Synergy 0, so the header's 'FSB0' label for both is doubtful; unknown.
 
 ### Register `syn_tag_disable_way`
 

@@ -55,7 +55,7 @@
 #define SYN_VEC_MASK0_B                              0x0002d8 /* established */
 
 /*
- * Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. So the register reads nonzero when the processor's earlier uncached stores have drained. Which bits carry that, and what the name's 'perf' means, is unknown.
+ * Offset established; role inferred. From the 2.4.18 patches of April 2002 the kernel's I/O write barrier reads this register for a processor on Synergy 0 (gbl_perf_b for Synergy 1) in a loop that sleeps 5 microseconds while the value is zero, after first reading the Bedrock revision register. The code comment calls the polled thing the Bedrock PIO write status register, and the macro names are GBL_PERF_A/B. The loop therefore implies the register reads nonzero when the processor's earlier uncached stores have drained, but the comment says 'clear', so the polarity is unsettled. Which bits carry that, and what the name's 'perf' means, is unknown.
  */
 /* gbl_perf_a: r64, reset unknown; Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM) */
 #define SYN_GBL_PERF_A                               0x000330 /* established */
@@ -88,7 +88,7 @@
 #define SYN_PERF_CNTL0_A_ENABLE_INPLACE              (SYN_PERF_CNTL0_A_ENABLE_MASK << SYN_PERF_CNTL0_A_ENABLE_SHIFT)
 
 /*
- * Performance control, bus 0, counter B. Same layout as perf_cntl0_a.
+ * Performance control, counter B. The header labels it bus 0, but the kernel's multiplexer writes it through Synergy 1 (and CNTL0_A through Synergy 0), the same event word to both, so 'B' may mean Synergy 1; unknown. Same layout as perf_cntl0_a.
  */
 /* perf_cntl0_b: rw64, reset unknown; Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM) */
 #define SYN_PERF_CNTL0_B                             0x000ab8 /* established */
@@ -112,7 +112,7 @@
 #define SYN_PERF_CNTR0_A                             0x000ad0 /* established */
 
 /*
- * Performance counter 0, B. Same use.
+ * Performance counter 0, B. Same use, but read and cleared through Synergy 1 while counter 0 A is read through Synergy 0, so the header's 'FSB0' label for both is doubtful; unknown.
  */
 /* perf_cntr0_b: rw64, reset unknown; Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM) */
 #define SYN_PERF_CNTR0_B                             0x000ad8 /* established */
