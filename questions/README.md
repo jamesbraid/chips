@@ -391,3 +391,4 @@ Corrections found while tagging. These are not fixed here.
 ## System controllers (added with devices/l1/host-link.md, devices/l2 and devices/l3)
 
 - **Controller host protocol: SHub 2 UART location, FIFO depth, no-argument requests, event frame, L2 routing, L2 baud, the 4700's controller link, address type 2, SAL subchannel mapping.** *[route: mixed, see the page]* Nine items, each with its next route in [questions/l1-l2-l3-host-protocol.md](l1-l2-l3-host-protocol.md).
+- **TIOCX and RASC: bitstream-dependent registers.** *[route: missing source; some unknown]* The Core Services register block is defined by the vendor driver, but the algorithm-defined register offsets, reset values, the second part number, the board-type mapping and the SSP packet format are not public. See [tiocx-rasc-open.md](tiocx-rasc-open.md).
