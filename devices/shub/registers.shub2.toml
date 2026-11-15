@@ -2,7 +2,8 @@
 # the SGI Linux ia64 header shub_mmr.h (v5.3); registers the header gives no SH2_
 # name for are removed rather than assumed.
 
-remove = ["registers.shub_id", "registers.pi_cam_control", "registers.ptc", "registers.md_dqlp_dir_privilege_vector", "registers.md_dqrp_dir_privilege_vector"]
+remove = ["registers.shub_id", "registers.pi_cam_control", "registers.ptc", "registers.md_dqlp_dir_privilege_vector", "registers.md_dqrp_dir_privilege_vector",
+  "registers.lb_reg_1002_0000", "registers.pi_reg_2001_0100", "registers.cpu_hist", "registers.fw_word_1540", "registers.cpu_bits", "registers.fw_debug_word", "registers.lb_elect", "registers.lb_elect_set", "registers.lb_l1_state", "registers.lb_lock", "registers.lb_lock_status", "registers.lb_slice_rec", "registers.rtc_ctl", "registers.pi_slice_present", "registers.chip_id"]
 
 [override]
 unit = "shub2"
@@ -25,6 +26,7 @@ EVENT_OCCURRED_EXTIO_INT3 = { value = 0x400000000, grade = "established", doc = 
 
 [patch."registers.rtc"]
 offset = 0x2101c0000
+access = "r"
 
 [patch."registers.rtc_int_config"]
 offset = 0x10001480

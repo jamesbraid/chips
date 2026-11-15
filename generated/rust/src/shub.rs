@@ -2,6 +2,31 @@
 // SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 #![allow(dead_code)]
 
+/// Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's  (inferred)
+pub mod chip_id {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100000000;
+    pub mod revision { // bits 31:28, established
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod part_number { // bits 27:12, inferred
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege  (established)
 pub mod md_dqlp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
@@ -231,6 +256,53 @@ pub mod event_occurred_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110010008;
 }
+/// Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image (established)
+pub mod lb_reg_1002_0000 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110020000;
+}
+/// Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and (established)
+pub mod lb_slice_rec {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110030000;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
+}
+/// Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, b (established)
+pub mod rtc_ctl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060280;
+    pub mod mode { // bits 33:32, inferred
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod period { // bits 13:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod run { // bits 0:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross- (established)
 pub mod ipi_access {
     pub const WIDTH: u32 = 64;
@@ -243,6 +315,26 @@ pub mod shub_id {
     pub mod nodes_per_bit { // bits 52:48, established
         pub const SHIFT: u32 = 48;
         pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod size_code { // bits 45:44, inferred
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod nasid { // bits 42:32, inferred
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x7ff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -340,6 +432,81 @@ pub mod rtc {
         }
     }
 }
+/// Node election word; the name is ours. SAL_A stores slice + 1 to lb_elect_set and reads this register: the 64-bit value must equal exactly what was wri (established)
+pub mod lb_elect {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0080;
+}
+/// Election write register; the name is ours. SAL_A stores slice + 1 here and reads lb_elect. Whether it aliases lb_elect, latches the first writer or so (established)
+pub mod lb_elect_set {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0088;
+}
+/// L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An (established)
+pub mod lb_l1_state {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0100;
+    pub mod link { // bits 41:39, inferred
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cp (inferred)
+pub mod lb_lock {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0200;
+}
+/// Firmware lock status; the name is ours. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 (inferred)
+pub mod lb_lock_status {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0208;
+}
+/// Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. S (established)
+pub mod pi_reg_2001_0100 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120010100;
+    pub mod bit24 { // bits 24:24, inferred
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and  (established)
+pub mod pi_slice_present {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120020080;
+    pub mod present2 { // bits 5:4, inferred
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod present { // bits 1:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the k (established)
 pub mod pi_cam_control {
     pub const WIDTH: u32 = 64;
@@ -378,6 +545,28 @@ pub mod pio_write_status_alias {
     pub const OFFSET: u64 = 0x120070208;
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 128;
+}
+/// Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the w (established)
+pub mod cpu_hist {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031500;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 16;
+}
+/// Firmware scratch word; the name is ours. SAL_A's election winner writes 0 to it. No read was found in the reset phase. Plain storage satisfies the acc (inferred)
+pub mod fw_word_1540 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031540;
+}
+/// Firmware per-processor state word; the name is ours. The winner of the SAL_A election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, (established)
+pub mod cpu_bits {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031550;
+}
+/// Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits (inferred)
+pub mod fw_debug_word {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031560;
 }
 /// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor  (established)
 pub mod junk_bus_led {

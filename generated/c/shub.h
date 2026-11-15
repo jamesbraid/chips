@@ -7,6 +7,18 @@
 
 
 /*
+ * Chip identification word at node offset 0x1_0000_0000 (memory and directory block by address); the name is ours. The PROM reads it through the node's global window at node start and stores bits 27:12 as the node's part number and bits 31:28 as its revision. The part number is compared with 17251 (0x4363) site 0xffa959a6, reached through a table, so that this word feeds the compare is inferred. A bounded read that returns the part number satisfies the PROM.
+ */
+/* chip_id: r64, reset unknown; SAL 5.04 PROM site 0xffa0be1c (read) and 0xffa0f8c0 (storage of the fields); the compare against 17251 is site 0xffa959a6 */
+#define SHUB_CHIP_ID                                 0x100000000 /* inferred */
+#define SHUB_CHIP_ID_REVISION_SHIFT                  28 /* established */
+#define SHUB_CHIP_ID_REVISION_MASK                   0xfull
+#define SHUB_CHIP_ID_REVISION_INPLACE                (SHUB_CHIP_ID_REVISION_MASK << SHUB_CHIP_ID_REVISION_SHIFT)
+#define SHUB_CHIP_ID_PART_NUMBER_SHIFT               12 /* inferred */
+#define SHUB_CHIP_ID_PART_NUMBER_MASK                0xffffull
+#define SHUB_CHIP_ID_PART_NUMBER_INPLACE             (SHUB_CHIP_ID_PART_NUMBER_MASK << SHUB_CHIP_ID_PART_NUMBER_SHIFT)
+
+/*
  * Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
  */
 /* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
@@ -110,19 +122,54 @@
 #define SHUB_EVENT_OCCURRED_ALIAS                    0x110010008 /* established */
 
 /*
- * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown.
+ * Local block register, unnamed; the name is ours (address). SAL_A writes 0x15031010 to it on each of its two entries (reason 3 and reason 0). The image holds no other reference to the address, so it is never read back. The meaning of the value is unknown; a plain write-accepting register satisfies the PROM.
+ */
+/* lb_reg_1002_0000: w64, reset unknown; SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name */
+#define SHUB_LB_REG_1002_0000                        0x110020000 /* established */
+
+/*
+ * Per-slice local block record, 128 bytes apart (index = slice & 3); the name is ours. SAL_B reads the running processor's entry in the lock routine and writes its low byte as a progress code, so any value is accepted; SAL_A reads it into r31 for reasons 1 and 2 only. The meaning of the value is unknown.
+ */
+/* lb_slice_rec: r64, reset unknown; SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (reasons 1 and 2 only) */
+#define SHUB_LB_SLICE_REC                            0x110030000 /* established */
+#define SHUB_LB_SLICE_REC_COUNT                      4
+#define SHUB_LB_SLICE_REC_STRIDE                     128
+
+/*
+ * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (period + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+ */
+/* rtc_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
+#define SHUB_RTC_CTL                                 0x110060280 /* established */
+#define SHUB_RTC_CTL_MODE_SHIFT                      32 /* inferred */
+#define SHUB_RTC_CTL_MODE_MASK                       0x3ull
+#define SHUB_RTC_CTL_MODE_INPLACE                    (SHUB_RTC_CTL_MODE_MASK << SHUB_RTC_CTL_MODE_SHIFT)
+#define SHUB_RTC_CTL_PERIOD_SHIFT                    4 /* established */
+#define SHUB_RTC_CTL_PERIOD_MASK                     0x3ffull
+#define SHUB_RTC_CTL_PERIOD_INPLACE                  (SHUB_RTC_CTL_PERIOD_MASK << SHUB_RTC_CTL_PERIOD_SHIFT)
+#define SHUB_RTC_CTL_RUN_SHIFT                       0 /* inferred */
+#define SHUB_RTC_CTL_RUN_MASK                        0x1ull
+#define SHUB_RTC_CTL_RUN_INPLACE                     (SHUB_RTC_CTL_RUN_MASK << SHUB_RTC_CTL_RUN_SHIFT)
+
+/*
+ * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown.
  */
 /* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_IPI_ACCESS                              0x110060480 /* established */
 
 /*
- * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header.
+ * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32; the reset value is unknown. See prom-reset.md.
  */
-/* shub_id: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* shub_id: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_SHUB_ID                                 0x110060580 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_SHIFT             48 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_MASK              0x1full
 #define SHUB_SHUB_ID_NODES_PER_BIT_INPLACE           (SHUB_SHUB_ID_NODES_PER_BIT_MASK << SHUB_SHUB_ID_NODES_PER_BIT_SHIFT)
+#define SHUB_SHUB_ID_SIZE_CODE_SHIFT                 44 /* inferred */
+#define SHUB_SHUB_ID_SIZE_CODE_MASK                  0x3ull
+#define SHUB_SHUB_ID_SIZE_CODE_INPLACE               (SHUB_SHUB_ID_SIZE_CODE_MASK << SHUB_SHUB_ID_SIZE_CODE_SHIFT)
+#define SHUB_SHUB_ID_NASID_SHIFT                     32 /* inferred */
+#define SHUB_SHUB_ID_NASID_MASK                      0x7ffull
+#define SHUB_SHUB_ID_NASID_INPLACE                   (SHUB_SHUB_ID_NASID_MASK << SHUB_SHUB_ID_NASID_SHIFT)
 #define SHUB_SHUB_ID_REVISION_SHIFT                  28 /* established */
 #define SHUB_SHUB_ID_REVISION_MASK                   0xfull
 #define SHUB_SHUB_ID_REVISION_INPLACE                (SHUB_SHUB_ID_REVISION_MASK << SHUB_SHUB_ID_REVISION_SHIFT)
@@ -159,13 +206,67 @@
 #define SHUB_INT_CMP_COMPARE_INPLACE                 (SHUB_INT_CMP_COMPARE_MASK << SHUB_INT_CMP_COMPARE_SHIFT)
 
 /*
- * Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only.
+ * Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only. The SHub 1 PROM (SAL 5.04) writes 0 to it at the SAL_B reset entry (0xffa94d20) and again to a node's counter in the interconnect phase, then reads it on every delay and timeout, so it must advance. Its tick period comes from rtc_ctl (SHub 1: 10 ns times the field plus one, 50 ns after the PROM's own write). See prom-reset.md.
  */
-/* rtc: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* rtc: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_RTC                                     0x1101c0000 /* established */
 #define SHUB_RTC_COUNTER_SHIFT                       0 /* established */
 #define SHUB_RTC_COUNTER_MASK                        0x7fffffffffffffull
 #define SHUB_RTC_COUNTER_INPLACE                     (SHUB_RTC_COUNTER_MASK << SHUB_RTC_COUNTER_SHIFT)
+
+/*
+ * Node election word; the name is ours. SAL_A stores slice + 1 to lb_elect_set and reads this register: the 64-bit value must equal exactly what was written, twice (site 0xffc4e9b0 and 0xffc4e766). Equal means this processor is the node's winner. Later code ORs bits 39 to 41 into it (set bit 41 when no other processor position is flagged; bit 40 set across nodes; bit 39 on a remote node) as firmware state. The relation to lb_elect_set is unknown: a write to the offset 8 above may alias, latch (first writer wins) or store into this word; the code reads the same register for all three.
+ */
+/* lb_elect: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e9b0, 0xffc4e766 (election reads), 0xffc4e246, 0xffa0b0f0 (bit updates); no Linux v5.3 name */
+#define SHUB_LB_ELECT                                0x1101d0080 /* established */
+
+/*
+ * Election write register; the name is ours. SAL_A stores slice + 1 here and reads lb_elect. Whether it aliases lb_elect, latches the first writer or something else is unknown. A model that returns the written value at lb_elect satisfies every access read.
+ */
+/* lb_elect_set: w64, reset unknown; SAL 5.04 PROM site 0xffc4e9a6 (release store of slice + 1); no Linux v5.3 name */
+#define SHUB_LB_ELECT_SET                            0x1101d0088 /* established */
+
+/*
+ * L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here.
+ */
+/* lb_l1_state: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg */
+#define SHUB_LB_L1_STATE                             0x1101d0100 /* established */
+#define SHUB_LB_L1_STATE_LINK_SHIFT                  39 /* inferred */
+#define SHUB_LB_L1_STATE_LINK_MASK                   0x7ull
+#define SHUB_LB_L1_STATE_LINK_INPLACE                (SHUB_LB_L1_STATE_LINK_MASK << SHUB_LB_L1_STATE_LINK_SHIFT)
+
+/*
+ * Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
+ */
+/* lb_lock: rw64, reset unknown; SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user) */
+#define SHUB_LB_LOCK                                 0x1101d0200 /* inferred */
+
+/*
+ * Firmware lock status; the name is ours. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 microsecond deadline, then it writes 0 to lb_lock and keeps polling, so a status that never reads 0 hangs the PROM. A read side effect is unknown. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
+ */
+/* lb_lock_status: r64, reset unknown; SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node */
+#define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
+
+/*
+ * Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written.
+ */
+/* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
+#define SHUB_PI_REG_2001_0100                        0x120010100 /* established */
+#define SHUB_PI_REG_2001_0100_BIT24_SHIFT            24 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT24_MASK             0x1ull
+#define SHUB_PI_REG_2001_0100_BIT24_INPLACE          (SHUB_PI_REG_2001_0100_BIT24_MASK << SHUB_PI_REG_2001_0100_BIT24_SHIFT)
+
+/*
+ * Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and tests bit slice; a set bit makes the PROM count that processor present and wait for it (up to 5,000,000 microseconds). On a one-processor node the bit for every other slice must read 0. The meaning (processor present) is inferred from that use. Later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor); the own-slice bit they expect was not traced, so a model should set it.
+ */
+/* pi_slice_present: r64, reset unknown; SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) */
+#define SHUB_PI_SLICE_PRESENT                        0x120020080 /* established */
+#define SHUB_PI_SLICE_PRESENT_PRESENT2_SHIFT         4 /* inferred */
+#define SHUB_PI_SLICE_PRESENT_PRESENT2_MASK          0x3ull
+#define SHUB_PI_SLICE_PRESENT_PRESENT2_INPLACE       (SHUB_PI_SLICE_PRESENT_PRESENT2_MASK << SHUB_PI_SLICE_PRESENT_PRESENT2_SHIFT)
+#define SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT          0 /* inferred */
+#define SHUB_PI_SLICE_PRESENT_PRESENT_MASK           0x3ull
+#define SHUB_PI_SLICE_PRESENT_PRESENT_INPLACE        (SHUB_PI_SLICE_PRESENT_PRESENT_MASK << SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT)
 
 /*
  * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown.
@@ -194,6 +295,32 @@
 #define SHUB_PIO_WRITE_STATUS_ALIAS                  0x120070208 /* inferred */
 #define SHUB_PIO_WRITE_STATUS_ALIAS_COUNT            2
 #define SHUB_PIO_WRITE_STATUS_ALIAS_STRIDE           128
+
+/*
+ * Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the word, shift it left 8, put the code in the low byte, write it back. The code is never read for a decision; any reset value is tolerated and the register must return what was last written. SAL_A also reads slice 1 and slice 3 words (0x150031510, 0x150031530) and copies them, ORed with 0x60, to LED registers. The block is the network interface's by address; the PROM uses it as plain storage (inferred).
+ */
+/* cpu_hist: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name */
+#define SHUB_CPU_HIST                                0x150031500 /* established */
+#define SHUB_CPU_HIST_COUNT                          4
+#define SHUB_CPU_HIST_STRIDE                         16
+
+/*
+ * Firmware scratch word; the name is ours. SAL_A's election winner writes 0 to it. No read was found in the reset phase. Plain storage satisfies the access.
+ */
+/* fw_word_1540: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner); no Linux v5.3 name */
+#define SHUB_FW_WORD_1540                            0x150031540 /* inferred */
+
+/*
+ * Firmware per-processor state word; the name is ours. The winner of the SAL_A election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, set in the SAL_B reset entry), 26 + slice (set by the local-master arbitration, polled until the other present processors have set theirs), 30 + slice and bit 34 (a second barrier), 35 + slice (set in the SAL_B reset entry), and a 3-bit count at bit 47 (even slice) or bit 50 (odd slice) that each present slice publishes from a PAL call and the master waits for as that many ready bits among 29:26 (inferred). Bits are set and cleared by read-modify-write under the lock pair lb_lock and lb_lock_status. The SAL_A error path clears bits 29:26. The meanings are inferred from use; the word must read back what was written.
+ */
+/* cpu_bits: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name */
+#define SHUB_CPU_BITS                                0x150031550 /* established */
+
+/*
+ * Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits of it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). Plain storage.
+ */
+/* fw_debug_word: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test) */
+#define SHUB_FW_DEBUG_WORD                           0x150031560 /* inferred */
 
 /*
  * Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.
