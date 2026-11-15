@@ -27,11 +27,12 @@ sibling image, or a path whose gating condition was not evaluated. *unknown*: no
   wrappers `0xffa7e6d0`/`0xffa7e900`, reached through `0xffaac4b0(4, ...)`, which this path does not call (inferred, caller list).
   The L1 ignores everything but the task number.
 - **Wire framing** (established, `0xffa86c90`): flag `0x7e`, one header byte, the payload with `0x7e` and `0x7d` escaped as `0x7d`
-  plus the byte xor `0x20`, the complemented CRC-16 (initial `0xffff`, reflected `0x8408`) low byte first, flag `0x7e`; payload
+  plus the byte xor `0x20`, the complemented CRC-16 (initial `0xffff`, reflected `0x8408`, standard table at `0xffbe1190`; it runs over the
+  header byte and then the unescaped payload, and the two CRC bytes are escaped too) low byte first, flag `0x7e`; payload
   clamped to 127 bytes. The request header byte is the open handle: `5 + processor slice` (slice = `cr.lid` bits 26:23), so 5 for
   the boot processor, up to 19 when several are open. Console traffic uses `0x40 | slice` (class 2).
 - **Reply** (established, `sysctl_cmd_interpret_resp` `0xffa82270`): the receiver (`0xffa87830`) takes frames whose header byte is
-  `0x20 | n` or `0x40 | n` for n from 5 to 19 and checks the CRC; the PROM then reads status in bytes 0 to 3 (big-endian), the
+  `0x20 | n` or `0x40 | n` for n from 5 to 19, or a byte from 0 to 4 with class bits clear, and checks the CRC; the PROM then reads status in bytes 0 to 3 (big-endian), the
   argument count in byte 4 and arguments from byte 5. Status 0 is success. Status `-106` selects a second status at bytes 6 to 9
   (that value minus 106000). Any other status is returned to the caller unchanged. With status 0 each caller supplies a list of
   expected arguments; a tag that differs from the expected type gives `-32` and a count that differs from the expected count gives
@@ -39,10 +40,12 @@ sibling image, or a path whose gating condition was not evaluated. *unknown*: no
   index.
 - **No reply, send failure.** `0xffa82a10` retries a partial send up to 50 times (500 ticks apart; status `-26`), any other send error
   returns at once. If no reply frame arrives before the deadline (`0x2dc6c0` ticks after the send), the receive returns `-24` and the
-  routine calls the node-die routine `0xffad2cb0` with progress code `0x8d` ("Critical system controller transaction failed"),
-  which writes the node reset request (`0x1_0001_0000_0000` to `0x1_2000_0000`) and then returns to the caller (established for the
-  call; whether the node halts afterwards is decided by that hardware write, not read). **This applies to every request below,
-  including `0x100b`.** A model must reply to all of them.
+  routine calls the node-die routine `0xffad2cb0` with progress code `0x8d` ("Critical system controller transaction failed").
+  Every request below goes through this routine (`0xffa82c10` is `0xffa82a10` with the timeout), so the die call precedes whatever the
+  request's own caller does with the `-24`. As read in the review below, the die routine shows `ERR 8d` on the display, then writes
+  the node reset request (`0x1_0001_0000_0000` to `0x1_2000_0000`) and, for the local node and the calling processor's own slice,
+  does not return: it enters `0xffaeb7c0` (cache init, `rfi`, then an endless `PAL_HALT_LIGHT` loop at `0xffaeb8d0`). Read the review
+  section "Silence" before relying on a model that withholds a reply. This applies to `0x100b` as well.
 - **Gating.** Most requests are made only by the node's master processor (`0xffa0ff30` returns 1 when no lower-numbered processor is
   flagged present; the single processor of a one-CPU node qualifies) and, for the display text, only while bit 6 of the node object's
   flags is set (set at the end of the link start, cleared by the node-die routine). A processor that runs under the simulator CPU ID
@@ -93,14 +96,18 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   version (5.04); the same bytes feed the version field in `0xffa46540`. (Established: image bytes read.)
 - **Reply read:** `sysctl_cmd_command` is run, then the reply is parsed with an expected list of zero arguments. The result of
   the routine is ignored by `sysctl_init`.
-- **Needs:** status 0 and argument count 0 (a different count only changes a status the caller drops). A reply must still arrive
-  or the 3,000,000-tick wait ends in the `0x8d` die path above.
+- **Needs:** status 0 and argument count 0 (a different count only changes a status the caller drops). The real L1 sends no reply
+  (next bullet); the 3,000,000-tick wait then ends in the `0x8d` die path above.
 - **Repeats:** once per node object; no retries.
 - **L1 handler:** `L1ReqIRouter` code `0x100b`, `0xcb474`. It checks four arguments (counting the code) and **sends no reply on success**
-  (sysco: established). **Conflict, not resolved here:** the PROM code waits for a reply like any other request. Either the PROM
-  runs the die path on a real L1 of this generation, or a deployed L1 answers; this repository cannot tell which. Answer it with
-  status 0 and no arguments.
-- **Blank L1:** same, no reply. Grade: request, arguments, reader: established; real L1 behaviour: unknown.
+  (sysco `12e3608`, section "The 0x100b reply": established, L1 1.62.1). The PROM waits the full timeout (`0x2dc6c0` ticks through
+  `0xffa82c10` and `0xffa82a10`), calls `0xffad2cb0` with progress `0x8d`, and `sysctl_init` ignores the `-24` it gets back: the
+  caller at `0xffa1f62c` is followed at once by the return (established, re-read in the review). **Open conflict:** sysco reads
+  `0xffad2cb0` as returning, so the PROM carries on; the review below finds that the routine's tail parks the processor. Until that
+  is settled, a model that stays silent for `0x100b` is reproducing the 1.62.1 L1 but risks parking the boot processor, and a model
+  that answers it (status 0, no arguments) is accepted by the PROM either way.
+- **Blank L1:** same, no reply. Grade: request, arguments, reader, no reply from L1 1.62.1: established; what the PROM does after
+  the missed reply: unknown (two readings of the die routine disagree).
 
 ### 2. `0x1005` display text "Prom starting..."
 
@@ -125,6 +132,8 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
 - **Needs:** status 0, count 2, tags 0 and 0. On `F` the later type switch (`0xffa7d510`) sends the next request.
 - **On error:** the wrappers return -1 and the later users get an unknown module; not fatal here.
 - **Repeats:** once (cached) unless the cache is lost.
+- **Type `o`:** when the type letter is `o` the identity wrapper `0xffa7d1f0` follows with up to eleven board-area EEPROM reads
+  (`0xffa84fd0`, site `0xffa7d46c`) until one succeeds; not reached for `F` (inferred for the arguments: not traced).
 - **L1 handler:** `0xc8bb8` (sysco, established): `rack << 6 | bay` then the type character. Blank L1: 0 and the brick type (inferred `F`).
 - Grade: request, reader, order: established; `F` for an Altix 350: inferred.
 
@@ -186,8 +195,14 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   tag/integer pairs: node count (must be at most 4), CPU count (at most 16), and for each node a presence word then an enable word.
   The routine returns `presence[slab] & enable[slab]`, the slab from the cache (`0xffa11a10` or `0xffa7d950`). A bad count gives
   `-100` (`0xffffffffffffff9c`).
-- **Needs for one processor:** status 0; node count 1; CPU count 1; presence 1; enable 1 (bit 0 of the ANDed word is the boot
-  processor; the PROM stops considering its own slice otherwise).
+- **Reply layout** (byte offsets, read from the hand parser): status 0 to 3; byte 4 (argument count) and the tag bytes are not
+  checked; node count at 6 to 9 (tag at 5); CPU count at 11 to 14 (tag at 10); then per node a presence word (tag at 15, value at 16
+  to 19) and an enable word (tag at 20, value at 21 to 24), each tag/value pair 5 bytes. The arrays hold four words; the PROM
+  indexes them by the node's slab (0 for one node).
+- **Needs for one processor:** status 0; node count 1; CPU count 1; presence 1; enable 1. The bit tested is the processor's slice
+  (`cr.lid` bits 26:23) in the ANDed word. A clear bit, or any status whose low bit is clear (the `-100` for a bad count is
+  `0xffffff9c`), makes `main_early_disable` (`0xffad34a0`) show progress `0x87` and call the same park path as the die routine
+  (`0xffa9fba0` to `0xffaeb7c0`) on that processor. Every processor sends this request, not only the master.
 - **L1 handler:** `0xca5f4`; reply order status, node count, CPU count, then per node presence and enable (sysco). Blank L1: not
   determined by the settings record (taken from the board's I/O expanders): unknown.
 - **Repeats:** not cached. Asked again in `main_two` (request 13) and in `main_three` (request 16).
@@ -219,7 +234,7 @@ Same routine as request 2; site `0xffa7e09c` through `main` at `0xffa1a3ec`. Mas
 
 ### 11. `0x0015` sharing mode
 
-- **Site:** `0xffa7fbbc`, routine `0xffa7fab0`, from `0xffa46540` (called at `0xffa1a37c`, master only, after the "DEX POD" check).
+- **Site:** `0xffa7fbbc`, routine `0xffa7fab0`, from `0xffa46540` (entered through the stub at `0xffa46530`, called at `0xffa1a37c`, master only, after the "DEX POD" check).
 - **Arguments:** none.
 - **Reply read:** one integer; on error the routine returns -1 or the status. The value goes (masked to 4 bits) into a configuration word
   passed to the node operations table (`+0x170`); it is not otherwise tested.
@@ -271,7 +286,7 @@ all resolved).
 | Order | Code | Arguments | Reply the PROM needs | Grade |
 |---|---|---|---|---|
 | 0 | none (link start) | UART at `0x8000000ffed40000`, divisor 1, 8N1, FIFO `0xc7`, MCR `0x22`; state register `0x81_101d_0100` bits 41:39 = 7 | no handshake | established |
-| 1 | `0x100b` | ints 1, 5, 4 | status 0, 0 args; a reply must arrive (3,000,000 ticks, else die `0x8d`) | established; real L1 reply unknown |
+| 1 | `0x100b` | ints 1, 5, 4 | status 0, 0 args accepted; the L1 sends none, the PROM times out (3,000,000 ticks), runs the `0x8d` die routine and ignores the `-24` | established; effect of the die routine unknown (see review) |
 | 2 | `0x1005` | string "Prom starting..." | status 0, 0 args (errors ignored) | established |
 | 3 | `0x0003` | none | status 0, 2 ints (module word, type letter) | established |
 | 4 | `0x000e` | none | status 0, 1 int (slab; 0 turns type `f` into `c`) | established |
@@ -302,12 +317,56 @@ all resolved).
   SAL runtime (`0xffb5ead0`, `0xffb5ed50`) and the `0x100b` twin. Of these only `0x0008` and `0x0012` are on the boot path;
   the others are not reached from `main`, `main_two` or `main_three` by direct calls, and their callers are SAL procedure
   descriptors the kernel calls (established for the call graph, as far as direct calls and descriptor tables go).
-- The no-reply claim for `0x100b` in the L1 link page contradicts the PROM's wait.
+- The no-reply claim for `0x100b` in the L1 link page and the PROM's wait are both right: the L1 sends nothing and the PROM waits
+  out the timeout (sysco `12e3608`). What follows the timeout is the open point in the review.
 
 ## Unknown
 
 - Whether the node object's identity cache survives the jump to RAM (decides whether `0x0003`, `0x000e`, `0x0013`, `0x0009` repeat).
 - The value of the partition-master flag and whether I/O discovery sends EEPROM reads on a model with no I/O widget.
-- What a deployed L1 does for `0x100b`.
+- What the PROM does after the `0x8d` die routine on a `0x100b` timeout (review, "Silence").
 - `0x0010` values on a blank L1.
 - Indirect calls through the node operations tables between `0xffaf8c50` and the EFI jump were not all resolved.
+
+## Review
+
+Independent review of chips commit `77d39fb` (this page), examined at `77d39fb`. The reviewer did not write it. Method: the retools IA-64 Ghidra export of `shub1snprom.bin` (SAL 5.04, sha256 matches the page) for the decompiled C of the request routines, `main`, `main_early_disable`, the frame builder, the send and wait routines and the receiver; `ia64-linux-gnu-objdump` over the whole SAL_B range as the cross-check for every constant, call target, call site and branch; the version bytes and the CRC table read from the image. The L1 side was read in the sysco pages only (section "The 0x100b reply" in `sn2-prom-link-1.62.1.md`, sysco `12e3608`); the L1 program was not re-read.
+
+**Confirmed (re-read in the binary).**
+
+- Census: exactly 23 `br.call` sites reach the frame builder `0xffa81f40`. Request codes read at 21 of them match the page's list (task-3 commands at `0xffa0d52c` and `0xffa0d80c`; `0x0003`, `0x0013`, `0x000e`, `0x0001`, `0x0009`, `0x0008`, `0x1005`, `0x000a`, `0x0012`, `0x1007`, `0x100a`, `0x200e`, `0x200f`, `0x0015`, `0x0006`, `0x100b` twice, `0x0010`, and `0x1005` in `0xffb5ead0`). The code constants at `0xffa7f59c` (`0x200d`) and `0xffb5ee7c` were not read. The twin `0xffa91060` and `0xffb5ed50` have no direct callers; `0xffa7e1d0`, `0xffa7ed60`, `0xffa7efe0`, `0xffa7f190`, `0xffa7f430`, `0xffa7f6b0` and `0xffb5ead0` have one direct caller each, none in `main`, `main_two` or `main_three`.
+- Order in `main` before the jump: `0x100b` (inside `sysctl_init`, progress `0xd`), `0x1005` "Prom starting..." (master), then `0xffaac4b0(2, nasid)`, which calls `0xffa80210` (`0x0003`, then the type switch in `0xffa7d510`: `0x000e` for types `f`, `l`, `b`, `{`; slab 0 or -1 turns the type into `c`), then `0xffa80270` (`0x0013`), then `0xffa802f0` (slab, cached). Then `0x0009`, progress `0xe`, `0x0001` (master stores the low 16 bits in the scratch register and sets flag 11), progress `0x10`, `0x0010` through `main_early_disable` (only if debug bit 8 is clear), the DIMM probe (`0xffa78100` calls `0xffa77bb0`) after progress `0x14` and before progress `0x15`, "Init memory..." at progress `0x16`, then `0x0015` (master, after the "DEX POD" test). The PROM then goes to RAM through `0xffac6bb0` at progress `0x19`. `0x000e` before `0x0013` and the slab-0 type change are confirmed.
+- Link start: `sc_uart_init` writes, in this order, line control with bit 7 set, divisor high byte 0, divisor low byte 1 (method `0xffa94340` returns 1), line control with bit 7 cleared, line control 3, modem control `0x22`, interrupt enable 0, FIFO control `0xc7`, then reads scratch; registers at `0x8000000ffed40000` with stride 8 and the nasid shifted by 38; the first step polls line status bit 6 for up to 100000 ticks. The test is bits 41:39 equal to 7 on the state register (`0xffa94300` returns `0x1_101d_0100`), and `0xffa8b5d0` then clears them, bumps bits 49:42 and clears bit 63.
+- `0x0010`: limits (nodes at most 4, CPUs at most 16, else `-100`), reply order status, node count, CPU count, then presence and enable per node, and the arrays indexed by slab.
+- DIMM reads: device id for bank b and position p is `8 + ((p & 1) * 4 + b) * 2 + (p >> 1)`, bank-major (`0xffa7bd60` passes p>>1, p&1 and b to `0xffa85470`); selector 4, offset 0, length 48 fixed in `0xffa84680`; expected reply int then raw (size 5 in the parser); a negative status gives return 1, `-107` gives 3, and nothing aborts the loop. Board area read: chunks of 64 bytes until the bytes-left integer is 0.
+- The `-24` and send-retry arithmetic (50 tries, 500 ticks, `-26`), the `0x2dc6c0` timeout constant in `0xffa82c10`, the status `-106` second-status rule, and `-32`/`-33` on tag and count mismatch in `0xffa82270`.
+- Frame builder: destination word is the open target `0x0ffff000` ORed with task 6, the open handle is `5 + slice`, and the CRC table at `0xffbe1190` is the standard reflected `0x8408` table (all 256 entries compared).
+- After the jump: "Init Intercon..." (master) comes first at `0xffa1b41c`, then `0xffa1a980` (not traced), then `0xffa9fe80` (board area read, then `0x0010`), as listed; the `0x0012`, `0x0010` per node and `0x0008` group runs from `main_three` only when the master test and flag 1 pass (`0xffad761c`, `0xffad765c`, `0xffaa03f0`). `0x0008` goes through `0xffaa9d60`, which then repeats `0x0009` (cached unless it failed).
+
+**Mechanical fixes made in this review.**
+
+1. The `0x100b` text said a missed reply makes the PROM die and that a model "must reply to all of them". The L1 (1.62.1) sends no reply for the three-argument form (sysco `12e3608`), and the PROM's caller ignores the result, so the page no longer says a model must reply; the conflict over what the die routine does afterwards is recorded under "Silence" below and in the request 1 text. The "no-reply claim contradicts the wait" note and the unknown about a deployed L1 were rewritten.
+2. The die routine was described as returning to its caller after the reset write. It does not return for the local node and the calling processor's own slice (see "Silence"); text corrected.
+3. The wire framing text omitted that the CRC covers the header byte and that the CRC bytes are escaped; added. The receiver also accepts header bytes 0 to 4 with class bits clear; added.
+4. `0x0010`: the reply layout was given without offsets and the consequence of a clear bit ("stops considering its own slice") was vague; added the byte offsets, that tags and the count byte are not checked, that every processor sends the request, and that a failure parks that processor through progress `0x87`.
+5. `0x0015`: the routine is entered through the stub `0xffa46530` (the call target), whose body starts at `0xffa46540`.
+6. `0x0003`: added the type `o` path (up to eleven board-area reads from `0xffa7d1f0`) the page did not list.
+
+**Silence: which requests tolerate a missing reply.** Every request goes through `0xffa82c10`/`0xffa82a10`. A missing reply ends in `0xffa82730` returning `-24` after the timeout, and the die routine `0xffad2cb0` runs before any caller sees the `-24`. The routine writes `ERR 8d` text to the display (only while the display flag is set), clears the display flag, writes four progress indicator updates, then calls `0xffa9fc70(nasid, 0, 0)`. That writes `0x1_0001_0000_0000` to `0x1_2000_0000` and clears bits 29:26 of the scratch word at `0x1_5003_1550`. When the node is the local node and the parameters are zero it then calls `0xffa9fba0(nasid, own slice)`, which for the calling processor calls `0xffaeb7c0`. That routine sets a flag, switches state with `rfi` to `0xffaeb8b0`, calls PAL index 3 (cache init) and loops forever on PAL index 29 (halt light) at `0xffaeb8d0`. Nothing in the die path returns on that route. The simulator signature path returns `-24` earlier and never reaches it.
+
+- On this reading no request tolerates silence on real hardware: a missing reply to any of them parks the boot processor, whatever the caller does with the status. This includes `0x100b`, whose caller at `0xffa1f62c` ignores the result; the die routine has already run. **This contradicts sysco `12e3608`**, which reads `0xffad2cb0` as returning ("no halt was found"). Its text checks the progress routine and the first branches but not the tail through `0xffa9fc70`. The two readings are not reconciled here: the L1 side (no reply from 1.62.1) is established in sysco; the PROM side (the die routine parks the processor) is established by this review for the code. If both hold, a PROM 5.04 image on an L1 1.62.1 would park at its first request, so either the real pairing used an L1 that answers `0x100b` or the park path is reached differently than read. Nobody has run the pair. For an implementer: answer `0x100b` with status 0 and no arguments (accepted either way), and treat the real L1's silence as unverified.
+- Error replies (a negative status or a wrong argument count, not silence) are tolerated as follows. Ignored by the caller: `0x1005` and `0x100b`. Fallback value: `0x0003` (unknown type), `0x000e` (type becomes `c`), `0x0013` (`-101` falls back to `0x0003`; other errors give `0xff`), `0x0009` (becomes 0 with a printed warning), `0x0001` (console prompt about the switches), `0x0012` (value forced to `0x800`), `0x0008` (default text), `0x0015` (not otherwise tested), `0x0006` for DIMMs (slot absent) and for the board area (a message, then the boot goes on). Not tolerated: `0x0010`, whose presence-and-enable bit for the processor's own slice must be set or that processor is parked at progress `0x87`; and "No memory on node" (progress `0x80`) if every DIMM slot errors.
+
+**Findings not fixed (author to settle before these claims stand).**
+
+1. The die-routine conflict above, for the sysco author: decide whether `0xffa9fba0` really reaches `0xffaeb7c0` for the boot processor (the parameters at `0xffa9fe00` to `0xffa9fe60` read that way) and correct `12e3608` or this page. Until then the `0x100b` grade stays at "established: no reply from the L1; unknown: PROM behaviour afterwards".
+2. Incoming console frames: the receiver's header test accepts class 0x20 or 0x40 only for n from 5 to 19 and class 0 for n from 0 to 4 (`0xffa87830`, case 1). The page says console input arrives with header `0x40 | index` including index 4 (`0x44`) for the remote console; by the receiver's rule `0x44` and `0x40` to `0x43` would be rejected. Either the console input is parsed by another routine or the index is not what the page says. Not resolved.
+3. Console index for `p`: `0xffae96f0` sends with header `param_2 | 0x40`, where `param_2` is the console index (index 4 selects the remote-console buffer); that the index for `p` is the slice is inferred, not read.
+4. `0xffa1a980` (called before the hub board read in `main_two`) and the callees of most `main_two` calls were not traced for further L1 requests; the census shows no other request builder site on the path, so only an indirect call through the node operations tables could add one.
+5. The type `o` board reads, and which arguments the `0xffa846c0` route sends, were not traced.
+
+**Grades.** Request codes, argument counts and order up to the jump, the link-start register sequence, the `0x0010` and SPD reader layouts, the frame format and the census are correctly **established**. The effect of a missing reply, the console index and incoming header, and `0x0010` blank-L1 values stay **inferred** or **unknown** as above.
+
+**Cleared scope:** the request list and order before the jump to RAM, link start, `0x0010` limits and layout, SPD ids, phase and absent-slot rule, frame format and CRC, the 23-site census. **Not cleared:** the `0x100b` and silence conclusions (conflict with sysco), the console frame headers, the requests after the jump beyond their order and gates, and anything that depends on indirect calls through the node operations tables.
+
+**Not checked.** The L1 program (the sysco pages were taken as given); the tick unit of the timeout; the hardware effect of the write to `0x1_2000_0000`; the callees `0xffa9f750` and `0xffa1a980`; the code of `0xffa7f59c` and `0xffb5ee7c`; the chip match value and the lock routines in the link start; the board-area bytes the parsers require; any run of the PROM.
