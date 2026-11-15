@@ -525,6 +525,11 @@ pub mod ni_return_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600308;
 }
+/// The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferre (established)
+pub mod ni_vector_clear {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x600380;
+}
 /// PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout n (established)
 pub mod ni_io_protect {
     pub const WIDTH: u32 = 64;
@@ -1072,8 +1077,12 @@ pub mod ni_local_entry {
     pub const COUNT: u32 = 15;
     pub const STRIDE: u64 = 8;
 }
+pub const NI_BASE: u32 = 0x600000; // established
+pub const NI_BASE_TABLES: u32 = 0x630000; // established
 pub const NI_LOCAL_ENTRIES: u32 = 0x10; // established
 pub const NI_META_ENTRIES: u32 = 0x20; // established
+pub const NI_NASID_TO_COARSEREG_SHIFT: u32 = 0x3; // established
+pub const NI_NASID_TO_FINEREG_SHIFT: u32 = 0x0; // established
 pub const NI_PORT_ERROR_COUNT_MAX: u32 = 0xff; // established
 pub const NI_PORT_PARMS_DEFAULTS: u32 = 0x1bf0; // established
 pub const NI_PORT_PARMS_HUB20_DEFAULTS: u32 = 0x7f0; // established

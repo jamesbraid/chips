@@ -30,3 +30,112 @@ width = 64
 grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_0 to MD_UREG1_15 (sixteen microcontroller and UART 1 registers eight bytes apart)"
 doc = "The sixteen microcontroller and UART 1 registers as one array. They are also listed one by one under their own names; this is the same storage seen as an array, so that its extent is data. On the Origin 200 (the SN00 variant) the kernel's per-processor LED macro writes the LED of slice 0 at element 0 and the LED of slice 1 at element 4, a spacing of four elements per slice; other Hub variants use the separate LED registers. The IRIX register table gives read and write access for the entries it lists (0, 1 and 15) and the header gives all sixteen the same description."
+
+[registers.ni_age]
+offset = 0x600500
+count = 8
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub network interface header: NI_AGE_CPU0_MEMORY to NI_AGE_IO_PIO (NI_AGE_REG_MIN, NI_AGE_REG_MAX)"
+doc = "The eight network age-control registers as one array: CPU 0 memory, CPU 0 PIO, CPU 1 memory, CPU 1 PIO, GBR memory, GBR PIO, I/O memory, I/O PIO, in that order. The same storage is listed one by one in the network interface unit, where the field layout sits. The header gives no access type, so rw is an assumption."
+
+[registers.ni_meta_table]
+offset = 0x638000
+count = 32
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub network interface header: NI_META_TABLE(x), NI_META_ENTRIES, NMT_EXIT_PORT_MASK"
+doc = "The 32-entry meta routing table as one array, replacing the split of the first entry and the other 31. Each entry holds the exit port. The header gives no access type, so rw is an assumption."
+
+[registers.ni_meta_table.fields]
+exit_port = { bits = [3, 0], grade = "established", doc = "Exit port, four bits (NMT_EXIT_PORT_MASK 0xf)." }
+
+[registers.ni_local_table]
+offset = 0x638100
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub network interface header: NI_LOCAL_TABLE(x), NI_LOCAL_ENTRIES, NLT_EXIT_PORT_MASK"
+doc = "The 16-entry local routing table as one array, replacing the split of the first entry and the other 15. Each entry holds the exit port. The header gives no access type, so rw is an assumption."
+
+[registers.ni_local_table.fields]
+exit_port = { bits = [3, 0], grade = "established", doc = "Exit port, four bits (NLT_EXIT_PORT_MASK 0xf)." }
+
+[registers.md_ureg0]
+offset = 0x220000
+count = 8
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub memory/directory header: MD_UREG0_0 to MD_UREG0_7"
+doc = "The eight microcontroller and UART 0 registers as one array. The same storage is listed one by one where the census reaches it. The header gives no access type, so rw is an assumption."
+
+[registers.md_perf_cnt]
+offset = 0x210010
+count = 6
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub memory/directory header: MD_PERF_CNT0 to MD_PERF_CNT5"
+doc = "The six memory/directory performance counters as one array. The header gives no access type, so rw is an assumption."
+
+[enums.iio_prb_mode]
+values = { normal = { value = 0, grade = "established" }, collect_a = { value = 1, grade = "established" }, service_a = { value = 2, grade = "established" }, service_b = { value = 3, grade = "established" } }
+
+[registers.iio_ioprb]
+offset = 0x400198
+count = 9
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+doc = "The nine I/O partial-request buffer entries (0, then 8 to f) as one array; entry 0 sits at the first offset and entries 8 to f follow, eight bytes apart. The header gives no access type, so rw is an assumption. The header says the nak and overflow counters are status fields to be used only when cleaning up after errors."
+
+[registers.iio_ioprb.fields]
+xtalkctr = { bits = [7, 0], grade = "established", doc = "Crosstalk counter, eight bits." }
+anakctr = { bits = [21, 8], grade = "established", doc = "A-side nak counter, fourteen bits." }
+bnakctr = { bits = [37, 24], grade = "established", doc = "B-side nak counter, fourteen bits." }
+mode = { bits = [41, 40], grade = "established", enum = "iio_prb_mode", doc = "Widget operation mode." }
+fire_and_forget = { bits = [42, 42], grade = "established", doc = "Launch the write without a response." }
+ovflow = { bits = [47, 43], grade = "established", doc = "Overflow count, five bits (performance measurement)." }
+error = { bits = [48, 48], grade = "established", doc = "Widget received a write response packet with an error." }
+
+[registers.iio_prte]
+offset = 0x400308
+count = 8
+stride = 8
+access = "rw"
+width = 64
+grade = "inferred"
+from = "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+doc = "The eight PIO read address table entries as one array. The header gives no access type, so rw is an assumption."
+
+[registers.iio_prte.fields]
+valid = { bits = [56, 56], grade = "established", doc = "Maps to a timeout entry." }
+srcnode = { bits = [54, 46], grade = "established", doc = "Node that issued the PIO, nine bits." }
+initiator = { bits = [45, 44], grade = "established", doc = "Initiator, two bits (T5A, T5B or I/O)." }
+addr = { bits = [40, 3], grade = "established", doc = "Physical address of the PIO, 38 bits (the header's address shift is 3)." }
+
+[constants]
+NODE_SIZE_BITS_M_MODE = { value = 0x20, grade = "established", doc = "Address bits per node in M mode, from the header; a node's address space is 4 GiB." }
+NODE_SIZE_BITS_N_MODE = { value = 0x1f, grade = "established", doc = "Address bits per node in N mode." }
+NASID_SHIFT_M_MODE = { value = 0x20, grade = "established", doc = "Shift of the node number in a physical address, M mode." }
+NASID_SHIFT_N_MODE = { value = 0x1f, grade = "established", doc = "Shift of the node number in a physical address, N mode." }
+NASID_BITS_M_MODE = { value = 0x8, grade = "established", doc = "Node number width, M mode (mask 0xff)." }
+NASID_BITS_N_MODE = { value = 0x9, grade = "established", doc = "Node number width, N mode (mask 0x1ff)." }
+NASID_LOCAL_BITS = { value = 0x4, grade = "established", doc = "Low bits of a node number that name a node within its meta region." }
+BWIN_SIZE_BITS_M_MODE = { value = 0x1d, grade = "established", doc = "Size of a big I/O window in address bits, M mode (512 MiB)." }
+BWIN_SIZE_BITS_N_MODE = { value = 0x1c, grade = "established", doc = "Size of a big I/O window in address bits, N mode (256 MiB)." }
+BWIN_INDEX_BITS = { value = 0x3, grade = "established", doc = "Bits that index a big window." }
+SWIN_SIZE_BITS = { value = 0x18, grade = "established", doc = "Size of a small I/O window in address bits (16 MiB)." }
+HUB_REGISTER_WIDGET = { value = 0x1, grade = "established", doc = "Small window the Hub's own registers sit in." }
+HUB_REGISTER_WINDOW_SIZE = { value = 0x800000, grade = "established", doc = "Size of the Hub register window, 8 MiB, from the header's IALIAS_SIZE." }

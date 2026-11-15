@@ -11,24 +11,8 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ITTE1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a40",
   "value": 0
  },
- "iio_ibct_0": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e48",
-  "value": 0
- },
- "iio_ibct_1": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ed8",
-  "value": 0
- },
  "iio_ibda_0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBDA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e30",
-  "value": 0
- },
- "iio_ibls_0": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e00",
-  "value": 0
- },
- "iio_ibls_1": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e90",
   "value": 0
  },
  "iio_ibna_1": {
@@ -43,18 +27,6 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBSA1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ea8",
   "value": 0
  },
- "iio_iccr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d88",
-  "value": 0
- },
- "iio_icdr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d28",
-  "value": 0
- },
- "iio_icmr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICMR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d70",
-  "value": 0
- },
  "iio_icto": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICTO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7da0",
   "value": 0
@@ -63,57 +35,17 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICTP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7db8",
   "value": 0
  },
- "iio_ifdr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d40",
-  "value": 0
- },
  "iio_iidem": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDEM (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7968",
   "value": 18446744073709551615
- },
- "iio_iidsr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79c8",
-  "value": 0
- },
- "iio_iiwa": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7938",
-  "value": 0
- },
- "iio_ilcsr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILCSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7998",
-  "value": 4380933685258
- },
- "iio_illr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILLR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79b0",
-  "value": 0
  },
  "iio_ioprb_0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPRB0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ae8",
   "value": 1
  },
- "iio_iowa": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IOWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7908",
-  "value": 0
- },
- "iio_ipdr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d10",
-  "value": 0
- },
  "iio_prte_0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPRTE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7c38",
   "value": 0
- },
- "iio_wcr": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7860",
-  "value": 16385
- },
- "iio_wstat": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WSTAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7830",
-  "value": 0
- },
- "md_fandop_cac_stat": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488",
-  "value": 192
  },
  "md_ureg1_0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77b8",
@@ -139,10 +71,6 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8298",
   "value": 0
  },
- "pi_calias_size": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CALIAS_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c90",
-  "value": 15
- },
  "pi_cpu_enable_a": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_ENABLE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d08",
   "value": 0
@@ -165,14 +93,6 @@
  },
  "pi_crb_sfactor": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CRB_SFACTOR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6cc0",
-  "value": 0
- },
- "pi_err_int_mask_a": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71d0",
-  "value": 0
- },
- "pi_err_int_mask_b": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71e8",
   "value": 0
  },
  "pi_err_stack_addr_a": {

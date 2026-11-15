@@ -56,6 +56,9 @@ grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_LED1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor)"
 doc = "Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred. The IRIX register table confirms the access."
 
+[registers.md_led1.fields]
+led = { bits = [7, 0], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: field layout and masks", doc = "Eight-bit LED value. The header's comment says eight-bit LED for the processor of that name; bit order on the LED is not stated." }
+
 [registers.md_ureg1_1]
 offset = 0x220088
 access = "rw"
@@ -195,14 +198,14 @@ reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register
 doc = "Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by the header, and their meaning is only partly stated there."
 
 [registers.md_memory_config.fields]
-bank0 = { bits = [2, 0], grade = "established", doc = "Size code of bank 0, bits 2:0. Codes are in the size table below.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank1 = { bits = [5, 3], grade = "established", doc = "Size code of bank 1, bits 5:3.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank2 = { bits = [8, 6], grade = "established", doc = "Size code of bank 2, bits 8:6.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank3 = { bits = [11, 9], grade = "established", doc = "Size code of bank 3, bits 11:9.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank4 = { bits = [14, 12], grade = "established", doc = "Size code of bank 4, bits 14:12. The header sizes eight banks in its M-mode build.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank5 = { bits = [17, 15], grade = "established", doc = "Size code of bank 5, bits 17:15.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank6 = { bits = [20, 18], grade = "established", doc = "Size code of bank 6, bits 20:18.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
-bank7 = { bits = [23, 21], grade = "established", doc = "Size code of bank 7, bits 23:21.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank0 = { bits = [2, 0], grade = "established", enum = "md_bank_size", doc = "Size code of bank 0, bits 2:0. Codes are in the size table below.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank1 = { bits = [5, 3], grade = "established", enum = "md_bank_size", doc = "Size code of bank 1, bits 5:3.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank2 = { bits = [8, 6], grade = "established", enum = "md_bank_size", doc = "Size code of bank 2, bits 8:6.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank3 = { bits = [11, 9], grade = "established", enum = "md_bank_size", doc = "Size code of bank 3, bits 11:9.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank4 = { bits = [14, 12], grade = "established", enum = "md_bank_size", doc = "Size code of bank 4, bits 14:12. The header sizes eight banks in its M-mode build.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank5 = { bits = [17, 15], grade = "established", enum = "md_bank_size", doc = "Size code of bank 5, bits 17:15.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank6 = { bits = [20, 18], grade = "established", enum = "md_bank_size", doc = "Size code of bank 6, bits 20:18.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank7 = { bits = [23, 21], grade = "established", enum = "md_bank_size", doc = "Size code of bank 7, bits 23:21.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
 reply_guar = { bits = [27, 24], grade = "established", doc = "Reply guarantee count, four bits at 27:24 (mask 15 in the header). Its meaning is not stated in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
 dir_premium = { bits = [28, 28], grade = "established", doc = "Directory format bit: set selects the premium directory format, clear the standard one. The header's own accessor macro reads it this way.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
 ignore_ecc = { bits = [29, 29], grade = "established", doc = "Ignore directory ECC bit, bit 29. The header names it MMC_IGNORE_ECC and gives no further behaviour.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
@@ -270,7 +273,7 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
-doc = "Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out."
+doc = "Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out. The header also defines bit 7 as the slot ID on the Origin 200 (MSU_SN00_SLOTID_MASK 0x80) and bits 7:4 as a power-supply field (MSU_PIMM_PSC_MASK); those overlay the bits above on that product and are not separate fields."
 
 [registers.md_slotid_ustat.fields]
 core_clk_test = { bits = [7, 7], grade = "established", doc = "Core clock test bit, bit 7. The header comment says only that it is for testing.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
@@ -398,6 +401,73 @@ doc = "Layout of performance counters 0 to 5. Bit positions come from the header
 [registers.md_perf_cnt0.fields]
 perf_cnt = { bits = [19, 0], grade = "inferred", doc = "Twenty-bit counter value, from the header's structure.", from = "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure" }
 
+# ---- MD: memory and directory (configuration, migration, error latches)
+[registers.md_fandop_cac_stat]
+offset = 0x200028
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+reset = 0xc0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488"
+
+[registers.md_fandop_cac_stat.fields]
+addr = { bits = [31, 6], grade = "established", from = "public Linux SN0 Hub memory/directory header: field layout and masks", doc = "Address, 26 bits (MFC_ADDR_MASK 0x3ffffff at shift 6)." }
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub memory/directory header: field layout and masks", doc = "Valid." }
+
+[registers.md_led0]
+offset = 0x220050
+access = "w"
+width = 64
+grade = "established"
+from = "census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)"
+
+[registers.md_led0.fields]
+led = { bits = [7, 0], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: field layout and masks", doc = "Eight-bit LED value. The header's comment says eight-bit LED for the processor of that name; bit order on the LED is not stated." }
+
+[registers.md_mig_candidate]
+offset = 0x200040
+access = "r"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE (offset and name)"
+doc = "Latest page migration candidate. The header gives no access type and no reset, so the access letter is an assumption (graded inferred). The header's initiator mask (bits 28:18) overlaps its node and address masks; the fields here are the node and address masks and the single-bit fields."
+
+[registers.md_mig_candidate.fields]
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks", doc = "Valid." }
+type = { bits = [30, 30], grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks", doc = "Type bit, bit 30; the header gives no meaning." }
+overrun = { bits = [29, 29], grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks", doc = "Overrun." }
+node = { bits = [28, 20], grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks", doc = "Node number, nine bits." }
+page = { bits = [17, 0], grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks", doc = "Address field, eighteen bits (the header says the address starts at bit 14 and gives an 18-bit mask)." }
+
+[registers.md_io_protect]
+offset = 0x200000
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub memory/directory header: MD_IO_PROTECT (offset and name)"
+doc = "MD and core register protection. The header gives no access type, layout or reset; rw is an assumption."
+
+[registers.md_io_prot_ovrrd]
+offset = 0x200008
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub memory/directory header: MD_IO_PROT_OVRRD (offset and name)"
+doc = "Clear my bit in the MD and core register protection. The header gives no access type, layout or reset; rw is an assumption."
+
+[registers.md_hspec_protect]
+offset = 0x200010
+access = "rw"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub memory/directory header: MD_HSPEC_PROTECT (offset and name)"
+doc = "Back-door directory and boot-space protection. The header gives no access type, layout or reset; rw is an assumption."
+
+[enums.md_bank_size]
+values = { size_empty = { value = 0, grade = "established" }, size_8mb = { value = 1, grade = "established" }, size_16mb = { value = 2, grade = "established" }, size_32mb = { value = 3, grade = "established" }, size_64mb = { value = 4, grade = "established" }, size_128mb = { value = 5, grade = "established" }, size_256mb = { value = 6, grade = "established" }, size_512mb = { value = 7, grade = "established" } }
+
 [constants]
 # Default values the header defines for the registers above. They are what software writes as a
 # starting value, so the reset of the hardware is not established by them.
@@ -443,3 +513,8 @@ HUB_MD_DIR_UNOWNED = { value = 0x7, grade = "established", doc = "Directory stat
 HUB_MD_REFCNT_COUNT_MASK_PREMIUM = { value = 0x7ffff, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT, MD_PPROT_REFCNT_WIDTH", doc = "Nineteen-bit reference count mask, premium memory; which memory is premium is inferred." }
 HUB_MD_REFCNT_COUNT_MASK_STANDARD = { value = 0x7ff, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_SPROT_REFCNT_SHFT, MD_SPROT_REFCNT_WIDTH", doc = "Eleven-bit reference count mask, standard memory." }
 HUB_MD_REFCNT_COUNT_SHIFT = { value = 5, grade = "established", from = "public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT and MD_SPROT_REFCNT_SHFT", doc = "Bit position of the count in a node's reference word." }
+HUB_MD_BASE = { value = 0x200000, grade = "established", doc = "Start of the memory/directory registers, from the header." }
+HUB_MD_BASE_PERF = { value = 0x210000, grade = "established", doc = "Start of the performance registers." }
+HUB_MD_BASE_JUNK = { value = 0x220000, grade = "established", doc = "Start of the junk-bus registers (microcontroller, UART, slot id, LEDs)." }
+HUB_MD_PAGE_SIZE = { value = 0x1000, grade = "established", doc = "Hardware page size, bytes." }
+HUB_MD_PAGE_NUM_SHIFT = { value = 0xc, grade = "established", doc = "Address to page number shift." }

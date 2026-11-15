@@ -48,6 +48,157 @@
   {
    "unit": "hub_pi_extra",
    "kind": "register",
+   "name": "pi_calias_size",
+   "offset": 40,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 15,
+   "grade": "established",
+   "from": "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_calias_size.size",
+   "hi": 3,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_none",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_4k",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_8k",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_16k",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_32k",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_64k",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_128k",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_256k",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_512k",
+   "value": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_1m",
+   "value": 9,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_2m",
+   "value": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_4m",
+   "value": 11,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_8m",
+   "value": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_16m",
+   "value": 13,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_32m",
+   "value": 14,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "enum_value",
+   "name": "pi_calias_size.size.size_64m",
+   "value": 15,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
    "name": "pi_reply_level",
    "offset": 96,
    "access": "rw",
@@ -493,6 +644,800 @@
   {
    "unit": "hub_pi_extra",
    "kind": "register",
+   "name": "pi_err_int_pend",
+   "offset": 1024,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.md_uncorr",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysstate_tag_a",
+   "hi": 23,
+   "lo": 23,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysstate_tag_b",
+   "hi": 22,
+   "lo": 22,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.uncac_uncorr_a",
+   "hi": 21,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.uncac_uncorr_b",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.bad_spool_a",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.bad_spool_b",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.syscmd_addr_a",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.syscmd_addr_b",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.syscmd_data_a",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.syscmd_data_b",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysad_addr_a",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysad_addr_b",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysad_data_a",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysad_data_b",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysstate_a",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.sysstate_b",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.wrb_werr_a",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.wrb_werr_b",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.wrb_terr_a",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.wrb_terr_b",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.spur_msg_a",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.spur_msg_b",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.spool_cmp_a",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_pend.spool_cmp_b",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_int_mask_a",
+   "offset": 1032,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.md_uncorr",
+   "hi": 24,
+   "lo": 24,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysstate_tag_a",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysstate_tag_b",
+   "hi": 22,
+   "lo": 22,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.uncac_uncorr_a",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.uncac_uncorr_b",
+   "hi": 20,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.bad_spool_a",
+   "hi": 19,
+   "lo": 19,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.bad_spool_b",
+   "hi": 18,
+   "lo": 18,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.syscmd_addr_a",
+   "hi": 17,
+   "lo": 17,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.syscmd_addr_b",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.syscmd_data_a",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.syscmd_data_b",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysad_addr_a",
+   "hi": 13,
+   "lo": 13,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysad_addr_b",
+   "hi": 12,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysad_data_a",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysad_data_b",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysstate_a",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.sysstate_b",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.wrb_werr_a",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.wrb_werr_b",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.wrb_terr_a",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.wrb_terr_b",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.spur_msg_a",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.spur_msg_b",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.spool_cmp_a",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_a.spool_cmp_b",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_int_mask_b",
+   "offset": 1040,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.md_uncorr",
+   "hi": 24,
+   "lo": 24,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysstate_tag_a",
+   "hi": 23,
+   "lo": 23,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysstate_tag_b",
+   "hi": 22,
+   "lo": 22,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.uncac_uncorr_a",
+   "hi": 21,
+   "lo": 21,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.uncac_uncorr_b",
+   "hi": 20,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.bad_spool_a",
+   "hi": 19,
+   "lo": 19,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.bad_spool_b",
+   "hi": 18,
+   "lo": 18,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.syscmd_addr_a",
+   "hi": 17,
+   "lo": 17,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.syscmd_addr_b",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.syscmd_data_a",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.syscmd_data_b",
+   "hi": 14,
+   "lo": 14,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysad_addr_a",
+   "hi": 13,
+   "lo": 13,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysad_addr_b",
+   "hi": 12,
+   "lo": 12,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysad_data_a",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysad_data_b",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysstate_a",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.sysstate_b",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.wrb_werr_a",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.wrb_werr_b",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.wrb_terr_a",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.wrb_terr_b",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.spur_msg_a",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.spur_msg_b",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.spool_cmp_a",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_int_mask_b.spool_cmp_b",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status0_a",
+   "offset": 1072,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 5 sites, 4 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.overrun",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.addr",
+   "hi": 61,
+   "lo": 25,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.cmd",
+   "hi": 24,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.suppl",
+   "hi": 16,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.reqnum",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
    "name": "pi_err_status0_a_rclr",
    "offset": 1080,
    "access": "r",
@@ -503,6 +1448,300 @@
    "reset": "unknown",
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.overrun",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.addr",
+   "hi": 61,
+   "lo": 25,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.cmd",
+   "hi": 24,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.suppl",
+   "hi": 16,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.reqnum",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_a_rclr.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status1_a",
+   "offset": 1088,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 3 sites, 3 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.msgsrc",
+   "hi": 63,
+   "lo": 53,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.crbstat",
+   "hi": 52,
+   "lo": 43,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.wrbrrb",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.crbnum",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.invcnt",
+   "hi": 38,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.toutcnt",
+   "hi": 28,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a.spool",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status1_a_rclr",
+   "offset": 1096,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.msgsrc",
+   "hi": 63,
+   "lo": 53,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.crbstat",
+   "hi": 52,
+   "lo": 43,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.wrbrrb",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.crbnum",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.invcnt",
+   "hi": 38,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.toutcnt",
+   "hi": 28,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_a_rclr.spool",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status0_b",
+   "offset": 1104,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 5 sites, 4 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.overrun",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.addr",
+   "hi": 61,
+   "lo": 25,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.cmd",
+   "hi": 24,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.suppl",
+   "hi": 16,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.reqnum",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
   },
   {
    "unit": "hub_pi_extra",
@@ -517,6 +1756,223 @@
    "reset": "unknown",
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.overrun",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.addr",
+   "hi": 61,
+   "lo": 25,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.cmd",
+   "hi": 24,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.suppl",
+   "hi": 16,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.reqnum",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status0_b_rclr.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status1_b",
+   "offset": 1120,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 3 sites, 3 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.msgsrc",
+   "hi": 63,
+   "lo": 53,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.crbstat",
+   "hi": 52,
+   "lo": 43,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.wrbrrb",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.crbnum",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.invcnt",
+   "hi": 38,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.toutcnt",
+   "hi": 28,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b.spool",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_err_status1_b_rclr",
+   "offset": 1128,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.msgsrc",
+   "hi": 63,
+   "lo": 53,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.crbstat",
+   "hi": 52,
+   "lo": 43,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.wrbrrb",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.crbnum",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.invcnt",
+   "hi": 38,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.toutcnt",
+   "hi": 28,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_err_status1_b_rclr.spool",
+   "hi": 20,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: field layout and masks"
   },
   {
    "unit": "hub_pi_extra",
@@ -805,6 +2261,15 @@
   {
    "unit": "hub_pi_extra",
    "kind": "constant",
+   "name": "PI_BASE",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
    "name": "PI_CALIAS_SIZE_0",
    "value": 0,
    "count": 1,
@@ -949,8 +2414,89 @@
   {
    "unit": "hub_pi_extra",
    "kind": "constant",
+   "name": "PI_ERR_CLEAR_ALL_A",
+   "value": 11184810,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_CLEAR_ALL_B",
+   "value": 5592405,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_RD_DERR",
+   "value": 2,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_RD_PRERR",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_RD_TERR",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_WR_PWERR",
+   "value": 1,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_WR_TERR",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_ERR_WR_WERR",
+   "value": 0,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
    "name": "PI_LOCAL_WINDOW_BASE",
    "value": 16777216,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_MIN_STACK_SIZE",
+   "value": 4096,
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
@@ -969,6 +2515,15 @@
    "kind": "constant",
    "name": "PI_NODE_WINDOW_BASE",
    "value": 25165824,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "constant",
+   "name": "PI_STACK_SIZE_SHIFT",
+   "value": 12,
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"

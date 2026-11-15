@@ -525,6 +525,20 @@
   {
    "unit": "hub_ni_extra",
    "kind": "register",
+   "name": "ni_vector_clear",
+   "offset": 6292352,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 3 sites, 3 routines"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "register",
    "name": "ni_io_protect",
    "offset": 6292480,
    "access": "rw",
@@ -1341,6 +1355,24 @@
   {
    "unit": "hub_ni_extra",
    "kind": "constant",
+   "name": "NI_BASE",
+   "value": 6291456,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_BASE_TABLES",
+   "value": 6488064,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
    "name": "NI_LOCAL_ENTRIES",
    "value": 16,
    "count": 1,
@@ -1352,6 +1384,24 @@
    "kind": "constant",
    "name": "NI_META_ENTRIES",
    "value": 32,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_NASID_TO_COARSEREG_SHIFT",
+   "value": 3,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
+  },
+  {
+   "unit": "hub_ni_extra",
+   "kind": "constant",
+   "name": "NI_NASID_TO_FINEREG_SHIFT",
+   "value": 0,
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"

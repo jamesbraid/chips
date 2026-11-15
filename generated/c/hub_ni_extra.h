@@ -177,6 +177,12 @@
 #define HUB_NI_RETURN_VECTOR_OFFSET                  0x600308u /* established */
 
 /*
+ * The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.
+ */
+/* ni_vector_clear: r64, reset unknown; census: 3 sites, 3 routines */
+#define HUB_NI_VECTOR_CLEAR_OFFSET                   0x600380u /* established */
+
+/*
  * PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.
  */
 /* ni_io_protect: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
@@ -321,7 +327,7 @@
 #define HUB_NI_PORT_PARMS_MAX_BURST_INPLACE          (HUB_NI_PORT_PARMS_MAX_BURST_MASK << HUB_NI_PORT_PARMS_MAX_BURST_SHIFT)
 
 /*
- * Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name.
+ * Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name. The rsvd mask is the header structure's unused members: bits 63:38 and bit 32. NPE_MASK, 0x3effffffff, is the header's own mask of defined bits and agrees.
  */
 /* ni_port_error: r64, reset unknown; census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed) */
 #define HUB_NI_PORT_ERROR_OFFSET                     0x608008u /* established */
@@ -408,8 +414,12 @@
 #define HUB_NI_LOCAL_ENTRY_COUNT                     15
 #define HUB_NI_LOCAL_ENTRY_STRIDE                    8
 
+#define HUB_NI_BASE                                  0x600000u /* established */
+#define HUB_NI_BASE_TABLES                           0x630000u /* established */
 #define HUB_NI_LOCAL_ENTRIES                         0x10u /* established */
 #define HUB_NI_META_ENTRIES                          0x20u /* established */
+#define HUB_NI_NASID_TO_COARSEREG_SHIFT              0x3u /* established */
+#define HUB_NI_NASID_TO_FINEREG_SHIFT                0x0u /* established */
 #define HUB_NI_PORT_ERROR_COUNT_MAX                  0xffu /* established */
 #define HUB_NI_PORT_PARMS_DEFAULTS                   0x1bf0u /* established */
 #define HUB_NI_PORT_PARMS_HUB20_DEFAULTS             0x7f0u /* established */

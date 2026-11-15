@@ -85,6 +85,9 @@
   <struct name="NI_RETURN_VECTOR" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600308" access="rw" reset="unknown">
     <doc>Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access.</doc>
   </struct>
+  <struct name="NI_VECTOR_CLEAR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600380" access="r" reset="unknown">
+    <doc>The header describes the register as 'Vector PIO read &amp; clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.</doc>
+  </struct>
   <struct name="NI_IO_PROTECT" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="0xffffffffffffffff">
     <doc>PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.</doc>
   </struct>
@@ -145,7 +148,7 @@
     <field name="max_burst" start="0" size="10" type="uint" grade="established"/>
   </struct>
   <struct name="NI_PORT_ERROR" size="8" grade="established" from="census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)" register="yes" offset="0x608008" access="r" reset="unknown">
-    <doc>Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name.</doc>
+    <doc>Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name. The rsvd mask is the header structure's unused members: bits 63:38 and bit 32. NPE_MASK, 0x3effffffff, is the header's own mask of defined bits and agrees.</doc>
     <field name="link_reset" start="37" size="1" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NPE_* masks and shifts"/>
     <field name="internal_error" start="36" size="1" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NPE_* masks and shifts"/>
     <field name="bad_message" start="35" size="1" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NPE_* masks and shifts"/>
@@ -176,8 +179,12 @@
   <struct name="NI_LOCAL_ENTRY" size="8" grade="inferred" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x638108" access="rw" count="15" stride="8" reset="unknown">
     <doc>Local routing table entries 1 to 15, eight bytes apart from the census entry ni_local_table0. The header gives the stride and the count of 16 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported.</doc>
   </struct>
+  <constant name="NI_BASE" value="0x600000" grade="established"/>
+  <constant name="NI_BASE_TABLES" value="0x630000" grade="established"/>
   <constant name="NI_LOCAL_ENTRIES" value="0x10" grade="established"/>
   <constant name="NI_META_ENTRIES" value="0x20" grade="established"/>
+  <constant name="NI_NASID_TO_COARSEREG_SHIFT" value="0x3" grade="established"/>
+  <constant name="NI_NASID_TO_FINEREG_SHIFT" value="0x0" grade="established"/>
   <constant name="NI_PORT_ERROR_COUNT_MAX" value="0xff" grade="established"/>
   <constant name="NI_PORT_PARMS_DEFAULTS" value="0x1bf0" grade="established"/>
   <constant name="NI_PORT_PARMS_HUB20_DEFAULTS" value="0x7f0" grade="established"/>

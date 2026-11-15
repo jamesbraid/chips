@@ -14,6 +14,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_cpu_protect` | 0x0 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_prot_override` | 0x8 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_io_protect` | 0x10 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_calias_size` | 0x28 | rw | 64 |  |  | 0xf (established) | established | census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed) |
 | `pi_reply_level` | 0x60 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_nmi_b` | 0x78 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_softreset` | 0x80 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
@@ -40,8 +41,17 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_gfx_bias_b` | 0x338 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_err_int_pend` | 0x400 | rw | 64 |  |  | unknown | established | census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed) |
+| `pi_err_int_mask_a` | 0x408 | rw | 64 |  |  | 0x0 (established) | established | census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed) |
+| `pi_err_int_mask_b` | 0x410 | rw | 64 |  |  | 0x0 (established) | established | census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed) |
+| `pi_err_status0_a` | 0x430 | r | 64 |  |  | unknown | established | census: 5 sites, 4 routines |
 | `pi_err_status0_a_rclr` | 0x438 | r | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_err_status1_a` | 0x440 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
+| `pi_err_status1_a_rclr` | 0x448 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
+| `pi_err_status0_b` | 0x450 | r | 64 |  |  | unknown | established | census: 5 sites, 4 routines |
 | `pi_err_status0_b_rclr` | 0x458 | r | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_err_status1_b` | 0x460 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
+| `pi_err_status1_b_rclr` | 0x468 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
 | `pi_spool_cmp_a` | 0x470 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_spool_cmp_b` | 0x478 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_crb_timeout_a` | 0x480 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
@@ -64,6 +74,12 @@ Protection override register, named PI_PROT_OVRRD in the header as the way to cl
 ### Register `pi_io_protect`
 
 Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.
+
+### Register `pi_calias_size`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:0 | `size` | inferred | pi_calias_size (size_none=0, size_4k=1, size_8k=2, size_16k=3, size_32k=4, size_64k=5, size_128k=6, size_256k=7, size_512k=8, size_1m=9, size_2m=10, size_4m=11, size_8m=12, size_16m=13, size_32m=14, size_64m=15) | public Linux SN0 Hub processor-interface header: field layout and masks | Cached alias size: 0 is none, then 4 KiB doubling to 64 MiB at 15. The header lists values 0 to 15 and gives no field extent; four bits is the width that holds them. |
 
 ### Register `pi_reply_level`
 
@@ -190,13 +206,201 @@ Graphics bias for processor B, named PI_GFX_BIAS_B in the header. The IRIX regis
 
 Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. The IRIX register table confirms the access.
 
+### Register `pi_err_int_pend`
+
+Bit pairs are B then A (even bit B, odd bit A) for bits 0 to 23.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 24 | `md_uncorr` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | PI_ERR_MD_UNCORR. The header's comment says it must be cleared in the memory/directory unit. |
+| 23 | `sysstate_tag_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 23, named PI_ERR_SYSSTATE_TAG_A. |
+| 22 | `sysstate_tag_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 22, named PI_ERR_SYSSTATE_TAG_B. |
+| 21 | `uncac_uncorr_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 21, named PI_ERR_UNCAC_UNCORR_A. |
+| 20 | `uncac_uncorr_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 20, named PI_ERR_UNCAC_UNCORR_B. |
+| 19 | `bad_spool_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 19, named PI_ERR_BAD_SPOOL_A. |
+| 18 | `bad_spool_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 18, named PI_ERR_BAD_SPOOL_B. |
+| 17 | `syscmd_addr_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 17, named PI_ERR_SYSCMD_ADDR_A. |
+| 16 | `syscmd_addr_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 16, named PI_ERR_SYSCMD_ADDR_B. |
+| 15 | `syscmd_data_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 15, named PI_ERR_SYSCMD_DATA_A. |
+| 14 | `syscmd_data_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 14, named PI_ERR_SYSCMD_DATA_B. |
+| 13 | `sysad_addr_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 13, named PI_ERR_SYSAD_ADDR_A. |
+| 12 | `sysad_addr_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 12, named PI_ERR_SYSAD_ADDR_B. |
+| 11 | `sysad_data_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 11, named PI_ERR_SYSAD_DATA_A. |
+| 10 | `sysad_data_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 10, named PI_ERR_SYSAD_DATA_B. |
+| 9 | `sysstate_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 9, named PI_ERR_SYSSTATE_A. |
+| 8 | `sysstate_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 8, named PI_ERR_SYSSTATE_B. |
+| 7 | `wrb_werr_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 7, named PI_ERR_WRB_WERR_A. |
+| 6 | `wrb_werr_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 6, named PI_ERR_WRB_WERR_B. |
+| 5 | `wrb_terr_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 5, named PI_ERR_WRB_TERR_A. |
+| 4 | `wrb_terr_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 4, named PI_ERR_WRB_TERR_B. |
+| 3 | `spur_msg_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 3, named PI_ERR_SPUR_MSG_A. |
+| 2 | `spur_msg_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 2, named PI_ERR_SPUR_MSG_B. |
+| 1 | `spool_cmp_a` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 1, named PI_ERR_SPOOL_CMP_A. |
+| 0 | `spool_cmp_b` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Bit 0, named PI_ERR_SPOOL_CMP_B. |
+
+### Register `pi_err_int_mask_a`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 24 | `md_uncorr` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 23 | `sysstate_tag_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 22 | `sysstate_tag_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 21 | `uncac_uncorr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 20 | `uncac_uncorr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 19 | `bad_spool_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 18 | `bad_spool_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 17 | `syscmd_addr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 16 | `syscmd_addr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 15 | `syscmd_data_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 14 | `syscmd_data_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 13 | `sysad_addr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 12 | `sysad_addr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 11 | `sysad_data_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 10 | `sysad_data_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 9 | `sysstate_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 8 | `sysstate_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 7 | `wrb_werr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 6 | `wrb_werr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 5 | `wrb_terr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 4 | `wrb_terr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 3 | `spur_msg_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 2 | `spur_msg_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 1 | `spool_cmp_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 0 | `spool_cmp_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+
+### Register `pi_err_int_mask_b`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 24 | `md_uncorr` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 23 | `sysstate_tag_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 22 | `sysstate_tag_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 21 | `uncac_uncorr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 20 | `uncac_uncorr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 19 | `bad_spool_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 18 | `bad_spool_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 17 | `syscmd_addr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 16 | `syscmd_addr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 15 | `syscmd_data_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 14 | `syscmd_data_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 13 | `sysad_addr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 12 | `sysad_addr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 11 | `sysad_data_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 10 | `sysad_data_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 9 | `sysstate_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 8 | `sysstate_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 7 | `wrb_werr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 6 | `wrb_werr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 5 | `wrb_terr_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 4 | `wrb_terr_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 3 | `spur_msg_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 2 | `spur_msg_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 1 | `spool_cmp_a` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+| 0 | `spool_cmp_b` | inferred |  | public Linux SN0 Hub processor-interface header: field layout and masks | Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register. |
+
+### Register `pi_err_status0_a`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `valid` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Valid. |
+| 62 | `overrun` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Overrun, spooled to memory. |
+| 61:25 | `addr` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Address, 37 bits (PI_ERR_ST0_ADDR_MASK). |
+| 24:17 | `cmd` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message command, eight bits. |
+| 16:6 | `suppl` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message supplemental field, eleven bits. |
+| 5:3 | `reqnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read request number (the structure calls it the T5 request number). |
+| 2:0 | `type` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit. |
+
 ### Register `pi_err_status0_a_rclr`
 
-Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.
+Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `valid` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Valid. |
+| 62 | `overrun` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Overrun, spooled to memory. |
+| 61:25 | `addr` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Address, 37 bits (PI_ERR_ST0_ADDR_MASK). |
+| 24:17 | `cmd` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message command, eight bits. |
+| 16:6 | `suppl` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message supplemental field, eleven bits. |
+| 5:3 | `reqnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read request number (the structure calls it the T5 request number). |
+| 2:0 | `type` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit. |
+
+### Register `pi_err_status1_a`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:53 | `msgsrc` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message source, eleven bits. |
+| 52:43 | `crbstat` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Status from the read or write buffer, ten bits. |
+| 42 | `wrbrrb` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read or write CRB: 0 read, 1 write. |
+| 41:39 | `crbnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB number, three bits: write 0 to 7 or read 0 to 4. |
+| 38:29 | `invcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Signed invalidate counter (read request buffer), ten bits. |
+| 28:21 | `toutcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB timeout counter, eight bits. |
+| 20:0 | `spool` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Number spooled to memory, 21 bits. |
+
+### Register `pi_err_status1_a_rclr`
+
+Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:53 | `msgsrc` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message source, eleven bits. |
+| 52:43 | `crbstat` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Status from the read or write buffer, ten bits. |
+| 42 | `wrbrrb` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read or write CRB: 0 read, 1 write. |
+| 41:39 | `crbnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB number, three bits: write 0 to 7 or read 0 to 4. |
+| 38:29 | `invcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Signed invalidate counter (read request buffer), ten bits. |
+| 28:21 | `toutcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB timeout counter, eight bits. |
+| 20:0 | `spool` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Number spooled to memory, 21 bits. |
+
+### Register `pi_err_status0_b`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `valid` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Valid. |
+| 62 | `overrun` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Overrun, spooled to memory. |
+| 61:25 | `addr` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Address, 37 bits (PI_ERR_ST0_ADDR_MASK). |
+| 24:17 | `cmd` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message command, eight bits. |
+| 16:6 | `suppl` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message supplemental field, eleven bits. |
+| 5:3 | `reqnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read request number (the structure calls it the T5 request number). |
+| 2:0 | `type` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit. |
 
 ### Register `pi_err_status0_b_rclr`
 
-Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.
+Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63 | `valid` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Valid. |
+| 62 | `overrun` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Overrun, spooled to memory. |
+| 61:25 | `addr` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Address, 37 bits (PI_ERR_ST0_ADDR_MASK). |
+| 24:17 | `cmd` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message command, eight bits. |
+| 16:6 | `suppl` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message supplemental field, eleven bits. |
+| 5:3 | `reqnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read request number (the structure calls it the T5 request number). |
+| 2:0 | `type` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit. |
+
+### Register `pi_err_status1_b`
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:53 | `msgsrc` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message source, eleven bits. |
+| 52:43 | `crbstat` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Status from the read or write buffer, ten bits. |
+| 42 | `wrbrrb` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read or write CRB: 0 read, 1 write. |
+| 41:39 | `crbnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB number, three bits: write 0 to 7 or read 0 to 4. |
+| 38:29 | `invcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Signed invalidate counter (read request buffer), ten bits. |
+| 28:21 | `toutcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB timeout counter, eight bits. |
+| 20:0 | `spool` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Number spooled to memory, 21 bits. |
+
+### Register `pi_err_status1_b_rclr`
+
+Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 63:53 | `msgsrc` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Message source, eleven bits. |
+| 52:43 | `crbstat` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Status from the read or write buffer, ten bits. |
+| 42 | `wrbrrb` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Read or write CRB: 0 read, 1 write. |
+| 41:39 | `crbnum` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB number, three bits: write 0 to 7 or read 0 to 4. |
+| 38:29 | `invcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Signed invalidate counter (read request buffer), ten bits. |
+| 28:21 | `toutcnt` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | CRB timeout counter, eight bits. |
+| 20:0 | `spool` | established |  | public Linux SN0 Hub processor-interface header: field layout and masks | Number spooled to memory, 21 bits. |
 
 ### Register `pi_spool_cmp_a`
 
@@ -257,6 +461,29 @@ Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in
 
 Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access.
 
+## Enums
+
+### Enum `pi_calias_size`
+
+| Label | Value | Grade | Source |
+|---|---|---|---|
+| `size_none` | 0 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_4k` | 1 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_8k` | 2 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_16k` | 3 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_32k` | 4 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_64k` | 5 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_128k` | 6 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_256k` | 7 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_512k` | 8 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_1m` | 9 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_2m` | 10 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_4m` | 11 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_8m` | 12 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_16m` | 13 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_32m` | 14 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `size_64m` | 15 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
@@ -267,6 +494,7 @@ Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives 
 | `IP_PEND1_CC` | 0x800 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cause bit for the second pending bank and the cross-call sources, named HUB_IP_PEND1_CC in the header: IP3 line. |
 | `IP_PROF` | 0x2000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cause bit for the profiling comparator, named HUB_IP_PROF in the header: IP5 line. |
 | `IP_RT` | 0x1000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cause bit for the real-time counter comparator, named HUB_IP_RT in the header: IP4 line. |
+| `PI_BASE` | 0x0 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Start of the processor interface registers, from the header. |
 | `PI_CALIAS_SIZE_0` | 0x0 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 0: no alias, per the header's name PI_CALIAS_SIZE_0. |
 | `PI_CALIAS_SIZE_128K` | 0x6 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 6: 128 KB, per the header. |
 | `PI_CALIAS_SIZE_16K` | 0x3 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 3: 16 KB, per the header. |
@@ -283,6 +511,16 @@ Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives 
 | `PI_CALIAS_SIZE_64M` | 0xf | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 15: 64 MB, per the header. |
 | `PI_CALIAS_SIZE_8K` | 0x2 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 2: 8 KB, per the header. |
 | `PI_CALIAS_SIZE_8M` | 0xc | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Cached-alias size code 12: 8 MB, per the header. |
+| `PI_ERR_CLEAR_ALL_A` | 0xaaaaaa | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | The header's clear-all mask for processor A's error pending bits. |
+| `PI_ERR_CLEAR_ALL_B` | 0x555555 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | The header's clear-all mask for processor B's error pending bits. |
+| `PI_ERR_RD_DERR` | 0x2 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 2 in the error status of a read request: data error. |
+| `PI_ERR_RD_PRERR` | 0x1 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 1 in the error status of a read request: partial read error. |
+| `PI_ERR_RD_TERR` | 0x3 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 3 in the error status of a read request: timeout. |
+| `PI_ERR_WR_PWERR` | 0x1 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 1 in the error status of a write request: partial write error. |
+| `PI_ERR_WR_TERR` | 0x3 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 3 in the error status of a write request: timeout. |
+| `PI_ERR_WR_WERR` | 0x0 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 0 in the error status of a write request: write error. |
 | `PI_LOCAL_WINDOW_BASE` | 0x1000000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical base of the processor's own hub window; no node shift. |
+| `PI_MIN_STACK_SIZE` | 0x1000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Smallest error stack, bytes. The header's size macro gives the stack as this value shifted left by the size field minus one, or zero when the field is zero. |
 | `PI_NODE_SHIFT` | 0x20 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration. |
 | `PI_NODE_WINDOW_BASE` | 0x1800000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical base of a named node's window. |
+| `PI_STACK_SIZE_SHIFT` | 0xc | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Shift of the 4 KiB unit of the error stack size, from the header. |

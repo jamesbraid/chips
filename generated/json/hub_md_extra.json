@@ -6,6 +6,48 @@
   {
    "unit": "hub_md_extra",
    "kind": "register",
+   "name": "md_io_protect",
+   "offset": 2097152,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: MD_IO_PROTECT (offset and name)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_io_prot_ovrrd",
+   "offset": 2097160,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: MD_IO_PROT_OVRRD (offset and name)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_hspec_protect",
+   "offset": 2097168,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: MD_HSPEC_PROTECT (offset and name)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
    "name": "md_memory_config",
    "offset": 2097176,
    "access": "rw",
@@ -118,10 +160,138 @@
   },
   {
    "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank7.size_512mb",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
    "kind": "field",
    "name": "md_memory_config.bank6",
    "hi": 20,
    "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank6.size_512mb",
+   "value": 7,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
   },
@@ -136,10 +306,138 @@
   },
   {
    "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank5.size_512mb",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
    "kind": "field",
    "name": "md_memory_config.bank4",
    "hi": 14,
    "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank4.size_512mb",
+   "value": 7,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
   },
@@ -154,10 +452,138 @@
   },
   {
    "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank3.size_512mb",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
    "kind": "field",
    "name": "md_memory_config.bank2",
    "hi": 8,
    "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank2.size_512mb",
+   "value": 7,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
   },
@@ -172,10 +598,138 @@
   },
   {
    "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank1.size_512mb",
+   "value": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
    "kind": "field",
    "name": "md_memory_config.bank0",
    "hi": 2,
    "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_empty",
+   "value": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_8mb",
+   "value": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_16mb",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_32mb",
+   "value": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_64mb",
+   "value": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_128mb",
+   "value": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_256mb",
+   "value": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "enum_value",
+   "name": "md_memory_config.bank0.size_512mb",
+   "value": 7,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
   },
@@ -219,6 +773,38 @@
    "lo": 0,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_fandop_cac_stat",
+   "offset": 2097192,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 192,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_fandop_cac_stat.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: field layout and masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_fandop_cac_stat.addr",
+   "hi": 31,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: field layout and masks"
   },
   {
    "unit": "hub_md_extra",
@@ -283,6 +869,65 @@
    "lo": 0,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_mig_candidate",
+   "offset": 2097216,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE (offset and name)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_candidate.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_candidate.type",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_candidate.overrun",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_candidate.node",
+   "hi": 28,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_candidate.page",
+   "hi": 17,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks"
   },
   {
    "unit": "hub_md_extra",
@@ -900,6 +1545,29 @@
   {
    "unit": "hub_md_extra",
    "kind": "register",
+   "name": "md_led0",
+   "offset": 2228304,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_led0.led",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: field layout and masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
    "name": "md_led1",
    "offset": 2228312,
    "access": "w",
@@ -910,6 +1578,15 @@
    "reset": "unknown",
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_led1.led",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: field layout and masks"
   },
   {
    "unit": "hub_md_extra",
@@ -1195,6 +1872,33 @@
   {
    "unit": "hub_md_extra",
    "kind": "constant",
+   "name": "HUB_MD_BASE",
+   "value": 2097152,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_BASE_JUNK",
+   "value": 2228224,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_BASE_PERF",
+   "value": 2162688,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
    "name": "HUB_MD_DIRTYPE_PREMIUM",
    "value": 1,
    "count": 1,
@@ -1323,6 +2027,24 @@
    "kind": "constant",
    "name": "HUB_MD_MOQ_SIZE_RESET_DEFAULTS",
    "value": 12818,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_PAGE_NUM_SHIFT",
+   "value": 12,
+   "count": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "constant",
+   "name": "HUB_MD_PAGE_SIZE",
+   "value": 4096,
    "count": 1,
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"

@@ -6,6 +6,34 @@
 #include <stdint.h>
 
 
+/* enum md_bank_size */
+#define HUB_MD_BANK_SIZE_SIZE_EMPTY                  0 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_8MB                    1 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_16MB                   2 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_32MB                   3 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_64MB                   4 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_128MB                  5 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_256MB                  6 /* established */
+#define HUB_MD_BANK_SIZE_SIZE_512MB                  7 /* established */
+
+/*
+ * MD and core register protection. The header gives no access type, layout or reset; rw is an assumption.
+ */
+/* md_io_protect: rw64, reset unknown; public Linux SN0 Hub memory/directory header: MD_IO_PROTECT (offset and name) */
+#define HUB_MD_IO_PROTECT_OFFSET                     0x200000u /* inferred */
+
+/*
+ * Clear my bit in the MD and core register protection. The header gives no access type, layout or reset; rw is an assumption.
+ */
+/* md_io_prot_ovrrd: rw64, reset unknown; public Linux SN0 Hub memory/directory header: MD_IO_PROT_OVRRD (offset and name) */
+#define HUB_MD_IO_PROT_OVRRD_OFFSET                  0x200008u /* inferred */
+
+/*
+ * Back-door directory and boot-space protection. The header gives no access type, layout or reset; rw is an assumption.
+ */
+/* md_hspec_protect: rw64, reset unknown; public Linux SN0 Hub memory/directory header: MD_HSPEC_PROTECT (offset and name) */
+#define HUB_MD_HSPEC_PROTECT_OFFSET                  0x200010u /* inferred */
+
 /*
  * Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by the header, and their meaning is only partly stated there.
  */
@@ -81,6 +109,15 @@
 #define HUB_MD_REFRESH_CONTROL_THRESHOLD_MASK        0xfffull
 #define HUB_MD_REFRESH_CONTROL_THRESHOLD_INPLACE     (HUB_MD_REFRESH_CONTROL_THRESHOLD_MASK << HUB_MD_REFRESH_CONTROL_THRESHOLD_SHIFT)
 
+/* md_fandop_cac_stat: r64, reset 0xc0; census: 1 sites, 1 routines */
+#define HUB_MD_FANDOP_CAC_STAT_OFFSET                0x200028u /* established */
+#define HUB_MD_FANDOP_CAC_STAT_VALID_SHIFT           63 /* established */
+#define HUB_MD_FANDOP_CAC_STAT_VALID_MASK            0x1ull
+#define HUB_MD_FANDOP_CAC_STAT_VALID_INPLACE         (HUB_MD_FANDOP_CAC_STAT_VALID_MASK << HUB_MD_FANDOP_CAC_STAT_VALID_SHIFT)
+#define HUB_MD_FANDOP_CAC_STAT_ADDR_SHIFT            6 /* established */
+#define HUB_MD_FANDOP_CAC_STAT_ADDR_MASK             0x3ffffffull
+#define HUB_MD_FANDOP_CAC_STAT_ADDR_INPLACE          (HUB_MD_FANDOP_CAC_STAT_ADDR_MASK << HUB_MD_FANDOP_CAC_STAT_ADDR_SHIFT)
+
 /*
  * Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled.
  */
@@ -104,6 +141,27 @@
 #define HUB_MD_MIG_VALUE_THRESH_VALUE_SHIFT          0 /* established */
 #define HUB_MD_MIG_VALUE_THRESH_VALUE_MASK           0xfffffull
 #define HUB_MD_MIG_VALUE_THRESH_VALUE_INPLACE        (HUB_MD_MIG_VALUE_THRESH_VALUE_MASK << HUB_MD_MIG_VALUE_THRESH_VALUE_SHIFT)
+
+/*
+ * Latest page migration candidate. The header gives no access type and no reset, so the access letter is an assumption (graded inferred). The header's initiator mask (bits 28:18) overlaps its node and address masks; the fields here are the node and address masks and the single-bit fields.
+ */
+/* md_mig_candidate: r64, reset unknown; public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE (offset and name) */
+#define HUB_MD_MIG_CANDIDATE_OFFSET                  0x200040u /* inferred */
+#define HUB_MD_MIG_CANDIDATE_VALID_SHIFT             63 /* established */
+#define HUB_MD_MIG_CANDIDATE_VALID_MASK              0x1ull
+#define HUB_MD_MIG_CANDIDATE_VALID_INPLACE           (HUB_MD_MIG_CANDIDATE_VALID_MASK << HUB_MD_MIG_CANDIDATE_VALID_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_TYPE_SHIFT              30 /* established */
+#define HUB_MD_MIG_CANDIDATE_TYPE_MASK               0x1ull
+#define HUB_MD_MIG_CANDIDATE_TYPE_INPLACE            (HUB_MD_MIG_CANDIDATE_TYPE_MASK << HUB_MD_MIG_CANDIDATE_TYPE_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_OVERRUN_SHIFT           29 /* established */
+#define HUB_MD_MIG_CANDIDATE_OVERRUN_MASK            0x1ull
+#define HUB_MD_MIG_CANDIDATE_OVERRUN_INPLACE         (HUB_MD_MIG_CANDIDATE_OVERRUN_MASK << HUB_MD_MIG_CANDIDATE_OVERRUN_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_NODE_SHIFT              20 /* established */
+#define HUB_MD_MIG_CANDIDATE_NODE_MASK               0x1ffull
+#define HUB_MD_MIG_CANDIDATE_NODE_INPLACE            (HUB_MD_MIG_CANDIDATE_NODE_MASK << HUB_MD_MIG_CANDIDATE_NODE_SHIFT)
+#define HUB_MD_MIG_CANDIDATE_PAGE_SHIFT              0 /* established */
+#define HUB_MD_MIG_CANDIDATE_PAGE_MASK               0x3ffffull
+#define HUB_MD_MIG_CANDIDATE_PAGE_INPLACE            (HUB_MD_MIG_CANDIDATE_PAGE_MASK << HUB_MD_MIG_CANDIDATE_PAGE_SHIFT)
 
 /*
  * Layout of the directory error latch, from the header's structure. The header lists the fields from the most significant bit down and gives a comment for each range. Bit positions here follow those comments.
@@ -301,7 +359,7 @@
 #define HUB_MD_PERF_CNT0_PERF_CNT_INPLACE            (HUB_MD_PERF_CNT0_PERF_CNT_MASK << HUB_MD_PERF_CNT0_PERF_CNT_SHIFT)
 
 /*
- * Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out.
+ * Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out. The header also defines bit 7 as the slot ID on the Origin 200 (MSU_SN00_SLOTID_MASK 0x80) and bits 7:4 as a power-supply field (MSU_PIMM_PSC_MASK); those overlay the bits above on that product and are not separate fields.
  */
 /* md_slotid_ustat: r64, reset unknown; census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed) */
 #define HUB_MD_SLOTID_USTAT_OFFSET                   0x220048u /* established */
@@ -324,11 +382,20 @@
 #define HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_MASK         0x7ull
 #define HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_INPLACE      (HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_MASK << HUB_MD_SLOTID_USTAT_SN0_SLOT_ID_SHIFT)
 
+/* md_led0: w64, reset unknown; census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed) */
+#define HUB_MD_LED0_OFFSET                           0x220050u /* established */
+#define HUB_MD_LED0_LED_SHIFT                        0 /* inferred */
+#define HUB_MD_LED0_LED_MASK                         0xffull
+#define HUB_MD_LED0_LED_INPLACE                      (HUB_MD_LED0_LED_MASK << HUB_MD_LED0_LED_SHIFT)
+
 /*
  * Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred. The IRIX register table confirms the access.
  */
 /* md_led1: w64, reset unknown; public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) */
 #define HUB_MD_LED1_OFFSET                           0x220058u /* established */
+#define HUB_MD_LED1_LED_SHIFT                        0 /* inferred */
+#define HUB_MD_LED1_LED_MASK                         0xffull
+#define HUB_MD_LED1_LED_INPLACE                      (HUB_MD_LED1_LED_MASK << HUB_MD_LED1_LED_SHIFT)
 
 /*
  * Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access.
@@ -443,6 +510,9 @@
 
 #define HUB_HUB_MD_BANK_MASK                         0xe0000000u /* established */
 #define HUB_HUB_MD_BANK_SHIFT                        0x1du /* established */
+#define HUB_HUB_MD_BASE                              0x200000u /* established */
+#define HUB_HUB_MD_BASE_JUNK                         0x220000u /* established */
+#define HUB_HUB_MD_BASE_PERF                         0x210000u /* established */
 #define HUB_HUB_MD_DIRTYPE_PREMIUM                   0x1u /* established */
 #define HUB_HUB_MD_DIRTYPE_STANDARD                  0x0u /* established */
 #define HUB_HUB_MD_DIR_BUSY_EXCL                     0x4u /* established */
@@ -458,6 +528,8 @@
 #define HUB_HUB_MD_MLAN_CTL_ACCESS_BYTES             0x8u /* established */
 #define HUB_HUB_MD_MLAN_CTL_RESET_DEFAULTS           0x18b100000ull /* established */
 #define HUB_HUB_MD_MOQ_SIZE_RESET_DEFAULTS           0x3212u /* established */
+#define HUB_HUB_MD_PAGE_NUM_SHIFT                    0xcu /* established */
+#define HUB_HUB_MD_PAGE_SIZE                         0x1000u /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_PREMIUM         0x7ffffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_MASK_STANDARD        0x7ffu /* established */
 #define HUB_HUB_MD_REFCNT_COUNT_SHIFT                0x5u /* established */

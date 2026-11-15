@@ -1,6 +1,24 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_pi_extra" prefix="HUB" title="Hub processor interface registers, bit layouts and constants outside the census" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
+  <enum name="pi_calias_size">
+    <value name="size_none" value="0" grade="established"/>
+    <value name="size_4k" value="1" grade="established"/>
+    <value name="size_8k" value="2" grade="established"/>
+    <value name="size_16k" value="3" grade="established"/>
+    <value name="size_32k" value="4" grade="established"/>
+    <value name="size_64k" value="5" grade="established"/>
+    <value name="size_128k" value="6" grade="established"/>
+    <value name="size_256k" value="7" grade="established"/>
+    <value name="size_512k" value="8" grade="established"/>
+    <value name="size_1m" value="9" grade="established"/>
+    <value name="size_2m" value="10" grade="established"/>
+    <value name="size_4m" value="11" grade="established"/>
+    <value name="size_8m" value="12" grade="established"/>
+    <value name="size_16m" value="13" grade="established"/>
+    <value name="size_32m" value="14" grade="established"/>
+    <value name="size_64m" value="15" grade="established"/>
+  </enum>
   <struct name="PI_CPU_PROTECT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x0" access="rw" reset="0xffffffffffffffff">
     <doc>CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
   </struct>
@@ -9,6 +27,9 @@
   </struct>
   <struct name="PI_IO_PROTECT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x10" access="rw" reset="0x0">
     <doc>Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
+  </struct>
+  <struct name="PI_CALIAS_SIZE" size="8" grade="established" from="census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)" register="yes" offset="0x28" access="rw" reset="0xf">
+    <field name="size" start="0" size="4" type="pi_calias_size" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
   </struct>
   <struct name="PI_REPLY_LEVEL" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x60" access="rw" reset="0x0">
     <doc>Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. The IRIX register table confirms the access.</doc>
@@ -97,11 +118,163 @@
   <struct name="PI_GFX_INT_CNTR_B" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x340" access="rw" reset="0x0">
     <doc>Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. The IRIX register table confirms the access.</doc>
   </struct>
+  <struct name="PI_ERR_INT_PEND" size="8" grade="established" from="census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed)" register="yes" offset="0x400" access="rw" reset="unknown">
+    <doc>Bit pairs are B then A (even bit B, odd bit A) for bits 0 to 23.</doc>
+    <field name="md_uncorr" start="24" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_a" start="23" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_b" start="22" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_a" start="21" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_b" start="20" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_a" start="19" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_b" start="18" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_a" start="17" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_b" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_a" start="15" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_b" start="14" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_a" start="13" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_b" start="12" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_a" start="11" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_b" start="10" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_a" start="9" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_b" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_a" start="7" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_b" start="6" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_a" start="5" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_b" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_a" start="3" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_b" start="2" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_a" start="1" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_b" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_INT_MASK_A" size="8" grade="established" from="census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)" register="yes" offset="0x408" access="rw" reset="0x0">
+    <field name="md_uncorr" start="24" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_a" start="23" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_b" start="22" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_a" start="21" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_b" start="20" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_a" start="19" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_b" start="18" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_a" start="17" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_b" start="16" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_a" start="15" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_b" start="14" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_a" start="13" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_b" start="12" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_a" start="11" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_b" start="10" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_a" start="9" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_b" start="8" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_a" start="7" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_b" start="6" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_a" start="5" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_b" start="4" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_a" start="3" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_b" start="2" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_a" start="1" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_b" start="0" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_INT_MASK_B" size="8" grade="established" from="census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)" register="yes" offset="0x410" access="rw" reset="0x0">
+    <field name="md_uncorr" start="24" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_a" start="23" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_tag_b" start="22" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_a" start="21" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="uncac_uncorr_b" start="20" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_a" start="19" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="bad_spool_b" start="18" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_a" start="17" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_addr_b" start="16" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_a" start="15" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="syscmd_data_b" start="14" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_a" start="13" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_addr_b" start="12" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_a" start="11" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysad_data_b" start="10" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_a" start="9" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="sysstate_b" start="8" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_a" start="7" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_werr_b" start="6" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_a" start="5" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrb_terr_b" start="4" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_a" start="3" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spur_msg_b" start="2" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_a" start="1" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool_cmp_b" start="0" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS0_A" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x430" access="r" reset="unknown">
+    <field name="valid" start="63" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="overrun" start="62" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="addr" start="25" size="37" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="cmd" start="17" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="suppl" start="6" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="reqnum" start="3" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="type" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
   <struct name="PI_ERR_STATUS0_A_RCLR" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x438" access="r" reset="unknown">
-    <doc>Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.</doc>
+    <doc>Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="overrun" start="62" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="addr" start="25" size="37" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="cmd" start="17" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="suppl" start="6" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="reqnum" start="3" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="type" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS1_A" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x440" access="r" reset="unknown">
+    <field name="msgsrc" start="53" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbstat" start="43" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrbrrb" start="42" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbnum" start="39" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="invcnt" start="29" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="toutcnt" start="21" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool" start="0" size="21" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS1_A_RCLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x448" access="w" reset="unknown">
+    <doc>Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.</doc>
+    <field name="msgsrc" start="53" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbstat" start="43" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrbrrb" start="42" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbnum" start="39" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="invcnt" start="29" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="toutcnt" start="21" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool" start="0" size="21" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS0_B" size="8" grade="established" from="census: 5 sites, 4 routines" register="yes" offset="0x450" access="r" reset="unknown">
+    <field name="valid" start="63" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="overrun" start="62" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="addr" start="25" size="37" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="cmd" start="17" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="suppl" start="6" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="reqnum" start="3" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="type" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
   </struct>
   <struct name="PI_ERR_STATUS0_B_RCLR" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x458" access="r" reset="unknown">
-    <doc>Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access.</doc>
+    <doc>Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.</doc>
+    <field name="valid" start="63" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="overrun" start="62" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="addr" start="25" size="37" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="cmd" start="17" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="suppl" start="6" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="reqnum" start="3" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="type" start="0" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS1_B" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x460" access="r" reset="unknown">
+    <field name="msgsrc" start="53" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbstat" start="43" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrbrrb" start="42" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbnum" start="39" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="invcnt" start="29" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="toutcnt" start="21" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool" start="0" size="21" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+  </struct>
+  <struct name="PI_ERR_STATUS1_B_RCLR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x468" access="w" reset="unknown">
+    <doc>Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.</doc>
+    <field name="msgsrc" start="53" size="11" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbstat" start="43" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="wrbrrb" start="42" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="crbnum" start="39" size="3" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="invcnt" start="29" size="10" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="toutcnt" start="21" size="8" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
+    <field name="spool" start="0" size="21" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: field layout and masks"/>
   </struct>
   <struct name="PI_SPOOL_CMP_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x470" access="rw" reset="unknown">
     <doc>Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. The header gives no field layout. The IRIX register table confirms the access.</doc>
@@ -149,6 +322,7 @@
   <constant name="IP_PEND1_CC" value="0x800" grade="established"/>
   <constant name="IP_PROF" value="0x2000" grade="established"/>
   <constant name="IP_RT" value="0x1000" grade="established"/>
+  <constant name="PI_BASE" value="0x0" grade="established"/>
   <constant name="PI_CALIAS_SIZE_0" value="0x0" grade="established"/>
   <constant name="PI_CALIAS_SIZE_128K" value="0x6" grade="established"/>
   <constant name="PI_CALIAS_SIZE_16K" value="0x3" grade="established"/>
@@ -165,7 +339,17 @@
   <constant name="PI_CALIAS_SIZE_64M" value="0xf" grade="established"/>
   <constant name="PI_CALIAS_SIZE_8K" value="0x2" grade="established"/>
   <constant name="PI_CALIAS_SIZE_8M" value="0xc" grade="established"/>
+  <constant name="PI_ERR_CLEAR_ALL_A" value="0xaaaaaa" grade="established"/>
+  <constant name="PI_ERR_CLEAR_ALL_B" value="0x555555" grade="established"/>
+  <constant name="PI_ERR_RD_DERR" value="0x2" grade="established"/>
+  <constant name="PI_ERR_RD_PRERR" value="0x1" grade="established"/>
+  <constant name="PI_ERR_RD_TERR" value="0x3" grade="established"/>
+  <constant name="PI_ERR_WR_PWERR" value="0x1" grade="established"/>
+  <constant name="PI_ERR_WR_TERR" value="0x3" grade="established"/>
+  <constant name="PI_ERR_WR_WERR" value="0x0" grade="established"/>
   <constant name="PI_LOCAL_WINDOW_BASE" value="0x1000000" grade="established"/>
+  <constant name="PI_MIN_STACK_SIZE" value="0x1000" grade="established"/>
   <constant name="PI_NODE_SHIFT" value="0x20" grade="established"/>
   <constant name="PI_NODE_WINDOW_BASE" value="0x1800000" grade="established"/>
+  <constant name="PI_STACK_SIZE_SHIFT" value="0xc" grade="established"/>
 </genxml>

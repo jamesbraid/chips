@@ -295,7 +295,17 @@ access = "r"
 width = 64
 grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_ERR_STATUS0_A_RCLR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
-doc = "Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access."
+doc = "Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
+cor = 0xffffffffffffffff
+
+[registers.pi_err_status0_a_rclr.fields]
+type = { bits = [2, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit." }
+reqnum = { bits = [5, 3], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read request number (the structure calls it the T5 request number)." }
+suppl = { bits = [16, 6], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message supplemental field, eleven bits." }
+cmd = { bits = [24, 17], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message command, eight bits." }
+addr = { bits = [61, 25], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Address, 37 bits (PI_ERR_ST0_ADDR_MASK)." }
+overrun = { bits = [62, 62], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Overrun, spooled to memory." }
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Valid." }
 
 [registers.pi_err_status0_b_rclr]
 offset = 0x458
@@ -303,7 +313,17 @@ access = "r"
 width = 64
 grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_ERR_STATUS0_B_RCLR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
-doc = "Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access."
+doc = "Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
+cor = 0xffffffffffffffff
+
+[registers.pi_err_status0_b_rclr.fields]
+type = { bits = [2, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit." }
+reqnum = { bits = [5, 3], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read request number (the structure calls it the T5 request number)." }
+suppl = { bits = [16, 6], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message supplemental field, eleven bits." }
+cmd = { bits = [24, 17], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message command, eight bits." }
+addr = { bits = [61, 25], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Address, 37 bits (PI_ERR_ST0_ADDR_MASK)." }
+overrun = { bits = [62, 62], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Overrun, spooled to memory." }
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Valid." }
 
 [registers.pi_spool_cmp_a]
 offset = 0x470
@@ -446,6 +466,231 @@ doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as Linu
 set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how Linux builds the word", from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level" }
 level = { bits = [6, 0], grade = "inferred", doc = "interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout", from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level" }
 
+[registers.pi_err_int_pend]
+offset = 0x400
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
+doc = "Bit pairs are B then A (even bit B, odd bit A) for bits 0 to 23."
+
+[registers.pi_err_int_pend.fields]
+spool_cmp_b = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 0, named PI_ERR_SPOOL_CMP_B." }
+spool_cmp_a = { bits = [1, 1], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 1, named PI_ERR_SPOOL_CMP_A." }
+spur_msg_b = { bits = [2, 2], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 2, named PI_ERR_SPUR_MSG_B." }
+spur_msg_a = { bits = [3, 3], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 3, named PI_ERR_SPUR_MSG_A." }
+wrb_terr_b = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 4, named PI_ERR_WRB_TERR_B." }
+wrb_terr_a = { bits = [5, 5], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 5, named PI_ERR_WRB_TERR_A." }
+wrb_werr_b = { bits = [6, 6], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 6, named PI_ERR_WRB_WERR_B." }
+wrb_werr_a = { bits = [7, 7], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 7, named PI_ERR_WRB_WERR_A." }
+sysstate_b = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 8, named PI_ERR_SYSSTATE_B." }
+sysstate_a = { bits = [9, 9], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 9, named PI_ERR_SYSSTATE_A." }
+sysad_data_b = { bits = [10, 10], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 10, named PI_ERR_SYSAD_DATA_B." }
+sysad_data_a = { bits = [11, 11], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 11, named PI_ERR_SYSAD_DATA_A." }
+sysad_addr_b = { bits = [12, 12], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 12, named PI_ERR_SYSAD_ADDR_B." }
+sysad_addr_a = { bits = [13, 13], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 13, named PI_ERR_SYSAD_ADDR_A." }
+syscmd_data_b = { bits = [14, 14], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 14, named PI_ERR_SYSCMD_DATA_B." }
+syscmd_data_a = { bits = [15, 15], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 15, named PI_ERR_SYSCMD_DATA_A." }
+syscmd_addr_b = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 16, named PI_ERR_SYSCMD_ADDR_B." }
+syscmd_addr_a = { bits = [17, 17], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 17, named PI_ERR_SYSCMD_ADDR_A." }
+bad_spool_b = { bits = [18, 18], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 18, named PI_ERR_BAD_SPOOL_B." }
+bad_spool_a = { bits = [19, 19], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 19, named PI_ERR_BAD_SPOOL_A." }
+uncac_uncorr_b = { bits = [20, 20], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 20, named PI_ERR_UNCAC_UNCORR_B." }
+uncac_uncorr_a = { bits = [21, 21], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 21, named PI_ERR_UNCAC_UNCORR_A." }
+sysstate_tag_b = { bits = [22, 22], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 22, named PI_ERR_SYSSTATE_TAG_B." }
+sysstate_tag_a = { bits = [23, 23], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Bit 23, named PI_ERR_SYSSTATE_TAG_A." }
+md_uncorr = { bits = [24, 24], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "PI_ERR_MD_UNCORR. The header's comment says it must be cleared in the memory/directory unit." }
+
+[registers.pi_err_int_mask_a]
+offset = 0x408
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71d0"
+
+[registers.pi_err_int_mask_a.fields]
+spool_cmp_b = { bits = [0, 0], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spool_cmp_a = { bits = [1, 1], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spur_msg_b = { bits = [2, 2], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spur_msg_a = { bits = [3, 3], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_terr_b = { bits = [4, 4], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_terr_a = { bits = [5, 5], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_werr_b = { bits = [6, 6], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_werr_a = { bits = [7, 7], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_b = { bits = [8, 8], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_a = { bits = [9, 9], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_data_b = { bits = [10, 10], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_data_a = { bits = [11, 11], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_addr_b = { bits = [12, 12], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_addr_a = { bits = [13, 13], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_data_b = { bits = [14, 14], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_data_a = { bits = [15, 15], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_addr_b = { bits = [16, 16], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_addr_a = { bits = [17, 17], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+bad_spool_b = { bits = [18, 18], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+bad_spool_a = { bits = [19, 19], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+uncac_uncorr_b = { bits = [20, 20], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+uncac_uncorr_a = { bits = [21, 21], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_tag_b = { bits = [22, 22], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_tag_a = { bits = [23, 23], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+md_uncorr = { bits = [24, 24], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+
+[registers.pi_err_int_mask_b]
+offset = 0x410
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71e8"
+
+[registers.pi_err_int_mask_b.fields]
+spool_cmp_b = { bits = [0, 0], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spool_cmp_a = { bits = [1, 1], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spur_msg_b = { bits = [2, 2], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+spur_msg_a = { bits = [3, 3], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_terr_b = { bits = [4, 4], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_terr_a = { bits = [5, 5], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_werr_b = { bits = [6, 6], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+wrb_werr_a = { bits = [7, 7], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_b = { bits = [8, 8], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_a = { bits = [9, 9], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_data_b = { bits = [10, 10], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_data_a = { bits = [11, 11], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_addr_b = { bits = [12, 12], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysad_addr_a = { bits = [13, 13], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_data_b = { bits = [14, 14], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_data_a = { bits = [15, 15], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_addr_b = { bits = [16, 16], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+syscmd_addr_a = { bits = [17, 17], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+bad_spool_b = { bits = [18, 18], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+bad_spool_a = { bits = [19, 19], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+uncac_uncorr_b = { bits = [20, 20], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+uncac_uncorr_a = { bits = [21, 21], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_tag_b = { bits = [22, 22], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+sysstate_tag_a = { bits = [23, 23], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+md_uncorr = { bits = [24, 24], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
+
+[registers.pi_err_status0_a]
+offset = 0x430
+access = "r"
+width = 64
+grade = "established"
+from = "census: 5 sites, 4 routines"
+
+[registers.pi_err_status0_a.fields]
+type = { bits = [2, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit." }
+reqnum = { bits = [5, 3], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read request number (the structure calls it the T5 request number)." }
+suppl = { bits = [16, 6], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message supplemental field, eleven bits." }
+cmd = { bits = [24, 17], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message command, eight bits." }
+addr = { bits = [61, 25], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Address, 37 bits (PI_ERR_ST0_ADDR_MASK)." }
+overrun = { bits = [62, 62], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Overrun, spooled to memory." }
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Valid." }
+
+[registers.pi_err_status0_b]
+offset = 0x450
+access = "r"
+width = 64
+grade = "established"
+from = "census: 5 sites, 4 routines"
+
+[registers.pi_err_status0_b.fields]
+type = { bits = [2, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Error type. Read-request errors are 1 (PRERR), 2 (DERR), 3 (TERR); write-request errors are 0 (WERR), 1 (PWERR), 3 (TERR); which table applies depends on the status 1 read/write bit." }
+reqnum = { bits = [5, 3], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read request number (the structure calls it the T5 request number)." }
+suppl = { bits = [16, 6], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message supplemental field, eleven bits." }
+cmd = { bits = [24, 17], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message command, eight bits." }
+addr = { bits = [61, 25], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Address, 37 bits (PI_ERR_ST0_ADDR_MASK)." }
+overrun = { bits = [62, 62], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Overrun, spooled to memory." }
+valid = { bits = [63, 63], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Valid." }
+
+[registers.pi_err_status1_a]
+offset = 0x440
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.pi_err_status1_a.fields]
+spool = { bits = [20, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Number spooled to memory, 21 bits." }
+toutcnt = { bits = [28, 21], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB timeout counter, eight bits." }
+invcnt = { bits = [38, 29], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Signed invalidate counter (read request buffer), ten bits." }
+crbnum = { bits = [41, 39], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB number, three bits: write 0 to 7 or read 0 to 4." }
+wrbrrb = { bits = [42, 42], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read or write CRB: 0 read, 1 write." }
+crbstat = { bits = [52, 43], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Status from the read or write buffer, ten bits." }
+msgsrc = { bits = [63, 53], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message source, eleven bits." }
+
+[registers.pi_err_status1_b]
+offset = 0x460
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+
+[registers.pi_err_status1_b.fields]
+spool = { bits = [20, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Number spooled to memory, 21 bits." }
+toutcnt = { bits = [28, 21], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB timeout counter, eight bits." }
+invcnt = { bits = [38, 29], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Signed invalidate counter (read request buffer), ten bits." }
+crbnum = { bits = [41, 39], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB number, three bits: write 0 to 7 or read 0 to 4." }
+wrbrrb = { bits = [42, 42], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read or write CRB: 0 read, 1 write." }
+crbstat = { bits = [52, 43], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Status from the read or write buffer, ten bits." }
+msgsrc = { bits = [63, 53], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message source, eleven bits." }
+
+[registers.pi_err_status1_a_rclr]
+offset = 0x448
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+doc = "Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
+cor = 0xffffffffffffffff
+
+[registers.pi_err_status1_a_rclr.fields]
+spool = { bits = [20, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Number spooled to memory, 21 bits." }
+toutcnt = { bits = [28, 21], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB timeout counter, eight bits." }
+invcnt = { bits = [38, 29], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Signed invalidate counter (read request buffer), ten bits." }
+crbnum = { bits = [41, 39], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB number, three bits: write 0 to 7 or read 0 to 4." }
+wrbrrb = { bits = [42, 42], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read or write CRB: 0 read, 1 write." }
+crbstat = { bits = [52, 43], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Status from the read or write buffer, ten bits." }
+msgsrc = { bits = [63, 53], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message source, eleven bits." }
+
+[registers.pi_err_status1_b_rclr]
+offset = 0x468
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+doc = "Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
+cor = 0xffffffffffffffff
+
+[registers.pi_err_status1_b_rclr.fields]
+spool = { bits = [20, 0], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Number spooled to memory, 21 bits." }
+toutcnt = { bits = [28, 21], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB timeout counter, eight bits." }
+invcnt = { bits = [38, 29], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Signed invalidate counter (read request buffer), ten bits." }
+crbnum = { bits = [41, 39], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "CRB number, three bits: write 0 to 7 or read 0 to 4." }
+wrbrrb = { bits = [42, 42], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Read or write CRB: 0 read, 1 write." }
+crbstat = { bits = [52, 43], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Status from the read or write buffer, ten bits." }
+msgsrc = { bits = [63, 53], grade = "established", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Message source, eleven bits." }
+
+[registers.pi_calias_size]
+offset = 0x28
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
+reset = 0xf
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CALIAS_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c90"
+
+[registers.pi_calias_size.fields]
+size = { bits = [3, 0], grade = "inferred", enum = "pi_calias_size", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Cached alias size: 0 is none, then 4 KiB doubling to 64 MiB at 15. The header lists values 0 to 15 and gives no field extent; four bits is the width that holds them." }
+
+[enums.pi_calias_size]
+values = { size_none = { value = 0, grade = "established" }, size_4k = { value = 1, grade = "established" }, size_8k = { value = 2, grade = "established" }, size_16k = { value = 3, grade = "established" }, size_32k = { value = 4, grade = "established" }, size_64k = { value = 5, grade = "established" }, size_128k = { value = 6, grade = "established" }, size_256k = { value = 7, grade = "established" }, size_512k = { value = 8, grade = "established" }, size_1m = { value = 9, grade = "established" }, size_2m = { value = 10, grade = "established" }, size_4m = { value = 11, grade = "established" }, size_8m = { value = 12, grade = "established" }, size_16m = { value = 13, grade = "established" }, size_32m = { value = 14, grade = "established" }, size_64m = { value = 15, grade = "established" } }
+
 [constants]
 # Cause register bits the header names for the processor's pending interrupt lines. Bits 15:8 of
 # the Cause register are the interrupt pending field, so these are the lines IP2 to IP6.
@@ -477,3 +722,14 @@ PI_CALIAS_SIZE_64M = { value = 15, grade = "established", doc = "Cached-alias si
 PI_LOCAL_WINDOW_BASE = { value = 0x1000000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: LOCAL_HUB_ADDR is IALIAS_BASE plus the offset, IALIAS_BASE is hub register widget 1 with 24-bit windows (HUB_REGISTER_WIDGET, SWIN_SIZE_BITS)", doc = "Physical base of the processor's own hub window; no node shift." }
 PI_NODE_WINDOW_BASE = { value = 0x1800000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: REMOTE_HUB_ADDR is widget 1 plus 0x800000 within the named node; arch/mips/sgi-ip27/ip27-xtalk.c line 85 adds 0x01800000 to PI_INT_PEND_MOD", doc = "Physical base of a named node's window." }
 PI_NODE_SHIFT = { value = 0x20, grade = "established", from = "Linux arch/mips/include/asm/sn/sn0/addrs.h at the references/code/linux pin: NASID_SHFT is 32 in one configuration and 31 in the other (lines 58 and 72); the 32 case is recorded", doc = "Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration." }
+PI_BASE = { value = 0x0, grade = "established", doc = "Start of the processor interface registers, from the header." }
+PI_ERR_CLEAR_ALL_A = { value = 0xaaaaaa, grade = "established", doc = "The header's clear-all mask for processor A's error pending bits." }
+PI_ERR_CLEAR_ALL_B = { value = 0x555555, grade = "established", doc = "The header's clear-all mask for processor B's error pending bits." }
+PI_MIN_STACK_SIZE = { value = 0x1000, grade = "established", doc = "Smallest error stack, bytes. The header's size macro gives the stack as this value shifted left by the size field minus one, or zero when the field is zero." }
+PI_STACK_SIZE_SHIFT = { value = 0xc, grade = "established", doc = "Shift of the 4 KiB unit of the error stack size, from the header." }
+PI_ERR_RD_PRERR = { value = 0x1, grade = "established", doc = "Error type 1 in the error status of a read request: partial read error." }
+PI_ERR_RD_DERR = { value = 0x2, grade = "established", doc = "Error type 2 in the error status of a read request: data error." }
+PI_ERR_RD_TERR = { value = 0x3, grade = "established", doc = "Error type 3 in the error status of a read request: timeout." }
+PI_ERR_WR_WERR = { value = 0x0, grade = "established", doc = "Error type 0 in the error status of a write request: write error." }
+PI_ERR_WR_PWERR = { value = 0x1, grade = "established", doc = "Error type 1 in the error status of a write request: partial write error." }
+PI_ERR_WR_TERR = { value = 0x3, grade = "established", doc = "Error type 3 in the error status of a write request: timeout." }

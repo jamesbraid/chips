@@ -1,17 +1,77 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub/registers-extra.toml by defs-gen - do not edit, change the source -->
 <genxml unit="hub_extra" prefix="HUB" title="Hub block transfer engine registers and control bits outside the census">
+  <enum name="iio_lnk_stat">
+    <value name="working" value="2" grade="established"/>
+  </enum>
   <struct name="IIO_WID" size="8" grade="established" register="yes" offset="0x400000" access="r" reset="0x1c101048">
     <doc>Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the The IRIX register table confirms the access.</doc>
     <field name="rev" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="mfg" start="1" size="11" type="uint" grade="established"/>
   </struct>
+  <struct name="IIO_WSTAT" size="8" grade="established" from="census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)" register="yes" offset="0x400008" access="r" reset="0x0">
+    <doc>The rsvd mask is the members the header's structure names reserved (rsvd1 to rsvd4); the header gives no read or write behaviour for them, so the mask is the header's naming, graded established as a header fact only.</doc>
+    <field name="crazy" start="32" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="llp_tx_cnt" start="16" size="8" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="tx_max_rtry" start="9" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="xt_tail_to" start="6" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="xt_crd_to" start="5" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="pending" start="1" size="4" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_WCR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x400020" access="r" reset="0x4001">
+    <doc>The rsvd mask is the structure's rsvd and rsvd1 members; header naming only.</doc>
+    <field name="e_thresh" start="18" size="5" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="dir_con" start="17" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="f_bad_pkt" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="xbar_crd" start="13" size="3" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="tag_mode" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="widget_id" start="0" size="4" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
   <struct name="IIO_ILAPR" size="8" grade="established" register="yes" offset="0x400100" access="rw" reset="0xffffffffffffffff">
     <doc>Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="IIO_ILAPO" size="8" grade="established" register="yes" offset="0x400108" access="w" reset="unknown">
     <doc>Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access.</doc>
+  </struct>
+  <struct name="IIO_IOWA" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x400110" access="rw" reset="0x0">
+    <doc>The rsvd mask is the structure's rsvd and rsvd1 members; header naming only.</doc>
+    <field name="wxoac" start="8" size="8" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="w0oac" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IIWA" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x400118" access="r" reset="0x0">
+    <doc>The rsvd mask is the structure's rsvd and rsvd1 members; header naming only.</doc>
+    <field name="wxiac" start="8" size="8" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="w0iac" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_ILCSR" size="8" grade="established" from="census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)" register="yes" offset="0x400128" access="rw" reset="0x3fc03ff000a">
+    <doc>The rsvd mask is the structure's rsvd, rsvd2, rsvd3 and rsvd4 members (the two bits at 7:6 are named rsvd1 and described as the data ready offset, so they are a field here); header naming only.</doc>
+    <field name="max_burst" start="32" size="10" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="max_retry" start="16" size="10" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="lnk_stat" start="12" size="2" type="iio_lnk_stat" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="bm8" start="11" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="llp_en" start="10" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="wrm_reset" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="data_ready_offset" start="6" size="2" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="null_to" start="0" size="6" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_ILLR" size="8" grade="established" from="census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)" register="yes" offset="0x400130" access="rw" reset="0x0">
+    <doc>The rsvd mask is the structure's rsvd member (bits 63:32); header naming only.</doc>
+    <field name="cb_cnt" start="16" size="16" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="sn_cnt" start="0" size="16" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IIDSR" size="8" grade="established" from="census: 12 sites, 5 routines" register="yes" offset="0x400138" access="rw" reset="0x0">
+    <field name="sent" start="28" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="enable" start="24" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="node" start="8" size="9" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="level" start="0" size="7" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IGFX_0" size="8" grade="established" from="census: 2 sites, 1 routines" register="yes" offset="0x400140" access="rw" reset="unknown">
+    <doc>The layout is the same as iio_igfx_1.</doc>
+    <field name="valid" start="20" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="processor" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="node" start="4" size="9" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="widget" start="0" size="4" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
   </struct>
   <struct name="IIO_IGFX_1" size="8" grade="inferred" register="yes" offset="0x400148" access="rw" reset="unknown">
     <doc>Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed.</doc>
@@ -21,16 +81,78 @@
     <field name="widget" start="0" size="4" type="uint" grade="established"/>
   </struct>
   <struct name="IIO_SCRATCH_REG0" size="8" grade="established" register="yes" offset="0x400150" access="rw" reset="0x0">
-    <doc>Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access.</doc>
+    <doc>Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated.</doc>
   </struct>
   <struct name="IIO_SCRATCH_REG1" size="8" grade="established" register="yes" offset="0x400158" access="rw" reset="0x0">
-    <doc>Scratch register 1, the twin of register 0. The IRIX register table confirms the access.</doc>
+    <doc>Scratch register 1, the twin of register 0. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated.</doc>
   </struct>
   <struct name="IIO_ITTE" size="8" grade="established" register="yes" offset="0x400160" access="rw" count="7" stride="8" reset="0x0">
     <doc>Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. The IRIX register table confirms the access.</doc>
     <field name="iospace" start="12" size="1" type="uint" grade="established"/>
     <field name="widget" start="8" size="4" type="uint" grade="established"/>
     <field name="slice" start="0" size="5" type="uint" grade="established"/>
+  </struct>
+  <struct name="IIO_IMEM" size="8" grade="established" from="census: 4 sites, 3 routines" register="yes" offset="0x4001e8" access="rw" reset="unknown">
+    <field name="b1esd" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="b0esd" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="w0esd" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IECLR" size="8" grade="established" from="census: 2 sites, 1 routines (w); census: 5 sites, 4 routines (rw, indexed)" register="yes" offset="0x4001f8" access="rw" reset="unknown">
+    <doc>The header calls each bit a clear bit; whether the register is write-1-to-clear is not stated, so no w1c mask is recorded.</doc>
+    <field name="bte1" start="18" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="bte0" start="17" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="crazy" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_f" start="15" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_e" start="14" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_d" start="13" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_c" start="12" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_b" start="11" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_a" start="10" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_9" start="9" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_8" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="prb_0" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IIBUSERR" size="8" grade="inferred" from="public Linux SN0 Hub I/O header: IIO_IIBUSERR (offset and name; the header lists it as 0x1400208 in the local I/O window, which is this offset past the 0x1000000 window base)" register="yes" offset="0x400208" access="r" reset="unknown">
+    <doc>Reads here cause a bus error, per the header's comment. The header gives no layout and no reset. The access letter is the comment's reading and is graded inferred.</doc>
+  </struct>
+  <struct name="IIO_IPDR" size="8" grade="established" from="census: 5 sites, 2 routines" register="yes" offset="0x400388" access="rw" reset="0x0">
+    <field name="pnd" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_ICDR" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x400390" access="rw" reset="0x0">
+    <field name="pnd" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IFDR" size="8" grade="established" from="census: 8 sites, 3 routines" register="yes" offset="0x400398" access="rw" reset="0x0">
+    <doc>The rsvd mask is the structure's rsvd and rsvd1 members; header naming only.</doc>
+    <field name="maxrp" start="8" size="7" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="maxrq" start="0" size="7" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_ICMR" size="8" grade="established" from="census: 6 sites, 3 routines" register="yes" offset="0x4003a8" access="rw" reset="0x0">
+    <field name="precise" start="52" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="pc_vld" start="36" size="15" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="crb_vld" start="20" size="15" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="fc_cnt" start="16" size="4" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="clr_rppd" start="13" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="clr_rqpd" start="12" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="c_cnt" start="4" size="4" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="p_cnt" start="0" size="4" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_ICCR" size="8" grade="established" from="census: 7 sites, 1 routines" register="yes" offset="0x4003b0" access="rw" reset="0x0">
+    <doc>The header gives the commands as values already in place (0x100, 0x200, 0x400, 0x800) next to a command mask of 0xff at shift 7, which disagree; they are recorded here as single bits, graded inferred.</doc>
+    <field name="pending" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="flush" start="11" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="eject" start="10" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="timeout" start="9" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="wake" start="8" size="1" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IBLS_0" size="8" grade="established" from="census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)" register="yes" offset="0x410000" access="rw" reset="0x0">
+    <field name="busy" start="20" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="error" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="length" start="0" size="16" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IBCT_0" size="8" grade="established" from="census: 1 sites, 1 routines" register="yes" offset="0x410018" access="r" reset="0x0">
+    <field name="poison" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="notify" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="zfil_mode" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
   </struct>
   <struct name="IIO_IBNA_0" size="8" grade="established" register="yes" offset="0x410020" access="rw" reset="0x0">
     <doc>Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
@@ -40,11 +162,38 @@
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="0" size="9" type="uint" grade="established"/>
   </struct>
+  <struct name="IIO_IBLS_1" size="8" grade="established" from="census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)" register="yes" offset="0x420000" access="rw" reset="0x0">
+    <field name="busy" start="20" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="error" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="length" start="0" size="16" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IBCT_1" size="8" grade="established" from="census: 3 sites, 1 routines" register="yes" offset="0x420018" access="rw" reset="0x0">
+    <field name="poison" start="8" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="notify" start="4" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="zfil_mode" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
   <struct name="IIO_IBIA_1" size="8" grade="established" register="yes" offset="0x420028" access="rw" reset="0x0">
     <doc>Interrupt address of engine 1. Offset and name are from the public header. The IRIX register table confirms the access.</doc>
     <field name="level" start="16" size="7" type="uint" grade="established"/>
     <field name="node" start="0" size="9" type="uint" grade="established"/>
   </struct>
+  <struct name="IIO_IPCR" size="8" grade="established" from="census: 4 sites, 2 routines" register="yes" offset="0x430000" access="rw" reset="unknown">
+    <doc>Layout is the header's performance-select structure, io_perf_sel; which register that structure belongs to is inferred from the register names.</doc>
+    <field name="icct" start="8" size="8" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="ippr1" start="4" size="4" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+    <field name="ippr0" start="0" size="4" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <struct name="IIO_IPPR" size="8" grade="established" from="census: 2 sites, 2 routines" register="yes" offset="0x430008" access="r" reset="unknown">
+    <doc>Layout is the header's performance-count structure; its offset equals the header's IIO_PERF_CNT, 0x430008.</doc>
+    <field name="count" start="0" size="20" type="uint" grade="inferred" from="public Linux SN0 Hub I/O header: field layout and masks"/>
+  </struct>
+  <constant name="HUB_NUM_WIDGET" value="0x9" grade="established"/>
+  <constant name="HUB_WIDGET_ID_MAX" value="0xf" grade="established"/>
+  <constant name="HUB_WIDGET_ID_MIN" value="0x8" grade="established"/>
+  <constant name="IIO_BASE" value="0x400000" grade="established"/>
+  <constant name="IIO_BASE_BTE0" value="0x410000" grade="established"/>
+  <constant name="IIO_BASE_BTE1" value="0x420000" grade="established"/>
+  <constant name="IIO_BASE_PERF" value="0x430000" grade="established"/>
   <constant name="IIO_IBCT_NOTIFY" value="0x10" grade="established"/>
   <constant name="IIO_IBCT_POISON" value="0x100" grade="established"/>
   <constant name="IIO_IBCT_ZFIL_MODE" value="0x1" grade="established"/>
@@ -53,23 +202,24 @@
   <constant name="IIO_IECLR_BTE1" value="0x40000" grade="inferred"/>
   <constant name="IIO_IIDSR_ENB" value="0x1000000" grade="established"/>
   <constant name="IIO_IIDSR_LVL_MASK" value="0x3f" grade="established"/>
-  <constant name="IIO_IIDSR_NODE_MASK" value="0xff00" grade="established"/>
   <constant name="IIO_IIDSR_SENT" value="0x10000000" grade="established"/>
   <constant name="IIO_ILCSR_BM8" value="0x800" grade="established"/>
   <constant name="IIO_ILCSR_LLP_EN" value="0x400" grade="established"/>
-  <constant name="IIO_ILCSR_MAX_BURST_MASK" value="0x3ff00000000" grade="established"/>
-  <constant name="IIO_ILCSR_MAX_RETRY_MASK" value="0x3ff0000" grade="established"/>
-  <constant name="IIO_ILCSR_NULL_TO_MASK" value="0x3f" grade="established"/>
   <constant name="IIO_ILCSR_WARM_RESET" value="0x100" grade="established"/>
-  <constant name="IIO_ILLR_CB_CNT_MASK" value="0xffff0000" grade="established"/>
-  <constant name="IIO_ILLR_SN_CNT_MASK" value="0xffff" grade="established"/>
   <constant name="IIO_ITTE_BASE" value="0x400160" grade="established"/>
   <constant name="IIO_ITTE_INVALID_WIDGET" value="0x3" grade="established"/>
   <constant name="IIO_ITTE_IOSP" value="0x1000" grade="established"/>
   <constant name="IIO_LLP_CSR_IS_UP" value="0x2000" grade="established"/>
   <constant name="IIO_LLP_CSR_LLP_STAT_MASK" value="0x3000" grade="established"/>
+  <constant name="IIO_NUM_CRBS" value="0xf" grade="established"/>
+  <constant name="IIO_NUM_IPRBS" value="0x9" grade="established"/>
+  <constant name="IIO_NUM_ITTES" value="0x7" grade="established"/>
+  <constant name="IIO_NUM_NORMAL_CRBS" value="0xc" grade="established"/>
+  <constant name="IIO_NUM_PC_CRBS" value="0x4" grade="established"/>
+  <constant name="IIO_NUM_PRTES" value="0x8" grade="established"/>
+  <constant name="IIO_PROTECT_OVRRD_KEY" value="0x53474972756c6573" grade="established"/>
+  <constant name="IIO_SCRATCH_MASK" value="0xf00f11fff" grade="established"/>
   <constant name="IIO_WCR_DIR_CON" value="0x20000" grade="established"/>
-  <constant name="IIO_WCR_WIDGET_ID_MASK" value="0xf" grade="established"/>
   <constant name="IIO_WID_PART_HUB" value="0xc101" grade="established"/>
   <constant name="IIO_WSTAT_ECRAZY" value="0x100000000" grade="established"/>
   <constant name="IIO_WSTAT_TXRETRY" value="0x200" grade="established"/>

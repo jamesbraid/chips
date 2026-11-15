@@ -43,6 +43,142 @@
   {
    "unit": "hub_extra",
    "kind": "register",
+   "name": "iio_wstat",
+   "offset": 4194312,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.crazy",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.llp_tx_cnt",
+   "hi": 23,
+   "lo": 16,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.tx_max_rtry",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.xt_tail_to",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.xt_crd_to",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wstat.pending",
+   "hi": 4,
+   "lo": 1,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_wcr",
+   "offset": 4194336,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 16385,
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.e_thresh",
+   "hi": 22,
+   "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.dir_con",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.f_bad_pkt",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.xbar_crd",
+   "hi": 15,
+   "lo": 13,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.tag_mode",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_wcr.widget_id",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
    "name": "iio_ilapr",
    "offset": 4194560,
    "access": "rw",
@@ -65,6 +201,296 @@
    "space": null,
    "reset": "unknown",
    "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_iowa",
+   "offset": 4194576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iowa.wxoac",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iowa.w0oac",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_iiwa",
+   "offset": 4194584,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iiwa.wxiac",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iiwa.w0iac",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ilcsr",
+   "offset": 4194600,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 4380933685258,
+   "grade": "established",
+   "from": "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.max_burst",
+   "hi": 41,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.max_retry",
+   "hi": 25,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.lnk_stat",
+   "hi": 13,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "enum_value",
+   "name": "iio_ilcsr.lnk_stat.working",
+   "value": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.bm8",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.llp_en",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.wrm_reset",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.data_ready_offset",
+   "hi": 7,
+   "lo": 6,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ilcsr.null_to",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_illr",
+   "offset": 4194608,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_illr.cb_cnt",
+   "hi": 31,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_illr.sn_cnt",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_iidsr",
+   "offset": 4194616,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 12 sites, 5 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iidsr.sent",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iidsr.enable",
+   "hi": 24,
+   "lo": 24,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iidsr.node",
+   "hi": 16,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iidsr.level",
+   "hi": 6,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_igfx_0",
+   "offset": 4194624,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 1 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_igfx_0.valid",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_igfx_0.processor",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_igfx_0.node",
+   "hi": 12,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_igfx_0.widget",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
   },
   {
    "unit": "hub_extra",
@@ -177,6 +603,488 @@
   {
    "unit": "hub_extra",
    "kind": "register",
+   "name": "iio_imem",
+   "offset": 4194792,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 4 sites, 3 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_imem.b1esd",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_imem.b0esd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_imem.w0esd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ieclr",
+   "offset": 4194808,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 1 routines (w); census: 5 sites, 4 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.bte1",
+   "hi": 18,
+   "lo": 18,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.bte0",
+   "hi": 17,
+   "lo": 17,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.crazy",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_f",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_e",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_d",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_c",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_b",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_a",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_9",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_8",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ieclr.prb_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_iibuserr",
+   "offset": 4194824,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: IIO_IIBUSERR (offset and name; the header lists it as 0x1400208 in the local I/O window, which is this offset past the 0x1000000 window base)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ipdr",
+   "offset": 4195208,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 5 sites, 2 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ipdr.pnd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_icdr",
+   "offset": 4195216,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 3 sites, 1 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icdr.pnd",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ifdr",
+   "offset": 4195224,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 8 sites, 3 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ifdr.maxrp",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ifdr.maxrq",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_icmr",
+   "offset": 4195240,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.precise",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.pc_vld",
+   "hi": 50,
+   "lo": 36,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.crb_vld",
+   "hi": 34,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.fc_cnt",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.clr_rppd",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.clr_rqpd",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.c_cnt",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_icmr.p_cnt",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_iccr",
+   "offset": 4195248,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 7 sites, 1 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iccr.pending",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iccr.flush",
+   "hi": 11,
+   "lo": 11,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iccr.eject",
+   "hi": 10,
+   "lo": 10,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iccr.timeout",
+   "hi": 9,
+   "lo": 9,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_iccr.wake",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibls_0",
+   "offset": 4259840,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_0.busy",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_0.error",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_0.length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibct_0",
+   "offset": 4259864,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_0.poison",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_0.notify",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_0.zfil_mode",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
    "name": "iio_ibna_0",
    "offset": 4259872,
    "access": "rw",
@@ -219,6 +1127,88 @@
   {
    "unit": "hub_extra",
    "kind": "register",
+   "name": "iio_ibls_1",
+   "offset": 4325376,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_1.busy",
+   "hi": 20,
+   "lo": 20,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_1.error",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibls_1.length",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ibct_1",
+   "offset": 4325400,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "census: 3 sites, 1 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_1.poison",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_1.notify",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ibct_1.zfil_mode",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
    "name": "iio_ibia_1",
    "offset": 4325416,
    "access": "rw",
@@ -243,6 +1233,126 @@
    "name": "iio_ibia_1.node",
    "hi": 8,
    "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ipcr",
+   "offset": 4390912,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 4 sites, 2 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ipcr.icct",
+   "hi": 15,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ipcr.ippr1",
+   "hi": 7,
+   "lo": 4,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ipcr.ippr0",
+   "hi": 3,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "register",
+   "name": "iio_ippr",
+   "offset": 4390920,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "field",
+   "name": "iio_ippr.count",
+   "hi": 19,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub I/O header: field layout and masks"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "HUB_NUM_WIDGET",
+   "value": 9,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "HUB_WIDGET_ID_MAX",
+   "value": 15,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "HUB_WIDGET_ID_MIN",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_BASE",
+   "value": 4194304,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_BASE_BTE0",
+   "value": 4259840,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_BASE_BTE1",
+   "value": 4325376,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_BASE_PERF",
+   "value": 4390912,
+   "count": 1,
    "grade": "established"
   },
   {
@@ -312,14 +1422,6 @@
   {
    "unit": "hub_extra",
    "kind": "constant",
-   "name": "IIO_IIDSR_NODE_MASK",
-   "value": 65280,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
    "name": "IIO_IIDSR_SENT",
    "value": 268435456,
    "count": 1,
@@ -344,48 +1446,8 @@
   {
    "unit": "hub_extra",
    "kind": "constant",
-   "name": "IIO_ILCSR_MAX_BURST_MASK",
-   "value": 4393751543808,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
-   "name": "IIO_ILCSR_MAX_RETRY_MASK",
-   "value": 67043328,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
-   "name": "IIO_ILCSR_NULL_TO_MASK",
-   "value": 63,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
    "name": "IIO_ILCSR_WARM_RESET",
    "value": 256,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
-   "name": "IIO_ILLR_CB_CNT_MASK",
-   "value": 4294901760,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "hub_extra",
-   "kind": "constant",
-   "name": "IIO_ILLR_SN_CNT_MASK",
-   "value": 65535,
    "count": 1,
    "grade": "established"
   },
@@ -432,16 +1494,72 @@
   {
    "unit": "hub_extra",
    "kind": "constant",
-   "name": "IIO_WCR_DIR_CON",
-   "value": 131072,
+   "name": "IIO_NUM_CRBS",
+   "value": 15,
    "count": 1,
    "grade": "established"
   },
   {
    "unit": "hub_extra",
    "kind": "constant",
-   "name": "IIO_WCR_WIDGET_ID_MASK",
-   "value": 15,
+   "name": "IIO_NUM_IPRBS",
+   "value": 9,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_NUM_ITTES",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_NUM_NORMAL_CRBS",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_NUM_PC_CRBS",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_NUM_PRTES",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_PROTECT_OVRRD_KEY",
+   "value": 6000845784439612787,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_SCRATCH_MASK",
+   "value": 64440311807,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_extra",
+   "kind": "constant",
+   "name": "IIO_WCR_DIR_CON",
+   "value": 131072,
    "count": 1,
    "grade": "established"
   },

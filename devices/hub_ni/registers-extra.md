@@ -19,6 +19,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ni_vector_parms` | 0x600200 | w | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
 | `ni_vector_status` | 0x600300 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed) |
 | `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_vector_clear` | 0x600380 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
 | `ni_io_protect` | 0x600400 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 | `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
 | `ni_age_cpu0_memory` | 0x600500 | rw | 64 |  |  | 0x0 (established) | established | census: 9 sites, 3 routines |
@@ -119,6 +120,10 @@ Layout of the vector routing status register, ni_vector_status. The source field
 
 Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access.
 
+### Register `ni_vector_clear`
+
+The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred.
+
 ### Register `ni_io_protect`
 
 PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.
@@ -218,7 +223,7 @@ Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the
 
 ### Register `ni_port_error`
 
-Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name.
+Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name. The rsvd mask is the header structure's unused members: bits 63:38 and bit 32. NPE_MASK, 0x3effffffff, is the header's own mask of defined bits and agrees.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -312,8 +317,12 @@ Array of 15 registers, stride 8.
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
+| `NI_BASE` | 0x600000 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Start of the network interface registers, from the header. |
+| `NI_BASE_TABLES` | 0x630000 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Start of the routing tables, from the header. |
 | `NI_LOCAL_ENTRIES` | 0x10 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Local routing table entry count, named NI_LOCAL_ENTRIES in the public header. |
 | `NI_META_ENTRIES` | 0x20 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Meta routing table entry count, named NI_META_ENTRIES in the public header. |
+| `NI_NASID_TO_COARSEREG_SHIFT` | 0x3 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Shift from a node number to its region number in coarse mode, with eight nodes per region. |
+| `NI_NASID_TO_FINEREG_SHIFT` | 0x0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Shift from a node number to its region number in fine mode, where each node is a region. |
 | `NI_PORT_ERROR_COUNT_MAX` | 0xff | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header. |
 | `NI_PORT_PARMS_DEFAULTS` | 0x1bf0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |
 | `NI_PORT_PARMS_HUB20_DEFAULTS` | 0x7f0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |

@@ -2,6 +2,74 @@
 // Hub memory and directory register layouts and constants outside the census
 #![allow(dead_code)]
 
+pub mod enums {
+    pub mod md_bank_size {
+        pub const SIZE_EMPTY: u32 = 0; // established
+        pub const SIZE_8MB: u32 = 1; // established
+        pub const SIZE_16MB: u32 = 2; // established
+        pub const SIZE_32MB: u32 = 3; // established
+        pub const SIZE_64MB: u32 = 4; // established
+        pub const SIZE_128MB: u32 = 5; // established
+        pub const SIZE_256MB: u32 = 6; // established
+        pub const SIZE_512MB: u32 = 7; // established
+        #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+        pub enum Value {
+            SizeEmpty,
+            Size8mb,
+            Size16mb,
+            Size32mb,
+            Size64mb,
+            Size128mb,
+            Size256mb,
+            Size512mb,
+            Other(u32),
+        }
+        impl Value {
+            pub const fn from_raw(v: u32) -> Self {
+                match v {
+                    0 => Self::SizeEmpty,
+                    1 => Self::Size8mb,
+                    2 => Self::Size16mb,
+                    3 => Self::Size32mb,
+                    4 => Self::Size64mb,
+                    5 => Self::Size128mb,
+                    6 => Self::Size256mb,
+                    7 => Self::Size512mb,
+                    _ => Self::Other(v),
+                }
+            }
+            pub const fn raw(self) -> u32 {
+                match self {
+                    Self::SizeEmpty => 0,
+                    Self::Size8mb => 1,
+                    Self::Size16mb => 2,
+                    Self::Size32mb => 3,
+                    Self::Size64mb => 4,
+                    Self::Size128mb => 5,
+                    Self::Size256mb => 6,
+                    Self::Size512mb => 7,
+                    Self::Other(v) => v,
+                }
+            }
+        }
+    }
+}
+
+/// MD and core register protection. The header gives no access type, layout or reset; rw is an assumption. (inferred)
+pub mod md_io_protect {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200000;
+}
+/// Clear my bit in the MD and core register protection. The header gives no access type, layout or reset; rw is an assumption. (inferred)
+pub mod md_io_prot_ovrrd {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200008;
+}
+/// Back-door directory and boot-space protection. The header gives no access type, layout or reset; rw is an assumption. (inferred)
+pub mod md_hspec_protect {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200010;
+}
 /// Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by  (established)
 pub mod md_memory_config {
     pub const WIDTH: u32 = 64;
@@ -115,6 +183,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank6 { // bits 20:18, established
         pub const SHIFT: u32 = 18;
@@ -125,6 +194,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank5 { // bits 17:15, established
         pub const SHIFT: u32 = 15;
@@ -135,6 +205,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank4 { // bits 14:12, established
         pub const SHIFT: u32 = 12;
@@ -145,6 +216,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank3 { // bits 11:9, established
         pub const SHIFT: u32 = 9;
@@ -155,6 +227,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank2 { // bits 8:6, established
         pub const SHIFT: u32 = 6;
@@ -165,6 +238,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank1 { // bits 5:3, established
         pub const SHIFT: u32 = 3;
@@ -175,6 +249,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
     pub mod bank0 { // bits 2:0, established
         pub const SHIFT: u32 = 0;
@@ -185,6 +260,7 @@ pub mod md_memory_config {
         pub const fn set(v: u64, x: u64) -> u64 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
+        pub use super::super::enums::md_bank_size::Value;
     }
 }
 /// Layout of the refresh control register. (established)
@@ -214,6 +290,31 @@ pub mod md_refresh_control {
     pub mod threshold { // bits 11:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xfff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// (established)
+pub mod md_fandop_cac_stat {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200028;
+    pub mod valid { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod addr { // bits 31:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x3ffffff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -264,6 +365,61 @@ pub mod md_mig_value_thresh {
     pub mod value { // bits 19:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xfffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Latest page migration candidate. The header gives no access type and no reset, so the access letter is an assumption (graded inferred). The header's i (inferred)
+pub mod md_mig_candidate {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200040;
+    pub mod valid { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#type { // bits 30:30, established
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overrun { // bits 29:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod node { // bits 28:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod page { // bits 17:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ffff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -837,10 +993,35 @@ pub mod md_slotid_ustat {
         }
     }
 }
+/// (established)
+pub mod md_led0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220050;
+    pub mod led { // bits 7:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (established)
 pub mod md_led1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220058;
+    pub mod led { // bits 7:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access. (established)
 pub mod md_ureg1_1 {
@@ -973,6 +1154,9 @@ pub mod md_mig_candidate_format {
 }
 pub const HUB_MD_BANK_MASK: u32 = 0xe0000000; // established
 pub const HUB_MD_BANK_SHIFT: u32 = 0x1d; // established
+pub const HUB_MD_BASE: u32 = 0x200000; // established
+pub const HUB_MD_BASE_JUNK: u32 = 0x220000; // established
+pub const HUB_MD_BASE_PERF: u32 = 0x210000; // established
 pub const HUB_MD_DIRTYPE_PREMIUM: u32 = 0x1; // established
 pub const HUB_MD_DIRTYPE_STANDARD: u32 = 0x0; // established
 pub const HUB_MD_DIR_BUSY_EXCL: u32 = 0x4; // established
@@ -988,6 +1172,8 @@ pub const HUB_MD_MEM_BANKS_N_MODE: u32 = 0x4; // established
 pub const HUB_MD_MLAN_CTL_ACCESS_BYTES: u32 = 0x8; // established
 pub const HUB_MD_MLAN_CTL_RESET_DEFAULTS: u64 = 0x18b100000; // established
 pub const HUB_MD_MOQ_SIZE_RESET_DEFAULTS: u32 = 0x3212; // established
+pub const HUB_MD_PAGE_NUM_SHIFT: u32 = 0xc; // established
+pub const HUB_MD_PAGE_SIZE: u32 = 0x1000; // established
 pub const HUB_MD_REFCNT_COUNT_MASK_PREMIUM: u32 = 0x7ffff; // established
 pub const HUB_MD_REFCNT_COUNT_MASK_STANDARD: u32 = 0x7ff; // established
 pub const HUB_MD_REFCNT_COUNT_SHIFT: u32 = 0x5; // established

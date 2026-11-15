@@ -13,11 +13,6 @@ pub mod pi_cpu_num {
     pub const OFFSET: u64 = 0x20;
 }
 /// (established)
-pub mod pi_calias_size {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x28;
-}
-/// (established)
 pub mod pi_max_crb_timeout {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x30;
@@ -148,21 +143,6 @@ pub mod pi_gfx_int_cmp_b {
     pub const OFFSET: u64 = 0x348;
 }
 /// (established)
-pub mod pi_err_int_pend {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400;
-}
-/// (established)
-pub mod pi_err_int_mask_a {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x408;
-}
-/// (established)
-pub mod pi_err_int_mask_b {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x410;
-}
-/// (established)
 pub mod pi_err_stack_addr_a {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x418;
@@ -178,36 +158,6 @@ pub mod pi_err_stack_size {
     pub const OFFSET: u64 = 0x428;
 }
 /// (established)
-pub mod pi_err_status0_a {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x430;
-}
-/// (established)
-pub mod pi_err_status1_a {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x440;
-}
-/// (established)
-pub mod pi_err_status1_a_rclr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x448;
-}
-/// (established)
-pub mod pi_err_status0_b {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x450;
-}
-/// (established)
-pub mod pi_err_status1_b {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x460;
-}
-/// (established)
-pub mod pi_err_status1_b_rclr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x468;
-}
-/// (established)
 pub mod pi_hardreset_bit {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x20068;
@@ -216,11 +166,6 @@ pub mod pi_hardreset_bit {
 pub mod pi_rt_count {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x30100;
-}
-/// (established)
-pub mod md_fandop_cac_stat {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200028;
 }
 /// (established)
 pub mod md_mig_candidate_clr {
@@ -278,59 +223,14 @@ pub mod md_ureg0_1 {
     pub const OFFSET: u64 = 0x220008;
 }
 /// (established)
-pub mod md_led0 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220050;
-}
-/// (established)
 pub mod md_ureg1_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220080;
 }
 /// (established)
-pub mod iio_wstat {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400008;
-}
-/// (established)
-pub mod iio_wcr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400020;
-}
-/// (established)
-pub mod iio_iowa {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400110;
-}
-/// (established)
-pub mod iio_iiwa {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400118;
-}
-/// (established)
 pub mod iio_iidem {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400120;
-}
-/// (established)
-pub mod iio_ilcsr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400128;
-}
-/// (established)
-pub mod iio_illr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400130;
-}
-/// (established)
-pub mod iio_iidsr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400138;
-}
-/// (established)
-pub mod iio_igfx_0 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400140;
 }
 /// (established)
 pub mod hub_piomap_alloc {
@@ -348,16 +248,6 @@ pub mod iio_ioprb_0 {
     pub const OFFSET: u64 = 0x400198;
 }
 /// (established)
-pub mod iio_imem {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x4001e8;
-}
-/// (established)
-pub mod iio_ieclr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x4001f8;
-}
-/// (established)
 pub mod iio_ibcn {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400200;
@@ -371,31 +261,6 @@ pub mod hub_error_devenable {
 pub mod iio_prte_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400308;
-}
-/// (established)
-pub mod iio_ipdr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400388;
-}
-/// (established)
-pub mod iio_icdr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400390;
-}
-/// (established)
-pub mod iio_ifdr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x400398;
-}
-/// (established)
-pub mod iio_icmr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x4003a8;
-}
-/// (established)
-pub mod iio_iccr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x4003b0;
 }
 /// (established)
 pub mod iio_icto {
@@ -436,11 +301,6 @@ pub mod iio_icrb_d {
     pub const STRIDE: u64 = 32;
 }
 /// (established)
-pub mod iio_ibls_0 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x410000;
-}
-/// (established)
 pub mod iio_ibsa_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x410008;
@@ -449,16 +309,6 @@ pub mod iio_ibsa_0 {
 pub mod iio_ibda_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x410010;
-}
-/// (established)
-pub mod iio_ibct_0 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x410018;
-}
-/// (established)
-pub mod iio_ibls_1 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x420000;
 }
 /// (established)
 pub mod iio_ibsa_1 {
@@ -471,24 +321,9 @@ pub mod iio_ibda_1 {
     pub const OFFSET: u64 = 0x420010;
 }
 /// (established)
-pub mod iio_ibct_1 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x420018;
-}
-/// (established)
 pub mod iio_ibna_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x420020;
-}
-/// (established)
-pub mod iio_ipcr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x430000;
-}
-/// (established)
-pub mod iio_ippr {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x430008;
 }
 /// (established)
 pub mod ni_scratch_reg0 {
@@ -516,11 +351,6 @@ pub mod ni_vector_read_data {
     pub const OFFSET: u64 = 0x600310;
 }
 /// (established)
-pub mod ni_vector_clear {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600380;
-}
-/// (established)
 pub mod ni_meta_table0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x638000;
@@ -538,12 +368,6 @@ pub const HUB_PIOMAP_ALLOC_V_300: u32 = 0x300; // inferred
 pub const HUB_REPLY_QUEUE_DEPTH_B_6_0: u32 = 0x7f; // inferred
 pub const HUB_REV_WAR_CTRL_V_100: u32 = 0x100; // inferred
 pub const IIO_IBCN_V_2: u32 = 0x2; // inferred
-pub const IIO_IBCT_1_V_10: u32 = 0x10; // inferred
-pub const IIO_IBLS_1_V_1: u32 = 0x1; // inferred
-pub const IIO_IBLS_1_V_100000: u32 = 0x100000; // inferred
-pub const IIO_ICDR_B_4: u32 = 0x10; // inferred
-pub const IIO_ICDR_V_10: u32 = 0x10; // inferred
-pub const IIO_ICMR_V_40: u32 = 0x40; // inferred
 pub const IIO_ICRB_A_B_0: u32 = 0x1; // inferred
 pub const IIO_ICRB_A_B_2_0: u32 = 0x7; // inferred
 pub const IIO_ICRB_A_B_3_0: u32 = 0xf; // inferred
@@ -552,55 +376,7 @@ pub const IIO_ICRB_B_B_1_0: u32 = 0x3; // inferred
 pub const IIO_ICRB_B_B_4_0: u32 = 0x1f; // inferred
 pub const IIO_ICTO_V_FF: u32 = 0xff; // inferred
 pub const IIO_ICTP_V_1000: u32 = 0x1000; // inferred
-pub const IIO_IECLR_V_20000: u32 = 0x20000; // inferred
-pub const IIO_IECLR_V_FF0000: u32 = 0xff0000; // inferred
-pub const IIO_IECLR_V_FFFF: u32 = 0xffff; // inferred
-pub const IIO_IFDR_B_6_0: u32 = 0x7f; // inferred
-pub const IIO_IIDSR_V_1000000: u32 = 0x1000000; // inferred
-pub const IIO_ILCSR_B_1: u32 = 0x2; // inferred
-pub const IIO_ILCSR_B_13: u32 = 0x2000; // inferred
-pub const IIO_ILCSR_B_15_0: u32 = 0xffff; // inferred
-pub const IIO_ILCSR_V_100: u32 = 0x100; // inferred
-pub const IIO_ILLR_B_15_0: u32 = 0xffff; // inferred
-pub const IIO_IMEM_B_0: u32 = 0x1; // inferred
-pub const IIO_IMEM_B_4: u32 = 0x10; // inferred
-pub const IIO_IMEM_B_4_0: u32 = 0x11; // inferred
-pub const IIO_IMEM_B_8: u32 = 0x100; // inferred
-pub const IIO_IMEM_V_101: u32 = 0x101; // inferred
-pub const IIO_IPDR_B_4: u32 = 0x10; // inferred
-pub const IIO_IPDR_V_10: u32 = 0x10; // inferred
 pub const IIO_PRTE_0_B_7_0: u32 = 0xff; // inferred
-pub const IIO_WCR_B_3_0: u32 = 0xf; // inferred
-pub const MD_LED0_V_1: u32 = 0x1; // inferred
-pub const MD_LED0_V_2: u32 = 0x2; // inferred
-pub const MD_LED0_V_23: u32 = 0x23; // inferred
-pub const MD_LED0_V_2A: u32 = 0x2a; // inferred
-pub const MD_LED0_V_2B: u32 = 0x2b; // inferred
-pub const MD_LED0_V_3: u32 = 0x3; // inferred
-pub const MD_LED0_V_31: u32 = 0x31; // inferred
-pub const MD_LED0_V_35: u32 = 0x35; // inferred
-pub const MD_LED0_V_36: u32 = 0x36; // inferred
-pub const MD_LED0_V_3F: u32 = 0x3f; // inferred
-pub const MD_LED0_V_4: u32 = 0x4; // inferred
-pub const MD_LED0_V_46: u32 = 0x46; // inferred
-pub const MD_LED0_V_47: u32 = 0x47; // inferred
-pub const MD_LED0_V_48: u32 = 0x48; // inferred
-pub const MD_LED0_V_5: u32 = 0x5; // inferred
-pub const MD_LED0_V_5D: u32 = 0x5d; // inferred
-pub const MD_LED0_V_81: u32 = 0x81; // inferred
-pub const MD_LED0_V_83: u32 = 0x83; // inferred
-pub const MD_LED0_V_84: u32 = 0x84; // inferred
-pub const MD_LED0_V_9: u32 = 0x9; // inferred
-pub const MD_LED0_V_97: u32 = 0x97; // inferred
-pub const MD_LED0_V_A: u32 = 0xa; // inferred
-pub const MD_LED0_V_A6: u32 = 0xa6; // inferred
-pub const MD_LED0_V_B: u32 = 0xb; // inferred
-pub const MD_LED0_V_B4: u32 = 0xb4; // inferred
-pub const MD_LED0_V_C: u32 = 0xc; // inferred
-pub const MD_LED0_V_CF: u32 = 0xcf; // inferred
-pub const MD_LED0_V_F: u32 = 0xf; // inferred
-pub const MD_LED0_V_F3: u32 = 0xf3; // inferred
-pub const MD_LED0_V_FC: u32 = 0xfc; // inferred
 pub const MD_MEM_ERROR_CLR_B_0: u32 = 0x1; // inferred
 pub const MD_MISC_ERROR_CLR_B_9_0: u32 = 0x3ff; // inferred
 pub const MD_UREG0_0_B_7_0: u32 = 0xff; // inferred
@@ -647,10 +423,6 @@ pub const MD_UREG1_0_V_CF: u32 = 0xcf; // inferred
 pub const MD_UREG1_0_V_F: u32 = 0xf; // inferred
 pub const MD_UREG1_0_V_F3: u32 = 0xf3; // inferred
 pub const MD_UREG1_0_V_FC: u32 = 0xfc; // inferred
-pub const PI_CALIAS_SIZE_V_1: u32 = 0x1; // inferred
-pub const PI_CALIAS_SIZE_V_2: u32 = 0x2; // inferred
-pub const PI_ERR_INT_PEND_V_FF0000: u32 = 0xff0000; // inferred
-pub const PI_ERR_INT_PEND_V_FFFF: u32 = 0xffff; // inferred
 pub const PI_ERR_STACK_ADDR_A_B_8: u32 = 0x100; // inferred
 pub const PI_INT_PEND1_B_0: u32 = 0x1; // inferred
 pub const PI_PROF_EN_B_V_1: u32 = 0x1; // inferred

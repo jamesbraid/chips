@@ -306,7 +306,8 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
-doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name."
+doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name. The rsvd mask is the header structure's unused members: bits 63:38 and bit 32. NPE_MASK, 0x3effffffff, is the header's own mask of defined bits and agrees."
+rsvd = 0xffffffc100000000
 
 [registers.ni_port_error.fields]
 link_reset = { bits = [37, 37], grade = "established", doc = "Link reset, bit 37, named NPE_LINKRESET.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
@@ -327,6 +328,7 @@ width = 64
 grade = "established"
 from = "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
 doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name."
+rsvd = 0xffffffc100000000
 
 [registers.ni_port_error_clear.fields]
 link_reset = { bits = [37, 37], grade = "established", doc = "Link reset, bit 37, named NPE_LINKRESET.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
@@ -372,9 +374,22 @@ vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc =
 congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 
+[registers.ni_vector_clear]
+offset = 0x600380
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+doc = "The header describes the register as 'Vector PIO read & clear status': a read clears, so the cor mask is all bits. Header comment only, graded inferred."
+cor = 0xffffffffffffffff
+
 [constants]
 NI_META_ENTRIES = { value = 32, grade = "established", doc = "Meta routing table entry count, named NI_META_ENTRIES in the public header." }
 NI_LOCAL_ENTRIES = { value = 16, grade = "established", doc = "Local routing table entry count, named NI_LOCAL_ENTRIES in the public header." }
 NI_PORT_ERROR_COUNT_MAX = { value = 0xff, grade = "established", doc = "Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header." }
 NI_PORT_PARMS_DEFAULTS = { value = 0x1bf0, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by stand/arcs/IP27prom/net.c by Hub revision", doc = "Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
 NI_PORT_PARMS_HUB20_DEFAULTS = { value = 0x7f0, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by stand/arcs/IP27prom/net.c by Hub revision", doc = "Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
+NI_BASE = { value = 0x600000, grade = "established", doc = "Start of the network interface registers, from the header." }
+NI_BASE_TABLES = { value = 0x630000, grade = "established", doc = "Start of the routing tables, from the header." }
+NI_NASID_TO_FINEREG_SHIFT = { value = 0x0, grade = "established", doc = "Shift from a node number to its region number in fine mode, where each node is a region." }
+NI_NASID_TO_COARSEREG_SHIFT = { value = 0x3, grade = "established", doc = "Shift from a node number to its region number in coarse mode, with eight nodes per region." }

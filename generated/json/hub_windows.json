@@ -19,6 +19,34 @@
   {
    "unit": "hub_windows",
    "kind": "register",
+   "name": "md_perf_cnt",
+   "offset": 2162704,
+   "access": "rw",
+   "width": 64,
+   "count": 6,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub memory/directory header: MD_PERF_CNT0 to MD_PERF_CNT5"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "md_ureg0",
+   "offset": 2228224,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub memory/directory header: MD_UREG0_0 to MD_UREG0_7"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
    "name": "md_ureg1",
    "offset": 2228352,
    "access": "rw",
@@ -27,6 +55,325 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "iio_ioprb",
+   "offset": 4194712,
+   "access": "rw",
+   "width": 64,
+   "count": 9,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.error",
+   "hi": 48,
+   "lo": 48,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.ovflow",
+   "hi": 47,
+   "lo": 43,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.fire_and_forget",
+   "hi": 42,
+   "lo": 42,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.mode",
+   "hi": 41,
+   "lo": 40,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "enum_value",
+   "name": "iio_ioprb.mode.normal",
+   "value": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "enum_value",
+   "name": "iio_ioprb.mode.collect_a",
+   "value": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "enum_value",
+   "name": "iio_ioprb.mode.service_a",
+   "value": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "enum_value",
+   "name": "iio_ioprb.mode.service_b",
+   "value": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.bnakctr",
+   "hi": 37,
+   "lo": 24,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.anakctr",
+   "hi": 21,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_ioprb.xtalkctr",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_IOPRB_0 to IIO_IOPRB_F, IIO_NUM_IPRBS; the iprb_t structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "iio_prte",
+   "offset": 4195080,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_prte.valid",
+   "hi": 56,
+   "lo": 56,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_prte.srcnode",
+   "hi": 54,
+   "lo": 46,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_prte.initiator",
+   "hi": 45,
+   "lo": 44,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "iio_prte.addr",
+   "hi": 40,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux SN0 Hub I/O header: IIO_PRTE_0, IIO_PRTE(x), IIO_NUM_PRTES; the iprte_a structure"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "ni_age",
+   "offset": 6292736,
+   "access": "rw",
+   "width": 64,
+   "count": 8,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub network interface header: NI_AGE_CPU0_MEMORY to NI_AGE_IO_PIO (NI_AGE_REG_MIN, NI_AGE_REG_MAX)"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "ni_meta_table",
+   "offset": 6520832,
+   "access": "rw",
+   "width": 64,
+   "count": 32,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub network interface header: NI_META_TABLE(x), NI_META_ENTRIES, NMT_EXIT_PORT_MASK"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "ni_meta_table.exit_port",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux SN0 Hub network interface header: NI_META_TABLE(x), NI_META_ENTRIES, NMT_EXIT_PORT_MASK"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "register",
+   "name": "ni_local_table",
+   "offset": 6521088,
+   "access": "rw",
+   "width": 64,
+   "count": 16,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "Linux SN0 Hub network interface header: NI_LOCAL_TABLE(x), NI_LOCAL_ENTRIES, NLT_EXIT_PORT_MASK"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "field",
+   "name": "ni_local_table.exit_port",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux SN0 Hub network interface header: NI_LOCAL_TABLE(x), NI_LOCAL_ENTRIES, NLT_EXIT_PORT_MASK"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "BWIN_INDEX_BITS",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "BWIN_SIZE_BITS_M_MODE",
+   "value": 29,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "BWIN_SIZE_BITS_N_MODE",
+   "value": 28,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "HUB_REGISTER_WIDGET",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "HUB_REGISTER_WINDOW_SIZE",
+   "value": 8388608,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NASID_BITS_M_MODE",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NASID_BITS_N_MODE",
+   "value": 9,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NASID_LOCAL_BITS",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NASID_SHIFT_M_MODE",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NASID_SHIFT_N_MODE",
+   "value": 31,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NODE_SIZE_BITS_M_MODE",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "NODE_SIZE_BITS_N_MODE",
+   "value": 31,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "hub_windows",
+   "kind": "constant",
+   "name": "SWIN_SIZE_BITS",
+   "value": 24,
+   "count": 1,
    "grade": "established"
   }
  ]

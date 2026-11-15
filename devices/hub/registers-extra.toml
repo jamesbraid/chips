@@ -137,7 +137,8 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_SCRATCH_REG0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a10"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, II_SCRATCH_REG0; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
-doc = "Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access."
+doc = "Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated."
+rsvd = 0xfffffff0ff0ee000
 
 [registers.iio_scratch_reg1]
 offset = 0x400158
@@ -148,7 +149,360 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a28"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_SCRATCH_REG1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
-doc = "Scratch register 1, the twin of register 0. The IRIX register table confirms the access."
+doc = "Scratch register 1, the twin of register 0. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated."
+rsvd = 0xfffffff0ff0ee000
+
+# ---- II: I/O interface (widget, protection, error, CRB and PRB registers)
+[registers.iio_wstat]
+offset = 0x400008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WSTAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7830"
+doc = "The rsvd mask is the members the header's structure names reserved (rsvd1 to rsvd4); the header gives no read or write behaviour for them, so the mask is the header's naming, graded established as a header fact only."
+rsvd = 0xfffffffeff00fd80
+
+[registers.iio_wstat.fields]
+crazy = { bits = [32, 32], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Hub gone crazy, bit 32 (IIO_WSTAT_ECRAZY and the structure's crazy member)." }
+llp_tx_cnt = { bits = [23, 16], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Link transmit retry counter. The structure gives eight bits at 23:16; the same header's IIO_WSTAT_TXRETRY_MASK gives seven." }
+tx_max_rtry = { bits = [9, 9], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Link retry timeout signal, bit 9 (IIO_WSTAT_TXRETRY and the structure's tx_max_rtry member)." }
+xt_tail_to = { bits = [6, 6], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Crosstalk tail timeout. Position from the structure's member order, counted down from the top; the structure holds 63 bits, so this assumes the spare bit is bit 0." }
+xt_crd_to = { bits = [5, 5], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Crosstalk credit timeout. Position as for xt_tail_to." }
+pending = { bits = [4, 1], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Pending requests, four bits. Position as for xt_tail_to; the structure may instead place them at 3:0." }
+
+[registers.iio_wcr]
+offset = 0x400020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+reset = 0x4001
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7860"
+doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
+rsvd = 0xffffffffff801fe0
+
+[registers.iio_wcr.fields]
+e_thresh = { bits = [22, 18], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Elasticity threshold, five bits." }
+dir_con = { bits = [17, 17], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Widget direct connect (IIO_WCR_DIR_CON)." }
+f_bad_pkt = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Force bad link packet enable." }
+xbar_crd = { bits = [15, 13], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Link crossbar credit, three bits." }
+tag_mode = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Tag mode." }
+widget_id = { bits = [3, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "The Hub's own widget number, four bits (read with a 0xf mask in the header)." }
+
+[registers.iio_iowa]
+offset = 0x400110
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IOWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7908"
+doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
+rsvd = 0xffffffffffff00fe
+
+[registers.iio_iowa.fields]
+wxoac = { bits = [15, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Outbound access bits for widgets 8 to 15, one bit each, as the structure's xtalk widget access bits." }
+w0oac = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Outbound access bit for widget 0." }
+
+[registers.iio_iiwa]
+offset = 0x400118
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7938"
+doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
+rsvd = 0xffffffffffff00fe
+
+[registers.iio_iiwa.fields]
+wxiac = { bits = [15, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Inbound access bits for widgets 8 to 15, one bit each." }
+w0iac = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Inbound access bit for widget 0." }
+
+[registers.iio_ilcsr]
+offset = 0x400128
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
+reset = 0x3fc03ff000a
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILCSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7998"
+doc = "The rsvd mask is the structure's rsvd, rsvd2, rsvd3 and rsvd4 members (the two bits at 7:6 are named rsvd1 and described as the data ready offset, so they are a field here); header naming only."
+rsvd = 0xfffffc00fc00c200
+
+[registers.iio_ilcsr.fields]
+max_burst = { bits = [41, 32], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Maximum burst, ten bits at 41:32." }
+max_retry = { bits = [25, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Maximum retry, ten bits at 25:16." }
+lnk_stat = { bits = [13, 12], grade = "established", enum = "iio_lnk_stat", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Link status. The header names only the value 2 (LNK_STAT_WORKING)." }
+bm8 = { bits = [11, 11], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Eight-bit mode." }
+llp_en = { bits = [10, 10], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Link enable." }
+wrm_reset = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Warm reset bit (ILCSR_WARM_RESET 0x100)." }
+data_ready_offset = { bits = [7, 6], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Data ready offset, two bits. The structure names the member reserved and gives the offset only in its comment." }
+null_to = { bits = [5, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Null timeout, six bits." }
+
+[registers.iio_illr]
+offset = 0x400130
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILLR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79b0"
+doc = "The rsvd mask is the structure's rsvd member (bits 63:32); header naming only."
+rsvd = 0xffffffff00000000
+
+[registers.iio_illr.fields]
+cb_cnt = { bits = [31, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Check-bit error count." }
+sn_cnt = { bits = [15, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Sequence-number error count." }
+
+[registers.iio_iidsr]
+offset = 0x400138
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 12 sites, 5 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79c8"
+
+[registers.iio_iidsr.fields]
+sent = { bits = [28, 28], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Interrupt sent (IIO_IIDSR_SENT)." }
+enable = { bits = [24, 24], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Interrupt enable (IIO_IIDSR_ENB)." }
+node = { bits = [16, 8], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Destination node, nine bits. The structure gives nine bits at 16:8; the mask macro IIO_IIDSR_NODE_MASK covers eight (15:8)." }
+level = { bits = [6, 0], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Interrupt level, seven bits. The structure gives seven bits at 6:0; the mask macro IIO_IIDSR_LVL_MASK covers six." }
+
+[registers.iio_igfx_0]
+offset = 0x400140
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+doc = "The layout is the same as iio_igfx_1."
+
+[registers.iio_igfx_0.fields]
+widget = { bits = [3, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Widget number, four bits." }
+node = { bits = [12, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Node number, nine bits." }
+processor = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Processor number, one bit." }
+valid = { bits = [20, 20], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Valid." }
+
+[registers.iio_imem]
+offset = 0x4001e8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 4 sites, 3 routines"
+
+[registers.iio_imem.fields]
+w0esd = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Widget 0 shut down due to error (IIO_IMEM_W0ESD)." }
+b0esd = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "BTE 0 shut down due to error (IIO_IMEM_B0ESD)." }
+b1esd = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "BTE 1 shut down due to error (IIO_IMEM_B1ESD)." }
+
+[registers.iio_ieclr]
+offset = 0x4001f8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines (w); census: 5 sites, 4 routines (rw, indexed)"
+doc = "The header calls each bit a clear bit; whether the register is write-1-to-clear is not stated, so no w1c mask is recorded."
+
+[registers.iio_ieclr.fields]
+prb_0 = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB 0 register." }
+prb_8 = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB 8 register." }
+prb_9 = { bits = [9, 9], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB 9 register." }
+prb_a = { bits = [10, 10], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB A register." }
+prb_b = { bits = [11, 11], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB B register." }
+prb_c = { bits = [12, 12], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB C register." }
+prb_d = { bits = [13, 13], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB D register." }
+prb_e = { bits = [14, 14], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB E register." }
+prb_f = { bits = [15, 15], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the error bit in the PRB F register." }
+crazy = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear the crazy bit in iio_wstat." }
+bte0 = { bits = [17, 17], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear BTE 0 error. The header's comment is marked uncertain." }
+bte1 = { bits = [18, 18], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Clear BTE 1 error. The header's comment is marked uncertain." }
+
+# ---- II block transfer engines 0 and 1
+[registers.iio_ibls_0]
+offset = 0x410000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e00"
+
+[registers.iio_ibls_0.fields]
+length = { bits = [15, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Length." }
+error = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Error (IBLS_ERROR)." }
+busy = { bits = [20, 20], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Busy (IBLS_BUSY)." }
+
+[registers.iio_ibct_0]
+offset = 0x410018
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e48"
+
+[registers.iio_ibct_0.fields]
+zfil_mode = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Zero-fill mode (IBCT_ZFIL_MODE)." }
+notify = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Notify (IBCT_NOTIFY)." }
+poison = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Poison (IBCT_POISON)." }
+
+[registers.iio_ibls_1]
+offset = 0x420000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e90"
+
+[registers.iio_ibls_1.fields]
+length = { bits = [15, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Length." }
+error = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Error (IBLS_ERROR)." }
+busy = { bits = [20, 20], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Busy (IBLS_BUSY)." }
+
+[registers.iio_ibct_1]
+offset = 0x420018
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ed8"
+
+[registers.iio_ibct_1.fields]
+zfil_mode = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Zero-fill mode (IBCT_ZFIL_MODE)." }
+notify = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Notify (IBCT_NOTIFY)." }
+poison = { bits = [8, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Poison (IBCT_POISON)." }
+
+[registers.iio_icmr]
+offset = 0x4003a8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICMR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d70"
+
+[registers.iio_icmr.fields]
+p_cnt = { bits = [3, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_P_CNT." }
+c_cnt = { bits = [7, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_C_CNT." }
+clr_rqpd = { bits = [12, 12], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_CLR_RQPD." }
+clr_rppd = { bits = [13, 13], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_CLR_RPPD." }
+fc_cnt = { bits = [19, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_FC_CNT." }
+crb_vld = { bits = [34, 20], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_CRB_VLD, fifteen bits, one per CRB entry." }
+pc_vld = { bits = [50, 36], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_PC_VLD, fifteen bits." }
+precise = { bits = [52, 52], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_PRECISE." }
+
+[registers.iio_iccr]
+offset = 0x4003b0
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 7 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d88"
+doc = "The header gives the commands as values already in place (0x100, 0x200, 0x400, 0x800) next to a command mask of 0xff at shift 7, which disagree; they are recorded here as single bits, graded inferred."
+
+[registers.iio_iccr.fields]
+wake = { bits = [8, 8], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Command: reactivate the CRB entry and process it (IIO_ICCR_CMD_WAKE 0x100)." }
+timeout = { bits = [9, 9], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Command: make the CRB time out and mark it invalid (IIO_ICCR_CMD_TIMEOUT 0x200)." }
+eject = { bits = [10, 10], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Command: write the entry's contents to memory (IIO_ICCR_CMD_EJECT 0x400)." }
+flush = { bits = [11, 11], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Command: flush (IIO_ICCR_CMD_FLUSH 0x800)." }
+pending = { bits = [16, 16], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Command pending (IIO_ICCR_PENDING 0x10000)." }
+
+[registers.iio_ifdr]
+offset = 0x400398
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 8 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d40"
+doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
+rsvd = 0xffffffffffff8080
+
+[registers.iio_ifdr.fields]
+maxrq = { bits = [6, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Maximum request queue depth, seven bits." }
+maxrp = { bits = [14, 8], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Maximum reply queue depth, seven bits." }
+
+[registers.iio_ipdr]
+offset = 0x400388
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 5 sites, 2 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d10"
+
+[registers.iio_ipdr.fields]
+pnd = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Pending (IIO_IPDR_PND)." }
+
+[registers.iio_icdr]
+offset = 0x400390
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 1 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d28"
+
+[registers.iio_icdr.fields]
+pnd = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Pending (IIO_ICDR_PND)." }
+
+# ---- II performance counters
+[registers.iio_ipcr]
+offset = 0x430000
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 4 sites, 2 routines"
+doc = "Layout is the header's performance-select structure, io_perf_sel; which register that structure belongs to is inferred from the register names."
+
+[registers.iio_ipcr.fields]
+ippr0 = { bits = [3, 0], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Selection for counter group 0." }
+ippr1 = { bits = [7, 4], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Selection for counter group 1." }
+icct = { bits = [15, 8], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Selection for the CRB counter." }
+
+[registers.iio_ippr]
+offset = 0x430008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+doc = "Layout is the header's performance-count structure; its offset equals the header's IIO_PERF_CNT, 0x430008."
+
+[registers.iio_ippr.fields]
+count = { bits = [19, 0], grade = "inferred", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Performance count, twenty bits. The header notes a hardware problem leaves one counter, not two." }
+
+[registers.iio_iibuserr]
+offset = 0x400208
+access = "r"
+width = 64
+grade = "inferred"
+from = "public Linux SN0 Hub I/O header: IIO_IIBUSERR (offset and name; the header lists it as 0x1400208 in the local I/O window, which is this offset past the 0x1000000 window base)"
+doc = "Reads here cause a bus error, per the header's comment. The header gives no layout and no reset. The access letter is the comment's reading and is graded inferred."
+
+[enums.iio_lnk_stat]
+values = { working = { value = 2, grade = "established" } }
 
 [constants]
 # Control/terminate bits. The census carries the notify value (0x10) only as an inferred
@@ -166,7 +520,6 @@ IIO_WID_PART_HUB = { value = 0xc101, grade = "established", doc = "Widget part n
 IIO_WSTAT_ECRAZY = { value = 0x100000000, grade = "established", doc = "Crazy bit of the widget status register, bit 32, named ECRAZY in the public header ('Hub gone crazy'). The header gives no behaviour for it." }
 IIO_WSTAT_TXRETRY = { value = 0x200, grade = "established", doc = "Transmit retry timeout bit of the widget status register, bit 9, from the public header's mask." }
 IIO_WSTAT_TXRETRY_MASK = { value = 0x7f0000, grade = "established", doc = "Transmit retry counter, bits 22:16: mask 0x7f at shift 16 in the public header. The same header's bit-field structure gives eight bits at 23:16, so the width is disputed inside the header and not settled here." }
-IIO_WCR_WIDGET_ID_MASK = { value = 0xf, grade = "established", doc = "The Hub's own widget number, bits 3:0 of the widget control register. The public header reads the number with this mask. The reset value is not imported." }
 IIO_WCR_DIR_CON = { value = 0x20000, grade = "established", doc = "Widget direct-connect bit, bit 17 of the widget control register, named in the public header's structure." }
 IIO_LLP_CSR_IS_UP = { value = 0x2000, grade = "established", doc = "Link-up bit, bit 13 of the link control and status register, named IS_UP in the public header. The header names the bit only; what the other values of the status field mean is not imported." }
 IIO_LLP_CSR_LLP_STAT_MASK = { value = 0x3000, grade = "established", doc = "Two-bit link status field, bits 13:12, named LLP_STAT_MASK in the public header." }
@@ -174,15 +527,24 @@ LNK_STAT_WORKING = { value = 0x2, grade = "established", from = "irix-657m-src i
 IIO_ILCSR_WARM_RESET = { value = 0x100, grade = "established", doc = "Warm reset bit of the link control register, bit 8, named ILCSR_WARM_RESET in the public header. The census carries the same value as an inferred constant. The header gives no behaviour for it." }
 IIO_ILCSR_LLP_EN = { value = 0x400, grade = "established", doc = "Link enable bit, bit 10 of the link control register, named llp_en in the public header's structure." }
 IIO_ILCSR_BM8 = { value = 0x800, grade = "established", doc = "Eight-bit mode bit, bit 11 of the link control register, named bm8 in the public header's structure." }
-IIO_ILCSR_MAX_BURST_MASK = { value = 0x3ff00000000, grade = "established", doc = "Maximum burst field, bits 41:32 of the link control register, from the public header's structure." }
-IIO_ILCSR_MAX_RETRY_MASK = { value = 0x3ff0000, grade = "established", doc = "Maximum retry field, bits 25:16 of the link control register, from the public header's structure." }
-IIO_ILCSR_NULL_TO_MASK = { value = 0x3f, grade = "established", doc = "Null timeout field, bits 5:0 of the link control register, from the public header's structure." }
-IIO_ILLR_CB_CNT_MASK = { value = 0xffff0000, grade = "established", doc = "Check-bit error count, bits 31:16 of the link log register, from the public header's structure." }
-IIO_ILLR_SN_CNT_MASK = { value = 0xffff, grade = "established", doc = "Sequence-number error count, bits 15:0 of the link log register, from the public header's structure." }
 IIO_IIDSR_SENT = { value = 0x10000000, grade = "established", doc = "Interrupt-sent bit, bit 28 of the interrupt destination register, from the public header's mask." }
 IIO_IIDSR_ENB = { value = 0x1000000, grade = "established", doc = "Interrupt enable bit, bit 24 of the interrupt destination register, from the public header's mask." }
-IIO_IIDSR_NODE_MASK = { value = 0xff00, grade = "established", doc = "Destination node field, bits 15:8, from the public header's mask. The reviewed tree has no bit-field structure for this register, so only the masks are imported." }
 IIO_IIDSR_LVL_MASK = { value = 0x3f, grade = "established", doc = "Interrupt number field, bits 5:0 of the interrupt destination register, from the public header's mask." }
 IIO_ITTE_BASE = { value = 0x400160, grade = "established", doc = "Offset of big-window translation entry 0, from the public header. Entry n sits at this value plus 8 times n. The census has entry 0 under an inferred name and entry 6 as a write-only register, which overlaps the header's entry 6." }
 IIO_ITTE_IOSP = { value = 0x1000, grade = "established", doc = "I/O space bit of a translation entry, bit 12, from the public header." }
 IIO_ITTE_INVALID_WIDGET = { value = 0x3, grade = "established", doc = "Widget value the public header's disable routine writes to park a translation entry." }
+IIO_BASE = { value = 0x400000, grade = "established", doc = "Start of the I/O interface registers, from the header." }
+IIO_BASE_BTE0 = { value = 0x410000, grade = "established", doc = "Start of the registers of block transfer engine 0." }
+IIO_BASE_BTE1 = { value = 0x420000, grade = "established", doc = "Start of the registers of block transfer engine 1." }
+IIO_BASE_PERF = { value = 0x430000, grade = "established", doc = "Start of the performance registers." }
+IIO_NUM_ITTES = { value = 0x7, grade = "established", doc = "Big-window translation entries, numbered 0 to 6 in the header (the hardware manuals number them 1 to 7)." }
+IIO_NUM_IPRBS = { value = 0x9, grade = "established", doc = "Partial-request buffer entries." }
+IIO_NUM_PRTES = { value = 0x8, grade = "established", doc = "PIO read address table entries." }
+IIO_NUM_CRBS = { value = 0xf, grade = "established", doc = "CRB entries." }
+IIO_NUM_NORMAL_CRBS = { value = 0xc, grade = "established", doc = "Regular CRB entries." }
+IIO_NUM_PC_CRBS = { value = 0x4, grade = "established", doc = "Partial-cache CRB entries. The header's counts, 12 and 4, add to 16, one more than IIO_NUM_CRBS." }
+IIO_SCRATCH_MASK = { value = 0xf00f11fff, grade = "established", doc = "Bits of each scratch register that exist, from the header." }
+IIO_PROTECT_OVRRD_KEY = { value = 0x53474972756c6573, grade = "established", doc = "Key the protection override register accepts, from the header (an eight-byte ASCII string)." }
+HUB_NUM_WIDGET = { value = 0x9, grade = "established", doc = "Widgets the Hub supports, from the header." }
+HUB_WIDGET_ID_MIN = { value = 0x8, grade = "established", doc = "Lowest widget number, from the header." }
+HUB_WIDGET_ID_MAX = { value = 0xf, grade = "established", doc = "Highest widget number, from the header." }
