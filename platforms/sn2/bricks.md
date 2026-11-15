@@ -33,7 +33,7 @@ All **established** from `007-4579-001`:
 - Rear panel (pp.105 to 106): two NODE LINK (NI) connectors, one per node, "Xtown2" connectors for a NUMAlink cable at
   1.6 GB/s each direction, to an R-brick or another C-brick; two NODE XIO (II) connectors, one per node, Xtown2 at
   1.2 GB/s, to an IX- or PX-brick; an RS-232 console port on the L1; a USB L1 port to the rack L2 for systems with no
-  router; four heartbeat LED pairs (one pair per node); 32 processor status LEDs (eight per processor); a power
+  router; four heartbeat LEDs, a pair per node (the lower LED is processor 0, the upper processor 1); 32 processor status LEDs (eight per processor); a power
   connector with 12 V and 48 V LEDs and a power switch that powers only the L1.
 - Front panel: three fans, the L1 LCD (two lines of 12 characters), on/off, reset and NMI switches (p.103).
 - Product options: zero or four processors and 8, 16, 24 or 32 DIMMs in groups of eight (Figures 3-5 and 3-6, pp.88 to
@@ -104,17 +104,20 @@ power-supply interface, the NUMAlink connectors and the connectors to the node b
 |---|---|---|---|
 | Node board | IP57, 12 DIMM slots, serial ID EEPROM | same | same (p.138) |
 | Processors | one or two | one or two | one or two, optional |
-| PCI riser with PIC | yes, four slots on two buses | none usable | yes, four 64-bit 3.3 V slots on two buses (p.140) |
+| PCI riser with PIC | yes, four slots on two buses (Figure 3-8, p.119) | none listed (inferred, see below) | yes, four 64-bit 3.3 V slots on two buses (p.140) |
 | Base I/O card | IO10 (IO9 optional) | no | no |
 | Disks and DVD | yes | no | no |
 | Count in a system | one or more | 0 to 15 (p.124) | may chain to other CMPX modules (p.137) |
 | NUMAlink ports | two | two | two |
-| Rear labels | not read | NUMALINK 0, NUMALINK 1, CPU, IS1, IS2, REPEAT (Figure 4-6, p.133) | not read |
+| Rear labels | CONSOLE, L1 PORT, NUMALINK 0, CPU, NUMALINK 1, REPEAT, IS1, IS2, PCI 1 to 4 (Figure 3-8, p.119) | the same set (Figure 4-6, p.133) | not read |
 
 - The CPU expansion module connects to the base module "via a NUMAlink cable", and can chain to other expansion
   modules, base modules, CMPX modules and routers (pp.120, 124, 133). The CMPX module is the same: it joins base
   modules, expansion modules and other CMPX modules (p.137). Established.
-- Its rear-panel Figure 4-6 prints labels "REPEAT", "IS1" and "IS2" next to the NUMAlink connectors; the text does not
+- The expansion module's feature list (p.124) names no PCI slot, but its rear-panel Figure 4-6 prints PCI 1 to 4 and its
+  interface board lists a connector to a riser card (p.130). The figure has the same labels as the base module's
+  Figure 3-8, so it is probably reused artwork; that the expansion module has no PCI is **inferred**, not stated.
+- Its rear-panel Figure 4-6 (and the base module's Figure 3-8) prints labels "REPEAT", "IS1" and "IS2" next to the NUMAlink connectors; the text does not
   explain them. **Unknown.** They are likely LEDs or jumpers (guessed from position); no source says.
 - The SHub block list is the same in every module: crossbar, processor interface, memory and directory interface, two
   network interfaces, one I/O interface and a local block (pp.130, 140). Established. See [the SHub page](../../devices/shub/README.md).
@@ -139,3 +142,38 @@ That reading is **inferred**.
 
 See [../../questions/altix-brick-identity.md](../../questions/altix-brick-identity.md) for the type characters, the
 EEPROM and the KLCONFIG contents.
+
+## Review
+
+Independent review of this page, [brick-identity.md](brick-identity.md) and the question page. Checked 45 facts. Linux
+facts against `module.h`, `l1.h`, `klconfig.h`, `geo.h`, `klconflib.c`, `setup.c`, `io_common.c`, `io_init.c`,
+`sn_sal.h`, `sn_hwperf.[ch]`, `arch.h` and `tiocx.c` at v5.3, and `module.h` and `l1.h` at v2.6.12. Manual claims
+against the printed pages of `007-4579-001`, `007-4377-002` and `007-4660-002`. No binary was read, because the pages
+make no binary claim, so no Ghidra check applied.
+
+**Confirmed.** Module id bit layout; brick-type constants 0 to 17 and the `brick_types` string order; no reader of
+`brick_types`; fold table in `format_module_id`; the L1 type codes in the table (except as fixed below);
+the 0x2b, 0x7a codes and the missing DAYTONA, 1932, 191010 codes in v2.6.12; `kl_config_hdr_t` layout (offset at byte
+20, 112 bytes); board classes and kinds; 24 component slots and 32-byte name; `build_cnode_tables` behaviour with no
+emptiness test and the NULL-header `BUG_ON`; all SAL call numbers and the `GET_SN_INFO` bit fields; geoid structure,
+`sn_generate_path` format with no fold, hwperf location formats and name matches, ENUM_OBJECTS op 12; odd NASID is a
+TIO; the M-brick comments in `arch.h` and `setup.c`. Manual: C-brick contents, rear panel, front panel and 1.6 and
+1.2 GB/s links; options of 0 or 4 processors and 8 to 32 DIMMs; CR-brick internals (two NL4 routers, eight Dnet
+connectors, XIO from nodes 1 and 3, p.72); R-brick ports and USB hub; IX-brick XIO 10 and 11 and dual-port option;
+power bay counts; 350 SHub block list, interface board contents, CMPX riser and serial ID EEPROM.
+
+**Mechanical fixes made.**
+- C-brick heartbeat LEDs are four in total, a pair per node, not four pairs (p.105).
+- The rack class digit is from the `module.h` comment; the guide does not state it.
+- The `l1.h` characters for 0x2c and 0x2e are `,` and `.`; the header comments print them swapped.
+- TIOCX tests the board code `L1_BOARDTYPE_DAYTONA` (0x0800), not the brick code 0x7a.
+- The kernel does not read `brd_geoid` in the files read; it uses type, NASID and next offset.
+- Altix 350 rear labels filled in for the base module (Figure 3-8); the CPU expansion module's lack of PCI regraded
+  to inferred, since Figure 4-6 prints PCI 1 to 4.
+
+**Findings not fixed.** None that change meaning. The router-ASIC generation per brick and the CR-brick type character
+remain open, correctly.
+
+**Cleared scope.** The module id, L1 code, KLCONFIG and SAL tables and the C-brick, CR-brick, R-brick and IX/PX
+summaries. Not cleared: the 350 CPU expansion PCI statement beyond inferred; the IX/PX PIC-per-bus layout, which was not
+re-read; Bx2 IX/PX pages 76 to 96.

@@ -17,9 +17,10 @@ PROM or kernel binary was read for this page (see Unknown). Grades follow [the S
 byte is the L1's brick-type character code (next section), not a small index.
 
 - The rack number is decimal-coded: `class * 100 + group * 10 + number`. `RACK_GET_CLASS` and friends divide it back.
-  The manual states what the class digit means: 0 is a compute rack (it holds C-bricks), 1 is an I/O rack, and I/O racks
-  are numbered by the quadrant they sit in (`007-4579-001` p.90 and Figure 3-7, p.91). Established for the 3000 family;
-  not checked for the 350, which needs no rack.
+  The kernel comment gives the class digit: 0 is a CPU or mixed rack, 1 is an I/O rack (`module.h`). The guide says
+  compute racks (those holding C-bricks) are numbered from 001 and I/O racks by the quadrant they sit in
+  (`007-4579-001` p.90, Figure 3-7); it does not mention a class digit. Established for the 3000 family; not checked for
+  the 350, which needs no rack.
 - The bay is the lowest rack unit the brick occupies: in a 40U rack a C-brick in units 5 to 7 is `c05`
   (`007-4579-001` p.90). Established.
 - `format_module_id` (`v5.3:arch/ia64/sn/kernel/klconflib.c`) prints the brief form `RRRtBB`, for example `002c15`: three
@@ -56,7 +57,7 @@ same byte. Established values relevant to the Altix 3000, 350 and Bx2 bricks:
 | 0x6f, 0x66 | `o`, `f` | `OPUS`, `OPUS_TIO` | Opus bricks (4700-era and Prism-era TIO platforms) |
 | 0x6b, 0x6a, 0x5e | `k`, `j`, `^` | `IA`, `PA`, `SA` | the IA, PA and SA bricks |
 | 0x2b, 0x7a | `+`, `z` | `ATHENA`, `DAYTONA` | TIO-attached boards |
-| 0x2c, 0x2e | `.`, `,` | `1932`, `191010` | chassis types used by the blade systems |
+| 0x2c, 0x2e | `,`, `.` | `1932`, `191010` | chassis types used by the blade systems (the header's own comments print the two characters swapped; these are the ASCII values) |
 
 The `DAYTONA`, `1932` and `191010` codes and the whole `L1_BOARDTYPE_*` list (`CA`, `CB`, `IB`, `IC`, `ID`, `IE`, `AB`,
 `AD`) are absent from v2.6.12 and present in v5.3, so they belong to the 4700 and Prism generation, not to the bricks
@@ -78,7 +79,7 @@ memory. Linux gets its address with one SAL call, `SN_SAL_GET_KLCONFIG_ADDR` (0x
   cached global address of that NASID (`NODE_OFFSET_TO_LBOARD`). The rest is padding as far as the kernel is concerned.
 - Each board (`lboard_t`) carries `brd_next_any` (offset of the next board), `brd_type` (class in the high nibble, kind in
   the low), `brd_slot`, `brd_geoid`, `brd_nasid`, `brd_nic`, component offsets (up to 24), a 32-byte `brd_name` and the
-  partition and diagnostic fields. The kernel reads only the type, NASID and geoid; the other fields are in the header
+  partition and diagnostic fields. The kernel files read use only the type, NASID and next-board offset (the per-node geoid comes from `hubdev_info`, below); the other fields are in the header
   for the PROM and tools, with no Linux reader.
 - Classes: `0x10` node (CPU, memory and hub), `0x20` I/O, `0x30` router, `0x40` midplane, `0x70` I/O brick.
 - Kinds the Altix generation uses: `KLTYPE_SNIA` 0x11 (a compute node, one per SHub), `KLTYPE_TIO` 0x12; routers
@@ -134,7 +135,7 @@ All **established** as call numbers and arguments (`v5.3:arch/ia64/include/asm/s
 | Call | Number | Use |
 |---|---|---|
 | `SN_SAL_GET_SN_INFO` | 0x0200001e | v0: bits 7:0 SHub type (0 SHub 1, 1 SHub 2), 15:8 log2 system node count, 23:16 log2 nodes per sharing domain, 31:24 partition, 39:32 coherency id, 47:40 region size; v1: NASID mask and shift |
-| `SN_SAL_SYSCTL_OP` op 1 (`SAL_SYSCTL_OP_IOBOARD`) | 0x02000030 | board type of the I/O board behind a TIO's NASID, as an L1 brick or board code; the TIOCX driver accepts `SA`, `ATHENA` and `DAYTONA` (`v5.3:arch/ia64/sn/kernel/tiocx.c`) |
+| `SN_SAL_SYSCTL_OP` op 1 (`SAL_SYSCTL_OP_IOBOARD`) | 0x02000030 | board type of the I/O board behind a TIO's NASID, as an L1 brick or board code; the TIOCX driver accepts the brick codes `SA` and `ATHENA` and the board code `L1_BOARDTYPE_DAYTONA` (0x0800, not the brick code 0x7a) (`v5.3:arch/ia64/sn/kernel/tiocx.c`) |
 | `SN_SAL_SYSCTL_PARTITION_GET` | 0x0200003a | partition number of a NASID |
 | `SN_SAL_SYSCTL_IOBRICK_MODULE_GET` | 0x02000033 | module id of an I/O brick (the wrapper exists; no caller in the files read) |
 | `SN_SAL_SYSCTL_MODID_GET`, `SN_SAL_SYSCTL_SLAB_GET` | 0x02000031, 0x02000036 | numbers defined, no wrapper or caller in v5.3 |
