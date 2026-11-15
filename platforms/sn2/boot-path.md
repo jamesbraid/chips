@@ -20,7 +20,7 @@ the PROM names only IP41 ([boot-sequence](../../software/firmware/snprom/boot-se
 | 1 | Processor reset, PAL_A, PAL_B | flash, no RAM | PAL_A to SAL_A entry (registers `r20`, `r33` to `r37`) |
 | 2 | SAL_A, SAL_B (`main`, jump to RAM, `main_two`, `main_three`) | flash, then RAM | SAL system table, SAL entry points, EFI image |
 | 3 | PAL and SAL runtime interfaces the OS uses | RAM (virtual and physical mode) | SAL procedure ids, PAL procedure indexes |
-| 4 | EFI firmware | RAM | EFI tables, memory map, EFI runtime services, console |
+| 4 | EFI firmware | RAM | EFI tables, memory map, EFI runtime services, console ([read](../../software/firmware/snprom/efi.md)) |
 | 5 | Boot loader (ELILO) | EFI application | `ia64_boot_param`, kernel entry |
 | 6 | Linux early boot (SN2 platform) | RAM | SAL calls, ACPI, klconfig, PROM-built structures |
 | 7 | Initrd and userland to multi-user | RAM | `/dev` and `/proc` nodes the SN2 drivers expose |
@@ -149,27 +149,31 @@ is a tar of three EFI drivers, `drv_fpswa.efi` among them (the floating-point so
 
 **Evidence.**
 - Components, sizes, symbols: established ([snprom README](../../software/firmware/snprom/README.md#image-layout)), reviewed.
-- Hand-off (`0xffaf8c50`: loads the SAL runtime, the BIOS emulator, then "Loading EFI ...", builds an 88-byte exit record
-  printed as "SAL->EFI handoff at"): static reading, **written-unreviewed**.
+- Hand-off (`0xffaf8c50`: loads the SAL runtime, the BIOS emulator, then "Loading EFI ...", builds an 88-byte record
+  printed as "SAL->EFI handoff at", enters EFI with `r32` = 1 and `r33` = the record): the record fields, the entry and what EFI reads are in
+  [efi.md](../../software/firmware/snprom/efi.md#2-the-hand-off-from-sal_b), **written-unreviewed**.
 - *Console, the `rpd` switch.* The PROM's console specification string is `rpd` (data at `0xffbba0a0`); `console_probe` walks it,
   calling each console object's probe: `d` the direct junk-bus UART (scratch test `0x55` then `0xaa` at `0xf_fed4_0038`, master
   node only), `p` and `r` the system-controller path, `e` the EFI callback console (not in the string). Read in full,
   established, unreviewed. Which of `p`, `r` is which controller route, and how the EFI console
-  text output reaches the user, is **unknown**. No IOC4 UART is selected on the reset-to-EFI path (inferred).
-- EFI configuration-table GUIDs the image carries (SAL system table, ACPI 1.0 and 2.0, SMBIOS, MPS, PCDP, PCI option ROM table):
-  established as data; which ones the PROM installs is **unknown**.
+  text output reaches the user: EFI's console is SAL console calls (`0x02000023` and others) with a serial-I/O layer on top, no IOC4 or UART access of its own
+  ([efi.md](../../software/firmware/snprom/efi.md#4-the-console), established). No IOC4 UART is selected on the reset-to-EFI path (inferred).
+- EFI configuration tables: it installs the SAL system table, ACPI 1.0 and 2.0 RSDPs, a PCDP table and the debug image table, and the PCI option ROM table
+  when its count is nonzero; MPS is not installed and nothing installs SMBIOS (established,
+  [efi.md](../../software/firmware/snprom/efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The ACPI contents are unknown.
 - Variable store: a flash-backed store at the top of the address space, "Syncing EFI var. store" at `0xffaf6640` and `0xffaf6d10`.
   Role inferred; contents and layout unknown. EFI runtime time calls go through SAL ids `0x0a` and `0x0b`, variable calls through `0x08` (established from the EFI image's constants, per the snprom README).
-- A boot manager menu and boot variable names: unknown. No capture of the 350's EFI shell is held.
+- Boot manager and variables: the Intel sample boot manager with `Boot####`, `BootOrder`, `BootNext`, `Timeout` (default 7 s) and a default
+  option per removable block device, file system, network and shell; the store is read and written through SAL
+  ([efi.md](../../software/firmware/snprom/efi.md#5-boot-manager-variables-and-finding-the-boot-loader), established). No capture of the 350's EFI shell is held.
 
 **Interface out.** An EFI system table with the configuration tables above, the EFI memory map, the console devices, the
 Simple File System on the boot partition (the PROM carries SATA and ATA pass-through drivers for IOC4).
 
 **Gaps.**
-1. Read the EFI component beyond its symbols: boot manager, `Boot####` variables, the console selection.
-2. Which configuration tables are installed (`InstallConfigurationTable` callers); whether the 350 PROM publishes an ACPI 2.0
-   DSDT with `SGIHUB` devices or the older direct I/O description.
-3. How the EFI console is routed to the L1 and whether IOC4 serial is ever an EFI console.
+1. The SAL_B handlers behind EFI's flash variable store (`0x02000008`) and callbacks (`0x3000`, `0x5000`, `0x6000`), and the flash format.
+2. Whether the 350 PROM publishes an ACPI 2.0 DSDT with `SGIHUB` devices or the older direct I/O description (the RSDP builders are unread).
+3. Which of the console routes `p` and `r` the SAL console calls take.
 4. Flash variable-store format and what survives power loss.
 
 ## 5. Boot loader (ELILO)
@@ -280,7 +284,7 @@ user-mapped RTC counter at v4.9.
 | 2c Interrupt delivery in the PROM | in progress | trace `SN_SAL_IOIF_INTERRUPT` handler and PIC interrupt set-up | row 7 |
 | 2d I/O: II, PIC, IOC4 | written-unreviewed (static); IOC4 PROM reads not started | `0xffab1cc0` II set-up, `main_three` run, then the IOC4 probe in the SAL I/O handlers | row 7 |
 | 3 SAL and PAL runtime interfaces | kernel side reviewed; PROM handlers for the boot-time calls read ([sn2-runtime](../../software/sal/sn2-runtime.md), written-unreviewed); PAL procedures in progress | independent review of the SAL runtime page; read the provider methods behind `IOIF_INTERRUPT` and the console device backends | rows 7 and 8 (SHub 2, SAL not read); row 9 for the shipped caller set |
-| 4 EFI | in progress (components, console string, hand-off written-unreviewed; the EFI image unread) | read the EFI component: configuration tables, boot manager, variables, console | row 7 (EFI component inside it); see inventory |
+| 4 EFI | read, written-unreviewed ([efi.md](../../software/firmware/snprom/efi.md): container, hand-off record, tables, console calls, boot manager, variable store) | PROM-side builders of the SAL and ACPI tables, SAL handlers for the variable store and timer callbacks, the PCI root bridge calls | row 7 (EFI component inside it); see inventory |
 | 5 ELILO | not started (public source only) | get the shipped loader, config and boot partition layout | not held: see inventory |
 | 6a-b Linux platform setup, SAL calls, klconfig | 6a reviewed; 6b [written-unreviewed](klconfig.md) | independent review of klconfig; read `0xffa7e3b0` for the 350's I/O board type | row 9 (symbols, no DWARF); row 7 |
 | 6c SHub MMRs | reviewed (kernel-named registers) | name the PROM-programmed registers | row 7 |
@@ -294,7 +298,7 @@ user-mapped RTC counter at v4.9.
 1. Stage 1: the reset-time `br.ia` and whether PAL_A authenticates anything.
 2. Stage 2: the route-table initialisation and the L1 reply set the real controller gives, so the PROM can be run past `main_two` (blocked now on the skipped jump to RAM).
 3. Stage 2: `main_three` I/O discovery and PIC interrupt allocation, which decide whether a PROM reaches "Loading EFI" on a 350.
-4. Stage 4: the EFI component itself: which tables it installs and how its console reaches the L1.
+4. Stage 4: the PROM-side builders of the SAL and ACPI tables and the SAL handlers behind EFI's variable store, timer and root-bridge calls (the EFI component itself is read: [efi.md](../../software/firmware/snprom/efi.md)).
 5. Stages 5 and 7: no shipped loader, configuration, initrd or userland is held, so the last two stages have only the public Linux and ELILO source to go on.
 
 ## Sources
