@@ -369,7 +369,7 @@ What `main_two` does when bit 11 of the debug word is clear, on a node whose net
 |---|---|---|
 | `0x1_5000_0048 + p * 0x2000` | read, conditional write, read | If bit 27 is set, write the value back with bit 27 cleared and read again; if bit 27 is still set the port is reported as status 0 (no link bit, no failure message). Bits 7:0 and 15:8 of the same register are read by `0xffa5d5e0` (an ops entry; the two fields look like error counters used by "intcon_chklink: Detected %d %s errors in port %d", inferred) |
 | `0x1_5000_0000 + p * 0x2000` | read | Bits 3:0 must equal 9. Any other value returns -1 and the caller prints "shub_port_status: vector 0x%lx/%d NI%d from %I failed: %s" and counts the port as down. The value 9 is "link up" (inferred from use: it is the only value that lets the port continue) |
-| `0x1_5000_1040 + p * 0x2000 + 16 * i`, i = 0 to 3 | read, repeated | Reached only with bits 3:0 of the previous register equal to 9: for each i the PROM re-reads until bits 22:16 are zero, at most 128 reads, and fails the port (returns -1) if all 128 still read non-zero. Not reached with no link |
+| `0x1_5000_1040 + p * 0x2000 + 16 * i`, i = 0 to 3 | read, repeated | Reached only with bits 3:0 of the previous register equal to 9: for each i the PROM re-reads while bits 22:16 are zero, at most 128 reads, and fails the port (returns -1) if all 128 still read zero. Not reached with no link |
 | `0x1_5000_0010 + p * 0x2000` | read | Only the bit-40-set case above; sets bit 1 of the port record flags |
 
 All of these go through the PROM's remote-register read `0xffa0bd20` (and write `0xffa0c560`) with the node's id taken from the entry, so they are plain register accesses to the node's own SHub. Linux v5.3 `shub_mmr.h` and `shubio.h` (checked by search, headers fetched into the working directory) define no NI register; the PROM's error-report tables hold the names `SH_NI0_LLP_STAT`, `SH_NI0_LLP_ERR` and `SH_NI1_*` (file offsets `0x1ac0f0` to `0x1ac280` in the image) but this reading found no link between those names and the offsets above, so no register is named here.
@@ -642,7 +642,7 @@ The vector bundles sit at 16-byte spacing just below the PAL_A FIT entry:
 **Which one is PALE_RESET (inferred).** Three public sources and the image's own layout agree on `0xFFFFFFB0`; none
 states it for Itanium 2.
 
-- Intel patent US 7,305,544 B2, "Interleaved boot block to support multiple processor architectures" (FIG. 6
+- Intel patent US 7,305,544 B2, "Interleaved boot block to support multiple processor architectures and method of use" (FIG. 6
   description; <https://patents.google.com/patent/US7305544B2/en>). The IA-32 reset vector is "by way of example"
   `0xFFFFFFF0`; the Itanium-processor-family reset vector is "for example" `0xFFFFFFB0`; the processor then runs "a basic
   initialization and check under PAL-A" and passes control to a SAL-A entry point. The FIG. 4 text calls the reset
@@ -689,7 +689,7 @@ br.ia.sptk b0
 It reads no general or branch register: every source is an immediate or a register it wrote. It writes two
 model-specific registers (numbers 212 and 1225; their meaning is unknown, these are processor-specific `msr` accesses
 the SDM does not define) and executes `br.ia`, the switch to the IA-32 instruction set, with `b0` set to
-`0xffffffe0`. The reading as an IA-32 hand-off is superseded: see [the br.ia sites](#the-bria-sites-what-they-are-not-established-and-what-they-might-be-inferred)
+`0xffffffe0`. The architectural effect is the IA-32 transition, but the target holds no IA-32 code and the reset-time effect is unknown: see [the br.ia sites](#the-bria-sites-what-they-are-not-established-and-what-they-might-be-inferred)
 and the conclusion. Whether code at the `br.ia` target exists, and where control goes afterwards, is read in [the vector map](#the-vector-map) below: the target holds the two pointers, not instructions.
 
 The native path the architecture describes is at `0xFFFF83F0` (entered from the `0xFFFFFF70` bundle): `alloc
@@ -725,8 +725,8 @@ read above; their reserved byte is zero in every entry.
 |---|---|---|---|
 | `0xFFFFFF50`, `0xFFFFFF60` | none | return through `b0` | stubs; no hardware use is visible (inferred) |
 | `0xFFFFFF70` | `0xFFFF83F0` | the cold-start path: sets `cr.ipsr`, `rfi`, validates and searches the FIT, hands over to processor-specific PAL_A | the only code in the image that reaches processor-specific PAL_A (established) |
-| `0xFFFFFF80` | `0xFFFFDA60` | a function with a normal prologue (`alloc r1=ar.pfs,96,0,96`) taking an argument in `r32`; also called by `br.call` from `0xFFFF8818` with `r32 = -2` | not a hardware path; software-callable PAL_A routine that works on FIT/PAL_A contents (inferred; not read in full) |
-| `0xFFFFFF90` | `0xFFFF8A80` | saves `r29`, `r30`, `r31` and `pr` into `msr` 1643, 1642 and 1641 (guarding each with a NaT test), tests bit 56 of `msr` 1640, finds a PAL_B (FIT type 1) entry, jumps to PAL_B plus `0x10080` | machine-check or INIT entry (inferred) |
+| `0xFFFFFF80` | `0xFFFFDA60` | a function with a normal prologue (`alloc r1=ar.pfs,96,0,96`) taking an argument in `r32`; also called by `br.call` from `0xFFFF881C` with `r32 = -2` | not a hardware path; software-callable PAL_A routine that works on FIT/PAL_A contents (inferred; not read in full) |
+| `0xFFFFFF90` | `0xFFFF8A80` | saves `r30` into `msr` 0, `r31` into 1641, `pr` into 1642 and `r29` into 1643 (guarding each with a NaT test), tests bit 56 of `msr` 1640, finds a PAL_B (FIT type 1) entry, jumps to PAL_B plus `0x10080` | machine-check or INIT entry (inferred) |
 | `0xFFFFFFA0` | `0xFFFF8DA0` | the same code with the same saves, jumps to PAL_B plus `0x10070` | the other of the pair (inferred) |
 | `0xFFFFFFB0` | `0xFFFF83A0` | two `msr` writes and `br.ia` (below); nothing after it | see the conclusion |
 
@@ -777,6 +777,20 @@ is `r1`, returning at `b0`, fits all three sites; what the callee is (the sixtee
 processor-specific PAL_A look like an authentication value and the SDM names a PAL authentication call) is inferred,
 not shown by the code. The `msr` writes before the reset site (212 to 0, 1225 to 4) and their effect are unknown.
 
+**What the SDM defines for `br.ia` (established; rev 2.3 page numbers as given by a separate reader, see the review).**
+`br.ia` is an unconditional indirect branch that sets PSR.is to 1 and begins IA-32 instruction execution at the virtual
+linear address in the branch register named by the B4 field `b2` (`b2` is 0 here, so `br.ia b0`; checked in the bundle
+bits), with EIP{31:0} = BR b2{31:0} minus CSD.base (volume 3, instruction `br`, rev 2.3 pp. 3:21 to 3:22; volume 2,
+section 9.1.2, p. 2:596). It raises Illegal Operation if the qualifying predicate is not PR0 or the register stack
+holds dirty registers, raises Disabled Instruction Set Transition if PSR.di is 1, clears PSR.da, id, ia, dd and ed
+before the first IA-32 instruction, sets the current register stack frame size to zero, and leaves the high
+registers and the ALAT undefined; software must have loaded CSD and CS and must set PSR properly, otherwise the
+operation is undefined. None of this says what a processor does at reset, and the SDM has no `mov msr[...]`
+instruction (its indirect register moves are cpuid, dbr, ibr, pkr, pmc, pmd and rr). Intel's Itanium 2 reference
+manual 251110, section 2.8, says IA-32 support is "achieved using hardware circuitry on the Itanium 2 processors",
+and the specification update 251141, erratum 70, says `br.ia` may miss the Illegal Operation fault when BSPSTORE and
+BSP differ. Neither names MSR 212 or 1225, a reset entry address or the entry state.
+
 For the reset site specifically (established): the 32 bytes at `0xFFFFFFE0` are the FIT pointer `0x80000000ffa00000`
 and the SALE_ENTRY pointer `0x80000000ffc4e000`, then the IA-32 far jump at `0xFFFFFFF0`. They do not form code in
 either default size. A straight decode from `0xFFFFFFE0` gives an `add` through `eax` (or `bx+si`), a load of `al` from
@@ -810,9 +824,12 @@ by CPUID revision before continuing; that part is not read further here.
   this image's vector layout, with `0xFFFFFF90` and `0xFFFFFFA0` as the PAL_B hand-offs (sources above). The SDM's three
   hardware entrypoints (PALE_RESET, PALE_INIT, PALE_CHECK) then map to `0xFFFFFFB0`, `0xFFFFFFA0` and `0xFFFFFF90`, and
   `0xFFFFFF70` would be reached only through the `0xFFFFFFB0` stub, not directly by the processor.
-- *Established decode, unknown effect*: elsewhere in this PAL_A `br.ia` behaves as a processor-internal service call
-  (arguments `r2`, `r3`, `r5`, result `r1`, continue at `b0`). The `0xFFFFFFB0` stub passes `r5 = 1` with `b0 =
-  0xffffffe0`, the address of the FIT pointer. What the processor does then is unknown; continuation into the
+- *Established architecture, unknown reset-time effect*: the SDM defines `br.ia` as the transition to the IA-32
+  instruction set, entering at EIP = `b2`{31:0} minus CSD.base (here `b0`, so `0xffffffe0` less the code segment base).
+  See [the architectural definition](#the-bria-sites-what-they-are-not-established-and-what-they-might-be-inferred)
+  below. Elsewhere in this PAL_A the two other `br.ia` sites are used as a call (arguments `r2`, `r3`, `r5`, result
+  `r1`, continue at `b0`; inferred from the code, not from a document). The `0xFFFFFFB0` stub passes `r5 = 1` with `b0 =
+  0xffffffe0`, the address of the FIT pointer. What the processor does at reset with the two `msr` writes is unknown; continuation into the
   `0xFFFFFF70` cold-start path is the consistent inferred reading, since that is the only code that reaches
   processor-specific PAL_A.
 - *Inferred*: the entry instruction set is IA-64. Entry register and PSR state is not stated in any public source read
@@ -823,3 +840,38 @@ by CPUID revision before continuing; that part is not read further here.
 **Leads.** An HP zx2000 emulator at <https://thebrokenpipe.com/ia64/zx2000/> reportedly boots real zx2000 firmware
 (binary only; another project's work, so confirmation only, not a source).
 
+
+## Review (reset entry and no-link route)
+
+Independent review of chips commits `ce97073` (NUMAlink discovery with the skip bit clear and no link), `d70228b` and `cc9b993` (processor reset entry, PAL_A vectors) and `f910147` (reset entry grounded in Intel and hardware sources, which supersedes parts of the two before it), plus `bd69911` (IA-64 reference submodules), examined at chips `f910147`. The reviewer wrote none of it. Method: `ia64-linux-gnu-objdump` through the retools container on `shub1snprom.bin` (SAL 5.04, sha256 matches the page and `root/sn2/SHA256SUMS`), the top 64 KiB at `0xffff0000` for PAL_A and `0xffa40000` to `0xffa60000` for SAL_B; a script re-read the FIT, the PAL_A FIT entry and its checksum, and compared the image with Intel's `S870BN4C.BIN` (sha256 and size match the page); the 2001 linux-ia64 thread was read in the Library; the Intel patent was fetched from Google Patents; the submodule URLs and pins were checked with `git ls-remote`. SDM rev 2.3 and the Itanium 2 hardware developer's manual could not be opened (see "Not checked"); SDM text was re-read in revision 1.1 (245318-002 and the volume 3 instruction reference), which the reviewer had.
+
+**Confirmed (re-read in the binary).**
+
+- Top of the image: FIT pointer at `0xFFFFFFE0` is `0x80000000ffa00000`, SALE_ENTRY at `0xFFFFFFE8` is `0x80000000ffc4e000`, alternate FIT at `0xFFFFFFC8` is zero, IA-32 far jump at `0xFFFFFFF0` to `f000:e05b` with the date string after it. The PAL_A FIT entry at `0xFFFFFFD0` is address `0xffff8000`, size `0x7fc0`, version 7.31, type `0x0f`, checksum byte `0x6e`; the 32,704 bytes plus the checksum sum to zero. The FIT proper has 15 entries, header version `0x0260`, and sums to zero; PAL_B 7.79, 5.73 and 2.25 are at `0xffdc8000`, `0xffe78000`, `0xfff28000`; the three type `0x0e` PAL_A images are at `0xfffc2fc0`, `0xfffc9ac0`, `0xfffd0280` with family `0x1f` and models 0, 1, 2 in the dword at image offset `0x14`; SAL_A is `0xffc4e000` (16 KiB), SAL_B `0xffa01000`.
+- Vector bundles: `0xFFFFFF50` and `0xFFFFFF60` are `br.few b0`; `0xFF70`, `0xFF80`, `0xFF90`, `0xFFA0` branch to `0xFFFF83F0`, `0xFFFFDA60`, `0xFFFF8A80`, `0xFFFF8DA0`; `0xFFB0` is the only MBB bundle and both its branches go to `0xFFFF83A0`. The stub at `0xFFFF83A0` is as listed: `r3 = 0x80000000ffffffe0`, `msr[212] = 0`, `msr[1225] = 4`, `b0 = r3`, `srlz.d`, `r5 = 1`, `br.ia.sptk b0`. The `br.ia` encodings at `0xFFFF83EC`, `0xFFFF872C` and `0xFFFF8A5C` all have B4 field `b2 = 0`, so `br.ia b0`.
+- The `0xFFFF83F0` path (`cpuid[3]`, `cr.ipsr = 0x100800000000`, `cr.iip = 0xffff8470`, `rfi`, `cr.iva = 0`, the `_FIT_   ` search with primary at `0xFFFFFFE0` and alternate at `0xFFFFFFC8`, type `0x0e` match on family and model and highest revision, the `0x300` entry offset, `b2` set at `0xFFFF890C`, `msr` 1643 cleared on success), the PAL_B hand-offs (type 1 entry, dword at `0x10114`, `msr` 1715 revision byte, `msr` 1640 bit 56 test with `r30 = 2`, FIT type above 1 giving `r30 = 12`, offsets `0x10080` for `0xFF90` and `0x10070` for `0xFFA0`), and the second `br.ia` site's `b0 = 0xFFFF8730` with a test of `r1` afterwards.
+- Byte comparison with the Intel image: the 112-byte vector region (`0xFFFFFF50` to `0xFFFFFFBF`) occurs exactly once, at file offset `0x4dfd7e`, which maps to `0xFFFFFF50` with the image ending at 4 GiB; 510 of the 511 aligned 64-byte windows of the generic PAL_A (excluding the top 64 bytes) occur in the Intel image and the miss is window 0 (`0xffff8000`). The top 64 bytes differ only in the alternate FIT address (Intel's is non-zero), the PAL_A FIT entry's version and checksum, the FIT pointer, the SALE_ENTRY pointer (Intel's has no bit 63), four date-string bytes ("11/02/99" against "01/01/01") and the last byte.
+- Quoted sources: the patent (title with "and method of use"; `0xFFFFFFF0` "by way of example", `0xFFFFFFB0` "for example", "a basic initialization and check under PAL-A", "may be hardwired into the CPUs", "a PAL-A entry point") is as quoted; the FIG. 6 flow is where the `0xFFFFFFB0` sentence sits. The linux-ia64 message is Chris McDermott's own correction (`lcm@us.ibm.com`, 2001-12-10) of his earlier line that put the reset vector at `0xFFFFFF90`, with the ITP observation in the first post. SDM revision 1.1 has the PALE_RESET sentence quoted from section 11.2.1 and lists RESET as an abort taking the PALE_RESET vector, and says PAL_A "resides below 0xFFFF_FFC0" with the hardware-triggered entrypoints.
+- ce97073: the NI accesses are `0x1_5000_0048 + p * 0x2000` (test bit 27, write back with it cleared only if set, read again), `0x1_5000_0000 + p * 0x2000` (low nibble must be 9, else -1), `0x1_5000_1040 + p * 0x2000 + 16 * i` for i = 0 to 3 (at most 128 reads each, skipped when a CPU ID test selects the simulator), `0x1_5000_0010 + p * 0x2000` in the port fill; `0xffa450e0` runs before the `0xffa975e0(11)` test; the constants `0x11e1a300`, `0x989680`, `0x1_5003_1550`, `0x1_5003_1540`, bits 55:54 and the bit 41 and bit 39 masks are as listed.
+- bd69911: the four URLs resolve, `linux-sn2` tag `v7.3-rc3-epic1-sn2-gpu` is `69571599c577`, `linux-ia64` `master-epic` is `076c06dc04ba`, `ski` master is `dfc2902ea142`, `elilo` master is `4e5817767696`. `setup-clone.sh --submodules "NAME"` and `all` exist in the retools script as the index says.
+
+**Mechanical fixes made in this review (this page).**
+
+1. The `0x1_5000_1040` loop had its polarity backwards. The code re-reads while bits 22:16 are zero (`cmp.eq` of the field against zero sends a non-zero field out of the loop to the success path) and fails the port only if all 128 reads are zero. The table said "until zero ... still non-zero".
+2. The `br.call` to `0xFFFFDA60` is at `0xFFFF881C` (slot 2 of the bundle at `0xFFFF8810`), not `0xFFFF8818`.
+3. The `0xFF90` hand-off saves four values into four registers, not three: `r30` into `msr` 0, `r31` into 1641, `pr` into 1642, `r29` into 1643. The page named `r29`, `r30`, `r31`, `pr` but only the registers 1641 to 1643.
+4. The patent title is "Interleaved boot block to support multiple processor architectures and method of use".
+5. The `br.ia` reading. `f910147` withdrew the IA-32 reading of the `0xFFFFFFB0` stub and described `br.ia` as "a processor-internal service call" with no architectural citation. The architecture defines `br.ia` as the transition to IA-32 (PSR.is set to 1, EIP{31:0} = `b2`{31:0} minus CSD.base, faults, PSR bits cleared, frame size zero; volume 3 instruction `br`, rev 2.3 pp. 3:21 to 3:22, and volume 2 section 9.1.2, p. 2:596, as supplied by a separate reader and not opened by this reviewer; the same text is in rev 1.1 at volume 3 `br` and volume 2 section 20.1.2). The page now states that definition, keeps the "service call" reading only as an inference for the two other sites, and keeps the reset-time effect unknown. The sentence "the reading as an IA-32 hand-off is superseded" now says the target holds no IA-32 code.
+
+**Findings not fixed.**
+
+1. `br.ia` target. The decode of the bytes at `0xFFFFFFE0` as IA-32 is a straight decode only; it shows no ordinary IA-32 code there, not that IA-32 is not entered. With CSD.base unknown at reset, EIP is `0xffffffe0` minus the base, and PSR.is, PSR.di, CSD and CS at reset are processor business. Intel's Itanium 2 reference manual 251110 section 2.8 (TOC p. 23) says IA-32 is "achieved using hardware circuitry"; spec update 251141 erratum 70 (p. 44) says `br.ia` may miss the Illegal Operation fault when BSPSTORE differs from BSP. Neither names MSR 212 or 1225, a reset entry address or entry state (cited by document number, revision and page from a separate reader; not re-read here). The SDM has no `mov msr[...]`, so those two writes are implementation-specific, as graded.
+2. The `0xFFFF83F0` path also writes `msr` 0 (`mov msr[r0] = r0`), as do the PAL_B hand-offs when the NaT test passes. The page says the path "reads no general or branch register" and does not mention this write.
+3. The "Merced" label on the Lion trace is an inference. The post says "Intel Lion SDVs" with B3 and C0 steppings and gives no processor name. The ITP also showed the processors at `0xFFFFFF90`, which the correction calls PALE_CHECK, so the trace is of a machine check or reset path in a hung system, not of a power-on entry. The page's "observed" grade is for the label, not for a first instruction at power-on.
+4. The patent text containing "a PAL-A entry point" is in the paragraph of the interleaved-block discussion that this review could not tie to FIG. 3 or FIG. 4; the page says FIG. 4.
+5. `elilo` is pinned at the master head; the index calls it 3.16 but the repository has no tags, so the version label cannot be checked from the pin.
+6. Grades hold: PALE_RESET at `0xFFFFFFB0` for Madison stays inferred (patent example plus a Merced-era label plus shared Intel code), the `br.ia` effect unknown, and there is no Linux KVM reference left on the page.
+
+**Not checked.** SDM rev 2.3 itself (Intel's download refused the request and the Library holds no copy in the roots this review could search), so the rev 2.3 page numbers on this page (2:109, 2:282 to 2:291, 2:596, 3:21 to 3:22) and its sha256 are unverified; the quoted sentences were found in rev 1.1 at different pagination, and the "Table 5-6" number is Table 5-5 there. The Itanium 2 hardware developer's manual 251109 (sections 3.2.1 and A.1.51 and their quotations) was not obtainable, so those two quotes are unverified. SAL specification 245359 was not opened. In ce97073 the bit layout of the `0x1_101d_0080` word beyond the bits listed above, the `0xffa5d6a0` mask loop and the master selection were not re-read.
+
+**Cleared scope.** The image facts at the top of memory (pointers, FIT, PAL_A entry and checksum, vector bundles, stub, native search, PAL_B hand-off offsets), the byte comparison with the Intel image, the patent and linux-ia64 quotations, the NI register accesses, polarity as corrected, and constants of the no-link route, and the four submodule pins. Not cleared: the rev 2.3 and hardware manual citations, the meaning of MSR 212 and 1225, and any claim about what the processor does after the reset `br.ia`.
