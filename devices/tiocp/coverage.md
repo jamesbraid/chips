@@ -13,7 +13,7 @@ the IRIX 6.5.30 IP35 `space.o` debug types, and the public Linux ia64 SN code of
 
 ## Which product carries a TIOCP
 
-- **No IRIX product in scope carries one: inferred.** The IP27 and IP35 boot sets hold no TIO routine (only the two
+- **No IRIX product carries one: inferred.** (The Altix SN2 PROMs do attach one; see [the chip page](README.md#which-product-carries-a-tiocp).) The IP27 and IP35 boot sets hold no TIO routine (only the two
   debug-table names the chip page records), no attach path that names the chip, and no register access outside the
   shared accessors that only a TIOCP could make. The shared accessors carry the TIOCP branch because the same object is shared with a
   later platform, not because the Origin or Onyx machines have the chip. Nothing in the 6.5.30 media instantiates it.
