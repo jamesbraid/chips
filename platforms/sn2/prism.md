@@ -165,11 +165,14 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 
 ## Firmware
 
-- **PROM and SAL.** No manual names a PROM version for any Prism and no PROM image is held. The only version requirement in
-  Linux is generic: with a SHub 1, `tioca_bus_fixup` refuses to set up a TIOCA unless the SAL revision is at least `0x0406`
-  ("SGI prom rev 4.06 or greater required for tioca support", `v5.3:arch/ia64/sn/pci/tioca_provider.c`). It is skipped for
-  SHub 2. Established as the code. What "snprom build supports Prism" means is **unknown**; the SAL calls the kernel makes are
-  on [the SAL page](../../software/sal/README.md).
+- **PROM and SAL.** No manual names a PROM version for any Prism. SGI's SHub 1 PROM images are held (snprom 4.43, 10.40 and
+  10.54; [evidence/sn2-holdings.md](../../evidence/sn2-holdings.md)), no Prism-specific build is, and SGI's `README.snprom` in
+  the 10.54 package lists Prism Rackmount and Prism Deskside among the machines `shub1snprom.bin` supports: vendor intent, not
+  a boot of a Prism ([the qualification page](../../software/firmware/snprom/qualification.md) grades it and recommends the
+  image). The only version requirement in Linux is generic: with a SHub 1, `tioca_bus_fixup` refuses to set up a TIOCA unless
+  the SAL revision is at least `0x0406` ("SGI prom rev 4.06 or greater required for tioca support",
+  `v5.3:arch/ia64/sn/pci/tioca_provider.c`). It is skipped for SHub 2. Established as the code. The SAL calls the kernel makes
+  are on [the SAL page](../../software/sal/README.md).
 - **L1.** Each module and brick has an L1 controller. The Extreme guide documents upgrading it through the `snxsc_firmware`
   package (example `snxsc_firmware-1.18.3-1`), with a boot image and two images A and B; the newer of A and B runs, and the
   other is overwritten; `flashsc --12 <addr> -p /usr/cpu/firmware/sysco/l1.bin all` updates every brick, and
