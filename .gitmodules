@@ -51,6 +51,22 @@
 	path = references/code/irix-657m-src
 	url = https://github.com/calmsacibis995/irix-657m-src.git
 	shallow = true
+[submodule "references/code/linux-sn2"]
+	path = references/code/linux-sn2
+	url = https://github.com/nsafran1217/linux-sn2.git
+	shallow = true
+[submodule "references/code/linux-ia64"]
+	path = references/code/linux-ia64
+	url = https://github.com/linux-ia64/linux-ia64.git
+	shallow = true
+[submodule "references/code/ski"]
+	path = references/code/ski
+	url = https://github.com/trofi/ski.git
+	shallow = true
+[submodule "references/code/elilo"]
+	path = references/code/elilo
+	url = https://github.com/spinl0ck/elilo.git
+	shallow = true
 [submodule "retools"]
 	path = retools
 	url = ../sgi-retools.git

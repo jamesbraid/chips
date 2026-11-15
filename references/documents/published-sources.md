@@ -20,7 +20,7 @@ Cited by file and version, never copied. Labels in the entries say which source 
   show and how many were read, in the entry that uses them.
 
 The Linux, OpenBSD, NetBSD, GXemul and MAME trees, older Linux trees (2.4, 2.5.40, 5.3 for the ia64 SN code, an
-out-of-tree Octane port) and the boot loader are submodules at the repository root; the pins, public URLs and what
+out-of-tree Octane port, the ia64 Linux, Ski simulator and ELILO trees) and the boot loader are submodules at the repository root; the pins, public URLs and what
 each covers are in [sources/INDEX.md](INDEX.md), which also lists the sources held by URL only.
 
 Nothing here is a path into any local store.
