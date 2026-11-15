@@ -52,6 +52,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `lb_elect` | 0x1101d0080 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e9b0, 0xffc4e766 (election reads), 0xffc4e246, 0xffa0b0f0 (bit updates); no Linux v5.3 name |
 | `lb_elect_set` | 0x1101d0088 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e9a6 (release store of slice + 1); no Linux v5.3 name |
 | `lb_l1_state` | 0x1101d0100 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg |
+| `lb_lock2` | 0x1101d0180 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers) |
+| `lb_lock2_status` | 0x1101d0188 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers) |
 | `lb_lock` | 0x1101d0200 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user) |
 | `lb_lock_status` | 0x1101d0208 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node |
 | `pi_reg_2000_0000` | 0x120000000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path); no Linux v5.3 name |
@@ -65,9 +67,9 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pio_write_status` | 0x120070200 | r | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status_alias` | 0x120070208 | w | 64 | 2 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `cpu_hist` | 0x150031500 | rw | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name |
-| `fw_word_1540` | 0x150031540 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner); no Linux v5.3 name |
+| `fw_word_1540` | 0x150031540 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name |
 | `cpu_bits` | 0x150031550 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name |
-| `fw_debug_word` | 0x150031560 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test) |
+| `fw_debug_word` | 0x150031560 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test), 0xffa974d0 (field setter) |
 | `junk_bus_led` | 0x7fed00000 | w | 16 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 
 ### Register `chip_id`
@@ -327,9 +329,17 @@ L1 link state word in the local block; the name is ours. SAL_A's election winner
 |---|---|---|---|---|---|
 | 41:39 | `link` | inferred |  | SAL 5.04 PROM site 0xffc4e7a0 (write 7) ; the L1 start check named in boot-sequence.md is unconfirmed | Written 7 by SAL_A's election winner; no reader that requires 7 was found (an earlier reading said the L1 start checks it). Meaning inferred; name is ours. |
 
+### Register `lb_lock2`
+
+Second firmware lock pair, release side; the name is ours. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred.
+
+### Register `lb_lock2_status`
+
+Second firmware lock status; the name is ours. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The other-node routine, reading it through the node-object read, proceeds when bit 0 reads 0 and ignores the other bits, so a model must keep bit 0 at 0 when the lock is free. A status that never reads 0 times out after 1,000,000 microseconds (forced release on this node, error -9 on another). A read side effect is unknown. Linux v5.3 does not define the lock; the meaning is inferred.
+
 ### Register `lb_lock`
 
-Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
+Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
 
 ### Register `lb_lock_status`
 
@@ -403,7 +413,7 @@ Array of 4 registers, stride 16.
 
 ### Register `fw_word_1540`
 
-Firmware scratch word; the name is ours. SAL_A's election winner writes 0 to it. No read was found in the reset phase. Plain storage satisfies the access.
+Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it, and a later routine writes 0 to it on another node through the node-object write (site 0xffa5d48c). No read exists on the direct-call reset path. The method tables reached through the chip object hold methods that treat it as a set of flags indexed by a bit number: claim bit n (wait until it reads clear, set it, with an optional deadline in microseconds; returns -1 on timeout), test bit n, and clear bit n, each as a read-modify-write under the lock pair lb_lock2 and lb_lock2_status, on this node (site 0xffa0efd0, 0xffa0f580) or through the global window of another (site 0xffa0f1a0, 0xffa0f3a0, 0xffa0f430, 0xffa0f650). That the flags are claims is inferred from the sequence; which bit numbers callers use was not traced, and whether any of these methods runs before the console start is unknown. The word must read back what was written.
 
 ### Register `cpu_bits`
 
@@ -411,7 +421,7 @@ Firmware per-processor state word; the name is ours. The winner of the SAL_A ele
 
 ### Register `fw_debug_word`
 
-Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits of it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). Plain storage.
+Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits of it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). A field setter (site 0xffa974d0, call sites 0xffa1a51c and 0xffa1a58c, both with a width of 16) replaces a bit field of it with a 16-bit value under the lb_lock and lb_lock_status lock: take the lock, read the word, clear the field, OR in the value, write, release. Plain storage.
 
 ### Register `junk_bus_led`
 

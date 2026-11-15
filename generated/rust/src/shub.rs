@@ -637,6 +637,16 @@ pub mod lb_l1_state {
         }
     }
 }
+/// Second firmware lock pair, release side; the name is ours. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the sam (inferred)
+pub mod lb_lock2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0180;
+}
+/// Second firmware lock status; the name is ours. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The o (inferred)
+pub mod lb_lock2_status {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1101d0188;
+}
 /// Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cp (inferred)
 pub mod lb_lock {
     pub const WIDTH: u32 = 64;
@@ -778,7 +788,7 @@ pub mod cpu_hist {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 16;
 }
-/// Firmware scratch word; the name is ours. SAL_A's election winner writes 0 to it. No read was found in the reset phase. Plain storage satisfies the acc (inferred)
+/// Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it, and a later routine writes 0 to it on another node through the node-obje (inferred)
 pub mod fw_word_1540 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x150031540;

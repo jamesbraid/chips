@@ -110,6 +110,21 @@ What the code needs (established as the test, **inferred** as hardware behaviour
 
 The word `0x1_5003_1550` is the PROM's own storage (inferred, from its use): bits 21 to 24 (21 + slice), 26 to 29 (26 + slice), 30 to 33 (30 + slice), 35 to 38 (35 + slice) and bit 34, and a 3-bit count at bit 47 (even slice) or bit 50 (odd slice), which each present slice publishes from a PAL call and the master waits for as that many ready bits among 29:26 (inferred; a reviewer's reading of the local-master wait). It must read back what was written and read 0 before the first write (A10 or the loser's undefined value). Bits 29:26 are the "other processor flagged" bits that SAL_A's error path clears.
 
+### The second lock pair and the flag word (not on the direct-call path)
+
+The chip object's method tables (see A39) hold routines that use a second lock pair, `0x1_101d_0188` (status, polled until it reads 0) and `0x1_101d_0180` (released by writing 0), around read-modify-writes of `0x1_5003_1540`. All of this was read in full; whether any of it runs before the console start is **unknown**, because the callers are indirect.
+
+| # | Site | Access | What the code does | Grade |
+|---|---|---|---|---|
+| B1 | `0xffa0ed30` (take, this node), `0xffa0ee40` (release) | R64 `0x8000_0081_101d_0188` until the whole word reads 0, then W64 0 to `0x8000_0081_101d_0180` at release | the same routine as the node lock, with these two addresses: 1,000,000-microsecond deadline, then a forced write of 0 to `0x180` and polling continues | established (sequence); inferred (meaning) |
+| B2 | `0xffa0ee90` to `0xffa0ad80` (take, another node), `0xffa0eee0` (release) | R64 offset `0x1_101d_0188` through the node-object read, repeated until bit 0 is clear (the other bits are ignored); W64 0 to offset `0x1_101d_0180` through the node-object write at release | the deadline is the caller's (1,000,000 microseconds in the callers read); on timeout it returns -9 and does not write `0x180` | established (sequence); inferred (meaning) |
+| B3 | `0xffa0efd0` (claim bit n), `0xffa0f580` (clear bit n) | under B1: R64 `0x8000_0081_5003_1540`, W64 the same address with bit n set or cleared | claim waits until the bit reads clear (a deadline argument of 0 means no deadline; a miss returns -1), test-and-sets it under the lock and releases; clear takes the lock, clears the bit and releases. Reads of the bit before the lock are unlocked | established (sequence); inferred (role) |
+| B4 | `0xffa0f1a0`, `0xffa0f430` (claim), `0xffa0f3a0` (test, no lock), `0xffa0f650` (clear) | the same on another node: offset form `0x9_5003_1540 + (nasid << 38)` (global window) with B2 | as B3 | established (sequence); inferred (role) |
+| B5 | `0xffa5d48c` | W64 0 to offset `0x1_5003_1540` of another node through the node-object write (and 0 to `0x1_5003_1550` at `0xffa5d44c`), in an interconnect-phase routine | plain storage | established (access) |
+| B6 | `0xffa974d0` (setter, called at `0xffa1a51c` and `0xffa1a58c` with a field width of 16) | under the node lock (`0x208` and `0x200`): R64 `0x8000_0081_5003_1560`, W64 the same address with a bit field replaced by a 16-bit argument | take, read, clear the field, OR in the value, write, release (R64 `0x208` until 0, W64 0 to `0x200`) | established (sequence); inferred (role) |
+
+A model that treats `0x188` as a status that always reads 0 (bit 0 clear is enough for B2), `0x180` as write-accepting storage and `0x1540` and `0x1560` as plain storage satisfies every access above. The this-node claim and clear are entered through small thunks (`0xffa0f750` and `0xffa0f780` for the claim, the second passing a deadline of 0; `0xffa0f7b0` for the clear); no caller or descriptor for the thunks was found. The other-node routines are reached through descriptors at `0xffc4bc10` to `0xffc4bdc0` that belong to the method tables.
+
 ## Accesses not on the reset path
 
 SAL_A has two more groups that run only on other reasons, kept here so the access list is complete.
@@ -127,10 +142,11 @@ For each register: where the PROM sees it, the unit by address block, the Linux 
 | `0x81_1002_0000` | local, LB | unnamed; label `lb_reg_1002_0000` (ours) | never read in this phase | established (the write) |
 | `0x81_2001_0100` | local, PI | unnamed; label `pi_reg_2001_0100` (ours) | bit 24 settable; any other bits kept; reads back as written | established (access); inferred (role) |
 | `0x81_5003_1500 + 16*n` (n = 0 to 3), `1510`, `1530` | local, NI block by address | unnamed; label `cpu_hist` (ours) | plain 64-bit storage; reads what was last written | established (use); inferred (storage) |
-| `0x81_5003_1540`, `1550`, `1560` | local, NI block by address | unnamed; label `cpu_bits` for `1550` (ours); `1560` is later the debug-switch word | plain 64-bit storage, 0 after SAL_A's winner writes them | inferred |
+| `0x81_5003_1540`, `1550`, `1560` | local, NI block by address | unnamed; label `cpu_bits` for `1550` (ours); `1560` is later the debug-switch word | plain 64-bit storage, 0 after SAL_A's winner writes them; `1540` is also read-modify-written as a set of flags under the second lock pair (B3, B4), and `1560` as a bit field under the `0x200` lock (B6) | inferred |
+| `0x81_101d_0180`, `0x81_101d_0188` | local, LB | unnamed; labels `lb_lock2` and `lb_lock2_status` (ours) | `0x188` reads 0 when free (bit 0 clear for the other-node form); `0x180` accepts 0 | established (test); inferred (behaviour) |
 | `0x81_101d_0080`, `0x81_101d_0088` | local, LB | unnamed; labels `lb_elect` and `lb_elect_set` (ours) | after a write of v to `0x88` a read of `0x80` returns exactly v, twice; `0x80` is also read-modify-written at bits 39 to 41 later | established (test); relation unknown |
 | `0x81_101d_0100` | local, LB | unnamed; label `lb_l1_state` (ours; the PROM's own names for the same word are `sc_shub_state_reg` and `sc_shub_pushed_data_reg`) | bits 41:39 read back as written (7) after A16 and the other bits are kept; no reader that requires 7 was found | established (access); inferred (any requirement) |
-| `0x81_101d_0200`, `0x81_101d_0208` | local, LB | unnamed; label `lb_lock` (ours) | `0x208` reads 0 when free; `0x200` accepts 0 | established (test); inferred (behaviour) |
+| `0x81_101d_0200`, `0x81_101d_0208` | local, LB | unnamed; label `lb_lock` (ours) | `0x208` reads 0 when free; `0x200` accepts 0; the same pair also guards the `1560` field setter (B6) | established (test); inferred (behaviour) |
 | `0x81_1003_0000 + 0x80*(slice & 3)` | local, LB | unnamed; label `lb_slice_rec` (ours) | any 64-bit value; the low byte becomes a progress code | established (read); unknown (meaning) |
 | `0x81_1006_0480` | local, LB | `SH1_IPI_ACCESS` | accepts 1 | established |
 | `0x81_1006_0280` | local, LB | unnamed; label `rtc_ctl` (ours) | reads back the stored value (bits 13:4 give the tick period); written before its first read | established (use); inferred (bit roles) |
@@ -152,6 +168,7 @@ For each register the PROM reads before it writes it (in this phase), and what t
 | `0x1_101d_0100` | yes (A15) | keeps the other bits; no reader that requires 7 in bits 41:39 was found | unknown (the PROM tolerates any other bits) |
 | `0x1_5003_1540`, `1550`, `1560` | no for the winner (A10 to A12 are first); yes for a loser | winner zeroes them; a loser reads whatever is there | unknown (a model that zeroes at reset behaves as the winner would leave it) |
 | `0x1_1006_0580` | yes (A30) | any NASID, any revision (the revision picks between two constants) | unknown (see [the SHub ID register](#the-shub-id-register)) |
+| `0x1_101d_0188` | yes (B1, B2) | 0 to proceed (bit 0 clear on another node); non-zero is waited out for 1,000,000 microseconds, then forced on this node or -9 on another | unknown (requires: reads 0 eventually) |
 | `0x1_101d_0208` | yes (the lock) | 0 to proceed; non-zero is waited out for 1,000,000 microseconds, then forced | unknown (requires: reads 0 eventually) |
 | `0x1_1003_0000 + 0x80*slice` | yes | any value | unknown (any) |
 | `0x1_2002_0080` | yes (A33) | bit of each other slice must be 0 for a one-processor node | unknown (requires bit 0 for the other slices) |
@@ -193,7 +210,7 @@ The page covers the accesses found by reading every function reachable by direct
 - Calls through operation tables and function descriptors (`0xffa1a910`, the node-object operations behind `[obj + 32]`, PAL calls) were not followed. A different register may be touched there. The L1 start-up, which this page ends at, is reached through them.
 - The exact order of the first L1 console accesses (UART at `0xf_fed4_0000 + 8*n` in the global form, or `0x7_fed4_0000 + 8*n` local; the state word `0x1_101d_0100`) is from [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#l1-controller-dependency), not re-read here.
 - Which error and workaround routines run at the reset entry or in `main` before `sysctl_init` depends on PAL return values the code does not show; the accesses on the normal path are listed.
-- The roles of `0x1_1002_0000`, `0x1_2001_0100`, `0x1_1006_0280` bits other than the period field, `0x1_1003_0000 + 0x80*slice`, the bit meanings in `0x1_5003_1550`, and what a hardware read of `0x1_101d_0200` and `0x208` does: **unknown**. A SHub 1 programmer's reference for the local block, the processor interface and the network interface block would settle them; a hardware read is the last resort and needs the repository owner's approval.
+- The roles of `0x1_1002_0000`, `0x1_2001_0100`, `0x1_1006_0280` bits other than the period field, `0x1_1003_0000 + 0x80*slice`, the bit meanings in `0x1_5003_1550`, and what a hardware read of `0x1_101d_0200`, `0x208`, `0x180` and `0x188` does: **unknown**. A SHub 1 programmer's reference for the local block, the processor interface and the network interface block would settle them; a hardware read is the last resort and needs the repository owner's approval.
 
 ## Corrections to earlier pages
 
@@ -244,3 +261,5 @@ Generated files regenerated; `ci-check` exits 0 (see the commit).
 **Cleared scope.** The SAL_A access list (A1 to A16) with its test polarity, the lock protocol and its "must return" entries, the election pair, `0x1_2002_0080`, the SHub ID write field positions and replacement values, the RTC write sequence, period formula and SAL_FREQ_BASE type 2 answer, the A39 read and its path to the `0x4363` compare, the offsets, widths and directions of every register in the two TOML commits (as corrected), the SHub 2 overlay removals and the generated C header. Not cleared: the grades that this review left (A39 as inferred, pending the author's update), the second lock pair and the untraced method tables, the bit layouts of the memory controller registers, and the SHub 2 image statements in item 5.
 
 Resolved after review: devices/shub: grade the chip identification read from the method-table chain
+
+Resolved after review: devices/shub: add the second firmware lock pair and the flag word's accesses

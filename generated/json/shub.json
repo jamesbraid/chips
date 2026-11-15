@@ -939,6 +939,34 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "lb_lock2",
+   "offset": 4565303680,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "lb_lock2_status",
+   "offset": 4565303688,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "lb_lock",
    "offset": 4565303808,
    "access": "rw",
@@ -1193,7 +1221,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner); no Linux v5.3 name"
+   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -1221,7 +1249,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test)"
+   "from": "SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test), 0xffa974d0 (field setter)"
   },
   {
    "unit": "shub",
