@@ -762,9 +762,11 @@ From `0xFFFF83F0` (entered by the `0xFFFFFF70` bundle):
    `0xFFFF8730` is native, restores the predicates and tests `r1`: nonzero rejects the image and the loop continues,
    zero accepts it.
 5. The hand-off is a branch to the image address plus `0x300` (`0xfffc32c0`, `0xfffc9dc0`, `0xfffd0580`), reached
-   through `b2` (set at `0xFFFF890C`), with `msr` 1643 set to zero (success) or to a status 9 to 15 for the alternate-FIT and
-   error cases. Failures with nothing usable go to `0xFFFF8A10`, which also uses `br.ia`, with `b0 = 0xFFFF8A60`
-   and `r2`, `r3`, `r5` zero, and then to the error path.
+   through `b2` (set at `0xFFFF890C`), with `msr` 1643 set to zero (normal reset) or to a status 9 to 15. Intel SDM vol. 2 Table 11-4 (pp. 2:292 to 2:293)
+   defines these codes for the GR20 status field, not for `msr` 1643; that `msr` 1643 carries them is inferred. In the
+   table, 9, 12 and 14 mean no usable processor-specific PAL_A; 10, 11, 13 and 15 mean a good one was found (in the
+   alternate FIT for 10, 13 and 15, in the FIT for 11). Failures with nothing usable go to `0xFFFF8A10`, which also
+   uses `br.ia`, with `b0 = 0xFFFF8A60` and `r2`, `r3`, `r5` zero, and then to the error path.
 
 ### The br.ia sites: what they are not (established) and what they might be (inferred)
 

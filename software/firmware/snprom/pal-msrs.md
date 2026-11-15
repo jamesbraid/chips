@@ -135,7 +135,7 @@ Function of msr[1640] as a whole: **inferred** a PAL mode and status word (bit 5
   where msr[1641] = `r12`, msr[1642] = `b0` and msr[1643] = `pr`), and uses them as scratch: `ar.unat` into msr[1643] (`0xffe17146`), bits 0, 1 and 2 of msr[1642] set one at a time (`0xffe16dd0`, `0xffe16e50`, `0xffe16ee0`),
   r5, r10 and r13 read back from 1642, 1643 and 1641 (`0xffe171c0`, `0xffe17200`, `0xffe17270`).
 - **Status code (established that it is written; inferred meaning).** msr[1643] also takes 0 at `0xFFFF8916` (just before entering the processor-specific PAL_A at image + `0x300`) and one of 10, 11, 13 or 15 at `0xFFFF8A00`
-  (just before the same entry, when a flag from the FIT walk says something failed; 9, 12 and 14 are assigned to the register first but overwritten before the write), which [boot-sequence.md](boot-sequence.md) reads as success or a failure status.
+  (just before the same entry, when a flag from the FIT walk says something failed; 9, 12 and 14 are assigned to the register first but overwritten before the write), which [boot-sequence.md](boot-sequence.md) reads as a status code: Intel SDM vol. 2 Table 11-4 (pp. 2:292 to 2:293) says 10, 11, 13 and 15 each report that a good processor-specific PAL_A was found.
   So 1643 is both a scratch register and, at that hand-off, a status value for the processor-specific PAL_A.
 
 Function: **inferred** that 1641 to 1643 (with msr[0]) are PAL-private scratch registers used where general registers cannot be trusted (machine check and INIT entry, and the PAL_B code that follows), and that 1643 doubles as a hand-off status word. Their reset values and any hardware meaning are **unknown**.
