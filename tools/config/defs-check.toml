@@ -301,6 +301,42 @@ profiles = ["c-clean"]
 base = 0x0
 profiles = ["c-clean"]
 
+[gen.export.units.pic]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.ioc4]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.isp12160]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.router_nl4]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.tio]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.tioca]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.tioce]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.tiocp]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.mbcs]
+base = 0x0
+profiles = ["c-clean"]
+
 [allowlists]
 leak = "tools/config/defs-leak-allow.txt"
 
