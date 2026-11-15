@@ -800,6 +800,22 @@ reset flow. That supports reading the `br.ia` sites that pass an image address a
 an implementation-specific authentication or self-test mechanism (inferred); the SDM does not say how it is entered,
 and what the reset-site `br.ia` runs stays unknown.
 
+Intel describes such a mechanism in patent US 6,542,981 B1, "Microcode upgrade and special function support by
+executing RISC instruction to invoke resident microcode" (filed 1999-12-28). Software sets "one MSR to a special
+value", one branch register to a function number and another to a return address, then executes `br.ia`. When the
+MSR is set, the instruction "does not necessarily branch" and "rather invokes resident microcode instructions", which
+authenticate the supplied code by a one-way hash and load it. An invalid function or a failed check sets an error
+code, and execution continues at the return address in either case. The patent places this in firmware run after
+power-on. It names no MSR, no register numbers and no PAL (established, as the patent's description). The two
+non-reset sites match it closely: image address and size in `r2` and `r3`, `r5 = 1`, `b0` pointing to native code
+that tests `r1` and rejects the image when it is nonzero. So those sites are read as this microcode service, used
+to authenticate the processor-specific PAL_A (inferred). The `msr` writes before the reset site (212 to 0, 1225 to
+4) fit "set one MSR to a special value", but which MSR is the gate and what the value selects are not disclosed
+(unknown). The reset site's `b0` is `0xFFFFFFE0`, which holds pointers rather than code, so the return-address part
+does not fit there and the reset-site effect stays unknown. Public source checks found no index for these MSRs: the
+GNU binutils ia64 tables define the `msr[]` operand only, with an index-dependent dependency rule, and the ski
+simulator stops on any `msr` access.
+
 For the reset site specifically (established): the 32 bytes at `0xFFFFFFE0` are the FIT pointer `0x80000000ffa00000`
 and the SALE_ENTRY pointer `0x80000000ffc4e000`, then the IA-32 far jump at `0xFFFFFFF0`. They do not form code in
 either default size. A straight decode from `0xFFFFFFE0` gives an `add` through `eax` (or `bx+si`), a load of `al` from
