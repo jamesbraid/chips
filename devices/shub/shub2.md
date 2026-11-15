@@ -6,6 +6,29 @@ The SHub 2 node controller as the SHub 2 first-stage and second-stage firmware s
 
 **Tools.** Every code reading below was done in Ghidra with the IA-64 processor module (`re-run --ghidra-export IMAGE --sn2-prom`, decompiler output plus the module's slot listing for exact sites). Names marked "PROM name" come from the register-name table the image carries for its error decoder (strings in the shipped binary: a table of name, address and field list, with bit ranges); that table's bit ranges have not been decoded, so any field range quoted from it is unverified unless section 4 says the code confirms it. Linux v5.3 names (`arch/ia64/include/asm/sn/addrs.h`, `shub_mmr.h`, `arch.h`, `sn_sal.h`, `arch/ia64/sn/kernel/setup.c`) are cited as "Linux". Objdump was used only to cross-check one routine's bytes.
 
+## What is verified
+
+"Verified by review" means the independent read in the Review section below (chips `01c5a93`). "Verified by code, awaiting review" means a second pass read the instructions again in Ghidra and cites them, and nobody independent has checked it yet.
+
+| Part of the page | State |
+|---|---|
+| 1. Address map: windows, NASID shift and mask, memory window | verified by review |
+| 2. Identification register fields `NODE_ID`, `SHARING_MODE`, `NODES_PER_BIT`, `SHARERS_1K`, `RANGE_CHECK`, `REVISION` and the offset-0 part-number word | verified by review (no test of the revision field was found; callers not all traced) |
+| 2. Identification register fields `FORCE1`, `MANUFACTURER`, `PART_NUMBER`, `NI_PORT`, `SYSTEM_TYPE` | unverified (names from the PROM table; no reader found for most) |
+| 3. SAL_A accesses S1 to S12 | verified by review |
+| 3. SAL_B reset entry B2 to B4, B6 | verified by review |
+| 3. SAL_B reset entry B1, B5, B7 | unverified (progress codes and the PAL entry test were read once) |
+| 3. Node lock cycle B8 (SCRATCH4 take and release, SCRATCH6 bit and field updates, bit positions) | verified by code, awaiting review |
+| 3. M1 (node number read) | verified by review |
+| 3. M2 arbitration and M3 barrier (SCRATCH6 bit and field positions, the `0x2002_0010` reads, timeouts) | verified by code, awaiting review |
+| 3. M4 chip identification read | verified by review |
+| 3. M5 to M9: the address form, node set-up writes W1 to W5, L1 UART bring-up and transmit and receive registers, the SCRATCH2 mailbox positions | verified by code, awaiting review; the packet payloads, the reply parser and the node's RAM tables are not traced |
+| 4. Memory and directory register offsets, directions and the values the code writes | verified by code, awaiting review |
+| 4. Field positions listed under "Field layouts the code confirms" | verified by code, awaiting review |
+| 4. All other field ranges and names in the section 4 tables (including `TOG_DIRC_BA`, `ODT_*`, `CLR_DIR_CACHE`, `IN`/`OUT` of the privilege vectors, `RANDOM`, `INV`, `ROT`, the `PAT` range, the credit depth field, `LOCVEC` and `PRESVEC` contents) | unverified |
+| 4. Directory presence and local vector programming by `0xff4886c0`, `0xff488140` and `0xff48a750` (values chosen per node) | unverified (offsets only) |
+| 4. DIMM discovery arithmetic, the test loop order, the BIST command words | unverified |
+
 ## 1. Address map
 
 ### Address forms the firmware issues
@@ -232,6 +255,8 @@ What a model must provide for the console start: the V and node registers of sec
 
 Scope: the registers `main` reaches between "Init memory..." (progress `0x16`) and "Testing memory ........" (`0xff47a970`, the routine that prints it). Found by reading the register-offset constants in every routine of that phase and following the callers in the order of `main` (`0xff42b9c0`); the routines are the memory discovery and configuration group at `0xff440a50` to `0xff4863c0`, the directory group at `0xff488140` to `0xff48a750`, and the test group at `0xff47b270` to `0xff4809e0`. What was read in full: the access list below by offset and direction; what was **not** read in full: the values the discovery computes from the L1's DIMM data (the DIMM and refresh timing arithmetic), so a value column says "from the DIMM data" where that applies. A model that accepts every write to these registers and returns what each section says lets the test pass. The memory itself is plain RAM behind the node's memory space (section 1).
 
+**Verification state.** The field ranges in the first two tables below were taken from the image's register-name table, whose bit ranges nobody has decoded; treat them as unverified. The positions the code itself confirms (a deposit, mask or test at a named site, so shift and width are read from the instruction) are in [Field layouts the code confirms](#field-layouts-the-code-confirms), and those registers and fields are in [registers.shub2.toml](registers.shub2.toml) with the site on each. Offsets and written values are read from the code throughout; the names are the PROM's and are inferred meanings, not Linux's.
+
 All offsets are in the local window (add `0x2_0000_0000`) or, for another node, the global form of section 1. SHub 2 splits memory into an X side and a Y side (two DIMM groups) and a "JNR" (junior) side; the directory and the queue ports come in left and right pairs (`DQLP`, `DQLS`, `DQRP`, `DQRS`, PROM names; the meaning of "P" and "S" is unknown). SHub 1 had one memory block and one directory block at `0x1_0001_0000` to `0x1_0183_0200`; none of those offsets exist here.
 
 ### Memory configuration
@@ -239,8 +264,8 @@ All offsets are in the local window (add `0x2_0000_0000`) or, for another node, 
 | Offset | PROM name | What the firmware does | Grade |
 |---|---|---|---|
 | `0x1_0000` / `0x1_0008` / `0x1_0010` | `SH2_X_DIMM_CFG`, `SH2_Y_DIMM_CFG`, `SH2_JNR_DIMM_CFG` | write the discovered DIMM population: for DIMMn (n = 0 to 3): `SIZE` (3 bits), `2BK`, `REV`, `CS` (2 bits); `FREQ` bits 35:32; `CLK_EN_LEFT/RIGHT` bits 36 and 37; `TOG_DIRC_BA` bit 38. Read back later in the test (`0xff47a970` reads `0x1_0010`) | established (access); inferred (field meanings from names) |
-| `0x1_0018` / `0x1_0048` | `SH2_X_ODT_CFG`, `SH2_Y_ODT_CFG` | write on-die-termination masks (`ODT_RD0..3`, `ODT_WT0..3`, `ODT_IDLE`, enables); values from DIMM count | established (access); unknown (values) |
-| `0x1_0020` / `0x1_0050` | `SH2_X_CFG`, `SH2_Y_CFG` | write timing delays (`TA_DLYS` bits 39:8), `MODE_SERIAL` bit 0 and bus bubbles; one RMW at `0xff48c38c` sets or clears single bits (`CLR_DIR_CACHE` bit 61 pulsed) | established (access); unknown (values) |
+| `0x1_0018` / `0x1_0048` | `SH2_X_ODT_CFG`, `SH2_Y_ODT_CFG` | one read-modify-write of bits 23:20 (set to `0xf` when only DIMM 0 is populated), copied from the Y register to both; the name table's `ODT_RD0..3`, `ODT_WT0..3` fields are unverified | established (access and the one field); unknown (the rest) |
+| `0x1_0020` / `0x1_0050` | `SH2_X_CFG`, `SH2_Y_CFG` | the value `0x4856_5320_3324_110e` (bit 53 also set when the DIMM record's word at offset 8 is 4) written to both; a separate routine (`0xff48c290`) replaces bit 0 and rewrites both. The name table's `CLR_DIR_CACHE` (bit 61) was not found in code | established (access, value and the positions in the layout section); unknown (the rest) |
 | `0x1_0028` / `0x1_0058` | `SH2_X_DQCT_CFG`, `SH2_Y_DQCT_CFG` | write read/write select delays (4-bit fields, `RD_SEL`, `WT_SEL`, `DTA_RD_SEL`...) | established (access); unknown (values) |
 | `0x1_0030` / `0x1_0060` | `SH2_X_REFRESH_CONTROL`, `SH2_Y_REFRESH_CONTROL` | write refresh `INTERVAL` bits 16:8, `HOLD` bits 22:17, `ENABLE` bits 7:0; `INTERLEAVE` bit 23 and `HALF_RATE` 27:24. A DIMM-dependent computation; the firmware prints a warning if `tRCD` is outside 2 to 4 | established (access); unknown (values) |
 | `0x1_0078` | `SH2_MEM_RED_BLACK` | write `TIME` bits 15:0 and `ERR_TIME` bits 51:16 | established (access); unknown (values) |
@@ -255,7 +280,7 @@ All offsets are in the local window (add `0x2_0000_0000`) or, for another node, 
 | `0x3_0000` / `0x5_0000` | `SH2_MD_DQLP_MMR_DIR_CONFIG` (`DQRP`) | write `SYS_SIZE` bits 2:0, `EN_DIRECC` 3, `EN_DIRPOIS` 4, `TIO_CHIPLET` 7:6, `RDSHD_TO_RDEXC_MASK` 14:8, `SHARERS_1K` 16 (the same bit as bit 54 of `SH2_NODE_ID`, section 2). `SYS_SIZE` is derived from the node count | established (access); inferred (meaning) |
 | `0x3_0100` / `0x5_0100` (+0x10, +0x20, +0x30) | `..._DIR_PRESVEC0..3` | written by the routine at `0xff4886c0` after reading `SH2_NODE_ID` bits 47:46: the presence-vector layout for the node's sharing mode | established (access); unknown (values) |
 | `0x3_0200` / `0x5_0200` (+0x10 to +0x70) | `..._DIR_LOCVEC0..7` | local vector, written by `0xff488140` | established (access); unknown (values) |
-| `0x3_0300` / `0x5_0300` (+0x10 to +0x70) | `..._DIR_PRIVEC0..7` | eight privilege vectors, each `IN` bits 13:0 and `OUT` bits 27:14; written by `0xff4891c0` to open access to all nodes. These are the "directory privilege vectors" Linux names for SHub 1 (`SH1_MD_DQLP_MMR_DIR_PRIVEC0`) | established (access) |
+| `0x3_0300` / `0x5_0300` (+0x10 to +0x70) | `..._DIR_PRIVEC0..7` | eight registers written by `0xff4891c0` with the constants `0x4bfff`, `0xc96f25b`, `0xfffffff`, `0x96ffff`, 0, 0, `0x4803f`, `0x48000` (the same in both blocks). They are not all ones, so the writes do not simply open access to every node; the `IN`/`OUT` fields (bits 13:0 and 27:14) are unverified. Linux names the SHub 1 counterpart `SH1_MD_DQLP_MMR_DIR_PRIVEC0` | established (access and values); unknown (fields) |
 | `0x3_0400` / `0x5_0400` | `..._DIR_TIMER` | write `TIMER_EN` bit 12 and `TIMER_DIV` 11:0 | established (access); unknown (values) |
 | `0x3_4800`, `0x4_b000`, `0x5_4800`, `0x6_b000` | `..._AMO_CFG` | AMO cache configuration: `EN_XAMOECC` bit 0, `EN_YAMOECC` 1, `EN_XLITTLE_END` 2, `EN_YLITTLE_END` 3 | established (access); unknown (values) |
 | `0x2_0000` to `0x2_0038` | `SH2_X_TAG0..7` | the directory cache tag array; written (cleared) once per entry by `0xff42e140` and others | established (access); inferred (role) |
@@ -273,6 +298,29 @@ The "Testing memory" phase drives a self-test block (the PROM calls it MBIST) th
 | `0xb8`, `0xc0` | `SH2_MEM_ERROR_SUMMARY`, `_ALIAS` | read after a failure and acknowledged through the alias (`0xff4809e0`) | established (access); inferred (acknowledge) |
 
 **What a model must return to pass.** `0x2_0088` must show `IN_PROGRESS` (bit 40) clear soon after the command write (it is polled with a 2,000,000-microsecond limit, `0xff41c990`), `FAIL` (bit 41) clear, and `MEM_IDLE` (bit 42) may be anything. The `XBIST` and `YBIST` registers must hold what was written (the firmware does not read the pattern registers back on a pass). Error registers read 0 on a pass. With "Skipping memory test, as requested" (the console option) the PROM does not write these.
+
+### Field layouts the code confirms
+
+Each position below is a deposit, mask or bit test the code performs at the named site, so the shift and width come from the instruction. Names are the PROM's (inferred meanings); where no name is given the position is as written. Every row is in [registers.shub2.toml](registers.shub2.toml). Grades: the position and the use are established; the meaning is inferred. Not confirmed anywhere in this pass: any field not listed here, including every field of the name table not named below.
+
+| Register (offset) | Fields | Site and operation |
+|---|---|---|
+| `X_DIMM_CFG`, `Y_DIMM_CFG`, `JNR_DIMM_CFG` (`0x1_0000`, `0x1_0008`, `0x1_0010`) | DIMM n (n = 0 to 3): size bits 8n+2:8n, 2BK bit 8n+3, REV bit 8n+4, CS bits 8n+6:8n+5; `FREQ` bits 35:32; `CLK_EN` bits 37:36 | `0xff482c60` deposits at sites `0xff48324c` to `0xff483346` (size, then 2BK, REV, CS, for each n) and `0xff48321c` (FREQ) into a value that keeps bits 63:38 and bits 31, 23, 15, 7; one value is stored to all three registers (sites `0xff483400`, `0xff483520`, `0xff483640`). `0xff4856b0` then reads Y and sets bits 36 and 37 (sites `0xff485816`, `0xff485836`) and stores to all three. Bit 38 is preserved, not written, so `TOG_DIRC_BA` is unverified |
+| `X_DQCT_CFG`, `Y_DQCT_CFG` (`0x1_0028`, `0x1_0058`) | six fields: bits 3:0 = 5, 7:4 = 1, 11:8 = 2, 15:12 = 4, 19:16 = 5, 24:20 = 2 | `0xff482c60` deposits at sites `0xff48303c`, `0xff48309c`, `0xff483106`, `0xff483126`, `0xff48314c`, `0xff48317c`; bits 63:25 preserved; stored at sites `0xff483760`, `0xff483880` (value `0x254215` in bits 24:0). The field names (`RD_SEL`, `WT_SEL`, ...) are unverified |
+| `X_CFG`, `Y_CFG` (`0x1_0020`, `0x1_0050`) | `TA_DLYS` bits 39:8; bit 0 (separate routine); deposits at bits 7:2, 43:40, 47:44, 51:48, 61:55; single bits 1, 52, 53, 54, 62 | `0xff482c60`, sites `0xff483016` to `0xff4831a0`: clear bit 0, set bit 1, deposit 3 at bit 2 width 6, replace bits 39:8 with `0x2033241`, deposit 3, 5, 6 at bits 40, 44, 48 width 4, set bit 52, clear bit 53, set bit 54, deposit `0x10` at bit 55 width 7, set bit 62; bit 0 alone is replaced at site `0xff48c416`. Only bits 39:8 have a name in the table |
+| `X_ODT_CFG`, `Y_ODT_CFG` (`0x1_0018`, `0x1_0048`) | bits 23:20 | site `0xff4853f6` deposits `0xf` into the value read from Y (site `0xff48536c`); stored to X (site `0xff48548c`) and Y (site `0xff4855ac`) |
+| `X_REFRESH_CONTROL`, `Y_REFRESH_CONTROL` (`0x1_0030`, `0x1_0060`) | `ENABLE` bits 7:0; `INTERVAL` bits 16:8; `HOLD` bits 22:17; bits 27:24 cleared | `0xff4856b0`: sites `0xff4862fc` (enable, width 8), `0xff485d16` and `0xff485d5c` (interval, width 9), `0xff485d06` (hold, width 6), `0xff485d0c` (clear 27:24); bits 63:28 preserved. Read from Y, stored to X and Y |
+| `MEM_RED_BLACK` (`0x1_0078`) | none | site `0xff4841f0` stores `0x4e20_0400` once |
+| `MISC_MEM_CFG` (`0x1_0080`) | bits 58 and 59 | `0xff482c60` stores `0x0fc4_0000_00c4_c4c` (site `0xff483e90`); `0xff481280` clears bit 58 (site `0xff481696`) when a masked size exceeds `0x3ff` and bit 59 (site `0xff4816c6`) when it exceeds `0x1ff`; the other bits are as read |
+| `PI_MD_RQ_CRD_CTL`, `PI_MD_RP_CRD_CTL`, `XN_MD_RQ_CRD_CTL`, `XN_MD_RP_CRD_CTL` (`0x1_00e0`, `0x1_00e8`, `0x1_00f0`, `0x1_00f8`) | whole word | stores of `0xc`, `4`, `0xb`, `3` at sites `0xff484f6c`, `0xff484e50`, `0xff484d30`, `0xff484c10`. `SH2_PIO_RQ_CRD_CTL` (`0x1_00d8`) is written 2 by SAL_A and read-modify-written by `0xff48b420` |
+| `DIR_CONFIG` (`0x3_0000`, `0x5_0000`) | `SYS_SIZE` bits 2:0; bits 3, 10, 11, 15 | `0xff481280`: bits 2:0 deposited at sites `0xff4817fc` (0), `0xff4818c6` (7), `0xff4818d6` (1 to 6) from a 16-bit count in bits 16:1 of its argument (0 below `0x40`, 1 below `0x80`, 2 below `0x100`, 3 below `0x200`, 4 below `0x400`, 5 below `0x800`, 6 below `0x1000`, else 7); bit 11 cleared with bit 58 of `MISC_MEM_CFG` (site `0xff4816a6`) and bit 10 with bit 59 (site `0xff4816dc`); `0xff486c40` sets bit 3; `0xff482c60` sets bit 15. Both blocks get the same value |
+| `DIR_LOCVEC` (`0x3_0200` + `0x10 * i`, `0x5_0200`) | whole word | eight stores of all ones each (loop at site `0xff483c80`) |
+| `DIR_PRIVEC` (`0x3_0300` + `0x10 * i`, `0x5_0300`) | whole word | the eight constants listed above, site `0xff4892bc` |
+| `DIR_TIMER` (`0x3_0400`, `0x5_0400`) | none | stores `0x1000` (site `0xff483fb0`) |
+| `AMO_CFG` (`0x3_4800`, `0x4_b000`, `0x5_4800`, `0x6_b000`) | bits 3:2 | `0xff482c60`: read at site `0xff484310`, or `0xc` at site `0xff484380`, stores at sites `0xff484430`, `0xff484550`, `0xff484670` and the next |
+| `X_BIST_H`, `X_BIST_L`, `Y_BIST_H`, `Y_BIST_L` (`0x3_8000`, `0x3_8010`, `0x3_8800`, `0x3_8810`, and the three other ports 0x1_0000 apart) | pattern bits 39:0; bit 40; bit 41; `ARM` bit 43 (the `_H` registers only) | `0xff47bf60`: the value is `(pattern & 0xffffffffff) \| (byte << 0x28) \| (byte << 0x29)`, the `_H` copies also OR `0x80000000000` (site `0xff47bfa6`). The 40-bit pattern mask disagrees with the name table's `PAT` bits 31:0 |
+| `X_BIST_ERR_H`, `_L`, `Y_BIST_ERR_H`, `_L` (`0x3_8020`, `0x3_8030`, `0x3_8820`, `0x3_8830`, four ports) | pattern bits 39:0; `VAL` bit 40 | `0xff47d260` reads each and tests bit 40 (`extr.u 0x28`, for example site `0xff47d6bc`) before it compares the low 40 bits with the expected pattern |
+| `MMRBIST_BASE`, `MMRBIST_CTL` (`0x2_0080`, `0x2_0088`) | `IN_PROGRESS` bit 40 | `0xff41c990` writes `0x11_0000_0010` (site `0xff41cc66`) and polls bit 40 clear (site `0xff41ce96`); the other fields of the name table are not read in code |
 
 **Not read.** The numeric values written to the timing registers, the way the firmware chooses `CMD` and `BLOCK_LENGTH` per DIMM, the order of the sixteen BIST writes against the `ARM` writes, the exact poll loop in `0xff47bb60` (which of two registers it reads second), and the DIMM discovery over the L1 (it is serial traffic to the L1 controller, not chip registers). These are **unknown** here; the questions page should list them.
 
