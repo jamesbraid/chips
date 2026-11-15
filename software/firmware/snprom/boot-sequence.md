@@ -76,8 +76,9 @@ reasons 0 and 3:
    read `0x81_101d_0080`; on a match, that processor (the winner) zeroes `0x81_5003_1550`, `0x81_5003_1540`,
    `0x81_5003_1560` and writes 1 to `0x81_1006_0480` (`SH1_IPI_ACCESS`). It then re-reads `0x81_101d_0080`, finds its
    value again and sets bits 41:39 of `0x81_101d_0100` to 7.
-7. FIT scan as on SHub 2 (same checks, hang 178). Progress 48, 56 or 59 for reason 0, 1, 2; read
-   `[0x81_1003_0000 + (slice & 3) * 128]` into `r31`; branch to SAL_B offset 0, 0x20 or 0x10.
+7. FIT scan as on SHub 2 (same checks, hang 178). Progress 48, 56 or 59 for reason 0, 1, 2; for reasons 1 and 2 (and
+   for a reason above 3) read `[0x81_1003_0000 + (slice & 3) * 128]` into `r31`, which reason 0 does not (its branch at
+   `0xffc4e4fc` skips the read at `0xffc4e570`); branch to SAL_B offset 0, 0x20 or 0x10.
 
 **Progress display (established).** Every progress code is shifted into a per-processor 64-bit history register at
 `0x81_5003_1500 + 16 * cr.lid[26:23]` (shift left 8, new code in the low byte) and written as 16 bits to two LED
