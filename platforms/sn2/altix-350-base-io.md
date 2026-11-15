@@ -106,6 +106,17 @@ Two further statements are inferred, not read:
   ATA controller that cannot drive an ATAPI DVD-ROM of the slim-line IDE kind the guide shows (a reasoned reading, not a
   statement of either guide). The -002 guide says only that the card "connects to ... DVD-ROM drive".
 
+### IO10 facts from the manuals (established)
+
+- The IO10 is the standard base I/O card of the Altix 350; the IO9 is the optional one. Each system takes one of the two,
+  in PCI slot 1 of a module, and only one per module (007-4660-002 p.112; 007-4374-001 p.1).
+- A module with an IO10 takes one or two SATA system disks and no SCSI internal drives (007-4660-002 pp.112, 115).
+- The card has a full-size PCI board form, a 36-pin MDR multi-port serial connector that a cable splits into four DB-9 serial
+  ports, two RT interrupt connectors that SGI Linux + ProPack does not support, and an Ethernet port (007-4374-001 p.1 and
+  Figure 1; 007-4660-002 p.113).
+- The 36-pin connector's pin assignments are in 007-4374-001 p.2, Table 1.
+- Table 3-3 of 007-4660-002 (p.122) lists the SATA internal port and the 36-pin serial adapter connector as IO10 features.
+
 ## Ethernet and the PCI wiring
 
 Both guides list one 10/100/1000BaseT port on each card and name no controller. The Linux driver tree names none
@@ -131,6 +142,12 @@ either, and the IO10's SATA and the IO9's SCSI controller are found by `ioc4_var
 
 So: the Ethernet controller on the Altix IO9 and IO10 is **unknown**; a Broadcom Tigon 3 part is the better
 hypothesis, inferred from the three items above and the sibling card. No Altix capture of `lspci` is held.
+
+- If the Ethernet part is a BCM5701 (inferred above, not established), its register reference is the Broadcom "BCM57XX Host
+  Programmer Interface Specification", 57XX-PG105-R. The Library holds no copy (techpubs search, 2026-11-15). The web was
+  not checked.
+- No public VSC 7174 datasheet is known to this page. The Library holds none (techpubs search, 2026-11-15), and the web was
+  not checked. Linux `sata_vsc.c` is the only source for that part here.
 
 ## The riser identity record
 

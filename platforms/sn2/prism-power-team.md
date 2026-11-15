@@ -65,6 +65,21 @@ A base compute module plus one XG2N only: at most 4 processors and 48 GB (p.32).
 
 ## Graphics (established unless marked)
 
+Board names as the manuals print them (established):
+
+- 007-4701-003 names the XG2N board "FireGL X2PRO-256" (Figures 1-1 and 1-2, p.3) and "FireGL X3-256" (Figures 1-3 and
+  1-4, p.4; added in revision 003, p.iii).
+- Its Linux device examples (`hinv` and `/sbin/lspci` output, p.23) read "ATI Technologies Inc Radeon R350 [FireGL X2]" and
+  "Radeon R350 NG [FireGL X2]". This is the only place the guide gives the Radeon name.
+- 007-4774-001 (Prism Extreme) names the same two boards, FireGL X2PRO-256 and FireGL X3-256 (Figures 5-2 and 5-4, on pp.76
+  and 77 by the text on p.75). It prints no Radeon board name; "Radeon" appears only in the trademark notice.
+- Attachment: the card sits in "the main connector on the riser board", with a 7-pin keyed synchronization cable from the
+  riser to its underside (007-4701-003 pp.92, 94; 007-4774-001 pp.187, 189). Neither guide says AGP or TIOCA (text search of
+  both), so the AGP-through-TIOCA path in [the overview](prism.md) is not established by these guides.
+- The GPU is ATI silicon, outside chips' scope. No public board-level FireGL X2 document is known to this page. A search of
+  the Library techpubs root for "Radeon R350 FireGL X2 Prism" (2026-11-15) returned only the three Prism guides. The web was
+  not checked.
+
 - An XG2N carries two pipes; each pipe has two DVI-I outputs, a "left" and a "right channel" (Figures 1-1 to 1-4, pp.3 and 4).
   The first module's pipes are "Bus 1 slot 1 (Pipe 0)" and "Bus 2 slot 1 (Pipe 1)". Later modules number pipes upward,
   `pipe n` below `pipe n+1` (Figures 1-2, 1-4).
