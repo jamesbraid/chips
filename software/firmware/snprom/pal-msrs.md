@@ -43,7 +43,7 @@ bits by read-modify-write, writes constants to blocks of consecutive indices, an
 The vector bundles at `0xFFFFFF50` to `0xFFFFFFB0` branch as follows (read from the bundles): `0xFFFFFF50` and `0xFFFFFF60` return through `b0`;
 `0xFFFFFF70` to `0xFFFF83F0`; `0xFFFFFF80` to `0xFFFFDA60`; `0xFFFFFF90` to `0xFFFF8A80`; `0xFFFFFFA0` to `0xFFFF8DA0`; `0xFFFFFFB0` to `0xFFFF83A0`.
 Which of `0xFFFFFF90` and `0xFFFFFFA0` is PALE_CHECK and which PALE_INIT is **inferred**: both save registers into MSRs, then look for a PAL_B in the FIT
-(the walk reads type 1 entries and compares bytes of the PAL_B header with the `cpuid[3]` family and model bytes and, for the revision byte, with bits 15:8 of msr[1715] read at `0xFFFF8C96` and `0xFFFF8FB6`; so msr[1715] holds a revision-like byte, inferred), and jump to the PAL_B plus `0x10080`.
+(the walk reads type 1 entries and compares bytes of the PAL_B header with the `cpuid[3]` family and model bytes and, for the revision byte, with bits 15:8 of msr[1715] read at `0xFFFF8C96` and `0xFFFF8FB6`; so msr[1715] holds a revision-like byte, inferred), and jump to the PAL_B plus `0x10080` (from `0xFFFFFF90`) or plus `0x10070` (from `0xFFFFFFA0`).
 The SDM's section 11.1 fixes no addresses for them. The routine at `0xFFFF8210` (MSR 1553, 1640, 1730 window, below) is not the target of any static branch in the image, and
 the bundle just before it is a branch to itself; how it is entered is **unknown**.
 
