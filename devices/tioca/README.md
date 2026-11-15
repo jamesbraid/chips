@@ -4,7 +4,7 @@ Mode: **no-spec**. The TIOCA is the AGP bridge of the TIO generation: widget par
 corelet of a [TIO](../tio/README.md). No specification is held. Every fact comes from SGI's own Linux Altix platform code
 (linux-5.3 pin 4d856f72c10e: the register header, its provider header and the PCI/AGP provider), which defines names and
 layouts and so grades **established** as software definitions, never as silicon measurements. Registers:
-[registers.md](registers.md) (35 registers, 306 header-named fields, DMA and PIO map constants).
+[registers.md](registers.md) (35 registers, 305 fields, and DMA and PIO map constants, which include the one header-named bit left out of the fields, bit 28 of `agp_dma_addr_extn`).
 
 ## What the code says it is
 
@@ -31,7 +31,7 @@ layouts and so grades **established** as software definitions, never as silicon 
 | `0x80000000` to `0xBFFFFFFF` | graphics aperture (GART-mapped, owned by the AGP driver) |
 | `0xC0000000` to `0xFFFFFFFF` | PCI GART-mapped window; with the graphics window, the whole aperture of 2 GiB |
 | `0x40000000` and up, to 48 bits | AGP 48-bit direct window: node id, chiplet id and node offset taken straight from the bus address |
-| 64-bit PCI | bits 63:60 packet type (1 coherent memory, 2 non-coherent PIO), bit 55 swap, bits 53:0 coretalk address |
+| 64-bit PCI | bits 63:60 packet type (1 coherent memory, 2 non-coherent PIO), bit 55 swap (the provider marks it currently unused), bits 53:0 coretalk address |
 
 PIO windows (offsets in the TIOCA's widget space, constants `PIO_*`): internal registers 64 KiB, graphics write buffer, AGP DMA write and read
 buffers (diagnostics), PCI type 0 and type 1 configuration windows of 16 MiB, PCI I/O, and two PCI memory windows (one at a programmable
@@ -54,7 +54,7 @@ PCI offset held in control 1 bits 31:24, one fixed to PCI 0 to `0xbfffffff`).
 - Which Altix product carries a TIOCA (graphics, an AGP slot): [PIC versus TIO by product](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product).
   The error interrupt name in the interrupt header is a TIOCA-specific vector, so the platform expected the chip in the field.
 - The provider's 48-bit direct check compares the whole AGP DMA extension word shifted right 20 with the target's upper node bits, so on that path bit 28 and the bits above 35 must read as zero. That makes the header's 16-bit node-id span the likelier error and the bit 28 name the lesser claim. Grade: inferred.
-- Reset values are **unknown** for every register: neither the header nor the provider states one, and the provider never reads a register before its first write. Routes not yet tried: the SNPROM images' TIOCA initialisation code (read with Ghidra, to see which registers firmware assumes at reset) and the TIO AEGIS Programmers' Reference, which is not held.
+- Reset values are **unknown** for every register: neither the header nor the provider states one, and the provider's only reads of a register are read-modify-writes and the 48-bit direct check, none of which looks at a power-on value. The Prism kernel's copy of the provider was read with Ghidra (see Review) and agrees with the source; it adds no reset value. Routes not yet tried: the SNPROM images' TIOCA initialisation code (read with Ghidra, to see which registers firmware assumes at reset) and the TIO AEGIS Programmers' Reference, which is not held.
 
 ## Access (registers.toml `access`)
 
@@ -69,4 +69,38 @@ The header gives no direction. What the code read supports:
 | `id`, `status1`, `status2` | r | inferred | named as identification and status words; no code touches them |
 | every other register | rw | unknown | no code read touches it; rw is the widest access, not a finding |
 
-The Prism kernel and its `sgi-agp` module were not read with Ghidra. The module is the AGP half only, and the register-touching code is already public source; a disassembly could only confirm that the same stores ship.
+The Prism kernel was read with Ghidra at review (see Review): its provider makes the same register stores and reads as the v5.3 source. The `sgi-agp` module was not read; it is the AGP half only and reaches the registers through the provider.
+
+## Review
+
+Independent review on 2026-11-15 by a reviewer who did not write this page. Revision: chips commit 8468691 (read at main e001983). Sources: Linux v5.3 `arch/ia64/include/asm/sn/tioca.h`, `tioca_provider.h`, `intr.h`, `io.h`, `pcibus_provider_defs.h`, `arch/ia64/sn/pci/tioca_provider.c` and `drivers/char/agp/sgi-agp.c`, fetched singly from the tag; `include/asm-ia64/sn/tioca.h` at v2.6.12, v2.6.18 and v2.6.26. Binary: the Prism kernel (vmlinux 7.3.0, community build of a mainline SN2 tree, symbols but no DWARF), the 12 KiB holding the TIOCA provider functions, read with Ghidra (the IA-64 module, `DecompileAt`); decompiler output used for the stores' offsets and values only.
+
+**Method.** A script parsed every mask in `tioca.h` and compared bit span and name with each field in `registers.toml`; offsets were checked against the struct comments; access and grade claims were checked against each use of a register in the provider and AGP files.
+
+**Confirmed.**
+- All 35 register offsets, including the `0x200` pointer and the `0x208` TLB array (eight entries of 8 bytes), against `struct tioca`.
+- 305 of 305 fields in the TOML match the header's mask and shift (including the three destination-address registers and the five status, error and mask registers that share one macro block). The 306th header name, `CA_AGP_DMA_PIO_MEM_TYPE`, is carried only as a constant, as the page says.
+- Access claims: the provider's read-modify-write of `control1`, `control2` and `int_mask`, its plain writes of `int_status_alias`, `mult_error_alias`, `gart_aperature` and `gart_ptr_table`, its read of `agp_dma_addr_extn` and the `control2` read-back after a flush; no other register is touched (eight in all, as the open question says). `id`, `status1` and `status2` are named as ID and status words and never touched; the grade "inferred" is right.
+- Constants and prose: the aperture size encodings (0x3ff for 4 MiB down to 0 for 4 GiB), the 16 KiB page bit, the or-with-1 on the table pointer, `GART_MEM_PARAM` 2, prefetch cleared, the PV910244 flush sequence, the four erratum masks (only PV910244 is tested), PV930029 in the prefetch comment, error vector 0x35, ASIC type 4, the DMA map bases and sizes (1 GiB values over the 2 GB comments), the PIO windows and the 64-bit direct address layout.
+- Ghidra on the Prism kernel (`tioca_bus_fixup`, `tioca_fastwrite_enable`, `tioca_dma_map`): the same sequence ships. Offset 0x08 or `0x40000000000` (bit 42); offset 0x10 cleared at bits 33:32 then set to 2 there, then bits 35:34 cleared; offsets 0x58 and 0x68 written `0x10` (the GART fetch error bit); offset 0x78 and-ed with `~0x10`; offset 0x28 written `0x80200007` (bits 0 to 2 set, size field 0x200, base `0x80000000`, so the 16 KiB page bit is set on that build's page size); offset 0x200 written with the table address or 1; fast write sets bit 6 of offset 0x08; the 48-bit direct path reads offset 0xe8 and shifts it right by 20; the error interrupt is registered at 0x35.
+- The 2.6.18 and 2.6.26 headers are identical to v5.3; the 2.6.12 one differs only in the integer type names.
+- No reset value is stated or implied anywhere read, so "unknown" for all is right.
+
+**Mechanical fixes.**
+- "306 header-named fields" in the intro: the registers file holds 305 fields; reworded.
+- "The provider never reads a register before its first write" was false (the read-modify-writes read first); reworded to say no read looks at a power-on value.
+- The 64-bit address row now notes the provider calls bit 55 (swap) currently unused.
+- The page said the Prism kernel was not read with Ghidra; it has been now, with the result above.
+- The cross-check question entry said the headers are unchanged at v2.6.12; only the type names differ there (left in the other file, noted here).
+
+**Findings not fixed.**
+- The 48-bit direct comment in the provider says the fixed upper node bits "come from the xxx register bits [5:0]". The PCI extension's `upper_node_offset` is exactly bits 5:0, so the comment points at a 6-bit field, and the AGP header's 16-bit field at bit 20 does not fit it either. This supports the page's reading that the node-id span is wrong, but it does not by itself place the field (bits 25:20 would be consistent with bit 28 and the unused 27:26). Grade stays inferred; a register specification is the only thing that settles it.
+- The page's reasoning that the 48-bit check "makes bit 28 read as zero" holds only on that path; a set bit 28 would also fail the check if it were a genuine PIO memory type bit, so the check does not discriminate between the two readings except through the comment above.
+- Register-level `grade = "established"` on all 35 rows still covers only name and offset; the 24 rows with access `rw` and no code touching them carry a placeholder access. The docs say so; a consumer reading the generated headers will not see it.
+
+**Not checked.**
+- The SNPROM images' TIOCA setup code (the only remaining route to reset or firmware-assumed values) was not read.
+- The SLES 9 SN2 kernel (2.6.5) was not read; the Prism kernel is a community build, not an SGI release, so it confirms that the mainline provider code compiles to these stores, not what SGI shipped.
+- The `sgi-agp` module was not disassembled.
+
+**Cleared scope.** Register names, offsets, field positions, constants and the provider behaviours listed under Confirmed; the access column as a statement of what the code reads and writes, with the grades in the Access table. Not cleared: any reset value, access direction for the 24 untouched `rw` registers, the AGP DMA extension field layout, and that the TIOCA is present in any shipped product.

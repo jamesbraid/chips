@@ -69,4 +69,4 @@ larger than the constants say, port 2 maps differently, or the allocation is wro
 
 ## TIOCA reset values and register access
 
-[missing source] No TIOCA register has a known reset value, and the direction of every register the provider does not touch (all but eight) is unknown. The header, provider and AGP driver (Linux v5.3, and the unchanged header at v2.6.12, v2.6.18 and v2.6.26) state neither. Routes tried: the three source files and `sgi-agp.c`. Next: the SNPROM images' TIOCA setup code in Ghidra for registers firmware relies on before its first write, or the TIO AEGIS Programmers' Reference.
+[missing source] No TIOCA register has a known reset value, and the direction of every register the provider does not touch (all but eight) is unknown. The header, provider and AGP driver (Linux v5.3, and the header at v2.6.12, v2.6.18 and v2.6.26, which differs from v5.3 only in integer type names at v2.6.12) state neither. Routes tried: the three source files and `sgi-agp.c`. Next: the SNPROM images' TIOCA setup code in Ghidra for registers firmware relies on before its first write, or the TIO AEGIS Programmers' Reference.
