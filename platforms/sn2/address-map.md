@@ -1,10 +1,10 @@
 # SN2 node physical address map
 
-How an Altix (SN2) processor, SHub or TIO forms and decodes an address: the node number, the address-space selector, the local and global register windows, memory aliases, I/O windows and the DMA address a bridge sees. Everything is read from SGI's own Linux platform headers and setup code for SN2 (Linux v5.3, `arch/ia64/include/asm/sn/addrs.h` and `arch.h`, plus the setup, I/O and DMA code that uses them). That source is the vendor's software and defines these facts, so they are **established** as definitions of what the kernel computes. What the hardware does with a given address is **inferred** from those definitions and says so. No PROM, SAL image or hardware read is held; see [questions/sn2-address-map-open.md](../../questions/sn2-address-map-open.md) for what that leaves open.
+How an Altix (SN2) processor, SHub or TIO forms and decodes an address: the node number, the address-space selector, the local and global register windows, memory aliases, I/O windows and the DMA address a bridge sees. Everything is read from SGI's own Linux platform headers and setup code for SN2 (Linux v5.3, `arch/ia64/include/asm/sn/addrs.h` and `arch.h`, plus the setup, I/O and DMA code that uses them). That source is the vendor's software and defines these facts, so they are **established** as definitions of what the kernel computes. What the hardware does with a given address is **inferred** from those definitions and says so. The SHub 2 values come from the SHub 2 PROM, read in [devices/shub/shub2.md](../../devices/shub/shub2.md); no hardware read is held. See [questions/sn2-address-map-open.md](../../questions/sn2-address-map-open.md) for what that leaves open.
 
 The shape is the same family as the Origin 3000's Bedrock node (a NASID in the high bits, a per-node offset below it), but the field positions, the window offsets and the chip are different; do not carry Bedrock numbers over ([ip35 address map notes](../ip35/nasid-numbering.md) are a separate machine). See [../../devices/shub/README.md](../../devices/shub/README.md) for the chip.
 
-**PROM view.** The SHub 2 first-stage firmware (SAL_A) uses only the local MMR window (`0x2_0000_0000 + offset`, with bit 63 set for uncached access in physical mode). The SHub 2 SAL runtime, which runs later, also uses the global window (`0x3_0000_0000`), for example for the firmware flag register at `0x3_101d_0300` and the registers at `0x3_101d_0280` and `0x3_901d_0000` (established as constants in the 1.40 runtime's chipset functions). The SHub 1 firmware uses `0x80_0000_0000 + offset`, with the offsets the kernel header gives for SHub 1 (for example `0x81_101d_0080` is offset `0x1_101d_0080`). `SN_SAL_GET_SN_INFO` in the SHub 2 build computes the NASID width and shift from the register at `0x2_2011_0000`: mask `(1 << (V + 10)) - 1`, shift `40 - V` (read in full; what V is on hardware is unknown): [software/firmware/snprom](../../software/firmware/snprom/README.md).
+**PROM view.** The SHub 2 first-stage firmware (SAL_A) uses only the local MMR window (`0x2_0000_0000 + offset`, with bit 63 set for uncached access in physical mode). The SHub 2 SAL runtime, which runs later, also uses the global window (`0x3_0000_0000`), for example for the firmware flag register at `0x3_101d_0300` and the registers at `0x3_101d_0280` and `0x3_901d_0000` (established as constants in the 1.40 runtime's chipset functions). The SHub 1 firmware uses `0x80_0000_0000 + offset`, with the offsets the kernel header gives for SHub 1 (for example `0x81_101d_0080` is offset `0x1_101d_0080`). `SN_SAL_GET_SN_INFO` in the SHub 2 build computes the NASID width and shift from the register at `0x2_2011_0000`: mask `(1 << (V + 10)) - 1`, shift `40 - V`, V from 0 to 4 (established as the firmware's computation, [devices/shub/shub2.md](../../devices/shub/shub2.md#nasid-shift-and-mask-established-as-the-firmwares-computation); what V is on hardware is unknown): [software/firmware/snprom](../../software/firmware/snprom/README.md).
 
 ## What software is told, and what it assumes
 
@@ -18,7 +18,7 @@ The kernel does not hard-code the node number field. It asks firmware once per C
 | as shift | the kernel | nasid shift minus 2 |
 | system size, sharing domain size, region size, coherency id, partition id | v0 | log2 of maximum nodes, log2 of nodes per sharing domain, region size, coherency domain id, partition id |
 
-If the call is not implemented (an old PROM) the kernel falls back to SHub 1 with mask 0x7ff, shift 38, system size 10 (a thousand nodes), sharing domain size 8, and takes the region size from the SHub identification register. Those fallback numbers are the only concrete values for the fields the sources give. Established as the fallback; whether real SHub 1 firmware reports the same is **inferred**. For SHub 2 the sources give no values at all (unknown, see the question page).
+If the call is not implemented (an old PROM) the kernel falls back to SHub 1 with mask 0x7ff, shift 38, system size 10 (a thousand nodes), sharing domain size 8, and takes the region size from the SHub identification register. Those fallback numbers are the only concrete values for the fields the sources give. Established as the fallback; whether real SHub 1 firmware reports the same is **inferred**. For SHub 2 the kernel sources give no values; the SHub 2 PROM computes shift `40 - V` and mask `(1 << (V + 10)) - 1` from a register (V from 0 to 4, so 10 to 14 NASID bits; established as the PROM's computation, see [devices/shub/shub2.md](../../devices/shub/shub2.md)); which V a real chip reports is unknown.
 
 ## Anatomy of a node address
 
@@ -66,7 +66,7 @@ The header comment describes AS = 0 as "local resources and MMR space": if the t
 | `LOCAL_MMR_OFFSET` | 0x80_0000_0000 (node field value 2 at shift 38) | 0x2_0000_0000 |
 | `GLOBAL_MMR_OFFSET` | 0x8_0000_0000 (top bit of a 36-bit node offset) | 0x3_0000_0000 |
 
-For SHub 2 the constants sit well below any plausible NASID field, so the node-field reading does not apply; how SHub 2 splits local and global MMR is **unknown** without its shift value. The kernel forms register addresses as:
+For SHub 2 the constants sit well below any plausible NASID field, so the node-field reading does not apply; with the PROM's shift of 36 to 40 the AS field starts at bit 34 to 38, so both offsets lie inside the node offset. Bit 33 then selects MMR space and bit 32 "use the NASID field" (**inferred**: the only reading that fits every address constant, [devices/shub/shub2.md](../../devices/shub/shub2.md); no document states the decode). The kernel forms register addresses as:
 
 - local: `uncached | LOCAL_MMR_OFFSET | register` (used for the real-time clock, event register and LEDs, where "this node's" copy is wanted)
 - global, on a given node: `uncached | GLOBAL_MMR_OFFSET | (nasid << N) | register`
@@ -123,9 +123,10 @@ Firmware describes node memory to the kernel through the standard EFI memory map
 
 ## Established versus inferred, in one list
 
-- Established: the AS values and names; the field shift relation `AS shift = NASID shift - 2`; the local and global MMR offsets for both chips; the window sizes; the DMA conversion macros; the fallback field values.
+- Established: the AS values and names; the field shift relation `AS shift = NASID shift - 2`; the local and global MMR offsets for both chips; the window sizes; the DMA conversion macros; the fallback field values; the SHub 2 PROM's shift `40 - V` and mask `(1 << (V + 10)) - 1`.
 - Inferred: the node-field reading of AS = 0 on SHub 1; what AS 1 (GET) is; why the II lands at 0x1c00000; the TIO AS-bit reading on SHub 2.
-- Unknown: the SHub 2 nasid shift and mask; how SHub 2 splits local and global MMR; the memory layout inside a node's offset.
+- Inferred, SHub 2: the bit 33 and bit 32 decode of the local and global MMR windows.
+- Unknown: which V a SHub 2 chip reports; the memory layout inside a node's offset.
 
 ## Review
 
@@ -148,7 +149,7 @@ Independent review of this page at chips commit 788b7be against Linux v5.3 `addr
 3. The DSDT OEM revision threshold 0x20101 is in `acpi.h`. The code that fills `sn_acpi_rev` from the table was not found in the files fetched; the "decided by the DSDT's OEM revision" statement (on the SAL page) is therefore plausible but not verified here.
 4. The page quotes two header comment fragments (the "low NASID bit is 0" line and the local-memory space id); both are short and attributed, no longer passages are copied.
 
-**Cleared:** every address macro, constant and formula listed above (all were read against the source), and the inferred 0x1c00000 arithmetic. **Not cleared:** the node-field reading of AS = 0 on SHub 1 (inferred, no second source), the meaning of GET space and of the TIO chiplet ids (inferred from names), any SHub 2 NASID shift (unknown, correctly), and the memory layout inside a node (unknown).
+**Cleared:** every address macro, constant and formula listed above (all were read against the source), and the inferred 0x1c00000 arithmetic. **Not cleared:** the node-field reading of AS = 0 on SHub 1 (inferred, no second source), the meaning of GET space and of the TIO chiplet ids (inferred from names), the SHub 2 NASID shift, now read from the PROM (shub2.md), and the memory layout inside a node (unknown).
 
 Findings 1-8 addressed in the commit "docs: address the SN2 SHub review findings"; renewed review needed for the changed claims.
 

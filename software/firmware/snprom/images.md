@@ -41,17 +41,17 @@ All hashes were recomputed with `sha256sum` on the files under `root/sn2/` and m
 container row is what the pages record; a container hash is a different thing from the image hash and is treated
 separately below.
 
-| | `snprom.bin` | `shub1snprom.bin` | `shub1snprom.bin` | `shub2snprom.bin` | `ip65prom.bin` |
-|---|---|---|---|---|---|
-| Package | snprom 4.43 build 44607 | snprom 10.40 build 62478 | snprom 10.54 build 70399 | snprom 10.40 build 62478 | snprom 10.11 build 52277 |
-| Container recorded | `snprom-4.43-44607.ia64.rpm`, ProPack 4 SP3 CD 2 | `snprom-10.40-62478.ia64.rpm`, ProPack 4 SP4 CD 2 | `snprom-10.54-70399.ia64.rpm`, package mirror | same rpm as 4.90 | `snprom-10.11-52277.ia64.rpm`, package mirror |
-| SAL banner | 4.43 rel051202 IP41 | 4.90 rel071217 IP41 | 5.04 rel081111 IP41 | 1.40 rel071217 IP65 | 1.11 (IP65) |
-| Built | 2005-12-02 14:14:24 | 2007-12-17 06:06:11 | 2008-11-11 07:25:21 | 2007-12-17 06:08:32 | 2006-10-18 (firmware page; banner not re-read here) |
-| Size (bytes) | 6291456 | 6291456 | 6291456 | 12582912 | 12582912 |
-| sha256 (re-hashed) | `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb` | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` | `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617` | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` |
+| | `snprom.bin` | `shub1snprom.bin` | `shub1snprom.bin` | `shub2snprom.bin` | `shub2snprom.bin` | `ip65prom.bin` |
+|---|---|---|---|---|---|---|
+| Package | snprom 4.43 build 44607 | snprom 10.40 build 62478 | snprom 10.54 build 70399 | snprom 10.40 build 62478 | snprom 10.54 build 70399 | snprom 10.11 build 52277 |
+| Container recorded | `snprom-4.43-44607.ia64.rpm`, ProPack 4 SP3 CD 2 | `snprom-10.40-62478.ia64.rpm`, ProPack 4 SP4 CD 2 | `snprom-10.54-70399.ia64.rpm`, package mirror | same rpm as 4.90 | same rpm as 5.04 | `snprom-10.11-52277.ia64.rpm`, package mirror |
+| SAL banner | 4.43 rel051202 IP41 | 4.90 rel071217 IP41 | 5.04 rel081111 IP41 | 1.40 rel071217 IP65 | 1.54 rel081111 IP65 | 1.11 (IP65) |
+| Built | 2005-12-02 14:14:24 | 2007-12-17 06:06:11 | 2008-11-11 07:25:21 | 2007-12-17 06:08:32 | 2008-11-11 07:28:01 | 2006-10-18 (firmware page; banner not re-read here) |
+| Size (bytes) | 6291456 | 6291456 | 6291456 | 12582912 | 12582912 | 12582912 |
+| sha256 (re-hashed) | `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb` | `26170cc83c3db243601da8f55610bcdd6bb408136c3b3d19b7c4823e491b9a06` | `51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617` | `1c8144e3d318f71a7633dddc268c3ebd0f64febb87c2f234a9a917df0673dd77` | `3ea833181fda8968a5297043f2260d2fc255983ecca1d418292ee008b5e2c793` | `372e74f7201d35e56ef871c330ccbd66fda9f921376ae5dd3045cf4ae6319199` |
 
 Banner, build time and size: established (strings and FIT read by me). The 10.54 package also ships a
-`shub2snprom.bin` (`3ea83318...`, SAL not read) and SGI's `README.snprom` (`00f0a21d...`, re-hashed).
+`shub2snprom.bin` (`3ea83318...`, SAL 1.54 rel081111 IP65, the sixth column above; the SHub 2 address map and reset accesses read from it are in [devices/shub/shub2.md](../../../devices/shub/shub2.md)) and SGI's `README.snprom` (`00f0a21d...`, re-hashed).
 
 **Container hash.** The holdings catalogue records the 10.54 container as `snprom-10.54-70399.ia64.rpm`, 6,296,643
 bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`. This is catalogue metadata: the rpm is

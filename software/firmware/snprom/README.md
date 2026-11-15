@@ -24,11 +24,12 @@ at `0xffa00000`, a 12 MiB file at `0xff400000`). Files are listed in
 | `snprom.bin` | snprom-4.43-44607 | SAL 4.43, built 2005-12-02 | IP41 | SHub 1 (builds for 1.1, 1.2, "1.x") | NUMAlink 3 and 4 routers, TIO |
 | `shub1snprom.bin` | snprom-10.40-62478 | SAL 4.90, built 2007-12-17 | IP41 | SHub 1 | Same line as `snprom.bin`, later build |
 | `shub2snprom.bin` | snprom-10.40-62478 | SAL 1.40, built 2007-12-17 | IP65 | SHub 2.0 | NUMAlink 4 only; says SHub 2 has no XIO |
+| `shub2snprom.bin` | snprom-10.54-70399 | SAL 1.54, built 2008-11-11 | IP65 | SHub 2 | Newest SHub 2 build held; same line as the 10.40 image |
 | `ip65prom.bin` | snprom-10.11-52277 | SAL 1.11, built 2006-10-18 | IP65 | SHub 2.0 | Earlier build of the `shub2snprom.bin` line |
 
 Four more images are in the root and listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels):
 `snprom.bin` from snprom 3.32 (SAL 3.32) and 4.20 (SAL 4.20), both IP41 and SHub 1, and `shub1snprom.bin` (SAL 5.04, built
-2008-11-11, IP41, SHub 1) and `shub2snprom.bin` (not read) from snprom 10.54. The SAL 5.04 image is the newest SHub 1
+2008-11-11, IP41, SHub 1) and `shub2snprom.bin` (SAL 1.54, built 2008-11-11, IP65, SHub 2; read in [devices/shub/shub2.md](../../../devices/shub/shub2.md)) from snprom 10.54. The SAL 5.04 image is the newest SHub 1
 build held and is the one SGI's own `README.snprom` says boots the Altix 350 and both Prism models; its FIT and first
 stage are read in [boot-sequence.md](boot-sequence.md). The component tables below are for the first four.
 
