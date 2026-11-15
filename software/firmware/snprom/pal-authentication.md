@@ -99,6 +99,50 @@ routine's last stage; the verification above does not depend on it.
 Observation, not used further: SIG_R is identical in every signed image, so the signing tool used the same per-signature
 value each time.
 
+## What the SAL and PAL specifications define
+
+Documents: SDM volume 2, 245318 rev 2.3 ("SDM"), and SAL specification 245359-009 rev 3.4 ("SAL spec"). Page numbers are printed numbers.
+
+- **Authentication is optional and implementation-specific.** PALE_RESET "may optionally perform authentication of the PAL
+  firmware" (SDM 11.2.1, p. 2:289). The recovery-check exit state lists "an implementation-specific PAL procedure for PAL
+  authentication" among the calls PAL provides, in GR34; GR36 carries that procedure's address on the second SALE_ENTRY
+  call (SDM 11.2.2, p. 2:290). The specs give no index, arguments or return values for it. The call needs PSR.dfh = 0
+  (SDM PAL note b, p. 2:360). **established**
+- **Failure.** The specs define failure only as SALE_ENTRY status values (table below). SAL_A starts recovery when PAL_A
+  reports an authentication failure on PAL_B or checksum errors in the FIT or PAL_B (SAL spec 3.1, p. 27), and the
+  recovery code "shall authenticate a new firmware image using a PAL_A procedure" (SAL spec 3.1.1, p. 28). SAL_UPDATE_PAL
+  returns -2 when the supplied PAL "failed the authentication test" (SAL spec, p. 113). That is a SAL return, not a PAL one.
+  **established**
+- **FIT fields.** Entry layout (SAL spec Figure 2-5, p. 22): Checksum bits 63:56, C_V bit 55, Type 54:48, Version 47:32,
+  Reserved 31:24, Size 23:0. The bytes of the component plus Chksum sum to zero, and Chksum counts only when C_V is set.
+  The PAL_A FIT entry at 4 GB - 48 is outside the FIT checksum (SAL spec 2.5, p. 22). The specs define no authentication
+  flag in the FIT. Bit 24 is the low bit of the reserved byte, to which the spec gives no meaning. **established**
+- **Not defined by the specs:** the value of the PAL authentication address in this PROM (0xffffda60), the argument
+  (r32 = -2 at 0xffff881c) and result convention of its routine (the r1 accept test, r8, r32), and the msr[1643] carrier.
+  Each stays inferred or unknown as stated above.
+
+SALE_ENTRY status values (SDM Table 11-4, pp. 2:292 and 2:293). The status is the 8-bit field of the SALE_ENTRY state
+parameter in GR20 (Figure 11-7, p. 2:291). The table is the spec's definition, not a statement about msr[1643]:
+
+| Value | Specification meaning | PROM use | Grade |
+|---|---|---|---|
+| 0 | Normal reset | written before the specific PAL_A entry | defined |
+| 4, 5, 16 | PAL_A / PAL_B authentication failure | not used | defined |
+| 9, 12, 14 | no usable specific PAL_A (checksum or authentication, or not found) | assigned, then overwritten | defined |
+| 10 | specific PAL_A found in the alternate FIT, FIT checksum failed | written | defined |
+| 11 | some specific PAL_A failed checksum or authentication, a good one found in the FIT | written | defined |
+| 13 | some specific PAL_A failed checksum or authentication, a good one found in the alternate FIT | written | defined |
+| 15 | none in the FIT, a good one found in the alternate FIT | written | defined |
+
+Two consequences. Values 10, 11, 13 and 15 each report a good specific PAL_A being found, so none is a plain failure code;
+the "failure" reading in [boot-sequence.md](boot-sequence.md) fits only 11 and 13, and those also report a good one. This image's alternate FIT
+address is zero, so 10 and 15 describe an alternate FIT the image does not have. Which register delivers these values to
+SAL is not defined; GR20 is the spec's carrier. **established** for the definitions, **inferred** for the PROM mapping.
+
+The SALE_ENTRY exit state in [boot-sequence.md](boot-sequence.md) matches SDM 11.2.2 (pp. 2:289 to 2:291): GR20 to GR38
+as listed, RSC 0, CFM.sof 96, PSR.bn 1 with the other PSR bits 0, DCR 0, IVA 0 for the recovery check, and the
+interruption block pointer at 0xFEE00000. **established**
+
 ## What the processor's `br.ia` service checks (unknown)
 
 The generic PAL_A reaches the service at `0xffff872c` (`r2` = component address with bit 63, `r3` = size in paragraphs,
