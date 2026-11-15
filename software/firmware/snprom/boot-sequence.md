@@ -572,3 +572,116 @@ Independent review of chips commits `63907b1`, `0f33729` and `ccc8fa0` (the firs
 **The `0x0001` debug-switch conflict (state of the evidence, not a resolution).** Two facts, from two images. (a) PROM: the debug word `0x81_5003_1560` is loaded in phase 0xe from the integer in the L1's reply to request `0x0001`, and the single-node skip is taken only when bit 11 (`0x800`) of that word is set (`0xffa975e0(11)`); established. (b) ARM L1 1.62.1: the reply is `nvramGet(3)`, a 16-bit field (bits 23:8 of the word at `+0x1c` of the settings record, `0x303b4`); the `3` is the setting selector, not a value. The code does not fix what the field holds, and no default for it was read. Neither image fixes the value, so the firmware sources do not say the L1 replies 3 and do not say it replies `0x800`. The `0x800` on this page is the input the interpreter run was given to reach the skip (inferred; the run is a trace under assumed inputs). If an implementation returns the integer 3 (bits 1 and 0 set, bit 11 clear), the PROM takes the NUMAlink discovery path that reads NI registers, which is read [above](#numalink-discovery-with-the-skip-bit-clear-and-no-link). **Update:** the L1 settings default table has since been read: a blank or reset ARM L1 1.62.1 holds 0 in that field (sysco `software/firmware/l1/sn2-l1-settings-defaults-1.62.1.md`), so an unconfigured L1 replies 0, bit 11 clear, the same branch. What a deployed Altix 350's L1 holds is still unknown (set by the `debug` console command or a request `0x1001` from the node).
 
 **Cleared scope.** The three `63907b1`, `0f33729`, `ccc8fa0` readings as corrected above: the bit-24 sites and the revision split, the history registers and progress read-modify-write, the election including the second read and the bit 41:39 write, the call-site list with codes and arguments, the PROM reply parser, and the L1 reply bodies for `0x0003`, `0x0013`, `0x000e`, `0x0009`, `0x0001`, `0x0015`, `0x100b`, `0x0006`. Grades stand except as noted (`0x0015` and `0x0010` ordering could move up). Not cleared: the names and meanings of the registers (all unknown, as graded), the order of requests, the `0x0010` reply for other brick types, and what the L1 holds in the debug-switch field.
+
+## Processor reset entry
+
+Where an Itanium 2 (Madison) processor begins executing when it comes out of power-on reset with `shub1snprom.bin`
+(SAL 5.04, sha256 `51ccf9ad...3a34617`, 6 MiB, mapped so it ends at physical 4 GiB, base `0xffa00000`), and what that code
+expects. Architecture from the Intel Itanium Architecture Software Developer's Manual, Volume 2, revision 2.3, May 2010,
+document 245318 (fetched from Intel's public PDF; the Library holds no copy; sha256 `f08296c0...949b029`). Image read with the
+retools `ia64-linux-gnu-objdump`, the top 256 bytes of the file and the 32 KiB block at `0xffff8000` taken as bundles.
+
+**Grades.** *established*: stated by the manual, or read in full from the image. *software expectation*: from a public
+driver. *inferred*: everything else.
+
+### What the manual fixes (established)
+
+- Firmware address space is the 16 MB below 4 GiB. On reset "the processor begins executing code from the PALE_RESET
+  entrypoint in the firmware address space" (section 11.2.1, p. 2:289; also section 11.1.3, p. 2:282).
+- Top of the space (section 11.1.6, Figure 11-3 and bullets, pp. 2:284 to 2:286): `0xFFFFFFF0` 16 bytes of IA-32 reset
+  code; `0xFFFFFFE8` physical address of SALE_ENTRY; `0xFFFFFFE0` physical address of the FIT; `0xFFFFFFD0` the 16-byte
+  FIT entry for PAL_A (generic PAL_A in the split model), which "is not part of the actual FIT table" (Table 11-1,
+  footnote a, type 0x0F; type 0x0E is processor-specific PAL_A); `0xFFFFFFC8` alternate FIT address (0 if none);
+  `0xFFFFFFC0` zero. PAL_A "resides below 0xFFFF_FFC0" and "contains the hardware-triggered entrypoints PALE_RESET,
+  PALE_INIT, and PALE_CHECK". The generic PAL_A searches the FIT (and alternate FIT) for the first compatible,
+  error-free processor-specific PAL_A and branches to it. PAL_A is therefore found by the fixed `0xFFFFFFD0` entry
+  (the block sits at a position the hardware vector reaches without the FIT), and the FIT is used only to find the
+  processor-specific part and later components.
+- The IA-32 reset vector at `0xFFFFFFF0` is the entry for IA-32 reset code, not the native one. Section 11.2.1 allows PAL
+  to execute IA-32 instructions during self-test.
+- The manual gives no numeric address for PALE_RESET inside PAL_A, and does not describe the processor state at the
+  PALE_RESET entry itself (section 11.2.2 defines only the state when PALE_RESET calls SALE_ENTRY).
+  **The entry offset is not an architectural fact in this document.**
+- State handed to SALE_ENTRY (section 11.2.2, pp. 2:289 to 2:291; this is PAL's exit state, not its entry state):
+  GR20 SALE_ENTRY state parameter (function 3 recovery check, then 0 reset); GR32 = 0; GR33 processor id and LID
+  read-only mask; GR34 PAL procedure call address; GR35 self-test state; GR36 return address into PALE_RESET (PAL
+  authentication call address on the second call); GR37 self-test control word; GR38 PAL_MEMORY_BUFFER requirement
+  (Table 11-2). Other GR, BR, PR, FR undefined. RSC = 0, CFM.sof = 96, PSR.bn = 1 with all other bits 0 (bits df1/dfh
+  set if the FPU failed self-test), DCR = 0, IVA 0 for the recovery check, interrupt block pointer `0xFEE00000`,
+  caches enabled and invalidated, TLB invalid with translation off.
+
+### What the image has (established, read in full)
+
+| Address | Content |
+|---|---|
+| `0xFFFFFFF0` | bytes `ea 5b e0 00 f0`: an IA-32 far jump to `f000:e05b`, then `"11/02/99"` at `0xFFFFFFF5`, `00`, `fc`, `31` (x86 BIOS reset vector layout) |
+| `0xFFFFFFE8` | `0x80000000ffc4e000`, SALE_ENTRY, equal to the FIT SAL_A entry |
+| `0xFFFFFFE0` | `0x80000000ffa00000`, the FIT |
+| `0xFFFFFFD0` | FIT-format entry: address `0xffff8000`, size `0x7fc0` (to `0xFFFFFFC0`), version 7.31, type `0x0f` (checksum flag set, byte `0x6e`; the 32,704 bytes plus `0x6e` sum to zero modulo 256, so the checksum holds) |
+| `0xFFFFFFC8`, `0xFFFFFFC0` | zero (no alternate FIT) |
+
+So the 32 KiB block at `0xffff8000` is the generic PAL_A, not IA-32 BIOS code: the FIT-format entry at `0xFFFFFFD0`
+describes exactly it. It also contains the text "Copyright (C) 2002 Intel Corporation" at `0xffffff00`. The earlier
+"no FIT entry describes it" and "IA-32 BIOS layout" readings are superseded; only the last 16 bytes are IA-32. The
+FIT proper has 15 entries (header count 15, `0x7f` at the end): PAL_B 7.79 `0xffdc8000`, 5.73 `0xffe78000`, 2.25
+`0xfff28000`; processor-specific PAL_A (type `0x0e`) 7.31 `0xfffc2fc0`, 5.37 `0xfffc9ac0`, 1.27 `0xfffd0280`; SAL_A 5.04
+`0xffc4e000` (16 KiB); SAL_B 5.04 `0xffa01000`; runtime (0x12), 0x13, EFI (0x1f), 0x22, 0x23. Its header is `_FIT_   `,
+15 entries, version 0x0260, checksum flag set; the 240 bytes sum to zero.
+
+The vector bundles sit at 16-byte spacing just below the PAL_A FIT entry:
+
+| Bundle address | Form | Target |
+|---|---|---|
+| `0xFFFFFF50`, `0xFFFFFF60` | `br.few b0` | return through b0 (no target) |
+| `0xFFFFFF70` | `br.few` | `0xFFFF83F0` |
+| `0xFFFFFF80` | `br.few` | `0xFFFFDA60` |
+| `0xFFFFFF90` | `br.few` | `0xFFFF8A80` |
+| `0xFFFFFFA0` | `br.few` | `0xFFFF8DA0` |
+| `0xFFFFFFB0` | `[MBB]` `br.cond.spnt.few`, `br.many` (both the same target) | `0xFFFF83A0` |
+
+**Which one is PALE_RESET (software expectation).** The Linux KVM ia64 code defines `PALE_RESET_ENTRY` as
+`0x80000000ffffffb0` (`arch/ia64/kvm/kvm-ia64.c`, Library `linux-history`), and a 2001 linux-ia64 post names
+`...FFFFFF90` as PALE_CHECK and `...FFFFFFB0` as PALE_RESET on an earlier Itanium board. The image agrees in shape: the
+`0xFFFFFFB0` bundle is the only one with a two-branch bundle, and `0xFFFFFFA0`, `0xFFFFFF90` and `0xFFFFFF80` match the
+INIT, CHECK and PMI vector spacing. Taking `0xFFFFFFB0` as the entry: the processor's first bundle is the one at
+physical `0xFFFFFFB0` (the PROM's own pointers carry bit 63 for uncached; the vectors are not read through them).
+
+### The code at the entry (established decode, inferred meaning)
+
+`0xFFFFFFB0` branches to `0xFFFF83A0`, inside generic PAL_A. That code, in order:
+
+```
+movl r3 = 0x80000000ffffffe0
+mov  r40 = 1225 ; mov r42 = 212
+mov  msr[r42] = r0 ; mov b0 = r3 ; mov r41 = 4
+mov  msr[r40] = r41 ; srlz.d ; mov r5 = 1
+br.ia.sptk b0
+```
+
+It reads no general or branch register: every source is an immediate or a register it wrote. It writes two
+model-specific registers (numbers 212 and 1225; their meaning is unknown, these are processor-specific `msr` accesses
+the SDM does not define) and executes `br.ia`, the switch to the IA-32 instruction set, with `b0` set to
+`0xffffffe0`. This is an IA-32 hand-off from reset, consistent with the manual's allowance for IA-32 code in PALE_RESET
+and with the 16 bytes at `0xFFFFFFF0`. Where that IA-32 code goes (whether it returns to native code through the
+`0xFFFFFF70` vector) is **not read**: the IA-32 side at and above `0xFFFFFFE0` is not decoded and a real-mode jump to
+`f000:e05b` is physical `0xfe05b` (inferred), which is below the 16 MB firmware window, so what serves it is unknown. Treat the second half of this path as unknown.
+
+The native path the architecture describes is at `0xFFFF83F0` (entered from the `0xFFFFFF70` bundle): `alloc
+r1=ar.pfs,96,0,0`, `mov pr=r0,...`, `mov r3=3`, `mov r71=cpuid[3]`, reads `cr.ifs`, loads `cr.ipsr = 0x100800000000`
+(bits 44 and 35, so `psr.bn` is 1) and `cr.iip = 0xffff8470`, and executes `rfi` to move to physical addressing; then at
+`0xffff8470` clears `cr.iva`, zeroes `r73` to `r78` and `r94` to `r96`, sets `r81` to the text `_FIT_   `, and reads the
+FIT pointer from `0xFFFFFFE0` (alternate from `0xFFFFFFC8`), walks 16-byte entries comparing types against 0x0e and
+`cpuid[3]` fields (family, revision, model), which is the generic PAL_A search the manual describes in section 11.1.6.
+Its only inputs are `cpuid[3]`, `cr.ifs` and the FIT; it reads no GR or BR given at reset. (Established for these
+instructions as read; whether hardware starts here or at `0xFFFFFFB0` first is the open point above.)
+
+### Answer for an IA-64 CPU model
+
+1. The first instruction fetched is the bundle at physical `0xFFFFFFB0` (software expectation, not stated by the SDM),
+   uncached firmware space, executing in place from flash.
+2. It branches to `0xFFFF83A0` in the generic PAL_A (`0xffff8000` to `0xffffffbf`, FIT entry at `0xFFFFFFD0`, type 0x0f).
+3. No register is read at entry; the processor's reset state (PSR bits, ITC, IP) is only the processor manual's
+   business and is not given by the SDM. A model must reset to a state in which `br.ia` and the two `msr` writes
+   execute, then reach `0xFFFF83F0` for the native path (not settled how).
+4. The SDM's register list (GR20, GR32 to GR38, CFM, PSR, IVA) is what SALE_ENTRY receives (SAL_A reads r20 and r33
+   to r37, see [SAL_A on SHub 1](#sal_a-on-shub-1)), not what PALE_RESET receives.
