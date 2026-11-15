@@ -579,7 +579,7 @@ Clock source control for the real-time clock. The PROM converts counter ticks to
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 33:32 | `source_sel` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The firmware writes 1. |
+| 33:32 | `source_sel` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The firmware writes 1 at bit 32; the two-bit width comes from the PROM name table. |
 | 13:4 | `max_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The firmware writes 4 and reads it back for every time conversion. |
 | 0 | `enable_counter` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Set to start the counter. |
 
@@ -626,7 +626,7 @@ Firmware mailbox word for the L1 console link. Plain storage satisfies the code;
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `clear_bit` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared once by the firmware's handshake. |
+| 63 | `clear_bit` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Cleared once by the firmware's handshake; the send routine 0xff499650 tests it and only when it is set toggles bit 16 of 0x1000_0e00 around a transmit. |
 | 62:58 | `rx_index` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Index of the next byte to take from the current 8-byte receive word; 7 after reset of the link. |
 | 54:50 | `channel` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Index of the channel with a pending packet. |
 | 49:42 | `sequence` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Receive sequence byte. |
@@ -663,7 +663,7 @@ Shared firmware word guarded by the node lock: slice present and arrival bits, t
 | 34 | `barrier_busy` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Barrier in progress. |
 | 33:30 | `slice_arrived` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n has reached the barrier. |
 | 29:26 | `slice_present` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n has started. |
-| 24:21 | `pal_flags` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged. |
+| 24:21 | `pal_flags` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Four bits assume slices 0 to 3; the code extracts a three-bit slice. Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged. |
 
 ### Register `scratch7`
 
@@ -714,11 +714,11 @@ Remote flash remap: the PROM writes the enable bit and a 9-bit field it takes fr
 
 ### Register `processor_type`
 
-The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+The first-stage firmware reads it and compares the whole word with zero to choose which bit pair of the PAL argument becomes the slice number in cr.lid (zero: bits 2:1, else bits 3:2). Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `code` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Bit clear selects argument bits 2:1, bit set bits 3:2. |
+| 0 | `code` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Zero selects argument bits 2:1, non-zero bits 3:2. The code does not isolate bit 0; the position comes from the PROM name table. |
 
 ### Register `bt_eng_csr`
 

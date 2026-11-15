@@ -160,10 +160,10 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674800 (read)"
-doc = "The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
+doc = "The first-stage firmware reads it and compares the whole word with zero to choose which bit pair of the PAL argument becomes the slice number in cr.lid (zero: bits 2:1, else bits 3:2). Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
 
 [add.registers.processor_type.fields]
-code = { bits = [0, 0], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674800", doc = "Bit clear selects argument bits 2:1, bit set bits 3:2." }
+code = { bits = [0, 0], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff674806 (cmp.eq of the whole word with 0, no mask)", doc = "Zero selects argument bits 2:1, non-zero bits 3:2. The code does not isolate bit 0; the position comes from the PROM name table." }
 
 [add.registers.scratch1]
 offset = 0x101d0080
@@ -197,7 +197,7 @@ state = { bits = [41, 39], grade = "inferred", from = "SAL 1.54 PROM (shub2snpro
 sequence = { bits = [49, 42], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49ef20 (read, increment modulo 256), routine 0xff49a130 (compare)", doc = "Receive sequence byte." }
 channel = { bits = [54, 50], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49a130", doc = "Index of the channel with a pending packet." }
 rx_index = { bits = [62, 58], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a7a20 (set to 7), routine 0xff4a30b0 (read, decrement)", doc = "Index of the next byte to take from the current 8-byte receive word; 7 after reset of the link." }
-clear_bit = { bits = [63, 63], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49ef20 (cleared)", doc = "Cleared once by the firmware's handshake." }
+clear_bit = { bits = [63, 63], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff49ef20 (cleared), routine 0xff499650 (tested)", doc = "Cleared once by the firmware's handshake; the send routine 0xff499650 tests it and only when it is set toggles bit 16 of 0x1000_0e00 around a transmit." }
 
 [add.registers.scratch3]
 offset = 0x101d0180
@@ -254,7 +254,7 @@ from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routines 0xff421430 (set o
 doc = "Shared firmware word guarded by the node lock: slice present and arrival bits, the barrier flag and a per-slice-pair field. Plain storage; names of the fields are ours. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
 
 [add.registers.scratch6.fields]
-pal_flags = { bits = [24, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff4b3580 (test of bit 21 + slice)", doc = "Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged." }
+pal_flags = { bits = [24, 21], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff42f4e0 (test of bit 21 + slice, called through 0xff4b3580)", doc = "Four bits assume slices 0 to 3; the code extracts a three-bit slice. Slice n's bit decides whether the PAL entry point is translated through RAM tables (bit set) or used unchanged." }
 slice_present = { bits = [29, 26], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2850 (sets bit 0x1a + slice), routine 0xff423920 (tests lower slices)", doc = "Slice n has started." }
 slice_arrived = { bits = [33, 30], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2c90 (sets bit 0x1e + slice)", doc = "Slice n has reached the barrier." }
 barrier_busy = { bits = [34, 34], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4b2c90 (bit 0x22)", doc = "Barrier in progress." }
@@ -298,7 +298,7 @@ from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810 (writes
 doc = "Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux."
 
 [add.registers.gc_src_ctrl.fields]
-source_sel = { bits = [33, 32], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810", doc = "The firmware writes 1." }
+source_sel = { bits = [33, 32], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810 (writes 1 << 32)", doc = "The firmware writes 1 at bit 32; the two-bit width comes from the PROM name table." }
 max_count = { bits = [13, 4], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) helper 0xff41ffa0 (extr.u 4, 10)", doc = "The firmware writes 4 and reads it back for every time conversion." }
 enable_counter = { bits = [0, 0], grade = "established", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) routine 0xff4a9810 (value 0x1_0000_0041)", doc = "Set to start the counter." }
 

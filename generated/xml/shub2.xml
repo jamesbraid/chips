@@ -302,7 +302,7 @@
   </struct>
   <struct name="GC_SRC_CTRL" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10060700" access="rw" reset="unknown">
     <doc>Clock source control for the real-time clock. The PROM converts counter ticks to microseconds as counter * (max_count * 10 + 10) / 1000, so with max_count 4 the counter advances 20 ticks per microsecond. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
-    <field name="source_sel" start="32" size="2" type="uint" grade="established"/>
+    <field name="source_sel" start="32" size="2" type="uint" grade="inferred"/>
     <field name="max_count" start="4" size="10" type="uint" grade="established"/>
     <field name="enable_counter" start="0" size="1" type="uint" grade="established"/>
   </struct>
@@ -388,8 +388,8 @@
     <field name="offset" start="24" size="9" type="uint" grade="established"/>
   </struct>
   <struct name="PROCESSOR_TYPE" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20110010" access="r" reset="unknown">
-    <doc>The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
-    <field name="code" start="0" size="1" type="uint" grade="established"/>
+    <doc>The first-stage firmware reads it and compares the whole word with zero to choose which bit pair of the PAL argument becomes the slice number in cr.lid (zero: bits 2:1, else bits 3:2). Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.</doc>
+    <field name="code" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="BT_ENG_CSR" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x30040000" access="rw" count="4" stride="65536" reset="unknown">
     <doc>Block transfer engine control and status, one per engine, SHub 2 (four engines, SH2_BT_ENG_CSR_0 to 3). Unlike SHub 1 the kernel starts a transfer with one store here: busy, the mode shifted left by 24, and the length in cache lines in the low bits. The kernel reads it for busy and error; the engine's error code sits in bits 41:36 (kernel's BTE_ERR_BITS).</doc>

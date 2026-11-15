@@ -2029,7 +2029,7 @@
    "name": "gc_src_ctrl.source_sel",
    "hi": 33,
    "lo": 32,
-   "grade": "established",
+   "grade": "inferred",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
@@ -2552,7 +2552,7 @@
    "name": "processor_type.code",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
+   "grade": "inferred",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {

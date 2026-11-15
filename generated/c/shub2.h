@@ -779,7 +779,7 @@
  */
 /* gc_src_ctrl: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_GC_SRC_CTRL                            0x10060700 /* established */
-#define SHUB2_GC_SRC_CTRL_SOURCE_SEL_SHIFT           32 /* established */
+#define SHUB2_GC_SRC_CTRL_SOURCE_SEL_SHIFT           32 /* inferred */
 #define SHUB2_GC_SRC_CTRL_SOURCE_SEL_MASK            0x3ull
 #define SHUB2_GC_SRC_CTRL_SOURCE_SEL_INPLACE         (SHUB2_GC_SRC_CTRL_SOURCE_SEL_MASK << SHUB2_GC_SRC_CTRL_SOURCE_SEL_SHIFT)
 #define SHUB2_GC_SRC_CTRL_MAX_COUNT_SHIFT            4 /* established */
@@ -984,11 +984,11 @@
 #define SHUB2_FIRMWARE_REMAP_OFFSET_INPLACE          (SHUB2_FIRMWARE_REMAP_OFFSET_MASK << SHUB2_FIRMWARE_REMAP_OFFSET_SHIFT)
 
 /*
- * The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
+ * The first-stage firmware reads it and compares the whole word with zero to choose which bit pair of the PAL argument becomes the slice number in cr.lid (zero: bits 2:1, else bits 3:2). Meaning of the bit is inferred from the PROM name. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux.
  */
 /* processor_type: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_PROCESSOR_TYPE                         0x20110010 /* established */
-#define SHUB2_PROCESSOR_TYPE_CODE_SHIFT              0 /* established */
+#define SHUB2_PROCESSOR_TYPE_CODE_SHIFT              0 /* inferred */
 #define SHUB2_PROCESSOR_TYPE_CODE_MASK               0x1ull
 #define SHUB2_PROCESSOR_TYPE_CODE_INPLACE            (SHUB2_PROCESSOR_TYPE_CODE_MASK << SHUB2_PROCESSOR_TYPE_CODE_SHIFT)
 

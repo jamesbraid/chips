@@ -1716,7 +1716,7 @@ pub mod rack_slot_data {
 pub mod gc_src_ctrl {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x10060700;
-    pub mod source_sel { // bits 33:32, established
+    pub mod source_sel { // bits 33:32, inferred
         pub const SHIFT: u32 = 32;
         pub const MASK: u64 = 0x3;
         pub const fn get(v: u64) -> u64 {
@@ -2090,11 +2090,11 @@ pub mod firmware_remap {
         }
     }
 }
-/// The first-stage firmware reads it and tests bit 0 to choose which bit pair of the PAL argument becomes the slice number in cr.lid. Meaning of the bit  (established)
+/// The first-stage firmware reads it and compares the whole word with zero to choose which bit pair of the PAL argument becomes the slice number in cr.li (established)
 pub mod processor_type {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x20110010;
-    pub mod code { // bits 0:0, established
+    pub mod code { // bits 0:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
