@@ -27,6 +27,9 @@ machine pages say where. Brick pages for the CR-brick and the 350 modules are in
 The Altix 3000 IX- and PX-brick are on [the Origin 3000 brick pages](../bricks/ixbrick.md), which already cite the
 Altix guide.
 
+The boot path of the Altix 350 from processor reset to multi-user, mapped against the reverse-engineered pages with a gap list, is
+[boot-path.md](boot-path.md).
+
 ## Which chip where
 
 **SHub, generation 1 or 2.** The Linux kernel does not infer the generation from the product. At boot it asks the
