@@ -20,7 +20,7 @@ Status: **unknown** for everything below. What is established is on [the IRU pag
 - **Compute board codes.** Which of `IP69`, `IP63` and the printed `IP73_667` is which blade, and whether any is SHub 2.
 - **Altix 450.** SHub generation (the PROM package README says the SHub 2 image supports it from 10.23, vendor intent only)
   and whether the blades are identical to the 4700's.
-- **Dense router.** The 32 channels against 16 front connectors, and whether the router commands of the controller apply to
+- **Dense router.** Which 16 of the 32 router channels (four boards of eight, 007-4823-001 p.61) reach the 16 front connectors, and whether the router commands of the controller apply to
   the IRU routers.
 - **Graphics blade.** The 4700 graphics board's chip, the bridge on its PCIe slot, and whether the PROM publishes a console
   entry for it. Route: a PROM string search in the held SHub 2 image, or any 4700 boot capture.

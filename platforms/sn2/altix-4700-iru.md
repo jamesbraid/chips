@@ -90,8 +90,8 @@ Link speed: the Dense router table lists 32 NUMAlink channels at "3.2 GB/s each 
 An optional 2U box at the top of the rack (007-4823-001 pp.61 to 66): four router boards, each with one router ASIC
 ("eight-port crossbar... any of the seven other possible output-link channels"), "32 NUMAlink channels" in the feature list,
 and "sixteen NUMAlink 4 connection ports" on the front; one L1 controller; an L2-host RJ45 and a DB-9 console port; four fans;
-power from a 12 V and 3.3 V supply, about 160 W. Used when IRUs span more than one rack. The guide's 32 channels against 16
-front ports is **unresolved** (each port may carry two channels, or the feature list counts router-side channels). It carries
+power from a 12 V and 3.3 V supply, about 160 W. Used when IRUs span more than one rack. The guide's overview says each of the four router boards supports eight NUMAlink channels, which is the 32 (007-4823-001
+p.61, established). Which 16 of those 32 reach the front ports, and what the other 16 connect to, is **unknown** (**inferred**: internal links among the four router boards). It carries
 its own L1, needs a valid unique rack and module id like an IRU (007-3938-005 p.52), and the L1 `router` command set applies
 to it (below).
 
@@ -137,3 +137,49 @@ single-bit correct, double-bit detect ECC; NUMAlink uses a CRC. The directory fo
 
 A boot log or `/proc/sgi_sn/` capture and the hardware-performance topology listing from a 4700, or the held SHub 2 PROM
 read against the node-discovery code ([questions/altix-4700-open.md](../../questions/altix-4700-open.md)).
+
+## Review
+
+Independent review, 2026-11-15, by a reviewer who wrote none of these pages. Reviewed the four pages of this item at chips
+commit 01c6b5f: this page, [the discovery page](altix-4700-discovery.md), [the graphics page](graphics-attachment.md) and
+[the open questions](../../questions/altix-4700-open.md). Method: every cited Linux v5.3 file was fetched as a single file
+and read against the claim; manual claims were checked against the printed pages in the Library (007-4823-001, PDF page =
+printed + 20, confirmed on pp.46, 53, 107; 007-4857-001, +22; 007-3938-005, +26; 007-4954-001, +6). About 60 facts were
+checked. No page here makes a claim from a binary, so no Ghidra reading was needed or run.
+
+**Confirmed.** Chassis table (10U and 5U, ten and five slots, slots 10 and 11 as routers, four and two routers, 42U and 20U
+racks, 64 processors and 76 cores, the 2U router space); blade types C1, C2, M2, IA, I2E, I3X, "14E" misprint, RC; the
+user's-guide blade list; the `blade` example; `RackID = 100 * rack + slot`; `router` commands "valid only for R-bricks and
+NUMAlink modules"; the temperature thresholds; the eight front NUMAlink connectors and LEDs; NI0 and NI1 LEDs and heartbeat
+letters A to D; directory coherence, 128-byte blocks, SECDED and CRC; DIMM groups and left/right buses X and Y; 3.2 GB/s
+and 160 W on the Dense router; PCIe notes; the graphics option's I2E and I4E rules. Linux: SAL call numbers for sn info,
+sapic info, klconfig address, sysctl, hwperf, IOIF calls, slot enable and disable and the router op; the `GET_SN_INFO`
+field layout and its SHub 1 fallback values (`0x7ff`, 38, 10, 8); module id and geoid layouts and type values; the three
+location-string formats; hwperf opcodes, return codes, object record layout, name substrings and the 16-entry port array
+with `BUG_ON`; LLP3/LLP4 rule; nearest-node search; asic type numbers 1 to 5; every `L1_BRICKTYPE_*` and `L1_BOARDTYPE_*`
+value quoted; hotplug rules; TIOCA DMA policy (64-bit, 48-bit, GART, `SN_DMA_MSI` refusal, the 54-bit `BUG_ON`, node id
+above 64), the SHub 1 SAL 4.06 check, fast-write conditions, the 2 GiB aperture at `0x80000000` and the AGP mode word.
+
+**Mechanical fixes made.** `build_cnode_tables` and `board_needs_cnode` are in `arch/ia64/sn/kernel/setup.c`, not
+`io_init.c` (two citations). `sn_ioboard_to_pci_bus` is in `pcibr_provider.c`. TIOCE has its own provider
+(`tioce_provider.c`, registered for type 5); the pages implied a provider table with only the PIC and TIOCP file, and the
+graphics page cited the type definition instead of the provider. The Dense router's 32 channels are explained by the
+guide (four boards of eight channels, p.61), so the "unresolved" note became an established fact plus a narrower unknown.
+
+**Findings not fixed.**
+- The block diagram labels the left and right router groups "Upper router board" and "Lower router board" (007-4823-001
+  Figure 3-4), while the controller guide calls slots 10 and 11 the left and right routers. The page follows the
+  controller guide and treats each board as holding an upper and a lower router box; the figure does not settle whether
+  the four routers are two dual-router boards (as `DUAL_ROUTER` suggests) or something else.
+- The `L1_BRICKTYPE_IA` row reads the code as the 4700 base I/O blade. The same header also has `L1_BOARDTYPE_BASEIO`
+  (`IB`), and the hotplug driver accepts the brick type but not the board type, so which code a 4700 IA blade reports is
+  unknown. The hotplug conclusion that only the PCI-X three-slot blade is hot-pluggable depends on that and on the
+  inferred board-to-blade pairing; it is inferred, not established.
+- The `GET_SN_INFO` header comment gives the low-nasid-bit position as bits 23:15; the code reads 23:16, which the page
+  follows.
+
+**Cleared scope.** The chassis, blade-type and controller-naming facts, the Linux discovery interface as SGI's code
+defines it, and the TIOCA and graphics-attachment description are cleared as graded, with the fixes above. Not cleared
+because not checked: the 450's L1 panel and power-supply details, the Altix 450 "first release" dating, 007-4954-001
+pages 6, 7 and 20 (ImageSync, not read), the Prism product-page links, and anything about the held SHub 2 PROM (no
+binary reading is on these pages).

@@ -8,7 +8,7 @@ the chassis and blades are on [altix-4700-iru.md](altix-4700-iru.md), the node a
 
 Sources: Linux v5.3 files (SGI's Linux platform code, graded established as the evidence order says), cited as
 `v5.3:path`: `arch/ia64/include/asm/sn/{l1.h,geo.h,module.h,types.h,klconfig.h,sn_sal.h,pcibus_provider_defs.h}`,
-`arch/ia64/include/asm/sn/sn2/sn_hwperf.h`, `arch/ia64/sn/kernel/{setup.c,io_init.c,io_common.c}`,
+`arch/ia64/include/asm/sn/sn2/sn_hwperf.h`, `arch/ia64/sn/kernel/{setup.c,io_init.c,io_common.c}`, `arch/ia64/sn/pci/tioce_provider.c`,
 `arch/ia64/sn/kernel/sn2/sn_hwperf.c`, `arch/ia64/sn/pci/pcibr/pcibr_provider.c`, `drivers/pci/hotplug/sgi_hotplug.c`;
 manuals as on the [IRU page](altix-4700-iru.md). The same tree serves the 350 and 3000; the 4700-specific parts are marked.
 
@@ -27,13 +27,13 @@ manuals as on the [IRU page](altix-4700-iru.md). The same tree serves the 350 an
   (007-4823-001 Figure 7-1, p.108; inferred match, since the guide does not say the letters are slices).
 - **NASID is not a blade number (established).** The kernel numbers nodes with a compact `cnodeid`; compute nodes come first, in
   node order, and I/O nodes (TIOs) and memory-less or headless nodes are appended to the tables after them
-  (`v5.3:arch/ia64/sn/kernel/io_init.c`, `build_cnode_tables`, comment "ensures cnode == node for all C & M bricks").
+  (`v5.3:arch/ia64/sn/kernel/setup.c`, `build_cnode_tables`, comment "ensures cnode == node for all C & M bricks").
   A blade that holds only memory therefore still gets an ordinary node number; a TIO gets a cnode past the compute nodes.
 
 ## The configuration graph
 
 `SN_SAL_GET_KLCONFIG_ADDR` (`0x02000005`) returns, per NASID, the address of a header whose first board record starts a
-linked list of boards (`v5.3:io_init.c`, `build_cnode_tables`, which walks `ch_board_info` and `find_lboard_next`). The
+linked list of boards (`v5.3:arch/ia64/sn/kernel/setup.c`, `build_cnode_tables`, which walks `ch_board_info` and `find_lboard_next`). The
 walk looks only at board type: `KLTYPE_SNIA` (`CPU class | 1`) and `KLTYPE_TIO` (`CPU class | 2`) each need a cnode
 (`board_needs_cnode`). Other types the header names: routers (`KLTYPE_ROUTER`, `META_ROUTER`, `REPEATER_ROUTER`) and
 the I/O brick family, whose entries run from the Origin 3000 bricks up to `KLTYPE_IABRICK` (base I/O), `PABRICK`,
@@ -96,8 +96,9 @@ graph; the kernel's `/proc/sgi_sn/` topology file and ioctl nodes are a thin lay
 ## PCI buses and expansion blade types
 
 - **Bus providers (established).** Each PCI bus carries an ASIC type: 1 a plain PCI-to-PCI bridge (no fixup), 2 PIC, 3 TIOCP,
-  4 TIOCA, 5 TIOCE; a provider table indexed by it maps each to PCI, PCI/PCI-X, or AGP handlers, and the PIC and TIOCP
-  share one provider (`v5.3:include/asm/sn/pcibus_provider_defs.h`, `pcibr_provider.c` lines 257 and 258). The PROM
+  4 TIOCA, 5 TIOCE; a provider table indexed by it maps each to PCI, PCI/PCI-X, AGP or PCIe handlers, the PIC and TIOCP
+  sharing one provider and TIOCE having its own (`v5.3:include/asm/sn/pcibus_provider_defs.h`, `pcibr_provider.c`
+  lines 257 and 258, `tioce_provider.c` line 1060). The PROM
   supplies the bus record through `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`), and device records through
   `...GET_PCIDEV_INFO` (`0x02000057`) and hub-device data through `...GET_HUBDEV_INFO` (`0x02000055`).
 - **Which blade maps to which bridge is not stated.** No manual or file reads that the PCIe blade holds a TIOCE and the
@@ -107,7 +108,7 @@ graph; the kernel's `/proc/sgi_sn/` topology file and ioctl nodes are a thin lay
   hold the register facts. Route: a boot log from a 4700 listing bus numbers and the asic type per bus, or the held SHub 2
   PROM read for the bus-record builder ([questions/altix-4700-open.md](../../questions/altix-4700-open.md)).
 - **Board code per I/O node (established).** `SN_SAL_SYSCTL_OP` (`0x02000030`) with sub-operation 1 returns "the associated
-  ioboard type" for a NASID (`ia64_sn_sysctl_ioboard_get`, `v5.3:sn_sal.h`); `sn_ioboard_to_pci_bus` calls it with the
+  ioboard type" for a NASID (`ia64_sn_sysctl_ioboard_get`, `v5.3:sn_sal.h`); `sn_ioboard_to_pci_bus` (`pcibr_provider.c`) calls it with the
   bus's node. The answer is one of the codes below. The only consumer in the tree is the hotplug driver.
 
 ### Board and brick codes

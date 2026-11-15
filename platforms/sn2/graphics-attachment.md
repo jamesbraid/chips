@@ -38,7 +38,7 @@ The 4700 guide's PCIe notes (p.87): PCIe is point-to-point serial, connectors ar
 sustained throughput is about four times the fastest PCI-X, and a lane is two pairs of wires.
 
 **Inferred** (not stated by any guide or file read): the PCIe slots of I2E and I4E blades sit behind a TIOCE. The bus
-provider for type 5 exists in SGI's Linux code (`v5.3:arch/ia64/include/asm/sn/pcibus_provider_defs.h`), the platform
+provider for type 5 exists in SGI's Linux code (`v5.3:arch/ia64/sn/pci/tioce_provider.c`, for the type defined in `pcibus_provider_defs.h`), the platform
 treats TIOCE like the PIC and TIOCP in placing the controller at the nearest node with CPUs
 (`v5.3:arch/ia64/sn/kernel/io_common.c`, `sn_io_late_init`), and no other PCIe bridge is named for the 4700's PCIe blades. See
 [tioce](../../devices/tioce/README.md) for the register facts. Also unstated: whether the graphics board is the
