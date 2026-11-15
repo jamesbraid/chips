@@ -26,7 +26,10 @@ Census: [census/](census/census.md) (`census.tsv`, `census-sites.tsv`, `fields.t
   an `ori` on a window pointer. The key is off by default and set only for this chip.
 - The router UART path and the request codes are call-argument censuses (see [../router/README.md](../router/README.md)).
 - The L1 packet payloads (what each request returns) are not decoded here: only the codes the host sends.
-- The L2 and the "L3" are named only by address-type constants in the public header; no held routine addresses them.
+- The L2 and the "L3" are named only by address-type constants in the public header; no held IRIX routine addresses them.
+  What they are, and how a host reaches them, is on [../l2/README.md](../l2/README.md) and [../l3/README.md](../l3/README.md).
+- The packet header, message body, subchannels and the SN1 IA-64 and SN2 hosts of the same UART are on
+  [host-link.md](host-link.md); that page also covers the Linux reading of this register file.
 - Reset values: unknown for every register (no code reads one before writing it).
 
 ## Node-local UART (IP35, `l1.o`)
