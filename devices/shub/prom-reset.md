@@ -266,3 +266,5 @@ Resolved after review: devices/shub: grade the chip identification read from the
 Resolved after review: devices/shub: add the second firmware lock pair and the flag word's accesses
 
 Resolved after review: devices/shub: add the three bring-up registers the first batch missed
+
+Resolved after review: firmware/snprom: correct the reason-0 read of the per-slice word on the other pages

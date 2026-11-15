@@ -291,8 +291,9 @@ are inferred, not read from SAL_B.
      neither and fall through to the FIT scan.
    - **FIT scan and hand-off, reasons 0, 1 and 2.** Finds SAL_B through the FIT (checking `_FIT_   `, requiring a type 0
      header, walking entries until type 0x11, hanging with 178 if it fails), writes the progress code 48, 56 or 59 for
-     reason 0, 1 or 2 (a halfword at `0x2_f000_0000 + (slice << 16)`), reads `[0x2_1003_0000 + slice*128]` into `r31`
-     and branches to SAL_B offset 0, 0x20 or 0x10 for reason 0, 1 or 2.
+     reason 0, 1 or 2 (a halfword at `0x2_f000_0000 + (slice << 16)`). Before the progress write, reasons 1 and 2 (and a
+     reason above 3, which hangs with 177) read `[0x2_1003_0000 + slice*128]` into `r31`; reason 0 does not, its branch at
+     `0xff67c3ec` skipping the load at `0xff67c460`. SAL_A branches to SAL_B offset 0, 0x20 or 0x10 for reason 0, 1 or 2.
    - **Progress codes in SAL_A, complete (established).** 48, 56 and 59 (hand-off for reasons 0, 1, 2), 176 (the error
      path), 177 (reason above 3: spin) and 178 (fatal hang: bad `r20` byte 1, FIT not found). SAL_B writes 179 and 49,
      53, 180 later. Nothing in SAL_A reads these stores back.
@@ -362,7 +363,7 @@ ordered account is the first-stage walk above).
 | `0x2_1006_0c00` | write on the election winner | 1 | `SH2_IPI_ACCESS0` (kernel header) |
 | `0x2_1006_0c80`, `0d00`, `0d80` | write on the election winner | 0 | `SH2_IPI_ACCESS1..3` (kernel header) |
 | `0x2_101d_0100` | read-modify-write on the election winner | bits 41:39 = 7 | unnamed |
-| `0x2_1003_0000 + slice*128` | read | passed to SAL_B in `r31` | unnamed |
+| `0x2_1003_0000 + slice*128` | read (reasons 1, 2 and above 3 only, not reason 0) | passed to SAL_B in `r31` | unnamed |
 | `0x2_f000_0000 + slice<<16` | write (16-bit) | progress codes 48, 56, 59, 176, 177, 178 | unnamed |
 | `0x2_101d_0300` | read-modify-write, error path only | bits 29:26 cleared | as above |
 | `0x2_101d_0080` | read-modify-write, error path only | `\|= 0x280_0000_0000` | as above |
