@@ -131,6 +131,7 @@ SAL_A has two more groups that run only on other reasons, kept here so the acces
 
 - **Reason 1 (machine check) or 2 (INIT), SAL_A end (`0xffc4e570`).** R64 `0x8000_0081_1003_0000 | ((slice & 3) << 7)` into `r31` before branching to SAL_B offset `0x20` or `0x10`. A reason above 3 makes the same read before its hang (code 177). Reason 0 does not make this read: its branch to `0xffc4e580` skips it (`cmp.eq p6=0,r3` at `0xffc4e4d0`, `(p6) br` at `0xffc4e4fc`). This corrects [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#sal_a-on-shub-1), which lists the read for reason 0 as well.
 - **SAL_A error path (`0xffc4e090` to `0xffc4e2d0`),** taken only if bit 2 of `r35` is set and its low two bits are not zero (PAL reports a fault). P(176): R64 and W64 history, W16 LED A and LED B; then RMW of `0x8000_0081_5003_1550` clearing bits 29:26; RMW of `0x8000_0081_101d_0080` ORing `0x280_0000_0000`; W64 `0x8000_0081_2000_0000` with `0x1_0001_0000_0000`; then a spin. The SAL_B reset entry has a similar path for a non-zero reason argument (code 179, `0xffa1de06` to `0xffa1df7c`: P(179) then a spin).
+- **Memory controller set-up (after this page's end), three accesses missing from the first register batch.** W64 `0x8000_0009_0003_0400 + (nasid << 38)` and W64 `0x8000_0009_0005_0400 + (nasid << 38)`, each with `0x1000`, at `0xffa773fc` and `0xffa7742c`, between the control-register write (`0xffa773cc`) and the `0x1_0001_0058` write; neither is read anywhere. R64 `0x1_0001_0068` at `0xffa7ab6c` and W64 of a caller-supplied 32-bit value at `0xffa7acdc` and `0xffa7ad9c`, by a routine that returns untouched when `cpuid[2]` equals `0xaeeeeeee8badbeef`, the constant also noted under [the real-time clock](#the-real-time-clock). All three registers are plain storage as far as the code shows; roles unknown.
 
 ## Registers touched
 
@@ -263,3 +264,5 @@ Generated files regenerated; `ci-check` exits 0 (see the commit).
 Resolved after review: devices/shub: grade the chip identification read from the method-table chain
 
 Resolved after review: devices/shub: add the second firmware lock pair and the flag word's accesses
+
+Resolved after review: devices/shub: add the three bring-up registers the first batch missed

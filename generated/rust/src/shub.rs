@@ -107,6 +107,11 @@ pub mod md_ctl_60 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010060;
 }
+/// Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argu (established)
+pub mod md_reg_0001_0068 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100010068;
+}
 /// Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md). (inferred)
 pub mod md_const_78 {
     pub const WIDTH: u32 = 64;
@@ -167,6 +172,11 @@ pub mod md_dqlp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100030300;
 }
+/// Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, b (established)
+pub mod md_reg_0003_0400 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100030400;
+}
 /// Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offs (established)
 pub mod md_dir_access_lp {
     pub const WIDTH: u32 = 64;
@@ -186,6 +196,11 @@ pub mod md_dir_access_lp {
 pub mod md_dqrp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050300;
+}
+/// Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writ (established)
+pub mod md_reg_0005_0400 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100050400;
 }
 /// As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours. (established)
 pub mod md_dir_access_rp {

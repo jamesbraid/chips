@@ -106,6 +106,12 @@
 #define SHUB_MD_CTL_60                               0x100010060 /* inferred */
 
 /*
+ * Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argument as signed integers; when they differ it writes the argument back, sign-extended from 32 bits, and goes on to a helper call. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef (the value the PROM's clock code also tests). The register must read back what was written; the role of the value is unknown.
+ */
+/* md_reg_0001_0068: rw64, reset unknown; SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes) */
+#define SHUB_MD_REG_0001_0068                        0x100010068 /* established */
+
+/*
  * Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md).
  */
 /* md_const_78: w64, reset unknown; SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name */
@@ -142,6 +148,12 @@
 #define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300 /* established */
 
 /*
+ * Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, between the control register md_ctl_60 and md_const_58. It is 0x100 above SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the next privilege vector is not shown. Never read. A write-accepting register satisfies the PROM; the role is unknown.
+ */
+/* md_reg_0003_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B */
+#define SHUB_MD_REG_0003_0400                        0x100030400 /* established */
+
+/*
  * Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status.
  */
 /* md_dir_access_lp: w64, reset unknown; SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name */
@@ -155,6 +167,12 @@
  */
 /* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300 /* established */
+
+/*
+ * Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the role is unknown.
+ */
+/* md_reg_0005_0400: w64, reset unknown; SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B */
+#define SHUB_MD_REG_0005_0400                        0x100050400 /* established */
 
 /*
  * As md_dir_access_lp for the right queue port block (SH1_MD_DQRP_MMR_DIR_PRIVEC0's block); the name is ours.

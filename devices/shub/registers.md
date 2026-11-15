@@ -28,12 +28,15 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_refresh_1` | 0x100010050 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_const_58` | 0x100010058 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_ctl_60` | 0x100010060 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
+| `md_reg_0001_0068` | 0x100010068 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes) |
 | `md_const_78` | 0x100010078 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
 | `md_mbist_cmd` | 0x100020080 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name |
 | `md_mbist_ctl` | 0x100020088 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c (poll), 0xffa6b1dc (failure test); no Linux v5.3 name |
 | `md_dqlp_dir_privilege_vector` | 0x100030300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_reg_0003_0400` | 0x100030400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_lp` | 0x100031000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name |
 | `md_dqrp_dir_privilege_vector` | 0x100050300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_reg_0005_0400` | 0x100050400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_rp` | 0x100051000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name |
 | `ipi_int` | 0x110000380 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc_int_config` | 0x110001480 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -141,6 +144,10 @@ Memory controller register, unnamed; the name is ours. Written with the constant
 
 Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision split as pi_reg_2000_0000's OR value).
 
+### Register `md_reg_0001_0068`
+
+Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argument as signed integers; when they differ it writes the argument back, sign-extended from 32 bits, and goes on to a helper call. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef (the value the PROM's clock code also tests). The register must read back what was written; the role of the value is unknown.
+
 ### Register `md_const_78`
 
 Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md).
@@ -164,6 +171,10 @@ Memory test and DRAM initialisation engine control; the name is ours. The PROM s
 
 Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
 
+### Register `md_reg_0003_0400`
+
+Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, between the control register md_ctl_60 and md_const_58. It is 0x100 above SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the next privilege vector is not shown. Never read. A write-accepting register satisfies the PROM; the role is unknown.
+
 ### Register `md_dir_access_lp`
 
 Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status.
@@ -175,6 +186,10 @@ Directory memory initial-value write, left queue port block (the block is the on
 ### Register `md_dqrp_dir_privilege_vector`
 
 Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names.
+
+### Register `md_reg_0005_0400`
+
+Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the role is unknown.
 
 ### Register `md_dir_access_rp`
 

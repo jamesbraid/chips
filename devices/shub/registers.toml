@@ -646,3 +646,32 @@ grade = "inferred"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
 doc = "Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md)."
+
+# Found in the review of the registers above; read in full at the sites given. Names are ours; roles are unknown.
+
+[registers.md_reg_0003_0400]
+offset = 0x100030400
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B"
+doc = "Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, between the control register md_ctl_60 and md_const_58. It is 0x100 above SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the next privilege vector is not shown. Never read. A write-accepting register satisfies the PROM; the role is unknown."
+
+[registers.md_reg_0005_0400]
+offset = 0x100050400
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B"
+doc = "Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the role is unknown."
+
+[registers.md_reg_0001_0068]
+offset = 0x100010068
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes)"
+doc = "Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argument as signed integers; when they differ it writes the argument back, sign-extended from 32 bits, and goes on to a helper call. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef (the value the PROM's clock code also tests). The register must read back what was written; the role of the value is unknown."

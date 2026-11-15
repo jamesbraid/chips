@@ -243,6 +243,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "md_reg_0001_0068",
+   "offset": 4295032936,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "md_const_78",
    "offset": 4295032952,
    "access": "w",
@@ -335,6 +349,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "md_reg_0003_0400",
+   "offset": 4295164928,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "md_dir_access_lp",
    "offset": 4295168000,
    "access": "w",
@@ -368,6 +396,20 @@
    "reset": "unknown",
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_reg_0005_0400",
+   "offset": 4295296000,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B"
   },
   {
    "unit": "shub",
