@@ -994,3 +994,79 @@ Independent review of chips commit `5e4a340` (PAL procedures 99, 520, 528 and 53
 **Not checked.** Which PAL entry SAL's first 520 call uses (the bank-0 `r18` at `0xffa9bd36`); the 7.79 and 2.25 copies of the 520 handler and dispatch (only 5.73 and the 5.37 recovery copy were read); the full effect of the 520 handler's later steps on msr state (`0xffea4ad0` onward); the PAL_B 7.79 and 2.25 `br.ia` returns; whether `alloc` with 96 registers at `0xffff83f0` can force an RSE spill from an undefined RSC and BSPSTORE (the code does not set them first, and the SDM and Table 5-6 give no entry state for them); the SAL specification 245359.
 
 **Cleared scope.** The PAL procedure readings for 99, 520, 528 and 530 (SAL call sites, arguments, PAL-side status), the dispatch table contents and the Intel comparison, the msr 1632 sites and the no-read claim, and the reset-site contract items (a) to (d) with the fixes and findings above. Not cleared: any meaning of msr 1632, 1536 or 1715, what 520 is for, and what the real `br.ia` service does in the processor.
+
+## PAL self-test state handed to SAL_A
+
+How PAL builds `r35`, which failures reach it, and what SAL_A does with it. Image: SAL 5.04 PROM, PAL_B 5.73. Addresses are read in Ghidra (IA-64 module, SN2 PROM import) and cross-checked against `ia64-linux-gnu-objdump -z`; "listing" below means both agree. Ratings: established (read), inferred, unknown.
+
+### What `r35` is (established)
+
+GR35 at SALE_ENTRY is the Self Test State Parameter (Intel SDM rev 2.3, vol 2, section 11.2.2.3, Figure 11-9, p. 2:293). Fields: `state` bits 1:0 (0 healthy, 1 performance restricted, 2 functionally restricted), `te` bit 2 (testing occurred; the other fields are valid only if set), `vm`, `ia`, `fp`, `mf` in bits 16 to 19 (read left to right in the figure as mf fp ia vm, so vm is bit 16, ia 17, fp 18, mf 19; the bit numbers come from the figure's layout, the order from its labels), `test_status` bits 63:32 (implementation dependent). Reading `0x20006`: `te` = 1, `state` = 2, `ia` = 1 (IA-32 execution unavailable), `vm`, `fp`, `mf` clear, `test_status` = 0.
+
+### How PAL_B 5.73 builds it (established, listing)
+
+The block is at `0xffed7a2c` to `0xffed7a6c`, entered by straight-line flow from the reset path after the self-test steps below:
+
+| Site | Effect |
+|---|---|
+| `0xffed7a30` | `r3` = msr[1640] |
+| `0xffed7a3c` to `0xffed7a46` | bit 62 of msr[1640] set: `r35` = 5; clear: `r35` = 4. The whole register is written, so bits 63:32 are 0 |
+| `0xffed7a4c`, `0xffed7a56` | `r35` bits 19:16 = msr[1640] bits 61:58 (`vm` = bit 58, `ia` = bit 59, `fp` = bit 60, `mf` = bit 61) |
+| `0xffed7a5c`, `0xffed7a6c` | if those four bits are not all zero, `r35` bits 1:0 are replaced by 2 (a 2-bit deposit, so a base of 5 becomes 6, never 7) |
+
+So bit 2 is always set, bit 0 is msr[1640] bit 62, bits 19:16 are msr[1640] bits 61:58 and bit 1 follows from any of the four. `test_status` is never written. The specific PAL_A images carry the same builder (7.31 `0xfffc4cd0`, 5.37 `0xfffcb8d0`, 1.27 `0xfffd2080`); no other site in PAL_A or PAL_B writes `r35` as a result (a scan of the `r35` destinations in `0xfffc0000` to the end of the image found only these three and unrelated scratch uses).
+
+Ghidra's decompile of the enclosing routine (function seeded at `0xffed75e0`, ending `0xffed7b0f`) shows the same computation: base 4 or 5 from msr[1640] bit 62, the four-bit field shifted to bit 16, and the base with bits 19:16 and 1:0 cleared, then the field and 2 ORed in when the field is nonzero; the value is passed as the fourth outgoing argument (`r35`) and `0xe030ffffffff` as the sixth (`r37`) of the call at `0xffed7b0c`. That call is not a procedure: `0xffe96bd0` sets `cr.iip` from `b0`, `cr.ipsr` from `r28` (bits 42:41 cleared) and executes `rfi`, and does not touch `r35`, so the value reaches the later code unchanged. Between the `r35` build and the `rfi` the code ORs bit 8 into msr[1640] if msr[0] bit 10 is set (`0xffed7a90` to `0xffed7ad0`); that bit is not copied into `r35` (its meaning here is unknown).
+
+The rest of the hand-off, after the `rfi` returns at `0xffed7b10` (established, listing): `r37` = `0xe030ffffffff` (`0xffed7a76`), `r36` = `r12` + `0xe70` (`0xffed7bec`, `0xffed7bf0`), `r33` = bits 21:19 of msr[1559] shifted left by one (`0xffed7bb0`, `0xffed7bd6`, `0xffed7bdc`), the low byte of `r20` = 3 (`0xffed7bfc`; the recovery-check reason), msr[1057] = `r34` (`0xffed7b60`), msr[1640] bit 56 set (`0xffed7b7c`, written at `0xffed7b80`), then the other registers are filled with a constant, and the branch goes through `b0` = the doubleword at `0x80000000ffffffe8` (`0xffed7bd0`, `0xffed7c0c`).
+
+### Failure arms that write msr[1640] bits 62:58 (established, listing; conditions as read)
+
+| Site (5.73) | Condition | Sets | Reaches `r35` as |
+|---|---|---|---|
+| `0xffed75f0` to `0xffed7610` | `r1` is nonzero when control returns from the `br.ia` at `0xffed641c` (return `b0` = `0xffed75e0`) | bit 59 | `ia`, state 2 |
+| `0xffed77fc`, `0xffed780c`, `0xffed781c`, `0xffed7826` to `0xffed7850` | known-answer mismatch (next section) | bit 59 | `ia`, state 2 |
+| `0xffee3450`, `0xffefc640` | a called sub-test returns `r8` nonzero | bit 60 (and a status code in `r9`) | `fp`, state 2 |
+| `0xffef2bf0`, `0xffef2e30`, `0xffef3240`, `0xffef3470`, `0xfff009e0`, `0xfff05540` | the same, other sub-tests | bit 62 | state 1 |
+
+No PAL code between the `br.ia` and its return address writes `r1`, so what `r1` holds is whatever the `br.ia` target leaves (established that PAL does not set it; the value `0x99` seen in a run is not derived from PAL code). Writers of bits 58 and 61 with a constant index: none found (inferred absent; accesses through a computed index register were not checked). The callees at `0xffe88760` and `0xffe88970` (called at `0xffed79ac` and `0xffed79cc`) contain no constant-index write of msr[1640] at their own top level; their callees were not traced (unknown).
+
+### The known-answer block (established, listing and Ghidra)
+
+`0xffed7646` to `0xffed7890`, the part of the path after the table load:
+
+1. `r15` = msr[0]. If bit 30 is set, the branch at `0xffed765c` skips everything below to `0xffed7890`. So msr[0] bit 30 set means no known-answer check and no bit-59 write from it.
+2. msr[1664] = 2. `r21` = 12668 (`0x317c`) and `r20` = `0x82518167826f836c` are loaded; three `cpuid[3]` revision tests choose among three blocks that load the same values (`0xffed7710`, `0xffed7730`, `0xffed7750`), so the answers do not depend on the revision byte.
+3. msr[1544] = 0, msr[1546] = `0x9021004d60000001`, `srlz.d`, then one bundle at `0xffed77c0` whose middle slot neither Ghidra nor objdump decodes (also at `0xffed7880`). Function of that slot: unknown; it sits between the msr[1546] command write and the poll that follows, so it is the instruction that starts the work (inferred).
+4. Poll (`0xffed77d0` to `0xffed77ec`): read msr[1212] and loop while bit 14 is clear. There is no counter, so if bit 14 never sets, PAL_B hangs here and never reaches `r35`.
+5. Compare 1 (`0xffed77f6`, `0xffed77fc`): msr[1212] bits 13:0 against `0x317c`; unequal goes to `0xffed7830`.
+6. Compare 2 (`0xffed7810`, `0xffed781c`): msr[1226] against `0x82518167826f836c`; unequal goes to `0xffed7830`. Both equal goes to `0xffed7860`.
+7. `0xffed7830` to `0xffed7850`: set msr[1640] bit 59. Then (both ways) msr[1546] = `0x9020000000000001`, `srlz.d`, another undecoded-slot bundle (`0xffed7880`), msr[1664] = 0.
+
+Only the low 14 bits of msr[1212] are compared; the upper bits of a returned `0x717c` are ignored.
+
+### Other PAL_B exits before the hand-off (established, listing)
+
+- `0xffed78f6`: msr[1779] bit 15 set sends control to `0xffed7906`: `r30` = 2 and a branch through the PAL_A table entry the FIT gives (`0xffed7910` to `0xffed794c`), the common PAL_A error exit used by the other PAL_A entries (inferred it is that exit; the target was not read). Clear continues to `0xffed7950`.
+- `0xffed7950` to `0xffed79fc`: clears bit 3 of msr[1237], calls `0xffe88760` and `0xffe88970`, clears msr[1552], sets bit 16 of msr[1416].
+- `0xffed7a00` to `0xffed7a1c`: poll msr[1416], looping while bit 40 is set; no counter, so a stuck bit hangs here (established).
+
+### What SAL_A does with it (established, listing; see [SAL_A on SHub 1](#sal_a-on-shub-1))
+
+SAL_A 5.04 tests bit 2 of `r35` at `0xffc4e096` and `r35` bits 1:0 at `0xffc4e0b6`; either test failing jumps to `0xffc4e2e0`, the normal flow. With both passing (te set, state nonzero) it runs the error block `0xffc4e0d6` to `0xffc4e2cc`: progress 176 in the history register at `0x81_5003_1500 + 16 * lid[26:23]` (`0xffc4e100`), the 16-bit LED stores at `0xffc4e166` and `0xffc4e1e0` (`r8` = `0xf0` is the `0xb0 | 0x60` form), clear bits 29:26 of `0x81_5003_1550` (`0xffc4e22c`), OR `0x280_0000_0000` into `0x81_101d_0080` (`0xffc4e260`), then `movl r9=0x8000008120000000` and `movl r10=0x1000100000000` (`0xffc4e276`, `0xffc4e286`) and the 64-bit store at `0xffc4e290`, and finally a branch through `b6` to `0xffc4e2d0` with bit 63 cleared, which spins. The store at `0xffc4e290` is the fault address seen in the live run: the access that takes the bus error is the `0x1_2000_0000` store itself, not something after it. What that register does on the hardware (the same one SAL_B later ORs `0x3b03f7` or `1009` into) is unknown; a store that completes is enough for SAL_A, which then spins either way.
+
+Consequence: every `r35` that PAL_B 5.73 can build with a nonzero bit in 62:58 has `state` nonzero, because bit 62 gives state 1 and any of 61:58 gives state 2, and `te` is always set. So every failure arm above, once it has written msr[1640], ends in SAL_A's error block ("PAL early self-test failed", progress 176). The SAL_A path with `r20` = 3 is the recovery-check entry; its normal flow also stops at a spin if bit 3 of `r33` is set (`r33` = msr[1559] bits 21:19 shifted left, so bit 3 is msr[1559] bit 21).
+
+### Fatal or not
+
+- Table load not applied (`r1` nonzero, bit 59): fatal in the sense above, SAL_A reaches its error block. It does not stop PAL_B itself.
+- Known-answer mismatch (bit 59): fatal in the same sense. Skipped altogether if msr[0] bit 30 is set.
+- Bit 14 poll (msr[1212]) and the bit 40 poll (msr[1416]): neither flags. Both spin with no counter, so a failing hardware condition is a hang inside PAL_B, not an `r35` bit.
+- Sub-test failures (bits 60 and 62 sites): flag only at PAL level, but any flag makes SAL_A take the error block, so the same outcome.
+- msr[1779] bit 15: leaves PAL_B through the PAL_A error exit (`r30` = 2), not through SALE_ENTRY (see above).
+
+### The healthy values (established as what the code produces; inferred as what SAL_A needs)
+
+`r35` = 4: `te` set, `state` 0, no failing function, `test_status` 0. SAL_A needs only bits 1:0 = 0 to take the normal flow (the bit 2 test may pass or fail without changing that outcome). msr[1640] at the branch to SALE_ENTRY has bit 56 set (written at `0xffed7b80`) and bits 62:58 clear, so a healthy read afterwards is `0x0100000000000000` (consistent with a run that reads that value; this section does not trace what clears or sets other bits later). Bit 56 is also the bit the PAL_A hand-offs test (see [msr[1640]](pal-msrs.md#msr1640)): it is set here just before SALE_ENTRY and its meaning stays as that page records it (inferred: a valid PAL state exists). Bit 63 of msr[1640] is not written by PAL_B 5.73 on this path; what it means is unknown.
+
+`r33` = 0 for a single processor at position 0 (msr[1559] bits 21:19 clear), `r37` = `0xe030ffffffff`.
