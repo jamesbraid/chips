@@ -268,6 +268,18 @@ a 16-byte block of high-entropy bytes, then 282 eight-byte words: in the first 2
 reading as 141 sixteen-byte records was wrong). How these tables relate to the msr[1224] loaders is in the review. 5.73's `0xffed6420` and `0xffed6d00` have
 the same spacing (`0x8e0`); 2.25 has one table at `0xfff77070`.
 
+### PAL_B 5.73 br.ia at 0xffed641c
+
+Re-read in the Ghidra slot listing of `snprom-10.54-70399`; the bundle is `0xffed6410` and this is its slot 2. Grades: established (code as read), inferred, unknown.
+
+- **Gate (established).** msr[1225] is read at `0xffed6300`. Bit 14 or bit 2 set goes to `0xffed6360`, the `br.ia` path; both clear calls the loader at `0xffe96d40` with return address `0xffed6350`, which branches to `0xffed75e0`. So the `br.ia` and the loader are alternatives, not a sequence.
+- **Operands (established).** b1 = `0x80000000ffffffe0` (`movl r9` at `0xffed6366`, `mov b1=r9` at `0xffed63ec`); b0 = r12 + `0x2130` = `0xffed75e0`, with r12 = `0xffed54b0` from `mov r12=ip` at `0xffed54b6` (static read); r3 = 1, r5 = 0, r1 = `0x99` (`0xffed62fc`, no later write before the `br.ia`).
+- **Table choice (established).** `cpuid[3]` bits 15:8 against 3, unsigned compare: above 3 gives r2 = r12 + `0x1850` = `0xffed6d00`; 3 or below, including 0, gives r12 + `0xf70` = `0xffed6420`. There is no "0 reads as 1" step as in 7.79.
+- **Tables against the loader (established, compared word by word).** Each table is a 16-byte lead plus 282 qwords, `0x8e0` bytes; qwords 256 to 281 are zero in both. The loader at `0xffe96d40` writes 256 values to msr[1224]; they equal the first 256 qwords of the `0xffed6d00` table exactly. The `0xffed6420` table matches them except 16 words (indices 104-107, 109, 110, 113, 114, 117, 118, 144-147, 149, 150). A second 256-write loader at `0xffe98480` matches neither table; no direct branch to it was found (indirect callers not excluded). A "single loader with no revision test" is therefore not the whole picture for 5.73: the loader is not chosen by revision, the `br.ia` table is.
+- **Return code (established).** `0xffed75e0`: `alloc`, restore pr from r100, `cmp.eq p0,p2=0,r1`. r1 non-zero sets msr[1640] bit 59 (`0xffed7600` to `0xffed7610`); r1 = 0 skips that write. Nothing else there reads r1, and a non-zero r1 is not fatal at this code. msr[1640] bit 59 is also set by a later msr[1212] and msr[1226] mismatch check (`0xffed77d0` to `0xffed784c`, only when msr[0] bit 30 is clear). No reader of bit 59 was found within nine slots of a `tbit` on bit 59 in this PAL_B image (simple scan); other readers are **unknown**.
+- **After that (established, partly traced).** It clears six application registers, then tests msr[0] bits 30, 24 and 10, msr[1779] bit 15, and bit 23 of the saved pr, and ends in calls to `0xffe96bd0` (and on one arm `0xffe88760` and `0xffe88970`). The callees were not traced.
+- **Loader writes the `br.ia` path lacks (established for the listed code).** The loader writes msr[1225] = 1, msr[1224] 256 times, then msr[1200..1211], msr[1216..1223] and msr[1232..1235]. Neither the `br.ia` path nor `0xffed75e0` to `0xffed7b0f` writes any of msr[1200..1236]. A `br.ia` callee that does nothing would leave them unwritten; whether the real callee writes them is **unknown**.
+
 ### Does a consistent layout emerge?
 
 - **r2, r3, r5 are not one convention across all sites (established for the values).** Across the sites that set them (the three PAL_B first-row
