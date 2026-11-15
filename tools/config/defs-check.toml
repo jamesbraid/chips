@@ -215,7 +215,7 @@ prose_offsets = false
 # is already node-relative); the Hub units, and the census and Linux-header units of both chips that span
 # several blocks, stay at base 0, so their OFFSET is the node-relative offset.
 [gen.export]
-profiles = ["rust-regs", "c-regfields"]
+profiles = ["rust-regs", "c-regfields", "c-clean"]
 
 [gen.export.units.hub]
 base = 0x0
@@ -288,6 +288,18 @@ rust_file = "bedrock"
 base = 0x700000
 constants = ["XB_PARMS_RESET_DEFAULTS", "XB_PARMS_ACTIVE_DEFAULTS"]
 rust_file = "bedrock"
+
+[gen.export.units.shub]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.shub2]
+base = 0x0
+profiles = ["c-clean"]
+
+[gen.export.units.shub_ii]
+base = 0x0
+profiles = ["c-clean"]
 
 [allowlists]
 leak = "tools/config/defs-leak-allow.txt"
