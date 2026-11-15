@@ -158,9 +158,10 @@ No held document describes the service. Evidence that it checks the same signatu
 1. The software verifier takes exactly the data the call passes (component address and size), skips the same 16-byte
    lead region the PAL header begins after, and is selected by a flag bit in the same FIT entry word: two alternative
    routes to one decision.
-2. The signature tail exists on every image the service would see, and Intel's unsigned 7.46 is the one image with no
+2. The signature tail exists on every image the service would see, and Intel's 7.46 is the one image with no
    `br.ia` of the msr[1225] kind (the PAL_A 7.46 code uses none of 212, 1225 or 1640 to 1643,
-   [pal-msrs.md](pal-msrs.md)).
+   [pal-msrs.md](pal-msrs.md)). The Montecito images are not signed with the Madison DSA key; whether they carry some other
+   signature is unknown ([cross-vendor review](../pal/cross-vendor.md)).
 3. US 6,571,335 describes a processor verifying a DSA/SHA-1 signature on PAL code at reset from a key held on-chip.
 
 Evidence against treating it as proven: nothing shows the microcode uses the same coverage, the same key or the lead
