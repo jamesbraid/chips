@@ -14,12 +14,13 @@ bytes or listings.
   resolved (caller-supplied). `bank x N` is N consecutive writes to msr[1600..1627].
 - *After*: the msr reads (`R`) and writes (`W`) that follow before the next slot, branch or return, in order, up to six. `(tbit vs n)` or
   `(cmp vs n)` is the test that the value read first reaches, with its constant operand; no `vs` means the other operand was a register
-  not resolved. `BR`, `RET`, `CALL` end the trace. `?` as the index means unresolved.
+  not resolved. `BR`, `RET`, `CALL` end the trace. `?` as the index means unresolved (a read through `msr[r0]` is msr[0] and is shown `R0`).
 - *Entry*: `A` reached by static flow from the PAL_A entry at +0x300; `R` from the PAL_B reset continuation (stub at +0x10060); `D` from the
   PAL_PROC dispatch (+0x10010); `E` from the event stubs (+0x10070, +0x10080); `5` from the PAL procedure 520 handler (PAL_B 5.73
   only). Static flow follows both arms of every conditional branch and resolves only ip-relative jumps, so a letter means "can be reached",
   not "is reached", and the set is a lower bound: a return through a register set from `ip` is followed only part of the way (the site
-  `0xfffca626` is on the PAL_A 5.37 path by hand reading, static flow misses it, and it is marked `A` by hand). `-` means not reached from any of these entries by this method.
+  `0xfffca626` is on the PAL_A 5.37 path by hand reading and is marked `A` by hand; the review added 14 more PAL_A sites, the ones after the
+  second V site on the same path, found by following those returns, see the review in pal-instructions.md). `-` means not reached from any of these entries by this method.
 
 Grades: addresses, registers and field patterns are *established* (read from the listing). Every class label and every entry letter is a
 reading of code shape (*inferred*), with the limits in section 5 of the page.
@@ -38,10 +39,10 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xfffc9cb6` | M | W2 | srlz.i | 1553=xxxxx*xxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1730=xxxxx**xxxxxxxxx | W1730 W1640 R1553 W1553 BR | - |
 | `0xfffca406` | M | V | srlz.d | 1536=xxxxxxxxxxxx*xxx; 1572=xxxxxxxxxxxx*xxx; 1640=0; 1546=9**00*xx*0**x*ff | R1558 W1558 R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) ... | A |
 | `0xfffca626` | M | V | srlz.d | 1558=xxxxxxxxxxxx*xxx; 1546=9**00*xx*00007ff; 1544=xxxxxxxxxxxxxxxx | R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) BR | A |
-| `0xfffca826` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R? (tbit vs 0xa) R? (tbit vs 0x7) R1559 R1559 R1559 | - |
-| `0xfffcac26` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1544=x*fc; 1546=8**00*xx*0000000 | W? W? W1546 | - |
-| `0xfffcad26` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1547 W1546 | - |
-| `0xfffcae86` | M | O | srlz.d | 1544=x*fc; 1545=fffc0019b; 1547=xxxxxxxxxxxxxxxx; 1546=8**00*xx*0000000 | R? (tbit vs 0x7) R1536 R1553 W1536 W1553 R? (tbit vs 0x5) ... | - |
+| `0xfffca826` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R0 (tbit vs 0xa) R0 (tbit vs 0x7) R1559 R1559 R1559 | A |
+| `0xfffcac26` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1544=x*fc; 1546=8**00*xx*0000000 | W? W? W1546 | A |
+| `0xfffcad26` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1547 W1546 | A |
+| `0xfffcae86` | M | O | srlz.d | 1544=x*fc; 1545=fffc0019b; 1547=xxxxxxxxxxxxxxxx; 1546=8**00*xx*0000000 | R0 (tbit vs 0x7) R1536 R1553 W1536 W1553 R0 (tbit vs 0x5) ... | A |
 | `0xfffcbc1c` | B | B1 | srlz.i | 1777=xxxxxxxxxxxxxxxx; bank x1; 1572=xxxxxxxxxxxx*000; 1664=xxxxxxxxxxxxxxx* | limit | - |
 | `0xfffcd386` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxx**x; 1544=301; 1546=9740**00000003** | W1084 BR | - |
 | `0xfffcd4d6` | M | N1 | srlz.d | bank x4; 1084=xxxxxxxx*xxxx**x; 1544=201; 1546=9700**00000002** | W1084 BR | A |
@@ -171,14 +172,14 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xffea52c6` | M | N2 | srlz.d | bank x6; 1544=xxxxxxxxxxxxxxxx; 1546=9490**034000xxxx | RET | - |
 | `0xffea5626` | M | N1 | srlz.i | 1558=xxxxxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
 | `0xffea5786` | M | N1 | srlz.i | 1640=xx*xxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
-| `0xffea89fc` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R? R1641 | D |
-| `0xffea8a3c` | B | B0 | srlz.i | - | R? R1642 | D |
-| `0xffea8a8c` | B | B0 | srlz.i | - | R? R1641 R1642 | D |
+| `0xffea89fc` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R0 R1641 | D |
+| `0xffea8a3c` | B | B0 | srlz.i | - | R0 R1642 | D |
+| `0xffea8a8c` | B | B0 | srlz.i | - | R0 R1641 R1642 | D |
 | `0xffea8acc` | B | B0 | srlz.i | - | BR | D |
 | `0xffeab8ec` | B | B1 | srlz.i | 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | BR | - |
 | `0xffeb827c` | B | B1 | srlz.i | 1643=xxxxxxxxxxxxxxxx; 1642=xxxxxxxxxxxxxxxx; 1282=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | W1282 R1640 R1237 (tbit vs 0x5) W1237 R1572 (tbit vs 0xe) | - |
-| `0xffeba05c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R? | E |
-| `0xffeba12c` | B | B0 | srlz.i | - | R1642 R1641 R? | E |
+| `0xffeba05c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R0 | E |
+| `0xffeba12c` | B | B0 | srlz.i | - | R1642 R1641 R0 | E |
 | `0xffeba17c` | B | B0 | srlz.i | - | R? R1641 | E |
 | `0xffeba1bc` | B | B0 | srlz.i | - | R? | E |
 | `0xffeba1ec` | B | B0 | srlz.i | - | BR | E |
@@ -190,9 +191,9 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xffed5246` | M | N1 | srlz.d | 1544=10380; 1546=9780**00000103ff | R1559 W1544 W1546 | R |
 | `0xffed52c6` | M | N1 | srlz.d | 1544=20380; 1546=9780**00000203ff | R1559 W1544 W1546 | R |
 | `0xffed5346` | M | N1 | srlz.d | 1544=30380; 1546=9780**00000303ff | W1084 W1057 W1056 R1559 W1544 Wbank x1 ... | R |
-| `0xffed5436` | M | O | srlz.d | 1056=200007; 1544=xxxxxxxxxxxxxxxx; bank x1; 1546=97c0**01d0003000 | R? (tbit vs 0x1) W1056 W1040 CALL | R |
+| `0xffed5436` | M | O | srlz.d | 1056=200007; 1544=xxxxxxxxxxxxxxxx; bank x1; 1546=97c0**01d0003000 | R0 (tbit vs 0x1) W1056 W1040 CALL | R |
 | `0xffed77c6` | M | K | srlz.d | 1640=xxxxxxxxxxxxxxxx; 1664=2; 1544=xxxxxxxxxxxxxxxx; 1546=9021004d60000001 | R1212 (tbit vs 0xe) R1226 (cmp vs r20?) BR | R |
-| `0xffed7886` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R? (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
+| `0xffed7886` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R0 (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
 | `0xffed87d6` | M | N1 | srlz.i | 1416=xxxxxxxxxxx*xxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1552 BR | - |
 | `0xffeefe76` | M | W1 | srlz.i | 1544=xxxxxxxxxxx*xxxx; 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*3x | W1546 Wbank x1 W1084 | - |
 | `0xffeefec6` | M | W1 | srlz.i | 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*1x | W1546 Wbank x1 W1084 | - |
@@ -293,11 +294,11 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 |---|---|---|---|---|---|---|
 | `0xfffc31b6` | M | W2 | srlz.i | 1553=xxxxx*xxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1730=xxxxx**xxxxxxxxx | W1730 W1640 R1553 W1553 BR | - |
 | `0xfffc38a6` | M | V | srlz.d | 1572=xxxxxxxxxxxx*xxx; 1640=0; 1546=9**00*xx*000xxxx; 1544=xxxxxxxxxxxxxxxx | R1558 W1558 R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) ... | A |
-| `0xfffc3ab6` | M | V | srlz.d | 1558=xxxxxxxxxxxx*xxx; 1546=9**00*xx*00007ff; 1544=xxxxxxxxxxxxxxxx | R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) BR | - |
-| `0xfffc3cb6` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R? (tbit vs 0xa) R1536 W1536 R? (tbit vs 0x7) R1559 ... | - |
-| `0xfffc4046` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1536=xxxxxxxxxxxxxxx*; 1544=7fc; 1546=8**00*xx*0000000 | W? W? W1546 | - |
-| `0xfffc4146` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1546 | - |
-| `0xfffc4286` | M | O | srlz.d | 1544=7fc; 1545=fffc0019b; 1546=8**00*xx*0000000 | R? (tbit vs 0x7) R1536 R1553 W1536 W1553 R? (tbit vs 0x5) ... | - |
+| `0xfffc3ab6` | M | V | srlz.d | 1558=xxxxxxxxxxxx*xxx; 1546=9**00*xx*00007ff; 1544=xxxxxxxxxxxxxxxx | R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) BR | A |
+| `0xfffc3cb6` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R0 (tbit vs 0xa) R1536 W1536 R0 (tbit vs 0x7) R1559 ... | A |
+| `0xfffc4046` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1536=xxxxxxxxxxxxxxx*; 1544=7fc; 1546=8**00*xx*0000000 | W? W? W1546 | A |
+| `0xfffc4146` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1546 | A |
+| `0xfffc4286` | M | O | srlz.d | 1544=7fc; 1545=fffc0019b; 1546=8**00*xx*0000000 | R0 (tbit vs 0x7) R1536 R1553 W1536 W1553 R0 (tbit vs 0x5) ... | A |
 | `0xfffc501c` | B | B1 | srlz.i | 1777=xxxxxxxxxxxxxxxx; bank x1; 1572=xxxxxxxxxxxx*000; 1664=xxxxxxxxxxxxxxx* | limit | - |
 | `0xfffc8236` | M | N1 | srlz.d | bank x4; 1084=xxxxxxxx*xxxx**x; 1544=201; 1546=9700**00000002** | W1084 BR | A |
 | `0xfffc8326` | M | N2 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1546=97e0**000000007f; bank x4; 1544=xxxxxxxxxxxxxxxx | BR | - |
@@ -423,14 +424,14 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xffdf4646` | M | N2 | srlz.d | bank x6; 1544=xxxxxxxxxxxxxxxx; 1546=9490**034000*xxx | RET | - |
 | `0xffdf4986` | M | N1 | srlz.i | 1558=xxxxxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
 | `0xffdf4ae6` | M | N1 | srlz.i | 1640=xx*xxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
-| `0xffdf7c5c` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R? R1641 | D |
-| `0xffdf7c9c` | B | B0 | srlz.i | - | R? R1642 | D |
-| `0xffdf7cec` | B | B0 | srlz.i | - | R? R1641 R1642 | D |
+| `0xffdf7c5c` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R0 R1641 | D |
+| `0xffdf7c9c` | B | B0 | srlz.i | - | R0 R1642 | D |
+| `0xffdf7cec` | B | B0 | srlz.i | - | R0 R1641 R1642 | D |
 | `0xffdf7d2c` | B | B0 | srlz.i | - | BR | D |
 | `0xffdfa8ec` | B | B1 | srlz.i | 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | BR | - |
 | `0xffe0727c` | B | B1 | srlz.i | 1643=xxxxxxxxxxxxxxxx; 1642=xxxxxxxxxxxxxxxx; 1282=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | W1282 R1640 R1237 (tbit vs 0x5) W1237 R1572 (tbit vs 0xe) | - |
-| `0xffe0905c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R? | E |
-| `0xffe0912c` | B | B0 | srlz.i | - | R1642 R1641 R? | E |
+| `0xffe0905c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R0 | E |
+| `0xffe0912c` | B | B0 | srlz.i | - | R1642 R1641 R0 | E |
 | `0xffe0917c` | B | B0 | srlz.i | - | R? R1641 | E |
 | `0xffe091bc` | B | B0 | srlz.i | - | R? | E |
 | `0xffe091ec` | B | B0 | srlz.i | - | BR | E |
@@ -444,7 +445,7 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xffe243e6` | M | N1 | srlz.d | 1544=30380; 1546=9780**00000303ff | W1084 W1057 W1056 R1559 W1544 Wbank x1 ... | R |
 | `0xffe244d6` | M | N1 | srlz.d | 1056=200007; 1544=xxxxxxxxxxxxxxxx; bank x1; 1546=97c0**01d0003000 | W1056 W1040 CALL | R |
 | `0xffe26856` | M | K | srlz.d | 1640=xxxxxxxxxxxxxxxx; 1664=2; 1544=xxxxxxxxxxxxxxxx; 1546=9021004d60000001 | R1212 (tbit vs 0xe) R1226 (cmp vs r20?) BR | R |
-| `0xffe26916` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R? (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
+| `0xffe26916` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R0 (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
 | `0xffe27866` | M | N1 | srlz.i | 1416=xxxxxxxxxxx*xxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1552 BR | - |
 | `0xffe3ee76` | M | W1 | srlz.i | 1544=xxxxxxxxxxx*xxxx; 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*3x | W1546 Wbank x1 W1084 | - |
 | `0xffe3eec6` | M | W1 | srlz.i | 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*1x | W1546 Wbank x1 W1084 | - |
@@ -545,11 +546,11 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 |---|---|---|---|---|---|---|
 | `0xfffd0476` | M | W2 | srlz.i | 1553=xxxxx*xxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1730=xxxxx**xxxxxxxxx | W1730 W1640 R1553 W1553 BR | - |
 | `0xfffd0b16` | M | V | srlz.d | 1536=xxxxxxxxxxxx*xxx; 1572=xxxxxxxxxxxx*xxx; 1640=0; 1546=9**00*xx*0**xfff | R1558 W1558 R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) ... | A |
-| `0xfffd0d36` | M | V | srlz.d | 1558=xxxxxxxxxxxx*xxx; 1546=9**00*xx*00007ff; 1544=xxxxxxxxxxxxxxxx | R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) BR | - |
-| `0xfffd0f36` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R? (tbit vs 0xa) R? (tbit vs 0x7) R1559 R1559 R1559 | - |
-| `0xfffd13a6` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1544=*x7fc; 1546=8**00*xx*0000000 | W? W? W1546 | - |
-| `0xfffd14a6` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1547 W1546 | - |
-| `0xfffd1606` | M | O | srlz.d | 1544=*x7fc; 1545=fffc0019b; 1547=xxxxxxxxxxxxxxxx; 1546=8**00*xx*0000000 | R? (tbit vs 0x7) R1536 R1553 W1536 W1553 R? (tbit vs 0x5) ... | - |
+| `0xfffd0d36` | M | V | srlz.d | 1558=xxxxxxxxxxxx*xxx; 1546=9**00*xx*00007ff; 1544=xxxxxxxxxxxxxxxx | R1608 (cmp vs 0x0) R1609 (cmp vs 0x0) R1610 (cmp vs 0x0) R1611 (cmp vs 0x0) BR | A |
+| `0xfffd0f36` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxxxfx; 1544=600; 1546=9720**000000067f | W1084 R0 (tbit vs 0xa) R0 (tbit vs 0x7) R1559 R1559 R1559 | A |
+| `0xfffd13a6` | M | N1 | srlz.d | 1084=xxxxxxxxxxxxxxxx; 1544=*x7fc; 1546=8**00*xx*0000000 | W? W? W1546 | A |
+| `0xfffd14a6` | M | N1 | srlz.d | ?=0; ?=xxxxxxxxxxxxxxxx; 1546=xxxxxxxxxxxxxxxx | R1559 W1544 W1545 W1547 W1546 | A |
+| `0xfffd1606` | M | O | srlz.d | 1544=*x7fc; 1545=fffc0019b; 1547=xxxxxxxxxxxxxxxx; 1546=8**00*xx*0000000 | R0 (tbit vs 0x7) R1536 R1553 W1536 W1553 R0 (tbit vs 0x5) ... | A |
 | `0xfffd23dc` | B | B1 | srlz.i | 1777=xxxxxxxxxxxxxxxx; bank x1; 1572=xxxxxxxxxxxx*000; 1664=xxxxxxxxxxxxxxx* | limit | - |
 | `0xfffd3ba6` | M | N1 | srlz.d | bank x1; 1084=xxxxxxxx*xxxx**x; 1544=301; 1546=9740**00000003** | W1084 BR | - |
 | `0xfffd3cf6` | M | N1 | srlz.d | bank x4; 1084=xxxxxxxx*xxxx**x; 1544=201; 1546=9700**00000002** | W1084 BR | A |
@@ -689,14 +690,14 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xfff57436` | M | N2 | srlz.d | bank x6; 1544=xxxxxxxxxxxxxxxx; 1546=9490**03400*xxxx | RET | - |
 | `0xfff577e6` | M | N1 | srlz.i | 1558=xxxxxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
 | `0xfff57946` | M | N1 | srlz.i | 1640=xx*xxxxxxxxxxxxx; 1640=xx*xxxxxxxxxxxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1640 BR | - |
-| `0xfff5ab6c` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R? R1641 | D |
-| `0xfff5abac` | B | B0 | srlz.i | - | R? R1642 | D |
-| `0xfff5abfc` | B | B0 | srlz.i | - | R? R1641 R1642 | D |
+| `0xfff5ab6c` | B | B1 | srlz.i | 1641=xxxxxxxxxxxxxxxx; 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx | R0 R1641 | D |
+| `0xfff5abac` | B | B0 | srlz.i | - | R0 R1642 | D |
+| `0xfff5abfc` | B | B0 | srlz.i | - | R0 R1641 R1642 | D |
 | `0xfff5ac3c` | B | B0 | srlz.i | - | BR | D |
 | `0xfff5dbfc` | B | B1 | srlz.i | 1776=xxxxxxxxxxxxxxxx; 1464=xxxxxxxxxxxxxxxx; 1283=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | CALL | - |
 | `0xfff6a28c` | B | B1 | srlz.i | 1643=xxxxxxxxxxxxxxxx; 1642=xxxxxxxxxxxxxxxx; 1282=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | W1282 R1640 R1237 (tbit vs 0x6) W1237 R1572 (tbit vs 0xe) | - |
-| `0xfff6c06c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R? | E |
-| `0xfff6c13c` | B | B0 | srlz.i | - | R1642 R1641 R? | E |
+| `0xfff6c06c` | B | B1 | srlz.i | 1237=xxxxxxxxxxxxxx*x; 1640=xxxxxxxxxxxxxxxx; ?=xxxxxxxxxxxxxxxx; 1664=xxxxxxxxxxxxxxx* | R1642 R0 | E |
+| `0xfff6c13c` | B | B0 | srlz.i | - | R1642 R1641 R0 | E |
 | `0xfff6c18c` | B | B0 | srlz.i | - | R? R1641 | E |
 | `0xfff6c1cc` | B | B0 | srlz.i | - | R? | E |
 | `0xfff6c1fc` | B | B0 | srlz.i | - | BR | E |
@@ -710,9 +711,9 @@ reading of code shape (*inferred*), with the limits in section 5 of the page.
 | `0xfff75706` | M | N1 | srlz.d | 1544=10380; 1546=9780**00000103ff | R1559 W1544 W1546 | R |
 | `0xfff75786` | M | N1 | srlz.d | 1544=20380; 1546=9780**00000203ff | R1559 W1544 W1546 | R |
 | `0xfff75806` | M | N1 | srlz.d | 1544=30380; 1546=9780**00000303ff | W1084 W1057 W1056 R1559 W1544 Wbank x1 ... | R |
-| `0xfff758f6` | M | O | srlz.d | 1056=200007; 1544=xxxxxxxxxxxxxxxx; bank x1; 1546=97c0**01d0003000 | R? (tbit vs 0x1) W1056 W1040 CALL | R |
+| `0xfff758f6` | M | O | srlz.d | 1056=200007; 1544=xxxxxxxxxxxxxxxx; bank x1; 1546=97c0**01d0003000 | R0 (tbit vs 0x1) W1056 W1040 CALL | R |
 | `0xfff77b36` | M | K | srlz.d | 1640=xxxxxxxxxxxxxxxx; 1664=2; 1544=xxxxxxxxxxxxxxxx; 1546=9021004d60000001 | R1212 (tbit vs 0xe) R1226 (cmp vs r20?) BR | R |
-| `0xfff77bf6` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R? (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
+| `0xfff77bf6` | M | U | srlz.d | 1640=x*xxxxxxxxxxxxxx; ?=9020000000000001 | W1664 R0 (tbit vs 0x18) W1573 R1779 (tbit vs 0xf) BR | R |
 | `0xfff78da6` | M | N1 | srlz.i | 1416=xxxxxxxxxxx*xxxx; 1544=xxxxxxxxxxxxxxxx; 1546=8940000000000000 | W1552 BR | - |
 | `0xfff90e76` | M | W1 | srlz.i | 1544=xxxxxxxxxxx*xxxx; 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*3x | W1546 Wbank x1 W1084 | - |
 | `0xfff90ec6` | M | W1 | srlz.i | 1546=8**00*xx*0000300; bank x1; 1084=xxxxxxxx*xxxx*1x | W1546 Wbank x1 W1084 | - |
