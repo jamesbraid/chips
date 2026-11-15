@@ -293,7 +293,7 @@ Per-pin interrupt address register (`cp_int_addr[n]`). The provider clears the d
 
 ### Word `INT_PIN_BITS`
 
-Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown).
+Layout of the interrupt enable register: one bit per bridge interrupt pin (the status register is likely to use the same pin bits, inferred; no code read tests it), numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

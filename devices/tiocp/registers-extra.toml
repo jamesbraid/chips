@@ -349,7 +349,7 @@ mfg = { bits = [11, 1], grade = "established" }
 width = 64
 grade = "established"
 from = "SGI Linux platform code, linux-5.3 pin 4d856f72c10e, arch/ia64/sn/pci/pcibr/pcibr_provider.c (pcibr_target_interrupt, pcibr_force_interrupt), pcibr_reg.c"
-doc = "Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown)."
+doc = "Layout of the interrupt enable register: one bit per bridge interrupt pin (the status register is likely to use the same pin bits, inferred; no code read tests it), numbered as the pin's per-pin address register (`cp_int_addr[n]`) and force register (`cp_force_pin[n]`). The provider sets and clears bit n of the enable register with the pin number from the firmware-supplied interrupt record. Upper bits (error interrupts) are not named by the code (unknown)."
 
 [words.INT_PIN_BITS.fields]
 pin = { bits = [7, 0], grade = "established", doc = "Pin n at bit n, n from 0 to 7 (the arrays have eight entries)." }

@@ -50,7 +50,7 @@ Corrections found while tagging. These are not fixed here.
   symbols, so the census holds no access from them. Next: constant-fold the PROM's widget-window setup, or read the
   I/O-board PROM's bridge probe by hand.
 - **TIOCP: which product carries one.** *[route: missing source: a published hardware overview of the Altix-class generation]* The register layout, the identification and the two registers the shared code says the chip lacks are settled
-  (devices/tiocp/README.md, devices/tiocp/coverage.md). Open: the Altix model list (the SN2 PROM attaches a TIOCP on the Opus TIO brick and on-board I/O boards, see the chip page). A hardware overview or guide that names the bridge is the route.
+  (devices/tiocp/README.md, devices/tiocp/coverage.md). Open: the Altix model list (the SN2 PROM maps TIOCP widgets for any I/O board type, see the chip page). A hardware overview or guide that names the bridge is the route.
 - **Xbow: the PROMs' large crossbar routines.** *[route: software now]* The census seeds only the small routines it could tie to the
   Crossbow (link-usable tests, link reset, error save, the IP30 interrupt service). Routines that touch the
   link-block displacements and were not read: IP27 PROM `0x1fc444b0`; I/O-board PROM `0x11c1d4ac` (its link reset wrapper is now read to the control restore, see devices/xbow/family.md; the remainder is not), `0x11c21c58`,

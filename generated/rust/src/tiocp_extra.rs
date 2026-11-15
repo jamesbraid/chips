@@ -351,7 +351,7 @@ pub mod int_addr {
         }
     }
 }
-/// Layout shared by the interrupt enable register and the status register: one bit per bridge interrupt pin, numbered as the pin's per-pin address regist (established)
+/// Layout of the interrupt enable register: one bit per bridge interrupt pin (the status register is likely to use the same pin bits, inferred; no code r (established)
 pub mod int_pin_bits {
     pub const WIDTH: u32 = 64;
     pub mod pin { // bits 7:0, established

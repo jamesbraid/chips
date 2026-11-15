@@ -2,8 +2,7 @@
 
 Mode: **no-spec** (see [references/documents/specs.md](../../references/documents/specs.md)).
 
-PCI-X bridge of a later system family (the Altix-class SN2 generation, whose crossbar chip is the TIO). The Altix SN2 PROMs carry a TIOCP
-attach routine, so it is an SN2 chip; which model has one is open. Nothing in the IRIX 6.5.30 builds read here drives it.
+PCI-X bridge of a later system family (the Altix-class SN2 generation, whose crossbar chip is the TIO). The Altix SN2 PROMs carry TIOCP routines (a widget-to-bus routine read in full, and the names of an attach routine and an error handler), so it is an SN2 chip; which model has one is open. Nothing in the IRIX 6.5.30 builds read here drives it.
 
 Status: no entries. The census of the shared Bridge-family accessors already lists the offsets those accessors reach
 when the chip type is 3 or the part number is `0xe000` or `0xe010`: the `tiocp` rows of
@@ -76,7 +75,7 @@ The PIC has the write request RAM too, at the same offsets, and no read response
 - **Interrupt address field is 54 bits** (mask `0x003fffffffffffff`) against the PIC's 48.
 - **Read ordering (erratum PV907516).** Instead of forcing an interrupt and waiting, S reads the per-device write-request flush register `cp_wr_req_buf[slot - 1]`, which "ensures the data has entered the
   coherence domain, unlike the PIC's". On a TIO whose identification revision is 1 the kernel does not read it and returns without ordering at all (the kernel's choice; what the hardware does on revision 1 is unknown).
-- **No part number.** The v5.3 headers define part numbers for the TIOCA (`0xe020`) and TIOCE (`0xce00`) but none for the TIOCP, so `0xe000` and `0xe010` as TIOCP remain IRIX-accessor evidence only (inferred).
+- **No part number.** The v5.3 headers define part numbers for the TIOCA (`0xe020`) and TIOCE (`0xce00`) but none for the TIOCP, so `0xe000` and `0xe010` as TIOCP rest on the IRIX accessors and the SAL 5.04 bridge classifier (see [Which product carries a TIOCP](#which-product-carries-a-tiocp)); the silicon's part field is not measured.
 
 ## Field layouts, reads and reset (SGI Linux v5.3 provider; PROM names)
 
@@ -122,15 +121,15 @@ Read in full from `sn_dma_flush` in `pcibr_dma.c` (v5.3; the same test is in v2.
   `0xe000` and `0xe010`**. Linux numbers the PIC 2 and the TIOCP 3 and says its values "must agree with what prom thinks they are". With the IRIX
   accessors that makes `0xe000` and `0xe010` the TIOCP in every shipped reader. That the silicon part field holds those numbers is still no measurement.
   (The PROM page's earlier reading of `0xd112` as the TIOCP is wrong: `0xd112` is the second PIC head.)
-- **Boards (inferred).** The PROM routine `tiocp_widget_to_bus` (Ghidra, `0xffb47210`, read in full) maps a TIO widget to a bus number from the L1
-  module type: types 123, 102 and 108 take the base number, other types add twice the slab. In the PROM's brick-name table 102 is the Opus TIO brick and
-  108 is on-board I/O; 123 is not in that table. The PIC attach routine, by contrast, accepts the IX-brick and PX-brick types. So a TIOCP sits on TIO-based I/O boards
-  (the Opus TIO brick and on-board I/O), and the IX- and PX-bricks keep PICs. No guide read names the product, so the Altix model list stays **unknown**.
-  The routine `tiocp_attach` itself was not found by the Ghidra analysis and is unread.
+- **Boards (unknown; weak inference only).** The PROM routine `tiocp_widget_to_bus` (Ghidra, `0xffb47210`, read in full) maps a TIO widget to a bus number from the
+  I/O board value of the widget's record (its error text calls it the ioboard): values 123, 102 and 108 take the base number and **every other value** adds twice the slab. In the PROM's
+  brick-name table 102 is the Opus TIO brick and 108 is on-board I/O; 123 is not in that table (which table value the routine reads is inferred from the matching numbers).
+  The routine accepts all board values, so it does not show that a TIOCP sits only on those boards, and the page makes no claim about IX- or PX-bricks. No guide read names the
+  product, so the board and Altix model lists stay **unknown**. The routine `tiocp_attach` itself was not found by the Ghidra analysis and is unread (its name is a string).
 
 ## Open
 
-- Which Altix model carries a TIOCP. The Altix PROM attaches one (boards narrowed above); IRIX does not. A published hardware
+- Which Altix model carries a TIOCP. The Altix PROM handles one (its widget-to-bus routine is read; boards stay unknown); IRIX does not. A published hardware
   overview of the Altix-class generation would name the models ([question](../../questions/altix-io-sn2-cross-check.md#pic-versus-tio-by-product)).
 - The `+0x14000` manual-parity translation RAM and the `+0x18000` and `+0x1c000` write-request and read-response RAMs
   exist only in the public header. No IRIX accessor reaches them. They are now named registers of the extra unit.
@@ -149,3 +148,20 @@ Independent review on 2026-11-14 by a reviewer who did not write these pages. Re
 - The earlier TIOCP content (census registers, inferred grades) is unchanged apart from added citations and the two appended "Open" sentences.
 
 **Cleared scope.** The extra unit's registers and constants and the README's Altix section. Not cleared: the coverage statement above, TIOCP revision behaviour, and which product carries a TIOCP.
+
+## Review (field layouts, revision 1 flush, product mapping)
+
+Independent review on 2026-11-15 of commits 6ba01ce, 883d61c and fdb0b0c (read at main 6843841) by a reviewer who did not write them. Grading rule: the SN2 paragraph of the evidence order in `retools/tools/README-analysis.md`.
+
+**How.** Linux v5.3 `tiocp.h`, `pcibr_provider.h`, `pcibus_provider_defs.h`, `pcibr_dma.c`, `pcibr_provider.c`, `pcibr_reg.c`, `pcibr_ate.c`, `pic.h`, `xwidgetdev.h`, `tioca.h` and `tioce.h` were fetched singly and every word, field, mask, shift and provider claim of the extra unit and the new sections compared with them; the `sn_dma_flush` revision test was also read at v2.6.14, v2.6.18 and v2.6.33. In the 10.54 SHub 1 image (SAL 5.04), Ghidra (`--ghidra-export --sn2-prom`) was re-run on `0xffab3f40` and `0xffb47210`; the name pool was checked by a byte scan of the 5.04 and 4.43 images (a string count, not code reading). More than 40 facts checked.
+
+**Confirmed.** Widget id split (31:28, 27:12, 11:1); interrupt address mask (54 bits, PIC 48); command type bits 61:60 with values 1 and 3; all six 64-bit attributes at bits 59 to 54 and which the kernel sets or clears (prefetch cleared in PCI-X, virtual for function other than 0 in PCI mode, bar for consistent mappings); translation entry bits 0 to 4 and shift 12, PIO set with MSI only on the TIOCP; 32-bit mapped base `0x40000000`, swap bit 29 from device bit 19, direct base `0x80000000`, PCI-X refusals (direct window on both chips, entries on the PIC only); control bit 21 set or cleared by kernel page size; device flags tested from the firmware-supplied copy; the target flush read must be zero and panics otherwise, after every entry update; per-device flush read discarded; `sn_dma_flush` returns at once for revision 1 of the TIO node id, otherwise reads `cp_wr_req_buf[slot - 1]`, same test in all four trees; ASIC type numbers 2 and 3 with the "must agree with prom" comment; TIOCA `0xe020` and TIOCE `0xce00`. Ghidra: `0xffab3f40` returns type 3 for `0xe000` and `0xe010` and type 2 for `0xd102` and `0xd112`, manufacturer 36, so the corrected PROM page is right. `0xffb47210` special-cases values 123, 102 and 108 and otherwise adds twice the slab. Name pool: 178 `TIO_CP_` names in each image, every field name the page lists present and grouped under the registers the page says. Names `tiocp_attach`, `tiocp_error_intr_handler` and `tiocp_widget_to_bus` are strings in both images.
+
+**Mechanical fixes.** (1) The board paragraph claimed a TIOCP sits on the Opus TIO brick and on-board I/O boards and that IX and PX bricks keep PICs. The Ghidra reading shows the routine accepts every board value and special-cases only those three for the base number, so it does not select boards; the PIC attach routine's accepted types were not read. Narrowed to unknown with a weak inference, here and in `questions/README.md` and the Open list. (2) `INT_PIN_BITS` said the status register shares the enable register's layout; no code tests status bits, so the doc now says enable register established, status likely the same (inferred). (3) The intro said the PROMs carry an attach routine; only its name is a string, so it now names the widget-to-bus routine that was read. (4) The "No part number" bullet still said inferred; it now points at the classifier reading.
+
+**Findings not fixed.**
+- Judgement: the board value `0xffb47210` reads (record +0x104) is called L1 module type by the page; the error text calls it the ioboard and the match to the brick-name table is by number only. Left as the weak inference above.
+- Judgement: `ATE.pio` and `bar` names are expanded from the PIC page, not the TIOCP header; the header gives only the constants.
+- The grouping of field names under registers comes from pool order; positions remain unknown, as the page says.
+
+**Cleared scope.** The extra unit's new words, the revision 1 flush section, the part-number paragraph, the PROM page corrections and the field-name list. Not cleared: board and Altix model mapping, and any hardware statement about revision 1.
