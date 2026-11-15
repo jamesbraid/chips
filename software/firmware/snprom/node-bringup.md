@@ -136,7 +136,7 @@ What an emulated L1 has to put in the SPD bytes so that SAL 5.04 sizes one bank 
 | 2 | 12 | 20 | 13 | 21 |
 | 3 | 14 | 22 | 15 | 23 |
 
-All sixteen are asked, in this order; odd slots first run two calls (`0xffa1f030`, `0xffa1f170`) that were not read. The L1 answers ids 14, 15, 22, 23 as not present on a type `F` brick, so bank 3 is always empty there. A slot whose read returns 0 sets its bit in the bank's presence word; the bank is sized only if the word is 15.
+All sixteen are asked, in this order; the only caller of `mdir_fill_node_dimmcfg` passes a nonzero fourth argument, so each odd slot first runs two calls (`0xffa1f030`, `0xffa1f170`), which go through a method pointer in the chip object and were not resolved. The L1 answers ids 14, 15, 22, 23 as not present on a type `F` brick, so bank 3 is always empty there. A slot whose read returns 0 sets its bit in the bank's presence word; the bank is sized only if the word is 15.
 
 **How the reply is parsed (established, `0xffa82270`, with the chunk loop `0xffa843f0`).** The reader sends selector 4, offset 0 and length min(48, 64) = 48 in one request and hands the reply (class byte already dropped) to the parser with two expected arguments: one integer and one raw block. The parser reads the status from bytes 0 to 3 (big-endian); a nonzero status is returned as the error (status -106 is combined with a further four bytes). Then it reads the count from byte 4, which must be exactly 2 (otherwise -33). The first argument's tag must be `0x00`, followed by four bytes (any other tag gives -32). The second argument is a raw block: the parser takes the length from the low 7 bits of its tag byte, does not test bit 7, and copies that many bytes to the slot's 256-byte buffer (buffers are 256 bytes apart, 1024 per bank). The integer is the L1's "bytes left"; after the one request the reader finds that 48 bytes are done and does not use it. The slot reads as absent if any step fails: the caller treats only return 0 as success (a status -107 gives return code 3, everything else 1, and the caller does not tell them apart). I saw no length test (inferred: a reply shorter than 48 bytes leaves the buffer's earlier contents in the bytes after it, which the PROM would then read) and no SPD checksum test in the PROM (reviewed above); the checksum matters only because the L1 refuses a record with a bad one.
 
@@ -153,21 +153,21 @@ All sixteen are asked, in this order; odd slots first run two calls (`0xffa1f030
 | 29 | row-to-column delay | `0xffa7b410` | upper 6 bits whole nanoseconds, lower 2 bits quarters |
 | 42 | refresh cycle time | `0xffa7b6c0` | nanoseconds; maximum over all present slots |
 
-**Size (established).** The bank's density index and rank code give the bank size in MB as `64 << (index + rank code + 2)` (`0xffa77f9c` to `0xffa78080`, stored per bank); the node's memory is the sum over banks (inferred, the sum was not read). Index 3 (byte 31 = `0x80`) with rank code 0 (byte 5 = 1) gives 2048 MB for four DIMMs, so each is 512 MB. Index 7 marks a bank empty.
+**Size (established).** The bank's density index and rank code give the bank size in MB as `64 << (index + rank code + 2)` (`0xffa77f9c` to `0xffa78080`, stored per bank); the node's memory is the sum over banks (established: `0xffa782c0`, loop at `0xffa783d0` to `0xffa784c6`, adds each bank's size to the node total at offset 32 of the memory record; a bank counts only when its present flag is set and its density field in `0x1_0001_0010` is not 7). Index 3 (byte 31 = `0x80`) with rank code 0 (byte 5 = 1) gives 2048 MB for four DIMMs, so each is 512 MB. Index 7 marks a bank empty.
 
-**CAS latency and clock (established for the arithmetic; the diagnostics are inferred non-fatal).** The bus period code comes from `0xffa7b7e0`: 133 MHz gives `0x75`, 100 MHz `0xa0`, 160 MHz `0x63`, 200 MHz `0x50` (a period in nanoseconds, tens in the upper nibble, tenths in the lower; any other clock gives 0). `0xffa7afd0` returns a latency index per slot, and the bank set takes the largest over every present slot, starting from 1:
+**CAS latency and clock (established for the arithmetic; the diagnostics are inferred non-fatal).** `0xffa7b7e0` derives the bus period code internally and returns the latency index; the code is: 133 MHz gives `0x75`, 100 MHz `0xa0`, 160 MHz `0x63`, 200 MHz `0x50` (a period in nanoseconds, tens in the upper nibble, tenths in the lower; any other clock gives 0). `0xffa7afd0` returns a latency index per slot, and the bank set takes the largest over every present slot, starting from 1:
 
 - If bit 4 of byte 18 is set: index 3 (CL 3.0) when `byte 9 <= period code`; then if bit 3 is set and `byte 23 <= period code`, index 2; then if bit 2 is set and `byte 25 <= period code`, index 1. If none of the three conditions held it prints a diagnostic and returns 3.
 - If bit 4 is clear and bit 3 is set: index 2 when `byte 9 <= period code`; then if bit 2 is set and `byte 23 <= period code`, index 1; no match prints a diagnostic and returns 2.
 - If neither bit 4 nor bit 3 is set (a module that only lists CL 2.0): -1, which the maximum ignores.
 
-The index and the clock then select the timing row (`0xffa76630`): at 200 MHz index 1, 2, 3 give timing index 3, 4, 5; at 160 MHz 6, 7, 8; at 133 MHz and 100 MHz only the pairs listed in section 2 (the 133 and 100 MHz rows of the map were not re-read here). A pair outside the table prints "not supported" and goes on with a default.
+The index and the clock then select the timing row (`0xffa76630`): at 200 MHz index 1, 2, 3 give timing index 6, 7, 8; at 160 MHz 3, 4, 5; at 133 MHz index 1, 2 give 1, 2; at 100 MHz index 1 gives 0. A pair outside the table prints "not supported" and goes on with a default.
 
-**Row-to-column delay (established).** `0xffa7b410` turns byte 29 into hundredths of a nanosecond (`100 * (byte >> 2) + 25 * (byte & 3)`), divides by the bus period in the same unit, rounding up, and stores the clock count. A count above 4 is cut to 4 and a count of 1 or less is raised to 2, each with a diagnostic; the count must be the same for every slot of every present bank (a difference prints a diagnostic and calls a helper at `0xffad2c50` that was not read, so it may be fatal: unknown).
+**Row-to-column delay (established).** `0xffa7b410` turns byte 29 into hundredths of a nanosecond (`100 * (byte >> 2) + 25 * (byte & 3)`), divides by the bus period in the same unit, rounding up. A count above 4 is cut to 4 and a count of 1 or less is raised to 2, each with a diagnostic; the count must be the same for every slot of every present bank (a difference prints a diagnostic and calls `0xffad2c50`, which reports the error through `0xffad2cb0`: it clears the four processor-ready bits 29:26 of `0x1_5003_1550`, sets bit 39 of `0x1_101d_0080`, waits 0.3 s and returns 0. It does not halt; whether a later stage stops was not traced). The value the function finally returns is always 3: after the loop, a count other than 3 prints "INFO: tRCD setting %d is not supported.  Setting tRCD to 3." and the result is 3, stored at offset 8 of the memory record.
 
-**Refresh cycle (established).** `0xffa7b6c0` takes the largest byte 42 of all present slots, divides by 5 (rounding down) and caps the result at 14. That value feeds the tRFC clock count of the controller programming (field position in section 1; the hand-off was not traced: inferred).
+**Refresh cycle (established).** `0xffa7b6c0` takes the largest byte 42 of all present slots, divides by 5 (rounding down) and raises a result below 14 to 14 (a lower bound; larger values are kept). That value feeds the tRFC clock count of the controller programming (field position in section 1; the hand-off was not traced: inferred).
 
-**What rejects a DIMM or a bank.** A slot with a nonzero reply status, a count other than 2 or a wrong tag is absent. A bank with one to three present slots prints "DIMM groups must be plugged in sets of 4 DIMMs" and its presence word is set to 0 (`0xffa76290`; the message text from section 1, the reset to 0 inferred from the return value). Byte 5 other than 1 or 2 gives rank code -1 and is not otherwise rejected, so the size would be wrong (the PROM does not stop). Byte 31 outside the six values makes the bank empty. A populated bank after an empty one, and banks whose rank codes are out of order, print diagnostics from `0xffa764a0` (inferred non-fatal); bank 0 alone triggers none of them.
+**What rejects a DIMM or a bank.** A slot with a nonzero reply status, a count other than 2 or a wrong tag is absent. A bank with one to three present slots prints "DIMM groups must be plugged in sets of 4 DIMMs" and its presence word is set to 0 (`0xffa76290`; the message text from section 1, the reset to 0 established: the function returns 0 for a partial word). Byte 5 other than 1 or 2 gives rank code -1 and is not otherwise rejected, so the size would be wrong (the PROM does not stop). Byte 31 outside the six values makes the bank empty. A populated bank after an empty one, and banks whose rank codes are out of order, print diagnostics from `0xffa764a0` (inferred non-fatal); bank 0 alone triggers none of them.
 
 **Worked example: four 512 MB single-rank DIMMs in bank 0, 200 MHz bus.** `0x1_1006_0500` bits 1:0 = 0 selects 200 MHz (period code `0x50`). Ids 8, 16, 9, 17 return this 64-byte head, the rest of the 256 bytes zero; the other twelve ids return -104.
 
@@ -178,14 +178,51 @@ The index and the clock then select the timing row (`0xffa76630`): at 200 MHz in
 | 18 | `0x1c` | bits 4, 3, 2 set (CL 3.0, 2.5, 2.0) |
 | 23 | `0x60` | bit 3 set, `0x60 <= 0x50` is false, so index stays 3 |
 | 25 | `0x75` | bit 2 set, `0x75 <= 0x50` is false, so index stays 3 |
-| 29 | `0x48` | 18 ns = 1800; period 500; 1800 / 500 rounded up = 4 clocks, inside 2..4 |
+| 29 | `0x48` | 18 ns = 1800; period 500; 1800 / 500 rounded up = 4 clocks, inside 2..4; the PROM then prints the tRCD INFO line and uses 3 |
 | 31 | `0x80` | density index 3; with rank code 0 the bank is `64 << 5` = 2048 MB |
-| 42 | `0x46` | 70 ns, 70 / 5 = 14, the cap |
+| 42 | `0x46` | 70 ns, 70 / 5 = 14, equal to the lower bound |
 | 63 | `0x50` | the L1's check: the 63 bytes above sum to `0x250`, low byte `0x50` |
 
-Latency index 3 at 200 MHz selects timing index 5. Banks 1 to 3 have a presence word of 0 and size as empty. The result is a 2 GiB node.
+Latency index 3 at 200 MHz selects timing index 8 (the table row 8 has its valid halfword set). Banks 1 to 3 have a presence word of 0 and size as empty. The result is a 2 GiB node.
 
 The PROM's own stand-in for a DIMM (the simulator path `0xffa7b940`, not reached on real hardware) builds a buffer with byte 18 = `0x0c`, byte 9 = `0x75`, byte 23 = `0xa0`, byte 29 = `0x49` and a density and rank pair, and sets byte 63 to the sum of bytes 0 to 62. At 133 MHz that gives CL 2.5, which is another valid shape for the same bank (byte 5 = 1, byte 31 = `0x80`).
+
+## Review (SPD contents)
+
+Independent review of the section "SPD contents for a 2 GiB node" as committed in chips `acf6511`. The reviewer wrote none of it. Method: `shub1snprom.bin` (SAL_B, sha256 `51ccf9ad...3a34617`, base `0xffa00000`) was disassembled with `ia64-linux-gnu-objdump` through the retools container and every function the section cites was read in full, with the predicate polarity of each compare followed. The L1 side was read in the ARM program `/stand/sysco/bin/l1` (package 4 of `l1-1.62.1.bin`, sha256 `22cb6287...`) with the retools decoder's ARM mode (Capstone), for the reply frame and the error statuses. No firmware bytes or listings are kept.
+
+**Confirmed (re-read in the binary).**
+
+- Id order: `0xffa77bb0` runs bank 0 to 3 outside and slot 0 to 3 inside, calling `0xffa7bd60`, which passes slot >> 1, slot & 1 and the bank to `0xffa85470`; that function builds `8 + 8*(slot & 1) + 2*bank + (slot >> 1)`. Bank 0 is 8, 16, 9, 17. Buffers are `bank*1024 + slot*256`. The presence bit is set when the read returns 0.
+- Reply parser `0xffa82270`: status from bytes 0 to 3 big-endian; the count byte 4 is compared after the loop with the expected count, so exactly 2 is required (else -33); the integer needs tag `0x00` then four bytes (else -32); the raw length is the tag byte masked with `0x7f`, no test of bit 7 and no bound against the 256-byte buffer (the `0x80` it tests is in the caller's expected-type word).
+- The integer is parsed but unused for this call: the chunk loop `0xffa843f0` takes min(remaining, 64) = 48, and after the reply tests only its own remaining count (48 - 64 < 0). The "bytes left" cell is read back only when more than 64 bytes are asked. The L1's value 208 = 256 - 0 - 48 is correct and is needed only because the parser demands an integer and a raw block (count 2).
+- Per-byte consumers: `0xffa7b310` (byte 5: 1 gives rank code 0, 2 gives 1, else -1; all four slots must agree), `0xffa7b1b0` (byte 31: `0x10`, `0x20`, `0x40`, `0x80`, `0x01`, `0x02` give 0 to 5, else 7; minimum over the four slots), `0xffa7afd0` (bytes 18, 9, 23, 25: every branch polarity matches the section, including the override order 3, 2, 1 and the returns of 3 or 2 with a diagnostic when nothing matches, -1 when neither bit 4 nor bit 3 is set), `0xffa7b410` (byte 29 to `100*(b>>2) + 25*(b&3)`, ceiling division by the period 10000/MHz*10, cut to 4, raised to 2), `0xffa7b6c0` (byte 42, maximum over present slots, divided by 5 with the multiply-shift for x/5), `0xffa7b7e0` (period codes `0x75`, `0xa0`, `0x63`, `0x50`, else 0; maximum latency index over present slots starting at 1).
+- Size: `64 << (density + rank + 2)` at `0xffa78060` to `0xffa78080`; one 2048 MB bank for byte 31 = `0x80`, byte 5 = 1. The sum into the node total is now read (see fix 2).
+- Checksum bytes of the example: bytes 5, 9, 18, 23, 25, 29, 31, 42 are `0x01 + 0x50 + 0x1c + 0x60 + 0x75 + 0x48 + 0x80 + 0x46 = 0x250`, low byte `0x50`, so byte 63 = `0x50` holds only if every other byte of 0 to 62 is 0, as the example says.
+- L1 side, ARM `0xc9658`: the five checks in the section's order; the frame writer `0xc3f64` writes `0x20 | index`, status, a count byte incremented per argument including a dropped one, integer tag 0, raw tag `0x80 | n` with the guard `len + n <= 127` (116 at length 11 after the status and integer), integer guard `len + 5 <= 127`; the loader `0x12e5c0` sums bytes 0 to 62 (the loop runs 0 to `0x3e`) and compares byte 63. Statuses -100, -104, -105, -107 are `0xffffff9c`, `0xffffff98`, `0xffffff97`, `0xffffff95`.
+
+**Mechanical fixes made in this review (this page).**
+
+1. Timing index map (`0xffa76630`): 200 MHz index 1, 2, 3 give 6, 7, 8 and 160 MHz gives 3, 4, 5; the page had them swapped. 133 MHz index 1, 2 give 1, 2 and 100 MHz index 1 gives 0. The example now says timing index 8 (the table row has its valid halfword set; row 3, the 160 MHz latency index 1 case, has it clear).
+2. The sum over banks is now established (`0xffa782c0`, loop `0xffa783d0`): it adds each bank's size to the node total at offset 32, for banks whose present flag is set and whose density field in `0x1_0001_0010` is not 7.
+3. tRFC: the code is a lower bound, `max(byte42 / 5, 14)`, not a cap. Bytes up to `0x45` give 14; `0x46` also gives 14.
+4. tRCD: `0xffa7b410` always returns 3. After the clamp to 2..4 and the equality check, a count other than 3 prints "INFO: tRCD setting %d is not supported.  Setting tRCD to 3." The worked example's 4 clocks is therefore the pre-forced count; the node runs tRCD 3.
+5. The helper at `0xffad2c50` is read: it is not a halt (see the text now on the page).
+6. The two calls for odd slots run because the only caller passes a nonzero fourth argument; they go through a method pointer and stay unresolved. The page said only that they were not read.
+7. The partial-bank reset to 0 is established (`0xffa76290` returns 0). `0xffa7b7e0` returns the latency index and derives the period code itself.
+
+**Findings not fixed.**
+
+1. Example byte 29 gives the INFO line above. Byte 29 = `0x3c` (15 ns, 3 clocks at 5.00 ns) avoids it, which moves byte 63 to `0x44`. The example works either way, so the values are unchanged.
+2. The tRCD mismatch route (and the same helper from the bank-order diagnostics at `0xffa764a0`) clears processor-ready bits 29:26 of `0x1_5003_1550` and sets bit 39 of `0x1_101d_0080`. The helper's logging branch (taken only for one chip-object type) was not followed to its end, and whether any later stage stops on this was not traced. Identical DIMMs never reach it.
+3. A bank with an unrecognised byte 31 gets a huge size (`64 << (7 + rank + 2)`) in the size array and a present flag; it drops out of the sum only through the density field 7 in `0x1_0001_0010`. That register must hold what the PROM writes (it is written by code not read here; the section's register table says storage).
+4. SPD meanings: the JEDEC DDR SDRAM SPD standard (JESD21-C) was searched for in the `techpubs` and `linux-history` Library roots and not found; the other roots were not enumerated. The grades stay inferred. For what it is worth, byte 18's bits as CAS masks and bytes 9, 23, 25 as periods in 4.4-bit coding agree with the usual DDR SPD layout, and the PROM's density coding (`0x80` for 512 MB per DIMM with one rank) matches how DDR modules are usually coded; that is memory, not a cited source.
+5. Timing table rows other than the valid halfword (offset 26) were not decoded.
+6. What the two odd-slot calls do on hardware is unknown.
+
+**Not checked.** The writer of `0x1_0001_0010` (`0xffa76bf0`), `0xffa6de80`, the diagnostic path of `0xffa73bd0`, the simulator path `0xffa7b940`.
+
+**Cleared scope.** The id formula and order, the parser rules, the eight byte consumers, the density, rank, latency, tRCD, tRFC and size arithmetic, the sum into the node total, the 2 GiB worked example as corrected (CAS index 3, timing index 8, tRCD 3 after forcing, tRFC 14, node size 2048 MB). Not cleared: the JEDEC meanings of the bytes (inferred) and the grades on item 2 and 3 above.
 
 ## 3. NASID and role
 
