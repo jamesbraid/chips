@@ -168,7 +168,7 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 - **PROM and SAL.** No manual names a PROM version for any Prism. SGI's SHub 1 PROM images are held (snprom 4.43, 10.40 and
   10.54; [evidence/sn2-holdings.md](../../evidence/sn2-holdings.md)), no Prism-specific build is, and SGI's `README.snprom` in
   the 10.54 package lists Prism Rackmount and Prism Deskside among the machines `shub1snprom.bin` supports: vendor intent, not
-  a boot of a Prism ([the qualification page](../../software/firmware/snprom/qualification.md) grades it and recommends the
+  a boot of a Prism ([the qualification page](../../software/firmware/snprom/images.md) grades it and recommends the
   image). The only version requirement in Linux is generic: with a SHub 1, `tioca_bus_fixup` refuses to set up a TIOCA unless
   the SAL revision is at least `0x0406` ("SGI prom rev 4.06 or greater required for tioca support",
   `v5.3:arch/ia64/sn/pci/tioca_provider.c`). It is skipped for SHub 2. Established as the code. The SAL calls the kernel makes

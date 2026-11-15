@@ -87,7 +87,7 @@ No L1, L2 or L3 controller firmware package for the SN2 bricks has been found un
 the controller firmware shipped with IRIX include SN2 brick routines, so that firmware may cover some SN2 bricks.
 
 The SN1 IA-64 prototype never shipped a PROM. For that one target the repository owner accepted SGI's simulator fake
-PROM from the Linux 2.5 tree as its firmware ([platforms/sn1-ia64/bring-up.md](../platforms/sn1-ia64/bring-up.md)).
+PROM from the Linux 2.5 tree as its firmware ([platforms/sn1-ia64/fake-prom.md](../platforms/sn1-ia64/fake-prom.md)).
 Every shipped SN2 machine is to boot real SGI firmware.
 
 ## Manuals

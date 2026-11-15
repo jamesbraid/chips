@@ -80,7 +80,7 @@ Everything else: the `FSB_CONFIG` bits other than the two written fields, reset 
 control, the interface to the Bedrock PI (processor-bus command encodings), the interrupt priority and inter-processor
 interrupt path through Synergy, and the meaning of the A and B performance event selectors. The open entry is in
 [questions/sn1-ia64-synergy-registers.md](../../questions/sn1-ia64-synergy-registers.md). What a bring-up needs from Synergy is in
-[bring-up.md](bring-up.md).
+[fake-prom.md](fake-prom.md).
 
 ## Review
 

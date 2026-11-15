@@ -3,7 +3,7 @@
 Which real SGI PROM image, and which minimal machine, an emulator should boot first: no synthetic firmware, no patched
 firmware, no skipped diagnostics, no invented success. The end goal is the Prism (IP57 node board, SHub 1.2 where a
 manual names it); the Altix 350 shares that node board and is the smaller machine. This page only qualifies. It adds no
-register facts: those live in [the firmware page](README.md), [the boot-path page](altix350-boot-path.md) and the
+register facts: those live in [the firmware page](README.md), [the boot-path page](boot-sequence.md) and the
 device pages. An independent review is appended (section Review); its corrections are folded into the text below.
 
 **Grades.** *established*: read in full in a shipped binary or printed in a published manual. *inferred*: reasoned,
@@ -18,7 +18,7 @@ SHub 1 images; `IP57` and `Prism` string counts. The manual pages cited were re-
 Everything else is taken from the pages named, at the commits named.
 
 Pages synthesised (chips `c567510`, sysco `5d62fbd`):
-[snprom README](README.md) (`1579f00`), [boot path](altix350-boot-path.md) (`c567510`),
+[snprom README](README.md) (`1579f00`), [boot path](boot-sequence.md) (`c567510`),
 [SN2 holdings](../../../evidence/sn2-holdings.md) (`c4a3255`),
 [irix-files](../../../evidence/irix-files.md#sn2-firmware-and-kernels) (`ec38a7e`),
 [Altix 350](../../../platforms/sn2/altix-350.md) and [Altix 3000](../../../platforms/sn2/altix-3000.md) (`94c62dd`),
