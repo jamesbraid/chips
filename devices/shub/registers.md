@@ -14,27 +14,35 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `chip_id` | 0x100000000 | r | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa0be1c (read), 0xffa0f8c0 (storage of the fields), 0xffa0f7e0 (table walk), 0xffa959a6 (compare against 17251) |
-| `md_mbist_status` | 0x100000080 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read on failure per the earlier reviewed reading; no Linux v5.3 name |
-| `md_mbist_err` | 0x1000000b8 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa725f6 (read in the failure report, per the earlier reviewed reading); no Linux v5.3 name |
-| `md_mbist_mask` | 0x1000000c0 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name |
-| `md_bank_cfg0` | 0x100010000 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_bank_cfg1` | 0x100010008 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_bank_cfg2` | 0x100010010 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_0` | 0x100010020 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_1` | 0x100010028 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_refresh_0` | 0x100010030 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_2` | 0x100010040 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_timing_3` | 0x100010048 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_refresh_1` | 0x100010050 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_const_58` | 0x100010058 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_ctl_60` | 0x100010060 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
+| `md_mbist_status` | 0x100000080 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux v5.3 name |
+| `md_mbist_err` | 0x1000000b8 | r | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa725f6 (read in the failure report); no Linux v5.3 name |
+| `md_mbist_mask` | 0x1000000c0 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name |
+| `md_bank_cfg0` | 0x100010000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7701c (write); no Linux v5.3 name |
+| `md_bank_cfg1` | 0x100010008 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa76c3c (read), 0xffa7704c (write), 0xffa6dedc and 0xffa7ab9c (reads for the bank size); no Linux v5.3 name |
+| `md_bank_cfg2` | 0x100010010 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7707c (write), 0xffa6f2fc and 0xffa7838c (reads); no Linux v5.3 name |
+| `md_timing_0` | 0x100010020 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7710c (write); no Linux v5.3 name |
+| `md_timing_1` | 0x100010028 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa770ac (write); no Linux v5.3 name |
+| `md_refresh_0` | 0x100010030 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa77adc (write); no Linux v5.3 name |
+| `md_timing_2` | 0x100010040 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa76c9c (read), 0xffa7713c (write); no Linux v5.3 name |
+| `md_timing_3` | 0x100010048 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa76c6c (read), 0xffa770dc (write); no Linux v5.3 name |
+| `md_refresh_1` | 0x100010050 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7761c (read), 0xffa77b0c (write); no Linux v5.3 name |
+| `md_const_58` | 0x100010058 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7745c (write); no Linux v5.3 name |
+| `md_ctl_60` | 0x100010060 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa773cc (write), 0xffa7738c (revision read); no Linux v5.3 name |
 | `md_reg_0001_0068` | 0x100010068 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7ab6c (read), 0xffa7acdc and 0xffa7ad9c (writes) |
-| `md_const_78` | 0x100010078 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name |
-| `md_mbist_cmd` | 0x100020080 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name |
-| `md_mbist_ctl` | 0x100020088 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c (poll), 0xffa6b1dc (failure test); no Linux v5.3 name |
+| `md_const_78` | 0x100010078 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7748c (write); no Linux v5.3 name |
+| `md_mbist_cmd` | 0x100020080 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name |
+| `md_mbist_ctl` | 0x100020088 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c and 0xffa6fddc (poll), 0xffa6b1dc (failure test); no Linux v5.3 name |
+| `md_reg_0003_0000` | 0x100030000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name |
+| `md_reg_0003_0200` | 0x100030200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name |
 | `md_dqlp_dir_privilege_vector` | 0x100030300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `md_reg_0003_0400` | 0x100030400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_lp` | 0x100031000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name |
+| `md_bist_data_a0` | 0x100038000 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
+| `md_bist_data_b0` | 0x100038010 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
+| `md_bist_data_a1` | 0x100038800 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
+| `md_bist_data_b1` | 0x100038810 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
+| `md_reg_0005_0000` | 0x100050000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7861c (write); no Linux v5.3 name |
+| `md_reg_0005_0200` | 0x100050200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name |
 | `md_dqrp_dir_privilege_vector` | 0x100050300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `md_reg_0005_0400` | 0x100050400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_rp` | 0x100051000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name |
@@ -86,86 +94,199 @@ Chip identification word at node offset 0x1_0000_0000 (memory and directory bloc
 
 ### Register `md_mbist_status`
 
-Memory test engine status; the name is ours. Written 0 at engine start. The memory-test loop reads bit 36 after every engine run (site 0xffa702c0) and treats it set as failure (-2), so it must read 0 on a passing run; the error report reads it again and then md_mbist_err. The directory write does not test it. The flag name (compare error) is inferred.
+Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside the compare wrapper) and treated as failure when set, so it must read 0 on a passing run; the failure report reads it again and then md_mbist_err. Operation 48, the directory write and the DRAM commands never read it. Bits 32:0 are read in the failure report as the failing address in 8-byte units. Plain storage satisfies the PROM. The flag name (compare error) is inferred. See memory-init.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 36 | `cmp_err` | inferred |  | SAL 5.04 PROM site 0xffa702c0 and 0xffa72500, per the node-bringup.md review | Set means the engine run failed. Name is ours. |
+| 36 | `cmp_err` | inferred |  | SAL 5.04 PROM sites 0xffa702c0 and 0xffa72500 | Set means the compare of an operation 16 run failed. Name is ours. |
+| 32:0 | `fail_addr` | inferred |  | SAL 5.04 PROM site 0xffa72500 (extract of 33 bits, times 8) | Failing address in 8-byte units, read only in the failure report. Name is ours. |
 
 ### Register `md_mbist_err`
 
-Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run.
+Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a passing run, so it needs no particular value. Its layout is unknown.
 
 ### Register `md_mbist_mask`
 
-Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts.
+Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts; never read. Must return: plain storage.
 
 ### Register `md_bank_cfg0`
 
-Memory controller register, unnamed; the name is ours. Per-bank configuration word 0 of the memory controller set-up (node-bringup.md: timing index in bits 35:32 and one byte per bank at bit 8k with density index in 2:0, rank code in 3 and bank number in 6:5; not re-read for this file).
-
-### Register `md_bank_cfg1`
-
-Memory controller register, unnamed; the name is ours. Per-bank configuration word 1; read once first, then written.
-
-### Register `md_bank_cfg2`
-
-Memory controller register, unnamed; the name is ours. Per-bank configuration word 2; the memory test driver reads each bank's config byte here and skips banks whose density index is 7 (empty).
-
-### Register `md_timing_0`
-
-Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or 54 selects tRCD 3, 2 or 4 (node-bringup.md; not re-read for this file).
-
-### Register `md_timing_1`
-
-Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file).
-
-### Register `md_refresh_0`
-
-Memory controller register, unnamed; the name is ours. Refresh interval 195 in bits 16:8 (overridable by the MemoryRefresh variable), tRFC clocks in bits 22:17 and per-bank enables (node-bringup.md; not re-read for this file).
-
-### Register `md_timing_2`
-
-Memory controller register, unnamed; the name is ours. Paired with md_timing_0 (same layout, per node-bringup.md); read then written.
-
-### Register `md_timing_3`
-
-Memory controller register, unnamed; the name is ours. Second copy of md_timing_1's layout; read then written.
-
-### Register `md_refresh_1`
-
-Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. The bring-up routine reads it (site 0xffa7761c), puts the refresh interval 195 in bits 16:8 and writes it back (site 0xffa77b0c); the same word is also written to md_refresh_0 (site 0xffa77adc).
-
-### Register `md_const_58`
-
-Memory controller register, unnamed; the name is ours. Written with the constant 0x4004e20 (node-bringup.md).
-
-### Register `md_ctl_60`
-
-Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision split as pi_reg_2000_0000's OR value).
-
-### Register `md_reg_0001_0068`
-
-Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argument as signed integers; when they differ it writes the argument back, sign-extended from 32 bits, and goes on to a helper call. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef (the value the PROM's clock code also tests). The register must read back what was written; the role of the value is unknown.
-
-### Register `md_const_78`
-
-Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md).
-
-### Register `md_mbist_cmd`
-
-Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's word before md_mbist_ctl. The meaning of the word is unknown; it is plain storage as far as the PROM shows.
-
-### Register `md_mbist_ctl`
-
-Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and all ones to md_mbist_mask, then this register with go set, an operation code in bits 38:32 and a 31-bit value. It then polls: while (value & 0x300_0000_0000) equals 0x100_0000_0000 (go set, fail clear) it waits; it stops when go clears or fail sets, with a deadline of 20,000,000 microseconds on the PROM's own clock routine (the routine site 0xffa0da70 returns microseconds). Fail set afterwards is an error. A model where go clears at once and fail never sets satisfies the code.
+Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). This one is never read; accept the store. See memory-init.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 41 | `fail` | inferred |  | SAL 5.04 PROM site 0xffa6fd40 (mask 0x30000000000) and 0xffa6b1e6 (bit test) | Set when the operation failed; the PROM stops polling when it sets and reports an error. Name is ours. |
-| 40 | `go` | inferred |  | SAL 5.04 PROM site 0xffa6fc16 (constant 0x10000000000) and the poll site 0xffa6fd40 | Written 1 to start; reads 1 while the engine runs. The PROM waits for it to clear. Name is ours. |
-| 38:32 | `op` | inferred |  | SAL 5.04 PROM site 0xffa6fc26 (seven-bit deposit at bit 32) | Operation code: 64 for the directory write, 48 and 16 for the memory test, 7, 2, 0, 0, 2, 1, 1, 0 for the first DRAM initialisation sequence (earlier reading, meaning inferred). Name is ours. |
-| 30:0 | `value` | inferred |  | SAL 5.04 PROM site 0xffa6fbe6 (mask 0x7fffffff) | Operand written with the operation. Name is ours. |
+| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+
+### Register `md_bank_cfg1`
+
+Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). Read first by the set-up, then by the memory test and the credit routine to find each bank's size: it must read back what was written. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+
+### Register `md_bank_cfg2`
+
+Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with the same 64-bit word, built by merging fields into the old value of _0008 (bits it does not deposit keep their old value): a timing index in bits 35:32 and one byte per bank at bit 8k with the density index, rank code and a two-bit field. For a 2 GiB node (one bank, density 3, rank 0) the low byte is 0x03 and banks 1 to 3 read 0x27, 0x47, 0x67 (density 7). The memory test driver reads it to skip banks whose density index is 7, and the size sum reads it too: it must read back what was written. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 35:32 | `timing_idx` | established |  | SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4) | Timing-table row index 0 to 8 chosen from the bus clock and CAS latency (100 MHz with CL 2.0 gives 0; 133 MHz 1 and 2; 160 MHz 3 to 5; 200 MHz 6 to 8). Name is ours. |
+| 30:29 | `b3_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 3 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 27 | `b3_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 3: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 26:24 | `b3_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 3: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 22:21 | `b2_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 2 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 19 | `b2_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 2: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 18:16 | `b2_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 2: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 14:13 | `b1_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 1 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 11 | `b1_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 1: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 10:8 | `b1_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 1: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+| 6:5 | `b0_field` | established |  | SAL 5.04 PROM site 0xffa76f56 (bank 0) | Two-bit field of bank 0 taken from the bank record; equals the bank number in the traced run, role unknown. Name is ours. |
+| 3 | `b0_rank` | established |  | SAL 5.04 PROM site 0xffa76f06 (bank 0) | Rank code of bank 0: 0 for single-rank DIMMs, 1 for dual-rank. Name is ours. |
+| 2:0 | `b0_density` | established |  | SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function) | Density index of bank 0: 0 to 5 for 64 MB to 2 GB per rank, 7 for an empty bank. Bank size is 0x4000000 << (density + rank code) << 2 bytes, so 3 with rank code 0 is 2 GiB. Name is ours. |
+
+### Register `md_timing_0`
+
+Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Never read. Must return: plain storage. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 54 | `trcd4` | established |  | SAL 5.04 PROM site 0xffa77536 | Set instead of trcd3 for a tRCD of 4. Name is ours. |
+| 53 | `trcd2` | established |  | SAL 5.04 PROM site 0xffa76e16 | Set instead of trcd3 for a tRCD of 2. Name is ours. |
+| 52 | `trcd3` | established |  | SAL 5.04 PROM site 0xffa76d86 | Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours. |
+| 51:48 | `row_c` | established |  | SAL 5.04 PROM site 0xffa76e3c | 16-bit value at row offset 12. Name is ours. |
+| 47:44 | `row_b` | established |  | SAL 5.04 PROM site 0xffa76e26 | 16-bit value at row offset 10. Name is ours. |
+| 43:40 | `row_a` | established |  | SAL 5.04 PROM site 0xffa76df6 | 16-bit value at row offset 8. Name is ours. |
+| 39:8 | `row_lo` | established |  | SAL 5.04 PROM site 0xffa76d46 | Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours. |
+| 7:0 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours. |
+
+### Register `md_timing_1`
+
+Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timing-table row; the other bits keep the old value read from _0048 (site 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word. Never read. Must return: plain storage. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:20 | `u5` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 24 of the timing-table row. Name is ours. |
+| 19:16 | `u4` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 22 of the timing-table row. Name is ours. |
+| 15:12 | `u3` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 20 of the timing-table row. Name is ours. |
+| 11:8 | `u2` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 18 of the timing-table row. Name is ours. |
+| 7:4 | `u1` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 16 of the timing-table row. Name is ours. |
+| 3:0 | `u0` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 14 of the timing-table row. Name is ours. |
+
+### Register `md_refresh_0`
+
+Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Never read. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 27:24 | `bank_small` | established |  | SAL 5.04 PROM site 0xffa77a8c | Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours. |
+| 22:17 | `trfc` | established |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
+| 16:8 | `interval` | established |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
+| 7:0 | `cs_enable` | established |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
+
+### Register `md_timing_2`
+
+Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the timing index). One of two registers (offsets _0020 and _0040) that carry the same word; bits 63:40 and 7:0 of the old value of _0040 are merged in (read at site 0xffa76c9c). Read once before the write, so any value is accepted before the first write. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 54 | `trcd4` | established |  | SAL 5.04 PROM site 0xffa77536 | Set instead of trcd3 for a tRCD of 4. Name is ours. |
+| 53 | `trcd2` | established |  | SAL 5.04 PROM site 0xffa76e16 | Set instead of trcd3 for a tRCD of 2. Name is ours. |
+| 52 | `trcd3` | established |  | SAL 5.04 PROM site 0xffa76d86 | Set for a tRCD of 3 clocks (the value the PROM always ends up with). Name is ours. |
+| 51:48 | `row_c` | established |  | SAL 5.04 PROM site 0xffa76e3c | 16-bit value at row offset 12. Name is ours. |
+| 47:44 | `row_b` | established |  | SAL 5.04 PROM site 0xffa76e26 | 16-bit value at row offset 10. Name is ours. |
+| 43:40 | `row_a` | established |  | SAL 5.04 PROM site 0xffa76df6 | 16-bit value at row offset 8. Name is ours. |
+| 39:8 | `row_lo` | established |  | SAL 5.04 PROM site 0xffa76d46 | Low 32 bits of the first doubleword of the 32-byte timing-table row. Name is ours. |
+| 7:0 | `const_lo` | established |  | SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6 | Always 0x02: bit 1 set, bits 7:2 cleared. Name is ours. |
+
+### Register `md_timing_3`
+
+Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timing-table row; the other bits keep the old value read from _0048 (site 0xffa76c6c). One of two registers (_0028 and _0048) that carry the same word. Read once before the write, so any value is accepted before the first write. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 23:20 | `u5` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 24 of the timing-table row. Name is ours. |
+| 19:16 | `u4` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 22 of the timing-table row. Name is ours. |
+| 15:12 | `u3` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 20 of the timing-table row. Name is ours. |
+| 11:8 | `u2` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 18 of the timing-table row. Name is ours. |
+| 7:4 | `u1` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 16 of the timing-table row. Name is ours. |
+| 3:0 | `u0` | established |  | SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20) | 16-bit value at row offset 14 of the timing-table row. Name is ours. |
+
+### Register `md_refresh_1`
+
+Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it starts as the old value of _0050 with bit 23 cleared and these fields deposited. Read once, before the write; keep what was written. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 27:24 | `bank_small` | established |  | SAL 5.04 PROM site 0xffa77a8c | Bit k set for each present bank whose density index is 1 or less; none for a 2 GiB node. Meaning unknown. Name is ours. |
+| 22:17 | `trfc` | established |  | SAL 5.04 PROM site 0xffa776ec | tRFC in clocks: SPD byte 42 divided by 5, at least 14. Name is ours. |
+| 16:8 | `interval` | established |  | SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override) | Refresh interval, 195 unless the flash variable MemoryRefresh gives another number. Name is ours. |
+| 7:0 | `cs_enable` | established |  | SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0) | One bit per chip select that exists (chip select = 2 * bank + rank); bit 0 only for a 2 GiB single-rank node. Meaning inferred. Name is ours. |
+
+### Register `md_const_58`
+
+Memory controller register, unnamed; the name is ours. Written once with the constant 0x4004e20; never read. Role unknown. See memory-init.md.
+
+### Register `md_ctl_60`
+
+Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision (bits 31:28 of 0x1_1006_0580) is above 2 and 0x4045 otherwise; never read. Role unknown. See memory-init.md.
+
+### Register `md_reg_0001_0068`
+
+Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, and compares the 32-bit value with its argument, 4 when called from the memory test and 2 from Initializing memory (which runs only with bit 8 of the debug-switch word set). Equal: nothing. Value below the argument: writes the argument back (sign-extended from 32 bits), zero-fills the last 1/32 of the bank with engine operation 48 and then zero-fills with the block transfer engine (IBLS0 written 0x100000 plus twice the difference, polled for bit 20 to clear). Value above: writes the argument back and zero-fills (value minus argument) times 32 8-byte words at the bank base with operation 48. The routine returns at once, touching nothing, when cpuid[2] equals 0xaeeeeeee8badbeef or no bank is flagged present. The register must read back what was written; the role of the value is unknown (a credit-like count, inferred from the comparison). See memory-init.md.
+
+### Register `md_const_78`
+
+Memory controller register, unnamed; the name is ours. Written once with the constant 0x24; never read. Role unknown. See memory-init.md.
+
+### Register `md_mbist_cmd`
+
+Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's 64-bit word before the status and control writes of every engine start: for operations 48 and 16 the byte address within the node where the pass starts (bank << 34, plus 32 times the pass number for operation 16), for operation 64 the directory address, for the DRAM initialisation commands (operations 7, 2, 1, 0) a command word. Never read in the passing path. Must return: plain storage. See memory-init.md.
+
+### Register `md_mbist_ctl`
+
+Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status and all ones to md_mbist_mask, then this register with go set, an operation code in bits 38:32 and a 31-bit value. It then polls, keeping bits 41:40: it leaves the loop when they are not 01 (go set, fail clear), so 00 is done, 10 is done and failed, 11 is failed with go still set (the PROM then stores the value it read back with bit 40 cleared and polls bit 40 to clear), 01 is busy. The deadline is 20,000,000 microseconds, scaled from the real-time clock by the period in rtc_ctl. An expiry returns -3 (printed as MBIST TIMEOUT). Callers test bit 41 afterwards. Bits 38:0 are never read. A model where go clears at once and fail never sets satisfies the code. See memory-init.md.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 41 | `fail` | established |  | SAL 5.04 PROM site 0xffa6fd40 (mask 0x30000000000) and 0xffa6b1e6 (bit test) | Set when the operation failed; the PROM stops polling when it sets and the caller reports an error. Never set in the passing path. Name is ours. |
+| 40 | `go` | established |  | SAL 5.04 PROM site 0xffa6fc16 (constant 0x10000000000) and the poll site 0xffa6fd40 | Written 1 to start; reads 1 while the engine runs. The PROM waits for it to clear. Name is ours. |
+| 38:32 | `op` | established |  | SAL 5.04 PROM site 0xffa6fc26 (seven-bit deposit at bit 32) | Operation code: 48 and 16 for the memory test (inferred as write the pattern and read and compare), 64 for the directory write, 80 for a directory read (not reached on a single node), 7, 2, 0, 0, 2, 1, 1, 0 for the DRAM initialisation sequence of one chip select (meaning inferred). Name is ours. |
+| 30:0 | `value` | established |  | SAL 5.04 PROM site 0xffa6fbe6 (mask 0x7fffffff) | Operand written with the operation: the count of 8-byte words for operations 48, 16 and 64 (bank size divided by 8, 0x1000_0000 for a 2 GiB bank), 0 for the DRAM initialisation commands. Name is ours. |
+
+### Register `md_reg_0003_0000`
+
+MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
+
+### Register `md_reg_0003_0200`
+
+MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. Role unknown. See memory-init.md.
+
+Array of 8 registers, stride 16.
 
 ### Register `md_dqlp_dir_privilege_vector`
 
@@ -177,11 +298,45 @@ Memory and directory block register, unnamed; the name is ours. The memory contr
 
 ### Register `md_dir_access_lp`
 
-Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status.
+Directory memory initial-value write, left queue port block (the block is the one the Linux header calls SH1_MD_DQLP_MMR_DIR_PRIVEC0 at the 0x300 offset; the left reading is inferred from that name); the name is ours. The PROM stores the value shifted left 55 here and to md_dir_access_rp, then runs the engine with operation code 64. No separate initialise register for directory ECC was seen. The routine fails on a -3 timeout or bit 41 of md_mbist_ctl and does not test bit 36 of md_mbist_status. Never read; plain storage satisfies the PROM. Callers pass the value 7 for the first 64 KiB of node 0 and 6 for the 6 MiB PROM image copy (argument positions inferred). See memory-init.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 63:55 | `value` | inferred |  | SAL 5.04 PROM site 0xffa6b076 (shift left 55) | The caller's value shifted left 55. The width of the field is inferred from the shift; name is ours. |
+
+### Register `md_bist_data_a0`
+
+Memory test data pattern word (first A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+
+Array of 4 registers, stride 65536.
+
+### Register `md_bist_data_b0`
+
+Memory test data pattern word (first B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+
+Array of 4 registers, stride 65536.
+
+### Register `md_bist_data_a1`
+
+Memory test data pattern word (second A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+
+Array of 4 registers, stride 65536.
+
+### Register `md_bist_data_b1`
+
+Memory test data pattern word (second B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Programmed before every engine operation 48 or 16: the A words get the 40-bit pattern with bit 42 set, the B words the pattern or its 40-bit complement. Never read. Must return: plain storage. See memory-init.md.
+
+Array of 4 registers, stride 65536.
+
+### Register `md_reg_0005_0000`
+
+As md_reg_0003_0000 for the right queue port block; the PROM only writes it, with the value it read from md_reg_0003_0000 with bit 3 set. The name is ours.
+
+### Register `md_reg_0005_0200`
+
+As md_reg_0003_0200 for the right queue port block. The name is ours.
+
+Array of 8 registers, stride 16.
 
 ### Register `md_dqrp_dir_privilege_vector`
 
@@ -280,11 +435,11 @@ Which processors may send interprocessor interrupts to this one (header title: C
 
 ### Register `md_clk_sel`
 
-DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (200, 160, 133 and 100 MHz for 0 to 3, per the earlier reading). The chosen clock and the DIMM's CAS latency must be a pair the PROM supports or it prints that the memory bus speed is not supported. In the local block by address. Linux does not define it: the position and use are as observed in the PROM, the meaning (bus clock select) is inferred.
+DRAM bus clock select; the name is ours. The memory-controller set-up reads it and uses bits 1:0 as an index into a four-entry table held in flash (200, 160, 133 and 100 MHz for 0 to 3, table read). The chosen clock and the DIMM's CAS latency must be a pair the PROM supports or it prints that the memory bus speed is not supported and goes on with unusable timing values. Never written by the PROM. Must return: any value whose bits 1:0 give a supported pair; zero (200 MHz) is the simplest. In the local block by address. Linux does not define it: the position and use are as observed in the PROM, the meaning (bus clock select) is inferred. See memory-init.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 1:0 | `sel` | inferred |  | SAL 5.04 PROM site 0xffa77e20 | Clock table index. Name is ours. |
+| 1:0 | `sel` | inferred |  | SAL 5.04 PROM site 0xffa77e20 | Clock table index: 0 for 200 MHz, 1 for 160, 2 for 133, 3 for 100. Name is ours. |
 
 ### Register `shub_id`
 

@@ -27,7 +27,7 @@ pub mod chip_id {
         }
     }
 }
-/// Memory test engine status; the name is ours. Written 0 at engine start. The memory-test loop reads bit 36 after every engine run (site 0xffa702c0) and (inferred)
+/// Memory test engine status; the name is ours. Written 0 before every engine start. Bit 36 is read after each operation 16 poll (site 0xffa702c0, inside (established)
 pub mod md_mbist_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100000080;
@@ -41,92 +41,852 @@ pub mod md_mbist_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod fail_addr { // bits 32:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1ffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a p (inferred)
+/// Memory test engine other-error value; the name is ours. Read only in the failure report, after bit 36 of md_mbist_status is found set; not read on a p (established)
 pub mod md_mbist_err {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1000000b8;
 }
-/// Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts. (inferred)
+/// Memory test engine mask; the name is ours (inferred from the all-ones write only). Written with all ones each time the engine starts; never read. Must (established)
 pub mod md_mbist_mask {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1000000c0;
 }
-/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 0 of the memory controller set-up (node-bringup.md: timing index in (inferred)
+/// Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with t (established)
 pub mod md_bank_cfg0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010000;
+    pub mod timing_idx { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_field { // bits 30:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_rank { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_density { // bits 26:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_field { // bits 22:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_rank { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_density { // bits 18:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_field { // bits 14:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_rank { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_density { // bits 10:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_field { // bits 6:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_rank { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_density { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 1; read once first, then written. (inferred)
+/// Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with t (established)
 pub mod md_bank_cfg1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010008;
+    pub mod timing_idx { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_field { // bits 30:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_rank { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_density { // bits 26:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_field { // bits 22:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_rank { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_density { // bits 18:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_field { // bits 14:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_rank { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_density { // bits 10:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_field { // bits 6:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_rank { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_density { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Per-bank configuration word 2; the memory test driver reads each bank's config byte here and sk (inferred)
+/// Memory controller register, unnamed; the name is ours. One of three registers (offsets 0x1_0001_0000, _0008 and _0010) the memory set-up writes with t (established)
 pub mod md_bank_cfg2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010010;
+    pub mod timing_idx { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_field { // bits 30:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_rank { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b3_density { // bits 26:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_field { // bits 22:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_rank { // bits 19:19, established
+        pub const SHIFT: u32 = 19;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b2_density { // bits 18:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_field { // bits 14:13, established
+        pub const SHIFT: u32 = 13;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_rank { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b1_density { // bits 10:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_field { // bits 6:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_rank { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod b0_density { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Timing fields built from a 32-byte flash table row; bits 7:0 are 0x02 and one of bits 52, 53 or (inferred)
+/// Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the ti (established)
 pub mod md_timing_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010020;
+    pub mod trcd4 { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trcd2 { // bits 53:53, established
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trcd3 { // bits 52:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_c { // bits 51:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_b { // bits 47:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_a { // bits 43:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_lo { // bits 39:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod const_lo { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields (node-bringup.md; not re-read for this file). (inferred)
+/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timi (established)
 pub mod md_timing_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010028;
+    pub mod u5 { // bits 23:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u4 { // bits 19:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u3 { // bits 15:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u2 { // bits 11:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u1 { // bits 7:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u0 { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Refresh interval 195 in bits 16:8 (overridable by the MemoryRefresh variable), tRFC clocks in b (inferred)
+/// Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it (established)
 pub mod md_refresh_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010030;
+    pub mod bank_small { // bits 27:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trfc { // bits 22:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod interval { // bits 16:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cs_enable { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Paired with md_timing_0 (same layout, per node-bringup.md); read then written. (inferred)
+/// Memory controller register, unnamed; the name is ours. Timing word built from a 32-byte row of the timing table at flash site 0xffbe0650 (row = the ti (established)
 pub mod md_timing_2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010040;
+    pub mod trcd4 { // bits 54:54, established
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trcd2 { // bits 53:53, established
+        pub const SHIFT: u32 = 53;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trcd3 { // bits 52:52, established
+        pub const SHIFT: u32 = 52;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_c { // bits 51:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_b { // bits 47:44, established
+        pub const SHIFT: u32 = 44;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_a { // bits 43:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod row_lo { // bits 39:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod const_lo { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Second copy of md_timing_1's layout; read then written. (inferred)
+/// Memory controller register, unnamed; the name is ours. Six 4-bit timing fields from the 16-bit values at offsets 14, 16, 18, 20, 22 and 24 of the timi (established)
 pub mod md_timing_3 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010048;
+    pub mod u5 { // bits 23:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u4 { // bits 19:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u3 { // bits 15:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u2 { // bits 11:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u1 { // bits 7:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod u0 { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Second copy of md_refresh_0's layout. The bring-up routine reads it (site 0xffa7761c), puts the (inferred)
+/// Memory controller register, unnamed; the name is ours. One word is written to both _0030 and _0050, once, after the eight DRAM initialisation runs: it (established)
 pub mod md_refresh_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010050;
+    pub mod bank_small { // bits 27:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod trfc { // bits 22:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod interval { // bits 16:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod cs_enable { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Memory controller register, unnamed; the name is ours. Written with the constant 0x4004e20 (node-bringup.md). (inferred)
+/// Memory controller register, unnamed; the name is ours. Written once with the constant 0x4004e20; never read. Role unknown. See memory-init.md. (established)
 pub mod md_const_58 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010058;
 }
-/// Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision is above 2 and 0x4045 otherwise (the same revision spl (inferred)
+/// Memory controller register, unnamed; the name is ours. Written 0x4047 when the SHub ID revision (bits 31:28 of 0x1_1006_0580) is above 2 and 0x4045 ot (established)
 pub mod md_ctl_60 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010060;
 }
-/// Memory controller register, unnamed; the name is ours. A SAL_B routine reads it, reads md_bank_cfg1, and compares the 32-bit value with its third argu (established)
+/// Memory controller register, unnamed; the name is ours. The credit routine (site 0xffa7a960) reads it for the first flagged bank, reads md_bank_cfg1, a (established)
 pub mod md_reg_0001_0068 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010068;
 }
-/// Memory controller register, unnamed; the name is ours. Written with the constant 0x24 (node-bringup.md). (inferred)
+/// Memory controller register, unnamed; the name is ours. Written once with the constant 0x24; never read. Role unknown. See memory-init.md. (established)
 pub mod md_const_78 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100010078;
 }
-/// Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's word before md_mbist_ctl. The meaning (inferred)
+/// Memory test and DRAM initialisation engine, command or address word; the name is ours. Written with the caller's 64-bit word before the status and con (established)
 pub mod md_mbist_cmd {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100020080;
 }
-/// Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status an (inferred)
+/// Memory test and DRAM initialisation engine control; the name is ours. The PROM starts the engine by writing md_mbist_cmd, then 0 to md_mbist_status an (established)
 pub mod md_mbist_ctl {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100020088;
-    pub mod fail { // bits 41:41, inferred
+    pub mod fail { // bits 41:41, established
         pub const SHIFT: u32 = 41;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -136,7 +896,7 @@ pub mod md_mbist_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod go { // bits 40:40, inferred
+    pub mod go { // bits 40:40, established
         pub const SHIFT: u32 = 40;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -146,7 +906,7 @@ pub mod md_mbist_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod op { // bits 38:32, inferred
+    pub mod op { // bits 38:32, established
         pub const SHIFT: u32 = 32;
         pub const MASK: u64 = 0x7f;
         pub const fn get(v: u64) -> u64 {
@@ -156,7 +916,7 @@ pub mod md_mbist_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod value { // bits 30:0, inferred
+    pub mod value { // bits 30:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7fffffff;
         pub const fn get(v: u64) -> u64 {
@@ -166,6 +926,18 @@ pub mod md_mbist_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, run only with bit 8 of the debug-switch word set) reads it, sets b (established)
+pub mod md_reg_0003_0000 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100030000;
+}
+/// MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global wi (established)
+pub mod md_reg_0003_0200 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100030200;
+    pub const COUNT: u32 = 8;
+    pub const STRIDE: u64 = 16;
 }
 /// Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege  (established)
 pub mod md_dqlp_dir_privilege_vector {
@@ -191,6 +963,46 @@ pub mod md_dir_access_lp {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Memory test data pattern word (first A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Progr (established)
+pub mod md_bist_data_a0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100038000;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 65536;
+}
+/// Memory test data pattern word (first B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Progr (established)
+pub mod md_bist_data_b0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100038010;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 65536;
+}
+/// Memory test data pattern word (second A word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Prog (established)
+pub mod md_bist_data_a1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100038800;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 65536;
+}
+/// Memory test data pattern word (second B word of each block), one in each of the blocks 0x3, 0x4, 0x5 and 0x6 (stride 0x1_0000); the name is ours. Prog (established)
+pub mod md_bist_data_b1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100038810;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 65536;
+}
+/// As md_reg_0003_0000 for the right queue port block; the PROM only writes it, with the value it read from md_reg_0003_0000 with bit 3 set. The name is  (established)
+pub mod md_reg_0005_0000 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100050000;
+}
+/// As md_reg_0003_0200 for the right queue port block. The name is ours. (established)
+pub mod md_reg_0005_0200 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100050200;
+    pub const COUNT: u32 = 8;
+    pub const STRIDE: u64 = 16;
 }
 /// Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names. (established)
 pub mod md_dqrp_dir_privilege_vector {

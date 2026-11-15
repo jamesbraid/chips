@@ -46,8 +46,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read on failure per the earlier reviewed reading; no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa6fbac (written 0 at engine start); bit 36 read at site 0xffa702c0 and 0xffa72500; no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -56,7 +56,16 @@
    "hi": 36,
    "lo": 36,
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa702c0 and 0xffa72500, per the node-bringup.md review"
+   "from": "SAL 5.04 PROM sites 0xffa702c0 and 0xffa72500"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_mbist_status.fail_addr",
+   "hi": 32,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa72500 (extract of 33 bits, times 8)"
   },
   {
    "unit": "shub",
@@ -69,8 +78,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa725f6 (read in the failure report, per the earlier reviewed reading); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa725f6 (read in the failure report); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -83,7 +92,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fbdc (written all ones at engine start); no Linux v5.3 name"
   },
   {
@@ -97,8 +106,125 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7701c (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.timing_idx",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b3_field",
+   "hi": 30,
+   "lo": 29,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b3_rank",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b3_density",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b2_field",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b2_rank",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b2_density",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b1_field",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b1_rank",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b1_density",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b0_field",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b0_rank",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg0.b0_density",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
    "unit": "shub",
@@ -111,8 +237,125 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76c3c (read), 0xffa7704c (write), 0xffa6dedc and 0xffa7ab9c (reads for the bank size); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.timing_idx",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b3_field",
+   "hi": 30,
+   "lo": 29,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b3_rank",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b3_density",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b2_field",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b2_rank",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b2_density",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b1_field",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b1_rank",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b1_density",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b0_field",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b0_rank",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg1.b0_density",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
    "unit": "shub",
@@ -125,8 +368,125 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7707c (write), 0xffa6f2fc and 0xffa7838c (reads); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.timing_idx",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ec6 (deposit at bit 32, width 4)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b3_field",
+   "hi": 30,
+   "lo": 29,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b3_rank",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b3_density",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b2_field",
+   "hi": 22,
+   "lo": 21,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b2_rank",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b2_density",
+   "hi": 18,
+   "lo": 16,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b1_field",
+   "hi": 14,
+   "lo": 13,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b1_rank",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b1_density",
+   "hi": 10,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b0_field",
+   "hi": 6,
+   "lo": 5,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f56 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b0_rank",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76f06 (bank 0)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_bank_cfg2.b0_density",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76ee6 (bank 0; the other banks follow in the same function)"
   },
   {
    "unit": "shub",
@@ -139,8 +499,80 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7710c (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.trcd4",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77536"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.trcd2",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e16"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.trcd3",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76d86"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.row_c",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e3c"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.row_b",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e26"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.row_a",
+   "hi": 43,
+   "lo": 40,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76df6"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.row_lo",
+   "hi": 39,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76d46"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_0.const_lo",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6"
   },
   {
    "unit": "shub",
@@ -153,8 +585,62 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa770ac (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u5",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u4",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u3",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u2",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u1",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_1.u0",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
   },
   {
    "unit": "shub",
@@ -167,8 +653,44 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77adc (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_0.bank_small",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77a8c"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_0.trfc",
+   "hi": 22,
+   "lo": 17,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa776ec"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_0.interval",
+   "hi": 16,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_0.cs_enable",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)"
   },
   {
    "unit": "shub",
@@ -181,8 +703,80 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76c9c (read), 0xffa7713c (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.trcd4",
+   "hi": 54,
+   "lo": 54,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77536"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.trcd2",
+   "hi": 53,
+   "lo": 53,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e16"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.trcd3",
+   "hi": 52,
+   "lo": 52,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76d86"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.row_c",
+   "hi": 51,
+   "lo": 48,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e3c"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.row_b",
+   "hi": 47,
+   "lo": 44,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76e26"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.row_a",
+   "hi": 43,
+   "lo": 40,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76df6"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.row_lo",
+   "hi": 39,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76d46"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_2.const_lo",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d80 and 0xffa76dd6"
   },
   {
    "unit": "shub",
@@ -195,8 +789,62 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa76c6c (read), 0xffa770dc (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u5",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u4",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u3",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u2",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u1",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_timing_3.u0",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa76d66 to 0xffa76e46 (deposits at bits 0 to 20)"
   },
   {
    "unit": "shub",
@@ -209,8 +857,44 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7761c (read), 0xffa77b0c (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_1.bank_small",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77a8c"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_1.trfc",
+   "hi": 22,
+   "lo": 17,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa776ec"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_1.interval",
+   "hi": 16,
+   "lo": 8,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7764c (195) and 0xffa7769c (override)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "md_refresh_1.cs_enable",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa77a6c (deposit of bit cs into bits 7:0)"
   },
   {
    "unit": "shub",
@@ -223,8 +907,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7745c (write); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -237,8 +921,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa773cc (write), 0xffa7738c (revision read); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -265,8 +949,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa76bf0 (memory controller set-up; sites per node-bringup.md); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7748c (write); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -279,7 +963,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name"
   },
   {
@@ -293,8 +977,8 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c (poll), 0xffa6b1dc (failure test); no Linux v5.3 name"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c and 0xffa6fddc (poll), 0xffa6b1dc (failure test); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -302,7 +986,7 @@
    "name": "md_mbist_ctl.fail",
    "hi": 41,
    "lo": 41,
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fd40 (mask 0x30000000000) and 0xffa6b1e6 (bit test)"
   },
   {
@@ -311,7 +995,7 @@
    "name": "md_mbist_ctl.go",
    "hi": 40,
    "lo": 40,
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fc16 (constant 0x10000000000) and the poll site 0xffa6fd40"
   },
   {
@@ -320,7 +1004,7 @@
    "name": "md_mbist_ctl.op",
    "hi": 38,
    "lo": 32,
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fc26 (seven-bit deposit at bit 32)"
   },
   {
@@ -329,8 +1013,36 @@
    "name": "md_mbist_ctl.value",
    "hi": 30,
    "lo": 0,
-   "grade": "inferred",
+   "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa6fbe6 (mask 0x7fffffff)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_reg_0003_0000",
+   "offset": 4295163904,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_reg_0003_0200",
+   "offset": 4295164416,
+   "access": "w",
+   "width": 64,
+   "count": 8,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name"
   },
   {
    "unit": "shub",
@@ -382,6 +1094,90 @@
    "lo": 55,
    "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa6b076 (shift left 55)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_bist_data_a0",
+   "offset": 4295196672,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_bist_data_b0",
+   "offset": 4295196688,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_bist_data_a1",
+   "offset": 4295198720,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_bist_data_b1",
+   "offset": 4295198736,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 65536,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_reg_0005_0000",
+   "offset": 4295294976,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7861c (write); no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_reg_0005_0200",
+   "offset": 4295295488,
+   "access": "w",
+   "width": 64,
+   "count": 8,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name"
   },
   {
    "unit": "shub",
