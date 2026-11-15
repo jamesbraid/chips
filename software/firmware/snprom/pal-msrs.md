@@ -59,6 +59,22 @@ the bundle just before it is a branch to itself; how it is entered is **unknown*
 So the later `br.ia` sites are not preceded by fresh 212 or 1225 writes: they rely on the state the reset stub left, and the processor-specific PAL_A tests msr[1225]
 before calling (next section). That is the discriminating evidence for 1225 over 212 as the gate (inferred; there is no read of msr[212] anywhere in PAL_A).
 
+### `br.ia` sites in the PAL_B images (added after review)
+
+Decoding the three PAL_B images with zero runs shown finds three `br.ia` slots in each, nine in all. With the six PAL_A sites above that is every `br.ia` the decoder reports inside a PAL component (established). Two more hits, at `0xffc111c0` and `0xffd44d2c`, lie outside every PAL image in bytes that decode as data, and are not counted.
+
+| `br.ia` (slot 2) | Guard | Registers set before it | MSR writes before it |
+|---|---|---|---|
+| 7.79 `0xffe254ac` (5.73 `0xffed641c`, 2.25 `0xfff7678c`) | msr[1225] is read at `0xffe252b6`; the branch at `0xffe252dc` goes to this block when bit 14 or bit 2 is set and to the loader calls when both are clear. Same polarity as the specific PAL_A gate (established) | `b1` = `0x80000000ffffffe0` (the `br.ia` operand, the value the reset stub puts in `b0`), `b0` = `0xffe26670`, `r2` = `0xffe254b0` if the `cpuid[3]` revision byte is 3 or less (0 reads as 1) and `0xffe25d90` otherwise, `r3` = 1, `r5` = 0, `r100` = `pr` | msr[1040] = 4; msr[1056] = 2 only when the revision byte is 7 or less; msr[1167], [1183], [1231], [1247] = 0; msr[1215] = one masked bit of msr[1212]; msr[1153], [1154] = 0; msr[1152] set to a low-field value of 8, then written 128 more times with the field at 7 and the value stepping by 128, then bit 16 set; msr[1777] and msr[1714] loaded with ip-relative address values (bit 50 of the old msr[1714] kept); `srlz.d`; then the 1225 read. Addresses `0xffe24600` to `0xffe25296` |
+| 7.79 `0xffe3aae0` (5.73 `0xffeebb20`, 2.25 `0xfff8cae0`) | none from an MSR: the routine from its `alloc` at `0xffe3a780` to the `br.ia` has no MSR access. It leaves early if bit 33 of `r13` is set, then runs a chain of one-bit-mask checks (`cmp.eq p7,p6=r14,r0`) that branch to the failure exit `0xffe3ac90` | `b0` = `0x80000000fff72c90` (5.73 `…fff73cd0`, 2.25 `…fff64c90`); `ssm 0x400000` and `srlz.d` immediately before; the two slots after the `br.ia` are branches to `0xffe3ac90`; `r5` is not set in the routine | none |
+| 7.79 `0xffdff426` (5.73 `0xffeb0426`, 2.25 `0xfff62726`) | a predicated `br.ia` in a bundle whose neighbours decode as unrelated data (a `getf` and `fwb` pair in the other slots) | `b4` | none |
+
+The first row's block is not reached by the `(p07)` branch at `0xffe2462c`: the compare at `0xffe24610` (`cmp.eq p0,p7=0,r0`) leaves `p7` clear, so that branch never fires. Control gets there by straight-line flow from `0xffe245c0` (the two paths into it, a `cpuid[3]` revision test at `0xffe24560` and its fall-through, both reach `0xffe245c0`), through a cache-flush loop and a chain of predicate-selected jumps, to a computed jump through `b2` = `r12` + 3168 = `0xffe25220`, where `r12` = `0xffe245c0` from the `mov r12=ip` at `0xffe245c6` (established from the bundles). The code that calls this procedure is not traced, so how it is entered is **unknown**. After reset msr[1225] is 4, so bit 2 is set and this path takes the `br.ia` (inferred: assumes nothing else wrote msr[1225] first).
+
+In 5.73 and 2.25 the first row has the same shape with different offsets: `r12` = `0xffed54b0` and `0xfff75970`, `b0` = `r12` + `0x2130` (`0xffed75e0`) and `r12` + `0x1fe0` (`0xfff77950`), and `r2` = `r12` + 3952 or 6224 on the same revision-byte test in 5.73, `r12` + 5888 with no test in 2.25.
+
+The second row has the shape of a fault check, not a service call (inferred): bit 22 of the `ssm` mask is `psr.di`, which the SDM says makes an instruction-set transition fault, and the code treats falling through as failure. What `0xfff72c90` is, and whether the processor would honour the `br.ia` there, is **unknown**. The third row is almost certainly not code (inferred).
+
 ## Priority registers
 
 ### msr[212]
@@ -91,6 +107,8 @@ before a `br.ia` that invokes resident microcode, but no MSR number is given the
 msr[1224] is written and never read in any PAL image: **inferred** a write-only data port loaded while msr[1225] = 1 (consistent with the patent's "microcode upgrade" language, not shown by the code).
 The constants written to 1200 to 1236 and 1224 are table data in the PROM and are not reproduced here.
 
+**Loader selection when bits 14 and 2 are both clear (checked after review, established for 7.79).** The code reads `cpuid[3]` (index 3 set at `0xffe252e6`) and extracts bits 15:8 (the revision byte, `extr.u r17=r19,8,8`), replaces 0 by 1, and compares it with a limit held in the low seven bits of a constant; bit 7 of the constant selects "revision above limit" (both constants here have it set). At `0xffe252e0` to `0xffe2532c` the limit is 3: above 3 branches to `0xffe25360`, otherwise `0xffde8030` is called (through `0xffe25340`) and its return goes to the common exit `0xffe26670`. At `0xffe25360` to `0xffe253ac` the limit is 8: above 8 goes to the exit, otherwise `0xffde68f0` is called (through `0xffe253c0`). So a revision byte of 3 or less (including 0) selects `0xffde8030`, 4 to 8 selects `0xffde68f0`, and above 8 selects neither. Reset leaves msr[1225] = 4, so the first time through, neither loader runs. In 5.73 and 2.25 the both-clear path calls a single loader (`0xffe96d40`, `0xfff47890`) with no revision test; the revision byte there only picks `r2` for the later `br.ia`. The same bits and encoding are compared at other sites (26 `cpuid[3]` reads in PAL_B 7.79 alone, limits 1, 3, 5, 7 and 8 among them); those are not catalogued.
+
 ### msr[1640]
 
 About 275 sites in PAL_B 7.79 (142 writes, 134 reads), 6 writes and 5 reads in PAL_A 5.37 and 1.27, 4 and 4 in 7.31, 2 and 3 in generic PAL_A. Observed read-modify-write patterns in PAL_B 7.79:
@@ -103,7 +121,7 @@ set bit 54 (31 sites), set bit 54 then clear it later in the same routine (28), 
   at least 28 times in PAL_B (for example `0xffdf2040` to `0xffdf2090`: PMC/PMD writes then the clears), and
   specific PAL_A has it at `0xFFFC3170` to `0xFFFC31E0`. Inferred: bit 54 (with 1553 and 1730 bits above) opens a window in which the processor is in a PAL-only mode for
   performance-monitor or similar accesses. The window in the generic PAL_A contains one bundle that objdump cannot decode (`0xFFFF82F0`: an instruction slot with an undefined encoding between the `srlz.i` and the closing code); it is
-  not named here and its meaning is **unknown**.
+  not named here and its meaning is **unknown**; its slot is described under [undecodable slots](#undecodable-slots) below.
 - Other bits: 57 and 62 are set in PAL_B and PAL_A 7.31 (`0xfffc3b90` to `0xfffc3ba0` sets bit 62 and then branches to a common exit with `r28` = 63); meaning **unknown**.
 
 Function of msr[1640] as a whole: **inferred** a PAL mode and status word (bit 54 window enable, bit 56 state-valid), the rest **unknown**.
@@ -122,6 +140,14 @@ Function of msr[1640] as a whole: **inferred** a PAL mode and status word (bit 5
 
 Function: **inferred** that 1641 to 1643 (with msr[0]) are PAL-private scratch registers used where general registers cannot be trusted (machine check and INIT entry, and the PAL_B code that follows), and that 1643 doubles as a hand-off status word. Their reset values and any hardware meaning are **unknown**.
 msr[0] is written 9 times in generic PAL_A (once with 0 at `0xFFFF8406` on the `0xFFFFFF70` path just after `cpuid[3]` is read, eight times with `r30` in the save blocks) and read 16 times in PAL_B 7.79: **inferred** scratch.
+
+**msr[0] accesses (added after review; sites established, meaning inferred or unknown).** The index is the literal `r0`, so every access below is msr[0].
+
+- Generic PAL_A: 9 writes, 0 reads. `0xFFFF8406` writes `r0`; eight writes under predicate `p01` at `0xFFFF8AA0`, `0xFFFF8AF0`, `0xFFFF8B50`, `0xFFFF8BA0`, `0xFFFF8DC0`, `0xFFFF8E10`, `0xFFFF8E70` and `0xFFFF8EC0` store `r30`, each in the save block that also stores `r31`, `pr` and `r29` to msr[1641] to msr[1643].
+- Each specific PAL_A (7.31 / 5.37 / 1.27): 19 reads, 1 write. The first read (`0xfffc32e0` / `0xfffc9de0` / `0xfffd05a0`) puts msr[0] in `r5`; the write (`0xfffc3440` / `0xfffc9ed6` / `0xfffd05d6`) puts `r5` back, and bit 22 of `r5` is then tested. The other 18 reads each load a register and test one bit of it, in this order of sites, bits 21, 7, 6, 11, 10, 7, 7, 5, 14, 14, 14, 7, 14, 14, 23, 15, 22 and 20 (7.31 sites `0xfffc3730` to `0xfffc48c0`; the other two images repeat the same bit sequence, 1.27 with bit 22 tested once more at its start). Nothing else is done with the value.
+- PAL_B 7.79: 7 writes and 16 reads (5.73: 7 and 19; 2.25: 5 and 18). Writes: `0xffdf7930` stores `ar.unat`; `0xffe07020`, `0xffe07070`, `0xffe070d0`, `0xffe07120` (the PAL_B copies of the generic save block) store `r30`; `0xffe16e30` and `0xffe22120` store `r30` and are followed by setting bit 1 of msr[1642]. Reads: `0xffdf7c30`, `0xffdf7c70`, `0xffdf7cc0`, `0xffdf7cf0` go back into `ar.unat`; `0xffe09036` (bits 0 and 1 of the value tested, then branches), `0xffe09110` and `0xffe09160` restore `r30` on the exit path; `0xffe17220`, `0xffe18870`, `0xffe22510` and `0xffe232c0` load `r12` in register-dump code; `0xffe23be6` (bit 0), `0xffe26930` (bit 24), `0xffe26b20` (bit 10), `0xffe27950` (bit 17) and `0xffe27a60` (bit 10) test one bit and branch.
+
+Function: **inferred** that msr[0] is a scratch slot with several uses: `ar.unat` save in PAL_B, `r30` save and restore across PAL entries, and a flag word handed from the generic PAL_A to the processor-specific PAL_A (the generic code stores `r30` as received, the specific code tests bits 5, 6, 7, 10, 11, 14, 15, 20, 21, 22 and 23 of it). What those bits mean, and what `r30` holds at the vectors, is **unknown**.
 
 ## Other registers
 
@@ -254,9 +280,34 @@ Sets of indices worth noting: the 1504 to 1512 group is accessed in matching 13-
 
 ## Computed-index sites
 
-PAL_A 7.31: `0xfffc40c6` (sum of two registers) and ten sites in `0xfffc8b90` to `0xfffc9826` with indices set far from the access. PAL_B 7.79: the generic accessor routines at `0xffdd8160` to `0xffdd8600` (index in `r28`, taking an argument:
-`mov r29=msr[r28]` / `mov msr[r28]=r29`), table-driven loaders (`0xffde6890`, `0xffde68a6`: read an index, an and-mask and an or-value from a table through `r28`, apply them to the MSR, stop at an index of all ones), a block at `0xffe074d0` to `0xffe076c0`
-(index from an extracted bit field), and index sums at `0xffe07ab0` to `0xffe08370`. The table contents are PROM data and are not recorded. Which indices they cover is **unknown**.
+Rechecked after review with a reaching-definition search over the control flow of each image (every definition of the index register that can reach the access, predicated definitions kept alive, indirect branches treated as unknown entries), plus a read of each cluster. The earlier straight-line trace left 11 sites in each specific PAL_A and 89, 89 and 90 in PAL_B 7.79, 5.73 and 2.25. Inferred throughout: a constant is established only where the register has one reaching definition, and the register-stack frames are not followed across calls.
+
+- **All 11 sites in each specific PAL_A resolve.** Ten write 1600, 1544 or 1546 (the same constants as the PAL_B block at `0xffdd8f50`); `0xfffc40c6` (5.37 `0xfffcaca6`, 1.27 `0xfffd1426`) writes a base of 1600, 1608, 1616 or 1624 plus a 2-bit field, so 1600 to 1627. None reaches 212, 1225, 1224 or 1640 to 1643.
+- **Constants in PAL_B (62 sites in each image):** 1600, 1544, 1546, 1085, 1040, 1082, 1730, 1572 (the 14 stores at `0xffe074d0` to `0xffe076c0` use the index set before them; the `extr` that looks like their definition is later in the same bundle), 1416, 1084, 1087, 1056, 480, 512 and 529. The "generic accessor" at `0xffdd8160` to `0xffdd8600` the page first described is not one: `r28` is the constant 1084 there and the accesses were never computed. **Six of these sites write msr[1640]** (7.79 `0xffe3c590`, `0xffe3cab0`, `0xffe3d010`, `0xffe3d910`, `0xffe3eaa0`, `0xffe3f670`; the same six in each of the other two images, which are part of the 142 writes counted above); two write msr[1416]. None reaches 212, 1225, 1224, 1641, 1642 or 1643.
+- **Bounded, base plus a small field (15 sites):** nine use 1600, 1608, 1616 or 1624 plus a 2-bit field (7.79 `0xffddef80`, `0xffddefb0`, `0xffddf380`, `0xffddf420`, `0xffde2e96`, `0xffde3216`, `0xffde3830`, `0xffde3840`, `0xffde3850`; indices fall in 1600 to 1631); six read 1704 plus a loop counter that starts at 0 and stays below a 3-bit count read from msr[1698] (7.79 `0xffe07ab0`, `0xffe07c10`, `0xffe07d70`, `0xffe080b0`, `0xffe08210`, `0xffe08370`; indices 1704 to 1711). None reaches the registers asked about.
+- **Unresolved, 12 sites in 7.79 and 5.73, 13 in 2.25:**
+  - Eight sites (7.79 `0xffde4f46` to `0xffde5090`, index `r29` copied to `r2`) sit in code that follows a routine's `br.ret` with no static branch into it. The index is whatever the caller leaves in `r29`. How the code is entered is **unknown**.
+  - Two sites (`0xffde6890`, `0xffde68a6`) are the table-driven loader: it reads an index, an and-mask and an or-value from a table at `r28` until an index of all ones. Nothing in the image branches to the loader and no immediate gives its table, so the indices are **unknown** and the table was not read.
+  - Two sites (`0xffe09180`, `0xffe091c0`) are on the exit path described under [undecodable slots](#undecodable-slots). Entered by the branches at `0xffe090bc` and `0xffe090ac`, the index is the constant 1642 (set at `0xffe090a6`). Entered by falling through from the other paths, the index register holds the value just read from msr[1641] (the saved `r31`), so the read goes to whatever register that value names. Whether the second read is meant to be indirect is **unknown**; it looks like a restore that should have used the first read's value directly.
+  - 2.25 only: `0xfff3a140`, a poll of bit 40 of msr[`r25`] after a msr[1416] update; `r25` reaches the routine from its caller and the routine has no static entry (7.79 and 5.73 poll with a constant index here).
+- So the computed sites that surely reach a priority register are the six msr[1640] writes; the 12 or 13 unresolved sites could reach any register, 1642 among them, and 212, 1225 and 1224 are not reached by any resolved computed site. For PAL_B "no other write to 212 or 1225" now holds for every site except those 12 or 13.
+
+## Undecodable slots
+
+GNU binutils 2.44 prints these as raw data although the bundle template is valid. Slot values are read from the 128-bit bundle (template in bits 4:0, slots at bits 5, 46 and 87, 41 bits each); the major opcode is bits 40:37.
+
+| Address | Bundle template | Slot | Major opcode | Remaining fields |
+|---|---|---|---|---|
+| `0xFFFF82F6` | `0x0b` (two M slots then I, stop at the end) | 1, M unit | 0 | bits 35:33 = 0, bits 32:27 = 33 |
+| `0xffe0917c`, `0xffe091bc` | `0x11` (M, I, B, stop at the end), the other two slots are no-ops | 2, B unit | 0 | bits 32:27 = 9 |
+
+(Review found `0xffe0917c` and `0xffe091bc`; two more of the same kind are at `0xffe0905c` and `0xffe0912c`, all on the exit path below.) The M-unit value 33 sits between two values this PROM decodes as `fwb` (32) and `mf` (34) in the same opcode group, and the B-unit value 9 sits between `rfi` (8) and `bsw.0` (12); I did not look either value up in the SDM tables, so I name no instruction for them and grade them **unknown**.
+
+Both values are common idioms, not one-off bytes. The M-slot value occurs 1 time in the generic PAL_A, 18, 22 and 22 times in the three specific PAL_A images, and 211, 211 and 257 times in PAL_B 7.79, 5.73 and 2.25. The B-slot value occurs 0, 1, 1, 1, 12, 12 and 20 times in the same order. Every occurrence has a `srlz.d` or `srlz.i` as the nearest preceding instruction (established, counted from the listing), so they look like a companion to the serialising instruction (inferred), and the hardware evidently accepts them since the PAL runs through them (inferred).
+
+Reachability:
+- `0xFFFF82F6` is in the routine at `0xFFFF8210`, which no static branch, immediate or `ip`-relative address in the generic PAL_A reaches and which the bundle before it cannot fall into. By the static flow it does not execute; an indirect entry is not excluded (**unknown**).
+- The four B-slot sites (`0xffe0905c`, `0xffe0912c`, `0xffe0917c`, `0xffe091bc`) are on the exit path that restores `r30`, `r31` and `pr` from msr[1641], msr[1642] and msr[0] and selects among its branches with bits 0 and 1 of the msr[0] value (`0xffe09066`, `0xffe0906c`). By the branches: `0xffe0917c` runs on the fall-through run `0xffe09130`, `0xffe09160`, `0xffe09170`, entered from `0xffe090cc` (bits 0 and 1 clear) or by falling from `0xffe090d0` (bit 0 clear, bit 1 set); `0xffe091bc` runs after `0xffe09180` and `0xffe09190`, entered from the branch at `0xffe090bc` (bit 0 set, bit 1 clear) or from the run above. The branch at `0xffe090ac` (bits 0 and 1 set) goes straight to `0xffe091c0` and skips both. Whether this exit path is entered is not traced. These readings assume the B slot falls through; if it redirects control they do not hold (**unknown**).
 
 ## Intel's SR870BN4 PAL (package SR870BN4_1001_SUP3.ZIP, file S870BN4C.BIN, sha256 `fb422439a42e3d06fe5286c68942c03293868cdde07891758437d4f98642d252`)
 
@@ -271,7 +322,7 @@ Compared by locating each SGI component in the file by bundle match and re-runni
 ## What is not settled
 
 - What any MSR is in hardware. Only the uses above are read.
-- The entry condition of the `0xFFFF8210` routine and the undecoded slot at `0xFFFF82F0`.
+- The entry condition of the `0xFFFF8210` routine and what the undecoded slots do (see [undecodable slots](#undecodable-slots)).
 - The PAL procedure indexes of the PAL_B routines (212 and 1572 toggles, the register loaders). Closing this needs the PAL_B dispatch table read to its end.
 - Whether control returns from the reset `br.ia` or continues at `0xFFFFFF70`; see [boot-sequence.md](boot-sequence.md).
 - Per-bit meaning of 1225, 1640 and every register in the table.
@@ -309,12 +360,17 @@ Independent review of chips commit `d29ab44`, examined at chips `main` after it.
 **Findings not fixed.**
 
 1. PAL_B contains `br.ia` sites the page never lists: 7.79 `0xffe254ac` (via `b1` = `0x80000000ffffffe0`, the same target as the reset stub), `0xffe3aae0` (via `b0` = `0x80000000fff72c90`), and a predicated one at `0xffdff426` that sits in what decodes as data and is probably not code; 5.73 and 2.25 have the same three (`0xffed641c`, `0xffeebb20`, `0xffeb0426`; `0xfff7678c`, `0xfff8cae0`, `0xfff62726`). The `0xffe254ac` site is the PAL_B counterpart of the specific PAL_A gate: it is on the path the msr[1225] bit 14 or bit 2 branch takes, so the polarity (call when set, run the loaders when both are clear) matches PAL_A. The page's "br.ia sites" table is PAL_A-only and should say so or list these.
+   Resolved after review: commit "firmware/snprom: resolve the PAL MSR review findings": all nine PAL_B sites are listed under [`br.ia` sites in the PAL_B images](#bria-sites-in-the-pal_b-images-added-after-review); `0xffe254ac` is guarded by the msr[1225] bit 14 or bit 2 test and `0xffdff426` is data.
 2. In PAL_B the both-clear path is not a single call. A revision byte (`cpuid[3]` bits 15:8, 0 read as 1) up to 3 reaches `0xffde8030`; 4 to 8 reaches `0xffde68f0`; above 8 skips both. Also, a state of 4 left by reset means neither loader runs in the first boot.
+   Resolved after review: commit "firmware/snprom: resolve the PAL MSR review findings": confirmed for 7.79 under msr[1225] (revision byte = `cpuid[3]` bits 15:8; 3 or less selects `0xffde8030`, 4 to 8 `0xffde68f0`, above 8 neither); 5.73 and 2.25 have one loader and no revision test there.
 3. `0xffdf05a6`: the msr[212] read feeds a `tbit` whose result goes to p59, but the branch after it tests p61 (set earlier from the procedure's arguments, or cleared by `mov pr.rot`). The same pattern is in 5.73 and 2.25. Whether this is a latent bug or the test is meant for another predicate is unknown; the read has no visible effect on control flow.
 4. msr[0] is under-described. Besides the 9 generic writes and the 16 PAL_B 7.79 reads, PAL_B 7.79 has 7 writes (5.73 7, 2.25 5), and each specific PAL_A has 19 reads and 1 write. msr[0] is read far more than the "scratch" reading predicts; its function stays unknown.
+   Resolved after review: commit "firmware/snprom: resolve the PAL MSR review findings": every access is listed under [msr[0] accesses](#msr1641-msr1642-msr1643-and-msr0).
 5. Undecoded slots with a valid template (binutils 2.44 prints data): `0xFFFF82F6` (value `0x108000000`, M-unit opcode 0, x3 0, x4 1, x2 2) and `0xffe0917c` and `0xffe091bc` (`0x048000000`, an I-unit slot). They sit between `srlz.i` and the next MSR access, so they may be the operation the bit 54 window exists for. Not identified; the opcode map suggests an M-unit invalidation form, unverified.
+   Resolved after review: commit "firmware/snprom: resolve the PAL MSR review findings": slot types and opcode fields are under [undecodable slots](#undecodable-slots); the slots are in the exit path and are not known to be unreachable, except `0xFFFF82F6`.
 6. Not reproduced: the "250 pairs" for PAL_B 2.20 against 2.25 (this review's trace gives 216 resolved (index, direction) pairs over 146 indices, equal for both images); the 1.27 site total 367 (368 here); and a number of non-priority table rows for PAL_B (for example 1084, 1544, 1546, 1552, 1600 to 1626 write counts), where this review's simpler trace resolves fewer sites and disagrees. Those rows are graded unknown, so no grade moves, but the counts are unverified.
 7. Computed-index sites (accessor routines taking the index in a register, the table-driven loaders) can reach any index, including the priority ones. Their coverage of 212, 1225 and 1640 to 1643 is unchecked, so "no other write to 212 or 1225" holds only for the resolved sites of PAL_A; for PAL_B it holds for resolved sites.
+   Resolved after review: commit "firmware/snprom: resolve the PAL MSR review findings": see [computed-index sites](#computed-index-sites): 12 sites in 7.79 and 5.73 and 13 in 2.25 remain unresolved; none of the resolved ones reaches 212, 1225 or 1224, and six write msr[1640].
 8. Intel's own FIT addresses for PAL_A 5.37 and 7.46 do not map linearly to offsets in the file the way 1.27 and PAL_B 2.20 do; Intel PAL_B 2.20 and PAL_A 7.46 were located by FIT address plus a fixed `0xb0000` skew guessed from where 5.37 sits, and checked by header version bytes only.
 
 **Not checked.** PAL_B control flow beyond the sites listed (which PAL procedure reaches the 212/1572 routines); the non-priority table rows; the bit 62, 60 and 53 pattern counts; indirect-branch entries into the middle of code; whether the 1224 constants form a microcode image.
