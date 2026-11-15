@@ -7,7 +7,7 @@ WORDS = {}
 FIELDS = {'node_id': {'rev': (31, 28), 'part': (27, 12), 'mfg': (11, 1)}, 'ice_frz_cfg': {'disable_conveyor': (61, 61)}, 'itte': {'valid': (16, 16), 'widget': (13, 12), 'offset': (7, 0)}, 'ice_pmi_tx_cfg': {}, 'ice_pmi_tx_dyn_credit_stat_cb3': {'credit_count': (3, 0)}}
 ENUMS = {}
 FIELD_ENUM = {}
-CONSTANTS = {'BIG_WINDOW_SIZE_BITS': {'value': 30, 'count': 1, 'stride': 1}, 'CE_PART_NUMBER': {'value': 52736, 'count': 1, 'stride': 1}, 'ERROR_VECTOR': {'value': 54, 'count': 1, 'stride': 1}, 'FPGA_CORELET': {'value': 3, 'count': 1, 'stride': 1}, 'SMALL_WINDOW_SIZE_BITS': {'value': 28, 'count': 1, 'stride': 1}, 'WIDGET_ID_OFFSET': {'value': 0, 'count': 1, 'stride': 1}}
+CONSTANTS = {'BIG_WINDOW_SIZE_BITS': {'value': 30, 'count': 1, 'stride': 1}, 'CE_PART_NUMBER': {'value': 52736, 'count': 1, 'stride': 1}, 'CTALK_CHIPLET_SHIFT': {'value': 38, 'count': 1, 'stride': 1}, 'CTALK_NASID_SHIFT': {'value': 40, 'count': 1, 'stride': 1}, 'ERROR_VECTOR': {'value': 54, 'count': 1, 'stride': 1}, 'ERROR_VECTOR_TIOCA': {'value': 53, 'count': 1, 'stride': 1}, 'ERROR_VECTOR_TIOCX': {'value': 55, 'count': 1, 'stride': 1}, 'FPGA_CORELET': {'value': 3, 'count': 1, 'stride': 1}, 'INTR_VECTOR_SHIFT': {'value': 56, 'count': 1, 'stride': 1}, 'KLTYPE_TIO': {'value': 18, 'count': 1, 'stride': 1}, 'SAL_HUB_ERROR_INTERRUPT': {'value': 33554528, 'count': 1, 'stride': 1}, 'SAL_IOIF_INTERRUPT': {'value': 33554506, 'count': 1, 'stride': 1}, 'SMALL_WINDOW_SIZE_BITS': {'value': 28, 'count': 1, 'stride': 1}, 'WIDGET_ID_OFFSET': {'value': 0, 'count': 1, 'stride': 1}}
 TESTS = []
 
 

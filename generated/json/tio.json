@@ -151,6 +151,22 @@
   {
    "unit": "tio",
    "kind": "constant",
+   "name": "CTALK_CHIPLET_SHIFT",
+   "value": 38,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "CTALK_NASID_SHIFT",
+   "value": 40,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
    "name": "ERROR_VECTOR",
    "value": 54,
    "count": 1,
@@ -159,8 +175,56 @@
   {
    "unit": "tio",
    "kind": "constant",
+   "name": "ERROR_VECTOR_TIOCA",
+   "value": 53,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "ERROR_VECTOR_TIOCX",
+   "value": 55,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
    "name": "FPGA_CORELET",
    "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "INTR_VECTOR_SHIFT",
+   "value": 56,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "KLTYPE_TIO",
+   "value": 18,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "SAL_HUB_ERROR_INTERRUPT",
+   "value": 33554528,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "constant",
+   "name": "SAL_IOIF_INTERRUPT",
+   "value": 33554506,
    "count": 1,
    "grade": "established"
   },

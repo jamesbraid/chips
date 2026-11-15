@@ -27,8 +27,16 @@
   </struct>
   <constant name="BIG_WINDOW_SIZE_BITS" value="0x1e" grade="established"/>
   <constant name="CE_PART_NUMBER" value="0xce00" grade="established"/>
+  <constant name="CTALK_CHIPLET_SHIFT" value="0x26" grade="established"/>
+  <constant name="CTALK_NASID_SHIFT" value="0x28" grade="established"/>
   <constant name="ERROR_VECTOR" value="0x36" grade="established"/>
+  <constant name="ERROR_VECTOR_TIOCA" value="0x35" grade="established"/>
+  <constant name="ERROR_VECTOR_TIOCX" value="0x37" grade="established"/>
   <constant name="FPGA_CORELET" value="0x3" grade="established"/>
+  <constant name="INTR_VECTOR_SHIFT" value="0x38" grade="established"/>
+  <constant name="KLTYPE_TIO" value="0x12" grade="established"/>
+  <constant name="SAL_HUB_ERROR_INTERRUPT" value="0x2000060" grade="established"/>
+  <constant name="SAL_IOIF_INTERRUPT" value="0x200004a" grade="established"/>
   <constant name="SMALL_WINDOW_SIZE_BITS" value="0x1c" grade="established"/>
   <constant name="WIDGET_ID_OFFSET" value="0x0" grade="established"/>
 </genxml>

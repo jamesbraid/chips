@@ -73,6 +73,64 @@ Read together, the FPGA-port driver's procedure is established:
 4. On the reload path, when the bitstream is loaded, ask the controller to reset the port clock, then read the identification word at offset 0 of widget 3's small window. A part number of
    `0xce00` is a TIOCE, which the driver leaves alone; anything else is an FPGA and is registered as a bus device with its part and manufacturer numbers.
 
+## Widget numbering and windows (established, `addrs.h` v5.3)
+
+A TIO's address space is `uncached | nasid << NASID_SHIFT | node offset`. `AS_SHIFT` is `NASID_SHIFT - 2` and is the width of the node offset; firmware reports `NASID_SHIFT` through `SN_SAL_GET_SN_INFO`, so no absolute width is fixed by the header (with the SHub 1 fallback of 38 the offset is 36 bits). Inside the offset:
+
+| Range of the offset | Meaning | Source |
+|---|---|---|
+| bits 29:28 | small-window widget number 0 to 3, 256 MiB each (`TIO_SWIN_WIDGETNUM`) | established |
+| bits 32:30 | big-window number 0 to 7, 1 GiB each (`TIO_BWIN_WINDOWNUM`) | established |
+| bits above 33 | `TIO_HWIN`, nonzero selects ITTE entry 0 in the flush path | established |
+| MMR offsets `0x90060e80`, `0xb000....` | register offsets, chiplet-qualified as above | established |
+
+The widget table in the kernel has sixteen slots (`HUB_WIDGET_ID_MAX` 0xf) because it is shared with the SHub, whose small-window widget field is four bits. A TIO's small window has only two widget bits, so only slots 0 to 3 can be addressed by a small-window address; the other slots are **inferred** unused on a TIO.
+
+**Which ITTE a PIO address uses (established, `sn_dma_flush`).** If `TIO_HWIN` of the address is nonzero the kernel uses entry 0. Otherwise a nonzero big-window number picks that entry. Otherwise the address is a small-window address and its widget is bits 29:28. A picked entry that has `valid` clear ends the lookup with no widget. The widget is bits 13:12 of the entry. This is the kernel's use of a firmware-held copy of the entries; no register read or write is observed. **Inferred:** the header says the node offset's top bit must be set, which makes `TIO_HWIN` nonzero for every such address, so entries 1 to 7 would then be reachable only through offsets with the top bit clear. Whether that is what the hardware does is [open](../../questions/tio-open.md#itte-use).
+
+The ITTE layout differs from the SHub's IIO table: a TIO entry has offset 7:0, widget 13:12 and valid at bit 16; the SHub entry carries a four-bit widget at bits 11:8 and has seven usable entries (`IIO_NUM_ITTES`). Do not share the decode.
+
+## Crosstalk widget numbers and widget types (established)
+
+The kernel distinguishes widgets by the bridge type the firmware reports in the bus record (`PCIIO_ASIC_TYPE_TIOCP` 3, `TIOCA` 4, `TIOCE` 5; the SHub-side PIC and PPB use other values) and by the widget's identification word. The record's `bs_xid` is the widget number and indexes the node's widget table. Fixed assignments seen in code: widget 3 is the FPGA port (corelet), and a TIOCE can be the occupant of widget 3 (part `0xce00`). No fixed number is given for TIOCP or TIOCA: the code takes it from firmware. Which widget a given Altix model puts each bridge on is **unknown**.
+
+The identification word at small-window offset 0 uses the Crosstalk layout: revision 31:28, part 27:12, manufacturer 11:1. Part numbers named in the pinned files: `0xce00` (TIOCE). The TIOCP and TIOCA part numbers are not stated by the files read; the PIC's (`0xd102`) is in the PROM reading, see [PIC](../pic/README.md).
+
+The kernel also declares a Crosstalk widget configuration structure (`struct widget_cfg`, `xwidgetdev.h`: id, status, error address, control, request timeout, interrupt destination, error command, link-layer configuration, flush, each a 32-bit word in the odd half of an eight-byte pair). No TIO code read uses it, so it is established only as a declaration and **unknown** as a TIO hardware contract.
+
+## Address views (established)
+
+- **PIO to a TIO MMR** needs the chiplet field set to 1 on a SHub 2 system and the ordinary global MMR window on a SHub 1 system (see above).
+- **Coretalk address** (what a device behind the TIO sends, and what the interrupt destination words hold): NASID in bits 53:40 (`CTALK_NASID_MASK` 0x3fff), chiplet id in bits 39:38 (`CTALK_CID_MASK`), node offset in bits 37:0 (`CTALK_NODE_OFFSET`). The header comment in `addrs.h` names bits 38 to 39 for the chiplet. Chiplet 0 is used for DMA to memory ("our belief ... ICE, which is also zero", the code says of TIO to TIO DMA); that belief is a developer note, not a measurement (inferred).
+- **PHYS_TO_TIODMA** (established): SHub 1 uses `nasid << 40 | node offset`. SHub 2 uses `nasid << 40`, the low `NASID_SHIFT - 4` bits unchanged and the two bits above them moved to bits 37:36. This is the view used by TIOCP, TIOCA and TIOCE mappings (all three providers call it).
+- **TIOCX** adds `TIOCX_DMA_ADDR` (clears bits 37:36, keeps 55:0) and `TIOCX_TO_TIOCX_DMA_ADDR` (keeps 35:0, moves 55:38 up two); see [TIOCX](../tiocx/README.md).
+
+## Interrupts (established unless marked)
+
+- **Vectors.** `SGI_TIOCA_ERROR` 0x35, `SGI_TIO_ERROR` 0x36, `SGI_TIOCX_ERROR` 0x37 are reserved kernel vectors below the first device vector 0x3c. Device interrupts from bridges behind a TIO use vectors 0x3c to 0xe6 chosen by firmware.
+- **Error interrupt.** At node setup (`sn_common_hubdev_init`) a TIO calls `ice_error_init`, which requests vector 0x36 as a shared, level-handled interrupt named "SN_TIO_error" with the node's hub-device record as the cookie, and pins its affinity to the boot CPU when the PROM advertises CPU-disable support on a SHub 2. The handler calls `SN_SAL_HUB_ERROR_INTERRUPT` (0x02000060) with the NASID and panics on a nonzero first result. The SHub's own BTE and CRB handling is skipped for a TIO.
+- **Allocation.** A bridge's interrupt is allocated by firmware: `SN_SAL_IOIF_INTERRUPT` (0x0200004a) with operation 1 (alloc), 2 (free) or 3 (redirect), the TIO NASID, the widget number, the physical address of an `sn_irq_info` record to fill, a requested vector, and a target NASID and slice. The record the firmware fills holds the vector, the bridge pin (`irq_int_bit`, negative for MSI), the target CPU, and `irq_xtalkaddr`, the Crosstalk address the bridge must write to raise the interrupt. The kernel never computes that address. The TIOCX path uses the same call (`tiocx_irq_alloc`) and refuses even NASIDs.
+- **Delivery word (established for the TIOCE).** The bridge's per-pin destination register holds the vector shifted left by 56 ORed with `irq_xtalkaddr`; the kernel masks the pin, stores the word, then unmasks. TIOCP uses its own destination register with the address alone. See the [TIOCE](../tioce/README.md) and [TIOCP](../tiocp/README.md) pages for the registers.
+- **Forced interrupt on TIOCE rev A (workaround PV945826).** When the pin is pending, the kernel stores `(1 << 8) | vector` at the TIO address that the Crosstalk address names (NASID from bits 53:40, offset from bits 37:0, through the normal TIO accessor). This shows a store to a TIO address from CPU space raises an interrupt on the SHub 2 side; the destination register at that address is not named (unknown).
+- **No lost-interrupt check for TIO bridges** (`sn_check_intr`): the check applies to the PIC only, because bridges behind a TIO "do not target SHub II interrupt registers". That sentence says the TIO delivers interrupts by a different path from the PIC; the path itself is not described (**unknown**).
+
+## Firmware and controller interface (established, `sn_sal.h`, `l1.h`, `klconfig.h`)
+
+| Item | Value |
+|---|---|
+| `SN_SAL_SYSCTL_OP` operation 1 | board type of the I/O board of a NASID, returned in the first or second value |
+| `SN_SAL_SYSCTL_OP` operation 2 | reset the TIO's corelet clock (`SAL_SYSCTL_OP_TIO_JLCK_RST`) |
+| `SN_SAL_IOIF_GET_HUBDEV_INFO` 0x02000055 | fill the hub-device record: sixteen widget identities, dual-porting peer NASID, maximum segment and bus numbers |
+| `SN_SAL_IOIF_GET_PCIBUS_INFO` 0x02000056 | per-bus record (type, widget id, persistent bus and segment, legacy windows, base) |
+| `SN_SAL_IOIF_GET_DEVICE_DMAFLUSH_LIST` 0x0200005a | per-widget, per-device flush records (BAR ranges, slot, flush address) used by the read-ordering path |
+| `SN_SAL_IOIF_INTERRUPT` 0x0200004a | see above |
+| `SN_SAL_HUB_ERROR_INTERRUPT` 0x02000060 | TIO error service |
+| board class `KLTYPE_TIO` | 0x12 (class node, type 2) in the klconfig board list |
+| I/O board types that carry an FPGA port | controller codes 0x5e, 0x2b and board 0x0800 (named for SA, Athena and Daytona in the header); the Opus TIO brick has code 0x66 |
+| module type | `MODULE_SABRICK` 13 ("TIO bring-up brick") and `MODULE_OPUS_TIO` 17 ("Opus TIO riser") |
+
+Each widget has up to `DEV_PER_WIDGET` (32) device records. The performance interface names the TIO class "ionode" and bars it from node-only operations. The product mapping of these code names is **unknown**.
+
 ## Workaround that depends on the TIO revision
 
 The TIO identification word's revision field decides one erratum (named PV907516 in the code): on revision 1, the TIOCP's per-device write

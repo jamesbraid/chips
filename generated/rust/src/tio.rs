@@ -111,7 +111,15 @@ pub mod ice_pmi_tx_dyn_credit_stat_cb3 {
 }
 pub const BIG_WINDOW_SIZE_BITS: u32 = 0x1e; // established
 pub const CE_PART_NUMBER: u32 = 0xce00; // established
+pub const CTALK_CHIPLET_SHIFT: u32 = 0x26; // established
+pub const CTALK_NASID_SHIFT: u32 = 0x28; // established
 pub const ERROR_VECTOR: u32 = 0x36; // established
+pub const ERROR_VECTOR_TIOCA: u32 = 0x35; // established
+pub const ERROR_VECTOR_TIOCX: u32 = 0x37; // established
 pub const FPGA_CORELET: u32 = 0x3; // established
+pub const INTR_VECTOR_SHIFT: u32 = 0x38; // established
+pub const KLTYPE_TIO: u32 = 0x12; // established
+pub const SAL_HUB_ERROR_INTERRUPT: u32 = 0x2000060; // established
+pub const SAL_IOIF_INTERRUPT: u32 = 0x200004a; // established
 pub const SMALL_WINDOW_SIZE_BITS: u32 = 0x1c; // established
 pub const WIDGET_ID_OFFSET: u32 = 0x0; // established

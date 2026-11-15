@@ -66,7 +66,15 @@ Dynamic transmit credit status of channel buffer 3 (`TIO_ICE_PMI_TX_DYN_CREDIT_S
 |---|---|---|---|---|
 | `BIG_WINDOW_SIZE_BITS` | 0x1e | established |  | Big windows are 1 GiB; the window number is three bits above that. |
 | `CE_PART_NUMBER` | 0xce00 | established |  | Widget part number of the TIOCE, which can sit on the FPGA port's widget. |
+| `CTALK_CHIPLET_SHIFT` | 0x26 | established |  | Chiplet id position in a coretalk address, 2 bits. Node offset is bits 37:0. |
+| `CTALK_NASID_SHIFT` | 0x28 | established |  | NASID position in a coretalk address, 14 bits. |
 | `ERROR_VECTOR` | 0x36 | established |  | Kernel interrupt vector of the TIO error interrupt, shared by every TIO. The handler's only action is a firmware call. |
+| `ERROR_VECTOR_TIOCA` | 0x35 | established |  | Error vector of the TIOCA. |
+| `ERROR_VECTOR_TIOCX` | 0x37 | established |  | Defined; no registration of it appears in the files read. |
 | `FPGA_CORELET` | 0x3 | established |  | Widget (corelet) number of the FPGA port. |
+| `INTR_VECTOR_SHIFT` | 0x38 | established |  | Position of the kernel vector in a TIOCE interrupt destination word; the Crosstalk address supplied by firmware fills the low bits. |
+| `KLTYPE_TIO` | 0x12 | established |  | Board type of a TIO in the klconfig list. |
+| `SAL_HUB_ERROR_INTERRUPT` | 0x2000060 | established |  | Firmware call made by the TIO error handler; a nonzero result is fatal. |
+| `SAL_IOIF_INTERRUPT` | 0x200004a | established |  | Firmware call that allocates (1), frees (2) or redirects (3) a bridge interrupt. |
 | `SMALL_WINDOW_SIZE_BITS` | 0x1c | established |  | Small windows are 256 MiB, one per widget, selected by two address bits, so a TIO has four small-window widgets (0 to 3). |
 | `WIDGET_ID_OFFSET` | 0x0 | established |  | Every widget behind the TIO, including the FPGA port, has its identification word (revision 31:28, part 27:12, manufacturer 11:1) at offset 0 of its small window. |

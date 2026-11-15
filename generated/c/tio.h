@@ -64,8 +64,16 @@
 
 #define TIO_BIG_WINDOW_SIZE_BITS                     0x1eu /* established */
 #define TIO_CE_PART_NUMBER                           0xce00u /* established */
+#define TIO_CTALK_CHIPLET_SHIFT                      0x26u /* established */
+#define TIO_CTALK_NASID_SHIFT                        0x28u /* established */
 #define TIO_ERROR_VECTOR                             0x36u /* established */
+#define TIO_ERROR_VECTOR_TIOCA                       0x35u /* established */
+#define TIO_ERROR_VECTOR_TIOCX                       0x37u /* established */
 #define TIO_FPGA_CORELET                             0x3u /* established */
+#define TIO_INTR_VECTOR_SHIFT                        0x38u /* established */
+#define TIO_KLTYPE_TIO                               0x12u /* established */
+#define TIO_SAL_HUB_ERROR_INTERRUPT                  0x2000060u /* established */
+#define TIO_SAL_IOIF_INTERRUPT                       0x200004au /* established */
 #define TIO_SMALL_WINDOW_SIZE_BITS                   0x1cu /* established */
 #define TIO_WIDGET_ID_OFFSET                         0x0u /* established */
 
