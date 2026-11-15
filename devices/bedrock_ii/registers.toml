@@ -145,11 +145,11 @@ offset = 0x4001e8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IMEM (offset and name; the header states no access)"
+from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IMEM (offset and name; the header states no access); shipped IRIX kernel I/O error handlers (read sites)"
 reset = 0x111
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IMEM at image offset 0x15fd18 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table."
+doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table. The shipped kernel's I/O error handlers read this register; a hand-written row once recorded it as read-only on that basis, but reads alone do not show it cannot be written, so rw stays."
 notes = "The kernel reading named this register flags and called both bits role unknown; the header's names (widget_0_enable at bit 0, bte_0_enable at bit 4) are kept."
 
 [registers.misc_error_mask.fields]
@@ -591,17 +591,17 @@ grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_WSTAT at image offset 0x15fa30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"
-doc = "Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT."
+from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites)"
+doc = "Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The shipped kernel's I/O error handlers only read it, which agrees with r but does not show the register cannot be written. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT."
 rsvd = 0xfffffffeff00fdc0
 
 [registers.widget_status.fields]
 pending = { bits = [3, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_pending of the header's ii_wstat structure, 4 bits." }
-xt_crd_to = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_crd_to of the header's ii_wstat structure, 1 bit." }
-xt_tail_to = { bits = [5, 5], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_tail_to of the header's ii_wstat structure, 1 bit." }
-tx_mx_rty = { bits = [9, 9], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit." }
+xt_crd_to = { bits = [4, 4], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_crd_to of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set." }
+xt_tail_to = { bits = [5, 5], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_xt_tail_to of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set." }
+tx_mx_rty = { bits = [9, 9], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set." }
 llp_tx_cnt = { bits = [23, 16], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_llp_tx_cnt of the header's ii_wstat structure, 8 bits." }
-crazy = { bits = [32, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_crazy of the header's ii_wstat structure, 1 bit." }
+crazy = { bits = [32, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure", doc = "Member w_crazy of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the error flag (the name crazy is the header's)." }
 
 [registers.crosstalk_spurious_message]
 offset = 0x400208
@@ -661,39 +661,39 @@ test_err_capture = { bits = [54, 54], grade = "established", from = "Linux 2.5.4
 
 [registers.incoming_error_header_1]
 offset = 0x400220
-access = "rw"
+access = "r"
 width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH1 at image offset 0x15fdc0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
-doc = "Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1."
+from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites)"
+doc = "Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1."
 rsvd = 0xffffeef080080080
 
 [registers.incoming_error_header_1.fields]
-command = { bits = [6, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_command of the header's ii_iieph1 structure, 7 bits." }
-suppl = { bits = [18, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_suppl of the header's ii_iieph1 structure, 11 bits." }
-source = { bits = [30, 20], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_source of the header's ii_iieph1 structure, 11 bits." }
-err_type = { bits = [35, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_err_type of the header's ii_iieph1 structure, 4 bits." }
-overrun = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_overrun of the header's ii_iieph1 structure, 1 bit." }
-valid = { bits = [44, 44], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure", doc = "Member i_valid of the header's ii_iieph1 structure, 1 bit." }
+command = { bits = [6, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_command of the header's ii_iieph1 structure, 7 bits. The shipped kernel's print routine reads the same bits." }
+suppl = { bits = [18, 8], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_suppl of the header's ii_iieph1 structure, 11 bits. The shipped kernel's print routine reads the same bits." }
+source = { bits = [30, 20], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_source of the header's ii_iieph1 structure, 11 bits. The shipped kernel's print routine reads the same bits." }
+err_type = { bits = [35, 32], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_err_type of the header's ii_iieph1 structure, 4 bits. The shipped kernel's print routine names 2 short request packet, 3 short reply packet, 4 long request packet and 5 long reply packet; any other value prints as unknown." }
+overrun = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_overrun of the header's ii_iieph1 structure, 1 bit. The shipped kernel's print routine reads the same bits." }
+valid = { bits = [44, 44], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_valid of the header's ii_iieph1 structure, 1 bit. The shipped kernel's print routine tests this bit before printing the header." }
 
 [registers.incoming_error_header_2]
 offset = 0x400228
-access = "rw"
+access = "r"
 width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
 reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH2 at image offset 0x15fdd8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"
-doc = "Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2."
+from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites)"
+doc = "Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2."
 rsvd = 0xfffffec000000000
 
 [registers.incoming_error_header_2.fields]
-address = { bits = [37, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure", doc = "Member i_address of the header's ii_iieph2 structure, 38 bits." }
-tail = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure", doc = "Member i_tail of the header's ii_iieph2 structure, 1 bit." }
+address = { bits = [37, 0], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_address of the header's ii_iieph2 structure, 38 bits. The shipped kernel's print routine reads the same bits." }
+tail = { bits = [40, 40], grade = "established", from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine)", doc = "Member i_tail of the header's ii_iieph2 structure, 1 bit. The shipped kernel's print routine reads the same bits." }
 
 [registers.prb_counter_adjust]
 offset = 0x400300

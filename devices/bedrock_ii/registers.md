@@ -14,7 +14,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
 | `widget_id` | 0x400000 | r | 64 |  |  | 0x1c110049 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
-| `widget_status` | 0x400008 | r | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure |
+| `widget_status` | 0x400008 | r | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites) |
 | `widget_control` | 0x400020 | rw | 64 |  |  | 0x4011 (established) | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `local_access_protection` | 0x400100 | rw | 64 |  |  | 0xfffffffffffffff (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `protection_override` | 0x400108 | w | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
@@ -37,8 +37,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `crosstalk_spurious_message` | 0x400208 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXSM (name and offset), ii_ixsm structure |
 | `crosstalk_spurious_sideband` | 0x400210 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IXSS (name and offset), ii_ixss structure |
 | `llp_channel_test` | 0x400218 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_ILCT (name and offset), ii_ilct structure |
-| `incoming_error_header_1` | 0x400220 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure |
-| `incoming_error_header_2` | 0x400228 | rw | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure |
+| `incoming_error_header_1` | 0x400220 | r | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites) |
+| `incoming_error_header_2` | 0x400228 | r | 64 |  |  | 0x0 (established) | inferred | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites) |
 | `prb_counter_adjust` | 0x400300 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPCA (name and offset), ii_ipca structure |
 | `pio_read_address` | 0x400308 | rw | 64 | 8 |  | 0x0 (established) | established | Linux 2.5.40 SN1 register headers: names, offsets and field layouts |
 | `pio_deallocation` | 0x400388 | rw | 64 |  |  | unknown | inferred | Linux 2.5.40 SN1 register headers: IIO_IPDR (name and offset), ii_ipdr structure |
@@ -77,15 +77,15 @@ Widget identification. Echoes the manufacturer and revision fields of the local 
 
 ### Register `widget_status`
 
-Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
+Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The shipped kernel's I/O error handlers only read it, which agrees with r but does not show the register cannot be written. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 32 | `crazy` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_crazy of the header's ii_wstat structure, 1 bit. |
+| 32 | `crazy` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_crazy of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the error flag (the name crazy is the header's). |
 | 23:16 | `llp_tx_cnt` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_llp_tx_cnt of the header's ii_wstat structure, 8 bits. |
-| 9 | `tx_mx_rty` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit. |
-| 5 | `xt_tail_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_tail_to of the header's ii_wstat structure, 1 bit. |
-| 4 | `xt_crd_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_crd_to of the header's ii_wstat structure, 1 bit. |
+| 9 | `tx_mx_rty` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_tx_mx_rty of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set. |
+| 5 | `xt_tail_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_tail_to of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set. |
+| 4 | `xt_crd_to` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_xt_crd_to of the header's ii_wstat structure, 1 bit. The shipped kernel's I/O error handler tests this bit as the reason when crazy is set. |
 | 3:0 | `pending` | established |  | Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure | Member w_pending of the header's ii_wstat structure, 4 bits. |
 
 ### Register `widget_control`
@@ -252,7 +252,7 @@ IO crosstalk credit count timeout. The header states no access type, so rw is as
 
 ### Register `misc_error_mask`
 
-Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.
+Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table. The shipped kernel's I/O error handlers read this register; a hand-written row once recorded it as read-only on that basis, but reads alone do not show it cannot be written, so rw stays.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -342,25 +342,25 @@ Link layer channel test. The register's name and layout are from the header; the
 
 ### Register `incoming_error_header_1`
 
-Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
+Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 44 | `valid` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_valid of the header's ii_iieph1 structure, 1 bit. |
-| 40 | `overrun` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_overrun of the header's ii_iieph1 structure, 1 bit. |
-| 35:32 | `err_type` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_err_type of the header's ii_iieph1 structure, 4 bits. |
-| 30:20 | `source` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_source of the header's ii_iieph1 structure, 11 bits. |
-| 18:8 | `suppl` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_suppl of the header's ii_iieph1 structure, 11 bits. |
-| 6:0 | `command` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure | Member i_command of the header's ii_iieph1 structure, 7 bits. |
+| 44 | `valid` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_valid of the header's ii_iieph1 structure, 1 bit. The shipped kernel's print routine tests this bit before printing the header. |
+| 40 | `overrun` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_overrun of the header's ii_iieph1 structure, 1 bit. The shipped kernel's print routine reads the same bits. |
+| 35:32 | `err_type` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_err_type of the header's ii_iieph1 structure, 4 bits. The shipped kernel's print routine names 2 short request packet, 3 short reply packet, 4 long request packet and 5 long reply packet; any other value prints as unknown. |
+| 30:20 | `source` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_source of the header's ii_iieph1 structure, 11 bits. The shipped kernel's print routine reads the same bits. |
+| 18:8 | `suppl` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_suppl of the header's ii_iieph1 structure, 11 bits. The shipped kernel's print routine reads the same bits. |
+| 6:0 | `command` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_command of the header's ii_iieph1 structure, 7 bits. The shipped kernel's print routine reads the same bits. |
 
 ### Register `incoming_error_header_2`
 
-Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
+Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 40 | `tail` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure | Member i_tail of the header's ii_iieph2 structure, 1 bit. |
-| 37:0 | `address` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure | Member i_address of the header's ii_iieph2 structure, 38 bits. |
+| 40 | `tail` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_tail of the header's ii_iieph2 structure, 1 bit. The shipped kernel's print routine reads the same bits. |
+| 37:0 | `address` | established |  | Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine) | Member i_address of the header's ii_iieph2 structure, 38 bits. The shipped kernel's print routine reads the same bits. |
 
 ### Register `prb_counter_adjust`
 

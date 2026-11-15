@@ -151,4 +151,6 @@ Independent review of the Bedrock I/O and crossbar additions at chips commit 603
 2. **The 60-bit resets stay.** The author kept 0x0fffffffffffffff and recorded the decode, but the stated reason was wrong: "no other 64-bit field in the table has an all-ones reset". The table also has single 64-bit fields that reset to all 64 bits set, in the processor interface block (offsets 0x0, 0x10 and 0x18) and for the first register of the memory-directory block. So the table can write 64 set bits, and the three 60-bit records are deliberate. That strengthens the decision to keep the value; the docs of the three registers now say it (fixed in this review). Whether silicon reads the top four bits clear is still unknown, and no change of value or grade is warranted: the reset is a table value, graded established as the others from that table are.
 3. The cited tree is the 2.5.40 pin; the Library's copy of the same header sits under a different revision label and was not used.
 
+Resolved after review: devices/bedrock_ii: keep one definition of the four registers named twice
+
 **Cleared:** the 126 field positions, 25 rsvd masks, 16 names and offsets, the manufacturer decode and the 60-bit decode. **Not cleared:** access types of the new registers (inferred), the second-instance crossbar layouts (graded inferred), and the resolution of finding 1.

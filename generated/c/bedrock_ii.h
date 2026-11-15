@@ -22,9 +22,9 @@
 #define BEDROCK_II_WIDGET_ID_MANUFACTURER_INPLACE    (BEDROCK_II_WIDGET_ID_MANUFACTURER_MASK << BEDROCK_II_WIDGET_ID_MANUFACTURER_SHIFT)
 
 /*
- * Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
+ * Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The shipped kernel's I/O error handlers only read it, which agrees with r but does not show the register cannot be written. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT.
  */
-/* widget_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure */
+/* widget_status: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites) */
 #define BEDROCK_II_WIDGET_STATUS                     0x400008 /* inferred */
 #define BEDROCK_II_WIDGET_STATUS_CRAZY_SHIFT         32 /* established */
 #define BEDROCK_II_WIDGET_STATUS_CRAZY_MASK          0x1ull
@@ -327,7 +327,7 @@
 #define BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_INPLACE (BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_MASK << BEDROCK_II_CREDIT_COUNT_TIMEOUT_TIMEOUT_SHIFT)
 
 /*
- * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table.
+ * Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table. The shipped kernel's I/O error handlers read this register; a hand-written row once recorded it as read-only on that basis, but reads alone do not show it cannot be written, so rw stays.
  */
 /* misc_error_mask: rw64, reset 0x111; Linux 2.5.40 SN1 register headers: names, offsets and field layouts */
 #define BEDROCK_II_MISC_ERROR_MASK                   0x4001e8 /* inferred */
@@ -492,9 +492,9 @@
 #define BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_INPLACE (BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_MASK << BEDROCK_II_LLP_CHANNEL_TEST_TEST_SEED_SHIFT)
 
 /*
- * Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
+ * Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1.
  */
-/* incoming_error_header_1: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure */
+/* incoming_error_header_1: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites) */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1           0x400220 /* inferred */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_VALID_SHIFT 44 /* established */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_VALID_MASK 0x1ull
@@ -516,9 +516,9 @@
 #define BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_INPLACE (BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_MASK << BEDROCK_II_INCOMING_ERROR_HEADER_1_COMMAND_SHIFT)
 
 /*
- * Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the register is graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
+ * Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2.
  */
-/* incoming_error_header_2: rw64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure */
+/* incoming_error_header_2: r64, reset 0x0; Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites) */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2           0x400228 /* inferred */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2_TAIL_SHIFT 40 /* established */
 #define BEDROCK_II_INCOMING_ERROR_HEADER_2_TAIL_MASK 0x1ull

@@ -1240,7 +1240,7 @@ pub mod llp_channel_test {
         }
     }
 }
-/// Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the re (inferred)
+/// Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O er (inferred)
 pub mod incoming_error_header_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400220;
@@ -1305,7 +1305,7 @@ pub mod incoming_error_header_1 {
         }
     }
 }
-/// Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type, so rw is assumed and the re (inferred)
+/// Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O er (inferred)
 pub mod incoming_error_header_2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x400228;

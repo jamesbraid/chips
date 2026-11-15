@@ -56,7 +56,7 @@
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites)"
   },
   {
    "unit": "bedrock_ii",
@@ -1343,14 +1343,14 @@
    "kind": "register",
    "name": "incoming_error_header_1",
    "offset": 4194848,
-   "access": "rw",
+   "access": "r",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites)"
   },
   {
    "unit": "bedrock_ii",
@@ -1359,7 +1359,7 @@
    "hi": 44,
    "lo": 44,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1368,7 +1368,7 @@
    "hi": 40,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1377,7 +1377,7 @@
    "hi": 35,
    "lo": 32,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1386,7 +1386,7 @@
    "hi": 30,
    "lo": 20,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1395,7 +1395,7 @@
    "hi": 18,
    "lo": 8,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1404,21 +1404,21 @@
    "hi": 6,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
    "kind": "register",
    "name": "incoming_error_header_2",
    "offset": 4194856,
-   "access": "rw",
+   "access": "r",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": 0,
    "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites)"
   },
   {
    "unit": "bedrock_ii",
@@ -1427,7 +1427,7 @@
    "hi": 40,
    "lo": 40,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
@@ -1436,7 +1436,7 @@
    "hi": 37,
    "lo": 0,
    "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure"
+   "from": "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (print routine)"
   },
   {
    "unit": "bedrock_ii",
