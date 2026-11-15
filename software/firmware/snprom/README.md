@@ -3,7 +3,7 @@
 What the SGI Altix and Prism firmware images in hand are made of (four read in full, four more builds listed, one of
 them read from reset to the EFI console), which machines they target, what the processor does before the EFI console appears, which SAL
 calls they answer, and which SHub registers the first stage writes. The path an Altix 350 or Prism node takes from reset
-to the EFI console, read in the newest SHub 1 image, is in [boot-sequence.md](boot-sequence.md); every model-specific register access in the PAL code is catalogued in [pal-msrs.md](pal-msrs.md). Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
+to the EFI console, read in the newest SHub 1 image, is in [boot-sequence.md](boot-sequence.md); every model-specific register access in the PAL code is catalogued in [pal-msrs.md](pal-msrs.md). The single-node memory and node bring-up, with the value each register must return, is in [node-bringup.md](node-bringup.md). Source for every statement: the shipped images themselves, read with a binutils 2.44 `ia64-linux-gnu-objdump`
 built in the retools toolchain image. Nothing here is copied from the images: names are function and string names the
 binaries carry, addresses and numbers are quoted as facts.
 
