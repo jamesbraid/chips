@@ -58,9 +58,6 @@ boundaries agree with two selections; the patent does not say which part sits at
 - What the 8-byte HSPEC stride for writes means in hardware, beyond the patent's description.
 - The command set the flash answers to, and the board's wiring from the flash to the memory
   directory unit.
-- The environment records that mark absent CPU positions A to D disabled. No source in the
-  repositories gives their offsets or bytes. The records written after a failed start need
-  the captured PROM's bytes before they can be stated.
 
 Routes that would settle these: a published Bedrock or memory directory unit specification with
 the boot-flash pages, or a read of the flash's own identification data from a board. Neither is
@@ -112,12 +109,42 @@ Reference mode words, one row each:
   hardware or the PROM. The PROM's own 500 MHz rows are 0x549aa985 (2 MB) and 0x549ca985
   (8 MB).
 
+## Environment records that disable absent CPUs
+
+When a processor position is empty, the PROM writes a record that marks it disabled into the
+environment store. The store starts at flash offset 0x9e0100 (8 MiB + 0x1e0100). Each absent
+position takes the next 64-byte slot.
+
+One record:
+
+| Offset in record | Content | Bytes |
+| --- | --- | --- |
+| 0x00 | 0x10 | 1 |
+| 0x01 | ASCII `Disable` | 7 |
+| 0x08 | ASCII position letter, A to D | 1 |
+| 0x09 | zero | 7 |
+| 0x10 | ASCII `32: CPU failed early init.` | 26 |
+| 0x2a | zero | 22 |
+
+The lengths total 64 (1 + 7 + 1 + 7 + 26 + 22).
+
+| Slot | Flash offset | Position | Grade |
+| --- | --- | --- | --- |
+| 0 | 0x9e0100 | B | observed |
+| 1 | 0x9e0140 | D | observed |
+| 2 | 0x9e0180 | the third absent position | inferred (offset extrapolated from the stride) |
+
+Slots 0 and 1 are observed from a captured Origin 300 boot's environment store, including the
+byte layout. The PROM writes these records after its failed-start recovery has given up on an
+empty position; that is observed PROM behaviour. Pre-seeding a fresh store with them is emulator
+policy, not hardware.
+
 ## Not imported
 
 - The PROM's own probe of the flash and the way the PROM erases and programs the flash. These
   need the PROM image itself to re-derive (the CPU PROM payload
   `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`, described in
-  [ip35-prom-md-config.md](prom-md-config.md)). The configuration block is covered above; the
-  environment records are under Unknown.
+  [ip35-prom-md-config.md](prom-md-config.md)). The configuration block and the environment
+  records are covered above.
 - The per-position command state. It does not appear in the patent text. The write stride is
   eight HSPEC bytes per PROM byte (see the table above).
