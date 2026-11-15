@@ -1873,6 +1873,8 @@ Independent review of the coverage additions to the Hub register maps (`devices/
 4. `IIO_IIDSR` node and level widths and the transmit-retry counter width are disputed inside the header (structure versus macro). The TOML records both and grades the structure reading inferred; iris's existing mask agrees with the structure.
 5. The TOML cites a pinned tree (`v6.12`/`db2ddb87`); this review read the Library's default revision. Every compared value matched, so no tree difference was seen, but the revisions were not diffed.
 
+Resolved after review (finding 5): devices/hub: record the header diff against the pinned tree. Diffed the five headers and the SN0 `addrs.h` between the Library's `linux` root at db2ddb87 and the default `linux-history` revision: no register offset, mask, shift, enum or constant differs, so no field added in a73c37b changes. The differences are whitespace, `__ASSEMBLY__` against `__ASSEMBLER__`, unused macros the pinned tree dropped (`HUB_REG_PTR`, `PI_ERROR_*`, `FREEMEM_*`, `KERN_XP_*`, `BRIDGE_REG_PTR` and similar; none cited here), and `get_region_shift` added to `hubni.h`.
+
 Resolved after review (finding 1): devices/hub_ni: grade the vector clear cor mask established like the processor ones
 
 **Cleared:** the field positions, masks, enums and constants listed above, and that none of the iris-used register facts changed. **Not cleared:** access types and reset values (none is stated by the headers; they come from the PROM table or are inferred), and the fields not sampled.
