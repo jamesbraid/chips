@@ -335,12 +335,213 @@ Established from the code, no hardware naming: no read of msr[1546] with a resol
 
 Reached on the normal PALE_RESET path, not created by zero reads, **only on a processor whose `cpuid[3]` has family 0x1f and model 1**: the generic search takes PAL_A 7.31 for model 0 and PAL_A 1.27 for model 2, and PAL_B 5.73 is the model 1 PAL_B. The reset stub zeroes msr[0], the FIT header and a PAL_B match are needed, and only msr[1536] bits 59:48 all set or msr[0] bits 21 or 7 set would skip it. The zero reads make the value written simple (single run, zero table fields); with a real msr[1559] index in 7 to 24 (inferred, since only those table entries are nonzero) the value differs. Whether msr[1608..1612] read zero afterwards on hardware is unknown. An emulator must return zero there to stay on the main path.
 
+## 5. Context of every reserved-slot site
+
+Section 4 reads one site, the first reserved M slot on the PAL_A 5.37 path (`0xfffca406`), and finds that the code after it only tests
+status registers against zero. This section sets all 747 sites (702 M-unit words `0x108000000`, 45 B-unit words `0x48000000`) against that
+context. One row per site, with the writes before it and the reads after it, is in [reserved-slot-sites.md](reserved-slot-sites.md). The
+question behind it: for how many sites does "execute the word as a no-op" rest on the same evidence as at the verified site, and where
+is that evidence missing or contradicted.
+
+### Method and limits
+
+- **Listing.** The Ghidra slot listing of the whole 6 MiB image (IA-64 module, every bundle) gives every instruction; a site is a slot whose
+  41 bits equal the reserved word in an M position, or `0x48000000` in a B position. 702 and 45 found, the counts section 1 and the
+  B-unit paragraph give. A separate standalone bundle decoder (template table, no Ghidra) finds the same 702 and 45 in the same image
+  ranges, per image (generic PAL_A 1, 7.31 18, 5.37 22, 1.27 22, PAL_B 7.79 211, 5.73 211, 2.25 217; B-unit 1, 1, 1, 12, 12, 18 for the
+  processor-specific PAL_A and the three PAL_B). `objdump` was not re-run for this section; its agreement with the module over the whole
+  image is measured in the retools page.
+- **Before the slot.** The msr writes in the 400 instructions before the site, back to the previous site, with the index register and value
+  register evaluated forward over that window (constants, `movl`, `adds`, `dep`, `dep.z`, `or`; known bits tracked, so a value can be
+  partly known). The state is dropped at a call, an `alloc` and an unconditional branch, because code after one is entered from
+  somewhere else. An index that is a caller's register stays unresolved (`?`).
+- **After the slot.** Forward in listing order, up to 110 instructions, to the next site, an unconditional branch, a call, a return or
+  `rfi`. Conditional branches are passed on the fall-through side. Each msr read is followed through `extr`, `and`, `shr` and `dep`
+  into the first compare or `tbit` that uses it; a read with no such use before the register is overwritten is "consumed as data". A
+  loop is a conditional branch back to an address after the slot with an msr read in the loop body.
+- **What this cannot see.** Effects that reach a read in another routine, code reached only by an indirect branch the trace does not
+  resolve, and any read after the trace ends. "None found" below means none inside that trace, not none in the image. The index
+  evaluation follows listing order, not control flow, so a value assembled in a different routine is shown unresolved, not guessed.
+- **Entry sets.** Static flow from the PAL_A entry (+0x300), the PAL_B reset continuation (stub at +0x10060), the PAL_PROC dispatch (+0x10010), the two event stubs
+  and, in PAL_B 5.73, the procedure 520 handler (`0xffea42a0`), following both arms of conditional branches and resolving jumps through
+  a register set from `ip`. It is a lower bound ("can be reached"), not a trace of the boot: for example it misses the return to
+  `0xfffca520`, so the second PAL_A 5.37 site `0xfffca626` (on the path by the reading in section 4) is added by hand.
+
+### The verified context
+
+The site at `0xfffca406` (section 4), as the reference: (a) a write to msr[1546] (here the only write to it; sometimes with msr[1544] before or
+after), (b) `srlz.d`, (c) the slot, (d) reads of the status registers msr[1608..1612] (the five registers at `0x648..0x64c`) each compared
+with zero, a non-zero value taking an error exit, and (e) no read anywhere in the following code of a register the slot could be setting
+(it has no operand, so this is "no read of any command or result register the slot could be completing").
+
+### Classes (M-unit)
+
+| Class | Context | Sites | Against the verified context | Later code reads state the slot could change |
+|---|---|---|---|---|
+| V | msr[1546] write (class 4), `srlz.d`, slot, then msr[1608..1611 or 1612] each `cmp.ne` against 0 | 6 | **exact match** (the two sites per PAL_A image: `0xfffca406` and `0xfffca626`, and their counterparts) | reads; the same value with or without a change (zero required, any other value takes the error exit) |
+| K | msr[1544] = 0, msr[1546] = `0x9021004d60000001`, `srlz.d`, slot, then a poll of msr[1212] until bit 14 is set, bits 13:0 compared with `0x317c` and msr[1226] with a 64-bit constant | 3 (one per PAL_B) | **differs, matters**: a poll that needs a non-zero value | **MUST SEE A CHANGE** (poll on msr[1212] bit 14; see "Sites that matter") |
+| P1 | msr[1546] class 2, `srlz.i`, slot, then msr[1640] bit 54 cleared (window close), `cr.pta` restored, a write setting bit 4 of msr[1552], `srlz.i`, poll msr[1552] until bit 2 is set | 60 (20 per PAL_B) | differs, matters: a poll that needs a bit set | MUST SEE A CHANGE of msr[1552] bit 2, but a write to that register comes between the slot and the poll, so the change is explained without the slot (inferred) |
+| P2 | command, slot, then msr[1416] written and polled until bit 40 is clear | 5 | differs: a poll, but a zero read satisfies it | reads; the same value with or without a change (a zero read passes) |
+| R | msr[1546] (class 2 mostly, class 3 for 15, 22 with the class not resolved), `srlz.d`, slot, then msr[1545] read (PAL_B only): 86 tested, 41 returned or stored | 127 | **differs, matters**: reads a register the command may fill | reads; undecided. Tests use bit 3 (21 sites), a constant 7 (16), a constant 0 (11) or a caller-supplied value (about 38); none is shown to need a value only the slot could produce |
+| S | command, slot, then msr[1600], [1601] or [1608] (caller-selected bank) read and shifted into a result or returned, not compared with a constant | 21 (7 per PAL_B) | differs, matters: a status bank read as data, not tested | reads; undecided (no expected value in the code; the value goes to the caller) |
+| O | command, slot, then another msr read: msr[1058] tested (15), msr[1510], [1511], [1512] tested (9), msr[1028..1031] returned (3), msr[1779] (3), reads through a caller's index (17), msr[1536] and [1553] (one site per PAL_A, `0xfffcae86` in 5.37) | 50 | differs, matters: reads a register other than the status bank | reads; undecided (the msr[1058] and msr[1510..1512] reads are tested, the rest returned or unused; none shown to need the slot) |
+| N1 | command write(s), `srlz.d`, slot, then no read before the next command or data write (msr[1544], [1546], [1600], [1084], [1558]) | 157 | **differs, matters**: no status read follows | none found |
+| N2 | command write(s), `srlz.d` or `srlz.i`, slot, then no read before a branch or return | 113 | differs, matters: no status read follows | none found |
+| W1 | cache or table-maintenance routines: msr[1546] earlier, then msr[1084] written last, `srlz.i` (69 + 24 + 12 with `srlz.d`), slot, then msr[1084] or msr[1546] written | 105 (35 per PAL_B) | differs, matters: no command write directly before, no read after | none found |
+| W2 | the bit-54 window: msr[1553] bits 43:42, msr[1640] bit 54, msr[1730] bits 43 and 36 written, `srlz.i`, slot, then the same registers restored | 19 (the generic PAL_A site, 5 per PAL_B, 1 per processor-specific PAL_A) | differs: no msr[1546] command at all | none found |
+| U | the index of the writes before the slot is a caller's register or was set in another routine, so the class is not resolved | 36 | not decided | none found in the trace; 3 sites of PAL_A 5.37 are the loop at `0xfffcdd20` (below) |
+
+Of the 702 M-unit sites: 6 match the verified context exactly; 0 differ only in which command and status msrs they use (the nearest are the 21 S sites, which read the same banks but
+compare nothing against a constant);
+696 differ in a way that matters: 430 with no read after them at all (N1, N2, W1, W2, U), 198 that read a register the command could be
+filling (R, S, O) and 68 with a poll (K, P1, P2). Of the 696, only K and P1 wait for a bit that a zero read does not give; P1's change is
+explained by a write that precedes the poll, K's is not.
+
+### Classes (B-unit)
+
+| Class | Context | Sites | Later code reads state the slot could change |
+|---|---|---|---|
+| B0 | `srlz.i`, slot, no msr write before it in the trace (these sit in the exit paths that restore r30, r31 and pr from msr[0], msr[1641] and msr[1642], and in the `ar.unat` save and restore code) | 21 | none found |
+| B1 | msr[1664] (15 of 21), msr[1283] (3) or another register written before; then `srlz.i`, slot, then branch, return or a write to msr[1282] | 21 | none found |
+| BP | PAL_B 2.25 only: msr[1664] written, `srlz.i`, slot, then writes to msr[1282], [1237] and [1416] and a poll of msr[1416] until bit 40 is clear | 3 | reads; the same value with or without a change (a zero read passes) |
+
+None of the 45 B-unit sites has an msr[1546] command before it or a status register read after it, so none matches the verified
+context; the evidence for treating them as a no-op is only that the code after each is ordinary and does not depend on a result (inferred).
+
+### Counts per image
+
+Images in the order a model-1 (Madison) boot runs them (generic PAL_A reset, PAL_A 5.37 from +0x300, PAL_B 5.73 as SAL_B reaches it),
+then the model-0 and model-2 pairs. Sites per class, M and B together:
+
+| Class | generic A | A 5.37 | B 5.73 | A 7.31 | B 7.79 | A 1.27 | B 2.25 | Total |
+|---|---|---|---|---|---|---|---|---|
+| V | 0 | 2 | 0 | 2 | 0 | 2 | 0 | 6 |
+| K | 0 | 0 | 1 | 0 | 1 | 0 | 1 | 3 |
+| P1 | 0 | 0 | 20 | 0 | 20 | 0 | 20 | 60 |
+| P2 | 0 | 0 | 2 | 0 | 2 | 0 | 1 | 5 |
+| R | 0 | 0 | 40 | 0 | 40 | 0 | 47 | 127 |
+| S | 0 | 0 | 7 | 0 | 7 | 0 | 7 | 21 |
+| O | 0 | 1 | 16 | 1 | 15 | 1 | 16 | 50 |
+| N1 | 0 | 8 | 45 | 5 | 46 | 8 | 45 | 157 |
+| N2 | 0 | 5 | 33 | 4 | 33 | 5 | 33 | 113 |
+| W1 | 0 | 0 | 35 | 0 | 35 | 0 | 35 | 105 |
+| W2 | 1 | 1 | 5 | 1 | 5 | 1 | 5 | 19 |
+| U | 0 | 5 | 7 | 5 | 7 | 5 | 7 | 36 |
+| B0 | 0 | 0 | 7 | 0 | 7 | 0 | 7 | 21 |
+| B1 | 0 | 1 | 5 | 1 | 5 | 1 | 8 | 21 |
+| BP | 0 | 0 | 0 | 0 | 0 | 0 | 3 | 3 |
+| **All** | 1 | 23 | 223 | 19 | 223 | 23 | 235 | 747 |
+
+Which sites a processor model reaches. The generic PAL_A picks 7.31 for `cpuid[3]` model 0, 5.37 for model 1 and 1.27 for model 2
+(section 4 and [pal-authentication.md](pal-authentication.md)), and each model's PAL_B is the one with the same model byte. Sites per model:
+
+| Model (cpuid[3] model byte), images | V | K | P1 | P2 | R | S | O | N1 | N2 | W1 | W2 | U | B0 | B1 | BP | All |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 1 (Madison): generic PAL_A, 5.37, 5.73 | 2 | 1 | 20 | 2 | 40 | 7 | 17 | 53 | 38 | 35 | 7 | 12 | 7 | 6 | 0 | 247 |
+| 0: generic PAL_A, 7.31, 7.79 | 2 | 1 | 20 | 2 | 40 | 7 | 16 | 51 | 37 | 35 | 7 | 12 | 7 | 6 | 0 | 243 |
+| 2: generic PAL_A, 1.27, 2.25 | 2 | 1 | 20 | 1 | 47 | 7 | 17 | 53 | 38 | 35 | 7 | 12 | 7 | 9 | 3 | 259 |
+
+The generic PAL_A site is shared by all three. Per model, the sites that static flow reaches from the entry points (lower bound,
+class letter after each address):
+
+- **Model 1.** PAL_A 5.37 from +0x300: `0xfffca406` V, `0xfffca626` V, `0xfffcd4d6` N1, `0xfffcd9a6` N1, `0xfffcdb06` N2, `0xfffcdd66` U, `0xfffcde56` U, `0xfffcdea6` U, `0xfffce576` U. PAL_B 5.73 reset continuation: `0xffe88ac6` N1, `0xffe88c26` N2, `0xffe88e86` U, `0xffe88f76` U, `0xffe88fc6` U, `0xffed51c6` N1, `0xffed5246` N1, `0xffed52c6` N1, `0xffed5346` N1, `0xffed5436` O, `0xffed77c6` K, `0xffed7886` U. PAL 520 handler (PAL_B 5.73): `0xffe88346` N1, `0xffe88656` N2, `0xffe88ac6` N1, `0xffe88c26` N2, `0xffe88e86` U, `0xffe88f76` U, `0xffe88fc6` U, `0xffea4366` N1.
+- **Model 0.** PAL_A 7.31 from +0x300: `0xfffc38a6` V, `0xfffc8236` N1, `0xfffc8706` N1, `0xfffc8866` N2, `0xfffc8ac6` U, `0xfffc8bb6` U, `0xfffc8c06` U, `0xfffc90c6` U, `0xfffc9956` N2. PAL_B 7.79 reset continuation: `0xffdd8ac6` N1, `0xffdd8c26` N2, `0xffdd8e86` U, `0xffdd8f76` U, `0xffdd8fc6` U, `0xffe24266` N1, `0xffe242e6` N1, `0xffe24366` N1, `0xffe243e6` N1, `0xffe244d6` N1, `0xffe26856` K, `0xffe26916` U.
+- **Model 2.** PAL_A 1.27 from +0x300: `0xfffd0b16` V, `0xfffd3cf6` N1, `0xfffd41c6` N1, `0xfffd4326` N2, `0xfffd4586` U, `0xfffd4676` U, `0xfffd46c6` U, `0xfffd4ec6` U. PAL_B 2.25 reset continuation: `0xfff38ac6` N1, `0xfff38c26` N2, `0xfff38e86` U, `0xfff38f76` U, `0xfff38fc6` U, `0xfff397c6` U, `0xfff75686` N1, `0xfff75706` N1, `0xfff75786` N1, `0xfff75806` N1, `0xfff758f6` O, `0xfff77b36` K, `0xfff77bf6` U.
+
+The known order inside PAL_A 5.37 (section 4 and the reading below): `0xfffca406` (V), then the call at `0xfffca51c` into `0xfffcd850`
+(`0xfffcd9a6` N1, `0xfffcdb06` N2, then three sites per pass for eight passes at `0xfffcdd66`, `0xfffcde56`, `0xfffcdea6`), the return to `0xfffca520`,
+`0xfffca626` (V). The three loop sites are U above only because the registers holding 1544, 1546 and 1600 are set earlier in the
+routine (`0xfffcdb6c` to `0xfffcdb7c`); read by hand, each pass writes msr[1544] (`0x001`, `0x101`, ..., `0x701`), msr[1546] (class 5 value
+`0x954...` with an 11-bit field of `0xff`, `0x1ff`, ..., `0x7ff`) and msr[1600], then `srlz.d`, the slot, a read of msr[1559] for an
+index, then two more command groups (class 3 values, msr[1544] with the pass number in bits 10:8) each with its own `srlz.d` and slot. None of them reads a status register.
+
+### The second PAL_A 5.37 site, `0xfffcd9a6`
+
+Second reserved word that the model reaches, in the routine at `0xfffcd850`. Context, read in Ghidra: msr[1544] = 0 and msr[1600..1603] = 0
+(`0xfffcd870`), msr[1608..1611] and msr[1616..1619] = 0 (`0xfffcd8c0`), then in one instruction group msr[1624..1627] = 0 and
+**msr[1546] = `0x8d20000000000000`** with bit 43 set when msr[1559] bits 23:22 are 1 or 2 (`0xfffcd930` to `0xfffcd990`), `srlz.d` (`0xfffcd996`), the
+slot in the bundle at `0xfffcd9a0`. It is a command write, class 3 (bits 63, 59, 58, 56 and 53; the verified site writes class 4), not a pure
+clear. After the slot: msr[1559] read for an index, a second msr[1546] write (class 5 `0x9500000340000000` + `0x7ff`, bit 43 again), the same sixteen clears
+again, msr[1544] = 0, `srlz.d` and the next slot. No status register is read and nothing is compared between the two slots, so it is class N1, not V.
+Nothing after it tests state the slot could have changed inside the routine; the status registers it clears are tested later by the V site at `0xfffca626`, after
+another command and another slot, so a dependence of those reads on this slot is neither shown nor excluded. The sixteen
+zero writes look like an initialisation of a command and status register file before commands are issued (inferred; the loop later
+writes msr[1600] non-zero, so at least that one is a command or data register, not status).
+
+### Sites that matter
+
+1. **K: the msr[1212] poll (3 sites; MUST SEE A CHANGE).** PAL_B 7.79 `0xffe26856`, 5.73 `0xffed77c6`, 2.25 `0xfff77b36`. After msr[1544] = 0, msr[1546] =
+   `0x9021004d60000001`, `srlz.d` and the slot the code loops reading msr[1212] (index `0x4bc`) until bit 14 is set, then requires bits 13:0 of msr[1212] to
+   equal `0x317c` and msr[1226] (`0x4ca`) to equal a 64-bit constant. In 5.73 and 2.25 the constant is `0x82518167826f836c` in all three revision arms. In 7.79 it is `0x833e80ab8096833e` for
+   a `cpuid[3]` revision byte (0 reads as 1) of 3 or below, `0x82518167826f836c` for 4 to 8, and `0xbad` in both places above 8 (the compare chain is read from the listing: inferred for which arm a given revision takes). A mismatch is not fatal: it sets msr[1640]
+   bit 59 (`0xffe268c6` to `0xffe268e0`) and goes on with a second command (`0x9020000000000001`, `srlz.d`, a second slot). A model that reads zero from msr[1212] loops forever at
+   `0xffe26860`. The site is on the PAL_B reset continuation (+0x10060): the three ways through the msr[1225] test (`br.ia` after reset left it at 4, the msr[1224]
+   loaders, or neither) rejoin at the common exit `0xffe26670` (5.73 `0xffed75e0`, 2.25 `0xfff77950`), which has no conditional skip before the site. Grade: reachable by static
+   flow established; "every pass of the reset continuation" inferred, since the PAL_A to PAL_B hand-off was not re-traced. Whether the slot or the msr[1546] write alone provides the
+   response: **unknown**. The constants are not in the data the loaders write: the two loaders at `0xffde68f0` and `0xffde8030` (7.79) write indices 1200..1211, 1216..1223,
+   1224 (256 values), 1225 and 1232..1235 only; none of their 281 values and none of the 282 words of the `br.ia` tables at `0xffe254b0` and `0xffe25d90` has either 64-bit
+   constant or bits 13:0 equal to `0x317c`, and neither constant occurs anywhere in the image as bytes (established, 7.79). So the check is a known-answer test whose
+   expected values live in the check itself. What msr[1212] and msr[1226] are: **unknown**.
+2. **P1: msr[1552] polls (60 sites).** The window routines, for example PAL_B 5.73 `0xffea0fe6` to the poll at `0xffea1050`, set bit 4 of msr[1552] after the slot and then loop until
+   bit 2 reads set. A zero read hangs there. The write that precedes the poll is the more direct cause, so the slot is not required to explain the change (inferred).
+3. **R: msr[1545] after a command (127 sites).** This is the result register of the msr[1544..1547] group in every reading so far (inferred, no source names it). 56 of the tested sites
+   compare it with a constant or a caller-supplied value. The values asked for are not shown to be produced only by the slot; a model that stores what is written to msr[1545]
+   satisfies some and not others. Not resolved here.
+4. **S and O (71 sites).** Same question for reads that are returned or compared in the caller. Not resolved.
+5. **Not slot-related, but needed to get past the slots: the msr[1730] loops at `0xfffcb2c0` and `0xfffcb390` (PAL_A 5.37; 7.31 and 1.27 counterparts not read).** Loop 1 exits when msr[1730] bits 3:0 are `0xf`,
+   loop 2 when bits 11:8 are `0xf`; each pass writes msr[1728] (bit 48 set and 49 clear in loop 1, the reverse in loop 2) and strobes msr[1730] bits 42, 48 and 49 then clears bit 48. Both loops
+   are skipped when msr[0] bit 22, msr[1152] bit 18 or msr[1572] bit 18 is set (`0xfffcb260` to `0xfffcb2bc`), and continue at `0xfffcb460` and `0xfffcb4c0`. A stepped count or training loop
+   (inferred; no source names the bits). It needs a non-zero read; a zero read hangs. The msr[1416] bit 40 poll at `0xfffcd7d0` is different: it waits for the bit to be clear, which a zero read satisfies.
+
+### The msr[1546] command values across all sites
+
+650 of the 702 M-unit sites have a write to msr[1546] before them in the trace; 52 do not (19 W2 and 33 U). Bits 60:58 are the command class
+(inferred: bit 63 is set in every value seen, so it is a valid or go bit, and the class is the field the code assembles with `dep`; no source names any of this). Of the 650,
+the class is known for 589 and was not resolved for 61 (the value comes from a caller's register).
+
+| Class (bits 60:58) | Sites | Fully known values | Fields that vary | After the slot (class letters) | What later code requires |
+|---|---|---|---|---|---|
+| 2 | 270 | `0x8940000000000000` (98: PAL_B windows, PAL 520 handler, PAL_A 5.37 `0xfffceee6` and its 1.27 counterpart), `0x8922000000000000` (9) | the other 163 are partly known: bit 63 and the class known, bits 51:44 and 27:0 zero, bits 55:52, 43:40, 39:32 and 31:28 assembled from registers | R 90, N1 47, P1 60, O 36, S 21, N2 9, P2 4, W1 3 | msr[1545] tests (bit 3, constants 7 and 0, a register), msr[1552] bit 2 set, msr[1416] bit 40 clear, the bank 1600/1601/1608 returned |
+| 3 | 261 | `0x8d40000000000000` (15) | partly known values of the same shape as class 2; `0x8d20000000000000` + bit 43 at PAL_A 5.37 `0xfffcd9a6` | W1 102, N1 72, N2 57, R 15, O 12, U 3 | msr[1545] bit 3 test (15 sites); the rest need nothing |
+| 4 | 9 | `0x9021004d60000001` (3, K); `0x9020000000000001` is the failure arm of K, read by hand | PAL_A: bits 57:53 from a table at `0xfffcce70`, bit 43 from msr[1559], bits 41:29 from the table, 22:18 run start, 15:0 run end | V 6, K 3 | V: msr[1608..1612] compare 0. K: msr[1212] bit 14, `0x317c`, msr[1226] constant |
+| 5 | 49 | none fully known | partly known; by top 16 bits and low byte: `0x9490..034000..` (5), `0x9700..2xx` (6), `0x9720..067f` (3), `0x9740..3xx` (8), `0x9780..x3ff` with x = 0 to 3 in bits 9:8 of the second word (12), `0x97c0..01d0003000` (3), `0x97e0..7f` (12) | N1 30, N2 17, O 2 | none (O: msr[1536], msr[1553] and a bit-1 test) |
+| not resolved | 61 | none | value from a caller's register or computed in another routine | R 22, N2 30, N1 8, P2 1 | R: msr[1545] tests (constant 0 or 7); others none |
+
+The status registers the V class reads are msr[1608..1612] (the bank at `0x648`). Across the image msr[1600..1627] are read only by the S class (data, 21 sites) and the V class; the sites otherwise write them (the sixteen zero writes at `0xfffcd870` and `0xfffcda36`, the clears at `0xffe23e36`). Every meaning in this table is **inferred**; none is named by a source.
+
+### Cross-check against Intel's SR870BN4 BIOS
+
+Package `SR870BN4_1001_SUP3.ZIP`, file `S870BN4C.BIN`, sha256 starting `fb422439` (5,111,342 bytes). Method: locate each SGI PAL image in the file by unique 64-byte chunks,
+compare the aligned bytes, scan the aligned region with the standalone bundle decoder. Established:
+
+| Image | Intel bytes | Reserved M slots | B slots | Notes |
+|---|---|---|---|---|
+| PAL_A 5.37 (0x67c0 bytes) | identical | 22 | 1 | same offsets as the SGI image |
+| PAL_A 1.27 (0x6ce0 bytes) | identical | 22 | 1 | same offsets |
+| generic PAL_A (0x7fc0 bytes, from `0xffff8000`, last 0x40 bytes left out) | identical except 8 bytes at image offsets 8 to 15 | 1 | 0 | the site is the same; the section 1 text "byte-identical" holds apart from those 8 bytes |
+| PAL_A 7.31 | not the same image: 611 of 1,712 sampled 16-byte steps match | | | consistent with Intel holding PAL_A 7.46; not compared |
+| PAL_B 2.20 against SGI 2.25 | 110,910 of 634,816 bytes differ over the 0x9afc0 bytes at the best alignment (code that moved inflates this) | 217 | 18 | 166 of the 217 M offsets and none of the 18 B offsets coincide; the totals and the class counts (V 0, K 1, P1 20, P2 1, R 47, S 7, O 16, N1 45, N2 33, W1 35, W2 5, U 7, B0 7, B1 8, BP 3) equal 2.25's |
+
+The Intel PAL_B 2.20 was classified by the same listing and trace, with the image's own length (not established) replaced by the 2.25
+length and the base address of 2.25. The poll at msr[1212] is present there once (K 1). PAL_B 7.79 and 5.73 were not compared: no region of the file matched more than about a quarter of their sampled steps. The slot therefore occurs in Intel's own shipped PAL images, in the same contexts, including the msr[1212] poll in 2.20 (established for the three PAL_A images and 2.20 as counted above).
+
+### Grades
+
+- **Established:** the 747 sites, their addresses, the preceding writes and following reads as listed, field patterns where the evaluation resolved them, the Intel byte comparison and
+  the standalone counts, the msr[1212] and msr[1226] constants and what the loaders and tables contain.
+- **Inferred:** the class letters, reading msr[1546] as a command port with bits 60:58 as a class, msr[1545] as its result, msr[1608..1612] as its status, the entry sets, "reachable
+  on every pass" for K, and every statement of what a register is.
+- **Unknown:** what the word does; whether the slot or the preceding write causes the response the K and P1 polls wait for; what msr[1212], msr[1226], msr[1552] and the
+  msr[1730] fields are; the later reads of R, S and O sites (not resolved); behaviour of sites reached only through the PAL_PROC dispatch (indirect, not traced).
+  What would settle the polls: a Madison or McKinley document that names the msr file, or a trace from hardware, which this program does not take without approval.
+
 ## Questions left (unknown)
 
 1. What the two reserved encodings do on Itanium 2 and Madison, and whether anything depends on their result (item 1).
 2. Which of the vectors at `0xffffff90` and `0xffffffa0` is MCA and which INIT, which predicates and registers each event leaves, where PMI is (item 2).
 3. The consumer of the 142-record tables and the full callee contract of `br.ia` (item 3).
 4. Whether a Madison document (or revision -028 of 251141) defines PAL-only opcodes: not in the revisions read.
+5. Whether the reserved slot or the msr[1546] write causes the response that the msr[1212] poll (3 sites) and the msr[1552] polls (60 sites) wait for, and what msr[1212], msr[1226] and the msr[1730] fields are (section 5).
 
 ## Review
 
