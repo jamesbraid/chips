@@ -294,6 +294,13 @@ author's statement**; it is not a measurement of silicon. Sources: the SGI SN2 L
 (SHA-256 `5a79bfd6f2bf07f4c614b5794a9a3e6f5f973f8e60110e0ac2f6b293eb252a29`, offsets into `.text` after applying
 relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
 
+- **Where the packet goes on a SHub 1 (established for the address, inferred for the data).** The 2.4 SN2 kernel built each
+  pin's destination as the I/O interface interrupt register of the target node, `SH_II_INT0` (`0x1_1000_0000`, processor
+  slice 0) or `SH_II_INT1` (`0x1_1000_0100`, other slices), with the NASID at bit 36 and bit 47 set, and stored it with the
+  vector in bits 55:48 into the pin's per-pin address register (`shub_intr.c` `do_hub_intr_alloc`, `pcibr_intr.c`
+  `pcibr_setpciint`; linux-mips `linux-2.4` at `8ef7d46c94d5`). The data written is inferred to be `0x100 | vector`, which is
+  the `SEND` bit and `IDX` field of `SH_II_INT0`. Later kernels get the address from firmware instead. Detail and grades:
+  [SHub 1 interrupts](../shub/interrupts.md#where-a-pic-interrupt-lands-on-shub-1).
 - **Status is the pin level, not the packet** (established: the header's own description,
   `include/asm-ia64/sn/pci/pic.h` lines 1298 to 1306). Status bits 7:0 hold the current state of the eight INT_N
   pins, active high for a pin driven low, and the register is read-only. Whether status changes before the packet

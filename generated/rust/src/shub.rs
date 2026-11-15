@@ -1029,6 +1029,97 @@ pub mod md_dir_access_rp {
         }
     }
 }
+/// I/O interface interrupt 0 and 1 (SH_II_INT0, SH_II_INT1): the register a PIC's interrupt write lands on, through the Crosstalk address nasid << 36 | 1 (established)
+pub mod ii_int {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000000;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 256;
+    pub mod send { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod idx { // bits 7:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Destination of the I/O interface interrupt n (SH_II_INTn_CONFIG): delivery type, target processor id and optional vector base, the ipi_int layout with (established)
+pub mod ii_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000080;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 256;
+    pub mod base { // bits 49:21, established
+        pub const SHIFT: u32 = 21;
+        pub const MASK: u64 = 0x1fffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pid { // bits 19:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0xffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod agent { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#type { // bits 2:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Bit 0 enables the I/O interface interrupt n. The PROM writes 1 to both and never reads them. (established)
+pub mod ii_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000200;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 128;
+    pub mod enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Selects the node whose processors take this node's interrupts when it has none of its own (the PROM's table names it SH_INT_NODE_ID_CONFIG). Role infe (established)
 pub mod int_node_id_config {
     pub const WIDTH: u32 = 64;

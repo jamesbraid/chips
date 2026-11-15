@@ -1233,6 +1233,111 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "ii_int",
+   "offset": 4563402752,
+   "access": "w",
+   "width": 64,
+   "count": 2,
+   "stride": 256,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int.send",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int.idx",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "ii_int_config",
+   "offset": 4563402880,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 256,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int_config.base",
+   "hi": 49,
+   "lo": 21,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int_config.pid",
+   "hi": 19,
+   "lo": 4,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int_config.agent",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int_config.type",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "ii_int_enable",
+   "offset": 4563403264,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ii_int_enable.enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "int_node_id_config",
    "offset": 4563403520,
    "access": "rw",
@@ -2275,7 +2380,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name"
+   "from": "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",
@@ -2289,7 +2394,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name"
+   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",
@@ -2303,7 +2408,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name"
+   "from": "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",
