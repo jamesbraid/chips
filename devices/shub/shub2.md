@@ -97,3 +97,70 @@ Where it is read (established): SAL_A never touches it. Every later read of the 
 **What a model must return.** Bits 45:32 = this node's NASID, even (SHub) and fitting the V in section 1. Bit 54 consistent with the intended sharing-domain size (0 for a domain of 512). Bits 47:46 and 53:48 hold whatever was last written, 0 before the firmware writes them (inferred: the firmware writes before it relies on them; no read before a write was found). The register must be writable in bits 55, 53:46 and 45:32. The offset-0 word must return part number `0x254` in bits 27:12 for the SHub 2 method table to be selected (inferred as the SHub 2 part; a value that matches none leaves the node without a method table and later calls through it fail); the revision field 31:28 is stored, never tested (established); real revision encodings are unknown. `SH2_NODE_ID`'s own part number, revision and manufacturer fields: any value passes.
 
 **Unknown.** The real revision encoding and manufacturer code; the register name and layout of the offset-0 word; the reset value of `NODE_ID`; whether bit 58, 57:56 mean what their names say.
+
+## 3. Reset-path accesses (SAL_A, the SAL_B reset entry and the start of `main`)
+
+Order and form follow [prom-reset.md](prom-reset.md). Sites are PROM addresses in this image (Ghidra module listing). R is a read, W a write; widths are 64 bits unless given. Names are the image's own register-name table (PROM name) where it has one; Linux v5.3 defines only `SH2_IPI_ACCESS0..3` of the registers below. Every address is shown as its offset in the local window (`0x2_0000_0000 + offset`, bit 63 set); "what a read must return" is the software expectation, not a hardware reset value. Grades: *established* means the instruction, address, width and direction were read in full here; meanings are *inferred* unless stated.
+
+### The progress write
+
+SHub 1 wrote a history word in scratch memory and two LED registers per code. SHub 2 does one 16-bit store of the code to `0x2_f000_0000 | ((cr.lid >> 23 & 3) << 16)` (the four "real junk bus" LED ports, Linux `SH2_REAL_JUNK_BUS_LED0..3` at `0xf000_0000 + 0x1_0000 * n`, established), so slice n writes port n. No history word and no second LED register. The PROM's name table also has four LED registers at `0x1003_0000 + 0x80 * n` (`SH2_JUNK_BUS_LED0..3`, field `LEDn_DATA` bits 7:0), which the firmware reads (`0xff420420`, `0xff420760`: R64 `0x2_1003_0000 | slice << 7`) only to remember the current code while it waits on a lock, and to pass to SAL_B from SAL_A on reasons 1, 2 and above 3 (`r31`). Any value is accepted; nothing branches on it (established). Codes on this path: `0x30` (SAL_A hand-off), `0x31`, `0x35`, `0x08`, `0x0c`, `0x0d`, `0x0e`, `0x10` and onward; `0xb0` to `0xb4` are fatal stops.
+
+### SAL_A (`0xff674000`, reason 0; reason 3 is the PAL-pair selection and returns to PAL)
+
+SAL_A is entered at `0xff674030` by the FIT's SAL_A entry. For reason 3 it also reads `0x2_1003_8200` (`SH2_RACK_SLOT_DATA`, the register `0xff674d10` tests bit 39 of; established) and spins forever if that bit is set and bit 3 of PAL's `r33` is set; this is not on the reason 0 path (the routine returns before the read for reason 0).
+
+| # | Site | Access | Value | What the code needs | Grade |
+|---|---|---|---|---|---|
+| S1 | `0xff6745d0` | W `0x2_1002_0000` (`SH2_JUNK_BUS_TIME`: `TIMEOUT_VALUE` bits 47:16, `SETUP_HOLD` bits 2:0) | `0xffff_ffff_0003` (timeout `0xffffffff`, setup/hold 3) | accepted | established (access); inferred (meaning: junk-bus access timing) |
+| S2 | `0xff6745e0` | R `0x2_2011_0000` (`SH2_ADDRESS_MODE`) | V | must be 0 to 4 (index into the table at `0xff676000`); see section 1 | established (use) |
+| S3 | `0xff674650` | W `0x2_101d_0c00` (`SH2_SCRATCH24`) | `(table[V] & 0xffffffff) \| 1 << 63`, the SAL_A table row address | the write must read back; every later NASID computation loads the row through it | established |
+| S4 | `0xff674800` | R `0x2_2011_0010` (`SH2_PROCESSOR_TYPE`, `CODE` bit 0) | selects bits 2:1 (bit clear) or 3:2 (set) of PAL's `r33`; the two bits are swapped and become `cr.lid` bits 25:23 (`0xff674b80`) | any value; the register must not fault | established (access); inferred (what `CODE` means) |
+| S5 | `0xff674696` | W (release) `0x2_101d_0088` (`SH2_SCRATCH1_ALIAS`) | slice + 1 (`cr.lid` bits 25:23, plus 1; 1 to 8) | accepted | established |
+| S6 | `0xff6746a0` | R (acquire) `0x2_101d_0080` (`SH2_SCRATCH1`) | compared with slice + 1 | must read exactly slice + 1 after S5 on the winner. The alias at `+8` is a write path onto the same word (inferred from the name and the use) | established (test); inferred (alias) |
+| S7 | `0xff6746f0`, `f6`, `0xff674700` | W `0x2_101d_0300`, `0x2_101d_0280`, `0x2_101d_0380` (`SH2_SCRATCH6`, `SCRATCH5`, `SCRATCH7`) | 0 | plain storage; winner only | established |
+| S8 | `0xff674726` | W `0x2_0001_00d8` (`SH2_PIO_RQ_CRD_CTL`, `DEPTH` bits 5:0) | 2 | accepted (PIO request credit depth 2; inferred from the name) | established (access) |
+| S9 | `0xff674750`, `70`, `90`, `b0` | W `0x2_1006_0c00` = 1; `0x2_1006_0c80`, `0d00`, `0d80` = 0 (`SH2_IPI_ACCESS0..3`, Linux names) | 1, 0, 0, 0 | accepted. IPI access 0 = 1 as in the earlier build; SHub 1 wrote one register | established |
+| S10 | `0xff674536` | R `0x2_101d_0080` (second check) | compared with slice + 1 again | winner reads slice + 1; a loser skips S11 | established |
+| S11 | `0xff674570`, `0xff674580` | RMW `0x2_101d_0100` (`SH2_SCRATCH2`) | bits 41:39 set to 7 | plain storage | established (access); unknown (reader) |
+| S12 | `0xff6744b0` | W16 `0x2_f000_0000 \| slice << 16` | `0x30` | accepted. SAL_A then jumps to SAL_B offset 0 | established |
+
+The fatal-error branch (`PAL r35` bit 2 set and bits 1:0 not zero: `0xff6740d6` to `0xff674180`) writes progress `0xb0`, RMW clears bits 29:26 of `0x2_101d_0300`, ORs `0x280_0000_0000` into `0x2_101d_0080`, writes `0x1_0001_0000_0000` to `0x2_2000_0000` (`SH2_CRB_MESSAGE_CONTROL`) and spins; byte 1 of `r20` other than 0 or 7 stops with `0xb2`. These are not taken in a normal reset. The register set matches what [the earlier 1.40 reading](../../software/firmware/snprom/README.md#shub-registers-the-first-stage-writes-shub-2-sal_a-established) lists, address for address, with two corrections this build shows: the election value uses the 3-bit `cr.lid` slice field, and bits 41:39 are written to `SCRATCH2` (the address is the same as before).
+
+### SAL_B reset entry (`0xff401000` to `0xff42fe30`, reason 0)
+
+| # | Site | Access | Value | What the code needs | Grade |
+|---|---|---|---|---|---|
+| B1 | `0xff42fed0` | W16 progress | `0x31` | as above | established |
+| B2 | `0xff4a9810` (called `0xff42ff40`) | W `0x2_1006_0700` (`SH2_GC_SRC_CTRL`) | `0x1_0000_0000` (`SOURCE_SEL` 33:32 = 1) | accepted | established |
+| B3 | same | W `0x2_101c_0000` (`SH2_RTC`, 55-bit counter) | 0 | the counter restarts from 0 and counts afterwards (the firmware times 500-microsecond and 1000-microsecond waits with it) | established (access); inferred (restart) |
+| B4 | same | W `0x2_1006_0700` | `0x1_0000_0041` (`SOURCE_SEL` 1, `MAX_COUNT` bits 13:4 = 4, `ENABLE_COUNTER` bit 0) | the clock must advance. The firmware converts to microseconds as `counter * (MAX_COUNT * 10 + 10) / 1000` (reads `0x2_1006_0700` bits 13:4 each time, helper `0xff41ffa0`; established arithmetic), so with 4 the counter advances 20 per microsecond for the firmware's timing to be right | established |
+| B5 | `0xff42f4e0` (via `0xff4b3580`) | R `0x2_101d_0300` (`SCRATCH6`), bit 21 + slice | bit clear: the PAL entry point is used unchanged. Bit set: translated through RAM tables. The bits are written by B8 | S7 zeroed the word, so the bit reads 0 | established (test) |
+| B6 | `0xff4d0350` (called `0xff42ffc6`) | R `0x2_1006_0f00` and `0x2_101d_0c00`, about 40 reads each | the node number and the table row (section 1) | the node number must be stable | established |
+| B7 | `0xff42fe30` | W16 progress | `0x32` (in `0xff4b3c30`), then `0x35` | as above | established |
+| B8 | `0xff421bd0(slice + 0x15)` and `(slice + 0x23)`, `0xff42feee` onward | lock cycle L(bit) setting bits 21 + slice and 35 + slice of `0x2_101d_0300` | see below | lock reads 0; word reads back | established |
+
+**The node lock (L).** Routine `0xff421430` (set or clear a bit) and `0xff421ad0` (set a field) of `SCRATCH6`; the same shape on `SCRATCH7` at `0xff4ae770`. One cycle: R64 `0x2_1003_0000 | slice << 7` (remember the code); R64 `0x2_101c_0000` and `0x2_1006_0700` (clock); R64 `0x2_101d_0208` (`SCRATCH4_ALIAS`) repeated, with a 1000-microsecond wait between reads and a progress-code xor `0xff` each wait (`0xff423680`), until it reads 0, with a 1,000,000-microsecond deadline after which the firmware writes 0 to `0x2_101d_0200` (`SCRATCH4`) and keeps polling; then R `0x2_101d_0300`, W `0x2_101d_0300` with the bit or field changed; W `0x2_101d_0200` = 0 to release (established). Hardware behaviour of `0x...0208` on read (a read-to-take lock) is unknown; a plain register that always reads 0 satisfies every access. SHub 1 used the same offsets `0x101d_0200/0208`.
+
+**Second lock and claim.** `0xff4221b0` (claim bit n in `0x2_101d_0280`, `SCRATCH5`, with an optional deadline) and `0xff422c90` (clear): poll R `0x2_101d_0280` until bit n is clear, take `0x2_101d_0188` (`SCRATCH3_ALIAS`, read until 0), test-and-set the bit, W `0x2_101d_0180` = 0 to release (established). Not on the direct reset path (callers are indirect).
+
+### `main` (`0xff42b9c0`) to the first console message
+
+| # | Site | Access | What the code needs | Grade |
+|---|---|---|---|---|
+| M1 | `0xff420290` (about 260 call sites) | R `0x2_1006_0f00` bits 45:32 masked, R `0x2_101d_0c00` | the node number | established |
+| M2 | progress `0x08`, then `0xff4b2850(0)` | local-master arbitration, progress `0x0c`. For each slice 0 and 1 other than this one, `0xff425bb0` reads `0x3_...` global `0x2002_0010` (`SH2_FSB_SYMMETRIC_AGENT_STATUS`, `CPU_0_ACTIVE` bit 0, `CPU_1_ACTIVE` bit 1, `CPUS_READY` bit 2) until two consecutive reads agree and are non-zero, then tests bit n. SCRATCH6 bits `0x1a` + slice (this slice present), `0x2f` + 3 * (n & 1) (a 3-bit field per slice pair) and 500-microsecond polls up to 5,000,000 microseconds. A single-processor node with CPU_0 only: bit 0 = 1 for slice 0, bit 1 = 0 | the register must return a stable non-zero word (for example bit 0 set, bit 2 set) | established (access); inferred (bit meanings) |
+| M3 | progress `0x0d`, `0xff4b2c90` | second barrier on `SCRATCH6` bits `0x1e` + i and `0x1a` + i, bit `0x22`, each read back; same lock | word reads back as written | established (access) |
+| M4 | `0xff42b790` | chip identification read, offset 0 (section 2): `0x3_0000_0000 \| nasid << (40 - V)` | part number `0x254` | established (access) |
+| M5 | `0xff42c8b0`, `0xff43b460`, `0xff430b00`, `0xff5b2f40` | method-table calls (indirect through the table chosen in M4); `0xff430b00` is the node set-up that reaches the console. "Prom starting..." is printed after these | the L1 UART block `0x2_1003_8000` (`SH2_ASIC_TO_L1_DATA`), `0x...8080` (`ASIC_TO_L1_STATUS`), `0x...8100` (`L1_TO_ASIC_DATA`), `0x...8180` (`L1_TO_ASIC_STATUS`) and the status reads at `0xff4a71c0` (R `0x1003_8180`, `0x1003_8080`, `0x1001_0000`, `0x1001_0080`) | not traced beyond the named registers |
+
+**Not traced.** The call chain after M4 goes through method tables (indirect calls) down to the L1 console start; only the registers whose constants the PROM's own helper functions form (the L1 UART block, event registers `0x1001_0000` and `0x1001_0008`, the interrupt configuration registers) were located by searching the listing, not by following the calls. The order and values of the console accesses, and the part of `main` between "Prom starting..." and "Init memory...", are unknown to this page.
+
+### Differences from SHub 1
+
+- Progress codes go to one junk-bus LED port by a 16-bit store; no history word at `0x1_5003_1500 + 16 n`.
+- The firmware's shared scratch word is `0x2_101d_0300` (SCRATCH6, was `0x1_5003_1550`), its second word `0x2_101d_0280` (was `0x1_5003_1540`), third `0x2_101d_0380` (was `0x1_5003_1560`); the lock registers keep the same offsets `0x101d_0200/0208` and `0x101d_0180/0188`; the election pair `0x101d_0080/0088` is the same, now with slice + 1 up to 8.
+- SAL_A writes `SH2_IPI_ACCESS0..3` (four registers) and `SH2_PIO_RQ_CRD_CTL`; there is no write of a constant `0x1503_1010` as SHub 1 A1.
+- The clock control is `0x1006_0700` (`SH2_GC_SRC_CTRL`), a different offset from SHub 1's `0x1006_0280`, with the same start sequence.
+- The node number is read from `0x1006_0f00` bits 45:32, not `0x1006_0580` bits 42:32; the part number from offset 0 as before (`0x254` first).
+- The firmware's node-addressing table row is held in a SHub register (`SCRATCH24`) instead of a constant.
