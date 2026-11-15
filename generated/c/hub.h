@@ -36,9 +36,6 @@
 /* pi_nmi_a: w64, reset unknown; census: 3 sites, 3 routines */
 #define HUB_PI_NMI_A                                 0x000070 /* established */
 
-/* pi_int_pend_mod: w64, reset unknown; census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) */
-#define HUB_PI_INT_PEND_MOD                          0x000090 /* established */
-
 /* pi_int_pend0: r64, reset 0x0; census: 11 sites, 8 routines (r); census: 2 sites, 2 routines (r, indexed) */
 #define HUB_PI_INT_PEND0                             0x000098 /* established */
 
@@ -90,9 +87,6 @@
 /* pi_prof_en_b: w64, reset 0x0; census: 2 sites, 2 routines (w); census: 1 sites, 1 routines (w, indexed) */
 #define HUB_PI_PROF_EN_B                             0x000158 /* established */
 
-/* pi_rt_local_ctrl: rw64, reset unknown; census: 6 sites, 1 routines */
-#define HUB_PI_RT_LOCAL_CTRL                         0x000160 /* established */
-
 /* pi_gfx_int_cmp_a: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_PI_GFX_INT_CMP_A                         0x000320 /* established */
 
@@ -141,53 +135,23 @@
 /* pi_rt_count: rw64, reset 0x0; census: 161 sites, 80 routines */
 #define HUB_PI_RT_COUNT                              0x030100 /* established */
 
-/* md_memory_config: rw64, reset 0x1e7fbc3fffffff; census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed) */
-#define HUB_MD_MEMORY_CONFIG                         0x200018 /* established */
-
-/* md_refresh_control: r64, reset 0x400; census: 1 sites, 1 routines */
-#define HUB_MD_REFRESH_CONTROL                       0x200020 /* established */
-
 /* md_fandop_cac_stat: r64, reset 0xc0; census: 1 sites, 1 routines */
 #define HUB_MD_FANDOP_CAC_STAT                       0x200028 /* established */
-
-/* md_mig_diff_thresh: rw64, reset unknown; census: 6 sites, 3 routines */
-#define HUB_MD_MIG_DIFF_THRESH                       0x200030 /* established */
-
-/* md_mig_value_thresh: rw64, reset unknown; census: 10 sites, 5 routines */
-#define HUB_MD_MIG_VALUE_THRESH                      0x200038 /* established */
 
 /* md_mig_candidate_clr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_MIG_CANDIDATE_CLR                     0x200048 /* established */
 
-/* md_dir_error: r64, reset unknown; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed) */
-#define HUB_MD_DIR_ERROR                             0x200050 /* established */
-
 /* md_dir_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed) */
 #define HUB_MD_DIR_ERROR_CLR                         0x200058 /* established */
-
-/* md_protocol_error: r64, reset unknown; census: 1 sites, 1 routines */
-#define HUB_MD_PROTOCOL_ERROR                        0x200060 /* established */
 
 /* md_protocol_error_clr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_PROTOCOL_ERROR_CLR                    0x200068 /* established */
 
-/* md_mem_error: r64, reset unknown; census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed) */
-#define HUB_MD_MEM_ERROR                             0x200070 /* established */
-
 /* md_mem_error_clr: r64, reset unknown; census: 1 sites, 1 routines (r); census: 5 sites, 3 routines (r, indexed) */
 #define HUB_MD_MEM_ERROR_CLR                         0x200078 /* established */
 
-/* md_misc_error: r64, reset unknown; census: 1 sites, 1 routines */
-#define HUB_MD_MISC_ERROR                            0x200080 /* established */
-
 /* md_misc_error_clr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_MD_MISC_ERROR_CLR                        0x200088 /* established */
-
-/* md_moq_size: w64, reset 0x3212; census: 1 sites, 1 routines */
-#define HUB_MD_MOQ_SIZE                              0x2000a0 /* established */
-
-/* md_mlan_ctl: rw64, reset 0x18b100002; census: 6 sites, 1 routines */
-#define HUB_MD_MLAN_CTL                              0x2000a8 /* established */
 
 /* per_hub_init: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_PER_HUB_INIT                             0x2000c8 /* established */
@@ -201,20 +165,11 @@
 /* hub_rev_war_ctrl: rw64, reset 0x0; census: 3 sites, 1 routines */
 #define HUB_HUB_REV_WAR_CTRL                         0x2000e0 /* established */
 
-/* md_perf_sel: w64, reset unknown; census: 2 sites, 2 routines */
-#define HUB_MD_PERF_SEL                              0x210000 /* established */
-
-/* md_perf_cnt0: w64, reset unknown; census: 1 sites, 1 routines */
-#define HUB_MD_PERF_CNT0                             0x210010 /* established */
-
 /* md_ureg0_0: rw64, reset unknown; census: 6 sites, 2 routines (w); census: 22 sites, 6 routines (rw, indexed) */
 #define HUB_MD_UREG0_0                               0x220000 /* established */
 
 /* md_ureg0_1: rw64, reset unknown; census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed) */
 #define HUB_MD_UREG0_1                               0x220008 /* established */
-
-/* md_slotid_ustat: r64, reset unknown; census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed) */
-#define HUB_MD_SLOTID_USTAT                          0x220048 /* established */
 
 /* md_led0: w64, reset unknown; census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed) */
 #define HUB_MD_LED0                                  0x220050 /* established */
@@ -347,29 +302,11 @@
 /* iio_ippr: r64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_IIO_IPPR                                 0x430008 /* established */
 
-/* ni_status_rev_id: r64, reset 0x20020; census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed) */
-#define HUB_NI_STATUS_REV_ID                         0x600000 /* established */
-
-/* ni_port_reset: w64, reset unknown; census: 6 sites, 6 routines */
-#define HUB_NI_PORT_RESET                            0x600008 /* established */
-
-/* ni_protection: r64, reset 0x1; census: 3 sites, 2 routines */
-#define HUB_NI_PROTECTION                            0x600010 /* established */
-
-/* ni_global_parms: rw64, reset 0x3fffffe000f00f0; census: 2 sites, 1 routines */
-#define HUB_NI_GLOBAL_PARMS                          0x600018 /* established */
-
 /* ni_scratch_reg0: w64, reset 0x0; census: 1 sites, 1 routines */
 #define HUB_NI_SCRATCH_REG0                          0x600100 /* established */
 
 /* ni_scratch_reg1: rw64, reset 0x0; census: 14 sites, 2 routines */
 #define HUB_NI_SCRATCH_REG1                          0x600108 /* established */
-
-/* ni_diag_parms: rw64, reset unknown; census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed) */
-#define HUB_NI_DIAG_PARMS                            0x600110 /* established */
-
-/* ni_vector_parms: w64, reset unknown; census: 3 sites, 3 routines */
-#define HUB_NI_VECTOR_PARMS                          0x600200 /* established */
 
 /* ni_vector: w64, reset unknown; census: 3 sites, 3 routines */
 #define HUB_NI_VECTOR                                0x600208 /* established */
@@ -377,26 +314,11 @@
 /* ni_vector_data: w64, reset unknown; census: 2 sites, 2 routines */
 #define HUB_NI_VECTOR_DATA                           0x600210 /* established */
 
-/* ni_vector_status: r64, reset unknown; census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed) */
-#define HUB_NI_VECTOR_STATUS                         0x600300 /* established */
-
 /* ni_vector_read_data: rw64, reset unknown; census: 4 sites, 2 routines */
 #define HUB_NI_VECTOR_READ_DATA                      0x600310 /* established */
 
 /* ni_vector_clear: r64, reset unknown; census: 3 sites, 3 routines */
 #define HUB_NI_VECTOR_CLEAR                          0x600380 /* established */
-
-/* ni_age_cpu0_memory: rw64, reset 0x0; census: 9 sites, 3 routines */
-#define HUB_NI_AGE_CPU0_MEMORY                       0x600500 /* established */
-
-/* ni_age_cpu1_memory: rw64, reset 0x0; census: 9 sites, 3 routines */
-#define HUB_NI_AGE_CPU1_MEMORY                       0x600510 /* established */
-
-/* ni_port_error: r64, reset unknown; census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed) */
-#define HUB_NI_PORT_ERROR                            0x608008 /* established */
-
-/* ni_port_error_clear: r64, reset unknown; census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed) */
-#define HUB_NI_PORT_ERROR_CLEAR                      0x608088 /* established */
 
 /* ni_meta_table0: w64, reset unknown; census: 1 sites, 1 routines */
 #define HUB_NI_META_TABLE0                           0x638000 /* established */
@@ -475,14 +397,8 @@
 #define HUB_MD_LED0_V_F                              0xfu /* inferred */
 #define HUB_MD_LED0_V_F3                             0xf3u /* inferred */
 #define HUB_MD_LED0_V_FC                             0xfcu /* inferred */
-#define HUB_MD_MEMORY_CONFIG_B_1_0                   0x3u /* inferred */
 #define HUB_MD_MEM_ERROR_CLR_B_0                     0x1u /* inferred */
 #define HUB_MD_MISC_ERROR_CLR_B_9_0                  0x3ffu /* inferred */
-#define HUB_MD_MLAN_CTL_B_0                          0x1u /* inferred */
-#define HUB_MD_MLAN_CTL_B_1                          0x2u /* inferred */
-#define HUB_MD_REFRESH_CONTROL_B_11_0                0xfffu /* inferred */
-#define HUB_MD_SLOTID_USTAT_B_3_0                    0xfu /* inferred */
-#define HUB_MD_SLOTID_USTAT_B_7_0                    0xffu /* inferred */
 #define HUB_MD_UREG0_0_B_7_0                         0xffu /* inferred */
 #define HUB_MD_UREG0_0_V_1                           0x1u /* inferred */
 #define HUB_MD_UREG0_0_V_1C                          0x1cu /* inferred */
@@ -527,25 +443,12 @@
 #define HUB_MD_UREG1_0_V_F                           0xfu /* inferred */
 #define HUB_MD_UREG1_0_V_F3                          0xf3u /* inferred */
 #define HUB_MD_UREG1_0_V_FC                          0xfcu /* inferred */
-#define HUB_NI_PORT_ERROR_CLEAR_B_7_0                0xffu /* inferred */
-#define HUB_NI_PORT_RESET_V_2                        0x2u /* inferred */
-#define HUB_NI_PORT_RESET_V_81                       0x81u /* inferred */
-#define HUB_NI_STATUS_REV_ID_B_0                     0x1u /* inferred */
-#define HUB_NI_STATUS_REV_ID_B_3_0                   0xfu /* inferred */
-#define HUB_NI_STATUS_REV_ID_B_7_0                   0xffu /* inferred */
-#define HUB_NI_STATUS_REV_ID_B_8_0                   0x1ffu /* inferred */
 #define HUB_PI_CALIAS_SIZE_V_1                       0x1u /* inferred */
 #define HUB_PI_CALIAS_SIZE_V_2                       0x2u /* inferred */
 #define HUB_PI_ERR_INT_PEND_V_FF0000                 0xff0000u /* inferred */
 #define HUB_PI_ERR_INT_PEND_V_FFFF                   0xffffu /* inferred */
 #define HUB_PI_ERR_STACK_ADDR_A_B_8                  0x100u /* inferred */
 #define HUB_PI_INT_PEND1_B_0                         0x1u /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_100                    0x100u /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_40                     0x40u /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_69                     0x69u /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_6B                     0x6bu /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_7                      0x7u /* inferred */
-#define HUB_PI_INT_PEND_MOD_V_76                     0x76u /* inferred */
 #define HUB_PI_PROF_EN_B_V_1                         0x1u /* inferred */
 #define HUB_PI_REGION_PRESENT_V_1                    0x1u /* inferred */
 #define HUB_PI_RT_COMPARE_A_V_1                      0x1u /* inferred */
@@ -571,6 +474,5 @@
 #define HUB_PI_RT_COMPARE_A_V_C                      0xcu /* inferred */
 #define HUB_PI_RT_COUNT_B_11_0                       0xfffu /* inferred */
 #define HUB_PI_RT_EN_A_V_1                           0x1u /* inferred */
-#define HUB_PI_RT_LOCAL_CTRL_V_10000                 0x10000u /* inferred */
 
 #endif /* HUB_GEN_H */

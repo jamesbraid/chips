@@ -107,13 +107,6 @@ width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines"
 
-[registers.pi_int_pend_mod]
-offset = 0x90
-access = "w"
-width = 64
-grade = "established"
-from = "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
-
 [registers.pi_int_pend0]
 offset = 0x98
 access = "r"
@@ -284,13 +277,6 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_PROF_INT_EN_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6fd8"
 
-[registers.pi_rt_local_ctrl]
-offset = 0x160
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 6 sites, 1 routines"
-
 [registers.pi_gfx_int_cmp_a]
 offset = 0x320
 access = "w"
@@ -432,26 +418,6 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_COUNTER (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ed0"
 
 # ---- MD: memory and directory (configuration, migration, error latches)
-[registers.md_memory_config]
-offset = 0x200018
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
-reset = 0x1e7fbc3fffffff
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458"
-
-[registers.md_refresh_control]
-offset = 0x200020
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
-reset = 0x400
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470"
-
 [registers.md_fandop_cac_stat]
 offset = 0x200028
 access = "r"
@@ -462,33 +428,12 @@ reset = 0xc0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488"
 
-[registers.md_mig_diff_thresh]
-offset = 0x200030
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 6 sites, 3 routines"
-
-[registers.md_mig_value_thresh]
-offset = 0x200038
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 10 sites, 5 routines"
-
 [registers.md_mig_candidate_clr]
 offset = 0x200048
 access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
-
-[registers.md_dir_error]
-offset = 0x200050
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.md_dir_error_clr]
 offset = 0x200058
@@ -497,26 +442,12 @@ width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed)"
 
-[registers.md_protocol_error]
-offset = 0x200060
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
-
 [registers.md_protocol_error_clr]
 offset = 0x200068
 access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
-
-[registers.md_mem_error]
-offset = 0x200070
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 
 [registers.md_mem_error_clr]
 offset = 0x200078
@@ -525,39 +456,12 @@ width = 64
 grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 5 sites, 3 routines (r, indexed)"
 
-[registers.md_misc_error]
-offset = 0x200080
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
-
 [registers.md_misc_error_clr]
 offset = 0x200088
 access = "r"
 width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
-
-[registers.md_moq_size]
-offset = 0x2000a0
-access = "w"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
-reset = 0x3212
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0"
-
-[registers.md_mlan_ctl]
-offset = 0x2000a8
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 6 sites, 1 routines"
-reset = 0x18b100002
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608"
 
 [registers.per_hub_init]
 offset = 0x2000c8
@@ -599,21 +503,6 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8298"
 
-# ---- MD performance counters
-[registers.md_perf_sel]
-offset = 0x210000
-access = "w"
-width = 64
-grade = "established"
-from = "census: 2 sites, 2 routines"
-
-[registers.md_perf_cnt0]
-offset = 0x210010
-access = "w"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines"
-
 # ---- MD junk-bus block: microcontroller registers, slot id, LEDs
 [registers.md_ureg0_0]
 offset = 0x220000
@@ -628,13 +517,6 @@ access = "rw"
 width = 64
 grade = "established"
 from = "census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed)"
-
-[registers.md_slotid_ustat]
-offset = 0x220048
-access = "r"
-width = 64
-grade = "established"
-from = "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
 
 [registers.md_led0]
 offset = 0x220050
@@ -1019,43 +901,6 @@ grade = "established"
 from = "census: 2 sites, 2 routines"
 
 # ---- NI: network interface (status, port, vector, routing tables)
-[registers.ni_status_rev_id]
-offset = 0x600000
-access = "r"
-width = 64
-grade = "established"
-from = "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
-reset = 0x20020
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50"
-
-[registers.ni_port_reset]
-offset = 0x600008
-access = "w"
-width = 64
-grade = "established"
-from = "census: 6 sites, 6 routines"
-
-[registers.ni_protection]
-offset = 0x600010
-access = "r"
-width = 64
-grade = "established"
-from = "census: 3 sites, 2 routines"
-reset = 0x1
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80"
-
-[registers.ni_global_parms]
-offset = 0x600018
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 2 sites, 1 routines"
-reset = 0x3fffffe000f00f0
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98"
-
 [registers.ni_scratch_reg0]
 offset = 0x600100
 access = "w"
@@ -1076,20 +921,6 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7fc8"
 
-[registers.ni_diag_parms]
-offset = 0x600110
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed)"
-
-[registers.ni_vector_parms]
-offset = 0x600200
-access = "w"
-width = 64
-grade = "established"
-from = "census: 3 sites, 3 routines"
-
 [registers.ni_vector]
 offset = 0x600208
 access = "w"
@@ -1104,13 +935,6 @@ width = 64
 grade = "established"
 from = "census: 2 sites, 2 routines"
 
-[registers.ni_vector_status]
-offset = 0x600300
-access = "r"
-width = 64
-grade = "established"
-from = "census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed)"
-
 [registers.ni_vector_read_data]
 offset = 0x600310
 access = "rw"
@@ -1124,40 +948,6 @@ access = "r"
 width = 64
 grade = "established"
 from = "census: 3 sites, 3 routines"
-
-[registers.ni_age_cpu0_memory]
-offset = 0x600500
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 9 sites, 3 routines"
-reset = 0x0
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0"
-
-[registers.ni_age_cpu1_memory]
-offset = 0x600510
-access = "rw"
-width = 64
-grade = "established"
-from = "census: 9 sites, 3 routines"
-reset = 0x0
-reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100"
-
-[registers.ni_port_error]
-offset = 0x608008
-access = "r"
-width = 64
-grade = "established"
-from = "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
-
-[registers.ni_port_error_clear]
-offset = 0x608088
-access = "r"
-width = 64
-grade = "established"
-from = "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
 
 [registers.ni_meta_table0]
 offset = 0x638000
@@ -1245,14 +1035,8 @@ MD_LED0_V_CF = { value = 0xcf, grade = "inferred" }
 MD_LED0_V_F = { value = 0xf, grade = "inferred" }
 MD_LED0_V_F3 = { value = 0xf3, grade = "inferred" }
 MD_LED0_V_FC = { value = 0xfc, grade = "inferred" }
-MD_MEMORY_CONFIG_B_1_0 = { value = 0x3, grade = "inferred" }
 MD_MEM_ERROR_CLR_B_0 = { value = 0x1, grade = "inferred" }
 MD_MISC_ERROR_CLR_B_9_0 = { value = 0x3ff, grade = "inferred" }
-MD_MLAN_CTL_B_0 = { value = 0x1, grade = "inferred" }
-MD_MLAN_CTL_B_1 = { value = 0x2, grade = "inferred" }
-MD_REFRESH_CONTROL_B_11_0 = { value = 0xfff, grade = "inferred" }
-MD_SLOTID_USTAT_B_3_0 = { value = 0xf, grade = "inferred" }
-MD_SLOTID_USTAT_B_7_0 = { value = 0xff, grade = "inferred" }
 MD_UREG0_0_B_7_0 = { value = 0xff, grade = "inferred" }
 MD_UREG0_0_V_1 = { value = 0x1, grade = "inferred" }
 MD_UREG0_0_V_1C = { value = 0x1c, grade = "inferred" }
@@ -1297,25 +1081,12 @@ MD_UREG1_0_V_CF = { value = 0xcf, grade = "inferred" }
 MD_UREG1_0_V_F = { value = 0xf, grade = "inferred" }
 MD_UREG1_0_V_F3 = { value = 0xf3, grade = "inferred" }
 MD_UREG1_0_V_FC = { value = 0xfc, grade = "inferred" }
-NI_PORT_ERROR_CLEAR_B_7_0 = { value = 0xff, grade = "inferred" }
-NI_PORT_RESET_V_2 = { value = 0x2, grade = "inferred" }
-NI_PORT_RESET_V_81 = { value = 0x81, grade = "inferred" }
-NI_STATUS_REV_ID_B_0 = { value = 0x1, grade = "inferred" }
-NI_STATUS_REV_ID_B_3_0 = { value = 0xf, grade = "inferred" }
-NI_STATUS_REV_ID_B_7_0 = { value = 0xff, grade = "inferred" }
-NI_STATUS_REV_ID_B_8_0 = { value = 0x1ff, grade = "inferred" }
 PI_CALIAS_SIZE_V_1 = { value = 0x1, grade = "inferred" }
 PI_CALIAS_SIZE_V_2 = { value = 0x2, grade = "inferred" }
 PI_ERR_INT_PEND_V_FF0000 = { value = 0xff0000, grade = "inferred" }
 PI_ERR_INT_PEND_V_FFFF = { value = 0xffff, grade = "inferred" }
 PI_ERR_STACK_ADDR_A_B_8 = { value = 0x100, grade = "inferred" }
 PI_INT_PEND1_B_0 = { value = 0x1, grade = "inferred" }
-PI_INT_PEND_MOD_V_100 = { value = 0x100, grade = "inferred" }
-PI_INT_PEND_MOD_V_40 = { value = 0x40, grade = "inferred" }
-PI_INT_PEND_MOD_V_69 = { value = 0x69, grade = "inferred" }
-PI_INT_PEND_MOD_V_6B = { value = 0x6b, grade = "inferred" }
-PI_INT_PEND_MOD_V_7 = { value = 0x7, grade = "inferred" }
-PI_INT_PEND_MOD_V_76 = { value = 0x76, grade = "inferred" }
 PI_PROF_EN_B_V_1 = { value = 0x1, grade = "inferred" }
 PI_REGION_PRESENT_V_1 = { value = 0x1, grade = "inferred" }
 PI_RT_COMPARE_A_V_1 = { value = 0x1, grade = "inferred" }
@@ -1341,4 +1112,3 @@ PI_RT_COMPARE_A_V_B4 = { value = 0xb4, grade = "inferred" }
 PI_RT_COMPARE_A_V_C = { value = 0xc, grade = "inferred" }
 PI_RT_COUNT_B_11_0 = { value = 0xfff, grade = "inferred" }
 PI_RT_EN_A_V_1 = { value = 0x1, grade = "inferred" }
-PI_RT_LOCAL_CTRL_V_10000 = { value = 0x10000, grade = "inferred" }

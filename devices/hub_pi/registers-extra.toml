@@ -2,7 +2,7 @@ unit = "hub_pi_extra"
 prefix = "HUB"
 title = "Hub processor interface registers, bit layouts and constants outside the census"
 from = "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-public_from = ["public Linux SN0 Hub processor-interface header", "shipped IRIX"]
+public_from = ["census:", "public Linux SN0 Hub processor-interface header", "shipped IRIX"]
 
 # The census has the offsets the shipped kernel and PROM touch in the processor interface, and
 # their names come from the public header by offset. The registers here are the processor
@@ -419,18 +419,32 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CMP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73f8"
 doc = "Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access."
 
-[words.PI_RT_LOCAL_CTRL_FORMAT]
+[registers.pi_rt_local_ctrl]
+offset = 0x160
+access = "rw"
 width = 64
 grade = "established"
-from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+from = "census: 6 sites, 1 routines"
 doc = "Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it."
 
-[words.PI_RT_LOCAL_CTRL_FORMAT.fields]
-use_internal = { bits = [16, 16], grade = "established", doc = "Use internal clock, bit 16, named PRLC_USE_INT in the header. The header gives no behaviour beyond the name." }
-gclk = { bits = [15, 15], grade = "established", doc = "Global clock flag, bit 15, named PRLC_GCLK in the header. The header gives no behaviour beyond the name." }
-gclk_count = { bits = [14, 8], grade = "established", doc = "Global clock count, seven bits at 14:8, named PRLC_GCLK_COUNT in the header." }
-max_count = { bits = [7, 1], grade = "established", doc = "Maximum count, seven bits at 7:1, named PRLC_MAX_COUNT in the header. The header gives no statement of what it sets." }
-gclk_en = { bits = [0, 0], grade = "established", doc = "Global clock enable, bit 0, named PRLC_GCLK_EN in the header." }
+[registers.pi_rt_local_ctrl.fields]
+use_internal = { bits = [16, 16], grade = "established", doc = "Use internal clock, bit 16, named PRLC_USE_INT in the header. The header gives no behaviour beyond the name.", from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions" }
+gclk = { bits = [15, 15], grade = "established", doc = "Global clock flag, bit 15, named PRLC_GCLK in the header. The header gives no behaviour beyond the name.", from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions" }
+gclk_count = { bits = [14, 8], grade = "established", doc = "Global clock count, seven bits at 14:8, named PRLC_GCLK_COUNT in the header.", from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions" }
+max_count = { bits = [7, 1], grade = "established", doc = "Maximum count, seven bits at 7:1, named PRLC_MAX_COUNT in the header. The header gives no statement of what it sets.", from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions" }
+gclk_en = { bits = [0, 0], grade = "established", doc = "Global clock enable, bit 0, named PRLC_GCLK_EN in the header.", from = "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions" }
+
+[registers.pi_int_pend_mod]
+offset = 0x90
+access = "w"
+width = 64
+grade = "established"
+from = "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded."
+
+[registers.pi_int_pend_mod.fields]
+set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how Linux builds the word", from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level" }
+level = { bits = [6, 0], grade = "inferred", doc = "interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout", from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level" }
 
 [constants]
 # Cause register bits the header names for the processor's pending interrupt lines. Bits 15:8 of
@@ -463,14 +477,3 @@ PI_CALIAS_SIZE_64M = { value = 15, grade = "established", doc = "Cached-alias si
 PI_LOCAL_WINDOW_BASE = { value = 0x1000000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: LOCAL_HUB_ADDR is IALIAS_BASE plus the offset, IALIAS_BASE is hub register widget 1 with 24-bit windows (HUB_REGISTER_WIDGET, SWIN_SIZE_BITS)", doc = "Physical base of the processor's own hub window; no node shift." }
 PI_NODE_WINDOW_BASE = { value = 0x1800000, grade = "established", from = "Linux arch/mips/include/asm/sn/addrs.h at the references/code/linux pin: REMOTE_HUB_ADDR is widget 1 plus 0x800000 within the named node; arch/mips/sgi-ip27/ip27-xtalk.c line 85 adds 0x01800000 to PI_INT_PEND_MOD", doc = "Physical base of a named node's window." }
 PI_NODE_SHIFT = { value = 0x20, grade = "established", from = "Linux arch/mips/include/asm/sn/sn0/addrs.h at the references/code/linux pin: NASID_SHFT is 32 in one configuration and 31 in the other (lines 58 and 72); the 32 case is recorded", doc = "Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration." }
-
-[words.PI_INT_PEND_MOD_FORMAT]
-width = 64
-grade = "inferred"
-from = "Linux arch/mips/include/asm/sn/intr.h at the references/code/linux pin: LOCAL_HUB_SEND_INTR writes 0x100 | level to PI_INT_PEND_MOD and LOCAL_HUB_CLR_INTR writes the bare level"
-doc = "Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded."
-notes = "The Origin 300 hub's version of this register (bedrock_pi int_pend_mod) splits the same low seven bits into a register select (bit 6) and a bit select (5:0) and names bit 8 ipm_value. The two layouts agree on the bit ranges; they differ only in how finely the level is named. Kept the finer Origin 300 names there and the kernel's single level field here."
-
-[words.PI_INT_PEND_MOD_FORMAT.fields]
-set = { bits = [8, 8], grade = "inferred", doc = "set the level (1) or clear it (0); the role is read from how Linux builds the word" }
-level = { bits = [6, 0], grade = "inferred", doc = "interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout" }

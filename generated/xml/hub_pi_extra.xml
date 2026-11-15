@@ -19,6 +19,11 @@
   <struct name="PI_SOFTRESET" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x80" access="w" reset="unknown">
     <doc>Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. The IRIX register table confirms the access.</doc>
   </struct>
+  <struct name="PI_INT_PEND_MOD" size="8" grade="established" from="census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)" register="yes" offset="0x90" access="w" reset="unknown">
+    <doc>Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.</doc>
+    <field name="set" start="8" size="1" type="uint" grade="inferred"/>
+    <field name="level" start="0" size="7" type="uint" grade="inferred"/>
+  </struct>
   <struct name="PI_CC_PEND_SET_A" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xc8" access="w" reset="unknown">
     <doc>Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access.</doc>
   </struct>
@@ -33,6 +38,14 @@
   </struct>
   <struct name="PI_CC_MASK" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0xe8" access="rw" reset="0x0">
     <doc>Cross-call interrupt mask, named PI_CC_MASK in the header. The IRIX register table confirms the access.</doc>
+  </struct>
+  <struct name="PI_RT_LOCAL_CTRL" size="8" grade="established" from="census: 6 sites, 1 routines" register="yes" offset="0x160" access="rw" reset="unknown">
+    <doc>Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.</doc>
+    <field name="use_internal" start="16" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"/>
+    <field name="gclk" start="15" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"/>
+    <field name="gclk_count" start="8" size="7" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"/>
+    <field name="max_count" start="1" size="7" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"/>
+    <field name="gclk_en" start="0" size="1" type="uint" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"/>
   </struct>
   <struct name="PI_RT_FILTER_CTRL" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x168" access="rw" reset="0x0">
     <doc>Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The IRIX register table confirms the access.</doc>
@@ -129,19 +142,6 @@
   </struct>
   <struct name="PI_NACK_CMP" size="8" grade="established" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)" register="yes" offset="0x4b8" access="rw" reset="0x0">
     <doc>Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access.</doc>
-  </struct>
-  <struct name="PI_INT_PEND_MOD_FORMAT" size="8" grade="inferred" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
-    <doc>Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.</doc>
-    <field name="set" start="8" size="1" type="uint" grade="inferred"/>
-    <field name="level" start="0" size="7" type="uint" grade="inferred"/>
-  </struct>
-  <struct name="PI_RT_LOCAL_CTRL_FORMAT" size="8" grade="established" from="public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions">
-    <doc>Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.</doc>
-    <field name="use_internal" start="16" size="1" type="uint" grade="established"/>
-    <field name="gclk" start="15" size="1" type="uint" grade="established"/>
-    <field name="gclk_count" start="8" size="7" type="uint" grade="established"/>
-    <field name="max_count" start="1" size="7" type="uint" grade="established"/>
-    <field name="gclk_en" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <constant name="IP_ERROR" value="0x4000" grade="established"/>
   <constant name="IP_MASK" value="0x7c00" grade="established"/>

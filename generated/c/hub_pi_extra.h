@@ -43,6 +43,18 @@
 #define HUB_PI_SOFTRESET_OFFSET                      0x80u /* established */
 
 /*
+ * Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.
+ */
+/* pi_int_pend_mod: w64, reset unknown; census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) */
+#define HUB_PI_INT_PEND_MOD_OFFSET                   0x90u /* established */
+#define HUB_PI_INT_PEND_MOD_SET_SHIFT                8 /* inferred */
+#define HUB_PI_INT_PEND_MOD_SET_MASK                 0x1ull
+#define HUB_PI_INT_PEND_MOD_SET_INPLACE              (HUB_PI_INT_PEND_MOD_SET_MASK << HUB_PI_INT_PEND_MOD_SET_SHIFT)
+#define HUB_PI_INT_PEND_MOD_LEVEL_SHIFT              0 /* inferred */
+#define HUB_PI_INT_PEND_MOD_LEVEL_MASK               0x7full
+#define HUB_PI_INT_PEND_MOD_LEVEL_INPLACE            (HUB_PI_INT_PEND_MOD_LEVEL_MASK << HUB_PI_INT_PEND_MOD_LEVEL_SHIFT)
+
+/*
  * Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access.
  */
 /* pi_cc_pend_set_a: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
@@ -71,6 +83,27 @@
  */
 /* pi_cc_mask: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_CC_MASK_OFFSET                        0xe8u /* established */
+
+/*
+ * Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.
+ */
+/* pi_rt_local_ctrl: rw64, reset unknown; census: 6 sites, 1 routines */
+#define HUB_PI_RT_LOCAL_CTRL_OFFSET                  0x160u /* established */
+#define HUB_PI_RT_LOCAL_CTRL_USE_INTERNAL_SHIFT      16 /* established */
+#define HUB_PI_RT_LOCAL_CTRL_USE_INTERNAL_MASK       0x1ull
+#define HUB_PI_RT_LOCAL_CTRL_USE_INTERNAL_INPLACE    (HUB_PI_RT_LOCAL_CTRL_USE_INTERNAL_MASK << HUB_PI_RT_LOCAL_CTRL_USE_INTERNAL_SHIFT)
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_SHIFT              15 /* established */
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_MASK               0x1ull
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_INPLACE            (HUB_PI_RT_LOCAL_CTRL_GCLK_MASK << HUB_PI_RT_LOCAL_CTRL_GCLK_SHIFT)
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_COUNT_SHIFT        8 /* established */
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_COUNT_MASK         0x7full
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_COUNT_INPLACE      (HUB_PI_RT_LOCAL_CTRL_GCLK_COUNT_MASK << HUB_PI_RT_LOCAL_CTRL_GCLK_COUNT_SHIFT)
+#define HUB_PI_RT_LOCAL_CTRL_MAX_COUNT_SHIFT         1 /* established */
+#define HUB_PI_RT_LOCAL_CTRL_MAX_COUNT_MASK          0x7full
+#define HUB_PI_RT_LOCAL_CTRL_MAX_COUNT_INPLACE       (HUB_PI_RT_LOCAL_CTRL_MAX_COUNT_MASK << HUB_PI_RT_LOCAL_CTRL_MAX_COUNT_SHIFT)
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_EN_SHIFT           0 /* established */
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_EN_MASK            0x1ull
+#define HUB_PI_RT_LOCAL_CTRL_GCLK_EN_INPLACE         (HUB_PI_RT_LOCAL_CTRL_GCLK_EN_MASK << HUB_PI_RT_LOCAL_CTRL_GCLK_EN_SHIFT)
 
 /*
  * Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The IRIX register table confirms the access.
@@ -275,39 +308,6 @@
  */
 /* pi_nack_cmp: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
 #define HUB_PI_NACK_CMP_OFFSET                       0x4b8u /* established */
-
-/*
- * Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.
- */
-/* word PI_INT_PEND_MOD_FORMAT: 64 bits; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
-#define HUB_PI_INT_PEND_MOD_FORMAT_WIDTH             64 /* inferred */
-#define HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT         8 /* inferred */
-#define HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK          0x1ull
-#define HUB_PI_INT_PEND_MOD_FORMAT_SET_INPLACE       (HUB_PI_INT_PEND_MOD_FORMAT_SET_MASK << HUB_PI_INT_PEND_MOD_FORMAT_SET_SHIFT)
-#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT       0 /* inferred */
-#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK        0x7full
-#define HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_INPLACE     (HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_MASK << HUB_PI_INT_PEND_MOD_FORMAT_LEVEL_SHIFT)
-
-/*
- * Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.
- */
-/* word PI_RT_LOCAL_CTRL_FORMAT: 64 bits; public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_WIDTH            64 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_USE_INTERNAL_SHIFT 16 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_USE_INTERNAL_MASK 0x1ull
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_USE_INTERNAL_INPLACE (HUB_PI_RT_LOCAL_CTRL_FORMAT_USE_INTERNAL_MASK << HUB_PI_RT_LOCAL_CTRL_FORMAT_USE_INTERNAL_SHIFT)
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_SHIFT       15 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_MASK        0x1ull
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_INPLACE     (HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_MASK << HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_SHIFT)
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_COUNT_SHIFT 8 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_COUNT_MASK  0x7full
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_COUNT_INPLACE (HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_COUNT_MASK << HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_COUNT_SHIFT)
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_MAX_COUNT_SHIFT  1 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_MAX_COUNT_MASK   0x7full
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_MAX_COUNT_INPLACE (HUB_PI_RT_LOCAL_CTRL_FORMAT_MAX_COUNT_MASK << HUB_PI_RT_LOCAL_CTRL_FORMAT_MAX_COUNT_SHIFT)
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_EN_SHIFT    0 /* established */
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_EN_MASK     0x1ull
-#define HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_EN_INPLACE  (HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_EN_MASK << HUB_PI_RT_LOCAL_CTRL_FORMAT_GCLK_EN_SHIFT)
 
 #define HUB_IP_ERROR                                 0x4000u /* established */
 #define HUB_IP_MASK                                  0x7c00u /* established */

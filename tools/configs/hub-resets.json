@@ -115,22 +115,6 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488",
   "value": 192
  },
- "md_memory_config": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458",
-  "value": 8584695805640703
- },
- "md_mlan_ctl": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608",
-  "value": 6628048898
- },
- "md_moq_size": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0",
-  "value": 12818
- },
- "md_refresh_control": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470",
-  "value": 1024
- },
  "md_ureg1_0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77b8",
   "value": 0
@@ -139,22 +123,6 @@
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ITTE7 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ad0",
   "value": 0
  },
- "ni_age_cpu0_memory": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0",
-  "value": 0
- },
- "ni_age_cpu1_memory": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100",
-  "value": 0
- },
- "ni_global_parms": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98",
-  "value": 288230367562760432
- },
- "ni_protection": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80",
-  "value": 1
- },
  "ni_scratch_reg0": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_SCRATCH_REG0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7fb0",
   "value": 0
@@ -162,10 +130,6 @@
  "ni_scratch_reg1": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7fc8",
   "value": 0
- },
- "ni_status_rev_id": {
-  "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50",
-  "value": 131104
  },
  "per_hub_init": {
   "from": "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register CORE_CACR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8250",

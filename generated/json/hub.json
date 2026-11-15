@@ -146,20 +146,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "pi_int_pend_mod",
-   "offset": 144,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "pi_int_pend0",
    "offset": 152,
    "access": "r",
@@ -398,20 +384,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "pi_rt_local_ctrl",
-   "offset": 352,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 6 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "pi_gfx_int_cmp_a",
    "offset": 800,
    "access": "w",
@@ -636,34 +608,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "md_memory_config",
-   "offset": 2097176,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 8584695805640703,
-   "grade": "established",
-   "from": "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_refresh_control",
-   "offset": 2097184,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 1024,
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "md_fandop_cac_stat",
    "offset": 2097192,
    "access": "r",
@@ -674,34 +618,6 @@
    "reset": 192,
    "grade": "established",
    "from": "census: 1 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_mig_diff_thresh",
-   "offset": 2097200,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 6 sites, 3 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_mig_value_thresh",
-   "offset": 2097208,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 10 sites, 5 routines"
   },
   {
    "unit": "hub",
@@ -720,20 +636,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "md_dir_error",
-   "offset": 2097232,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "md_dir_error_clr",
    "offset": 2097240,
    "access": "r",
@@ -744,20 +646,6 @@
    "reset": "unknown",
    "grade": "established",
    "from": "census: 1 sites, 1 routines (r); census: 4 sites, 3 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_protocol_error",
-   "offset": 2097248,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
   },
   {
    "unit": "hub",
@@ -776,20 +664,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "md_mem_error",
-   "offset": 2097264,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "md_mem_error_clr",
    "offset": 2097272,
    "access": "r",
@@ -804,20 +678,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "md_misc_error",
-   "offset": 2097280,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "md_misc_error_clr",
    "offset": 2097288,
    "access": "r",
@@ -828,34 +688,6 @@
    "reset": "unknown",
    "grade": "established",
    "from": "census: 2 sites, 2 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_moq_size",
-   "offset": 2097312,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 12818,
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_mlan_ctl",
-   "offset": 2097320,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 6628048898,
-   "grade": "established",
-   "from": "census: 6 sites, 1 routines"
   },
   {
    "unit": "hub",
@@ -916,34 +748,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "md_perf_sel",
-   "offset": 2162688,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 2 sites, 2 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_perf_cnt0",
-   "offset": 2162704,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "md_ureg0_0",
    "offset": 2228224,
    "access": "rw",
@@ -968,20 +772,6 @@
    "reset": "unknown",
    "grade": "established",
    "from": "census: 9 sites, 2 routines (w); census: 36 sites, 5 routines (rw, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "md_slotid_ustat",
-   "offset": 2228296,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -1560,62 +1350,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "ni_status_rev_id",
-   "offset": 6291456,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 131104,
-   "grade": "established",
-   "from": "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_port_reset",
-   "offset": 6291464,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 6 sites, 6 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_protection",
-   "offset": 6291472,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 1,
-   "grade": "established",
-   "from": "census: 3 sites, 2 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_global_parms",
-   "offset": 6291480,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 288230367562760432,
-   "grade": "established",
-   "from": "census: 2 sites, 1 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "ni_scratch_reg0",
    "offset": 6291712,
    "access": "w",
@@ -1640,34 +1374,6 @@
    "reset": 0,
    "grade": "established",
    "from": "census: 14 sites, 2 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_diag_parms",
-   "offset": 6291728,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_vector_parms",
-   "offset": 6291968,
-   "access": "w",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 3 sites, 3 routines"
   },
   {
    "unit": "hub",
@@ -1700,20 +1406,6 @@
   {
    "unit": "hub",
    "kind": "register",
-   "name": "ni_vector_status",
-   "offset": 6292224,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
    "name": "ni_vector_read_data",
    "offset": 6292240,
    "access": "rw",
@@ -1738,62 +1430,6 @@
    "reset": "unknown",
    "grade": "established",
    "from": "census: 3 sites, 3 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_age_cpu0_memory",
-   "offset": 6292736,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 0,
-   "grade": "established",
-   "from": "census: 9 sites, 3 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_age_cpu1_memory",
-   "offset": 6292752,
-   "access": "rw",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": 0,
-   "grade": "established",
-   "from": "census: 9 sites, 3 routines"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_port_error",
-   "offset": 6324232,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
-  },
-  {
-   "unit": "hub",
-   "kind": "register",
-   "name": "ni_port_error_clear",
-   "offset": 6324360,
-   "access": "r",
-   "width": 64,
-   "count": 1,
-   "stride": 8,
-   "space": null,
-   "reset": "unknown",
-   "grade": "established",
-   "from": "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
   },
   {
    "unit": "hub",
@@ -2465,15 +2101,6 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "MD_MEMORY_CONFIG_B_1_0",
-   "value": 3,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
    "name": "MD_MEM_ERROR_CLR_B_0",
    "value": 1,
    "count": 1,
@@ -2485,51 +2112,6 @@
    "kind": "constant",
    "name": "MD_MISC_ERROR_CLR_B_9_0",
    "value": 1023,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "MD_MLAN_CTL_B_0",
-   "value": 1,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "MD_MLAN_CTL_B_1",
-   "value": 2,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "MD_REFRESH_CONTROL_B_11_0",
-   "value": 4095,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "MD_SLOTID_USTAT_B_3_0",
-   "value": 15,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "MD_SLOTID_USTAT_B_7_0",
-   "value": 255,
    "count": 1,
    "grade": "inferred",
    "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
@@ -2933,69 +2515,6 @@
   {
    "unit": "hub",
    "kind": "constant",
-   "name": "NI_PORT_ERROR_CLEAR_B_7_0",
-   "value": 255,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_PORT_RESET_V_2",
-   "value": 2,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_PORT_RESET_V_81",
-   "value": 129,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_STATUS_REV_ID_B_0",
-   "value": 1,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_STATUS_REV_ID_B_3_0",
-   "value": 15,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_STATUS_REV_ID_B_7_0",
-   "value": 255,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "NI_STATUS_REV_ID_B_8_0",
-   "value": 511,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
    "name": "PI_CALIAS_SIZE_V_1",
    "value": 1,
    "count": 1,
@@ -3043,60 +2562,6 @@
    "kind": "constant",
    "name": "PI_INT_PEND1_B_0",
    "value": 1,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_100",
-   "value": 256,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_40",
-   "value": 64,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_69",
-   "value": 105,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_6B",
-   "value": 107,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_7",
-   "value": 7,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_INT_PEND_MOD_V_76",
-   "value": 118,
    "count": 1,
    "grade": "inferred",
    "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
@@ -3322,15 +2787,6 @@
    "kind": "constant",
    "name": "PI_RT_EN_A_V_1",
    "value": 1,
-   "count": 1,
-   "grade": "inferred",
-   "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"
-  },
-  {
-   "unit": "hub",
-   "kind": "constant",
-   "name": "PI_RT_LOCAL_CTRL_V_10000",
-   "value": 65536,
    "count": 1,
    "grade": "inferred",
    "from": "census: loads and stores in the shipped binaries; names from the public Linux SN0 Hub register headers (the processor, memory, I/O and network interface sets) by offset; IRIX prints no register names, so every name is inferred (config register_names)"

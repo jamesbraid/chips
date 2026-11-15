@@ -17,11 +17,13 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_reply_level` | 0x60 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_nmi_b` | 0x78 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_softreset` | 0x80 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_int_pend_mod` | 0x90 | w | 64 |  |  | unknown | established | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) |
 | `pi_cc_pend_set_a` | 0xc8 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_pend_set_b` | 0xd0 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_cc_mask` | 0xe8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_rt_local_ctrl` | 0x160 | rw | 64 |  |  | unknown | established | census: 6 sites, 1 routines |
 | `pi_rt_filter_ctrl` | 0x168 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_write_data` | 0x200 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
 | `pi_bist_read_data` | 0x208 | r | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
@@ -75,6 +77,15 @@ Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired w
 
 Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. The IRIX register table confirms the access.
 
+### Register `pi_int_pend_mod`
+
+Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 8 | `set` | inferred |  | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) | set the level (1) or clear it (0); the role is read from how Linux builds the word |
+| 6:0 | `level` | inferred |  | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) | interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout |
+
 ### Register `pi_cc_pend_set_a`
 
 Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access.
@@ -94,6 +105,18 @@ Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in th
 ### Register `pi_cc_mask`
 
 Cross-call interrupt mask, named PI_CC_MASK in the header. The IRIX register table confirms the access.
+
+### Register `pi_rt_local_ctrl`
+
+Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 16 | `use_internal` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Use internal clock, bit 16, named PRLC_USE_INT in the header. The header gives no behaviour beyond the name. |
+| 15 | `gclk` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock flag, bit 15, named PRLC_GCLK in the header. The header gives no behaviour beyond the name. |
+| 14:8 | `gclk_count` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock count, seven bits at 14:8, named PRLC_GCLK_COUNT in the header. |
+| 7:1 | `max_count` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Maximum count, seven bits at 7:1, named PRLC_MAX_COUNT in the header. The header gives no statement of what it sets. |
+| 0 | `gclk_en` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock enable, bit 0, named PRLC_GCLK_EN in the header. |
 
 ### Register `pi_rt_filter_ctrl`
 
@@ -233,34 +256,6 @@ Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in
 ### Register `pi_nack_cmp`
 
 Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access.
-
-## Words
-
-| Word | Width | Grade | Source |
-|---|---|---|---|
-| `PI_INT_PEND_MOD_FORMAT` | 64 | inferred | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `PI_RT_LOCAL_CTRL_FORMAT` | 64 | established | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions |
-
-### Word `PI_INT_PEND_MOD_FORMAT`
-
-Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register. Whether a second processor in a node reaches it at another offset is not established by a public source and is not recorded.
-
-| Bits | Field | Grade | Values | Source | Description |
-|---|---|---|---|---|---|
-| 8 | `set` | inferred |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | set the level (1) or clear it (0); the role is read from how Linux builds the word |
-| 6:0 | `level` | inferred |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout |
-
-### Word `PI_RT_LOCAL_CTRL_FORMAT`
-
-Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift definitions give the fields below. The header gives no access type or reset value for it.
-
-| Bits | Field | Grade | Values | Source | Description |
-|---|---|---|---|---|---|
-| 16 | `use_internal` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Use internal clock, bit 16, named PRLC_USE_INT in the header. The header gives no behaviour beyond the name. |
-| 15 | `gclk` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock flag, bit 15, named PRLC_GCLK in the header. The header gives no behaviour beyond the name. |
-| 14:8 | `gclk_count` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock count, seven bits at 14:8, named PRLC_GCLK_COUNT in the header. |
-| 7:1 | `max_count` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Maximum count, seven bits at 7:1, named PRLC_MAX_COUNT in the header. The header gives no statement of what it sets. |
-| 0 | `gclk_en` | established |  | public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions | Global clock enable, bit 0, named PRLC_GCLK_EN in the header. |
 
 ## Constants
 

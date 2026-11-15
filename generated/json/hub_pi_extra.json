@@ -90,6 +90,38 @@
   {
    "unit": "hub_pi_extra",
    "kind": "register",
+   "name": "pi_int_pend_mod",
+   "offset": 144,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_int_pend_mod.set",
+   "hi": 8,
+   "lo": 8,
+   "grade": "inferred",
+   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_int_pend_mod.level",
+   "hi": 6,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
    "name": "pi_cc_pend_set_a",
    "offset": 200,
    "access": "w",
@@ -156,6 +188,65 @@
    "reset": 0,
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "register",
+   "name": "pi_rt_local_ctrl",
+   "offset": 352,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 6 sites, 1 routines"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_rt_local_ctrl.use_internal",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_rt_local_ctrl.gclk",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_rt_local_ctrl.gclk_count",
+   "hi": 14,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_rt_local_ctrl.max_count",
+   "hi": 7,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
+  },
+  {
+   "unit": "hub_pi_extra",
+   "kind": "field",
+   "name": "pi_rt_local_ctrl.gclk_en",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
   },
   {
    "unit": "hub_pi_extra",
@@ -656,85 +747,6 @@
    "reset": 0,
    "grade": "established",
    "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "word",
-   "name": "PI_INT_PEND_MOD_FORMAT",
-   "width": 64,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_INT_PEND_MOD_FORMAT.set",
-   "hi": 8,
-   "lo": 8,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_INT_PEND_MOD_FORMAT.level",
-   "hi": 6,
-   "lo": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "word",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT.use_internal",
-   "hi": 16,
-   "lo": 16,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT.gclk",
-   "hi": 15,
-   "lo": 15,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT.gclk_count",
-   "hi": 14,
-   "lo": 8,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT.max_count",
-   "hi": 7,
-   "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
-  },
-  {
-   "unit": "hub_pi_extra",
-   "kind": "field",
-   "name": "PI_RT_LOCAL_CTRL_FORMAT.gclk_en",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header: PI_RT_LOCAL_CTRL mask and shift definitions"
   },
   {
    "unit": "hub_pi_extra",

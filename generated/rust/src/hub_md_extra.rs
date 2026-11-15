@@ -2,217 +2,10 @@
 // Hub memory and directory register layouts and constants outside the census
 #![allow(dead_code)]
 
-/// Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the L (established)
-pub mod md_mem_dimm_init {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200090;
-}
-/// Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Li (established)
-pub mod md_dir_dimm_init {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200098;
-}
-/// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (established)
-pub mod md_led1 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220058;
-}
-/// Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access. (established)
-pub mod md_ureg1_1 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220088;
-}
-/// Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_2 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220090;
-}
-/// Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_3 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220098;
-}
-/// Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro (inferred)
-pub mod md_ureg1_4 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200a0;
-}
-/// Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_5 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200a8;
-}
-/// Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_6 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200b0;
-}
-/// Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_7 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200b8;
-}
-/// Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_8 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200c0;
-}
-/// Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_9 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200c8;
-}
-/// Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_10 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200d0;
-}
-/// Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_11 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200d8;
-}
-/// Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_12 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200e0;
-}
-/// Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_13 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200e8;
-}
-/// Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
-pub mod md_ureg1_14 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200f0;
-}
-/// Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access. (established)
-pub mod md_ureg1_15 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2200f8;
-}
-/// Layout of the memory and directory DIMM mode initialisation registers. Both registers share this layout. (established)
-pub mod md_dimm_init_format {
-    pub const WIDTH: u32 = 64;
-    pub mod select { // bits 35:32, established
-        pub const SHIFT: u32 = 32;
-        pub const MASK: u64 = 0xf;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod mode { // bits 11:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0xfff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of the directory error latch, from the header's structure. The header lists the fields from the most significant bit down and gives a comment f (established)
-pub mod md_dir_error_format {
-    pub const WIDTH: u32 = 64;
-    pub mod uce_vld { // bits 63:63, established
-        pub const SHIFT: u32 = 63;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ae_vld { // bits 62:62, established
-        pub const SHIFT: u32 = 62;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ce_vld { // bits 61:61, established
-        pub const SHIFT: u32 = 61;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod bad_prot { // bits 41:39, established
-        pub const SHIFT: u32 = 39;
-        pub const MASK: u64 = 0x7;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod bad_syn { // bits 38:32, established
-        pub const SHIFT: u32 = 32;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod hspec_addr { // bits 29:3, established
-        pub const SHIFT: u32 = 3;
-        pub const MASK: u64 = 0x7ffffff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod uce_ovr { // bits 2:2, established
-        pub const SHIFT: u32 = 2;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ae_ovr { // bits 1:1, established
-        pub const SHIFT: u32 = 1;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ce_ovr { // bits 0:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
 /// Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by  (established)
-pub mod md_memory_config_format {
+pub mod md_memory_config {
     pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200018;
     pub mod fprom_cyc { // bits 53:49, established
         pub const SHIFT: u32 = 49;
         pub const MASK: u64 = 0x1f;
@@ -394,10 +187,11 @@ pub mod md_memory_config_format {
         }
     }
 }
-/// Layout of the memory error latch, from the header's structure. (established)
-pub mod md_mem_error_format {
+/// Layout of the refresh control register. (established)
+pub mod md_refresh_control {
     pub const WIDTH: u32 = 64;
-    pub mod uce_vld { // bits 63:63, established
+    pub const OFFSET: u64 = 0x200020;
+    pub mod enable { // bits 63:63, established
         pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -407,9 +201,9 @@ pub mod md_mem_error_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod ce_vld { // bits 62:62, established
-        pub const SHIFT: u32 = 62;
-        pub const MASK: u64 = 0x1;
+    pub mod counter { // bits 23:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xfff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -417,93 +211,9 @@ pub mod md_mem_error_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod bad_syn { // bits 39:32, established
-        pub const SHIFT: u32 = 32;
-        pub const MASK: u64 = 0xff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod address { // bits 31:3, established
-        pub const SHIFT: u32 = 3;
-        pub const MASK: u64 = 0x1fffffff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod uce_ovr { // bits 1:1, established
-        pub const SHIFT: u32 = 1;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ce_ovr { // bits 0:0, established
+    pub mod threshold { // bits 11:0, established
         pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported (established)
-pub mod md_mig_candidate_format {
-    pub const WIDTH: u32 = 64;
-    pub mod valid { // bits 63:63, established
-        pub const SHIFT: u32 = 63;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod r#type { // bits 30:30, established
-        pub const SHIFT: u32 = 30;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod overrun { // bits 29:29, established
-        pub const SHIFT: u32 = 29;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod node { // bits 28:20, inferred
-        pub const SHIFT: u32 = 20;
-        pub const MASK: u64 = 0x1ff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod page { // bits 17:0, inferred
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x3ffff;
+        pub const MASK: u64 = 0xfff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -513,8 +223,9 @@ pub mod md_mig_candidate_format {
     }
 }
 /// Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting (established)
-pub mod md_mig_thresh_format {
+pub mod md_mig_diff_thresh {
     pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200030;
     pub mod valid { // bits 63:63, established
         pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
@@ -536,105 +247,12 @@ pub mod md_mig_thresh_format {
         }
     }
 }
-/// Layout of the miscellaneous error latch. The header's valid mask covers bits 9:0. Its long-pack mask is written with a misspelt shift macro, so only t (established)
-pub mod md_misc_error_format {
+/// Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting (established)
+pub mod md_mig_value_thresh {
     pub const WIDTH: u32 = 64;
-    pub mod ill_msg { // bits 9:8, established
-        pub const SHIFT: u32 = 8;
-        pub const MASK: u64 = 0x3;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod ill_rev { // bits 7:6, established
-        pub const SHIFT: u32 = 6;
-        pub const MASK: u64 = 0x3;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod long_pack { // bits 5:4, established
-        pub const SHIFT: u32 = 4;
-        pub const MASK: u64 = 0x3;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod short_pack { // bits 3:2, established
-        pub const SHIFT: u32 = 2;
-        pub const MASK: u64 = 0x3;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod bad_data { // bits 1:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x3;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of the one-wire (Microlan) control register. (established)
-pub mod md_mlan_ctl_format {
-    pub const WIDTH: u32 = 64;
-    pub mod phi1 { // bits 33:27, established
-        pub const SHIFT: u32 = 27;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod phi0 { // bits 26:20, inferred
-        pub const SHIFT: u32 = 20;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod pulse { // bits 19:10, established
-        pub const SHIFT: u32 = 10;
-        pub const MASK: u64 = 0x3ff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod sample { // bits 9:2, established
-        pub const SHIFT: u32 = 2;
-        pub const MASK: u64 = 0xff;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod done { // bits 1:1, established
-        pub const SHIFT: u32 = 1;
+    pub const OFFSET: u64 = 0x200038;
+    pub mod valid { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
@@ -643,45 +261,7 @@ pub mod md_mlan_ctl_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod rd_data { // bits 0:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of the outgoing queue size register. (established)
-pub mod md_moq_size_format {
-    pub const WIDTH: u32 = 64;
-    pub mod rp_size { // bits 13:8, established
-        pub const SHIFT: u32 = 8;
-        pub const MASK: u64 = 0x3f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod rq_size { // bits 4:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x1f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of performance counters 0 to 5. Bit positions come from the header's structure, read in the same order as the select register and so inferred. (inferred)
-pub mod md_perf_cnt_format {
-    pub const WIDTH: u32 = 64;
-    pub mod perf_cnt { // bits 19:0, inferred
+    pub mod value { // bits 19:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xfffff;
         pub const fn get(v: u64) -> u64 {
@@ -692,11 +272,12 @@ pub mod md_perf_cnt_format {
         }
     }
 }
-/// Layout of the performance counter select register. Bit positions come from the header's structure, which lists the fields from the most significant bi (inferred)
-pub mod md_perf_sel_format {
+/// Layout of the directory error latch, from the header's structure. The header lists the fields from the most significant bit down and gives a comment f (established)
+pub mod md_dir_error {
     pub const WIDTH: u32 = 64;
-    pub mod perf_en { // bits 3:3, inferred
-        pub const SHIFT: u32 = 3;
+    pub const OFFSET: u64 = 0x200050;
+    pub mod uce_vld { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
@@ -705,9 +286,79 @@ pub mod md_perf_sel_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod perf_sel { // bits 2:0, inferred
-        pub const SHIFT: u32 = 0;
+    pub mod ae_vld { // bits 62:62, established
+        pub const SHIFT: u32 = 62;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_vld { // bits 61:61, established
+        pub const SHIFT: u32 = 61;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bad_prot { // bits 41:39, established
+        pub const SHIFT: u32 = 39;
         pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bad_syn { // bits 38:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod hspec_addr { // bits 29:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x7ffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod uce_ovr { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ae_ovr { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_ovr { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -717,8 +368,9 @@ pub mod md_perf_sel_format {
     }
 }
 /// Layout of the protocol error latch, from the header's structure. (established)
-pub mod md_protocol_error_format {
+pub mod md_protocol_error {
     pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200060;
     pub mod valid { // bits 63:63, established
         pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
@@ -820,10 +472,11 @@ pub mod md_protocol_error_format {
         }
     }
 }
-/// Layout of the refresh control register. (established)
-pub mod md_refresh_control_format {
+/// Layout of the memory error latch, from the header's structure. (established)
+pub mod md_mem_error {
     pub const WIDTH: u32 = 64;
-    pub mod enable { // bits 63:63, established
+    pub const OFFSET: u64 = 0x200070;
+    pub mod uce_vld { // bits 63:63, established
         pub const SHIFT: u32 = 63;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -833,9 +486,9 @@ pub mod md_refresh_control_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod counter { // bits 23:12, established
-        pub const SHIFT: u32 = 12;
-        pub const MASK: u64 = 0xfff;
+    pub mod ce_vld { // bits 62:62, established
+        pub const SHIFT: u32 = 62;
+        pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }
@@ -843,7 +496,117 @@ pub mod md_refresh_control_format {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod threshold { // bits 11:0, established
+    pub mod bad_syn { // bits 39:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod address { // bits 31:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1fffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod uce_ovr { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ce_ovr { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of the miscellaneous error latch. The header's valid mask covers bits 9:0. Its long-pack mask is written with a misspelt shift macro, so only t (established)
+pub mod md_misc_error {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200080;
+    pub mod ill_msg { // bits 9:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ill_rev { // bits 7:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod long_pack { // bits 5:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod short_pack { // bits 3:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bad_data { // bits 1:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the L (established)
+pub mod md_mem_dimm_init {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200090;
+    pub mod select { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mode { // bits 11:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0xfff;
         pub const fn get(v: u64) -> u64 {
@@ -854,9 +617,165 @@ pub mod md_refresh_control_format {
         }
     }
 }
-/// Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named he (established)
-pub mod md_slotid_ustat_format {
+/// Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Li (established)
+pub mod md_dir_dimm_init {
     pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x200098;
+    pub mod select { // bits 35:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod mode { // bits 11:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xfff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of the outgoing queue size register. (established)
+pub mod md_moq_size {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2000a0;
+    pub mod rp_size { // bits 13:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rq_size { // bits 4:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of the one-wire (Microlan) control register. (established)
+pub mod md_mlan_ctl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2000a8;
+    pub mod phi1 { // bits 33:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod phi0 { // bits 26:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pulse { // bits 19:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod sample { // bits 9:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0xff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod done { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rd_data { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of the performance counter select register. Bit positions come from the header's structure, which lists the fields from the most significant bi (established)
+pub mod md_perf_sel {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x210000;
+    pub mod perf_en { // bits 3:3, inferred
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod perf_sel { // bits 2:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of performance counters 0 to 5. Bit positions come from the header's structure, read in the same order as the select register and so inferred. (established)
+pub mod md_perf_cnt0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x210010;
+    pub mod perf_cnt { // bits 19:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xfffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named he (established)
+pub mod md_slotid_ustat {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220048;
     pub mod core_clk_test { // bits 7:7, established
         pub const SHIFT: u32 = 7;
         pub const MASK: u64 = 0x1;
@@ -910,6 +829,140 @@ pub mod md_slotid_ustat_format {
     pub mod sn0_slot_id { // bits 2:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x7;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and (established)
+pub mod md_led1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220058;
+}
+/// Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access. (established)
+pub mod md_ureg1_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220088;
+}
+/// Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220090;
+}
+/// Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_3 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x220098;
+}
+/// Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro (inferred)
+pub mod md_ureg1_4 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200a0;
+}
+/// Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_5 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200a8;
+}
+/// Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_6 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200b0;
+}
+/// Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_7 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200b8;
+}
+/// Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_8 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200c0;
+}
+/// Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_9 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200c8;
+}
+/// Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_10 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200d0;
+}
+/// Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_11 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200d8;
+}
+/// Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_12 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200e0;
+}
+/// Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_13 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200e8;
+}
+/// Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed. (inferred)
+pub mod md_ureg1_14 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200f0;
+}
+/// Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access. (established)
+pub mod md_ureg1_15 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x2200f8;
+}
+/// Layout of the page migration candidate. The header's initiator and node-number masks overlap at bits 28:20, so only the single-bit fields are imported (established)
+pub mod md_mig_candidate_format {
+    pub const WIDTH: u32 = 64;
+    pub mod valid { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod r#type { // bits 30:30, established
+        pub const SHIFT: u32 = 30;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod overrun { // bits 29:29, established
+        pub const SHIFT: u32 = 29;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod node { // bits 28:20, inferred
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x1ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod page { // bits 17:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ffff;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK
         }

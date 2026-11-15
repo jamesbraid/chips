@@ -53,11 +53,6 @@ pub mod pi_nmi_a {
     pub const OFFSET: u64 = 0x70;
 }
 /// (established)
-pub mod pi_int_pend_mod {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x90;
-}
-/// (established)
 pub mod pi_int_pend0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x98;
@@ -143,11 +138,6 @@ pub mod pi_prof_en_b {
     pub const OFFSET: u64 = 0x158;
 }
 /// (established)
-pub mod pi_rt_local_ctrl {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x160;
-}
-/// (established)
 pub mod pi_gfx_int_cmp_a {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x320;
@@ -228,29 +218,9 @@ pub mod pi_rt_count {
     pub const OFFSET: u64 = 0x30100;
 }
 /// (established)
-pub mod md_memory_config {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200018;
-}
-/// (established)
-pub mod md_refresh_control {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200020;
-}
-/// (established)
 pub mod md_fandop_cac_stat {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200028;
-}
-/// (established)
-pub mod md_mig_diff_thresh {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200030;
-}
-/// (established)
-pub mod md_mig_value_thresh {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200038;
 }
 /// (established)
 pub mod md_mig_candidate_clr {
@@ -258,19 +228,9 @@ pub mod md_mig_candidate_clr {
     pub const OFFSET: u64 = 0x200048;
 }
 /// (established)
-pub mod md_dir_error {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200050;
-}
-/// (established)
 pub mod md_dir_error_clr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200058;
-}
-/// (established)
-pub mod md_protocol_error {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200060;
 }
 /// (established)
 pub mod md_protocol_error_clr {
@@ -278,34 +238,14 @@ pub mod md_protocol_error_clr {
     pub const OFFSET: u64 = 0x200068;
 }
 /// (established)
-pub mod md_mem_error {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200070;
-}
-/// (established)
 pub mod md_mem_error_clr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200078;
 }
 /// (established)
-pub mod md_misc_error {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x200080;
-}
-/// (established)
 pub mod md_misc_error_clr {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x200088;
-}
-/// (established)
-pub mod md_moq_size {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2000a0;
-}
-/// (established)
-pub mod md_mlan_ctl {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x2000a8;
 }
 /// (established)
 pub mod per_hub_init {
@@ -328,16 +268,6 @@ pub mod hub_rev_war_ctrl {
     pub const OFFSET: u64 = 0x2000e0;
 }
 /// (established)
-pub mod md_perf_sel {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x210000;
-}
-/// (established)
-pub mod md_perf_cnt0 {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x210010;
-}
-/// (established)
 pub mod md_ureg0_0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220000;
@@ -346,11 +276,6 @@ pub mod md_ureg0_0 {
 pub mod md_ureg0_1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x220008;
-}
-/// (established)
-pub mod md_slotid_ustat {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x220048;
 }
 /// (established)
 pub mod md_led0 {
@@ -566,26 +491,6 @@ pub mod iio_ippr {
     pub const OFFSET: u64 = 0x430008;
 }
 /// (established)
-pub mod ni_status_rev_id {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600000;
-}
-/// (established)
-pub mod ni_port_reset {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600008;
-}
-/// (established)
-pub mod ni_protection {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600010;
-}
-/// (established)
-pub mod ni_global_parms {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600018;
-}
-/// (established)
 pub mod ni_scratch_reg0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600100;
@@ -594,16 +499,6 @@ pub mod ni_scratch_reg0 {
 pub mod ni_scratch_reg1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600108;
-}
-/// (established)
-pub mod ni_diag_parms {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600110;
-}
-/// (established)
-pub mod ni_vector_parms {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600200;
 }
 /// (established)
 pub mod ni_vector {
@@ -616,11 +511,6 @@ pub mod ni_vector_data {
     pub const OFFSET: u64 = 0x600210;
 }
 /// (established)
-pub mod ni_vector_status {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600300;
-}
-/// (established)
 pub mod ni_vector_read_data {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600310;
@@ -629,26 +519,6 @@ pub mod ni_vector_read_data {
 pub mod ni_vector_clear {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x600380;
-}
-/// (established)
-pub mod ni_age_cpu0_memory {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600500;
-}
-/// (established)
-pub mod ni_age_cpu1_memory {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x600510;
-}
-/// (established)
-pub mod ni_port_error {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x608008;
-}
-/// (established)
-pub mod ni_port_error_clear {
-    pub const WIDTH: u32 = 64;
-    pub const OFFSET: u64 = 0x608088;
 }
 /// (established)
 pub mod ni_meta_table0 {
@@ -731,14 +601,8 @@ pub const MD_LED0_V_CF: u32 = 0xcf; // inferred
 pub const MD_LED0_V_F: u32 = 0xf; // inferred
 pub const MD_LED0_V_F3: u32 = 0xf3; // inferred
 pub const MD_LED0_V_FC: u32 = 0xfc; // inferred
-pub const MD_MEMORY_CONFIG_B_1_0: u32 = 0x3; // inferred
 pub const MD_MEM_ERROR_CLR_B_0: u32 = 0x1; // inferred
 pub const MD_MISC_ERROR_CLR_B_9_0: u32 = 0x3ff; // inferred
-pub const MD_MLAN_CTL_B_0: u32 = 0x1; // inferred
-pub const MD_MLAN_CTL_B_1: u32 = 0x2; // inferred
-pub const MD_REFRESH_CONTROL_B_11_0: u32 = 0xfff; // inferred
-pub const MD_SLOTID_USTAT_B_3_0: u32 = 0xf; // inferred
-pub const MD_SLOTID_USTAT_B_7_0: u32 = 0xff; // inferred
 pub const MD_UREG0_0_B_7_0: u32 = 0xff; // inferred
 pub const MD_UREG0_0_V_1: u32 = 0x1; // inferred
 pub const MD_UREG0_0_V_1C: u32 = 0x1c; // inferred
@@ -783,25 +647,12 @@ pub const MD_UREG1_0_V_CF: u32 = 0xcf; // inferred
 pub const MD_UREG1_0_V_F: u32 = 0xf; // inferred
 pub const MD_UREG1_0_V_F3: u32 = 0xf3; // inferred
 pub const MD_UREG1_0_V_FC: u32 = 0xfc; // inferred
-pub const NI_PORT_ERROR_CLEAR_B_7_0: u32 = 0xff; // inferred
-pub const NI_PORT_RESET_V_2: u32 = 0x2; // inferred
-pub const NI_PORT_RESET_V_81: u32 = 0x81; // inferred
-pub const NI_STATUS_REV_ID_B_0: u32 = 0x1; // inferred
-pub const NI_STATUS_REV_ID_B_3_0: u32 = 0xf; // inferred
-pub const NI_STATUS_REV_ID_B_7_0: u32 = 0xff; // inferred
-pub const NI_STATUS_REV_ID_B_8_0: u32 = 0x1ff; // inferred
 pub const PI_CALIAS_SIZE_V_1: u32 = 0x1; // inferred
 pub const PI_CALIAS_SIZE_V_2: u32 = 0x2; // inferred
 pub const PI_ERR_INT_PEND_V_FF0000: u32 = 0xff0000; // inferred
 pub const PI_ERR_INT_PEND_V_FFFF: u32 = 0xffff; // inferred
 pub const PI_ERR_STACK_ADDR_A_B_8: u32 = 0x100; // inferred
 pub const PI_INT_PEND1_B_0: u32 = 0x1; // inferred
-pub const PI_INT_PEND_MOD_V_100: u32 = 0x100; // inferred
-pub const PI_INT_PEND_MOD_V_40: u32 = 0x40; // inferred
-pub const PI_INT_PEND_MOD_V_69: u32 = 0x69; // inferred
-pub const PI_INT_PEND_MOD_V_6B: u32 = 0x6b; // inferred
-pub const PI_INT_PEND_MOD_V_7: u32 = 0x7; // inferred
-pub const PI_INT_PEND_MOD_V_76: u32 = 0x76; // inferred
 pub const PI_PROF_EN_B_V_1: u32 = 0x1; // inferred
 pub const PI_REGION_PRESENT_V_1: u32 = 0x1; // inferred
 pub const PI_RT_COMPARE_A_V_1: u32 = 0x1; // inferred
@@ -827,4 +678,3 @@ pub const PI_RT_COMPARE_A_V_B4: u32 = 0xb4; // inferred
 pub const PI_RT_COMPARE_A_V_C: u32 = 0xc; // inferred
 pub const PI_RT_COUNT_B_11_0: u32 = 0xfff; // inferred
 pub const PI_RT_EN_A_V_1: u32 = 0x1; // inferred
-pub const PI_RT_LOCAL_CTRL_V_10000: u32 = 0x10000; // inferred

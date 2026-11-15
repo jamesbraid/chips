@@ -32,6 +32,31 @@ pub mod pi_softreset {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x80;
 }
+/// Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register (established)
+pub mod pi_int_pend_mod {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x90;
+    pub mod set { // bits 8:8, inferred
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod level { // bits 6:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access. (established)
 pub mod pi_cc_pend_set_a {
     pub const WIDTH: u32 = 64;
@@ -56,6 +81,61 @@ pub mod pi_cc_pend_clr_b {
 pub mod pi_cc_mask {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0xe8;
+}
+/// Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift (established)
+pub mod pi_rt_local_ctrl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x160;
+    pub mod use_internal { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod gclk { // bits 15:15, established
+        pub const SHIFT: u32 = 15;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod gclk_count { // bits 14:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod max_count { // bits 7:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x7f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod gclk_en { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The I (established)
 pub mod pi_rt_filter_ctrl {
@@ -316,84 +396,6 @@ pub mod pi_nack_cnt_b {
 pub mod pi_nack_cmp {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x4b8;
-}
-/// Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux writes it: a set bit and an interrupt level. Linux only writes the register (inferred)
-pub mod pi_int_pend_mod_format {
-    pub const WIDTH: u32 = 64;
-    pub mod set { // bits 8:8, inferred
-        pub const SHIFT: u32 = 8;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod level { // bits 6:0, inferred
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Layout of the real-time counter local control register, the register the census names by its real-time clock control name. The header's mask and shift (established)
-pub mod pi_rt_local_ctrl_format {
-    pub const WIDTH: u32 = 64;
-    pub mod use_internal { // bits 16:16, established
-        pub const SHIFT: u32 = 16;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod gclk { // bits 15:15, established
-        pub const SHIFT: u32 = 15;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod gclk_count { // bits 14:8, established
-        pub const SHIFT: u32 = 8;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod max_count { // bits 7:1, established
-        pub const SHIFT: u32 = 1;
-        pub const MASK: u64 = 0x7f;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-    pub mod gclk_en { // bits 0:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u64 = 0x1;
-        pub const fn get(v: u64) -> u64 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u64, x: u64) -> u64 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
 }
 pub const IP_ERROR: u32 = 0x4000; // established
 pub const IP_MASK: u32 = 0x7c00; // established

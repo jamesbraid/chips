@@ -6,6 +6,613 @@
   {
    "unit": "hub_md_extra",
    "kind": "register",
+   "name": "md_memory_config",
+   "offset": 2097176,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 8584695805640703,
+   "grade": "established",
+   "from": "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.fprom_cyc",
+   "hi": 53,
+   "lo": 49,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.fprom_wr",
+   "hi": 48,
+   "lo": 44,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.uctlr_cyc",
+   "hi": 43,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.uctlr_wr",
+   "hi": 38,
+   "lo": 34,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.dimm0_sel",
+   "hi": 33,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.io_prot_en",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.arb_mlss",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.ignore_ecc",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.dir_premium",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.reply_guar",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank7",
+   "hi": 23,
+   "lo": 21,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank6",
+   "hi": 20,
+   "lo": 18,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank5",
+   "hi": 17,
+   "lo": 15,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank4",
+   "hi": 14,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank3",
+   "hi": 11,
+   "lo": 9,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank2",
+   "hi": 8,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank1",
+   "hi": 5,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_memory_config.bank0",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_refresh_control",
+   "offset": 2097184,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 1024,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_refresh_control.enable",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_refresh_control.counter",
+   "hi": 23,
+   "lo": 12,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_refresh_control.threshold",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_mig_diff_thresh",
+   "offset": 2097200,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 6 sites, 3 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_diff_thresh.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_diff_thresh.value",
+   "hi": 19,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_mig_value_thresh",
+   "offset": 2097208,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 10 sites, 5 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_value_thresh.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mig_value_thresh.value",
+   "hi": 19,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_dir_error",
+   "offset": 2097232,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.uce_vld",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.ae_vld",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.ce_vld",
+   "hi": 61,
+   "lo": 61,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.bad_prot",
+   "hi": 41,
+   "lo": 39,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.bad_syn",
+   "hi": 38,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.hspec_addr",
+   "hi": 29,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.uce_ovr",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.ae_ovr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_error.ce_ovr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_protocol_error",
+   "offset": 2097248,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.valid",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.initiator",
+   "hi": 60,
+   "lo": 50,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.backoff",
+   "hi": 49,
+   "lo": 48,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.msg_type",
+   "hi": 47,
+   "lo": 40,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.access",
+   "hi": 39,
+   "lo": 38,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.priority",
+   "hi": 37,
+   "lo": 37,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.dir_state",
+   "hi": 36,
+   "lo": 33,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.pointer_me",
+   "hi": 32,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.address",
+   "hi": 31,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_protocol_error.overrun",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_mem_error",
+   "offset": 2097264,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.uce_vld",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.ce_vld",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.bad_syn",
+   "hi": 39,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.address",
+   "hi": 31,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.uce_ovr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_error.ce_ovr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_misc_error",
+   "offset": 2097280,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_misc_error.ill_msg",
+   "hi": 9,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_misc_error.ill_rev",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_misc_error.long_pack",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_misc_error.short_pack",
+   "hi": 3,
+   "lo": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_misc_error.bad_data",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
    "name": "md_mem_dimm_init",
    "offset": 2097296,
    "access": "w",
@@ -16,6 +623,24 @@
    "reset": "unknown",
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_dimm_init.select",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mem_dimm_init.mode",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
   },
   {
    "unit": "hub_md_extra",
@@ -30,6 +655,247 @@
    "reset": "unknown",
    "grade": "established",
    "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_dimm_init.select",
+   "hi": 35,
+   "lo": 32,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_dir_dimm_init.mode",
+   "hi": 11,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_moq_size",
+   "offset": 2097312,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 12818,
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_moq_size.rp_size",
+   "hi": 13,
+   "lo": 8,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_moq_size.rq_size",
+   "hi": 4,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_mlan_ctl",
+   "offset": 2097320,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 6628048898,
+   "grade": "established",
+   "from": "census: 6 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.phi1",
+   "hi": 33,
+   "lo": 27,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.phi0",
+   "hi": 26,
+   "lo": 20,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.pulse",
+   "hi": 19,
+   "lo": 10,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.sample",
+   "hi": 9,
+   "lo": 2,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.done",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_mlan_ctl.rd_data",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_perf_sel",
+   "offset": 2162688,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_perf_sel.perf_en",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_perf_sel.perf_sel",
+   "hi": 2,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_perf_cnt0",
+   "offset": 2162704,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 1 sites, 1 routines"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_perf_cnt0.perf_cnt",
+   "hi": 19,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "register",
+   "name": "md_slotid_ustat",
+   "offset": 2228296,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.core_clk_test",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.core_clk",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.net_sync",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.fprom_ready",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.i2c_intr",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
+  },
+  {
+   "unit": "hub_md_extra",
+   "kind": "field",
+   "name": "md_slotid_ustat.sn0_slot_id",
+   "hi": 2,
+   "lo": 0,
+   "grade": "established",
+   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
   },
   {
    "unit": "hub_md_extra",
@@ -258,353 +1124,6 @@
   {
    "unit": "hub_md_extra",
    "kind": "word",
-   "name": "MD_DIMM_INIT_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIMM_INIT_FORMAT.select",
-   "hi": 35,
-   "lo": 32,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIMM_INIT_FORMAT.mode",
-   "hi": 11,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MDI_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_DIR_ERROR_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.uce_vld",
-   "hi": 63,
-   "lo": 63,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.ae_vld",
-   "hi": 62,
-   "lo": 62,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.ce_vld",
-   "hi": 61,
-   "lo": 61,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.bad_prot",
-   "hi": 41,
-   "lo": 39,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.bad_syn",
-   "hi": 38,
-   "lo": 32,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.hspec_addr",
-   "hi": 29,
-   "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.uce_ovr",
-   "hi": 2,
-   "lo": 2,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.ae_ovr",
-   "hi": 1,
-   "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_DIR_ERROR_FORMAT.ce_ovr",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MEMORY_CONFIG_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.fprom_cyc",
-   "hi": 53,
-   "lo": 49,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.fprom_wr",
-   "hi": 48,
-   "lo": 44,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.uctlr_cyc",
-   "hi": 43,
-   "lo": 39,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.uctlr_wr",
-   "hi": 38,
-   "lo": 34,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.dimm0_sel",
-   "hi": 33,
-   "lo": 32,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.io_prot_en",
-   "hi": 31,
-   "lo": 31,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.arb_mlss",
-   "hi": 30,
-   "lo": 30,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.ignore_ecc",
-   "hi": 29,
-   "lo": 29,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.dir_premium",
-   "hi": 28,
-   "lo": 28,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.reply_guar",
-   "hi": 27,
-   "lo": 24,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank7",
-   "hi": 23,
-   "lo": 21,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank6",
-   "hi": 20,
-   "lo": 18,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank5",
-   "hi": 17,
-   "lo": 15,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank4",
-   "hi": 14,
-   "lo": 12,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank3",
-   "hi": 11,
-   "lo": 9,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank2",
-   "hi": 8,
-   "lo": 6,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank1",
-   "hi": 5,
-   "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEMORY_CONFIG_FORMAT.bank0",
-   "hi": 2,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MEM_ERROR_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.uce_vld",
-   "hi": 63,
-   "lo": 63,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.ce_vld",
-   "hi": 62,
-   "lo": 62,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.bad_syn",
-   "hi": 39,
-   "lo": 32,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.address",
-   "hi": 31,
-   "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.uce_ovr",
-   "hi": 1,
-   "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MEM_ERROR_FORMAT.ce_ovr",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
    "name": "MD_MIG_CANDIDATE_FORMAT",
    "width": 64,
    "grade": "established",
@@ -654,411 +1173,6 @@
    "lo": 0,
    "grade": "inferred",
    "from": "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_ADDR_MASK (0x3ffff)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MIG_THRESH_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MIG_THRESH_FORMAT.valid",
-   "hi": 63,
-   "lo": 63,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MIG_THRESH_FORMAT.value",
-   "hi": 19,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MISC_ERROR_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MISC_ERROR_FORMAT.ill_msg",
-   "hi": 9,
-   "lo": 8,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MISC_ERROR_FORMAT.ill_rev",
-   "hi": 7,
-   "lo": 6,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MISC_ERROR_FORMAT.long_pack",
-   "hi": 5,
-   "lo": 4,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MISC_ERROR_FORMAT.short_pack",
-   "hi": 3,
-   "lo": 2,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MISC_ERROR_FORMAT.bad_data",
-   "hi": 1,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MLAN_CTL_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.phi1",
-   "hi": 33,
-   "lo": 27,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.phi0",
-   "hi": 26,
-   "lo": 20,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.pulse",
-   "hi": 19,
-   "lo": 10,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.sample",
-   "hi": 9,
-   "lo": 2,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.done",
-   "hi": 1,
-   "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MLAN_CTL_FORMAT.rd_data",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_MOQ_SIZE_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MOQ_SIZE_FORMAT.rp_size",
-   "hi": 13,
-   "lo": 8,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_MOQ_SIZE_FORMAT.rq_size",
-   "hi": 4,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_PERF_CNT_FORMAT",
-   "width": 64,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PERF_CNT_FORMAT.perf_cnt",
-   "hi": 19,
-   "lo": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_PERF_SEL_FORMAT",
-   "width": 64,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PERF_SEL_FORMAT.perf_en",
-   "hi": 3,
-   "lo": 3,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PERF_SEL_FORMAT.perf_sel",
-   "hi": 2,
-   "lo": 0,
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_PROTOCOL_ERROR_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.valid",
-   "hi": 63,
-   "lo": 63,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.initiator",
-   "hi": 60,
-   "lo": 50,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.backoff",
-   "hi": 49,
-   "lo": 48,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.msg_type",
-   "hi": 47,
-   "lo": 40,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.access",
-   "hi": 39,
-   "lo": 38,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.priority",
-   "hi": 37,
-   "lo": 37,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.dir_state",
-   "hi": 36,
-   "lo": 33,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.pointer_me",
-   "hi": 32,
-   "lo": 32,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.address",
-   "hi": 31,
-   "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_PROTOCOL_ERROR_FORMAT.overrun",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_REFRESH_CONTROL_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_REFRESH_CONTROL_FORMAT.enable",
-   "hi": 63,
-   "lo": 63,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_REFRESH_CONTROL_FORMAT.counter",
-   "hi": 23,
-   "lo": 12,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_REFRESH_CONTROL_FORMAT.threshold",
-   "hi": 11,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "word",
-   "name": "MD_SLOTID_USTAT_FORMAT",
-   "width": 64,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.core_clk_test",
-   "hi": 7,
-   "lo": 7,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.core_clk",
-   "hi": 6,
-   "lo": 6,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.net_sync",
-   "hi": 5,
-   "lo": 5,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.fprom_ready",
-   "hi": 4,
-   "lo": 4,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.i2c_intr",
-   "hi": 3,
-   "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-  },
-  {
-   "unit": "hub_md_extra",
-   "kind": "field",
-   "name": "MD_SLOTID_USTAT_FORMAT.sn0_slot_id",
-   "hi": 2,
-   "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
   },
   {
    "unit": "hub_md_extra",

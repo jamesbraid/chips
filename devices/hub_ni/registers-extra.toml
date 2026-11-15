@@ -2,7 +2,7 @@ unit = "hub_ni_extra"
 prefix = "HUB"
 title = "Hub network interface field layouts, port and vector fields, and register offsets outside the census"
 from = "public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)"
-public_from = ["public Linux SN0 Hub network interface header", "shipped IRIX"]
+public_from = ["census:", "public Linux SN0 Hub network interface header", "shipped IRIX"]
 
 # The census has the offsets of most network interface registers and no field layouts. The word
 # layouts here come from the public header's masks and shifts; the offsets the census lacks come
@@ -11,133 +11,17 @@ public_from = ["public Linux SN0 Hub network interface header", "shipped IRIX"]
 # constants are values software writes, not resets read from hardware. The header says every
 # register in it is subject to change until tapeout.
 
-[words.NI_STATUS_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts"
-doc = "Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees."
-
-[words.NI_STATUS_FORMAT.fields]
-eightbit_mode = { bits = [30, 30], grade = "established", doc = "Eight-bit mode bit, bit 30, named NSRI_8BITMODE. The header gives no further meaning." }
-link_up = { bits = [29, 29], grade = "established", doc = "Link-up bit, bit 29, named NSRI_LINKUP. The header gives no further meaning." }
-down_reason = { bits = [28, 28], grade = "established", doc = "Down reason, bit 28. The header's comment says 0 means failed and 1 means never came out of reset." }
-more_nodes = { bits = [18, 18], grade = "established", enum = "ni_node_mode", doc = "Maximum-node selection, bit 18, named NSRI_MORENODES." }
-region_size = { bits = [17, 17], grade = "established", enum = "ni_region_size", doc = "Region granularity, bit 17, named NSRI_REGIONSIZE." }
-node_id = { bits = [16, 8], grade = "established", doc = "This Hub's node number, nine bits at 16:8, named NSRI_NODEID." }
-chip_rev = { bits = [7, 4], grade = "established", doc = "Chip revision, four bits at 7:4, named NSRI_REV. The header gives no meaning for the values." }
-chip_id = { bits = [3, 0], grade = "established", doc = "Chip type identifier, four bits at 3:0, named NSRI_CHIPID." }
-
 [enums.ni_node_mode]
 values = { more_memory = { value = 0, grade = "established" }, more_nodes = { value = 1, grade = "established" } }
 
 [enums.ni_region_size]
 values = { coarse = { value = 0, grade = "established" }, fine = { value = 1, grade = "established" } }
 
-[words.NI_PORT_RESET_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NPR_* masks"
-doc = "Layout of the port reset register, ni_port_reset. The register is written, not read back; the header gives no read value."
-
-[words.NI_PORT_RESET_FORMAT.fields]
-warm_reset = { bits = [7, 7], grade = "established", doc = "Send a warm reset over the link, bit 7, named NPR_PORTRESET." }
-link_reset = { bits = [1, 1], grade = "established", doc = "Send a link reset, bit 1, named NPR_LINKRESET." }
-local_reset = { bits = [0, 0], grade = "established", doc = "Reset the whole Hub, bit 0, named NPR_LOCALRESET. The header's comment says it resets the entire Hub." }
-
-[words.NI_PROTECTION_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NPROT_RESETOK"
-doc = "Layout of the protection configuration register, ni_protection."
-
-[words.NI_PROTECTION_FORMAT.fields]
-reset_ok = { bits = [0, 0], grade = "established", doc = "Permits reset, bit 0, named NPROT_RESETOK." }
-
-[words.NI_GLOBAL_PARMS_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NGP_* masks and shifts"
-doc = "Layout of the global link parameters register, ni_global_parms. The header's comment on the credit-timeout field repeats the wording of the field above it; the name used here is the mask's own name."
-
-[words.NI_GLOBAL_PARMS_FORMAT.fields]
-max_retry = { bits = [57, 48], grade = "established", doc = "Maximum retry count, ten bits at 57:48." }
-tail_timeout_wrap = { bits = [47, 32], grade = "established", doc = "Tail timeout wrap value, sixteen bits at 47:32." }
-credit_timeout = { bits = [19, 16], grade = "established", doc = "Credit timeout value, four bits at 19:16." }
-tail_timeout = { bits = [7, 4], grade = "established", doc = "Tail timeout value, four bits at 7:4." }
-
-[words.NI_DIAG_PARMS_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NDP_* masks"
-doc = "Layout of the diagnostic parameters register, ni_diag_parms. The header names each bit and gives no further behaviour."
-
-[words.NI_DIAG_PARMS_FORMAT.fields]
-port_timeout_reset = { bits = [18, 18], grade = "established", doc = "Port timeout reset, bit 18, named NDP_PORTTORESET." }
-llp_8bit_mode = { bits = [12, 12], grade = "established", doc = "Link-layer eight-bit mode, bit 12, named NDP_LLP8BITMODE." }
-port_disable = { bits = [6, 6], grade = "established", doc = "Port disable, bit 6, named NDP_PORTDISABLE." }
-send_error = { bits = [0, 0], grade = "established", doc = "Send a data error, bit 0, named NDP_SENDERROR." }
-
-[words.NI_VECTOR_PARMS_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NVP_* masks and shifts"
-doc = "Layout of the vector routing parameters register, ni_vector_parms. The header's identifier mask covers bits 49:40. Other sources put the top bit of that field at 50; this layout follows the public header."
-
-[words.NI_VECTOR_PARMS_FORMAT.fields]
-pio_id = { bits = [49, 40], grade = "established", doc = "Access identifier, ten bits at 49:40, named NVP_PIOID. The top bit is disputed; see the unit note." }
-write_id = { bits = [39, 32], grade = "established", doc = "Write identifier, eight bits at 39:32, named NVP_WRITEID." }
-address = { bits = [19, 3], grade = "established", doc = "Register address to reach, bits 19:3. The header's mask is 0xffff8, with bits 2:0 always zero." }
-pio_type = { bits = [1, 0], grade = "established", enum = "ni_pio_request_type", doc = "Operation, two bits at 1:0, named NVP_TYPE. Only the values 0 to 3 can be requested." }
-
-[words.NI_VECTOR_STATUS_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts"
-doc = "Layout of the vector routing status register, ni_vector_status. The source field is ten bits in the header (60:51). Another source gives it eleven bits (61:51); this layout follows the public header."
-
-[words.NI_VECTOR_STATUS_FORMAT.fields]
-valid = { bits = [63, 63], grade = "established", doc = "Valid bit, bit 63, named NVS_VALID." }
-overrun = { bits = [62, 62], grade = "established", doc = "Overrun bit, bit 62, named NVS_OVERRUN." }
-target = { bits = [60, 51], grade = "established", doc = "Source field, ten bits at 60:51, named NVS_TARGET. Its encoding is not given in the header." }
-pio_id = { bits = [49, 40], grade = "established", doc = "Echo of the access identifier, ten bits at 49:40, named NVS_PIOID." }
-write_id = { bits = [39, 32], grade = "established", doc = "Echo of the write identifier, eight bits at 39:32, named NVS_WRITEID." }
-address = { bits = [31, 3], grade = "established", doc = "Echo of the register address, bits 31:3. The header's mask is 0xfffffff8." }
-pio_type = { bits = [2, 0], grade = "established", enum = "ni_pio_type", doc = "Response type, three bits at 2:0, named NVS_TYPE. The header's error mask is bit 2: a type with bit 2 set is an error." }
-
 [enums.ni_pio_type]
 values = { read = { value = 0, grade = "established" }, write = { value = 1, grade = "established" }, undefined = { value = 2, grade = "established", doc = "Named undefined in the header, for both the request and the status side." }, exchange = { value = 3, grade = "established" }, address_error = { value = 4, grade = "established", doc = "Status side only." }, command_error = { value = 5, grade = "established", doc = "Status side only." }, protection_error = { value = 6, grade = "established", doc = "Status side only." }, unknown = { value = 7, grade = "established", doc = "Status side only." } }
 
 [enums.ni_pio_request_type]
 values = { read = { value = 0, grade = "established" }, write = { value = 1, grade = "established" }, undefined = { value = 2, grade = "established", doc = "Named undefined in the header." }, exchange = { value = 3, grade = "established" } }
-
-[words.NI_PORT_ERROR_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts"
-doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name."
-
-[words.NI_PORT_ERROR_FORMAT.fields]
-link_reset = { bits = [37, 37], grade = "established", doc = "Link reset, bit 37, named NPE_LINKRESET." }
-internal_error = { bits = [36, 36], grade = "established", doc = "Internal error, bit 36, named NPE_INTERNALERROR." }
-bad_message = { bits = [35, 35], grade = "established", doc = "Bad message, bit 35, named NPE_BADMESSAGE." }
-bad_destination = { bits = [34, 34], grade = "established", doc = "Bad destination, bit 34, named NPE_BADDEST." }
-queue_overflow = { bits = [33, 33], grade = "established", doc = "FIFO overflow, bit 33, named NPE_FIFOOVERFLOW." }
-credit_timeout_count = { bits = [31, 28], grade = "established", doc = "Credit timeout count, four bits at 31:28." }
-tail_timeout_count = { bits = [27, 24], grade = "established", doc = "Tail timeout count, four bits at 27:24." }
-retry_count = { bits = [23, 16], grade = "established", doc = "Retry count, eight bits at 23:16." }
-check_bit_error_count = { bits = [15, 8], grade = "established", doc = "Check-bit error count, eight bits at 15:8." }
-sequence_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits at 7:0. The header's counter maximum is 0xff." }
-
-[words.NI_AGE_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"
-doc = "Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field."
-
-[words.NI_AGE_FORMAT.fields]
-vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH." }
-congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values." }
-age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE." }
 
 [enums.ni_vchannel]
 values = { channel_a = { value = 0, grade = "established" }, channel_b = { value = 1, grade = "established" }, any = { value = 2, grade = "established" } }
@@ -201,6 +85,11 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80e8"
 doc = "CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
+[registers.ni_age_cpu0_pio.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+
 [registers.ni_age_cpu1_pio]
 offset = 0x600518
 access = "rw"
@@ -211,6 +100,11 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8118"
 doc = "CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
+
+[registers.ni_age_cpu1_pio.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 
 [registers.ni_age_gbr_memory]
 offset = 0x600520
@@ -223,6 +117,11 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8130"
 doc = "Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
+[registers.ni_age_gbr_memory.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+
 [registers.ni_age_gbr_pio]
 offset = 0x600528
 access = "rw"
@@ -234,6 +133,11 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8148"
 doc = "Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
+[registers.ni_age_gbr_pio.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+
 [registers.ni_age_io_memory]
 offset = 0x600530
 access = "rw"
@@ -244,6 +148,11 @@ reset = 0x0
 reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_IO_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8160"
 doc = "I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
+
+[registers.ni_age_io_memory.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 
 [registers.ni_age_io_pio]
 offset = 0x600538
@@ -258,6 +167,11 @@ doc = "I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout 
 
 # Routing table entries after the first. The census names entry 0 of each table. The header gives
 # the stride of eight bytes and the entry counts below. The entry width is not in the header.
+
+[registers.ni_age_io_pio.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 
 [registers.ni_meta_entry]
 offset = 0x638008
@@ -274,6 +188,189 @@ access = "rw"
 width = 64
 grade = "inferred"
 doc = "Local routing table entries 1 to 15, eight bytes apart from the census entry ni_local_table0. The header gives the stride and the count of 16 entries. Access is assumed read and write. The entry width is not stated in the header and is not imported."
+
+# ---- NI: network interface (status, port, vector, routing tables)
+[registers.ni_status_rev_id]
+offset = 0x600000
+access = "r"
+width = 64
+grade = "established"
+from = "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
+reset = 0x20020
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50"
+doc = "Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees."
+
+[registers.ni_status_rev_id.fields]
+eightbit_mode = { bits = [30, 30], grade = "established", doc = "Eight-bit mode bit, bit 30, named NSRI_8BITMODE. The header gives no further meaning.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+link_up = { bits = [29, 29], grade = "established", doc = "Link-up bit, bit 29, named NSRI_LINKUP. The header gives no further meaning.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+down_reason = { bits = [28, 28], grade = "established", doc = "Down reason, bit 28. The header's comment says 0 means failed and 1 means never came out of reset.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+more_nodes = { bits = [18, 18], grade = "established", enum = "ni_node_mode", doc = "Maximum-node selection, bit 18, named NSRI_MORENODES.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+region_size = { bits = [17, 17], grade = "established", enum = "ni_region_size", doc = "Region granularity, bit 17, named NSRI_REGIONSIZE.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+node_id = { bits = [16, 8], grade = "established", doc = "This Hub's node number, nine bits at 16:8, named NSRI_NODEID.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+chip_rev = { bits = [7, 4], grade = "established", doc = "Chip revision, four bits at 7:4, named NSRI_REV. The header gives no meaning for the values.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+chip_id = { bits = [3, 0], grade = "established", doc = "Chip type identifier, four bits at 3:0, named NSRI_CHIPID.", from = "public Linux SN0 Hub network interface header: NSRI_* masks and shifts" }
+
+[registers.ni_port_reset]
+offset = 0x600008
+access = "w"
+width = 64
+grade = "established"
+from = "census: 6 sites, 6 routines"
+doc = "Layout of the port reset register, ni_port_reset. The register is written, not read back; the header gives no read value."
+
+[registers.ni_port_reset.fields]
+warm_reset = { bits = [7, 7], grade = "established", doc = "Send a warm reset over the link, bit 7, named NPR_PORTRESET.", from = "public Linux SN0 Hub network interface header: NPR_* masks" }
+link_reset = { bits = [1, 1], grade = "established", doc = "Send a link reset, bit 1, named NPR_LINKRESET.", from = "public Linux SN0 Hub network interface header: NPR_* masks" }
+local_reset = { bits = [0, 0], grade = "established", doc = "Reset the whole Hub, bit 0, named NPR_LOCALRESET. The header's comment says it resets the entire Hub.", from = "public Linux SN0 Hub network interface header: NPR_* masks" }
+
+[registers.ni_protection]
+offset = 0x600010
+access = "r"
+width = 64
+grade = "established"
+from = "census: 3 sites, 2 routines"
+reset = 0x1
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80"
+doc = "Layout of the protection configuration register, ni_protection."
+
+[registers.ni_protection.fields]
+reset_ok = { bits = [0, 0], grade = "established", doc = "Permits reset, bit 0, named NPROT_RESETOK.", from = "public Linux SN0 Hub network interface header: NPROT_RESETOK" }
+
+[registers.ni_global_parms]
+offset = 0x600018
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines"
+reset = 0x3fffffe000f00f0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98"
+doc = "Layout of the global link parameters register, ni_global_parms. The header's comment on the credit-timeout field repeats the wording of the field above it; the name used here is the mask's own name."
+
+[registers.ni_global_parms.fields]
+max_retry = { bits = [57, 48], grade = "established", doc = "Maximum retry count, ten bits at 57:48.", from = "public Linux SN0 Hub network interface header: NGP_* masks and shifts" }
+tail_timeout_wrap = { bits = [47, 32], grade = "established", doc = "Tail timeout wrap value, sixteen bits at 47:32.", from = "public Linux SN0 Hub network interface header: NGP_* masks and shifts" }
+credit_timeout = { bits = [19, 16], grade = "established", doc = "Credit timeout value, four bits at 19:16.", from = "public Linux SN0 Hub network interface header: NGP_* masks and shifts" }
+tail_timeout = { bits = [7, 4], grade = "established", doc = "Tail timeout value, four bits at 7:4.", from = "public Linux SN0 Hub network interface header: NGP_* masks and shifts" }
+
+[registers.ni_diag_parms]
+offset = 0x600110
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed)"
+doc = "Layout of the diagnostic parameters register, ni_diag_parms. The header names each bit and gives no further behaviour."
+
+[registers.ni_diag_parms.fields]
+port_timeout_reset = { bits = [18, 18], grade = "established", doc = "Port timeout reset, bit 18, named NDP_PORTTORESET.", from = "public Linux SN0 Hub network interface header: NDP_* masks" }
+llp_8bit_mode = { bits = [12, 12], grade = "established", doc = "Link-layer eight-bit mode, bit 12, named NDP_LLP8BITMODE.", from = "public Linux SN0 Hub network interface header: NDP_* masks" }
+port_disable = { bits = [6, 6], grade = "established", doc = "Port disable, bit 6, named NDP_PORTDISABLE.", from = "public Linux SN0 Hub network interface header: NDP_* masks" }
+send_error = { bits = [0, 0], grade = "established", doc = "Send a data error, bit 0, named NDP_SENDERROR.", from = "public Linux SN0 Hub network interface header: NDP_* masks" }
+
+[registers.ni_vector_parms]
+offset = 0x600200
+access = "w"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines"
+doc = "Layout of the vector routing parameters register, ni_vector_parms. The header's identifier mask covers bits 49:40. Other sources put the top bit of that field at 50; this layout follows the public header."
+
+[registers.ni_vector_parms.fields]
+pio_id = { bits = [49, 40], grade = "established", doc = "Access identifier, ten bits at 49:40, named NVP_PIOID. The top bit is disputed; see the unit note.", from = "public Linux SN0 Hub network interface header: NVP_* masks and shifts" }
+write_id = { bits = [39, 32], grade = "established", doc = "Write identifier, eight bits at 39:32, named NVP_WRITEID.", from = "public Linux SN0 Hub network interface header: NVP_* masks and shifts" }
+address = { bits = [19, 3], grade = "established", doc = "Register address to reach, bits 19:3. The header's mask is 0xffff8, with bits 2:0 always zero.", from = "public Linux SN0 Hub network interface header: NVP_* masks and shifts" }
+pio_type = { bits = [1, 0], grade = "established", enum = "ni_pio_request_type", doc = "Operation, two bits at 1:0, named NVP_TYPE. Only the values 0 to 3 can be requested.", from = "public Linux SN0 Hub network interface header: NVP_* masks and shifts" }
+
+[registers.ni_vector_status]
+offset = 0x600300
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed)"
+doc = "Layout of the vector routing status register, ni_vector_status. The source field is ten bits in the header (60:51). Another source gives it eleven bits (61:51); this layout follows the public header."
+
+[registers.ni_vector_status.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Valid bit, bit 63, named NVS_VALID.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+overrun = { bits = [62, 62], grade = "established", doc = "Overrun bit, bit 62, named NVS_OVERRUN.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+target = { bits = [60, 51], grade = "established", doc = "Source field, ten bits at 60:51, named NVS_TARGET. Its encoding is not given in the header.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+pio_id = { bits = [49, 40], grade = "established", doc = "Echo of the access identifier, ten bits at 49:40, named NVS_PIOID.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+write_id = { bits = [39, 32], grade = "established", doc = "Echo of the write identifier, eight bits at 39:32, named NVS_WRITEID.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+address = { bits = [31, 3], grade = "established", doc = "Echo of the register address, bits 31:3. The header's mask is 0xfffffff8.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+pio_type = { bits = [2, 0], grade = "established", enum = "ni_pio_type", doc = "Response type, three bits at 2:0, named NVS_TYPE. The header's error mask is bit 2: a type with bit 2 set is an error.", from = "public Linux SN0 Hub network interface header: NVS_* masks and shifts" }
+
+[registers.ni_port_error]
+offset = 0x608008
+access = "r"
+width = 64
+grade = "established"
+from = "census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed)"
+doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name."
+
+[registers.ni_port_error.fields]
+link_reset = { bits = [37, 37], grade = "established", doc = "Link reset, bit 37, named NPE_LINKRESET.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+internal_error = { bits = [36, 36], grade = "established", doc = "Internal error, bit 36, named NPE_INTERNALERROR.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+bad_message = { bits = [35, 35], grade = "established", doc = "Bad message, bit 35, named NPE_BADMESSAGE.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+bad_destination = { bits = [34, 34], grade = "established", doc = "Bad destination, bit 34, named NPE_BADDEST.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+queue_overflow = { bits = [33, 33], grade = "established", doc = "FIFO overflow, bit 33, named NPE_FIFOOVERFLOW.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+credit_timeout_count = { bits = [31, 28], grade = "established", doc = "Credit timeout count, four bits at 31:28.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+tail_timeout_count = { bits = [27, 24], grade = "established", doc = "Tail timeout count, four bits at 27:24.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+retry_count = { bits = [23, 16], grade = "established", doc = "Retry count, eight bits at 23:16.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+check_bit_error_count = { bits = [15, 8], grade = "established", doc = "Check-bit error count, eight bits at 15:8.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+sequence_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits at 7:0. The header's counter maximum is 0xff.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+
+[registers.ni_port_error_clear]
+offset = 0x608088
+access = "r"
+width = 64
+grade = "established"
+from = "census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed)"
+doc = "Layout of the port error register, ni_port_error, and of its clearing alias, ni_port_error_clear. Bit 32 is outside the header's error mask and has no name."
+
+[registers.ni_port_error_clear.fields]
+link_reset = { bits = [37, 37], grade = "established", doc = "Link reset, bit 37, named NPE_LINKRESET.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+internal_error = { bits = [36, 36], grade = "established", doc = "Internal error, bit 36, named NPE_INTERNALERROR.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+bad_message = { bits = [35, 35], grade = "established", doc = "Bad message, bit 35, named NPE_BADMESSAGE.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+bad_destination = { bits = [34, 34], grade = "established", doc = "Bad destination, bit 34, named NPE_BADDEST.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+queue_overflow = { bits = [33, 33], grade = "established", doc = "FIFO overflow, bit 33, named NPE_FIFOOVERFLOW.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+credit_timeout_count = { bits = [31, 28], grade = "established", doc = "Credit timeout count, four bits at 31:28.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+tail_timeout_count = { bits = [27, 24], grade = "established", doc = "Tail timeout count, four bits at 27:24.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+retry_count = { bits = [23, 16], grade = "established", doc = "Retry count, eight bits at 23:16.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+check_bit_error_count = { bits = [15, 8], grade = "established", doc = "Check-bit error count, eight bits at 15:8.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+sequence_error_count = { bits = [7, 0], grade = "established", doc = "Sequence-number error count, eight bits at 7:0. The header's counter maximum is 0xff.", from = "public Linux SN0 Hub network interface header: NPE_* masks and shifts" }
+
+[registers.ni_age_cpu0_memory]
+offset = 0x600500
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 9 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0"
+doc = "Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field."
+
+[registers.ni_age_cpu0_memory.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+
+[registers.ni_age_cpu1_memory]
+offset = 0x600510
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 9 sites, 3 routines"
+reset = 0x0
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100"
+doc = "Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field."
+
+[registers.ni_age_cpu1_memory.fields]
+vchannel = { bits = [11, 10], grade = "established", enum = "ni_vchannel", doc = "Virtual channel, two bits at 11:10, named NAGE_VCH.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+congestion = { bits = [9, 8], grade = "established", doc = "Congestion control, two bits at 9:8, named NAGE_CC. The header gives no values.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
+age = { bits = [7, 0], grade = "established", doc = "Age, eight bits at 7:0, named NAGE_AGE.", from = "public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names" }
 
 [constants]
 NI_META_ENTRIES = { value = 32, grade = "established", doc = "Meta routing table entry count, named NI_META_ENTRIES in the public header." }

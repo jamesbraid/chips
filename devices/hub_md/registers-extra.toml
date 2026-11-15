@@ -2,7 +2,7 @@ unit = "hub_md_extra"
 prefix = "HUB"
 title = "Hub memory and directory register layouts and constants outside the census"
 from = "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
-public_from = ["public Linux SN0 Hub memory/directory header", "shipped IRIX"]
+public_from = ["census:", "public Linux SN0 Hub memory/directory header", "shipped IRIX"]
 
 # The census has the offsets of the memory and directory registers at 0x200000 to 0x2000a8 and
 # 0x210000 to 0x210038, and their access sites. It has no field layouts. These word layouts
@@ -10,154 +10,6 @@ public_from = ["public Linux SN0 Hub memory/directory header", "shipped IRIX"]
 # devices/hub/registers.toml. Each word here is the bit layout of a register that the census names.
 # The header states no access type for any of them. Reset defaults are software constants in
 # the header, not a reset read from hardware, so they are graded inferred.
-
-[words.MD_MEMORY_CONFIG_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)"
-doc = "Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by the header, and their meaning is only partly stated there."
-
-[words.MD_MEMORY_CONFIG_FORMAT.fields]
-bank0 = { bits = [2, 0], grade = "established", doc = "Size code of bank 0, bits 2:0. Codes are in the size table below." }
-bank1 = { bits = [5, 3], grade = "established", doc = "Size code of bank 1, bits 5:3." }
-bank2 = { bits = [8, 6], grade = "established", doc = "Size code of bank 2, bits 8:6." }
-bank3 = { bits = [11, 9], grade = "established", doc = "Size code of bank 3, bits 11:9." }
-bank4 = { bits = [14, 12], grade = "established", doc = "Size code of bank 4, bits 14:12. The header sizes eight banks in its M-mode build." }
-bank5 = { bits = [17, 15], grade = "established", doc = "Size code of bank 5, bits 17:15." }
-bank6 = { bits = [20, 18], grade = "established", doc = "Size code of bank 6, bits 20:18." }
-bank7 = { bits = [23, 21], grade = "established", doc = "Size code of bank 7, bits 23:21." }
-reply_guar = { bits = [27, 24], grade = "established", doc = "Reply guarantee count, four bits at 27:24 (mask 15 in the header). Its meaning is not stated in the header." }
-dir_premium = { bits = [28, 28], grade = "established", doc = "Directory format bit: set selects the premium directory format, clear the standard one. The header's own accessor macro reads it this way." }
-ignore_ecc = { bits = [29, 29], grade = "established", doc = "Ignore directory ECC bit, bit 29. The header names it MMC_IGNORE_ECC and gives no further behaviour." }
-arb_mlss = { bits = [30, 30], grade = "established", doc = "Bit 30, named MMC_ARB_MLSS in the header. The header gives no meaning for it, so only the name and position are imported." }
-io_prot_en = { bits = [31, 31], grade = "established", doc = "I/O protection enable, bit 31, named MMC_IO_PROT_EN in the header." }
-dimm0_sel = { bits = [33, 32], grade = "established", doc = "Two-bit DIMM 0 select field at 33:32 (mask 3 in the header). The header gives no meaning for the values. The Origin 2000 boot firmware writes the value 2 here while exchanging the size codes of bank pairs (0,1), (2,3), (4,5) and (6,7), and the shipped kernel names a failing module from this field XORed with address bits 31:29; so the field permutes which DIMM serves a bank window. Established for the writes and the XOR, inferred for the effect." }
-uctlr_wr = { bits = [38, 34], grade = "established", doc = "Five-bit write timing field at 38:34, named UCTLR_WR in the header. The header's abbreviation is the only name for it; its meaning is inferred from the name." }
-uctlr_cyc = { bits = [43, 39], grade = "established", doc = "Five-bit cycle timing field at 43:39, named UCTLR_CYC in the header. The abbreviation is the only name given; its meaning is inferred from the name." }
-fprom_wr = { bits = [48, 44], grade = "established", doc = "Five-bit boot flash write timing field at 48:44, named FPROM_WR in the header. The flash reading of the name is inferred." }
-fprom_cyc = { bits = [53, 49], grade = "established", doc = "Five-bit boot flash cycle timing field at 53:49, named FPROM_CYC in the header. The flash reading of the name is inferred." }
-
-[words.MD_REFRESH_CONTROL_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)"
-doc = "Layout of the refresh control register."
-
-[words.MD_REFRESH_CONTROL_FORMAT.fields]
-enable = { bits = [63, 63], grade = "established", doc = "Refresh enable, bit 63." }
-counter = { bits = [23, 12], grade = "established", doc = "Twelve-bit refresh counter at 23:12. The header gives no meaning beyond the name." }
-threshold = { bits = [11, 0], grade = "established", doc = "Twelve-bit threshold at 11:0, named MRC_CNT_THRESH_MASK in the header." }
-
-[words.MD_MOQ_SIZE_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)"
-doc = "Layout of the outgoing queue size register."
-
-[words.MD_MOQ_SIZE_FORMAT.fields]
-rp_size = { bits = [13, 8], grade = "established", doc = "Reply queue size field, six bits at 13:8, named MMS_RP_SIZE in the header." }
-rq_size = { bits = [4, 0], grade = "established", doc = "Request queue size field, five bits at 4:0, named MMS_RQ_SIZE in the header." }
-
-[words.MD_MLAN_CTL_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)"
-doc = "Layout of the one-wire (Microlan) control register."
-
-[words.MD_MLAN_CTL_FORMAT.fields]
-phi1 = { bits = [33, 27], grade = "established", doc = "Seven-bit field at 33:27 (mask 0x7f shifted 27), named MLAN_PHI1 in the header. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown." }
-phi0 = { bits = [26, 20], grade = "inferred", doc = "Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown." }
-pulse = { bits = [19, 10], grade = "established", doc = "Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10). The header gives no time unit, so the real pulse width is unknown." }
-sample = { bits = [9, 2], grade = "established", doc = "Eight-bit sample field at 9:2 (mask 0xff shifted 2). The header gives no time unit or reference point, so the real sample offset is unknown." }
-done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, but the IRIX register reset table gives the whole register's reset as 0x18b100002, so done is set at reset." }
-rd_data = { bits = [0, 0], grade = "established", doc = "Read-data bit, bit 0, named MLAN_RD_DATA in the header." }
-
-[words.MD_SLOTID_USTAT_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)"
-doc = "Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out."
-
-[words.MD_SLOTID_USTAT_FORMAT.fields]
-core_clk_test = { bits = [7, 7], grade = "established", doc = "Core clock test bit, bit 7. The header comment says only that it is for testing." }
-core_clk = { bits = [6, 6], grade = "established", doc = "Core clock bit, bit 6." }
-net_sync = { bits = [5, 5], grade = "established", doc = "Network sync bit, bit 5." }
-fprom_ready = { bits = [4, 4], grade = "established", doc = "Flash PROM ready bit, bit 4. The header's comment names it as the flash PROM ready bit." }
-i2c_intr = { bits = [3, 3], grade = "established", doc = "I2C interrupt bit, bit 3." }
-sn0_slot_id = { bits = [2, 0], grade = "established", doc = "Slot ID, bits 2:0 (mask 7 in the header)." }
-
-[words.MD_DIR_ERROR_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure"
-doc = "Layout of the directory error latch, from the header's structure. The header lists the fields from the most significant bit down and gives a comment for each range. Bit positions here follow those comments."
-
-[words.MD_DIR_ERROR_FORMAT.fields]
-uce_vld = { bits = [63, 63], grade = "established", doc = "Valid directory uncorrectable error." }
-ae_vld = { bits = [62, 62], grade = "established", doc = "Valid directory protection ECC error." }
-ce_vld = { bits = [61, 61], grade = "established", doc = "Valid correctable ECC error." }
-bad_prot = { bits = [41, 39], grade = "established", doc = "Access rights encoding of a bad access, bits 41:39." }
-bad_syn = { bits = [38, 32], grade = "established", doc = "Bad directory syndrome, bits 38:32." }
-hspec_addr = { bits = [29, 3], grade = "established", doc = "Address of the bad entry in the Hub special space, bits 29:3." }
-uce_ovr = { bits = [2, 2], grade = "established", doc = "Multiple directory uncorrectable errors." }
-ae_ovr = { bits = [1, 1], grade = "established", doc = "Multiple protection ECC errors." }
-ce_ovr = { bits = [0, 0], grade = "established", doc = "Multiple correctable errors." }
-
-[words.MD_MEM_ERROR_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure"
-doc = "Layout of the memory error latch, from the header's structure."
-
-[words.MD_MEM_ERROR_FORMAT.fields]
-uce_vld = { bits = [63, 63], grade = "established", doc = "Valid memory uncorrectable error." }
-ce_vld = { bits = [62, 62], grade = "established", doc = "Valid correctable ECC error." }
-bad_syn = { bits = [39, 32], grade = "established", doc = "Bad memory ECC syndrome, bits 39:32." }
-address = { bits = [31, 3], grade = "established", doc = "Bad entry pointer, bits 31:3." }
-uce_ovr = { bits = [1, 1], grade = "established", doc = "Multiple memory uncorrectable errors." }
-ce_ovr = { bits = [0, 0], grade = "established", doc = "Multiple correctable errors." }
-
-[words.MD_PROTOCOL_ERROR_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure"
-doc = "Layout of the protocol error latch, from the header's structure."
-
-[words.MD_PROTOCOL_ERROR_FORMAT.fields]
-valid = { bits = [63, 63], grade = "established", doc = "Valid protocol error." }
-initiator = { bits = [60, 50], grade = "established", doc = "Identifier of the request initiator, eleven bits." }
-backoff = { bits = [49, 48], grade = "established", doc = "Backoff control, two bits." }
-msg_type = { bits = [47, 40], grade = "established", doc = "Type of the request, eight bits." }
-access = { bits = [39, 38], grade = "established", doc = "Access rights of the initiator, two bits." }
-priority = { bits = [37, 37], grade = "established", doc = "Priority level of the requester." }
-dir_state = { bits = [36, 33], grade = "established", doc = "State of the directory, four bits." }
-pointer_me = { bits = [32, 32], grade = "established", doc = "Initiator is the same as the directory pointer." }
-address = { bits = [31, 3], grade = "established", doc = "Request address, bits 31:3." }
-overrun = { bits = [0, 0], grade = "established", doc = "Multiple protocol errors." }
-
-[words.MD_MISC_ERROR_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MMCE_* masks"
-doc = "Layout of the miscellaneous error latch. The header's valid mask covers bits 9:0. Its long-pack mask is written with a misspelt shift macro, so only the other masks are imported as stated."
-
-[words.MD_MISC_ERROR_FORMAT.fields]
-ill_msg = { bits = [9, 8], grade = "established", doc = "Illegal message field, bits 9:8." }
-ill_rev = { bits = [7, 6], grade = "established", doc = "Illegal revision field, bits 7:6." }
-long_pack = { bits = [5, 4], grade = "established", doc = "Long packet field, bits 5:4." }
-short_pack = { bits = [3, 2], grade = "established", doc = "Short packet field, bits 3:2." }
-bad_data = { bits = [1, 0], grade = "established", doc = "Bad data field, bits 1:0." }
-
-[words.MD_MIG_THRESH_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks"
-doc = "Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled."
-notes = "The kernel reading graded the value field of mig_diff_thresh and the whole of mig_value_thresh inferred and called mig_value_thresh's access inferred; the census and the public header place the offsets, access and field established, so they are kept as stated here."
-
-[words.MD_MIG_THRESH_FORMAT.fields]
-valid = { bits = [63, 63], grade = "established", doc = "Threshold enable bit." }
-value = { bits = [19, 0], grade = "established", doc = "Threshold value, twenty bits." }
 
 [words.MD_MIG_CANDIDATE_FORMAT]
 width = 64
@@ -172,41 +24,6 @@ overrun = { bits = [29, 29], grade = "established", doc = "Candidate overrun bit
 node = { bits = [28, 20], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_NODEID_MASK (0x1ff at shift 20)", doc = "Node number of the requester, nine bits at 28:20, from the header's node-id mask. The header's initiator mask (11 bits at shift 18) overlaps these bits, so the layout is graded inferred." }
 page = { bits = [17, 0], grade = "inferred", from = "public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE_ADDR_MASK (0x3ffff)", doc = "Page index within the node, eighteen bits at 17:0, from the header's address mask. The header's own comment says the address starts at bit 14, which disagrees with the mask, so the position is graded inferred." }
 
-[words.MD_DIMM_INIT_FORMAT]
-width = 64
-grade = "established"
-from = "public Linux SN0 Hub memory/directory header: MDI_* masks"
-doc = "Layout of the memory and directory DIMM mode initialisation registers. Both registers share this layout."
-
-[words.MD_DIMM_INIT_FORMAT.fields]
-select = { bits = [35, 32], grade = "established", doc = "Four-bit select field, named MDI_SELECT in the header." }
-mode = { bits = [11, 0], grade = "established", doc = "Twelve-bit DIMM mode field, named MDI_DIMM_MODE in the header." }
-
-[words.MD_PERF_SEL_FORMAT]
-width = 64
-grade = "inferred"
-from = "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure"
-doc = "Layout of the performance counter select register. Bit positions come from the header's structure, which lists the fields from the most significant bit down. The order is taken as written there and is inferred."
-
-[words.MD_PERF_SEL_FORMAT.fields]
-perf_en = { bits = [3, 3], grade = "inferred", doc = "Counter enable, bit 3, from the header's structure." }
-perf_sel = { bits = [2, 0], grade = "inferred", doc = "Event select, three bits at 2:0, from the header's structure." }
-
-[words.MD_PERF_CNT_FORMAT]
-width = 64
-grade = "inferred"
-from = "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure"
-doc = "Layout of performance counters 0 to 5. Bit positions come from the header's structure, read in the same order as the select register and so inferred."
-
-[words.MD_PERF_CNT_FORMAT.fields]
-perf_cnt = { bits = [19, 0], grade = "inferred", doc = "Twenty-bit counter value, from the header's structure." }
-
-# Registers named by the public header that the census does not reach. The header gives an offset and a
-# one-line description for each and no access type, so every access here is an assumption and each register
-# is graded inferred. No reset value is stated for any of them.
-# Where the IRIX register table states a register's access, the row is graded established and its from names the
-# header and the table; the rows it does not list keep the Linux-header reading and stay inferred.
-
 [registers.md_mem_dimm_init]
 offset = 0x200090
 access = "w"
@@ -215,6 +32,10 @@ grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_MEM_DIMM_INIT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name)"
 doc = "Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
+[registers.md_mem_dimm_init.fields]
+select = { bits = [35, 32], grade = "established", doc = "Four-bit select field, named MDI_SELECT in the header.", from = "public Linux SN0 Hub memory/directory header: MDI_* masks" }
+mode = { bits = [11, 0], grade = "established", doc = "Twelve-bit DIMM mode field, named MDI_DIMM_MODE in the header.", from = "public Linux SN0 Hub memory/directory header: MDI_* masks" }
+
 [registers.md_dir_dimm_init]
 offset = 0x200098
 access = "w"
@@ -222,6 +43,10 @@ width = 64
 grade = "established"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_DIR_DIMM_INIT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name)"
 doc = "Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
+
+[registers.md_dir_dimm_init.fields]
+select = { bits = [35, 32], grade = "established", doc = "Four-bit select field, named MDI_SELECT in the header.", from = "public Linux SN0 Hub memory/directory header: MDI_* masks" }
+mode = { bits = [11, 0], grade = "established", doc = "Twelve-bit DIMM mode field, named MDI_DIMM_MODE in the header.", from = "public Linux SN0 Hub memory/directory header: MDI_* masks" }
 
 [registers.md_led1]
 offset = 0x220058
@@ -356,6 +181,222 @@ reset_grade = "established"
 reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_15 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77e8"
 from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_15; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)"
 doc = "Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access."
+
+# ---- MD: memory and directory (configuration, migration, error latches)
+[registers.md_memory_config]
+offset = 0x200018
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
+reset = 0x1e7fbc3fffffff
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458"
+doc = "Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by the header, and their meaning is only partly stated there."
+
+[registers.md_memory_config.fields]
+bank0 = { bits = [2, 0], grade = "established", doc = "Size code of bank 0, bits 2:0. Codes are in the size table below.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank1 = { bits = [5, 3], grade = "established", doc = "Size code of bank 1, bits 5:3.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank2 = { bits = [8, 6], grade = "established", doc = "Size code of bank 2, bits 8:6.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank3 = { bits = [11, 9], grade = "established", doc = "Size code of bank 3, bits 11:9.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank4 = { bits = [14, 12], grade = "established", doc = "Size code of bank 4, bits 14:12. The header sizes eight banks in its M-mode build.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank5 = { bits = [17, 15], grade = "established", doc = "Size code of bank 5, bits 17:15.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank6 = { bits = [20, 18], grade = "established", doc = "Size code of bank 6, bits 20:18.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+bank7 = { bits = [23, 21], grade = "established", doc = "Size code of bank 7, bits 23:21.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+reply_guar = { bits = [27, 24], grade = "established", doc = "Reply guarantee count, four bits at 27:24 (mask 15 in the header). Its meaning is not stated in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+dir_premium = { bits = [28, 28], grade = "established", doc = "Directory format bit: set selects the premium directory format, clear the standard one. The header's own accessor macro reads it this way.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+ignore_ecc = { bits = [29, 29], grade = "established", doc = "Ignore directory ECC bit, bit 29. The header names it MMC_IGNORE_ECC and gives no further behaviour.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+arb_mlss = { bits = [30, 30], grade = "established", doc = "Bit 30, named MMC_ARB_MLSS in the header. The header gives no meaning for it, so only the name and position are imported.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+io_prot_en = { bits = [31, 31], grade = "established", doc = "I/O protection enable, bit 31, named MMC_IO_PROT_EN in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+dimm0_sel = { bits = [33, 32], grade = "established", doc = "Two-bit DIMM 0 select field at 33:32 (mask 3 in the header). The header gives no meaning for the values. The Origin 2000 boot firmware writes the value 2 here while exchanging the size codes of bank pairs (0,1), (2,3), (4,5) and (6,7), and the shipped kernel names a failing module from this field XORed with address bits 31:29; so the field permutes which DIMM serves a bank window. Established for the writes and the XOR, inferred for the effect.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+uctlr_wr = { bits = [38, 34], grade = "established", doc = "Five-bit write timing field at 38:34, named UCTLR_WR in the header. The header's abbreviation is the only name for it; its meaning is inferred from the name.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+uctlr_cyc = { bits = [43, 39], grade = "established", doc = "Five-bit cycle timing field at 43:39, named UCTLR_CYC in the header. The abbreviation is the only name given; its meaning is inferred from the name.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+fprom_wr = { bits = [48, 44], grade = "established", doc = "Five-bit boot flash write timing field at 48:44, named FPROM_WR in the header. The flash reading of the name is inferred.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+fprom_cyc = { bits = [53, 49], grade = "established", doc = "Five-bit boot flash cycle timing field at 53:49, named FPROM_CYC in the header. The flash reading of the name is inferred.", from = "public Linux SN0 Hub memory/directory header: MD_MEMORY_CONFIG fields (MMC_*)" }
+
+[registers.md_refresh_control]
+offset = 0x200020
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+reset = 0x400
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470"
+doc = "Layout of the refresh control register."
+
+[registers.md_refresh_control.fields]
+enable = { bits = [63, 63], grade = "established", doc = "Refresh enable, bit 63.", from = "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)" }
+counter = { bits = [23, 12], grade = "established", doc = "Twelve-bit refresh counter at 23:12. The header gives no meaning beyond the name.", from = "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)" }
+threshold = { bits = [11, 0], grade = "established", doc = "Twelve-bit threshold at 11:0, named MRC_CNT_THRESH_MASK in the header.", from = "public Linux SN0 Hub memory/directory header: MD_REFRESH_CONTROL fields (MRC_*)" }
+
+[registers.md_moq_size]
+offset = 0x2000a0
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+reset = 0x3212
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0"
+doc = "Layout of the outgoing queue size register."
+
+[registers.md_moq_size.fields]
+rp_size = { bits = [13, 8], grade = "established", doc = "Reply queue size field, six bits at 13:8, named MMS_RP_SIZE in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)" }
+rq_size = { bits = [4, 0], grade = "established", doc = "Request queue size field, five bits at 4:0, named MMS_RQ_SIZE in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MOQ_SIZE fields (MMS_*)" }
+
+[registers.md_mlan_ctl]
+offset = 0x2000a8
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 1 routines"
+reset = 0x18b100002
+reset_grade = "established"
+reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608"
+doc = "Layout of the one-wire (Microlan) control register."
+
+[registers.md_mlan_ctl.fields]
+phi1 = { bits = [33, 27], grade = "established", doc = "Seven-bit field at 33:27 (mask 0x7f shifted 27), named MLAN_PHI1 in the header. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+phi0 = { bits = [26, 20], grade = "inferred", doc = "Seven-bit field named MLAN_PHI0. The header's mask for it is 0x7f shifted by 27, the same place as PHI1, which contradicts its shift constant of 20. The position 26:20 is taken from the shift constant and is inferred. What the field shapes is not stated by the header or by any held source, so its timing meaning is unknown.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+pulse = { bits = [19, 10], grade = "established", doc = "Ten-bit pulse field at 19:10 (mask 0x3ff shifted 10). The header gives no time unit, so the real pulse width is unknown.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+sample = { bits = [9, 2], grade = "established", doc = "Eight-bit sample field at 9:2 (mask 0xff shifted 2). The header gives no time unit or reference point, so the real sample offset is unknown.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+done = { bits = [1, 1], grade = "established", doc = "Done bit, bit 1, named MLAN_DONE in the header. The header's reset constant sets only the two phase fields, but the IRIX register reset table gives the whole register's reset as 0x18b100002, so done is set at reset.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+rd_data = { bits = [0, 0], grade = "established", doc = "Read-data bit, bit 0, named MLAN_RD_DATA in the header.", from = "public Linux SN0 Hub memory/directory header: MD_MLAN_CTL fields (MLAN_*)" }
+
+[registers.md_slotid_ustat]
+offset = 0x220048
+access = "r"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed)"
+doc = "Layout of the slot identity and status register. The header also defines an SN00 slot bit at bit 7 and a PIMM field at 7:4. Both overlap bits named here, so they are left out."
+
+[registers.md_slotid_ustat.fields]
+core_clk_test = { bits = [7, 7], grade = "established", doc = "Core clock test bit, bit 7. The header comment says only that it is for testing.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+core_clk = { bits = [6, 6], grade = "established", doc = "Core clock bit, bit 6.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+net_sync = { bits = [5, 5], grade = "established", doc = "Network sync bit, bit 5.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+fprom_ready = { bits = [4, 4], grade = "established", doc = "Flash PROM ready bit, bit 4. The header's comment names it as the flash PROM ready bit.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+i2c_intr = { bits = [3, 3], grade = "established", doc = "I2C interrupt bit, bit 3.", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+sn0_slot_id = { bits = [2, 0], grade = "established", doc = "Slot ID, bits 2:0 (mask 7 in the header).", from = "public Linux SN0 Hub memory/directory header: MD_SLOTID_USTAT fields (MSU_*)" }
+
+[registers.md_dir_error]
+offset = 0x200050
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+doc = "Layout of the directory error latch, from the header's structure. The header lists the fields from the most significant bit down and gives a comment for each range. Bit positions here follow those comments."
+
+[registers.md_dir_error.fields]
+uce_vld = { bits = [63, 63], grade = "established", doc = "Valid directory uncorrectable error.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+ae_vld = { bits = [62, 62], grade = "established", doc = "Valid directory protection ECC error.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+ce_vld = { bits = [61, 61], grade = "established", doc = "Valid correctable ECC error.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+bad_prot = { bits = [41, 39], grade = "established", doc = "Access rights encoding of a bad access, bits 41:39.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+bad_syn = { bits = [38, 32], grade = "established", doc = "Bad directory syndrome, bits 38:32.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+hspec_addr = { bits = [29, 3], grade = "established", doc = "Address of the bad entry in the Hub special space, bits 29:3.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+uce_ovr = { bits = [2, 2], grade = "established", doc = "Multiple directory uncorrectable errors.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+ae_ovr = { bits = [1, 1], grade = "established", doc = "Multiple protection ECC errors.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+ce_ovr = { bits = [0, 0], grade = "established", doc = "Multiple correctable errors.", from = "public Linux SN0 Hub memory/directory header: dir_error_reg structure" }
+
+[registers.md_mem_error]
+offset = 0x200070
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
+doc = "Layout of the memory error latch, from the header's structure."
+
+[registers.md_mem_error.fields]
+uce_vld = { bits = [63, 63], grade = "established", doc = "Valid memory uncorrectable error.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+ce_vld = { bits = [62, 62], grade = "established", doc = "Valid correctable ECC error.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+bad_syn = { bits = [39, 32], grade = "established", doc = "Bad memory ECC syndrome, bits 39:32.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+address = { bits = [31, 3], grade = "established", doc = "Bad entry pointer, bits 31:3.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+uce_ovr = { bits = [1, 1], grade = "established", doc = "Multiple memory uncorrectable errors.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+ce_ovr = { bits = [0, 0], grade = "established", doc = "Multiple correctable errors.", from = "public Linux SN0 Hub memory/directory header: mem_error_reg structure" }
+
+[registers.md_protocol_error]
+offset = 0x200060
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+doc = "Layout of the protocol error latch, from the header's structure."
+
+[registers.md_protocol_error.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Valid protocol error.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+initiator = { bits = [60, 50], grade = "established", doc = "Identifier of the request initiator, eleven bits.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+backoff = { bits = [49, 48], grade = "established", doc = "Backoff control, two bits.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+msg_type = { bits = [47, 40], grade = "established", doc = "Type of the request, eight bits.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+access = { bits = [39, 38], grade = "established", doc = "Access rights of the initiator, two bits.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+priority = { bits = [37, 37], grade = "established", doc = "Priority level of the requester.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+dir_state = { bits = [36, 33], grade = "established", doc = "State of the directory, four bits.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+pointer_me = { bits = [32, 32], grade = "established", doc = "Initiator is the same as the directory pointer.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+address = { bits = [31, 3], grade = "established", doc = "Request address, bits 31:3.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+overrun = { bits = [0, 0], grade = "established", doc = "Multiple protocol errors.", from = "public Linux SN0 Hub memory/directory header: proto_error_reg structure" }
+
+[registers.md_misc_error]
+offset = 0x200080
+access = "r"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+doc = "Layout of the miscellaneous error latch. The header's valid mask covers bits 9:0. Its long-pack mask is written with a misspelt shift macro, so only the other masks are imported as stated."
+
+[registers.md_misc_error.fields]
+ill_msg = { bits = [9, 8], grade = "established", doc = "Illegal message field, bits 9:8.", from = "public Linux SN0 Hub memory/directory header: MMCE_* masks" }
+ill_rev = { bits = [7, 6], grade = "established", doc = "Illegal revision field, bits 7:6.", from = "public Linux SN0 Hub memory/directory header: MMCE_* masks" }
+long_pack = { bits = [5, 4], grade = "established", doc = "Long packet field, bits 5:4.", from = "public Linux SN0 Hub memory/directory header: MMCE_* masks" }
+short_pack = { bits = [3, 2], grade = "established", doc = "Short packet field, bits 3:2.", from = "public Linux SN0 Hub memory/directory header: MMCE_* masks" }
+bad_data = { bits = [1, 0], grade = "established", doc = "Bad data field, bits 1:0.", from = "public Linux SN0 Hub memory/directory header: MMCE_* masks" }
+
+[registers.md_mig_diff_thresh]
+offset = 0x200030
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 6 sites, 3 routines"
+doc = "Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled."
+
+[registers.md_mig_diff_thresh.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Threshold enable bit.", from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks" }
+value = { bits = [19, 0], grade = "established", doc = "Threshold value, twenty bits.", from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks" }
+
+[registers.md_mig_value_thresh]
+offset = 0x200038
+access = "rw"
+width = 64
+grade = "established"
+from = "census: 10 sites, 5 routines"
+doc = "Layout of the page migration difference and value thresholds. The two registers share this layout. The shipped IRIX kernel arms a threshold by setting the valid bit (bit 63) and clears the bit to disarm it while a candidate is handled."
+
+[registers.md_mig_value_thresh.fields]
+valid = { bits = [63, 63], grade = "established", doc = "Threshold enable bit.", from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks" }
+value = { bits = [19, 0], grade = "established", doc = "Threshold value, twenty bits.", from = "public Linux SN0 Hub memory/directory header: MD_MIG_DIFF_THRES and MD_MIG_VALUE_THRES masks" }
+
+# ---- MD performance counters
+[registers.md_perf_sel]
+offset = 0x210000
+access = "w"
+width = 64
+grade = "established"
+from = "census: 2 sites, 2 routines"
+doc = "Layout of the performance counter select register. Bit positions come from the header's structure, which lists the fields from the most significant bit down. The order is taken as written there and is inferred."
+
+[registers.md_perf_sel.fields]
+perf_en = { bits = [3, 3], grade = "inferred", doc = "Counter enable, bit 3, from the header's structure.", from = "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure" }
+perf_sel = { bits = [2, 0], grade = "inferred", doc = "Event select, three bits at 2:0, from the header's structure.", from = "public Linux SN0 Hub memory/directory header: md_perf_sel_t structure" }
+
+[registers.md_perf_cnt0]
+offset = 0x210010
+access = "w"
+width = 64
+grade = "established"
+from = "census: 1 sites, 1 routines"
+doc = "Layout of performance counters 0 to 5. Bit positions come from the header's structure, read in the same order as the select register and so inferred."
+
+[registers.md_perf_cnt0.fields]
+perf_cnt = { bits = [19, 0], grade = "inferred", doc = "Twenty-bit counter value, from the header's structure.", from = "public Linux SN0 Hub memory/directory header: md_perf_cnt_t structure" }
 
 [constants]
 # Default values the header defines for the registers above. They are what software writes as a
