@@ -95,7 +95,7 @@ The processor-specific PAL_A and PAL_B are entered by SAL_A's reason-3 call, the
   ([boot-sequence](../../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-the-skip-bit-clear-and-no-link)).
 - *Interrupt delivery.* In progress, no page. The PROM's PIC interrupt set-up (`0xffabfa80`, writes to PIC `0x108`, `0x110`,
   `0x128`) is read; how the PROM allocates a bridge-to-SHub path for `SN_SAL_IOIF_INTERRUPT` is not.
-- *I/O: II, PIC, IOC4.* Static reading of `main_three` (widget 0 id read, `0xffab1cc0` II register set-up, PIC initialiser
+- *I/O: II, PIC, IOC4.* Static reading of `main` and `main_three` (`0xffab1cc0` II register set-up in `main`; widget 0 id read, PIC initialiser
   `0xffab0c00`, riser EEPROM): **written-unreviewed**. PIC part `0xd102` with manufacturer 36 and the register offsets match
   `v5.3:arch/ia64/include/asm/sn/pic.h` ([devices/pic](../../devices/pic/README.md#against-sgis-altix-linux-code-linux-53-pin-4d856f72c10e)).
   No PCI walk and no IOC4 register read happen before EFI on this path (inferred from reachability).
@@ -108,7 +108,7 @@ Built before the jump to EFI (established that the PROM builds them; entry types
 1. L1 command ids and the module-type reply the real L1 gives for each request in `main`; the interpreter run the page
    describes stalled in the route-table walk (`0xffa5b5d0`) because the jump to RAM was skipped. Route: re-run with the
    jump or a hand-built layout, then the L1 notes in sysco.
-2. `main_three`: the II set-up `0xffab1cc0`, brick presence read `0xffab2e60`, link-credit writes `0xffab0130`, and the
+2. `main` (call `0xffa1a40c`): the II set-up `0xffab1cc0` and brick presence read `0xffab2e60`. `main_three`: link-credit writes `0xffab0130` and the
    widget ids a one-node 350 must return (`0xd000` or `0xd100` at widget 0, `0xd102` PIC). Unreviewed, partly static.
 3. Interrupt allocation for PIC pins: which SHub register a bridge interrupt store names.
 4. What differs for an IP57 board: the PROM has no IP57 string. A captured board EEPROM area from a real 350 would settle
@@ -282,7 +282,7 @@ user-mapped RTC counter at v4.9.
 | 2a SAL_A, SAL_B reset path, SHub accesses, election, L1 link | reviewed | none beyond reset values | row 7 |
 | 2b Memory init and test, SPD, NASID, no-link route | memory init written-unreviewed; SPD, NASID, no-link reviewed | independent review of memory-init; route-table initialisation (item 1 of the stage 2 gaps) | row 7 |
 | 2c Interrupt delivery in the PROM | in progress | trace `SN_SAL_IOIF_INTERRUPT` handler and PIC interrupt set-up | row 7 |
-| 2d I/O: II, PIC, IOC4 | written-unreviewed (static); IOC4 PROM reads not started | `0xffab1cc0` II set-up, `main_three` run, then the IOC4 probe in the SAL I/O handlers | row 7 |
+| 2d I/O: II, PIC, IOC4 | written-unreviewed (static); IOC4 PROM reads not started | `0xffab1cc0` II set-up (in `main`), `main_three` run, then the IOC4 probe in the SAL I/O handlers | row 7 |
 | 3 SAL and PAL runtime interfaces | kernel side reviewed; PROM handlers for the boot-time calls read ([sn2-runtime](../../software/sal/sn2-runtime.md), written-unreviewed); PAL procedures in progress | independent review of the SAL runtime page; read the provider methods behind `IOIF_INTERRUPT` and the console device backends | rows 7 and 8 (SHub 2, SAL not read); row 9 for the shipped caller set |
 | 4 EFI | read, written-unreviewed ([efi.md](../../software/firmware/snprom/efi.md): container, hand-off record, tables, console calls, boot manager, variable store) | PROM-side builders of the SAL and ACPI tables, SAL handlers for the variable store and timer callbacks, the PCI root bridge calls | row 7 (EFI component inside it); see inventory |
 | 5 ELILO | not started (public source only) | get the shipped loader, config and boot partition layout | not held: see inventory |

@@ -142,7 +142,7 @@
 #define SHUB_II_INBOUND_DEVICE_ERROR_MASK_W8_DXS_INPLACE (SHUB_II_INBOUND_DEVICE_ERROR_MASK_W8_DXS_MASK << SHUB_II_INBOUND_DEVICE_ERROR_MASK_W8_DXS_SHIFT)
 
 /*
- * LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1) is tested as the I/O brick attached indication (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170).
+ * LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1, the header's IIO_LLP_CSR_IS_UP) must be set, and the PROM prints that an I/O brick is attached (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170).
  */
 /* llp_control_status: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_LLP_CONTROL_STATUS                   0x400128 /* established */
@@ -345,7 +345,7 @@
 #define SHUB_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TO_INPLACE (SHUB_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TO_MASK << SHUB_II_CROSSTALK_TIMEOUT_THRESHOLD_TAIL_TO_SHIFT)
 
 /*
- * Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, every defined clear bit (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40).
+ * Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, bits 42:0, which cover every defined clear bit and the reserved bits between them (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40).
  */
 /* error_clear: w64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_ERROR_CLEAR                          0x4001f8 /* established */

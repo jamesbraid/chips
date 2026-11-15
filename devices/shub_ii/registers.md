@@ -161,7 +161,7 @@ Inbound device error mask: per-device (up to eight per widget) enable bits for D
 
 ### Register `llp_control_status`
 
-LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1) is tested as the I/O brick attached indication (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170).
+LLP control and status: programmable control and observation fields for the link-level protocol port toward Crosstalk. Header name IIO_ILCSR. SAL 5.04 PROM: bit 13 (llp_stat bit 1, the header's IIO_LLP_CSR_IS_UP) must be set, and the PROM prints that an I/O brick is attached (site 0xffab2e60); read-modify-write of d_avail_sel to 0 (site 0xffab3020), llp_en to 1 (site 0xffab2f80) and nullto to 3 (site 0xffab3780), and wrmrst set when the L1 module type is 111 (site 0xffab3170).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -284,7 +284,7 @@ Crosstalk timeout threshold: read response timeout, its prescaler and the tail-f
 
 ### Register `error_clear`
 
-Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, every defined clear bit (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40).
+Error clear: writing a one clears the matching error bit elsewhere in the SHub (PRB entries, crazy-widget, BTE 0 and 1, CAM and queue over/underflows, bad commands). The kernel's BTE recovery writes the BTE 0 and BTE 1 bits. Kernel: written with BTE 0 and BTE 1 clear bits after a BTE error (write-one-to-clear). Header name IIO_IECLR. SAL 5.04 PROM: written 0x7ffffffffff, bits 42:0, which cover every defined clear bit and the reserved bits between them (site 0xffab1cc0); its BTE error path writes bits 17 and 18 (site 0xffa94d40).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -849,7 +849,7 @@ I/O performance profiling: the counter values. Header name IIO_IPPR. SAL 5.04 PR
 | `BTE_LINE_BYTES` | 0x80 | inferred | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | BTE unit of transfer. The kernel shifts the byte length by the L1 cache line size of the CPU (128 bytes on Itanium 2); the header's own text says lines are 128 bytes. |
 | `CRB_STRIDE` | 0x30 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Distance between CRB entries: each entry takes six 8-byte slots, of which five (A to E) are registers (header macro IIO_ICRB_A: base plus 6 times 8 times the index). |
 | `CRB_TIMEOUT_PRESCALE_PROM` | 0x1fffff | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to the CRB timeout prescaler (site 0xffab1cc0). |
-| `ERROR_CLEAR_ALL` | 0x7ffffffffff | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to the error clear register (site 0xffab1cc0): bits 42:0, every defined clear bit. |
+| `ERROR_CLEAR_ALL` | 0x7ffffffffff | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Value the SAL 5.04 PROM writes to the error clear register (site 0xffab1cc0): bits 42:0, which cover every defined clear bit and the reserved bits between them. |
 | `HUB_WIDGET_ID_MAX` | 0xf | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | Highest widget number. |
 | `ICRB_ECODE_AERR` | 0x3 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB error code: access (protection) error. |
 | `ICRB_ECODE_DERR` | 0x0 | established | Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code | CRB error code: directory error caused by an II access. |

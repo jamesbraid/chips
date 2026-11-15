@@ -149,9 +149,9 @@ It runs first in `0xffaad720` (after B1 when the module type is 111).
 |---|---|---|---|---|
 | A0 | non-II word at `0x1_1007_1080` (no Linux definition) | one write of 0 first | accept the store | established; role unknown |
 | A1 | IPRTE_A 0 to 7 (`0x400308 + 8i`), IPRTE_B 0 to 7 (`0x400348 + 8i`) | for i = 0 to 7: read A, write A = 0, read B, write B = 0 | any; the value is discarded | established; the writes mark every PIO read entry invalid (inferred) |
-| A2 | IPPR (`0x430008`), IPCR (`0x430000`) | read (discarded), then write 0 | any | established |
+| A2 | IPPR (`0x430008`), IPCR (`0x430000`) | IPPR read (discarded), then IPCR written 0 | any | established |
 | A3 | WSTAT (`0x400008`) | write 0 | | established |
-| A4 | IECLR (`0x4001f8`) | write `0x7ff_ffff_ffff` (bits 42:0, every defined clear bit) | write-one-to-clear; clears all sticky error state | established |
+| A4 | IECLR (`0x4001f8`) | write `0x7ff_ffff_ffff` (bits 42:0: every defined clear bit and the reserved bits between them) | write-one-to-clear; clears all sticky error state | established |
 | A5 | IGFX0 (`0x400140`), IGFX1 (`0x400148`) | write 2, write 3 (widget 2 and 3, node 0, PI 0) | read back the written value | established |
 | A6 | ITTE1 to ITTE7 (`0x400160 + 8i`) | write 0, i ascending | a plain read/write register | established |
 | A7 | IBCT0 (`0x410018`), IBCT1 (`0x420018`), IBLS0 (`0x410000`), IBLS1 (`0x420000`) | four reads, in that order, values discarded | any. The header says reading IBCT ends a transfer, so this stops both engines (inferred) | established; meaning inferred |
@@ -174,8 +174,8 @@ where stated.
 | Row | Site | II registers and widget accesses | What a read must return | Grade |
 |---|---|---|---|---|
 | B1 | `0xffab3170`, only if the L1 module type byte is 111 | ILCSR: set bit 8 (`wrmrst`), then write back the value read after it | bit 8 may self-clear | established; why 111 unknown |
-| B2 | `0xffab30e0` | IOWA (`0x400110`) and IIWA (`0x400118`) written `0xff01` | read back | established; widget 0 and widgets 8 to F open (header fields) |
-| B3 | `0xffab2e60` | ILCSR read; bit 13 (`llp_stat` bit 1) is "I/O brick attached" | **bit 13 set**, else the routine returns 0 and I/O is skipped (flag 2) | established |
+| B2 | `0xffab30e0` | IOWA (`0x400110`) and IIWA (`0x400118`) written `0xff01` | read back | established; the bits are widget 0 and widgets 8 to F (header fields), that a one opens them is inferred |
+| B3 | `0xffab2e60` | ILCSR read; bit 13 (`llp_stat` bit 1, the header's `IIO_LLP_CSR_IS_UP`) is "I/O brick attached" in the PROM's own message | **bit 13 set**, else the routine returns 0 and I/O is skipped (flag 2) | established |
 | B4 | `0xffab3020`, arg 0 | ILCSR: `d_avail_sel` (27:26) = 0 | | established |
 | B5 | `0xffab3320`, arg 0 | WCR: `dir_con` (bit 17) = 0 | | established |
 | B6 | `0xffab2f80` | ILCSR: `llp_en` (bit 10) = 1 | | established |
@@ -192,12 +192,12 @@ this; any other returns 1 at once.
 
 ### C. I/O discovery in `main_three`: `0xffab38b0` for the node
 
-Reached from `main_three` at `0xffad756c`. Gates, none touching the II: flag 2 clear, master processor (`0xffa0ff30`).
+Reached from `main_three` at `0xffad756c`. Gates, none touching the II: master processor (`0xffa0ff30`) first, then flag 2 clear.
 
 | Row | Site | Accesses | What a read must return | Grade |
 |---|---|---|---|---|
 | C1 | `0xffab3720` (in `0xffab0560`) | WCR read (`0x400020`), bits 3:0 = `wid` | what B8 wrote | established |
-| C2 | `0xffab15c0` through `0xffaeb170` | 4-byte read of widget 0 window offset 0 (id), through the machine-check protected helper that returns 0 on a fault or timeout | part `0xd000` or `0xd100`; anything else prints "New Widget %x connected to HUB." and stops without klconfig entries | established |
+| C2 | `0xffab15c0` through `0xffaeb170`, after C1 and C3 to C6 (`0xffab15c0` calls `0xffab0560` first) | 4-byte read of widget 0 window offset 0 (id), through the machine-check protected helper that returns 0 on a fault or timeout | part `0xd000` or `0xd100`; anything else prints "New Widget %x connected to HUB." and stops without klconfig entries | established |
 | C3 | `0xffab0560`, `0xffaaf630` | read link flag word of links 8 to 15 until one has bit 2 (up to 8 reads); that link number must equal WCR `wid` | the flag B12 set on the hub's own link, so `wid` must be 8 to 15, or "*** early return from xbow_init" prints | established |
 | C4 | `0xffab0560` | widget 0 write sequence (table X, row X4) | accept | established |
 | C5 | `0xffab0560`, per valid link | table X rows X5 to X8 | see the table | established |
@@ -214,7 +214,7 @@ so names and meanings are unknown; offsets, widths and values are what the code 
 
 | Row | Access | Value or test | What a read must return | Grade |
 |---|---|---|---|---|
-| X1 | read widget 0 `+0x08` again, take bits 9:6, write them to `+0xc0`, read `+0xc0` until it equals what was written; at the end write 1 to `+0xc8` and read it back (`0xffaaf340`, `0xffaaf400`, from `0xffaaf8b0`) | no bound: the loop waits 1 ms per pass forever if `+0xc0` does not hold the value | `+0xc0` stores at least 4 bits; `+0xc8` stores | established |
+| X1 | read widget 0 `+0x08` again, take bits 9:6, write them to `+0xc0`, read `+0xc0` until it equals what was written; at the end write 1 to `+0xc8` and read it back (`0xffaaf340`, `0xffaaf400`, from `0xffaaf8b0`) | no bound: the loop waits 1 ms per pass forever if `+0xc0` does not hold the value | `+0xc0` reads back exactly the 4-bit value written (a 32-bit compare, so bits 31:4 read 0); the status word at `+0x08` is read once, not per pass; `+0xc8` is written and read back with the value discarded, so any behaviour is accepted | established |
 | X2 | link flag word of the hub's link `wid`, at `+0x118 + 0x40 * (wid & 7)` (`0xffaaf8b0`): set bit 0; set bit 1 if a node operation (table slot 54, `0xffa5d6a0`, the NI port status routine; the object it is read from was not traced) returns non-zero; then bit 2 (master): set bits 0 and 2 on the own link unless link `0xa` (link `0xb` when `wid` is `0xa`) already has bit 2; when `wid` is `0xa` and `0xb` has it, move it to `0xa`; `0xffaaf630` later finds the master by scanning links 8 to 15 | the word is plain storage to the PROM; bit 0 "hub's own link", bit 1 "NUMAlink up", bit 2 "master" (inferred) | 32-bit read/write storage | established; meanings inferred |
 | X3 | per link block base `0x100 + 0x40 * (link & 7)`: `+0x10` bit 31 (link alive), `+0x38` bit 5 (widget present) | a link is valid if both set; for a `0xd100` crossbow, link `0xb` is valid if alive and link `0xf` always | the hub's own link and the PIC's link: both bits set; others: clear | established; meanings inferred |
 | X4 | `+0x50` read first, then writes in this order: `+0x38` = 0, `+0x30` = master link `<< 16`, `+0x28` = `0x4000`, `+0x40` = 0, `+0x20` = `0x3c`, `+0x48` = `0x3ff1be0` | `st4.rel`; these offsets are the standard widget configuration block (`p_wid_*` in `pic.h`) | accept; reads of `+0x50` return anything | established; for the PIC names and offsets established, for the crossbow inferred |
@@ -240,8 +240,8 @@ equals the platform-simulation marker `0xaeeeeeee8badbeef` (established).
 
 - ILCSR bit 13 set; every II register above a plain 64-bit read/write cell with the write-one-to-clear IECLR the only
   special case; WCR holds what is written.
-- Widget 0: id part `0xd000` or `0xd100` (revision in 31:28, manufacturer 11:1 free), status bits 9:6 in 8 to 15, offsets `0xc0`
-  and `0xc8` storage, link blocks as in X2 to X3, `+0x20` to `+0x48` storage.
+- Widget 0: id part `0xd000` or `0xd100` (revision in 31:28, manufacturer 11:1 free), status bits 9:6 in 8 to 15, `0xc0`
+  storing a 4-bit value and reading back only that value, `0xc8` accepting a write, link blocks as in X2 to X3, `+0x20` to `+0x48` storage.
 - One PIC link: link block alive and present, window id `0xd102` (see [the PIC page](../pic/README.md)).
 - No other link valid; then the "no NUMAlink, skipping" case never arises.
 
@@ -300,3 +300,37 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 **Findings.** None.
 
 **Cleared:** the BTE sequence wording. **Not cleared:** as in the first review (Bedrock overlap figure, real-hardware behaviour).
+
+## Review (PROM II setup)
+
+Independent review of the "PROM II setup" section above, the note added to [the reset and roles question](../../questions/shub-ii-reset-and-roles.md) (commit 88a9411) and the register notes and constants in [registers.toml](registers.toml) (commit 8fff0ff). The reviewer wrote none of it. Image: SAL 5.04, snprom 10.54, `shub1snprom.bin` (sha256 `51ccf9ad...`). Method: Ghidra with the IA-64 module (retools at da7f0c0 or later); each function was decompiled and its listing re-read, with a whole-image listing used to search constants and call sites. Nothing was run. Register meanings were checked against Linux v5.3 `arch/ia64/include/asm/sn/shubio.h`, fetched as one file.
+
+**Confirmed (read in the listing).**
+- **II setup runs in `main`.** `0xffa1a40c` calls the wrapper `0xffab3840`, which takes the node object's table (object `+0x20`) and calls slot 91 (`+0x2d8`). Table `0xffbd7c18` (the first of four listed at `0xffbd8a18`) has slot 91 at `0xffbd7ef0`, descriptor `0xffc4bc30`, entry `0xffaad720`, which calls `0xffab1cc0`. The table is picked by `0xffa0f7e0`, which calls each table's slot 1 with the 16-bit part number at node object `+2`; table 0's slot 1 (`0xffa959a0`) compares with `0x4363`, the others with `0x3017`, `0x239` and `0x4422`. Progress 0x12 is at `0xffa19f86` and 0x13 at `0xffa1a41c`. A result of 0 or less (the branch is on `0 < r8`) calls `0xffa0eae0(2, 1)`, which sets bit 2 of the word at local `0x81_5003_1550`. `0xffab38b0` tests that bit through slot 32 (`0xffa0ebc0`, via `0xffa99870`) and returns 1 without discovering anything when it is set. `0xffa0ecd0(2)` (`0xffa19fcc`) gates the whole call: `main` skips the setup if flag 2 is already set.
+- **Counts.** 158 II accesses in `0xffab1cc0`, plus the one non-II store (A0): 31 store sites and 10 load sites, with the loops of 8, 7, 8 and 15 passes multiplying out to the table's per-row counts. In `main_three` 7 II accesses (WCR read in `0xffab0560`, `0xffab0f10` and twice in `0xffab0c00`, three in `0xffab3580`); a search of every function reachable by direct call from `main_three` finds II register constants only in `0xffab3580`, `0xffab3720` and the BTE error clean-up `0xffa94d40`.
+- **Accesses.** Well over 40 accesses were checked for address, value and direction against the listing and decompile: every row of A (IPRTE loop, IPPR read, IPCR, WSTAT, IECLR, IGFX0 and 1, the seven ITTE writes, the four BTE reads and ten BTE writes, ILLR, 15 x 5 CRB writes, IPRB0 and IPRB8 to F read-modify-write of bit 42, IIEPH1 and 2, IWEIM bit 15, ICTP) and B1 to B13. The write of 0 to `0x1_1007_1080` comes first. The offsets match `shubio.h`; IPRB bit 42, IWEIM bit 15, IWC bit 0, WCR bits 4:0, 13 to 15 and 17, ILCSR bits 5:0, 8, 10, 13 and 27:26 all match its field layouts.
+- **Requirements.** ILCSR bit 13 set (return 1, with a "Found I/O brick attached" message; clear returns 0). Widget 0 id part `0xd000` or `0xd100` (`0xffab14f0` and again in `0xffab15c0`). Status bits 9:6 give WCR `wid`, and `0xffab0560` requires the master link found in links 8 to 15 (`0xffaaf630`) to equal it. The `+0xc0` loop has no bound: it writes the value, reads it back and retries every 1 ms until the 32-bit read equals it.
+- **Untouched.** ITTE zeroed and never programmed. ILAPR, ILAPO, IIDEM, ISLAPR, ISLAPO, IWI and IWS have no constant anywhere in the image; IIDSR, IWEL and the other ITTE users sit only in the block from `0xffb45080`, which no direct-call chain from `main` or `main_three` reaches (the chain roots are descriptors, the IWEIM routine's in the SAL procedure table `0xffc26380` to `0xffc264e0`; one root has no static reference). The error and interrupt setup in the routine is as listed (IECLR, IIEPH1 and 2, IWEIM bit 15, ICTP); IECLR bits 17 and 18 in `0xffa94d40` are the BTE bits.
+- **Skips.** Debug-switch bit 14 (`0xffa975e0(14)`, set means skip) prints the "skipping I/O initialization" message and returns -1. Bit 11 is tested at `0xffa4754c` in the interconnect step and prints "Skipping NUMAlink discovery". The "XBow link %d:no NUMAlink, skipping" test in `0xffab0f10` is link flag bit 1 (`0xffaaf810`), set in `0xffaaf8b0` only when slot 54 of the node's table returns non-zero; for table 0 slot 54 is `0xffa5d6a0`, which prints "shub_port_status" and returns a mask of the two NI ports.
+- **Constants and notes.** The 5 constants match their sites and the header's fields. The register notes number 30, not 28 (the CRB, BTE and performance registers account for the difference); all 30 match the listing apart from the wording fixed below.
+
+**Fixed in place.**
+- A2 said IPPR and IPCR were both read; IPPR is read and IPCR written 0.
+- A4 and `ERROR_CLEAR_ALL` called the IECLR value "every defined clear bit": bits 42:0 also cover the reserved bits between them.
+- B2: the header only says IOWA and IIWA "qualify" accesses, so that a one opens a widget is inferred.
+- B3 and the ILCSR note: bit 13 is the header's `IIO_LLP_CSR_IS_UP`; "brick attached" is the PROM's own message.
+- X1: only `+0xc0` can stall the PROM, and it must read back exactly the 4-bit value (bits 31:4 read 0). The status word at `+0x08` is read once before the loop. `+0xc8` is written and read back with no check.
+- C2 happens after C1 and C3 to C6 in time: `0xffab15c0` runs `0xffab0560` first and reads the widget 0 id afterwards. In `0xffab38b0` the master test comes before the flag test.
+- `boot-sequence.md` and `boot-path.md` no longer place `0xffab1cc0` in `main_three`. The gate bullet in `boot-sequence.md` named the wrong table slot (+256, a flag test) as the I/O initialiser.
+
+**Changed or added requirements for a model.**
+- The flag word (local `0x81_5003_1550`, read through the node's small window at `0x1_5003_1550`) and the debug-switch word (local `0x81_5003_1560`, loaded from the L1 command 1 reply) are SHub registers outside the II. A model of the whole node needs both as plain storage; bits 11 and 14 of the debug word must read 0.
+- `main` runs the II setup only on the master processor and only while flag 2 is clear. A return of 0 also happens when the widget 0 part is not `0xd000` or `0xd100` (`0xffab34b0` warns and returns 0), so that case sets flag 2 as well; the page lists only the brick and read-failure causes.
+- The widget window form depends on bit 0 of the NASID: even uses `0x8000_0008_0000_0000 + (nasid << 38) + (link << 24)`, odd uses `0x8000_0000_0000_0000 + (nasid << 38) + (link << 28)`. The II registers always use the small-window form. Only even NASIDs were read through; the odd form is not analysed and the page's "no big window" statement holds for even NASIDs only.
+- For a part `0xd100` crossbow link `0xf` is always valid and link `0xb` needs only the alive bit (`0xffaaf430`); the page states this in X3.
+
+**Not covered by the page's claims.** An OS-called SAL procedure (descriptors at `0xffc26390` and `0xffc26460`, reaching `0xffb714a0` through `0xffb45a10`) also programs the II: it writes IWEIM `0xc000` and touches ILCSR and more. It is not on the boot path, so "the only II error and interrupt setup" holds for the boot path only; its register list was not read.
+
+**Not checked.** The 25-access helper figure: B1 to B13 give 21 II accesses (26 with the module-111 reset in B1), plus 3 for IWC read inline in `0xffaad720`, which does not reproduce 25. Why part `0x4363` is SHub 1 (inferred from the image name and table order, not from a header). The odd-NASID path, the meaning of module type 111, the L1 side of the debug word, the contents of `0xffa91260`'s records beyond the absence of II constants, rows X5 to X8 beyond the credit table (checked) and the BTE zero-fill sequence of D (`0xffa73b00`, read only for its gates and the 8-credit exit). The static call search misses calls through descriptors, so the "no other II access" statements are for direct calls only. The section heading says `main_three`; the routine runs in `main`, and the heading is kept because other pages link to its anchor.
+
+**Cleared:** the sequence, addresses, values and polarity of `0xffab1cc0` and its helpers; the call chain and flag; the requirement list after the fixes above. **Not cleared:** the odd-NASID path, rows X5 to X8 meanings, and anything beyond the boot path.
