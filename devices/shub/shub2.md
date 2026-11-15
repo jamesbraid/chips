@@ -183,7 +183,7 @@ All offsets are in the local window (add `0x2_0000_0000`) or, for another node, 
 | `0x1_0078` | `SH2_MEM_RED_BLACK` | write `TIME` bits 15:0 and `ERR_TIME` bits 51:16 | established (access); unknown (values) |
 | `0x1_0080` | `SH2_MISC_MEM_CFG` | RMW: node-id mask bits 61:55, `DISABLED_VICTIMS` 49:44, `DISABLED_WRITE_TNUMS` 40:36, `DISABLED_READ_TNUMS` 32:28, thresholds, `NM_INT_EN_0..3` bits 10, 11, 18, 19 | established (access); unknown (values) |
 | `0x1_00d8`, `0x1_00e0`, `0x1_00e8`, `0x1_00f0`, `0x1_00f8` | `SH2_PIO_RQ_CRD_CTL`, `SH2_PI_MD_RQ_CRD_CTL`, `SH2_PI_MD_RP_CRD_CTL`, `SH2_XN_MD_RQ_CRD_CTL`, `SH2_XN_MD_RP_CRD_CTL` | credit depths (`DEPTH` bits 5:0); SAL_A already wrote the first to 2 | established (access); unknown (values) |
-| `0x2_5003_1240` | scratch word | the PROM stores the board type here after checking the DIMM layout (`0xff4824e0`); values `0x7b`, `0x200`, `0xa00`, `0xe00` are the accepted boards, anything else stops with "unknown board type" | established |
+| `0x5003_1240` (global window of the node) | scratch word | the PROM stores the board type here after checking the DIMM layout (`0xff4824e0`); values `0x7b`, `0x200`, `0xa00`, `0xe00` are the accepted boards, anything else stops with "unknown board type" | established |
 
 ### Directory registers (DQLP at `0x3_xxxx`, DQRP at `0x5_xxxx`, same layout)
 
@@ -208,7 +208,6 @@ The "Testing memory" phase drives a self-test block (the PROM calls it MBIST) th
 | `0x3_8000`, `0x3_8010`, `0x3_8800`, `0x3_8810` (DQLP) and the same at `0x4_8xxx`, `0x5_8xxx`, `0x6_8xxx` (DQLS, DQRP, DQRS) | `..._XBIST_H`, `_XBIST_L`, `_YBIST_H`, `_YBIST_L` | data pattern: `PAT` bits 31:0, `INV` 40, `ROT` 41, `RANDOM` 42; `ARM` bit 43 in the `_H` registers starts that port (`0xff47bf60` writes all sixteen, with `0x80000000000` = ARM set and `CMD` byte from the node's test description) | established (access); inferred (field use) |
 | `0x3_8020`, `0x3_8030`, `0x3_8820`, `0x3_8830` (and the three other ports) | `..._XBIST_ERR_H`, `_L`, `YBIST_ERR_H`, `_L` | read on failure: `PAT` 31:0, `VAL` 40, `MORE` 41 | established (access) |
 | `0xb8`, `0xc0` | `SH2_MEM_ERROR_SUMMARY`, `_ALIAS` | read after a failure and acknowledged through the alias (`0xff4809e0`) | established (access); inferred (acknowledge) |
-| `0x1_0010`, `0x1_0001_0010` | `SH2_JNR_DIMM_CFG` | the test routine reads it (`0xff47a970`) before announcing the test | established |
 
 **What a model must return to pass.** `0x2_0088` must show `IN_PROGRESS` (bit 40) clear soon after the command write (it is polled with a 2,000,000-microsecond limit, `0xff41c990`), `FAIL` (bit 41) clear, and `MEM_IDLE` (bit 42) may be anything. The `XBIST` and `YBIST` registers must hold what was written (the firmware does not read the pattern registers back on a pass). Error registers read 0 on a pass. With "Skipping memory test, as requested" (the console option) the PROM does not write these.
 
