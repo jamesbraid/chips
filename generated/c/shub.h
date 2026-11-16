@@ -1327,6 +1327,17 @@
 #define SHUB_NI_LLP_RESET_LINK_INPLACE               (SHUB_NI_LLP_RESET_LINK_MASK << SHUB_NI_LLP_RESET_LINK_SHIFT)
 
 /*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 allows a warm reset received on the link to reset the SHub. The partition-fence routine writes 0 to the port of every link whose neighbour is absent or outside the node's partition, and 1 to the rest, once per boot, in port order, and never reads the register back. The port-fill method reads it only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement of bit 0 as a per-port flag; that read is not on a lone node's path. A lone node needs one bit of storage that resets to 1 and reads back what was written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred from the header text; the register does not touch the link state or LLP_RESET.
+ */
+/* ni_llp_reset_en: rw64, reset 0x1; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_RESET_EN                         0x150000010 /* established */
+#define SHUB_NI_LLP_RESET_EN_COUNT                   2
+#define SHUB_NI_LLP_RESET_EN_STRIDE                  8192
+#define SHUB_NI_LLP_RESET_EN_OK_SHIFT                0 /* established */
+#define SHUB_NI_LLP_RESET_EN_OK_MASK                 0x1ull
+#define SHUB_NI_LLP_RESET_EN_OK_INPLACE              (SHUB_NI_LLP_RESET_EN_OK_MASK << SHUB_NI_LLP_RESET_EN_OK_SHIFT)
+
+/*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written.
  */
 /* ni_llp_chan_mode: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */

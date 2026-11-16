@@ -1956,6 +1956,22 @@ doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (
 link = { bits = [0, 0], grade = "established", doc = "Send link reset, a pulse (header). Written 1 by the PROM." }
 warm = { bits = [1, 1], grade = "established", doc = "Send warm reset, a pulse (header). Never written by the PROM in this routine." }
 
+[registers.ni_llp_reset_en]
+offset = 0x150000010
+count = 2
+stride = 0x2000
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x1
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_RESET_EN_INIT, value 0x1 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_RESET_EN (mask 0x1; NI1 at 0x150002010); SAL 5.04 PROM write 0xffa0e650 from the fence method 0xffa60410 (slot 62), called by intcon_pttn_erect_reset_fences 0xffa51200 at 0xffa5167c; read by the port-fill method 0xffa5e0b0 only when SH_SCRATCH1 bit 40 is set"
+doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 allows a warm reset received on the link to reset the SHub. The partition-fence routine writes 0 to the port of every link whose neighbour is absent or outside the node's partition, and 1 to the rest, once per boot, in port order, and never reads the register back. The port-fill method reads it only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement of bit 0 as a per-port flag; that read is not on a lone node's path. A lone node needs one bit of storage that resets to 1 and reads back what was written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred from the header text; the register does not touch the link state or LLP_RESET."
+
+[registers.ni_llp_reset_en.fields]
+ok = { bits = [0, 0], grade = "established", doc = "Allow LLP warm reset to reset SHUB (header). The PROM writes 0 (fenced port) or 1 (port kept inside the partition)." }
+
 [registers.ni_llp_chan_mode]
 offset = 0x150000018
 count = 2

@@ -3322,6 +3322,29 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "ni_llp_reset_en",
+   "offset": 5637144592,
+   "access": "rw",
+   "width": 64,
+   "count": 2,
+   "stride": 8192,
+   "space": null,
+   "reset": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ni_llp_reset_en.ok",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "ni_llp_chan_mode",
    "offset": 5637144600,
    "access": "r",

@@ -2522,6 +2522,23 @@ pub mod ni_llp_reset {
         }
     }
 }
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 a (established)
+pub mod ni_llp_reset_en {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000010;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod ok { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per por (established)
 pub mod ni_llp_chan_mode {
     pub const WIDTH: u32 = 64;

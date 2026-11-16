@@ -1195,3 +1195,58 @@ Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-
 **Not checked.** The `0xffa0dcf0` read of `SH_SHUB_ID` and its bits (taken from the existing pages); the `0xffa47870` discovery crawl and its negative-return conditions; `0xffa4d390` and `0xffa5b5d0`; the klconfig builders in step 3; the `0xffa5c900` send loop over neighbour records (row 5), which was read in the decompile but not traced through `0xffa46a50`; the unit of the 1,000,000 and 240,000,000 tick bounds (inferred as microseconds, unchanged); the `0xffa43d20` branch.
 
 **Model requirements.** One tightening and one regrade, no new register: keep the `cpu_bits` store from `0xffa99cf0` (bit 26 + slice) readable by the first barrier; bit 4 reads 0 on this path; the `0x9_2002_0080` bit 0 requirement is inferred.
+
+## Partition fences: `0xffa51200` (`intcon_pttn_erect_reset_fences`)
+
+SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`), lone node, NASID 0. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled) with an `ia64-linux-gnu-objdump` listing for call slots, immediates and predicates. Names and fields are the 2.4 SN2 header (`shub_mmr.h` at 8ef7d46c); the Linux v5.3 headers carry no NI names (a search of the Library `linux` root found none; its v5.3 coverage was not confirmed). Not independently reviewed. No external URL was read.
+
+**Where it is (established).** The routine name is the PROM's own: its two error strings begin `intcon_pttn_erect_reset_fences:`. The print "Erecting partition fences .................", two tabs, is the string at `0xffbb1700` (address built at `0xffa51336`, print call `0xffa5135c`, then a console call `0xffa1f170` at `0xffa5136c`, not traced); the end prints "DONE\n" (`0xffbb16c8`, call `0xffa5152c`). Chain: `main` `0xffa19a20` to `main_two` `0xffa1ade0` to the NASID change `0xffacd2b0` to `main_three` `0xffad7280`, which calls `0xffa485a0` at `0xffad761c`; that routine calls `0xffa51200` at `0xffa4873c`. `0xffa485a0` is the partition set-up: it reads `SH_SHUB_ID`, writes progress code `0x25`, runs `0xffa50880` (prints "Checking partitioning information ....", returns 2 on a lone node), then `0xffa50bd0` (flags each port, below), then `0xffa53180`, `0xffa51200` and `0xffa517b0`. `0xffa48560`, which `main_two` calls at `0xffa1b0fc`, is a different routine that only fills a RAM page.
+
+**Gate (established as code, inferred for the values).** The master-slice test `0xffa0ff30` must be non-zero and `cpu_bits` (`0x1_5003_1550`) bit 1 must be set (`0xffa0ecd0(1)`, read in `0xffa50880` and again in `0xffa485a0`). `0xffa44660` sets bit 1 for node record 0 in `main_two`, so a lone node runs the routine. Otherwise it is skipped, and so are the prints.
+
+**What `0xffa0c660` is.** The return address of the store call inside `0xffa0c560`, the node-object write. With a zero route word (the local record) it does one `st8` through `0xffa0e640` to `0x8000_0008_0000_0000 | offset | nasid << 38`; for offset `0x1_5000_0010` and NASID 0 that is `0x8000_0009_5000_0010`. The stop at `0xffa0e650` is that store, so `r34` is stale. The caller of `0xffa0c560` is the fence method, slot 62 of the SHub 1 chip operation table (`0xffbd7c18 + 8 * 62` to descriptor `0xffc4bb30`, function `0xffa60410`), reached from `0xffa51200` through `[ops + 0x1f0]` at `0xffa5167c`.
+
+**How it decides (established).** `0xffa50bd0` sets bit 1 of byte `+3` of port entry p (port array at record `+0x60`, stride `0x28`, entries 1 and 2) when the entry's neighbour index (short at the entry start) is -1, and clears it when the neighbour is a record in the same partition (byte `+0x35` equal, or for a router neighbour `0xffa4f9b0` non-zero). `0xffa450e0` initialises every neighbour index to -1 when it inserts a record, and a lone node has no neighbour, so both ports end with the bit set. `0xffa51200` then walks the records. For a record of type 2 (router) it takes the NASID from `SH_SHUB_ID`; for any other type it skips a record whose `+0x5b` bit 0 is set (a record whose port set came from `SH_SCRATCH1` bit 40) and takes the rest. It keeps only a record whose partition byte (descriptor byte 5) equals the local one. It asks the chip for its port count (slot 49, `0xffa5d5b0`, returns 2, no access) and builds the mask M, bit p-1 for each entry whose byte `+3` bit 1 is set. It then calls the fence method twice:
+
+1. `(descriptor, M, 1, 3, 0xff)` at `0xffa5167c`: operation 1 writes 0.
+2. `(descriptor, ~M, 2, 3, 0xff)` at `0xffa516dc`: any other operation writes 1.
+
+The method (`0xffa60410`, read in full) tests bit 0 of its fourth argument (3 here; bit 1 is not used), then for p = 0, 1 writes the value to `0x1_5000_0010 + 0x2000 * p` for each bit p set in mask AND `0xff`, through `0xffa0c560`, stopping at the first negative result. A negative result prints `intcon_pttn_erect_reset_fences: Can't fence ports mask 0x%lx on router vec 0x%lx` (call 1, `0xffbb1730`) or `... Can't clear ports mask ...` (call 2, `0xffbb1788`) and the routine goes on to the next record. The failure needs a route word, so it cannot happen for the local record.
+
+### Accesses, in order, on a lone node
+
+All 8-byte. "Own" is the global MMR window of NASID 0, `0x8000_0009_0000_0000 | offset`; "local" is `0x8000_0081_xxxx_xxxx`.
+
+| # | Site | Access | Offset (window) | Header name | Value, test, and what the PROM does with it |
+|---|---|---|---|---|---|
+| 1 | `0xffa485cc` (`0xffa0dcf0`) | R | `0x1_1006_0580` (local) | `SH_SHUB_ID` | bits 42:32 kept; used only in the fatal-path loop of row 12. Not tested |
+| 2 | `0xffa485fc` (`0xffa0ddb0`) | R, W, 2 x W16 | `0x1_5003_1500 + 0x10n`, LED A and B | | the progress write [P(0x25)](#the-progress-write-pc) |
+| 3 | `0xffa4860c`, `0xffa4862c` | none for slice 0 | | | master-slice test `0xffa0ff30` (reads `cpu_bits` bit 26 + i for lower slices only) |
+| 4 | `0xffa50880` | R | `0x1_5003_1550` bit 1 (local) | `cpu_bits` | must be 1 to continue; the check prints "Checking partitioning information ....", then "DONE\n" |
+| 5 | `0xffa485a0` after `0xffa50bd0` | R | `0x1_5003_1550` bit 1 | `cpu_bits` | must be 1 or `0xffa53180`, `0xffa51200` and `0xffa517b0` are skipped |
+| 6 | `0xffa53180` | R (debug word) | `0x1_5003_1560` bit 2 (`0xffa975e0(2)`, local) | | RAM otherwise: sets partition bits in the page at `[0x1000040] + 0x20`. Bit 2 set prints a page dump (no hardware access) |
+| 7 | `0xffa51200` | none | | | prints "Erecting ...", walks the record (RAM), slot 49 returns 2 |
+| 8 | `0xffa5167c` to `0xffa0c560` | W | `0x1_5000_0010` (own) | `SH_NI0_LLP_RESET_EN` | value 0 (operation 1, port 0 in M). Mask 1, INIT 1. Not read back. Stop `0xffa0e650` |
+| 9 | same call, second pass of the method's loop | W | `0x1_5000_2010` (own) | `SH_NI1_LLP_RESET_EN` | value 0 (port 1 in M) |
+| 10 | `0xffa516dc` | none | | | operation 2, mask `~M & 0xff` = `0xfc`: no port 0 or 1 selected, so no write |
+| 11 | `0xffa517b0` | none | | | meta-router set-up: two heap allocations (`0xb00` and `0x4200` bytes, RAM); only type 2 records do anything, so it only runs the klconfig walk `0xffaa20f0` (RAM, maybe `SH_SHUB_ID` reads through `0xffa0dcf0`; not traced past that). The allocation-failure path prints `intcon_pttn_meta_routers: not enough malloc space` and returns -1, which the caller ignores |
+| 12 | back in `0xffa485a0` | none | | | counts the used slots of `[0x1000038 + 0x10]` and asks L1 request `0x0012` (`0xffa7ea90`; [L1 requests](../../software/firmware/snprom/l1-requests.md)); a count above the reply (never below `0x800`) prints "Too many nodes in this partition!" and parks the boot processor (`0xffad2cb0`, then `0xffad2c50(0x8a)`). One node never reaches it |
+
+There is no permission, protection, route-table or region-mask write in this routine. `SH_NI*_LLP_RESET` and `SH_NI*_LLP_STAT` are not touched here: the PROM reads the link state only in the earlier port set-up and in slot 54.
+
+### What the write means
+
+Header text: `SH_NI0_LLP_RESET_EN`, "Controls LLP warm reset propagation"; field `OK` (bit 0, mask 1): "Allow LLP warm reset to reset SHUB"; `INIT` 1. `SH_NI1_LLP_RESET_EN` is `0x1_5000_2010`, same fields. So writing 0 stops a warm reset that arrives on that link from resetting this SHub. The routine's name and its two operations agree: ports toward a neighbour that is absent or in another partition are fenced (0), ports toward a neighbour in the same partition keep propagation (1). It is not a link-down: `LLP_RESET` (offset `0x08`, the pulse registers) and `LLP_STAT` are not written, and the PROM reads no link status afterwards in this stretch. The line "Erecting partition fences" is the PROM's description (established). That 0 changes only the warm-reset path and not the link is **inferred** from the header text; no manual page states more. The PROM reads the register back in one place only: the port-fill method `0xffa5e0b0` reads it for a record inserted while `SH_SCRATCH1` bit 40 is set and keeps the complement of bit 0 as the port's fence flag; that is the neighbour-insert path, and a lone node's own record is inserted with bit 40 clear (the route calculation section above), so it is not on this path.
+
+### Polls, fatal paths and prints in this stretch
+
+- **Polls.** None in `0xffa51200`, `0xffa60410`, `0xffa50880`, `0xffa50bd0`, `0xffa53180` or `0xffa517b0` on a lone node. The remote-route branch of `0xffa0c560` polls (1024 passes) but needs a route word. The L1 request `0x0012` has the L1 timeout of `0x2dc6c0` ticks; a missing reply runs the die routine (l1-requests page).
+- **Fatal.** Only "Too many nodes in this partition!" (row 12, count above the L1 value) and an L1 silence on request `0x0012`. A heap failure and a failed fence write are printed and not fatal.
+- **Prints.** "Checking partitioning information ....\t\t", "DONE\n", "Erecting partition fences .................\t\t", "DONE\n". The error strings above never print on a lone node. "Invalid partition %d. Running pttn has same pttn id." (`0xffa50880`) needs another record with the local partition id.
+
+### What the model needs
+
+- `SH_NI0_LLP_RESET_EN` (`0x1_5000_0010`) and `SH_NI1_LLP_RESET_EN` (`0x1_5000_2010`): one bit of storage, reset 1 (header INIT, inferred), 64-bit stores accepted, reads return what was written. The PROM writes 0 to port 0 then port 1 and never reads them. With no link behind the port nothing else happens; a model with a link would stop delivering warm resets (`LLP_RESET` bit 1 on the peer) to the SHub once the bit is 0.
+- `cpu_bits` bit 1 reads 1 here (set by the PROM), bit 0 is unrelated, and `0x1_5003_1560` bit 2 should read 0 (a set bit only prints a RAM page).
+- The progress write, `SH_SHUB_ID` read and the L1 request `0x0012` reply as before. No other register is needed in this stretch.
+- Not checked: the klconfig walk `0xffaa20f0`, the console call `0xffa1f170`, whether other code writes the two registers later, and the `0xffa4f9b0` router path (no router on a lone node).
