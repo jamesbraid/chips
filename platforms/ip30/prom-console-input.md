@@ -56,6 +56,15 @@ The same applies to a failed output open (no graphics board). Software expectati
 Mouse only: the keyboard component is missing, so the fallback applies as with neither. Keyboard only: the mouse component is always present and the
 open succeeds. Software expectation (source).
 
+## What a standalone program sees after the fallback
+
+After the serial fallback `console` stays `g`, so a standalone program that decides "graphics console" from that variable alone still takes
+its graphics path. The firmware's private vector entry 8 (the textport-state call) still returns a non-null object in that state, but the
+object's font table pointer is null, because the textport start-up that fills it only runs once a graphics board was opened. Observed on the
+model with the stock 6.5.30 PROM, no board and `console=g`: object at `0x20f29d28`, font table field null. The consequence in `sash64` (read
+null font table, bad address `0x38`, Install System Software from CD) is in kudzu `software/standalone/sash-console.md`. Observed; that a real
+Octane returns the same is inferred, because the PROM routine itself was not decompiled.
+
 ## Unknowns
 
 1. Code-level confirmation in `IP30prom.bin`: the main program's link address and the routine addresses.
