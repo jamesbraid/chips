@@ -420,3 +420,7 @@ The page's wiring and identity claims at the grade given in the table above, wit
 IO10 contents by the Linux variant test and the guides; the PIC-behind-riser layout; the board record format; the base I/O
 node selection rule; the interrupt chain from the PIC pin to the SAL allocator. Not cleared: the Ethernet part and slots,
 the INTx to pin map, and anything in the compressed SAL runtime, none of which was read.
+
+### Review (PIC attach items 6 to 8, commit 043c9f6)
+
+Item 6 holds with one correction: the PROM also passes `m` and `v`, and the ARM L1 answers `0x0013` for a single-slot `F` brick with the plain letter `F`, which is rejected (details in the PIC page's review). Item 7: only the IOC3 stops after its first BAR; the IOC4 does not. Item 8: the pin rule and registers re-read and confirmed.

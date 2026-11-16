@@ -556,7 +556,7 @@ SAL 5.04 PROM (snprom 10.54, `shub1snprom.bin`), read in full in Ghidra and an `
 
 ### What waits, and what a lone node or one CPU sees (established as code)
 
-- `0xffa9a130`, the slice barrier: for each slice i (0 to 3) it waits until `cpu_bits` bit 30 + i equals bit 26 + i. Slices without a CPU read 0 and 0. A lone node with one or two CPUs passes when each present CPU has arrived, so the other CPU of a pair must run the same path (it does: steps 1 to 8 are not gated by the master test, apart from the explicit master-only calls); no node and no other board is involved.
+- `0xffa9a130`, the slice barrier: it first waits while `cpu_bits` bit 34 is set (a previous barrier still draining), sets its own bit 30 + slice, then for each slice i (0 to 3) waits until bit 30 + i equals bit 26 + i or bit 34 is set (the first CPU to see them all equal sets bit 34 as the release). It then clears its own bit 30 + slice and, when all four bit 30 + i are zero, clears bit 34. It does not wait for the others to clear. (Bit 34 and the exit phase read in the review below; the helper meanings are inferred from the names on the route-calculation page.) Slices without a CPU read 0 and 0. A lone node with one or two CPUs passes when each present CPU has arrived, so the other CPU of a pair must run the same path (it does: steps 1 to 8 are not gated by the master test, apart from the explicit master-only calls); no node and no other board is involved.
 - `0xffa44710` and `0xffa44950`, the tree barrier: position 0 of 1 returns 0 at once (local accesses only, see the route calculation section of the SHub page). No mailbox, no remote read.
 - The RTC wait of `0xffae3160` (4 s and 1 s) happens only with a link up; none on a lone node.
 - There is no wait on another node anywhere in steps 1 to 12.
@@ -568,6 +568,25 @@ SAL 5.04 PROM (snprom 10.54, `shub1snprom.bin`), read in full in Ghidra and an `
 ### Not read, or unknown
 
 `0xffa21350`, `0xffa23600`, `0xffa24810`, `0xffa30b40`, `0xffae0a00`, `0xffac7f90`, `0xffacda00`, `0xffa1f740`, `0xffa1a9e0`, `0xffa1ac80` and the contents of `0xffa44e50`'s and `0xffa4eb40`'s RAM tables are not read in full. Whether `0xffaf5f90`'s caller sees the cache flush complete in one PAL call is unknown (status ignored). Whether the code at `0xffa…` runs from flash or the RAM copy after the jump is not decided by these routines (entry and gp are unchanged by the address mask).
+
+### Review (NASID change and start of main_three, commit 8745c9d)
+
+Independent re-read in Ghidra (`--sn2-prom --no-analysis`, address lists) and an ia64 objdump listing of snprom 10.54, flat at `0xffa00000`; 2.4 header at `8ef7d46c` for names. Reviewer wrote none of it. At stops in the sof=2 leaf helpers, r34 and above are out of frame.
+
+**Confirmed.**
+- `0xffacd2b0`: clears `cpu_bits` bit 21 + slice, prints, calls `0xffaf5f90(0x30003ffff, sp, bspstore, gp, target, arg)`; the descriptor at `0xffc4d650` holds `0xffacd1e0` and gp `0xffd98000`; `0xffc4d850` holds `main_three` `0xffad7280` and the same gp.
+- `0xffaf5f90` with type 3: `PAL_PREFETCH_VISIBILITY` (r28 = 41, r29 = 1), `PAL_CACHE_FLUSH` (r28 = 1, r29 = 3, r30 = 1, r31 = 0), `PAL_MC_DRAIN` (r28 = 22), all through `0xffa1d8c0`, which only clears `psr.i` and does not change `psr.it`/`rt`/`dt`; then `ar.rsc = 0`, `loadrs`, `invala`, `ar.bspstore`, `ar.rnat = 0`, `r1`, `sp`, `b7`, `alloc`, `br b7`. No `rfi`. Type 0 (the second call from `0xffafba70`) calls nothing before the jump.
+- `0xffa976e0`: master only; progress `0x59`; `0x1_2001_0100` read, write with bit 24, read; slot 33 (vtable `+0x108`); `0x1_2000_0000` and `SH_SHUB_ID` (revision below 3 gives `0x3f1`, else `0x3b03f7`); `0x1_2001_0100` written with the original value, bit 24 clear; progress `0x5a`. `0xffa95a30` reads and writes `0x1_1006_0580` through the old NASID's global window (`*param_1`, route word at `+0x18`), replacing bits 42:32, 45:44, 52:48 with the page's rules; for B = C = 0 that is 0, 0, 1.
+- `0xffaec240`: writes `cr.lid` bits 31:16 from `nasid & 0x7f`, slice << 7 and `(nasid >> 7) & 0x1f` << 11, reads back, progress `0xc3` and the halt `0xffad2c50` on a mismatch.
+- `0xffaec340`: 21 pairs at `0xffbbc750` (listed from the image: the table in the page matches); ENABLE read in the new NASID's global window, CONFIG read locally, bits 19:4 rewritten (10:4 NASID low 7, 14:11 old slice, 19:15 NASID high 5), written globally.
+- `0xffa733d0`: `0x1_0003_0000` read in the new window, bits 2:0 from C >> 1, written to it and to `0x1_0005_0000`. `0xffafba70` and the unconditional second jump with no flush. Scrub `0xffae3160`: prints the notice when no port is up, `0xffa23e00` writes 0 then `0x7ef` to `LOCAL_INT0_ENABLE` (slices 0, 1) and `LOCAL_INT1_ENABLE` (slices 2, 3). `main_three` at NASID 0 skips the whole nonzero block, including its barrier.
+- Register names and bit positions of `SH_FSB_SYSTEM_AGENT_CONFIG` (bit 3 `berr_assert_en`, bit 17 `xtpr_trans_rsp`, bit 24 `serialize_fsb_en`) and `SH_PROC0_ADV_INT_CONFIG` at `0x110000c80` match the 2.4 headers.
+
+**Corrected.** The slice barrier has an exit phase and a release bit (above). The commit message's "skips all register traffic" in the scrub is too strong: the page body is right that the `LOCAL_INT` enables and `cpu_bits` bit 13 are touched, and the master's `0xffa21350` and `0xffa23600` were not read. `0xffaad6d0` and `0xffa4eb40` are called by every CPU in `main_three` (no master test in the caller); whether they test internally was not read.
+
+**Found, not on the page.** `ar.rsc` is 0 (enforced lazy) from the first switch on; nothing between `0xffaf5f90` and `main_three` writes it (no `ar.rsc` store in `0xffa976e0` to `0xffafba70` or `main_three`), so a CPU model must run these routines with the register stack engine idle.
+
+**Not rechecked.** The lock pair at `0x1_101d_0200` behind `cpu_bits` writes, `0xffa5f84c`, the PAL index in `0xffa9e680` is 27 (read), the memory directory register names, the `NI0_LLP_STAT` link test (inferred from the slot offsets). **Grades.** As the page; the PAL calls and register sequences are established as code, values for NASID 0 inferred.
 
 ## Review (streams K and L)
 
