@@ -193,6 +193,8 @@ that takes 10. The IP30 PROM routine at `0xbfc6b198` reads link status once, wri
 arbitration registers 0 and reset 0, and does not poll. The IP35 PROM routine does not write the reset register.
 questions/tezro-widget-11.md reads the same IP35 routine and the credit table that follows it.
 
+**SN2 PROM widget-0 lock (established for the accesses).** The SHub 1 PROM (snprom 10.54, `io_llp_setup`) reads status, writes status bits 9:6 to the lock slot (`+0xc0`) until it reads back the same 32-bit value (1 ms apart, no bound), updates three link words at `+0x118 + 0x40 * (link & 7)` and ends by writing 1 to the lock-clear slot (`+0xc8`). Detail: [the SHub II page](../shub_ii/README.md#the-widget-0-handshake-io_llp_setup-0xffab34b0-and-what-follows-it). That `+0xc0` is a lock acquire and `+0xc8` its release is inferred from the names in the 2.4 header; whether a PXBOW has them is unknown.
+
 **Error interrupt (established for the register traffic: `xbow_errintr_handler`).** See `0x50` above. After the reads
 it re-arms by writing 0 to the error command word, handles each link whose request bit is set, and reports through the
 kernel error layer (`cmn_err`, `xbow_error_handler`, `xem_add_ioe`; the layer is not read).

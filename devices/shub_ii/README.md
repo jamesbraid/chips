@@ -258,7 +258,7 @@ where stated.
 | B9 | `0xffa91260` | node and port records; no II offset constant was found beneath it | | established for the absence of constants only |
 | B10 | `0xffaad9f6` | IWC (`0x400250`): read, write with bit 0 (`dma_byte_swap`) cleared, read; no wait | any | established |
 | B11 | `0xffab14f0`, link 0 | 4-byte read of widget 0, offset 0 (the id): if the read fails or returns `0xffffffff`, I/O is skipped | the xbow id, part (27:12) `0xd000` or `0xd100` | established; see C2 |
-| B12 | `0xffab34b0` then `0xffab3260`, if part is `0xd000` or `0xd100` | crossbow handshake and link flags (table X, rows X1 and X2), then WCR: set `tag` (bit 4) | | established; any other part prints a warning and leaves WCR alone |
+| B12 | `0xffab34b0` then `0xffab3260`, if part is `0xd000` or `0xd100` | crossbow handshake and link flags (table X, rows X1 and X2), then WCR: set `tag` (bit 4) | | established; any other part prints a warning, leaves WCR alone and makes the routine return 0, so `main` skips I/O (see [the handshake](#the-widget-0-handshake-io_llp_setup-0xffab34b0-and-what-follows-it)) |
 | B13 | `0xffab3780`, arg 3 | ILCSR: `nullto` (5:0) = 3 | | established |
 
 Return value 1 (rows B1 to B13 done), 0 (B3 or B11 failed) or -1 (switch bit 14). Only the master processor of the node does
@@ -407,6 +407,58 @@ Graded: sequence and values established; engine choice by `cr.lid` bit 23 establ
 Corrections to the section above: B-section helper text says the helpers disable interrupt collection; it is psr.i. The
 registers.toml field widths for BTE addresses (bits 48:7) and the interrupt node (11:1) follow Linux v5.3; the 2.4 header
 has 39:7 and 8:1. The PROM's `ADDRESS<39:07>` field name for IBNA matches 2.4.
+
+## The widget-0 handshake: `io_llp_setup` (`0xffab34b0`) and what follows it
+
+Row B12 and B13 of the table above, read at instruction level in Ghidra (snprom 10.54, `shub1snprom.bin`, SAL_B). The PROM
+names `0xffab34b0` itself: its warning string is "io_llp_setup: WARNING: Use of part 0x%x with SHUB unexpected!". Header
+names are the 2.4 SN2 headers (`xtalk/xbow.h`, `xtalk/xwidget.h`, `sn2/shubio.h`); the 2.4 xbow header lists registers by
+the MIPS word at slot + 4, the Itanium `ld4` reaches the same register at slot + 0 (see
+[How the Itanium sees widget registers](#how-the-itanium-sees-widget-registers)). The PROM's own register-name table
+(the II error decoder) has the II names `II_WID`, `II_WSTAT`, `II_WCR`, `II_ILCSR`; it has no names for widget 0 registers.
+The only PROM name for the link flag word below is the debug-print field `xbow_port_info[%d].port_flag`.
+
+Address forms. "II" is `0x8_0180_0000 + offset + (nasid << 38)` with bit 63 set, an 8-byte access through
+`0xffa0e5a0` / `0xffa0e640`. "W0" is widget 0's small window: `0x8_0000_0000 + (nasid << 38)` with bit 63 set; for an odd
+NASID bit 35 is left out (`0xffaaf8b0`, `0xffab14f0`, `0xffab3640` all test NASID bit 0). W0 accesses are 4-byte
+`ld4.acq` / `st4.rel`. Established.
+
+| # | Where | Space, offset, width | Dir | Value written / what it is compared with | Keeps the Altix 350 path | 2.4 name; PROM name | Grade |
+|---|---|---|---|---|---|---|---|
+| 1 | `0xffab34b0` | none: id word from B11, part = bits 27:12 | test | part == `0xd100` or `0xd000`; else prints the warning, returns 0 | `0xd100` (`0xd000` also passes; revision and manufacturer are not tested here) | `PXBOW_WIDGET_PART_NUM` 0xd100 ("PIC"), `XXBOW_WIDGET_PART_NUM` 0xd000; `io_llp_setup` | established |
+| 1a | return path | none | | an unexpected part returns 0, so `0xffaad720` returns 0 (it returns the value of this call) and `main` sets flag 2: no I/O discovery. `0xffab3780` still runs. B12 above said only "leaves WCR alone" | | | established (return value read in `0xffaad720` at `0xffaada8c` to `0xffaadab0`) |
+| 2 | `0xffab3720` (from `0xffaaf8b0`) | II `0x400020`, 8 | R | keeps bits 3:0 (`wid`, the hub's widget number). Used as the hub's link number | 8 to 15, else the later link scan (row C3) fails | `IIO_WCR`, field `wid`; `II_WCR` | established; "must be 8 to 15" inferred from C3 |
+| 3 | `0xffaaf340` | W0 `+0x08`, 4 | R, once | keeps bits 9:6 as `v` | any; `v` is then written as is | `XBOW_WID_STAT` (`WIDGET_STATUS`), `XB_WID_STAT_SRCID_MASK 0x3c0`, shift 6 (header: Xbridge only) | established; field meaning from the header |
+| 4 | `0xffaaf2e0` in a loop | W0 `+0xc0`, 4 | W then R, poll | writes `v`; reads back; exits when the 32-bit read equals `v`; otherwise waits 1000 microseconds (`0xffa0db90`, which polls the real-time clock at `0x1_101c_0000`) and writes `v` again. No bound | `+0xc0` must store 4 bits and read them back. An all-ones or zero read hangs the PROM unless `v` is 0 | `XBOW_LOCK` (`xb_lock`, Xbridge only); none | established; role as a lock acquire inferred (the register is named the lock, it is written with the requester's widget number, and row 8 writes the clear register) |
+| 5 | `0xffaaf8b0` | W0 `+0x118 + 0x40 * (wid & 7)`, 4 | RMW | sets bit 0 | plain storage | `XB_LINK_ARB_UPPER(wid)` (`XB_LINK_REG_BASE + 0x1c` at the MIPS word); `xbow_port_info[].port_flag` | established offset and bit; meaning inferred. The PROM treats the register as a flag word, not an arbitration register |
+| 6 | node operation slot 54 (`0xffa5d6a0`, PROM string `shub_port_status`) | no widget access: NI vector reads of ports 0 and 1 (`0x1_5000_0048`, `0x1_5000_0000` plus port << 13, through `0xffa0bd20`) | R | result is a two-bit mask, bit n = port n; non-zero sets bit 1 of the row-5 word | any (bit 1 is read only for a link whose part is `0xc120`, none on one node) | none | established for the structure; port status polarity and values not decoded: unknown |
+| 7 | `0xffaaf8b0` | W0 `+0x118 + 0x40 * (other & 7)`, 4, where other = `0xa` (`0xb` if `wid` == `0xa`) | R | bit 2 clear: RMW own word `|= 5` (bits 0 and 2). Set and `wid` != `0xa`: own word keeps bit 0 only. Set and `wid` == `0xa`: clear bit 2 in the `0xb` word (`and -5`), then RMW `0x198` `|= 5` | the words start from the model's storage; no other link has bit 2, so the hub's link gets bits 0 and 2 | as row 5 | established |
+| 8 | `0xffaaf8b0` | W0 own-link word, 4 | R, discarded | read after the stores, then `0xffaaf400` | any | | established |
+| 9 | `0xffaaf400` | W0 `+0xc8`, 4 | W then R | writes 1, reads back, discards | any (a write-only or plain register is fine) | `XBOW_LOCK_CLR` (`xb_lock_clr`, Xbridge only); none | established; role as the release inferred |
+| 10 | `0xffab3260` | II `0x400020`, 8 | R, W, R | sets bit 4 (`tag`), reads back (discarded), waits 10 ms | WCR holds what is written | `IIO_WCR` field `tag`; `II_WCR` | established |
+| 11 | `0xffab3780(nasid, 3)` | II `0x400128`, 8 | R, W, R | read value with bits 5:0 (`nullto`) replaced by 3, written, read back (discarded), waits 10 ms | plain storage | `IIO_ILCSR` field `nullto`; `II_ILCSR` | established |
+
+`0xffaaf8b0` returns 1 always. It also calls the node-record lookup `0xffa0fa00` (software only, no hardware access; it
+fills a record and returns the node object whose slot 54 row 6 calls). The wait helper `0xffa0db90(n)` waits `n` microseconds
+by reading the clock register `0x1_101c_0000` (read with `ld8`) until it has advanced; a model needs an advancing counter
+there (established for the loop, the tick rate unknown).
+
+What reads keep the hardware path on a one-node Altix 350 with one PIC: part `0xd100` at W0 `+0x00`; WCR `wid` 8 to 15; W0
+`+0xc0` that reads back what is written (or `v` of 0); the flag words plain storage. Nothing reads a link-up bit in this
+section. The link-alive and present bits (`+0x10` bit 31, `+0x38` bit 5 of each link block) are read in rows X3 and X6 above,
+after this handshake, in `main_three`.
+
+Is there a Crossbow on an Altix 350? No discrete Crossbow chip is evidenced: the held material shows one SHub 1 and one PIC
+on the riser ([base I/O page](../../platforms/sn2/altix-350-base-io.md)), and the PROM accepts parts `0xd000` and `0xd100`
+only. The part the PROM expects at widget 0 is `0xd100`, which `xbow.h` glosses as "PIC": the Crossbow-compatible face a PIC
+presents at widget 0 (the same part the Origin 350 and Tezro PROMs accept, see [PXBOW](../xbow/README.md#pxbow-part-0xd100)).
+That the Altix 350's widget 0 is this face rather than an Xbridge (`0xd000`) is inferred, not read from hardware. Whether a
+PIC implements `+0xc0` and `+0xc8` is unknown (the only measurement is an Octane2 Crossbow reading the lock as 0).
+
+Next large step: I/O discovery in `main_three`, `0xffab38b0` (gate: master processor and flag 2 clear), which prints "Discovering
+local I/O" and calls `0xffab15c0` (crossbow walk, rows C1 to C8). Between this handshake and it, `0xffaad720` returns and
+`main` runs the memory phases; nothing in that range touches the II or widget 0 (established for the code read earlier; the
+`main` text between `0xffa1a40c` and the memory phases was not re-read at instruction level here).
 
 ## Consistency with Bedrock
 
