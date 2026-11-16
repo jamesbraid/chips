@@ -189,9 +189,11 @@ physical address: a region-bits virtual address is rejected.
 
 **Hardware touched.** None directly; it uses the EFI file protocol (so IOC4 ATA or a SCSI HBA through EFI drivers) and the EFI console.
 
-**Evidence.** Established for what the public loader does. **Unknown** for what the shipped loader does: no ELILO binary, no
-`elilo.conf` and no boot partition image is held ([inventory](../../evidence/ia64-binaries.md#boot-path-coverage)). The kernel side of the
-interface, `ia64_boot_param` use at `v5.3:arch/ia64/kernel/setup.c` (lines 312 to 360, 407 to 412, 533), is established.
+**Evidence.** Two ELILO builds (3.16 and Debian 3.4-7.sarge.1) and the 3.16 source are now read: the boot-parameter layout, the memory-map
+hand-off, the kernel load address and entry, and the register state at the jump (`r28` only) are on
+[ELILO on IA-64](../../software/boot/elilo-ia64.md), established. **Unknown**: which release SGI shipped, and its `elilo.conf` and boot partition
+image ([inventory](../../evidence/ia64-binaries.md#boot-path-coverage)). The kernel side of the interface, `ia64_boot_param` use at
+`v5.3:arch/ia64/kernel/setup.c` (lines 312 to 360, 407 to 412, 533), is established.
 
 **Gaps.**
 1. The command line SGI shipped (`console=`, `root=`, `machvec=`), and whether any option selects the machine vector
@@ -203,8 +205,10 @@ interface, `ia64_boot_param` use at `v5.3:arch/ia64/kernel/setup.c` (lines 312 t
 ## 6. Linux early boot on SN2
 
 Tree and version: Linux v5.3 is the last release with SN2; the ProPack 2.6.5 kernel held (SLES 9 SP3 SN2 2.6.5-7.244, row 9
-of the inventory) confirms which calls shipped kernels make. v5.3 differs from 2.6.5 in places (notably the I/O path). The
-sequence below is v5.3, graded **established** for what the kernel does; every PROM-side effect is unknown unless a page above says otherwise.
+of the inventory) is read in Ghidra on [SN2 early boot](../../software/linux/sn2-early-boot.md): its entry state, the order of
+`setup_arch`, the EFI, SAL-table and ACPI requirements, the SAL and PAL calls and the first SHub registers. It differs from v5.3
+(direct I/O calls, two `SET_OS_FEATURE_SET` calls, no `SET_CPU_NUMBER`). The sequence below is v5.3, graded **established** for
+what the kernel does; every PROM-side effect is unknown unless a page above says otherwise.
 
 | Step | v5.3 code | SAL or hardware |
 |---|---|---|
@@ -285,8 +289,8 @@ user-mapped RTC counter at v4.9.
 | 2d I/O: II, PIC, IOC4 | written-unreviewed (static); IOC4 PROM reads not started | `0xffab1cc0` II set-up (in `main`), `main_three` run, then the IOC4 probe in the SAL I/O handlers | row 7 |
 | 3 SAL and PAL runtime interfaces | kernel side reviewed; PROM handlers for the boot-time calls read ([sn2-runtime](../../software/sal/sn2-runtime.md), written-unreviewed); PAL procedures in progress | independent review of the SAL runtime page; read the provider methods behind `IOIF_INTERRUPT` and the console device backends | rows 7 and 8 (SHub 2, SAL not read); row 9 for the shipped caller set |
 | 4 EFI | read, written-unreviewed ([efi.md](../../software/firmware/snprom/efi.md): container, hand-off record, tables, console calls, boot manager, variable store) | PROM-side builders of the SAL and ACPI tables, SAL handlers for the variable store and timer callbacks, the PCI root bridge calls | row 7 (EFI component inside it); see inventory |
-| 5 ELILO | not started (public source only) | get the shipped loader, config and boot partition layout | not held: see inventory |
-| 6a-b Linux platform setup, SAL calls, klconfig | 6a reviewed; 6b [written-unreviewed](klconfig.md) | independent review of klconfig; read `0xffa7e3b0` for the 350's I/O board type | row 9 (symbols, no DWARF); row 7 |
+| 5 ELILO | read: two builds and the 3.16 source ([elilo-ia64](../../software/boot/elilo-ia64.md)) | the shipped release, `elilo.conf` and boot partition layout | not held: see inventory |
+| 6a-b Linux platform setup, SAL calls, klconfig | 6a reviewed; 6b [written-unreviewed](klconfig.md); held 2.6.5 kernel read ([sn2-early-boot](../../software/linux/sn2-early-boot.md), written-unreviewed) | independent review of klconfig; read `0xffa7e3b0` for the 350's I/O board type | row 9 (symbols, no DWARF); row 7 |
 | 6c SHub MMRs | reviewed (kernel-named registers) | name the PROM-programmed registers | row 7 |
 | 6d Interrupts, timer | reviewed (kernel side) | PROM side of interrupt allocation (2c) | row 7 |
 | 6e PCI, PIC and TIOCP | reviewed (kernel side) | PROM side of `IOIF_*` structure fill | row 7 |
