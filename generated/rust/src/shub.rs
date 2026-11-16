@@ -1767,7 +1767,7 @@ pub mod shubs_present {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 128;
 }
-/// Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back (established)
+/// Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothin (established)
 pub mod vec_data {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110066000;
@@ -1782,7 +1782,7 @@ pub mod vec_route {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110066100;
 }
-/// Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. (established)
+/// Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request  (established)
 pub mod vec_rddata {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110074000;

@@ -884,7 +884,7 @@
 #define SHUB_SHUBS_PRESENT_STRIDE                    128
 
 /*
- * Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
+ * Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
  */
 /* vec_data: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_VEC_DATA                                0x110066000 /* established */
@@ -902,7 +902,7 @@
 #define SHUB_VEC_ROUTE                               0x110066100 /* established */
 
 /*
- * Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result.
+ * Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown).
  */
 /* vec_rddata: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_VEC_RDDATA                              0x110074000 /* established */

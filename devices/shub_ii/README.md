@@ -538,7 +538,7 @@ halfword (+0x30) and calls `xbow_init`.
 
 | # | Site | Space, offset, width | Dir | Value, compare, exit | Value that keeps the one-node Altix 350 path | 2.4 name; PROM name | Grade |
 |---|---|---|---|---|---|---|---|
-| 1 | `0xffab0560` (`0xffab3720`) | II `0x400020`, 8 | R | low byte, sign-extended: `wid` | 8 to 15 | `IIO_WCR.wid`; `II_WCR` | established |
+| 1 | `0xffab0560` (`0xffab3720`) | II `0x400020`, 8 | R | bits 3:0 (`0xffab3720` returns the doubleword `& 0xf`; the caller's sign extension of a byte changes nothing): `wid` | 8 to 15 | `IIO_WCR.wid`; `II_WCR` | established |
 | 2 | `0xffaaf630`, first call | W0 `+0x118 + 0x40*(L&7)` for L = 8, 9, ... 15 (that is block L `+0x18`), 4 | R, up to 8 | stops at the first word with bit 2 set and returns L; none gives 0 | the word of link `wid` has bit 2 set (the PROM set it, row X2) | PROM `xbow_port_info[].port_flag`; message "Check_master: link %d is master" | established |
 | 3 | `0xffab05cc` | none | test | master == `wid`, else prints "*** early return from xbow_init: master 0x%x, link 0x%x" (scanning again for the message) and returns | equal | | established |
 | 4 | `0xffab066c` | none | call | `0xffaf2700` is `r8 = 0; return`; `0xffaf26f0` the same: both are empty stubs | | | established |
@@ -586,6 +586,24 @@ read helper `0xffaeb170` returns a status and the PROM treats a non-zero status 
 an unpopulated widget window (a time-out error response, a machine check, `0xffffffff`) is unknown. Because the walk reads
 only valid links, a model that gives block L `+0x38` bit 5 clear for every link except the hub's own link and the PIC's link never has
 the PROM read an absent window, except row 14's re-read of W0.
+
+### Review (I/O discovery in `main_three`)
+
+Independent re-read of the rows above and of the PIC set-up they call, on 2026-11-16, in the Ghidra decompiles of snprom 10.54 (`shub1snprom.bin`, flat at `0xffa00000`, `--sn2-prom --sal-runtime`) with a Ghidra instruction listing of `0xffab0040`, `0xffab0560` to `0xffab0840`, `0xffab0c00` to `0xffab0f10`, `0xffab0130` and the II control-word helpers; no IA-64 objdump was available, so the listing is Ghidra's. The 2.4 widget and crossbar headers were not re-read; names are as graded above. At a model stop inside the leaf helpers `0xffa0e5a0` (load) and `0xffa0e640` (store), which run in a frame of two (`sof=2`), registers `r34` and above are out of frame and show stale values, so a register read there is not evidence.
+
+**Confirmed (established, read in the decompile and the listing).**
+- The `xbow_init` order: II WCR read, master scan (`0xffaaf630`, W0 `+0x118 + 0x40 * (L & 7)` bit 2, L from 8), the compare against `wid`, the empty stubs, one discarded `ld4.acq` of `+0x50`, then the six W0 stores in the order and with the values of row 6 (`+0x38` 0, `+0x30` master `<< 16`, `+0x28` `0x4000`, `+0x40` 0, `+0x20` `0x3c`, `+0x48` `0x3ff1be0`).
+- The link-valid rule of row 7 and the link-up special cases, exactly: valid when `+0x10` bit 31 and `+0x38` bit 5 are both set, or, for a W0 part of `0xd100`, link `0xb` with bit 31 alone and link `0xf` always. The "link not alive" message is printed only for bit 5 set, bit 31 clear, and only when the link is not already valid by the `0xd100` exception. Links below 8 are skipped by `0xffaaf700`.
+- The `0xd102` and `0xd112` link-up block (row 12): a discarded `ld4.acq` of `+0x28`, then `+0x08` `0x80000`, `+0x18` 0, `+0x20` 0, then at most 100 reads of `+0x10` with a 1000 us wait after each read that finds bit 31 clear (100 reads, 100 waits at worst, no failure).
+- The credit step (row 13), including the table at `0xffbe10e0` (`0xc120` 4, `0xd102` and `0xd112` 3, `0xd000` and `0xd100` 4; unknown parts default to 2 with the message), the `0xf000` mask with shift 12 for a PIC (and the same read-modify-write at `+0x80_0020`), the 1 ms wait, and the own-link path (II control word bits 15:13 = 4, read back, 10 ms).
+- Both link windows for the `0xf003000 | L` write (row 9) are 4-byte stores at `+0x20` and, for a `0xd100` widget 0, at `+0x80_0020`.
+- The PIC set-up is reached only for part `0xd102` in the walk of `0xffab0f10`, for window `W` then `W + 0x80_0000`; `0xd112` falls to "New Widget %x connected to HUB.". No PCI configuration access is made on this path.
+
+**Changed.** Row 1 said the WCR `wid` is the low byte sign-extended; `0xffab3720` masks it to bits 3:0 (the listing shows the `sxt1` after the call, harmless for 0 to 15).
+
+**Not confirmed from the decompile.** The discarded read-backs after the `0xf003000` write (row 9) are not visible: the decompiler drops unused loads, and the listing of `0xffab0380` was not dumped. Treat "each read back" as the earlier reader's listing reading, inferred here. The `0xffa0ff30` and flag-2 gates in front of `0xffab38b0` and the `0xffab1b60` record builder were not read.
+
+**Grades.** Unchanged: the rows stay established for access, offset, value and order; names and the meaning of unnamed bits stay as graded.
 
 ## Consistency with Bedrock
 

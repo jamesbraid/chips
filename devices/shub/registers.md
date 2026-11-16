@@ -746,7 +746,7 @@ Array of 4 registers, stride 128.
 
 ### Register `vec_data`
 
-Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
+Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
 
 ### Register `vec_parms`
 
@@ -758,7 +758,7 @@ Route of a vector request: the 16-nibble route word shifted down 4 bits (the fir
 
 ### Register `vec_rddata`
 
-Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result.
+Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown).
 
 ### Register `vec_status`
 

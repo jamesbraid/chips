@@ -2164,7 +2164,7 @@ reset = 0x0
 reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_DATA_INIT, value 0x0 (macro only)"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_DATA (mask 0xffffffffffffffff); SAL 5.04 PROM vector write 0xffa0c560 and read 0xffa0bd20"
-doc = "Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead."
+doc = "Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead."
 
 [registers.vec_route]
 offset = 0x110066100
@@ -2197,7 +2197,7 @@ reset = 0x0
 reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_RDDATA_INIT, value 0x0 (macro only)"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_RDDATA; SAL 5.04 PROM 0xffa0bd20"
-doc = "Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result."
+doc = "Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown)."
 
 [registers.vec_status]
 offset = 0x110074100

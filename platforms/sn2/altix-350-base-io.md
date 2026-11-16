@@ -319,6 +319,14 @@ Board-level reading of the SN2 PROM (snprom 10.54, SHub 1), in boot order. Regis
    byte is **unknown**; if they do, an `F` reply would stop the PIC attach and `o` (`0x6f`) would not. A model should answer `o`
    (or the IX brick value `0x3d`) until a 350 capture settles it.
 
+### Review (what the PROM probes)
+
+Independent re-read on 2026-11-16 of the list above against the Ghidra decompiles of snprom 10.54 (see [the PIC page review](../../devices/pic/README.md#review-sal-runtime-pic-attach-and-pci-scan)). At a model stop inside the leaf helpers `0xffa0e5a0` (load) and `0xffa0e640` (store), which run in a frame of two (`sof=2`), registers `r34` and above are out of frame and show stale values, so a register read there is not evidence.
+
+- Items 1 to 3 and 4 hold: no configuration access before the first I/O SAL call; slot `s` at `0x21000 + 0x1000 * s`; an empty slot is a failed protected read or a low half of `0xffff`; IOC3 and IOC4 in slots 0 to 2 only; the QLogic IDs; no Vitesse constant in the functions read. Item 5 (no devices is not fatal) was read at the slot loops only and stays inferred.
+- Item 2's slot ranges are incomplete. Slots 0 to 3 on the second bus need the record field at `+0xbc` to be 1 and `0xffb32470` true; other ioboard types (`0x6d`, `0x76`) have their own ranges (PIC page review).
+- Item 6: the byte the PROM tests before the PCI reset (`main_three`) and the halfword `pic_attach2` checks come from different L1 requests (code 3 and `0x13`), the second falling back to the first when the L1 does not support it. So "do both read the same byte" is answered in part: they do when the L1 rejects request `0x13`, which is not settled for a 350. An `F` reply is lower-cased to `0x66`; the KLCONFIG board type that byte maps to is `0x7e`. The advice to answer `o` (`0x6f`) or the IX value `0x3d` stands as a model choice, not a finding.
+
 ## Open points
 
 Filed in [the base I/O question page](../../questions/altix-base-io-cards.md): the Ethernet controller part and slot on

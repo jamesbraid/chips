@@ -715,7 +715,7 @@ MIPS-side sections say `+0x4` for the same word). The PROM reaches the PIC throu
 reads the 4-byte word at `+0` of the window it is given; if bits 11:1 are `0x24` and bits 27:12 are `0xd102` or `0xd112` the chip
 type is PIC (2), `0xe000` or `0xe010` with manufacturer `0x24` is type 3, anything else is type -1 and the accessor prints
 "pcireg_*(): unknown bridgetype" and **does nothing** (established, `0xffab3f40` and every accessor between `0xffab41f0` and
-`0xffabf2c0`). So a model that answers the identification read wrongly has its PIC writes silently dropped. All other accesses
+`0xffabf2c0`; a pointer with bits 37:36 both set is taken as a soft-state record and skips the id read, which no window address on this path has). So a model that answers the identification read wrongly has its PIC writes silently dropped. All other accesses
 are 8-byte `ld8.acq` / `st8.rel`.
 
 Called from the link walk in `0xffab0f10` for an id part `0xd102`, once with the link window `W` (bus 0) and once with `W + 0x80_0000`
@@ -726,14 +726,14 @@ for an even NASID, bits 29:28 for an odd one):
 |---|---|---|---|---|---|---|---|
 | 1 | `0xffab0c7c` | `+0x20`, 8 (and the 4-byte id read at `+0`) | R | | any; id as above | `p_wid_control` (`pic.h`, `struct pic`); `pcireg_control_get` | established |
 | 2 | `0xffab0cac` | `+0x20`, 8 | W | value read with bits 3:0 replaced by `n` | write kept | `p_wid_control`, widget-number field bits 3:0 (`WIDGET_WIDGET_ID` in `xwidget.h`); `pcireg_control_set` | established (offset, value); the field's meaning inferred from the 2.4 widget control header |
-| 3 | `0xffab0cb0` (`0xffa80430`) | none | test | the node record's brick-type byte (bits 15:8 of `0xffa7e5e0`) equals `0x23` (PX brick) or `0x3d` (IX brick, also the simulator's value): skip row 4. For the Altix 350 the byte is `0x7e` only if the L1 answers `F` (inferred, [KLCONFIG](../../platforms/sn2/klconfig.md)), so the reset in row 4 runs | | | established for the test |
-| 4 | `0xffab0e7c` to `0xffab0f00` | `+0x20`, 8: R, W (value `& 0xf0ffffff`), wait 2000 us, W (value `\| 0x0f000000`), wait 1,006,600 us | R, W, W | bits 27:24 cleared then set; the second wait is about 1.0 s on the clock `0x1_101c_0000` | writes kept | `BRIDGE_CTRL_RST_MASK` (`0x0f000000`, PCI reset pins) in `pcibr.h`; `pcireg_control_set` | established (values, waits); the reset-pin meaning inferred from the header |
+| 3 | `0xffab0cb0` (`0xffa80430`) | none | test | the brick-type byte the L1 reports (bits 15:8 of the word `0xffa7e5e0` returns; the reply character is folded to lower case, so `F` gives `0x66`) equals `0x23` (PX brick) or `0x3d` (IX brick, also the simulator's value): skip row 4. For the Altix 350 the byte is `0x66` if the L1 answers `F` (inferred, [KLCONFIG](../../platforms/sn2/klconfig.md); `0x7e` is the KLCONFIG board type that byte maps to, not the byte), so the reset in row 4 runs | | | established for the test |
+| 4 | `0xffab0e7c` to `0xffab0f00` | `+0x20`, 8: R, W (value `& 0xffff_ffff_f0ff_ffff`, upper bits kept), wait 2000 us, W (value `\| 0x0f000000`), wait 1,006,600 us | R, W, W | bits 27:24 cleared then set; the second wait is about 1.0 s on the clock `0x1_101c_0000` | writes kept | `BRIDGE_CTRL_RST_MASK` (`0x0f000000`, PCI reset pins) in `pcibr.h`; `pcireg_control_set` | established (values, waits); the reset-pin meaning inferred from the header |
 | 5 | `0xffab0d2c` | `+0x20`, 8: R, W | RMW | bit 9 (`0x200`) cleared (`pcireg_control_bit_clr`) | kept | `p_wid_control`; bit 9 is not named in the headers read | established; meaning unknown |
 | 6 | `0xffab0d6c` | `+0x80`, 8 | W | 0 (`pcireg_dirmap_set`) | kept | `p_dir_map`; `pcireg_dirmap_set` | established |
 | 7 | `0xffab0d7c` then `0xffab0d9c` | II WCR (`0x400020`, 8, R) then `+0x80`, 8: R, W (bits 23:20 cleared), R, W (bits 23:20 = WCR `wid`) | RMW twice | `wid` from WCR bits 3:0 | the value row 7 of the handshake wrote | `p_dir_map` widget field, bits 23:20; `pcireg_dirmap_wid_set` | established |
 | 8 | `0xffab0dcc`, `0xffab0dec` | `+0x280` = `0x88889999`, `+0x288` = `0x88889999`, 8 each | W, W | index 0 and 1 of `pcireg_rrb_set` (`+0x280 + 8 * index`) | kept | `p_rrb_map[0]`, `p_rrb_map[1]` (`p_even_resp`, `p_odd_resp`); `pcireg_rrb_set` | established |
 | 9 | `0xffab0dfc`, `0xffab0e2c` | `+0x48`, 8: R, W | RMW | value with bits 9:0 replaced by `0x3e0` | kept | `p_wid_llp`; `pcireg_llp_cfg_get`, `_set` | established |
-| 10 | bus 0 only, `0xffab0e5c` (`0xffabfa80`), when bit 23 of `W` is clear | `+0x108` = 0; `+0x110` = `0xffffffffffffffff`; `+0x128` = 0, 8 each, in that order | W, W, W | enable cleared, all pending interrupt and error bits reset, host error interrupt register cleared | kept | `p_int_enable`, `p_int_rst_stat`, `p_int_host_err`; `pcireg_intr_enable_set`, `pcireg_intr_reset_set`, `pcireg_intr_host_err_set` | established |
+| 10 (runs after row 5 and before row 6: the code branches out to it from `0xffab0d36`) | bus 0 only, `0xffab0e5c` (`0xffabfa80`), when bit 23 of `W` is clear | `+0x108` = 0; `+0x110` = `0xffffffffffffffff`; `+0x128` = 0, 8 each, in that order | W, W, W | enable cleared, all pending interrupt and error bits reset, host error interrupt register cleared | kept | `p_int_enable`, `p_int_rst_stat`, `p_int_host_err`; `pcireg_intr_enable_set`, `pcireg_intr_reset_set`, `pcireg_intr_host_err_set` | established |
 
 Not done here (so not part of this stage): the interrupt address registers (`+0x130 + 8n`), the interrupt device register
 (`+0x120`), the device registers (`+0x200 + 8n`), the interrupt mode register (`+0x118`) and any PCI configuration access. Those
@@ -746,6 +746,20 @@ are written by the SAL runtime's PIC attach (below); until then the registers ho
 Values a model needs for this stage: id word `+0` with manufacturer `0x24` and part `0xd102` on both buses' windows, every
 register above plain read/write storage (8-byte), a clock at `0x1_101c_0000` that advances (the waits), and no side effect on
 reads of `+0x20`, `+0x48`, `+0x80`.
+
+
+### Review (PROM set-up of a PIC)
+
+Independent re-read on 2026-11-16 in the Ghidra decompiles of snprom 10.54 (`shub1snprom.bin`, flat at `0xffa00000`), with a Ghidra instruction listing of `0xffab0c00` to `0xffab0f10` (no IA-64 objdump was available). At a model stop inside the leaf helpers `0xffa0e5a0` (load) and `0xffa0e640` (store), which run in a frame of two (`sof=2`), registers `r34` and above are out of frame and show stale values, so a register read there is not evidence.
+
+**Confirmed.** Accessor offsets from the decompiled stores: control `+0x20`, direct map `+0x80`, response buffers `+0x280 + 8 * index`, LLP configuration `+0x48`, interrupt enable `+0x108`, reset `+0x110`, host error `+0x128`. Values: control bits 3:0 = `n` (bits 27:24 of the window pointer for an even NASID, bits 29:28 for an odd one); the reset block (when the brick-type byte is neither `0x23` nor `0x3d`) clears bits 27:24, waits 2000 us, sets them to `0xf`, waits `0xf5c08` = 1,006,600 us; control bit 9 cleared with a read-modify-write; direct map written 0, then its widget field (bits 23:20) from the WCR `wid` as two read-modify-writes; response buffers 0 and 1 each `0x88889999`; LLP configuration bits 9:0 replaced by `0x3e0`. The bus-0 writes (enable 0, reset all ones, host error 0, in that order) run only when bit 23 of the window pointer is clear. The brick-type byte tested in row 3 is bits 15:8 of the word `0xffa7e5e0` returns: the listing shows `extr.u r8=r8,8,8` and the two compares.
+**Every accessor re-checks the id.** Confirmed for all the accessors read (`0xffab3f40`, `0xffab41f0`, `0xffab44a0`, `0xffab75a0`, `0xffab7850`, `0xffab5d90`, `0xffab6030`, `0xffabcfb0`, the three interrupt accessors): same 4-byte read of the word at `+0`, same type decode, a silent return for a type that is neither 2 nor 3 after the message for -1.
+
+**Changed.** (1) Execution order: the bus-0 interrupt writes (row 10) run between rows 5 and 6, not last; the listing shows the branch out of `0xffab0d36` and back to `0xffab0d50`. The row is annotated. (2) Row 3: the L1 reply is lower-cased by the parser (`0xffa7ca10`), so an `F` reply is `0x66`; the earlier text gave `0x7e`, which is the KLCONFIG board type the byte maps to. (3) Row 4: the masks are 64-bit and keep the upper bits. (4) The accessor paragraph notes the soft-state-pointer exception.
+
+**Not confirmed.** Whether the reset of row 4 is seen by a model as anything but writes: the PCI reset pins are not read back anywhere here.
+
+**Grades.** Unchanged.
 
 ## SAL runtime PIC attach and PCI scan (`pic_attach2`, `0xffb6d9c0`)
 
@@ -765,7 +779,7 @@ instructions; what a register bit means is as graded earlier on this page.
 | 4 | `0xffb6e35c` | `+0x110` | W | `0xffffffffffffffff` | IRIX writes `0x7f` | established |
 | 5 | `0xffb6e38c` | `+0x120` | W | `0x6db6db` | none | established |
 | 6 | `0xffb6e39c` (`0xffb6bd50`) | `+0x80`: direct map, the same accessors as the IRIX routine (offset field, widget field, add-512 MiB bit) | RMW | the translated value of `nasid << 33`; not decoded here | | inferred (call list only) |
-| 7 | `0xffb6e3bc` to `0xffb6e55c` | `+0x20` | R, W | control with bits 55:48 cleared, bits 42:40 cleared, bits 62:61 cleared, bit 31 set, bit 21 cleared; bit 29 set if revision is not 1; bit 30 cleared if revision is 1, 2 or 3. The listing also ORs a shifted bus number into 55:48 and then ANDs the same mask again, so bits 55:48 end clear (read as written; not cross-checked against the decompiler) | IRIX sets bit 21 and bits 31:30 | established as read; the double mask is unverified |
+| 7 | `0xffb6e3bc` to `0xffb6e55c` | `+0x20` | R, W | control with bits 55:48 cleared, bits 42:40 cleared, bits 62:61 cleared, bit 31 set, bit 21 cleared; bit 29 set if revision is not 1; bit 30 cleared if revision is 1, 2 or 3. The decompile ORs `(argument & 0xff00) << 48` into the word after clearing 55:48; that lands in bits 63:56 (then 62:61 are cleared again) and is zero for bus 0 or 1, so bits 55:48 end clear | IRIX sets bit 21 and bits 31:30 | established |
 | 8 | `0xffb6e5ac`, loop | `+0x10000 + 8*i` for `i` in `0 .. N-1` (`N` the record's entry count, `pcireg_int_ate_set`) | W | 0 each |  | established |
 | 9 | `0xffb6e68c`, `0xffb6e6ac`, `0xffb6e6bc` | `+0x38` RMW (bits 51:48 = target widget id); `+0x118` = 0; `+0x50` read (tflush) | RMW, W, R | | none | established |
 | 10 | `0xffb6e89c` and following | per slot `s` from the record's first to last slot: PCI configuration reads and writes (next table); revision 1 only: `+0x280` and `+0x288` set bits `0xf000f` (`pcireg_rrb_bit_set`); revision 1: `+0x28` = `0x750` | | | as IRIX | established for the order and values |
@@ -799,7 +813,7 @@ nothing but `+0x110 = 0x40` after the read.
 
 Recognised devices in the later device set-up: vendor `0x10a9` with device `0x100a` (IOC4) or `0x0003` (IOC3), allowed only in slots
 0 to 2 ("ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots", `0xffb38260`, slot 3 fails and the allocation returns 0);
-IOC3 and IOC4 get their endianness set by the bus provider method (`0xffb3f810`); vendor `0x1077` with device `0x1240`, `0x1280` or
+The bus provider method `0xffb3f810` makes an unconditional first call through its method table for every device it attaches (not shown to be IOC-specific); vendor `0x1077` with device `0x1240`, `0x1280` or
 `0x1216` gets three response buffers on each map (`0xffb33880`; "Unable to allocated RRBs for qlogic scsi" if that fails). No other
 vendor or device constant appears in the runtime, so a Vitesse SATA controller (`0x1725:0x7174`) is handled as any other device
 (BAR sizing and mapping, `0xffb3bec0`, interrupt line and pin; not traced).
@@ -807,6 +821,28 @@ vendor or device constant appears in the runtime, so a Vitesse SATA controller (
 Not traced: BAR sizing and mapping, interrupt pin assignment (`+0x130 + 8n`, written at interrupt allocation by the provider,
 `SN_SAL_IOIF_INTERRUPT`), error interrupt set-up in the late-init method (`0xffb6cef0`: interrupt `0x33`, writes `+0x38` and
 `+0x128`, then the enable register), and the Device register values.
+
+
+### Review (SAL runtime PIC attach and PCI scan)
+
+Independent re-read on 2026-11-16 in the Ghidra decompiles of `pic_attach2` (`0xffb6d9c0`), `pcibr_slot_info_init` (`0xffb36020`), the configuration address helpers and the slot-device helpers (no IA-64 objdump was available; no listing was dumped for this runtime). At a model stop inside the leaf helpers `0xffa0e5a0` (load) and `0xffa0e640` (store), which run in a frame of two (`sof=2`), registers `r34` and above are out of frame and show stale values, so a register read there is not evidence.
+
+**Confirmed.**
+- Configuration address for bus 0: `W + 0x20000 + (device + 1) * 0x1000 + function * 0x100 + (register & ~3)`, with device = slot, so slot 0 is `0x21000` (the accessor returns a pointer and counts in 4-byte units). Type 1: `+0xc8` = `bus << 16 | device << 11` (8-byte store), then `W + 0x28000 + function * 0x100 + (register & ~3)`.
+- Empty slot: the probe marks a slot in the valid-device mask (`+0xac`) when the protected read succeeds, and treats it as absent when the low 16 bits are `0xffff`; a failed read is absent and unmarked; nothing is printed. The header-type read (register `0xe`, one byte) tests bit 7 and then reads functions 1 to 7 (a bridge-type-3 record at revision 1 reads 1 only).
+- Device IDs: IOC3 (`0x10a9`, `0x0003`) and IOC4 (`0x10a9`, `0x100a`) are accepted only in slots 0 to 2; slot 3 or more prints "ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots of a pci bus" and the allocation fails. The IOC4 test in the probe calls the board-record helper. QLogic vendor `0x1077` with device `0x1280`, `0x1240` or `0x1216` gets response buffers (`0xffb33880`) from the provider method `0xffb3f810`, with "Unable to allocated RRBs for qlogic scsi" on failure. No other vendor or device constant occurs in the functions read.
+- Attach order and values of rows 1 to 9: id read, the 256-pass loop clearing `+0x18000`, `+0x18800`, `+0x19000` (skipped under the simulator CPU ID `0xaeeeeeee8badbeef`), reset register `+0x110` all ones, `+0x120` = `0x6db6db`, direct map, control (bits 55:48, 42:40 and 62:61 cleared; bit 31 set; bit 29 set unless revision 1; bit 30 cleared for revisions 1 to 3; bit 21 cleared), `+0x38` widget id, `+0x118` = 0, `+0x50` read, and for revision 1 `+0x280` and `+0x288` OR `0xf000f`.
+- The ioboard type list is `0x23`, `0x3d`, `0x6d`, `0x6f`, `0x76`; a negative halfword prints "%s: ioboard was unknown by L1 (ret val = 0x%x)" and anything else outside the list prints "%s: Unknown ioboard: 0x%x"; in both the bus is not attached.
+
+**Changed.** Row 7's remark on a shifted bus number: the term is `(argument & 0xff00) << 48`, which lands in bits 63:56 and is zero for bus 0 or 1. The IOC endianness sentence: `0xffb3f810` makes an unconditional first method call for every device it attaches, so no IOC-specific endianness step is shown.
+
+**Slot ranges (not rewritten in the paragraph above; a separate trace of the ioboard byte is editing it).** The decompile gives, per ioboard type: `0x23`, `0x3d`, `0x6f`: slots 0 to 1 (mask 3), widened to slots 0 to 3 (mask `0xf`) only when the record's field at `+0xbc` is 1 (the value `0xffb6d550` returns; read as "the second bus" but not shown) **and** `0xffb32470` is true, i.e. a node record with flag `0x10` in byte `+9` exists for the NASID or its partner; `0x6d`: bus 0 mask 3, bus 1 mask `0xb` (slots 0, 1 and 3); `0x76`: slot 0 only, both buses. The "base-I/O test" reading of `0xffb32470` stays inferred.
+
+**Where the ioboard halfword comes from.** `pic_attach2` stores `0xffac0420(NASID)` at record `+0x104`. For an even NASID that calls `0xffa80490` and then `0xffa7e6d0`, which returns a cached value or asks the L1 with request code `0x13` (`0xffa7cbe0`, the same target `0x4ffff000` as the brick-type query of `main_three` that uses request code 3 in `0xffa7ca10`); a reply character is lower-cased; if request `0x13` fails with -`0x65` the code falls back to the request-3 brick-type query. Under the simulator signature the value is `0x3d` for both. So the halfword is the L1's answer to a different request than the byte `main_three` tests, with a fall-back to the same one. Whether a 350's L1 answers request `0x13`, and with what, is not settled; if it fails, an `F` reply to request 3 gives `0x66` here too and the attach prints "Unknown ioboard". The odd-NASID path (`0xffa7d760`) uses the same query with a different cache slot and mask. Inferred from the decompile only; the meaning of request codes 3 and `0x13` is not read.
+
+**Not confirmed.** "No PCI devices at all is not fatal": the slot loops tolerate absent slots, but the whole of `0xffb2be00` and the interrupt and error set-up that follows were not read end to end. Slot-device register values (Device registers, BAR sizing) were not traced.
+
+**Grades.** Unchanged, except that the address formula, the empty-slot rule, the device-ID checks and the ioboard list are now read in the decompile twice and stay established.
 
 ## Open
 
