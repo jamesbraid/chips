@@ -35,16 +35,16 @@ Shell aliases and `set` values are stored in the same variable store (shell help
   chip-object methods at `+0xa0`, `+0xa8`, `+0xb0` of the node chip's method table: flash chip operations, not decoded). Any other operation returns -2.
 - **Operation 4 (established).** Called once from `PlInitNvVarStoreFlash` (`0x121d60`) with flash id (`<= 0x10`), store size (`<= 0x10000` bytes), the buffer and
   its length (0x20000). It writes the buffer header: an int count of request slots that fit (each slot is `0x2020` bytes), a short **index of the first node whose
-  flash answers as writable** (`-1` if none), and a pointer to the slot array at `+8`; it probes each present node by calling chip methods `+0x40` then `+0x50`.
+  flash answers as writable** (`-1` if none), and a pointer at `+8` to the work area that follows the slots (the request queue the helpers use; the slots themselves start `0x2010` into the buffer); it probes each present node by calling chip methods `+0x40` then `+0x50`.
   It copies no store contents. So the variable store is a flash region of at most **64 KiB** (`0x10000`), reached on the **first node with writable flash**,
-  moved in 8 KiB (`0x2000`) chunks by a request queue (helpers `0xffaf49a0`, `0xffaf49d0`, `0xffaf5540`); EFI keeps a 0x20000-byte runtime copy of the header and slots.
+  moved in 8 KiB (`0x2000`) chunks by a request queue (reads go to the first writable node only; clear and update requests are issued for every present node, **inferred** from the helper's loop, whose arguments the decompiler did not name) (helpers `0xffaf49a0`, `0xffaf49d0`, `0xffaf5540`); EFI keeps a 0x20000-byte runtime copy of the header and slots.
 - **Flash address range: unknown.** The 8 MiB flash window at `0xff80_0000` ([os-handoff-tables.md](os-handoff-tables.md#2-the-efi-memory-map)) holds the
   FIT and images; the region offset of the 64 KiB store inside the node flash is set by the chip-object flash methods
   (`+0x40`/`+0x48`/`+0x50`/`+0xa0`/`+0xa8`/`+0xb0`, reached through `0xffa1c2e0`), which were not decoded. Route: read those methods for the sector base, or diff
   the flash of a machine before and after `bcfg boot add`. A model may back the store with 64 KiB of RAM; EFI cannot tell, provided `0x02000008` ops 1 to 3 behave as below.
-- **Contract a model must meet (established as the caller's contract):** op 4 returns status 0 and a buffer header whose first-writable-node short is not -1
-  (otherwise `0x8000...` store errors are returned and EFI starts with an empty set: `PlInitNvVarStoreFlash` ignores the status); ops 1/2/3 take
-  (offset, length, buffer) and return 0. A store that always reads back all `0xff` (erased) is a valid empty store.
+- **Contract a model must meet (established as the caller's contract):** op 4 returns status 0 for a flash id `<= 0x10` and size `<= 0x10000` (otherwise it zeroes the count and returns -2) and writes a buffer header;
+  EFI's callers pass op 1 = clear, 2 = read, 3 = update with (offset, length, buffer) and read the status back. With a first-writable-node short of -1, PROM op 2 does not fail: it fills the buffer with `0xff` and returns 0, so a model
+  that never reports a writable node still gets an empty, readable (but not persistent) store. `PlInitNvVarStoreFlash` ignores the op 4 status. A store that always reads back all `0xff` (erased) is a valid empty store.
 
 **Record format (inferred from `RtVarParseStore` `0x131be0`, the sample engine's parser, plus the two-bank layout in efi.md).** The store is a sequence of 4-byte aligned
 records; `0xffff` in the first u16 ends the log. A record starts with a u16 whose low 12 bits are the record length from the header and whose bit pattern
@@ -99,8 +99,7 @@ The PCI root node is built by `AltixRootBridgeDevicePathConstructor`; its ACPI H
 - ATAPI CD media: `ScsiDisk` gives Block I/O with a 2048-byte block. `PartitionInstallElToritoChildHandles` requires block size `0x800`, scans volume descriptors from LBA 16 for a
   boot record (type 0) carrying `CD001` and the 23-byte `EL TORITO SPECIFICATION` id at `+7`, reads the boot catalog at the LBA stored at `+0x47`, validates its header
   (id 1, key `0x55aa`, 16-bit checksum zero) and, for every **bootable entry (byte 0x88)** with a nonzero start, installs a child Block I/O handle on that image. The media type is switched on
-  `entry byte 1 & 0xf`: values above 4 print "unsupported El Torito boot media type" (the `cmp ltu 4` test at `0x5d410`); the per-type handling of 0 to 4 (no emulation, 1.2/1.44/2.88 MB floppy, hard disk) was **not decoded**
-  (inferred: all five accepted).
+  `entry byte 1 & 0xf`: values above 4 print "unsupported El Torito boot media type" (the unsigned compare of 4 against the type at ELF `0x5d410`, so 0 to 4 are accepted: established); the per-type handling of 0 to 4 (no emulation, 1.2/1.44/2.88 MB floppy, hard disk) was **not decoded**.
 - The `Fat` driver then mounts the child handle if the image holds a FAT file system, which is how a stock ELILO CD works: the boot catalog's image is a FAT volume holding `\EFI\BOOT\BOOTIA64.EFI` (ELILO) and its config. **A bare ISO 9660 file tree with
   no FAT El Torito image is unreachable from this EFI**: there is nothing to read ISO files. (Inferred from the absence of a driver; established that no ISO 9660 reader is among the 166 source names.)
 - Boot: the default CD option boots `\EFI\BOOT\BOOTIA64.EFI` on that handle; from the shell, `fsN:` then the file name runs it.
@@ -125,4 +124,23 @@ No interrupt is needed by the pass-through as read (it polls: the `Stall` calls 
 - The ACPI root-bridge node values in device paths, and whether `BootOrder` auto-boot reaches the shell option on an empty machine (a model run).
 - Whether SGI shipped media use a FAT El Torito image or a different layout: no SGI install medium is held (stage 5 of the boot path).
 
-**Reviewer status.** Not yet reviewed by a second reader.
+## Review
+
+Independent re-read on 2026-11-16 against `shub1snprom.bin` 10.54 (sha256 `51ccf9ad...`). EFI ELF re-extracted from FIT type `0x1f` (gzip at `0xffca5ec0`) and read in Ghidra with `--no-analysis` and `@address` lists (24 EFI functions); SAL_B read through `--sn2-prom --no-analysis` (the dispatch table's `sal_<id>` names, plus `0xffb182c0`, `0xffb17e40`, `0xffb140a0`, `0xffb607f0`, `0xffa9ef10`). `ia64-linux-gnu-objdump` was the cross-check for the constants the decompiler hid. No emulator ran.
+
+**Confirmed.**
+- Variable GUID `8be4df61-93ca-11d2-aa0d-00e098032b8c` present as bytes in the ELF; `Boot%04x`, `BootOrder`, `BootNext`, `Timeout`, `NoVGA`, `VGACons` present as UCS-2 strings. "No other SGI variable" was not searched exhaustively (not checked).
+- Callback id `0x...3000`: row 99 of the table at `0xffc25ec8` points at descriptor `0xffc4b1f0`, entry `0xffb182c0` (same entry as SAL `0x02000008`); `0x...5000` is `0xffb1ba90` (SAL `0x02000002`), `0x...7000` is `0xffb607f0`, `0x...6000` is `0xffb140a0`. EFI side: clear, read and update pass ops 1, 2, 3 to `RtSalCallBack` (disassembly), and the bounds check against the store size is in `RtPlReadStore`.
+- `0x02000008`: ops 1, 2, 3 share the helper `0xffb17e40`; op 4 bounds (`<= 0x10`, `<= 0x10000`), slot size `0x2020`, header short = first writable node, chip methods `+0x40`/`+0x50` (and `+0x48`) in the probe loop; ops 5, 6, 7 call methods `+0xa0`, `+0xa8`, `+0xb0`; any other op returns -2. Op 0 calls `0xffad4ec0` (role not read).
+- Default options: `BmSetDefaultBootOptions` makes options in this order: Block I/O handles with RemovableMedia set, then file-system handles whose Block I/O is missing or not removable (GUID offsets `0x201908`, `0x201928` read as Block I/O and file system), then Simple Network (`0x201978`), then the fourth handle class. It writes `BootOrder` as 0, 1, 2, ... and then **`Timeout` = 7 as a 2-byte value** (disassembly: `mov r14=7; st2`, name pointer resolves to the UCS-2 string "Timeout"). `BmBootMenu` auto-boots only when `Timeout` is present, tries the next option when `BmLoad` fails, and stops at the entry whose type is 8 (the internal shell); the fall-through to the shell is therefore read, not just inferred, but no run was made (kept **inferred** for the end state).
+- `\EFI\BOOT\BOOTIA64.EFI` and `\EFI\BOOT\%s` strings; `BmDefaultBootImage` iterates files and calls `BmIsEfiImageName`.
+- Device paths: IOC4 and Sil0680 build type 3, subtype 1, length 8 with bytes 4 and 5 from target and LUN in `+6`; IOC4 accepts target `< 2` and LUN 0, Sil0680 target 0; QLogic builds subtype 2, length 10, target `< 0x20`, LUN 0. El Torito: block size `0x800`, header id 1 and key `0xaa55` (bytes `55 aa`), bootable byte `0x88`, boot catalog LBA at `+0x47`, media type `> 4` rejected (`cmp4.ltu 4,r16`, so 0 to 4 accepted: now **established**, no longer inferred), CD-ROM media node type 4 subtype 2 length 24, `CDROM(Entry%x)` and `Ata(Primary,Master)` strings. No ISO 9660 file-system source name among the strings.
+- `0x6000` op 1 calls `0xffa9ef10`, which stores the handler and period in a per-CPU block and arms a timer with vector argument `0xef`; op 3 calls `0xffaebf30`; other ops return -2. (That `0xffaebe90` programs the interval timer vector register was not read.)
+
+**Changed.**
+- Op 4's pointer at `+8` points at a work area after the slot array, not at the slot array.
+- The model contract for a missing writable node: the PROM does not return an error for it; read returns an erased buffer and success. The earlier text said store errors were returned.
+- The store is read from the first writable node only; clear and update visit every present node (inferred).
+- El Torito media types 0 to 4 are all accepted (comparison read).
+
+**Not checked.** The record format of `RtVarParseStore`; the Ioc4 ATA register contract; the `Partition` GPT and MBR paths; `BmBootOptionFromHandle` option contents beyond the file path; the SATA bus driver; the PE32+ drivers; the debug-switch bypass; op 0 of `0x02000008`.

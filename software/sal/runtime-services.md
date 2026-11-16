@@ -40,7 +40,7 @@ SN-specific ids (the `SN_SAL_*` of `sn_sal.h`). Every id here is established pre
 | Id | Name | Kernel use | PROM handler | Platform hardware | If it fails |
 |---|---|---|---|---|---|
 | `0x0200001e` | GET_SN_INFO | `sn_cpu_init` (twice on the boot CPU) | `0xffb60640`, `rt:0x31d0` | SHub NASID register `0x1_1006_0580` | -1 selects SHub 1 defaults; < -1 **stops** (BUG) |
-| `0x02000068` | SET_CPU_NUMBER | `sn_cpu_init` (v5.3 only) | `0xffb13a70`, `rt:0x47d0` | per-CPU record at `0x1000000` | ignored |
+| `0x02000068` | SET_CPU_NUMBER | `sn_cpu_init` (v5.3, the linux-history tree and linux-sn2 7.3; result ignored) | `0xffb13a70`, `rt:0x47d0` | per-CPU record at `0x1000000` | ignored |
 | `0x0200001a` | SET_ERROR_HANDLING_FEATURES | `sn_setup` | `0xffb13890`, `rt:0x45f0` | none | ignored |
 | `0x02000066` | SET_OS_FEATURE_SET | `sn_setup`: 2.6.3x calls 0, 1, then `PCISEGMENT_ENABLE`, `ACPI_ENABLE` before `acpi_table_init`; the held 2.6.5 calls 0 and 1 only | `0xffb5fc90` | block B `+0xc8` flag word | ignored; features 2 and 3 make the PROM rebuild the DSDT |
 | `0x02000005` | GET_KLCONFIG_ADDR | `sn_setup` per node | `0xffb19c20` | KLCONFIG in block A (64 KiB into the hwcfg block) | 0 or a bad board list **stops** (BUG) |
@@ -54,7 +54,7 @@ SN-specific ids (the `SN_SAL_*` of `sn_sal.h`). Every id here is established pre
 | `0x02000013` | go virtual (EFI `SetVirtualAddressMap`) | EFI only | `0xffb14450` (case 0 walks the node table and rewrites the node-record pointers at `0x1000038` and block A `+0x50`/`+0xa0`; read as a pointer re-base, **inferred**) | none | the kernel tolerates a failed `SetVirtualAddressMap` |
 | `0x02000002` | SYSTEM_RESET (and callback `0x5000`) | EFI `ResetSystem`, `machine_restart` paths | `0xffb1ba90` | L1 reset request | n/a |
 | `0x02000045` | start I/O (EFI only) | EFI start-up | `0xffb20350` | pool buffer for I/O | ignored |
-| `0x02000051` to `0x0200005f`, `0x64` | IOIF: error interrupt, `PCI_SAFE`, slot enable/disable, `GET_HUBDEV_INFO` (`55`), `GET_PCIBUS_INFO` (`56`), `GET_PCIDEV_INFO` (`57`), flush lists (`58`, `5a`), `IOIF_INIT` (`5f`), PCI topology (`64`) | I/O discovery (section 5) | one dispatcher, `0xffb1e660` (the `0x...5e` case is the exported label), SAL_B only | SHub/xtalk widget registers, the bridge objects in the PROM's pcfg | `0x55`/`0x57` errors **stop** (BUG); `0x56` v0 = 1 means "no such bus" |
+| `0x02000051` to `0x0200005f`, `0x64` | IOIF: error interrupt, `PCI_SAFE`, slot enable/disable, `GET_HUBDEV_INFO` (`55`), `GET_PCIBUS_INFO` (`56`), `GET_PCIDEV_INFO` (`57`), flush lists (`58`, `5a`), `IOIF_INIT` (`5f`), PCI topology (`64`) | I/O discovery (section 5) | one dispatcher, `0xffb1e660` (the `0x...5e` case is the exported label), SAL_B only | SHub/xtalk widget registers, the bridge objects in the PROM's pcfg | `0x57` errors **stop** (`BUG_ON`); a `0x55` error only skips that node's set-up (`continue`, in both trees read); `0x56` with a positive status means "no such bus" |
 | `0x0200004a` | IOIF_INTERRUPT (alloc, free, redirect) | `sn_intr_alloc` and friends | `0xffb1f970`, SAL_B only | SHub II interrupt routing, the bridge's interrupt registers | device without interrupt |
 | `0x02000003` | PROBE | PCI-safe fallback | `0xffb23cb0`, `rt:0x1d570` | protected read | n/a |
 | `0x0200001b` | GET_FIT_COMPT | `/proc/sgi_sn/prominfo` | `0xffb18d50` | flash window | n/a |
@@ -119,7 +119,7 @@ timekeeping after boot: the processor ITC/ITM for the tick (period from `SAL_FRE
 
 1. Entry-point descriptor in the SAL system table (type 0 first, at `+0x60`) and an EFI system table with the `IBI SYST` signature and a readable (or null) vendor string ([os-handoff-tables.md](../firmware/snprom/os-handoff-tables.md)).
 2. `GET_SN_INFO` with a status below -1 (BUG), `GET_KLCONFIG_ADDR` with a null result or bad board list, `GET_SAPIC_INFO` with a status below -1.
-3. The I/O discovery calls (`0x55`, `0x57`) with an error; `0x56` must put 1 in r9 for a missing bus.
+3. `GET_PCIDEV_INFO` (`0x57`) with an error (`BUG_ON`); a `0x55` error skips the node and leaves it half set up; a missing bus is a positive `0x56` status in linux-sn2 (the page earlier said r9 = 1; linux-sn2 tests the returned status; linux-history was not read for this call).
 4. `SAL_PCI_CONFIG_READ` that does not return all-ones for a missing device (the generic scan sees a phantom device) or never returns data.
 5. The ACPI 2.0 tables: an SRAT with a processor entry, a MADT ([sn2-early-boot.md](../linux/sn2-early-boot.md#where-a-model-that-implements-only-what-chips-documents-today-fails)).
 6. The SHub registers in section 5.2 below: a frozen RTC or a wrong `PIO_WRITE_STATUS` value hangs the kernel.
@@ -152,12 +152,12 @@ The order is the boot CPU's order. "Kernel expects" is what the kernel source te
 
 ### 5.3 PCI discovery
 
-Order (established from `io_init.c` and the earlier pages): `sn_fixup_ionodes` calls `GET_HUBDEV_INFO` (`0x55`) per node and the flush-list calls (`0x58`); `sn_io_init` then loops over
-`segment <= max_segment_number` and `bus <= max_pcibus_number` from that structure and `sn_pci_controller_fixup` calls `GET_PCIBUS_INFO` (`0x56`): a **positive status means the bus does not exist** and
+Order (established from `io_init.c` and the earlier pages): `sn_fixup_ionodes` calls `GET_HUBDEV_INFO` (`0x55`) per node, and `sn_common_hubdev_init` the device flush-list call (`0x5a`; `0x58` only for a PROM older than 4.50); `sn_io_init` then loops over
+`segment <= max_segment_number` and `bus <= max_pcibus_number` from that structure and `sn_pci_controller_fixup` calls `GET_PCIBUS_INFO` (`0x56`): a **positive status means the bus does not exist** (linux-sn2 7.3 scans with `pci_scan_root_bus`, 2.6.3x with `pci_scan_bus`; the SAL config calls are the same) and
 is skipped; otherwise a `pcibus_bussoft` (asic type, xtalk widget id, persistent segment and bus numbers, `bs_base`, legacy I/O and memory) is returned by physical address. It then
 scans the bus with `pci_scan_bus(busnum, &pci_root_ops, controller)`, whose config access is **SAL `0x01000010`/`0x01000011`** (not a memory-mapped config window). `sn_bus_fixup` runs per root bus and
 `sn_io_slot_fixup` per device: `GET_PCIDEV_INFO` (`0x57`) returns a `pcidev_info` with up to six BAR PIO addresses and the ROM; the kernel rewrites `dev->resource[]` from them as
-uncached addresses (`(addr << 4 >> 4) | __IA64_UNCACHED_OFFSET`) and, for the ROM resource, **ioremaps the ROM and reads its header** (`pci_get_rom_size`), so the ROM BAR address must be backed. Then
+uncached addresses (`(addr << 4 >> 4) | __IA64_UNCACHED_OFFSET`) and, for the ROM resource, 2.6.3x **ioremaps the ROM and reads its header** (`pci_get_rom_size`), so the ROM BAR address must be backed. In linux-sn2 7.3 the same code instead marks the ROM `IORESOURCE_ROM_SHADOW` and calls `pci_disable_rom`; nothing maps it at fixup, only a later ROM read (sysfs, VGA) does. Then
 `pcibr_bus_fixup` (`pcibr_provider.c`) ioremaps the bridge (`bs_base`, `sizeof(struct pic)`), registers the error interrupt (`SGI_PCIASIC_ERROR`, the PROM's `IOIF_ERROR_INTERRUPT` call is made from
 the handler), writes the PIC control register's page-size bit, and sets up the PMU ATE map (`pbi_int_ate_size` from the PROM's structure). DMA mapping later programs the PIC's ATEs. The structure
 layouts are in [sn2-runtime.md](sn2-runtime.md#the-structures-behind-0x55-to-0x58) and [README.md](README.md#structures-the-prom-fills). Failure: `0x55` or `0x57` errors BUG; a missing bus is skipped; with no
@@ -168,7 +168,7 @@ PIC model the PROM structures can still be fabricated, but any bridge register w
 - **Allocation (SAL).** `sn_intr_alloc` calls `IOIF_INTERRUPT` (`0x0200004a`) with `SAL_INTR_ALLOC` and the physical address of a `sn_irq_info`, the widget and the requested NASID/slice; the PROM fills
   `irq_irq` (the IA-64 vector), `irq_nasid`, `irq_slice`, `irq_xtalkaddr` (the SHub address the bridge writes to raise the interrupt), `irq_int_bit` (bridge pin, negative for MSI), `irq_bridge_type`, `irq_bridge`, flags. A non-zero status leaves the device without an interrupt (degrades). `SAL_INTR_FREE` and `SAL_INTR_REDIRECT` are used by `sn_set_affinity_irq`; `REDIRECT` failure falls back to free plus alloc.
 - **Delivery (hardware).** The PIC turns a pin change into a write of the programmed `irq_xtalkaddr` (`pcibr_target_interrupt` sets the INT_ADDR register of that bit and enables the bit), which the SHub II presents as an external interrupt of that vector to the target CPU: the "interrupt as write" path, established from the kernel side; the SH_II_INT register contract is in [devices/shub](../../devices/shub/interrupts.md).
-- **Acknowledge (`sn_ack_irq`).** Reads `SH_EVENT_OCCURRED` at `LOCAL_MMR_ADDR`, masks it with `SH_ALL_INT_MASK` and **writes the mask to `SH_EVENT_OCCURRED_ALIAS`** (write-one-to-clear); `sn_end_irq` re-reads it for `SGI_UART_VECTOR` (an UART bit still set re-sends an IPI to self) and, because `sn_force_interrupt_flag` defaults to 1, calls the bus provider's `force_interrupt`: for a PIC device that sets the bridge's force-interrupt bit (`pcireg_force_intr_set`, a PIC register write) after every device interrupt. A missing `EVENT_OCCURRED` or alias, or a PIC without the force register, makes the first interrupt hang or fault. **Stops** at the first interrupt. Established (read).
+- **Acknowledge (`sn_ack_irq`).** Reads `SH_EVENT_OCCURRED` at `LOCAL_MMR_ADDR`, masks it with `SH_ALL_INT_MASK` and **writes the mask to `SH_EVENT_OCCURRED_ALIAS`** (write-one-to-clear); `sn_end_irq` re-reads it for `SGI_UART_VECTOR` (an UART bit still set re-sends an IPI to self) and, because `sn_force_interrupt_flag` defaults to 1 (linux-sn2 7.3 dropped the flag and forces unless the irq is disabled), calls the bus provider's `force_interrupt`: for a PIC device that sets the bridge's force-interrupt bit (`pcireg_force_intr_set`, a PIC register write) after every device interrupt. A missing `EVENT_OCCURRED` or alias, or a PIC without the force register, makes the first interrupt hang or fault. **Stops** at the first interrupt. Established (read).
 - **IPIs.** `sn2_send_IPI` writes the SHub `SH_IPI_INT` register of the target node (first write when a second CPU starts or an IPI is sent; the address is in [sn2-early-boot.md](../linux/sn2-early-boot.md#shub-registers-touched-first); the send routine itself was not re-read this round, **inferred** from that page); needed only with a second CPU.
 - **TLB purges (SMP only).** `sn2_global_tlb_purge` writes `SH1_PTC_0` and `SH1_PTC_1` of each node in `mm_cpumask` (PIO, `pio_atomic_phys_write_mmrs`) after taking a global lock, then polls `PIO_WRITE_STATUS` for completion; the deadlock bit (`WRITE_DEADLOCK`) makes it call the physical-mode recovery routine in `ptc_deadlock.S`, which clears the status bits by writing 7 to the alias at `+8` (SHub 1) and rewrites the PTC pair with translation off. Single-CPU boot with one active mm (`mm_users == 1` or the local-only case) uses `ptc.l` and never reaches the SHub. An SMP model must make the PTC writes purge every TLB and let `PIO_WRITE_STATUS` read idle (all-ones count on SHub 1).
 
@@ -189,4 +189,25 @@ The serial console is **SAL, not a UART the kernel drives**: early output is `CO
 
 - The PIC register contract after `ioremap` (control, ATE, interrupt enable/address, force-interrupt) and the DMA address translation the PROM sets up: [devices/pic](../../devices/pic/README.md) and the open questions in [questions/sn2-sal-open.md](../../questions/sn2-sal-open.md).
 - The runtime-side handlers of `0x01000006`, `0x01000009`, `0x01000020` and the physical-id r9, and the SAL_B side of `0x02000013` beyond case 0.
-- A second source for the 2.6.3x-era SAL list: a Linux tree from a third-party SN2 fork was not read this round.
+
+## Review
+
+Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysis` on `shub1snprom.bin` 10.54, plus the EFI ELF from FIT type `0x1f`), kernel side against the Library `linux-history` tree (the `arch/ia64/include/asm` layout, the era this page cites) and the public community tree `nsafran1217/linux-sn2` (Linux 7.3-rc3 with an ia64 revert, read from the holdings mirror, commit `69571599c5`). No emulator ran.
+
+**Confirmed.**
+- Every SAL_B handler address in the two SAL tables of this page matches the dispatch table (`sal_<id>` entries, about 70 ids compared, including `0x01000010` `0xffb1e300`, `0x01000011` `0xffb1e4b0`, `0x01000012` `0xffb60270`, `0x0200000a`/`0b`, `0x02000013`, `0x0200002d`, `0x02000066` `0xffb5fc90`, `0x02000068` `0xffb13a70`, console `0x21`..`0x2c`). `0x01000006` and `0x01000020` thunk to `0xffb1daf0`, which returns -1; `0x01000009` returns -3 on failure of `0xffb204c0(1)`; `0x01000013` calls `0xffa0dcf0` and returns 0.
+- `PCI_CONFIG_READ/WRITE`: both look the device up (`0xffb2aeb0`) and call the config accessor only when the lookup is non-zero; the return value is 0 either way, so for an absent device no data register is written (the page's "unknown what r9 holds" stands; the kernel's `pci_sal_read` in `arch/ia64/pci/pci.c` was not re-read).
+- Callback `0x6000` is `0xffb140a0`; op 1 arms with vector `0xef`. Callbacks `0x3000`, `0x5000`, `0x7000` descriptors match.
+- The Linux SAL ids in `sn_sal.h` (console `0x21`..`0x2b`, `0x1e`, `0x1d`, `0x65`, `0x66`, `0x68`, `0x5`, `0x4a`, `0x51`..`0x57`, `0x60`, `0x61`, `0x64`) match this page; `sn_setup` calls `SET_OS_FEATURE_SET` with 0, 1, then `PCISEGMENT_ENABLE` (3), then `ACPI_ENABLE` (2) before `acpi_table_init` in linux-sn2 too; `GET_SN_INFO`/`GET_SAPIC_INFO` map `-1` (not implemented) to a fixed decode and any other negative status is returned (and the caller `BUG()`s); `sn2_rtc` rating 450, 55-bit mask; `sn_ack_irq` reads `SH_EVENT_OCCURRED` and writes the alias; PTC path (`mm_users == 1` local purge, `SH1_PTC_0/1`, `PIO_WRITE_STATUS` pending-count idle value all ones on SHub 1).
+
+**Differences between trees (linux-history 2.6.3x vs linux-sn2 7.3).**
+- ROM BAR: 2.6.3x maps and sizes it at device fixup; 7.3 marks it shadowed and does not map it (section 5.3). A model that backs the ROM address is safe for both.
+- `sn_force_interrupt_flag`: present in 2.6.3x (`irq.c`), removed in 7.3; both force an interrupt after each PIC device interrupt.
+- `pci_scan_bus` (2.6.3x) against `pci_scan_root_bus` (7.3); the PCI error interrupt is handled in the SAL (`IOIF_ERROR_INTERRUPT`) in both, and 7.3 panics ("Fatal Bridge Error") when that call returns negative.
+- `SET_CPU_NUMBER` is called in all three trees, not only v5.3; the held 2.6.5 call list was not re-read.
+- A `0x55` error is a skip in both, not a BUG (corrected above). The flush-list call is `0x5a`; `0x58` is a PROM-older-than-4.50 workaround.
+- 7.3 `ia64_sn_plat_set_error_handling_features` is still called and marked obsolete.
+
+**Changed.** The rows and bullets named above (SET_CPU_NUMBER, 0x55 handling, flush-list id, ROM mapping, force-interrupt flag, `0x56` status); the closing "second source" bullet is now answered by this review.
+
+**Not checked.** Every `rt:` runtime address and the runtime table at `rt:0xa29f8` (the SAL runtime component was not mapped; only SAL_B and the EFI ELF were read); the PAL table's SAL_B call addresses; the IPI send path; the EFI-side handlers of `RtSNGetTime` and `ConvertPointer`; the held 2.6.5 kernel; the older 2.4 SN2 tree for the runtime-service list.
