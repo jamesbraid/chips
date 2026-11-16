@@ -284,6 +284,23 @@ PAL zeroes it (SDM: reserved).
   3: `chk.a.nc` on `r0` to `r31`: all 32 miss (`r15` = 32). Block 4: `ld8.a r32` and `ldfd.a f32`, `invala.e r32`, `chk.a.nc f32` hits; `ld8.a r32`,
   `invala.e f32`, `chk.a.nc r32` hits (a miss there stops the PAL). A miss must raise the Speculation fault (vector `0x5700`, ISR.code 0 or
   2, `ipsr.ri` advanced by the Speculation handler at `0xffe7d700`, whose code 0 and 2 arm at `0xffe7d750` also increments `r15` and returns with `rfi`; it requires `r14` = 111, else it goes to `0xffe7ec10`), because PAL runs with `psr.it` clear (see the section below).
+- *Group 4, ALAT capacity and replacement (read at `0xffef9160` to `0xffef977c`; established for the code, inferred for the reading).* The
+  test never evicts. Block 2 runs `invala` (`0xffef93c0`), then 32 `ld8.a` into 32 different registers r37 to r68 (`0xffef93d0` to `0xffef94c6`),
+  then 32 `chk.a.nc` (`0xffef94d6` to `0xffef95d0`) and requires no miss (`r15` = 0, `0xffef95d6`). That is 32 allocations with 32 distinct
+  register tags into an emptied table: peak occupancy 32, no 33rd insert, nothing to replace, so no policy is tested and round-robin, LRU,
+  FIFO or a 2-way table indexed by register number (32 consecutive numbers fill 16 sets twice) all pass. A table with fewer than 32 entries
+  fails block 2. Block 1 is one address and four tags, not a capacity test: `ld8.a r2`, `ldfd.a f10`, `ld8.a r18`, `ldfd.a f7`
+  (`0xffef9356` to `0xffef9370`), `ld8.c.clr r2` hits and clears r2, `st2` to the same address kills f10, f7 and the old r18, `ld8.a r18` again
+  (`0xffef9386`) re-arms r18, so the four `chk.a.nc` (`0xffef9396` to `0xffef93b0`) miss on r2, f10 and f7 and hit on r18: exactly 3 (`0xffef93b6`).
+  Block 3 checks r0 to r31, never loaded since the `invala`: all 32 must miss (`0xffef96f6`). Block 4 needs `invala.e` of a GR to leave the FR of
+  the same number and the reverse (`0xffef9700` to `0xffef9746`), and a miss there ends the PAL (r14 = 16 sends the handler to `0xffe7ec10`).
+  A `chk.a.nc` miss must deliver the Speculation fault (ISR.code 0 for a GR, 2 for an FR, SDM vol 2 printed p.2:198); the handler counts it
+  in `r15` when `r14` = 111. Real silicon, for reference only (Itanium 2 Reference Manual 251110-003, section 5.1 printed p.37 and
+  section 5.1.1 p.38; the same text is in -001 and -002): 32 entries, fully associative; an allocation replaces the entry with the same
+  register number, else the first invalid entry, else a valid entry chosen by advancing pointers tied to ports M0 and M1, which approximates
+  FIFO. Entries hold register number, type and the low 20 bits of the physical address, so a store invalidates by address overlap with no
+  size. The SDM leaves size, organisation and replacement implementation dependent (vol 1, section 4.4.5.3.1, printed p.1:66). A model
+  therefore needs 32 entries and no particular policy; FIFO with same-register replacement first is the documented one and costs nothing.
 - *Group 8.* Helper `0xffefdc80(P, pmc4, pmc13, pmc14, pmc15)` runs with P = 0, -1, `0x5555555555555555`, `0x2aaa2aaa2aaa2aaa`. It writes
   pmc0 = P | 1, pmc1 to 3 and 5 to 12 = P, pmc4 and pmc13 to 15 their own values, pmd0 to 17 = P, then reads back. Expected pmc:
   pmc0 = (P & `0xf1`) | 1; pmc1 to 3 = 0; pmc4 = value & `0xfffff7f`; pmc5 to 7 = P & `0xf7fff7f`; pmc8 = P & `0xffffffff3fffffff`; pmc9 = P &
@@ -300,8 +317,8 @@ PAL zeroes it (SDM: reserved).
 
 **Ranking for the model (inferred).** (1) Group 10 sub-test 1: needs cache-array write, a detected single-bit mismatch and the error-log
 registers; it cannot pass with the reserved word as a no-op. (2) Group 8: the PMU register file must have the Itanium 2 implemented-bit
-masks and counter widths above, not a flat array. (3) Group 4: ALAT capacity (32 entries to one address), `ld.c.clr` and aliased-store
-invalidation, GR and FR entries kept apart, and the Speculation fault delivery. Log `r15` at the three tests to find the broken block;
+masks and counter widths above, not a flat array. (3) Group 4: an ALAT of at least 32 entries, `ld.c.clr` and aliased-store
+invalidation, GR and FR entries kept apart, and the Speculation fault delivery (no replacement policy; see the ALAT note under group 4). Log `r15` at the three tests to find the broken block;
 log `r8` after each helper call at `0xffefd4dc`, `0xffefd53c`, `0xffefd5cc` and `0xffefd65c` (-2 pmc, -3 pmd) for group 8.
 
 **Unknown.** Groups 3, 5 and 6 beyond their entry and failure constants; which of msr[1505] to msr[1508] holds which error-log bit; the
@@ -403,7 +420,8 @@ pointer (the `r47` that loads halfwords inside the helpers is the helper's own l
 Every cache-array access writes `msr[1544]` (index), `msr[1546]` (command) and, for a write, the payload registers `msr[1600..1627]`,
 then `srlz.d` and the reserved M-word `0x108000000` as the trigger. The order of those writes is not fixed: the data write
 (`0xffe8f530`), the tag write (`0xffe8fb70`) and the check-bit clear (`0xffe8f650`) put the payload before or in the same issue group as
-the command, so only the trigger can start the access. A read trigger fills the payload registers, which are then read back.
+the command, but the mask write at `0xffe8f460` to `0xffe8f490` and the loops at `0xffef5120` and `0xffe8d800` put an operand after it, so
+only the trigger can start the access (inferred; [pal-instructions.md](pal-instructions.md) section 6.1). A read trigger fills the payload registers, which are then read back.
 
 - `msr[1544]` index: bits 7:0 = address bits 14:7, bits 10:8 = address bits 17:15 (the "way" of the sub-tests). The read helpers (`0xffe8ee80` at
   `0xffe8effc`, the tag read `0xffe8f890` at `0xffe8f966`) write the way at bits 15:13 as well.

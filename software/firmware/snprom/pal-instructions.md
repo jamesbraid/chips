@@ -158,7 +158,8 @@ read, the dependence itself unknown).
   psr.ic = 0 or in PAL physical mode; what it does outside PAL mode. What would settle it: an Itanium 2 / Madison PAL or
   microarchitecture document that defines the PAL-private opcode space (not found in any revision read); a reading of the
   msr[1544..1547] consumers in PAL_B to see whether a read of msr[1545] ever returns different values with and without the slot
-  (a code reading, not yet done); or a hardware trace, which this program does not take without approval.
+  (done in section 6.1: no read can, because every command is followed by its word; the code instead shows operands arriving after
+  the command write, so the word performs the access, inferred); or a hardware trace, which this program does not take without approval.
 
 ### The B-unit companion (B-unit opcode 0, x6 = 9)
 
@@ -169,7 +170,7 @@ the exit path that restores r30, r31 and pr from msr[0], msr[1641] and msr[1642]
 `0xffdf7cec`, `0xffdf7d2c`) are in the code that saves and restores `ar.unat` through msr[0]; the rest are in other routines of the same
 kind (`0xffdfa8ec`, `0xffe0727c`, `0xffe091ec`, `0xffe23a5c`). SDM status as above (reserved if qp = 1, so faulting with qp = 0).
 Grades: encoding and sites established; behaviour unknown, and the same inference holds: a processor that completes this PAL treats it
-as non-faulting. The code after each site read is ordinary and the sites are not branch targets, which suggests it does not redirect control there (inferred, assuming it falls through).
+as non-faulting. Section 6.2 corrects the last claim of this paragraph that it falls through: the code after the sites is not ordinary continuation, and the word is a control transfer like `rfi` (inferred).
 
 ## 2. Hardware event entry state
 
@@ -560,9 +561,93 @@ length and the base address of 2.25. The poll at msr[1212] is present there once
   msr[1730] fields are; the later reads of R, S and O sites (not resolved); behaviour of sites reached only through the PAL_PROC dispatch (indirect, not traced).
   What would settle the polls: a Madison or McKinley document that names the msr file, or a trace from hardware, which this program does not take without approval.
 
+## 6. What the code settles about the reserved words (PAL_B 5.73)
+
+Read in the Ghidra listing of the whole image (IA-64 module, every bundle) with a script over it: constant-index `msr[]` accesses followed in
+listing order, up to 60 events, dropped at a call, return or unconditional branch. Hand reads are named. Hardware behaviour of every word
+stays **unknown**; what follows is what the code requires of a model.
+
+### 6.1 The M-word `0x108000000` and the cache-array command
+
+**Established (code).**
+- 211 words in 5.73. 206 have an `msr[1546]` write earlier in the same straight-line run with no other word between; five do not
+  (`0xffe7f1f6`, `0xffea27c6`, `0xffea32b6`, `0xffea3c86`, `0xffea41d6`: the msr[1640]/msr[1730] window and the PMC window, no command).
+- 207 `msr[1546]` writes have a constant index. None is followed by a second `msr[1546]` write before a word, and none by a read of
+  `msr[1545]` or `msr[1600..1627]` without a word between (55 constant-index and 12 computed-index reads follow a command in their run; 47
+  computed-index reads have no command in their run). None of the 73 sites that list a payload-bank write before them reads
+  `msr[1545]` or a payload register afterwards: they read `msr[1559]`, `msr[1084]` or nothing. So no read can show what a command
+  does without the word: the PAL never leaves one un-triggered, and absence says nothing for or against a trigger.
+- Operands arrive after the command write, so the access cannot use them at that write (188 of the 207 by script; four read by hand):
+  `0xffe8f460` writes the command and `0xffe8f490`, two groups later, writes a mask word computed in between to the payload register
+  (helper `0xffe8f100`), then `srlz.d` and the word at `0xffe8f4a0`; `0xffef5120` writes the tag-array command and `0xffef5140` the index in a
+  256-set loop (counter test `0xffef5170`), word at `0xffef5150`; `0xffe8d800` writes the command and then all sixteen payload registers,
+  word at `0xffe8d8f0`; `0xffef0d00` writes command, `0xffef0d10` changes msr[1084], zeroes the payload, then `srlz.i`, word at
+  `0xffef0d40`, and `0xffef0d50` puts msr[1084] back (the 35 W1 sites of 5.73 share that shape).
+- Reads follow the word in each helper: data read `0xffe8ee80` (command, word `0xffe8f030`, read payload `0xffe8f090`, second command for the
+  check-bit array, word `0xffe8f0b0`, read the same payload register `0xffe8f0c0`); group 11 read helper `0xffe93e50` (word `0xffe93f50`).
+  `0xffe93fc0` writes `msr[1545]` and `msr[1547]` as payload before its command (word `0xffe94100`), so those two are both input and result.
+
+**Inferred.** The `msr[1546]` write arms a command and the word performs it with the `msr[1544]`, payload and `msr[1084]` values present
+at that moment. Why: a model that acts at the `msr[1546]` write runs the 256-set loop one index behind and writes the stale payload in the
+cases above; the self-test read-backs would then fail (not run). Not excluded: the access firing at some other later point (`srlz.d`, the
+last payload write). **Unknown:** whether the command stays armed after the word, and what the word does with no pending command (the five
+sites above show it is harmless there).
+
+**A model must:** not fault on the word (qp = 0); keep `msr[1544..1547]` and `msr[1600..1627]` as plain read/write registers;
+on the word, if `msr[1546]` holds a command with bit 63 set, do the array access then (read: fill the payload registers or `msr[1545]`;
+write: store the payload), and do nothing otherwise. It must not perform the access at the `msr[1546]` write.
+
+### 6.2 The B-unit word `0x48000000`
+
+**Established (code).** 12 sites in 5.73 (`0xffea89fc`, `0xffea8a3c`, `0xffea8a8c`, `0xffea8acc`, `0xffeab8ec`, `0xffeb827c`, `0xffeba05c`,
+`0xffeba12c`, `0xffeba17c`, `0xffeba1bc`, `0xffeba1ec`, `0xffed4a8c`), each after `srlz.i`, none with a register operand. Each ends its block:
+- Eight are the last instruction of one arm of a register-restore routine (`0xffea89fc` to `0xffea8acc`; `0xffeba05c` to `0xffeba1bc`): the
+  next bundle is entered by a branch from the same routine (the last arm of the first chain is followed by an error-return stub).
+  Fall-through would run one arm into the next (the second arm reloads `r1` through the `r1` the first one loaded).
+- `0xffeab8ec` and `0xffed4a8c` are followed by `break.m` filler; before `0xffed4a8c` the code writes `cr.iip` and `cr.ipsr`, sets msr[1664] bit 0
+  and runs `srlz.i`. Before `0xffeb827c` it writes `cr.ipsr`, `cr.ifs` (valid bit cleared) and `cr.iip` = the bundle after the word
+  (`0xffeb81c0` to `0xffeb8210`), and execution resumes there with `cr.ipsr`/`cr.iip` reloaded from saved values at `0xffeb82b0`.
+- `0xffeba1ec` is followed by a bundle that three other sites branch to (`0xffeb8a1c`, `0xffeb901c`, `0xffeb9e0c`).
+
+**Inferred.** The word is a control transfer that consumes `cr.iip`, `cr.ipsr` and `cr.ifs` like `rfi` (x6 = 8, the neighbouring cell). This
+corrects the earlier reading above that the code after each site is ordinary and the word probably falls through. What separates it
+from `rfi`, and whether msr[1664] bit 0 (set before 4 of the 12 sites; 15 of the 21 B1 sites image-wide) enables it, is **unknown**.
+
+**A model must:** treat it as a return from interruption (new PSR from IPSR, IP from IIP, slot from IPSR.ri; IFS.v = 0 here, so no frame
+reload), not a nop. A nop falls into the next arm or the `break` filler.
+
+### 6.3 The third word: opcode 1, x3 = 0, x6 = `0x36`
+
+**Established.** M-unit slot, opcode (40:37) 1, x3 (35:33) 0, x6 (32:27) `0x36`, r3 (26:20) the operand, r2 (19:13), r1 (12:6) and qp (5:0)
+zero: the layout of `fc` (M28, x6 `0x30`) with r3 only. SDM vol 3 Table 4-45 (printed 3:346): the cell is dark purple (reserved if PR[qp] is 1), as is
+the whole row 30:27 = 6 of that table; with qp = 0 it raises Illegal Operation architecturally. Neither binutils 2.44 nor ski defines it.
+The bare word `0x21b0000000` (r3 = 0) occurs nowhere in the image. The code uses two operands, `0x21b1a00000` (r3 = 26) and
+`0x21b1c00000` (r3 = 28), six sites: 5.73 `0xffe8ec10`, `0xffe92ba0`; 7.79 `0xffddeb00`, `0xffde2920`; 2.25 `0xfff3ee50`, `0xfff43510`; none in PAL_A.
+(Other slots in the image with these opcode bits, such as `0x21b52a9a00`, sit in data with non-zero r1/r2/qp.)
+
+**Context (5.73, established).** Each site is the body of a 128-byte-stride loop beside an `fc` loop. `0xffe8ec10` (operand r26): index
+`(set << 7) | 0x20 | way`, 256 sets (r22 from `0x20` to `0x7fa0`) times ways 0 or 4 up to 7 (msr[1504] bits 38 and 39, read at `0xffe8ebb0` and `0xffe8ec80`, gate the way range), run after
+`rsm psr.dt`, `mf`, `sync.i`, `srlz.i`; after the last way the code writes `msr[1546] = 0x8922000000000000`, `srlz.d`, an M-word, then `mf; sync.i;
+srlz.i` and returns r8 = 0. `0xffe92ba0` (operand r28): the same with 2048 sets (r22 from `0x40` to `0x3ffc0`) and ways to 23. The other arm of
+each routine (`0xffe8ecf0`, `0xffe92be0`) writes msr[1544] with the same set and way, issues a tag-array read command and word, reads msr[1545] and executes
+`fc` on the line address rebuilt from the tag (`0xffe8eda0`, `0xffe92c90`) when its state field is non-zero. The arm is picked by bit 0 of the
+caller's operation word (r28 is a copy of r30 at `0xffea02e0`; the second routine tests r30 at `0xffe92b30`), taken for 1 (tag walk and `fc`) and not for 0 (the new word).
+The routine takes cache_type bits in r29, the operation in r30 and a progress value in r31 (`0xffea0200` to `0xffea02e0`), the SDM
+PAL_CACHE_FLUSH argument shape (vol 2, printed 2:370 to 2:371: bit 0 `inv`; 0 = copy modified lines back and optionally leave them valid
+and clean; 1 = write back and invalidate); the handler's dispatch index was not traced.
+
+**Inferred.** The word is a write-back-by-index of the line at set and way r3, the `inv` = 0 counterpart of tag read plus `fc`. `fc` always
+invalidates, so `inv` = 0 needs a different instruction. Class under section 5: reserved word with a register operand, no result register or
+predicate, no `msr[]` write before it and no `msr[]` read after it.
+
+**What depends on it (established).** Nothing reads a result. Loop control uses r22 and r23 only. The word's effect reaches only the line
+state, and the memory the written-back line goes to. **A model must** not fault, read r3 and, if it models the caches, write back the
+addressed line (leaving it valid and clean or invalidating it, as the SDM allows); a model without cache state can execute it as a nop and
+the routine still returns r8 = 0. Whether the Altix 350 boot reaches the `inv` = 0 arm was not traced (**unknown**).
+
 ## Questions left (unknown)
 
-1. What the two reserved encodings do on Itanium 2 and Madison, and whether anything depends on their result (item 1).
+1. What the reserved encodings do on Itanium 2 and Madison (item 1). The code-side dependence is settled in section 6: the M-word performs the pending cache-array command, the B-unit word is an `rfi`-like transfer, and `0x36`-class opcode-1 words are write-back-by-index.
 2. Which of the vectors at `0xffffff90` and `0xffffffa0` is MCA and which INIT, which predicates and registers each event leaves, where PMI is (item 2).
 3. The consumer of the 142-record tables and the full callee contract of `br.ia` (item 3).
 4. Whether a Madison document (or revision -028 of 251141) defines PAL-only opcodes: not in the revisions read.
