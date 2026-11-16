@@ -706,6 +706,47 @@ datasheet does list +0x0 to +0x78, +0x80, +0x100 to +0x1f8, +0x200 to +0x298, +0
 arrays, and nothing here contradicts those ranges. The +0x18000 banks and the 0x20000 configuration windows agree
 with its address list.
 
+## PROM set-up of a PIC in `main_three` (`0xffab0c00`)
+
+SN2 SAL_B (snprom 10.54, `shub1snprom.bin`), read in the Ghidra listing. Offsets here are the Itanium's: a 64-bit register at
+`8n` is accessed as `ld8`/`st8` at `+8n`, and the one 4-byte access is the identification word at `+0` (this page's earlier
+MIPS-side sections say `+0x4` for the same word). The PROM reaches the PIC through its own copy of the `pcireg_*` accessor family
+(names are in the image: `pcireg_control_get`, `pcireg_intr_reset_set` and so on, as in the IRIX driver). Each accessor first
+reads the 4-byte word at `+0` of the window it is given; if bits 11:1 are `0x24` and bits 27:12 are `0xd102` or `0xd112` the chip
+type is PIC (2), `0xe000` or `0xe010` with manufacturer `0x24` is type 3, anything else is type -1 and the accessor prints
+"pcireg_*(): unknown bridgetype" and **does nothing** (established, `0xffab3f40` and every accessor between `0xffab41f0` and
+`0xffabf2c0`). So a model that answers the identification read wrongly has its PIC writes silently dropped. All other accesses
+are 8-byte `ld8.acq` / `st8.rel`.
+
+Called from the link walk in `0xffab0f10` for an id part `0xd102`, once with the link window `W` (bus 0) and once with `W + 0x80_0000`
+(bus 1); the bus is bit 23 of the pointer. Steps in order (for window pointer `W`, `n` = the widget number taken from `W`: bits 27:24
+for an even NASID, bits 29:28 for an odd one):
+
+| # | Site | Offset, width | Dir | Value, compare | Keeps the one-node path | 2.4 name (`pci/pic.h`, `pci/pcibr.h`); PROM name | Grade |
+|---|---|---|---|---|---|---|---|
+| 1 | `0xffab0c7c` | `+0x20`, 8 (and the 4-byte id read at `+0`) | R | | any; id as above | `p_wid_control` (`pic.h`, `struct pic`); `pcireg_control_get` | established |
+| 2 | `0xffab0cac` | `+0x20`, 8 | W | value read with bits 3:0 replaced by `n` | write kept | `p_wid_control`, widget-number field bits 3:0 (`WIDGET_WIDGET_ID` in `xwidget.h`); `pcireg_control_set` | established (offset, value); the field's meaning inferred from the 2.4 widget control header |
+| 3 | `0xffab0cb0` (`0xffa80430`) | none | test | the node record's brick-type byte (bits 15:8 of `0xffa7e5e0`) equals `0x23` (PX brick) or `0x3d` (IX brick, also the simulator's value): skip row 4. For the Altix 350 the byte is `0x7e` only if the L1 answers `F` (inferred, [KLCONFIG](../../platforms/sn2/klconfig.md)), so the reset in row 4 runs | | | established for the test |
+| 4 | `0xffab0e7c` to `0xffab0f00` | `+0x20`, 8: R, W (value `& 0xf0ffffff`), wait 2000 us, W (value `\| 0x0f000000`), wait 1,006,600 us | R, W, W | bits 27:24 cleared then set; the second wait is about 1.0 s on the clock `0x1_101c_0000` | writes kept | `BRIDGE_CTRL_RST_MASK` (`0x0f000000`, PCI reset pins) in `pcibr.h`; `pcireg_control_set` | established (values, waits); the reset-pin meaning inferred from the header |
+| 5 | `0xffab0d2c` | `+0x20`, 8: R, W | RMW | bit 9 (`0x200`) cleared (`pcireg_control_bit_clr`) | kept | `p_wid_control`; bit 9 is not named in the headers read | established; meaning unknown |
+| 6 | `0xffab0d6c` | `+0x80`, 8 | W | 0 (`pcireg_dirmap_set`) | kept | `p_dir_map`; `pcireg_dirmap_set` | established |
+| 7 | `0xffab0d7c` then `0xffab0d9c` | II WCR (`0x400020`, 8, R) then `+0x80`, 8: R, W (bits 23:20 cleared), R, W (bits 23:20 = WCR `wid`) | RMW twice | `wid` from WCR bits 3:0 | the value row 7 of the handshake wrote | `p_dir_map` widget field, bits 23:20; `pcireg_dirmap_wid_set` | established |
+| 8 | `0xffab0dcc`, `0xffab0dec` | `+0x280` = `0x88889999`, `+0x288` = `0x88889999`, 8 each | W, W | index 0 and 1 of `pcireg_rrb_set` (`+0x280 + 8 * index`) | kept | `p_rrb_map[0]`, `p_rrb_map[1]` (`p_even_resp`, `p_odd_resp`); `pcireg_rrb_set` | established |
+| 9 | `0xffab0dfc`, `0xffab0e2c` | `+0x48`, 8: R, W | RMW | value with bits 9:0 replaced by `0x3e0` | kept | `p_wid_llp`; `pcireg_llp_cfg_get`, `_set` | established |
+| 10 | bus 0 only, `0xffab0e5c` (`0xffabfa80`), when bit 23 of `W` is clear | `+0x108` = 0; `+0x110` = `0xffffffffffffffff`; `+0x128` = 0, 8 each, in that order | W, W, W | enable cleared, all pending interrupt and error bits reset, host error interrupt register cleared | kept | `p_int_enable`, `p_int_rst_stat`, `p_int_host_err`; `pcireg_intr_enable_set`, `pcireg_intr_reset_set`, `pcireg_intr_host_err_set` | established |
+
+Not done here (so not part of this stage): the interrupt address registers (`+0x130 + 8n`), the interrupt device register
+(`+0x120`), the device registers (`+0x200 + 8n`), the interrupt mode register (`+0x118`) and any PCI configuration access. Those
+are written by the SAL runtime's PIC attach (below); until then the registers hold what the hardware or an earlier stage left
+(unknown). The rest of `bridge_discover` (`0xffabfb10`) reads the identification word at `+0` and builds KLCONFIG records
+([SHub I/O interface page](../shub_ii/README.md#io-discovery-in-main_three-instruction-by-instruction-0xffab38b0)).
+
+`pic.h` notes that the PIC does not accept a write to only the low half of a 64-bit register (workaround PV#854697): the PROM's 8-byte stores agree.
+
+Values a model needs for this stage: id word `+0` with manufacturer `0x24` and part `0xd102` on both buses' windows, every
+register above plain read/write storage (8-byte), a clock at `0x1_101c_0000` that advances (the waits), and no side effect on
+reads of `+0x20`, `+0x48`, `+0x80`.
+
 ## Open
 
 See [questions/pic-field-and-revision-open.md](../../questions/pic-field-and-revision-open.md).

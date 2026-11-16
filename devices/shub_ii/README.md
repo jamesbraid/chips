@@ -293,7 +293,7 @@ so names and meanings are unknown; offsets, widths and values are what the code 
 | X3 | per link block base `0x100 + 0x40 * (link & 7)`: `+0x10` bit 31 (link alive), `+0x38` bit 5 (widget present) | a link is valid if both set; for a `0xd100` crossbow, link `0xb` is valid if alive and link `0xf` always | the hub's own link and the PIC's link: both bits set; others: clear | established; meanings inferred |
 | X4 | `+0x50` read first, then writes in this order: `+0x38` = 0, `+0x30` = master link `<< 16`, `+0x28` = `0x4000`, `+0x40` = 0, `+0x20` = `0x3c`, `+0x48` = `0x3ff1be0` | `st4.rel`; these offsets are the standard widget configuration block (`p_wid_*` in `pic.h`) | accept; reads of `+0x50` return anything | established; for the PIC names and offsets established, for the crossbow inferred |
 | X5 | per valid link whose flag bit 0 is clear: widget `link` `+0x20` written `link | 0xf003000`; if widget 0 is `0xd100`, `+0x80_0020` too (`0xffab0380`) | the widget's own `wid` in the low nibble (inferred) | accept | established |
-| X6 | per valid link (not the hub's own): 4-byte id read at the link window; `0xffffffff` skips the link; part `0xd102` or `0xd112` is a PIC | `0xd102` on a Altix 350 | | established |
+| X6 | per valid link (not the hub's own): 4-byte id read at the link window; `0xffffffff` skips the link; part `0xd102` or `0xd112` is a PIC in `xbow_init`; the later walk in `0xffab0f10` sets up only `0xd102` (see [the instruction-level trace](#io-discovery-in-main_three-instruction-by-instruction-0xffab38b0)) | `0xd102` on a Altix 350 | | established |
 | X7 | for a PIC link: link block `+0x08` = `0x80000`, `+0x18` = 0, `+0x20` = 0, then poll `+0x10` bit 31 up to 100 times at 1 ms | | alive within 100 ms | established |
 | X8 | link credits (`0xffab0130`): link block `+0x08` bits 22:18 = table credits; widget `+0x20` (and `+0x80_0020` for a PIC) masked-written with `4 << shift`; 1 ms wait. Table at `0xffbe10e0`: `0xc120` credits 4 mask `0xe000` shift 13; `0xd102` and `0xd112` credits 3, mask `0xf000` shift 12; `0xd000` and `0xd100` credits 4, mask `0x7c0000` shift 18 | | read/write registers | established |
 
@@ -518,6 +518,74 @@ caller sets bit 1 of the flag word when the mask is non-zero, so bit 1 means at 
 no responding NI. What nibble 9 names is unknown.
 
 Grades: "Widget 0 is the PIC's PXBOW face" stays inferred. Not re-read: `0xffaaf8b0`'s lookup `0xffa0fa00` beyond being software only.
+
+## I/O discovery in `main_three`, instruction by instruction (`0xffab38b0`)
+
+Read in the Ghidra listing of snprom 10.54 (`shub1snprom.bin`, SAL_B) from `0xffab38b0` through `xbow_init` (`0xffab0560`)
+and every callee that touches hardware. Notation: "W0" is widget 0's small window and "link L" the window of widget L,
+both from the address forms above; a link window for NASID n is `n << 38` plus `0x8000_0008_0000_0000 + (L << 24)` for an even
+NASID, or `0x8000_0000_0000_0000 + (L << 28)` for an odd one (`0xffab1510`, `0xffab0160`). "Block L" is the link register block
+`W0 + 0x100 + 0x40 * (L & 7)`. All W0, block and link-window accesses are 4 bytes (`ld4.acq` / `st4.rel`); the II accesses are 8
+(`0xffa0e5a0`, `0xffa0e640`). Register names: widget and link-block offsets are the 2.4 headers' word offsets
+(`xtalk/xwidget.h`, `xtalk/xbow.h`) minus 4, because the Itanium word at `+0` is what the MIPS header calls `+4`; the PROM has no
+names for them (its name table covers II registers only). The PROM's flag word for each link is stored in block L `+0x18`,
+the slot the header names `xb_link_arb_upper` (offset `+0x1c` there); that the PROM uses it as scratch storage and the
+hardware meaning is ignored is established for the PROM, and the register's own behaviour is unknown.
+
+The path is `0xffab38b0` (gates: master processor `0xffa0ff30`, then flag 2 via `0xffa99870`; prints "Discovering local I/O on
+nasid %d") then `0xffab15c0(nasid)`, which looks up the node record `0xffaa8a40`, forms the W0 pointer from the record's NASID
+halfword (+0x30) and calls `xbow_init`.
+
+| # | Site | Space, offset, width | Dir | Value, compare, exit | Value that keeps the one-node Altix 350 path | 2.4 name; PROM name | Grade |
+|---|---|---|---|---|---|---|---|
+| 1 | `0xffab0560` (`0xffab3720`) | II `0x400020`, 8 | R | low byte, sign-extended: `wid` | 8 to 15 | `IIO_WCR.wid`; `II_WCR` | established |
+| 2 | `0xffaaf630`, first call | W0 `+0x118 + 0x40*(L&7)` for L = 8, 9, ... 15 (that is block L `+0x18`), 4 | R, up to 8 | stops at the first word with bit 2 set and returns L; none gives 0 | the word of link `wid` has bit 2 set (the PROM set it, row X2) | PROM `xbow_port_info[].port_flag`; message "Check_master: link %d is master" | established |
+| 3 | `0xffab05cc` | none | test | master == `wid`, else prints "*** early return from xbow_init: master 0x%x, link 0x%x" (scanning again for the message) and returns | equal | | established |
+| 4 | `0xffab066c` | none | call | `0xffaf2700` is `r8 = 0; return`; `0xffaf26f0` the same: both are empty stubs | | | established |
+| 5 | `0xffab06b0` | W0 `+0x50`, 4 | R, value unused | one read before the stores | any | `WIDGET_TFLUSH` (word `0x54`); none | established (read happens, value ignored); role inferred |
+| 6 | `0xffab06c0` to `0xffab0710` | W0 `+0x38` = 0; `+0x30` = master link `<< 16`; `+0x28` = `0x4000`; `+0x40` = 0; `+0x20` = `0x3c`; `+0x48` = `0x3ff1be0`, 4 each, in this order, once | W | no read back | accepted | `WIDGET_INTDEST_LOWER_ADDR`, `_UPPER_ADDR`, `WIDGET_REQ_TIMEOUT`, `WIDGET_ERR_CMD_WORD`, `WIDGET_CONTROL`, `WIDGET_LLP_CFG`; none | established (offsets, values, order); register names inferred from the standard widget header |
+| 7 | loop `0xffab0720` (`0xffaaf700`, `0xffaaf430`) | block L `+0x10`, `+0x38`, 4, for L from the current link to 15 (links below 8 skipped) | R | valid if block `+0x10` bit 31 is set and block `+0x38` bit 5 is set. Otherwise: if W0's part (`ld4` at `+0` bits 27:12) is `0xd100`, link `0xb` is valid when `+0x10` bit 31 is set and link `0xf` is always valid. Otherwise invalid. A link with `+0x38` bit 5 set and `+0x10` bit 31 clear prints "WARNING: xbow_base: 0x%lx link: %d Widget present, but link not alive!" and is invalid. Returns the first valid link, -1 when none | the hub's own link and the PIC's link: both bits set. Any other link: `+0x38` bit 5 clear | `XB_LINK_STATUS` word `0x14`, `XB_STAT_LINKALIVE`; `XB_LINK_AUX_STATUS` word `0x3c`, `XB_AUX_STAT_PRESENT` (0x20) | established |
+| 8 | `0xffab078c` (`0xffaaf7e0`) | block L `+0x18`, 4 | R | bit 0: the hub's own link (set at row X2 above) | own link only | `port_flag` | established; meaning inferred |
+| 9 | not own link: `0xffab0520` then `0xffab0380` | W0 `+0` (4, R, the part again), then link L window `+0x20` = `(L | 0xf003000)` and, if W0's part is `0xd100`, also link L window `+0x80_0020`; each read back (value discarded) | R, W, R | `0xf003000` is `XBAR_CREDIT 3` in bits 15:12 plus bits 27:24 (all other bits of the old value are overwritten); low nibble L | accepted, any read | `WIDGET_CONTROL` word `0x24` (`WIDGET_WIDGET_ID` bits 3:0, `WIDGET_LLP_XBAR_CRD` bits 15:12); none | established (offsets, value); bits 27:24 unnamed in the header: unknown |
+| 10 | `0xffab08cc` (`0xffab14f0`) | link L window `+0`, 4, through `0xffaeb170` | R | helper returns 0 on a failed protected read and the PROM maps that to `~0`; `0xffffffff` skips the link (and does a discarded read of block L `+0x28`, `0xffaaf840`) | the PIC's id word; for any other link nothing may answer (see "What an empty window returns" below) | `WIDGET_ID` | established |
+| 11 | `0xffab07b0` | none | test | part (id bits 27:12) `0xd102` or `0xd112` takes row 12; anything else goes to row 13 | `0xd102` | | established |
+| 12 | `0xffab0040(W0, L)` | block L `+0x28`, 4, R, discarded; `+0x08` = `0x80000`; `+0x18` = 0; `+0x20` = 0; then poll `+0x10` bit 31 | R, W, W, W, R | writes in that order. Poll: read, count, if bit 31 clear wait 1000 us (`0xffa0db90`) and read again; at most 100 reads and 100 waits; no message and no failure on timeout | bit 31 set within the first reads (the PROM does not need it) | `XB_LINK_STATUS_CLR` word `0x2c`; `XB_LINK_CTRL` word `0xc` (`XB_CTRL_WIDGET_CR_MSK` 22:18: `0x80000` is 2 credits); `XB_LINK_ARB_UPPER`, `XB_LINK_ARB_LOWER`; none | established; note the writes also clear the PROM's flag word for that link |
+| 13 | `0xffab07d0` (`0xffab0130`, `0xffaaff60`) | block L `+0x08` RMW: `& ~0x7c0000 | credits << 18`; credits from the table at `0xffbe10e0` (`0xc120` 4, `0xd102` and `0xd112` 3, `0xd000` and `0xd100` 4; an unknown part prints "WARNING: Using default link credit counts" and takes 2); then link L window `+0x20` RMW masked by the table: for `0xd102` clear `0xf000`, set `0x4000`, and the same at `+0x80_0020`; 1 ms wait. For the hub's own link (part assumed `0xc120`): II `0x400020` RMW bits 15:13 = 4 (`0xffab3580`), read back, 10 ms wait | R, W (and R) | | accepted | `XB_LINK_CTRL`, `WIDGET_CONTROL.LLP_XBAR_CRD`, `IIO_WCR.dst_crd` | established |
+| 14 | after the loop (`0xffab16b0`) | W0 `+0`, 4, via `0xffaeb170` | R | part `0xd000` or `0xd100` else prints "New Widget %x connected to HUB." and returns 0 | `0xd100` | `WIDGET_ID` | established |
+
+After `xbow_init` returns, `0xffab0f10(W0 pointer, ...)` builds the hardware graph. Its hardware accesses, in order: II `0x400020`
+(row 1 again); `0xffab19f0` which reads the W0 id (`0xffab1800`, `ld4` at `+0`, copied into the crossbar record as part and
+revision) and runs the master scan (row 2) once more; a second master scan; then, when `wid` is the master (the one-node case), a walk of
+links from 8: `0xffaaf700`, row 8, for a link that is not the hub's own the id read of row 10, and by part:
+
+- `0xc120` (a NUMAlink to another hub, or the hub's own link whose id is not read): the own link makes a record; any other
+  needs block L `+0x18` bit 1 (`0xffaaf810`), else "XBow link %d:no NUMAlink, skipping". Not reached on one node.
+- `0xd102` only (`0xd112` takes the next case here, unlike `xbow_init` which accepts both for rows 12 and 13): PIC set-up
+  `0xffab0c00` for the link window, again for the link window `+ 0x80_0000`, then `bridge_discover` `0xffabfb10`.
+- anything else: "New Widget %x connected to HUB." and a record, no set-up.
+
+Everything else in `0xffab0f10`, `0xffab19f0`, `0xffab1b60` and `0xffabfb10` is KLCONFIG construction (software;
+[KLCONFIG](../../platforms/sn2/klconfig.md)), with these exceptions: `0xffabfb10` reads the brick's NIC string through the L1
+(`0xffaf1ee0`; under the simulator signature, `cpuid[2]` equal to `0xaeeeeeee8badbeef`, it uses a built-in string) and reads each
+bridge's identification word (`0xffab39f0`, a 4-byte `ld4` at `+0`).
+
+**What the PIC set-up does is on the [PIC page](../pic/README.md#prom-set-up-of-a-pic-in-main_three-0xffab0c00).**
+
+### Link-up and presence, in one place
+
+A link counts as present and up for `main_three` when block L `+0x38` bit 5 and `+0x10` bit 31 are both set (row 7). The
+exceptions are the `0xd100` widget 0: link `0xf` counts as valid whatever its bits say, and link `0xb` when only bit 31 is set. The
+hub's own link needs the flag word bit 0 (row 8, set earlier by the handshake) and is valid by the same bit test. The PROM never
+tests bit 2 of the flag word for presence: it is the "master" marker (row 2). The `+0x118 + 0x40 * (L & 7)` reads at `0xffaaf630` are
+the master scan, not a link-up test. Established.
+
+### What an empty window returns
+
+Nothing in this section reads a link that is absent: row 10 is reached only for a valid link (rows 7 and 8). The protected
+read helper `0xffaeb170` returns a status and the PROM treats a non-zero status as `~0`; what the hardware sends for a read to
+an unpopulated widget window (a time-out error response, a machine check, `0xffffffff`) is unknown. Because the walk reads
+only valid links, a model that gives block L `+0x38` bit 5 clear for every link except the hub's own link and the PIC's link never has
+the PROM read an absent window, except row 14's re-read of W0.
 
 ## Consistency with Bedrock
 
