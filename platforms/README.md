@@ -29,6 +29,12 @@
 | [size-ladder.md](bricks/size-ladder.md) | Origin 3000 and Onyx 3000 size ladder | This sheet lists, for each size of the Origin 3000 family that SGI's manuals describe (Origin and Onyx 3200, 3400... |
 | [xbrick.md](bricks/xbrick.md) | Origin 3000 X-brick | The X-brick is the 4U XIO expansion enclosure of the Origin 3000 and Onyx 3000 families. |
 
+## ip22
+
+| Page | Title | Summary |
+|---|---|---|
+| [prom-console-input.md](ip22/prom-console-input.md) | Indy, Indigo2 and Power Indigo2 PROM: what it does when no PS/2 keyboard or mouse answers | Question. |
+
 ## ip27
 
 | Page | Title | Summary |
@@ -49,6 +55,7 @@
 | Page | Title | Summary |
 |---|---|---|
 | [cpu-cache.md](ip32/cpu-cache.md) | O2 CPU cache and CRIME processor-interface visibility | This page covers the R10000 processor's primary and secondary caches as the O2 uses them, and what the CRIME 1.5... |
+| [prom-console-input.md](ip32/prom-console-input.md) | O2 PROM 6.5.30: what it does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-rom.md](ip32/prom-rom.md) | O2 system ROM: decode, flash aliasing and reset fetch | This page covers the O2's system ROM window as CRIME and MACE expose it, the external flash that MACE drives, and... |
 
 ## ip34
