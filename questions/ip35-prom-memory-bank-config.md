@@ -55,9 +55,9 @@ were not consulted for any fact here.
    inside the two groups of four that share bit 32. Inferred (from this one consumer): that the chip applies the
    same XOR on the access path. The kernel also uses the matching value when it sizes memory: its slot-size
    routine for the IP35 (link address 0xc00000000004f408) reads bank sizes from the node's memory component and
-   XORs the slot number with a signed halfword at +58 of that component, with no condition. Where the PROM puts
-   that halfword (probably the selector it wrote above) was not traced: **inferred**, route: find the PROM store
-   to component offset +58.
+   XORs the slot number with a signed halfword at +58 of that component, with no condition. The PROM's
+   KLCONFIG builder stores bits 33:32 of the word at +58 (**established**, 0x1fc54788); see
+   [memory-population.md](../platforms/ip35/memory-population.md).
 
 5. **Sizing one bank: the probe. Established (re-read in full for the return mapping).**
    Routine 0x1fc2d18c (0x398 bytes) takes a bank base address (bits 32:30 of it, `a0 >> 30 & 7`, pick the software
