@@ -10,8 +10,8 @@ What happens when a PCI or PCI-X device behind a PIC reads or writes main memory
 |---|---|
 | Linux SN2 | SGI's Altix platform code in Linux (`arch/ia64/sn/pci/pcibr/pcibr_dma.c`, `pcibr_ate.c`, `pcibr_provider.c`, `arch/ia64/include/asm/sn/pcibr_provider.h`, `pic.h`, `shubio.h`, `io.h`, `drivers/ide/sgiioc4.c`), read at the Linux history repository commit `981a2edd1922`. The PIC page pins the same files at v5.3 (`4d856f72c10e`); these were not diffed against each other. Public, GPL |
 | PROM 10.54 | the SHub 1 firmware image `shub1snprom.bin` of SNPROM 10.54 (SAL 5.04), read in Ghidra with this repository's IA-64 processor, addresses as the PROM loads |
-| Bridge 4.0 | SGI, *Bridge ASIC Specification*, revision 4.0, 27 March 1997 (printed page numbers below) |
-| XBridge 0.5 | SGI, *XBridge ASIC Specification*, revision 0.5, 1 October 1998 |
+| Bridge 4.0 | SGI, *Bridge ASIC Specification*, revision 4.0 for Rev D silicon (cover 26 April 1998, page footers 27 March 1997; printed page numbers below) |
+| XBridge 0.5 | SGI, *XBridge ASIC Specification*, revision 0.5 (cover 11 June 1998, page footers 1 October 1998) |
 | Crossbow 12.0 | SGI, *Crossbow ASIC Specification*, revision 12.0, 14 November 1996 |
 
 ## The path in one table
@@ -47,7 +47,7 @@ Not read: what the II does with the two NASID bits that overlap the address-spac
 | Local | `0` to `0x3fffffff` | no mapping (PIC's own space) | none | established (constants); Bridge 4.0 Figure 4 |
 | Translated (ATE) | `0x40000000` to `0x7fffffff` | entry index = (address minus `0x40000000`) >> I/O page shift; Crosstalk address = entry page address (bits 47:12) plus the offset inside the page; target = entry bits 11:8 | entry bits 4:0; PCI address bit 29 selects swap | established (Linux SN2; Bridge 4.0 section 4.3.4) |
 | Direct, 32-bit | `0x80000000` to `0xffffffff` (2 GiB) | `(dir_off << 31) + (address & 0x7fffffff)`; target = dir_w_id | Device(n) register bits; one direct-map register shared by all devices | established for the form (Bridge 4.0 Table 45 and section 4.3.3; Linux `pcibr_dmatrans_direct32`); the formula for the PIC inferred from the PROM's use of it (below) |
-| Direct, 64-bit | above 4 GiB | the low 48 PCI address bits are the Crosstalk address unchanged | bits 63:54 of the address itself | established (Linux `pcibr_dmatrans_direct64`; XBridge 0.5 Tables 87 to 89, Bridge 4.0 Tables 46 to 49) |
+| Direct, 64-bit | above 4 GiB | the low 48 PCI address bits are the Crosstalk address unchanged | bits 63:54 of the address itself | established (Linux `pcibr_dmatrans_direct64`; XBridge 0.5 Tables 87, 88 and 90, Bridge 4.0 Tables 46, 47 and 49) |
 
 ### Direct-map register (`+0x80`)
 
@@ -57,7 +57,7 @@ What the SHub 1 PROM programs, from the attach helper `0xffb6bd50` and the sette
 
 | Quantity | Value | Where from |
 |---|---|---|
-| Target node | the PIC's own node when a node-record halfword equals `0x700` (the field is filled by `0xffac0420(nasid)`; what `0x700` denotes is unknown); otherwise the lowest even NASID that has an entry in the node table and whose memory size is nonzero. The size routine `0xffa788b0(n)` reads one MMR at `nasid << 38 \| 0x8000000900010010` and sums four bank fields | established for the code; role of `0x700` unknown |
+| Target node | the PIC's own node (bus record `+0x102`, the NASID of the PIC's window pointer, stored by `pic_attach2`) when the record halfword at `+0x104` equals `0x700` (that halfword is filled by `0xffac0420(nasid)`; what `0x700` denotes is unknown); otherwise the lowest even NASID that has an entry in the node table and whose memory size is nonzero. The size routine `0xffa788b0(n)` reads one MMR at `nasid << 38 \| 0x8000000900010010` and sums four bank fields | established for the code; role of `0x700` unknown |
 | Base `x` | `(nasid << 38 & 0x1ffc000000000) >> 2`, that is `nasid << 36` | established |
 | `dir_off` | `x >> 31`, that is `nasid << 5` | established |
 | `dir_w_id` | the byte at node-record `+0x60`, also copied to `+0x100` | established that it is that byte; that it is the SHub's own widget number is inferred: the earlier `main_three` PIC set-up writes the II widget-control `wid` field (bits 3:0, 8 to 15 on this machine) there, `0xffab0d7c` to `0xffab0d9c` |
@@ -98,13 +98,13 @@ The top 16 bits of a 64-bit direct address carry attributes. The Altix header's 
 | 55 | `SWAP` | swap | remote map field (55:48) | defined; the kernel never sets it |
 | 54 | `VIRTUAL1` | unused | part of remote map | defined; never set |
 
-Established as declarations. In 64-bit mode only a few attributes come from the Device register (swap, coherent, GBR on the sibling chips: Bridge 4.0 Table 49). What the SHub does when the coherent bit is clear is unknown.
+Established as declarations. In 64-bit mode only coherent and GBR come from the Device register on the XBridge, and swap comes from address bit 55 (XBridge 0.5 Table 90); on the Bridge swap is a Device bit (Bridge 4.0 Table 49). The PIC header declares bit 55 as `SWAP`, so the XBridge reading is the likelier one for the PIC (inferred). What the SHub does when the coherent bit is clear is unknown.
 
 ### Which window Linux SN2 uses
 
-`pcibr_dma_map` (`pcibr_dma.c`): a device mask below `0x7fffffff` gets no mapping (returns 0). A full 64-bit mask (`~0`) gets 64-bit direct with `PREF` (streaming) or `BAR` (consistent). Anything between gets 32-bit direct if the PIC is in conventional PCI mode and the address lies in the 2 GiB starting at the PROM's base; otherwise a run of translation entries with `PREF` (streaming) or `BAR` (consistent), never in PCI-X mode (the PIC cannot page-map 32-bit addresses there, and the direct window is refused too). Established.
+`pcibr_dma_map` (`pcibr_dma.c`): a device mask below `0x7fffffff` gets no mapping (returns 0). A full 64-bit mask (`~0`) gets 64-bit direct with `PREF` (streaming) or `BAR` (consistent). Anything between gets, for a streaming mapping, 32-bit direct if the PIC is in conventional PCI mode and the address lies in the 2 GiB starting at the PROM's base; otherwise a run of translation entries with `PREF` (streaming) or `BAR` (consistent), never in PCI-X mode (the PIC cannot page-map 32-bit addresses there, and the direct window is refused too, so such a device gets no mapping). A consistent (descriptor) mapping never uses the 32-bit direct window: a full 64-bit coherent mask gets 64-bit direct with `BAR`, anything else always gets translation entries with `BAR` (`pcibr_dma_map_consistent`). The translated window is therefore required by any 32-bit-mask device. Established.
 
-For the Altix 350's two main DMA masters: the IOC4's ATA engine uses 32-bit PCI addresses (the IDE layer's default mask; the driver sets none, inferred from `sgiioc4.c`), so on a PCI-mode bus it takes the direct window when the buffer's node offset is under 2 GiB and translation entries otherwise. The QLogic ISP 12160 on the IO9 card sets a 64-bit mask when the host supports one; whether the card's bus is in PCI or PCI-X mode on a running machine is not in the sources read. **Unknown.**
+For the Altix 350's two main DMA masters: the IOC4's ATA engine uses 32-bit PCI addresses (the IDE layer's default mask; the driver sets none, inferred from `sgiioc4.c`), so on a PCI-mode bus it takes the direct window for a streaming buffer whose node offset is under 2 GiB and translation entries otherwise; its descriptor memory always takes translation entries. The QLogic ISP 12160 on the IO9 card sets a 64-bit mask when the host supports one; whether the card's bus is in PCI or PCI-X mode on a running machine is not in the sources read. **Unknown.**
 
 ### What the PROM programs (and what it does not)
 
@@ -160,8 +160,8 @@ The II is the SHub's Crosstalk port ([overview](README.md)). The header defines 
 
 | Register | Offset | Role for inbound DMA | PROM 10.54 | Reset |
 |---|---|---|---|---|
-| `inbound_widget_access` (IIWA) | `0x400118` | one bit per source widget: bit 0 widget 0, bits 15:8 widgets 8 to 15. A request from a widget is accepted only if its bit is set. Software uses it to fence off a misbehaving widget. Replies coming in from Crosstalk are not checked | `0xff01` at `0xffab30e0` | unknown (the Bedrock sibling resets to 0) |
-| `inbound_device_error_mask` (IIDEM) | `0x400120` | eight bits for each of widgets 8 to 15, one per DMA master (device) behind it. A request passes only if both its device bit here and its widget's IIWA bit are set. The II clears a device's bit itself when it detects an error that requires shutting the device down. The header assumes transaction numbers 0 to 7 are the device numbers ("Bridge-centric") | **no write found** in the routines traced (`0xffaad720`, `0xffab1cc0`, `0xffab34b0`) | unknown. The Hub and Bedrock siblings reset to all ones (established for those chips), so a model that powers up with every device enabled matches the sibling. The PROM works without writing it, which is consistent with all ones |
+| `inbound_widget_access` (IIWA) | `0x400118` | one bit per source widget: bit 0 widget 0, bits 15:8 widgets 8 to 15. A request from a widget is accepted only if its bit is set. Software uses it to fence off a misbehaving widget. Replies coming in from Crosstalk are not checked | `0xff01` at `0xffab30e0` (IOWA first, then IIWA, called from `0xffaad720` after the CRB clear) | unknown; the 2.4 header gives no reset value for any II register except the region protection register (ILAPR, all nodes allowed) |
+| `inbound_device_error_mask` (IIDEM) | `0x400120` | eight bits for each of widgets 8 to 15, one per DMA master (device) behind it. A request passes only if both its device bit here and its widget's IIWA bit are set. The II clears a device's bit itself when it detects an error that requires shutting the device down. The header assumes transaction numbers 0 to 7 are the device numbers ("Bridge-centric"). The header says its bits "are set by writing a 1 to them", so writes are set-only from software | **no access found**: no instruction in the whole 6 MiB image forms the address `0x8000000801c00120` (all PROM II accesses use immediate addresses), so the PROM neither writes nor reads it | unknown; inferred all ones, since neither the PROM nor Linux writes it and DMA works. The Hub and Bedrock siblings reset to all ones (established for those chips), so a model that powers up with every device enabled matches the sibling |
 | `outbound_widget_access` (IOWA) | `0x400110` | not inbound: qualifies PIO and graphics writes the II launches | `0xff01` | unknown |
 | `widget_control` (WCR) | `0x400020` | `wid` bits 3:0: the SHub's own widget number, the target of every DMA; the PROM reads it back to set the PIC's direct-map widget; destination credits 15:13 (PROM leaves 4) | `wid` set by `0xffab33e0`; credit by `0xffab3580` | unknown |
 | `wrapper_control` (IWC) | `0x400250` | bit 0 `dma_byte_swap`; bits 32:28 and 40:36 the network reply and request queue depths, bits 49:44 the inbound queue depth; force-credit bits 63:62 | bit 0 cleared by read-modify-write at `0xffaad9f6` | unknown |
@@ -228,4 +228,25 @@ For a PIC bus master (an IOC4 ATA engine, a QLogic SCSI controller) to read and 
 
 ## Reviews
 
-Not yet reviewed.
+### Independent review, 2026-11-16
+
+Reviewer wrote none of it. Method: Ghidra (IA-64 module, `--sn2-prom --no-analysis`) decompiles of `0xffb6bd50`, `0xffab7af0`, `0xffab7850`, `0xffab7e50`, `0xffab8110`, `0xffab0c00`, `0xffac0420`, `0xffa788b0`, `0xffb37e70`, `0xffab1cc0`, `0xffaad720`, `0xffab30e0`, `0xffab33e0`, `0xffab3580`, `0xffab34b0` and `0xffb6d9c0`, plus a whole-image listing for immediates; the specifications' text; Linux `pcibr_dma.c`, `pcibr_provider.h`, `addrs.h` and the 2.4 SN2 `shubio.h` (revision `8ef7d46c94d5`).
+
+**Confirmed.**
+- Direct map: base `nasid << 36`, `dir_off = x >> 31`, `dir_w_id` from record `+0x60`, bit 17 set only for `x == 0x20000000`; setters at `+0x80` use the field positions stated. The part check (`0xd102`, `0xd112`, `0xe000`, `0xe010`; manufacturer `0x24`) is as written. `0xffa788b0` reads `nasid << 38 | 0x8000000900010010` and sums four bank fields. The widget in `0xffab0c00` comes from the II widget control `wid` read (`0xffab3720`, bits 3:0).
+- Table count `0x400` in the record at `+0x50`; the zero-fill loop calls an entry writer (`0xffabf2c0`) that stores at `0x10000 + 8 * index`. Control bit 21 cleared in `pic_attach2`.
+- IIWA and IOWA both written `0xff01` (`0xffab30e0`); WCR `wid` (bits 3:0, the write also clears bit 4) and destination credits (bits 15:13) set by `0xffab33e0` and `0xffab3580`; IWC bit 0 cleared by read-modify-write at `0xffaad9f6`. The CRB clear is `0xffab1cc0`.
+- Command word fields (Bridge 4.0 section 3.2.9 Table 15), 32-bit direct formula (Bridge 4.0 Table 45), 64-bit attribute bits (Bridge Table 46; XBridge Table 87), `PHYS_TO_DMA` split, Linux window choice and `sn_dma_flush` (`0x10f`, force-interrupt store, spin).
+- The header text for IIWA, IIDEM and ICRB matches the page. The 2.4 header says the outbound big-window entry's IOSP field becomes Crosstalk bit 47, which supports reading bit 47 as register space (still inferred for inbound).
+
+**Changed.**
+- Source dates: Bridge cover 26 April 1998 (the 27 March 1997 is the page footer); XBridge cover 11 June 1998.
+- Table citations: XBridge 64-bit tables are 87, 88 and 90 (89 is the 32-bit space); Bridge 46, 47 and 49 (48 is the 32-bit space).
+- 64-bit direct swap: on the XBridge it comes from address bit 55, not a Device bit; now stated, graded inferred for the PIC.
+- Consistent mappings never use the 32-bit direct window; the translated window is mandatory for 32-bit-mask devices; PCI-X mode gives such devices no mapping.
+- Node choice: the PIC's own node is record `+0x102` (NASID of its window pointer), the override condition is `+0x104 == 0x700`.
+- IIDEM: the PROM does not touch it anywhere in the image (previously "no write found in routines traced"); header says bits are set by writing 1; reset stays unknown, inferred all ones. IIWA and IIDEM have no reset value in the 2.4 header (it gives one only for ILAPR), so both stay unknown; IIWA is written by the PROM regardless.
+
+**PCI or PCI-X.** Unsettled by any held source. The PROM reads the mode from the PIC at attach (`pcireg_mode_get`) and Linux copies it from the PROM's record; the Altix 350 guides give slot speeds and say a PCI card on a bus forces PCI mode ([base I/O page](../../platforms/sn2/altix-350-base-io.md)), and neither says what the base I/O buses run in. Model both; bus 1, which carries the IO9's IOC4, is **unknown**.
+
+**Not checked.** The body of the entry writer beyond its address arithmetic; the writer of `+0x60`; what `0x700` denotes; Bridge section 7.3 and Crossbow Tables 1, 2, 12 and 25 (page text taken as written); IPRB and IPRTE header text; the community `nsafran1217/linux-sn2` tree (not readable in the Library; the root `linux` copy shows the same `sn_dma_flush` signature, not diffed); v5.3 against the history snapshot beyond the files read.
