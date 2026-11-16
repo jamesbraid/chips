@@ -160,7 +160,7 @@ is a tar of three EFI drivers, `drv_fpswa.efi` among them (the floating-point so
   ([efi.md](../../software/firmware/snprom/efi.md#4-the-console), established). No IOC4 UART is selected on the reset-to-EFI path (inferred).
 - EFI configuration tables: it installs the SAL system table, ACPI 1.0 and 2.0 RSDPs, a PCDP table and the debug image table, and the PCI option ROM table
   when its count is nonzero; MPS is not installed and nothing installs SMBIOS (established,
-  [efi.md](../../software/firmware/snprom/efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The ACPI contents are unknown.
+  [efi.md](../../software/firmware/snprom/efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The tables themselves (ACPI, memory map, SAL system table, runtime services) are in [os-handoff-tables.md](../../software/firmware/snprom/os-handoff-tables.md).
 - Variable store: a flash-backed store at the top of the address space, "Syncing EFI var. store" at `0xffaf6640` and `0xffaf6d10`.
   Role inferred; contents and layout unknown. EFI runtime time calls go through SAL ids `0x0a` and `0x0b`, variable calls through `0x08` (established from the EFI image's constants, per the snprom README).
 - Boot manager and variables: the Intel sample boot manager with `Boot####`, `BootOrder`, `BootNext`, `Timeout` (default 7 s) and a default

@@ -1,0 +1,143 @@
+# The tables the SN2 PROM builds for the operating system
+
+What the SAL 5.04 PROM (SHub 1, Altix 350) puts in front of the loader and the kernel: the ACPI 2.0 tables, the EFI memory map, the SAL system table and the EFI runtime services. Each section gives the builder's address and what it writes, so a machine model can supply the same thing. The kernel side (what `setup_arch` needs from each) is in [the early-boot page](../../linux/sn2-early-boot.md); the hand-off record is in [efi.md](efi.md#2-the-hand-off-from-sal_b).
+
+Image: `shub1snprom.bin` from snprom 10.54 build 70399, SAL 5.04, flat at `0xffa00000`; the EFI component is the gzip ELF of FIT type `0x1f`. Addresses `0xff......` are SAL_B machine addresses; EFI addresses are ELF addresses (the Ghidra export adds `0x100000`).
+
+**Grades.** *established*: the whole builder was read and the constants decoded from the image bytes. *inferred*: read from call shape or names. *unknown*: not read. Decompiler output was navigation only. The UEFI/EFI 1.10 and ACPI 2.0 specifications are not held in the Library (a search of `techpubs` found neither), so structure offsets below are checked against the PROM's own stores and against Linux, not a specification.
+
+## How the tables are built
+
+SAL_B runs `0xffafc140` just before it enters EFI. It allocates every table from a hand-off arena (`0xffafc350`, zeroed, so every field not named below is 0) and writes the 0x58-byte record. The calls, in order (established):
+
+| Builder | Makes |
+|---|---|
+| `0xffac8120` | the memory descriptor array |
+| `0xffafca90` | the SAL system table |
+| `0xffb5c9b0` | the ACPI 1.0 RSDP: a stub that stores 0 |
+| `0xffb5a2f0` | the ACPI 2.0 RSDP, which calls `0xffb59da0` for the XSDT |
+
+The record's ACPI 1.0 slot is therefore 0 and there is no ACPI 1.0 table (the kernel does not use one). Whether EFI installs a null configuration-table entry for it was not checked. The ACPI 2.0 pointer is also stored at block B `+0xc0` ([sn2-runtime](../../sal/sn2-runtime.md#two-data-blocks-the-handlers-use)).
+
+All ACPI tables share the header writer `0xffb565e0` and the checksum/length writer `0xffb56750` (established): OEM id `SGI` (3 bytes, rest 0), OEM table id = the signature followed by `SN2\0` (for example `APICSN2\0`), OEM revision `(revision << 16) + 1`, creator id 1, creator revision 1. Length and the checksum byte are set last.
+
+## 1. ACPI
+
+Established, from the five builders.
+
+| Table | Builder | Revision | Length |
+|---|---|---|---|
+| RSDP | `0xffb5a2f0` | 2 | 0x24 |
+| XSDT | `0xffb59da0` | 1 | 0x44 |
+| MADT (`APIC`) | `0xffb56910` | 1 | 0x2c + 12 per CPU |
+| SRAT | `0xffb56d40` | 1 | 0x30 + 40 per memory node + 16 per CPU |
+| SLIT | `0xffb57570` | 1 | 0x2c + N*N |
+| FADT (`FACP`) | `0xffb57c40` | 3 | 0xf4 |
+| FACS | `0xffb58360` | n/a | 0x40 |
+
+**RSDP.** Signature `RSD PTR `, OEM id `SGI`, revision 2, RSDT address 0, length 0x24, XSDT address at `+0x18`, both checksums set.
+
+**XSDT.** Four 64-bit entries at `+0x24`: MADT, SRAT, SLIT, FADT, in that order. No DSDT, no SPCR and no HCDP/PCDP here (the PCDP is EFI's, [efi.md](efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The FADT's `X_DSDT` is 0, so there is no `SGIHUB` namespace in this builder. Whether a later call (the OS-feature call sets a flag in block B `+0xc8`) rebuilds a DSDT is **unknown**.
+
+**Where the numbers come from** (established as the reads; the writers of both tables are unread, see section 5). A per-node table at block A `+0x10` (a count, then one halfword per NASID, `-1` for an absent node) and a per-CPU table at block A `+0x18`: 4-byte entries `{u16 id, u16 flags}` ended by id `0xffff`, flag bit 0 = CPU enabled. The CPU id is the SAPIC id the kernel sees: ID in bits 15:8, EID in bits 7:0. A node "has memory" when `0xffa788b0` finds a non-zero total in the SHub memory configuration register at `0x9_0001_0010` of that NASID. Proximity domains are compact numbers: the n-th node with memory, in NASID order, gets domain n; a CPU takes the domain of its NASID, found from the id as `(id & 0x7f) | ((id >> 11) << 7)`, the same decode [GET_SAPIC_INFO](../../sal/sn2-runtime.md#get_sapic_info-0x0200001d) uses.
+
+**MADT.** Header 0x2c: local APIC address (`+0x24`) 0 and flags 0, so the kernel stores no address. One type 7 (local SAPIC, length 12) per CPU table entry, in table order: `+2` ACPI processor id (0, 1, 2 ...), `+3` SAPIC id (`id >> 8`), `+4` EID (`id & 0xff`), `+8` flags = `4`, with bit 0 added when the table flag is set (a CPU the table marks absent keeps flags 4: the enable bit is the only difference). No IOSAPIC, interrupt-override or NMI entries.
+
+**SRAT.** Header 0x30 with the two reserved words 0. Memory entries first, then CPU entries, both in the order of their source tables.
+- *Memory* (type 1, length 0x28), one per node with memory: domain at `+2`; base at `+8` = `(nasid << 38) + 0x30_0000_0000`; length at `+0x10` = `0x10_0000_0000` (64 GiB, the node's whole cacheable window, not the installed size); `+0x18` = 1; flags at `+0x1c` = 1 (enabled). The `0x30_0000_0000` is address-space bits 37:36 = 3 ([address map](../../../platforms/sn2/address-map.md)); the kernel takes the NASID as `(base >> 38) & 0x7ff`, which these bits do not disturb.
+- *Processor* (type 0, length 16), one per CPU, including CPUs on nodes without memory (the domain comes from the compact map by NASID, which has no number for such a node; the value the entry gets was not checked): domain `[7:0]` at `+2`, SAPIC id at `+3`, flags `+4` = 1, EID at `+8`, domain `[15:8]` at `+9`. So a slice appears only through the EID/id bits of its CPU.
+
+**SLIT.** `+0x24` holds N, the number of domains (highest compact number + 1); the N*N byte matrix starts at `+0x2c`, pre-filled `0xff`. An entry is `10 * distance(i, j) / distance(i, i)`, capped at `0xfe`, using a per-chip distance method (`0xffa0b210`; the chip method is **inferred** to count router hops from the node table at block A `+0x30`).
+
+**FADT.** Revision 3, no DSDT. Fields set: PM profile `+0x2d` = 4, SCI interrupt `+0x2e` = 0x34, PM1 event/control/timer/GPE0 lengths 4/2/4/8, `P_LVL2_LAT` 0x65 and `P_LVL3_LAT` 0x3e9 (C2/C3 unsupported), flags `0x1041` (WBINVD, fixed RTC absent, headless), `X_FIRMWARE_CTRL` = the FACS. The extended PM1a event, PM1a control, PM timer and GPE0 blocks are memory-space generic addresses that point to freshly allocated, zeroed RAM (4, 2, 4, 8 bytes): they are not hardware. FACS: signature, length 0x40, version 1 at `+0x20`.
+
+## 2. The EFI memory map
+
+The array is built by `0xffac8120` (0x28-byte descriptors: type, physical start, pages, attribute), sorted by start, and handed to EFI, which adds its own allocations and returns the result through `GetMemoryMap` (descriptor size 0x30, version 1). The kernel sees both. Established unless marked.
+
+| Source | Type | Start and size | Attribute |
+|---|---|---|---|
+| PAL code, first node only | 13 | `0x0100_0000`, 16 MiB | `0x8000000000000009` |
+| Flash window | 11 | `0xff80_0000`, 8 MiB | `0x8000000000000001` |
+| I/O port space | 12 | `0x1fff_ffff_fc00_0000`, 64 MiB | `0x8000000000000001` |
+| MMIO, SHub 1 (part `0x4363`) | 11 | `(nasid << 38) + 0x8_0000_0000`, 32 GiB | `0x8000000000000001` |
+| MMIO, TIO (part `0x4422`, **inferred** to be a TIO) | 11 | `nasid << 38`, 64 GiB | `0x8000000000000001` |
+
+Every node with memory then gets, from its bank 0 (base = `(nasid << 38) + 0x30_0000_0000`), in this order:
+
+| Offset | Type | Attribute |
+|---|---|---|
+| `0` to `0x1_0000` | 8 (unusable) | 9 |
+| to `0x8_0000` | 6 (runtime data) | `0x1001` |
+| to `0x40_0000` | 4 (boot data) | 1 |
+| to `0x200_0000` | 6 | `0x1009` |
+| to `0x300_0000` | 6 | 9 |
+| to `0x600_0000` | 4 | 9 |
+
+After that: conventional memory (type 7, attribute 9) up to the SAL copy at `[block A + 0x28] + 0xa0_0000`, a type 5 (runtime code) descriptor of 6 MiB there (attribute 9, no runtime bit), then conventional memory to the end of the bank. A bank's size is 31/32 of the bank record's size, capped at 16 GiB; a disabled bank is one type 8 descriptor of attribute 9. Banks sit 16 GiB apart (`bank << 34`). If a bank is smaller than about 2 GiB, the last `64 MiB - size/31` of it is typed 8 (attribute 8). Attribute 9 is write-back plus uncached, so the kernel's write-back test passes for the conventional and boot-data ranges. The bank size and enable bit come from component records of type `0x32` inside the node's board of type `0x11` (`+0x1c` bank, `+0x38` size in MiB, `+2` bit 0 enabled); the PROM's inventory builder produces those, and the layout of the record is not decoded.
+
+Notes. The PAL descriptor is one 16 MiB range, exactly the kernel's limit, and it contains `PAL_PROC` (`0x01ff_f800`) and `SAL_PROC` (`0x01ff_fc00`). Under the simulator signature the port space instead sits at `0xf_cc00_0000` inside bank 0 and nothing is added at the end. No descriptor covers the legacy VGA range `0xa0000`, so `efi_mem_type(0xa0000)` is not conventional (**inferred** from the list above). The runtime bit (bit 63) is set only on the PAL, port-space, flash and MMIO descriptors, so those are all `SetVirtualAddressMap` has to map.
+
+## 3. The SAL system table
+
+Builder `0xffafca90`, 0xe0 bytes, five entries (established).
+
+| Field | Value |
+|---|---|
+| signature | `SST_` |
+| `+4` size | `0x60` (the header only; the checksum byte at `+0xc` covers the same 0x60 bytes) |
+| `+8` SAL spec revision | `0x0302` |
+| `+0xa` entries | 5 |
+| `+0x14`, `+0x16` SAL_A and SAL_B version | `0x0504` (5.04) |
+| `+0x18` OEM id, `+0x38` product id | `SGI`, `SN2` |
+
+Entries start at `+0x60`, in order:
+
+| Offset | Type | Contents |
+|---|---|---|
+| `0x60` | 0, entry point (48 bytes) | `PAL_PROC` `0x01ff_f800` (`+8`), `SAL_PROC` `0x01ff_fc00` (`+0x10`), global pointer `0x01ff_fc00` (`+0x18`) |
+| `0x90` | 2, platform features | feature byte `+1` = 8: only the ITC-drift bit; no bus lock, no IRQ or IPI redirection |
+| `0xa0` | 3, translation register (32 bytes) | instruction TR 0, virtual address `0x0100_0000`, page size 2^24, PTE 0 |
+| `0xc0` | 4, PTC domains | count at `+4`, array pointer at `+8`; one domain per NASID, each `{count, pointer to u16 ids}`, from the block A `+0x18` CPU table |
+| `0xd0` | 5, AP wake-up | mechanism byte `+1` = 0 (external interrupt), vector `0x12` at `+8` |
+
+No type 1 (memory descriptor) entries. The three entry-point addresses are in the PAL-code range; what code sits at `0x01ff_fc00` was not traced (**unknown**), so a model may place its own SAL stub there or anywhere in the PAL range. This agrees with [sn2-runtime](../../sal/sn2-runtime.md); the AP wake-up and platform-feature values are new there. A model that clears the ITC-drift bit or changes the vector changes kernel behaviour (the early-boot page lists why).
+
+## 4. The EFI runtime services
+
+The system table in the EFI image (`SystemTable`, `0x1fe268`, 120 bytes) is static: signature `IBI SYST`, revision `0x0001000a` (EFI 1.10) at `+8`, header size 120, CRC field 0; the vendor, console and table pointers are filled in at run time and the vendor string was not found (**unknown**). Runtime services table (`RuntimeServices`, `0x1fe2e0`, signature `RUNTSERV`) members, named from the image's symbols (**inferred** for which slot holds which, established for each body):
+
+| Service | Implementation |
+|---|---|
+| `GetTime` | real: SAL `0x0200000b` fills seven u16 (year, month, day, hour, minute, second, milliseconds); capabilities resolution 1, accuracy 50,000,000 (50 ppm), no sets-to-zero; time zone and daylight 0. |
+| `SetTime` | real: SAL `0x0200000a` |
+| `GetWakeupTime`, `SetWakeupTime` | stubs returning `EFI_UNSUPPORTED` |
+| `SetVirtualAddressMap` | real (below) |
+| `ConvertPointer` | real; loops forever on an address outside every known range |
+| `GetVariable`, `GetNextVariableName`, `SetVariable` | real, flash store through SAL `0x02000008` |
+| `GetNextHighMonotonicCount` | real |
+| `ResetSystem` | real: cold and shutdown send SAL callback `0x5000` op 2, warm op 1 |
+
+The SAL side of the clock (`0xffa1cef0`, `0xffa1c8d0`, established): the time is a base value held at block A `+0x48`, advanced by the SHub real-time counter at `0x81_101c_0000` (the same counter `Stall` uses), and re-read when more than 300,000,000 ticks have passed. The base is read by a chip method at slot `+0xb8` (unread); if it fails the base is 1998-01-01 00:00:00. A model can therefore answer with any fixed base and a running counter.
+
+`SetVirtualAddressMap` (`0x12d0e0` and `0x121800`, established): it fails with `EFI_UNSUPPORTED` before `ExitBootServices` or when already virtual, `EFI_INVALID_PARAMETER` for a descriptor size under 0x28 or a version other than 1, and `EFI_NOT_FOUND` for a descriptor with a virtual address that matches no runtime range. It matches each descriptor to a runtime range by physical start, fixes up the runtime image list, events and its own pointers, returns `EFI_NO_MAPPING` if a runtime range got no virtual address, and finally calls SAL `0x02000013` once to retarget the PROM's own pointers (mode value 1, then a clearing call). The kernel tolerates failure.
+
+SAL calls the runtime implements among those the kernel and EFI use: `PROBE` `0x02000003` (protected read, returns data), `SYSCTL_OP` `0x02000030` (ops 1, 2, `0x200f`), `PCI_CONFIG_READ`/`WRITE` `0x01000010`/`11` (decode the address as segment/bus/device/function/register, look up the device and read or write through its config method; status 0 even when no device is found, in which case no data is returned), and `PHYSICAL_ID_INFO` `0x01000013` (status 0; r9 not decoded, **unknown**). All four are present in both the SAL_B and the runtime dispatch tables.
+
+## 5. Where the PROM gets the per-node facts
+
+These are the model inputs (established as reads; the writers are unread, **unknown**):
+
+- Block A `+0x10`: node presence, one halfword per NASID. Block A `+0x18`: the CPU table `{id, flags}`. Block A `+0x30`: 0x48-byte router/link records the distance method reads. Block A `+0x28`: base of the SAL copy.
+- Per NASID: the chip part number at `(nasid << 38) + 0x9_0000_0000` bits 27:12 (`0x4363` SHub 1, `0x4422` TIO), the memory configuration register `0x9_0001_0010`, and the node's inventory board (type `0x11`) with its bank components.
+- The SHub real-time counter and its period.
+
+A one-node model needs: NASID 0 present, N CPU entries with ids that decode to NASID 0, one board with up to four bank records, and the registers above. The writers of the two tables (the CPU enumeration the node bring-up page mentions at `0xffac6340`, and the node discovery in `main`) are the route to settle how a real machine fills them.
+
+## Unknowns
+
+- What sits at the SAL entry address `0x01ff_fc00`, and the effect of CPUs on memory-less nodes in the SRAT.
+- The system-table vendor string and the chip clock-base method (`+0xb8`).
+- Any DSDT built after the OS-feature call, and the HCDP table body (EFI's, [efi.md](efi.md)).
+- The writers of the block A tables and the inventory record layout.
+- Whether the kernel accepts the AS-bit-3 addresses as read (it uses `(base >> 38) & 0x7ff`; the rest was not traced).

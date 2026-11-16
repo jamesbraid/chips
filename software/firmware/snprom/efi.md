@@ -138,7 +138,7 @@ hands an OS loader (section 3.2.4), not what it hands EFI.
 | Table | GUID | Installed by the PROM's EFI? | Source |
 |---|---|---|---|
 | SAL system table | `eb9d2d32-2d88-11d3-9a16-0090273fc14d` | yes (record `0x18`); EFI also reads it back | `MainEntry` (established) |
-| ACPI 1.0 RSDP | `eb9d2d30-2d88-11d3-9a16-0090273fc14d` | yes (record `0x28`) | `MainEntry` (established) |
+| ACPI 1.0 RSDP | `eb9d2d30-2d88-11d3-9a16-0090273fc14d` | record `0x28` is 0: its builder `0xffb5c9b0` only stores 0 ([os-handoff-tables.md](os-handoff-tables.md)) | `MainEntry` (established) |
 | ACPI 2.0 RSDP | `8868e871-e4f1-11d3-bc22-0080c73c8881` | yes (record `0x30`) | `MainEntry` (established) |
 | MPS | `eb9d2d2f-2d88-11d3-9a16-0090273fc14d` | no: the slot is written zero | `MainEntry` and `0xffafc140` (established) |
 | SMBIOS | `eb9d2d31-2d88-11d3-9a16-0090273fc14d` | no installer exists: the GUID is only read, by shell code | all references to its address read (established) |
