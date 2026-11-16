@@ -1729,15 +1729,225 @@ pub mod lb_lock_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0208;
 }
-/// Processor interface register, unnamed; the name is ours. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when th (established)
-pub mod pi_reg_2000_0000 {
+/// SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A  (established)
+pub mod crb_message_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120000000;
+    pub mod ivack_throttle_control { // bits 63:48, established
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0xffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ivack_stall_count { // bits 47:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0xffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod enable_ivack_consolidation { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod suppress_bogus_writes { // bits 10:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wrb_attribute_mismatch_xb_enable { // bits 9:9, established
+        pub const SHIFT: u32 = 9;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rrb_attribute_mismatch_xb_enable { // bits 8:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod irb_attribute_mismatch_fsb_enable { // bits 7:7, established
+        pub const SHIFT: u32 = 7;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod wrb_attribute_mismatch_fsb_enable { // bits 6:6, established
+        pub const SHIFT: u32 = 6;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod rrb_attribute_mismatch_fsb_enable { // bits 5:5, established
+        pub const SHIFT: u32 = 5;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod message_color_enable { // bits 4:4, established
+        pub const SHIFT: u32 = 4;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod message_color { // bits 3:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod remote_speculative_message_enable { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod local_speculative_message_enable { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod system_coherence_enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Processor interface register, unnamed; the name is ours. A routine reached through a table that also writes pi_cam_control reads this register and wri (inferred)
-pub mod pi_reg_2000_0180 {
+/// Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine ( (established)
+pub mod crb_nack_limit {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120000080;
+    pub mod enable { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod pri_freq { // bits 15:12, established
+        pub const SHIFT: u32 = 12;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod limit { // bits 11:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xfff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and wr (established)
+pub mod crb_timeout_prescale {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120000100;
+    pub mod scaling_factor { // bits 31:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that al (established)
+pub mod crb_timeout_skid {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120000180;
+    pub mod reset_skid_count { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod skid { // bits 5:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. S (established)
 pub mod pi_reg_2001_0100 {

@@ -849,16 +849,88 @@
 #define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
 
 /*
- * Processor interface register, unnamed; the name is ours. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again. SAL_A's error path writes 0x1000100000000 here (bits 48 and 32) and spins. What the bits mean is unknown; that the OR value splits at revision 2 is established (the same split as the memory controller's 0x4047 and 0x4045).
+ * SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path and the SAL_B die path store 0x1_0001_0000_0000 here as a plain 64-bit write: that clears every enable in bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
  */
-/* pi_reg_2000_0000: rw64, reset unknown; SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path); no Linux v5.3 name */
-#define SHUB_PI_REG_2000_0000                        0x120000000 /* established */
+/* crb_message_control: rw64, reset 0x6; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_CRB_MESSAGE_CONTROL                     0x120000000 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT 48 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_MASK 0xffffull
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_MASK << SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_SHIFT 32 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_MASK 0xffffull
+#define SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_MASK << SHUB_CRB_MESSAGE_CONTROL_IVACK_STALL_COUNT_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_SHIFT 11 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_INPLACE (SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_MASK << SHUB_CRB_MESSAGE_CONTROL_ENABLE_IVACK_CONSOLIDATION_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_SHIFT 10 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_INPLACE (SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_MASK << SHUB_CRB_MESSAGE_CONTROL_SUPPRESS_BOGUS_WRITES_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 9 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT 8 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_XB_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 7 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_IRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 6 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_WRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT 5 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_RRB_ATTRIBUTE_MISMATCH_FSB_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_SHIFT 4 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_SHIFT 3 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_MASK  0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_INPLACE (SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_MASK << SHUB_CRB_MESSAGE_CONTROL_MESSAGE_COLOR_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_SHIFT 2 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_REMOTE_SPECULATIVE_MESSAGE_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_SHIFT 1 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_LOCAL_SPECULATIVE_MESSAGE_ENABLE_SHIFT)
+#define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT 0 /* established */
+#define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_MASK 0x1ull
+#define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT)
 
 /*
- * Processor interface register, unnamed; the name is ours. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. Meaning unknown.
+ * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
  */
-/* pi_reg_2000_0180: rw64, reset unknown; SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696; no Linux v5.3 name */
-#define SHUB_PI_REG_2000_0180                        0x120000180 /* inferred */
+/* crb_nack_limit: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_CRB_NACK_LIMIT                          0x120000080 /* established */
+#define SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT             63 /* established */
+#define SHUB_CRB_NACK_LIMIT_ENABLE_MASK              0x1ull
+#define SHUB_CRB_NACK_LIMIT_ENABLE_INPLACE           (SHUB_CRB_NACK_LIMIT_ENABLE_MASK << SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT)
+#define SHUB_CRB_NACK_LIMIT_PRI_FREQ_SHIFT           12 /* established */
+#define SHUB_CRB_NACK_LIMIT_PRI_FREQ_MASK            0xfull
+#define SHUB_CRB_NACK_LIMIT_PRI_FREQ_INPLACE         (SHUB_CRB_NACK_LIMIT_PRI_FREQ_MASK << SHUB_CRB_NACK_LIMIT_PRI_FREQ_SHIFT)
+#define SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT              0 /* established */
+#define SHUB_CRB_NACK_LIMIT_LIMIT_MASK               0xfffull
+#define SHUB_CRB_NACK_LIMIT_LIMIT_INPLACE            (SHUB_CRB_NACK_LIMIT_LIMIT_MASK << SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT)
+
+/*
+ * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
+ */
+/* crb_timeout_prescale: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_CRB_TIMEOUT_PRESCALE                    0x120000100 /* established */
+#define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT 0 /* established */
+#define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK 0xffffffffull
+#define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_INPLACE (SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK << SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT)
+
+/*
+ * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set.
+ */
+/* crb_timeout_skid: rw64, reset 0x7; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_CRB_TIMEOUT_SKID                        0x120000180 /* established */
+#define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_SHIFT 63 /* established */
+#define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_MASK  0x1ull
+#define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_INPLACE (SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_MASK << SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_SHIFT)
+#define SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT             0 /* established */
+#define SHUB_CRB_TIMEOUT_SKID_SKID_MASK              0x3full
+#define SHUB_CRB_TIMEOUT_SKID_SKID_INPLACE           (SHUB_CRB_TIMEOUT_SKID_SKID_MASK << SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT)
 
 /*
  * Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written.
