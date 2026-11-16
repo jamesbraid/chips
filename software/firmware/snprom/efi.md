@@ -287,6 +287,8 @@ PROM is bypassed or already ran to `0xffaf8c50`; a synthetic SAL_B must supply w
 11. PAL: EFI calls PAL for cache flushing (`RtPlCacheFlush`) and cache preload ("cache preloading PAL call failed" is a message, not a stop);
     exact calls and their tolerance were not read (**unknown**).
 
+The boot options, the variable-store access path, the device paths the disk drivers build and what the shell needs to run a loader from a CD or disk are in [efi-boot.md](efi-boot.md); the runtime services Linux calls are tabulated in [the runtime-services page](../../sal/runtime-services.md).
+
 ## Unknowns and routes
 
 - Builders of the SAL system table, both ACPI RSDPs and the memory descriptor array (`0xffafca90`, `0xffb5c9b0`, `0xffb5a2f0`, `0xffac8120`) and the

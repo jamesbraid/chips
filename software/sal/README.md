@@ -6,6 +6,8 @@ Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with f
 
 **PROM view.** Four shipped PROM images are now held and read ([software/firmware/snprom](../firmware/snprom/README.md)): the full dispatch tables (which ids each of the four images answers, and in which mode), and the boot-time handlers read in full there, are **established** from the binaries. The paragraph above about what the PROM does inside a call is out of date for those calls: the handlers the kernel needs from boot to multi-user, with their results on a single node and the places the PROM and the kernel disagree, are in [sn2-runtime.md](sn2-runtime.md); the rest are listed by name. The image set also shows ids the kernel header does not name (for example `0x02000008`, `0x0200000a` and `0x0200000b`, which the EFI side uses for flash and the clock).
 
+The SAL, PAL and EFI runtime services a kernel calls, with the PROM handler address for each and what stops a boot, are tabulated in [runtime-services.md](runtime-services.md), which also lists what an SN2 kernel reads from the platform.
+
 ## Calling convention
 
 The SN calls are OEM SAL procedures: function ids in the range `0x02000000` upward, passed through the ordinary SAL entry point (the entry point comes from the SAL system table's entry point descriptor, found through the EFI configuration table with the SAL system table GUID; the kernel parses it very early so console output through SAL works). The wrappers pass the function id and up to seven 64-bit arguments, and read back four values:
