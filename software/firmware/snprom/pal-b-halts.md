@@ -286,6 +286,7 @@ this. The evidence is the PAL_B 5.73 self-test table, entry 9 (`0xffee2b70`), wh
 - Meaning of msr[1640] bit 63 and of the FIT entry reserved bit 25 that selects between the two stops.
 - Whether a debugger or L1 reads `r30` or `r7` after the stop (nothing in the PROM does).
 - Why the entry at `PAL_B + 0x100a0` is the target the generic PAL_A hand-off uses for the msr[1779] bit 15 case.
+- A different hang in the same image: the msr[1730] nibble loops (for example PAL_B 5.73 `0xffe9ddb0`) never exit if the nibble does not step; see [msr 1728 and 1730 strobe loops](pal-msrs.md#msr-1728-and-1730-strobe-loops).
 
 ## Review
 

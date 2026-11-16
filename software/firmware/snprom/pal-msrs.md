@@ -319,6 +319,41 @@ Compared by locating each SGI component in the file by bundle match and re-runni
 - PAL_A 7.46 (Intel) is a different build from SGI's 7.31 and uses a different index set (392, 432, 480 to 484, 514 to 522 and others), with none of 212, 1225 or 1640 to 1643. PAL_B 7.79 and 5.73 have no counterpart in this file (its FIT lists one PAL_B, 2.20). So the 1000-and-up indices
   are shown as Intel code only through the shared 5.37, 1.27 and 2.2x images; whether the Madison 7.x images use them for the same purpose cannot be checked against Intel's file.
 
+## msr 1728 and 1730 strobe loops
+
+Read in the IA-64 Ghidra module (PAL_B 5.73 `0xffe9dd90` to `0xffe9dfb0`, PAL_A 5.37 `0xfffcb200` to `0xfffcb4c0`, PAL_A 1.27 `0xfffd1a10` to `0xfffd1b00`), with the other copies
+located by the reference decoder (`ia64_isa.py`) over the PAL_A and PAL_B images. No loop body holds a reserved slot; the O sites in
+[reserved-slot-sites.md](reserved-slot-sites.md) only flow into them. Model-run observations are not hardware evidence.
+
+**One routine, 144 copies.** Each copy moves one 4-bit field of msr[1730] to a target `T`: read msr[1730], `extr.u` the nibble (bits 3:0 or 11:8), exit when it equals `T`;
+write msr[1728] (select); read msr[1730], set bit 42, set bit 48, set bit 49 when the nibble is below `T` and clear it otherwise (`cmp.lt p7,p8=T-1,nibble`), write, `srlz.d`;
+read, clear bit 48, write, `srlz.d`; branch back. Copies: PAL_B 5.73 and 7.79 46 each, 2.25 38, PAL_A 5.37 6, 7.31 2, 1.27 4. All 144 have the same instruction mix, so **no counter,
+bound or timeout exists** (established): a nibble that never reaches `T` hangs the caller.
+
+| Register, bit | What the code does | Grade |
+|---|---|---|
+| msr[1728] 48 / 49 | read-modify-write only: 48 set and 49 clear before a 3:0 loop; 48 clear and 49 set before an 11:8 loop; both clear at exit (72 sites of each form; no other bit of 1728 is touched anywhere in the image) | established; "selects the nibble" inferred |
+| msr[1730] 3:0, 11:8 | read, compared with `T`, written back as read by every read-modify-write | established; "counter" inferred |
+| msr[1730] 48 | set in one write, cleared in the next, with a read between: a strobe | established |
+| msr[1730] 49 | set when nibble < `T`, clear when nibble > `T`: the direction | established as code, hardware meaning inferred |
+| msr[1730] 42 | set while stepping; cleared at exit only when `T` is 0 (`cmp.eq p7,p0=T,r0`); 72 of the 97 other msr[1730] sites clear it | established; role unknown |
+| msr[1730] 43, 36 | the bit 54 window above | established |
+
+**`T` per image** (nibble 3:0 / 11:8): PAL_B 5.73 and 7.79 0 or 15 / 0 or 15 (10 and 13 copies); PAL_B 2.25 0 / 0 or 8; PAL_A 5.37 and 7.31 15 / 15; PAL_A 1.27 0 / 8. The 1.27
+exits at 0 and 8 are this routine with `T` 0 and 8, and 8 is reachable from either side. Skip tests (loop not run): PAL_A msr[0] bit 22, msr[1152] bit 18 and msr[1572] bit 18 set, plus
+msr[1237] bit 1 in 1.27; PAL_B 5.73 msr[1152] bit 18, msr[1237] bit 2, msr[1572] bit 18, or the PAL procedure index in `r28` being 0x1c, 0x1d, 0x206 or 0x20a.
+
+**Is it a counter?** The code compares the nibble with `T`, takes the direction from the comparison and strobes until they match: a servo on a field that a strobe steps (inferred from
+144 identical copies, `T` of 0, 8 and 15, and 8 reachable from both sides). A status field set by a calibration step needs neither the direction bit nor the strobe. The step size
+(1 assumed), the strobe edge (0 to 1 of bit 48 assumed) and the reset value are **unknown**. Because every write carries the nibble back as read, a model must not let the written
+nibble bits override the stepped value. None of Intel's Itanium 2 reference manual 251110 (all three revisions), hardware developer's manual 251109 or specification update 251141
+(`docs/library/cache/cpu/itanium/`) names msr 1728 or 1730, and the Library holds no Intel patent on processor self-test or array test via MSR. The system bus is source-synchronous
+with strobes (251109, chapter 3); bus-timing taps are a possible use, but no source says so.
+
+**What lets a model past the loops.** msr[1728] reads back what was written. msr[1730] bits 3:0 and 11:8 step by one on each 0 to 1 write of bit 48, up when bit 49 is set and down when
+clear, the 3:0 field when msr[1728] bit 48 is set and the 11:8 field when bit 49 is. Reset to 0 passes every `T` = 0 loop at once (including `0xffe9ddb0` and `0xffe9de80`) and takes 15 or 8
+passes elsewhere; a constant 0 hangs every `T` of 15 or 8, and any constant nonzero value hangs every `T` = 0 loop.
+
 ## What is not settled
 
 - What any MSR is in hardware. Only the uses above are read.
