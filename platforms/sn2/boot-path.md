@@ -158,7 +158,7 @@ is a tar of three EFI drivers, `drv_fpswa.efi` among them (the floating-point so
   established, unreviewed. Which of `p`, `r` is which controller route, and how the EFI console
   text output reaches the user: EFI's console is SAL console calls (`0x02000023` and others) with a serial-I/O layer on top, no IOC4 or UART access of its own
   ([efi.md](../../software/firmware/snprom/efi.md#4-the-console), established). No IOC4 UART is selected on the reset-to-EFI path (inferred).
-- EFI configuration tables: it installs the SAL system table, ACPI 1.0 and 2.0 RSDPs, a PCDP table and the debug image table, and the PCI option ROM table
+- EFI configuration tables: it installs the SAL system table, the ACPI 2.0 RSDP (the ACPI 1.0 slot is 0 and adds nothing), an HCDP table and the debug image table, and the PCI option ROM table
   when its count is nonzero; MPS is not installed and nothing installs SMBIOS (established,
   [efi.md](../../software/firmware/snprom/efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The tables themselves (ACPI, memory map, SAL system table, runtime services) are in [os-handoff-tables.md](../../software/firmware/snprom/os-handoff-tables.md).
 - Variable store: a flash-backed store at the top of the address space, "Syncing EFI var. store" at `0xffaf6640` and `0xffaf6d10`.
