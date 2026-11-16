@@ -557,6 +557,26 @@ Read in Ghidra and an IA-64 listing of snprom 10.54 (`shub1snprom.bin`, flat at 
 | MMR windows | local `0x80_0000_0000` + offset, global `0x8_0000_0000` + `nasid << 38` + offset | same |
 | Flash | `0xffa00000` to `0xffffffff` in the compatibility space, read uncached through bit 63 | [images](images.md) |
 
+### Review (SAL shadow copy and destination, commit 5d3a3f5)
+
+Independent re-read in Ghidra (`--sn2-prom --no-analysis`, address ranges) and a flat `ia64-linux-gnu-objdump` listing of snprom 10.54; progress strings from the table at `0xffbd7000`; address facts against [the address map](../../../platforms/sn2/address-map.md). Nothing was run.
+
+**Confirmed.**
+- The mask helper `0xffaeb1c0` is `*p &= 0xf_ff00_0000` on a stack word. `0xfface570` stores its argument at sp+16, masks it (call `0xfface65c`), then calls `0xffa15d20(([sp+16] + 0xa00000) | 1 << 40, 0xffa00000, 0x600000)` (`0xfface680` to `0xfface69c`). `0xffac7946` is the `ld8` of block A `+0x28` and the call is at `0xffac798c`. `0xffa15e40` is the first `st8` of the unrolled 64-byte loop.
+- The masked word then goes to `0xffaeb450` (same destination) and `0xffaeb1f0`; the permission call is on plain `[sp+16] + 0xa00000`.
+- Type-5 builder: `0xffacf6cc` calls the same mask, `0xffacf6f6` adds `0xa00000`, `0xffacf710` to `0xffacf720` apply `0x7fffffcfffffffff` and OR `(nasid << 38) + 0x30_0000_0000`. There is no bit 40 in the builder, so its range is the node-window form, not the copy's.
+- The copy ends at `0x100_0100_0000`, offset `0x1000000`. Bit 40 is node field 4 at shift 38 (`LOCAL_MMR_OFFSET` is 2 at the same shift), and the address map describes that field as local memory regardless of node id. Graded inferred there (header comment only) and here.
+- Progress 0x23 is "Calling remote mem. available notification routines"; the install is 0x59, 0x5a, 0x1f, 0x20.
+- The SAL system table builder `0xffafca90` is `0xe0` bytes with a count of 5 (`mov r14=5`, `st2` at `0xffafcc2c`); no FIT entry type exists in SAL spec 3.4.
+- `0xffa4d390` formula: type-1 records start at 0 and step by 2, the NASID is `(number & 1) | (offset + number * (stride >> 1))`, defaults 0 and 2.
+
+**Changed.**
+- The shadow copy runs before the NASID install: `0xffac7400` precedes `main_two`, whose last call is `0xffacd2b0`. "The PROM keeps using plain low physical addresses after the install" holds for `0x1000000` (`0xffacddf0` uses `0x1000040` and `0x1000078` after it), not for `0xa00000`: the plain `0xa00000` use is the permission call, which is before the install. After the install the type-5 builder uses the node window.
+- NASID 0 on a lone node is inferred, not established. The arithmetic is read, but it gives 0 only when `0xffa4a740` (router tree depth) returns 0 and the environment values are unset; the L1 or slot input is not excluded, because a non-zero depth takes the path that reads the record's `+0x5e` field (stored earlier). The sibling note in [the SHub reset page](../../../devices/shub/prom-reset.md) already lists `0xffa4a740` as unconfirmed. A model run showing `[0x1000038] = 0x30_0240_0000` is model behaviour, not hardware.
+- The hand-off page's earlier review still said the copy sits at node base `+0xe0_0000`; corrected to `+0xa0_0000` there.
+
+**Not checked.** That block A `+0x28` is `0x40_0000` on this path (taken from the earlier layout-table review; the mask clears it for any value below `0x100_0000`); whether anything executes from the copy; the other `0xa00000` constants (`0xffac5ff6`, `0xffaf2cc6`, `0xffb31896`, `0xffb6f9f6`).
+
 ## The NASID change and the start of `main_three`
 
 SAL 5.04 PROM (snprom 10.54, `shub1snprom.bin`), read in full in Ghidra and an `ia64-linux-gnu-objdump` listing: `0xffacd2b0`, `0xffaf5f90`, `0xffacd1e0`, `0xffa976e0`, `0xffad7aa0`, `0xffaec240`, `0xffaec340`, `0xffa733d0`, `0xffafba70`, the first 0x600 bytes of `main_three` and the functions it calls up to the I/O discovery (read, or listed as not read). Not independently reviewed. The register-level facts, with offsets, windows and values, are in [the SHub reset page](../../../devices/shub/prom-reset.md#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three). Names are the PROM's progress table (`0xffbd7000`) and the 2.4 SN2 header.

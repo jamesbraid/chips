@@ -456,7 +456,7 @@ doc = "FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4
 [registers.pi_reg_2001_0100.fields]
 bit24 = { bits = [24, 24], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (serialize_fsb_en); SAL 5.04 PROM sites 0xffc4e816 and 0xffa97796", doc = "serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back)." }
 bit3 = { bits = [3, 3], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (berr_assert_en); SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)", doc = "berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write)." }
-bit17 = { bits = [17, 17], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (xtpr_trans_rsp); SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)", doc = "xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded." }
+bit17 = { bits = [17, 17], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (xtpr_trans_rsp); SAL 5.04 PROM site 0xffaeb2bc (set) and 0xffaeb2e0 (tested on another node)", doc = "xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded." }
 
 [registers.fsb_vga_remap]
 offset = 0x120010180

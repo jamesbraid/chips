@@ -1077,3 +1077,19 @@ Changed:
 - The word the `0x6c` test reads is named `SH_SCRATCH2` here by address; `registers.toml` still labels `0x1_101d_0100` `lb_l1_state`. Left as is.
 
 Not checked: the 2.4 header names, valid bits and INIT values quoted for the five PI error registers and `SH_SCRATCH1` (the header is not in this clone; no Linux v5.3 hit for `SH_SCRATCH1` in the Library `linux` root); the other nine lists of `0xffa30b40` beyond their counts; `0xffa24810`; the `0xffa20e30` table; the four nonzero-NASID calls. The five PI first-error and mask registers have reset `unknown` in `registers.toml` while the quoted header INIT is 0 (first-error) or all valid bits (masks); that is under-claimed, not wrong. Grades unchanged otherwise.
+
+### Review (`SH_FSB_VGA_REMAP`, commit 4055b2f)
+
+Independent re-read in Ghidra and an objdump listing of snprom 10.54 (`shub1snprom.bin`), and the SGI Linux 2.4 headers (`shub_mmr.h`, `shub_mmr_t.h`, linux-mips commit `8ef7d46c94d5`, read through the Library). Nothing was run.
+
+**Confirmed.**
+- Header: offset `0x120010180`, mask `0x4001fffffffe0000`, INIT 0, fields offset 35:17, asid 37:36, nid 48:38, enable 62; bits 61:49 reserved.
+- `0xffaeb1f0` (argument: the masked word): `0xffaeb22c` reads `0x8000008120010180` through the leaf `0xffa0e5a0` (`ld8 r8=[r32]`); `0xffaeb26c` writes `(old & 0xe001ffffffffffff) | ((arg >> 24 & 0xfff) << 49)` through `0xffa0e640`; `0xffaeb28c` and `0xffaeb2bc` read and write `0x8000008120010100` with bit 17 (`0x20000`) ORed in. The caller is `0xfface6fc`, passing the masked word, which is 0 on the stock path.
+- `0xffaeb2e0(nasid)` reads `0x8000000920010100 | nasid << 38` (global window of `pi_reg_2001_0100`) and returns `!(value >> 17 & 1)`; callers `0xffac63cc` and `0xffac690c` exist.
+- `r33 = 7` is stale: `0xffa0e5a0` is a leaf that reads only r32, and r37 (its r33) is not set before the first call in `0xffaeb1f0`.
+- The SHub 2 overlay removal agrees with the SHub 2 PROM of the same release: `shub2snprom.bin` has no `movl` of `0x8000008120010180` or `0x8000008120010100` in a linear listing.
+
+**Changed.**
+- The `bit17` source text in `registers.toml` names `0xffaeb276` as the set; that address is a `movl` of the register address. The write is `0xffaeb2bc` (the read is `0xffaeb28c`). Corrected in the toml; the generated tree does not carry field source text, so `defs-gen` writes nothing new.
+
+**Not checked.** What PROM or kernel code does with the value bits 60:49 written on a non-zero path (the field lies in the header's reserved bits); the rest of the generated headers beyond `defs-check`.

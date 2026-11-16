@@ -5,7 +5,7 @@ depend on. Read in the IA-64 Ghidra module (linear listing of the whole image, f
 (for PAL_B 5.73 also run addresses; link address = image address + `0x88000`). Nothing was run.
 
 **Grades.** *established*: instruction, operands and flow read in the image. *inferred*: reasoned from them. *unknown*: not settled.
-Field layouts are the Itanium SDM rev 2.3 vol 2 (PAL_CACHE_INFO, figures 11-2 and 11-3, pp. 2:374-2:376).
+Field layouts are the Itanium SDM rev 2.3 vol 2 (PAL_CACHE_INFO, figures 11-2 and 11-3, pp. 2:374-2:375).
 
 ## 1. The handlers (established)
 
@@ -65,7 +65,7 @@ Then:
 - cache size (`config_info_2` bits 31:0) = 2 x clear bits x `0x40000` = clear bits x 512 KB, i.e. 256 KB per way.
 
 Only the count matters, not which bits are clear. Nothing else enters: no `cpuid[3]`, no `msr[1559]`, no CPU record table (`0xffbe0a10`).
-There is no clamp: all 12 bits set gives associativity 0 and size 0.
+There is no clamp: all 12 bits set gives associativity 0 and size 0 (the SDM reads associativity 0 as fully associative).
 A set bit means two ways absent (the reading of bit i skipping ways 2i and 2i+1 in [pal-b-halts.md](pal-b-halts.md) is *inferred*; this
 handler is consistent with it).
 
@@ -83,8 +83,8 @@ Then `config_info_1` is `0x02020e0707070c03` (associativity 12) and `config_info
 Any other six-bit pattern gives the same numbers. Whether the real part sets the high or the low bits is **unknown**.
 
 Corroboration: PAL_BRAND_INFO (index 274, handler `0xffea0800`) reads the same bits (`0xffea0940`), computes the same size and inserts
-`size >> 20` as an ASCII digit into the string "Intel(R) Itanium(R) 2 Processor with N M L3 Cache" (stores at `0xffea0b96` to `0xffea0c80`), so a
-three-megabyte configuration prints `3 M` (established for the code).
+`size >> 20` as one ASCII digit into the string "Intel(r) Itanium(r) 2 Processor with NM L3 Cache" (lower-case `r`, no space before `M`; stores at `0xffea0b96` to `0xffea0c80`), so a
+three-megabyte configuration prints `3M` (established for the code). A size that is not a whole number of megabytes is truncated (5 clear bits give `2`).
 
 ## 6. Other users of `msr[1536]` bits 59:48 (established unless marked)
 
@@ -96,10 +96,32 @@ three-megabyte configuration prints `3 M` (established for the code).
   routines (`0xffe88120`, `0xffe88670`) and the L2 routine (`0xffe88970`) do not read them.
 - PAL_BRAND_INFO reads them (section 5). The other read sites (`0xffe89770`, `0xffe91110`, `0xffe91d70`, `0xffe92da0`, `0xffea44b0`, `0xffef7ee6`)
   are in diagnostic and self-test code listed in [pal-b-halts.md](pal-b-halts.md); their callers were not traced here (**unknown**).
-- No site writes bits 59:48.
+- No constant-numbered `msr` write changes bits 59:48. Three sites rewrite the whole register with other bits edited (`0xffe8a026`, `0xffe9fe90`, `0xffefc038`); computed register numbers were not searched.
 
 ## Unknown
 
 - Which bits of `msr[1536]` a real 3 MB part sets (the count is settled, the positions are not).
-- Why the L1I attribute field is 3 and the L2/L3 hint vectors set a reserved bit; the values are reported as read.
+- Why the L1I attribute field is 3 and the L2/L3 store-hint vectors set a reserved bit (bit 1); the values are reported as read. The L3 load hint (bit 1, non-temporal level 1) is a defined bit.
 - Whether PAL_B 7.79 and 1.27/2.25 (other images in the same PROM) report different L3 values: not read.
+
+## Review
+
+Independent re-read of commit 8338515 in Ghidra (`--sn2-prom --no-analysis`, address ranges) and a flat `ia64-linux-gnu-objdump` listing of snprom 10.54, plus SDM rev 2.3 vol 2 (pp. 2:374-2:375) and 251110-003. Nothing was run.
+
+**Confirmed.**
+- Handler table at `0xffe9f6e0`: 42 live 24-byte entries ended by -1 at `0xffe9fae8`, links at `0xffe9fb00` minus `0x88000`: index 2 `0xffea0430`, index 4 `0xffea1690`, index 0x112 (274) `0xffea0800`. FLUSH `0xffe9ff30` is reached by a branch at `0xffe9e3dc`; INIT's link `0xfff28d30` is in the movl list at `0xffe9e646`.
+- SUMMARY returns 0, 3, 4, 0 for zero r29..r31, else -2 with zeros (`0xffea1690` to `0xffea16cc`). INFO accepts exactly (0,1), (0,2), (1,2), (2,2) with r31 zero.
+- All four `config_info_1` and `config_info_2` constants decode against SDM figures 11-2 and 11-3 as the table says (L1I `0x10001ff07060406` / `0x310c0c00004000`, L1D `0x100010307060400`, L2 `0x802050707070803` / `0x310f0c00040000`, L3 base `0x2020e0707071803` / `0x31120c00000000`).
+- L3: one `msr[1536]` read at `0xffea0580`, `~msr & 0x0fff000000000000`, bits 59:48 shifted down; the loop at `0xffea0750` runs 24 steps (only the first 12 can be set), each clear bit adds 1 to r17 and 0x40000 to r19, both doubled at `0xffea07a0`, then `dep r2=r17,r2,8,8` and `or r3=r3,r19`. Six clear bits give `0x02020e0707070c03` and `0x0031120c00300000`, as worked.
+- FLUSH reads at `0xffe9ffb0` and compares at `0xffea01ec` (r31 above the way count or negative: -2). INIT's L3 routine reads at `0xffe890f0`. The walk helper range limit `0x3ffc0` is at `0xffe92bb0` (262080, 128-byte steps). BRAND_INFO reads at `0xffea0940`.
+- SDM layout of both configs, Table 11-67 (attribute 3 reserved), Table 11-68 (store-hint bit 1 reserved) and Table 11-69 (load-hint bit 1 non-temporal level 1).
+- All eleven listed `msr[1536]` read sites exist (the register number is loaded at each; `0xffef7ee6` is `0xffef7ee8` in a linear sweep, probably a phase difference, not re-resolved).
+
+**Changed.**
+- Brand string: it is "Intel(r) Itanium(r) 2 Processor with 3M L3 Cache" (lower-case `r`, no space before `M`), not `3 M`.
+- SDM page range is 2:374-2:375 (2:376 is PAL_CACHE_INIT).
+- "No site writes bits 59:48" is weaker than it read: three whole-register write-backs exist; none changes 59:48 (constant numbers only).
+- Unknown list: the L3 load hint is not a reserved bit; only the store hints (bit 1) are.
+- Table 6-4 in 251110-003 lists the L3 latency as "14 or 12" cycles without saying which configuration, so the manual does not discriminate the PAL's 14; the 12-way 3 MB row is table 12-4 only.
+
+**Not checked.** Which predicate selects each link in the special path at `0xffe9e5f0` (indexes 0x101 and 0x105 are also in the static table); the INIT routine's level and type decode beyond the read at `0xffe890f0`; the set-count loop at `0xffe89350`; the other `msr[1536]` readers' callers.
