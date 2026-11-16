@@ -748,7 +748,7 @@ are written by the SAL runtime's PIC attach (below); until then the registers ho
 - `+0x48` (`llp_cfg`, `p_wid_llp`): read-modify-write of bits 9:0 to `0x3e0`. The fields are bits 25:16 maximum retry, 15:10 null timeout and 9:0 maximum burst ([registers-extra.md](registers-extra.md), `LLP_CFG_REG`), so this sets the maximum burst to `0x3e0` (992) and keeps the other fields. The page marks it valid on head 0 only; the PROM writes it on both heads. Reset value: unknown (no specification held).
 - `+0x280` and `+0x288` (`rrb`, even and odd response buffer map): `0x88889999` written to each, not read back in this stage. Per nibble, low to high: `9` = valid, virtual channel 0, device pair 1 (nibbles 0 to 3); `8` = valid, virtual channel 0, device pair 0 (nibbles 4 to 7). So each register hands four response buffers to each of two slots (even register: slots 0 and 2; odd register: slots 1 and 3), all on virtual channel 0. Reset value: unknown. The enable bits do not act on anything the PROM does next; the effect on the model is only that reads of these registers return what was written.
 
-Values a model needs for this stage: id word `+0` with manufacturer `0x24` and part `0xd102` on both buses' windows, every
+Values a model needs for this stage: id word `+0` with manufacturer `0x24` and part `0xd102` on bus 0's window and `0xd112` on bus 1's (the PROM accepts either part on either window; the SGI header names `0xd112` for bus 1), every
 register above plain read/write storage (8-byte), a clock at `0x1_101c_0000` that advances (the waits), and no side effect on
 reads of `+0x20`, `+0x48`, `+0x80`.
 
@@ -765,6 +765,24 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of snprom 10.54 (`shu
 **Not confirmed.** Whether the reset of row 4 is seen by a model as anything but writes: the PCI reset pins are not read back anywhere here.
 
 **Grades.** Unchanged.
+
+### Review (the three writes and the id-word guard, commit a132551)
+
+Independent re-read on 2026-11-16 in Ghidra (IA-64, `--sn2-prom --no-analysis`) of snprom 10.54 (`shub1snprom.bin`): `0xffab0c00` and the accessors `0xffab3f40`, `0xffab41f0`, `0xffab5d90`, `0xffab6030` and `0xffabcfb0`. The field names were checked against the public Linux 2.4 SN2 tree (`include/asm-ia64/sn/pci/pic.h`, `arch/ia64/sn/io/sn2/pcibr/pcibr_rrb.c`, library root `linux-mips`).
+
+**Confirmed.**
+
+- `0xffab0c00` runs for each head (`W`, `W + 0x80_0000`); the `+0x48` accessors are unconditional, so the write happens on both heads, while only the interrupt block is gated on bit 23.
+- `+0x48` is `0xffab5d90` (load) then `0xffab6030` (store) of `(value & ~0x3ff) | 0x3e0`: bits 9:0 only. `pic_llp_cfg_u` is 25:16 `llp_maxretry`, 15:10 `llp_nulltimeout`, 9:0 `llp_maxburst`, and the header comment says the register is valid on bus 0 only. So maximum burst 0x3e0 (992) is right.
+- `+0x280` and `+0x288` are `0xffabcfb0` with index 0 and 1, address `base + 0x280 + 8 * index`, each written `0x88889999`. `0xffab0c00` contains no load of either. The nibble decode matches `pcibr_rrb.c`: bit 3 enable, bits 2:1 virtual channel, bit 0 device pair (`slot >> 1`), register chosen by `slot & 1`. So `9` is enable, channel 0, pair 1; `8` is enable, channel 0, pair 0. The decode is the header's; which buffers the real chip assigns to which slot is not tested by the PROM.
+- Every PIC accessor reads the id word at the window it is given and checks manufacturer `0x24` (bits 11:1) and part `0xd102` or `0xd112` (bits 27:12); a pointer with bits 37:36 both set skips the read. `0xe000` and `0xe010` with manufacturer `0x24` are type 3. Anything else prints "unknown bridgetype" and the access is dropped.
+
+**Changed.**
+
+- The model-requirement line said part `0xd102` on both windows. The PROM accepts `0xd102` or `0xd112` on either head (the guard is per window), and the header (`PIC_WIDGET_PART_NUM_BUS0` `0xd102`, `PIC_WIDGET_PART_NUM_BUS1` `0xd112`) names `0xd112` for bus 1. Only the link walk (`0xffab0f10`) tests for exactly `0xd102`, and it reads head 0's word. Fixed above. A model that answers `0xd102` on both windows still works with this PROM; `0xd112` on head 1 matches the header.
+- "Not read back" holds for the PROM stage only. The SAL runtime's PIC attach (next section, row 10) read-modify-writes `+0x280` and `+0x288` for revision 1 (`0xf000f` set), so those two must read back what was written.
+
+**Not checked.** Reset values of the three registers (no specification or firmware-independent source). Whether the real chip ignores `+0x48` on bus 1. The `0xe000`/`0xe010` (type 3) accessor branch beyond the id test.
 
 ## SAL runtime PIC attach and PCI scan (`pic_attach2`, `0xffb6d9c0`)
 

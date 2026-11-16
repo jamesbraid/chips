@@ -316,18 +316,18 @@ the run is not evidence. Nothing was run.
 the I/O side. The model's stop is request code `0x0006`, destination `0x0ffff006`, four tag-0 integers `0x62`, `2`, `0`, `0x40`
 (bytes `00 00000062 00 00000002 00 00000000 00 00000040`, the 20 argument bytes with no count byte; the frame's count byte is 4).
 
-**Call chain (established).** `0xffab38b0` prints "Discovering local I/O on nasid %d" (master only, through `0xffaad6d0` from the entry
-`0xffaad720`), then `0xffab15c0` reads the widget identification word at `nasid << 38 | 0x8000_0008_0000_0000` and, for a crossbar
+**Call chain (established).** `0xffab38b0` prints "Discovering local I/O on nasid %d" (master only, through `0xffaad6d0`, called from `main_three` at `0xffad756c`), then `0xffab15c0` reads the widget identification word at `nasid << 38 | 0x8000_0008_0000_0000` and, for a crossbar
 part (`0xd000`/`0xd100`), walks the widgets in `0xffab0f10`. For a widget whose id part is `0xd102` (PIC) it runs the PIC set-up
 `0xffab0c00` on head 0 and on head 1 (`W + 0x80_0000`; the register writes are in [devices/pic](../../../devices/pic/README.md#prom-set-up-of-a-pic-in-main_three-0xffab0c00)), then `bridge_discover`
-`0xffabfb10`. That calls `io_mfg_info` (`0xffaf1ee0`, site `0xffac01fc`; a second caller site, `0xffaaeafc`, is a generic accessor not on
-this path). An even node number selects `0xffaecd80`, which calls `0xffa85550`; an odd one selects `0xffaeccd0` and the id-1 path of
+`0xffabfb10`. That calls `io_mfg_info` (`0xffaf1ee0`, site `0xffac01fc`; a second caller site, `0xffaaeafc`, is in `0xffaae7f0`, the same read
+for another widget class; see the review below). An even node number selects `0xffaecd80`, which calls `0xffa85550`; an odd one selects `0xffaeccd0` and the id-1 path of
 request 13 (`0xffa84fd0`). So it runs **once per PIC widget** (once on a lone node with one PIC), not per head and not per brick.
 
 **Arguments (established).** Device id `0x62` (98) when the module type the L1 reported for `0x0003` is `o` after lowercasing (`0x6f`), else 1
 (`0xffa85550`). A blank L1 that answers the type letter `O` therefore gets 98; an `F` module (the ARM L1 1.62.1 reading) is `f`, then `c`,
 and gets id 1. Selector 2 (board information area), offset 0, length 64; the loop in `0xffa843f0` repeats at offset 64, 128, ... until
-the "bytes left" integer is 0 (at most 64 bytes a chunk, parse buffer 490 bytes).
+the "bytes left" integer is 0 (at most 64 bytes a chunk; the caller passes total length 0, which becomes 0x40000000, so only
+bytes-left ends it; the parse buffer is 496 bytes and nothing bounds the total).
 
 **Destination (established).** `0xffa85550` opens target `0x4ffff000`; `sysctl_cmd_open` (`0xffa819c0`) rewrites it to `0x0ffff000` when the
 cached type is `m` (`0x6d`) or `o` (`0x6f`), so the word is `0x0ffff000 | 6 = 0x0ffff006`: target `0xffff`, task 6, the same as the
@@ -335,18 +335,22 @@ requests on the `0x0ffff000` set. For other types it would be `0x4ffff006`; the 
 
 **Reply the PROM reads (established, `0xffa82270` as called by `0xffa843f0`).** Status 0, count 2: integer tag 0 with the bytes left
 after the chunk, then a raw block (tag `0x80 | n`, n up to 64) copied to the parse buffer. Then `0xffa84990` parses an IPMI-style board
-area: byte 0 version, byte 1 length in 8-byte units (0 gives "read_board_ia: eeprom length byte of ZERO", return 1), language, a 3-byte
+area: byte 0 version (not compared with anything), byte 1 length in 8-byte units (0 gives "read_board_ia: eeprom length byte of ZERO", return 1), language, a 3-byte
 manufacture time, then type/length-coded fields ending at `0xc1`. The sum of the whole area must be 0, else "read_board_ia: bad checksum" and
 return 3. A good area is kept as the board string.
 
-**What it uses the fields for (established for the code, inferred for the effect).** `io_mfg_info` hands the board string to `0xffabf570`,
-which looks for the substring `Laser:` and stores 16 bytes after it in the widget component (offset `0x28`). The component name does not come
+**What it uses the fields for (established for the code, inferred for the effect).** `io_mfg_info` first builds the board string from the
+parsed fields (`0xffaec9d0`): `Part:`, `;Name:`, `;Serial:`, `;Revision:`, `;Laser:`, then a final `;`. The first four are the area's part
+number, product name, serial number and FRU file id fields (inferred from the field order, not from labels); the `Laser:` value is made by the PROM
+itself as `%x` of a base-36 hash of the serial's alphanumerics (`0xffaec8b0`), not read from the EEPROM. `0xffabf570` then parses the
+hex number after `Laser:` (`0xffa154a0`, base 16) into the widget component (offset `0x28`), copies the whole string to an allocated buffer
+(pointer at component offset `0x68`) and copies the component name to offset `0xc1`. The component name does not come
 from the EEPROM for type `o`: `0xffabfb10` maps the type letter `o` to the name "onboardIO" (other letters map to other names, an
 unknown one to "WEIRDIO") and looks that name up (`0xffabf7c0`, `0xffaed410`).
 
 **Failures (established for the branch structure).**
 
-- Status `-101` (unknown request), `-104` (not present), `-105`, any other negative status, a wrong tag (`-32`) or a wrong count (`-33`):
+- Status `-101` (unknown request), `-104` (not present), `-105`, `-107`, any other negative status (`-106` is read differently: see the review), a wrong tag (`-32`) or a wrong count (`-33`):
   `0xffa843f0` returns 1 (status `-107` returns 3, which `0xffa84990` treats the same), `0xffa84990` prints
   "read_board_ia: error reading info area from L1 %d" and returns 1, `io_mfg_info` prints
   "io_mfg_info: Could not retrieve EEPROM info on nasid %d" and zeroes the board string. **Not fatal, and no brick or widget is skipped**:
@@ -397,7 +401,7 @@ What the L1 sends to the node when a character is typed, and how the PROM takes 
 | 12 | `0x1005` | string "Init Intercon..." | status 0, 0 args | established |
 | 13 | `0x0006` then `0x0010` | 1, 2, offset 0/64/..., 64; then none | board area in 64-byte chunks until bytes-left is 0; then as 8 | established |
 | 14 | `0x1005` | string "Init I/O..." | status 0, 0 args | established |
-| 15 | `0x0006`, once per PIC widget | 98 (type `o`) or 1, 2, 0, 64, then 64, 128, ... | as 13; any negative status is tolerated, silence parks | established |
+| 15 | `0x0006`, once per `bridge_discover` (each PIC widget; see review) | 98 (type `o`) or 1, 2, 0, 64, then 64, 128, ... | as 13; any negative status is tolerated, silence parks | established |
 | 16 | `0x0012`, `0x0010`, `0x0008` | none | 1 int; as 8; 1 string (error tolerated) | established, gating inferred |
 | 16b | `0x1005` | string "Running" | status 0, 0 args | established |
 | 17 | console | class-2 frames, no request | none | established |
@@ -615,3 +619,27 @@ Recomputed with a scratch script (FCS-16, init `0xffff`, polynomial `0x8408`, co
 Changed: the "only taken while a poll is outstanding" bullet (above) said bytes wait in the UART in every case; for the processor's own slice index, and for index 4 with `ctx+0x28` bit 2 set, the receiver resets instead. Grade of that bullet stays inferred.
 
 Not checked: the callers of the chip hook at `+0x248` beyond its use here; the SAL runtime's `l1sc_receive` equivalence (rt `0x53b80`); the SAL console calls `0x26`, `0x29`, `0x2b` and the runtime copies; the `p` and `r` wrappers (`0xffae8b70` to `0xffae9d20`) beyond their poll, readc and getc entries.
+
+## Review (request `0x0006` in I/O discovery, commit a132551)
+
+Independent re-read on 2026-11-16 in Ghidra (IA-64, `--sn2-prom --no-analysis`) of snprom 10.54 (`shub1snprom.bin`), with a flat objdump listing as a cross-check on the loop, the builder and the PIC-init stores. The PIC register decode is reviewed on the [PIC page](../../../devices/pic/README.md); the L1 side on the sysco page `software/firmware/l1/sn2-prom-link-1.62.1.md`.
+
+**Confirmed.**
+
+- Chain `0xffab38b0` -> `0xffab15c0` -> `0xffab0f10`; `0xffab0f10` dispatches only a widget id part `0xd102`, runs `0xffab0c00` on `W` and `W + 0x80_0000`, then calls `0xffabfb10` once; `0xffabfb10` calls `io_mfg_info` (`0xffaf1ee0`, site `0xffac01fc`); even node to `0xffaecd80` -> `0xffa85550` -> `0xffa84990` -> `0xffa843f0` (builder `0xffa81f40`, send `0xffa82c10`), odd node to `0xffaeccd0` -> `0xffa84fd0` (always id 1). Once per PIC widget on this path.
+- Arguments: four tag-0 integers 98, selector 2, offset 0, length 64 (`0xffa843f0` stores them in that order and adds 64 to the offset and the destination each pass). Id 98 (`0x62`) is built only in `0xffa85550`, when the cached type letter is `o` (0x6f); the only other callers of `0xffa84990` are in `0xffa84fd0`, which passes 1. Target `0x4ffff000` is rewritten to `0x0ffff000` in `0xffa819c0` for cached type `m` or `o`; the builder ORs in task 6, giving `0x0ffff006`, request code 6, then the count byte 4. The type letter is lowercased in `0xffa7ca10` (`A` to `Z` add 0x20).
+- Reply grammar in `0xffa82270`: status word, count byte that must equal the number of arguments read (else -33), an int with tag byte 0 (else -32), then a raw block whose length is the low 7 bits of its tag byte. Status -107 makes `0xffa843f0` return 3; every other negative status returns 1; both end in the "error reading info area" message, `io_mfg_info` zeroes the board string, and the caller ignores the result. A zero length byte prints "eeprom length byte of ZERO" and returns 1; a nonzero checksum prints "bad checksum" and returns 3.
+- Silence: `0xffa82c10` waits 3,000,000 (`0x2dc6c0`) ticks, returns -24 and calls `0xffad2cb0` with 0x8d first. Send errors other than -26 return at once; -26 is retried 50 times with a 500 us wait, then returns -26.
+- Name for type `o` is "onboardIO"; an unmapped letter gives "WEIRDIO" (string bytes read at `0xffbb83a0`, `0xffbb83f8`).
+- Whether `0xffad2cb0` parks the boot processor was not re-traced here; the page's earlier "Silence" section owns that.
+
+**Changed (fixed above).**
+
+- `0xffaad6d0` is called from `main_three` at `0xffad756c`, not from `0xffaad720`, which does other I/O set-up and does not call it. `0xffab38b0` has a second caller, the wrapper at `0xffaadc10`, which has no direct caller (how it is reached was not traced). The "master only" gating is by the test `0xffa0ff30` in `0xffab38b0`; the branch around the call in `main_three` tests that routine's result too, and its arguments were not resolved.
+- "Once per PIC widget" holds for this path, but `0xffabfb10` has a second caller, `0xffaaeb10`, which calls it for widgets with id part `0xe000` or `0xe010` (the TIO bridge parts) when the module type letter is one of a set that includes `f`. The call at `0xffaaeafc` is not a generic accessor: `0xffaae7f0` repeats the type-to-name map and the `io_mfg_info` read for another widget class. Both routes send `0x0006`; for a type-`f` module they send id 1. How `0xffaaeb10` is reached (no direct caller) and whether an Altix 350 takes it were not traced.
+- The chunk loop is not bounded by length 64: the caller passes length 0, which `0xffa843f0` turns into 0x40000000, so only the bytes-left integer ends it, and chunk size is the smaller of 64 and the bytes left. The parse buffer is 496 bytes (frame 512, buffer at +16), not 490. Nothing stops a reply from claiming more.
+- Board-area checks: the version byte is not compared with anything. A `0xc1` byte only ends the optional custom fields (two are read); a missing one is not an error. The checksum covers `length * 8` bytes from the buffer start. Failures are the length-zero and checksum cases only.
+- The board string is not only searched for `Laser:`. `0xffaec9d0` builds it as `Part:...;Name:...;Serial:...;Revision:...;Laser:%x;`; the `Laser:` number is a hash the PROM computes from the serial (`0xffaec8b0`, base 36), and `0xffabf570` parses it as a hex number (`0xffa154a0` with base 16) into component offset `0x28`, not "16 bytes". The string itself is also copied into an allocated buffer (component offset `0x68`). So a reply needs a parseable area, but its contents only reach hinv-style strings.
+- Status -106 is special-cased in `0xffa82270`: it returns the next integer minus 0x19e10, which can be non-negative. No L1 build read sends it; ignore it in a model.
+
+**Not checked.** Whether `0xffad2cb0` halts. Who calls `0xffaaeb10` and `0xffaadc10`. The `0xffa82630` and `0xffa82730` send and receive routines beyond their return values. The ColdFire L1 handlers. Grades otherwise stand; "once per PIC widget" is now established for the PIC route only.
