@@ -1943,3 +1943,293 @@ reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_DEAD_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_DEAD_FLOW (mask 0xff0fff0fff0fff0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it."
+
+[registers.iilb_local_table]
+offset = 0x150020000
+count = 128
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Local routing table of the I/O-interface side local block: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
+
+[registers.iilb_global_table]
+offset = 0x150020400
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Global routing table of the I/O-interface side local block: 16 doublewords, same entry layout as iilb_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
+
+[registers.iilb_over_ride_table]
+offset = 0x150020480
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x8000000000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Route override entry of the I/O-interface side local block; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
+
+[registers.pi_local_table]
+offset = 0x150021000
+count = 128
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Local routing table of the processor interface: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
+
+[registers.pi_global_table]
+offset = 0x150021400
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Global routing table of the processor interface: 16 doublewords, same entry layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
+
+[registers.pi_over_ride_table]
+offset = 0x150021480
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x8000000000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
+
+[registers.ni0_local_table]
+offset = 0x150022000
+count = 128
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Local routing table of network interface port 0: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
+
+[registers.ni0_global_table]
+offset = 0x150022400
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Global routing table of network interface port 0: 16 doublewords, same entry layout as ni0_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
+
+[registers.ni0_over_ride_table]
+offset = 0x150022480
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x8000000000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
+
+[registers.ni1_local_table]
+offset = 0x150023000
+count = 128
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Local routing table of network interface port 1: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
+
+[registers.ni1_global_table]
+offset = 0x150023400
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Global routing table of network interface port 1: 16 doublewords, same entry layout as ni1_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
+
+[registers.ni1_over_ride_table]
+offset = 0x150023480
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x8000000000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
+
+[registers.md_local_table]
+offset = 0x150024000
+count = 128
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Local routing table of the memory and directory unit: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
+
+[registers.md_global_table]
+offset = 0x150024400
+count = 16
+stride = 8
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Global routing table of the memory and directory unit: 16 doublewords, same entry layout as md_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
+
+[registers.md_over_ride_table]
+offset = 0x150024480
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x8000000000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
+
+[registers.xnni_vcswitch_flow]
+offset = 0x1500303a0
+count = 2
+stride = 512
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_VCSWITCH_FLOW_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_VCSWITCH_FLOW (mask 0x701010101); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0 and SAL 5.04 PROM 0xffa5c900 (progress 0x1c step)"
+doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM addresses it as base + port * 0x200). Virtual-channel switch control of the crossbar-to-NI path: bit 0 NI_VCFIFO_DATELINE_SWITCH, bit 8 PI_VCFIFO_SWITCH, bit 16 MD_VCFIFO_SWITCH, bit 24 IILB_VCFIFO_SWITCH (each swaps VC0/2 with VC1/3), bits 34:32 sync-bypass and async-fifo controls (header). 0xffa5c900 reads it and writes it back with bit 24 inverted, runs the neighbour loop, and inverts it again (on a lone node the loop does nothing, so the register ends where it began). Slot 59 reads it and ORs 0x100 (0x101 when the port record has flag 0x20 set). A plain read/write register satisfies both."
+
+[registers.xnni_inject_age]
+offset = 0x150030400
+count = 2
+stride = 512
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_INJECT_AGE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_INJECT_AGE (mask 0xffff); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+doc = "NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header). Slot 59 reads it and writes it back with bits 15:8 set to 0xc0 (value AND 0xffffffffffff00ff OR 0xc000), only when the node has no NUMAlink 4 router entry (count 0), which is the case for a lone node. A plain read/write register satisfies it."
+
+[registers.vec_data]
+offset = 0x110066000
+access = "w"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_DATA_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_DATA (mask 0xffffffffffffffff); SAL 5.04 PROM vector write 0xffa0c560 and read 0xffa0bd20"
+doc = "Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead."
+
+[registers.vec_route]
+offset = 0x110066100
+access = "w"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_ROUTE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_ROUTE; SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+doc = "Route of a vector request: the 16-nibble route word shifted down 4 bits (the first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has no remaining hops the PROM stores 0xf00000000 (a 0xf in nibble 8). Not read back."
+
+[registers.vec_parms]
+offset = 0x110066080
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_PARMS_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_PARMS (mask 0xc0003ffffffffffb); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+doc = "Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1 write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3), PIO_ID bits 45:35, START bit 62, BUSY bit 63 (header). The PROM first polls bit 63 until clear (at most 1024 reads), then writes (hops - 1) * 2 | offset AND 0x7fffffff8 | 0x40000e4000000000 for a read (PIO_ID 0x1c8) or | 0x400003d800000001 for a write (PIO_ID 0x7b); START (bit 62) launches the message. The PROM never reads BUSY again after the write; completion is read from SH_VEC_STATUS."
+
+[registers.vec_rddata]
+offset = 0x110074000
+access = "r"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_RDDATA_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_RDDATA; SAL 5.04 PROM 0xffa0bd20"
+doc = "Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result."
+
+[registers.vec_status]
+offset = 0x110074100
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_STATUS_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_STATUS (mask 0xcfffffffffffffff); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+doc = "Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35, SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM writes 0 before each request and reads it: bit 63 already set at that point makes the request fail with -1. After the request it polls (100 microseconds apart, at most 1024 times) until bit 63 is set. The reply is a success only when OVERRUN is clear, TYPE is 0 for a read or 1 for a write, PIO_ID is 0x1c8 (read) or 0x7b (write) and ADDRESS equals the request address bits; OVERRUN gives -2, TYPE 4, 5 or 6 give -4, -5, -6, anything else -3. Writing 0 must clear bit 63."
+
+[registers.lb_error_summary]
+offset = 0x110050580
+access = "r"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_LB_ERROR_SUMMARY_INIT (macro only; read as zero here)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_LB_ERROR_SUMMARY; SAL 5.04 PROM 0xffa0b9a0 (vector pre-check) and the poll in 0xffa0bd20 and 0xffa0c560"
+doc = "Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set while waiting for a reply means the reply status is not examined that pass. A model returns 0."
+
+[registers.lb_error_detail]
+offset = 0x110050200
+count = 5
+stride = 128
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_LB_ERROR_DETAIL_1_INIT (macro only; read as zero here)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names SH_LB_ERROR_DETAIL_1 at 0x1_1005_0200; the five-register stride is the PROM's (0xffa0b9a0 and 0xffa0bd20 write 0 to 0x200, 0x280, 0x300, 0x380 and 0x400); names for 2 to 5 follow the stride and were not each checked"
+doc = "Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it."

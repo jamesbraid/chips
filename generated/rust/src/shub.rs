@@ -1623,6 +1623,18 @@ pub mod conveyor_belt_time_out {
         }
     }
 }
+/// Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then write (established)
+pub mod lb_error_detail {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110050200;
+    pub const COUNT: u32 = 5;
+    pub const STRIDE: u64 = 128;
+}
+/// Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1 (established)
+pub mod lb_error_summary {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110050580;
+}
 /// CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks a (established)
 pub mod cpu_perm {
     pub const WIDTH: u32 = 64;
@@ -1754,6 +1766,31 @@ pub mod shubs_present {
     pub const OFFSET: u64 = 0x110060600;
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 128;
+}
+/// Data word of a vector request message. The PROM stores the value to write, or 0xdeadbeefdeadbeef for a read, before arming SH_VEC_PARMS. Not read back (established)
+pub mod vec_data {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110066000;
+}
+/// Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1 write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3) (established)
+pub mod vec_parms {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110066080;
+}
+/// Route of a vector request: the 16-nibble route word shifted down 4 bits (the first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has n (established)
+pub mod vec_route {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110066100;
+}
+/// Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. (established)
+pub mod vec_rddata {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110074000;
+}
+/// Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35, SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM wr (established)
+pub mod vec_status {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110074100;
 }
 /// Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel wri (established)
 pub mod ptc {
@@ -2379,6 +2416,108 @@ pub mod xnni1_link_flow {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 16;
 }
+/// Local routing table of the I/O-interface side local block: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0  (established)
+pub mod iilb_local_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150020000;
+    pub const COUNT: u32 = 128;
+    pub const STRIDE: u64 = 8;
+}
+/// Global routing table of the I/O-interface side local block: 16 doublewords, same entry layout as iilb_local_table, indexed by the high NASID bits (the (established)
+pub mod iilb_global_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150020400;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
+}
+/// Route override entry of the I/O-interface side local block; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. Th (established)
+pub mod iilb_over_ride_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150020480;
+}
+/// Local routing table of the processor interface: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction  (established)
+pub mod pi_local_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150021000;
+    pub const COUNT: u32 = 128;
+    pub const STRIDE: u64 = 8;
+}
+/// Global routing table of the processor interface: 16 doublewords, same entry layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 (established)
+pub mod pi_global_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150021400;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
+}
+/// Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header IN (established)
+pub mod pi_over_ride_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150021480;
+}
+/// Local routing table of network interface port 0: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction (established)
+pub mod ni0_local_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150022000;
+    pub const COUNT: u32 = 128;
+    pub const STRIDE: u64 = 8;
+}
+/// Global routing table of network interface port 0: 16 doublewords, same entry layout as ni0_local_table, indexed by the high NASID bits (the PROM loops (established)
+pub mod ni0_global_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150022400;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
+}
+/// Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header I (established)
+pub mod ni0_over_ride_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150022480;
+}
+/// Local routing table of network interface port 1: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction (established)
+pub mod ni1_local_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150023000;
+    pub const COUNT: u32 = 128;
+    pub const STRIDE: u64 = 8;
+}
+/// Global routing table of network interface port 1: 16 doublewords, same entry layout as ni1_local_table, indexed by the high NASID bits (the PROM loops (established)
+pub mod ni1_global_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150023400;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
+}
+/// Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header I (established)
+pub mod ni1_over_ride_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150023480;
+}
+/// Local routing table of the memory and directory unit: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (dire (established)
+pub mod md_local_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150024000;
+    pub const COUNT: u32 = 128;
+    pub const STRIDE: u64 = 8;
+}
+/// Global routing table of the memory and directory unit: 16 doublewords, same entry layout as md_local_table, indexed by the high NASID bits (the PROM l (established)
+pub mod md_global_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150024400;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
+}
+/// Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The hea (established)
+pub mod md_over_ride_table {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150024480;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM addresses it as base + port * 0x200). Virtual-channel switch control of the cro (established)
+pub mod xnni_vcswitch_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500303a0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
 /// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to- (established)
 pub mod xnni_fifo02_flow {
     pub const WIDTH: u32 = 64;
@@ -2404,6 +2543,13 @@ pub mod xnni_ni_flow {
 pub mod xnni_dead_flow {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1500303f0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header). Slo (established)
+pub mod xnni_inject_age {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150030400;
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 512;
 }
