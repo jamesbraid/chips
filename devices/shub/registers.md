@@ -64,6 +64,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `event_overflow_alias` | 0x110010088 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa0bb46 (write 8) |
 | `lb_reg_1002_0000` | 0x110020000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name |
 | `lb_slice_rec` | 0x110030000 | r | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa0e020 (read of the running processor's entry), 0xffc4e570 (not reached for reason 0) |
+| `lb_liq_ctl` | 0x110040000 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_LB_LIQ_CTL_INIT macro, value zero; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_LIQ_CTL, 'Local Block LIQ Control' (name, offset, mask 0x70f1f, fields); the PROM's register-name table carries the name (SAL 5.04 image, record 132 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa95ccc (read), 0xffa95cfc (write) |
+| `lb_max_rep_credit_cnt` | 0x110040100 | rw | 64 |  |  | 0x1f (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_LB_MAX_REP_CREDIT_CNT_INIT macro, value 0x1f) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REP_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 134); SAL 5.04 PROM site 0xffa95f3c (read), 0xffa95f6c (write) |
+| `lb_max_req_credit_cnt` | 0x110040180 | rw | 64 |  |  | 0x1f (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_LB_MAX_REQ_CREDIT_CNT_INIT macro, value 0x1f) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REQ_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 135); SAL 5.04 PROM site 0xffa95f7c (read), 0xffa95fbc (write) |
+| `conveyor_belt_time_out` | 0x110040300 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CONVEYOR_BELT_TIME_OUT_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's register-name table carries the name (record 138); SAL 5.04 PROM site 0xffa9613c (read), 0xffa9615c (write) |
 | `rtc_ctl` | 0x110060280 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field |
 | `ipi_access` | 0x110060480 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `md_clk_sel` | 0x110060500 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name |
@@ -565,9 +569,45 @@ Per-slice local block record, 128 bytes apart (index = slice & 3); the name is o
 
 Array of 4 registers, stride 128.
 
+### Register `lb_liq_ctl`
+
+Local block LIQ control: request control in bits 4:0, reply control in bits 11:8 and three force-credit bits. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it once, ORs bit 18 and writes the same value back 63 times in a row; nothing tests the value read. If each write adds one credit to the LINVV credit counter (6 bits wide in lb_credit_status in the header), 63 writes fill it; that role is inferred.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 18 | `force_linvv_credit` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_LIQ_CTL_FORCE_LINVV_CREDIT; SAL 5.04 PROM site 0xffa95cd6 (the constant 0x40000) | Force LINVV credit. The PROM sets it and writes the word 63 times. |
+| 17 | `force_rp_credit` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_LIQ_CTL_FORCE_RP_CREDIT | Force reply credit. |
+| 16 | `force_rq_credit` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_LIQ_CTL_FORCE_RQ_CREDIT | Force request credit. |
+| 11:8 | `liq_rpl_ctl` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_LIQ_CTL_LIQ_RPL_CTL | LIQ reply control. |
+| 4:0 | `liq_req_ctl` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_LIQ_CTL_LIQ_REQ_CTL | LIQ request control. |
+
+### Register `lb_max_rep_credit_cnt`
+
+Maximum number of reply credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once, after the CRB set-up.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 4:0 | `max_cnt` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_MAX_REP_CREDIT_CNT_MAX_CNT; SAL 5.04 PROM site 0xffa95f66 (deposit of 12) | Maximum reply credits. |
+
+### Register `lb_max_req_credit_cnt`
+
+Maximum number of request credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 4:0 | `max_cnt` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_LB_MAX_REQ_CREDIT_CNT_MAX_CNT; SAL 5.04 PROM site 0xffa95fa6 (deposit of 12) | Maximum request credits. |
+
+### Register `conveyor_belt_time_out`
+
+Local block conveyor belt time-out. The node set-up method (site 0xffa95c20) reads it last and writes it back with 0x3e8 (1000) in bits 11:0, the field the header gives.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 11:0 | `value` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_CONVEYOR_BELT_TIME_OUT_VALUE; SAL 5.04 PROM site 0xffa96156 (deposit of 1000) | Conveyor belt time-out value. |
+
 ### Register `rtc_ctl`
 
-Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -692,7 +732,7 @@ SHub 1 coherent request buffer message control: coherence and speculation enable
 
 ### Register `crb_nack_limit`
 
-Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
+Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it (site 0xffa95fcc) and writes it back (0xffa9601c) with bit 63 cleared and bits 15:0 set to 0xffff: a 0xfff limit and a 0xf frequency, enable off.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -702,7 +742,7 @@ Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for 
 
 ### Register `crb_timeout_prescale`
 
-Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
+Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. The node set-up method (site 0xffa95c20) reads it (site 0xffa9608c) and rewrites bits 31:0 (store site 0xffa960cc, a mix4.l keeping bits 63:32): 0x23c34600 (600,000,000) unless the environment attribute NoTimeouts is found, in which case 0. The attribute lookup call is site 0xffa9605c.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -710,7 +750,7 @@ Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0
 
 ### Register `crb_timeout_skid`
 
-Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set.
+Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. The node set-up method (site 0xffa95c20) (read 0xffa95d4c, write 0xffa95dcc) also clears bits 63 and 62, sets bits 11:8 and deposits 2 into bits 5:0; the 2.4 header's mask 0x800000000000003f has no bits 11:8 or 62, so those writes are outside the header's layout.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

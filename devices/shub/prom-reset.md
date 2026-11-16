@@ -330,7 +330,7 @@ The PROM's name table has 16-byte records from `0xffbfabb0` (819 records): the r
 
 That is 33 stores to 32 distinct words (`1270` is in lists 1 and 5). All are `SH_XN_*_CMP_*` words in the 2.4 header with 64 valid bits and INIT 0 (the 1100 to 11f0 block was read in the header; the others were not read one by one). Nothing reads them back.
 
-The stop at `r36 = 0x80000009500315a0` shows the saved `ar.pfs` in `r35` and the saved `b0` in `r34` of the frame of `0xffa2bd60` (its `alloc r35=ar.pfs,7,4,0` and `mov r34=b0`; `r36` is the first outgoing register, `r37` the value 0). `0xffa236f0` has `alloc r35=ar.pfs,9,4,0`, so the saved `ar.pfs` is `0x209` (9 | 4 << 7), and the `br.call` at `0xffa23750` makes `b0` the next bundle, `0xffa23760`. So `r35 = 0x209` is right and `r34` must be `0xffa23760`. A model that shows `r34 = -1` with `r35 = 0x209` is not setting `b0` on `br.call` (or reads it wrongly in `mov r34=b0`); the `alloc` path is fine.
+The stop at `r36 = 0x80000009500315a0` was inside the leaf store helper, which has no `alloc` (frame size 2), so `r34` and above were outside its frame at the stop: their values are undefined and are not evidence of a linkage fault. The valid check is `b0` against the caller's next bundle.
 
 After step 2, `0xffa236f0` calls `0xffae3f50` with the 70-entry list at `0xffbd8e18`, reads `SH1_SHUB_ID` (`0x81_1006_0580`, `0xffa0dcf0`), calls the attribute lookup `0xffad6e30` for `"AttrCheck"`, writes a 5-entry list (`0xffbd9280` if bit 31 of the result is clear, `0xffbd9330` if set), and then a 24-entry list at `0xffbd93e0`. The lists are given at the end of this section.
 
@@ -468,4 +468,65 @@ The writes after the SHUB_ID read are the list that clears the error-summary and
 
 ### Review
 
-Independent review of chips commit `d36d7aa`, re-read in Ghidra (IA-64 import of the SAL 5.04 SHub 1 image, flat at `0xffa00000`) with objdump as a cross-check. Confirmed: the step 1 tables, iteration count, store order and window rule; the step 2 stores to `15a0`, `1360` and `1370` and their read-backs in `0xffa2b340` and `0xffa2b430`; the nine names and header INIT values for the registers checked; that the six local words are never read (no constant, table or base-plus-register access found); and the `r35 = 0x209` / `r34 = 0xffa23760` reading. Corrected: the five calls at the end of step 2 write 0 (they are not a print), which adds 32 words; the name-table pool base is `0xffbfdef8`; the method table is `0xffbd7c18`, not `0xffc4ba50`; the gate reads `cr.lid` bits 26:23 and `cpu_bits`. Added: the 70-, 5- and 24-entry write lists after step 2, and the XN words with other accesses. Not verified: header masks for the aliases other than the two named above, header INIT for the registers outside the 1100 to 11f0 block, what the `AttrCheck` lookup returns on a model, readers of the error registers in the lists, and exhaustive exclusion of remote-NASID calls (only one caller of slot 84 was found). The overlay `remove` list now names every new XN row, and `defs-gen` was re-run.
+Independent review of chips commit `d36d7aa`, re-read in Ghidra (IA-64 import of the SAL 5.04 SHub 1 image, flat at `0xffa00000`) with objdump as a cross-check. Confirmed: the step 1 tables, iteration count, store order and window rule; the step 2 stores to `15a0`, `1360` and `1370` and their read-backs in `0xffa2b340` and `0xffa2b430`; the nine names and header INIT values for the registers checked; that the six local words are never read (no constant, table or base-plus-register access found). Corrected: the five calls at the end of step 2 write 0 (they are not a print), which adds 32 words; the name-table pool base is `0xffbfdef8`; the method table is `0xffbd7c18`, not `0xffc4ba50`; the gate reads `cr.lid` bits 26:23 and `cpu_bits`. Added: the 70-, 5- and 24-entry write lists after step 2, and the XN words with other accesses. Not verified: header masks for the aliases other than the two named above, header INIT for the registers outside the 1100 to 11f0 block, what the `AttrCheck` lookup returns on a model, readers of the error registers in the lists, and exhaustive exclusion of remote-NASID calls (only one caller of slot 84 was found). The overlay `remove` list now names every new XN row, and `defs-gen` was re-run.
+
+## The node set-up method after the error lists: `0xffa95c20` and its caller `0xffa96180`
+
+The SAL 5.04 PROM stops in a model at the first read after the error lists, an 8-byte read of `0x8000000910040000` (global window, NASID 0): `0x1_1004_0000`, the **local block's LIQ control register**. The PROM's name table (record 132 of the table at `0xffbfabb0`, name read with the pool rule above) calls it `SH_LB_LIQ_CTL`; the SGI 2.4 SN2 header (`include/asm-ia64/sn/sn2/shub_mmr.h` at 8ef7d46c) defines `SH_LB_LIQ_CTL` at `0x1_1004_0000`, mask `0x70f1f`, INIT 0: LIQ request control bits 4:0, LIQ reply control bits 11:8, force request credit bit 16, force reply credit bit 17, force LINVV credit bit 18. Established (name from two sources). The stop was inside the leaf load helper `0xffa0e5a0`, so the registers shown at the stop are outside its frame and say nothing about the caller.
+
+**Who calls it.** The method at slot 34 (offset `0x110`) of the class-0 table at `0xffbd7c18` (descriptor `0xffc4ba70`, function `0xffa95c20`) is called by the method at slot 36 (`0xffa96180`, descriptor `0xffc4b9e0`) with the same object. Slot 36 is the "node set-up" method; its own caller was not found (no direct call; a call through a wrapper that loads class offset `0x120` was not located). `0xffa95c20` takes a pointer to the node's 16-bit NASID and runs only when the slice gate `0xffa0ff30` returns 1 (same gate as in the XN section; it returns 0 and the method returns at once if a lower slice has set its local-master flag). All accesses are 8 bytes, through the load helper `0xffa0e5a0` and the store helper `0xffa0e640`, at the global window `0x8000000900000000 | (nasid << 38) | offset` unless said. Every row is established as an access (address, width, direction, constant), and the role is from the header name.
+
+### The value rule for the first read
+
+`LIQ_CTL` is read once (`0xffa95ccc`). The value is not compared, masked or branched on: it is ORed with `0x40000` (bit 18, `FORCE_LINVV_CREDIT`) at `0xffa95cdc` and the result is stored back **63 times in a row** (a counter from 62 down to -1, `0xffa95ce0` to `0xffa95d0c`; the same word each time, not a read-modify-write per pass). No poll, no read between the stores. Any value, including the INIT 0, continues the boot, and a plain read/write register satisfies it (established). The role of the 63 stores is inferred: `SH_LB_CREDIT_STATUS` (`0x1_1005_0000`) gives the LINVV credit counter 6 bits (`0x3f000`), so 63 writes fill it if each adds one; the PROM never reads that register back.
+
+### Accesses of `0xffa95c20`, in order
+
+| # | Offset | Name (header and PROM table) | Dir | What the code does | INIT (header) |
+|---|---|---|---|---|---|
+| 1 | `1_1004_0000` | `SH_LB_LIQ_CTL` | R, then 63 W | read once, store `value \| 0x40000` 63 times | 0 |
+| 2 | `1_2000_0180` | `SH_CRB_TIMEOUT_SKID` | R, W | clear bits 63 and 62, set bits 11:8, deposit 2 in bits 5:0 (`0xffa95d4c`, `0xffa95dcc`). The header's mask `0x800000000000003f` has no bits 11:8 or 62 | 7 |
+| 3 | `1_2000_0000` | `SH_CRB_MESSAGE_CONTROL` | R, W | clear bits 11, 2, 1 (and with `0xfffffffffffff7f9`, `0xffa95de0`) | 6 |
+| 4 | none | environment lookups `SysFlushInt`, `SysFlushDur` (strings at `0xffbb4a40`, `0xffbb4a50`) | | `0xffad6e30` then the numeric parse at `0xffa154a0`; a negative status keeps the default of -1 for each. No SHub access | |
+| 5 | `1_1006_0280` local window (`0x8000008110060280`) | `SH_GC_SRC_CTRL` (the page's `rtc_ctl`) | R | helper `0xffa0da00`: bits 13:4 are `x`, the result is `10*x + 10` (the tick period in ns). Any value works; 0 gives 10 | `0x1_0000_0000` |
+| 6 | `1_2000_0000` | `SH_CRB_MESSAGE_CONTROL` | R, W | in `0xffa11380(nasid, interval, duration, period)`: if bits 47:32 are non-zero and differ from bits 63:48 it returns without writing. Otherwise it writes bits 47:32 (`IVACK_STALL_COUNT`) and 63:48 (`IVACK_THROTTLE_CONTROL`) with `(2*interval + period) / (2*period)` and `(2*duration + period) / (2*period)` (a floating-point divide, `0xffa149c0`), each clamped to 1..65535. Defaults when the lookups fail: interval 327680 (`0x50000`), duration 320. With period 10: `0x8000` and `0x20` | 6 |
+| 7 | `1_1004_0100` | `SH_LB_MAX_REP_CREDIT_CNT` | R, W | deposit 12 in bits 4:0 | `0x1f` |
+| 8 | `1_1004_0180` | `SH_LB_MAX_REQ_CREDIT_CNT` | R, W | deposit 12 in bits 4:0 | `0x1f` |
+| 9 | `1_2000_0080` | `SH_CRB_NACK_LIMIT` | R, W | clear bit 63, set bits 15:0 to `0xffff` (limit `0xfff`, frequency `0xf`) | 0 |
+| 10 | `1_1006_0580` local | `SH_SHUB_ID` | R | `0xffa0dcf0` returns bits 42:32 (the NASID); it is the first argument of the next lookup, whose result is not used for the register value | per chips |
+| 11 | none | environment lookup `NoTimeouts` (`0xffbb4a60`) | | `tbit` of bit 31 of the status: set (not found) selects `0x23c34600`, clear (found) selects 0 | |
+| 12 | `1_2000_0100` | `SH_CRB_TIMEOUT_PRESCALE` | R, W | bits 31:0 become 0x23c34600 (600,000,000) or 0 (`mix4.l` keeps bits 63:32) | 0 |
+| 13 | `1_101a_0100` | `SH_PTC_PARMS` | R, W | bits 23:0 = `0x186a0` (100,000), bits 35:24 = `0x3e8` (1000), the rest kept (already described in interrupts.md) | `0x7_ffff_ffff` |
+| 14 | `1_1004_0300` | `SH_CONVEYOR_BELT_TIME_OUT` | R, W | `0xffa9613c`/`0xffa9615c`: bits 11:0 = `0x3e8`. Header mask is `0xfff`, INIT 0 | 0 |
+
+There is no poll anywhere in this method and no read value is compared except in row 6 (the bits 47:32 test) and the gate. Every written register is later read by the same routine only where the table says R. After row 14 the method returns (`0xffa95c70`).
+
+### What `0xffa96180` does next
+
+After the call to `0xffa95c20` returns, the caller continues. The new accesses, in order (new = not in the table above):
+
+| Step | Offset | Name | Dir | What the code does |
+|---|---|---|---|---|
+| a | `1_101c_0000` (before the call, `0xffa9620c`) | `SH_RTC` | W | 0 |
+| b | `1_2000_0000` | `SH_CRB_MESSAGE_CONTROL` | R | `0xffa9627c` |
+| c | `1_1006_0580` global | `SH_SHUB_ID` | R | revision = bits 31:28 (`0xffa962ac`) |
+| d | `1_2000_0000` | `SH_CRB_MESSAGE_CONTROL` | W | the value read in b ORed with `0x3b03f7` if revision > 2 or `0x3f1` otherwise (`0xffa962d6`, `0xffa962e0`); store `0xffa9630c`. `0x3b03f7` sets bits 21, 20, 19, 17, 16 (outside the header's mask `0xffffffff00000fff`) |
+| e | RAM, not SHub | | R, W | reads a pointer from `0x1000000 + (((lid slice) + 9) << 3)`, then at pointer+24, and copies six doublewords there. Plain memory at the physical address `0x1000000` and the pointers it holds |
+| f | | calls `0xffa97960` | | the next step below |
+
+**The next step is `0xffa97960`** (global window, NASID in `r32`; the same slice gate; returns at once if the gate fails). It reads `SH_SHUB_ID` (`0x1_1006_0580`, bits 52:49, a shift count), then loops reading 16-bit entries through `0xffa1c2e0` (a table in RAM; entry -1 means skip; the table pointer comes from `[0x1000038] + 16`) to build a bit mask, then stores it to `SH_CPU_PERM` (`0x1_1006_0000`), `SH_IOI_ACCESS` (`0x1_1006_0400`), `SH_EXT_IOI_ACCESS` (`0x1_1006_0180`), `SH_IO_PERM` (`0x1_1006_0380`) and `SH_IPI_ACCESS` (`0x1_1006_0480`), then writes 0 to `SH_EXT_IO_PERM` (`0x1_1006_0100`) (`0xffa97bbc` to `0xffa97cac`). It was read as far as the stores; the mask rule (which entries set which bit) and the registers' INIT and fields were not decoded. That is the next block of this phase.
+
+### Values a model must return
+
+| Read | Return | Grade |
+|---|---|---|
+| `1_1004_0000` | the last written value; 0 before any write | established that no value is tested; 0 is INIT (inferred) |
+| `1_2000_0180`, `1_2000_0080`, `1_2000_0100`, `1_1004_0100/0180/0300`, `1_101a_0100` | the last written value, or the header INIT before a write (7, 0, 0, `0x1f`, `0x1f`, 0, `0x7_ffff_ffff`) | established that no value is tested; INIT inferred |
+| `1_2000_0000` (reads b and 3 and 6) | last written value, INIT 6 first. Bits 47:32 must be 0 or equal to bits 63:48 or the write in row 6 is skipped | established (the test); INIT inferred |
+| `1_1006_0280` (local) | any value; bits 13:4 only set the PROM's idea of the tick period `10*x + 10` ns, and the INIT `0x1_0000_0000` gives 10 ns. The earlier page row for this register (`rtc_ctl`) says the PROM writes `0x100000041` first, giving 50 ns | established (use), inferred (timing role) |
+| `1_1006_0580` | the chip's SHub ID: bits 42:32 NASID, bits 31:28 revision (above 2 selects `0x3b03f7` in step d) | established (use), see the SHub ID section |
+| RAM at `0x1000000` and pointers | ordinary memory set up by earlier PROM code; not a register | established (access), content unknown |
+
+### Review
+
+Not independently reviewed. Read in objdump of the 10.54 image (every decode above is from the instruction text; no emulation). Not done: the Ghidra pass, the caller of slot 36, the contents of the RAM table and the mask rule in `0xffa97960`. The row 2 write sets bits the 2.4 header does not list; that could mean SHub 1 silicon differs from the header, or that the register layout differs for revisions the header does not cover; unknown.

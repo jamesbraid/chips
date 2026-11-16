@@ -704,7 +704,55 @@
 #define SHUB_LB_SLICE_REC_STRIDE                     128
 
 /*
- * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
+ * Local block LIQ control: request control in bits 4:0, reply control in bits 11:8 and three force-credit bits. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it once, ORs bit 18 and writes the same value back 63 times in a row; nothing tests the value read. If each write adds one credit to the LINVV credit counter (6 bits wide in lb_credit_status in the header), 63 writes fill it; that role is inferred.
+ */
+/* lb_liq_ctl: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_LIQ_CTL, 'Local Block LIQ Control' (name, offset, mask 0x70f1f, fields); the PROM's register-name table carries the name (SAL 5.04 image, record 132 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa95ccc (read), 0xffa95cfc (write) */
+#define SHUB_LB_LIQ_CTL                              0x110040000 /* established */
+#define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_SHIFT     18 /* established */
+#define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_MASK      0x1ull
+#define SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_INPLACE   (SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_LINVV_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_SHIFT        17 /* established */
+#define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_MASK         0x1ull
+#define SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_INPLACE      (SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RP_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_SHIFT        16 /* established */
+#define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_MASK         0x1ull
+#define SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_INPLACE      (SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_MASK << SHUB_LB_LIQ_CTL_FORCE_RQ_CREDIT_SHIFT)
+#define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_SHIFT            8 /* established */
+#define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_MASK             0xfull
+#define SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_INPLACE          (SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_RPL_CTL_SHIFT)
+#define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_SHIFT            0 /* established */
+#define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_MASK             0x1full
+#define SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_INPLACE          (SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_MASK << SHUB_LB_LIQ_CTL_LIQ_REQ_CTL_SHIFT)
+
+/*
+ * Maximum number of reply credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once, after the CRB set-up.
+ */
+/* lb_max_rep_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REP_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 134); SAL 5.04 PROM site 0xffa95f3c (read), 0xffa95f6c (write) */
+#define SHUB_LB_MAX_REP_CREDIT_CNT                   0x110040100 /* established */
+#define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_SHIFT     0 /* established */
+#define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_MASK      0x1full
+#define SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_INPLACE   (SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REP_CREDIT_CNT_MAX_CNT_SHIFT)
+
+/*
+ * Maximum number of request credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, once.
+ */
+/* lb_max_req_credit_cnt: rw64, reset 0x1f; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REQ_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 135); SAL 5.04 PROM site 0xffa95f7c (read), 0xffa95fbc (write) */
+#define SHUB_LB_MAX_REQ_CREDIT_CNT                   0x110040180 /* established */
+#define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_SHIFT     0 /* established */
+#define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_MASK      0x1full
+#define SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_INPLACE   (SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_MASK << SHUB_LB_MAX_REQ_CREDIT_CNT_MAX_CNT_SHIFT)
+
+/*
+ * Local block conveyor belt time-out. The node set-up method (site 0xffa95c20) reads it last and writes it back with 0x3e8 (1000) in bits 11:0, the field the header gives.
+ */
+/* conveyor_belt_time_out: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's register-name table carries the name (record 138); SAL 5.04 PROM site 0xffa9613c (read), 0xffa9615c (write) */
+#define SHUB_CONVEYOR_BELT_TIME_OUT                  0x110040300 /* established */
+#define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT      0 /* established */
+#define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK       0xfffull
+#define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_INPLACE    (SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK << SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT)
+
+/*
+ * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
  */
 /* rtc_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
 #define SHUB_RTC_CTL                                 0x110060280 /* established */
@@ -897,7 +945,7 @@
 #define SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_INPLACE (SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_MASK << SHUB_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE_SHIFT)
 
 /*
- * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
+ * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. The node set-up method (slot 34 of the chip-object table, site 0xffa95c20) reads it (site 0xffa95fcc) and writes it back (0xffa9601c) with bit 63 cleared and bits 15:0 set to 0xffff: a 0xfff limit and a 0xf frequency, enable off.
  */
 /* crb_nack_limit: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL */
 #define SHUB_CRB_NACK_LIMIT                          0x120000080 /* established */
@@ -912,7 +960,7 @@
 #define SHUB_CRB_NACK_LIMIT_LIMIT_INPLACE            (SHUB_CRB_NACK_LIMIT_LIMIT_MASK << SHUB_CRB_NACK_LIMIT_LIMIT_SHIFT)
 
 /*
- * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
+ * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. The node set-up method (site 0xffa95c20) reads it (site 0xffa9608c) and rewrites bits 31:0 (store site 0xffa960cc, a mix4.l keeping bits 63:32): 0x23c34600 (600,000,000) unless the environment attribute NoTimeouts is found, in which case 0. The attribute lookup call is site 0xffa9605c.
  */
 /* crb_timeout_prescale: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL */
 #define SHUB_CRB_TIMEOUT_PRESCALE                    0x120000100 /* established */
@@ -921,7 +969,7 @@
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_INPLACE (SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK << SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT)
 
 /*
- * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set.
+ * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set. The node set-up method (site 0xffa95c20) (read 0xffa95d4c, write 0xffa95dcc) also clears bits 63 and 62, sets bits 11:8 and deposits 2 into bits 5:0; the 2.4 header's mask 0x800000000000003f has no bits 11:8 or 62, so those writes are outside the header's layout.
  */
 /* crb_timeout_skid: rw64, reset 0x7; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696 */
 #define SHUB_CRB_TIMEOUT_SKID                        0x120000180 /* established */

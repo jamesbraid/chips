@@ -1495,6 +1495,106 @@ pub mod lb_slice_rec {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 128;
 }
+/// Local block LIQ control: request control in bits 4:0, reply control in bits 11:8 and three force-credit bits. The node set-up method (slot 34 of the c (established)
+pub mod lb_liq_ctl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110040000;
+    pub mod force_linvv_credit { // bits 18:18, established
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod force_rp_credit { // bits 17:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod force_rq_credit { // bits 16:16, established
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod liq_rpl_ctl { // bits 11:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod liq_req_ctl { // bits 4:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Maximum number of reply credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back, on (established)
+pub mod lb_max_rep_credit_cnt {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110040100;
+    pub mod max_cnt { // bits 4:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Maximum number of request credits from the crossbar. The node set-up method (site 0xffa95c20) reads it, deposits 12 into bits 4:0 and writes it back,  (established)
+pub mod lb_max_req_credit_cnt {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110040180;
+    pub mod max_cnt { // bits 4:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Local block conveyor belt time-out. The node set-up method (site 0xffa95c20) reads it last and writes it back with 0x3e8 (1000) in bits 11:0, the fiel (established)
+pub mod conveyor_belt_time_out {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110040300;
+    pub mod value { // bits 11:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xfff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, b (established)
 pub mod rtc_ctl {
     pub const WIDTH: u32 = 64;
@@ -1874,7 +1974,7 @@ pub mod crb_message_control {
         }
     }
 }
-/// Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine ( (established)
+/// Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. The node set-up method (sl (established)
 pub mod crb_nack_limit {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120000080;
@@ -1909,7 +2009,7 @@ pub mod crb_nack_limit {
         }
     }
 }
-/// Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and wr (established)
+/// Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. The node set-up method (site 0xffa95c20) reads it (site 0xffa9608c)  (established)
 pub mod crb_timeout_prescale {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120000100;
