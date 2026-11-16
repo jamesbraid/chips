@@ -1043,7 +1043,7 @@
 #define SHUB2_BT_ENG_NOTIFY_STRIDE                   65536
 
 /*
- * Board type word. The PROM stores the board type here once the DIMM layout checks out (accepted values 0x7b, 0x200, 0xa00, 0xe00) and eight later sites call the 64-bit read helper on it (one ninth site was not classified); one of them is a predicate that returns whether it equals 0xe00. Nothing zeroes it before the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Board type word. The PROM stores the board type here and then checks it (accepted values 0x7b, 0x200, 0xa00, 0xe00; any other prints "unknown board type" and returns, after the store) and eight later sites call the 64-bit read helper on it (one ninth site was not classified); one of them is a predicate that returns whether it equals 0xe00. Nothing zeroes it before the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
  */
 /* xn_iilb_pi_cmp_exp_data0: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_IILB_PI_CMP_EXP_DATA0               0x50031240 /* established */
@@ -1073,13 +1073,13 @@
 #define SHUB2_XN_IILB_NI1_CMP_EXP_DATA1              0x500312d0 /* established */
 
 /*
- * Per-slice word 2 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Per-slice word 2 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine (0xff414ca0) stores the constant 0xff_0000_0000 to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
  */
 /* xn_md_ni1_cmp_exp_data1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_MD_NI1_CMP_EXP_DATA1                0x50031590 /* established */
 
 /*
- * Per-slice word 3 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Per-slice word 3 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine (0xff414ca0) stores the constant 0xff_0000_0000 to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
  */
 /* xn_md_ni1_cmp_enable1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_MD_NI1_CMP_ENABLE1                  0x500315b0 /* established */
@@ -1091,19 +1091,19 @@
 #define SHUB2_XN_MD_SIC_CMP_EXP_HDR0                 0x500315c0 /* established */
 
 /*
- * Firmware scratch word, slot 0 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Firmware scratch word, slot 0 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred). SHub 1's equivalent (SH_XN_MD_SIC_CMP_EXP_HDR1) implements bits 41:0 only; the SHub 2 width is not known and a model should keep 64 bits.
  */
 /* xn_md_sic_cmp_exp_hdr1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_MD_SIC_CMP_EXP_HDR1                 0x500315d0 /* established */
 
 /*
- * Per-slice word 0 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Per-slice word 0 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine (0xff414ca0) stores the constant 0xff_0000_0000 to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
  */
 /* xn_md_sic_cmp_hdr_enable0: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_MD_SIC_CMP_HDR_ENABLE0              0x500315e0 /* established */
 
 /*
- * Per-slice word 1 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+ * Per-slice word 1 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine (0xff414ca0) stores the constant 0xff_0000_0000 to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred). SHub 1's equivalent (SH_XN_MD_SIC_CMP_HDR_ENABLE1) implements bits 41:0 only; the SHub 2 width is not known and a model should keep 64 bits.
  */
 /* xn_md_sic_cmp_hdr_enable1: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_XN_MD_SIC_CMP_HDR_ENABLE1              0x500315f0 /* established */

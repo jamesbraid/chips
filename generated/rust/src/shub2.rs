@@ -2193,7 +2193,7 @@ pub mod bt_eng_notify {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 65536;
 }
-/// Board type word. The PROM stores the board type here once the DIMM layout checks out (accepted values 0x7b, 0x200, 0xa00, 0xe00) and eight later sites (established)
+/// Board type word. The PROM stores the board type here and then checks it (accepted values 0x7b, 0x200, 0xa00, 0xe00; any other prints "unknown board ty (established)
 pub mod xn_iilb_pi_cmp_exp_data0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x50031240;

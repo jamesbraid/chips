@@ -271,7 +271,7 @@ All offsets are in the local window (add `0x2_0000_0000`) or, for another node, 
 | `0x1_0078` | `SH2_MEM_RED_BLACK` | write `TIME` bits 15:0 and `ERR_TIME` bits 51:16 | established (access); unknown (values) |
 | `0x1_0080` | `SH2_MISC_MEM_CFG` | RMW: node-id mask bits 61:55, `DISABLED_VICTIMS` 49:44, `DISABLED_WRITE_TNUMS` 40:36, `DISABLED_READ_TNUMS` 32:28, thresholds, `NM_INT_EN_0..3` bits 10, 11, 18, 19 | established (access); unknown (values) |
 | `0x1_00d8`, `0x1_00e0`, `0x1_00e8`, `0x1_00f0`, `0x1_00f8` | `SH2_PIO_RQ_CRD_CTL`, `SH2_PI_MD_RQ_CRD_CTL`, `SH2_PI_MD_RP_CRD_CTL`, `SH2_XN_MD_RQ_CRD_CTL`, `SH2_XN_MD_RP_CRD_CTL` | credit depths (`DEPTH` bits 5:0); SAL_A already wrote the first to 2 | established (access); unknown (values) |
-| `0x5003_1240` (global window of the node) | register `SH2_XN_IILB_PI_CMP_EXP_DATA0`, used as scratch; see [prom-scratch](../../platforms/sn2/prom-scratch.md) | the PROM stores the board type here after checking the DIMM layout (`0xff4824e0`); values `0x7b`, `0x200`, `0xa00`, `0xe00` are the accepted boards, anything else stops with "unknown board type" | established |
+| `0x5003_1240` (global window of the node) | register `SH2_XN_IILB_PI_CMP_EXP_DATA0`, used as scratch; see [prom-scratch](../../platforms/sn2/prom-scratch.md) | the PROM stores the board type here (`0xff4824e0`, write call at `0xff48271c`) and then checks it; values `0x7b`, `0x200`, `0xa00`, `0xe00` are the accepted boards, anything else prints "unknown board type" and returns, with the word already written | established |
 
 ### Directory registers (DQLP at `0x3_xxxx`, DQRP at `0x5_xxxx`, same layout)
 
@@ -383,3 +383,7 @@ Independent review of the console-path trace (`f928493`), the SHub 2 register ov
 No register address or written value of the reset path changed. Fields whose grade changed: `processor_type.code` and `gc_src_ctrl.source_sel`.
 
 **Not checked.** The S1 to S12 and B1 to B7 rows were not re-read (S4 only, because the TOML cites it). The reply parser, the packet payloads and the node's RAM tables. Which PAL value goes into the SCRATCH6 three-bit fields. Whether the BIST flag bytes are always 0 or 1. The refresh interval and hold values and the DIMM-derived values. The condition for the ODT write. The selector that picks the W4 variants. The meanings of every field graded inferred (names only).
+
+## Review (PIC interrupt and XN compare pages)
+
+Two rows changed, both in the `0x5003_xxxx` words: the board-type word is stored before it is validated, and an unknown value prints and returns instead of stopping. Details and the other checks are in [prom-scratch](../../platforms/sn2/prom-scratch.md#review).
