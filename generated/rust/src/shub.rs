@@ -2009,22 +2009,22 @@ pub mod lb_l1_state {
         }
     }
 }
-/// Second firmware lock pair, release side; the name is ours. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the sam (inferred)
+/// Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x1 (inferred)
 pub mod lb_lock2 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0180;
 }
-/// Second firmware lock status; the name is ours. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The o (inferred)
+/// Second firmware lock status. The header names this offset SH_SCRATCH3_ALIAS and gives no description; the other-node routine tests bit 0 only, which i (inferred)
 pub mod lb_lock2_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0188;
 }
-/// Firmware lock pair, release side; the name is ours. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cp (inferred)
+/// Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_ (inferred)
 pub mod lb_lock {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0200;
 }
-/// Firmware lock status; the name is ours. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 (inferred)
+/// Firmware lock status. The header names this offset SH_SCRATCH4_ALIAS and gives no description, so what a read does is unknown; the lock use is the PRO (inferred)
 pub mod lb_lock_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0208;

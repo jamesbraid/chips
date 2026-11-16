@@ -2639,7 +2639,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers)"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
    "unit": "shub",
@@ -2653,7 +2653,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers)"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
    "unit": "shub",
@@ -2667,7 +2667,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user)"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
    "unit": "shub",
@@ -2681,7 +2681,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
    "unit": "shub",

@@ -1117,3 +1117,69 @@ Independent re-read in Ghidra and an objdump listing of snprom 10.54 (`shub1snpr
 - The `bit17` source text in `registers.toml` names `0xffaeb276` as the set; that address is a `movl` of the register address. The write is `0xffaeb2bc` (the read is `0xffaeb28c`). Corrected in the toml; the generated tree does not carry field source text, so `defs-gen` writes nothing new.
 
 **Not checked.** What PROM or kernel code does with the value bits 60:49 written on a non-zero path (the field lies in the header's reserved bits); the rest of the generated headers beyond `defs-check`.
+
+## After the block-transfer self-test: the XN accesses in `main_two` up to the NASID change
+
+What SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`) does to SHub 1 between the two-engine copy self-test (`0xffa96980`, called from `main_two` at `0xffa1b04c`, traced in [the SHub 2 page](../shub_ii/README.md)) and the call to the NASID change (`0xffacd2b0`, [below](#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three)), for a lone node. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled), with a listing cross-check of the stop routine `0xffa5c900`, the accessor leaves and the thunks. Call sites are the address of the `br.call` slot. Names are the 2.4 SN2 header (`shub_mmr.h`, linux-mips 8ef7d46c). Not independently reviewed. The accessors are `0xffa0e5a0` (8-byte read), `0xffa0e640` (8-byte write) and the 1- and 2-byte variants; each runs with interrupts masked and ends in `mf.a`, so a model sees one access per call.
+
+### The stop: `0xffa5caf0` is inside `0xffa5c900`
+
+`0xffa5caf0` is the return address of the first read in `0xffa5c900`: the first pass of the first loop, port 0, address `0x8000_0081_5003_03a0` (call at `0xffa5caec`, the `ld8` of `0xffa0e5a0`). The routine toggles `IILB_VCFIFO_SWITCH` (bit 24) in `SH_XNNI0_VCSWITCH_FLOW` and `SH_XNNI1_VCSWITCH_FLOW` (header mask `0x701010101`, INIT 0), sends a vector write to each linked neighbour, then toggles the bit back. Call chain: `main_two` (`0xffa1ade0`) calls `0xffa44ba0` at `0xffa1b13c`, which calls `0xffa5c900` at `0xffa44d8c` after assigning `cpu_bits` bits 13, 14 and 15; the call follows `0xffa445b0` (bit 0) and `0xffa44660` (bit 1) and precedes the first `0xffa44710`. Both thunks tail-branch to the one routine at `0xffa42640` with argument 0 or 1 (established).
+
+**Lone-node gating (established as code).** `0xffa5c900` returns 0 at once, touching no XN register, unless the master-slice test `0xffa0ff30` is non-zero (it reads `cpu_bits` bit 26 + i for each slice i below the running one, and returns 0 if any is set, so slice 0 always passes) and `cpu_bits` bit 0 is set (`0xffa0ecd0(0)`, the read at `0xffa5ca2c`). `0xffa445b0` sets bit 0 when the best record index is 0, which a lone node's one record is.
+
+**`r33 = 0x813` at the stop is stale, not an argument.** The read leaf has a two-register frame: `r32` is the address (the caller's `r48`) and `r33` is the caller's `r49`. `0xffa5c900` first writes `r49` at `0xffa5caf0`, after the first read returns (the XOR value for the write), so on the first pass `r49` is whatever an earlier call left. The leaf never uses it. `r34` and above are out of frame.
+
+| # | Site | Access | Offset (window) | Name | Value, test and lone-node value |
+|---|---|---|---|---|---|
+| 1 | `0xffa5c950` area | R, RAM | `0x0_0100_0038`, then `+0x30` | not a register | the pointer to the node table; two RAM reads, no SHub access |
+| 2 | `0xffa5ca2c` | R | `0x1_5003_1550` (local) | `cpu_bits` | bit 0 must read 1 |
+| 3 | `0xffa5ca5c` | R | `0x1_1006_0580` (local, `0xffa0dcf0`) | `SH_SHUB_ID` | bits 42:32 kept as the NASID of the vector route; used only for a send |
+| 4 | `0xffa5caec`, `0xffa5cb2c` | R then W, p = 0 then 1 | `0x1_5003_03a0 + 0x200 p` (local; the `0x1_5003_03a0` and `0x1_5003_05a0` words) | `SH_XNNI0_VCSWITCH_FLOW`, `SH_XNNI1_VCSWITCH_FLOW` | write the read value XOR `0x1000000`; the read is not tested |
+| 5 | none | | | | per node record: slot 49 (`0xffa5d5b0`, returns 2); a port whose neighbour index is -1 sends nothing, and both are -1 on a lone node, so `0xffa46a50` is never called |
+| 6 | `0xffa5cc0c`, `0xffa5cc4c` | R then W, p = 0 then 1 | same two words | same | the same XOR again: the pair of toggles restores the value |
+
+The return value is 0 on a lone node; a negative return only makes `0xffa44ba0` print a line (`0xffbb0ae0`) and go on. There is no poll and no deadline in the routine.
+
+### The accesses between the self-test and the NASID change, in order
+
+Order is the execution order of `main_two` for the master slice of a lone node. Stubs: `0xffb91770`, `0xffb911b0`, `0xffb946d0`, `0xffb91b60`, `0xffb90720`, `0xffb91b70` and `0xffb91b80` are one-bundle returns (established), with no access.
+
+| Step | Site (call) | Routine | SHub accesses |
+|---|---|---|---|
+| 1 | `0xffa1b08c`, `0xffa1b0ac` | master-slice test `0xffa0ff30` | R `0x1_5003_1550` bit 26 + i per lower slice i; none for slice 0 |
+| 2 | `0xffa1b3fc`, `0xffa1b41c` | `0xffa805e0`, `0xffa7df40` (`sysctl_display_text`, L1 request `0x1005`) | `0xffa805e0` is RAM only. `0xffa7df40` goes through the L1 UART, not an XN register ([the L1 requests page](../../software/firmware/snprom/l1-requests.md)) |
+| 3 | `0xffa1b32c` | `0xffa1a980` (then `0xffaa0100` and the klconfig builders `0xffaa3cf0`, `0xffaa2760`, `0xffaa33a0`, `0xffaa4560`, `0xffaa4f50`, `0xffaa3060`, `0xffaa5450`, `0xffaa8a40`) | R `0x1_1006_0580` (`SH_SHUB_ID`, bits 42:32) three times; everything else is RAM (0xb0000 bytes allocated, node cells at `0x8000_0030_0100_0038` form). If the allocation fails the PROM prints and calls `0xffa1b940(0x84, 2)`, which blinks progress code `0x84` forever (fatal) |
+| 4 | `0xffa1b3dc` | `0xffa9fe80(nasid, 0x11, 0)` to `init_klcfg_hub` `0xffaa1ea0` | the board-area and `0x0010` L1 requests (see the L1 page). Through `0xffaa1da0` and `0xffa11710`: R `0x9_2002_0080 | nasid << 38` (global window, `SH_FSB_SYMMETRIC_AGENT_STATUS`), bit 0 or 1 for slice 0 or 2, only for slice bits set in the mask passed in (slices 1 and 3 read nothing unless `cpuid[2]` is the simulator value). Inferred that the path runs on a lone node (the caller of `0xffaa1da0` was not followed) |
+| 5 | `0xffa1b0cc` | progress write 0x1c, `0xffa0ddb0` | R and W `0x1_5003_1500 + 0x10 n`, two 16-bit LED stores ([the progress write](#the-progress-write-pc)) |
+| 6 | `0xffa1b0dc` | `0xffa47870` (the discovery crawl, [boot sequence](../../software/firmware/snprom/boot-sequence.md)) | on a lone node only the local descriptor build `0xffa47290`: R `0x1_5003_1560` (debug word, `0xffa975e0` and `0xffa97660`), R `0x1_1006_0580`, and the RAM descriptor writes. The loop over records 1 and up, with the `0x1_5003_1580` counter and vector sends, does not run. A negative return takes the failure halt `0xffad2c50(0x8f)` |
+| 7 | `0xffa1b0fc` | `0xffa48560` to `0xffa53070` | none found |
+| 8 | `0xffa1b11c`, `0xffa1b12c` | `0xffa445b0`, `0xffa44660` (thunks to `0xffa42640`) | per call: test, RAM scan of the node table, then `0xffa0eae0(0 or 1, record index is 0)`: the lock cycle (below), R and W `0x1_5003_1550` bit 0 (first) or bit 1 (second). Prints `Global master is %I` at debug level |
+| 9 | `0xffa1b13c` | `0xffa44ba0` | three `0xffa0eae0` cycles for bits 13, 14, 15 of `cpu_bits` (value 1 when a record of byte `+0x5a` = 1 without flag `0x10000` has flag `0x100000`, `0x200000`, `0x400000`; otherwise 0), then `0xffa5c900` (above) |
+| 10 | `0xffa1b14c` | `0xffa44710` | R `cpu_bits` bit 4 (0 on a lone node), `0xffa42a30` (tree barrier: R `0x1_5003_1550` bit 12, R and W `0x1_5003_1570`, W `0x1_5003_13f0`, `0x1_5003_13d0`, progress read and write; [above](#the-route-calculation-for-a-lone-node-0xffa4d390-and-0xffa5a670)), returns 0, then `0xffa9a130(4, 1)`, the slice barrier (below) |
+| 11 | `0xffa1b18c`, `0xffa1b24c` | test again, progress write 0x1d | as steps 1 and 5 |
+| 12 | `0xffa1b26c`, `0xffa1b2ac` | `0xffa4d390` (route calculation) then `0xffa5b5d0` (the walk, slot 59) | local reads only for the route calculation; the walk writes the router tables and ORs and updates the `VCSWITCH_FLOW` and `INJECT_AGE` words; all in [the topology walk](#the-numalink-topology-walk-0xffa5b5d0-and-slot-59). Negative returns take `0xffad2c50(0x8b)` or `0xffad2c50(0x8c)` |
+| 13 | `0xffa1b1ac` | `0xffa44710` again | as step 10 |
+| 14 | `0xffa1b1bc`, `0xffa1b1dc`, `0xffa1b21c` | `0xffa0aab0` (RAM), progress write 0x1e, `0xffacd2b0` | the NASID change, next section; this table stops here |
+
+**The `cpu_bits` cycle `0xffa0eae0(bit, value)`.** One call makes, in order: R `0x1_1003_0000 + 0x80 * slice` (progress word, `0xffa0e020`); R `0x1_101c_0000` and `0x1_1006_0280` (clock in microseconds, `0xffa0da70`); R `0x1_101d_0208` until it reads 0, once on a lone node; the progress write P(low byte of the progress word) (`0xffa0ddb0`, inside the lock routine `0xffa0ed30`); R `0x1_5003_1550`; W the same address with the bit set or cleared; W `0x1_101d_0200` = 0. [The node lock](#the-node-lock-used-by-a28-a29-a34-and-a37) lists the protocol. The header names the two registers `SH_SCRATCH4` (`0x1_101d_0200`) and `SH_SCRATCH4_ALIAS` (`0x1_101d_0208`), one bit wide (mask 1, INIT 0); the second lock pair is `SH_SCRATCH3` (`0x1_101d_0180`) and `SH_SCRATCH3_ALIAS` (`0x1_101d_0188`), also one bit. The header gives no description of an alias read.
+
+**The slice barrier `0xffa9a130` for a lone node.** Read the progress word; wait while `cpu_bits` bit 34 is set; `0xffa0f780(0)` claims bit 0 of `0x1_5003_1540` under the second lock pair (R `0x1_5003_1540` until the bit reads 0, no deadline; lock via `0xffa0ed30` on `0x188` and `0x180`; R, W `0x1_5003_1540` with bit 0 set; W `0x1_101d_0180` = 0); set `cpu_bits` bit 30 + slice; compare bit 30 + i with bit 26 + i for i = 0 to 3. With bit 26 set for slice 0 and nothing else (set earlier by the processor on its way in), all four pairs match, so it sets bit 34, clears bit 30 + slice, clears bit 34 once the four bits 30 + i read 0, clears bit 0 of `0x1_5003_1540` (`0xffa0f7b0`) and writes the progress code. A model that keeps `cpu_bits` plain does not wait.
+
+### Polls with no deadline, and what ends the PROM
+
+| Where | What it waits on | Deadline | A plain model |
+|---|---|---|---|
+| `0xffa0ed30` (every `cpu_bits` cycle; also the `0x188` pair) | `0x1_101d_0208` (`0x1_101d_0188`) reads 0 | none to give up: after 1,000,000 microseconds each pass writes 0 to `0x200` (`0x180`) and keeps polling | status reads 0 at once; no wait |
+| `0xffa9a130` | `cpu_bits` bit 34 clear; then, for i = 0 to 3, bit 30 + i equal to bit 26 + i, or bit 34 set | none | passes without waiting if bit 26 of the running slice is set and no other slice bit is |
+| `0xffa0f780(0)` (from `0xffa9a130`) | bit 0 of `0x1_5003_1540` clear | none (the deadline argument is 0) | bit 0 reads 0 |
+
+Bounded: the vector operations (1024 passes of 100 microseconds, none on a lone node), the tree barrier `0xffa42a30` (timeout message `tree barrier at %I timed out`), the link probe (128 reads per flow word, [above](#the-ni-port-set-up-before-memory-discovery-0xffa483d0-and-slot-55-0xffa5d850)). Fatal paths: the klconfig allocation failure (step 3), and `0xffad2c50` with progress code `0x8b` (route calculation), `0x8c` (walk) or `0x8f` (discovery), each on a negative return; none runs on a lone node whose RAM and registers behave as below. Prints on the path: the spinner character from `0xffa0ab80` (once), `Global master is %I`, and, with `cpu_bits` bit 10 set, `Distributing routing tables` and `Set up %s`. The remaining prints are debug-level.
+
+### What the model needs for this stretch
+
+- `0x1_5003_1550` (`cpu_bits`): 64-bit storage, reads back what was written. The PROM sets bit 0 and bit 1, assigns bits 13 to 15 and 30 + slice, and clears 30 + slice and 34, with bits 26 + slice already set. Bit 4 must stay 0.
+- `0x1_5003_03a0` and `0x1_5003_05a0` (`SH_XNNI0_VCSWITCH_FLOW`, `SH_XNNI1_VCSWITCH_FLOW`): storage, reset 0 (header INIT, inferred), read-modify-write, no side effect. The toggling pair restores the value; slot 59 then ORs `0x100` (or `0x101`). `0x1_5003_0400` and `0x1_5003_0600` (`SH_XNNI0_INJECT_AGE` and port 1, mask `0xffff`): storage; the PROM stores `(v & ~0xff00) | 0xc000`.
+- `0x1_101d_0208` and `0x1_101d_0188` read 0 when the lock is free (a plain storage pair, or a read that returns the bit and sets it, cleared by a write of 0 to `0x200` or `0x180`); `0x1_101d_0200` and `0x1_101d_0180` accept writes.
+- `0x1_5003_1540`: storage; bit 0 reads 0. `0x1_5003_1570`, `0x1_5003_13f0`, `0x1_5003_13d0`, `0x1_5003_1580`, `0x1_5003_1560` and the history words `0x1_5003_1500 + 0x10 n`: storage.
+- `0x1_1003_0000 + 0x80 n` read (any value), `0x1_101c_0000` running clock and `0x1_1006_0280` period, `0x1_1006_0580` returning the NASID in bits 42:32, `0x9_2002_0080 | nasid << 38` bit 0 set; the LED stores accepted.
