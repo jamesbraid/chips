@@ -22,13 +22,16 @@ below were then read in the disassembly of each routine named; where a routine w
   a `KL_CONFIG_INFO` pointer or a kldir; the SAL call is the only route. The held 2.6.5 kernel agrees: its `sn_setup`
   loads the constant `0x2000005` into the SAL function argument at two sites and has no helper symbols for the walk (they are
   static).
-- **Where the PROM puts it (established for the construction, unknown for the absolute address).** `hwcfg init`
-  (`0xffaa0100`, which names its source file `hwcfg/common/init.c`) allocates `0xb0000` bytes from the node's PROM heap
-  (heap handle at node object offset `0x1f8`), stores the pointer at node object `+0x20` (node object: the pointer at
-  `0x1000038`), and calls `0xffaa3cf0` to lay the area out. **KLCONFIG starts `0x10000` bytes into that block** (every access
-  adds `0x10000`; the allocator checks the 8-byte value at that address is `0xbeedbabe` and prints "kl_config_info_alloc: bad
-  magic" otherwise, `0xffaa4560`). So the offset inside the block is fixed and the block's own address depends on heap state:
-  **unknown**. Route: trace the heap allocator (`0xffac30c0`) on a booted node, or a captured `GET_KLCONFIG_ADDR` result.
+- **Where the PROM puts it (established for the construction, inferred for the address).** `hwcfg init`
+  (`0xffaa0100`, which names its source file `hwcfg/common/init.c`) allocates `0xb0000` bytes from the node's heap arena
+  (handle at block A `+0x1f8`, allocator `0xffac30c0`, arena magic `ARNA`), stores the pointer at block A `+0x20`
+  (block A: the pointer at `0x1000038`), and calls `0xffaa3cf0` to lay the area out. **KLCONFIG starts `0x10000` bytes into that
+  block** (every access adds `0x10000`; the allocator checks the 8-byte value at that address is `0xbeedbabe` and prints
+  "kl_config_info_alloc: bad magic" otherwise, `0xffaa4560`). The heap is the tail of block A, which `0xffac42d0` places at
+  `(nasid << 38) + 0x30_0240_0000` and fills with regions up to `+0x8ac80` ([block A table](../../software/firmware/snprom/os-handoff-tables.md#5-block-a-and-the-tables-the-builders-read)).
+  So the first possible block is `(nasid << 38) + 0x30_0248_ac80` plus arena headers, and **KLCONFIG for NASID 0 is at or after
+  `0x30_0249_ac80`** (**inferred**: allocations that come first, and the header sizes, were not read). That is inside the
+  type 6 runtime-data range of the memory map. Route for the exact value: trace the allocator (`0xffac13f0`, `0xffac3290`) on a booted node, or a captured `GET_KLCONFIG_ADDR` result.
   That the SAL call returns exactly `block + 0x10000` is **established**: the handler at `0xffb19c20` (`sal_02000005`) returns
   status 0 and, in r9 (`v0`, the only word Linux uses), the word at offset `+0x20` of the node's block A plus `0x10000`; a node
   with no memory gets status -2 and r9 0 (`software/sal/sn2-runtime.md` reads the same routine). The link routine `0xffaa5450`
@@ -242,10 +245,23 @@ type `0x3d` (`IXbrick`, `0x77`). `0xffa7e5e0` only folds `0x34` and `0x61` to `0
 (those are in `0xffa7d510`, the odd-NASID path), and `0xffa7d010` packs rack `<< 16`, type `<< 8`, bay. So the type
 byte is whatever the L1 answers to `0x0003` at that target. If the 350's L1 says `F`, the board type is `0x7e`, name `OpusTiobrick`;
 that `F` is **inferred** from the L1 default (see the [L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type))
-and no 350 reply is held. One constraint holds either way: with a result of `0x70` the PIC branch of `0xffabfb10` would call the
+and no 350 reply is held. The table has a second candidate for an Opus-class compute brick: type byte `0x6f` (`o`, `L1_BRICKTYPE_OPUS` in `v5.3:arch/ia64/include/asm/sn/l1.h`) maps to board type `0x79` (`OPUSBRICK` in the klconfig header) with name `onboardIO`. Which of `0x66` (`f`) and `0x6f` is the 350's letter is **unknown**; neither reaches Linux. One constraint holds either way: with a result of `0x70` the PIC branch of `0xffabfb10` would call the
 bridge fill with a null second board, so a working 350 must produce a type in `0x71` to `0x74` or `0x76` to `0x7f`
 (inferred from that control flow, not run). Linux does not read the board type of I/O boards for anything other than the SNIA
 and TIO test, so this does not affect boot.
+
+### What a one-node Altix 350 with an IO10 gets (summary)
+
+| Board | `brd_type` | `brd_nasid` | Components (`struct_type`) | Grade |
+|---|---|---|---|---|
+| node, name `IP41` | `0x11` | the node's NASID | hub 2, memory bank `0x32` (per present bank), hub UART `0x11`, CPU 1 (per slice) | established as stores; values inferred as above |
+| I/O brick midplane, name `IOBRICK` | `0x42` | the NASID passed to the builder (the node's) | crossbar 4 | established as stores; reached only if widget 0 reads as a crossbar part |
+| I/O board, one per PIC bus (two for a PIC `0xd102`) | from the brick-type table, see below | same | bridge 5 | established as stores; the type depends on one L1 reply |
+
+The IO10 itself leaves no component: no IOC4, VSC 7174 or Ethernet record exists on this image, so the base I/O card is invisible
+in KLCONFIG apart from the bridge records. Its PCI devices are discovered by the I/O interface set-up behind SAL calls `0x55` to `0x58`
+([SAL runtime](../../software/sal/sn2-runtime.md#the-structures-behind-0x55-to-0x58)), which works from the PROM's own bus and device objects (whether it also reads KLCONFIG was not checked).
+Sources, per field: NASID, SHub part and revision from the SHub registers; module, slab, slot, CPU enables, EEPROM text and brick type letter from the L1; bank sizes from SPD through the L1; nothing from PIC or TIO probing except the widget id words and the PIC identification word that select the builders.
 
 ### Values by source
 
@@ -315,8 +331,8 @@ Items 1 to 3 let the PROM finish building; items 4 to 6 shape the contents; item
 
 ## 5. Unknowns and routes
 
-1. Absolute address of KLCONFIG on a booted node (heap state): trace the allocator, or a captured `GET_KLCONFIG_ADDR` result.
-2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000`, hence the I/O board type (`0xffa7e3b0` is read;
+1. Exact address of KLCONFIG on a booted node: bounded below by `0x30_0249_ac80` for NASID 0 (see above); trace the allocator headers, or a captured `GET_KLCONFIG_ADDR` result.
+2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000` (`f` or `o` are the candidates), hence the I/O board type (`0xffa7e3b0` is read;
    the reply is not held): a captured L1 exchange, or a `sn_topology` / klconfig dump from a 350.
 3. The component layouts beyond `klinfo_t` (hub, memory bank, CPU, bridge, crossbar): Linux does not define them. The PROM
    stores are listed above; field meanings are inferred. A routine in the PROM that reads them back (the diagnostic dump
