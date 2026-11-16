@@ -58,6 +58,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ipi_int_enable` | 0x110000400 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads |
 | `local_int_config` | 0x110000480 | rw | 64 | 6 |  | unknown | established | SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9) |
 | `local_int_enable` | 0x110000500 | rw | 64 | 6 |  | unknown | established | SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5) |
+| `proc_err_int_config` | 0x110000a80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `proc_adv_int_config` | 0x110000c80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `proc_err_int_enable` | 0x110000e80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `proc_adv_int_enable` | 0x110001080 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `profile_int_config` | 0x110001280 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `profile_int_enable` | 0x110001300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc0_int_config` | 0x110001380 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr |
 | `rtc0_int_enable` | 0x110001400 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0) |
 | `rtc_int_config` | 0x110001480 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -566,6 +572,38 @@ Mask of event sources that raise local interrupt n. The PROM writes 0x7ef (the b
 
 Array of 6 registers, stride 256.
 
+### Register `proc_err_int_config`
+
+Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced.
+
+Array of 4 registers, stride 128.
+
+### Register `proc_adv_int_config`
+
+Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources read). Rewritten by the NASID-change routine as proc_err_int_config is.
+
+Array of 4 registers, stride 128.
+
+### Register `proc_err_int_enable`
+
+Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it reads 0.
+
+Array of 4 registers, stride 128.
+
+### Register `proc_adv_int_enable`
+
+Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is.
+
+Array of 4 registers, stride 128.
+
+### Register `profile_int_config`
+
+Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non-zero.
+
+### Register `profile_int_enable`
+
+Enable of the profiling interrupt; read by the NASID-change routine.
+
 ### Register `rtc0_int_config`
 
 Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read.
@@ -885,13 +923,13 @@ Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset
 
 ### Register `pi_reg_2001_0100`
 
-Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written.
+FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 24 | `bit24` | inferred |  | SAL 5.04 PROM site 0xffc4e816 and 0xffa97796 | Set by SAL_A; set before and cleared after the PROM's writes to 0x120000000 in a SAL_B routine. Role inferred from that bracket; name is ours. |
-| 17 | `bit17` | inferred |  | SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node) | Set by a local SAL_B routine and tested across nodes, so it carries a per-node flag; role not decoded. Name is ours. |
-| 3 | `bit3` | inferred |  | SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read) | Set, cleared and tested by SAL_B routines (read-modify-write); role not decoded. Name is ours. |
+| 24 | `bit24` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back). |
+| 17 | `bit17` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded. |
+| 3 | `bit3` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write). |
 
 ### Register `pi_slice_present`
 

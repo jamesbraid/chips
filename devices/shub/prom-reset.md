@@ -179,7 +179,7 @@ For each register the PROM reads before it writes it (in this phase), and what t
 
 ## The SHub ID register
 
-`0x1_1006_0580` (`SH1_SHUB_ID`) is read by the node-id routine at `main` start (A30, and again on later calls) and inline at 18 sites in the table builder (A26), and is written once by a later routine at `0xffa95a30` (the only direct call is `0xffa5f84c`, in the NUMAlink numbering path, after the jump to RAM, so outside this page's phase; read in full for this question). Linux v5.3 treats it as read only and names only the revision (bits 31:28; `SH1_SHUB_ID_REVISION_MASK`). The PROM's write, an `ld8` of the register through the node-object read, then `dep` into the value, then a 64-bit store through the node-object write, is:
+`0x1_1006_0580` (`SH1_SHUB_ID`) is read by the node-id routine at `main` start (A30, and again on later calls) and inline at 18 sites in the table builder (A26), and is written by a later routine at `0xffa95a30` (the node-object slot 33; the only direct call is `0xffa5f84c`, in the NUMAlink numbering path, after the jump to RAM, so outside this page's phase; read in full for this question; the call that matters on a lone node is the indirect one from `0xffa976e0`, [traced at the end of this page](#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three)). Linux v5.3 treats it as read only and names only the revision (bits 31:28; `SH1_SHUB_ID_REVISION_MASK`). The PROM's write, an `ld8` of the register through the node-object read, then `dep` into the value, then a 64-bit store through the node-object write, is:
 
 - bits 42:32 replaced by the NASID argument;
 - bits 45:44 replaced by 0, 1, 2 or 3, chosen from an argument (with bits 10:9 masked and the rest halved): 31 or below gives 0, 63 or below gives 1, 127 or below gives 2, more gives 3;
@@ -843,7 +843,7 @@ VALID (bit 63) is set for entry 0 and for entry NASID mod 128, the same entry fo
 
 **`SH_SCRATCH1` (`0x1_101d_0080`) bits 39 and 40.** Bit 39 is set, with bits 55:54 rewritten, only by `0xffa5d2a0`, reached from slot 56 (`0xffa5df20`), whose only caller is the crawl's neighbour step `0xffa45780` (a port with its link bit set); also by `0xffa0aee0` (the failure halt `0xffad2cb0`) and `0xffa60a70` (not reached without a neighbour: inferred). It is neither set nor cleared on a lone node (established for the callers found). Bit 40 is set only by `0xffa4eb40(nasid)`, called at `0xffad748c` in `main_three` after progress 0x23, and by slot 63 (`0xffa60550`, no caller found in the SAL_B code). So on a first boot bit 40 is clear while `main_two` runs: slot 57 stores NASID 0xffff, which `0xffa4d390` replaces. Neither bit is cleared by SAL_B. A value left in the register by an earlier boot is **unknown**.
 
-**After the walk (inferred for the last call).** `main_two` calls `0xffa44710` again (barrier, as above), reads the local NASID from record 0 (`0xffa0aab0`), writes progress 0x1e and calls `0xffacd2b0`. That clears `cpu_bits` bit 21 + slice, prints `Flushing caches and changing nasid...` and calls `0xffaf5f90`, which flushes caches and jumps to a routine passed to it (the NASID change; neither was read in full). `main_three` follows (progress 0x21 to 0x23, then I/O discovery): the next large step.
+**After the walk (inferred for the last call).** `main_two` calls `0xffa44710` again (barrier, as above), reads the local NASID from record 0 (`0xffa0aab0`), writes progress 0x1e and calls `0xffacd2b0`. That clears `cpu_bits` bit 21 + slice, prints `Flushing caches and changing nasid...` and calls `0xffaf5f90`, which flushes caches and jumps to a routine passed to it. Both are read in full in [the next section](#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three).
 
 ### Review (route calculation, and the corrections it makes to the walk)
 
@@ -858,3 +858,70 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of snprom 10.54 (`0xf
 **Not confirmed.** The NASID the route calculation stores (0 on a lone node: the arithmetic of `0xffa4d390` was skimmed, not traced), `0xffa4a740` returning 0, the callers of `0xffa5d2a0`, and the claims about `SH_SCRATCH1` bit 40 setters (`0xffa4eb40`, slot 63). The per-port field offsets inside the port record (`+0x38`, `+0x40`, `+0x48` relative to the array entry) agree between the allocator and slot 59 but were not tied to the `0x28`-byte records' own layout.
 
 **Grades.** As on the section: established as code for the reads above; the lone-node premise (one record, both ports down) stays the premise.
+
+## The NASID change and the node-id install: `0xffacd2b0` to `main_three`
+
+Same image and method as the sections above (snprom 10.54, `shub1snprom.bin`, flat at `0xffa00000`; Ghidra IA-64 `--sn2-prom --no-analysis` over the named addresses, every function below read in a Ghidra decompile and an `ia64-linux-gnu-objdump` listing, call targets and branch tests taken from the listing). Names are the 2.4 SN2 header (`shub_mmr.h` at 8ef7d46c) and the PROM name table at `0xffbfabb0`. Not independently reviewed. The flow of the stages, the PAL calls and the CPU-side effects are on the [boot sequence page](../../software/firmware/snprom/boot-sequence.md#the-nasid-change-and-the-start-of-main_three). All SHub accesses are 8 bytes. "Global" is `0x8000_0009_0000_0000 | nasid << 38 | offset` (`0x1_xxxx_xxxx` offsets), "local" is `0x8000_0081_xxxx_xxxx`.
+
+**What a lone node does here (established for the code, inferred for the values).** Node record 0 holds NASID 0 (the route calculation above), so `0xffa976e0` rewrites the NASID field with the value it already has: no window moves, every global-window address keeps its NASID. The values that vary with the NASID (`cr.lid`, interrupt pids, address bits 48:38) are given for NASID 0 and for the general case.
+
+### The SHub accesses of the install, in order
+
+| # | Where | Access | Offset (window) | Name | Value and test |
+|---|---|---|---|---|---|
+| 1 | `0xffacd2b0` | RMW | `0x1_5003_1550` (local) | `cpu_bits` (`SH_XN_MD_NI0_CMP_EXP_DATA1`) | clear bit 21 + slice, under the lock pair at `0x1_101d_0200`/`0208` (`0xffa0eae0(21 + slice, 0)`); every CPU |
+| 2 | `0xffacd1e0` | barrier | `cpu_bits` | | `0xffa9a130` (every CPU, before the master writes anything) |
+| 3 | `0xffa976e0`, master slice only (`0xffa0ff30`) | | | | progress 0x59 "Writing new node ID to chipset" |
+| 4 | | R, W, R | `0x1_2001_0100` (local) | `SH_FSB_SYSTEM_AGENT_CONFIG` (our key `pi_reg_2001_0100`) | read; write with bit 24 (`serialize_fsb_en`) set; read back (value unused) |
+| 5 | slot 33 `0xffa95a30` | R | `0x1_1006_0580` (global, route word of the node object `[obj+24]`, normally 0, NASID `[obj+0]` = the NASID the chip had) | `SH_SHUB_ID` | any; the other bits are kept |
+| 6 | | W | the same | `SH_SHUB_ID` | read value with bits 42:32 = new NASID (A), 45:44 = f(B), 52:48 = g(C) (rules on the [SHub ID section](#the-shub-id-register)); for NASID 0, B = 0, C = 0: 0, 0, 1 |
+| 7 | `0xffa976e0` | R | `0x1_2000_0000` (local) | `SH_CRB_MESSAGE_CONTROL` | value kept |
+| 8 | | R | `0x1_1006_0580` (local) | `SH_SHUB_ID` | bits 31:28 (revision): below 3 chooses `0x3f1`, otherwise `0x3b03f7` |
+| 9 | | W | `0x1_2000_0000` (local) | `SH_CRB_MESSAGE_CONTROL` | value of row 7 OR the mask |
+| 10 | | W | `0x1_2001_0100` (local) | `SH_FSB_SYSTEM_AGENT_CONFIG` | row 4's value with bit 24 cleared (the read-back is not reused: any bit set by someone in between is lost) |
+| 11 | | | | | progress 0x5a "New node ID written to chipset"; barrier `0xffa9a130` |
+| 12 | `0xffad7aa0` | | | | progress 0x1f "Calling node id install routines" |
+| 13 | `0xffaec240` (every CPU) | W, R | `cr.lid` | | write `cr.lid` bits 31:16 = `nasid & 0x7f` (bits 22:16), slice (bits 26:23), `(nasid >> 7) & 0x1f` (bits 31:27); read back bits 31:16 and compare; mismatch: progress 0xc3 "Could not write new value to cr.lid" and a halt (`0xffad2c50`) |
+| 14 | `0xffaec340` (master) | 21 pairs | see below | interrupt CONFIG and ENABLE pairs | rewrite the target processor id |
+| 15 | stubs `0xffa97950`, `0xffb91700`, `0xffb91280` | | | | return at once (the last returns 0); nothing accessed |
+| 16 | `0xffa733d0` (master) | R, W, W | `0x1_0003_0000` (global, new NASID), `0x1_0003_0000`, `0x1_0005_0000` | `SH_MD_DQLP_MMR_DIR_CONFIG`, `SH_MD_DQRP_MMR_DIR_CONFIG` | bits 2:0 of the first replaced by a class from C: C >> 1 below 0x40 gives 0, below 0x80 gives 1, below 0x100 gives 2, below 0x200 gives 3, else 4; the same word written to the second without reading it. For C = 0, bits 2:0 = 0 |
+| 17 | | barrier; progress 0x20 "Switching to new node id" | | | `0xffa9a130`, then `0xffafba70` |
+
+B and C come from `0xffa4f1a0` and `0xffa4efa0`, called at the end of `0xffa4d390`: B is the highest NASID among the non-router records (byte `+0x5a` not 2) that do not carry flag `0x10000` in the word at `+0x68` and agree with record 0 in NASID bits 10:9; a record whose byte `+0x6c` is non-zero also contributes a value built from that byte. C starts from B and takes the highest NASID of any non-router record or, for a record whose byte `+0x6d` is non-zero, `(1 << (byte + 6)) - 1`. One record with NASID 0 gives B = 0, and C = 0 if the two bytes are 0 (inferred: the bytes were not traced). B and C also reach row 6 through the argument list of slot 33 (A, B, C in that order).
+
+### The 21 interrupt pairs rewritten by `0xffaec340`
+
+For each entry of the table at `0xffbbc750` (16 bytes: CONFIG offset, ENABLE offset; ends at a zero CONFIG), master slice only, after the NASID write: read ENABLE in the **new** NASID's global window; if it reads 0, skip; else read CONFIG in the local window, replace bits 19:4 with `(nasid & 0x7f) | (old bits 14:11, the slice) | ((nasid >> 7) & 0x1f) << 11` (so bits 10:4 = NASID[6:0], bits 14:11 unchanged, bits 19:15 = NASID[11:7]), and write CONFIG in the global window of the new NASID. Established as code; the names are the PROM name table's, offsets are the table's. All offsets are `0x1_1000_xxxx`.
+
+| Walk | CONFIG | ENABLE | Name (`SH_..._CONFIG`, `SH_..._ENABLE`) |
+|---|---|---|---|
+| 0 | `0080` | `0200` | `II_INT0` |
+| 1 | `0180` | `0280` | `II_INT1` |
+| 2 to 7 | `0480` + `0x100 * n` | `0500` + `0x100 * n` | `LOCAL_INT0` to `LOCAL_INT5` |
+| 8 to 11 | `0c80` + `0x80 * n` | `1080` + `0x80 * n` | `PROC0_ADV_INT` to `PROC3_ADV_INT` |
+| 12 to 15 | `0a80` + `0x80 * n` | `0e80` + `0x80 * n` | `PROC0_ERR_INT` to `PROC3_ERR_INT` |
+| 16 | `1280` | `1300` | `PROFILE_INT` |
+| 17 | `1380` | `1400` | `RTC0_INT` |
+| 18 to 20 | `1480` + `0x100 * (n - 18)` | `1500` + `0x100 * (n - 18)` | `RTC1_INT` to `RTC3_INT` |
+
+The 2.4 header gives `SH_PROC0_ERR_INT_CONFIG` at `0x1_1000_0a80` with mask `0x0ff3ffffffefffff` and INIT 0, and INIT 0 for `SH_PROC0_ERR_INT_ENABLE`, `SH_PROFILE_INT_ENABLE`, `SH_II_INT0_ENABLE` and `SH_RTC1_INT_ENABLE`; the other pairs' INIT lines were not read one by one (inferred the same). Before this step the PROM has already written 1 to both `II_INT` enables (`0xffb73a40`) and 0x7ef or 0x4000 to the `LOCAL_INT` enables (`0xffa23a20`, `0xffa31290`), so on a model that keeps written values those pairs are rewritten; for NASID 0 the rewrite produces the pid the PROM stored already (slice in bits 14:11, NASID bits 0), so the result is unchanged. A model that returns 0 for every ENABLE skips all 21 writes and reaches the same state.
+
+### The window move, and the second jump (`0xffafba70`)
+
+Established: nothing moves the old global window. After row 6 the PROM addresses the chip through the new NASID only: row 14 reads ENABLE through it, row 16 reads `0x1_0003_0000` through it, and `0xffa0dcf0` (local window) reads the new NASID. A model must therefore decode the global window of the NASID stored in `SH_SHUB_ID` bits 42:32 from the write on, and may stop decoding the old one (the PROM does not touch the old one after row 5/6 and does not read back through it). For NASID 0 nothing changes. A nonzero NASID also needs the node-window RAM layout rebuilt, which `main_three` does (`0xffac42d0(1, nasid, 1)`, `0xffadee60`); the RAM view of the node moves with the NASID (inferred from that rebuild: the physical form `nasid << 38 | 0x30_0000_0000` is how the PROM addresses its node-window arenas).
+
+`0xffafba70(descriptor of main_three)`: reads the NASID through `0xffa0dcf0` (three times), builds two arena addresses in the new node window, `(nasid << 38) + 0x30_0000_0000 | 0x300_0000` plus 1 MiB per slice (table `0xffbe6c08`: four entries of 1 MiB) plus `0x180` (table `0xffbe71c8`, whose entries 0 and 1 are odd markers and are skipped), and a third from `0x30_0200_0000` (tables `0xffbe6b78`, `0xffbe7b48`). It calls `0xffaf5f90(0x3ffff, base + 0x3fff0, base, gp, entry, 0)`: sp at base + `0x3fff0`, backing store at base (a cached address, no bit 63), no flush (the type field is 0), gp and entry masked with `0x7fffffcfffffffff` (`0xfface7d0`; for `0xffd98000` and `0xffad7280` the mask changes nothing), and a jump to `main_three` (`0xffad7280`) with argument 0. Established as code; the arena addresses depend on the RAM layout the earlier steps built and are inferred for a real run.
+
+### The memory scrub `0xffae3160` on a lone node
+
+Called from `main_three` after progress 0x22. Master slice: `0xffa21350(0, nasid, nasid, 0)` and `0xffa23600` (not decoded: the second reads `SH_SHUB_ID`, looks up an attribute and calls the register-list writer `0xffae3f50`; contents unknown), then the barrier. Then set bit 13 of `0x1_5003_1540` (`0xffa0f780(13)`), `0xffa23e00(0)` (for each slice i with `cpu_bits` bit 26 + i set: write 0 to `SH_LOCAL_INT0_ENABLE` for i = 0, 1 or `SH_LOCAL_INT1_ENABLE` for i = 2, 3, global window, 8 bytes), read the environment variable `WrbWARCnt` (default `20`, clamped to 0 to 32; call n), ask the node object for the port count (slot 49, 2) and the mask of ports with a link up (slot 54, `shub_port_status`, inferred from the slot offsets `+0x188` and `+0x1b0` matching those NI methods). With no port up (`SH_NI0_LLP_STAT` low nibble not 9, the lone node), the mask is 0 and the PROM prints `NOTICE:  no NI ports are up, ICC underflow WAR disabled`, then `0xffa23e00(1)` (writes 0x7ef instead of 0), clears bit 13 and runs the barrier. Established as control flow; nothing else is accessed.
+
+With a port up (not the lone node; established as code): k = bits 48:45 of the scrub address `(((nasid ^ 0x400) << 38) + 0x30_0000_0000 + 16 GiB - n * 128)` (0x8 for NASID 0); read `SH_PI_GLOBAL_TABLE[k]` (`0x1_5002_1400 + 8k`, local window), write it `0xf0f | b << 13 | b << 5` (b = the first port up, 0 or 1); read and write `SH_CRB_TIMEOUT_PRESCALE` (`0x1_2000_0100`) = `0x5f5e06`; read and write `SH_CRB_TIMEOUT_SKID` (`0x1_2000_0180`) = `(old & ~0x3f) | (n + 2)`; unless `cpuid[2]` is `0xaeeeeeee8badbeef`, wait 4,000,000 microseconds (`0xffa0db90`; 80,000,000 RTC ticks at the 50 ns tick the PROM sets), store 0 to n 8-byte words 128 bytes apart at the scrub address, wait 1,000,000 microseconds (20,000,000 ticks); `0xffa30b40(nasid, 5)`; then write back SKID (with bit 63 set in the stored value), PRESCALE, the PI table entry and call `0xffa24810`. The waits poll `SH_RTC` (`0x1_101c_0000`) in `0xffa0db90`; nothing else is polled. The bodies of `0xffa30b40` (known to clear event bits through a descriptor table) and `0xffa24810` were not read.
+
+### Main_three's SHub accesses on the way to the I/O discovery
+
+The step list with progress codes and function addresses is on the boot sequence page. SHub accesses of the functions read: `0xffa97960` ([above](#the-node-permission-set-up-0xffa97960)); `0xffa73590` (rows of the slot 97 table above); `0xffae3160` (previous section); `0xffa44710` and `0xffa44950` (tree barrier, local reads of `cpu_bits` bit 12 and `SH_XN_MD_NI0_CMP_ENABLE1` as in the route calculation section; on a lone node they return 0); `0xffa4eb40(nasid)` (R and W of `SH_SCRATCH1`, global window of NASID, sets bit 40 and keeps the rest; then RAM only); `0xffa44e50`, `0xffa0a850`, `0xffa1f960`, `0xffacddf0` and `0xffafbca0` (RAM only, plus one flash read in `0xffaf6d10`; `0xffacddf0` flushes 0x100 bytes at physical `0x1000000` with `fc`, `sync.i` and `mf`).
+
+### Unknown here
+
+`0xffa21350`, `0xffa23600`, `0xffa24810` and `0xffa30b40` (what they write); the bodies of `0xffae0a00`, `0xffac7f90`, `0xffacda00` and `0xffa1f740` (nonzero NASID only); whether the PROM's later code compares the chip's NASID with the record after the write on a node with a router; what the real chip does to a request in flight at the moment bits 42:32 change (no PROM code waits for it: after row 6 the next access is in the SHub's own register block).

@@ -1287,6 +1287,44 @@ pub mod local_int_enable {
     pub const COUNT: u32 = 6;
     pub const STRIDE: u64 = 256;
 }
+/// Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's nam (established)
+pub mod proc_err_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000a80;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
+}
+/// Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources r (established)
+pub mod proc_adv_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000c80;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
+}
+/// Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it r (established)
+pub mod proc_err_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110000e80;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
+}
+/// Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is. (established)
+pub mod proc_adv_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110001080;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
+}
+/// Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non- (established)
+pub mod profile_int_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110001280;
+}
+/// Enable of the profiling interrupt; read by the NASID-change routine. (established)
+pub mod profile_int_enable {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110001300;
+}
 /// Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_ (established)
 pub mod rtc0_int_config {
     pub const WIDTH: u32 = 64;
@@ -2146,11 +2184,11 @@ pub mod crb_timeout_skid {
         }
     }
 }
-/// Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. S (established)
+/// FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table (established)
 pub mod pi_reg_2001_0100 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120010100;
-    pub mod bit24 { // bits 24:24, inferred
+    pub mod bit24 { // bits 24:24, established
         pub const SHIFT: u32 = 24;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -2160,7 +2198,7 @@ pub mod pi_reg_2001_0100 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod bit17 { // bits 17:17, inferred
+    pub mod bit17 { // bits 17:17, established
         pub const SHIFT: u32 = 17;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
@@ -2170,7 +2208,7 @@ pub mod pi_reg_2001_0100 {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod bit3 { // bits 3:3, inferred
+    pub mod bit3 { // bits 3:3, established
         pub const SHIFT: u32 = 3;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {

@@ -1563,6 +1563,90 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "proc_err_int_config",
+   "offset": 4563405440,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "proc_adv_int_config",
+   "offset": 4563405952,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "proc_err_int_enable",
+   "offset": 4563406464,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "proc_adv_int_enable",
+   "offset": 4563406976,
+   "access": "rw",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "profile_int_config",
+   "offset": 4563407488,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "profile_int_enable",
+   "offset": 4563407616,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "rtc0_int_config",
    "offset": 4563407744,
    "access": "rw",
@@ -2787,8 +2871,8 @@
    "name": "pi_reg_2001_0100.bit24",
    "hi": 24,
    "lo": 24,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffc4e816 and 0xffa97796"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
   },
   {
    "unit": "shub",
@@ -2796,8 +2880,8 @@
    "name": "pi_reg_2001_0100.bit17",
    "hi": 17,
    "lo": 17,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
   },
   {
    "unit": "shub",
@@ -2805,8 +2889,8 @@
    "name": "pi_reg_2001_0100.bit3",
    "hi": 3,
    "lo": 3,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)"
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
   },
   {
    "unit": "shub",

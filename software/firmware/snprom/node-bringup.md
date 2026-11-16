@@ -301,7 +301,7 @@ for a decision except where noted:
 | `0x1_101d_0100` | SAL_A, winner | set bits 41:39 to 7; later read by the L1 UART start | none |
 | `0x1_5003_1500 + 16*n`, `_1510`, `_1530` | every progress code | shift-in of the code (read, write) | none |
 | `0x7_fed0_0000 + n*0x10000` | every progress code | 16-bit LED write | `SH1_REAL_JUNK_BUS_LED0` to `LED3` (`0x7_fed0_0000` and `+0x10000` steps) |
-| `0x1_2000_0000`, `0x1_2001_0100` | error path and `0xffa976e0` (call site not located) | set `0x1_2001_0100` bit 24, run a chip operation, OR `0x3b03f7` (revision above 2) or `0x3f1` (1009, otherwise) into `0x1_2000_0000`, write back, clear bit 24 | none |
+| `0x1_2000_0000`, `0x1_2001_0100` | error path and `0xffa976e0` (called from `0xffacd1e0`, the node-id install: see the [SHub reset page](../../../devices/shub/prom-reset.md#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three)) | set `0x1_2001_0100` bit 24, run a chip operation, OR `0x3b03f7` (revision above 2) or `0x3f1` (1009, otherwise) into `0x1_2000_0000`, write back, clear bit 24 | none |
 | `0x1_2005_0300`, `0x1_2000_0180`, `0x1_2006_0100`, `_0180`, `_0200` | `0xffa24510`, `0xffa245f0`, `0xffa25460` (reached through tables; order not located) | write low 7 bits of an argument with bit 63 to `0x1_2005_0300`, OR bit 63 into `0x1_2000_0180`; read the three `0x1_2006_xxxx` registers | `SH1_PI_CAM_CONTROL` (`0x1_2005_0300`) |
 | `0x1_1005_0608` then `0x1_2007_0200` | `pio_wt_st_force_err` (`0xffa24cc0`, early in `main_two`) | store, then spin until bit 0 or bit 2 of the status is set; clear through the alias at `0x..0208` | `SH1_PIO_WRITE_STATUS_0` and `_ALIAS` |
 

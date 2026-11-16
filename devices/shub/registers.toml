@@ -352,6 +352,68 @@ reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0)"
 doc = "Enable for comparator RTC0; written after the compare value, cleared first on undo. Never read."
 
+[registers.proc_err_int_config]
+offset = 0x110000a80
+count = 4
+stride = 0x80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SGI SN2 Linux 2.4 tree (linux-mips linux-2.4 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_PROC0_ERR_INT_CONFIG at 0x110000a80); SAL 5.04 PROM name table 0xffbfabb0 (SH_PROC0 to 3_ERR_INT_CONFIG); read and written by the NASID-change routine 0xffaec340"
+doc = "Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced."
+
+[registers.proc_err_int_enable]
+offset = 0x110000e80
+count = 4
+stride = 0x80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "PROM name table 0xffbfabb0 (SH_PROC0 to 3_ERR_INT_ENABLE); interrupt table 0xffbbc750 read by 0xffaec340"
+doc = "Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it reads 0."
+
+[registers.proc_adv_int_config]
+offset = 0x110000c80
+count = 4
+stride = 0x80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "PROM name table 0xffbfabb0 (SH_PROC0 to 3_ADV_INT_CONFIG); interrupt table 0xffbbc750 read by 0xffaec340"
+doc = "Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources read). Rewritten by the NASID-change routine as proc_err_int_config is."
+
+[registers.proc_adv_int_enable]
+offset = 0x110001080
+count = 4
+stride = 0x80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "PROM name table 0xffbfabb0 (SH_PROC0 to 3_ADV_INT_ENABLE); interrupt table 0xffbbc750 read by 0xffaec340"
+doc = "Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is."
+
+[registers.profile_int_config]
+offset = 0x110001280
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "PROM name table 0xffbfabb0 (SH_PROFILE_INT_CONFIG); interrupt table 0xffbbc750 read by 0xffaec340"
+doc = "Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non-zero."
+
+[registers.profile_int_enable]
+offset = 0x110001300
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "PROM name table 0xffbfabb0 (SH_PROFILE_INT_ENABLE); interrupt table 0xffbbc750 read by 0xffaec340"
+doc = "Enable of the profiling interrupt; read by the NASID-change routine."
+
 [registers.int_cmpa]
 offset = 0x1101b0000
 access = "rw"
@@ -389,12 +451,12 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
-doc = "Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written."
+doc = "FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written."
 
 [registers.pi_reg_2001_0100.fields]
-bit24 = { bits = [24, 24], grade = "inferred", from = "SAL 5.04 PROM site 0xffc4e816 and 0xffa97796", doc = "Set by SAL_A; set before and cleared after the PROM's writes to 0x120000000 in a SAL_B routine. Role inferred from that bracket; name is ours." }
-bit3 = { bits = [3, 3], grade = "inferred", from = "SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)", doc = "Set, cleared and tested by SAL_B routines (read-modify-write); role not decoded. Name is ours." }
-bit17 = { bits = [17, 17], grade = "inferred", from = "SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)", doc = "Set by a local SAL_B routine and tested across nodes, so it carries a per-node flag; role not decoded. Name is ours." }
+bit24 = { bits = [24, 24], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (serialize_fsb_en); SAL 5.04 PROM sites 0xffc4e816 and 0xffa97796", doc = "serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back)." }
+bit3 = { bits = [3, 3], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (berr_assert_en); SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)", doc = "berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write)." }
+bit17 = { bits = [17, 17], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (xtpr_trans_rsp); SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)", doc = "xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded." }
 
 [registers.cpu_hist]
 offset = 0x150031500

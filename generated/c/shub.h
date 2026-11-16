@@ -616,6 +616,50 @@
 #define SHUB_LOCAL_INT_ENABLE_STRIDE                 256
 
 /*
+ * Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced.
+ */
+/* proc_err_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROC_ERR_INT_CONFIG                     0x110000a80 /* established */
+#define SHUB_PROC_ERR_INT_CONFIG_COUNT               4
+#define SHUB_PROC_ERR_INT_CONFIG_STRIDE              128
+
+/*
+ * Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources read). Rewritten by the NASID-change routine as proc_err_int_config is.
+ */
+/* proc_adv_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROC_ADV_INT_CONFIG                     0x110000c80 /* established */
+#define SHUB_PROC_ADV_INT_CONFIG_COUNT               4
+#define SHUB_PROC_ADV_INT_CONFIG_STRIDE              128
+
+/*
+ * Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it reads 0.
+ */
+/* proc_err_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROC_ERR_INT_ENABLE                     0x110000e80 /* established */
+#define SHUB_PROC_ERR_INT_ENABLE_COUNT               4
+#define SHUB_PROC_ERR_INT_ENABLE_STRIDE              128
+
+/*
+ * Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is.
+ */
+/* proc_adv_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROC_ADV_INT_ENABLE                     0x110001080 /* established */
+#define SHUB_PROC_ADV_INT_ENABLE_COUNT               4
+#define SHUB_PROC_ADV_INT_ENABLE_STRIDE              128
+
+/*
+ * Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non-zero.
+ */
+/* profile_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROFILE_INT_CONFIG                      0x110001280 /* established */
+
+/*
+ * Enable of the profiling interrupt; read by the NASID-change routine.
+ */
+/* profile_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PROFILE_INT_ENABLE                      0x110001300 /* established */
+
+/*
  * Destination of comparator RTC0's interrupt, which the SAL keeps for a delayed bus-error assertion (Linux mmtimer: RTC0 is used by SAL). Layout as rtc_int_config. Never read.
  */
 /* rtc0_int_config: rw64, reset unknown; SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr */
@@ -1095,17 +1139,17 @@
 #define SHUB_CRB_TIMEOUT_SKID_SKID_INPLACE           (SHUB_CRB_TIMEOUT_SKID_SKID_MASK << SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT)
 
 /*
- * Processor interface register, unnamed (the block is inferred from the neighbouring SH1_PI_CAM_CONTROL and SH1_PIO_WRITE_STATUS_0); the name is ours. SAL_A reads it and writes it back with bit 24 set, using the read value for nothing else. The PROM later brackets writes to the register site 0x120000000 with bit 24 set then cleared, which suggests a write enable (inferred). Any reset value is tolerated; bit 24 must be settable and read back as written.
+ * FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written.
  */
 /* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
 #define SHUB_PI_REG_2001_0100                        0x120010100 /* established */
-#define SHUB_PI_REG_2001_0100_BIT24_SHIFT            24 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT24_SHIFT            24 /* established */
 #define SHUB_PI_REG_2001_0100_BIT24_MASK             0x1ull
 #define SHUB_PI_REG_2001_0100_BIT24_INPLACE          (SHUB_PI_REG_2001_0100_BIT24_MASK << SHUB_PI_REG_2001_0100_BIT24_SHIFT)
-#define SHUB_PI_REG_2001_0100_BIT17_SHIFT            17 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT17_SHIFT            17 /* established */
 #define SHUB_PI_REG_2001_0100_BIT17_MASK             0x1ull
 #define SHUB_PI_REG_2001_0100_BIT17_INPLACE          (SHUB_PI_REG_2001_0100_BIT17_MASK << SHUB_PI_REG_2001_0100_BIT17_SHIFT)
-#define SHUB_PI_REG_2001_0100_BIT3_SHIFT             3 /* inferred */
+#define SHUB_PI_REG_2001_0100_BIT3_SHIFT             3 /* established */
 #define SHUB_PI_REG_2001_0100_BIT3_MASK              0x1ull
 #define SHUB_PI_REG_2001_0100_BIT3_INPLACE           (SHUB_PI_REG_2001_0100_BIT3_MASK << SHUB_PI_REG_2001_0100_BIT3_SHIFT)
 
