@@ -167,7 +167,7 @@ Assume the minimum of [sn2-runtime](../sal/sn2-runtime.md#what-a-synthetic-sal-f
 
 - The PROM's ACPI tables, memory map, SAL system table and runtime services are now read in [os-handoff-tables.md](../firmware/snprom/os-handoff-tables.md) (items 2 to 5). The klconfig content for a real 350 (item 8) is now read except for the exact heap address and the I/O board type letter.
 - The exact PAL index list: only the call sites in the early-boot functions were matched; the MCA registration calls were not decoded.
-- The `candidate_dev` index is settled (1, `sysctl_rt_dev`, item 10). The block A node and CPU table writers are read (`0xffacbce0`, `0xfface0b0`); open: the caller of the node-table writer and the multi-node result.
+- The `candidate_dev` index is settled (1, `sysctl_rt_dev`, item 10). The block A node and CPU table writers are read (`0xffacbce0`, `0xfface0b0`); the node-table writer is class-0 method slot 2, called by `main` (see os-handoff-tables.md); open: the multi-node result.
 
 ## Review
 
