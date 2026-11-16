@@ -301,10 +301,10 @@ so names and meanings are unknown; offsets, widths and values are what the code 
 
 `main_three` calls `0xffa73b00` at `0xffad760c`. On the master it runs `0xffa736d0`: it writes `0x88c` to `0x81_2005_0d80`
 (a processor interface register, not II; local-form address), reads `0x81_2006_0980` and takes bits 5:0. If that is below 8 it
-zero-fills a 1 KiB buffer with the BTE (`0xffa952f0`: engine 0 or 1 by processor slice parity, local alias
-`0x81_0141_0000` or `0x81_0142_0000`; writes IBLS = length in lines with bit 20 set, IBSA, IBDA, IBNA, then IBCT = `0x11`,
-notify and zero fill; polls the notify word for up to 10,000,000 timer ticks) and re-reads the credits until they reach 8 or 1,000,000
-ticks pass (messages "BTE failed trying to adjust pi2md credits" and "pi2md request credits at:%d, should be %d"). With 8 on the
+zero-fills a 1 KiB buffer with the BTE (`0xffa952f0`: engine 0 or 1 by cr.lid bit 23, local alias
+`0x80_0141_0000` or `0x80_0142_0000`; writes IBLS = length in lines with bit 20 set, IBSA, IBDA, IBNA, then IBCT = `0x11`,
+notify and zero fill; polls the notify word for up to 10,000,000 timer units, microseconds by inference, see the BTE section) and re-reads the credits until they reach 8 or 1,000,000
+units pass (messages "BTE failed trying to adjust pi2md credits" and "pi2md request credits at:%d, should be %d"). With 8 on the
 first read the BTE is not used. If the BTE reports an error (bit 16 of the notify word)
 `0xffa94d40` runs an error clean-up (CRB scan, ICDR, IMEM, IECLR, IBCR). Established for the sequence; what a model must return:
 credits 8 on the first read of `0x81_2006_0980` avoids all of it (inferred). The PROM skips the call when processor id register 2
@@ -382,7 +382,9 @@ loop) and then `0xffab3260`. Read here only for its part test (`0xd100`, `0xd000
 
 ### What the PROM does with the BTE (`0xffa952f0`, the block copy)
 
-Arguments: source, destination, length in bytes (nonzero, 128-aligned, at most `0x7fffff`), flags, notify pointer.
+Arguments: source, destination, length in bytes (128-aligned, at most `0x7fffff`; a zero length returns 0 with no transfer, a misaligned or oversize
+value, or a failed scratch-block allocation, returns 10), flags, notify pointer. The only caller passes one 128-aligned
+1 KiB stack buffer as both source and destination, flags `0x11` and no notify pointer.
 Used by the credit adjustment of section D. Established.
 
 1. Engine: bit 23 of `cr.lid` picks engine 0 (clear) or 1, at the local alias `0x8000_0080_0141_0000` or
@@ -394,19 +396,51 @@ Used by the credit adjustment of section D. Established.
 3. Writes, in this order: IBLS = `0x100000 | length >> 7` (busy set, length in lines), IBSA and IBDA with bits 63, 37 and
    36 cleared, IBNA the notify address, same mask, and last IBCT = flags `& 0x11`. IBIA is not written. The IBCT write starts
    the transfer; the PROM passes `0x11` (zero fill and notify).
-4. If the caller gave a notify pointer it returns at once. Otherwise the notify word is in a block the helper allocated,
-   and it polls with `ld8.acq`: up to 1,000,000 reads, rechecking a timer (`0xffa0da70`) against start + `0x989680`
-   ticks. It stops when the word is not all ones. Bit 16 of the final word set means error (a timeout leaves all ones, so
-   it is an error too); clear means success and the helper frees the block and returns 0.
+4. The helper allocates a scratch block (`0xffac3da0`) that holds the engine base, the notify address and, when the caller
+   gave no pointer, the notify word itself. With a caller pointer it frees the block and returns 0 at once. Without one it
+   polls with `ld8.acq`: rounds of up to 1,000,000 reads, then a timer check (`0xffa0da70`) against start + `0x989680`,
+   repeated until the deadline. It stops when the word is not all ones. Bit 16 of the final word clear means success: free
+   the block, return 0. Bit 16 set (a timeout leaves all ones, so it is an error too): read IBLS once, print a message,
+   run `0xffa94d40`, clear the notify word, and return the notify value with bit 16 cleared (so exactly `0x10000` returns 0).
 5. A model must therefore: accept IBCT `0x11`, move or zero the memory, then store to the notify address a word that is not
-   `~0` with bit 16 clear (the Linux kernel's status word, busy bit 20 clear, satisfies both). The status register is
-   never read by the PROM after the start.
+   `~0` with bit 16 clear (the Linux kernel's status word, busy bit 20 clear, satisfies both). On success the PROM never
+   reads the status register; on error it reads IBLS once for the message.
 
-Graded: sequence and values established; engine choice by `cr.lid` bit 23 established; the timer's unit unknown.
+Graded: sequence and values established; engine choice by `cr.lid` bit 23 established. The timer `0xffa0da70` returns
+rtc * P / 1000 for the clock at `0x1_101c_0000` (local form `0x81_101c_0000`) and `P = 10 * (field + 1)`, field = bits 13:4 of the
+register at `0x1_1006_0280` (`0xffa0da00`), while `0xffa0db90(n)` waits `n * 1000 / P` ticks. That pairs P as nanoseconds per tick
+and the timer as microseconds, so the BTE poll bound is 10 s: inferred (P's register is not named anywhere).
 
 Corrections to the section above: B-section helper text says the helpers disable interrupt collection; it is psr.i. The
-registers.toml field widths for BTE addresses (bits 48:7) and the interrupt node (11:1) follow Linux v5.3; the 2.4 header
-has 39:7 and 8:1. The PROM's `ADDRESS<39:07>` field name for IBNA matches 2.4.
+registers.toml field widths for BTE addresses (bits 48:7) and the interrupt node (11:1) are also what the 2.4 `shubio.h`
+structs declare (`i_addr` 42 bits after 7 reserved, `i_node_id` 11 bits after 1); only the 2.4 comment prose says "bits 39:0".
+The PROM's `ADDRESS<39:07>` is a field label, and its masks clear only bits 63, 37 and 36, so they keep bits 62:38 and are
+consistent with the wider field.
+
+### Review (II and BTE set-up)
+
+Independent check, 2026-11-16, by a reviewer who wrote none of it: snprom 10.54 `shub1snprom.bin`, flat at `0xffa00000`, in
+Ghidra (IA-64 module, `--no-analysis`) with the `ia64-linux-gnu-objdump` listing as the instruction check, and the 2.4
+`shubio.h` at 8ef7d46c. The decompiler was used for navigation only.
+
+Confirmed from the listing: the four IBCT0/1 and IBLS0/1 reads whose values are never used; the ten zero writes (IBLS, IBSA,
+IBDA, IBNA, IBIA, per engine) with IBCT absent from every store in `0xffab1cc0` (its two addresses occur only in the reads);
+ILLR; the 15 CRB A to E passes at stride `0x30`; the IPRB0 and IPRB8 to F bit-42 read-modify-writes; IIEPH1 and IIEPH2 zeroed;
+IWEIM `|= 0x8000`; ICTP `0x1fffff`; the `0xffaad720` call order; IOWA and IIWA `0xff01`; ILCSR bit 13 (extract of bits
+13:12 masked with 2) returning 1 when set and 0 when clear; ILCSR bits 27:26, WCR bit 17, ILCSR bit 10 and the 10 ms waits.
+The helpers `0xffa0e5a0` and `0xffa0e640` run `rsm 0x24000` (psr.i and psr.dt), `mf.a`, restore psr.l and serialise.
+For `0xffa952f0`: engine from `cr.lid` bit 23 (the same field, bits 26:23 plus 9, indexes a per-processor table for the scratch
+block); notify word stored `-1` with release before any register write; IBLS `0x100000 | (len >> 7) & 0xffff`;
+IBSA, IBDA and IBNA masked with `0x7fffffcfffffffff`; IBCT `flags & 0x11` last; the completion rule and the 1,000,000-read
+rounds. Settled: the timer unit (microseconds, inferred, see above).
+
+Changed: a zero length succeeds without a transfer and bad arguments return 10; the error path reads IBLS and returns the notify
+word with bit 16 cleared; the poll is rounds repeated to a deadline, not one 1,000,000-read bound; "never read after the
+start" held only for success; the slice-parity wording and the `0x81_0141_0000` alias in section D were wrong.
+
+Field widths: 48:7 and 11:1 apply. The 2.4 header, read in full for IBSA, IBDA, IBNA and IBIA, declares exactly those widths; the
+"39:7 and 8:1" statement came from the prose comment and the PROM label. registers.toml is unchanged and needs no regeneration.
+The PROM masks do not discriminate between the two widths for the one caller (a stack buffer).
 
 ## The widget-0 handshake: `io_llp_setup` (`0xffab34b0`) and what follows it
 
@@ -431,8 +465,8 @@ NASID bit 35 is left out (`0xffaaf8b0`, `0xffab14f0`, `0xffab3640` all test NASI
 | 3 | `0xffaaf340` | W0 `+0x08`, 4 | R, once | keeps bits 9:6 as `v` | any; `v` is then written as is | `XBOW_WID_STAT` (`WIDGET_STATUS`), `XB_WID_STAT_SRCID_MASK 0x3c0`, shift 6 (header: Xbridge only) | established; field meaning from the header |
 | 4 | `0xffaaf2e0` in a loop | W0 `+0xc0`, 4 | W then R, poll | writes `v`; reads back; exits when the 32-bit read equals `v`; otherwise waits 1000 microseconds (`0xffa0db90`, which polls the real-time clock at `0x1_101c_0000`) and writes `v` again. No bound | `+0xc0` must store 4 bits and read them back. An all-ones or zero read hangs the PROM unless `v` is 0 | `XBOW_LOCK` (`xb_lock`, Xbridge only); none | established; role as a lock acquire inferred (the register is named the lock, it is written with the requester's widget number, and row 8 writes the clear register) |
 | 5 | `0xffaaf8b0` | W0 `+0x118 + 0x40 * (wid & 7)`, 4 | RMW | sets bit 0 | plain storage | `XB_LINK_ARB_UPPER(wid)` (`XB_LINK_REG_BASE + 0x1c` at the MIPS word); `xbow_port_info[].port_flag` | established offset and bit; meaning inferred. The PROM treats the register as a flag word, not an arbitration register |
-| 6 | node operation slot 54 (`0xffa5d6a0`, PROM string `shub_port_status`) | no widget access: NI vector reads of ports 0 and 1 (`0x1_5000_0048`, `0x1_5000_0000` plus port << 13, through `0xffa0bd20`) | R | result is a two-bit mask, bit n = port n; non-zero sets bit 1 of the row-5 word | any (bit 1 is read only for a link whose part is `0xc120`, none on one node) | none | established for the structure; port status polarity and values not decoded: unknown |
-| 7 | `0xffaaf8b0` | W0 `+0x118 + 0x40 * (other & 7)`, 4, where other = `0xa` (`0xb` if `wid` == `0xa`) | R | bit 2 clear: RMW own word `|= 5` (bits 0 and 2). Set and `wid` != `0xa`: own word keeps bit 0 only. Set and `wid` == `0xa`: clear bit 2 in the `0xb` word (`and -5`), then RMW `0x198` `|= 5` | the words start from the model's storage; no other link has bit 2, so the hub's link gets bits 0 and 2 | as row 5 | established |
+| 6 | node operation slot 54 (`0xffa5d6a0`, PROM string `shub_port_status`) | no widget access: NI vector reads of ports 0 and 1 (`0x1_5000_0048`, `0x1_5000_0000` plus port << 13, through `0xffa0bd20`) | R | result is a two-bit mask, bit n = port n; non-zero sets bit 1 of the row-5 word | any (bit 1 is read only for a link whose part is `0xc120`, none on one node) | none | established; return decoded in the review below: bit n set when port n's NI status nibble is 9, so bit 1 of the flag word means at least one port is up |
+| 7 | `0xffaaf8b0` | W0 `+0x118 + 0x40 * (other & 7)`, 4, where other = `0xa` (`0xb` if `wid` == `0xa`) | R | bit 2 clear: RMW own word `|= 5` (bits 0 and 2). Set and `wid` != `0xa`: own word keeps bit 0 (and bit 1 when row 6 is non-zero). Set and `wid` == `0xa`: clear bit 2 in the `0xb` word (`and -5`), then RMW `0x198` `|= 5` | the words start from the model's storage; no other link has bit 2, so the hub's link gets bits 0 and 2 | as row 5 | established |
 | 8 | `0xffaaf8b0` | W0 own-link word, 4 | R, discarded | read after the stores, then `0xffaaf400` | any | | established |
 | 9 | `0xffaaf400` | W0 `+0xc8`, 4 | W then R | writes 1, reads back, discards | any (a write-only or plain register is fine) | `XBOW_LOCK_CLR` (`xb_lock_clr`, Xbridge only); none | established; role as the release inferred |
 | 10 | `0xffab3260` | II `0x400020`, 8 | R, W, R | sets bit 4 (`tag`), reads back (discarded), waits 10 ms | WCR holds what is written | `IIO_WCR` field `tag`; `II_WCR` | established |
@@ -441,7 +475,8 @@ NASID bit 35 is left out (`0xffaaf8b0`, `0xffab14f0`, `0xffab3640` all test NASI
 `0xffaaf8b0` returns 1 always. It also calls the node-record lookup `0xffa0fa00` (software only, no hardware access; it
 fills a record and returns the node object whose slot 54 row 6 calls). The wait helper `0xffa0db90(n)` waits `n` microseconds
 by reading the clock register `0x1_101c_0000` (read with `ld8`) until it has advanced; a model needs an advancing counter
-there (established for the loop, the tick rate unknown).
+there, and any value in the register at `0x1_1006_0280` (the tick period is `10 * (bits 13:4 + 1)` ns, inferred; never zero)
+(established for the loop).
 
 What reads keep the hardware path on a one-node Altix 350 with one PIC: part `0xd100` at W0 `+0x00`; WCR `wid` 8 to 15; W0
 `+0xc0` that reads back what is written (or `v` of 0); the flag words plain storage. Nothing reads a link-up bit in this
@@ -459,6 +494,30 @@ Next large step: I/O discovery in `main_three`, `0xffab38b0` (gate: master proce
 local I/O" and calls `0xffab15c0` (crossbow walk, rows C1 to C8). Between this handshake and it, `0xffaad720` returns and
 `main` runs the memory phases; nothing in that range touches the II or widget 0 (established for the code read earlier; the
 `main` text between `0xffa1a40c` and the memory phases was not re-read at instruction level here).
+
+### Review (widget-0 handshake)
+
+Same check and date. Confirmed in the listing: the part test (`extr.u` bits 27:12, `0xd000` or `0xd100`, else a message and
+return 0); `0xffaaf8b0` reading WCR bits 3:0 through `0xffab3720`; the W0 `+0x08` read keeping bits 9:6; the `+0xc0` loop (4-byte
+store, 4-byte reload through a stack spill, 32-bit compare, 1000 microsecond wait, no bound); the flag words at
+`+0x118 + 0x40 * (wid & 7)` as 4-byte read-modify-writes; the other-link logic (other `0xa`, or `0xb` when wid is `0xa`; the
+`0x198` word); `+0xc8` written 1 and read back; WCR `|= 0x10`; ILCSR bits 5:0 = 3, each followed by a 10 ms wait. An unexpected
+part makes `0xffaad720` return 0 and its caller takes the non-positive path (`0xffa1a450`, a call with arguments 2 and 1). That
+this call sets PROM flag 2 was carried from the earlier page, not re-read.
+
+Added: `0xffab33e0` writes WCR bits 3:0 from that same W0 `+0x08` field (or `0xf` if its protected read failed) just before the
+handshake, so the WCR `wid` that `0xffaaf8b0` reads back is the xbow's source id. A model needs W0 `+0x08` bits 9:6 in 8 to 15
+and the same value in WCR. That 8 to 15 is required remains inferred from the link scan.
+
+`shub_port_status` (`0xffa5d6a0`, slot 54 of the table at `0xffbd7c18`; that this table is the one the object's slot 54
+reaches is inferred from the descriptor being in no other table) returns a mask. For port n it calls `0xffa5cf40`: read the NI
+register at `0x1_5000_0048 + n * 0x2000`; if bit 27 is set, clear it, write, re-read, and if still set the port's result is 0;
+otherwise read `0x1_5000_0000 + n * 0x2000`: low nibble `9` gives 1 (after a 4 by 128 read check outside simulation), anything
+else gives -1 and a printed message. Negative results add no bit. Polarity: bit n set means port n looks up (nibble 9); the
+caller sets bit 1 of the flag word when the mask is non-zero, so bit 1 means at least one NI port is up, and clear on a node with
+no responding NI. What nibble 9 names is unknown.
+
+Grades: "Widget 0 is the PIC's PXBOW face" stays inferred. Not re-read: `0xffaaf8b0`'s lookup `0xffa0fa00` beyond being software only.
 
 ## Consistency with Bedrock
 
