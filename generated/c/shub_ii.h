@@ -1229,7 +1229,7 @@
 #define SHUB_II_DEBUG_SUBMENU_SELECT_IIOCLK_CORE_SUBMENU_INPLACE (SHUB_II_DEBUG_SUBMENU_SELECT_IIOCLK_CORE_SUBMENU_MASK << SHUB_II_DEBUG_SUBMENU_SELECT_IIOCLK_CORE_SUBMENU_SHIFT)
 
 /*
- * BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error. SAL 5.04 PROM: read and written 0 in both engines (site 0xffab1cc0).
+ * BTE length and status, one block per engine (engine 1 is 64 KiB above engine 0). Length is in 128-byte cache lines. A write loads the length, sets busy and clears error; the engine counts the length down and clears busy at the end. On SHub 1 the kernel writes the length first and the control register second, which starts the transfer. Header names IIO_IBLS0 and IIO_IBLS1. Kernel: written with the length, read to see busy and error. SAL 5.04 PROM: read and written 0 in both engines (site 0xffab1cc0); the block copy 0xffa952f0 writes it with the length in lines and bit 20 set, then the notify word is polled. The PROM error-decoder name table calls it II_IBLS0 and II_IBLS1.
  */
 /* bte_length_status: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_LENGTH_STATUS                    0x410000 /* established */
@@ -1246,7 +1246,7 @@
 #define SHUB_II_BTE_LENGTH_STATUS_LENGTH_INPLACE     (SHUB_II_BTE_LENGTH_STATUS_LENGTH_MASK << SHUB_II_BTE_LENGTH_STATUS_LENGTH_SHIFT)
 
 /*
- * BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
+ * BTE source physical address, cache-line aligned. One per engine. Header names IIO_IBSA0 and IIO_IBSA1. Kernel: written with the source physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0); the block copy 0xffa952f0 writes the source with bits 63, 37 and 36 cleared. PROM name table: II_IBSA0, II_IBSA1.
  */
 /* bte_source: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_SOURCE                           0x410008 /* established */
@@ -1257,7 +1257,7 @@
 #define SHUB_II_BTE_SOURCE_ADDR_INPLACE              (SHUB_II_BTE_SOURCE_ADDR_MASK << SHUB_II_BTE_SOURCE_ADDR_SHIFT)
 
 /*
- * BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
+ * BTE destination physical address, cache-line aligned. One per engine. Header names IIO_IBDA0 and IIO_IBDA1. Kernel: written with the destination physical address, AS bits removed. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0); the block copy 0xffa952f0 writes the destination with bits 63, 37 and 36 cleared. PROM name table: II_IBDA0, II_IBDA1.
  */
 /* bte_destination: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_DESTINATION                      0x410010 /* established */
@@ -1268,7 +1268,7 @@
 #define SHUB_II_BTE_DESTINATION_ADDR_INPLACE         (SHUB_II_BTE_DESTINATION_ADDR_MASK << SHUB_II_BTE_DESTINATION_ADDR_SHIFT)
 
 /*
- * BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress.
+ * BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines (plain 8-byte reads, values discarded) and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress; the block copy 0xffa952f0 writes it last, with the caller flags masked to 0x11 (zero fill and notify). PROM name table: II_IBCT0, II_IBCT1, fields POISON, NOTIFY, ZEROFILL.
  */
 /* bte_control: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_CONTROL                          0x410018 /* established */
@@ -1285,7 +1285,7 @@
 #define SHUB_II_BTE_CONTROL_ZEROFILL_INPLACE         (SHUB_II_BTE_CONTROL_ZEROFILL_MASK << SHUB_II_BTE_CONTROL_ZEROFILL_SHIFT)
 
 /*
- * BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
+ * BTE notification address: a cache-line-aligned address that receives the completion write (the header calls it a write-invalidate) carrying the final length and status. Header names IIO_IBNA0 and IIO_IBNA1. Kernel: written with the physical address of a notification word. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0); the block copy 0xffa952f0 writes the notify address with bits 63, 37 and 36 cleared, after IBDA and before IBCT. PROM name table: II_IBNA0, II_IBNA1, field ADDRESS<39:07>.
  */
 /* bte_notify: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_NOTIFY                           0x410020 /* established */
@@ -1296,7 +1296,7 @@
 #define SHUB_II_BTE_NOTIFY_ADDR_INPLACE              (SHUB_II_BTE_NOTIFY_ADDR_MASK << SHUB_II_BTE_NOTIFY_ADDR_SHIFT)
 
 /*
- * BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0).
+ * BTE interrupt address: programmable level, node and PI unit of the processor to interrupt on completion. The kernel never uses it. Header names IIO_IBIA0 and IIO_IBIA1. SAL 5.04 PROM: written 0 in both engines (site 0xffab1cc0) and never otherwise. PROM name table: II_IBIA0, II_IBIA1, field NODEID.
  */
 /* bte_interrupt: rw64, reset unknown; Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code */
 #define SHUB_II_BTE_INTERRUPT                        0x410028 /* established */

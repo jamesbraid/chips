@@ -201,7 +201,7 @@ offset with bit 32 set, the big-window form); for every II constant the small-wi
 transfer copy `0xffa952f0`, uses a local alias instead, `0x8000_0080_0141_0000` and `0x8000_0080_0142_0000`
 (local MMR space `0x80_0000_0000` plus `0x100_0000` plus the offset); that this is the same register as the global form is
 inferred. Every II register access goes through two helpers, `0xffa0e5a0` (64-bit load) and `0xffa0e640` (64-bit store); each
-disables data translation and interrupt collection around a single access, then runs `mf.a` and a serialise, so all
+clears psr.i and psr.dt (`rsm 0x24000`; psr.ic is not touched) around a single access, then runs `mf.a` and a serialise, so all
 accesses are single, ordered, uncached 8-byte accesses (established). Widget window accesses are 4-byte loads and stores
 (`ld4.acq`, `st4.rel`) at `0x8_0000_0000 + nasid << 38 + link * 0x100_0000 + offset` for link 0 to 15 (small window `link`),
 the read of widget 0 at link 0, which Linux sends through a big window.
@@ -332,6 +332,81 @@ equals the platform-simulation marker `0xaeeeeeee8badbeef` (established).
 
 Unknown: the meaning of the xbow `+0x08` bits 9:6, `+0xc0`, `+0xc8` and the flag bits beyond the PROM's use; why module type 111
 needs a warm reset; what `0x1_1007_1080` is; the failure signal of the protected read for an absent widget.
+
+## The II and BTE set-up after the first BTE read (`0xffab22d0`)
+
+Read in Ghidra (IA-64 module, `--sn2-prom --no-analysis`) on `shub1snprom.bin` of snprom 10.54, from the disassembly. Names:
+"2.4" is `include/asm-ia64/sn/sn2/shubio.h` in linux-mips at 8ef7d46c (offsets all match; it carries no INIT values for
+the II, so every reset value stays **unknown**); "PROM" is the register-name table of the SHub 1 error decoder
+(records `{name offset:32, field-list word:32, register offset:64}` at `0xffc075c0` to `0xffc08040`, name pool base
+`0xffc08068`; pairing re-derived from `II_IGFX0`).
+
+The stop at ip `0xffa0e5b0`, b0 `0xffab22d0`, is the `ld8` of `0x8_01c1_0018` called at `0xffab22cc`: IBCT0
+(2.4 `IIO_IBCT0`, PROM `II_IBCT0`; fields `POISON`, `NOTIFY`, `ZEROFILL`, which are 2.4 bits 8, 4 and 0).
+**It is a plain read.** The value is discarded: no instruction reads r8 between `0xffab22d0` and the next load, and nothing
+compares it. It is not a poll and not a read-modify-write. The 2.4 header says a read terminates a transfer in
+progress, so a model aborts a running transfer on it; the PROM has none running (inferred). Established.
+
+All accesses below are one 8-byte `ld8` (`0xffa0e5a0`) or `st8` (`0xffa0e640`), global window
+`0x8000_0008_0000_0000 + 0x180_0000 + offset | nasid << 38` (the II MMR window, never widget space), run
+with psr.i and psr.dt cleared. All established.
+
+| Step | Site | Access | Value, and what continues the boot |
+|---|---|---|---|
+| 1 | `0xffab22cc` | R `0x410018` IBCT0 | discarded; any value |
+| 2 | `0xffab230c` | R `0x420018` IBCT1 (`II_IBCT1`) | discarded |
+| 3 | `0xffab232c` | R `0x410000` IBLS0 (`II_IBLS0`) | discarded |
+| 4 | `0xffab234c` | R `0x420000` IBLS1 (`II_IBLS1`) | discarded |
+| 5 | stores `0xffab236c` to `0xffab257c` (IBLS0 first, IBIA1 last) | W 0 to IBLS0 `0x410000`, IBSA0 `+8`, IBDA0 `+0x10`, IBNA0 `+0x20`, IBIA0 `+0x28`; then the same five at `0x420000` | IBCT never written; plain storage suffices |
+| 6 | `0xffab25bc` | W 0 to ILLR `0x400130` (`II_ILLR`) | |
+| 7 | loop `0xffab264c` to `0xffab28dc`, 15 passes, offset `0x30 * n` | W 0 to `0x400400 + 0x30n + {0, 8, 0x10, 0x18, 0x20}` (`II_ICRBn_A` to `_E`) | |
+| 8 | `0xffab294c`/`0xffab29ac`, loop `0xffab2a6c`/`0xffab2b4c` | R then W `0x400198` IPRB0, then `0x4001a0` to `0x4001d8` IPRB8 to F (`II_IPRB*`): value read OR bit 42 | any read value |
+| 9 | `0xffab2bcc`, `0xffab2bfc` | W 0 to `0x400220` IIEPH1, `0x400228` IIEPH2 | |
+| 10 | `0xffab2c00`, `0xffab2c2c` | R `0x400260` IWEIM (`II_IWEIM`), W value OR `0x8000` | any |
+| 11 | `0xffab2c5c` | W `0x1fffff` to `0x4003c0` ICTP (`II_ICTP`), then return at `0xffab2c7c` | |
+
+The routine calls only the two helpers. The listing check covered steps 1 to 5 and 9 to 11 line by line; the loops
+(6 to 8) agree with the decompiler and with the earlier review. The routine writes no BTE control and starts no transfer.
+IBIA is written 0 and never again; IBNA 0.
+
+After the return, `0xffaad720` goes on in this order (listing re-read, all established, the same table as rows B2 to B13
+above): `0xffab30e0` W `0xff01` to IOWA `0x400110` and IIWA `0x400118`; `0xffab2e60` R ILCSR `0x400128` (`II_ILCSR`) and
+**bit 13 must be set** ("I/O brick attached", else return 0 and I/O is skipped; 2.4 `IIO_ILCSR`); `0xffab3020` (ILCSR bits
+27:26 = 0); `0xffab3320` (WCR bit 17 = 0); `0xffab2f80` (ILCSR bit 10 set, wait 10 ms); `0xffab3640` (widget 0 status read,
+bits 9:6); `0xffab33e0` (WCR bits 3:0 = that, bit 4 = 0); `0xffa91260`; IWC `0x400250` read, bit 0 cleared, read;
+`0xffab14f0` (widget 0 id read; `0xffffffff` skips); `0xffab34b0` (part `0xd000` or `0xd100`, else a warning and return 0);
+`0xffab3780` (ILCSR bits 5:0 = 3). Each read-modify-write waits 10 ms (`0xffa0db90(10000)`).
+
+**Next large step: the Crossbow handshake `0xffab34b0`**, which calls `0xffaaf8b0` (link flags, the unbounded `+0xc0`
+loop) and then `0xffab3260`. Read here only for its part test (`0xd100`, `0xd000`); `0xffaaf8b0` is as in rows X1 and X2.
+
+### What the PROM does with the BTE (`0xffa952f0`, the block copy)
+
+Arguments: source, destination, length in bytes (nonzero, 128-aligned, at most `0x7fffff`), flags, notify pointer.
+Used by the credit adjustment of section D. Established.
+
+1. Engine: bit 23 of `cr.lid` picks engine 0 (clear) or 1, at the local alias `0x8000_0080_0141_0000` or
+   `0x8000_0080_0142_0000`. A model must decode this form as well as the global window; the earlier "slice parity" wording
+   named the same choice without the bit. A processor-id register 2 value of `0xaeeeeeee8badbeef` takes a simulation path
+   that never touches the engine.
+2. It stores `0xffffffffffffffff` in the notify word (a release store; the PROM's busy marker, unlike the Linux kernel's
+   marker with bit 21 clear).
+3. Writes, in this order: IBLS = `0x100000 | length >> 7` (busy set, length in lines), IBSA and IBDA with bits 63, 37 and
+   36 cleared, IBNA the notify address, same mask, and last IBCT = flags `& 0x11`. IBIA is not written. The IBCT write starts
+   the transfer; the PROM passes `0x11` (zero fill and notify).
+4. If the caller gave a notify pointer it returns at once. Otherwise the notify word is in a block the helper allocated,
+   and it polls with `ld8.acq`: up to 1,000,000 reads, rechecking a timer (`0xffa0da70`) against start + `0x989680`
+   ticks. It stops when the word is not all ones. Bit 16 of the final word set means error (a timeout leaves all ones, so
+   it is an error too); clear means success and the helper frees the block and returns 0.
+5. A model must therefore: accept IBCT `0x11`, move or zero the memory, then store to the notify address a word that is not
+   `~0` with bit 16 clear (the Linux kernel's status word, busy bit 20 clear, satisfies both). The status register is
+   never read by the PROM after the start.
+
+Graded: sequence and values established; engine choice by `cr.lid` bit 23 established; the timer's unit unknown.
+
+Corrections to the section above: B-section helper text says the helpers disable interrupt collection; it is psr.i. The
+registers.toml field widths for BTE addresses (bits 48:7) and the interrupt node (11:1) follow Linux v5.3; the 2.4 header
+has 39:7 and 8:1. The PROM's `ADDRESS<39:07>` field name for IBNA matches 2.4.
 
 ## Consistency with Bedrock
 
