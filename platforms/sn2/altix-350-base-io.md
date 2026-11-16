@@ -276,6 +276,20 @@ input) share one PCI interrupt line through the IOC4's status registers
 ([IOC4 page](../../devices/ioc4/README.md)), so the IO9 and IO10 each use a single PIC pin for the IOC4. Established
 for the IOC4 sharing; the same for the SCSI, SATA and Ethernet parts, one pin each, is inferred from the sibling card.
 
+## Devices on the PIC's buses
+
+What the PROM scan meets, by PIC bus and configuration window (window `n` is at `W + 0x20000 + n * 0x1000`; the PROM's slot is `n - 1`, and Linux's PCI device number is `n`). Scan order and the empty-slot rule are on [the PIC page](../../devices/pic/README.md#pci-scan-and-the-protected-read-stop-at-0xffb5cf50).
+
+| Bus (widget 15) | Window | Device | Vendor:device | Grade |
+|---|---|---|---|---|
+| 0 (first scanned, slots 0 to 3) | 1 (PROM slot 0) | IOC4 | `10a9:100a` | the part: established (Linux `ioc4_variant`, PROM rule "IOC3/IOC4 in slots 0 to 2"); window 1: inferred from the Origin 350 capture |
+| 0 | 2 | none on an Origin 350; a TI PCI bridge `104c:ac28` on a Tezro | | unknown for the Altix |
+| 0 | 3 | IO9: QLogic ISP 12160 SCSI; IO10: Vitesse VSC 7174 SATA | `1077:1216`; `1725:7174` | established (`ioc4_variant` tests PCI slot 3) |
+| 0 | 4 | gigabit Ethernet | BCM5701 `14e4:1645` on the Origin 350 | inferred for the Altix; no manual names the part |
+| 1 (slots 0 to 1) | 1, 2 | add-in slots | | which window is which slot: unknown |
+
+The PROM acts on IDs only for the IOC3 and IOC4 (slots 0 to 2; slot 3 or above prints "ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots" and the allocation fails) and QLogic `1077:1240`, `1280`, `1216` (extra response buffers; "Unable to allocated RRBs for qlogic scsi" on failure). Every other device gets generic BAR sizing and interrupt handling. Nothing in the scan is an unbounded poll: the only wait is the 100000-tick lock spin in the protected-read wrapper. The empty windows 2 to 4 (or 2 to 3 without the Ethernet part) must return all-ones or end as a machine check; an entirely empty bus is accepted (every slot absent), inferred as on the next section's item 5.
+
 ## What a machine model needs from this page
 
 A model that boots the held SN2 kernel needs, in order of how much of it is established:
