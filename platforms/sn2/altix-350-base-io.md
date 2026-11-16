@@ -282,13 +282,13 @@ What the PROM scan meets, by PIC bus and configuration window (window `n` is at 
 
 | Bus (widget 15) | Window | Device | Vendor:device | Grade |
 |---|---|---|---|---|
-| 0 (first scanned, slots 0 to 3) | 1 (PROM slot 0) | IOC4 | `10a9:100a` | the part: established (Linux `ioc4_variant`, PROM rule "IOC3/IOC4 in slots 0 to 2"); window 1: inferred from the Origin 350 capture |
+| 0 (first scanned; windows 1 to 4 all read) | 1 (PROM slot 0) | IOC4 | `10a9:100a` | the part: established (Linux `ioc4_variant`, PROM rule "IOC3/IOC4 in slots 0 to 2"); window 1: inferred from the Origin 350 capture |
 | 0 | 2 | none on an Origin 350; a TI PCI bridge `104c:ac28` on a Tezro | | unknown for the Altix |
 | 0 | 3 | IO9: QLogic ISP 12160 SCSI; IO10: Vitesse VSC 7174 SATA | `1077:1216`; `1725:7174` | established (`ioc4_variant` tests PCI slot 3) |
 | 0 | 4 | gigabit Ethernet | BCM5701 `14e4:1645` on the Origin 350 | inferred for the Altix; no manual names the part |
-| 1 (slots 0 to 1) | 1, 2 | add-in slots | | which window is which slot: unknown |
+| 1 (also windows 1 to 4 read, at `W + 0x80_0000`) | 1, 2 | add-in slots | | which window is which slot: unknown; windows 3 and 4 on this bus: nothing known |
 
-The PROM acts on IDs only for the IOC3 and IOC4 (slots 0 to 2; slot 3 or above prints "ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots" and the allocation fails) and QLogic `1077:1240`, `1280`, `1216` (extra response buffers; "Unable to allocated RRBs for qlogic scsi" on failure). Every other device gets generic BAR sizing and interrupt handling. Nothing in the scan is an unbounded poll: the only wait is the 100000-tick lock spin in the protected-read wrapper. The empty windows 2 to 4 (or 2 to 3 without the Ethernet part) must return all-ones or end as a machine check; an entirely empty bus is accepted (every slot absent), inferred as on the next section's item 5.
+The PROM acts on IDs only for the IOC3 and IOC4 (slots 0 to 2; slot 3 or above prints "ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots" and the allocation fails) and QLogic `1077:1240`, `1280`, `1216` (extra response buffers; "Unable to allocated RRBs for qlogic scsi" on failure). Every other device gets generic BAR sizing and interrupt handling. Nothing in the scan is an unbounded poll: the only wait is the 100000-tick lock spin in the protected-read wrapper. The code pins only the SCSI or SATA part (window 3, through Linux) and keeps an IOC4 within windows 1 to 3, so the IOC4 could be in window 1 or 2 and the Ethernet part is wherever is left; the window 1 and 4 rows rest on the Origin 350 capture. Every empty window on both buses (the PROM reads windows 1 to 4 of each) must return all-ones, or end as a recovered machine check; a window that returns zero is a device with vendor 0. An entirely empty bus is accepted: `pic_attach2` fails only on an allocation failure or an unknown ioboard halfword (established for the attach, inferred for the rest of the boot, as in the next section's item 5).
 
 ## What a machine model needs from this page
 
@@ -396,6 +396,23 @@ sampled.
   `io_baseio_master_nasid_set` selection rule and tie-break; interrupt handler `0xffb1f970` with the provider table and the
   "NULL provider pointer" message; the `rpd` string, the POD menu strings and the string counts in 4.43, 10.40 and 10.54.
 - Shipped kernel configuration lines (`TIGON3`, `BLK_DEV_SGIIOC4`, `SCSI_SATA_VITESSE`, `SCSI_QLOGIC_1280` as modules).
+
+### Review (PCI scan and the device table, 2026-11-16)
+
+Independent re-read of the section "Devices on the PIC's buses" against `shub1snprom.bin` 10.54 in Ghidra (IA-64 module, listings checked) and the Library sources named below; the PIC-side findings are in [the PIC page's review](../../devices/pic/README.md#review-pci-scan-and-the-protected-read).
+
+**Confirmed.**
+- The IOC3/IOC4 slot rule: the error string is printed by the bus-address allocator (`0xffb38260`) when the IOC's slot number is 3 or more, and the allocation returns 0 (the message says "Current slot is" slot + 1). The QLogic ids `0x1240`, `0x1280`, `0x1216` get 3 response buffers (`0xffb3ef90` calls `0xffb33880`); a failure only prints.
+- Linux `ioc4_variant` (`drivers/misc/ioc4.c`, linux-history): QLogic ISP 12160 or Vitesse VSC 7174 on the IOC4's bus at PCI slot 3. `arch/ia64/include/asm/sn/pic.h` (same root) says device `n - 1` is configuration window `n` (windows `0x21000` to `0x24000`, external slots 1 to 4), so slot 3 is window 3. Both rows of window 3 stay established.
+- No manual names the Ethernet part or a window. Re-read: *SGI Altix 350 System User's Guide* 007-4660-002 pp.112 and 122 (base I/O options and Table 3-3: only "SATA internal port" and the 36-pin serial connector with the IO10, SCSI ports with the IO9); the IO9 and IO10 pages cited above. The card goes in "PCI slot 1", the riser, which is not a PIC window. The BCM5701 window 4 row stays inferred.
+- The only wait in the scan is the 100000-tick (microsecond clock) lock spin in the protected-read wrapper.
+
+**Changed.**
+- Bus 1 is also read at windows 1 to 4 (the ioboard-based range of 0 to 1 is applied later); the table and the empty-window rule are corrected.
+- Vendor 0 is a present device, not an empty window; an empty window must read all-ones.
+- Window 1 for the IOC4 and window 4 for the Ethernet part remain inferred; the code constrains the IOC4 to windows 1 to 3 only.
+
+**Not checked.** Which of the two buses is the "widget 15" bus (the record word `+0xbc` comes from `pci_widget_to_bus`, `0xffb6adb0`, and was not traced); the Ethernet part's behaviour in the PROM (no code is specific to it); that the Altix 350 IO9 repeats the Origin 350 IO9 placement.
 
 ### Mechanical fixes (made in this commit)
 

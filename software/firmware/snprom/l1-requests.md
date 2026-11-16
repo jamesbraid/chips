@@ -286,7 +286,7 @@ Same routine as request 2; site `0xffa7e09c` through `main` at `0xffa1a3ec`. Mas
 14. **`0x1005` "Init I/O..."** at progress `0x24` (`0xffad789c`). Established.
 15. **I/O board EEPROM read: `0x0006`, device id 98, selector 2 (once per PIC widget).** See the section "Request `0x0006` in I/O
     discovery" below.
-16. **Progress `0x26`.** If this is the partition master (flag 1 in `0x81_5003_1550`, set by the master election code), `0xffa485a0`
+16. **Progress `0x25`** (`0xffa485a0` writes it at entry, `0xffa0ddb0(0x25)`; no write of `0x26` was found between its call at `0xffad761c` and the `0x27` write at `0xffad7766`). If this is the partition master (flag 1 in `0x81_5003_1550`, set by the master election code), `0xffa485a0`
     sends `0x0012` (`0xffa7ea90`, site `0xffa7ebfc`): no arguments, one integer reply; any error or any value below 0x800 becomes
     0x800, so only status and count matter. `0xffaa03f0` then sends `0x0010` again per node (`0xffad3ed0`) and `0x0008`
     (`0xffa7dda0`, site `0xffa7de3c`: no arguments, one string reply; an error, for example the -104 a blank L1 returns, selects a
