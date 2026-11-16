@@ -233,21 +233,21 @@ Every path leaves through `0xffeaaa40`, which sets `r10 = 0` and `r11 = 0` (esta
 
 **Phase two table (established).** `0xffefb980` saves state, runs `0xffefc080`, which sets `r41 = 4` (the `te` bit), sets msr[1640] bits 63
 and 57 for the duration and calls each of eleven groups with the test address, size, attributes and the skip word. Each group returns
-`r8` and `r9`; `r9` is ORed into `r41`. A group is skipped when its `test_control` bit is set (a skipped group returns zero).
+`r8` and `r9`; `r9` is ORed into `r41`. A group is skipped when its bit in the skip word is set (a skipped group returns zero). The always-skipped bits 19, 27, 28 and 30 turn off group 10 sub-test 4 and group 11 sub-tests 4, 5 and 7.
 
 | # | Group | Skip bit | Tests (inferred from the code) | Failure `r9` |
 |---|---|---|---|---|
 | 1 | `0xffeffa40` | 38 | test-buffer pattern store and read-back | `0x100000003` |
-| 2 | `0xffefc530` | 41, 40, 39 | two sub-tests; reads msr[1640] bit 60 first | `0x20000000002` |
+| 2 | `0xffefc530` | 41, 40 (bit 39 is a flag passed to the second sub-test, not a skip) | two sub-tests; fails at once if msr[1640] bit 60 is already set, and a failure sets that bit | `0x20000000002` |
 | 3 | `0xffefe0f0` | 45 | not read beyond the entry | `0x800000002` |
 | 4 | `0xffef9160` | 46 | ALAT: `ld.a`, `ld.c.clr`, `chk.a`, `invala`, aliased store | `0x400000002` |
-| 5 | `0xfff0acb0` | | not read | not read |
+| 5 | `0xfff0acb0` | 33 | saves `pkr0`, `pkr1` and `rr0`, calls `0xffefe410`, restores them; a non-zero result fails the group | `0x4000000002` |
 | 6 | `0xffeff020` | 34 | not read beyond the entry | `0x8000000002` |
 | 7 | `0xffefc680` | 44 | region registers and translation | `0x200000002` |
 | 8 | `0xffefd2f0` | 43 | performance monitor registers | `0x1000000002` |
 | 9 | `0xffef98f0` | 42 | debug registers (runs only if msr[1714] bit 50 is set) | `0x2000000002` |
-| 10 | `0xfff003b0` | 23 to 16 per sub-test | eight cache-array and error-log sub-tests; first one `0xfff00b30` | `0x80000000001` shifted left by the sub-test number |
-| 11 | `0xfff04ff0` | 24 and up | more array sub-tests; fails at once if msr[1640] bit 62 is set | `0x7f8000000000001` |
+| 10 | `0xfff003b0` | 16 to 23, one per sub-test | eight cache-array and error-log sub-tests; first one `0xfff00b30` | `0x80000000001` shifted left by the sub-test number minus one |
+| 11 | `0xfff04ff0` | 31 to 24, one per sub-test | eight more array sub-tests; fails at once if msr[1640] bit 62 is set | `0x8000000000001` shifted left by the sub-test number minus one (`0x7f8000000000001` when bit 62 was already set) |
 
 Groups 10 and 11 read msr[1640] bit 62 first and, if it is set, return `r8 = -1` with `0x7f80000000001` (group 10, bits 50:43 and 0)
 or `0x7f8000000000001` (group 11, bits 58:51 and 0) without testing. A failing sub-test of either group sets msr[1640] bit 62 (`0xfff009dc`
@@ -283,14 +283,14 @@ PAL zeroes it (SDM: reserved).
   tested at `0xffef93b6`). Block 2: `invala`, 32 `ld8.a` into `r37` to `r68` from one address, 32 `chk.a.nc`: none may miss (`r15` = 0). Block
   3: `chk.a.nc` on `r0` to `r31`: all 32 miss (`r15` = 32). Block 4: `ld8.a r32` and `ldfd.a f32`, `invala.e r32`, `chk.a.nc f32` hits; `ld8.a r32`,
   `invala.e f32`, `chk.a.nc r32` hits (a miss there stops the PAL). A miss must raise the Speculation fault (vector `0x5700`, ISR.code 0 or
-  2, `ipsr.ri` advanced by the handler at `0xffe7d750`), because PAL runs with `psr.it` clear (see the section below).
+  2, `ipsr.ri` advanced by the Speculation handler at `0xffe7d700`, whose code 0 and 2 arm at `0xffe7d750` also increments `r15` and returns with `rfi`; it requires `r14` = 111, else it goes to `0xffe7ec10`), because PAL runs with `psr.it` clear (see the section below).
 - *Group 8.* Helper `0xffefdc80(P, pmc4, pmc13, pmc14, pmc15)` runs with P = 0, -1, `0x5555555555555555`, `0x2aaa2aaa2aaa2aaa`. It writes
   pmc0 = P | 1, pmc1 to 3 and 5 to 12 = P, pmc4 and pmc13 to 15 their own values, pmd0 to 17 = P, then reads back. Expected pmc:
   pmc0 = (P & `0xf1`) | 1; pmc1 to 3 = 0; pmc4 = value & `0xfffff7f`; pmc5 to 7 = P & `0xf7fff7f`; pmc8 = P & `0xffffffff3fffffff`; pmc9 = P &
   `0xffffffff3ffffffc`; pmc10 = P; pmc11 = P & `0x3ffffff`; pmc12 = P & `0xffcf`; pmc13 to 15 as written. Expected pmd: pmd0 = P; pmd1 & `0x1fff` =
-  P & `0x1fff`; pmd2 = P; pmd3 = P & `0xffff`; pmd4 to 7 = P & `0xffffffffffff` sign-extended from bit 46; pmd8 to 15 and pmd17 = P; pmd16 = P &
+  P & `0x1fff`; pmd2 = P; pmd3 = P & `0xffff`; pmd4 to 7 = P & `0x7fffffffffff` with bits 63:47 copying bit 46 (bit 47 is not stored as written); pmd8 to 15 and pmd17 = P; pmd16 = P &
   `0xfffffffff` (36 bits). A pmc mismatch returns -2, a pmd mismatch -3 (the unconditional `mov r8=-3` at `0xffefe0cc` is this,
-  not the TEST_PROC status). The group then does a counting check (`0xffefd670` to `0xffefda90`) with small values; that part was read once, lightly.
+  not the TEST_PROC status). The group then repeats a write and read-back with small distinct values (`0xffefd670` to `0xffefda90`); nothing counts. See the review below.
 - *Group 10, sub-test 1.* Writes msr[1560] = `0xf1e2`, sets msr[1640] bit 57 and msr[1504] bits 48 and 54, `psr.mc` = 1. For 16 patterns (0, `0x5555...`,
   `0xaaaa...`, -1, four each) and 14 single-bit flips it writes a cache array entry for the line at test buffer + `0xe000` through msr[1544],
   msr[1546] and the reserved M-word (helpers `0xffe8f100` and `0xffe8f9e0` build the command and the check bits), loads the line, ORs
@@ -304,9 +304,29 @@ masks and counter widths above, not a flat array. (3) Group 4: ALAT capacity (32
 invalidation, GR and FR entries kept apart, and the Speculation fault delivery. Log `r15` at the three tests to find the broken block;
 log `r8` after each helper call at `0xffefd4dc`, `0xffefd53c`, `0xffefd5cc` and `0xffefd65c` (-2 pmc, -3 pmd) for group 8.
 
-**Unknown.** The `test_control` value SAL passes (`[record + 72]` of the structure returned by `0xffaeb5c0`, the third argument of the PAL
-call, not traced), which decides whether the skip bits of groups 4, 8 and 10 could be used; groups 5, 6, 3 beyond their entry; which of
-msr[1505] to msr[1508] holds which error-log bit; the meaning of msr[1640] bits 61 and 57.
+**Unknown.** Groups 3, 5 and 6 beyond their entry and failure constants; which of msr[1505] to msr[1508] holds which error-log bit; the
+meaning of msr[1640] bits 61 and 57.
+
+### What SAL passes (established, SAL_B 5.73)
+
+The progress-`0x36` call chain is `0xffaf5c80`, then `0xffb208b0`, then `0xffb20be0`, then the static wrapper `0xffa1d960`, which
+passes index 258 and the three arguments as stacked registers. `0xffb208b0` has this one caller; it writes progress `0x36`, looks the CPU
+up with `0xffaeb5c0` (a table of 96-byte records keyed by CPUID register 3) and passes `test_address` and `test_info` through from its own
+arguments. The third argument (`test_params`) is the qword at record + `0x48`, read by `0xffb208b0`, not anything the caller chooses.
+In the model's run `test_address` is `0x3003800000` and `test_info` is `0x800000`: an 8 MiB buffer and `test_phase` 0, so phase two.
+
+Across the 15 records and the terminator, `test_params` is `0x51` (11 records and the terminator) or `0x10000051` (4 records).
+Attributes are `0x51`, so the cacheable bit is set. `test_control` is 0, or `0x1000` (bit 12, which PAL always skips anyway). So SAL
+skips nothing: the skip word the groups see is only `0x803058081000` (bits 12, 19, 27, 28, 30, 36, 37, 47). Groups 4 (bit 46), 8 (bit 43),
+10 (every sub-test but 4) and 11 (every sub-test but 4, 5, 7) all run, as do groups 1, 2, 3, 5, 6, 7 and 9 (group 9 also needs msr[1714] bit 50).
+
+SAL's handling of the result (`0xffb20a40` onward and `0xffaf5da0`): a non-zero `r8` is kept and progress `0xc1` is written. If `r8` is
+zero and `te` is set, `r8` becomes the `state` field and `0xc1` is written when that is non-zero, else progress `0x37`. The caller continues
+only when `r8` is zero. Anything else writes `r8` into the progress byte, does three SHub stores and spins at `0xffaf5f30` (a bundle that
+branches to itself). So `-3`, `state` 1 and `state` 2 are all fatal for this CPU: no warning, no CPU disable. Because every failing group
+sets `r41` bits 1:0, a restricted state reaches SAL only together with `-3`. The SDM (vol 2 p. 2:462) reserves status 1 for "completed,
+hardware failures occurred"; this PAL returns `-3` instead. The one call found is phase two; phase one runs inside PAL at reset. Whether
+the three callers of `0xffaf5c80` can ever pass phase 1 was not traced.
 
 ## Processor behaviour the self-tests depend on
 
@@ -419,3 +439,76 @@ and FIT tables. The Ghidra decompile of `0xffeec2d0` and `0xffee0b20` was tried 
 - The result routine's second argument (`ar.k7` upper half) and the real-hardware meaning of any value; no run was made.
 
 Checked against the SDM PDF: Figure 11-10 (SDM rev 2.3 vol 2, document 245318, section 11.2.3, p. 2:295) puts test_control in bits 46:0, cs in bit 47 and reserved in bits 63:48, and the text's rule that a 0 in an implemented test_control bit runs the test and a 1 skips it matches the layout listed above as unconfirmed, so the GR37 decode was right and needed no change.
+
+### Review of the PAL_TEST_PROC section
+
+Independent review of `286a050`, section 6 above, by a reader who did not write it. The section was written from an objdump listing
+only, so before this review none of it had been re-read in Ghidra. This pass re-read it in Ghidra with the repository's IA-64
+processor, `--sn2-prom --no-analysis`, on `shub1snprom.bin` 10.54: instruction listings of the address ranges named below (from a
+throwaway listing script run in the Ghidra image) and the stock decompile export as a cross-check. The IA-64 objdump was not
+available on the review host, so it was not used. SDM figures were checked in the rev 2.3 vol 2 PDF, and the PMU masks against
+Itanium 2 Processor Reference Manual 251110-003, chapter 10.
+
+**Confirmed (instruction-level in Ghidra, grade of the section unchanged).**
+- Entry: argument checks and the `-2` exits, `r34` bits 55:0 and 63:56, `r35` bit 0 as the cacheability test, `test_control` as `r35` >> 16
+  (SDM vol 2 Fig 11-45 puts attributes in 7:0 and `test_control` in 63:16), the two always-skipped masks `0x803058081000` (phase 0) and
+  `0xe030ffff8000` (phase 1), and the exit at `0xffeaaa40` that zeroes `r10` and `r11` and does not touch `r8` or `r9`. A phase above 1
+  returns `r8` = 0 and `r9` = 0 (added). The link-address table entry `0xfff32190` for this handler is present at `0xffe9e5f0`; which
+  predicate selects it for index 258 was not traced.
+- The 11-entry group table at `0xffefc4d0` (the page's `0xffefc280` is the dispatch loop that reads it), with the groups in the order
+  listed; `r41` starts at 4; msr[1640] bits 63 and 57 set at `0xffefc140`; `r9` ORed into `r41` after each call.
+- Result routine: `r9` bits 62:58 from msr[1640]; all three tests that set `ia`, `fp` and `vm`; `vm` also from `r9` bits 33 and 39; `mf` from bits 33 to
+  37; `state` 1 from msr bits 61 or 62, `state` 2 winning; the fall-through to msr[1640] bits 1:0; bits 63 and 57 cleared and nothing
+  else (mask `0x7dff...`), so bit 62 is not cleared by the routine; predicated `mov r8=-3` at `0xffefc48c` on `r41` bits 1:0.
+  Fig 11-9 (p. 2:293): `state` 1:0, `te` 2, `vm` 16, `ia` 17, `fp` 18, `mf` 19, `test_status` 63:32.
+- The decode of `0x43f8081400080006` bit by bit, including the group 11 constant losing bit 58 to the msr copy.
+- Group 4: skip bit 46, the three expected miss counts (3, 0, 32 at `0xffef93b6`, `0xffef95d6`, `0xffef96f6`), the final two checks with
+  `r14` = 16, the failure constant, and handler arms. Every `chk.a` sits in slot 0 or 1, so `ri` + 1 stays valid.
+- Group 8: skip bit 43; the four patterns; helper write order and every readback mask listed; `-2` for pmc and `-3` for pmd.
+- Group 10: bit-62 test and constant, skip bits 16 to 23, per-sub-test constants, sub-test 1's msr[1560] = `0xf1e2`, the msr[1640] bit 57
+  and msr[1504] bits 48 and 54 writes, `psr.mc`, the 16 patterns by 14 bit positions, and the `& 0xf80001 == 0x100001` test on the OR of
+  msr[1505] to msr[1508] at `0xfff0105c`. Group 11: the same shape, skip bits 24 to 31, constants as corrected above.
+- The failure latch: groups 10 and 11 set msr[1640] bit 62 on a failing sub-test (`0xfff009dc`, `0xfff0553c`).
+
+**Changed (corrected in place above).**
+- Group 2 has two skip bits, 41 and 40. Bit 39 is a flag passed to the second sub-test. The msr[1640] bit 60 test is a latch: the group
+  fails at once when it is set and sets it on any failure; the result routine reads it as `fp`.
+- Group 5 was "not read": skip bit 33, failure constant `0x4000000002`, and it preloads `r8` and `r9` with -1 when it runs.
+- Group 11's skip bits are 24 to 31 (not "24 and up"), and its failure constants follow group 10's pattern.
+- The group 8 counting check is not a counting check. It writes distinct small values (pmc 2 to 16, pmd 3 to 17, pmd13 to 15 = 35 to 33,
+  pmc9 = 40, pmc0 = 33, pmd0 = 34), freezes via pmc0 and reads back with masks. Values 25, 23 and 21 for pmd1 to pmd3 are the values
+  just written to those pmds, read back under a 7-bit mask. They do not come from read-only status registers. The pmc1 to pmc3 reads
+  must be zero, as written values 24, 22 and 20 are ignored. pmc0 expects `0x21` after clearing bits 3:1. The pmd4 to 7 expectation copies
+  bit 46 into bits 63:47.
+- The "Unknown" test_control item is answered (section above).
+
+**Added.**
+- Groups 4, 10 and 11 each bracket their work with msr[1552] bit 4 set and a poll of bit 2 until it reads 1, with no timeout; a model
+  that never returns bit 2 hangs there. The msr[1544] = 0, msr[1546] and reserved-word sequence with msr[1640] bit 54 set around it
+  appears in groups 4, 10 and 11 prologues and after group 10's loop, so it is a general step, not only the cache-array write.
+- msr[1640] bit roles seen in this code: 63 and 57 bracket the whole call; 62 failure latch of groups 10 and 11; 60 latch of group 2 (and
+  `fp`); 54 brackets the msr[1544]/msr[1546] sequence; 59 and 58 are only read by the result routine (page text unchanged).
+
+**251110 against the group 8 masks.** Agree: pmc0 populated bits 7:4 and 0 (mask `0xf1`); pmc1 to pmc3 read zero; pmc4 to pmc7 bits 27:0
+without the reserved bit 7, 63:28 reading zero, bit 23 only in pmc4; pmc9 bits 1:0 ignored (`0x...ffc` mask); pmc11 bits 25:0 (`0x3ffffff`);
+pmc12 without bits 5:4 (`0xffcf` exactly); pmd1 12:0; pmd16 35:0 (36 bits); pmd17, pmd2 and pmd8 to 15 all 64 bits.
+Agree only through the patterns: pmc10 is expected to read back all 64 bits, while the manual says bits 31:16 and 47:32 return the value
+of bits 15:0; every pattern repeats every 16 bits, so a model that implements the mirror passes. pmd3 reads back 16 bits; the manual's figure
+is ambiguous on its width.
+Disagree: (1) pmd4 to pmd7. The manual shows a 48-bit counter with a separate overflow bit 47 and bits 63:48 copying bit 47. The PAL test
+expects bits 63:47 to copy bit 46, as for a 47-bit counter with architectural sign extension. The PAL expectation is a software
+expectation from shipped firmware and the manual disagrees with it; the model should follow the PAL until hardware says otherwise.
+(2) pmc8 and pmc9 bit 32: the manual lists 32:30 as reserved, the PAL expects bit 32 to read back as written and bits 31:30 to read zero.
+(3) pmc13 to pmc15: the PAL writes values with bits set in fields the manual calls reserved (pmc15 31:4, pmc14 63:14) and requires them
+to read back as written; for pmc13 the manual says the register must hold `0x2078fefefefe`, and the PAL writes other values.
+
+**Not checked.**
+- The mode-switch helpers (`0xffe96bd0`, `0xffe88970`, `0xffe89040` and the like), the cache-array helpers `0xffe8f100` and `0xffe8f9e0`, and
+  group 10 sub-tests 2 to 8 and group 11 sub-tests 1 to 8 bodies; groups 1, 3, 6, 7 and 9 beyond their skip bit and failure constant.
+- The claim that nothing in the image clears msr[1640] bit 62 (only the result routine was read, and it does not), and the inferred
+  bit-56 behaviour and final msr[1640] value.
+- That the exit stub `0xffe9f260` never touches `r8` to `r11`; what `0xffe7ec10` does (it reads ISR, IIP and IPSR first).
+- SAL: the callers of `0xffaf5c80` and what the SHub stores before the spin mean.
+
+**Regrade.** Section 6 stood as objdump-only until this pass. The established grades above are now backed by Ghidra for the items
+under Confirmed. The group 2, group 5, group 11 skip-bit and group 8 counting-check statements were wrong or missing and are fixed.
