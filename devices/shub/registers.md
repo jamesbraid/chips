@@ -80,10 +80,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `lb_lock2_status` | 0x1101d0188 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers) |
 | `lb_lock` | 0x1101d0200 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user) |
 | `lb_lock_status` | 0x1101d0208 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node |
-| `crb_message_control` | 0x120000000 | rw | 64 |  |  | 0x6 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `crb_nack_limit` | 0x120000080 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `crb_timeout_prescale` | 0x120000100 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `crb_timeout_skid` | 0x120000180 | rw | 64 |  |  | 0x7 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `crb_message_control` | 0x120000000 | rw | 64 |  |  | 0x6 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_MESSAGE_CONTROL_INIT macro (value 6); the macro name says initial value, no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name, offset, bits 11:0 and 63:32); the PROM's own register-name table carries the same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux v5.3 dropped the register |
+| `crb_nack_limit` | 0x120000080 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_NACK_LIMIT_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL |
+| `crb_timeout_prescale` | 0x120000100 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_TIMEOUT_PRESCALE_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL |
+| `crb_timeout_skid` | 0x120000180 | rw | 64 |  |  | 0x7 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_TIMEOUT_SKID_INIT macro, value 7) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696 |
 | `pi_reg_2001_0100` | 0x120010100 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name |
 | `pi_slice_present` | 0x120020080 | r | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) |
 | `pi_cam_control` | 0x120050300 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -623,24 +623,24 @@ Firmware lock status; the name is ours. The PROM polls it with a short delay unt
 
 ### Register `crb_message_control`
 
-SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path and the SAL_B die path store 0x1_0001_0000_0000 here as a plain 64-bit write: that clears every enable in bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
+SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then writes the saved value back with bit 24 cleared; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path stores 0x1_0001_0000_0000 here with a plain 64-bit store, and the SAL_B park path passes the same address and value to a write helper (not read): the value clears bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63:48 | `ivack_throttle_control` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | IVACK throttling limit and timer control. |
-| 47:32 | `ivack_stall_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | IVACK stall counter. |
-| 11 | `enable_ivack_consolidation` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable IVACK reply consolidation. |
-| 10 | `suppress_bogus_writes` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Ignore residual write data. |
-| 9 | `wrb_attribute_mismatch_xb_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable the crossbar write request buffer mismatch check. |
-| 8 | `rrb_attribute_mismatch_xb_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable the crossbar read request buffer mismatch check. |
-| 7 | `irb_attribute_mismatch_fsb_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable the front-side-bus interrupt request buffer mismatch check. |
-| 6 | `wrb_attribute_mismatch_fsb_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable the front-side-bus write request buffer mismatch check. |
-| 5 | `rrb_attribute_mismatch_fsb_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable the front-side-bus read request buffer attribute mismatch check. |
-| 4 | `message_color_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable colour message processing. |
-| 3 | `message_color` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Colour of the message. |
-| 2 | `remote_speculative_message_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Speculative read requests to remote memory enabled. |
-| 1 | `local_speculative_message_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Speculative read requests to local memory enabled. |
-| 0 | `system_coherence_enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | System coherence enabled. |
+| 63:48 | `ivack_throttle_control` | established |  | SGI Linux 2.4 ia64 SN2 header | IVACK throttling limit and timer control. |
+| 47:32 | `ivack_stall_count` | established |  | SGI Linux 2.4 ia64 SN2 header | IVACK stall counter. |
+| 11 | `enable_ivack_consolidation` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable IVACK reply consolidation. |
+| 10 | `suppress_bogus_writes` | established |  | SGI Linux 2.4 ia64 SN2 header | Ignore residual write data. |
+| 9 | `wrb_attribute_mismatch_xb_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable the crossbar write request buffer mismatch check. |
+| 8 | `rrb_attribute_mismatch_xb_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable the crossbar read request buffer mismatch check. |
+| 7 | `irb_attribute_mismatch_fsb_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable the front-side-bus interrupt request buffer mismatch check. |
+| 6 | `wrb_attribute_mismatch_fsb_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable the front-side-bus write request buffer mismatch check. |
+| 5 | `rrb_attribute_mismatch_fsb_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable the front-side-bus read request buffer attribute mismatch check. |
+| 4 | `message_color_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable colour message processing. |
+| 3 | `message_color` | established |  | SGI Linux 2.4 ia64 SN2 header | Colour of the message. |
+| 2 | `remote_speculative_message_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Speculative read requests to remote memory enabled. |
+| 1 | `local_speculative_message_enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Speculative read requests to local memory enabled. |
+| 0 | `system_coherence_enable` | established |  | SGI Linux 2.4 ia64 SN2 header, SH_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE | System coherence enabled. |
 
 ### Register `crb_nack_limit`
 
@@ -648,9 +648,9 @@ Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for 
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enable NACK limit detection. |
-| 15:12 | `pri_freq` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Frequency at which the priority count is incremented. |
-| 11:0 | `limit` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | NACK count limit. |
+| 63 | `enable` | established |  | SGI Linux 2.4 ia64 SN2 header | Enable NACK limit detection. |
+| 15:12 | `pri_freq` | established |  | SGI Linux 2.4 ia64 SN2 header | Frequency at which the priority count is incremented. |
+| 11:0 | `limit` | established |  | SGI Linux 2.4 ia64 SN2 header | NACK count limit. |
 
 ### Register `crb_timeout_prescale`
 
@@ -658,7 +658,7 @@ Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:0 | `scaling_factor` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | CRB timeout prescale factor. |
+| 31:0 | `scaling_factor` | established |  | SGI Linux 2.4 ia64 SN2 header | CRB timeout prescale factor. |
 
 ### Register `crb_timeout_skid`
 
@@ -666,8 +666,8 @@ Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `reset_skid_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Reset the skid counter. |
-| 5:0 | `skid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | CRB timeout skid. |
+| 63 | `reset_skid_count` | established |  | SGI Linux 2.4 ia64 SN2 header | Reset the skid counter. |
+| 5:0 | `skid` | established |  | SGI Linux 2.4 ia64 SN2 header | CRB timeout skid. |
 
 ### Register `pi_reg_2001_0100`
 

@@ -849,9 +849,9 @@
 #define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
 
 /*
- * SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then clears bit 24 again; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path and the SAL_B die path store 0x1_0001_0000_0000 here as a plain 64-bit write: that clears every enable in bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
+ * SHub 1 coherent request buffer message control: coherence and speculation enables, mismatch checks and the invalidate-acknowledge (IVACK) throttle. A SAL_B routine sets bit 24 of pi_reg_2001_0100, reads this register, ORs in 0x3b03f7 when the SHub ID revision (bits 31:28 of shub_id) is above 2 and 0x3f1 otherwise, writes it, then writes the saved value back with bit 24 cleared; 0x3f1 sets bits 0 and 9:4, and the 0x3b0000 half of the other value sets bits 21, 20, 19, 17 and 16, which the 2.4 header lists as reserved (the PROM table names fields the header lacks: SYSTEM_FLUSH_DURATION, SYSTEM_FLUSH_INTERVAL, ENABLE_PIPE_SNOOP_ERRORS; their positions are not decoded). SAL_A's error path stores 0x1_0001_0000_0000 here with a plain 64-bit store, and the SAL_B park path passes the same address and value to a write helper (not read): the value clears bits 11:0 (system coherence included) and sets IVACK stall count 1 and throttle control 1. Nothing in the header makes a bit of this register reset the node (inferred).
  */
-/* crb_message_control: rw64, reset 0x6; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* crb_message_control: rw64, reset 0x6; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name, offset, bits 11:0 and 63:32); the PROM's own register-name table carries the same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux v5.3 dropped the register */
 #define SHUB_CRB_MESSAGE_CONTROL                     0x120000000 /* established */
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_SHIFT 48 /* established */
 #define SHUB_CRB_MESSAGE_CONTROL_IVACK_THROTTLE_CONTROL_MASK 0xffffull
@@ -899,7 +899,7 @@
 /*
  * Coherent request buffer NACK limit: a 12-bit count limit, a 4-bit frequency for the priority count and an enable in bit 63. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
  */
-/* crb_nack_limit: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* crb_nack_limit: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL */
 #define SHUB_CRB_NACK_LIMIT                          0x120000080 /* established */
 #define SHUB_CRB_NACK_LIMIT_ENABLE_SHIFT             63 /* established */
 #define SHUB_CRB_NACK_LIMIT_ENABLE_MASK              0x1ull
@@ -914,7 +914,7 @@
 /*
  * Coherent request buffer timeout prescale: one 32-bit scaling factor in bits 31:0. One SAL_B set-up routine (the PTC one in interrupts.md) reads and writes the offset; the value it stores was not decoded.
  */
-/* crb_timeout_prescale: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* crb_timeout_prescale: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL */
 #define SHUB_CRB_TIMEOUT_PRESCALE                    0x120000100 /* established */
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_SHIFT 0 /* established */
 #define SHUB_CRB_TIMEOUT_PRESCALE_SCALING_FACTOR_MASK 0xffffffffull
@@ -923,7 +923,7 @@
 /*
  * Coherent request buffer timeout skid limit: a 6-bit skid in bits 5:0 and a reset-skid-counter bit in bit 63. A routine reached through a table that also writes pi_cam_control reads this register and writes it back with bit 63 set.
  */
-/* crb_timeout_skid: rw64, reset 0x7; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* crb_timeout_skid: rw64, reset 0x7; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696 */
 #define SHUB_CRB_TIMEOUT_SKID                        0x120000180 /* established */
 #define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_SHIFT 63 /* established */
 #define SHUB_CRB_TIMEOUT_SKID_RESET_SKID_COUNT_MASK  0x1ull

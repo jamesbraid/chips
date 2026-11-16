@@ -2177,7 +2177,7 @@
    "space": null,
    "reset": 6,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name, offset, bits 11:0 and 63:32); the PROM's own register-name table carries the same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux v5.3 dropped the register"
   },
   {
    "unit": "shub",
@@ -2186,7 +2186,7 @@
    "hi": 63,
    "lo": 48,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2195,7 +2195,7 @@
    "hi": 47,
    "lo": 32,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2204,7 +2204,7 @@
    "hi": 11,
    "lo": 11,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2213,7 +2213,7 @@
    "hi": 10,
    "lo": 10,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2222,7 +2222,7 @@
    "hi": 9,
    "lo": 9,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2231,7 +2231,7 @@
    "hi": 8,
    "lo": 8,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2240,7 +2240,7 @@
    "hi": 7,
    "lo": 7,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2249,7 +2249,7 @@
    "hi": 6,
    "lo": 6,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2258,7 +2258,7 @@
    "hi": 5,
    "lo": 5,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2267,7 +2267,7 @@
    "hi": 4,
    "lo": 4,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2276,7 +2276,7 @@
    "hi": 3,
    "lo": 3,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2285,7 +2285,7 @@
    "hi": 2,
    "lo": 2,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2294,7 +2294,7 @@
    "hi": 1,
    "lo": 1,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2303,7 +2303,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header, SH_CRB_MESSAGE_CONTROL_SYSTEM_COHERENCE_ENABLE"
   },
   {
    "unit": "shub",
@@ -2317,7 +2317,7 @@
    "space": null,
    "reset": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL"
   },
   {
    "unit": "shub",
@@ -2326,7 +2326,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2335,7 +2335,7 @@
    "hi": 15,
    "lo": 12,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2344,7 +2344,7 @@
    "hi": 11,
    "lo": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2358,7 +2358,7 @@
    "space": null,
    "reset": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL"
   },
   {
    "unit": "shub",
@@ -2367,7 +2367,7 @@
    "hi": 31,
    "lo": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2381,7 +2381,7 @@
    "space": null,
    "reset": 7,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_SKID (name, offset, fields); SAL 5.04 PROM site 0xffa2459c to 0xffa245cc (read, OR bit 63, write); other sites site 0xffae3696"
   },
   {
    "unit": "shub",
@@ -2390,7 +2390,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
@@ -2399,7 +2399,7 @@
    "hi": 5,
    "lo": 0,
    "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+   "from": "SGI Linux 2.4 ia64 SN2 header"
   },
   {
    "unit": "shub",
