@@ -73,5 +73,6 @@
 | [boot-flash.md](ip35/boot-flash.md) | IP35 boot flash: the address windows and the two PROM positions | The IP35 node controller (Bedrock) drives a boot flash that holds the CPU PROM code and the system configuration and... |
 | [metarouter-route-and-roles.md](ip35/metarouter-route-and-roles.md) | IP35 PROM on MetaRouter systems: route calculation, role values and size limits | Question. nasid-numbering.md and the router number walk stop at the numbers. |
 | [nasid-numbering.md](ip35/nasid-numbering.md) | Origin 3000 NASID numbering | This page covers how the IP35 (Bedrock) PROM numbers the hubs of a Bedrock system (their NASIDs), what it does with... |
+| [prom-console-input.md](ip35/prom-console-input.md) | IP35 PROM 6.210: what the boot PROM does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
 | [prom-md-config.md](ip35/prom-md-config.md) | IP35 PROM: every write to the memory controller's bank configuration during boot | Question. |
