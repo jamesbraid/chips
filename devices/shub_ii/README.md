@@ -96,33 +96,58 @@ MIPS host must not carry their `+4` convention over. Model the register as one 6
 byte order choose the half.
 
 - **(a) Width and halves.** `___sn_readl` and `___sn_readl_relaxed` are `*(volatile unsigned int *)addr` and the `readq`
-  forms are `*(volatile unsigned long *)addr`, with no conversion (`io.h`). `struct pic` is `u64` fields at 8-byte steps
+  forms are `*(volatile unsigned long *)addr`, with no conversion (`io.h`; the non-relaxed forms add `mf.a` and a DMA flush
+  of the bridge, not a swap). `struct pic` is `u64` fields at 8-byte steps
   (`pic.h`) and the widget id is a `u64` union with manufacturer 11:1, part 27:12, revision 31:28 and the upper 32 bits
-  reserved (`shubio.h`, `ii_wid_u`). The PROM's `ld4` at `+0` of widget 0 is tested for part `0xd000` or `0xd100` in bits 27:12
-  (B11, `0xffab14f0`), and the status word read at `+0x8` is shifted right by 6 and masked to 4 bits (`0xffaaf340`): both only
-  make sense if `+0` and `+8` return the low 32 bits. Established for `+0` (the PROM depends on it); inferred for `+4`
+  reserved (`shubio.h`, `ii_wid_u`). The PROM reads the widget 0 id with a size-4 access at `+0` (`0xffab14f0`, B11) and
+  `0xffab15c0` then tests the part in bits 27:12 (`ld4.acq` of the returned word, `extr.u 12,16`, compare with `0xd000` and
+  `0xd100`, at `0xffab16d0` to `0xffab16f0`). The status word is read with `ld4.acq` at `+0x8`, then `extr.u 6,4` (`0xffaaf340`):
+  both only make sense if `+0` and `+8` return the low 32 bits. Established for `+0` (the PROM depends on it); inferred for `+4`
   returning bits 63:32, since no SN2 code reads an `8n+4` word of a widget register that this page found. For II registers
   the PROM never uses 4 bytes: `0xffa0e5a0` is a single `ld8`.
 - **(b) Byte swap in transit.** None is visible to the processor on PIO. Software does no swap (below), and the register
   fields are at their little-endian positions in the doubleword, so a PIO access is unswapped (established as the software
   contract; the hardware path itself is not described anywhere found, so nothing beyond the contract is claimed). The swap
-  controls are all on the DMA side: IWC bit 0 `i_dma_byte_swap` (`shubio.h`, no description in either header; the PROM writes
-  it clear at `0xffaad9f6`, row B10; Linux never writes `IIO_IWC`), and the PIC's Device register bit 19 (`PCIBR_DEV_SWAP_DIR`),
+  controls are all on the DMA side: IWC bit 0 `i_dma_byte_swap` (`shubio.h`, no description in either header; the PROM forms
+  the address at `0xffaad9f6`, reads it with `ld8` (`0xffa0e5a0`), and writes the value `& ~1` at `0xffaada3c`, row B10; Linux never writes `IIO_IWC`), and the PIC's Device register bit 19 (`PCIBR_DEV_SWAP_DIR`),
   ATE bit 29 (`ATE_SWAP_ON`) and 64-bit address attribute bit 55 (`PCI64_ATTR_SWAP`) in `pcibr_provider.h`. That these affect
   DMA data only is inferred from the names and use (`pcibr_dma.c` sets the ATE bit when the device bit is set); what they do to
   the lanes is covered in [PIC](../pic/README.md#device-register-bit-19-swap_direct-which-level-swaps). No control was found
   that swaps PIO register data: unknown whether one exists.
 - **(c) Linux accessors.** No `swab`, `cpu_to_*` or `le/be` conversion appears in `pcibr_reg.c`, `pcibr_dma.c`, `pcibr_ate.c`,
-  `pcibr_provider.c` or `tioce_provider.c` (v5.3, searched). The `pcireg_*` accessors are `__sn_readq_relaxed` and
-  `__sn_setq_relaxed` on `u64` fields. Linux never reads the widget id: `bs_xid` comes from the SAL topology call. Established.
-- **(d) PROM.** Consistent with (a) to (c). The widget read helper `0xffab14f0` builds the window address from the nasid and
-  link and calls `0xffaeb170` with size 4; that reaches the generic read at `0xffb0f4b0`, which accepts sizes 1, 2, 4 and 8
-  and returns `~0` for a failed access. The bundles at `0xffb5cf40` and `0xffb5cf50` are four loads with opcodes
-  `ld1`, `ld2`, `ld4`, `ld8` on the unmodified address (slot decode by hand; Ghidra's decompile of that routine shows only the
-  serialise) and the result is stored zero-extended into a 64-bit slot, with no swap. Established for the instructions.
+  `pcibr_provider.c`, `tioce_provider.c` or `io_init.c` (v5.3, searched; none in `arch/ia64/sn` at all outside unrelated
+  `cpu_to_node` uses). The `pcireg_*` accessors are `__sn_readq_relaxed`,
+  `__sn_setq_relaxed`/`__sn_clrq_relaxed` and `writeq` on `u64` fields. Linux never reads the widget id: `bs_xid` comes from the SAL topology call. Established.
+- **(d) PROM.** Consistent with (a) to (c). The widget read helper `0xffab14f0` builds the window address from the nasid, the
+  widget number and a link bit (no register offset, so `+0`) and calls `0xffaeb170` with size 4; that reaches the generic read
+  at `0xffb0f4b0`, which accepts sizes 1, 2, 4 and 8. The helper itself returns `~0` when the status is zero, otherwise a 4-byte
+  `ld4` of the result buffer. The sized-load routine at `0xffb5cf20` holds four predicated loads, `ld1` (`0xffb5cf40`), `ld2`
+  (`0xffb5cf46`), `ld4` (`0xffb5cf50`) and `ld8` (`0xffb5cf56`), each `[r32]` into `r36`, the address unmodified, then
+  returns the value in `r9` with status 0 (an unsupported size returns status 1 and value 0). Ghidra's listing with our IA-64
+  module shows all four loads; the decompiler shows only the serialise. Zero extension is the `ld` definition, not a PROM
+  step; the width of the store into the result buffer and the call from `0xffb0f4b0` into `0xffb5cf20` were not re-traced.
+  Established for the instructions; there is no swap in them.
 
 Not covered: the Crossbow's own endian behaviour (the same reading applies to widget 0 `+0`, `+8` and `+0xc0`, but no
 crossbow-specific swap control was looked for), and TIO.
+
+### Review
+
+Independent check of the section, with Ghidra (our IA-64 module) on `shub1snprom.bin` and Linux v5.3 `arch/ia64/sn`,
+`arch/ia64/include/asm/sn`.
+
+- Confirmed: `+0` is bits 31:0 (the `0xd000`/`0xd100` part test on bits 27:12, the `+8` status field at bits 9:6, and
+  `ii_wid_u` in `shubio.h`); the bit positions and names of IWC bit 0 `i_dma_byte_swap`, `PCIBR_DEV_SWAP_DIR` (bit 19),
+  `ATE_SWAPSHIFT` (29) and `PCI64_ATTR_SWAP` (55); the IWC read, write-with-bit-0-clear, read sequence; Linux never writes
+  `IIO_IWC` (only the offset is defined) and has no swap call anywhere in `arch/ia64/sn`; the four sized loads.
+- Corrected: the part test is in `0xffab15c0`, not in the read helper `0xffab14f0`; `~0` on failure comes from that helper,
+  not from the sized load; `0xffaad9f6` only forms the IWC address (the write is at `0xffaada3c`); the non-relaxed Linux
+  readers also issue `mf.a` and a bridge flush; `pcibr_reg.c` also uses `writeq` and `__sn_clrq_relaxed`.
+- `+4` stays inferred. No `ld4` at an `8n+4` widget or PIC word was found in the Linux tree (no 32-bit register access in
+  `arch/ia64/sn`), and the PROM was checked only in the routines above, not exhaustively.
+- Ghidra: the listing shows the loads at `0xffb5cf40` to `0xffb5cf56`; the decompile of `0xffb5cf20` is just `srlz_i(); return 0;`.
+  Probably the module's prototype returns only `r8`, so the value in `r9` (the loaded result) is dead; a decompiler defect
+  to report, not checked further.
 
 ## PROM II setup on the main_three path
 
