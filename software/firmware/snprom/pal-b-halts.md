@@ -246,8 +246,8 @@ and 57 for the duration and calls each of eleven groups with the test address, s
 | 7 | `0xffefc680` | 44 | region registers and translation | `0x200000002` |
 | 8 | `0xffefd2f0` | 43 | performance monitor registers | `0x1000000002` |
 | 9 | `0xffef98f0` | 42 | debug registers (runs only if msr[1714] bit 50 is set) | `0x2000000002` |
-| 10 | `0xfff003b0` | 16 to 23, one per sub-test | eight cache-array and error-log sub-tests; first one `0xfff00b30` | `0x80000000001` shifted left by the sub-test number minus one |
-| 11 | `0xfff04ff0` | 31 to 24, one per sub-test | eight more array sub-tests; fails at once if msr[1640] bit 62 is set | `0x8000000000001` shifted left by the sub-test number minus one (`0x7f8000000000001` when bit 62 was already set) |
+| 10 | `0xfff003b0` | 16 to 23, one per sub-test | eight cache-array and error-log sub-tests; first one `0xfff00b30` | bit 43 plus the sub-test number minus one, and bit 0 (`0x80000000001`, `0x100000000001`, ...) |
+| 11 | `0xfff04ff0` | 31 to 24, one per sub-test | eight more array sub-tests; fails at once if msr[1640] bit 62 is set | bit 50 plus the sub-test number, and bit 0 (`0x8000000000001`, `0x10000000000001`, ...) (`0x7f8000000000001` when bit 62 was already set) |
 
 Groups 10 and 11 read msr[1640] bit 62 first and, if it is set, return `r8 = -1` with `0x7f80000000001` (group 10, bits 50:43 and 0)
 or `0x7f8000000000001` (group 11, bits 58:51 and 0) without testing. A failing sub-test of either group sets msr[1640] bit 62 (`0xfff009dc`
@@ -400,27 +400,31 @@ pointer (the `r47` that loads halfwords inside the helpers is the helper's own l
 
 ### The array command interface (established)
 
-Every cache-array access is the same four steps: write `msr[1544]` (index), write `msr[1546]` (command), load the payload registers
-`msr[1600..1627]` if the command writes, then execute the reserved M-word `0x108000000` as the trigger (`srlz.d` before it). A read
-trigger fills the payload registers, which are then read back.
+Every cache-array access writes `msr[1544]` (index), `msr[1546]` (command) and, for a write, the payload registers `msr[1600..1627]`,
+then `srlz.d` and the reserved M-word `0x108000000` as the trigger. The order of those writes is not fixed: the data write
+(`0xffe8f530`), the tag write (`0xffe8fb70`) and the check-bit clear (`0xffe8f650`) put the payload before or in the same issue group as
+the command, so only the trigger can start the access. A read trigger fills the payload registers, which are then read back.
 
-- `msr[1544]` index: bits 7:0 = address bits 14:7, bits 10:8 = address bits 17:15 (the "way" of the sub-tests). The read helper (`0xffe8ee80`)
-  writes the way at bits 15:13 as well (`0xffe8effc`).
+- `msr[1544]` index: bits 7:0 = address bits 14:7, bits 10:8 = address bits 17:15 (the "way" of the sub-tests). The read helpers (`0xffe8ee80` at
+  `0xffe8effc`, the tag read `0xffe8f890` at `0xffe8f966`) write the way at bits 15:13 as well.
 - `msr[1546]` command: bit 63 = 1; bits 60:58 = operation, 2 for the read command and 3 for the write commands (inferred: read and
   write); bits 57:53 = array number; bit 43 = `((cfg & 3) * 3 >> 1) & 1`; bits 41:29 = a configuration-dependent field. `cfg` is
   `msr[1559]` bits 26:22. Both fields come from a halfword table, one row of 32 halfwords per array: halfword 0 is the array number and
   halfword `cfg - 7` is the field. Rows 8, 9 and 10 give array 8 (data, field 0xe3 at `cfg` 16), array 10 (tag, field 0) and array 9
-  (check bits, field 0xe0 at `cfg` 16). The observed words are `0x8900001c60000000` (read array 8), `0x8d00001c60000000` (write array 8),
+  (check bits, field 0xe0 at `cfg` 16). The command's bit 43 and the field are built at run time from `cfg`; the prologue's "array 10
+  clear" word `0x8940000000000000` is a literal that is byte-identical to the tag read command at `cfg` 16 (op 2, array 10, field 0), so it is
+  distinguished only by the msr[1640] bit 54 bracket and index 0: do not model it as an unconditional clear (what bit 54 changes is unknown). The observed words are `0x8900001c60000000` (read array 8), `0x8d00001c60000000` (write array 8),
   `0x8d20001c00000000` (write array 9) and `0x8d40000000000000` (write array 10), all at `cfg` 16.
 - `msr[1600..1627]`: sixteen payload registers, `0x640 + 8*(i>>2) + (i&3)` for dword i of the 128-byte line. A tag write puts the word
   in `msr[0x640]` only. A tag read comes back in `msr[1545]`.
-- Tag write word (helper `0xffe8f9e0`): bits 34:0 = address bits 49:15 passed through three 12-bit halfword lookups (a table
-  reached ip-relative from `0xffe8fad6`), bit 35 = valid, 39:36 = parity, 43:40 = state, 51:44 = an 8-bit field (replacement
+- Tag write word (helper `0xffe8f9e0`): bits 34:0 = address bits 49:15 passed through three 12-bit halfword lookups (the table at `0xffe9b910`, reached
+  ip-relative from `0xffe8fad6`, is exactly 12-bit bit reversal, so the field is the 35-bit bit reversal of the tag; established, all 4096 entries
+  read). The tag read is not reversed, bit 35 = valid, 39:36 = parity, 43:40 = state, 51:44 = an 8-bit field (replacement
   state, inferred). Tag read word (`msr[1545]`, helper `0xffe8f890`): bits 53:19 tag, 8:5 parity, 3:0 state, 16:9 the 8-bit field.
 - Data helper `0xffe8f100` (index, way, dword, data, mask): with mask 0 it only does read array 8 (write command 2), set one payload
   register, write array 8. With a mask it first zeroes all sixteen payload registers, writes array 9 with the mask word
   `((mask & 0x7f) << 13) | ((mask >> 7) << 45)` in `msr[0x640 + (i&3)]` and triggers (this happens before `msr[1544]` is written for
-  that call), then does the data write, then zeroes the payload registers and writes array 9 again. The mask is therefore 14 bits.
+  that call, so it uses the previous call's index, and the payload register is block 0 whatever the dword), then does the data write, then zeroes the payload registers and writes array 9 again. The mask is therefore 14 bits.
 
 ### The data check code (established for the code, inferred for the hardware)
 
@@ -457,7 +461,8 @@ failure stops the group.
 
 Sub-tests 4, 6 and 7 compare with `cmp.lt p2,p1=r47,8` (or r42 against `0x80`) and branch back on p1, which is the opposite of the loop
 test in sub-tests 1, 2, 3 and 5. As decoded, their inner r47 or r42 loop runs only its first value; only the outer way or valid loop
-steps. Sub-test 6 therefore only exercises parity bit 0 (inferred from the decode, not run).
+steps. Sub-test 6 therefore only exercises parity bit 0 (inferred from the decode, not run). Sub-test 4 likewise runs r47 = 1 only, for ways 0 to 7.
+Sub-test 7 runs r42 = 2 (pattern 1, valid 0), then the reset sets r42 = 1, which selects no pattern, so valid 1 reuses pattern 1's stale values.
 
 Expected log for the model, from the injected mask (sub-tests 1 and 2):
 
@@ -476,16 +481,16 @@ The tests do not inject a data-bit flip, so what the log says for one is unknown
 
 A second cache array: 4-dword (256-bit) lines, 10 check bits per line for data, a seven-bit ECC over 35 bits (32 tag bits and 3
 state bits) for the tags. Its log is `msr[1558]`, its way mask is `msr[1536]` bits 59:48 (12 bits, two ways per bit, up to 24 ways;
-zero is accepted), and it is configured through the same `msr[1559]` field. It uses helpers `0xffe93c50`, `0xffe938b0`, `0xffe93fc0`,
+zero is accepted), and it is configured through the same `msr[1559]` field. Each group 11 sub-test first sets `msr[1559]` bit 1, clears `msr[1558]` bit 4 and sets bit 30, and restores all three (and `msr[1536]`) afterwards; its prologue `0xfff0575c` also calls `0xffe89f20`. It uses helpers `0xffe93c50`, `0xffe938b0`, `0xffe93fc0`,
 `0xffe93620`, `0xffe93e50`, `0xffe932a0`, `0xffe92ff0`, `0xffe8fbc0` and `0xffe94130`, which were not read beyond their arguments.
 
 The prologue does the same cache clear, clears and sets msr[1552] bit 4 and polls bit 2 with no timeout (`0xfff051c0`), then calls
-sub-test n if test_control bit 23+n is clear, with test_control bit 7+n as its flag. Failure `r9` is `0x8000000000001 << (n-1)`.
+sub-test n if test_control bit 23+n is clear, with test_control bit 7+n as its flag. Failure `r9` is bit 50+n and bit 0 (`0x8000000000001` for n = 1).
 Bit 62 already set returns `r8 = -1` and `0x7f8000000000001` (section 6).
 
 | n | Entry | Skip bit | Kind | Pass condition |
 |---|---|---|---|---|
-| 1 | `0xfff056a0` | 24 | data check injection, mask 1 to `0x200` (10 values) x 4 patterns, then `ld8` | `msr[1558] & 0x1c1f2000 == 0x080a2000`, then msr[1558] cleared |
+| 1 | `0xfff056a0` | 24 | data check injection, mask 1 to `0x200` (10 values) x the 4 dwords of the line (all-zero data), then `ld8` | `msr[1558] & 0x1c1f2000 == 0x080a2000`, then msr[1558] cleared |
 | 2 | `0xfff06590` | 25 | pairs `3<<k`, k 0..8 | `msr[1558] & 0x1c1f2000 == 0x080b2000` |
 | 3 | `0xfff07470` | 26 | data array write and read, 10 patterns, 256-bit code | four dwords and 10 check bits read back |
 | 4 | `0xfff081a0` | 27 (always skipped) | tag ECC single flips | `msr[1558] & 0xf01fff6000 == 0x7008082000` |
@@ -624,3 +629,46 @@ to read back as written; for pmc13 the manual says the register must hold `0x207
 
 **Regrade.** Section 6 stood as objdump-only until this pass. The established grades above are now backed by Ghidra for the items
 under Confirmed. The group 2, group 5, group 11 skip-bit and group 8 counting-check statements were wrong or missing and are fixed.
+
+### Review of the group 10 and 11 decode
+
+Independent review of `ba90ac6` (section 7), by a reader who did not write it. Re-read in Ghidra with the repository's IA-64 processor,
+`--sn2-prom --no-analysis`, on `shub1snprom.bin` 10.54: instruction listings of `0xfff00000-0xfff0b000`, the array helpers
+`0xffe8ee00-0xffe8ff00` and the dispatcher `0xffefc100-0xffefc500`. The compare and branch encodings in item 5 were also decoded by hand from
+the image bytes, independent of Ghidra. The IA-64 objdump was not available. Nothing was run.
+
+**Confirmed (established unless noted).**
+- Command word: bit 63, op 60:58, array 57:53, bit 43 `((cfg&3)*3>>1)&1`, field 41:29 from the halfword table at `0xffe9d910` (64-byte
+  rows, halfword 0 the array, halfword `cfg-7` the field; rows 8, 9, 10 as stated, `cfg` 16 gives `0xe3`, 0, `0xe0`); the four observed words
+  re-derived. Index formula (callers pass address bits 14:7 and 17:15). Payload registers `0x640 + 8*(i>>2) + (i&3)`.
+  Op 2 = read and op 3 = write stay inferred.
+- Array 9 placement `((mask&0x7f)<<13)|((mask>>7)<<45)`; read-back `0xffe8f0cc` and `0xffe8f0d6` give low half in bits 6:0, high half in 13:7.
+- Seven masks (the constants load at `0xfff01956-0xfff019b6`, the ANDs run at `0xfff019c0-0xfff01a5c`). Recomputed: every data bit is in exactly
+  three rows, the 32 columns are distinct, so the code is odd-weight-column SEC-DED (inferred). "Copied to both halves" is right (`0xfff01a66`
+  copies bits 6:0 to 13:7) and holds because all ten patterns have equal halves.
+- Expected-log constants and masks, mask walks (sub-test 1: 1 to `0x2000`; sub-test 2: 3, 6, ..., `0x60`, then second pass 3, 12, 48; group 11
+  sub-test 1: 1 to `0x200`; sub-test 2: `3<<k`, k 0..8), msr numbers (1505 to 1508, 1509 to 1512, 1558), entries, skip bits 16 to 23 and 24 to 31,
+  flag bits 0 to 7 and 8 to 15, and failure constants. Group 11 failure constants were mis-stated and are corrected above.
+- Skip word `0x803058081000` = bits 12, 19, 27, 28, 30, 36, 37, 47: bits 19, 27, 28 and 30 are the always-skipped sub-tests. Bit 12 is group 11
+  sub-test 5's flag (moot, it is skipped). Flags 0 to 7 are clear, so group 10 runs both passes.
+- msr[1552] bit 4 cleared, flush, then set and bit 2 polled: 18 sites (the two group drivers `0xfff005f0`, `0xfff051c0` and the 16 sub-tests), each a
+  three-instruction self-loop with no counter, no timeout and no other exit.
+- Group 11: way mask msr[1536] bits 59:48 (the PAL scans for clear bits, two ways per bit, four ways kept); ten check bits per 256-bit
+  line (ten mask values; sub-test 3 builds ten parities over four dwords and compares `r14 & 0x3ff`); tag ECC is seven parities over
+  `(tag32<<3)|state` = 35 bits with state 3.
+
+**Loop quirk (item 5): confirmed.** Sub-tests 4, 6 and 7 issue `cmp.lt p2,p1=r47,8` (or `r42,0x80`) and branch on `p1`, which is true only when the value
+is 8 or more (0x80 for r42). Raw bytes: A6 op `0xc`, first predicate field 2, second field 1, `r2` = r47, `r3` = the limit; branch B1 `qp` 1 to the
+loop top. No `br.ctop`, `br.cloop`, `br.wtop`, `rrb` or rotating register (`alloc` sor 0) is in these functions; `p16` is a plain predicate there.
+Executed: sub-tests 4 and 6 run r47 = 1 once for each way 0 to 7 (eight passes). Sub-test 7 runs r42 = 2 with valid 0, then r42 = 1, which
+selects no pattern predicate, so valid 1 runs with pattern 1's stale r47, r43 and r44. Under the SAL skip word sub-tests 6 and 7 run, 4 does not.
+
+**Changed.**
+- Tag write word is the 35-bit bit reversal of the tag (table at `0xffe9b910`); the page said only "three lookups".
+- The "array 10 clear" word equals the tag read command; payload-before-command order exists; array 9 mask write uses the previous index; the tag
+  read helper also writes the way at 15:13; failure constants of group 11; group 11 sub-tests 1 and 2 use all-zero data over four dwords, not four
+  patterns; group 11 sub-tests write msr[1559] bit 1 and msr[1558] bits 4 and 30; sub-test 7's second pass.
+
+**Not checked.** Meaning of msr bits and what the masks do in hardware; the group 11 helpers' internals and the 256-bit data-code masks (read as 40
+constants at `0xfff078c6-0xfff07efc`, not tabulated); sub-tests 5 and 8 of group 10 beyond their entries; that `psr.mc` and the masked
+`cmcv` and `tpr` stop every interruption; what `0xffe89f20`, `0xffe96bd0`, `0xffe88970` do.
