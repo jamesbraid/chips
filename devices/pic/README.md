@@ -879,7 +879,7 @@ valid-device mask (`+0xac`). A slot whose id is vendor `0x10a9` device `0x100a` 
 (`0xffb32680`). Then header type (register `0xe`, bit 7 = multifunction); with that bit set, functions 1 to 7 are read the same way. The
 IP35 PROM reads only function 1 (see [facts outside the census](facts-outside-census.md#empty-slot-configuration-reads)); this
 runtime reads 1 to 7. An empty slot may return `0xffffffff` with no machine check, or fail the protected read: either is "absent". What
-the real PIC does for an unclaimed configuration cycle (the error status, master timeout in `+0x100`) is unknown, and the PROM clears
+the real PIC does for an unclaimed configuration cycle is traced in [Config read to an empty slot](#config-read-to-an-empty-slot); the PROM clears
 nothing but `+0x110 = 0x40` after the read.
 
 Recognised devices in the later device set-up: vendor `0x10a9` with device `0x100a` (IOC4) or `0x0003` (IOC3), allowed only in slots
@@ -959,7 +959,7 @@ Traced on snprom 10.54 (SHub 1) in Ghidra with the repository's IA-64 module, be
 
 **The protected read (established).** `0xffb351d0` (alignment and size checked) brackets the read: `0xffb34720` clears bits 11 (`pci_master_tout`), 34 (PCI-X master timeout) and 44 (`pcix_split_emsg`) of the interrupt enable register `+0x108` (`0xffab9ee0` clears, `0xffab9980` reads, `0xffaba1a0` sets) and reports whether any was set. After the read it writes `+0x110 = 0x40` (multiple-error clear; `0xffaba460`), and re-sets those bits if they had been set (`0xffb347c0`). The wrapper `0xffb0f4b0` first registers a recovery entry (`0xffb5d040`): a table of 32 entries in a per-processor state block, code range `0xffb5cf20` to `0xffb5cf80`, resume address `0xffb5cf90`, protected by a lock it spins on for 100000 timer ticks (if the lock is not obtained the entry is not registered and the read runs unprotected; the result is ignored). It also writes the address to a per-CPU word at state `+0x5308` and clears PSR.i around the access if it was set. The leaf returns status 0 and the data on completion; the resume address returns status 1 and data 0.
 
-**What a fault does (established for the handler path, inferred for the hardware).** A machine check takes SAL_B's check entry (`0xffa01020`, branching to `0xffa01080`, which saves state and calls `0xffa02ff0`). `0xffa07230` classifies it; with processor state parameter bits 9 and 18 clear it calls `0xffa05610`, which compares the two saved instruction-pointer slots (min-state `+0x1a0` and `+0x1b8`) with each registered range. On a match it replaces them by the entry's resume address (clearing PSR.ri, setting the data-translation bit from the entry) and the handler reports the check as recovered, so the PROM resumes at `0xffb5cf90`. No match, or either bit set, takes the other paths of `0xffa07230` (not traced; treated as fatal). Therefore the PROM survives an unclaimed configuration read in exactly two ways: the read completes with the vendor half `0xffff` (a master-abort that returns all-ones), or it ends as a machine check delivered through PALE_CHECK. Any other exception type, or a model that halts on an access error, ends the boot at `0xffb5cf50`. The PROM does not read `+0x100` or `+0x170` after the read, and it prints nothing for an absent slot.
+**What a fault does (established for the handler path, inferred for the hardware).** A machine check takes SAL_B's check entry (`0xffa01020`, branching to `0xffa01080`, which saves state and calls `0xffa02ff0`). `0xffa07230` classifies it; with processor state parameter bits 9 (`us`) and 18 (`cm`) clear it calls `0xffa05610`, which compares the two saved instruction-pointer slots (min-state `+0x1a0` and `+0x1b8`) with each registered range. On a match it replaces them by the entry's resume address (clearing PSR.ri, setting the data-translation bit from the entry) and the handler reports the check as recovered, so the PROM resumes at `0xffb5cf90`. No match, or either bit set, takes the other paths of `0xffa07230` (not traced; treated as fatal). Therefore the PROM survives an unclaimed configuration read in exactly two ways: the read completes with the vendor half `0xffff` (a master-abort that returns all-ones), or it ends as a machine check delivered through PALE_CHECK. Any other exception type, or a model that halts on an access error, ends the boot at `0xffb5cf50`. The PROM does not read `+0x100` or `+0x170` after the read, and it prints nothing for an absent slot.
 
 **Why the first read is slot 0 of bus 0 (established).** Slot 0 is the first slot of the range, and bus 0 is attached first. Which device sits there on a real machine is on [the base I/O page](../../platforms/sn2/altix-350-base-io.md#devices-on-the-pics-buses).
 
@@ -990,6 +990,48 @@ Independent re-read on 2026-11-16 on `shub1snprom.bin` 10.54 (flat at `0xffa0000
 **An empty bus is accepted (established for the attach).** No pass counts devices; `pic_attach2` fails only on an allocation failure or an unknown ioboard, `0xffb341b0` and `0xffb2be00` work with zero devices (empty list; inferred for the rest of the boot).
 
 **Not checked.** Which node record makes bus 1 come from a partner bridge (`0xffb6d2c0`); the PCI-X capability walk (`0xffb3de40`) and `0xffb3e6a0` that run for a present device; the check types other than 0 and the rendezvous in `0xffa05610`; hardware behaviour of an unclaimed cycle (a master abort returning all-ones, or a machine check, remains a model choice); the conditional override of command bits 1:0 in the read accessor `0xffb6b380`.
+
+## Config read to an empty slot
+
+What the hardware does when a protected configuration read finds no device, from SGI's public SN2 Linux sources and the PROM's own handler. Nothing here comes from a PIC or SHub manual, so no row is `established` for hardware; the software rows are labelled as such.
+
+| Question | Answer | Grade |
+|---|---|---|
+| Does the PIC return all ones? | Not stated anywhere. The PROM and SGI's Linux both treat the read as able to fail, and neither depends on the data. | unknown |
+| Does the processor see an error? | Yes, a bus error. SGI's SN2 error interrupt handler (`pcibr_error_intr_handler`, `arch/ia64/sn/io/sn2/pcibr/pcibr_error.c`, linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5) says a PIO read that fails "also triggers a bus error" and that for a write the bridge interrupt is the only indication. SGI's probe wrapper `ia64_sn_probe_mem` / `ia64_sn_probe_io_slot` (`sn_sal.h`, `arch/ia64/sn/kernel/probe.c`) returns 1 for "probe failed (generated MCA)". On IA-64 that is a machine check, delivered through PALE_CHECK. | software expectation (inferred for the hardware) |
+| Which PIC status bit latches? | Bit 11 `pci_master_tout` in PCI mode, bit 34 PCI-X master timeout in PCI-X mode. SGI's `pcibr_probe_slot_pic` clears both in `+0x108` around the SAL probe, then reads the error view (`+0x170`) for the same two bits and calls the slot empty if either is set. Bit 44 (`pcix_split_emsg`) is masked with them by the later (2004) form of the probe, `pcibr_disable_mst_timeout`, which is the PROM's mask `0x100400000800`. Bit names: SGI's 2004 `pic.h` and `pcibr.h` definitions (LKML message-id `200408112336.i7BNaPxI163752@fsgi900.americas.sgi.com`, "Altix I/O code reorganization 21 of 21"; the masking patch is `200405271531.i4RFVIX3333251@fsgi900.americas.sgi.com`). | software expectation |
+| What does `+0x110 = 0x40` do? | It is `BRIDGE_IRR_MULTI_CLR`, bit 6 (`include/asm-ia64/sn/pci/bridge.h`, same tree). SGI writes it to drop the multiple-error state that the error view shows after a probe; the status groups are cleared by separate bits (`BRIDGE_IRR_PCI_GRP_CLR`, `PIC_PCIX_GRP_CLR`), which the PROM does not write. | software expectation |
+| PCI error address | The failing PCI address is in the PCI error registers (`+0xd0`, `+0xd8` in this repository's table; SGI's `pcibr_pioerr_check` reads them for a master timeout). The PROM does not read them. | software expectation |
+| Where does the error interrupt go? | To the SHub through the error interrupt SGI allocates later (late error set-up, above). The PROM clears bits 11, 34 and 44 first so a probe does not raise it, which is also why SGI added the masking: without it a probe produced a fatal bridge error report. | inferred |
+| Does the status latch while the enable bit is clear? | Not shown. SGI's code reads the view with the enable bit already cleared and expects the bit set, so the view latches regardless of the enable. Whether `+0x100` does too, and whether the PROM's `0x40` leaves bit 11 set there for the later error enable to find, is not settled. | unknown |
+
+### What the PROM needs from the model
+
+The PROM registers a recovery range because the read can machine-check; with a plain all-ones return it would not need one. The check path (`0xffa01020` to `0xffa02ff0` to `0xffa07230`, read in Ghidra again for this section) recovers only when all of these hold:
+
+- the check is type 0 (a machine check, not an INIT);
+- the processor state parameter (r18 at the SAL check entry, saved at record `+0x578`) has bit 9 (`us`, uncontained storage damage) clear and bit 18 (`cm`, corrected) clear. Bits named from `pal_processor_state_info_t` in Linux `arch/ia64/include/asm/pal.h`; the [earlier text](#pci-scan-and-the-protected-read-stop-at-0xffb5cf50) gave the numbers without names;
+- either saved instruction pointer (`+0x1a0`, `+0x1b8`) lies in a registered range. `0xffa05610` then replaces it with the resume address and clears the restart-instruction bits of the saved status.
+
+Another condition, PSR.ic clear at the fault with the bus-error assertion flag (`0x1_2001_0100` bit 3) set, rewrites the parameter to "uncontained" and ends in the unrecovered path. A hardware bus check on a normal read is not that. Nothing else in the check path reads the PIC; the PSP.mi bit (12) only makes SAL call `PAL_MC_ERROR_INFO` (`0xffa1d870(0x19)`) to fill its record, and a failure there does not stop recovery. A machine check has no ISR; PAL builds the parameter and min-state itself, so a model that raises the check must run the PAL_B code or hand SAL an equivalent state. What the Madison PAL puts in the parameter for a bus check from a hard-error response is unknown here.
+
+### Model recommendation
+
+Make the load take a synchronous machine check, with these effects:
+
+1. PIC `+0x100` bit 11 (PCI mode) or bit 34 (PCI-X mode) set; `+0x170` shows the same bit; the PCI error address registers hold the configuration address. If the matching enable bit is set, the error interrupt fires, which the PROM avoids by masking.
+2. A bus-check machine check, contained (`us` = 0, not corrected), reaching PALE_CHECK with the faulting IIP.
+3. Writing `+0x110` bit 6 clears the view and multiple-error registers; leave the status bits alone unless the group-clear bits are written.
+4. Leave the SHub II and processor-interface error registers unmodelled until a source names the SHub 1 ones: the 2.4 SN2 tree's `hubii_check_widget_disabled` reads SN1-style widget registers and was not shown to apply.
+
+"All ones plus the PIC bits, no machine check" also boots this PROM (vendor `0xffff` is absent), but it takes a different path: the slot is marked in the valid-device mask (`+0xac`), which a faulted read never does. It also contradicts SGI's statement that a read gets a bus error. Treat it as an approximation, not the hardware behaviour.
+
+### Not settled
+
+- That a PIC returns an error response on the read rather than all ones with a latch: only SGI's comments and wrapper names say so.
+- Whether `+0x100` latches with the enable clear, and whether anything clears bit 11 after the PROM's probes before the late error enable ORs bit 11 back in.
+- The SHub 1 registers that record the failed read (II widget error, PI error detail) and the Madison PAL's parameter for it.
+- A capture of one empty-slot read on an Altix 350 would settle all three; it needs the physical-test proposal the repository rules require.
 
 ## Open
 
