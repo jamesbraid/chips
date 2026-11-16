@@ -376,7 +376,15 @@
 #define SHUB_MD_REG_0003_0000                        0x100030000 /* established */
 
 /*
- * MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. Role unknown. See memory-init.md.
+ * Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. Bit meaning is inferred from the name only.
+ */
+/* md_dqlp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table) */
+#define SHUB_MD_DQLP_DIR_PRESVEC                     0x100030100 /* established */
+#define SHUB_MD_DQLP_DIR_PRESVEC_COUNT               4
+#define SHUB_MD_DQLP_DIR_PRESVEC_STRIDE              16
+
+/*
+ * MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. The PROM table names them SH_MD_DQLP_MMR_DIR_LOCVEC0 to 7 (right port: DQRP). The node memory set-up (site 0xffa78f60, slot 97 of the class-0 methods) writes all eight again with the node mask, one bit per group of present nodes (1 for NASID 0 alone). See memory-init.md.
  */
 /* md_reg_0003_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name */
 #define SHUB_MD_REG_0003_0200                        0x100030200 /* established */
@@ -388,6 +396,14 @@
  */
 /* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300 /* established */
+
+/*
+ * Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back; meaning inferred from the name only.
+ */
+/* md_dqlp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
+#define SHUB_MD_DQLP_DIR_PRIVEC                      0x100030310 /* established */
+#define SHUB_MD_DQLP_DIR_PRIVEC_COUNT                7
+#define SHUB_MD_DQLP_DIR_PRIVEC_STRIDE               16
 
 /*
  * Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, between the control register md_ctl_60 and md_const_58. It is 0x100 above SH1_MD_DQLP_MMR_DIR_PRIVEC0 (md_dqlp_dir_privilege_vector); that it is the next privilege vector is not shown. Never read. A write-accepting register satisfies the PROM; the role is unknown.
@@ -443,6 +459,14 @@
 #define SHUB_MD_REG_0005_0000                        0x100050000 /* established */
 
 /*
+ * Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back.
+ */
+/* md_dqrp_dir_presvec: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table) */
+#define SHUB_MD_DQRP_DIR_PRESVEC                     0x100050100 /* established */
+#define SHUB_MD_DQRP_DIR_PRESVEC_COUNT               4
+#define SHUB_MD_DQRP_DIR_PRESVEC_STRIDE              16
+
+/*
  * As md_reg_0003_0200 for the right queue port block. The name is ours.
  */
 /* md_reg_0005_0200: w64, reset unknown; SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name */
@@ -455,6 +479,14 @@
  */
 /* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300 /* established */
+
+/*
+ * Privilege vectors 1 to 7 of the right directory queue port: the same constants as md_dqlp_dir_privec, written right after each left word.
+ */
+/* md_dqrp_dir_privec: w64, reset unknown; SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table */
+#define SHUB_MD_DQRP_DIR_PRIVEC                      0x100050310 /* established */
+#define SHUB_MD_DQRP_DIR_PRIVEC_COUNT                7
+#define SHUB_MD_DQRP_DIR_PRIVEC_STRIDE               16
 
 /*
  * Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writes 0x1000 to it straight after md_reg_0003_0400. The name is ours; the role is unknown.
@@ -828,6 +860,14 @@
 #define SHUB_SHUB_ID_REVISION_SHIFT                  28 /* established */
 #define SHUB_SHUB_ID_REVISION_MASK                   0xfull
 #define SHUB_SHUB_ID_REVISION_INPLACE                (SHUB_SHUB_ID_REVISION_MASK << SHUB_SHUB_ID_REVISION_SHIFT)
+
+/*
+ * Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back.
+ */
+/* shubs_present: w64, reset unknown; SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table) */
+#define SHUB_SHUBS_PRESENT                           0x110060600 /* established */
+#define SHUB_SHUBS_PRESENT_COUNT                     4
+#define SHUB_SHUBS_PRESENT_STRIDE                    128
 
 /*
  * Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel writes the two registers of that node's global window back to back with interrupts and interruption collection off, the first with a type bit, the page-size exponent, the region id and a start bit, the second with the virtual address and a start bit; both stores are in one atomic assembly sequence. It does this once per page of the range, after taking a global lock, for every node that has the mm's processors, except the local node which uses the processor's own global purge instruction instead. Entry 0 is the control word and entry 1 the address word. After a batch of nodes it waits on the PIO write status.

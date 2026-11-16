@@ -1033,6 +1033,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "md_dqlp_dir_presvec",
+   "offset": 4295164160,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "md_reg_0003_0200",
    "offset": 4295164416,
    "access": "w",
@@ -1057,6 +1071,20 @@
    "reset": "unknown",
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_dqlp_dir_privec",
+   "offset": 4295164688,
+   "access": "w",
+   "width": 64,
+   "count": 7,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table"
   },
   {
    "unit": "shub",
@@ -1168,6 +1196,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "md_dqrp_dir_presvec",
+   "offset": 4295295232,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "md_reg_0005_0200",
    "offset": 4295295488,
    "access": "w",
@@ -1192,6 +1234,20 @@
    "reset": "unknown",
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "md_dqrp_dir_privec",
+   "offset": 4295295760,
+   "access": "w",
+   "width": 64,
+   "count": 7,
+   "stride": 16,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table"
   },
   {
    "unit": "shub",
@@ -2131,6 +2187,20 @@
    "lo": 28,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "shubs_present",
+   "offset": 4563797504,
+   "access": "w",
+   "width": 64,
+   "count": 4,
+   "stride": 128,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table)"
   },
   {
    "unit": "shub",

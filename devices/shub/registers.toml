@@ -1008,7 +1008,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name"
-doc = "MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. Role unknown. See memory-init.md."
+doc = "MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. The PROM table names them SH_MD_DQLP_MMR_DIR_LOCVEC0 to 7 (right port: DQRP). The node memory set-up (site 0xffa78f60, slot 97 of the class-0 methods) writes all eight again with the node mask, one bit per group of present nodes (1 for NASID 0 alone). See memory-init.md."
 
 [registers.md_reg_0005_0200]
 offset = 0x100050200
@@ -1707,3 +1707,61 @@ reset_grade = "inferred"
 reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_IOI_ACCESS_INIT macro, 0xffffffffffffffff; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bec (write)"
 doc = "I/O interface (II) interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back."
+
+# Presence and privilege vectors written by the node memory set-up (SAL 5.04 slot 97, via 0xffa73590). Names are the PROM's own
+# register-name table (SAL 5.04 image, table at 0xffbfabb0), without the SH_ prefix; the 2.4 SGI header names the same offsets.
+
+[registers.md_dqlp_dir_presvec]
+offset = 0x100030100
+count = 4
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table)"
+doc = "Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. Bit meaning is inferred from the name only."
+
+[registers.md_dqrp_dir_presvec]
+offset = 0x100050100
+count = 4
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table)"
+doc = "Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back."
+
+[registers.shubs_present]
+offset = 0x110060600
+count = 4
+stride = 0x80
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table)"
+doc = "Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back."
+
+[registers.md_dqlp_dir_privec]
+offset = 0x100030310
+count = 7
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table"
+doc = "Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back; meaning inferred from the name only."
+
+[registers.md_dqrp_dir_privec]
+offset = 0x100050310
+count = 7
+stride = 0x10
+access = "w"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table"
+doc = "Privilege vectors 1 to 7 of the right directory queue port: the same constants as md_dqlp_dir_privec, written right after each left word."

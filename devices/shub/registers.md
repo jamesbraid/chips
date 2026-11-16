@@ -33,8 +33,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_mbist_cmd` | 0x100020080 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fb7c (written first when the engine starts); no Linux v5.3 name |
 | `md_mbist_ctl` | 0x100020088 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6fc3c (start), 0xffa6fd3c and 0xffa6fddc (poll), 0xffa6b1dc (failure test); no Linux v5.3 name |
 | `md_reg_0003_0000` | 0x100030000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name |
+| `md_dqlp_dir_presvec` | 0x100030100 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table) |
 | `md_reg_0003_0200` | 0x100030200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name |
 | `md_dqlp_dir_privilege_vector` | 0x100030300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_dqlp_dir_privec` | 0x100030310 | w | 64 | 7 |  | unknown | established | SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table |
 | `md_reg_0003_0400` | 0x100030400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_lp` | 0x100031000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name |
 | `md_bist_data_a0` | 0x100038000 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
@@ -42,8 +44,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_bist_data_a1` | 0x100038800 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
 | `md_bist_data_b1` | 0x100038810 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa703d0 (the pattern programming routine); no Linux v5.3 name |
 | `md_reg_0005_0000` | 0x100050000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7861c (write); no Linux v5.3 name |
+| `md_dqrp_dir_presvec` | 0x100050100 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table) |
 | `md_reg_0005_0200` | 0x100050200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name |
 | `md_dqrp_dir_privilege_vector` | 0x100050300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_dqrp_dir_privec` | 0x100050310 | w | 64 | 7 |  | unknown | established | SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table |
 | `md_reg_0005_0400` | 0x100050400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_rp` | 0x100051000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name |
 | `ii_int` | 0x110000000 | w | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -77,6 +81,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ipi_access` | 0x110060480 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `md_clk_sel` | 0x110060500 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name |
 | `shub_id` | 0x110060580 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `shubs_present` | 0x110060600 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table) |
 | `ptc` | 0x1101a0000 | w | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ptc_parms` | 0x1101a0100 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS |
 | `int_cmpa` | 0x1101b0000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks) |
@@ -354,15 +359,27 @@ Memory test and DRAM initialisation engine control; the name is ours. The PROM s
 
 MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
 
+### Register `md_dqlp_dir_presvec`
+
+Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. Bit meaning is inferred from the name only.
+
+Array of 4 registers, stride 16.
+
 ### Register `md_reg_0003_0200`
 
-MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. Role unknown. See memory-init.md.
+MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global window. Never read. The PROM table names them SH_MD_DQLP_MMR_DIR_LOCVEC0 to 7 (right port: DQRP). The node memory set-up (site 0xffa78f60, slot 97 of the class-0 methods) writes all eight again with the node mask, one bit per group of present nodes (1 for NASID 0 alone). See memory-init.md.
 
 Array of 8 registers, stride 16.
 
 ### Register `md_dqlp_dir_privilege_vector`
 
 Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
+
+### Register `md_dqlp_dir_privec`
+
+Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back; meaning inferred from the name only.
+
+Array of 7 registers, stride 16.
 
 ### Register `md_reg_0003_0400`
 
@@ -404,6 +421,12 @@ Array of 4 registers, stride 65536.
 
 As md_reg_0003_0000 for the right queue port block; the PROM only writes it, with the value it read from md_reg_0003_0000 with bit 3 set. The name is ours.
 
+### Register `md_dqrp_dir_presvec`
+
+Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back.
+
+Array of 4 registers, stride 16.
+
 ### Register `md_reg_0005_0200`
 
 As md_reg_0003_0200 for the right queue port block. The name is ours.
@@ -413,6 +436,12 @@ Array of 8 registers, stride 16.
 ### Register `md_dqrp_dir_privilege_vector`
 
 Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names.
+
+### Register `md_dqrp_dir_privec`
+
+Privilege vectors 1 to 7 of the right directory queue port: the same constants as md_dqlp_dir_privec, written right after each left word.
+
+Array of 7 registers, stride 16.
 
 ### Register `md_reg_0005_0400`
 
@@ -662,6 +691,12 @@ SHub identification (local block, inferred). The kernel reads only the revision,
 | 45:44 | `size_code` | inferred |  | SAL 5.04 PROM site 0xffa95a30 | Written with 0, 1, 2 or 3 by thresholds 31, 63 and 127 on an argument (bits 10:9 masked, then halved). The meaning is inferred only; the PROM reads it in memory-presence code. Name is ours. |
 | 42:32 | `nasid` | inferred |  | SAL 5.04 PROM site 0xffa0dcf0 (read) and 0xffa95a30 (write) | Node id. Every read in the PROM forms global-window addresses from it, so the node's own global window at this id must decode to the node. The PROM replaces it once, later in boot; it must read back as written. Name is ours. Linux does not define this field (it takes the node id from firmware): the position and the PROM's replacement are what the code does, the meaning is inferred. |
 | 31:28 | `revision` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Chip revision. The kernel treats 2 or lower as SHub 1.1. |
+
+### Register `shubs_present`
+
+Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back.
+
+Array of 4 registers, stride 128.
 
 ### Register `ptc`
 

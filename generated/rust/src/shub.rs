@@ -932,6 +932,13 @@ pub mod md_reg_0003_0000 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100030000;
 }
+/// Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in bl (established)
+pub mod md_dqlp_dir_presvec {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100030100;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 16;
+}
 /// MD block registers, unnamed; the name is ours. Eight words at stride 0x10 that the memory set-up fills with all ones, once each, through the global wi (established)
 pub mod md_reg_0003_0200 {
     pub const WIDTH: u32 = 64;
@@ -943,6 +950,13 @@ pub mod md_reg_0003_0200 {
 pub mod md_dqlp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100030300;
+}
+/// Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the  (established)
+pub mod md_dqlp_dir_privec {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100030310;
+    pub const COUNT: u32 = 7;
+    pub const STRIDE: u64 = 16;
 }
 /// Memory and directory block register, unnamed; the name is ours. The memory controller set-up writes 0x1000 (bit 12) to it through the global window, b (established)
 pub mod md_reg_0003_0400 {
@@ -997,6 +1011,13 @@ pub mod md_reg_0005_0000 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050000;
 }
+/// Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back. (established)
+pub mod md_dqrp_dir_presvec {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100050100;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 16;
+}
 /// As md_reg_0003_0200 for the right queue port block. The name is ours. (established)
 pub mod md_reg_0005_0200 {
     pub const WIDTH: u32 = 64;
@@ -1008,6 +1029,13 @@ pub mod md_reg_0005_0200 {
 pub mod md_dqrp_dir_privilege_vector {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050300;
+}
+/// Privilege vectors 1 to 7 of the right directory queue port: the same constants as md_dqlp_dir_privec, written right after each left word. (established)
+pub mod md_dqrp_dir_privec {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x100050310;
+    pub const COUNT: u32 = 7;
+    pub const STRIDE: u64 = 16;
 }
 /// Same as md_reg_0003_0400 for the right queue port block, 0x100 above SH1_MD_DQRP_MMR_DIR_PRIVEC0 (md_dqrp_dir_privilege_vector). The same routine writ (established)
 pub mod md_reg_0005_0400 {
@@ -1719,6 +1747,13 @@ pub mod shub_id {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read bac (established)
+pub mod shubs_present {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060600;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 128;
 }
 /// Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel wri (established)
 pub mod ptc {
