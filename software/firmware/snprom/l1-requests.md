@@ -300,13 +300,27 @@ Same routine as request 2; site `0xffa7e09c` through `main` at `0xffa1a3ec`. Mas
     the console moves to the remote-console index. The `d` direct console (`0xffaeaff0`) is used only if both fail; its probe
     writes `0x55` then `0xaa` to the UART scratch register `0x8000000ffed40038 | nasid << 38` and needs each read back.
     **No numbered request is sent for the console.** Characters leave as class-2 frames (`0xffae96f0` -> `0xffa86ed0`, header
-    byte `0x40 | slice` for `p`, index 4 for `r`: `0x44`), up to 127 payload bytes per frame, and arrive the same way. The PROM's own
+    byte `0x40 | slice` for `p`, index 4 for `r`: `0x44`), up to 127 payload bytes per frame. Typed characters arrive in a different class (class 0, index 4 for `r`: header `0x04`; see "Console input" below). The PROM's own
     console init for `p` (`0xffae87f0`) only re-reads the cached type, slot and slab. Grade: established for the probes and
     framing; which console index a given phase prints on: inferred.
 
 After `Running` the PROM loads the EFI image (`0xffaf8c50`, "Loading EFI", progress `0x27`); no further L1 request is sent before
 the EFI hand-off in the code read (established for the direct calls; indirect calls through the node operations tables were not
 all resolved).
+
+## Console input
+
+What the L1 sends to the node when a character is typed, and how the PROM takes it. Grades as above.
+
+- **Frame (established, both ends).** `0x7e`, header byte, the raw character(s), FCS-16 low byte first (the same CRC and escaping as the request frames; residue `0xf0b8`), `0x7e`. The header is the console index with the class bits clear: `0x04` for `r`, the boot processor's slice (0 to 3) for `p`. There is no sub-header, type byte or count. The class-2 header `0x40 | n` is the node-to-L1 direction only.
+- **Why (established, `0xffa88590` to `0xffa88606`).** The receiver `0xffa87830`, state 1, takes index below 5 only with `(header & 0xe0) == 0`, and index 5 to 19 only with class `0x20` or `0x40`. A header of `0x44` or `0x40` to `0x43` is rejected with -23. The same receiver handles replies and console input; no other routine parses console input. The SAL runtime's `l1sc_receive` (rt `0x53b80`) has the same tests.
+- **Where the characters go (established).** The payload bytes are appended unchanged to the 128-byte ring of that index, at `ctx + index * 0x98 + 0x21c` (tentative write index `+0x2a4`, committed write `+0x29c`, read `+0x2a0`). On a good CRC the frame is committed and the ready byte `+0x211` is incremented. An empty payload is accepted. The readers are `p`: poll `0xffae9250`, readc `0xffae93c0`, getc `0xffae9640` (poll in a loop, then readc), reached through `0xffae8b70`, `0xffae8be0` and `0xffae8c50`; `r`: the same routines with index 4 hard-coded, through `0xffae9b60`, `0xffae9c40` and `0xffae9d20`.
+- **A frame is only taken while a console poll is outstanding (established for the gate, inferred for the effect).** Poll raises `+0x210` of the index before it calls the receiver; the receiver drops the frame for an index whose `+0x210` is zero. Bytes the L1 sends meanwhile wait in the UART until the next poll.
+- **Flow control (established: none at the link).** The node sends no acknowledgement or credit. A full ring sets the index's bit in `ctx+0x40`, calls the chip hook at `+0x248` of the chip table (inferred to be the receive-interrupt mask) and returns -21; `readc` undoes it when it takes a character.
+- **The L1 sender (established for ARM 1.62.1, sysco `sn2-prom-link-1.62.1.md`).** One character per frame, header = the subchannel the L1 last learned from the node's class-2 frame, so a model answers with `output header & 0x1f`.
+- **Worked bytes for "a" (checked with a CRC script, residue `0xf0b8`).** To `r`: `7e 04 61 a8 1a 7e`. To `p` with slice 0: `7e 00 61 c8 7d 5d 7e` (the CRC high byte is `0x7d`, escaped). Return key to `r`: `7e 04 0d 0a 8f ba 7e` in CR LF form.
+- **EFI (established for the runtime copy, not for SAL_B's own console rows).** EFI reads through SAL console calls `0x26`, `0x29` and `0x2b`; the runtime's `sc_rt_cons_poll`, `sc_rt_cons_readc` and `sc_rt_cons_getc` call the shared routines with index 4, so EFI input is the same frame with header `0x04`.
+- **Unknown.** Whether the POD prompt runs on `p` or `r` (answering with the last output header covers both); the chip hook's exact effect.
 
 ## Order and replies at a glance
 
@@ -461,7 +475,7 @@ real first boot whose wait times out (established for the code). What the write 
 **Findings not fixed (author to settle before these claims stand).**
 
 1. The die-routine conflict above, for the sysco author: decide whether `0xffa9fba0` really reaches `0xffaeb7c0` for the boot processor (the parameters at `0xffa9fe00` to `0xffa9fe60` read that way) and correct `12e3608` or this page. Settled: it does, and sysco corrected `12e3608` (see the resolution above). Until then the `0x100b` grade stays at "established: no reply from the L1; unknown: PROM behaviour afterwards".
-2. Incoming console frames: the receiver's header test accepts class 0x20 or 0x40 only for n from 5 to 19 and class 0 for n from 0 to 4 (`0xffa87830`, case 1). The page says console input arrives with header `0x40 | index` including index 4 (`0x44`) for the remote console; by the receiver's rule `0x44` and `0x40` to `0x43` would be rejected. Either the console input is parsed by another routine or the index is not what the page says. Not resolved.
+2. Incoming console frames: settled, see "Console input" below. The receiver's rule is right and the earlier `0x40 | index` reading was wrong; console input is class 0.
 3. Console index for `p`: `0xffae96f0` sends with header `param_2 | 0x40`, where `param_2` is the console index (index 4 selects the remote-console buffer); that the index for `p` is the slice is inferred, not read.
 4. `0xffa1a980` (called before the hub board read in `main_two`) and the callees of most `main_two` calls were not traced for further L1 requests; the census shows no other request builder site on the path, so only an indirect call through the node operations tables could add one.
 5. The type `o` board reads, and which arguments the `0xffa846c0` route sends, were not traced.
