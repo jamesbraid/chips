@@ -40,7 +40,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-doc = "Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown."
+doc = "Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the permission registers here too (see prom-reset.md); the header gives INIT 0xffffffffffffffff and a 64-bit ACCESS_BITS field."
 
 [registers.event_occurred]
 offset = 0x110010000
@@ -1652,3 +1652,58 @@ doc = "Local block conveyor belt time-out. The node set-up method (site 0xffa95c
 
 [registers.conveyor_belt_time_out.fields]
 value = { bits = [11, 0], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header, SH_CONVEYOR_BELT_TIME_OUT_VALUE; SAL 5.04 PROM site 0xffa96156 (deposit of 1000)", doc = "Conveyor belt time-out value." }
+
+[registers.cpu_perm]
+offset = 0x110060000
+access = "rw"
+width = 64
+grade = "established"
+reset = 0xffffffffffffffff
+reset_grade = "inferred"
+reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_CPU_PERM_INIT macro, 0xffffffffffffffff; no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bbc (write)"
+doc = "CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back."
+
+[registers.ext_io_perm]
+offset = 0x110060100
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_EXT_IO_PERM_INIT macro, 0; no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac (write)"
+doc = "External I/O MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes 0; no read-back."
+
+[registers.ext_ioi_access]
+offset = 0x110060180
+access = "rw"
+width = 64
+grade = "established"
+reset = 0xffffffffffffffff
+reset_grade = "inferred"
+reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_EXT_IOI_ACCESS_INIT macro, 0xffffffffffffffff; no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 532 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c1c (write)"
+doc = "External I/O interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back."
+
+[registers.io_perm]
+offset = 0x110060380
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_IO_PERM_INIT macro, 0; no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 536 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c4c (write)"
+doc = "I/O interface (II) MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back."
+
+[registers.ioi_access]
+offset = 0x110060400
+access = "rw"
+width = 64
+grade = "established"
+reset = 0xffffffffffffffff
+reset_grade = "inferred"
+reset_from = "SGI Linux 2.4 ia64 SN2 header: the SH_IOI_ACCESS_INIT macro, 0xffffffffffffffff; no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bec (write)"
+doc = "I/O interface (II) interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back."

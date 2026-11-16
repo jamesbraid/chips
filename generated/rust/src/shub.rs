@@ -1595,6 +1595,21 @@ pub mod conveyor_belt_time_out {
         }
     }
 }
+/// CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks a (established)
+pub mod cpu_perm {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060000;
+}
+/// External I/O MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit (established)
+pub mod ext_io_perm {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060100;
+}
+/// External I/O interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a clear (established)
+pub mod ext_ioi_access {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060180;
+}
 /// Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, b (established)
 pub mod rtc_ctl {
     pub const WIDTH: u32 = 64;
@@ -1629,6 +1644,16 @@ pub mod rtc_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// I/O interface (II) MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a clear (established)
+pub mod io_perm {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060380;
+}
+/// I/O interface (II) interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a (established)
+pub mod ioi_access {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110060400;
 }
 /// Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross- (established)
 pub mod ipi_access {

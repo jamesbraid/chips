@@ -8,7 +8,7 @@ remove = ["registers.ii_int", "registers.ii_int_config", "registers.ii_int_enabl
   "registers.crb_message_control", "registers.crb_nack_limit", "registers.crb_timeout_prescale", "registers.crb_timeout_skid", "registers.pi_reg_2006_0100", "registers.pi_reg_2006_0180", "registers.pi_reg_2006_0200", "registers.md_clk_sel", "registers.md_mbist_cmd", "registers.md_mbist_ctl", "registers.md_mbist_status", "registers.md_mbist_mask", "registers.md_mbist_err", "registers.md_dir_access_lp", "registers.md_dir_access_rp",
   "registers.md_bank_cfg0", "registers.md_bank_cfg1", "registers.md_bank_cfg2", "registers.md_timing_0", "registers.md_timing_1", "registers.md_refresh_0", "registers.md_timing_2", "registers.md_timing_3", "registers.md_refresh_1", "registers.md_const_58", "registers.md_ctl_60", "registers.md_const_78", "registers.md_reg_0003_0400", "registers.md_reg_0005_0400", "registers.md_reg_0001_0068",
   "registers.md_reg_0003_0000", "registers.md_reg_0005_0000", "registers.md_reg_0003_0200", "registers.md_reg_0005_0200", "registers.md_bist_data_a0", "registers.md_bist_data_b0", "registers.md_bist_data_a1", "registers.md_bist_data_b1",
-  "registers.lb_liq_ctl", "registers.lb_max_rep_credit_cnt", "registers.lb_max_req_credit_cnt", "registers.conveyor_belt_time_out"]
+  "registers.cpu_perm", "registers.ext_io_perm", "registers.ext_ioi_access", "registers.io_perm", "registers.ioi_access", "registers.lb_liq_ctl", "registers.lb_max_rep_credit_cnt", "registers.lb_max_req_credit_cnt", "registers.conveyor_belt_time_out"]
 
 [override]
 unit = "shub2"

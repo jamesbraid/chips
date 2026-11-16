@@ -514,7 +514,7 @@ After the call to `0xffa95c20` returns, the caller continues. The new accesses, 
 | e | RAM, not SHub | | R, W | reads a pointer from `0x1000000 + (((lid slice) + 9) << 3)`, then at pointer+24, and copies six doublewords there. Plain memory at the physical address `0x1000000` and the pointers it holds |
 | f | | calls `0xffa97960` | | the next step below |
 
-**The next step is `0xffa97960`** (global window, NASID in `r32`; the same slice gate; returns at once if the gate fails). It reads `SH_SHUB_ID` (`0x1_1006_0580`, bits 52:49, a shift count), then loops reading 16-bit entries through `0xffa1c2e0` (a table in RAM; entry -1 means skip; the table pointer comes from `[0x1000038] + 16`) to build a bit mask, then stores it to `SH_CPU_PERM` (`0x1_1006_0000`), `SH_IOI_ACCESS` (`0x1_1006_0400`), `SH_EXT_IOI_ACCESS` (`0x1_1006_0180`), `SH_IO_PERM` (`0x1_1006_0380`) and `SH_IPI_ACCESS` (`0x1_1006_0480`), then writes 0 to `SH_EXT_IO_PERM` (`0x1_1006_0100`) (`0xffa97bbc` to `0xffa97cac`). It was read as far as the stores; the mask rule (which entries set which bit) and the registers' INIT and fields were not decoded. That is the next block of this phase.
+**The next step is `0xffa97960`** (global window, NASID in `r32`; the same slice gate; returns at once if the gate fails). It reads `SH_SHUB_ID` (`0x1_1006_0580`, bits 52:49, a shift count), then loops reading 16-bit entries through `0xffa1c2e0` (a table in RAM; entry -1 means skip; the table pointer comes from `[0x1000038] + 16`) to build a bit mask, then stores it to `SH_CPU_PERM` (`0x1_1006_0000`), `SH_IOI_ACCESS` (`0x1_1006_0400`), `SH_EXT_IOI_ACCESS` (`0x1_1006_0180`), `SH_IO_PERM` (`0x1_1006_0380`) and `SH_IPI_ACCESS` (`0x1_1006_0480`), then writes 0 to `SH_EXT_IO_PERM` (`0x1_1006_0100`) (`0xffa97bbc` to `0xffa97cac`). The next section decodes it.
 
 ### Values a model must return
 
@@ -530,3 +530,55 @@ After the call to `0xffa95c20` returns, the caller continues. The new accesses, 
 ### Review
 
 Not independently reviewed. Read in objdump of the 10.54 image (every decode above is from the instruction text; no emulation). Not done: the Ghidra pass, the caller of slot 36, the contents of the RAM table and the mask rule in `0xffa97960`. The row 2 write sets bits the 2.4 header does not list; that could mean SHub 1 silicon differs from the header, or that the register layout differs for revisions the header does not cover; unknown.
+
+## The node permission set-up: `0xffa97960`
+
+Read in Ghidra (IA-64, SAL 5.04 SHub 1 image, flat at `0xffa00000`, `--sn2-prom --no-analysis`) for the decompile of `0xffa97960`, `0xffa1c2e0` and the functions named below, with an `ia64-linux-gnu-objdump` listing of the same image for every instruction quoted; the two agree. Nothing here is objdump-only. Not independently reviewed.
+
+**Who calls the node set-up.** The method at slot 36 (`0xffa96180`) is called by slot 5 of the same class-0 table (`0xffacc6e0`, descriptor `0xffc4ba50`, table entry `0xffbd7c40`), through `[obj+32] + 0x120`; one more caller of slot 36 exists in the same shape (`0xffad01e0`, slot 5 of the class at `0xffbd86c0`, not read). Slot 5 first prints a message (`0xffa17660`), then calls slot 36, so `0xffa97960` is the last thing slot 36 does. Slot 36 returns straight after `0xffa97960` (`0xffa9641c`).
+
+### What `0xffa97960(nasid)` does
+
+All accesses are 8 bytes, global window `0x8000000900000000 | (nasid << 38) | offset`, through the load helper `0xffa0e5a0` and the store helper `0xffa0e640`. The NASID is the sign-extended 16-bit argument. It returns at once if the slice gate `0xffa0ff30` returns 0.
+
+| # | Offset | Name (2.4 header = PROM name table) | Dir | What the code does | INIT (header) |
+|---|---|---|---|---|---|
+| 1 | `1_1006_0580` | `SH_SHUB_ID` | R | `extr.u` bits 52:49 (`0xffa97a06`); not compared, only turned into a shift count `s`: `s = 1`, then `s++` once per remaining bit of the value (its bit length plus one). Bits 52:48 are the nodes-per-bit field the PROM wrote as 1, 2, 4, 8 or 16 earlier on this page, so `s` is 1, 2, 3, 4, 5 for those | `0x0010300000000000` |
+| 2 | RAM | block A node table | R | no SHub access. Loop `i = 0 .. count-1` (each pass re-reads `[0x1000038]`, adds 16 and calls the translation helper `0xffa1c2e0`; `count` is the first halfword, the entries follow as halfwords, so entry `i` is the halfword at `+2+2i`). If the entry is not `-1`, `mask \|= 1 << (i >> s)`. No poll | |
+| 3 | `1_1006_0000` | `SH_CPU_PERM` (`0xffa97bbc`) | W | the mask | `0xffffffffffffffff` |
+| 4 | `1_1006_0400` | `SH_IOI_ACCESS` (`0xffa97bec`) | W | the mask | `0xffffffffffffffff` |
+| 5 | `1_1006_0180` | `SH_EXT_IOI_ACCESS` (`0xffa97c1c`) | W | the mask | `0xffffffffffffffff` |
+| 6 | `1_1006_0380` | `SH_IO_PERM` (`0xffa97c4c`) | W | the mask | 0 |
+| 7 | `1_1006_0480` | `SH_IPI_ACCESS` (`0xffa97c7c`) | W | the mask | `0xffffffffffffffff` |
+| 8 | `1_1006_0100` | `SH_EXT_IO_PERM` (`0xffa97cac`) | W | 0 | 0 |
+
+The six registers are 64-bit "access bits" fields, titled in the header as the CPU MMR, II MMR and interrupt access permission bits; the header gives no bit meaning beyond that. Names are from both the 2.4 header (`shub_mmr.h` at 8ef7d46c: records at lines 23773 to 23829 and 23932 to 24000) and the PROM's name table (records 529, 531, 532, 536, 537, 538, 540; the pool rule of the section above). Nothing reads any of the six back, nothing polls, and the stores are in the order 0000, 0400, 0180, 0380, 0480, 0100.
+
+**The mask rule (inferred from the code, established as code).** Table entry `i` is the halfword for NASID `i` in block A's node table ([os-handoff-tables.md](../../software/firmware/snprom/os-handoff-tables.md#5-block-a-and-the-tables-the-builders-read): count halfword, then one halfword per NASID, `-1` for an absent node, the entry 0 for a node the PROM has marked present). Bit `i >> s` is set for each present NASID. Since `s = log2(nodes per bit) + 1` and SN2 NASIDs are even (two per node), the bit is `(nasid / 2) / nodes_per_bit`: one bit per group of `nodes_per_bit` nodes. That the field is a node-group bit mask is the Linux meaning of the nodes-per-bit field; the permission registers' bit meaning is **unknown**.
+
+**Value for a one-node Altix 350 (NASID 0, one or two CPUs).** Any nodes-per-bit value gives `s >= 1`, so NASID 0 sets bit 0: mask `0x1`. The CPU count does not enter. So the writes are `SH_CPU_PERM`, `SH_IOI_ACCESS`, `SH_EXT_IOI_ACCESS`, `SH_IO_PERM`, `SH_IPI_ACCESS` = `1`, `SH_EXT_IO_PERM` = 0. This assumes block A's node table at that moment holds count at least 1 with entry 0 not `-1`. **Unknown:** what writes that table first. The writer named in the handoff page (`0xffacbce0`) has no direct call and no descriptor in the image, and the later method in slot 5 (slot 3, `0xffacbfa0`) rebuilds the block layout through `0xffac42d0` after this step. If the table were still zero at this point the mask would be 0. A model needs no value for it: all eight accesses are plain writes.
+
+**Reads that change the flow.** None of the SHub reads does. The gate `0xffa0ff30` (slice test, as in earlier sections) decides whether anything happens. For the SHUB_ID read, any value works; bits 52:49 only change the bit chosen in the mask. To keep the hardware path a model returns the value the PROM wrote earlier (bits 52:48 one of 1, 2, 4, 8, 16, bits 42:32 the NASID).
+
+### What follows: the rest of slot 5
+
+After `0xffa97960` and slot 36 return, slot 5 (`0xffacc6e0`) calls, in this order (descriptors are entries of the table at `0xffbd7c18`; each slot is `0xffa..` as listed; read as decompiles only, **not** traced in depth):
+
+| Call | Function | What it is, as far as read |
+|---|---|---|
+| slot 95 | `0xffa1ef70` to `0xffa1f430` | NASID test, copies from RAM tables, no SHub constant seen |
+| slot 85 | `0xffa23850` | runs `0xffa2bd60` (the node XN words of step 2), the error lists `0xffbd8e18` and `0xffbd93e0` through `0xffae3f50`, then `0xffa23a20`, which for a node other than its own writes `SH_INT_NODE_ID_CONFIG` (`0x1_1000_0300`, value NASID or `0x800`) and stores to the `0x8_0000_0000` window (interrupt routing, role unread) |
+| slot 97 | `0xffa6a100` | memory set-up: reads the DIMM configuration register `0x1_0001_0010` (`SH_JNR_DIMM_CFG` in the PROM's table; `md_bank_cfg2` here) in `0xffa788b0`, writes `0x1_0003_0000` and `0x1_0005_0000` bits 2:0 from a size class in `0xffa733d0` (below 0x40: 0, 0x80: 1, 0x100: 2, 0x200: 3, else 4), reads `0x81_5003_1560` bit 8 (`0xffa975e0`), and calls the bank set-up and test routines `0xffa78100`, `0xffa782c0`, `0xffa73590` (which calls `0xffa78f60`, `0xffa79310`, `0xffa79960`) |
+| slots 45, 46 | `0xffa959d0`, `0xffa96920` | read `0x1_101d_0080` through the node-object helpers (slot 45, `0xffa959d0`), then, only if `0xffa788b0` returned non-zero (memory present), clear and set bits 57 and 40 and write it back (slot 46, `0xffa96920`; `0xffacc8ac` to `0xffacc92c`). When it returned 0 the alternative `0xffa0afd0` sets bit 58 of the same register instead. The register is the election register of SAL_A; the bit meanings are unread |
+| slot 3 | `0xffacbfa0` | relocates the RAM pointer table into the node window (`0xffac42d0`, the layout builder) |
+| slot 81 | `0xffa915f0` | role unread (calls `0xffa8f8a0`, `0xffa8f9c0`, `0xffa80720`) |
+| slot 99 | `0xffaacaf0` | allocates the `0xb0000`-byte hwcfg block (`0xffaa0100`, stored at block A `+0x20`) and calls the board-record builder `0xffa9fe80` with type `0x11` (inferred to be the KLCONFIG build) |
+| slot 92 | `0xffaadae0` | CPU enable/disable through chip methods `0xffa99870` and `+0x2d8` |
+
+**The next major boot stage is memory discovery and set-up** (slot 97): the PROM reads the DIMM configuration, scans the banks, and programs the memory controller, then tests them. It is followed in the same method by the block layout and KLCONFIG build (slots 3 and 99) and the CPU enable step (slot 92). Grade: the stage order is established as the call order in slot 5; the roles of the slots are inferred from names and constants only.
+
+### Unknowns here
+
+- The bit meaning of the six permission registers, and what a cleared bit blocks.
+- What fills block A's node table before this step (above).
+- Everything below slot 97: its register accesses were not listed; the DIMM and bank set-up already named on the memory-init page may cover them.

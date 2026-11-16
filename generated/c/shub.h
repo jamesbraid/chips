@@ -752,6 +752,24 @@
 #define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_INPLACE    (SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK << SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT)
 
 /*
+ * CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ */
+/* cpu_perm: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bbc (write) */
+#define SHUB_CPU_PERM                                0x110060000 /* established */
+
+/*
+ * External I/O MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes 0; no read-back.
+ */
+/* ext_io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac (write) */
+#define SHUB_EXT_IO_PERM                             0x110060100 /* established */
+
+/*
+ * External I/O interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ */
+/* ext_ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 532 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c1c (write) */
+#define SHUB_EXT_IOI_ACCESS                          0x110060180 /* established */
+
+/*
  * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
  */
 /* rtc_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
@@ -767,7 +785,19 @@
 #define SHUB_RTC_CTL_RUN_INPLACE                     (SHUB_RTC_CTL_RUN_MASK << SHUB_RTC_CTL_RUN_SHIFT)
 
 /*
- * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown.
+ * I/O interface (II) MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ */
+/* io_perm: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 536 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c4c (write) */
+#define SHUB_IO_PERM                                 0x110060380 /* established */
+
+/*
+ * I/O interface (II) interrupt access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
+ */
+/* ioi_access: rw64, reset 0xffffffffffffffff; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bec (write) */
+#define SHUB_IOI_ACCESS                              0x110060400 /* established */
+
+/*
+ * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the permission registers here too (see prom-reset.md); the header gives INIT 0xffffffffffffffff and a 64-bit ACCESS_BITS field.
  */
 /* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_IPI_ACCESS                              0x110060480 /* established */
