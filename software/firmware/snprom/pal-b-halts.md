@@ -180,7 +180,7 @@ bits is **unknown**.
 word at `0xffeeb83e`, `psr.tb` set and then a taken branch, `chk.s.i`, `break.i 0x195871` and others), each followed by branches to the
 failure exit `0xffeebcd0` that must not be reached. The test sets one bit of `r14` before each and expects `r14 = 0` after the handler
 has run. An emulator must raise the architecturally correct trap or fault for each; for the B-unit word that is inferred to be an
-illegal-operation fault (major opcode 10 is not a defined B-unit opcode).
+illegal-operation fault (major opcode 10 is not a defined B-unit opcode). The rules a failing check and its handler must follow are in [Processor behaviour the self-tests depend on](#processor-behaviour-the-self-tests-depend-on).
 
 **What a healthy processor returns.** For the stop not to occur, every group that runs (entries 1 to 9) must leave `r8 >= 0` at its result
 call. No MSR, memory or SAL value is read by these groups, so no value can be "supplied": only correct instruction behaviour avoids the stop
@@ -216,6 +216,41 @@ and group 42 always runs on this PROM, whatever the SHub, L1 or switch state. Th
    (msr[1212], msr[1226], the `br.ia` return `r1 = 0`) decide only that execution reaches `0xffed75e0` and, via msr[0] bit 17 clear, the table.
    The M-word `0x108000000` appears on the other arm (`0xffe7f1f6`) and in the return path before the table (`0xffed87d6`); the model runs it as a no-op there,
    which is **inferred** harmless for this stop because nothing between it and the table depends on its effect.
+
+## Processor behaviour the self-tests depend on
+
+What the Intel manuals say about the checks and the fault that these groups rely on. Each fact cites its document, section and printed
+page, and the Library file under `cpu/itanium/`.
+
+*Established.* A failing `chk.s`, `chk.a` or `fchkf` either branches to its target or takes a Speculative Operation fault, and the
+manual leaves the choice to the implementation. `check_branch_implemented(check_type)` returns TRUE or FALSE for each check type, and
+the result "may depend on other implementation-dependent parameters". SDM rev 2.3 vol 3 (document 323207, `cpu/itanium/itanium-sdm-rev2.3-vol3-323207.pdf`):
+the `chk` description and Operation at pp. 3:35 to 3:36, Table 3-1 at p. 3:282, and the `fchkf` Operation at p. 3:63.
+
+*Established.* On Itanium 2, hardware "will usually" resteer a failing `chk.a`, `chk.s` or `fchkf` without the OS, and only when
+psr.ic = 1, psr.it = 1, psr.ss = 0 and psr.tb = 0. Otherwise the processor traps to the OS. Itanium 2 Processor Reference Manual for
+Software Development and Optimization (order 251110-003, `cpu/itanium/itanium2-processor-reference-manual-251110-003.pdf`): section 2.4.1,
+p. 18, with the same list again in section 2.4.3, p. 20.
+
+*Inferred.* PAL code that runs with translation off (psr.it = 0) does not get the hardware resteer. A failing check in PAL therefore
+faults rather than branches. The manual's trap goes to an OS, and PAL has none, so the handler that runs is the one at the Speculation
+vector below. This follows from the two rules above; no manual states it for PAL.
+
+*Established.* The Speculation vector, 0x5700 (SDM rev 2.3 vol 2, document 245318, `cpu/itanium/itanium-sdm-rev2.3-vol2-245318.pdf`,
+section 8.1, pp. 2:198 to 2:199):
+
+- Cause: a `chk.a`, `chk.s` or `fchkf` needs to branch to recovery code and the branch is not implemented.
+- IIM holds the check's imm21, zero-extended (the vol 3 `chk` Operation calls `zero_ext(imm21, 21)`).
+- ISR.code{3:0} is 0 for `chk.a` on a GR, 1 for `chk.s` on a GR, 2 for `chk.a` on an FR, 3 for `chk.s` on an FR and 4 for `fchkf`.
+- The only defined ISR fields are code, ei and ni. The rest of ISR is 0.
+- The handler reads the predicates, IIM, IIP, IPSR and ISR into scratch bank 0, copies IIP to IIPA, adds IIM (sign-extended from 21
+  bits and shifted left 4) to IIP, and sets IPSR.ri to 0. If neither IPSR.tb nor IPSR.ss is set, it restores the predicates and does
+  `rfi`. If IPSR.tb is set, it sets ISR.code's tb bit (and ss if IPSR.ss is set), clears the rest and branches to the taken-branch
+  vector 0x5f00. If only IPSR.ss is set, it sets ISR.code's ss bit and branches to the single-step vector 0x6000.
+
+*Established.* ISR.ei (SDM rev 2.3 vol 2 Table 3-7, p. 2:37, and Table 8-2 note a, p. 2:170). For faults and external interrupts ei
+equals IPSR.ri, which is 1 for a fault on the L+X slot of an MLX. For traps, ei names the slot of the excepting instruction, and a trap
+on the L+X slot sets ei to 2. The Speculation vector is a fault, so its ei is IPSR.ri.
 
 ## Unknown
 
@@ -258,8 +293,9 @@ and FIT tables. The Ghidra decompile of `0xffeec2d0` and `0xffee0b20` was tried 
 - Entries 1 and 8 beyond a skim; entries 4 to 7 and 9 for what they test (only scanned for MSR, reserved and undecodable words).
 - The SAL_A sub-id branch to `0xffc4e6f0`, and PAL's source for `r20` bits 15:8 (msr[1643] when no `p16`-`p22`).
 - Whether the SDM truncates a deposit past bit 63 as assumed; the SDM was not opened.
-- The GR35 field positions in boot-sequence.md and the GR37 field layout: Figure 11-9 and 11-10 could not be opened here (the SDM was
-  not found under the Library roots I could reach). `ia` = bit 17 agrees with the PAL code (msr[1640] bit 59 is set from the `br.ia`
+- The GR35 field positions in boot-sequence.md and the GR37 field layout (the figures are checked in the sentence below). `ia` = bit 17 agrees with the PAL code (msr[1640] bit 59 is set from the `br.ia`
   return and lands in `r35` bit 17). The rest of the GR35 decode, and the layout `test_control` 46:0, `cs` 47, reserved 63:48, 0 = run,
-  1 = skip are consistent with the code (`0xe030ffff8000` sets bit 47, and a set bit skips a group) but are not confirmed against the figure.
+  1 = skip are consistent with the code (`0xe030ffff8000` sets bit 47, and a set bit skips a group).
 - The result routine's second argument (`ar.k7` upper half) and the real-hardware meaning of any value; no run was made.
+
+Checked against the SDM PDF: Figure 11-10 (SDM rev 2.3 vol 2, document 245318, section 11.2.3, p. 2:295) puts test_control in bits 46:0, cs in bit 47 and reserved in bits 63:48, and the text's rule that a 0 in an implemented test_control bit runs the test and a 1 skips it matches the layout listed above as unconfirmed, so the GR37 decode was right and needed no change.
