@@ -6,9 +6,21 @@
 |---|---|---|
 | [sal/](sal/README.md) | SN2 SAL calls: what the Altix kernel asks of firmware | Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with function number, arguments, results... |
 
+## boot
+
+| Page | Title | Summary |
+|---|---|---|
+| [elilo-ia64.md](boot/elilo-ia64.md) | ELILO on IA-64: what the boot loader hands the Linux kernel | How ELILO, the EFI boot loader of the SLES 9 and ProPack era Altix, loads a Linux/ia64 kernel, what it builds for it... |
+
 ## kernel
 
 | Page | Title | Summary |
 |---|---|---|
 | [audio-drivers.md](kernel/audio-drivers.md) | Audio drivers in IRIX 6.5.30 and 6.5.22 | Scope: every audio driver object, master file, configuration line and inventory string found in the IRIX 6.5.30 and... |
 | [bridge-pci-driver-windows.md](kernel/bridge-pci-driver-windows.md) | Bridge and XBridge: the PCI windows and swap controls IRIX drives | What the IRIX 6.5.30 Octane and Origin kernels do to a Bridge (part `0xc002`, manufacturer 54) or XBridge (part... |
+
+## linux
+
+| Page | Title | Summary |
+|---|---|---|
+| [sn2-early-boot.md](linux/sn2-early-boot.md) | SN2 early boot: what the 2.6.5-7.244 Altix kernel needs from firmware | From the kernel entry point through `start_kernel`, `setup_arch`, `sn_setup` and `sn_cpu_init`: every table... |
