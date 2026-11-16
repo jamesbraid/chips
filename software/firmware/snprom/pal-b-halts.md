@@ -481,7 +481,7 @@ The tests do not inject a data-bit flip, so what the log says for one is unknown
 
 A second cache array: 4-dword (256-bit) lines, 10 check bits per line for data, a seven-bit ECC over 35 bits (32 tag bits and 3
 state bits) for the tags. Its log is `msr[1558]`, its way mask is `msr[1536]` bits 59:48 (12 bits, two ways per bit, up to 24 ways;
-zero is accepted), and it is configured through the same `msr[1559]` field. Each group 11 sub-test first sets `msr[1559]` bit 1, clears `msr[1558]` bit 4 and sets bit 30, and restores all three (and `msr[1536]`) afterwards; its prologue `0xfff0575c` also calls `0xffe89f20`. It uses helpers `0xffe93c50`, `0xffe938b0`, `0xffe93fc0`,
+zero is accepted), and it is configured through the same `msr[1559]` field. Sub-tests 1, 2, 4, 5 and 7 first set `msr[1559]` bit 1, clear `msr[1558]` bit 4 and set bit 30, and restore all three (and `msr[1536]`) afterwards; sub-tests 3, 6 and 8 touch neither register. Every sub-test calls `0xffe89f20` at entry and exit (it sets `msr[1552]` bit 4, polls bit 2 with no timeout, changes bit 0 of `msr[1536]` and `msr[1553]`, clears bit 4). It uses helpers `0xffe93c50`, `0xffe938b0`, `0xffe93fc0`,
 `0xffe93620`, `0xffe93e50`, `0xffe932a0`, `0xffe92ff0`, `0xffe8fbc0` and `0xffe94130`, which were not read beyond their arguments.
 
 The prologue does the same cache clear, clears and sets msr[1552] bit 4 and polls bit 2 with no timeout (`0xfff051c0`), then calls
@@ -500,7 +500,7 @@ Bit 62 already set returns `r8 = -1` and `0x7f8000000000001` (section 6).
 | 8 | `0xfff0a650` | 31 | data, tag, ECC and state over up to 24 ways | read back, tag state 3; no log |
 
 Sub-tests 1 and 2 differ only in bit 16 of the expected log (clear for one flip, set for two). They load the line with the same pass
-structure as group 10 (a second pass adds the `ld8.nta`). The only polls are the msr[1552] bit 2 poll after each cache clear.
+structure as group 10 (a second pass adds the `ld8.nta`). The msr[1552] bit 2 polls follow each cache clear and each `0xffe89f20` call (two per sub-test).
 
 ### Unknown
 
@@ -514,8 +514,8 @@ structure as group 10 (a second pass adds the `ld8.nta`). The only polls are the
 Read in the IA-64 Ghidra module on the same image (`--sn2-prom --no-analysis`, linear listing of `0xfff04ff0-0xfff0b000` and the helpers
 `0xffe92ff0-0xffe94800`, `0xffe8fbc0`, `0xffe89f20`); every `movl` constant below was also decoded from the raw bundle bytes. Nothing was
 run. Grades as above. The name "second-level" is the requester's: what the code shows is an array of 2048 sets (address bits 17:7) with
-way numbers up to 22 (a 12-bit way mask, two ways per bit) and 128-byte lines, which is the shape of a larger outer cache than group 10's
-256-set, 8-way array (inferred; no document ties either array to a cache level).
+way numbers up to 23 (a 12-bit way mask, two ways per bit; sub-tests 1, 2 and 6 use only the even way of each pair) and 128-byte lines, which is the shape of a larger outer cache than group 10's
+256-set, 8-way array (inferred; the PAL names neither array's cache level; see the Review for the geometry match).
 
 **Which sub-test fails with `r9` bits 51 and 0.** *Established.* The driver (`0xfff04ff0`) sets `r49 = (1 << (50 + n)) | 1` after sub-test
 n returns nonzero (`0xfff05296`: n = 1 gives `0x8000000000001`, `0xfff052e6`: n = 2 gives `0x10000000000001`). Bits 51 and 0 are sub-test 1
@@ -534,7 +534,7 @@ halfword 0 = array number, halfword `cfg - 7` = field, bit 43 = `((cfg & 3) * 3 
 | 13 | 7 | not used by group 11 | `0xc0` |
 
 Row 12 for cfg 8..24, in order: `0x40e 0x46e 0x450 0x430 0x212 0x2b2 0x2b4 0x294 0x296 0x276 0x278 0x258 0x25a 0x23a 0x23c 0x1c 0x1d`.
-Row 14 for cfg 8..23: `0x240 0x220 0x220 0 0 0xc0` then `0xc0` for cfg 13 to 23. The field at cfg 16 is a table constant: what it encodes is unknown.
+Row 14 for cfg 8..23: `0x240 0x220 0x220 0 0` for cfg 8 to 12, then `0xc0` for cfg 13 to 23 (row 14 has `0x666` at cfg 24). The field at cfg 16 is a table constant: what it encodes is unknown. `cfg` itself is read from the register at run time and no PAL constant shows its value; 16 is an assumption. Bit 43 and the field change with `cfg`; bit 63, the op, the array and 52:46 do not.
 
 | Word (cfg 16) | Bit 63 | 60:58 | 57:53 | 52:46 | 43 | 41:29 | Meaning |
 |---|---|---|---|---|---|---|---|
@@ -560,8 +560,8 @@ helpers never write a check register and issue the `0x60` write, and sub-test 3 
 | `msr[1545]` (tag write, `0xffe93fc0`) | bits 53:22 tag, bits 9:3 ECC, bits 2:0 state, bits 21:10 low 12 bits of an extra field | established |
 | `msr[1547]` | extra field >> 12 (tag write); returned in bits 11:0 and merged above bit 11 of the extra value on a tag read (`0xffe93f8c`..`0xffe93f9c`) | established |
 | tag value | address bits 49:18, not bit-reversed (`extr.u 0x12, 0x20` at `0xfff05c46`; the helper deposits it unchanged) | established |
-| state | 3 in sub-tests 1 to 3 and 8, 0..3 in sub-test 6 | established |
-| invalidate (`0xffe94130`) | `msr[1545]` = 0 then the tag write command at the same index and way | established |
+| state | 3 in sub-tests 1, 2 and 8 (sub-test 3 writes no tag), 0..3 in sub-test 6 | established |
+| invalidate (`0xffe94130`) | `msr[1545]` = 0 then the tag write command at the same index and way; `msr[1547]` is not written, so it keeps its previous value | established |
 | `msr[1545]` on read (`0xffe93f60`) | tag = bits 53:22, ECC = 9:3, state = 2:0, extra = 21:10 | established |
 | payload, one 128-byte line = 16 dwords = four 32-byte granules | granule g = address bits 6:5 (dword bits 3:2): data `msr[0x640 + 8g .. +3]`, check word `msr[0x644 + 8g]` | established |
 | check word | four 10-bit fields at bits 9:0, 25:16, 41:32, 57:48 (the write helpers spread a 40-bit mask over them; `0xffe92ff0` packs them back into 40 bits); only field 0 is ever compared or injected | established; what fields 1..3 hold is unknown |
@@ -606,7 +606,7 @@ steps the granule start dword 0, 4, 8, 12 over six ways (the first three clear w
 
 #### The tag ECC (established for the code)
 
-The PAL computes it in software for every tag write (sub-test 1 `0xfff05c76` to `0xfff05d76`, the same constants in sub-tests 2, 6 and 8):
+The PAL computes it in software for every tag write (sub-test 1 `0xfff05c76` to `0xfff05d76`, the same constants in every other sub-test that writes a tag; the same seven masks also occur at about 25 sites outside group 11 in the image, not read):
 `v = (tag32 << 3) | state`, 35 bits, no bit reversal of the tag (group 10's tag write reverses it, this one does not); ECC bit k =
 parity of `v & mask[k]`:
 
@@ -628,7 +628,7 @@ verbatim (sub-test 8 writes `r51 | waymask` and reads back the same value; `r51`
 | tested bits | 28:26 (value 2), 20:16 (10 for one flipped check bit, 11 for two), 13 (set) | established |
 | bit 13 | valid; the PAL handler clears it after reading (`0xfffca410` to `0xfffca430`) and tests it as `tbit 0xd` in many places | inferred |
 | bits 20:16 | error code, extracted with `extr.u 0x10, 5` in PAL_B's handlers and compared against 8, 9, 10, 11, 12 and others | established for the extraction, inferred for the meaning: 10 = corrected data check error, 11 = uncorrectable |
-| tag errors (sub-tests 4 and 5, always skipped) | `(msr[1558] & 0xf01fff6000) == 0x7008082000`: code 8, bits 38:36 = 7, bit 27, bit 13 | established (compare), inferred (meaning) |
+| tag errors (sub-tests 4 and 5, always skipped) | `(msr[1558] & 0xf01fff6000) == 0x7008082000`: the mask covers bits 39:36, 28:16 and 14:13; expected code 8 (bit 19), bits 38:36 = 7, bit 27, bit 13, all other masked bits clear | established (compare), inferred (meaning) |
 | after each pass | `msr[1558]` is written 0 (`0xfff05e70`); the bit 30 and bit 4 changes from the prologue are not needed again | established |
 | sub-tests 1 and 2 prologue | `msr[1559]` bit 1 set, `msr[1558]` bit 4 cleared and bit 30 set, `msr[1552]` bit 4 pulsed, `msr[1640]` bit 57 set; restored afterwards | established; what bit 1 of `msr[1559]` and bits 4 and 30 of `msr[1558]` do is unknown |
 
@@ -647,7 +647,7 @@ gives a weight 3 or 5 syndrome; the PAL never injects one, so the log for it is 
 | Sub-test | Writes | Reads and compares | No log |
 |---|---|---|---|
 | 3 (`0xfff07470`) | `0xffe938b0` per granule with flag 0 (plain read, patch four payload dwords, command `0x8c98..`) | `0xffe93620`: plain read, dwords from `msr[0x640 + 8g ..]`, check from `msr[0x644 + 8g]` bits 9:0 against the 40-mask code | yes |
-| 6 (`0xfff094a0`) | `0xffe93fc0`: tag at index 0 and `0x3ff`, ways from the first eight clear way bits (two per bit, up to way 22), ten patterns `0`, `0x55555555`, `0x800000`, `0x155`, `0x1555`, `0x15555`, `0x22`, `0x222222`, `0xaaaaaaaa`, `0xffffffff` with states 0, 1, 0, 3, 3, 3, 3, 3, 2, 3, ECC from the seven masks, extra 0 | `0xffe93e50`: tag, ECC and state equal | yes |
+| 6 (`0xfff094a0`) | `0xffe93fc0`: tag at index 0 and `0x3ff`, ways from the first eight clear way bits (the even way of each, up to way 22), ten patterns `0`, `0x55555555`, `0x800000`, `0x155`, `0x1555`, `0x15555`, `0x22`, `0x222222`, `0xaaaaaaaa`, `0xffffffff` with states 0, 1, 0, 3, 3, 3, 3, 3, 2, 3, ECC from the seven masks, extra 0 | `0xffe93e50`: tag, ECC and state equal | yes |
 | 8 (`0xfff0a650`) | per way 0..23 (skipping set way-mask bits, bit = way >> 1): `0xffe932a0` one dword at address bits 6:3 with data `0x0101010101010101 * way`, flag 0; `0xffe93fc0` with state 3 and extra `r51 \| waymask`; | `0xffe92ff0` data dword (the check word read is not compared), `0xffe93e50` tag, ECC, state, extra | yes |
 
 Sub-test 6 needs eight clear way-mask bits to fill its way list; with fewer it cycles the clear bits and re-uses ways, and only a mask of all ones
@@ -657,10 +657,10 @@ hangs it. Sub-tests 6 and 8 touch no `msr[1558]` bit.
 
 | Fact | Value | Grade |
 |---|---|---|
-| bits 59:48 | read by `extr.u r,0x30,0xc` at 11 PAL_B sites (`0xffe890f0`, `0xffe89770`, `0xffe91110`, `0xffe91d70`, `0xffe92460`, `0xffe92da0`, `0xffe9ffb0`, `0xffea0580`, `0xffea0940`, `0xffea44b0`, `0xffef7ee6`) and by every group 11 sub-test prologue; the PAL never writes these bits | established |
+| bits 59:48 | read by `extr.u r,0x30,0xc` at 11 PAL_B sites (`0xffe890f0`, `0xffe89770`, `0xffe91110`, `0xffe91d70`, `0xffe92460`, `0xffe92da0`, `0xffe9ffb0`, `0xffea0580`, `0xffea0940`, `0xffea44b0`, `0xffef7ee6`) and by every group 11 sub-test prologue; the PAL never writes these bits: every constant-numbered write site found is a read-modify-write of the low bits or a restore of the value read (group 11 sub-tests 4 and 5 also clear bit 7 for their duration; sub-tests 3, 6 and 8 end with bit 0 set by `0xffe89f20`). Computed register numbers were not searched | established |
 | meaning | a clear bit means ways `2i` and `2i+1` are usable and a set bit means they are skipped (absent or disabled; the PAL cannot tell which); the tests scan for clear bits, so zero is accepted | inferred |
 | need | sub-tests 1 and 2 four clear bits, sub-test 3 three pairs, sub-test 6 eight way slots (reuses ways), sub-test 8 any | established |
-| `0x8080` | not in 59:48: it is bits 15 and 7. PAL_A sets bit 15 (`0xfffc3490`) and bit 7 (`0xfffc43d0`, `0xfffc4560`), the PAL_B dispatcher ORs `0x80` (`0xffefbde0`) and restores the old value (`0xffefc036`), `0xffe9fe90` edits bits 2:1, `0xffe89f20` clears bit 0 of `msr[1536]` and `msr[1553]` for the tests and sets it afterwards; all are read-modify-write | established |
+| `0x8080` | not in 59:48: it is bits 15 and 7. PAL_A sets bit 15 (`0xfffc3490`), sets bits 0, 3 and 7 (`0xfffc43d0`), sets bit 7 (`0xfffc4560`), clears bits 7:4 (`0xfffc45f0`) and clears bit 3 (`0xfffc3db0`), the PAL_B dispatcher ORs `0x80` (`0xffefbde0`) and restores the old value (`0xffefc036`), `0xffe9fe90` edits bits 2:1, `0xffe89f20` clears bit 0 of `msr[1536]` and `msr[1553]` for the tests and sets it afterwards; all are read-modify-write | established |
 | read-back | no site compares a value it wrote; every access is a read-modify-write, so the register only has to hold what is written | established |
 | which ways are present on a 3 MB part | unknown: the PAL gives no sign; if a set bit means absent, a three-megabyte part would have bits 59:54 set (ways 12 to 23) | unknown |
 
@@ -669,7 +669,7 @@ hangs it. Sub-tests 6 and 8 touch no `msr[1558]` bit.
 - What bit 51 does on a read, and what fields 1 to 3 of the check word hold.
 - Whether the hardware or the PAL's own write chooses the check bits when bit 52 is set (inferred from sub-test 3 only).
 - The meaning of `msr[1559]` bit 1 and of bits 4 and 30 of `msr[1558]`; where a syndrome appears in `msr[1558]`.
-- Which array is the cache level: the PAL never names it.
+- Which array is the cache level: the PAL never names it (inferred from geometry only, see the Review).
 - What the field values in rows 12 and 14 encode, and the tag-ECC behaviour on read (sub-tests 4 and 5 are skipped, 7 reads through helpers never called by a running test).
 
 ## Unknown
@@ -835,3 +835,34 @@ selects no pattern predicate, so valid 1 runs with pattern 1's stale r47, r43 an
 **Not checked.** Meaning of msr bits and what the masks do in hardware; the group 11 helpers' internals and the 256-bit data-code masks (read as 40
 constants at `0xfff078c6-0xfff07efc`, not tabulated); sub-tests 5 and 8 of group 10 beyond their entries; that `psr.mc` and the masked
 `cmcv` and `tpr` stop every interruption; what `0xffe89f20`, `0xffe96bd0`, `0xffe88970` do.
+
+### Review of the group 11 second-level cache array port
+
+Independent review of `8a407ef`, by a reader who did not write it. Re-read in the repository's IA-64 reference decoder (the table the
+Ghidra processor is generated from, not a separate decoder) on `shub1snprom.bin` 10.54 over `0xfff04ff0-0xfff0b000`, the helpers
+`0xffe92ff0-0xffe94800`, `0xffe8fbc0`, `0xffe89f20` and a whole-image listing for the site searches. Every `movl` constant was also decoded
+from the raw bundle bytes with a separate bit-field decoder. Ghidra itself was not run: the decoder shares its instruction table.
+Table bytes at `0xffe9d910` were read directly. SDM vol 2 and Itanium 2 Processor Reference Manual 251110-003 were read from the PDFs. Nothing was run.
+
+**Confirmed.**
+- Failure code `(1 << (50 + n)) | 1` at `0xfff05296` and the seven following sites; bits 51 and 0 mean sub-test 1 (`0xfff056a0`). Each call is predicated on its skip bit (24 to 31).
+- All 40 data-code masks match the page table cell for cell (the ten blocks deposit check bits 9 down to 0 at `0xfff0795c`..`0xfff07efc`, `r66..r69` are dwords 0 to 3, parity is the XOR of four `popcnt`s, low bit). Recomputed: 256 distinct nonzero columns, 120 of weight 3 and 136 of weight 5, dword 1 all weight 3, dword 2 all weight 5, none a unit column, and the ten four-way folds equal the page values.
+- Sub-test 3 runs patterns 1 to 8 (`shl r42`, limit 256, `0xfff07fcc`), granule start 0, 4, 8, 12, six ways from three clear way bits; it writes one pattern into all four dwords and compares `r14 & 0x3ff`.
+- Seven tag-ECC masks, `v = (tag32 << 3) | state`, tag32 = address bits 49:18 not reversed, ECC bit k = parity of `v & mask[k]`. Recomputed: 35 distinct columns, all weight 3, every 3-of-7 pattern once. `msr[1545]` write layout (tag 53:22, ECC 9:3, state 2:0, extra 21:10) and `msr[1547]` (extra >> 12, 12 bits back on a read).
+- `msr[1558]` compares: mask `0x1c1f2000`, expected `0x080a2000` (`0xfff05e26`..`5e5c`) and `0x080b2000` (`0xfff06d06`..`6d3c`); mask walks 1..`0x200` and `3<<k` for k 0..8 (stop above `0x300`); zeroing of `msr[1558]` at `0xfff05e70`; bit 13 cleared by the handler at `0xfffca410`..`30`; `extr.u 16,5` followed by compares against 7 to 12, 19 and 27 in many handlers (grouped `{8,10,11}` against 12 in one, `{11,7}` in another; meanings stay inferred).
+- Command words: all six computed from the builder fields and match; rows 12 (array 4, `0x296`), 14 (array 6, `0xc0`) and 13 (array 7, `0xc0`) read from the table bytes; row 12 cfg sweep matches. Bits 52:46 are a 7-bit deposit (`0x60` or `0x20`). `0xffe938b0` issues the plain read, patches four data registers, writes the check register only when injecting, and then sends the `0x20` (bit 51 only) word; otherwise the `0x60` word. `0xffe92ff0` reads data, then issues the bit 51 read and reads the check word. `msr[1544]` = index | way << 11 (`dep ...,11,5` in every helper); way = address bits 22:18.
+- `msr[1536]` bits 59:48 are read at the 11 listed sites and no constant-numbered write changes them.
+- Sub-test 3, 6 and 8 protocols as stated (6: ten patterns, states 0,1,0,3,3,3,3,3,2,3, indices 0 and `0x3ff`, ways cycle when fewer than eight are clear; 8: ways 0..23, data `0x0101.. * way`, extra `r51 | waymask`, check word not compared).
+
+**Changed (corrected in place above).**
+- Sub-tests 3, 6 and 8 do not touch `msr[1559]` or `msr[1558]`; only 1, 2, 4, 5 and 7 do.
+- `0xffe89f20` polls `msr[1552]` bit 2 with no timeout; the page said the only polls follow cache clears.
+- Way numbers reach 23 (sub-tests 3 and 8); sub-tests 1, 2 and 6 use only the even way of a pair. State 3 is written in sub-tests 1, 2 and 8, not 3.
+- Row 14 listing was garbled. The invalidate helper does not write `msr[1547]`. The tag-error mask in sub-tests 4 and 5 covers bits 39:36, 28:16 and 14:13, not just the bits named.
+- `msr[1536]`: PAL_A also sets bits 0 and 3 (`0xfffc43d0`), clears bits 7:4 and bit 3; sub-tests 4 and 5 clear bit 7; sub-tests 3, 6 and 8 leave bit 0 set. Still nothing touches 59:48 (computed register numbers not searched).
+- `cfg` (`msr[1559]` 26:22) was presented as 16; nothing in the PAL shows its value. Only bit 43 and the 41:29 field depend on it.
+
+**Cache level and L3 geometry.** No string and no table in the image names a cache level for any array. The strings found are the SAL's PAL_CACHE_SUMMARY and "cache level %d config_info" messages; no literal `config_info_1` word for 12, 18 or 24 ways was found, and the PAL_CACHE_INFO handler was not traced. By geometry alone (inferred, 251110-003 Table 6-4 p. 48): group 10's array is 256 sets x 8 ways x 128 B = 256 KB, the L2 (256 KB, 8-way, 128 B); group 11's is 2048 sets x up to 24 ways x 128 B = 6 MB. Table 2-5 (p. 21) gives 4 ways per MB for parts up to 6 MB, so 3 MB is 12-way x 2048 sets and 6 MB is 24-way x 2048 sets; 9 MB is 18-way and would need 4096 sets, more than the 11-bit index here. So 2048 x 24 x 128 B is a 6 MB part, not 3 MB. A 3 MB part would show only 12 ways (way mask bits 59:54 set if a set bit means absent, still inferred). SDM vol 2 gives no Madison geometry; its PAL_CACHE_INFO format (Figures 11-2 and 11-3, p. 2:374) is the shape the PAL would return.
+
+**Not checked.** Ghidra's own listing and decompile (decoder only). Computed `msr` numbers and range loops (a save/restore loop at `0xffe88da0` skips 1536). Helpers `0xffe943a0`, `0xffe94270` and `0xffe945f0` and sub-test 7. Sub-tests 4 and 5 beyond their compares and the bit 7 write. The meaning of `msr[1558]` codes, check-word fields 1 to 3, and what `cfg` encodes. The seven ECC masks' other users outside group 11. Whether the hardware, not the PAL, chooses check bits on the `0x60` write.
+
