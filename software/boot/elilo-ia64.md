@@ -84,15 +84,15 @@ br.few b6          # not br.call: b0 is not updated
 ```
 
 - **`r28`** holds the physical address of the boot-parameter block. **Established.**
-- **`b6`** is the entry point (physical). No other register is set for the kernel. In particular `r1` (gp), `sp` (`r12`), `b0`, the register stack and `psr` are whatever EFI had at the point the application called `ExitBootServices`: EFI boot-services state, physical mode, interrupts off in practice. The kernel's first act is `rsm psr.i | psr.ic` and it rebuilds region registers, pins its own translation and uses its own stack, so it requires nothing beyond `r28` and physical-mode execution ([SN2 early boot](../linux/sn2-early-boot.md#the-kernel-entry-state)). The EFI specification, not ELILO, defines the rest, and the PROM's EFI state at that point is **unknown** (no capture).
+- **`b6`** is the entry point (physical); `r27` holds the same value as a scratch (it loads the entry through `r27` into `b6`). No other register is set for the kernel. In particular `r1` (gp), `sp` (`r12`), `b0`, the register stack and `psr` are whatever EFI had at the point the application called `ExitBootServices`: EFI boot-services state, physical mode, interrupts off in practice. The kernel's first act is `rsm psr.i | psr.ic` and it rebuilds region registers, pins its own translation and uses its own stack, so it requires nothing beyond `r28` and physical-mode execution ([SN2 early boot](../linux/sn2-early-boot.md#the-kernel-entry-state)). The EFI specification, not ELILO, defines the rest, and the PROM's EFI state at that point is **unknown** (no capture).
 - After `ExitBootServices` the boot-services table is gone: nothing in ELILO touches console, files or events again ("No console output permitted after create_boot_params" in the source).
-- If `ExitBootServices` fails: build 3.16 frees the parameter block, rebuilds it with a fresh map and retries up to **three** times; build 3.4 has **no retry** and returns with an error. Source for 3.16 (`elilo.c` `main_loop`) agrees with the binary; build 3.4 is binary only.
+- If `ExitBootServices` fails: build 3.16 frees the parameter block, rebuilds it with a fresh map and tries again, **three attempts in all** (two retries; the counter is tested before the third failure gives up); build 3.4 has **no retry** and returns with an error. Source for 3.16 (`elilo.c` `main_loop`) agrees with the binary; build 3.4 is binary only.
 
 ## Differences between the builds
 
 | Point | Build 3.4 | Build 3.16 |
 |---|---|---|
-| Block size and struct size | 16 KiB; struct ends at `0x58` | 16 KiB; struct is `0x70` bytes with `vmcode` and `loader_*` fields |
+| Block size and struct size | 16 KiB; struct is `0x60` bytes (length check `0x61` + command line), nothing written past `0x50` | 16 KiB; struct is `0x70` bytes with `vmcode` and `loader_*` fields |
 | `initrd_size` | `pages << 12` from a page count | byte size |
 | `vmcode_*` | absent | present |
 | `ExitBootServices` failure | one attempt | three attempts, rebuilding the parameter block |
@@ -116,3 +116,24 @@ Therefore a model that implements the EFI side per [efi.md](../firmware/snprom/e
 - Which ELILO release and which `elilo.conf` SGI shipped; the console option on the Altix kernel line. Route: the ELILO package on the SLES 9 media (listed in the inventory, not extracted).
 - The register and `psr` state the PROM's EFI leaves at `ExitBootServices` (the Intel EFI sample code is the likely source; not read).
 - Whether the PROM's EFI hands out one FPSWA handle or two.
+
+## Review
+
+Independent review of chips commit `a4bfcf2`, examined at that revision. The reviewer wrote none of it. Method: both ELILO builds imported in Ghidra (PE32+ import) with every function decompiled, the 3.16 source read beside them, and the jump bundles read with `ia64-linux-gnu-objdump`.
+
+**Confirmed.**
+
+- Boot-parameter offsets `0x00` to `0x48` are identical in both builds and match the 3.16 structure (command line `0x00`, system table `0x08`, map `0x10`, map size `0x18`, descriptor size `0x20`, descriptor version `0x28`, console `0x2c` to `0x32`, FPSWA `0x38`, initrd `0x40` and `0x48`); build 3.16 also stores `vmcode_start`/`vmcode_size` at `0x50`/`0x58`; `0x60`/`0x68` are never written. The descriptor size is the value `GetMemoryMap` returns.
+- Both builds allocate `0x4000` bytes as `EfiLoaderData`, zero it, and place the command line at `block + 0x4000 - (length + 1)`.
+- The kernel is placed with `AllocatePages(AllocateAddress, EfiLoaderData, pages, p_paddr-based address)` in both builds (`alloc_kmem`).
+- Build 3.16: three `ExitBootServices` attempts. Build 3.4: one attempt, then cleanup and return. Build 3.4 stores the initrd size as page count shifted left by 12.
+- The jump is `mov b6 = r27; mov r28 = bp; br.few b6` in both builds (3.16 at `0x3910`/`0x391c`, 3.4 at `0x17a0`/`0x17ac`); no other register is written for the kernel.
+- `SetWatchdogTimer` (`BS+0x100`) opens both builds; the `ConOut->Reset` call is in 3.16 only; `GetVariable` is `RT+0x48`.
+
+**Fixed in this review.**
+
+1. The 3.4 struct size was given as ending at `0x58`; the build's length check (`length + 0x61`) makes it `0x60`.
+2. "Retries up to three times" read as three retries; the binary and the source make three attempts in all.
+3. `r27` also holds the entry address at the jump (scratch); noted beside `b6`.
+
+**Not checked.** The gzip loader path in the binary (source only, as the page says); the FPSWA two-handle behaviour and the config-file search order (source only); `psr` and register-stack state at `ExitBootServices` (needs the PROM's EFI).
