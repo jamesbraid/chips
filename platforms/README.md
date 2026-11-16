@@ -43,6 +43,7 @@
 | [pci-discovery.md](ip27/pci-discovery.md) | PCI discovery and the Origin 200 device-number map | Status: imported from published sources, not independently reviewed. |
 | [power-and-reset-domains.md](ip27/power-and-reset-domains.md) | SN0 power domains and reset reach | Status: draft. |
 | [prom-console-input.md](ip27/prom-console-input.md) | IP27 PROMs: keyboard detection and the console choice with no keyboard | Question answered: on an Origin 200, Origin 2000 or Onyx2, which PROM probes the PS/2 keyboard and mouse on the base... |
+| [prom-environment.md](ip27/prom-environment.md) | IP27 PROM environment: the base I/O Timekeeper NVRAM and the node flash log | Question answered: on an Origin 200, Origin 2000 or Onyx2, where do the PROMs keep their environment variables, how... |
 | [prom-node-numbering.md](ip27/prom-node-numbering.md) | IP27 PROM node numbering: the order of the Hub writes, and what the other processors do meanwhile | Question answered: in what order does the IP27 boot PROM write the Hub's node number, cached-alias size... |
 
 ## ip30
