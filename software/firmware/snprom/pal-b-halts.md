@@ -18,9 +18,8 @@ with what would settle it. Nothing here says what hardware does unless a manual 
 a routine that starts at `0xffe7f000` and that every fatal path of PAL_B 5.73 leaves through:
 
 - `0xffe7f000` to `0xffe7f03c`: `r28` = `psr` after three deposits (`0xffe7f00c`, `0xffe7f016`, `0xffe7f01c`): bit 35 set, then two
-  deposits of zero whose encoded length is 64 at positions 13 and 14 (`dep r28=0,r28,13,64`). Taking the architectural rule that a field past
-  bit 63 is truncated (recalled from the SDM, not re-read here, so **inferred**), they clear bits 63:13, bit 35 included, leaving `psr` bits 12:0; read as
-  one-bit clears they would clear only bits 13 and 14. Either way `psr.ic` and `psr.i` end clear. Then `br.few 0xffe96bd0` with `b0` = `0xffe7f040`. `0xffe96bd0` is the PAL's return-to-physical-mode helper: `rsm 0x6000`,
+  deposits of zero whose encoded length is 64 at positions 13 and 14 (`dep r28=0,r28,13,64`). The SDM truncates a deposited field that runs past bit 63 ("the most
+  significant len + pos6 - 64 bits of the deposited bit field are truncated", SDM rev 2.3 vol 3, `dep`, p. 3:51, **established**), so they clear bits 63:13, bit 35 included, leaving `psr` bits 12:0. `psr.ic` and `psr.i` end clear. Then `br.few 0xffe96bd0` with `b0` = `0xffe7f040`. `0xffe96bd0` is the PAL's return-to-physical-mode helper: `rsm 0x6000`,
   `cr.iip` = `b0`, `cr.ipsr` = `r28`, `rfi`. It touches no MSR and no memory.
 - `0xffe7f040` to `0xffe7f06c`: read the doubleword at physical `0xffffffe0` (the FIT pointer, `0x80000000ffa00000` in this image),
   add `0x18`, read that doubleword (the size/version word of FIT entry 1) and `tbit.z p0,p6=r2,0x19`, so p6 is set when bit 25 is
@@ -292,7 +291,6 @@ and FIT tables. The Ghidra decompile of `0xffeec2d0` and `0xffee0b20` was tried 
 **Not checked.**
 - Entries 1 and 8 beyond a skim; entries 4 to 7 and 9 for what they test (only scanned for MSR, reserved and undecodable words).
 - The SAL_A sub-id branch to `0xffc4e6f0`, and PAL's source for `r20` bits 15:8 (msr[1643] when no `p16`-`p22`).
-- Whether the SDM truncates a deposit past bit 63 as assumed; the SDM was not opened.
 - The GR35 field positions in boot-sequence.md and the GR37 field layout (the figures are checked in the sentence below). `ia` = bit 17 agrees with the PAL code (msr[1640] bit 59 is set from the `br.ia`
   return and lands in `r35` bit 17). The rest of the GR35 decode, and the layout `test_control` 46:0, `cs` 47, reserved 63:48, 0 = run,
   1 = skip are consistent with the code (`0xe030ffff8000` sets bit 47, and a set bit skips a group).
