@@ -1011,7 +1011,7 @@ pub mod md_reg_0005_0000 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050000;
 }
-/// Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back. (established)
+/// Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back. Header t (established)
 pub mod md_dqrp_dir_presvec {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x100050100;

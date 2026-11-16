@@ -357,11 +357,11 @@ Memory test and DRAM initialisation engine control; the name is ours. The PROM s
 
 ### Register `md_reg_0003_0000`
 
-MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. Roles of bits 2:0 and 3 are inferred only (size class, memory initialised).
+MD block register, unnamed; the name is ours. Initializing memory (site 0xffa782c0, which always runs) reads it, sets bit 3 and writes the result to this register and to md_reg_0005_0000. A routine reached only through a function-descriptor table (site 0xffa733d0) writes a size class from 0 to 4 into bits 2:0 of both; another (site 0xffa78f70) reads bits 2:0 plus one as a shift. Whether the table path runs on a single node was not traced. Must return the stored value. The 2.4 header names this offset SH_MD_DQLP_MMR_DIR_CONFIG (mask 0x1f, INIT 0x10): bits 2:0 SYS_SIZE (system size code), bit 3 EN_DIRECC (enable directory ECC correction), bit 4 EN_DIRPOIS.
 
 ### Register `md_dqlp_dir_presvec`
 
-Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. Bit meaning is inferred from the name only.
+Directory presence vector words 0 to 3 of the left directory queue port. The PROM writes the bit mask of present nodes: for each present NASID n in block A's node table it sets one bit (word and bit from n, the mode in SHUB_ID bits 45:44 and the node's position); for NASID 0 alone word 0 is 1 and words 1 to 3 are 0 in every mode. The same four values go to md_dqrp_dir_presvec and shubs_present. Never read back. The header says: node [63:0] presence bits, 1 = present (INIT 0). The loop includes a node other than the local one only when 0xffa129f0 returns 0 for it.
 
 Array of 4 registers, stride 16.
 
@@ -377,7 +377,7 @@ Memory and directory unit: privilege vector for access class 0 of the left direc
 
 ### Register `md_dqlp_dir_privec`
 
-Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back; meaning inferred from the name only.
+Privilege vectors 1 to 7 of the left directory queue port (vector 0 is md_dqlp_dir_privilege_vector at 0x1_0003_0300). The PROM writes constants, the same pair of values to the left and right ports: vec 0 0x4bfff, 1 0xc96f25b, 2 0xfffffff, 3 0x96ffff, 4 0, 5 0, 6 0x4803f, 7 0x48000 (the list is vec 0 to 7 at 0x1_0003_0300 to 0x370). Never read back. The header (SH_MD_DQLP_MMR_DIR_PRIVEC1..7, mask 0xfffffff, INIT 0) splits each word into IN, bits 13:0, in-partition privileges for locvec bit = 1, and OUT, bits 27:14, out-of-partition privileges for locvec bit = 0; one vector per access class.
 
 Array of 7 registers, stride 16.
 
@@ -423,7 +423,7 @@ As md_reg_0003_0000 for the right queue port block; the PROM only writes it, wit
 
 ### Register `md_dqrp_dir_presvec`
 
-Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back.
+Presence vector words 0 to 3 of the right directory queue port: the same values as md_dqlp_dir_presvec, written beside them. Never read back. Header title: node [63:0] presence bits, 1 = present; INIT 0.
 
 Array of 4 registers, stride 16.
 
@@ -694,7 +694,7 @@ SHub identification (local block, inferred). The kernel reads only the revision,
 
 ### Register `shubs_present`
 
-Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back.
+Present-SHub vector words 0 to 3 in the processor interface block: the same values as md_dqlp_dir_presvec, written third in each group. Never read back. Header title: Shubs 0 - 63 Present, used for invalidate generation; header INIT 0xffffffffffffffff (macro only, no power-on claim).
 
 Array of 4 registers, stride 128.
 
@@ -747,7 +747,7 @@ Election write register; the name is ours. SAL_A stores slice + 1 here and reads
 
 ### Register `lb_l1_state`
 
-L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here.
+L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
