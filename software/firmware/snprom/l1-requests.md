@@ -25,7 +25,8 @@ sibling image, or a path whose gating condition was not evaluated. *unknown*: no
   A request with no arguments is exactly six payload bytes with no count byte: the builder's sixth parameter (argument slots, two
   per integer or string, three per raw block) is tested at `0xffa81ff6` and a zero sends it to `0xffa82150`, which returns length 6
   (established, Ghidra and objdump of `0xffa81f40`). The requests `0x0001`, `0x0003`, `0x0009`, `0x000e`, `0x0010` and `0x0013` pass 0
-  (call sites `0xffa7d040`, `0xffa7ca10`, `0xffa7db00`, `0xffa7ce90`, `0xffae8250`, `0xffa7cbe0`); `0x100b` passes 6 (count 3) and
+  (routine, call site: `0xffa7d040` at `0xffa7d0dc`, `0xffa7ca10` at `0xffa7ca9c`, `0xffa7db00` at `0xffa7dc7c`, `0xffa7ce90` at `0xffa7cf1c`,
+  `0xffae8250` at `0xffae82fc`, `0xffa7cbe0` at `0xffa7cc6c`); `0x100b` passes 6 (count 3) and
   `0x1005` passes 2 (count 1). Wire example for `0x0003`: `7e 05 0f ff f0 06 00 03 69 27 7e`. The ARM L1 reads the count only when the
   frame is longer than 7 bytes before the CRC and takes 0 otherwise, so both ends agree (sysco `sn2-prom-link-1.62.1.md`). The destination word is the open target
   ORed with 6 (the task). Every request on the main path is opened with target `0x0ffff000`, so the word is `0x0ffff006`
@@ -141,7 +142,7 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   -> `0xffa7d510` -> `0xffa7d1f0` (cache key 0 miss). First identity request of the run.
 - **Arguments:** none.
 - **Reply read:** two integers: the module word and the type. The type is lowercased by the PROM if it is a letter `A` to `Z`
-  (`F` becomes `f`, `0x66`). The module word is cached; its bits 19:6 and 5:0 are split into rack and bay by `0xffa7d1f0`.
+  (`F` becomes `f`, `0x66`). The module word is cached; its bits 15:6 (rack) and 5:0 (bay) are split out by `0xffa7d1f0`; it masks the word to 20 bits and keeps ten of them for the rack, so a larger rack number is truncated.
 - **Needs:** status 0, count 2, tags 0 and 0. On `F` the later type switch (`0xffa7d510`) sends the next request.
 - **On error:** the wrappers return -1 and the later users get an unknown module; not fatal here.
 - **Repeats:** once (cached) unless the cache is lost.
@@ -153,7 +154,7 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   type `0x46` (`F`, inferred). The PROM accepts it when the status is 0, the count is 2 and both tags are `0x00` (`0xffa82270`, expected
   list of two integers from `0xffa7ca10`); a wrong tag gives -32, a wrong count -33. After lowercasing (`f`), `0xffa7d510` asks `0x000e`
   and turns the type into `c` if the slab is 0 or -1. The observed destination `0x0ffff006` is the `0xffa7d1f0` path; the `0xffa7e3b0`
-  wrapper would send `0x4ffff006`.
+  wrapper would send `0x4ffff006` (`sysctl_cmd_open` `0xffa819c0` rewrites a `0x4ffff000` target to `0x0ffff000` when the node's cached type is `m` or `o`).
 - **L1 handler:** `0xc8bb8` (sysco, established): `rack << 6 | bay` then the type character. Blank L1: 0 and the brick type (inferred `F`).
 - Grade: request, reader, order: established; `F` for an Altix 350: inferred.
 
@@ -163,13 +164,13 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
   type `f` (as `l`, `b`, `{`) triggers a slab lookup.
 - **Arguments:** none.
 - **Reply read:** one integer (the slab). On error the routine returns -1.
-- **Special effect:** if the slab is `0` or `-1`, `0xffa7d510` replaces the type with `c` (99). A one-node Altix 350 reports slab 0,
-  so the type seen by the PROM becomes `c`.
+- **Special effect:** if the slab is `0` or `-1`, `0xffa7d510` replaces the type with `c` (99). If a one-node Altix 350 reports slab 0
+  (inferred, see the review at the end), the type seen by the PROM becomes `c`.
 - **Needs:** status 0, count 1.
 - **Reply on the wire** (established for the shape, L1 1.62.1 handler `0xca214`): `20|subchannel`, `00 00 00 00`, `01`, `00` plus the slab as a
   32-bit big-endian integer (a zero-extended byte): 11 payload bytes. For a single-slot type the blade workaround is skipped and the slab
   is `SysComGetSlab` of the request's source tag (0 for the lone node: inferred). The PROM (`0xffa7ce90`, expected list of one integer)
-  holds it as a signed char, so `0xff` reads as -1; the caller `0xffa7d950` caches it under key 4. In `0xffa7d510` the condition is
+  holds it as a signed char, so `0xff` reads as -1; the caller `0xffa7d950` caches it under key 4 unless it is -1 (a reply of `0xff` is returned but not cached). In `0xffa7d510` the condition is
   `(slab + 1) & 0xff < 2`, so slab 0, 0xff or a failed request give `c`, and slab 1 to 254 keep `f`. The type and module word then go to
   `0xffa7d010`, which packs `rack << 16 | type << 8 | bay`.
 - **L1 handler:** `0xca214`. Blank L1: 0 (inferred).
@@ -503,3 +504,32 @@ Independent re-read of the CRB message-control rewrite and the L1 sender paragra
 - **Grades.** The name, offset and layout are established; the reset values stay inferred (the `INIT` macros); the effect of the die write is inferred and nothing in the pages claims more. No source read says the register resets a node, and none says it does not, so "no boot loop" rests on the missing reset field. SAL_A spinning after the store is read from code.
 - **Patents.** US 6,678,798 (node controller read-latency, speculative reply) and US 6,751,698 (SN1 Bedrock) are in the Library. 6,678,798 describes the SHub-style node controller (processor interface, memory directory, network, I/O, local block, crossbar), NACK-based non-blocking protocol, and the timed I/O read after which a missing invalidate acknowledgment is ignored; the three pages read (front page and the first two of the description) name no registers, so it explains what the speculative and IVACK controls are about but not what clearing the coherence enable does at the chip. The Bedrock patent is another chip and its source map in the Library says it is not a register map; it was not read through. Neither states what a write to this register does. The effect stays inferred.
 - **Not checked.** The write helper at `0xffa0c560`, the SHub 2 overlay's `SH2_CRB_MESSAGE_CONTROL` name, and the "SAL_B" users of the NACK, prescale and skid registers. URLs: none read outside the Library.
+
+## Review (request frame grammar and identity replies)
+
+Independent re-read of the frame grammar and the `0x0003`, `0x0002` and `0x000e` replies, in Ghidra with Capstone and `objdump` as cross-checks. Images: `shub1snprom.bin` (sha256 `51ccf9ad830b...`), the 1.62.1 and 1.38.4 `/stand/sysco/bin/l1` programs (sha256 `22cb6287...` and `f652c04c...`).
+
+- **Confirmed (established).**
+  - `0xffa81f40` writes the count byte only when its sixth parameter (`cmp4.eq` at `0xffa81ff6`) is nonzero, and `0xffa82150` returns length 6. Argument tags are `0` plus 4 big-endian bytes, `1` plus the string and its NUL, and `0x80|n` plus n bytes. Slots are 2, 2 and 3.
+  - The sixth parameter is 0 at all six zero-argument call sites listed in "Frame". `0x100b` passes 6 and `0x1005` passes 2.
+  - The CRC of the wire example is `69 27`.
+  - On the L1, `syscom_process_inbound_request` (1.62.1 `0xc2284`, 1.38.4 `0x83ac4`) reads byte 7 only if the length is above 7 and otherwise takes 0. The loop runs count times. The code starts the argument list at 1, so the entry `-100` test (total zero) cannot fire. `PPPRead` (read in 1.38.4) strips the check bytes before the length reaches the parser.
+  - The reply layout, header, status, count and arguments, gives 16 bytes for `0x0003` and 11 for `0x0002` and `0x000e`.
+  - The PROM reply parser `0xffa82270`: status 0, then count equal to the arguments consumed, or `-32` for a wrong tag and `-33` for a wrong count. The lowercase fold, the `(slab + 1) & 0xff < 2` rule and `0xffa7d010` packing are as written. The rule fires only for the lowercase types `f`, `l`, `b` and `{`.
+  - Destination `0x0ffff006` is the `0xffa7d1f0` path (it passes `0xffff000`). `0xffa7e3b0` passes `0x4ffff000`.
+- **Corrected.**
+  - The rack field is bits 15:6 of the word, not 19:6.
+  - The call-site list named routine entries. The list now gives both.
+  - `0x4ffff000` is rewritten to `0x0ffff000` for node types `m` and `o`.
+  - The slab-0 sentence in the `0x000e` entry stated a value the code does not fix.
+  - A `0xff` slab is not cached.
+- **1.38.4 replies (read, not on the page before).**
+  - The `0x0002` and `0x0003` handler (`0x8882c`) gives the same layout, but its type mapping differs: type `Z` and type `|` both become `,` (with a log entry), and `=` becomes `#` when the per-slot flag is zero. 1.62.1 has only the `=` rule.
+  - `0x000e` replies with the slab, or `slab & 1` for type `Z`. There is no blade workaround. 1.62.1 applies the workaround only for types `,`, `}`, `.` and `$`, or a brick with more than one slot.
+  - None of this changes the `F` path.
+- **Lone-node slab.**
+  - For type `F` the L1's `SysComGetSlab` of the source tag is `tag >> 5`, and the tag is `(channel * 32 + (header & 0x1f)) & 0x7f`. The slab is the channel number the frame arrived on, mod 4.
+  - The channel number of the node link on an `F` brick comes from the Opus TIO scan-chain configuration, which was not read. Slab 0 is therefore still inferred (it holds if the node is channel 0), and so is the `c` fold.
+  - The tag-to-request-struct copy through `IRouterRequest` was read only as far as the argument passing.
+- **Grades.** `F` for an Altix 350 and slab 0 for the lone node stay inferred.
+- **Not checked.** The `0x4ffff006` caller chain beyond the `0xffa819c0` rewrite, and the 1.38.4 `0x0013` handler.
