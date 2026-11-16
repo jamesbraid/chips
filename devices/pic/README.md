@@ -747,6 +747,67 @@ Values a model needs for this stage: id word `+0` with manufacturer `0x24` and p
 register above plain read/write storage (8-byte), a clock at `0x1_101c_0000` that advances (the waits), and no side effect on
 reads of `+0x20`, `+0x48`, `+0x80`.
 
+## SAL runtime PIC attach and PCI scan (`pic_attach2`, `0xffb6d9c0`)
+
+Run by the first `SN_SAL_IOIF_GET_HUBDEV_INFO` (`0x55`) or `IOIF_INIT` (`0x5f`) call, not by the boot path to "Loading EFI"
+([SAL runtime page](../../software/sal/sn2-runtime.md#io-interface-calls-0x51-to-0x5f-0x60-0x64)): `0xffb2d450` builds the bus list
+(`0xffb2aff0`), then `pic_attach` (`0xffb6d740`, "pic_attach: bridge0=0x%lx, bridge1=0x%lx") calls `pic_attach2` for bus 0 (window `W`)
+and bus 1 (`W + 0x80_0000`), and `0xffb2be00` scans and sets up devices. Same Itanium conventions and accessors as
+[the previous section](#prom-set-up-of-a-pic-in-main_three-0xffab0c00); the code is a port of the IRIX sequence above, with the
+differences below. Read in the listing; values in the order the code issues them, 8-byte accesses unless stated. Grades are for the
+instructions; what a register bit means is as graded earlier on this page.
+
+| # | Site | Offset | Dir | Value or test | Differences from the IRIX sequence on this page | Grade |
+|---|---|---|---|---|---|---|
+| 1 | `0xffb6da1c` (`0xffab39f0`) | `+0` identification, 4 | R | manufacturer `0x24` and part `0xd102` or `0xd112` (type 2); the revision (bits 31:28) is kept for the tests below | none | established |
+| 2 | `0xffb6dcfc`, `0xffb6dd1c` | `+0x20` bits 5:4 (speed); `+0x08` bit 33 (mode, 1 = PCI-X) | R, R | | none | established |
+| 3 | `0xffb6df50` loop, 256 passes (skipped when `cpuid[2]` holds the simulator signature `0xaeeeeeee8badbeef`) | `+0x18000 + 8i`, `+0x18800 + 8i`, `+0x19000 + 8i` for `i` in 0 to 255, 8-byte `st8.rel` | W | 0, in the order bank 0, 1, 2 within each pass; these are the three banks the IRIX attach zeroes first | | established |
+| 4 | `0xffb6e35c` | `+0x110` | W | `0xffffffffffffffff` | IRIX writes `0x7f` | established |
+| 5 | `0xffb6e38c` | `+0x120` | W | `0x6db6db` | none | established |
+| 6 | `0xffb6e39c` (`0xffb6bd50`) | `+0x80`: direct map, the same accessors as the IRIX routine (offset field, widget field, add-512 MiB bit) | RMW | the translated value of `nasid << 33`; not decoded here | | inferred (call list only) |
+| 7 | `0xffb6e3bc` to `0xffb6e55c` | `+0x20` | R, W | control with bits 55:48 cleared, bits 42:40 cleared, bits 62:61 cleared, bit 31 set, bit 21 cleared; bit 29 set if revision is not 1; bit 30 cleared if revision is 1, 2 or 3. The listing also ORs a shifted bus number into 55:48 and then ANDs the same mask again, so bits 55:48 end clear (read as written; not cross-checked against the decompiler) | IRIX sets bit 21 and bits 31:30 | established as read; the double mask is unverified |
+| 8 | `0xffb6e5ac`, loop | `+0x10000 + 8*i` for `i` in `0 .. N-1` (`N` the record's entry count, `pcireg_int_ate_set`) | W | 0 each |  | established |
+| 9 | `0xffb6e68c`, `0xffb6e6ac`, `0xffb6e6bc` | `+0x38` RMW (bits 51:48 = target widget id); `+0x118` = 0; `+0x50` read (tflush) | RMW, W, R | | none | established |
+| 10 | `0xffb6e89c` and following | per slot `s` from the record's first to last slot: PCI configuration reads and writes (next table); revision 1 only: `+0x280` and `+0x288` set bits `0xf000f` (`pcireg_rrb_bit_set`); revision 1: `+0x28` = `0x750` | | | as IRIX | established for the order and values |
+| 11 | per slot | Device(s) `+0x200 + 8*s`: R, then W with bit 27 cleared, bits 25 and 18 set, bit 13 cleared and bits 11:0 from the slot's direct-mapped window (`0xffb37e70`, `pcibr_slot_device_init`) | RMW | the window bits depend on the BAR windows the PROM assigned: not a constant | | established for the bit operations; the window field inferred |
+
+Slot range and ioboard switch (`pic_attach2`, from `0xffb6ea10`): the record's ioboard type halfword (`+0x104`) must be `0x23`, `0x3d`,
+`0x6d`, `0x6f` or `0x76`, else "%s: Unknown ioboard: 0x%x" and this bus is not attached (established). For `0x23`, `0x3d` and `0x6f` bus 0 gets
+slots 0 to 1 (valid-device mask 3) and bus 1 slots 0 to 3 (mask `0xf`) when the base-I/O test `0xffb32470` is true, else slots 0 to 1 on both
+(established for the stores; the test's meaning inferred). Whether the ioboard type is the L1 brick-type byte the klconfig builder used
+(and so whether a 350 whose L1 answers `F`, `0x66`, passes) is not established: `0x66` is not in the accepted list, `0x6f` is.
+
+### PCI configuration access (`0xffb6afc0`, `pcireg_type0_cfg_addr` `0xffabed10`)
+
+| Item | Value | Grade |
+|---|---|---|
+| Type 0 address for bus 0, device `d`, function `f`, register `r` | `W + 0x21000 + d * 0x1000 + f * 0x100 + (r & ~3)` (the PROM adds `0x20000` and numbers devices from 1) | established |
+| Type 1 (bus not 0) | `+0xc8` = `bus << 16 \| device << 11` first (8-byte write), then `W + 0x28000 + f * 0x100 + (r & ~3)` | established; no device behind a PPB is needed on the Altix 350 |
+| Read | 4 bytes at the word address through the protected read helper `0xffaeb170` (`pio_safe`, `0xffb351d0`), then `+0x110` is written `0x40`; narrower reads shift and mask the word | established |
+| Failure | the helper returns status 0: the slot is absent; no error is printed | established |
+
+### Probing a slot (`pcibr_slot_info_init`, `0xffb36020`)
+
+For each slot: read the word at register 0 (above). Absent if the protected read failed, or if the low 16 bits are `0xffff`
+(`0xffb36250`). A failed read does not mark the slot; a slot that answered (including `0xffffffff`) is first marked in the record's
+valid-device mask (`+0xac`). A slot whose id is vendor `0x10a9` device `0x100a` (an IOC4) records itself in the board
+(`0xffb32680`). Then header type (register `0xe`, bit 7 = multifunction); with that bit set, functions 1 to 7 are read the same way. The
+IP35 PROM reads only function 1 (see [facts outside the census](facts-outside-census.md#empty-slot-configuration-reads)); this
+runtime reads 1 to 7. An empty slot may return `0xffffffff` with no machine check, or fail the protected read: either is "absent". What
+the real PIC does for an unclaimed configuration cycle (the error status, master timeout in `+0x100`) is unknown, and the PROM clears
+nothing but `+0x110 = 0x40` after the read.
+
+Recognised devices in the later device set-up: vendor `0x10a9` with device `0x100a` (IOC4) or `0x0003` (IOC3), allowed only in slots
+0 to 2 ("ERROR: IOC3/IOC4 devices must be located in one of the first 3 slots", `0xffb38260`, slot 3 fails and the allocation returns 0);
+IOC3 and IOC4 get their endianness set by the bus provider method (`0xffb3f810`); vendor `0x1077` with device `0x1240`, `0x1280` or
+`0x1216` gets three response buffers on each map (`0xffb33880`; "Unable to allocated RRBs for qlogic scsi" if that fails). No other
+vendor or device constant appears in the runtime, so a Vitesse SATA controller (`0x1725:0x7174`) is handled as any other device
+(BAR sizing and mapping, `0xffb3bec0`, interrupt line and pin; not traced).
+
+Not traced: BAR sizing and mapping, interrupt pin assignment (`+0x130 + 8n`, written at interrupt allocation by the provider,
+`SN_SAL_IOIF_INTERRUPT`), error interrupt set-up in the late-init method (`0xffb6cef0`: interrupt `0x33`, writes `+0x38` and
+`+0x128`, then the enable register), and the Device register values.
+
 ## Open
 
 See [questions/pic-field-and-revision-open.md](../../questions/pic-field-and-revision-open.md).

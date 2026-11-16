@@ -288,6 +288,37 @@ A model that boots the held SN2 kernel needs, in order of how much of it is esta
 4. An L1 that answers the module type and board reads of device 1 with an IPMI-style area, so the PROM's I/O record
    builds; a failed read is not fatal ("Could not retrieve EEPROM info", the record is emptied).
 
+## What the PROM probes on a one-PIC base I/O card
+
+Board-level reading of the SN2 PROM (snprom 10.54, SHub 1), in boot order. Register-level detail is in
+[the SHub I/O interface page](../../devices/shub_ii/README.md#io-discovery-in-main_three-instruction-by-instruction-0xffab38b0) and
+[the PIC page](../../devices/pic/README.md#sal-runtime-pic-attach-and-pci-scan-pic_attach2-0xffb6d9c0).
+
+1. **Before "Loading EFI" (`main_three`): no PCI access at all.** The PROM reads the widget id words of widget 0 and of each valid
+   link, sets the link and credit registers, and for a link whose id is part `0xd102` resets and initialises each of the PIC's two
+   buses through the PIC's own registers (control, direct map, response buffers, LLP configuration, and on bus 0 the interrupt enable,
+   reset and host error registers). It never issues a configuration cycle. Unless the L1 brick type is `0x23` or `0x3d`, it pulses the PCI reset pins
+   and waits about one second for devices to settle. Established.
+2. **At the first I/O SAL call (`0x55` or `0x5f`): the scan.** For each PIC bus the runtime attaches the bridge, then for each
+   slot in the bus's range (slots 0 to 1 on bus 0; slots 0 to 3 on bus 1 of a base I/O card; established for the stores, inferred for the
+   "base I/O" test) reads configuration register 0 of function 0. Slot `s` is at window offset `0x21000 + 0x1000 * s`.
+3. **What a slot must return.** A present device returns its vendor and device ids. An empty slot may return `0xffffffff` (the
+   vendor test `0xffff` skips it) or make the protected read fail (also skipped); neither prints anything. What the PIC does for an
+   unclaimed configuration cycle on real hardware is unknown, as is whether the Altix 350 firmware path needs it.
+4. **Devices it recognises.** IOC4 (`0x10a9:0x100a`) and IOC3 (`0x10a9:0x0003`) in slots 0 to 2 only; QLogic `0x1077` with device
+   `0x1240`, `0x1280` or `0x1216` (the IO9's ISP 12160). Nothing recognises the IO10's Vitesse `0x1725:0x7174`: it is mapped as a
+   generic device. A model needs the IOC4 at slot 1 and the SATA controller at slot 3 as the Linux variant test requires
+   ([above](#the-io10)); the PROM places no further requirement. Established for the PROM's lack of a Vitesse constant; the
+   slot numbers of the add-in slots stay unknown.
+5. **No PCI devices at all is not fatal in the code read.** Every slot returns "absent", the attach carries on to the interrupt and
+   error set-up, and the SAL calls still return their data with empty device lists. The only aborts in the attach are an allocation
+   failure and an ioboard type outside `0x23`, `0x3d`, `0x6d`, `0x6f`, `0x76`. Inferred for the whole scan (the scan driver was read at its
+   slot loops, not end to end); the kernel then finds no IOC4 and no disks.
+6. **Brick type.** `pic_attach2` accepts ioboard types `0x23`, `0x3d`, `0x6d`, `0x6f` and `0x76` only. The klconfig builder's inferred `0x66` for a
+   350 ([KLCONFIG](klconfig.md#the-io-boards-on-a-one-node-altix-350-with-io10)) is not in that list. Whether both read the same
+   byte is **unknown**; if they do, an `F` reply would stop the PIC attach and `o` (`0x6f`) would not. A model should answer `o`
+   (or the IX brick value `0x3d`) until a 350 capture settles it.
+
 ## Open points
 
 Filed in [the base I/O question page](../../questions/altix-base-io-cards.md): the Ethernet controller part and slot on
