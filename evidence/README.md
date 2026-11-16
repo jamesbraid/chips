@@ -18,6 +18,7 @@
 | [instruction-readings-chips-g3.md](instruction-readings-chips-g3.md) | Instruction readings from hostfacts | These entries record instruction facts rendered from the routines below. |
 | [interconnect-naming.md](interconnect-naming.md) | SGI interconnect naming: every name, from the deepest source | A second check of this file against the primary sources found the following. |
 | [irix-files.md](irix-files.md) | IRIX files this repository reads | Proprietary SGI files, copied by the reader from their own IRIX 6.5.30 install or media into `root/`. |
+| [prom-images.md](prom-images.md) | SGI MIPS PROM images we hold | Inventory of the SGI MIPS workstation and server PROM images we hold, one row per image, each identified by its sha256. |
 | [reading-brief.md](reading-brief.md) | Brief for a census worker | You produce register-access evidence for one chip from the shipped IRIX binaries, then write entries from it. |
 | [runtime-address-decode-changes.md](runtime-address-decode-changes.md) | Hub and Bedrock: what changes the meaning of an address after boot, under IRIX 6.5.22 and 6.5.30 | Question. |
 | [sn1-ia64-sources.md](sn1-ia64-sources.md) | SGI SN1 on IA-64: where the Linux source lives and how long it lasted | The Library root `linux-history` holds SGI's Linux port to the Bedrock-based IA-64 node ("SN1", also spelled SNIA or... |
