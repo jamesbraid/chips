@@ -197,10 +197,11 @@ Other pages: [boot-sequence](../../software/firmware/snprom/boot-sequence.md#2-i
 The PROM reaches II register `X` (header offset, `0x400000` and up) at `0x8_0000_0000 + 0x180_0000 + X`, with bit 63 set and
 `nasid << 38` added: `0x8_01c0_0020` is IIO_WCR, `0x8_01c1_0000` IIO_IBLS0. That is Linux's small window 1 plus 8 MiB
 (`SH1_REMOTE_SWIN_MMR`, `addrs.h`). The code builds each address with two untaken alternatives (an offset with bit 38 set, an
-offset with bit 32 set, the big-window form); for every II constant the small-window form is taken. One routine, the block
-transfer copy `0xffa952f0`, uses a local alias instead, `0x8000_0080_0141_0000` and `0x8000_0080_0142_0000`
-(local MMR space `0x80_0000_0000` plus `0x100_0000` plus the offset); that this is the same register as the global form is
-inferred. Every II register access goes through two helpers, `0xffa0e5a0` (64-bit load) and `0xffa0e640` (64-bit store); each
+offset with bit 32 set, the big-window form); for every II constant the small-window form is taken. The two-engine copy test
+`0xffa96980` uses the local form `0x8000_0080_01c1_0000` and `0x8000_0080_01c2_0000` (local MMR space `0x80_0000_0000` plus
+`0x180_0000` plus the offset; inferred to be the same register as the global form). One routine, the block transfer copy
+`0xffa952f0`, uses another local alias, `0x8000_0080_0141_0000` and `0x8000_0080_0142_0000` (local MMR space plus `0x100_0000`
+plus the offset); that this is the same register as the other forms is unknown. Every II register access goes through two helpers, `0xffa0e5a0` (64-bit load) and `0xffa0e640` (64-bit store); each
 clears psr.i and psr.dt (`rsm 0x24000`; psr.ic is not touched) around a single access, then runs `mf.a` and a serialise, so all
 accesses are single, ordered, uncached 8-byte accesses (established). Widget window accesses are 4-byte loads and stores
 (`ld4.acq`, `st4.rel`) at `0x8_0000_0000 + nasid << 38 + link * 0x100_0000 + offset` for link 0 to 15 (small window `link`),
@@ -434,7 +435,7 @@ Established as definitions.
 | Site (IBCT store, return ip) | Routine and caller | IBCT | Engine, window | Source, destination, length | Notify | Reached on a lone node |
 |---|---|---|---|---|---|---|
 | `0xffa9700c` (`0xffa97010`) and `0xffa9702c` (`0xffa97030`) | `0xffa96980`, called from `main_two` at `0xffa1b04c` | `0x10` copy plus notify, on both engines | engine 0 and engine 1 together, local alias `0x8000_0080_01c1_0000` and `0x8000_0080_01c2_0000` | src0 to dst0 and src1 to dst1; four 512 KiB heap buffers (`0xffac3da0`, 128-byte aligned), IBLS `0x101000` (busy plus `0x1000` lines) on each engine | a separate 8-byte zeroed word per engine, address masked | yes when debug-switch word bits 1:0 are not 1 (a zero word runs it); skipped when the word's bits 1:0 are 1, when `0xffa0ff30` is 0, or when `cpuid[2]` is the simulation marker |
-| `0xffa95640` store, call `0xffa9564c` | `0xffa952f0` (block copy), only caller `0xffa736d0` (credit adjustment) | flags and `0x11` (the caller passes `0x11`: zero fill plus notify) | engine by `cr.lid` bit 23, local alias `0x8000_0080_0141_0000` or `0x8000_0080_0142_0000` | the 1 KiB stack buffer as source and destination, IBLS `0x100000 | length >> 7` | caller's scratch word, busy marker preset | only when the first read of `0x81_2006_0980` is below 8 |
+| `0xffa9564c` (`0xffa95650`) | `0xffa952f0` (block copy), only caller `0xffa736d0` (credit adjustment) | flags and `0x11` (the caller passes `0x11`: zero fill plus notify) | engine by `cr.lid` bit 23, local alias `0x8000_0080_0141_0000` or `0x8000_0080_0142_0000` | the 1 KiB stack buffer as source and destination, IBLS `0x100000 | length >> 7` | the helper's own scratch block (word at offset 0), preset to all ones | only when the first read of `0x81_2006_0980` is below 8 |
 | `0xffa7ae9c` (`0xffa7aea0`) | `0xffa7a960` (`memctl_mbist_credit_war`), from "Testing memory" (argument 4) and "Initializing memory" (argument 2) | `0x11` | engine 0, global window `0x8_01c1_0000 + nasid << 38` | zero fill; source, destination and notify address all equal the flagged bank's base, IBLS `0x100000 + 2 * (argument - register)` | the bank base (as IBNA) | first call yes if `0x1_0001_0068` reads below 4 (reset 0 gives IBLS `0x100008`); polls IBLS bit 20 clear, 2,000,000 ticks |
 
 No other IBCT writer exists among the address immediates; the error clean-up `0xffa94d40` writes IBCR, IMEM and IECLR and never IBCT, and the II set-up `0xffab1cc0` only reads IBCT.
@@ -470,8 +471,12 @@ was not re-derived here. The timer unit stays inferred.
 
 Window forms: the PROM writes the same engine registers through three address forms: the local alias `0x8000_0080_01c1_0000`
 (this routine), the local alias `0x8000_0080_0141_0000` (`0xffa952f0`) and the global form `0x8_01c1_0000 + nasid << 38`
-(`0xffa7a960`, the II set-up). That the `0x0141` form is the same register block as the `0x01c1` form is carried over from the
-review of `0xffa952f0` and not shown independently here: the two differ in bit 23, **unknown** how the hardware decodes it.
+(`0xffa7a960`, the II set-up). The `0x01c1` local form is the global form's arithmetic (small window 1 plus 8 MiB) with the local
+base: the PROM's own register-address builder in `0xffa5c900` adds `0x180_0000` to an offset with bit 32 clear and then ORs
+`0x8000_0080_0000_0000`, which gives exactly this address. **Inferred** the same block as the global form (Linux has no local
+II form). The `0x0141` form lacks the 8 MiB and differs from `0x01c1` in bit 23; no source here says how the hardware decodes
+that bit, and the only path that uses `0x0141` (`0xffa952f0`) runs only when the credit read is below 8. **Unknown** whether
+`0x0141` reaches the same block.
 
 What a model must implement for the PROM:
 
@@ -485,6 +490,18 @@ What a model must implement for the PROM:
 
 Unknown: what the hardware stores in the notification word on success (the Linux kernel's own status word is the only
 evidence, and the kernel-side waiter treats anything but its busy marker as done); the engine's timing; the `0x0141` decode above.
+
+### Review (the BTE operations table and the two-engine copy test, commit 660e005)
+
+Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-64 module, `--sn2-prom --no-analysis`) decompiles of `0xffa96980`, `0xffa0ff30`, `0xffa17b90`, `0xffa97660`, `0xffa975e0`, `0xffa952f0`, `0xffa7a960`, `0xffa736d0`, `0xffa73640` and `main_two`; the `ia64-linux-gnu-objdump` listing only for call slots, immediates and the memset helper. IBCT, IBLS and the bit positions against Linux v5.3 `shubio.h` and `bte.h`.
+
+**Confirmed.** IBCT bit 0 `IBCT_ZFIL_MODE`, bit 4 `IBCT_NOTIFY`, bit 8 `IBCT_POISON`; IBLS busy bit 20, error bit 16, length mask `0xffff`; `BTE_NORMAL` is notify alone, `BTE_ZERO_FILL` is `0x11`, `BTE_VALID_MODE` keeps bits 4 and 0; `BTE_MAX_XFER` is the length mask shifted by `L1_CACHE_SHIFT`, so lines (the PROM itself uses `>> 7`). `0xffa96980`: called from `main_two` at `0xffa1b04c` right after progress 27; argument from `0xffa17b90(0)` (the stub `0xffb91cb0` returns 0, so the mode is debug-word bits 1:0, plus 16 for bit 2); gates in the order simulation `cpuid[2]` (`0xaeeeeeee8badbeef`), `mode & 15 == 1`, `0xffa0ff30`; four 512 KiB and two 8-byte blocks from `0xffac3da0(0x80, size, arena)`; `memset` stores only the low byte (`0xc3`, `0xa5`, `0xad`, `0xad`, zero, zero); register writes IBLS `0x101000`, IBSA, IBDA, IBNA per engine, each address ANDed with `0x7fffffcfffffffff` (clears bits 63, 37 and 36), engine 0 then engine 1, then IBCT `0x10` at the call slots `0xffa9700c` and `0xffa9702c` (return ips `0xffa97010`, `0xffa97030`); windows `0x8000_0080_01c1_0000` and `_01c2_0000`; no BTE register is read; the poll tests bit 20 of the two zeroed notify words, so it never waits; the deadline is timer plus `30000000` (`0x1c9c380`) and a timeout falls through silently; both `memcmp` results are discarded; six frees. `0xffa952f0`: engine by `cr.lid` bit 23, windows `0x8000_0080_0141_0000` and `_0142_0000`, notify word preset to all ones, IBLS `0x100000 | (length >> 7) & 0xffff`, IBCT `flags & 0x11` last, only caller `0xffa736d0` passing `0x11` and no notify pointer, entered only when `0xffa73640` (write `0x88c` to `0x81_2005_0d80`, read `0x81_2006_0980 & 0x3f`) is below 8. `0xffa7a960`: global window `0x8_01c1_0000 + nasid << 38`, IBCT `0x11`, IBLS `0x100000 + 2 * (argument - register)` entered only when the register at `0x1_0001_0068` is below the argument (4 or 2, set by the wrappers `0xffa7af50` and `0xffa7af90`), IBLS bit 20 poll to timer plus 2,000,000, simulation skip.
+
+**Changed.** (1) The `0xffa952f0` row named the bundle `0xffa95640` as the store; the IBCT call slot is `0xffa9564c`, return ip `0xffa95650`. (2) The same row's notify word is not the caller's: with no notify pointer the helper uses the start of its own 0x90-byte scratch block. (3) The window paragraph is regraded: the `0x01c1` local form is **inferred** to be the global II block (the PROM's own address builder in `0xffa5c900` produces `0x8000_0080_0000_0000 + 0x180_0000 + offset` for any offset with bit 32 clear); whether the `0x0141` form (local base plus `0x100_0000`, no 8 MiB) reaches the same block is **unknown**, not inferred. The address-map page has no local II form and Linux builds none. (4) For `0xffa7a960` the table did not say that the routine needs a flagged bank among four table entries (bit 0 of the halfword at `+4` of entry i) and that source, destination and notify address are `nasid << 38 | bank << 34`, unmasked and without bit 63.
+
+**Not checked.** The Linux 2.4 `shubio.h` bits (only v5.3 was read, and the 2.4 `bte.h` composition by search hit); the allocator's returned address form (inferred, unchanged); the timer unit (inferred, unchanged); the caller of `0xffa73b00` and its simulation skip; the two call sites of `0xffa7af50` and `0xffa7af90` beyond the argument they set.
+
+**Model requirements.** None change. The self-test needs IBCT `0x10` accepted on both engines and IBLS bit 20 not required to be anything; the mbist routine still needs IBLS bit 20 to read clear after IBCT `0x11`. A model that serves bits 5:0 of `0x81_2006_0980` as 8 never reaches the `0x0141` window.
 
 ### Review (II and BTE set-up)
 
