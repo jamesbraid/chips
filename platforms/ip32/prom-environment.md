@@ -17,7 +17,7 @@ Sources and grades:
   names and messages (`flash_write_env`, "nvram table overflow") but was not read in full.
 - **Flash dump**: the 512 KiB PROM 4.18 image in a public PROM mirror (`ip32prom.rev4.18.bin`, SHA-256
   `a60e19b6d0a1bd807a75383f90d088a2a0b73cf892a72f19f2e897d9c31979f0`) carries an env segment from a used machine.
-  Origin of the dump is not recorded: grade **observed**, source machine unknown.
+  Origin of the dump is not recorded: **inferred** as to which machine wrote it (the segment bytes themselves are read from the file).
 - **Emulator captures** of flash files written by the stock PROM running on a model (about a dozen distinct stores).
   They reproduce the PROM's own output byte for byte against the rules below. They are model behaviour, not hardware.
 
@@ -82,7 +82,7 @@ comes back as `console=g` at the next start.
 Variables that are never stored (established, table at `0x81055438`): `DEBUG`, `VERBOSE`, `_udpcksum` (bound to
 integers in RAM), and the read-only `gfx`, `cpufreq` and `eaddr` (the Ethernet address comes from the identity chip).
 
-Consumers (software expectation: call sites found by scanning for the string addresses; only the first two were read
+Consumers (inferred: call sites found by scanning for the string addresses; only the first two were read
 in some depth): `console` and `monitor` at `0x8100dde4` (display setup: `monitor` starting with `g` or `G` selects the
 graphics-console path; an empty `console` falls back to a default), `dbaud` and `rbaud` at `0x81009ae0` (serial rates,
 19200 and 9600 fallbacks) and `0x8100b138`, `AutoLoad` at `0x81039ac0`, `SystemPartition`, `OSLoadPartition`,
@@ -177,3 +177,26 @@ checked against a store the stock PROM wrote on an emulator (identical bytes), a
 - Whether the real kernel at 6.5.22 and 6.5.30 differs from the 6.5.7 source in header version string or length rules.
 - The calendar clock's 114 or 242 user-RAM bytes are not used by this PROM for the environment; no use of them by this
   PROM was found, and the kernel's reader of them is separate (see [devices/mace/README.md](../../devices/mace/README.md)).
+
+## Review
+
+Independent review against the shipped `ip32prom.image` (6.5.30 media; read in Ghidra as a flat image with file offset 0 at `0x80ff6cf8`, the base the
+console-input page uses, which also puts the variable table at the page's `0x810552f4` region) and the image's own factory segments. Confirmed, grades
+unchanged unless noted:
+
+- Header checksum (`0x81025614`): requires 256-byte alignment, `SHDR` at offset 8, length a multiple of 4, and the sixteen words from offset 0 to
+  `0x3c` summing to zero mod 2^32. Body checksum (`0x81025594`): the words from `0x40` to the end rounded up to 4, including the last, sum to zero.
+  Both hold for the four factory segments of this image and for its `env` segment (`0x400` bytes, empty body, name length 3, version length 3).
+- Create (`0x810394d0`) and update (`0x810396f0`): header words `0x00` to `0x38` written, then the header checksum word, then the body from the stack
+  pool, then the body checksum word last; length is the body rounded to 4 plus `0x44`; update rereads and writes the existing header back unchanged.
+  Matches the append order in the page. The pool is a stack buffer that is not cleared, so the tail is stale.
+- Variable table: 26 rows (name, default pointer, zero), ten with defaults in the page's order; the `netaddr` default string sits 8 bytes above its
+  pointer in the file (the shifted data block the page mentions). The keep rule in the rebuild (`0x8100aa64`: keep a name that is in the stored segment or
+  the default table, or any exact name with `-p`; drop it when it is being set to empty) matches the page.
+- Worked examples, recomputed with an independent script from the layout and the ten defaults: header checksum word `ce14138e` (sum of the fifteen words
+  `0x31ebec72`); body checksum `c11fb2ba` (body words sum `0x3ee04d46`); after `setenv console d` with a zero tail, `4d562687` (sum `0xb2a9d979`). All reproduce,
+  and both sums verify to zero over the assembled segment.
+
+Corrected: two grade labels the repository does not define (`observed`, `software expectation`) are now `inferred`. Not re-read in this review: the
+`setenv` command wrapper beyond the rebuild, the consumers' call sites, the kernel writer and the public-mirror dump the page cites (the local image's
+`env` segment is the empty factory one, so the "used machine" dump was not checked).

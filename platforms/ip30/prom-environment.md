@@ -8,9 +8,10 @@ leave behind. Ratings follow [AGENTS.md](../../AGENTS.md).
 - The 6.5.7 standalone-library NVRAM and flash code (`stand/arcs/lib/libsk/ml/IP30nvram.c`, `ml/nvram.c`, `ml/sflash.c`, `lib/setenv.c`), the IP30
   NVRAM and flash headers (`IP30nvram.h`, `sflash.h`) and the first-stage PROM's read-only copy (`stand/arcs/IP30prom/rprom_nvram.c`). Read in full;
   facts are written in our own words.
-- `root/firmware/IP30prom.bin` (6.5.30, `platforms/ip30/prom.bin`), disassembled with objdump as a cross-check (no Ghidra export was made). Image
-  offsets below are file offsets; the program runs at `0x9fc00000` plus the offset. The checksum routine (`0x6b200`), the whole-store reader
-  (`0x6b280`), the byte writer (`0x6b45c`), the validity test (`0x6b62c`, revision 7) and the variable table (`0xd4de8`, 28 rows) were read
+- `root/firmware/IP30prom.bin` (6.5.30, `platforms/ip30/prom.bin`), read in Ghidra as a flat MIPS image at `0x9fc00000` (decompiles of the four routines named below) and cross-checked with objdump. Image
+  offsets below are file offsets; the program address is `0x9fc00000` plus the offset (confirmed by the default-string pointers in the variable table, which are
+  `0x9fc00000` plus the offset of each string). The checksum routine (`0x6b200`), the whole-store reader
+  (`0x6b280`), the byte writer (`0x6b45c`), the validity test (`0x6b62c`, revision 7) and the variable table (`0xd4de8`, 27 variables and a zero terminator, 48 bytes a row) were read
   and match the source. The reinitialise message and the "old layout" message are present as strings.
 - Nothing was read from a real Octane. The clock part itself is in [ds1685](../../devices/ds1685/README.md).
 
@@ -121,7 +122,8 @@ the CPU-disable word and the flash counters are consumed by boot code. Establish
 Established (source; the byte writer at `0x6b45c` matches).
 
 - `setenv NAME VALUE` for a name in the table calls the store writer with the value's address and the field's fixed length. The writer copies exactly
-  that many bytes from the string, **without stopping at the NUL**, so bytes after the terminator come from whatever follows the string in memory.
+  that many bytes from the string, **without stopping at the NUL**, so bytes after the terminator come from whatever follows the string in memory. For a
+  typed `setenv` that string is the command's argument, packed back to back with the other arguments in a never-cleared token buffer (see Review).
   The PROM then recomputes the checksum over its memory copy and writes it to register `0x0f`.
 - Writes are in place, byte by byte, ascending, through the same bank rules as reads. Data first, checksum last. There is no journal, no second
   copy, no wear levelling (the part is battery RAM) and no erase step.
@@ -141,7 +143,7 @@ selected base plus `0xf0000`. Layout and rules, established from source; the fla
 
 - Header, 24 bytes: magic `0x46504453` ("FPDS"), 32-bit erase count, a 14-byte timestamp (seven 16-bit fields), and a 16-bit checksum. The
   checksum is the Internet one's-complement sum of the 24 bytes taken with the checksum field zero, complemented and stored; a header validates when
-  the complement of the sum over all 24 bytes, including the stored field, is 0. Software expectation (the summing routine in the library was not
+  the complement of the sum over all 24 bytes, including the stored field, is 0. Inferred (the summing routine in the library was not
   read).
 - Entries follow, 16-bit aligned. Word 0: type in the high byte (`0x01` environment, `0x10` log, `0x40` and `0x80` data) and data length in
   16-bit words in the low byte. Word 1: valid flag, `0xffff` valid, `0x0000` invalidated. Then the data. An environment entry's data is the
@@ -179,13 +181,41 @@ covers whatever is stored.
 
 ## Unknowns
 
-1. The second byte the PROM writes after `d` in `console`: it is the byte following the value's terminator in the command buffer, not traced. The
-   PROM accepts any value there. A writer should store NUL.
+1. The second byte the PROM writes after `d` in `console`, when typed at the monitor: it is the byte after the argument's NUL in the token buffer, which is
+   stale stack contents, so `00` only if that byte happens to be zero. `resetenv` and the reinitialise pass store `67 00` (`g`, from the default string
+   in the image), not a stale byte. The PROM accepts any value in the second byte. A writer should store NUL.
 2. The bytes after each terminator in the blank-reset pass. The writer copies the field length from the default string's address, so the real
-   result contains neighbouring read-only data (for example `passwd_key` picks up part of the `9600` default's neighbourhood). Not exact in the
+   result contains neighbouring read-only data (for example `passwd_key` picks up part of the `9600` default's neighbourhood, and the 20 bytes of
+   `netaddr` are `192.0.2.1`, seven NULs, then `ff ff ff ff`, so store offsets 45 to 48 hold `ff`). Not exact in the
    example above; harmless to validity. Also not traced: the string the `dbaud` writer copies from.
 3. Power-on state of a fresh part with the clock oscillator off or the lithium cell flat: the PROM's clock start and valid-RAM checks were not
    traced here (see [ds1685](../../devices/ds1685/README.md)).
 4. Whether the first-stage PROM (a separate image not in `IP30prom.bin`) ever differs from the shared source; it was read from source only.
 5. The diagnostics byte at offset 0: reserved by the header, who writes it was not traced.
 6. Flash PDS summing routine and compress/erase timing: source read, library routine for the sum not read, nothing observed on hardware.
+
+## Review
+
+Independent review of this page against the 6.5.30 image (read in Ghidra as a flat MIPS image at `0x9fc00000`, decompiles checked against objdump) and the
+public 6.5.7 NVRAM library source. Confirmed, with the grades above unchanged unless noted:
+
+- Store layout. Every offset and length in the layout table matches the 6.5.7 header and the image's 27-row variable table (name, default pointer,
+  store offset, length). The six flash variables carry offset 555. Console is offset 3, 2 bytes; the revision byte is offset 2, value 7.
+- Checksum (`0x6b200`). Seed `0xa5`; for store offsets 2 to 241 inclusive: XOR the byte in, rotate left one bit in 8 bits; the loop reads the in-memory
+  copy. Stored at offset 1 (register `0x0f`). Matches the page, including that offset 0 and offset 1 are not covered.
+- Validity (`0x6b62c`). Stored checksum against computed; on a miss, if bit `0x20` of store byte 102 is set it is cleared in the copy and the
+  checksum tried again; success prints the diagmode message, clears `bootmaster` (offset 84, from the empty string) and resets the CPU word. Then
+  offset 2 is compared with the caller's revision. Matches.
+- Write order (`0x6b45c`, `0x6b280`). The writer refuses ranges past 242 bytes, writes bytes in ascending order through bank 0 (register
+  index equals the register) or bank 1 (`0x50` then `0x53`), updates the memory copy as it goes, then computes the checksum from the copy and writes register `0x0f` last.
+  The copy length is the field length with no NUL test. Matches.
+- Reinitialise path and `resetenv` order, taken from the public source: the old-layout test tries revisions 2 to 6, always rewrites the CPU word, and
+  reinitialises counters only when none matches; `resetenv` skips `passwd_key` and `eaddr` and does not touch counters. Matches.
+- Worked example, recomputed with an independent script from the layout and defaults above: the blank store checksum is `0x9e`; after `console` becomes
+  `64 00` it is `0x1f`. Both reproduce.
+
+Corrected: the variable table has 27 variables plus a terminator (not 28 rows); the flash-header checksum is graded inferred (the page used a label this
+repository does not define); the second `console` byte after a typed `setenv console d` is not established as `00` (below); the netaddr tail in a real
+reinitialised store is `ff ff ff ff` from byte 16, not zeros. For a typed `setenv`, the value pointer is the argument inside the monitor's token list
+(public source: `libsc/lib/parser.c`, `lib/stringlist.c`, `cmd/env_cmd.c`), a never-cleared stack buffer, and the writer copies two bytes from it, so
+the second byte is whatever follows the argument's NUL. Not read: the flash PDS routines (source only, as the page says) and the first-stage image.

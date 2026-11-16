@@ -10,7 +10,7 @@ bytes does `setenv` leave behind (the case that matters is `setenv console d`). 
   `libkl/ml/iodiscover.c`), the NVRAM header (`sys/SN/nvram.h`), the flash-log code (`libkl/ml/promlog.c`, `ip27log.c`, `sys/SN/promlog.h`,
   `stand/arcs/IP27prom/Promlog/promlog.txt`). Read in full; facts are in our own words.
 - `root/firmware/io6prom.img` (segment `io6prom`, load `0x11c00000`) and `root/firmware/ip27prom.img` (load `0x1fc00000`), unpacked with
-  `retools/tools/chips/promgen64.py` and read as a disassembly (objdump, no Ghidra export). Read and matching the source: the checksum routine
+  `retools/tools/chips/promgen64.py` and read as a disassembly (objdump) and, for the IO6 routines below, in Ghidra as a flat image at `0x11c00000`. Read and matching the source: the checksum routine
   (`0x11c799e0`), the byte writer (`0x11c7bf8c`), the multi-byte writer (`0x11c7bfe8`), the checksum updater (`0x11c7bf20`), the validity test
   (`0x11c7a32c`), the validity setter (`0x11c7a04c`), the start-up path with the reinitialise message (`0x11c81b40`) and the 42-row variable table
   (`0x11ca7e28`, 48 bytes a row). In the node PROM: the three NVRAM reads (`0x1fc27b58`, `0x1fc3c86c`, `0x1fc3ffe0`) and the log header writer
@@ -113,13 +113,17 @@ Because XOR then rotate is linear, the result has a closed form, with `N = 0x7fd
   case-insensitive name, copies exactly the field length from the string to the NVRAM, byte by byte in ascending order, then recomputes the
   checksum over the whole area and writes it **last**. The copy does not stop at the string's end: bytes after the terminating NUL come from
   whatever follows the string in the PROM's memory. Established (source and image: the writer loops the field length with no end test).
-- Consequence for `console`: `setenv console d` stores `64 xx`. `xx` is the byte after the NUL of the typed word, so it is `00` only when that
-  buffer byte happens to be zero. A non-zero `xx` reads back as a two-letter `console` (`dX`). The default written by `resetenv` is the table's
-  two-byte string, `64 00`. Established that the byte is copied; **unknown** what the monitor's command buffer holds after the word.
+- Consequence for `console`: `setenv console d` stores `64 xx`. `xx` is the byte after the NUL of the typed word. The setenv command hands the
+  writer its argument as parsed, a pointer into the token list the parser builds with the arguments packed back to back (`setenv`, `console`, `d`,
+  each NUL-ended) in a stack buffer that is never cleared, so `xx` is the stale byte after `d`'s NUL: `00` only when that byte happens to be zero,
+  and a non-zero `xx` reads back as a two-letter `console` (`dX`). The default written by `resetenv` and the reinitialise pass is the table's
+  two-byte string, `64 00` (read from the image). Established that the byte is copied and where it comes from (public source for the parser; the
+  shipped parser was not read); **unknown** what the stale byte is in a given session. An emulator should write `64 00`, which is what a clean run gives.
 - `AutoLoad` stores only the first character, upper-cased. `netaddr` is parsed to four raw bytes. `dbaud` is range-checked first. Established.
 - `resetenv` writes every row but the two password keys, then sets the revision and the checksum. The password keys are untouched. Established.
-- Writes to the master part are mirrored to each slave base I/O board's part, except, in the 6.5.7 source, offsets strictly between `0x3885` (end of
-  the named fields) and `0x7fd1`; each slave's checksum is recomputed from its own bytes. Single-board machines (Origin 200) have no slave. Established (source).
+- Writes to the master part are mirrored to each slave base I/O board's part, except offsets `0x3885` to `0x7fd0` in the 6.5.7 source; in the shipped
+  IO6 image the byte-copy helper (`0x11c677dc`) skips `0x3926` to `0x7fd0`, the end of `tg0mode` onward (inferred: the helper's bounds, its caller was
+  not read); each slave's checksum is recomputed from its own bytes. Single-board machines (Origin 200) have no slave. Established (source).
 - **Interrupted write.** There is no journal. A reset after the field bytes but before the checksum byte leaves a stale checksum; the next boot
   fails validation and reinitialises the whole table to defaults (above). Established as the code's consequence; not observed.
 
@@ -175,7 +179,29 @@ result to `0x04bc`. On a store that is already valid, nothing else changes.
 
 ## Unknowns
 
-1. What the monitor's command buffer holds after `setenv console d` (second `console` byte); a captured serial session with a store dump would settle it.
+1. The stale byte after `d` in the parser's token list at `setenv console d` (second `console` byte): `00` on a clean run, otherwise leftovers of earlier
+   commands. A captured serial session with a store dump would settle which. It does not affect validity.
 2. The part's contents at power-on before any PROM write, and the free-space bytes between the named fields.
 3. Whether the module system controller's 2 KiB NVRAM carries anything the PROMs read as environment.
 4. The IO6 PROM's variable table in releases other than the shipped image (6.5.7 differs by the last two rows).
+
+## Review
+
+Independent review against the IO6 image (`io6prom.img`, segment `io6prom`, read in Ghidra as a flat image at `0x11c00000`, decompiles checked against
+objdump) and the public 6.5.7 library source. Confirmed, grades unchanged unless noted:
+
+- Layout. All 42 rows of the shipped variable table (48-byte rows: name, default pointer, offset, length) match the page's offsets and lengths,
+  including `console` at `0x0f` (2 bytes), the checksum at `0x04bc`, the restart block at `0x046f` and the added `dumpdev` and `tg0mode`. Defaults match
+  (`console` `d`, `AutoLoad` `N`, `dbgtty` `/dev/tty/ioc30`, `nonstop` `0`, `scsihostid` `00`, `volume` `80`, `rbaud` `19200`).
+- Checksum (`0x11c799e0`). Seed `0xa5` (`-0x5b` as a signed char), offsets `0x0e` to `0x7fd0`, XOR skipped at `0x04bc` and `0x046f`, rotate left one
+  bit applied at every offset including the skipped ones; the result is stored at `0x04bc` last. Matches.
+- Validity (`0x11c7a32c`): revision byte at `0x0e` equals 4 and the checksum matches, tried twice. Reinitialise (`0x11c81b40`): message, every table row
+  from its default (the two password rows from the empty string's neighbourhood, so empty), `0xff` to `0x7fcb`, revision 4, checksum. Writer
+  (`0x11c7bfe8`): ascending bytes, the field length with no NUL test, checksum updater (`0x11c7bf20`) last. All match.
+- Worked examples, recomputed with an independent script: smallest store `g` `0x90`, `d` `0x9c`; reset store `0xef` with `d`, `0xe3` after `setenv console g`,
+  `0xef` again after `d`, and the delta rule gives the same. All reproduce. The page's "106 non-zero bytes" counts the checksum byte (105 plus it).
+
+Corrected: the second `console` byte. The shipped writer copies the field length from the argument pointer, and the setenv command passes the
+parsed argument, so the byte after `d` is the stale byte after its NUL in the token list, not necessarily `00` (a claim elsewhere that it is always `64 00`
+holds only for `resetenv` and the reinitialise pass, whose default string `d`, NUL is in the image). The page's "unknown" stands, now with the source of the byte named.
+The slave-copy exclusion in the shipped image starts at `0x3926`, not `0x3885`. The flash-log header writer (`0x1fc0ab68`) was read: 28-byte erased header, `PLOG` at `+0x10`, version 1 at `+0x14`, sequence at `+0x18`. Not re-read: the node PROM's NVRAM reads, the log entry code and the module controller store.

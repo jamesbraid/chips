@@ -85,8 +85,9 @@ contents are written by other code, and the free space between the fields is unk
 class `0x4000` (Fuel, per [ip35-board-word-and-config-block.md](../../questions/ip35-board-word-and-config-block.md)). Otherwise it asks the product test
 `0x130e24a4`, which reads a product character from the node's I/O board identity and returns 1 to 5 for `7`, `8`, `9`, `0` and `Q`, or 0 when the node's
 class word at `0x9000000034000000` is `0x8000`, `0x4000` or `0xc000`; a result of 2, 3 or 5 (`8`, `9`, `Q`) writes `g`, anything else keeps `d`. So a
-Fuel, and a Tezro or Origin 350 if its I/O product character is `9`, reset to `g`, and an I-brick whose character is `7` resets to `d`. Established for the
-branches; which product each character names is inferred.
+Fuel, and a Tezro or Origin 350 if its I/O product character is `9`, reset to `g`, and an I-brick whose character is `7` resets to `d`. The same test
+(the same branch of the defaults loop) also makes the `AutoLoad` default `Yes` (stored `Y`) instead of `No` (stored `N`), so `g` machines reset to
+`AutoLoad` `Y`. Established for the branches; which product each character names is inferred.
 
 ## The checksum
 
@@ -136,8 +137,11 @@ Established for the names (each is a lookup key in the code); the CPU PROM's rea
   in the monitor's data. `ConsolePath`, `gConsoleIn` and `gConsoleOut` each hold `default`, NUL, `00`, a gap, `9600`, a gap, `80`, then the start of
   the next message text. The two password keys (17 bytes from the empty string) hold `2e 6d 66 69 6e 64 00 00 70...` (`.mfind`, `p...`). Established for
   the copy; the byte values are read from the 6.210 image.
-- **Consequence for `console`.** The row is two bytes. `setenv console d` stores the letter and the string's NUL: `64 00`. Typing `d2` stores `64 32`
-  (serial port 1, no NUL). `resetenv` stores `64 00` or `67 00` from the default string. Established.
+- **Consequence for `console`.** The row is two bytes. `setenv console d` stores `64 xx`, where `xx` is the byte after the argument's NUL: the setenv
+  command passes the parsed argument, a pointer into the parser's packed token list in a never-cleared stack buffer (public source:
+  `libsc/lib/parser.c`, `lib/stringlist.c`, `cmd/env_cmd.c`; the shipped parser was not read), so `xx` is `00` only when that stale byte is zero.
+  Typing `d2` stores `64 32` (serial port 1). `resetenv` and the reinitialise pass store `64 00` or `67 00` from the default string in the image.
+  Established for the copy and for the default strings; the stale byte is unknown. An emulator should write `64 00`.
 - Mirrors. A write to the master part goes to every other base I/O board's part, except offsets `0x393a` to `0x7fd0`. Each slave's checksum is
   recomputed from its own bytes (`0x130da2b4`). Established.
 - **Interrupted write.** No journal. A reset after the field bytes but before the checksum byte leaves a stale checksum, and the next boot reinitialises
@@ -145,7 +149,7 @@ Established for the names (each is a lookup key in the code); the CPU PROM's rea
 
 ## Flash log (the CPU PROM's variables)
 
-Established from the CPU PROM code, and agreeing with the captured records in [boot-flash.md](boot-flash.md).
+Established from the CPU PROM code for the header and entry layout (re-read in review, see Review), and agreeing with the captured records in [boot-flash.md](boot-flash.md); the compaction and erase details are less well read.
 
 - Where: a 64 KiB-block pair in the node's second PROM, base block index `0x1e` (30): blocks 30 and 31, flash offsets `0x9e0000` and `0x9f0000` of the
   16 MiB logical flash. Erase is by 64 KiB block: an unlock sequence at `0x555`/`0x2aa`, sector command `0x30`, then an all-`0xff` check (the AMD command set, inferred from the sequence).
@@ -179,10 +183,16 @@ rotate `43`; `0x0f`: `43 ^ 64 = 27`, rotate `4e`; `0x10`: `4e ^ 00 = 4e`, rotate
 | `67 00` (`g`) | `0x90` |
 | `64 00` (`d`) | `0x9c` |
 
-**Reset store.** Zero-filled; every table row written with its default including the neighbouring bytes, `AutoLoad` `4e`, `netaddr` `c0 00 02 01`,
-`netmask` `ff ff ff 00`, `0x7fcb` = `ff`, `0x0e` = `04`; 1,562 non-zero bytes; `console` default `g`. Checksum `0x37`. After `setenv console d`
-(`67 00` becomes `64 00`) it is `0x3b`, equal to the delta rule `0x37 ^ rotl8(0x67 ^ 0x64, (0x7fd1 - 0x0f) mod 8) = 0x37 ^ rotl8(0x03, 2) = 0x37 ^ 0x0c =
-0x3b`. With the `d` default (I-brick) the reset store checksum is `0x3b` and the setenv changes nothing.
+**Reset store.** Zero-filled; every table row written with its default including the neighbouring bytes (read from the image), `netaddr` `c0 00 02 01`,
+`netmask` `ff ff ff 00`, the other four address rows zero, `0x7fcb` = `ff`, `0x0e` = `04`; 1,562 non-zero bytes counting the checksum. Two cases:
+
+| Machine class | `console`, `AutoLoad` | Checksum after reset | After `setenv console d` |
+|---|---|---|---|
+| `g` default (Fuel, product `8`, `9`, `Q`) | `67 00`, `59` (`Y`) | `0x46` | `0x4a` |
+| `d` default (I-brick `7`) | `64 00`, `4e` (`N`) | `0x3b` | `0x3b`, unchanged |
+
+The `g` row follows the delta rule: `0x46 ^ rotl8(0x67 ^ 0x64, (0x7fd1 - 0x0f) mod 8) = 0x46 ^ rotl8(0x03, 2) = 0x46 ^ 0x0c = 0x4a`.
+An earlier version of this page paired `g` with `AutoLoad` `N` (`0x37`, `0x3b`); the PROM never writes that pair.
 
 The minimum for iris to match the PROM: on a store the PROM already accepted, write `64 00` at `0x0f`, recompute the loop above, write the byte to `0x04bc`.
 On a blank or zero-filled store do not write a partial image: the PROM accepts any store whose revision and checksum agree and reads the empty rows as
@@ -203,3 +213,31 @@ also write the checksum, and anything short of that makes the PROM wipe the vari
 3. The order of program operations inside one 64-byte flash entry, and so what an interrupted append leaves.
 4. The 6.211 monitor and CPU PROM; the table and loop here are 6.210.
 5. The meaning of the second type value `2` in the flash log, and the defaults the CPU PROM uses for variables other than `ConsoleDevice`.
+
+## Review
+
+Independent review against the 6.210 I/O monitor (the gzip ELF at image offset `0x8cbb0`, inflated; read in Ghidra as a flat image at `0x13000000`,
+decompiles checked against objdump) and the CPU PROM payload (flat at `0x1fc00000`). Confirmed, grades unchanged unless noted:
+
+- Layout. All 48 rows of the variable table at `0x1311fc68` match the page's offsets, lengths and defaults, including the five added address rows and
+  `AutoPROMVars`; `console` is offset `0x0f`, 2 bytes; the revision byte is `0x0e` = 4.
+- Checksum (`0x1300d1cc`, writer chain `0x130dd97c`, `0x130dbf14`, updater `0x130dd944`, validity `0x130db488`): identical to the IP27 routine (seed
+  `0xa5`, `0x0e` to `0x7fd0`, XOR skipped at `0x04bc` and `0x046f`, rotate at every offset, checksum written last, validity is revision 4 plus a
+  checksum matched on one of two tries). The slave copy helper (`0x130c6fc0`) skips `0x393a` to `0x7fd0` as the page says.
+- `console` default. The defaults loop (`0x130e3208`) tests the board class at `0x9000000014000000` (class `0x4000` gives `g`), else the product test
+  (`0x130e24a4`: `7`, `8`, `9`, `0`, `Q` return 1 to 5, `0` for node classes `0x8000`, `0x4000`, `0xc000`); results 3, 2 and 5 (`9`, `8`, `Q`) give `g`.
+  Matches the page, including that `7` and `0` keep `d`.
+- Worked examples, recomputed with an independent script that rebuilds the reset store from the image's table (each row copies its length from the
+  default pointer; `AutoLoad` first letter; address rows as raw bytes; `0x7fcb` = `ff`): `g` and `d` smallest stores `0x90` and `0x9c`; reset store
+  `0x37` with `g` and `AutoLoad` `N`, `0x3b` with `d`. These reproduce, 1,561 non-zero bytes plus the checksum.
+- CPU PROM log header (read at `0x1fc13470` onward): a 28-byte header memset to `ff`, magic `PLOI` at `+0x10`, version 1 at `+0x14`, generation at `+0x18`;
+  entry reader (`0x1fc18558`): 64-byte entries, type in the high nibble of byte 0 with `0xf` as end, name 14 bytes from byte 1, value 47 bytes from byte `0x10`.
+  Matches. Block 30 on a generation tie, the unlock and erase sequence and the set and unset routines were not read in full.
+
+Corrected:
+
+- The defaults loop applies the same product test to `AutoLoad`: `g` machines reset to `Yes` (stored `Y`), others to `No`. The page's reset example paired
+  `g` with `N`, a combination the PROM never writes; the table above now gives `0x46` and `0x4a` for the `g` class, `0x3b` for the `d` class.
+- `setenv console d` stores `64 00` only if the byte after the argument's NUL is zero. The argument is the parser's token-list string (stack buffer,
+  never cleared), so the second byte is stale; the page's "established" is withdrawn for that byte. `resetenv` and the reinitialise pass do store `64 00` or `67 00`
+  from the default string. This also settles the IP27 page's unknown in the same direction: it is unknown, not established, and the source is the token list.
