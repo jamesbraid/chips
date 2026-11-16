@@ -321,27 +321,26 @@ Compared by locating each SGI component in the file by bundle match and re-runni
 
 ## msr 1728 and 1730 strobe loops
 
-Read in the IA-64 Ghidra module (PAL_B 5.73 `0xffe9dd90` to `0xffe9dfb0`, PAL_A 5.37 `0xfffcb200` to `0xfffcb4c0`, PAL_A 1.27 `0xfffd1a10` to `0xfffd1b00`), with the other copies
+Read in the IA-64 Ghidra module (PAL_B 5.73 `0xffe9dd90` to `0xffe9dfb0`, PAL_A 5.37 `0xfffcb200` to `0xfffcb4c0`, PAL_A 1.27 `0xfffd19e0` to `0xfffd1c70`), with the other copies
 located by the reference decoder (`ia64_isa.py`) over the PAL_A and PAL_B images. No loop body holds a reserved slot; the O sites in
 [reserved-slot-sites.md](reserved-slot-sites.md) only flow into them. Model-run observations are not hardware evidence.
 
 **One routine, 144 copies.** Each copy moves one 4-bit field of msr[1730] to a target `T`: read msr[1730], `extr.u` the nibble (bits 3:0 or 11:8), exit when it equals `T`;
 write msr[1728] (select); read msr[1730], set bit 42, set bit 48, set bit 49 when the nibble is below `T` and clear it otherwise (`cmp.lt p7,p8=T-1,nibble`), write, `srlz.d`;
-read, clear bit 48, write, `srlz.d`; branch back. Copies: PAL_B 5.73 and 7.79 46 each, 2.25 38, PAL_A 5.37 6, 7.31 2, 1.27 4. All 144 have the same instruction mix, so **no counter,
+read, clear bit 48, write, `srlz.d`; branch back. Copies: PAL_B 5.73 and 7.79 46 each, 2.25 38, PAL_A 5.37 6, 7.31 2, 1.27 6. All 144 have the same instruction mix, so **no counter,
 bound or timeout exists** (established): a nibble that never reaches `T` hangs the caller.
 
 | Register, bit | What the code does | Grade |
 |---|---|---|
-| msr[1728] 48 / 49 | read-modify-write only: 48 set and 49 clear before a 3:0 loop; 48 clear and 49 set before an 11:8 loop; both clear at exit (72 sites of each form; no other bit of 1728 is touched anywhere in the image) | established; "selects the nibble" inferred |
+| msr[1728] 48 / 49 | read-modify-write only: 48 set and 49 clear before a 3:0 loop; 48 clear and 49 set before an 11:8 loop; both clear at exit (72 sites of each form, 216 reads and 216 writes, each write fed by the read of the same index; no other bit of 1728 is touched at any constant-index or `movl`-index site in the image, and the computed-index sites are not excluded) | established; "selects the nibble" inferred |
 | msr[1730] 3:0, 11:8 | read, compared with `T`, written back as read by every read-modify-write | established; "counter" inferred |
 | msr[1730] 48 | set in one write, cleared in the next, with a read between: a strobe | established |
 | msr[1730] 49 | set when nibble < `T`, clear when nibble > `T`: the direction | established as code, hardware meaning inferred |
-| msr[1730] 42 | set while stepping; cleared at exit only when `T` is 0 (`cmp.eq p7,p0=T,r0`); 72 of the 97 other msr[1730] sites clear it | established; role unknown |
+| msr[1730] 42 | set while stepping; cleared at exit only when `T` is 0 (`cmp.eq p7,p0=T,r0`, then `cmp.eq.and` with the same `T` for the 11:8 field): 72 exit sites carry the predicated clear, and it takes effect in the 30 with `T` 0 (the 29 with `T` 15 and 13 with `T` 8 leave bit 42 set); the other 25 read-modify-write sites are the bit 43 and 36 windows | established; role unknown |
 | msr[1730] 43, 36 | the bit 54 window above | established |
 
-**`T` per image** (nibble 3:0 / 11:8): PAL_B 5.73 and 7.79 0 or 15 / 0 or 15 (10 and 13 copies); PAL_B 2.25 0 / 0 or 8; PAL_A 5.37 and 7.31 15 / 15; PAL_A 1.27 0 / 8. The 1.27
-exits at 0 and 8 are this routine with `T` 0 and 8, and 8 is reachable from either side. Skip tests (loop not run): PAL_A msr[0] bit 22, msr[1152] bit 18 and msr[1572] bit 18 set, plus
-msr[1237] bit 1 in 1.27; PAL_B 5.73 msr[1152] bit 18, msr[1237] bit 2, msr[1572] bit 18, or the PAL procedure index in `r28` being 0x1c, 0x1d, 0x206 or 0x20a.
+**`T` per image** (nibble 3:0 / 11:8): PAL_B 5.73 and 7.79 0 or 15 / 0 or 15 (10 copies with 0 and 13 with 15 per field); PAL_B 2.25 0 / 0 or 8 (8 and 11 copies in 11:8); PAL_A 7.31 15 / 15; PAL_A 5.37 0 or 15 / 0 or 15 (three pairs: 15 and 15, 0 and 0, 15 and 15); PAL_A 1.27 0 / 0 or 8 (three pairs: 0 and 8, 0 and 0, 0 and 8). 8 is reachable from either side. Skip tests (loop not run): PAL_A msr[0] bit 22 (first pair only), msr[1152] bit 18 and msr[1572] bit 18 set, plus
+msr[1237] bit 1 in 1.27; the second pair in 5.37 and 1.27 also runs only when `r28` is 2, 0xe, 0x10, 0x208 or 0x209; PAL_B 5.73 msr[1152] bit 18, msr[1237] bit 2, msr[1572] bit 18, or the PAL procedure index in `r28` being 0x1c, 0x1d, 0x206 or 0x20a.
 
 **Is it a counter?** The code compares the nibble with `T`, takes the direction from the comparison and strobes until they match: a servo on a field that a strobe steps (inferred from
 144 identical copies, `T` of 0, 8 and 15, and 8 reachable from both sides). A status field set by a calibration step needs neither the direction bit nor the strobe. The step size
@@ -350,9 +349,30 @@ nibble bits override the stepped value. None of Intel's Itanium 2 reference manu
 (`docs/library/cache/cpu/itanium/`) names msr 1728 or 1730, and the Library holds no Intel patent on processor self-test or array test via MSR. The system bus is source-synchronous
 with strobes (251109, chapter 3); bus-timing taps are a possible use, but no source says so.
 
-**What lets a model past the loops.** msr[1728] reads back what was written. msr[1730] bits 3:0 and 11:8 step by one on each 0 to 1 write of bit 48, up when bit 49 is set and down when
+**What lets a model past the loops.** The simplest model that passes every loop: msr[1730] bits 3:0 and 11:8 step by one on each 0 to 1 write of bit 48, up when bit 49 is set and down when
 clear, the 3:0 field when msr[1728] bit 48 is set and the 11:8 field when bit 49 is. Reset to 0 passes every `T` = 0 loop at once (including `0xffe9ddb0` and `0xffe9de80`) and takes 15 or 8
-passes elsewhere; a constant 0 hangs every `T` of 15 or 8, and any constant nonzero value hangs every `T` = 0 loop.
+passes elsewhere; a constant 0 hangs every `T` of 15 or 8, and any constant nonzero value hangs every `T` = 0 loop. The code does not require that model (see Review).
+
+### Review
+
+Independent re-read of every copy in the Ghidra module over the PAL_A and PAL_B images of snprom 10.54 (all 144 strobe sites and all 216 msr[1728] sites decoded, not sampled). Confirmed:
+msr[1728] is read-modify-written only, with the three bit pairs and 72 sites of each; each strobe writes bits 42 and 48 (with 49 per the comparison, `cmp.lt p7,p8=T-1,nibble`, so 49 is set below
+`T` and clear above), then clears 48 after a fresh read; no other nibble bit is touched; all 144 copies share one instruction mix, exit only through the `cmp.eq` on the nibble and loop on an
+unpredicated `br.few`, with no counter. The 3:0 and 11:8 skip tests, the bit 43 and 36 windows and the `T` of 0 at `0xffe9ddb0` and `0xffe9de80` hold.
+
+Corrected here: PAL_A 1.27 has 6 copies, not 4 (the counts summed to 142); PAL_A 5.37 has a `T` = 0 pair, so it is not 15 / 15, and 1.27's 11:8 field takes 0 as well as 8; the second pair in 5.37
+and 1.27 has an `r28` gate that the page omitted; "72 of the 97 sites clear bit 42" counted sites that carry a predicated clear, which runs in 30 (`T` 0); the 1.27 address range. The earlier statement that 5.37 and 1.27 are byte-identical
+(PAL_A comparison list above) fails for these loops: their `T` differ. Not checked: computed-index sites (`add`, `ld8`, `extr` derived) could in principle touch 1728 or 1730.
+The grades stand: code facts established, "servo on a nibble the strobe steps" inferred, no hardware behaviour claimed. msr[1728] need not read back what was written (the loops only
+read-modify-write it), so that requirement is dropped.
+
+What the code constrains and does not. Required: the nibble read after some number of strobes equals `T`, for every `T` of 0, 8 and 15, from the unknown reset value; while it differs the
+loop goes on, so any model that never reaches `T` hangs the caller. Not required: step size one (a nibble that jumps straight to `T` on the first strobe passes; a step of two from an even reset never
+reaches 15); the strobe edge (the set write and the clear write are back to back, so stepping on the 0 to 1 or the
+1 to 0 edge, or on the write with 48 set, is indistinguishable); a hardware servo that converges on its own and uses the strobe only as a trigger; whether the other field also moves when one is
+selected, since each field is only ever tested while its own loop runs; saturation versus wrap at 0 and 15 (wrap matters only if the direction is inverted). The direction polarity is
+constrained only by the `T` = 8 loops: with bit 49 meaning "down", a nibble at 0 and `T` = 8 oscillates between 0 and 15 and never exits, while `T` of 0 and 15 would still pass by wrap. Nothing here
+says what the fields mean in hardware.
 
 ## What is not settled
 
