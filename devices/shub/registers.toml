@@ -157,7 +157,11 @@ reset = "unknown"
 doc = "PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data."
 
 [registers.pio_write_status.fields]
+multi_write_error = { bits = [0, 0], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "More than one PIO write error occurred. The PROM self test accepts it in place of write_error." }
 write_deadlock = { bits = [1, 1], grade = "established", doc = "A deadlock response was detected for a PIO write." }
+write_error = { bits = [2, 2], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set." }
+write_error_address = { bits = [49, 3], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "Address associated with the error response. The PROM does not read it." }
+writes_ok = { bits = [63, 63], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll." }
 pending_write_count = { bits = [61, 56], grade = "established", doc = "Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason." }
 
 [registers.pio_write_status_alias]
@@ -741,6 +745,26 @@ grade = "inferred"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name"
 doc = "Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100."
+
+[registers.lb_reg_1005_0608]
+offset = 0x110050608
+access = "w"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
+doc = "Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours."
+
+[registers.pi_error_detail_1]
+offset = 0x120060500
+access = "r"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5) SH_PI_ERROR_DETAIL_1_INIT, value 0 (macro only)"
+from = "SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5) names the offset (one 64-bit STATUS field); SAL 5.04 PROM site 0xffa24ee8"
+doc = "Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown."
 
 [registers.pi_error_mask]
 offset = 0x120050a80
@@ -2365,4 +2389,4 @@ reset = 0x0
 reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_LB_ERROR_DETAIL_1_INIT (macro only; read as zero here)"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names SH_LB_ERROR_DETAIL_1 at 0x1_1005_0200; the five-register stride is the PROM's (0xffa0b9a0 and 0xffa0bd20 write 0 to 0x200, 0x280, 0x300, 0x380 and 0x400); names for 2 to 5 follow the stride and were not each checked"
-doc = "Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it."
+doc = "Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it."

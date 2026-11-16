@@ -2105,6 +2105,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "lb_reg_1005_0608",
+   "offset": 4563731976,
+   "access": "w",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "cpu_perm",
    "offset": 4563795968,
    "access": "rw",
@@ -3157,6 +3171,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "pi_error_detail_1",
+   "offset": 4832232704,
+   "access": "r",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "pio_write_status",
    "offset": 4832297472,
    "access": "r",
@@ -3171,6 +3199,15 @@
   {
    "unit": "shub",
    "kind": "field",
+   "name": "pio_write_status.writes_ok",
+   "hi": 63,
+   "lo": 63,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
    "name": "pio_write_status.pending_write_count",
    "hi": 61,
    "lo": 56,
@@ -3180,11 +3217,38 @@
   {
    "unit": "shub",
    "kind": "field",
+   "name": "pio_write_status.write_error_address",
+   "hi": 49,
+   "lo": 3,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "pio_write_status.write_error",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
    "name": "pio_write_status.write_deadlock",
    "hi": 1,
    "lo": 1,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "pio_write_status.multi_write_error",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub",

@@ -828,7 +828,7 @@
 #define SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_INPLACE    (SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_MASK << SHUB_CONVEYOR_BELT_TIME_OUT_VALUE_SHIFT)
 
 /*
- * Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
+ * Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
  */
 /* lb_error_detail: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_LB_ERROR_DETAIL                         0x110050200 /* established */
@@ -840,6 +840,12 @@
  */
 /* lb_error_summary: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_LB_ERROR_SUMMARY                        0x110050580 /* established */
+
+/*
+ * Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours.
+ */
+/* lb_reg_1005_0608: w64, reset unknown; SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) */
+#define SHUB_LB_REG_1005_0608                        0x110050608 /* inferred */
 
 /*
  * CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks are not in any source read. The SHub 1 node permission set-up (site 0xffa97960): the PROM writes the node mask (one bit per group of nodes, see prom-reset.md); for NASID 0 alone, 1; no read-back.
@@ -1256,18 +1262,36 @@
 #define SHUB_PI_CRBP_FIRST_ERROR                     0x120060480 /* inferred */
 
 /*
+ * Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown.
+ */
+/* pi_error_detail_1: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_PI_ERROR_DETAIL_1                       0x120060500 /* established */
+
+/*
  * PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.
  */
 /* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_PIO_WRITE_STATUS                        0x120070200 /* established */
 #define SHUB_PIO_WRITE_STATUS_COUNT                  2
 #define SHUB_PIO_WRITE_STATUS_STRIDE                 128
+#define SHUB_PIO_WRITE_STATUS_WRITES_OK_SHIFT        63 /* established */
+#define SHUB_PIO_WRITE_STATUS_WRITES_OK_MASK         0x1ull
+#define SHUB_PIO_WRITE_STATUS_WRITES_OK_INPLACE      (SHUB_PIO_WRITE_STATUS_WRITES_OK_MASK << SHUB_PIO_WRITE_STATUS_WRITES_OK_SHIFT)
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT 56 /* established */
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK 0x3full
 #define SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_INPLACE (SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK << SHUB_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT)
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_SHIFT 3 /* established */
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_MASK 0x7fffffffffffull
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_INPLACE (SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_MASK << SHUB_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_SHIFT)
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT      2 /* established */
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_MASK       0x1ull
+#define SHUB_PIO_WRITE_STATUS_WRITE_ERROR_INPLACE    (SHUB_PIO_WRITE_STATUS_WRITE_ERROR_MASK << SHUB_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT)
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT   1 /* established */
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK    0x1ull
 #define SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_INPLACE (SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK << SHUB_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT)
+#define SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_SHIFT 0 /* established */
+#define SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_MASK 0x1ull
+#define SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_INPLACE (SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_MASK << SHUB_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_SHIFT)
 
 /*
  * Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.

@@ -1661,7 +1661,7 @@ pub mod conveyor_belt_time_out {
         }
     }
 }
-/// Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then write (established)
+/// Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and det (established)
 pub mod lb_error_detail {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110050200;
@@ -1672,6 +1672,11 @@ pub mod lb_error_detail {
 pub mod lb_error_summary {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x110050580;
+}
+/// Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism  (inferred)
+pub mod lb_reg_1005_0608 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x110050608;
 }
 /// CPU MMR access permission bits: one access bit per group of nodes (header field ACCESS_BITS, all 64 bits). Bit meaning and what a cleared bit blocks a (established)
 pub mod cpu_perm {
@@ -2394,12 +2399,27 @@ pub mod pi_crbp_first_error {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120060480;
 }
+/// Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit  (established)
+pub mod pi_error_detail_1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060500;
+}
 /// PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O wr (established)
 pub mod pio_write_status {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120070200;
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 128;
+    pub mod writes_ok { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod pending_write_count { // bits 61:56, established
         pub const SHIFT: u32 = 56;
         pub const MASK: u64 = 0x3f;
@@ -2410,8 +2430,38 @@ pub mod pio_write_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod write_error_address { // bits 49:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x7fffffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod write_error { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod write_deadlock { // bits 1:1, established
         pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod multi_write_error { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK

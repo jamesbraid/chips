@@ -2032,6 +2032,16 @@ pub mod pio_write_status {
     pub const OFFSET: u64 = 0x20070200;
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 128;
+    pub mod writes_ok { // bits 63:63, established
+        pub const SHIFT: u32 = 63;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod pending_write_count { // bits 61:56, established
         pub const SHIFT: u32 = 56;
         pub const MASK: u64 = 0x3f;
@@ -2042,8 +2052,38 @@ pub mod pio_write_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod write_error_address { // bits 49:3, established
+        pub const SHIFT: u32 = 3;
+        pub const MASK: u64 = 0x7fffffffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod write_error { // bits 2:2, established
+        pub const SHIFT: u32 = 2;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod write_deadlock { // bits 1:1, established
         pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod multi_write_error { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
         pub const MASK: u64 = 0x1;
         pub const fn get(v: u64) -> u64 {
             (v >> SHIFT) & MASK

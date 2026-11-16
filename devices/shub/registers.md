@@ -80,6 +80,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `conveyor_belt_time_out` | 0x110040300 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CONVEYOR_BELT_TIME_OUT_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's register-name table carries the name (record 138); SAL 5.04 PROM site 0xffa9613c (read), 0xffa9615c (write) |
 | `lb_error_detail` | 0x110050200 | rw | 64 | 5 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `lb_error_summary` | 0x110050580 | r | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `lb_reg_1005_0608` | 0x110050608 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) |
 | `cpu_perm` | 0x110060000 | rw | 64 |  |  | 0xffffffffffffffff (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CPU_PERM_INIT macro, 0xffffffffffffffff; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bbc (write) |
 | `ext_io_perm` | 0x110060100 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_EXT_IO_PERM_INIT macro, 0; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac (write) |
 | `ext_ioi_access` | 0x110060180 | rw | 64 |  |  | 0xffffffffffffffff (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_EXT_IOI_ACCESS_INIT macro, 0xffffffffffffffff; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 532 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c1c (write) |
@@ -123,6 +124,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_reg_2006_0180` | 0x120060180 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa246d6; no Linux v5.3 name |
 | `pi_reg_2006_0200` | 0x120060200 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name |
 | `pi_crbp_first_error` | 0x120060480 | rw | 64 |  |  | unknown | inferred | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
+| `pi_error_detail_1` | 0x120060500 | r | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status` | 0x120070200 | r | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status_alias` | 0x120070208 | w | 64 | 2 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ni_llp_stat` | 0x150000000 | r | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -721,13 +723,17 @@ Local block conveyor belt time-out. The node set-up method (site 0xffa95c20) rea
 
 ### Register `lb_error_detail`
 
-Local block error detail words 1 to 5. A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
+Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
 
 Array of 5 registers, stride 128.
 
 ### Register `lb_error_summary`
 
 Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set while waiting for a reply means the reply status is not examined that pass. A model returns 0.
+
+### Register `lb_reg_1005_0608`
+
+Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours.
 
 ### Register `cpu_perm`
 
@@ -1002,6 +1008,10 @@ Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100.
 
 PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred).
 
+### Register `pi_error_detail_1`
+
+Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown.
+
 ### Register `pio_write_status`
 
 PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.
@@ -1010,8 +1020,12 @@ Array of 2 registers, stride 128.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
+| 63 | `writes_ok` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll. |
 | 61:56 | `pending_write_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason. |
+| 49:3 | `write_error_address` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | Address associated with the error response. The PROM does not read it. |
+| 2 | `write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set. |
 | 1 | `write_deadlock` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | A deadlock response was detected for a PIO write. |
+| 0 | `multi_write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | More than one PIO write error occurred. The PROM self test accepts it in place of write_error. |
 
 ### Register `pio_write_status_alias`
 

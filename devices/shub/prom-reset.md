@@ -205,6 +205,21 @@ Two registers matter. The counter `0x1_101c_0000` (`SH1_RTC`, 55 bits) and the c
 - **A zero field.** If a read of `0x1_1006_0280` returned 0, the PROM would assume a 10 ns period, so the counter would have to advance at 100 MHz. Every deadline in the PROM (the 500-microsecond steps, the 1,000,000 and 5,000,000 microsecond waits, the 20,000,000 microsecond memory-test deadline) is in microseconds and is scaled by this period, so a counter that ticks at a different rate from the field stretches or shrinks them by the ratio. [node-bringup.md](../../software/firmware/snprom/node-bringup.md) calls these deadlines ticks; they are microseconds, as its review says.
 - **What would settle the rest:** the SHub 1 programmer's reference for the local block (the register at `0x1_1006_0280`), or a hardware read of the register after a known write.
 
+## The PIO write-error self test: store to `0x1_1005_0608` (`0xffa24cc0`)
+
+Snprom 10.54 `shub1snprom.bin`, Ghidra IA-64 `--sn2-prom --no-analysis` with an `ia64-linux-gnu-objdump` cross-check. Established as code unless marked. Runs right after the op 80 loop: `main_two` call `0xffa1af8c` to the stub `0xffa3dc60`, `0xffa3dc70` (per-slice node set-up; call at `0xffa3dfcc` after the slice barrier `0xffa9a130`, on every slice), `0xffae2f80` (call at `0xffae306c`), `0xffa24cc0`. Only gate: `cpuid[2]` equal to `0xaeeeeeee8badbeef` skips it; no revision, port or slice test. The routine is the PROM's `pio_wt_st_force_err`.
+
+| Step | Site | Access |
+|---|---|---|
+| 1 | `0xffa23e00(0)` | write 0 to the local interrupt enable registers (`0x7ef` back at the end) |
+| 2 | `0xffa24dec` (store `0xffa0e650`) | W `0x1_1005_0608` = 0 (explicit argument, `mov r42=r0`); the offset has no register, the store is meant to fail (inferred) |
+| 3 | `0xffa24e20` to `0xffa24e5c` | read this slice's `pio_write_status` (`0x1_2007_0200` slice 0, `0280` slice 1, table `0xffbd9678` by `cr.lid` bits 26:23) until `(v & 5) != 0`; no delay, no deadline |
+| 4 | `0xffa24ac0` | W `0x3fffffffffffd` to the alias (`0x1_2007_0208`), then up to 1001 reads of the status, 100 microseconds apart, until bits 61:56 are all ones; exhaustion is silent |
+| 5 | `0xffa24ea8`, `0xffa24ee8`, `0xffa24f4c` after a 600 microsecond delay | R `0x1_1005_0280`: `(v & 0x3fffffff) == 0x2200a0c1` (the address >> 3) gives mask 8; R `0x1_2006_0500`: `(v & 0x1_ffff_fff8) == 0x1_1005_0608` gives mask 1; R `0x1_1005_0200`: low byte `0xe9` or `0xea` gives mask 8 |
+| 6 | `0xffa30b40(nasid, mask)` | only if the mask is non-zero (the error-clear lists above); then `0xffa23e00(1)` |
+
+A model needs: the store sets bit 2 of that slice's status (the header's write error; bit 0 is the multiple-error bit); the status reads count `0x3f` in bits 61:56 throughout; the alias write clears the error bits. Zero for the three detail reads is accepted (mask 0, nothing else runs). Plain storage for `0x608` hangs step 3. The status bits are from the 2.4 SN2 header; the error mechanism and the detail contents are not documented (inferred).
+
 ## What was not traced
 
 The page covers the accesses found by reading every function reachable by direct calls from the reset entry and from `main` up to `sysctl_init`. Four things are left, none of them a gap in the accesses listed above:

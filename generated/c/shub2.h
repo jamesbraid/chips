@@ -944,18 +944,30 @@
 #define SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_INPLACE (SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_MASK << SHUB2_FSB_SYMMETRIC_AGENT_STATUS_CPU_0_ACTIVE_SHIFT)
 
 /*
- * PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones.
+ * PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones. The write_error, multi_write_error, write_error_address and writes_ok fields are the SHub 1 header's; the SHub 2 layout was not read.
  */
 /* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_PIO_WRITE_STATUS                       0x20070200 /* established */
 #define SHUB2_PIO_WRITE_STATUS_COUNT                 4
 #define SHUB2_PIO_WRITE_STATUS_STRIDE                128
+#define SHUB2_PIO_WRITE_STATUS_WRITES_OK_SHIFT       63 /* established */
+#define SHUB2_PIO_WRITE_STATUS_WRITES_OK_MASK        0x1ull
+#define SHUB2_PIO_WRITE_STATUS_WRITES_OK_INPLACE     (SHUB2_PIO_WRITE_STATUS_WRITES_OK_MASK << SHUB2_PIO_WRITE_STATUS_WRITES_OK_SHIFT)
 #define SHUB2_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT 56 /* established */
 #define SHUB2_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK 0x3full
 #define SHUB2_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_INPLACE (SHUB2_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_MASK << SHUB2_PIO_WRITE_STATUS_PENDING_WRITE_COUNT_SHIFT)
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_SHIFT 3 /* established */
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_MASK 0x7fffffffffffull
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_INPLACE (SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_MASK << SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_ADDRESS_SHIFT)
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT     2 /* established */
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_MASK      0x1ull
+#define SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_INPLACE   (SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_MASK << SHUB2_PIO_WRITE_STATUS_WRITE_ERROR_SHIFT)
 #define SHUB2_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT  1 /* established */
 #define SHUB2_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK   0x1ull
 #define SHUB2_PIO_WRITE_STATUS_WRITE_DEADLOCK_INPLACE (SHUB2_PIO_WRITE_STATUS_WRITE_DEADLOCK_MASK << SHUB2_PIO_WRITE_STATUS_WRITE_DEADLOCK_SHIFT)
+#define SHUB2_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_SHIFT 0 /* established */
+#define SHUB2_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_MASK 0x1ull
+#define SHUB2_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_INPLACE (SHUB2_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_MASK << SHUB2_PIO_WRITE_STATUS_MULTI_WRITE_ERROR_SHIFT)
 
 /*
  * Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.

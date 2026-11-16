@@ -10,7 +10,7 @@ remove = ["registers.ii_int", "registers.ii_int_config", "registers.ii_int_enabl
   "registers.md_reg_0003_0000", "registers.md_reg_0005_0000", "registers.md_reg_0003_0200", "registers.md_reg_0005_0200", "registers.md_bist_data_a0", "registers.md_bist_data_b0", "registers.md_bist_data_a1", "registers.md_bist_data_b1",
   "registers.ni_llp_stat", "registers.ni_llp_reset", "registers.ni_llp_chan_mode", "registers.ni_llp_config", "registers.ni_llp_test_ctl", "registers.ni_llp_err", "registers.xnni0_link_flow", "registers.xnni1_link_flow", "registers.xnni_fifo02_flow", "registers.xnni_fifo13_flow", "registers.xnni_ni_flow", "registers.xnni_dead_flow",
   "registers.cpu_perm", "registers.ext_io_perm", "registers.ext_ioi_access", "registers.io_perm", "registers.ioi_access", "registers.lb_liq_ctl", "registers.lb_max_rep_credit_cnt", "registers.lb_max_req_credit_cnt", "registers.conveyor_belt_time_out", "registers.md_dqlp_dir_presvec", "registers.md_dqrp_dir_presvec", "registers.shubs_present", "registers.md_dqlp_dir_privec", "registers.md_dqrp_dir_privec",
-  "registers.iilb_local_table", "registers.iilb_global_table", "registers.iilb_over_ride_table", "registers.pi_local_table", "registers.pi_global_table", "registers.pi_over_ride_table", "registers.ni0_local_table", "registers.ni0_global_table", "registers.ni0_over_ride_table", "registers.ni1_local_table", "registers.ni1_global_table", "registers.ni1_over_ride_table", "registers.md_local_table", "registers.md_global_table", "registers.md_over_ride_table", "registers.xnni_vcswitch_flow", "registers.xnni_inject_age", "registers.vec_data", "registers.vec_route", "registers.vec_parms", "registers.vec_rddata", "registers.vec_status", "registers.lb_error_summary", "registers.lb_error_detail"]
+  "registers.iilb_local_table", "registers.iilb_global_table", "registers.iilb_over_ride_table", "registers.pi_local_table", "registers.pi_global_table", "registers.pi_over_ride_table", "registers.ni0_local_table", "registers.ni0_global_table", "registers.ni0_over_ride_table", "registers.ni1_local_table", "registers.ni1_global_table", "registers.ni1_over_ride_table", "registers.md_local_table", "registers.md_global_table", "registers.md_over_ride_table", "registers.xnni_vcswitch_flow", "registers.xnni_inject_age", "registers.vec_data", "registers.vec_route", "registers.vec_parms", "registers.vec_rddata", "registers.vec_status", "registers.lb_error_summary", "registers.lb_error_detail", "registers.lb_reg_1005_0608", "registers.pi_error_detail_1"]
 
 [override]
 unit = "shub2"
@@ -54,7 +54,7 @@ doc = "Which processors may send interprocessor interrupts to this one: four reg
 offset = 0x20070200
 count = 4
 stride = 0x80
-doc = "PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones."
+doc = "PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones. The write_error, multi_write_error, write_error_address and writes_ok fields are the SHub 1 header's; the SHub 2 layout was not read."
 
 [patch."registers.pio_write_status_alias"]
 offset = 0x20070208
