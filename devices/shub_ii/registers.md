@@ -790,7 +790,7 @@ Array of 2 registers, stride 65536.
 
 ### Register `bte_control`
 
-BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines (plain 8-byte reads, values discarded) and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress; the block copy 0xffa952f0 writes it last, with the caller flags masked to 0x11 (zero fill and notify). PROM name table: II_IBCT0, II_IBCT1, fields POISON, NOTIFY, ZEROFILL.
+BTE control and terminate: the zero-fill and notify attributes. Writing it starts the transfer. The header says that reading it ends a transfer in progress, and that stopping one engine can disturb the other. The kernel uses notify (bit 4) always and zero-fill (bit 0) for memory clears. Header names IIO_IBCT0 and IIO_IBCT1. Kernel: the last write of a transfer, with the mode. SAL 5.04 PROM: read in both engines (plain 8-byte reads, values discarded) and never written by its set-up routine (site 0xffab1cc0), which by the header ends any transfer in progress; the block copy 0xffa952f0 writes it last, with the caller flags masked to 0x11 (zero fill and notify); the credit routine 0xffa7a960 writes 0x11; the two-engine copy test 0xffa96980 writes 0x10 (notify, a plain copy) to both engines, last of the writes (see the README). PROM name table: II_IBCT0, II_IBCT1, fields POISON, NOTIFY, ZEROFILL.
 
 Array of 2 registers, stride 65536.
 

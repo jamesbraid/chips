@@ -417,6 +417,75 @@ structs declare (`i_addr` 42 bits after 7 reserved, `i_node_id` 11 bits after 1)
 The PROM's `ADDRESS<39:07>` is a field label, and its masks clear only bits 63, 37 and 36, so they keep bits 62:38 and are
 consistent with the wider field.
 
+### The PROM's block-transfer operations (BTE operations table)
+
+Every site in SAL_B (snprom 10.54, `shub1snprom.bin`, flat at `0xffa00000`) that writes IBCT, found by searching the
+whole image for the engine register addresses and reading each hit in Ghidra (IA-64 module, `--sn2-prom --no-analysis`) with
+the objdump listing as the instruction check. A search of the address immediates would miss an address built by arithmetic;
+the only built one known is the engine base in `0xffa952f0`. Nothing was run.
+
+**IBCT decode** (Linux v5.3 `arch/ia64/include/asm/sn/bte.h` and `shubio.h`, GPL; the 2.4 `shubio.h` carries the same
+bits). Bit 0 `IBCT_ZFIL_MODE` zero fill (the source is ignored and the destination is filled with zeros), bit 4
+`IBCT_NOTIFY` write the notification word when the transfer ends, bit 8 `IBCT_POISON`. Linux `BTE_NORMAL` is notify alone
+(`0x10`, a copy) and `BTE_ZERO_FILL` is `0x11`; `BTE_VALID_MODE` keeps bits 4 and 0 only. IBLS: busy bit 20, error bit 16, length
+in bits 15:0 in cache lines (`BTE_LEN_BITS` 16; Linux converts `len >> L1_CACHE_SHIFT`, so 128-byte lines on SN2).
+Established as definitions.
+
+| Site (IBCT store, return ip) | Routine and caller | IBCT | Engine, window | Source, destination, length | Notify | Reached on a lone node |
+|---|---|---|---|---|---|---|
+| `0xffa9700c` (`0xffa97010`) and `0xffa9702c` (`0xffa97030`) | `0xffa96980`, called from `main_two` at `0xffa1b04c` | `0x10` copy plus notify, on both engines | engine 0 and engine 1 together, local alias `0x8000_0080_01c1_0000` and `0x8000_0080_01c2_0000` | src0 to dst0 and src1 to dst1; four 512 KiB heap buffers (`0xffac3da0`, 128-byte aligned), IBLS `0x101000` (busy plus `0x1000` lines) on each engine | a separate 8-byte zeroed word per engine, address masked | yes when debug-switch word bits 1:0 are not 1 (a zero word runs it); skipped when the word's bits 1:0 are 1, when `0xffa0ff30` is 0, or when `cpuid[2]` is the simulation marker |
+| `0xffa95640` store, call `0xffa9564c` | `0xffa952f0` (block copy), only caller `0xffa736d0` (credit adjustment) | flags and `0x11` (the caller passes `0x11`: zero fill plus notify) | engine by `cr.lid` bit 23, local alias `0x8000_0080_0141_0000` or `0x8000_0080_0142_0000` | the 1 KiB stack buffer as source and destination, IBLS `0x100000 | length >> 7` | caller's scratch word, busy marker preset | only when the first read of `0x81_2006_0980` is below 8 |
+| `0xffa7ae9c` (`0xffa7aea0`) | `0xffa7a960` (`memctl_mbist_credit_war`), from "Testing memory" (argument 4) and "Initializing memory" (argument 2) | `0x11` | engine 0, global window `0x8_01c1_0000 + nasid << 38` | zero fill; source, destination and notify address all equal the flagged bank's base, IBLS `0x100000 + 2 * (argument - register)` | the bank base (as IBNA) | first call yes if `0x1_0001_0068` reads below 4 (reset 0 gives IBLS `0x100008`); polls IBLS bit 20 clear, 2,000,000 ticks |
+
+No other IBCT writer exists among the address immediates; the error clean-up `0xffa94d40` writes IBCR, IMEM and IECLR and never IBCT, and the II set-up `0xffab1cc0` only reads IBCT.
+
+#### The two-engine copy test (`0xffa96980`)
+
+Role (established): a copy self-test of both engines at once, after progress 27 in `main_two`. The mode it is called with is
+`0xffa17b90(0)`, debug-switch word bits 1:0 plus 16 for bit 2 (`0xffa97660` and `0xffa975e0`; the first argument comes from
+the stub `0xffb91cb0`, which returns 0); `0xffa96980` returns at once when the mode masked with 15 is 1. The gate
+`0xffa0ff30` is the master-slice test (nonzero on a lone node, as the first part of `main_two` needs).
+
+Sequence (established, listing and Ghidra agree):
+
+1. Allocate four 512 KiB blocks (`0xffac3da0(align 128, size, arena)`) and two 8-byte words. Fill block 0 with `0xC3`, block 1
+   with `0xA5`, blocks 2 and 3 (the destinations) with `0xAD` (`0xffa15b80` is a byte `memset`; the C argument is the 16-bit
+   pattern but only the low byte is stored). Zero both words.
+2. Write, in order, IBLS0 = `0x101000`, IBSA0 = block 0, IBDA0 = block 2, IBNA0 = word 0, then the same five on engine 1
+   (block 1, block 3, word 1; the engine-1 values use IBLS1, IBSA1, IBDA1 and IBNA1). Each address is ANDed with
+   `0x7fffffcfffffffff`, clearing bits 63, 37 and 36, which leaves `nasid << 38` and the physical offset (the arena sits in the
+   node window, `prom-reset.md`). IBIA is not written.
+3. IBCT0 = `0x10` at `0xffa9700c`, IBCT1 = `0x10` at `0xffa9702c`. No IBLS or IBCT read follows; the routine reads no BTE
+   register.
+4. Poll: read the timer (`0xffa0da70`; the deadline is that plus 30,000,000, microseconds by inference as for `0xffa952f0`).
+   Loop while bit 20 of word 0 or of word 1 is set. Because both words were zeroed in step 1, bit 20 is already clear, so the loop
+   is never entered: the PROM does not wait for the hardware. On a timeout the loop also just falls through (no message, no error clean-up).
+5. `memcmp` (`0xffa166a0`) of block 0 against block 2 and block 1 against block 3, 512 KiB each. **Both results are discarded.**
+6. Free the six blocks and return. Nothing is printed on any path.
+
+The stop is therefore "accept the control write", not "complete a zero fill". Grades: sequence, values, order, the discarded
+compare and the absent wait are established. The allocator's address form (a heap pointer in the node window, bit 63 and the
+address-space bits possibly set before masking) is inferred from the masks and the arena construction; the arena base itself
+was not re-derived here. The timer unit stays inferred.
+
+Window forms: the PROM writes the same engine registers through three address forms: the local alias `0x8000_0080_01c1_0000`
+(this routine), the local alias `0x8000_0080_0141_0000` (`0xffa952f0`) and the global form `0x8_01c1_0000 + nasid << 38`
+(`0xffa7a960`, the II set-up). That the `0x0141` form is the same register block as the `0x01c1` form is carried over from the
+review of `0xffa952f0` and not shown independently here: the two differ in bit 23, **unknown** how the hardware decodes it.
+
+What a model must implement for the PROM:
+
+- Accept IBCT `0x10` on both engines. No PROM path reads the result: completion, copying and the notification word are not
+  tested here. For fidelity, copy `length` 128-byte lines from IBSA to IBDA (physical, node in bits above 37) and then store a
+  completion word at IBNA; the Linux kernel's final-status word (busy clear, error clear) is what its caller waits for.
+- Do it before the IBCT write returns, or accept a late write: the PROM frees the buffers (and the arena may reuse them) right
+  after the compare, so a transfer that completes much later writes into freed memory (as hardware would).
+- IBLS must be a plain writable register that reads bit 20 clear after the transfer (the mbist routine needs that); the error bit
+  is read once by `0xffa952f0` on its failure path.
+
+Unknown: what the hardware stores in the notification word on success (the Linux kernel's own status word is the only
+evidence, and the kernel-side waiter treats anything but its busy marker as done); the engine's timing; the `0x0141` decode above.
+
 ### Review (II and BTE set-up)
 
 Independent check, 2026-11-16, by a reviewer who wrote none of it: snprom 10.54 `shub1snprom.bin`, flat at `0xffa00000`, in
