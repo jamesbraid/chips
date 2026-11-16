@@ -2193,6 +2193,91 @@ pub mod bt_eng_notify {
     pub const COUNT: u32 = 4;
     pub const STRIDE: u64 = 65536;
 }
+/// Board type word. The PROM stores the board type here once the DIMM layout checks out (accepted values 0x7b, 0x200, 0xa00, 0xe00) and eight later sites (established)
+pub mod xn_iilb_pi_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031240;
+}
+/// Firmware scratch word, slot 3 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_iilb_ni0_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031280;
+}
+/// Firmware scratch word, slot 3 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_iilb_ni0_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031290;
+}
+/// Firmware scratch word, slot 2 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_iilb_ni1_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500312c0;
+}
+/// Firmware scratch word, slot 2 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_iilb_ni1_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500312d0;
+}
+/// Per-slice word 2 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table).  (established)
+pub mod xn_md_ni1_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031590;
+}
+/// Per-slice word 3 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table).  (established)
+pub mod xn_md_ni1_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500315b0;
+}
+/// Firmware scratch word, slot 0 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_md_sic_cmp_exp_hdr0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500315c0;
+}
+/// Firmware scratch word, slot 0 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_md_sic_cmp_exp_hdr1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500315d0;
+}
+/// Per-slice word 0 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table).  (established)
+pub mod xn_md_sic_cmp_hdr_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500315e0;
+}
+/// Per-slice word 1 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table).  (established)
+pub mod xn_md_sic_cmp_hdr_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x500315f0;
+}
+/// Firmware scratch word, slot 0 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_iilb_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031700;
+}
+/// Firmware scratch word, slot 1 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_iilb_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031710;
+}
+/// Firmware scratch word, slot 2 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_llp_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031800;
+}
+/// Firmware scratch word, slot 3 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_llp_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031810;
+}
+/// Firmware scratch word, slot 1 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_md_cmp_exp_hdr0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031b40;
+}
+/// Firmware scratch word, slot 1 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not tr (established)
+pub mod xn_ni0_md_cmp_exp_hdr1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x50031b50;
+}
 /// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor  (established)
 pub mod junk_bus_led {
     pub const WIDTH: u32 = 16;

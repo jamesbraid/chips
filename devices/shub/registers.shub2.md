@@ -90,6 +90,23 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `bt_eng_src` | 0x30040080 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `bt_eng_dest` | 0x30040100 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `bt_eng_notify` | 0x30040180 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_iilb_pi_cmp_exp_data0` | 0x50031240 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_iilb_ni0_cmp_exp_data0` | 0x50031280 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_iilb_ni0_cmp_exp_data1` | 0x50031290 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_iilb_ni1_cmp_exp_data0` | 0x500312c0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_iilb_ni1_cmp_exp_data1` | 0x500312d0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_ni1_cmp_exp_data1` | 0x50031590 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_ni1_cmp_enable1` | 0x500315b0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_sic_cmp_exp_hdr0` | 0x500315c0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_sic_cmp_exp_hdr1` | 0x500315d0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_sic_cmp_hdr_enable0` | 0x500315e0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_sic_cmp_hdr_enable1` | 0x500315f0 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_iilb_cmp_exp_data0` | 0x50031700 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_iilb_cmp_exp_data1` | 0x50031710 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_llp_cmp_exp_data0` | 0x50031800 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_llp_cmp_exp_data1` | 0x50031810 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_md_cmp_exp_hdr0` | 0x50031b40 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_ni0_md_cmp_exp_hdr1` | 0x50031b50 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `junk_bus_led` | 0xf0000000 | w | 16 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `ptc` | 0x170000000 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc` | 0x2101c0000 | r | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -752,6 +769,74 @@ Array of 4 registers, stride 65536.
 BTE notification address, per engine; same conversion.
 
 Array of 4 registers, stride 65536.
+
+### Register `xn_iilb_pi_cmp_exp_data0`
+
+Board type word. The PROM stores the board type here once the DIMM layout checks out (accepted values 0x7b, 0x200, 0xa00, 0xe00) and eight later sites call the 64-bit read helper on it (one ninth site was not classified); one of them is a predicate that returns whether it equals 0xe00. Nothing zeroes it before the store. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_iilb_ni0_cmp_exp_data0`
+
+Firmware scratch word, slot 3 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_iilb_ni0_cmp_exp_data1`
+
+Firmware scratch word, slot 3 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_iilb_ni1_cmp_exp_data0`
+
+Firmware scratch word, slot 2 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_iilb_ni1_cmp_exp_data1`
+
+Firmware scratch word, slot 2 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_ni1_cmp_exp_data1`
+
+Per-slice word 2 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_ni1_cmp_enable1`
+
+Per-slice word 3 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_sic_cmp_exp_hdr0`
+
+Firmware scratch word, slot 0 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_sic_cmp_exp_hdr1`
+
+Firmware scratch word, slot 0 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_sic_cmp_hdr_enable0`
+
+Per-slice word 0 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_md_sic_cmp_hdr_enable1`
+
+Per-slice word 1 of the four read by the processor lookup (the compact-id lookup picks it by bits 9:7 of the id; a second routine reads it by table). One routine stores one caller-supplied value to all four; the node set-up write list does not zero them. What the word holds is unknown beyond the caller keeping bits 51:50 of the value read. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_iilb_cmp_exp_data0`
+
+Firmware scratch word, slot 0 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_iilb_cmp_exp_data1`
+
+Firmware scratch word, slot 1 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_llp_cmp_exp_data0`
+
+Firmware scratch word, slot 2 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_llp_cmp_exp_data1`
+
+Firmware scratch word, slot 3 of the group-c list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_md_cmp_exp_hdr0`
+
+Firmware scratch word, slot 1 of the group-b list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
+
+### Register `xn_ni0_md_cmp_exp_hdr1`
+
+Firmware scratch word, slot 1 of the group-a list the node set-up zeroes (three lists of four, indexed by slice). Its use after the zeroing was not traced. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux. A node crossbar debug-compare register by name; the PROM uses it as 64-bit storage (inferred).
 
 ### Register `junk_bus_led`
 
