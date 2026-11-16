@@ -2949,6 +2949,56 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "fsb_vga_remap",
+   "offset": 4831904128,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": 0,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "fsb_vga_remap.vga_remapping_enabled",
+   "hi": 62,
+   "lo": 62,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "fsb_vga_remap.nid",
+   "hi": 48,
+   "lo": 38,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "fsb_vga_remap.asid",
+   "hi": 37,
+   "lo": 36,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "fsb_vga_remap.offset",
+   "hi": 35,
+   "lo": 17,
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "pi_slice_present",
    "offset": 4831969408,
    "access": "r",

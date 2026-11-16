@@ -458,6 +458,23 @@ bit24 = { bits = [24, 24], grade = "established", from = "SGI 2.4 SN2 header shu
 bit3 = { bits = [3, 3], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (berr_assert_en); SAL 5.04 PROM site 0xffa318b6 (set), 0xffa31d56 (clear), 0xffa31ab6 (read)", doc = "berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write)." }
 bit17 = { bits = [17, 17], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (xtpr_trans_rsp); SAL 5.04 PROM site 0xffaeb276 (set) and 0xffaeb2e0 (tested on another node)", doc = "xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded." }
 
+[registers.fsb_vga_remap]
+offset = 0x120010180
+access = "rw"
+width = 64
+grade = "established"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header SH_FSB_VGA_REMAP_INIT (0); the macro name says initial value, no source states a power-on default"
+from = "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+doc = "FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface570, after the copy) reads it, clears bits 60:49, ORs in bits 35:24 of the masked block A word at offset 0x28 moved to bit 49 (zero on the stock path, inferred), writes it back, then sets bit 17 of pi_reg_2001_0100. The read value is used only as the base of that write; nothing tests it and nothing reads the register again. Any value is tolerated; a plain write-accepting 64-bit register passes. The PROM's field 60:49 lies inside the header's reserved bits 61:49."
+
+[registers.fsb_vga_remap.fields]
+offset = { bits = [35, 17], grade = "established", from = "SGI 2.4 SN2 header (offset)", doc = "VGA remap node offset." }
+asid = { bits = [37, 36], grade = "established", from = "SGI 2.4 SN2 header (asid)", doc = "VGA remap address space id." }
+nid = { bits = [48, 38], grade = "established", from = "SGI 2.4 SN2 header (nid)", doc = "VGA remap node id." }
+vga_remapping_enabled = { bits = [62, 62], grade = "established", from = "SGI 2.4 SN2 header (vga_remapping_enabled)", doc = "VGA remapping enabled. Kept by the PROM's read-modify-write." }
+
 [registers.cpu_hist]
 offset = 0x150031500
 count = 4

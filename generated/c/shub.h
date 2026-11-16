@@ -1172,6 +1172,24 @@
 #define SHUB_PI_REG_2001_0100_BIT3_INPLACE           (SHUB_PI_REG_2001_0100_BIT3_MASK << SHUB_PI_REG_2001_0100_BIT3_SHIFT)
 
 /*
+ * FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface570, after the copy) reads it, clears bits 60:49, ORs in bits 35:24 of the masked block A word at offset 0x28 moved to bit 49 (zero on the stock path, inferred), writes it back, then sets bit 17 of pi_reg_2001_0100. The read value is used only as the base of that write; nothing tests it and nothing reads the register again. Any value is tolerated; a plain write-accepting 64-bit register passes. The PROM's field 60:49 lies inside the header's reserved bits 61:49.
+ */
+/* fsb_vga_remap: rw64, reset 0x0; SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) */
+#define SHUB_FSB_VGA_REMAP                           0x120010180 /* established */
+#define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_SHIFT 62 /* established */
+#define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_MASK 0x1ull
+#define SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_INPLACE (SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_MASK << SHUB_FSB_VGA_REMAP_VGA_REMAPPING_ENABLED_SHIFT)
+#define SHUB_FSB_VGA_REMAP_NID_SHIFT                 38 /* established */
+#define SHUB_FSB_VGA_REMAP_NID_MASK                  0x7ffull
+#define SHUB_FSB_VGA_REMAP_NID_INPLACE               (SHUB_FSB_VGA_REMAP_NID_MASK << SHUB_FSB_VGA_REMAP_NID_SHIFT)
+#define SHUB_FSB_VGA_REMAP_ASID_SHIFT                36 /* established */
+#define SHUB_FSB_VGA_REMAP_ASID_MASK                 0x3ull
+#define SHUB_FSB_VGA_REMAP_ASID_INPLACE              (SHUB_FSB_VGA_REMAP_ASID_MASK << SHUB_FSB_VGA_REMAP_ASID_SHIFT)
+#define SHUB_FSB_VGA_REMAP_OFFSET_SHIFT              17 /* established */
+#define SHUB_FSB_VGA_REMAP_OFFSET_MASK               0x7ffffull
+#define SHUB_FSB_VGA_REMAP_OFFSET_INPLACE            (SHUB_FSB_VGA_REMAP_OFFSET_MASK << SHUB_FSB_VGA_REMAP_OFFSET_SHIFT)
+
+/*
  * Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and tests bit slice; a set bit makes the PROM count that processor present and wait for it (up to 5,000,000 microseconds). On a one-processor node the bit for every other slice must read 0. The meaning (processor present) is inferred from that use. Later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor); the own-slice bit they expect was not traced, so a model should set it.
  */
 /* pi_slice_present: r64, reset unknown; SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) */

@@ -472,6 +472,13 @@
     <field name="bit17" start="17" size="1" type="uint" grade="established"/>
     <field name="bit3" start="3" size="1" type="uint" grade="established"/>
   </struct>
+  <struct name="FSB_VGA_REMAP" size="8" grade="established" from="SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)" register="yes" offset="0x120010180" access="rw" reset="0x0">
+    <doc>FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface570, after the copy) reads it, clears bits 60:49, ORs in bits 35:24 of the masked block A word at offset 0x28 moved to bit 49 (zero on the stock path, inferred), writes it back, then sets bit 17 of pi_reg_2001_0100. The read value is used only as the base of that write; nothing tests it and nothing reads the register again. Any value is tolerated; a plain write-accepting 64-bit register passes. The PROM's field 60:49 lies inside the header's reserved bits 61:49.</doc>
+    <field name="vga_remapping_enabled" start="62" size="1" type="uint" grade="established"/>
+    <field name="nid" start="38" size="11" type="uint" grade="established"/>
+    <field name="asid" start="36" size="2" type="uint" grade="established"/>
+    <field name="offset" start="17" size="19" type="uint" grade="established"/>
+  </struct>
   <struct name="PI_SLICE_PRESENT" size="8" grade="established" from="SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller)" register="yes" offset="0x120020080" access="r" reset="unknown">
     <doc>Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and tests bit slice; a set bit makes the PROM count that processor present and wait for it (up to 5,000,000 microseconds). On a one-processor node the bit for every other slice must read 0. The meaning (processor present) is inferred from that use. Later CPU-enumeration callers of the same word read bits 0 and 1 (first processor of slices 0 and 1) and bits 4 and 5 (second processor); the own-slice bit they expect was not traced, so a model should set it.</doc>
     <field name="present2" start="4" size="2" type="uint" grade="inferred"/>

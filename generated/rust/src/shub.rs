@@ -2279,6 +2279,51 @@ pub mod pi_reg_2001_0100 {
         }
     }
 }
+/// FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM routine (0xffaeb1f0, called from the SAL shadow copy routine 0xfface5 (established)
+pub mod fsb_vga_remap {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120010180;
+    pub mod vga_remapping_enabled { // bits 62:62, established
+        pub const SHIFT: u32 = 62;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod nid { // bits 48:38, established
+        pub const SHIFT: u32 = 38;
+        pub const MASK: u64 = 0x7ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod asid { // bits 37:36, established
+        pub const SHIFT: u32 = 36;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod offset { // bits 35:17, established
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u64 = 0x7ffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Per-slice flags in the processor interface; the name is ours. The local-master arbitration reads it for slices 0 and 1 other than the running one and  (established)
 pub mod pi_slice_present {
     pub const WIDTH: u32 = 64;
