@@ -2063,6 +2063,91 @@ pub mod pio_write_status_alias {
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 128;
 }
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_lb_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031110;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_lb_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031120;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_lb_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031130;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ii_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031140;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ii_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031150;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ii_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031160;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ii_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031170;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_md_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031180;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_md_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031190;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_md_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311a0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_md_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311b0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_pi_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311c0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_pi_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311d0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_pi_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311e0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_pi_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500311f0;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ni0_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031200;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ni0_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031210;
+}
 /// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
 pub mod xn_iilb_ni0_cmp_enable0 {
     pub const WIDTH: u32 = 64;
@@ -2072,6 +2157,46 @@ pub mod xn_iilb_ni0_cmp_enable0 {
 pub mod xn_iilb_ni0_cmp_enable1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x150031230;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ni1_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031240;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_iilb_ni1_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031260;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it twice per node (first and last of the five lists), as an 8-byte store through the g (established)
+pub mod xn_iilb_ni1_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031270;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_pi_iilb_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031300;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_pi_iilb_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031310;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_pi_iilb_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031320;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_pi_iilb_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031330;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_pi_ni0_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031340;
 }
 /// A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 a (established)
 pub mod xn_pi_ni0_cmp_enable0 {
@@ -2088,10 +2213,20 @@ pub mod xn_pi_sic_cmp_exp_hdr0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1500313c0;
 }
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model mus (established)
+pub mod xn_pi_sic_cmp_exp_hdr1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500313d0;
+}
 /// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
 pub mod xn_pi_sic_cmp_hdr_enable0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1500313e0;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model mus (established)
+pub mod xn_pi_sic_cmp_hdr_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500313f0;
 }
 /// Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the w (established)
 pub mod cpu_hist {
@@ -2115,6 +2250,21 @@ pub mod fw_debug_word {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x150031560;
 }
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM loads, stores and zeroes; the values it keeps are not  (established)
+pub mod xn_md_ni0_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031570;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM uses as a counter, loading it and storing the value pl (established)
+pub mod xn_md_ni1_cmp_exp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031580;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model (established)
+pub mod xn_md_ni1_cmp_exp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031590;
+}
 /// A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 a (established)
 pub mod xn_md_ni1_cmp_enable0 {
     pub const WIDTH: u32 = 64;
@@ -2129,6 +2279,51 @@ pub mod xn_md_ni1_cmp_enable1 {
 pub mod xn_md_sic_cmp_exp_hdr0 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1500315c0;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model (established)
+pub mod xn_md_sic_cmp_hdr_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500315e0;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage: a word the PROM only reads, through the global window of a NASID it is  (established)
+pub mod xn_md_sic_cmp_data0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031600;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031610;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031620;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data3 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031630;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031640;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031650;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data_enable2 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031660;
+}
+/// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
+pub mod xn_md_sic_cmp_data_enable3 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031670;
 }
 /// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor  (established)
 pub mod junk_bus_led {

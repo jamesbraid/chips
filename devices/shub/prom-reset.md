@@ -308,13 +308,31 @@ The renamed `0x81_5003_1500` to `1560` rows were checked against the 2.4 header 
 
 ## The XN compare words the PROM zeroes in the chip-object method at `0xffa236f0`
 
-One method of the chip object (descriptor at `0xffc4baa0`) zeroes nine XN compare words, in two steps. It runs only when `0xffa0ff30` returns 1, which means no lower-numbered slice of the node passes the `0xffa0ecd0(26 + slice)` test, so once per node, on the lowest slice (what the test reads is pending Ghidra). Every store goes through the 8-byte store helper at `0xffa0e640`: data translation and interrupts off (`rsm 0x24000`), `st8`, `mf.a`, restore. The `ip 0xffa0e650` of a stop is inside that helper.
+One method of the chip object zeroes the node's XN compare words, then writes four lists of error-register clears and masks. The method is slot 84 of the class-0 method table at `0xffbd7c18` (359 descriptor pointers in four 112-slot classes; `0xffbd8a18` holds the four class pointers). `0xffc4ba50` and `0xffc4baa0` are only entries in the descriptor pool; slot 84 is the descriptor at `0xffc4baa0`. The only call of slot 84 found is the wrapper `0xffa3e5d0` (it loads the class pointer from the object at offset 32), called once, at `0xffa19c1c` in `0xffa19a20`, on the chip object of the CPU's own node. `0xffa19a20` itself has one caller (`0xffa1e66c`). No path with another NASID was found, but computed vtable calls were not exhaustively excluded.
 
-The PROM's name table (16-byte records at `0xffbfbef0`: 64-bit offset, then a name-pool offset and a field word; pool base `0xffbfe578`) pairs each offset with the name in the *previous* record. The SGI 2.4 header gives the same names at the same offsets.
+The method runs only when `0xffa0ff30` returns 1. That gate reads `cr.lid` bits 26:23 as `n`. For `n` = 0 it returns 1 without reading anything. Otherwise it tests bits 26 to 26+`n`-1 of `cpu_bits` (local window `0x81_5003_1550`, through `0xffa0ecd0`) and returns 0 if any is set. So it is "no lower-numbered slice has set its local-master flag", once per node in the normal case, and not a hardware lock.
 
-**Step 1: `0xffa222a0`, local window.** Three 4-entry tables of 64-bit offsets indexed by slice, walked together for 4 iterations (counter 3 down to -1, stride 8). Each iteration stores 0 to table A's entry, then B's, then C's. An entry with bit 32 set is ORed with `0x8000008000000000` (local window, `0x81_...`); a clear bit 32 would add `0x1800000` first (no entry uses that). Each offset sits in two adjacent slots, so each is written twice, in this order: A0 `15c0`, B0 `15b0`, C0 `1220`; A1 `15c0`, B1 `15b0`, C1 `1220`; A2 `13c0`, B2 `13e0`, C2 `1230`; A3 `13c0`, B3 `13e0`, C3 `1230`. The tables are A `0xffbd8ae0`, B `0xffbd8b00`, C `0xffbd8b20`, reached gp-relative (gp `0xffd98000`). The `0xffbd8b40` table is unrelated: 32-bit sizes indexed by a device-type byte (`0xffa228e0`), stored to a record field.
+Every store goes through the 8-byte store helper at `0xffa0e640` (data translation and interrupts off with `rsm 0x24000`, `st8`, `mf.a`, restore). A stop inside the helper shows `ip 0xffa0e650`.
 
-**Step 2: `0xffa2bd60`, global window of this node.** Called right after step 1 with a pointer to the node's 16-bit NASID. Zeros a 128-byte stack buffer, then stores 0 to `0x8000000950031xxx | (nasid << 38)` (bit 35 set, so `0x9_5003_xxxx + nasid * 2^38`) for `15a0`, `1360`, `1370`, in that order (the stop at `r36 = 0x80000009500315a0`, `r35 = 0x209`: that value is the caller's saved `ar.pfs`, frame size 9, 4 locals, matching `0xffa236f0`'s `alloc`; `r34`, the saved `b0`, should be `0xffa23760`, so `-1` there is worth a check in the model). It then calls the printer `0xffa2b580` five times with lists of `0x1_5003_11xx..16xx` offsets and the zeroed buffer as values (no MMIO), and `0xffa23750`'s caller goes on to print twice, read `SH1_SHUB_ID` (`0x81_1006_0580`, `0xffa0dcf0`) and print again.
+The PROM's name table has 16-byte records from `0xffbfabb0` (819 records): the register offset, then a word whose low 32 bits are a name offset (the high 32 bits are a field word, for example `0x10535`). The name of record *i* starts at `0xffbfdef8` plus the low 32 bits of record *i*-1's word. The earlier note gave a different pool base (`0xffbfe578`), which does not land on these names. The constant `0xffbfdef8` holds for all ten registers checked, and the names match the 2.4 header.
+
+**Step 1: `0xffa222a0`, local window.** Three 4-entry tables of 64-bit offsets, indexed by slice and walked together for four iterations (counter 3 down to -1, stride 8). Each iteration stores 0 to table A's entry, then B's, then C's, with the value in the second argument. An entry with bit 32 set is ORed with `0x8000008000000000` (local window, `0x81_...`); a clear bit 32 would add `0x1800000` first (no entry uses that). Each offset sits in two adjacent slots, so each is written twice, in this order: A0 `15c0`, B0 `15b0`, C0 `1220`; A1 `15c0`, B1 `15b0`, C1 `1220`; A2 `13c0`, B2 `13e0`, C2 `1230`; A3 `13c0`, B3 `13e0`, C3 `1230`. The tables are A `0xffbd8ae0`, B `0xffbd8b00`, C `0xffbd8b20`, reached gp-relative (gp `0xffd98000`, which is the gp in every descriptor of the table). The `0xffbd8b40` table is unrelated: 32-bit sizes indexed by a device-type byte (`0xffa228e0`), stored to a record field.
+
+**Step 2: `0xffa2bd60`, global window of this node.** Called right after step 1 with a pointer to the node's 16-bit NASID (`0xffa236f0` passes its own first argument). It zeros a 128-byte stack buffer (`0xffa15b80`, a memset), stores 0 to `0x8000000950031xxx | (nasid << 38)` for `15a0`, `1360`, `1370`, in that order (the global flag is bit 35, and bit 32 is the offset's own), and then calls `0xffa2b580` five times with a zero-terminated offset list and the zeroed buffer. `0xffa2b580` pairs each offset with the next buffer word and hands the pairs to the list writer `0xffae3f50`, which stores each value with the same 8-byte helper at `0x8000000800000000 | (nasid << 38) | offset` (for an offset with bit 32 set and bit 38 clear). So the five lists are **writes of 0**, not a print; the earlier note called them a print with no MMIO, and that was wrong. The lists, at `0xffbdbde8`, `0xffbdbe18`, `0xffbdbe48`, `0xffbdbe78` and `0xffbdbea8`:
+
+| List | Offsets (`0x1_5003_...`) |
+|---|---|
+| 1 | `1270`, `1110`, `1120`, `1130`, `1140` |
+| 2 | `1150`, `1160`, `1170`, `1180`, `1190` |
+| 3 | `11a0`, `11b0`, `11c0`, `11d0`, `11e0` |
+| 4 | `11f0`, `1200`, `1210`, `1240`, `1260` |
+| 5 | `1270`, `1610`, `1620`, `1630`, `1640`, `1650`, `1660`, `1670`, `1300`, `1310`, `1320`, `1330`, `1340` |
+
+That is 33 stores to 32 distinct words (`1270` is in lists 1 and 5). All are `SH_XN_*_CMP_*` words in the 2.4 header with 64 valid bits and INIT 0 (the 1100 to 11f0 block was read in the header; the others were not read one by one). Nothing reads them back.
+
+The stop at `r36 = 0x80000009500315a0` shows the saved `ar.pfs` in `r35` and the saved `b0` in `r34` of the frame of `0xffa2bd60` (its `alloc r35=ar.pfs,7,4,0` and `mov r34=b0`; `r36` is the first outgoing register, `r37` the value 0). `0xffa236f0` has `alloc r35=ar.pfs,9,4,0`, so the saved `ar.pfs` is `0x209` (9 | 4 << 7), and the `br.call` at `0xffa23750` makes `b0` the next bundle, `0xffa23760`. So `r35 = 0x209` is right and `r34` must be `0xffa23760`. A model that shows `r34 = -1` with `r35 = 0x209` is not setting `b0` on `br.call` (or reads it wrongly in `mov r34=b0`); the `alloc` path is fine.
+
+After step 2, `0xffa236f0` calls `0xffae3f50` with the 70-entry list at `0xffbd8e18`, reads `SH1_SHUB_ID` (`0x81_1006_0580`, `0xffa0dcf0`), calls the attribute lookup `0xffad6e30` for `"AttrCheck"`, writes a 5-entry list (`0xffbd9280` if bit 31 of the result is clear, `0xffbd9330` if set), and then a 24-entry list at `0xffbd93e0`. The lists are given at the end of this section.
 
 | Offset (`0x1_...`) | Window | Header name (SGI 2.4 SN2) | Reset (header INIT) | Written | Read-back sites (all decoded) | Grade |
 |---|---|---|---|---|---|---|
@@ -327,5 +345,127 @@ The PROM's name table (16-byte records at `0xffbfbef0`: 64-bit offset, then a na
 | `5003_15a0` | global, own NASID | `SH_XN_MD_NI1_CMP_ENABLE0` | 0 | plain 0, step 2 | `0xffa2b340`: read, and if none of the mask bits is set, write back OR mask (test-and-set; masks `0x20` at `0xffa2b6cc`, `0x100` at `0xffa2b81c`, `0x80` at `0xffa2b96c`, `0x400` at `0xffa2ba9c`, `0x40` at `0xffa2bbcc`); a set bit makes the caller skip | name established; reset inferred; use established (decoded) |
 | `5003_1360` | global, own NASID | `SH_XN_PI_NI0_CMP_ENABLE0` | 0 | plain 0, step 2 | `0xffa2b430` (via `0xffa2b72c`, `0xffa2b87c`): read; if 0, write the first argument; the PROM's 64-bit record field | same |
 | `5003_1370` | global, own NASID | `SH_XN_PI_NI0_CMP_ENABLE1` | 0 | plain 0, step 2 | `0xffa2b430`: read, write back OR the second argument | same |
+| the 32 list words above | global, own NASID | `SH_XN_*` per the table | 0 | 0, step 2 lists (`1270` twice) | none | name established; reset inferred |
+| `5003_15e0`, `5003_1590` | local | `SH_XN_MD_SIC_CMP_HDR_ENABLE0`, `SH_XN_MD_NI1_CMP_EXP_DATA1` | 0 | `0xff00000000` at `0xffa30d7c`, `0xffa30d9c` (in `0xffa30d40`, called from `0xffae302c`) | `0xffa30dc0`, per slice (array `0xffbdd068`, index `cr.lid` bits 26:23) | name established; use inferred |
+| `5003_13f0`, `5003_13d0`, `5003_1570` | local | `SH_XN_PI_SIC_CMP_HDR_ENABLE1`, `SH_XN_PI_SIC_CMP_EXP_HDR1`, `SH_XN_MD_NI0_CMP_ENABLE1` | 0 | plain 0 at `0xffa4852c`, `0xffa4854c`, `0xffa4850c` in `0xffa483d0`, gated by `0xffa0ff30` | `1570` only: loads at `0xffa42d3c`, `0xffa42ffc`, store at `0xffa433dc` in `0xffa42a30` (values not decoded) | name established; use inferred |
+| `5003_1580` | local | `SH_XN_MD_NI1_CMP_EXP_DATA0` | 0 | old value plus 1, `0xffa469cc` | the same routine, `0xffa469ac` (a counter) | name established; use inferred |
+| `5003_1600` | global, NASID passed in | `SH_XN_MD_SIC_CMP_DATA0` | 0 | never | loads at `0xffa6b71c`, `0xffa6cc9c`, `0xffa6cdac`; value not decoded | name established; use unknown |
 
-So 15a0, 1360 and 1370 are firmware storage read back later (they must read 0 after the zeroing, or the once-only test fails); the six local words are never read by decoded code (no `movl` of any form holds them; the tables are the only reference). Nothing waits or polls. The two helper pairs are used by what looks like an error-record routine at `0xffa2b690` and `0xffa2b7e0` (callers `0xffa2c39c`, `0xffa2cd4c`); who calls the method at `0xffa236f0`, and whether it runs for remote NASIDs, is pending Ghidra (it is entered through the method table at `0xffc4ba50..`).
+The six local words of step 1 are never read by any decoded code. The three global words of step 2 are firmware storage read back by the error-record routines at `0xffa2b690` and `0xffa2b7e0` (callers `0xffa2c39c`, `0xffa2cd4c`), so they must read 0 after the zeroing or the once-only test fails. Nothing waits or polls here.
+
+The writes after the SHUB_ID read are the list that clears the error-summary and overflow aliases and masks the error sources. Offsets are the full 36-bit offsets (the leading 1 is bit 32). Each store is 8 bytes. Names are from the PROM's name table, without `SH_`. The two `EVENT` names, `EVENT_OVERFLOW` (mask `0x0fffffff`) and `EVENT_OCCURRED_ALIAS` (offset `0x1_1001_0008`), were checked against the 2.4 header; the other masks were not, so "value equals the register's valid-bit mask" is an inference. The `AttrCheck` choice only changes the `PI_*` values; a lookup result with bit 31 set (a negative status such as `-2`) selects the second 5-entry list. `0xffad6e30` returns 0 for a successful lookup and the negative status otherwise, via `0xffad6b30` and `0xffad67c0`, which holds `mov r8=-2` at `0xffad6a76`. Which condition produces `-2` was not traced, and what a valid log must hold to return a non-negative status was not decoded.
+
+```
+== L1 ffbd8e18 (before SHUB_ID read)
+110010008 7fffffff EVENT_OCCURRED_ALIAS
+110010088 fffffff EVENT_OVERFLOW_ALIAS
+110071000 0 FIRST_ERROR
+120060688 7ffffffff PI_ERROR_SUMMARY_ALIAS
+120060608 7ffffffff PI_ERROR_OVERFLOW_ALIAS
+110071380 0 PI_HW_TIME_STAMP
+110071300 0 PI_COR_TIME_STAMP
+110071400 0 PI_UNCOR_TIME_STAMP
+1000000c0 7f77777ff MEM_ERROR_SUMMARY_ALIAS
+1000000d0 7f77777ff MEM_ERROR_OVERFLOW_ALIAS
+110071180 0 MD_COR_TIME_STAMP
+110071200 0 MD_HW_TIME_STAMP
+110071280 0 MD_UNCOR_TIME_STAMP
+150040508 ffffffffffffffff NI0_ERROR_SUMMARY_1_ALIAS
+150040518 7fffffff003fffff NI0_ERROR_SUMMARY_2_ALIAS
+150040528 ffffffffffffffff NI0_ERROR_OVERFLOW_1_ALIAS
+150040538 7fffffff003fffff NI0_ERROR_OVERFLOW_2_ALIAS
+150040560 0 NI0_FIRST_ERROR_1
+150040570 0 NI0_FIRST_ERROR_2
+150040580 0 NI0_ERROR_DETAIL_1
+150040590 0 NI0_ERROR_DETAIL_2
+150040140 0 NI0_ERROR_DETAIL_3
+150000048 0 NI0_LLP_ERR
+150040608 ffffffffffffffff NI1_ERROR_SUMMARY_1_ALIAS
+150040618 7fffffff003fffff NI1_ERROR_SUMMARY_2_ALIAS
+150040628 ffffffffffffffff NI1_ERROR_OVERFLOW_1_ALIAS
+150040638 7fffffff003fffff NI1_ERROR_OVERFLOW_2_ALIAS
+150040660 0 NI1_FIRST_ERROR_1
+150040670 0 NI1_FIRST_ERROR_2
+150040680 0 NI1_ERROR_DETAIL_1
+150040690 0 NI1_ERROR_DETAIL_2
+150040150 0 NI1_ERROR_DETAIL_3
+150002048 0 NI1_LLP_ERR
+150040208 ffffffffffffffff XNIILB_ERRORS_ALIAS
+150040228 ffffffffffffffff XNIILB_ERROR_OVERFLOW_ALIAS
+150040260 0 XNIILB_FIRST_ERROR
+150040110 0 XNIILB_ERROR_DETAIL_1
+150040120 0 XNIILB_ERROR_DETAIL_2
+150040130 0 XNIILB_ERROR_DETAIL_3
+150040308 3ffffffffffff XNPI_ERRORS_ALIAS
+150040328 3ffffffffffff XNPI_ERROR_OVERFLOW_ALIAS
+150040360 0 XNPI_FIRST_ERROR
+150040100 0 XNPI_ERROR_DETAIL_1
+150040408 3ffffffffffff XNMD_ERRORS_ALIAS
+150040428 3ffffffffffff XNMD_ERROR_OVERFLOW_ALIAS
+150040460 0 XNMD_FIRST_ERROR
+1500400f0 0 XNMD_ERROR_DETAIL_1
+150040008 3fffffffff XN_ERRORS_ALIAS
+150040028 3fffffffff XN_ERROR_OVERFLOW_ALIAS
+150040060 0 XN_FIRST_ERROR
+150040070 0 XN_CORRECTED_DETAIL_1
+150040080 0 XN_CORRECTED_DETAIL_2
+150040090 0 XN_CORRECTED_DETAIL_3
+1500400a0 0 XN_CORRECTED_DETAIL_4
+1500400b0 0 XN_UNCORRECTED_DETAIL_1
+1500400c0 0 XN_UNCORRECTED_DETAIL_2
+1500400d0 0 XN_UNCORRECTED_DETAIL_3
+1500400e0 0 XN_UNCORRECTED_DETAIL_4
+110071900 0 XN_HW_TIME_STAMP
+110071980 0 XN_UNCOR_TIME_STAMP
+110071880 0 XN_COR_TIME_STAMP
+110050200 0 LB_ERROR_DETAIL_1
+110050280 0 LB_ERROR_DETAIL_2
+110050300 0 LB_ERROR_DETAIL_3
+110050380 0 LB_ERROR_DETAIL_4
+110050400 0 LB_ERROR_DETAIL_5
+110050588 7fffff LB_ERROR_SUMMARY_ALIAS
+110050508 7fffff LB_ERROR_OVERFLOW_ALIAS
+110050600 0 LB_FIRST_ERROR
+110071100 0 LB_HW_TIME_STAMP
+== L2 ffbd9280 (AttrCheck bit31 clear)
+120050a80 180200000 PI_ERROR_MASK
+120050080 180200000 PI_AFI_ERROR_MASK
+120050500 180200000 PI_CRBP_ERROR_MASK
+120060080 67fdfffff PI_AFI_FIRST_ERROR
+120060480 67fdfffff PI_CRBP_FIRST_ERROR
+== L3 ffbd9330 (AttrCheck bit31 set)
+120050a80 183200000 PI_ERROR_MASK
+120050080 183200000 PI_AFI_ERROR_MASK
+120050500 183200000 PI_CRBP_ERROR_MASK
+120060080 67cdfffff PI_AFI_FIRST_ERROR
+120060480 67cdfffff PI_CRBP_FIRST_ERROR
+== L4 ffbd93e0 (always, last)
+1000000d8 100000000 MEM_ERROR_MASK
+10004a000 100000000 MD_DQLS_MMR_XAMOPW_ERR
+10006a000 100000000 MD_DQRS_MMR_YAMOPW_ERR
+100033020 4000000000 MD_DQLP_MMR_XUERR1
+100033820 4000000000 MD_DQLP_MMR_YUERR1
+100053020 4000000000 MD_DQRP_MMR_XUERR1
+100053820 4000000000 MD_DQRP_MMR_YUERR1
+100033000 4000000000 MD_DQLP_MMR_XCERR1
+100033800 4000000000 MD_DQLP_MMR_YCERR1
+100053000 4000000000 MD_DQRP_MMR_XCERR1
+100053800 4000000000 MD_DQRP_MMR_YCERR1
+100033040 4000000000000000 MD_DQLP_MMR_XPERR
+100033840 4000000000000000 MD_DQLP_MMR_YPERR
+100053040 4000000000000000 MD_DQRP_MMR_XPERR
+100053840 4000000000000000 MD_DQRP_MMR_YPERR
+150040040 0 XN_ERROR_MASK
+150040240 0 XNIILB_ERROR_MASK
+150040340 0 XNPI_ERROR_MASK
+150040440 0 XNMD_ERROR_MASK
+150040540 0 NI0_ERROR_MASK_1
+150040550 0 NI0_ERROR_MASK_2
+150040640 0 NI1_ERROR_MASK_1
+150040650 0 NI1_ERROR_MASK_2
+110050480 0 LB_ERROR_MASK
+```
+
+### Review
+
+Independent review of chips commit `d36d7aa`, re-read in Ghidra (IA-64 import of the SAL 5.04 SHub 1 image, flat at `0xffa00000`) with objdump as a cross-check. Confirmed: the step 1 tables, iteration count, store order and window rule; the step 2 stores to `15a0`, `1360` and `1370` and their read-backs in `0xffa2b340` and `0xffa2b430`; the nine names and header INIT values for the registers checked; that the six local words are never read (no constant, table or base-plus-register access found); and the `r35 = 0x209` / `r34 = 0xffa23760` reading. Corrected: the five calls at the end of step 2 write 0 (they are not a print), which adds 32 words; the name-table pool base is `0xffbfdef8`; the method table is `0xffbd7c18`, not `0xffc4ba50`; the gate reads `cr.lid` bits 26:23 and `cpu_bits`. Added: the 70-, 5- and 24-entry write lists after step 2, and the XN words with other accesses. Not verified: header masks for the aliases other than the two named above, header INIT for the registers outside the 1100 to 11f0 block, what the `AttrCheck` lookup returns on a model, readers of the error registers in the lists, and exhaustive exclusion of remote-NASID calls (only one caller of slot 84 was found). The overlay `remove` list now names every new XN row, and `defs-gen` was re-run.
