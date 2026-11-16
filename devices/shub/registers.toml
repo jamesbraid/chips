@@ -77,8 +77,10 @@ offset = 0x110060580
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
-doc = "SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32; the reset value is unknown. See prom-reset.md."
+reset = 0x0010300000000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SHUB_ID_INIT 0x0010300000000000, MASK 0x011f37ffffffffff; no source states a power-on default"
+doc = "SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects revision 3 and part 0x4363; those are PROM expectations, not header facts. See prom-reset.md."
 
 [registers.shub_id.fields]
 nasid = { bits = [42, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0dcf0 (read) and 0xffa95a30 (write)", doc = "Node id. Every read in the PROM forms global-window addresses from it, so the node's own global window at this id must decode to the node. The PROM replaces it once, later in boot; it must read back as written. Name is ours. Linux does not define this field (it takes the node id from firmware): the position and the PROM's replacement are what the code does, the meaning is inferred." }
@@ -432,9 +434,15 @@ offset = 0x1101a0100
 access = "rw"
 width = 64
 grade = "inferred"
-reset = "unknown"
+reset = 0x7ffffffff
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_INIT 0x7ffffffff, MASK 0xfffffffff; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
-doc = "Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the packing and meaning (a timeout) are not decoded. Neither the PROM nor the runtime stores to ptc itself."
+doc = "Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the header splits the word into PTC_TO_WRAP (bits 23:0, time-out period) and PTC_TO_VAL (bits 35:24, time-out valid); what the PROM's value means is not decoded. Neither the PROM nor the runtime stores to ptc itself."
+
+[registers.ptc_parms.fields]
+ptc_to_wrap = { bits = [23, 0], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_WRAP", doc = "Header field PTC_TO_WRAP, the time-out period. Name and position are the header's; the PROM's use is not decoded." }
+ptc_to_val = { bits = [35, 24], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_VAL", doc = "Header field PTC_TO_VAL, described as time-out valid. Name and position are the header's; the meaning is inferred." }
 
 # Registers the SHub 1 PROM touches from reset to the console start (SAL 5.04). Linux v5.3 names none
 # of them; every name below is ours and says so. Offsets and use are from the PROM sites in each entry.
@@ -549,9 +557,11 @@ offset = 0x1101d0100
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH2_INIT 0x0, MASK 0xffffffffffffffff; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg"
-doc = "L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces)."
+doc = "L1 link state word in the local block; the name is ours. The header calls this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias SH_SCRATCH2_ALIAS is at +8 (0x1101d0108). SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces)."
 
 [registers.lb_l1_state.fields]
 link = { bits = [41, 39], grade = "inferred", from = "SAL 5.04 PROM site 0xffc4e7a0 (write 7) ; the L1 start check named in boot-sequence.md is unconfirmed", doc = "Written 7 by SAL_A's election winner; no reader that requires 7 was found (an earlier reading said the L1 start checks it). Meaning inferred; name is ours." }
@@ -561,7 +571,9 @@ offset = 0x1101d0200
 access = "rw"
 width = 64
 grade = "inferred"
-reset = "unknown"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH4_INIT 0x0, MASK 0x1; no source states a power-on default"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH4 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user)"
 doc = "Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_lock_status); the lock use is the PROM's, and our name stays for that role. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred."
 
@@ -579,7 +591,9 @@ offset = 0x1101d0180
 access = "w"
 width = 64
 grade = "inferred"
-reset = "unknown"
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH3_INIT 0x0, MASK 0x1; no source states a power-on default"
 from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH3 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers)"
 doc = "Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for that role. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred."
 
@@ -608,14 +622,18 @@ offset = 0x110060280
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
+reset = 0x100000000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_INIT 0x100000000, MASK 0x313ff3ff1; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
 doc = "Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives."
 
 [registers.rtc_ctl.fields]
-period = { bits = [13, 4], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period", doc = "Tick period field: the PROM and the SAL runtime both compute the period in nanoseconds as 10 times (value + 1), a software expectation read in two places; that the counter really ticks at that rate is inferred. Written 4 by the PROM. Name is ours." }
-mode = { bits = [33, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1)", doc = "Read by an interconnect-phase routine that branches on 1, 2 and 3, and set to 1 by another. Written 1 by the reset entry. Meaning inferred only; name is ours." }
-run = { bits = [0, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa94d06 (clear), 0xffa94d26 (set), 0xffa967e6 (clear)", doc = "Clear when the PROM writes the counter to 0, set after; cleared again by an interconnect-phase routine. A run control is inferred from that order only; name is ours." }
+period = { bits = [13, 4], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period", doc = "Tick period field: the PROM and the SAL runtime both compute the period in nanoseconds as 10 times (value + 1), a software expectation read in two places; that the counter really ticks at that rate is inferred. Written 4 by the PROM. The header calls it MAX_COUNT." }
+mode = { bits = [33, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1)", doc = "Read by an interconnect-phase routine that branches on 1, 2 and 3, and set to 1 by another. Written 1 by the reset entry. Meaning inferred only; the header calls it SOURCE_SEL." }
+run = { bits = [0, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa94d06 (clear), 0xffa94d26 (set), 0xffa967e6 (clear)", doc = "Clear when the PROM writes the counter to 0, set after; cleared again by an interconnect-phase routine. A run control is inferred from that order only; the header calls it ENABLE_COUNTER." }
+counter = { bits = [25, 16], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_COUNTER; shub_mmr_t.h counter field", doc = "Header field COUNTER, a 10-bit count. The header gives its position only; that the clock advances here is inferred." }
+toggle_bit = { bits = [28, 28], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_TOGGLE_BIT; shub_mmr_t.h toggle_bit field", doc = "Header field TOGGLE_BIT. The header states no role; the PROM's two writes leave it clear." }
 
 [registers.pi_slice_present]
 offset = 0x120020080
@@ -771,7 +789,9 @@ offset = 0x120050a80
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
+reset = 0x7ffffffff
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_ERROR_MASK_INIT 0x7ffffffff, MASK 0x7ffffffff; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -780,7 +800,9 @@ offset = 0x120050080
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
+reset = 0x7ffe00000
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_AFI_ERROR_MASK_INIT 0x7ffe00000, MASK 0x7ffe00000; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -789,7 +811,9 @@ offset = 0x120050500
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
+reset = 0x1fffff
+reset_grade = "inferred"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_CRBP_ERROR_MASK_INIT 0x1fffff, MASK 0x1fffff; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -2185,10 +2209,10 @@ offset = 0x150021480
 access = "rw"
 width = 64
 grade = "established"
-reset = 0x8000000000000000
+reset = 0x8000000000002000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.ni0_local_table]
@@ -2225,7 +2249,7 @@ grade = "established"
 reset = 0x8000000000000000
 reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.ni1_local_table]
@@ -2262,7 +2286,7 @@ grade = "established"
 reset = 0x8000000000000000
 reset_grade = "inferred"
 reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.md_local_table]
@@ -2296,10 +2320,10 @@ offset = 0x150024480
 access = "rw"
 width = 64
 grade = "established"
-reset = 0x8000000000000000
+reset = 0x8000000000002000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.xnni_vcswitch_flow]

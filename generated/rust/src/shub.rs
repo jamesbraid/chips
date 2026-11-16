@@ -1707,6 +1707,26 @@ pub mod rtc_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod toggle_bit { // bits 28:28, inferred
+        pub const SHIFT: u32 = 28;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod counter { // bits 25:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod period { // bits 13:4, inferred
         pub const SHIFT: u32 = 4;
         pub const MASK: u64 = 0x3ff;
@@ -1886,6 +1906,26 @@ pub mod ptc {
 pub mod ptc_parms {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101a0100;
+    pub mod ptc_to_val { // bits 35:24, inferred
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u64 = 0xfff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod ptc_to_wrap { // bits 23:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xffffff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown. (established)
 pub mod int_cmpa {
@@ -1994,7 +2034,7 @@ pub mod scratch1_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0088;
 }
-/// L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An (established)
+/// L1 link state word in the local block; the name is ours. The header calls this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias (established)
 pub mod lb_l1_state {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0100;

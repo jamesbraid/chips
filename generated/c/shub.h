@@ -868,11 +868,17 @@
 /*
  * Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives.
  */
-/* rtc_ctl: rw64, reset unknown; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
+/* rtc_ctl: rw64, reset 0x100000000; SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field */
 #define SHUB_RTC_CTL                                 0x110060280 /* established */
 #define SHUB_RTC_CTL_MODE_SHIFT                      32 /* inferred */
 #define SHUB_RTC_CTL_MODE_MASK                       0x3ull
 #define SHUB_RTC_CTL_MODE_INPLACE                    (SHUB_RTC_CTL_MODE_MASK << SHUB_RTC_CTL_MODE_SHIFT)
+#define SHUB_RTC_CTL_TOGGLE_BIT_SHIFT                28 /* inferred */
+#define SHUB_RTC_CTL_TOGGLE_BIT_MASK                 0x1ull
+#define SHUB_RTC_CTL_TOGGLE_BIT_INPLACE              (SHUB_RTC_CTL_TOGGLE_BIT_MASK << SHUB_RTC_CTL_TOGGLE_BIT_SHIFT)
+#define SHUB_RTC_CTL_COUNTER_SHIFT                   16 /* inferred */
+#define SHUB_RTC_CTL_COUNTER_MASK                    0x3ffull
+#define SHUB_RTC_CTL_COUNTER_INPLACE                 (SHUB_RTC_CTL_COUNTER_MASK << SHUB_RTC_CTL_COUNTER_SHIFT)
 #define SHUB_RTC_CTL_PERIOD_SHIFT                    4 /* inferred */
 #define SHUB_RTC_CTL_PERIOD_MASK                     0x3ffull
 #define SHUB_RTC_CTL_PERIOD_INPLACE                  (SHUB_RTC_CTL_PERIOD_MASK << SHUB_RTC_CTL_PERIOD_SHIFT)
@@ -908,9 +914,9 @@
 #define SHUB_MD_CLK_SEL_SEL_INPLACE                  (SHUB_MD_CLK_SEL_SEL_MASK << SHUB_MD_CLK_SEL_SEL_SHIFT)
 
 /*
- * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32; the reset value is unknown. See prom-reset.md.
+ * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects revision 3 and part 0x4363; those are PROM expectations, not header facts. See prom-reset.md.
  */
-/* shub_id: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* shub_id: rw64, reset 0x10300000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_SHUB_ID                                 0x110060580 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_SHIFT             48 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_MASK              0x1full
@@ -984,10 +990,16 @@
 #define SHUB_PTC_TYPE_BIT_INPLACE                    (SHUB_PTC_TYPE_BIT_MASK << SHUB_PTC_TYPE_BIT_SHIFT)
 
 /*
- * Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the packing and meaning (a timeout) are not decoded. Neither the PROM nor the runtime stores to ptc itself.
+ * Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the header splits the word into PTC_TO_WRAP (bits 23:0, time-out period) and PTC_TO_VAL (bits 35:24, time-out valid); what the PROM's value means is not decoded. Neither the PROM nor the runtime stores to ptc itself.
  */
-/* ptc_parms: rw64, reset unknown; SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS */
+/* ptc_parms: rw64, reset 0x7ffffffff; SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS */
 #define SHUB_PTC_PARMS                               0x1101a0100 /* inferred */
+#define SHUB_PTC_PARMS_PTC_TO_VAL_SHIFT              24 /* inferred */
+#define SHUB_PTC_PARMS_PTC_TO_VAL_MASK               0xfffull
+#define SHUB_PTC_PARMS_PTC_TO_VAL_INPLACE            (SHUB_PTC_PARMS_PTC_TO_VAL_MASK << SHUB_PTC_PARMS_PTC_TO_VAL_SHIFT)
+#define SHUB_PTC_PARMS_PTC_TO_WRAP_SHIFT             0 /* inferred */
+#define SHUB_PTC_PARMS_PTC_TO_WRAP_MASK              0xffffffull
+#define SHUB_PTC_PARMS_PTC_TO_WRAP_INPLACE           (SHUB_PTC_PARMS_PTC_TO_WRAP_MASK << SHUB_PTC_PARMS_PTC_TO_WRAP_SHIFT)
 
 /*
  * Compare value of RTC0 (55 bits). Never read. Whether a value already below the counter fires is unknown.
@@ -1046,9 +1058,9 @@
 #define SHUB_SCRATCH1_ALIAS                          0x1101d0088 /* established */
 
 /*
- * L1 link state word in the local block; the name is ours. SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces).
+ * L1 link state word in the local block; the name is ours. The header calls this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias SH_SCRATCH2_ALIAS is at +8 (0x1101d0108). SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces).
  */
-/* lb_l1_state: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg */
+/* lb_l1_state: rw64, reset 0x0; SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg */
 #define SHUB_LB_L1_STATE                             0x1101d0100 /* established */
 #define SHUB_LB_L1_STATE_LINK_SHIFT                  39 /* inferred */
 #define SHUB_LB_L1_STATE_LINK_MASK                   0x7ull
@@ -1057,7 +1069,7 @@
 /*
  * Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for that role. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred.
  */
-/* lb_lock2: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock2: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_LB_LOCK2                                0x1101d0180 /* inferred */
 
 /*
@@ -1069,7 +1081,7 @@
 /*
  * Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_lock_status); the lock use is the PROM's, and our name stays for that role. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
  */
-/* lb_lock: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_LB_LOCK                                 0x1101d0200 /* inferred */
 
 /*
@@ -1210,7 +1222,7 @@
 /*
  * PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
  */
-/* pi_afi_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* pi_afi_error_mask: rw64, reset 0x7ffe00000; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
 #define SHUB_PI_AFI_ERROR_MASK                       0x120050080 /* established */
 
 /*
@@ -1222,13 +1234,13 @@
 /*
  * PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
  */
-/* pi_crbp_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* pi_crbp_error_mask: rw64, reset 0x1fffff; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
 #define SHUB_PI_CRBP_ERROR_MASK                      0x120050500 /* established */
 
 /*
  * PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
  */
-/* pi_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+/* pi_error_mask: rw64, reset 0x7ffffffff; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
 #define SHUB_PI_ERROR_MASK                           0x120050a80 /* established */
 
 /*
@@ -1447,7 +1459,7 @@
 /*
  * Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* pi_over_ride_table: rw64, reset 0x8000000000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_over_ride_table: rw64, reset 0x8000000000002000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_PI_OVER_RIDE_TABLE                      0x150021480 /* established */
 
 /*
@@ -1513,7 +1525,7 @@
 /*
  * Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* md_over_ride_table: rw64, reset 0x8000000000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_over_ride_table: rw64, reset 0x8000000000002000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_MD_OVER_RIDE_TABLE                      0x150024480 /* established */
 
 /*

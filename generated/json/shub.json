@@ -2168,7 +2168,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4294967296,
    "grade": "established",
    "from": "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
   },
@@ -2180,6 +2180,24 @@
    "lo": 32,
    "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "rtc_ctl.toggle_bit",
+   "hi": 28,
+   "lo": 28,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "rtc_ctl.counter",
+   "hi": 25,
+   "lo": 16,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
   },
   {
    "unit": "shub",
@@ -2274,7 +2292,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 4556376185503744,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
@@ -2458,7 +2476,25 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 34359738367,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ptc_parms.ptc_to_val",
+   "hi": 35,
+   "lo": 24,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "ptc_parms.ptc_to_wrap",
+   "hi": 23,
+   "lo": 0,
    "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
   },
@@ -2614,7 +2650,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
    "from": "SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg"
   },
@@ -2637,7 +2673,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
@@ -2665,7 +2701,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "inferred",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
@@ -3052,7 +3088,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 34357641216,
    "grade": "established",
    "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
   },
@@ -3080,7 +3116,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 2097151,
    "grade": "established",
    "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
   },
@@ -3094,7 +3130,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 34359738367,
    "grade": "established",
    "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
   },
@@ -3569,7 +3605,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": 9223372036854775808,
+   "reset": 9223372036854784000,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
@@ -3695,7 +3731,7 @@
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": 9223372036854775808,
+   "reset": 9223372036854784000,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
