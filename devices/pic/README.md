@@ -743,6 +743,11 @@ are written by the SAL runtime's PIC attach (below); until then the registers ho
 
 `pic.h` notes that the PIC does not accept a write to only the low half of a 64-bit register (workaround PV#854697): the PROM's 8-byte stores agree.
 
+**The three writes a model must accept (field decode, 2026-11-16).** All are plain 8-byte read/write storage on each head's window; none has a read side effect, and the PROM does not test any of them afterwards.
+
+- `+0x48` (`llp_cfg`, `p_wid_llp`): read-modify-write of bits 9:0 to `0x3e0`. The fields are bits 25:16 maximum retry, 15:10 null timeout and 9:0 maximum burst ([registers-extra.md](registers-extra.md), `LLP_CFG_REG`), so this sets the maximum burst to `0x3e0` (992) and keeps the other fields. The page marks it valid on head 0 only; the PROM writes it on both heads. Reset value: unknown (no specification held).
+- `+0x280` and `+0x288` (`rrb`, even and odd response buffer map): `0x88889999` written to each, not read back in this stage. Per nibble, low to high: `9` = valid, virtual channel 0, device pair 1 (nibbles 0 to 3); `8` = valid, virtual channel 0, device pair 0 (nibbles 4 to 7). So each register hands four response buffers to each of two slots (even register: slots 0 and 2; odd register: slots 1 and 3), all on virtual channel 0. Reset value: unknown. The enable bits do not act on anything the PROM does next; the effect on the model is only that reads of these registers return what was written.
+
 Values a model needs for this stage: id word `+0` with manufacturer `0x24` and part `0xd102` on both buses' windows, every
 register above plain read/write storage (8-byte), a clock at `0x1_101c_0000` that advances (the waits), and no side effect on
 reads of `+0x20`, `+0x48`, `+0x80`.

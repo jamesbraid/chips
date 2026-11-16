@@ -284,10 +284,8 @@ Same routine as request 2; site `0xffa7e09c` through `main` at `0xffa1a3ec`. Mas
 ### I/O discovery and the console (`main_three`, `0xffad7280`)
 
 14. **`0x1005` "Init I/O..."** at progress `0x24` (`0xffad789c`). Established.
-15. **I/O EEPROM reads (conditional).** `0xffaad6d0` runs I/O discovery. Only if the widget identification read at
-    `(nasid << 38) + 0x8000_0008_0000_0000` returns a crossbar part (`0xd000`/`0xd100`) does it reach `io_mfg_info`
-    (`0xffaf1ee0`), which sends `0x0006` with device id 1 (id 98 when the cached type is `o`) and selector 2, from `0xffaecd80`
-    through `0xffa85550`. On a model with no I/O widget answering, none are sent. Inferred: gating not evaluated against a model.
+15. **I/O board EEPROM read: `0x0006`, device id 98, selector 2 (once per PIC widget).** See the section "Request `0x0006` in I/O
+    discovery" below.
 16. **Progress `0x26`.** If this is the partition master (flag 1 in `0x81_5003_1550`, set by the master election code), `0xffa485a0`
     sends `0x0012` (`0xffa7ea90`, site `0xffa7ebfc`): no arguments, one integer reply; any error or any value below 0x800 becomes
     0x800, so only status and count matter. `0xffaa03f0` then sends `0x0010` again per node (`0xffad3ed0`) and `0x0008`
@@ -307,6 +305,64 @@ Same routine as request 2; site `0xffa7e09c` through `main` at `0xffa1a3ec`. Mas
 After `Running` the PROM loads the EFI image (`0xffaf8c50`, "Loading EFI", progress `0x27`); no further L1 request is sent before
 the EFI hand-off in the code read (established for the direct calls; indirect calls through the node operations tables were not
 all resolved).
+
+## Request `0x0006` in I/O discovery
+
+Read on 2026-11-16 in the Ghidra decompiles of snprom 10.54 (`shub1snprom.bin`, flat at `0xffa00000`; `--sn2-prom --no-analysis`, address
+ranges), each branch cross-checked in a flat `ia64-linux-gnu-objdump` listing. A model run that stopped here prompted the reading;
+the run is not evidence. Nothing was run.
+
+**What it is (established).** The board-information-area read of the I/O board's EEPROM, the same transfer as request 13, aimed at
+the I/O side. The model's stop is request code `0x0006`, destination `0x0ffff006`, four tag-0 integers `0x62`, `2`, `0`, `0x40`
+(bytes `00 00000062 00 00000002 00 00000000 00 00000040`, the 20 argument bytes with no count byte; the frame's count byte is 4).
+
+**Call chain (established).** `0xffab38b0` prints "Discovering local I/O on nasid %d" (master only, through `0xffaad6d0` from the entry
+`0xffaad720`), then `0xffab15c0` reads the widget identification word at `nasid << 38 | 0x8000_0008_0000_0000` and, for a crossbar
+part (`0xd000`/`0xd100`), walks the widgets in `0xffab0f10`. For a widget whose id part is `0xd102` (PIC) it runs the PIC set-up
+`0xffab0c00` on head 0 and on head 1 (`W + 0x80_0000`; the register writes are in [devices/pic](../../../devices/pic/README.md#prom-set-up-of-a-pic-in-main_three-0xffab0c00)), then `bridge_discover`
+`0xffabfb10`. That calls `io_mfg_info` (`0xffaf1ee0`, site `0xffac01fc`; a second caller site, `0xffaaeafc`, is a generic accessor not on
+this path). An even node number selects `0xffaecd80`, which calls `0xffa85550`; an odd one selects `0xffaeccd0` and the id-1 path of
+request 13 (`0xffa84fd0`). So it runs **once per PIC widget** (once on a lone node with one PIC), not per head and not per brick.
+
+**Arguments (established).** Device id `0x62` (98) when the module type the L1 reported for `0x0003` is `o` after lowercasing (`0x6f`), else 1
+(`0xffa85550`). A blank L1 that answers the type letter `O` therefore gets 98; an `F` module (the ARM L1 1.62.1 reading) is `f`, then `c`,
+and gets id 1. Selector 2 (board information area), offset 0, length 64; the loop in `0xffa843f0` repeats at offset 64, 128, ... until
+the "bytes left" integer is 0 (at most 64 bytes a chunk, parse buffer 490 bytes).
+
+**Destination (established).** `0xffa85550` opens target `0x4ffff000`; `sysctl_cmd_open` (`0xffa819c0`) rewrites it to `0x0ffff000` when the
+cached type is `m` (`0x6d`) or `o` (`0x6f`), so the word is `0x0ffff000 | 6 = 0x0ffff006`: target `0xffff`, task 6, the same as the
+requests on the `0x0ffff000` set. For other types it would be `0x4ffff006`; the L1 ignores everything but the task number.
+
+**Reply the PROM reads (established, `0xffa82270` as called by `0xffa843f0`).** Status 0, count 2: integer tag 0 with the bytes left
+after the chunk, then a raw block (tag `0x80 | n`, n up to 64) copied to the parse buffer. Then `0xffa84990` parses an IPMI-style board
+area: byte 0 version, byte 1 length in 8-byte units (0 gives "read_board_ia: eeprom length byte of ZERO", return 1), language, a 3-byte
+manufacture time, then type/length-coded fields ending at `0xc1`. The sum of the whole area must be 0, else "read_board_ia: bad checksum" and
+return 3. A good area is kept as the board string.
+
+**What it uses the fields for (established for the code, inferred for the effect).** `io_mfg_info` hands the board string to `0xffabf570`,
+which looks for the substring `Laser:` and stores 16 bytes after it in the widget component (offset `0x28`). The component name does not come
+from the EEPROM for type `o`: `0xffabfb10` maps the type letter `o` to the name "onboardIO" (other letters map to other names, an
+unknown one to "WEIRDIO") and looks that name up (`0xffabf7c0`, `0xffaed410`).
+
+**Failures (established for the branch structure).**
+
+- Status `-101` (unknown request), `-104` (not present), `-105`, any other negative status, a wrong tag (`-32`) or a wrong count (`-33`):
+  `0xffa843f0` returns 1 (status `-107` returns 3, which `0xffa84990` treats the same), `0xffa84990` prints
+  "read_board_ia: error reading info area from L1 %d" and returns 1, `io_mfg_info` prints
+  "io_mfg_info: Could not retrieve EEPROM info on nasid %d" and zeroes the board string. **Not fatal, and no brick or widget is skipped**:
+  `0xffabfb10` goes on with the type-derived name, finds no `Laser:`, and I/O discovery continues. The caller never checks the result.
+- Bad version/length/checksum: same, return 3.
+- No reply: `0xffa82c10` returns `-24` after `0x2dc6c0` ticks, but the node-die routine `0xffad2cb0` (progress `0x8d`) has already
+  parked the boot processor (see "Silence"). This is the stop the model hit: its reply for id 98 was missing.
+- A send error, other than the partial-send retries, returns 1 at once (non-fatal).
+
+**Minimal model reply (established that it is accepted; whether the real L1 answers so is inferred).** Status `-104`, no arguments: the same
+reply a model already gives for id 1, selector 2. Any complete reply stops the park. Reading the board area needs a valid IPMI area.
+
+**L1 side.** the sysco repository, `software/firmware/l1/sn2-prom-link-1.62.1.md` (section on request `0x0006`): the ARM 1.62.1 handler `0xc9658` maps
+id 98 to table entry 18 (RISER) for module type `F` and returns -104 when that record is not present; the ColdFire handlers do the
+same mapping for type `O` (id 98 and 99 to records 18 and 19, in `brick-request-handlers.md`). This is an ordinary request with a reply, not the
+open `0x100b` wait question.
 
 ## Console input
 
@@ -341,7 +397,7 @@ What the L1 sends to the node when a character is typed, and how the PROM takes 
 | 12 | `0x1005` | string "Init Intercon..." | status 0, 0 args | established |
 | 13 | `0x0006` then `0x0010` | 1, 2, offset 0/64/..., 64; then none | board area in 64-byte chunks until bytes-left is 0; then as 8 | established |
 | 14 | `0x1005` | string "Init I/O..." | status 0, 0 args | established |
-| 15 | `0x0006` (conditional) | 1 or 98, 2, offset, 64 | as 13 | inferred |
+| 15 | `0x0006`, once per PIC widget | 98 (type `o`) or 1, 2, 0, 64, then 64, 128, ... | as 13; any negative status is tolerated, silence parks | established |
 | 16 | `0x0012`, `0x0010`, `0x0008` | none | 1 int; as 8; 1 string (error tolerated) | established, gating inferred |
 | 16b | `0x1005` | string "Running" | status 0, 0 args | established |
 | 17 | console | class-2 frames, no request | none | established |
