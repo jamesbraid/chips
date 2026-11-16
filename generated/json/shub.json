@@ -2511,21 +2511,66 @@
   {
    "unit": "shub",
    "kind": "register",
-   "name": "lb_elect",
+   "name": "scratch1",
    "offset": 4565303424,
    "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
-   "reset": "unknown",
+   "reset": 0,
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e9b0, 0xffc4e766 (election reads), 0xffc4e246, 0xffa0b0f0 (bit updates); no Linux v5.3 name"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "scratch1.bit56",
+   "hi": 56,
+   "lo": 56,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa1a6d0 (test-and-set under a firmware lock)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "scratch1.port_probe",
+   "hi": 55,
+   "lo": 54,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffa5d2a0 (clears then stores the two-bit result of 0xffa5d6a0; nonzero ends the poll at once)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "scratch1.bit41",
+   "hi": 41,
+   "lo": 41,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM sites 0xffa0b0f0 (set), 0xffa5d2a0 (the poll stops on it)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "scratch1.bit40",
+   "hi": 40,
+   "lo": 40,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM sites 0xffa4eb40 (set), 0xffa5e0b0 (tested: stores the NASID from bits 42:32 of its argument when set, 0xffff when clear)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
+   "name": "scratch1.node_claimed",
+   "hi": 39,
+   "lo": 39,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM sites 0xffa0aee0 (set), 0xffa5d2a0 (set with the poll), 0xffa5e0b0 (tested: record flag 0x10000)"
   },
   {
    "unit": "shub",
    "kind": "register",
-   "name": "lb_elect_set",
+   "name": "scratch1_alias",
    "offset": 4565303432,
    "access": "w",
    "width": 64,
@@ -2534,7 +2579,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e9a6 (release store of slice + 1); no Linux v5.3 name"
+   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
   },
   {
    "unit": "shub",

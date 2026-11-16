@@ -1919,13 +1919,63 @@ pub mod rtc {
         }
     }
 }
-/// Node election word; the name is ours. SAL_A stores slice + 1 to lb_elect_set and reads this register: the 64-bit value must equal exactly what was wri (established)
-pub mod lb_elect {
+/// SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the node election and for per-node state bits. Reset 0 is the header's INIT (th (established)
+pub mod scratch1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0080;
+    pub mod bit56 { // bits 56:56, inferred
+        pub const SHIFT: u32 = 56;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod port_probe { // bits 55:54, inferred
+        pub const SHIFT: u32 = 54;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit41 { // bits 41:41, inferred
+        pub const SHIFT: u32 = 41;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod bit40 { // bits 40:40, inferred
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod node_claimed { // bits 39:39, inferred
+        pub const SHIFT: u32 = 39;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
-/// Election write register; the name is ours. SAL_A stores slice + 1 here and reads lb_elect. Whether it aliases lb_elect, latches the first writer or so (established)
-pub mod lb_elect_set {
+/// SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux v5.3 has no name. Established: the first stage stores slice + 1 here and (established)
+pub mod scratch1_alias {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0088;
 }

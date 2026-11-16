@@ -100,8 +100,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `int_cmpa` | 0x1101b0000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks) |
 | `int_cmp` | 0x1101b0080 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `rtc` | 0x1101c0000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `lb_elect` | 0x1101d0080 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e9b0, 0xffc4e766 (election reads), 0xffc4e246, 0xffa0b0f0 (bit updates); no Linux v5.3 name |
-| `lb_elect_set` | 0x1101d0088 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e9a6 (release store of slice + 1); no Linux v5.3 name |
+| `scratch1` | 0x1101d0080 | rw | 64 |  |  | 0x0 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `scratch1_alias` | 0x1101d0088 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `lb_l1_state` | 0x1101d0100 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg |
 | `lb_lock2` | 0x1101d0180 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers) |
 | `lb_lock2_status` | 0x1101d0188 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers) |
@@ -846,13 +846,21 @@ Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock
 |---|---|---|---|---|---|
 | 54:0 | `counter` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
 
-### Register `lb_elect`
+### Register `scratch1`
 
-Node election word; the name is ours. SAL_A stores slice + 1 to lb_elect_set and reads this register: the 64-bit value must equal exactly what was written, twice (site 0xffc4e9b0 and 0xffc4e766). Equal means this processor is the node's winner. Later code ORs bits 39 to 41 into it (set bit 41 when no other processor position is flagged; bit 40 set across nodes; bit 39 on a remote node) as firmware state. The relation to lb_elect_set is unknown: a write to the offset 8 above may alias, latch (first writer wins) or store into this word; the code reads the same register for all three.
+SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the node election and for per-node state bits. Reset 0 is the header's INIT (the early election needs a zero word, inferred); the header gives no fields. Hardware sets no bit: every bit is stored by firmware. Early election (0xffc4e970): each processor stores slice + 1 to the alias, reads this register and wins when the value equals slice + 1 exactly; 0xffc4e730 repeats the exact compare, so bits 39 to 41 must still be clear then. Read-modify-write bits (all other bits kept): 41 (0xffa0b0f0, local, only when no other processor position is flagged), 39 (0xffa0aee0, global window), 40 (0xffa4eb40, global window). The discovery path reaches the register through the vector engine at its literal address, never the alias: 0xffa5d2a0 polls it until it reads 0 or bit 39 or 41 is set (any other value is polled every 10000 RTC ticks for up to 300000000 ticks, then forced to 0x20000000000), returns at once when bits 55:54 are nonzero, then stores the word with bit 39 set and bits 55:54 replaced by the NI port-probe result; 0xffa1a6d0 test-and-sets bit 56 under a firmware lock. The error and park paths (0xffaf5c80, 0xffc4e030) OR in bits 41 and 39. Bits 20, 23, 25 and 33 of 0x2_0290_0000 are written by no SHub 1 site in the image. Bit 58 and the field at 30:23 appear only in the twin routine for the other chip type (0xffa60a70 at 0x4_0901_d0080).
 
-### Register `lb_elect_set`
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 56 | `bit56` | inferred |  | SAL 5.04 PROM site 0xffa1a6d0 (test-and-set under a firmware lock) | One-time claim flag set by 0xffa1a6d0; firmware state. |
+| 55:54 | `port_probe` | inferred |  | SAL 5.04 PROM site 0xffa5d2a0 (clears then stores the two-bit result of 0xffa5d6a0; nonzero ends the poll at once) | Result of probing NI ports 0 and 1 (bit i is port i); stored once, by firmware. |
+| 41 | `bit41` | inferred |  | SAL 5.04 PROM sites 0xffa0b0f0 (set), 0xffa5d2a0 (the poll stops on it) | Set by the last processor of the node during start-up when no other position is flagged; firmware state. |
+| 40 | `bit40` | inferred |  | SAL 5.04 PROM sites 0xffa4eb40 (set), 0xffa5e0b0 (tested: stores the NASID from bits 42:32 of its argument when set, 0xffff when clear) | Firmware state; role inferred from the reader. |
+| 39 | `node_claimed` | inferred |  | SAL 5.04 PROM sites 0xffa0aee0 (set), 0xffa5d2a0 (set with the poll), 0xffa5e0b0 (tested: record flag 0x10000) | Set when the node is claimed during discovery; firmware state. The name is ours. |
 
-Election write register; the name is ours. SAL_A stores slice + 1 here and reads lb_elect. Whether it aliases lb_elect, latches the first writer or something else is unknown. A model that returns the written value at lb_elect satisfies every access read.
+### Register `scratch1_alias`
+
+SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux v5.3 has no name. Established: the first stage stores slice + 1 here and then reads SH_SCRATCH1 expecting exactly that value, so the alias cannot be write-one-to-clear (a clear of a zero word would never read back equal). Inferred, from that single use: the store lands in the SH_SCRATCH1 word (either as a plain store or as an OR; a lone processor cannot tell them apart). Unknown: whether a second writer is blocked or OR-merged. A model keeps both addresses on one 64-bit cell; reads of the alias are never issued by the PROM.
 
 ### Register `lb_l1_state`
 

@@ -496,23 +496,31 @@ reset = "unknown"
 from = "SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test), 0xffa974d0 (field setter)"
 doc = "Firmware debug-switch word; the name is ours. SAL_A's election winner zeroes it; the PROM later stores the L1's reply to request 0x0001 and tests bits of it (bit 11 selects the single-node route, bit 14 skips I/O initialisation). A field setter (site 0xffa974d0, call sites 0xffa1a51c and 0xffa1a58c, both with a width of 16) replaces a bit field of it with a 16-bit value under the lb_lock and lb_lock_status lock: take the lock, read the word, clear the field, OR in the value, write, release. Plain storage. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_ENABLE0: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown."
 
-[registers.lb_elect]
+[registers.scratch1]
 offset = 0x1101d0080
 access = "rw"
 width = 64
 grade = "established"
-reset = "unknown"
-from = "SAL 5.04 PROM site 0xffc4e9b0, 0xffc4e766 (election reads), 0xffc4e246, 0xffa0b0f0 (bit updates); no Linux v5.3 name"
-doc = "Node election word; the name is ours. SAL_A stores slice + 1 to lb_elect_set and reads this register: the 64-bit value must equal exactly what was written, twice (site 0xffc4e9b0 and 0xffc4e766). Equal means this processor is the node's winner. Later code ORs bits 39 to 41 into it (set bit 41 when no other processor position is flagged; bit 40 set across nodes; bit 39 on a remote node) as firmware state. The relation to lb_elect_set is unknown: a write to the offset 8 above may alias, latch (first writer wins) or store into this word; the code reads the same register for all three."
+reset = 0x0
+reset_from = "SGI 2.4 SN2 header shub_mmr.h, SH_SCRATCH1_INIT 0x0000000000000000; the first-stage election at SAL 5.04 PROM site 0xffc4e970 also relies on a zero word"
+from = "SGI 2.4 SN2 header shub_mmr.h and shub_mmr_t.h (SH_SCRATCH1: MASK all ones, INIT 0, one 64-bit field); SAL 5.04 PROM (shub1snprom.bin, snprom 10.54) sites 0xffc4e970, 0xffc4e730 (election), 0xffa0b0f0, 0xffa0aee0, 0xffa4eb40 (bit 41, 39, 40), 0xffa5d2a0, 0xffa1a6d0 (vector path, through 0xffa959d0 and 0xffa96920); no Linux v5.3 name"
+doc = "SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the node election and for per-node state bits. Reset 0 is the header's INIT (the early election needs a zero word, inferred); the header gives no fields. Hardware sets no bit: every bit is stored by firmware. Early election (0xffc4e970): each processor stores slice + 1 to the alias, reads this register and wins when the value equals slice + 1 exactly; 0xffc4e730 repeats the exact compare, so bits 39 to 41 must still be clear then. Read-modify-write bits (all other bits kept): 41 (0xffa0b0f0, local, only when no other processor position is flagged), 39 (0xffa0aee0, global window), 40 (0xffa4eb40, global window). The discovery path reaches the register through the vector engine at its literal address, never the alias: 0xffa5d2a0 polls it until it reads 0 or bit 39 or 41 is set (any other value is polled every 10000 RTC ticks for up to 300000000 ticks, then forced to 0x20000000000), returns at once when bits 55:54 are nonzero, then stores the word with bit 39 set and bits 55:54 replaced by the NI port-probe result; 0xffa1a6d0 test-and-sets bit 56 under a firmware lock. The error and park paths (0xffaf5c80, 0xffc4e030) OR in bits 41 and 39. Bits 20, 23, 25 and 33 of 0x2_0290_0000 are written by no SHub 1 site in the image. Bit 58 and the field at 30:23 appear only in the twin routine for the other chip type (0xffa60a70 at 0x4_0901_d0080)."
 
-[registers.lb_elect_set]
+[registers.scratch1.fields]
+node_claimed = { bits = [39, 39], grade = "inferred", from = "SAL 5.04 PROM sites 0xffa0aee0 (set), 0xffa5d2a0 (set with the poll), 0xffa5e0b0 (tested: record flag 0x10000)", doc = "Set when the node is claimed during discovery; firmware state. The name is ours." }
+bit40 = { bits = [40, 40], grade = "inferred", from = "SAL 5.04 PROM sites 0xffa4eb40 (set), 0xffa5e0b0 (tested: stores the NASID from bits 42:32 of its argument when set, 0xffff when clear)", doc = "Firmware state; role inferred from the reader." }
+bit41 = { bits = [41, 41], grade = "inferred", from = "SAL 5.04 PROM sites 0xffa0b0f0 (set), 0xffa5d2a0 (the poll stops on it)", doc = "Set by the last processor of the node during start-up when no other position is flagged; firmware state." }
+port_probe = { bits = [55, 54], grade = "inferred", from = "SAL 5.04 PROM site 0xffa5d2a0 (clears then stores the two-bit result of 0xffa5d6a0; nonzero ends the poll at once)", doc = "Result of probing NI ports 0 and 1 (bit i is port i); stored once, by firmware." }
+bit56 = { bits = [56, 56], grade = "inferred", from = "SAL 5.04 PROM site 0xffa1a6d0 (test-and-set under a firmware lock)", doc = "One-time claim flag set by 0xffa1a6d0; firmware state." }
+
+[registers.scratch1_alias]
 offset = 0x1101d0088
 access = "w"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SAL 5.04 PROM site 0xffc4e9a6 (release store of slice + 1); no Linux v5.3 name"
-doc = "Election write register; the name is ours. SAL_A stores slice + 1 here and reads lb_elect. Whether it aliases lb_elect, latches the first writer or something else is unknown. A model that returns the written value at lb_elect satisfies every access read."
+from = "SGI 2.4 SN2 header shub_mmr.h (SH_SCRATCH1_ALIAS, address only); SAL 5.04 PROM site 0xffc4e970 (store of slice + 1)"
+doc = "SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux v5.3 has no name. Established: the first stage stores slice + 1 here and then reads SH_SCRATCH1 expecting exactly that value, so the alias cannot be write-one-to-clear (a clear of a zero word would never read back equal). Inferred, from that single use: the store lands in the SH_SCRATCH1 word (either as a plain store or as an OR; a lone processor cannot tell them apart). Unknown: whether a second writer is blocked or OR-merged. A model keeps both addresses on one 64-bit cell; reads of the alias are never issued by the PROM."
 
 [registers.lb_l1_state]
 offset = 0x1101d0100
