@@ -51,6 +51,7 @@
 |---|---|---|
 | [flash.md](ip30/flash.md) | IP30 boot flash | The IP30 boot PROM sits in flash that the Bridge chip drives. |
 | [prom-console-input.md](ip30/prom-console-input.md) | IP30 PROM: keyboard detection and the console choice with no keyboard | Question answered: on an Octane (IP30), how does the PROM find out that no PS/2 keyboard is attached to the IOC3... |
+| [prom-environment.md](ip30/prom-environment.md) | IP30 PROM environment: the DS1687 NVRAM and the flash PDS | Question answered: where does the Octane (IP30) PROM keep its environment variables, how is the store protected, and... |
 
 ## ip32
 
