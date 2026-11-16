@@ -75,6 +75,55 @@ states that the hardware never clears the mark bit itself.
 The header names four of the 15 as "partial cache" CRBs and notes that the first of them is now tunable, so which four
 they are is unknown.
 
+## How the Itanium sees widget registers
+
+Question: when the SN2 PROM does a 4-byte `ld4` or `st4` on a Crosstalk widget register, which bits does it touch, and does
+anything swap bytes on the way? Sources: SGI's Altix Linux code (linux-5.3 `arch/ia64/include/asm/sn/{io,pic,shubio}.h`,
+`arch/ia64/sn/pci/pcibr/*.c`; the 2.4-era `include/asm-ia64/sn/sn2/shubio.h` in the same fields) and the SHub 1 PROM
+(`shub1snprom.bin`, flat at `0xffa00000`).
+
+Every widget register is a 64-bit register at an 8-byte-aligned offset. SN2 software reads it with plain loads, so an access
+of N bytes at byte offset N0 is an N-byte access at N0, and little-endian rules pick the bits.
+
+| Access to the doubleword at 8n | Itanium (little-endian) | Origin MIPS (big-endian, `lw` of the same register) |
+|---|---|---|
+| `ld8` at +0 | the whole register | whole register (`ld`) |
+| `ld4` at +0 | bits 31:0 | bits 63:32 |
+| `ld4` at +4 | bits 63:32 | bits 31:0 |
+
+So the widget id (part number in bits 27:12) is `ld4` at `+0` on SN2 and `lw` at `+4` on MIPS; the models written for the
+MIPS host must not carry their `+4` convention over. Model the register as one 64-bit value and let the access width and host
+byte order choose the half.
+
+- **(a) Width and halves.** `___sn_readl` and `___sn_readl_relaxed` are `*(volatile unsigned int *)addr` and the `readq`
+  forms are `*(volatile unsigned long *)addr`, with no conversion (`io.h`). `struct pic` is `u64` fields at 8-byte steps
+  (`pic.h`) and the widget id is a `u64` union with manufacturer 11:1, part 27:12, revision 31:28 and the upper 32 bits
+  reserved (`shubio.h`, `ii_wid_u`). The PROM's `ld4` at `+0` of widget 0 is tested for part `0xd000` or `0xd100` in bits 27:12
+  (B11, `0xffab14f0`), and the status word read at `+0x8` is shifted right by 6 and masked to 4 bits (`0xffaaf340`): both only
+  make sense if `+0` and `+8` return the low 32 bits. Established for `+0` (the PROM depends on it); inferred for `+4`
+  returning bits 63:32, since no SN2 code reads an `8n+4` word of a widget register that this page found. For II registers
+  the PROM never uses 4 bytes: `0xffa0e5a0` is a single `ld8`.
+- **(b) Byte swap in transit.** None is visible to the processor on PIO. Software does no swap (below), and the register
+  fields are at their little-endian positions in the doubleword, so a PIO access is unswapped (established as the software
+  contract; the hardware path itself is not described anywhere found, so nothing beyond the contract is claimed). The swap
+  controls are all on the DMA side: IWC bit 0 `i_dma_byte_swap` (`shubio.h`, no description in either header; the PROM writes
+  it clear at `0xffaad9f6`, row B10; Linux never writes `IIO_IWC`), and the PIC's Device register bit 19 (`PCIBR_DEV_SWAP_DIR`),
+  ATE bit 29 (`ATE_SWAP_ON`) and 64-bit address attribute bit 55 (`PCI64_ATTR_SWAP`) in `pcibr_provider.h`. That these affect
+  DMA data only is inferred from the names and use (`pcibr_dma.c` sets the ATE bit when the device bit is set); what they do to
+  the lanes is covered in [PIC](../pic/README.md#device-register-bit-19-swap_direct-which-level-swaps). No control was found
+  that swaps PIO register data: unknown whether one exists.
+- **(c) Linux accessors.** No `swab`, `cpu_to_*` or `le/be` conversion appears in `pcibr_reg.c`, `pcibr_dma.c`, `pcibr_ate.c`,
+  `pcibr_provider.c` or `tioce_provider.c` (v5.3, searched). The `pcireg_*` accessors are `__sn_readq_relaxed` and
+  `__sn_setq_relaxed` on `u64` fields. Linux never reads the widget id: `bs_xid` comes from the SAL topology call. Established.
+- **(d) PROM.** Consistent with (a) to (c). The widget read helper `0xffab14f0` builds the window address from the nasid and
+  link and calls `0xffaeb170` with size 4; that reaches the generic read at `0xffb0f4b0`, which accepts sizes 1, 2, 4 and 8
+  and returns `~0` for a failed access. The bundles at `0xffb5cf40` and `0xffb5cf50` are four loads with opcodes
+  `ld1`, `ld2`, `ld4`, `ld8` on the unmodified address (slot decode by hand; Ghidra's decompile of that routine shows only the
+  serialise) and the result is stored zero-extended into a 64-bit slot, with no swap. Established for the instructions.
+
+Not covered: the Crossbow's own endian behaviour (the same reading applies to widget 0 `+0`, `+8` and `+0xc0`, but no
+crossbow-specific swap control was looked for), and TIO.
+
 ## PROM II setup on the main_three path
 
 What the SAL 5.04 PROM (snprom 10.54, `shub1snprom.bin`, SAL_B component, loaded at `0xffa00000`) does to the II between
