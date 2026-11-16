@@ -366,6 +366,8 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
 
 ## DMA address attributes and byte placement: what public software says
 
+The whole inbound path, from the three PCI address windows to the SHub's I/O interface, is collected on [the SHub 1 inbound DMA page](../shub_ii/inbound-dma.md), including what the PROM programs.
+
 Same labelling. Sources: SN2 `include/asm-ia64/sn/pci/bridge.h` lines 1512 to 1520, `pic.h` lines 1625 to 1654,
 `arch/ia64/sn/io/sn2/pcibr/pcibr_dvr.c` lines 2735 to 2800; the out-of-tree MIPS IP35 port at
 `9f613a321ea03fb91bd9947cca7dda2888ccb447`, `arch/mips/pci/pci-sgipic.c` lines 54 to 128 and 226.

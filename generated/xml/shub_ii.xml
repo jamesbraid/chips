@@ -518,6 +518,7 @@
   <constant name="ICRB_INIT_CRB" value="0x3" grade="established"/>
   <constant name="ICRB_INIT_NET" value="0x2" grade="established"/>
   <constant name="ICRB_INIT_XTALK" value="0x0" grade="established"/>
+  <constant name="IIDEM_DEVICES_PER_WIDGET" value="0x8" grade="established"/>
   <constant name="LLP_NULLTO_PROM" value="0x3" grade="established"/>
   <constant name="NUM_BIG_WINDOWS" value="0x6" grade="established"/>
   <constant name="NUM_CRBS" value="0xf" grade="established"/>
@@ -526,4 +527,6 @@
   <constant name="WARM_RESET" value="0x100" grade="established"/>
   <constant name="WCR_DST_CRD_PROM" value="0x4" grade="established"/>
   <constant name="WIDGET_ACCESS_OPEN" value="0xff01" grade="established"/>
+  <constant name="XTALK_ADDR_REGISTER_SPACE" value="0x800000000000" grade="inferred"/>
+  <constant name="XTALK_DMA_NASID_SHIFT" value="0x24" grade="established"/>
 </genxml>

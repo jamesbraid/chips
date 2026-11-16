@@ -3870,6 +3870,15 @@
   {
    "unit": "shub_ii",
    "kind": "constant",
+   "name": "IIDEM_DEVICES_PER_WIDGET",
+   "value": 8,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
    "name": "LLP_NULLTO_PROM",
    "value": 3,
    "count": 1,
@@ -3935,6 +3944,24 @@
    "kind": "constant",
    "name": "WIDGET_ACCESS_OPEN",
    "value": 65281,
+   "count": 1,
+   "grade": "established",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "XTALK_ADDR_REGISTER_SPACE",
+   "value": 140737488355328,
+   "count": 1,
+   "grade": "inferred",
+   "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"
+  },
+  {
+   "unit": "shub_ii",
+   "kind": "constant",
+   "name": "XTALK_DMA_NASID_SHIFT",
+   "value": 36,
    "count": 1,
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform I/O register header (GPL): names, offsets and field layouts; kernel use from the same tree's SN2 BTE and hub error code"

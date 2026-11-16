@@ -3989,6 +3989,14 @@
   {
    "unit": "pic_extra",
    "kind": "constant",
+   "name": "ATE_ENTRIES",
+   "value": 1024,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
    "name": "ATE_MSI",
    "value": 4,
    "count": 1,
@@ -4053,6 +4061,14 @@
   {
    "unit": "pic_extra",
    "kind": "constant",
+   "name": "DIRECT32_WINDOW_SIZE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
    "name": "DIRECT64_ATTR_BARRIER",
    "value": 72057594037927936,
    "count": 1,
@@ -4103,6 +4119,14 @@
    "kind": "constant",
    "name": "DIRECT64_ATTR_VIRTUAL1",
    "value": 18014398509481984,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "DIR_MAP_OFFSET_SHIFT",
+   "value": 31,
    "count": 1,
    "grade": "established"
   },
@@ -4185,6 +4209,30 @@
    "value": 196608,
    "count": 1,
    "grade": "established"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "TNUM_INTR_PIN_BASE",
+   "value": 24,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "TNUM_PCI_WRITE_BASE",
+   "value": 16,
+   "count": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "pic_extra",
+   "kind": "constant",
+   "name": "TNUM_READ_MAX",
+   "value": 15,
+   "count": 1,
+   "grade": "inferred"
   }
  ]
 }

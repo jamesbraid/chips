@@ -41,6 +41,9 @@ ERROR_CLEAR_ALL = { value = 0x7ffffffffff, grade = "established", doc = "Value t
 CRB_TIMEOUT_PRESCALE_PROM = { value = 0x1fffff, grade = "established", doc = "Value the SAL 5.04 PROM writes to the CRB timeout prescaler (site 0xffab1cc0)." }
 LLP_NULLTO_PROM = { value = 3, grade = "established", doc = "Value the SAL 5.04 PROM leaves in the nullto field of the LLP control and status register (site 0xffab3780)." }
 WCR_DST_CRD_PROM = { value = 4, grade = "established", doc = "Destination credit count the SAL 5.04 PROM leaves in the widget control register (site 0xffab3580)." }
+XTALK_DMA_NASID_SHIFT = { value = 36, grade = "established", doc = "Bit position of the NASID in the Crosstalk address a PIC DMA carries: the kernel macro that builds it moves the NASID down two bits from its processor-address position (shift 38), and the SAL 5.04 PROM attach helper 0xffb6bd50 derives the PIC direct-map base the same way. What the II does with the address is inferred; see inbound-dma.md." }
+XTALK_ADDR_REGISTER_SPACE = { value = 0x800000000000, grade = "inferred", doc = "Bit 47 of a Crosstalk address: the 2.4 kernel sets it in the interrupt address a PIC writes to the II (nasid << 36 | 1 << 47 | register offset), so it is read as register space against memory. The value is established as the kernel construction; the meaning is inferred." }
+IIDEM_DEVICES_PER_WIDGET = { value = 8, grade = "established", doc = "Device bits per widget in the inbound device error mask: eight bits for each of widgets 8 to F, one per DMA master, with transaction numbers 0 to 7 taken as device numbers (header text, called Bridge-centric)." }
 
 
 [registers.widget_id]

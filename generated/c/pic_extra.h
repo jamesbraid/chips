@@ -1716,6 +1716,7 @@
 #define PIC_ATE_ADDR_SHIFT                           0xcu /* established */
 #define PIC_ATE_BARRIER                              0x10u /* established */
 #define PIC_ATE_COHERENT                             0x2u /* established */
+#define PIC_ATE_ENTRIES                              0x400u /* established */
 #define PIC_ATE_MSI                                  0x4u /* established */
 #define PIC_ATE_PREFETCH                             0x8u /* established */
 #define PIC_ATE_TARGET_SHIFT                         0x8u /* established */
@@ -1724,6 +1725,7 @@
 #define PIC_CFG_TYPE1_BASE                           0x28000u /* established */
 #define PIC_CONTROL_PAGE_SIZE_16K                    0x200000u /* established */
 #define PIC_DEVICE_SWAP_DIRECT                       0x80000u /* inferred */
+#define PIC_DIRECT32_WINDOW_SIZE                     0x80000000u /* established */
 #define PIC_DIRECT64_ATTR_BARRIER                    0x100000000000000ull /* established */
 #define PIC_DIRECT64_ATTR_PRECISE                    0x400000000000000ull /* established */
 #define PIC_DIRECT64_ATTR_PREFETCH                   0x800000000000000ull /* established */
@@ -1731,6 +1733,7 @@
 #define PIC_DIRECT64_ATTR_TARGET_SHIFT               0x3cu /* established */
 #define PIC_DIRECT64_ATTR_VIRTUAL                    0x200000000000000ull /* established */
 #define PIC_DIRECT64_ATTR_VIRTUAL1                   0x40000000000000ull /* established */
+#define PIC_DIR_MAP_OFFSET_SHIFT                     0x1fu /* established */
 #define PIC_HOST_INTR_ADDR_MASK                      0xffffffffffffull /* established */
 #define PIC_INTR_FLUSH_WAIT_VALUE                    0x10fu /* established */
 #define PIC_INTR_PCIX_MASTER_TIMEOUT                 0x400000000ull /* established */
@@ -1741,5 +1744,8 @@
 #define PIC_PCI32_MAPPED_SWAP                        0x20000000u /* established */
 #define PIC_PCIX_SPECIAL_CYCLE_BASE                  0x40000u /* established */
 #define PIC_PCI_IACK_BASE                            0x30000u /* established */
+#define PIC_TNUM_INTR_PIN_BASE                       0x18u /* inferred */
+#define PIC_TNUM_PCI_WRITE_BASE                      0x10u /* inferred */
+#define PIC_TNUM_READ_MAX                            0xfu /* inferred */
 
 #endif /* PIC_GEN_H */

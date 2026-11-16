@@ -634,6 +634,7 @@
   <constant name="ATE_ADDR_SHIFT" value="0xc" grade="established"/>
   <constant name="ATE_BARRIER" value="0x10" grade="established"/>
   <constant name="ATE_COHERENT" value="0x2" grade="established"/>
+  <constant name="ATE_ENTRIES" value="0x400" grade="established"/>
   <constant name="ATE_MSI" value="0x4" grade="established"/>
   <constant name="ATE_PREFETCH" value="0x8" grade="established"/>
   <constant name="ATE_TARGET_SHIFT" value="0x8" grade="established"/>
@@ -642,6 +643,7 @@
   <constant name="CFG_TYPE1_BASE" value="0x28000" grade="established"/>
   <constant name="CONTROL_PAGE_SIZE_16K" value="0x200000" grade="established"/>
   <constant name="DEVICE_SWAP_DIRECT" value="0x80000" grade="inferred"/>
+  <constant name="DIRECT32_WINDOW_SIZE" value="0x80000000" grade="established"/>
   <constant name="DIRECT64_ATTR_BARRIER" value="0x100000000000000" grade="established"/>
   <constant name="DIRECT64_ATTR_PRECISE" value="0x400000000000000" grade="established"/>
   <constant name="DIRECT64_ATTR_PREFETCH" value="0x800000000000000" grade="established"/>
@@ -649,6 +651,7 @@
   <constant name="DIRECT64_ATTR_TARGET_SHIFT" value="0x3c" grade="established"/>
   <constant name="DIRECT64_ATTR_VIRTUAL" value="0x200000000000000" grade="established"/>
   <constant name="DIRECT64_ATTR_VIRTUAL1" value="0x40000000000000" grade="established"/>
+  <constant name="DIR_MAP_OFFSET_SHIFT" value="0x1f" grade="established"/>
   <constant name="HOST_INTR_ADDR_MASK" value="0xffffffffffff" grade="established"/>
   <constant name="INTR_FLUSH_WAIT_VALUE" value="0x10f" grade="established"/>
   <constant name="INTR_PCIX_MASTER_TIMEOUT" value="0x400000000" grade="established"/>
@@ -659,4 +662,7 @@
   <constant name="PCI32_MAPPED_SWAP" value="0x20000000" grade="established"/>
   <constant name="PCIX_SPECIAL_CYCLE_BASE" value="0x40000" grade="established"/>
   <constant name="PCI_IACK_BASE" value="0x30000" grade="established"/>
+  <constant name="TNUM_INTR_PIN_BASE" value="0x18" grade="inferred"/>
+  <constant name="TNUM_PCI_WRITE_BASE" value="0x10" grade="inferred"/>
+  <constant name="TNUM_READ_MAX" value="0xf" grade="inferred"/>
 </genxml>

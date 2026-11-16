@@ -5,6 +5,7 @@ through, that DMA from widgets enters through, and that holds the two block tran
 Register layouts, with a grade on
 every field, are in [registers.toml](registers.toml); the generated reference is [registers.md](registers.md). The
 chip-level context, the SHub 2 differences and how software tells the two apart are in [../shub/README.md](../shub/README.md).
+How a PIC bus master's DMA reaches node memory through the II (address translation, packets, inbound access control, completion) is on [inbound-dma.md](inbound-dma.md).
 
 **Mode: no-spec.** No SHub specification is held. The only source is SGI's own Linux platform header for the SN2
 family (`arch/ia64/include/asm/sn/shubio.h` in Linux v5.3, GPL) and the kernel code that includes it. Under this

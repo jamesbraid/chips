@@ -1360,6 +1360,7 @@
 #define SHUB_II_ICRB_INIT_CRB                        0x3u /* established */
 #define SHUB_II_ICRB_INIT_NET                        0x2u /* established */
 #define SHUB_II_ICRB_INIT_XTALK                      0x0u /* established */
+#define SHUB_II_IIDEM_DEVICES_PER_WIDGET             0x8u /* established */
 #define SHUB_II_LLP_NULLTO_PROM                      0x3u /* established */
 #define SHUB_II_NUM_BIG_WINDOWS                      0x6u /* established */
 #define SHUB_II_NUM_CRBS                             0xfu /* established */
@@ -1368,5 +1369,7 @@
 #define SHUB_II_WARM_RESET                           0x100u /* established */
 #define SHUB_II_WCR_DST_CRD_PROM                     0x4u /* established */
 #define SHUB_II_WIDGET_ACCESS_OPEN                   0xff01u /* established */
+#define SHUB_II_XTALK_ADDR_REGISTER_SPACE            0x800000000000ull /* inferred */
+#define SHUB_II_XTALK_DMA_NASID_SHIFT                0x24u /* established */
 
 #endif /* SHUB_II_GEN_H */

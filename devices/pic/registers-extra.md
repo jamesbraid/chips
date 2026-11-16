@@ -975,6 +975,7 @@ Type-1 configuration address bits: supplies the secondary bus and device number 
 | `ATE_ADDR_SHIFT` | 0xc | established |  | Translation entry bit 12 is the lowest page-address bit; the kernel stores the page-aligned address in place with the low bits as flags, whatever the I/O page size. |
 | `ATE_BARRIER` | 0x10 | established |  | Bit 4: barrier, requested for consistent (coherent-memory) mappings. |
 | `ATE_COHERENT` | 0x2 | established |  | Bit 1 of a translation entry on the PIC: coherent. The same bit position is the programmed-I/O bit on the TIOCP. |
+| `ATE_ENTRIES` | 0x400 | established |  | Number of internal translation entries. There is no external entry RAM on the PIC. |
 | `ATE_MSI` | 0x4 | established |  | Bit 2: the mapping is for a message-signalled interrupt write. |
 | `ATE_PREFETCH` | 0x8 | established |  | Bit 3: prefetch. The kernel clears it in PCI-X mode because prefetch is not supported there. |
 | `ATE_TARGET_SHIFT` | 0x8 | established |  | Shift of the target widget number in a PIC translation entry: the kernel ORs the hub's Crosstalk widget id left by 8. Entry bits from 12 up carry the page address (shift PCI32_ATE_ADDR_SHFT 12). |
@@ -983,6 +984,7 @@ Type-1 configuration address bits: supplies the secondary bus and device number 
 | `CFG_TYPE1_BASE` | 0x28000 | established |  | Base of the 0x1000-byte type-1 configuration window. |
 | `CONTROL_PAGE_SIZE_16K` | 0x200000 | established |  | Bit 21 of the control register: translation page size. The kernel clears it for 4 KiB I/O pages and sets it when its page size is 16 KiB or more. The shipped IRIX attach sets it unconditionally, which agrees with 16 KiB pages. |
 | `DEVICE_SWAP_DIRECT` | 0x80000 | inferred |  | bit 19 of the device register (0x200 plus 8n), named swap_direct in the public PIC header. Set selects the address-preserving byte map for the 32-bit direct window; clear selects the lane-preserving map. The bit position comes from the public SN2 driver's byte-stream flag mapping onto this bit; no PIC measurement confirms the lane sense (open question in open-questions.md) |
+| `DIRECT32_WINDOW_SIZE` | 0x80000000 | established |  | Size of the 32-bit direct window, PCI 0x80000000 to 0xffffffff. |
 | `DIRECT64_ATTR_BARRIER` | 0x100000000000000 | established |  | Bit 56: barrier. Set for consistent mappings. |
 | `DIRECT64_ATTR_PRECISE` | 0x400000000000000 | established |  | Bit 58: precise. Defined; no SGI Altix provider code read sets it. |
 | `DIRECT64_ATTR_PREFETCH` | 0x800000000000000 | established |  | Bit 59 of a 64-bit direct address: prefetch. Cleared by the kernel in PCI-X mode. Used for streaming mappings. |
@@ -990,6 +992,7 @@ Type-1 configuration address bits: supplies the secondary bus and device number 
 | `DIRECT64_ATTR_TARGET_SHIFT` | 0x3c | established |  | Shift of the target widget number in a 64-bit direct PCI address. Same placement as the other PIC page, now also named by the SGI Altix provider. |
 | `DIRECT64_ATTR_VIRTUAL` | 0x200000000000000 | established |  | Bit 57: second virtual channel. In conventional PCI mode the kernel sets it for every function except function 0, so function 0 uses channel 0 and other functions channel 1. Not set in PCI-X mode. |
 | `DIRECT64_ATTR_VIRTUAL1` | 0x40000000000000 | established |  | Bit 54: defined next to the virtual-channel bit; no provider code read sets it. |
+| `DIR_MAP_OFFSET_SHIFT` | 0x1f | established |  | Shift from the direct-map offset field to a Crosstalk address: the field counts 2 GiB units. The PROM programs nasid << 5, base nasid << 36. |
 | `HOST_INTR_ADDR_MASK` | 0xffffffffffff | established |  | Mask of the destination address field of a per-pin interrupt address register, 48 bits. The kernel clears this field and ORs the new address in; the TIOCP uses a 54-bit field. |
 | `INTR_FLUSH_WAIT_VALUE` | 0x10f | established |  | The value the kernel's read-ordering flush waits to see at the memory word it armed as an interrupt target after forcing a pin interrupt. As a packet shape, 0x100 plus vector 0x0f, it matches the shape the shipped IRIX path is inferred to wait for; the kernel names no meaning for bit 8. |
 | `INTR_PCIX_MASTER_TIMEOUT` | 0x400000000 | established |  | bit 34 of the interrupt status register (0x100), the PCI-X master timeout. Which bit a bus in PCI-X mode sets for an unclaimed configuration cycle is not stated by any source read (unknown) |
@@ -1000,3 +1003,6 @@ Type-1 configuration address bits: supplies the secondary bus and device number 
 | `PCI32_MAPPED_SWAP` | 0x20000000 | established |  | Bit 29 of a translated-window PCI address: the kernel sets it only when the device's Device register copy it was handed already has the swap bit (bit 19) set. |
 | `PCIX_SPECIAL_CYCLE_BASE` | 0x40000 | established |  | Eight-byte PCI-X special cycle window. No code read uses it. |
 | `PCI_IACK_BASE` | 0x30000 | established |  | Eight-byte PCI interrupt acknowledge cycle window. No code read uses it. |
+| `TNUM_INTR_PIN_BASE` | 0x18 | inferred |  | Transaction number of a pin interrupt write is this plus the device number on the Bridge; 0x1f is used for error interrupts. |
+| `TNUM_PCI_WRITE_BASE` | 0x10 | inferred |  | Transaction number of a PCI write is this plus the device number (0x10 to 0x17) on the Bridge. |
+| `TNUM_READ_MAX` | 0xf | inferred |  | Highest transaction number of a read request: the response buffer number, 0 to 15, on the Bridge. |
