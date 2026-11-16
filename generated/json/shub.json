@@ -2927,6 +2927,20 @@
   {
    "unit": "shub",
    "kind": "register",
+   "name": "pi_afi_error_mask",
+   "offset": 4832166016,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
    "name": "pi_cam_control",
    "offset": 4832166656,
    "access": "w",
@@ -2937,6 +2951,48 @@
    "reset": "unknown",
    "grade": "established",
    "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "pi_crbp_error_mask",
+   "offset": 4832167168,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "pi_error_mask",
+   "offset": 4832168576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established",
+   "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "pi_afi_first_error",
+   "offset": 4832231552,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
   },
   {
    "unit": "shub",
@@ -2979,6 +3035,20 @@
    "reset": "unknown",
    "grade": "inferred",
    "from": "SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name"
+  },
+  {
+   "unit": "shub",
+   "kind": "register",
+   "name": "pi_crbp_first_error",
+   "offset": 4832232576,
+   "access": "rw",
+   "width": 64,
+   "count": 1,
+   "stride": 8,
+   "space": null,
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
   },
   {
    "unit": "shub",

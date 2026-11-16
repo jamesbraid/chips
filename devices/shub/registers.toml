@@ -716,6 +716,51 @@ reset = "unknown"
 from = "SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name"
 doc = "Processor interface register, unnamed; the name is ours. See pi_reg_2006_0100."
 
+[registers.pi_error_mask]
+offset = 0x120050a80
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+doc = "PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
+
+[registers.pi_afi_error_mask]
+offset = 0x120050080
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+doc = "PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
+
+[registers.pi_crbp_error_mask]
+offset = 0x120050500
+access = "rw"
+width = 64
+grade = "established"
+reset = "unknown"
+from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+doc = "PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
+
+[registers.pi_afi_first_error]
+offset = 0x120060080
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+doc = "PI AFI first error (SH_PI_AFI_FIRST_ERROR, valid bits 34:21 and 8:7, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred)."
+
+[registers.pi_crbp_first_error]
+offset = 0x120060480
+access = "rw"
+width = 64
+grade = "inferred"
+reset = "unknown"
+from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
+doc = "PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred)."
+
 [registers.md_clk_sel]
 offset = 0x110060500
 access = "r"

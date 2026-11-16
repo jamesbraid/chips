@@ -1166,10 +1166,34 @@
 #define SHUB_PI_SLICE_PRESENT_PRESENT_INPLACE        (SHUB_PI_SLICE_PRESENT_PRESENT_MASK << SHUB_PI_SLICE_PRESENT_PRESENT_SHIFT)
 
 /*
+ * PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ */
+/* pi_afi_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+#define SHUB_PI_AFI_ERROR_MASK                       0x120050080 /* established */
+
+/*
  * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown.
  */
 /* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB_PI_CAM_CONTROL                          0x120050300 /* established */
+
+/*
+ * PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ */
+/* pi_crbp_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+#define SHUB_PI_CRBP_ERROR_MASK                      0x120050500 /* established */
+
+/*
+ * PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit.
+ */
+/* pi_error_mask: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+#define SHUB_PI_ERROR_MASK                           0x120050a80 /* established */
+
+/*
+ * PI AFI first error (SH_PI_AFI_FIRST_ERROR, valid bits 34:21 and 8:7, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred).
+ */
+/* pi_afi_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+#define SHUB_PI_AFI_FIRST_ERROR                      0x120060080 /* inferred */
 
 /*
  * Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control write; the value is stored for a later report. Any value is tolerated (inferred; the consumer was not traced).
@@ -1188,6 +1212,12 @@
  */
 /* pi_reg_2006_0200: r64, reset unknown; SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name */
 #define SHUB_PI_REG_2006_0200                        0x120060200 /* inferred */
+
+/*
+ * PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x6_7fdf_ffff with AttrCheck) early in main, 0x7_7cdf_ffff (0x7_7fdf_ffff with AttrCheck) from main_three, and the same constants as the block summary aliases in the event-clear lists (0xffbdc1d8 and the following). Written in the global window, 8-byte store, never read back by these routines. What a write does is not stated by the header; the PROM uses it like the write-one-to-clear aliases, so bit 32 (bad_snoop) in the later value clears a recorded first error (inferred).
+ */
+/* pi_crbp_first_error: rw64, reset unknown; SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 */
+#define SHUB_PI_CRBP_FIRST_ERROR                     0x120060480 /* inferred */
 
 /*
  * PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.

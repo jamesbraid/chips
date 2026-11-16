@@ -2244,10 +2244,30 @@ pub mod pi_slice_present {
         }
     }
 }
+/// PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of (established)
+pub mod pi_afi_error_mask {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120050080;
+}
 /// Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the k (established)
 pub mod pi_cam_control {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120050300;
+}
+/// PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection o (established)
+pub mod pi_crbp_error_mask {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120050500;
+}
+/// PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection (established)
+pub mod pi_error_mask {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120050a80;
+}
+/// PI AFI first error (SH_PI_AFI_FIRST_ERROR, valid bits 34:21 and 8:7, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_f (inferred)
+pub mod pi_afi_first_error {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060080;
 }
 /// Processor interface register, unnamed; the name is ours. Read once, with pi_reg_2006_0180 and pi_reg_2006_0200, right after the second pi_cam_control  (inferred)
 pub mod pi_reg_2006_0100 {
@@ -2263,6 +2283,11 @@ pub mod pi_reg_2006_0180 {
 pub mod pi_reg_2006_0200 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120060200;
+}
+/// PI CRBP first error (SH_PI_CRBP_FIRST_ERROR, valid bits 20:0, INIT 0). The PROM writes it from the same lists as the PI error masks: 0x6_7cdf_ffff (0x (inferred)
+pub mod pi_crbp_first_error {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x120060480;
 }
 /// PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O wr (established)
 pub mod pio_write_status {
