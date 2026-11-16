@@ -74,7 +74,7 @@ Every node with memory then gets, from its bank 0 (base = `(nasid << 38) + 0x30_
 | to `0x300_0000` | 6 | 9 |
 | to `0x600_0000` | 4 | 9 |
 
-After that: conventional memory (type 7, attribute 9) up to the SAL copy at `[block A + 0x28] + 0xa0_0000`, a type 5 (runtime code) descriptor of 6 MiB there (attribute 9, no runtime bit), then conventional memory to the end of the bank. A bank's size is 31/32 of the bank record's size, capped at 16 GiB; a disabled bank is one type 8 descriptor of attribute 9. Banks sit 16 GiB apart (`bank << 34`). If the bank length `len` (the 31/32 figure) is below about 2 GiB, the last `64 MiB - len/31` of it (64 MiB minus 1/32 of the record size) is typed 8 (attribute 8). The carve-out table above applies to bank 0 only; the SAL-copy test applies to every bank. With node base B = `(nasid << 38) + 0x30_0000_0000` the layout is B+0 to +0x1_0000 type 8, to +0x8_0000 type 6 (`0x1001`), to +0x40_0000 type 4 (1), to +0x200_0000 type 6 (`0x1009`), to +0x300_0000 type 6 (9), to +0x600_0000 type 4 (9). The type 5 start is `(([block A + 0x28] + 0xa0_0000) & 0x7fff_ffcf_ffff_ffff) | B`; if that is not beyond the running offset, no type 5 descriptor is emitted. The value at block A `+0x28` is **unknown**; the SAL shadow copy (6 MiB) goes to the same address ([boot-sequence](boot-sequence.md)). Attribute 9 is write-back plus uncached, so the kernel's write-back test passes for the conventional and boot-data ranges. The bank size and enable bit come from component records of type `0x32` inside the node's board of type `0x11` (`+0x1c` bank, `+0x38` size in MiB, `+2` bit 0 enabled); the PROM's inventory builder produces those, and the layout of the record is not decoded.
+After that: conventional memory (type 7, attribute 9) up to the SAL copy at `[block A + 0x28] + 0xa0_0000`, a type 5 (runtime code) descriptor of 6 MiB there (attribute 9, no runtime bit), then conventional memory to the end of the bank. A bank's size is 31/32 of the bank record's size, capped at 16 GiB; a disabled bank is one type 8 descriptor of attribute 9. Banks sit 16 GiB apart (`bank << 34`). If the bank length `len` (the 31/32 figure) is below about 2 GiB, the last `64 MiB - len/31` of it (64 MiB minus 1/32 of the record size) is typed 8 (attribute 8). The carve-out table above applies to bank 0 only; the SAL-copy test applies to every bank. With node base B = `(nasid << 38) + 0x30_0000_0000` the layout is B+0 to +0x1_0000 type 8, to +0x8_0000 type 6 (`0x1001`), to +0x40_0000 type 4 (1), to +0x200_0000 type 6 (`0x1009`), to +0x300_0000 type 6 (9), to +0x600_0000 type 4 (9). The type 5 start is `(([block A + 0x28] + 0xa0_0000) & 0x7fff_ffcf_ffff_ffff) | B`; if that is not beyond the running offset, no type 5 descriptor is emitted. The value at block A `+0x28` is the constant `0x40_0000` from the block's layout table (section 5; **inferred** that nothing rewrites it), so the SAL copy sits at node base + `0xe0_0000`, inside the type 6 range from `+0x40_0000` to `+0x200_0000`. That start is not beyond the running offset after the carve-outs (`+0x600_0000`), so by the rule above no type 5 descriptor is emitted on bank 0 (**inferred** from the arithmetic; the descriptor code was not re-run). The SAL shadow copy (6 MiB) goes to the same address ([boot-sequence](boot-sequence.md)). Attribute 9 is write-back plus uncached, so the kernel's write-back test passes for the conventional and boot-data ranges. The bank size and enable bit come from component records of type `0x32` inside the node's board of type `0x11` (`+0x1c` bank, `+0x38` size in MiB, `+2` bit 0 enabled); the PROM's inventory builder produces those, and the layout of the record is not decoded.
 
 Notes. The PAL descriptor is one 16 MiB range, exactly the kernel's limit, and it contains `PAL_PROC` (`0x01ff_f800`) and `SAL_PROC` (`0x01ff_fc00`). Under the simulator signature the port space instead sits at `0xf_cc00_0000` inside bank 0 and nothing is added at the end. No descriptor covers the legacy VGA range `0xa0000`, so `efi_mem_type(0xa0000)` is not conventional (**inferred** from the list above). The runtime bit (bit 63) is set only on the PAL, port-space, flash and MMIO descriptors, so those are all `SetVirtualAddressMap` has to map.
 
@@ -124,22 +124,46 @@ The SAL side of the clock (`0xffa1cef0`, `0xffa1c8d0`, established): the time is
 
 SAL calls the runtime implements among those the kernel and EFI use: `PROBE` `0x02000003` (protected read, returns data), `SYSCTL_OP` `0x02000030` (ops 1, 2, `0x200f`), `PCI_CONFIG_READ`/`WRITE` `0x01000010`/`11` (decode the address as segment/bus/device/function/register, look up the device and read or write through its config method; status 0 even when no device is found, in which case no data is returned), and `PHYSICAL_ID_INFO` `0x01000013` (status 0; r9 not decoded, **unknown**). All four are present in both the SAL_B and the runtime dispatch tables.
 
-## 5. Where the PROM gets the per-node facts
+## 5. Block A and the tables the builders read
 
-These are the model inputs (established as reads; the writers are unread, **unknown**):
+Established from the layout code (`0xffac42d0`, carving routine `0xffac4230`) and its size tables in the image; decompiler output was navigation and the table bytes were read from the image.
 
-- Block A `+0x10`: node presence, one halfword per NASID. Block A `+0x18`: the CPU table `{id, flags}`. Block A `+0x30`: 0x48-byte router/link records the distance method reads. Block A `+0x28`: base of the SAL copy.
+**What block A is.** The word at physical `0x1000038` is slot 7 of a pointer table at physical `0x1000000` (slot n at `0x1000000 + 8n`). `0xffac42d0(1, nasid, 0)` rebuilds the table in the node window: slots 2 to 5 get 1 MiB regions at `(nasid << 38) + 0x30_0200_0000 + 0, 1, 2, 3 MiB`, slot 7 (block A) a 6 MiB region at `+4 MiB` (so `(nasid << 38) + 0x30_0240_0000`), slot 8 (block B) a 2 MiB region at `+10 MiB`. Before that, an early layout of the same slots (size `0xa000` for most, `0x10000` for block A) serves the first stage. Block A's first words are 8-byte fields carved by `0xffac4230` from the size table at `0xffbe7b48` (early copy `0xffbe7948`): a region entry gets the next address, an odd entry stores its value with the low bit cleared and consumes nothing. The final word at `+0x1f8` receives the running address, which is where the heap starts.
+
+| Block A field | Content | Source |
+|---|---|---|
+| `+0x10` | node table, `0x1080` bytes: a count halfword, then one halfword per NASID, -1 for an absent node | size from the table; contents written by code not found (**unknown**) |
+| `+0x18` | CPU table, `0x2000` bytes: 4-byte entries `{u16 id, u16 flags}` ended by `0xffff` | same |
+| `+0x20` | the hwcfg block (KLCONFIG is 64 KiB into it) | stored by `0xffaa0100` after an `0xb0000`-byte arena allocation |
+| `+0x28` | the constant `0x40_0000` | layout table entry `0x400001` (odd entry, value with bit 0 cleared) |
+| `+0x30` | the PCFG area, `0x80000` bytes (tag `PCFG`, limit at area +40) | `0xffa47290` zeroes and tags it |
+| `+0x38` | the local chip object, `0x80` bytes; its method table is the pointer at `+0x20` | read by `0xffa47290`; copied whole (`0x28` bytes) into the transfer area |
+| `+0x40` to `+0x60` | five more `0x80`-byte records | role unread |
+| `+0x80` | the constant `0x180_0000` | layout table, odd entry |
+| `+0x90` | `0x5480`-byte region | role unread |
+| `+0x98` to `+0xa8`, `+0xb0` (`0x2000`), `+0xb8` to `+0xd0` | `0x80`-byte records and one `0x2000` region | role unread |
+| `+0x180` | zero until set later (the L1 transport object for the node; `l1sc_send` and the I/O re-init read it) | layout table entry 0 |
+| `+0x188`, `+0x190` | two `0x80`-byte records | role unread |
+| `+0x1f8` | heap start (see below) | end of the carved regions |
+
+Earlier readings give `+0x50` as an offset that `main_ptov` adds; the layout makes it the pointer to a `0x80`-byte record that `0xffa1c2e0` passes as the second argument to the translation helper, so "offset" is **inferred** to mean a field of that record. The regions up to `+0x1f8` total `0x8ac80` bytes, so the heap is at `block A + 0x8ac80` and runs to the end of the 6 MiB region. It is an arena with magic `ARNA` (`0x414e5241`) created by `0xffac3290` (called from `0xffadd540`) and allocated from by `0xffac30c0`. The first `0xb0000` allocation for KLCONFIG is therefore at or after `(nasid << 38) + 0x30_0248_ac80`, plus the arena and allocation headers (sizes unread), and KLCONFIG 64 KiB further: **inferred** `GET_KLCONFIG_ADDR` for NASID 0 is at least `0x30_0249_ac80`, inside the type 6 range of section 2. Other allocations from the same arena may come first (not enumerated).
+
+**Block B** is the 2 MiB region of slot 8 with the layout `0xffbe81c8` (early `0xffbe8048`, `0x800` bytes); its fields are in [sn2-runtime](../../sal/sn2-runtime.md#two-data-blocks-the-handlers-use).
+
+**Other inputs.**
+
 - Per NASID: the chip part number at `(nasid << 38) + 0x9_0000_0000` bits 27:12 (`0x4363` SHub 1, `0x4422` TIO), the memory configuration register `0x9_0001_0010`, and the node's inventory board (type `0x11`) with its bank components.
 - The SHub real-time counter and its period.
+- The per-CPU records at `0x1000000 + 8 * (n + 2)` (n = bits 26:23 of `cr.lid`) and the stack pointer table at `0x1000000 + 8 * (n + 9)`; their layout is the early-boot page's.
 
-A one-node model needs: NASID 0 present, N CPU entries with ids that decode to NASID 0, one board with up to four bank records, and the registers above. The writers of the two tables (the CPU enumeration the node bring-up page mentions at `0xffac6340`, and the node discovery in `main`) are the route to settle how a real machine fills them.
+A one-node model needs: NASID 0 present, N CPU entries with ids that decode to NASID 0, one board with up to four bank records, and the registers above. **Unknown:** the writers of the node table and the CPU table. A search of the SAL_B listing for stores near reads of `+0x10` and `+0x18` of the block A pointer found candidates only in `0xffacbd00` to `0xffacbe40` and `0xffad3c00`; neither was read. The CPU start function `0xffac6340` appends 72-byte entries to the PCFG list through the chip object's method at table entry `+0x98`, not to the CPU table.
 
 ## Unknowns
 
 - What sits at the SAL entry address `0x01ff_fc00`, and the effect of CPUs on memory-less nodes in the SRAT.
 - The system-table vendor string and the chip clock-base method (`+0xb8`).
 - Which condition selects the OEM revision `0x20101` DSDT rewrite, the SSDT bodies, and the HCDP table body (EFI's, [efi.md](efi.md)).
-- The writers of the block A tables and the inventory record layout.
+- The writers of the node table (block A `+0x10`) and the CPU table (`+0x18`), the roles of the other `0x80`-byte records, and the inventory record layout.
 - Whether the kernel accepts the AS-bit-3 addresses as read (it uses `(base >> 38) & 0x7ff`; the rest was not traced).
 
 ## Review
