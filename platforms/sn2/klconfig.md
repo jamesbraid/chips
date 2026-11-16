@@ -235,7 +235,7 @@ read through `0xffa80430` for an even NASID (a compute SHub) and `0xffa80210` fo
 | `0x7b` | `0x72` | `onboardIO` |
 | anything else | `0x70` | `WEIRDIO` |
 
-**What a one-node 350 gets: depends on one L1 reply (inferred `0x7e`, `OpusTiobrick`).** The 350's PIC has an even NASID, so
+**What a one-node 350 gets: depends on one L1 reply (`0x7e`, `OpusTiobrick`, if `F`; `0x79`, `onboardIO`, if `o`, which the PIC attach favours).** The 350's PIC has an even NASID, so
 `bridge_discover` calls `0xffa80430`, which maps the NASID to the chip object (`0xffa7fcb0`) and calls `0xffa7e5e0`, which calls
 `0xffa7e3b0` (read in full). That routine reads the cached module word and type (cache keys 8 and 9); on a miss it sends L1
 request `0x0003` through `0xffa7ca10` to the **`0x4ffff000` target** (the node path `0xffa7d1f0` uses `0x0ffff000`),
@@ -244,7 +244,9 @@ type `0x3d` (`IXbrick`, `0x77`). `0xffa7e5e0` only folds `0x34` and `0x61` to `0
 (those are in `0xffa7d510`, the odd-NASID path), and `0xffa7d010` packs rack `<< 16`, type `<< 8`, bay. So the type
 byte is whatever the L1 answers to `0x0003` at that target. If the 350's L1 says `F`, the board type is `0x7e`, name `OpusTiobrick`;
 that `F` is **inferred** from the L1 default (see the [L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type))
-and no 350 reply is held. The table has a second candidate for an Opus-class compute brick: type byte `0x6f` (`o`, `L1_BRICKTYPE_OPUS` in `v5.3:arch/ia64/include/asm/sn/l1.h`) maps to board type `0x79` (`OPUSBRICK` in the klconfig header) with name `onboardIO`. Which of `0x66` (`f`) and `0x6f` is the 350's letter is **unknown**; neither reaches Linux. One constraint holds either way: with a result of `0x70` the PIC branch of `0xffabfb10` would call the
+and no 350 reply is held. The table has a second candidate for an Opus-class compute brick: type byte `0x6f` (`o`, `L1_BRICKTYPE_OPUS` in `v5.3:arch/ia64/include/asm/sn/l1.h`) maps to board type `0x79` (`OPUSBRICK` in the klconfig header) with name `onboardIO`. Which of `0x66` (`f`) and `0x6f` is the 350's letter is **unknown**; neither reaches Linux. A second constraint comes from the PIC attach, which reads the same L1 letter through request `0x0013` and accepts only `#`, `=`, `m`, `o` and `v`
+([PIC page](../../devices/pic/README.md#where-the-ioboard-type-comes-from-and-what-an-unaccepted-one-does)): an `F` (`0x66`) would stop the PIC attach with
+"Unknown ioboard", so a 350 that boots with this PROM reports `o` (`0x6f`, board type `0x79`, `onboardIO`), inferred, not `F`. One constraint holds either way: with a result of `0x70` the PIC branch of `0xffabfb10` would call the
 bridge fill with a null second board, so a working 350 must produce a type in `0x71` to `0x74` or `0x76` to `0x7f`
 (inferred from that control flow, not run). Linux does not read the board type of I/O boards for anything other than the SNIA
 and TIO test, so this does not affect boot.
@@ -331,7 +333,7 @@ Items 1 to 3 let the PROM finish building; items 4 to 6 shape the contents; item
 ## 5. Unknowns and routes
 
 1. Exact address of KLCONFIG on a booted node: bounded below by `0x30_0249_ae80` for NASID 0 (see above); trace the allocator headers, or a captured `GET_KLCONFIG_ADDR` result.
-2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000` (`f` or `o` are the candidates), hence the I/O board type (`0xffa7e3b0` is read;
+2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000` (`f` or `o` are the candidates; the PIC attach rejects `f`, so `o` is inferred), hence the I/O board type (`0xffa7e3b0` is read;
    the reply is not held): a captured L1 exchange, or a `sn_topology` / klconfig dump from a 350.
 3. The component layouts beyond `klinfo_t` (hub, memory bank, CPU, bridge, crossbar): Linux does not define them. The PROM
    stores are listed above; field meanings are inferred. A routine in the PROM that reads them back (the diagnostic dump
@@ -378,4 +380,4 @@ Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292
 
 **Changed.** The heap start is block A `+0x8ae80`, not `+0x8ac80`: the region carve starts after the 64-word header at block `+0x200`. The KLCONFIG lower bound for NASID 0 is therefore `0x30_0249_ae80`. The "no other component builder" census is now a caller census of the component allocator (nine callers, two untraced), still **inferred**.
 
-**Brick letter, not settled.** Linux `l1.h` names `0x66` `f` as `L1_BRICKTYPE_OPUS_TIO` and `0x6f` `o` as `L1_BRICKTYPE_OPUS`; no Linux or PROM name ties either to the 350. In the L1 firmware notes (sysco), the ARM L1 string-to-type map (`brickConvertString`) has `opus` (`O`) and no 350 string, and the IP57 routines are board-class handlers, not a brick letter. The PROM follows type `o` with board-area EEPROM reads, which fits an on-board base I/O (`onboardIO`), but that is a fit, not a reading. `F` (the blank-L1 default) remains the inferred value; the page's conditional stands.
+**Brick letter, not settled.** Linux `l1.h` names `0x66` `f` as `L1_BRICKTYPE_OPUS_TIO` and `0x6f` `o` as `L1_BRICKTYPE_OPUS`; no Linux or PROM name ties either to the 350. In the L1 firmware notes (sysco), the ARM L1 string-to-type map (`brickConvertString`) has `opus` (`O`) and no 350 string, and the IP57 routines are board-class handlers, not a brick letter. The PROM follows type `o` with board-area EEPROM reads, which fits an on-board base I/O (`onboardIO`), but that is a fit, not a reading. `F` (the blank-L1 default) was the inferred value; the PIC attach, which accepts `o` and rejects `f`, now makes `o` the better-supported one (inferred; see the [PIC page](../../devices/pic/README.md#where-the-ioboard-type-comes-from-and-what-an-unaccepted-one-does)). The page's conditional on the L1 reply stands.

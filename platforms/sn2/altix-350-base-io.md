@@ -300,8 +300,8 @@ Board-level reading of the SN2 PROM (snprom 10.54, SHub 1), in boot order. Regis
    reset and host error registers). It never issues a configuration cycle. Unless the L1 brick type is `0x23` or `0x3d`, it pulses the PCI reset pins
    and waits about one second for devices to settle. Established.
 2. **At the first I/O SAL call (`0x55` or `0x5f`): the scan.** For each PIC bus the runtime attaches the bridge, then for each
-   slot in the bus's range (slots 0 to 1 on bus 0; slots 0 to 3 on bus 1 of a base I/O card; established for the stores, inferred for the
-   "base I/O" test) reads configuration register 0 of function 0. Slot `s` is at window offset `0x21000 + 0x1000 * s`.
+   slot in the bus's range (slots 0 to 1, or 0 to 3 for the bus whose brick-bus word is 1 when the base I/O test holds; established for the
+   stores, inferred for which PIC bus that is, see [the PIC page](../../devices/pic/README.md#sal-runtime-pic-attach-and-pci-scan-pic_attach2-0xffb6d9c0)) reads configuration register 0 of function 0. Slot `s` is at window offset `0x21000 + 0x1000 * s`.
 3. **What a slot must return.** A present device returns its vendor and device ids. An empty slot may return `0xffffffff` (the
    vendor test `0xffff` skips it) or make the protected read fail (also skipped); neither prints anything. What the PIC does for an
    unclaimed configuration cycle on real hardware is unknown, as is whether the Altix 350 firmware path needs it.
@@ -314,10 +314,20 @@ Board-level reading of the SN2 PROM (snprom 10.54, SHub 1), in boot order. Regis
    error set-up, and the SAL calls still return their data with empty device lists. The only aborts in the attach are an allocation
    failure and an ioboard type outside `0x23`, `0x3d`, `0x6d`, `0x6f`, `0x76`. Inferred for the whole scan (the scan driver was read at its
    slot loops, not end to end); the kernel then finds no IOC4 and no disks.
-6. **Brick type.** `pic_attach2` accepts ioboard types `0x23`, `0x3d`, `0x6d`, `0x6f` and `0x76` only. The klconfig builder's inferred `0x66` for a
-   350 ([KLCONFIG](klconfig.md#the-io-boards-on-a-one-node-altix-350-with-io10)) is not in that list. Whether both read the same
-   byte is **unknown**; if they do, an `F` reply would stop the PIC attach and `o` (`0x6f`) would not. A model should answer `o`
-   (or the IX brick value `0x3d`) until a 350 capture settles it.
+6. **Brick type.** The ioboard type `pic_attach2` tests is the lower-cased type letter of the L1's reply to request `0x0013` (not the KLCONFIG
+   board type, not the module word); accepted: `#` `=` `m` `o` `v` (`0x23`, `0x3d`, `0x6d`, `0x6f`, `0x76`). Any other letter, `F` (`0x66`) and `C` (`0x63`)
+   included, prints "Unknown ioboard" and abandons the bus after the PIC registers, configuration space and BARs have been programmed
+   ([trace](../../devices/pic/README.md#where-the-ioboard-type-comes-from-and-what-an-unaccepted-one-does)). A model must answer `O` to `0x0013`
+   and `0x0003` (the PROM lower-cases it). Established for the path; inferred that a real 350's L1 says `O`: the one L1 firmware reading that fits an
+   Altix 350 module with an IO10 reports `F`, which this PROM would reject, so a captured reply is still wanted.
+7. **BARs.** For every function the PROM writes all-ones to each BAR, reads it back and takes the lowest set bit as the size (I/O `~3`, memory
+   `~0xf`, 64-bit BARs skip the next), then writes an allocated base into the BAR and sets command bits 2:0; the expansion ROM is sized with
+   `0xfffffffe`, except on IOC3 and IOC4. A model needs ordinary BAR behaviour and nothing device-specific for the IOC4 or the Vitesse controller; the BAR sizes are
+   the devices'. Established ([PIC page](../../devices/pic/README.md#bar-sizing-and-window-assignment-0xffb36020-0xffb37520-0xffb37e70)).
+8. **Interrupts.** Each device with an interrupt pin gets an irq (first free in `0x3c` to `0xe6`) written to its interrupt-line register, and the PIC
+   line is the slot (pins A and C) or slot + 4 (B and D). Connecting a line writes the PIC `+0x120` (line to device), `+0x130 + 8n` (irq in bits
+   55:48, address in 47:0) and `+0x108` (enable). The SHub address in that register was not read; the late set-up adds an error interrupt (irq `0x33`) on `+0x38`/`+0x128`. Established
+   for the PIC side ([PIC page](../../devices/pic/README.md#interrupt-allocation-and-the-pic-registers-it-writes)).
 
 ### Review (what the PROM probes)
 
