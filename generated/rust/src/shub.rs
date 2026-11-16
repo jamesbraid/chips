@@ -2063,6 +2063,36 @@ pub mod pio_write_status_alias {
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 128;
 }
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_iilb_ni0_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031220;
+}
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_iilb_ni0_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031230;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 a (established)
+pub mod xn_pi_ni0_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031360;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 a (established)
+pub mod xn_pi_ni0_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150031370;
+}
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_pi_sic_cmp_exp_hdr0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500313c0;
+}
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_pi_sic_cmp_hdr_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500313e0;
+}
 /// Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the w (established)
 pub mod cpu_hist {
     pub const WIDTH: u32 = 64;
@@ -2084,6 +2114,21 @@ pub mod cpu_bits {
 pub mod fw_debug_word {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x150031560;
+}
+/// A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 a (established)
+pub mod xn_md_ni1_cmp_enable0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500315a0;
+}
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_md_ni1_cmp_enable1 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500315b0;
+}
+/// A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a  (established)
+pub mod xn_md_sic_cmp_exp_hdr0 {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500315c0;
 }
 /// Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor  (established)
 pub mod junk_bus_led {

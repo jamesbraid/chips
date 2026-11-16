@@ -305,3 +305,27 @@ Independent review of chips commits `45fae66`, `6dff4a0`, `5feb445`, `37cb17a` a
 ## Review (PIC interrupt and XN compare pages)
 
 The renamed `0x81_5003_1500` to `1560` rows were checked against the 2.4 header (`SH_XN_MD_IILB_CMP_*` at `0x1_5003_1500` to `1530`, `SH_XN_MD_NI0_CMP_*` at `1540` to `1570`, all reset 0) and the SHub 1 PROM's name records (`0xffbfbf68` on), which agree. The earlier row listed `_CMP_ENABLE0` and the "n = 0 to 3, 1510, 1530" form redundantly; the names are now given with their offsets. The widths are 64 bits for these seven.
+
+## The XN compare words the PROM zeroes in the chip-object method at `0xffa236f0`
+
+One method of the chip object (descriptor at `0xffc4baa0`) zeroes nine XN compare words, in two steps. It runs only when `0xffa0ff30` returns 1, which means no lower-numbered slice of the node passes the `0xffa0ecd0(26 + slice)` test, so once per node, on the lowest slice (what the test reads is pending Ghidra). Every store goes through the 8-byte store helper at `0xffa0e640`: data translation and interrupts off (`rsm 0x24000`), `st8`, `mf.a`, restore. The `ip 0xffa0e650` of a stop is inside that helper.
+
+The PROM's name table (16-byte records at `0xffbfbef0`: 64-bit offset, then a name-pool offset and a field word; pool base `0xffbfe578`) pairs each offset with the name in the *previous* record. The SGI 2.4 header gives the same names at the same offsets.
+
+**Step 1: `0xffa222a0`, local window.** Three 4-entry tables of 64-bit offsets indexed by slice, walked together for 4 iterations (counter 3 down to -1, stride 8). Each iteration stores 0 to table A's entry, then B's, then C's. An entry with bit 32 set is ORed with `0x8000008000000000` (local window, `0x81_...`); a clear bit 32 would add `0x1800000` first (no entry uses that). Each offset sits in two adjacent slots, so each is written twice, in this order: A0 `15c0`, B0 `15b0`, C0 `1220`; A1 `15c0`, B1 `15b0`, C1 `1220`; A2 `13c0`, B2 `13e0`, C2 `1230`; A3 `13c0`, B3 `13e0`, C3 `1230`. The tables are A `0xffbd8ae0`, B `0xffbd8b00`, C `0xffbd8b20`, reached gp-relative (gp `0xffd98000`). The `0xffbd8b40` table is unrelated: 32-bit sizes indexed by a device-type byte (`0xffa228e0`), stored to a record field.
+
+**Step 2: `0xffa2bd60`, global window of this node.** Called right after step 1 with a pointer to the node's 16-bit NASID. Zeros a 128-byte stack buffer, then stores 0 to `0x8000000950031xxx | (nasid << 38)` (bit 35 set, so `0x9_5003_xxxx + nasid * 2^38`) for `15a0`, `1360`, `1370`, in that order (the stop at `r36 = 0x80000009500315a0`, `r35 = 0x209`: that value is the caller's saved `ar.pfs`, frame size 9, 4 locals, matching `0xffa236f0`'s `alloc`; `r34`, the saved `b0`, should be `0xffa23760`, so `-1` there is worth a check in the model). It then calls the printer `0xffa2b580` five times with lists of `0x1_5003_11xx..16xx` offsets and the zeroed buffer as values (no MMIO), and `0xffa23750`'s caller goes on to print twice, read `SH1_SHUB_ID` (`0x81_1006_0580`, `0xffa0dcf0`) and print again.
+
+| Offset (`0x1_...`) | Window | Header name (SGI 2.4 SN2) | Reset (header INIT) | Written | Read-back sites (all decoded) | Grade |
+|---|---|---|---|---|---|---|
+| `5003_1220` | local | `SH_XN_IILB_NI0_CMP_ENABLE0` | 0 | plain 0, twice, step 1 | none | name established; reset inferred |
+| `5003_1230` | local | `SH_XN_IILB_NI0_CMP_ENABLE1` | 0 | plain 0, twice, step 1 | none | same |
+| `5003_13c0` | local | `SH_XN_PI_SIC_CMP_EXP_HDR0` | 0 | plain 0, twice, step 1 | none | same |
+| `5003_13e0` | local | `SH_XN_PI_SIC_CMP_HDR_ENABLE0` | 0 | plain 0, twice, step 1 | none | same |
+| `5003_15b0` | local | `SH_XN_MD_NI1_CMP_ENABLE1` | 0 | plain 0, twice, step 1 | none | same |
+| `5003_15c0` | local | `SH_XN_MD_SIC_CMP_EXP_HDR0` | 0 | plain 0, twice, step 1 | none | same |
+| `5003_15a0` | global, own NASID | `SH_XN_MD_NI1_CMP_ENABLE0` | 0 | plain 0, step 2 | `0xffa2b340`: read, and if none of the mask bits is set, write back OR mask (test-and-set; masks `0x20` at `0xffa2b6cc`, `0x100` at `0xffa2b81c`, `0x80` at `0xffa2b96c`, `0x400` at `0xffa2ba9c`, `0x40` at `0xffa2bbcc`); a set bit makes the caller skip | name established; reset inferred; use established (decoded) |
+| `5003_1360` | global, own NASID | `SH_XN_PI_NI0_CMP_ENABLE0` | 0 | plain 0, step 2 | `0xffa2b430` (via `0xffa2b72c`, `0xffa2b87c`): read; if 0, write the first argument; the PROM's 64-bit record field | same |
+| `5003_1370` | global, own NASID | `SH_XN_PI_NI0_CMP_ENABLE1` | 0 | plain 0, step 2 | `0xffa2b430`: read, write back OR the second argument | same |
+
+So 15a0, 1360 and 1370 are firmware storage read back later (they must read 0 after the zeroing, or the once-only test fails); the six local words are never read by decoded code (no `movl` of any form holds them; the tables are the only reference). Nothing waits or polls. The two helper pairs are used by what looks like an error-record routine at `0xffa2b690` and `0xffa2b7e0` (callers `0xffa2c39c`, `0xffa2cd4c`); who calls the method at `0xffa236f0`, and whether it runs for remote NASIDs, is pending Ghidra (it is entered through the method table at `0xffc4ba50..`).
