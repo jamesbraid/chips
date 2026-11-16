@@ -1923,6 +1923,16 @@ pub mod rtc {
 pub mod scratch1 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x1101d0080;
+    pub mod bit57 { // bits 57:57, inferred
+        pub const SHIFT: u32 = 57;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod bit56 { // bits 56:56, inferred
         pub const SHIFT: u32 = 56;
         pub const MASK: u64 = 0x1;

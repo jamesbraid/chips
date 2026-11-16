@@ -2525,6 +2525,15 @@
   {
    "unit": "shub",
    "kind": "field",
+   "name": "scratch1.bit57",
+   "hi": 57,
+   "lo": 57,
+   "grade": "inferred",
+   "from": "SAL 5.04 PROM site 0xffacc6e0 (node-object method 5, writes bits 57 and 40 through method 46)"
+  },
+  {
+   "unit": "shub",
+   "kind": "field",
    "name": "scratch1.bit56",
    "hi": 56,
    "lo": 56,
