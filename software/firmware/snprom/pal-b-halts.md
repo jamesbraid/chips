@@ -84,8 +84,8 @@ the result routine's own `mov r37=msr[r37]` at `0xffebf140` (see below). Entry 8
 
 Each entry is a test group guarded by one bit of `r13` (a **set** bit skips the group; read as `tbit.z p0,p1=r13,N` then `(p1) br`):
 entry 1 `0xffee7c60` bit 44, entry 2 `0xffee1e20` bit 43, entry 3 `0xffeec200` bit 42, entry 4 `0xffee8960` bit 41, entry 5 `0xffee1010` bit
-40, entry 6 `0xffee1ee0` bit 39, entry 7 `0xffee26f0` bit 38, entry 8 `0xffeeb7c0` bits 33 and 32, entry 9 `0xffee2b70` bits 35 and 34, entries 10 to
-13 bits 16 to 30 (three to five bits each, checked in the listing). `r13 = 0xe030ffffffff` has bits 47:45, 37:36 and 31:0 set, so entries 1 to 9 run
+40, entry 6 `0xffee1ee0` bit 39, entry 7 `0xffee26f0` bit 38, entry 8 `0xffeeb7c0` bits 33 and 32, entry 9 `0xffee2b70` bits 35 and 34 (its `famax` check at `0xffee4490` expects
+the SWA fault, see [floating-point exception faults](#floating-point-exception-faults)), entries 10 to 13 bits 16 to 30 (three to five bits each, checked in the listing). `r13 = 0xe030ffffffff` has bits 47:45, 37:36 and 31:0 set, so entries 1 to 9 run
 (bits 44 to 38 and 35:32 are clear) and entries 10 to 13 are skipped. A group runs its sub-tests in order and stops at the first that
 returns `r8 != 0` (`cmp.eq p7,p6=r8,r0`, then `(p6) br 0xffeec280` in group 42). Then it calls the result routine `0xffebf000` with
 `r9 = 0` on success and a constant whose low two bits are `3` on failure (group 42: `0xffeec296`, `r9 = 0x400000003`; group 44: `0xffee7d36`,
@@ -250,6 +250,35 @@ section 8.1, pp. 2:198 to 2:199):
 *Established.* ISR.ei (SDM rev 2.3 vol 2 Table 3-7, p. 2:37, and Table 8-2 note a, p. 2:170). For faults and external interrupts ei
 equals IPSR.ri, which is 1 for a fault on the L+X slot of an MLX. For traps, ei names the slot of the excepting instruction, and a trap
 on the L+X slot sets ei to 2. The Speculation vector is a fault, so its ei is IPSR.ri.
+
+### Floating-point exception faults
+
+*Established.* A Floating-Point Exception fault has four causes: a Software Assist fault; an enabled IEEE Invalid Operation; an enabled
+IEEE Zero Divide; and an enabled Denormal/Unnormal Operand trap met by an unnormalized operand. The status flags in the FPSR are not
+updated, so only ISR.code says which fault occurred. SDM rev 2.3 vol 1 (document 245317, `cpu/itanium/itanium-sdm-rev2.3-vol1-245317.pdf`),
+section 5.4.1.2, p. 1:102.
+
+*Established.* The Denormal/Unnormal fault (ISR.code bit 1, D) is raised only when the D trap is enabled (vol 1, section 5.4.1.2, p. 1:102,
+cause 4).
+
+*Established.* The Software Assist fault (ISR.code bit 3, SWA) is implementation-defined. Nothing requires it to be signalled, and no mode
+forces it. If no input is a NaTVal, an implementation may signal it at any time during the operation. Most implementations use it only in
+difficult cases such as operations consuming denormal numbers (vol 1, section 5.4.1.2, p. 1:102).
+
+*Established.* Priority in Figure 5-11 (vol 1, p. 1:103): the NaTVal operand check first, then the unsupported and other invalid operand
+checks, the SNaN and QNaN checks, zero divide, the limits check that raises SWA (frcpa, frsqrta), and last the UnNormal operand check, which
+raises D only when the D trap is enabled. Otherwise the operation runs with FLAGS.d set.
+
+*Established.* ISR.code for vector 0x5c00 (SDM rev 2.3 vol 2, document 245318, `cpu/itanium/itanium-sdm-rev2.3-vol2-245318.pdf`, "Floating-point
+Fault vector (0x5c00)", p. 2:203): bit 0 is V, bit 1 D, bit 2 Z and bit 3 SWA, for Normal and Parallel FP-HI. Bits 4 to 7 are the same four for
+Parallel FP-LO. IIM is not among the parameters the vector defines (IIP, IPSR, IIPA, IFS, ISR, and IIB0 and IIB1 if implemented). ISR.ei is
+IPSR.ri for a fault (Table 3-7, vol 2, p. 2:37), so it names the faulting slot.
+
+*Established.* famax (SDM rev 2.3 vol 3, document 323207, `cpu/itanium/itanium-sdm-rev2.3-vol3-323207.pdf`, famax instruction, p. 3:57) lists
+Invalid Operation (V), Denormal/Unnormal Operand (D) and the Software Assist fault (SWA) as its floating-point exceptions.
+
+*Software expectation, not established.* On Madison, famax on an unnormal operand raises SWA, not D. No public Itanium 2 document states
+this. The evidence is the PAL_B 5.73 self-test table, entry 9 (`0xffee2b70`), which expects the SWA path for `famax` at `0xffee4490`.
 
 ## Unknown
 
