@@ -106,6 +106,18 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_reg_2006_0200` | 0x120060200 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name |
 | `pio_write_status` | 0x120070200 | r | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `pio_write_status_alias` | 0x120070208 | w | 64 | 2 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_stat` | 0x150000000 | r | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_reset` | 0x150000008 | w | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_chan_mode` | 0x150000018 | r | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_config` | 0x150000020 | rw | 64 | 2 |  | 0x7fc6ffd00 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_test_ctl` | 0x150000028 | rw | 64 | 2 |  | 0xa5fffff (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ni_llp_err` | 0x150000048 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni0_link_flow` | 0x150001040 | r | 64 | 4 |  | 0x1800 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni1_link_flow` | 0x150003040 | r | 64 | 4 |  | 0x1800 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni_fifo02_flow` | 0x1500303c0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni_fifo13_flow` | 0x1500303d0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni_ni_flow` | 0x1500303e0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xnni_dead_flow` | 0x1500303f0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `xn_iilb_lb_cmp_exp_data1` | 0x150031110 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `xn_iilb_lb_cmp_enable0` | 0x150031120 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
 | `xn_iilb_lb_cmp_enable1` | 0x150031130 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
@@ -868,6 +880,106 @@ Array of 2 registers, stride 128.
 Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.
 
 Array of 2 registers, stride 128.
+
+### Register `ni_llp_stat`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in its link probe and compares the low nibble with 9, nothing else. 9 is taken as link up (inferred from the use: the probe then checks the link credit words and reports success). Any other value is a link that is not up; no PROM code separates a link that is down from a port with no cable. The INIT of zero is a not-up value, so a node with no NUMAlink cable keeps the hardware path.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 3:0 | `link_reset_state` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Status of LLP link (header). The PROM tests the value 9 only. |
+
+### Register `ni_llp_reset`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says bits generate pulses. The PROM writes 1 (link reset) to each port whose probe says not up, up to three times with delays of 100, 200 and 400 microseconds. A write must not make link_reset_state read 9. Never read.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 1 | `warm` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Send warm reset, a pulse (header). Never written by the PROM in this routine. |
+| 0 | `link` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Send link reset, a pulse (header). Written 1 by the PROM. |
+
+### Register `ni_llp_chan_mode`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `bitmode32` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enables 32-bit (plus sideband) channel phits (header). The PROM branches on it. |
+
+### Register `ni_llp_config`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it straight back with MAXBURST set to 400; no other bit changes and the value read is never tested, so a plain read/write register satisfies it. This is the read that stops a model at 0x1_5000_0020.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 35:26 | `ftu_time` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
+| 25:20 | `nulltimeout` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
+| 19:10 | `maxretry` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
+| 9:0 | `maxburst` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The PROM replaces this field with 400 (0x190). |
+
+### Register `ni_llp_test_ctl`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link retry is needed, and finally writes bits 41:40 to the mode chosen from chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40 are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no test running is unknown. A plain read/write register satisfies it.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 41:40 | `send_test_mode` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enables continuous send of data (header name). The PROM sets it to 3 or 0 by chan_mode.bitmode32. |
+
+### Register `ni_llp_err`
+
+Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss trap) is set it writes the word back with that bit clear and reads again; a bit still set makes the probe return 0 and the port counts as not ready. A model returns 0 and the probe goes on to the link state.
+
+Array of 2 registers, stride 8192.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 27 | `power_not_ok` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Detects and traps a loss of power_OK (header). The PROM clears it by writing the word back with the bit clear. |
+
+### Register `xnni0_link_flow`
+
+Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+
+Array of 4 registers, stride 16.
+
+### Register `xnni1_link_flow`
+
+Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+
+Array of 4 registers, stride 16.
+
+### Register `xnni_fifo02_flow`
+
+NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+
+Array of 2 registers, stride 512.
+
+### Register `xnni_fifo13_flow`
+
+NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+
+Array of 2 registers, stride 512.
+
+### Register `xnni_ni_flow`
+
+NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it. Only touched when the environment variable NoTimeouts is set.
+
+Array of 2 registers, stride 512.
+
+### Register `xnni_dead_flow`
+
+NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+
+Array of 2 registers, stride 512.
 
 ### Register `xn_iilb_lb_cmp_exp_data1`
 

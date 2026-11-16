@@ -2223,6 +2223,190 @@ pub mod pio_write_status_alias {
     pub const COUNT: u32 = 2;
     pub const STRIDE: u64 = 128;
 }
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in i (established)
+pub mod ni_llp_stat {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000000;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod link_reset_state { // bits 3:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0xf;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says b (established)
+pub mod ni_llp_reset {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000008;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod warm { // bits 1:1, established
+        pub const SHIFT: u32 = 1;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod link { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per por (established)
+pub mod ni_llp_chan_mode {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000018;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod bitmode32 { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it str (established)
+pub mod ni_llp_config {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000020;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod ftu_time { // bits 35:26, established
+        pub const SHIFT: u32 = 26;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod nulltimeout { // bits 25:20, established
+        pub const SHIFT: u32 = 20;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod maxretry { // bits 19:10, established
+        pub const SHIFT: u32 = 10;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod maxburst { // bits 9:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u64 = 0x3ff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link (established)
+pub mod ni_llp_test_ctl {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000028;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod send_test_mode { // bits 41:40, established
+        pub const SHIFT: u32 = 40;
+        pub const MASK: u64 = 0x3;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss  (established)
+pub mod ni_llp_err {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150000048;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 8192;
+    pub mod power_not_ok { // bits 27:27, established
+        pub const SHIFT: u32 = 27;
+        pub const MASK: u64 = 0x1;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times unt (established)
+pub mod xnni0_link_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150001040;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 16;
+}
+/// Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times unt (established)
+pub mod xnni1_link_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x150003040;
+    pub const COUNT: u32 = 4;
+    pub const STRIDE: u64 = 16;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to- (established)
+pub mod xnni_fifo02_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500303c0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to- (established)
+pub mod xnni_fifo13_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500303d0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI pat (established)
+pub mod xnni_ni_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500303e0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
+/// NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to (established)
+pub mod xnni_dead_flow {
+    pub const WIDTH: u32 = 64;
+    pub const OFFSET: u64 = 0x1500303f0;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 512;
+}
 /// A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes (established)
 pub mod xn_iilb_lb_cmp_exp_data1 {
     pub const WIDTH: u32 = 64;

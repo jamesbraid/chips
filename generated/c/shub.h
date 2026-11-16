@@ -1124,6 +1124,132 @@
 #define SHUB_PIO_WRITE_STATUS_ALIAS_STRIDE           128
 
 /*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in its link probe and compares the low nibble with 9, nothing else. 9 is taken as link up (inferred from the use: the probe then checks the link credit words and reports success). Any other value is a link that is not up; no PROM code separates a link that is down from a port with no cable. The INIT of zero is a not-up value, so a node with no NUMAlink cable keeps the hardware path.
+ */
+/* ni_llp_stat: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_STAT                             0x150000000 /* established */
+#define SHUB_NI_LLP_STAT_COUNT                       2
+#define SHUB_NI_LLP_STAT_STRIDE                      8192
+#define SHUB_NI_LLP_STAT_LINK_RESET_STATE_SHIFT      0 /* established */
+#define SHUB_NI_LLP_STAT_LINK_RESET_STATE_MASK       0xfull
+#define SHUB_NI_LLP_STAT_LINK_RESET_STATE_INPLACE    (SHUB_NI_LLP_STAT_LINK_RESET_STATE_MASK << SHUB_NI_LLP_STAT_LINK_RESET_STATE_SHIFT)
+
+/*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says bits generate pulses. The PROM writes 1 (link reset) to each port whose probe says not up, up to three times with delays of 100, 200 and 400 microseconds. A write must not make link_reset_state read 9. Never read.
+ */
+/* ni_llp_reset: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_RESET                            0x150000008 /* established */
+#define SHUB_NI_LLP_RESET_COUNT                      2
+#define SHUB_NI_LLP_RESET_STRIDE                     8192
+#define SHUB_NI_LLP_RESET_WARM_SHIFT                 1 /* established */
+#define SHUB_NI_LLP_RESET_WARM_MASK                  0x1ull
+#define SHUB_NI_LLP_RESET_WARM_INPLACE               (SHUB_NI_LLP_RESET_WARM_MASK << SHUB_NI_LLP_RESET_WARM_SHIFT)
+#define SHUB_NI_LLP_RESET_LINK_SHIFT                 0 /* established */
+#define SHUB_NI_LLP_RESET_LINK_MASK                  0x1ull
+#define SHUB_NI_LLP_RESET_LINK_INPLACE               (SHUB_NI_LLP_RESET_LINK_MASK << SHUB_NI_LLP_RESET_LINK_SHIFT)
+
+/*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written.
+ */
+/* ni_llp_chan_mode: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_CHAN_MODE                        0x150000018 /* established */
+#define SHUB_NI_LLP_CHAN_MODE_COUNT                  2
+#define SHUB_NI_LLP_CHAN_MODE_STRIDE                 8192
+#define SHUB_NI_LLP_CHAN_MODE_BITMODE32_SHIFT        0 /* established */
+#define SHUB_NI_LLP_CHAN_MODE_BITMODE32_MASK         0x1ull
+#define SHUB_NI_LLP_CHAN_MODE_BITMODE32_INPLACE      (SHUB_NI_LLP_CHAN_MODE_BITMODE32_MASK << SHUB_NI_LLP_CHAN_MODE_BITMODE32_SHIFT)
+
+/*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it straight back with MAXBURST set to 400; no other bit changes and the value read is never tested, so a plain read/write register satisfies it. This is the read that stops a model at 0x1_5000_0020.
+ */
+/* ni_llp_config: rw64, reset 0x7fc6ffd00; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_CONFIG                           0x150000020 /* established */
+#define SHUB_NI_LLP_CONFIG_COUNT                     2
+#define SHUB_NI_LLP_CONFIG_STRIDE                    8192
+#define SHUB_NI_LLP_CONFIG_FTU_TIME_SHIFT            26 /* established */
+#define SHUB_NI_LLP_CONFIG_FTU_TIME_MASK             0x3ffull
+#define SHUB_NI_LLP_CONFIG_FTU_TIME_INPLACE          (SHUB_NI_LLP_CONFIG_FTU_TIME_MASK << SHUB_NI_LLP_CONFIG_FTU_TIME_SHIFT)
+#define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_SHIFT         20 /* established */
+#define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_MASK          0x3full
+#define SHUB_NI_LLP_CONFIG_NULLTIMEOUT_INPLACE       (SHUB_NI_LLP_CONFIG_NULLTIMEOUT_MASK << SHUB_NI_LLP_CONFIG_NULLTIMEOUT_SHIFT)
+#define SHUB_NI_LLP_CONFIG_MAXRETRY_SHIFT            10 /* established */
+#define SHUB_NI_LLP_CONFIG_MAXRETRY_MASK             0x3ffull
+#define SHUB_NI_LLP_CONFIG_MAXRETRY_INPLACE          (SHUB_NI_LLP_CONFIG_MAXRETRY_MASK << SHUB_NI_LLP_CONFIG_MAXRETRY_SHIFT)
+#define SHUB_NI_LLP_CONFIG_MAXBURST_SHIFT            0 /* established */
+#define SHUB_NI_LLP_CONFIG_MAXBURST_MASK             0x3ffull
+#define SHUB_NI_LLP_CONFIG_MAXBURST_INPLACE          (SHUB_NI_LLP_CONFIG_MAXBURST_MASK << SHUB_NI_LLP_CONFIG_MAXBURST_SHIFT)
+
+/*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link retry is needed, and finally writes bits 41:40 to the mode chosen from chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40 are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no test running is unknown. A plain read/write register satisfies it.
+ */
+/* ni_llp_test_ctl: rw64, reset 0xa5fffff; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_TEST_CTL                         0x150000028 /* established */
+#define SHUB_NI_LLP_TEST_CTL_COUNT                   2
+#define SHUB_NI_LLP_TEST_CTL_STRIDE                  8192
+#define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_SHIFT    40 /* established */
+#define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_MASK     0x3ull
+#define SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_INPLACE  (SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_MASK << SHUB_NI_LLP_TEST_CTL_SEND_TEST_MODE_SHIFT)
+
+/*
+ * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss trap) is set it writes the word back with that bit clear and reads again; a bit still set makes the probe return 0 and the port counts as not ready. A model returns 0 and the probe goes on to the link state.
+ */
+/* ni_llp_err: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_NI_LLP_ERR                              0x150000048 /* established */
+#define SHUB_NI_LLP_ERR_COUNT                        2
+#define SHUB_NI_LLP_ERR_STRIDE                       8192
+#define SHUB_NI_LLP_ERR_POWER_NOT_OK_SHIFT           27 /* established */
+#define SHUB_NI_LLP_ERR_POWER_NOT_OK_MASK            0x1ull
+#define SHUB_NI_LLP_ERR_POWER_NOT_OK_INPLACE         (SHUB_NI_LLP_ERR_POWER_NOT_OK_MASK << SHUB_NI_LLP_ERR_POWER_NOT_OK_SHIFT)
+
+/*
+ * Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+ */
+/* xnni0_link_flow: r64, reset 0x1800; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI0_LINK_FLOW                         0x150001040 /* established */
+#define SHUB_XNNI0_LINK_FLOW_COUNT                   4
+#define SHUB_XNNI0_LINK_FLOW_STRIDE                  16
+
+/*
+ * Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
+ */
+/* xnni1_link_flow: r64, reset 0x1800; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI1_LINK_FLOW                         0x150003040 /* established */
+#define SHUB_XNNI1_LINK_FLOW_COUNT                   4
+#define SHUB_XNNI1_LINK_FLOW_STRIDE                  16
+
+/*
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ */
+/* xnni_fifo02_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI_FIFO02_FLOW                        0x1500303c0 /* established */
+#define SHUB_XNNI_FIFO02_FLOW_COUNT                  2
+#define SHUB_XNNI_FIFO02_FLOW_STRIDE                 512
+
+/*
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ */
+/* xnni_fifo13_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI_FIFO13_FLOW                        0x1500303d0 /* established */
+#define SHUB_XNNI_FIFO13_FLOW_COUNT                  2
+#define SHUB_XNNI_FIFO13_FLOW_STRIDE                 512
+
+/*
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it. Only touched when the environment variable NoTimeouts is set.
+ */
+/* xnni_ni_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI_NI_FLOW                            0x1500303e0 /* established */
+#define SHUB_XNNI_NI_FLOW_COUNT                      2
+#define SHUB_XNNI_NI_FLOW_STRIDE                     512
+
+/*
+ * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
+ */
+/* xnni_dead_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+#define SHUB_XNNI_DEAD_FLOW                          0x1500303f0 /* established */
+#define SHUB_XNNI_DEAD_FLOW_COUNT                    2
+#define SHUB_XNNI_DEAD_FLOW_STRIDE                   512
+
+/*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
 /* xn_iilb_lb_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */

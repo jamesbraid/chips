@@ -19,7 +19,7 @@ The header does not say which unit holds a register. The unit named below is inf
 | Processor interface (PI) | PIO write status, one per processor slice; CRB CAM access control (SHub 1 only) | `pio_write_status`, `pio_write_status_alias`, `pi_cam_control`; TLB purge registers (`ptc`) are in the local-block address block but act on the processor side (inferred) |
 | Memory and directory (MD) | two privilege vectors named for the "DQLP" and "DQRP" queue ports, no use by the kernel | `md_dqlp_dir_privilege_vector`, `md_dqrp_dir_privilege_vector` (SHub 1) |
 | I/O interface (II) | the Crosstalk port, access protection, the CRBs and two block transfer engines on SHub 1 | [shub_ii](../shub_ii/README.md); on SHub 2 the BTEs move to their own block (below) |
-| Network interface (NI) | nothing in the sources read | none; unknown |
+| Network interface (NI) | the LLP link registers and flow limits the PROM sets before memory discovery, one-node values in [prom-reset.md](prom-reset.md#the-ni-port-set-up-before-memory-discovery-0xffa483d0-and-slot-55-0xffa5d850) | `ni_llp_stat`, `ni_llp_reset`, `ni_llp_chan_mode`, `ni_llp_config`, `ni_llp_test_ctl`, `ni_llp_err`, `xnni*_link_flow`, `xnni_*_flow`; router and vector-route registers unknown |
 | Local block (LB) | identification, interrupt event and send, IPI access, the real-time clock and its comparators | `shub_id`, `event_occurred`, `ipi_int`, `ipi_access`, `rtc`, `rtc_int_*`, `int_cmp` |
 | Junk bus | four LED registers; a UART whose interrupt is an event bit | `junk_bus_led` |
 
