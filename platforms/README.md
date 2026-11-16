@@ -76,3 +76,4 @@
 | [prom-console-input.md](ip35/prom-console-input.md) | IP35 PROM 6.210: what the boot PROM does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
 | [prom-md-config.md](ip35/prom-md-config.md) | IP35 PROM: every write to the memory controller's bank configuration during boot | Question. |
+| [prom-tod-clock.md](ip35/prom-tod-clock.md) | IP35 PROM 6.210: reading the time-of-day clock | Scope. |
