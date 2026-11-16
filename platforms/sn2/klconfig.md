@@ -28,9 +28,9 @@ below were then read in the disassembly of each routine named; where a routine w
   (block A: the pointer at `0x1000038`), and calls `0xffaa3cf0` to lay the area out. **KLCONFIG starts `0x10000` bytes into that
   block** (every access adds `0x10000`; the allocator checks the 8-byte value at that address is `0xbeedbabe` and prints
   "kl_config_info_alloc: bad magic" otherwise, `0xffaa4560`). The heap is the tail of block A, which `0xffac42d0` places at
-  `(nasid << 38) + 0x30_0240_0000` and fills with regions up to `+0x8ac80` ([block A table](../../software/firmware/snprom/os-handoff-tables.md#5-block-a-and-the-tables-the-builders-read)).
-  So the first possible block is `(nasid << 38) + 0x30_0248_ac80` plus arena headers, and **KLCONFIG for NASID 0 is at or after
-  `0x30_0249_ac80`** (**inferred**: allocations that come first, and the header sizes, were not read). That is inside the
+  `(nasid << 38) + 0x30_0240_0000` and fills with regions up to `+0x8ae80` (a `0x200`-byte header, then regions) ([block A table](../../software/firmware/snprom/os-handoff-tables.md#5-block-a-and-the-tables-the-builders-read)).
+  So the first possible block is `(nasid << 38) + 0x30_0248_ae80` plus arena headers, and **KLCONFIG for NASID 0 is at or after
+  `0x30_0249_ae80`** (**inferred**: allocations that come first, and the header sizes, were not read). That is inside the
   type 6 runtime-data range of the memory map. Route for the exact value: trace the allocator (`0xffac13f0`, `0xffac3290`) on a booted node, or a captured `GET_KLCONFIG_ADDR` result.
   That the SAL call returns exactly `block + 0x10000` is **established**: the handler at `0xffb19c20` (`sal_02000005`) returns
   status 0 and, in r9 (`v0`, the only word Linux uses), the word at offset `+0x20` of the node's block A plus `0x10000`; a node
@@ -211,8 +211,7 @@ Then `0xffab0f10` builds the following.
 
 No IOC4, IOC3, SCSI or Tigon component is built on this image: the strings `init_klcfg_ioc*` and `init_klcfg_tg3` that older
 images carry ([base I/O cards](altix-350-base-io.md)) are absent from 10.54, and the routines that call the board and bridge
-builders above are the only I/O klconfig builders found. That no other builder exists in 10.54 is **inferred** from the
-string list and the caller census (a name-based search, not a proof).
+builders above are the only I/O klconfig builders found. That no other builder exists in 10.54 is **inferred**: a census of callers of the component allocator `0xffaed090` finds nine (`0xffaa06e0`, `0xffaa1310` hub, `0xffaa1930` hub UART, `0xffaa1a10` memory bank, `0xffaacbd0` CPU, `0xffaae490`, `0xffab1800` crossbar, `0xffabf850` bridge, `0xffaf1fc0` VGA). Only the crossbar and bridge builders are on the I/O path; `0xffaa06e0` (reached from `0xffaa0a30`) and `0xffaae490` (from `0xffaae6a0`) were not traced to their callers.
 
 **Brick-type table in `bridge_discover` (established).** The board type comes from the module id's type byte (bits 15:8),
 read through `0xffa80430` for an even NASID (a compute SHub) and `0xffa80210` for an odd one. Non-positive result: type
@@ -331,7 +330,7 @@ Items 1 to 3 let the PROM finish building; items 4 to 6 shape the contents; item
 
 ## 5. Unknowns and routes
 
-1. Exact address of KLCONFIG on a booted node: bounded below by `0x30_0249_ac80` for NASID 0 (see above); trace the allocator headers, or a captured `GET_KLCONFIG_ADDR` result.
+1. Exact address of KLCONFIG on a booted node: bounded below by `0x30_0249_ae80` for NASID 0 (see above); trace the allocator headers, or a captured `GET_KLCONFIG_ADDR` result.
 2. The brick type byte a one-node 350's L1 returns to `0x0003` at target `0x4ffff000` (`f` or `o` are the candidates), hence the I/O board type (`0xffa7e3b0` is read;
    the reply is not held): a captured L1 exchange, or a `sn_topology` / klconfig dump from a 350.
 3. The component layouts beyond `klinfo_t` (hub, memory bank, CPU, bridge, crossbar): Linux does not define them. The PROM
@@ -370,3 +369,13 @@ Independent review of this page by a reviewer who did not write it. Reviewed chi
 **Not checked.** The GET_KLCONFIG_ADDR heap address; the header magic check at `0xffaa4560`; region sizes and board and component counts in section 1; the CPU, EEPROM-text and chip-object routines beyond the page's own reading; the `corelet` and `vgagfx` callers; the L1 firmware's real reply for a 350; the v2.6.12 `klconflib.c` helpers; whether `0xffab0f10`'s `0xd102` dispatch holds in disassembly.
 
 Cleared scope: the layout tables, the PROM store offsets, the brick-type table, and the Linux and 2.6.5 read analysis. Not cleared: the "depends on one L1 reply" type claim (the `F` is unverified), finding 5, and finding 6.
+
+## Review of the 350 summary, block A, I/O SAL and console (second reader)
+
+Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292` by a reader who did not write them. Every address below was re-read in the IA-64 Ghidra module (`--sn2-prom --sal-runtime --no-analysis` with address ranges) and cross-checked against a flat objdump of the same image and the inflated SAL runtime ELF; no grade rests on a model run.
+
+**Confirmed.** Builders `0xffaa1ea0` (node, type `0x11`), `0xffab0f10` (I/O walk), `0xffab19f0` (midplane: type `0x42` at `+5`, name `IOBRICK`, geoid type 1, crossbar through `0xffab1800`, then the link routine `0xffaa5450`), `0xffabfb10`/`0xffabf570` (per-bus board and bridge, `0xd102` only) and the parent store (`+0x98` = midplane) and slot store (`+10`). Sources by field as the page gives them.
+
+**Changed.** The heap start is block A `+0x8ae80`, not `+0x8ac80`: the region carve starts after the 64-word header at block `+0x200`. The KLCONFIG lower bound for NASID 0 is therefore `0x30_0249_ae80`. The "no other component builder" census is now a caller census of the component allocator (nine callers, two untraced), still **inferred**.
+
+**Brick letter, not settled.** Linux `l1.h` names `0x66` `f` as `L1_BRICKTYPE_OPUS_TIO` and `0x6f` `o` as `L1_BRICKTYPE_OPUS`; no Linux or PROM name ties either to the 350. In the L1 firmware notes (sysco), the ARM L1 string-to-type map (`brickConvertString`) has `opus` (`O`) and no 350 string, and the IP57 routines are board-class handlers, not a brick letter. The PROM follows type `o` with board-area EEPROM reads, which fits an on-board base I/O (`onboardIO`), but that is a fit, not a reading. `F` (the blank-L1 default) remains the inferred value; the page's conditional stands.

@@ -128,17 +128,18 @@ SAL calls the runtime implements among those the kernel and EFI use: `PROBE` `0x
 
 Established from the layout code (`0xffac42d0`, carving routine `0xffac4230`) and its size tables in the image; decompiler output was navigation and the table bytes were read from the image.
 
-**What block A is.** The word at physical `0x1000038` is slot 7 of a pointer table at physical `0x1000000` (slot n at `0x1000000 + 8n`). `0xffac42d0(1, nasid, 0)` rebuilds the table in the node window: slots 2 to 5 get 1 MiB regions at `(nasid << 38) + 0x30_0200_0000 + 0, 1, 2, 3 MiB`, slot 7 (block A) a 6 MiB region at `+4 MiB` (so `(nasid << 38) + 0x30_0240_0000`), slot 8 (block B) a 2 MiB region at `+10 MiB`. Before that, an early layout of the same slots (size `0xa000` for most, `0x10000` for block A) serves the first stage. Block A's first words are 8-byte fields carved by `0xffac4230` from the size table at `0xffbe7b48` (early copy `0xffbe7948`): a region entry gets the next address, an odd entry stores its value with the low bit cleared and consumes nothing. The final word at `+0x1f8` receives the running address, which is where the heap starts.
+**What block A is.** The word at physical `0x1000038` is slot 7 of a pointer table at physical `0x1000000` (slot n at `0x1000000 + 8n`). `0xffac42d0(1, nasid, 0)` rebuilds the table in the node window: slots 2 to 5 get 1 MiB regions at `(nasid << 38) + 0x30_0200_0000 + 0, 1, 2, 3 MiB`, slot 7 (block A) a 6 MiB region at `+4 MiB` (so `(nasid << 38) + 0x30_0240_0000`), slot 8 (block B) a 2 MiB region at `+10 MiB`. Before that, an early layout of the same slots (size `0xa000` for most, `0x10000` for block A) serves the first stage. Block A's first words are 8-byte fields carved by `0xffac4230` from the size table at `0xffbe7b48` (early copy `0xffbe7948`): a region entry gets the next address, an odd entry stores its value with the low bit cleared and consumes nothing. The 64 words of the header are `+0x00` to `+0x1f8`; the regions start after them, at block `+0x200`, so the running address begins there. The final word at `+0x1f8` receives the running address after the last region, which is where the heap starts. Block A's first word is overwritten with the tag `NODPDATA` (`0xffac5ac0`), and the first word of the heap receives the bytes left in the 6 MiB region. Odd entries store their value only when the third argument of `0xffac42d0` is 0; a zero entry in the early table stores `0x7f` instead and consumes nothing.
 
 | Block A field | Content | Source |
 |---|---|---|
-| `+0x10` | node table, `0x1080` bytes: a count halfword, then one halfword per NASID, -1 for an absent node | size from the table; contents written by code not found (**unknown**) |
-| `+0x18` | CPU table, `0x2000` bytes: 4-byte entries `{u16 id, u16 flags}` ended by `0xffff` | same |
+| `+0x10` | node table, `0x1080` bytes: a count halfword, then one halfword per NASID, -1 for an absent node | size from the table; written by `0xffacbce0` (below) |
+| `+0x18` | CPU table, `0x2000` bytes: 4-byte entries `{u16 id, u16 flags}` ended by `0xffff` | size from the table; written by `0xfface0b0` (below) |
 | `+0x20` | the hwcfg block (KLCONFIG is 64 KiB into it) | stored by `0xffaa0100` after an `0xb0000`-byte arena allocation |
 | `+0x28` | the constant `0x40_0000` | layout table entry `0x400001` (odd entry, value with bit 0 cleared) |
 | `+0x30` | the PCFG area, `0x80000` bytes (tag `PCFG`, limit at area +40) | `0xffa47290` zeroes and tags it |
 | `+0x38` | the local chip object, `0x80` bytes; its method table is the pointer at `+0x20` | read by `0xffa47290`; copied whole (`0x28` bytes) into the transfer area |
 | `+0x40` to `+0x60` | five more `0x80`-byte records | role unread |
+| `+0x68` to `+0x78`, `+0xd8` to `+0x178`, `+0x198` to `+0x1f0` | the constant `0xfe` | layout table, odd entries (role unread) |
 | `+0x80` | the constant `0x180_0000` | layout table, odd entry |
 | `+0x90` | `0x5480`-byte region | role unread |
 | `+0x98` to `+0xa8`, `+0xb0` (`0x2000`), `+0xb8` to `+0xd0` | `0x80`-byte records and one `0x2000` region | role unread |
@@ -146,7 +147,7 @@ Established from the layout code (`0xffac42d0`, carving routine `0xffac4230`) an
 | `+0x188`, `+0x190` | two `0x80`-byte records | role unread |
 | `+0x1f8` | heap start (see below) | end of the carved regions |
 
-Earlier readings give `+0x50` as an offset that `main_ptov` adds; the layout makes it the pointer to a `0x80`-byte record that `0xffa1c2e0` passes as the second argument to the translation helper, so "offset" is **inferred** to mean a field of that record. The regions up to `+0x1f8` total `0x8ac80` bytes, so the heap is at `block A + 0x8ac80` and runs to the end of the 6 MiB region. It is an arena with magic `ARNA` (`0x414e5241`) created by `0xffac3290` (called from `0xffadd540`) and allocated from by `0xffac30c0`. The first `0xb0000` allocation for KLCONFIG is therefore at or after `(nasid << 38) + 0x30_0248_ac80`, plus the arena and allocation headers (sizes unread), and KLCONFIG 64 KiB further: **inferred** `GET_KLCONFIG_ADDR` for NASID 0 is at least `0x30_0249_ac80`, inside the type 6 range of section 2. Other allocations from the same arena may come first (not enumerated).
+Earlier readings give `+0x50` as an offset that `main_ptov` adds; the layout makes it the pointer to a `0x80`-byte record that `0xffa1c2e0` passes as the second argument to the translation helper, so "offset" is **inferred** to mean a field of that record. The regions total `0x8ac80` bytes after the `0x200`-byte header, so the heap is at `block A + 0x8ae80` and runs to the end of the 6 MiB region. It is an arena with magic `ARNA` (`0x414e5241`) created by `0xffac3290` (called from `0xffadd540`) and allocated from by `0xffac30c0`. The first `0xb0000` allocation for KLCONFIG is therefore at or after `(nasid << 38) + 0x30_0248_ae80`, plus the arena and allocation headers (sizes unread), and KLCONFIG 64 KiB further: **inferred** `GET_KLCONFIG_ADDR` for NASID 0 is at least `0x30_0249_ae80`, inside the type 6 range of section 2. Other allocations from the same arena may come first (not enumerated).
 
 **Block B** is the 2 MiB region of slot 8 with the layout `0xffbe81c8` (early `0xffbe8048`, `0x800` bytes); its fields are in [sn2-runtime](../../sal/sn2-runtime.md#two-data-blocks-the-handlers-use).
 
@@ -156,14 +157,14 @@ Earlier readings give `+0x50` as an offset that `main_ptov` adds; the layout mak
 - The SHub real-time counter and its period.
 - The per-CPU records at `0x1000000 + 8 * (n + 2)` (n = bits 26:23 of `cr.lid`) and the stack pointer table at `0x1000000 + 8 * (n + 9)`; their layout is the early-boot page's.
 
-A one-node model needs: NASID 0 present, N CPU entries with ids that decode to NASID 0, one board with up to four bank records, and the registers above. **Unknown:** the writers of the node table and the CPU table. A search of the SAL_B listing for stores near reads of `+0x10` and `+0x18` of the block A pointer found candidates only in `0xffacbd00` to `0xffacbe40` and `0xffad3c00`; neither was read. The CPU start function `0xffac6340` appends 72-byte entries to the PCFG list through the chip object's method at table entry `+0x98`, not to the CPU table.
+A one-node model needs: NASID 0 present, N CPU entries with ids that decode to NASID 0, one board with up to four bank records, and the registers above. **The two table writers (established, read in Ghidra and disassembly).** `0xffacbce0(chip)` takes a node's chip object (first halfword the NASID n) and writes the *local* block A's node table: halfwords 1 to n are set to `-1`, halfword n+1 to 0, and the count at halfword 0 to n+1. So the entry for NASID n is 0 (present) and every lower NASID is reset to `-1`; for NASID 0 the table is count 1, entry 0 = 0. It then calls `0xfface0b0(chip, cpu_table)`, `0xffaf64b0` and `0xffadd540(n, cpu_table)`. Nothing calls it with a direct branch (reached through a pointer; the caller is **unknown**). `0xfface0b0` is the CPU table writer, also called directly from `main_two` (`0xffa1b5ac`): for slices 0 to 3 whose presence test `0xffa11710` is non-zero it stores the id `((nasid >> 7) & 0x1f) << 11 | slice << 7 | (nasid & 0x7f)` and then the flag word 1 if `0xffa99870` is non-zero, else 0; it ends with `{0xffff, 0}`. It writes from the start of the table each call, so what several nodes leave in one table was not read. `0xffad3a90`, the other candidate, is the `DisabledCpus`/`DisCpusReason` variable handler and writes neither table. The CPU start function `0xffac6340` appends 72-byte entries to the PCFG list through the chip object's method at table entry `+0x98`, not to the CPU table.
 
 ## Unknowns
 
 - What sits at the SAL entry address `0x01ff_fc00`, and the effect of CPUs on memory-less nodes in the SRAT.
 - The system-table vendor string and the chip clock-base method (`+0xb8`).
 - Which condition selects the OEM revision `0x20101` DSDT rewrite, the SSDT bodies, and the HCDP table body (EFI's, [efi.md](efi.md)).
-- The writers of the node table (block A `+0x10`) and the CPU table (`+0x18`), the roles of the other `0x80`-byte records, and the inventory record layout.
+- The caller of the node-table writer `0xffacbce0`, the multi-node result in both tables, the roles of the other `0x80`-byte records, and the inventory record layout.
 - Whether the kernel accepts the AS-bit-3 addresses as read (it uses `(base >> 38) & 0x7ff`; the rest was not traced).
 
 ## Review
@@ -175,3 +176,11 @@ Independent review of chips `fbcf305`, re-reading the SAL_B builders and the EFI
 **Changed.** The DSDT/SSDT claim: a later SAL_B builder exists (above). The XSDT creator revision is `0x44`, not 1. The ACPI 1.0 slot installs no EFI entry. The PM1a control word has SCI_EN set and the generic addresses carry zero widths. The carve-out addresses and the type 5 condition are given exactly; the tail figure is `len/31`. Variable and reset calls go through the SAL callbacks `0x3000` and `0x5000`, not a direct SAL id. Added `GetTime` always succeeding, the wakeup status value, and the `cr.iva` swap.
 
 **Not settled.** Block A `+0x28`, the SSDT contents and trigger, SRAT domain for memory-less nodes, the runtime-slot assignments (the five static ones are relocations, the other six are filled at run time, so which slot holds `RtSN*` stays inferred). Nothing here rests on a model run.
+
+## Review of the 350 summary, block A, I/O SAL and console (second reader)
+
+Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292` by a reader who did not write them. Every address below was re-read in the IA-64 Ghidra module (`--sn2-prom --sal-runtime --no-analysis` with address ranges) and cross-checked against a flat objdump of the same image and the inflated SAL runtime ELF; no grade rests on a model run.
+
+**Confirmed.** The pointer table at `0x1000000` and its carve (`0xffac42d0`, `0xffac4230`): block A at `(nasid << 38) + 0x30_0240_0000`, 6 MiB; block B at `+0x30_02a0_0000`, 2 MiB; the size table at `0xffbe7b48` and the `+0x28` constant `0x40_0000` (odd entry `0x400001`); so the SAL copy sits at node base `+ 0xe0_0000`, and the no-type-5 conclusion for bank 0 follows from the arithmetic as the page says.
+
+**Changed.** The heap is at `+0x8ae80` (header `0x200` plus `0x8ac80` of regions). Added the `0xfe` filler entries, the `NODPDATA` tag and the heap's leading length word. The node-table and CPU-table writers are now read: `0xffacbce0` and `0xfface0b0`; `0xffad3a90` is not a writer. **Unread:** the caller of `0xffacbce0` and what several nodes leave in the two tables.
