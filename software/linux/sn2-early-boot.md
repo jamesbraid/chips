@@ -165,6 +165,8 @@ Assume the minimum of [sn2-runtime](../sal/sn2-runtime.md#what-a-synthetic-sal-f
 
 ## I/O discovery in SN2 kernels
 
+The Debian 7.11 kernel (Linux 3.2.78) is read call by call, with structure offsets, on [SN2 I/O discovery in the 3.2 kernel](sn2-io-discovery-3.2.md).
+
 Which path an SN2 kernel takes to find its PCI buses, what gates each, and what the SAL 5.04 PROM of snprom 10.54 (`shub1snprom.bin`) hands over. Kernel facts are from the linux-sn2 tree at the v7.0-rc1 and v7.3-rc3 tags (the SN I/O code is identical in both; the v7.0 GPU tag was not available). PROM facts are from the SAL_B handlers read in Ghidra. Grades follow the page header.
 
 **The gate (established, kernel source).** `sn_io_early_init` (an `arch_initcall` in `io_common.c`) copies the DSDT's OEM revision into `sn_acpi_rev`. `SN_ACPI_BASE_SUPPORT()` is `sn_acpi_rev >= 0x20101`.
