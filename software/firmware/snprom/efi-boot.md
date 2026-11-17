@@ -348,3 +348,34 @@ Independent review of chips commit `eae2bb7`, examined at that revision. The rev
 **Verdict.** Accept the format, the lookup and the write-sequence claims; fix findings 1 to 3 before a model session builds from the recipe, and mark finding 5.
 
 **Not verified.** The command handler that parses `setenv` (the page says it was not located); the POD entry paths and debug switch bits; the poll, toggle and blank-check routines and time-outs; the "Cannot program a 0 into a 1" check; the non-buffered program sequence (`0xa0`); the chip-class match on part number `0x4363` and the vtable address; the type of `0xffa14ea0` (assumed to copy up to the NUL); the other variables in section 5 beyond `NoACPIIO` and `AttrCheck`; the early mask-list selection. The recipe was not run against a model.
+
+## Review (GetTime and the TOD chip, commits d26fa73 and 50487ce)
+
+Independent re-read on 2026-11-17 by a reviewer who wrote neither commit. Image `shub1snprom.bin` (SAL 5.04, snprom 10.54, sha256 `51ccf9ad830b...`). Method: a flat `ia64-linux-gnu-objdump` listing of the whole image (used for every address below), Ghidra (`--sn2-prom --no-analysis`) on `0xffaf36a0`, `0xffaf2960`, `0xffb32680` and `0xffaf2f70` as a second reading, and Linux 3.2.78 from kernel.org for the oops. No emulator ran. No IRIX source, restricted result or firmware listing was opened or committed.
+
+**Confirmed (established).**
+
+- Slot 23 (`0xfface1e0`) calls `0xffaf36a0` first and calls `0xffa7f190` (request `0x200e`) only when that returns nonzero. `0xffa7f430` sends `0x200d`.
+- Chip object: `0xffaf2dc0` caches the pointer and a zeroed 0x18-byte object, calls `0xffaf2d30`, then the probe `0xffaf2870` only if that did not fail. `0xffaf2d30` stores object `+0` = 1 and `+8` = result + `0x80000`, or leaves `+0` = 0 and fails when `0xffaf2960` returns 0. `0xffaf36a0` returns -1 for `+0` = 0.
+- `0xffaf2960` walks the lboards of the given NASID for class `0x70` (`brd_type` +5 masked `0xf0`) with `brd_flags` +9 bit `0x10`.
+- Discovery: `0xffb36020` compares the id dword with vendor `0x10a9` (4265) and device `0x100a` (4106) and calls `0xffb32680`, which matches class `0x70` and `brd_slot` +10, ORs `0x10` into `brd_flags`, stores slot in bits 59:56 of `+8`. `0xffaed410` deposits address bit 23 into bits 49:48.
+- Window arithmetic, all three steps, including the bus-B offsets (`+0x800000` for the low windows and `+0xb00000` for the high ones), the even/odd NASID forms, bit 63, the `0x20000 + d * 0x1000 + 0x10` configuration read, the `0xfffff0` mask and OR (not add) into the window, and the `+0x80000` in `0xffaf2d30`.
+- Accessors `0xffaf2710` / `0xffaf27c0` compute `(reg & ~3) + 3 - (reg & 3)`, which is `reg ^ 3`, for a register below 0x10000. The byte access runs with `psr.i` and `psr.dt` cleared and `mf.a` after (`0xffa0e5f0`, `0xffa0e6e0`).
+- Probe order and the layout selection (`0xff` at register 6 gives layout 0). Layout 0 reads year, month, date, hours, minutes, seconds from `0x7fff`, `0x7ffe`, `0x7ffd`, `0x7ffb`, `0x7ffa`, `0x7ff9`, never `0x7ffc`, with `0x40` then `0` at `0x7ff8`. Layout 1 reads `1, 2, 4, 8, 9, 10` between `0` and `0x80` at register `0xb`. Every register is read twice, tens digit from the first read and ones from the second, with no masking.
+- `NBY` signature (78, 66, 89) at `0xf7e0` to `0xf7e2` (layout 1: `0x20` to `0x22`), base = BCD at `0xf7e3` + 100 x BCD at `0xf7e4` (`0x23`, `0x24`), else 1970. Clamp: a year not above 1997 becomes 1998. `SetTime` stores year - 1992.
+- Simulator signature: `cpuid[2]` equal to `0xaeeeeeee8badbeef` makes `0xffaf36a0` return 0 at once.
+- Month 0 from all-zero reads, and the oops: Linux 3.2.78 `rtc-efi.c` calls `rtc_year_days(day - 1, month - 1, year)` with unsigned arguments, so month 0 indexes `rtc_ydays` at 0xffffffff.
+- Owner's guide: `007-4660-001` printed p.104 says the IO9 "contains an IOC-4 ASIC that supports ... NVRAM and time-of-day clock". The IO10 listing was not checked.
+- 50487ce is labelled "Observed on the emulator (not hardware)".
+
+**Needs correction before a model is built from it.**
+
+1. **Device index is slot + 1.** `0xffb32680` stores the scan's device number plus 1 (the Ghidra read shows `(param_3 & 0xff) + 1 << 0x3c`; the listing shows `adds r34=1`). Everything in the window and configuration arithmetic uses that stored value, so the page's `d` is the configuration window number (slot 0 is window 1, as the [PIC page](../../../devices/pic/README.md) says for `pic_attach2`), not the PCI device or slot. Window 1 is `0x200000` and window 4 is `0x700000` on bus A. Read as a slot number the formulas put the chip one window off. The page says "the device number" in the discovery bullet and "PCI device `d`" in the window bullet; both need "device index (slot + 1)". The values themselves match the PIC page's slot pools.
+2. **"Zero month on the simulator path" is not established.** That path returns success without writing the caller's buffer. The caller (`0xffa1c8d0`, call at `0xffa1ca3c`) passes a stack buffer it never clears, so the result is whatever was on the stack. The 1998-01-01 default is written only on a negative status (`0xffa1cd30`). Grade: unknown.
+3. **The `0xffb23930` gloss is unsupported.** The page says it returns "the node whose board carries the flag below". As far as read it loads a stored word through the global at `0x1000040` + `0x28`, sign-extends it and treats -2 as a sentinel; it does not search boards. "Master node" is plausible but was not traced here.
+4. **The lane-swap note and the recipe now disagree.** Option A still says the model has "a lane-swapped address (`phys = reg ^ 3`)" on the device, while 50487ce says the PIC swaps too and the device sees the logical register. A reader who follows both swaps twice. The cancellation is an observation of this repository's own PIC model only; for hardware it fits the IOC4 page's big-endian lane numbering (inferred), nothing more. State once which component swaps.
+5. Minor: `0xffaf36a0` also returns -1 when the allocation fails, and fails the layout check (`-1`, message) for a layout other than 0 or 1 in `0xffaf2f70`; neither can occur with the probe as written.
+
+**Grades.** The established items above hold, except the item 2 claim. Inferred stands for the part identity, both register maps (positions match an M48T35-style top-of-SRAM clock and a DS1286-style command register) and the 32 KiB alias at A15. The "L1 only for a node with no scanned IOC4" statement is inferred, as written.
+
+**Not checked.** Who calls `0xffaf2d30` apart from `0xffaf2dc0`; the SHub 2 image; the IO10's time-of-day listing; whether the real part is 32 KiB or 64 KiB; the L1 clock address in the sysco page.
