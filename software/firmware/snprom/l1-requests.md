@@ -533,6 +533,13 @@ The behaviour every candidate shares: THRE is set when the FIFO is empty, cleare
 
 **Sources read this session.** Library roots `linux-mips` (2.4 `shub.h`, `shub_mmr.h`, `sn_serial.c`), `linux` (`8250_port.c`, `8250_core.c`), `origami-docs` (PC16550D copy, page 17); no TL16C550, ST16C550 or XR16C850 hit in `origami-docs` or `techpubs` (searched by part name), so those three datasheets were fetched from the vendors' public sites (TI `tl16c550c.pdf`, `tl16c550d.pdf`, `tl16c750.pdf`; the Exar ST16C550 Rev 4.30 PDF; MaxLinear `16c850-231-080905.pdf`). The PROM was read as strings and register constants only; the L1 `l1` program by a call-site scan of its UART init and string search; the L1 kernel by strings. No IRIX source and no restricted Library result was opened.
 
+The vendor datasheets are now held in the Library cache:
+
+- TI TL16C550C, single UART with 16-byte FIFOs (SLLS177): `io-chip/ti-tl16c550c-datasheet.pdf`
+- TI TL16C750, single UART with 64-byte FIFOs and auto flow control: `io-chip/ti-tl16c750-datasheet.pdf`
+- Exar/MaxLinear ST16C550, 16-byte FIFO UART, Rev 5.01 (supersedes the Rev 4.30 copy read above): `io-chip/exar-st16c550-datasheet.pdf`
+- Exar/MaxLinear XR16C850, 128-byte FIFO UART, Rev 2.3.1: `io-chip/exar-xr16c850-datasheet.pdf`
+
 ### Is there an input limit near 80 characters? (read 2026-11-16, nothing run)
 
 A model run showed an 83-character command producing no output. Read in the SAL 5.04 runtime in Ghidra (`l1sc_receive` `rt:0x53b80`, `sc_cons_readc` `rt:0x7ec10`, `sc_cons_poll`
