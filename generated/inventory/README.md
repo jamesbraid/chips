@@ -25,7 +25,7 @@ A setup that reproduces them:
     ln -s <shared checkout>/root root                        # or a copy or a mount that matches the manifest
     python3 retools/tools/inventory.py
 
-When a rebase or merge conflicts in `generated/inventory/*.tsv`, do not resolve it by hand. `.gitattributes` marks those tables `-merge`, so git never line-merges them and stops with this side's copy and no markers. Take either side, run the script, and `git add evidence/inventory COVERAGE.md`. `audits.tsv` is kept by hand and merges normally.
+When a rebase or merge conflicts in `generated/inventory/*.tsv`, do not resolve it by hand. `.gitattributes` marks those tables `-merge`, so git never line-merges them and stops with this side's copy and no markers. Take either side, run the script, and `git add generated/inventory COVERAGE.md`. `audits.tsv` is kept by hand and merges normally.
 
 ## Tables
 

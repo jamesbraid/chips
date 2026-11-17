@@ -52,13 +52,31 @@ Full text and the checks that enforce it: `retools/tools/README-analysis.md#evid
 - `generated/` and `devices/<unit>/registers.md`: written by `retools/tools/defs/defs-gen`, never edited (CI fails on a
   stale tree). `registers.md` is the published reference page for each unit; consumers include `generated/c/<unit>.h`. After any register map change run `defs-gen`, then `defs-check --build`.
 - `platforms/<board>/`: topology, address map, boot and PROM of one machine; bricks in `platforms/bricks/`.
-  `software/kernel/`: how IRIX drives a part. `questions/`: one page per open question. `references/`: the
+  `software/kernel/`: how IRIX drives a part. `questions/`: one page per open question. `references/`: the lists of what we hold, the
   specification index (`documents/`) and the public source trees (`code/`, submodules).
 - `generated/inventory/`, `COVERAGE.md`: written by `retools/tools/inventory.py`; never edit by hand.
   `tools/configs/`: one census config per chip, marked spec-backed or no-spec. `tools/config/`: inventory settings,
   pinned manifests and the allow-lists the checks read. `tools/setup-clone.sh` is the bootstrap stub.
 - Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `tools: ...`); the body says why.
   No trailers of any kind.
+
+## Where new work goes
+
+There is no `evidence/` directory. File each page by what it is about:
+
+- `devices/<chip>/`, `platforms/<board>/`, `formats/<name>/`, `software/<area>/`: a note about one device, platform,
+  format or software component.
+- `<subject>/readings/<binary>.md`: per-routine readings of one binary, filed under the subject it explains (a driver
+  object under its chip, a kernel object under `software/kernel/<platform>/`). `retools/tools/reading_round.py` files
+  its entries there; `tools/config/readings-subjects.json` says which subject a binary belongs to.
+- `references/`: what we hold and cite: binary, PROM and firmware lists with checksums, scope lists, source lists.
+  Code submodules stay under `references/code/`.
+- `generated/`: tool output that is regenerated and never hand-edited (`generated/inventory/`, diff tables, symbol
+  tables, register output). Hand-kept audit tables sit in `generated/inventory/audits.tsv` by exception.
+- `COVERAGE.md` at the root: progress tallies. The inventory block in it is rewritten by `retools/tools/inventory.py`.
+- `questions/`: open questions.
+
+`retools/tools/defs/ci-check` fails when an `evidence/` directory comes back.
 
 ## Done
 
