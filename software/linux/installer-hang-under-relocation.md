@@ -79,8 +79,9 @@ The hang is model-side or memory-map-side, not a kernel bug. The same read happe
 hardware: unmapped or unpopulated memory just returns data (the result only feeds
 `table->end`, used by kernel backtraces). Cause is not a 64 MB alignment, boot parameter or
 relocation problem. (inferred)
-- Physical `0x1008e1611` in nasid 0 space must complete as an uncached byte read (RAM, or
-  any answer instead of a stall). On a real Altix node 0 has RAM there (4 GiB + 9 MiB).
+- Physical `0x1008e1611` is node field 0, AS 0: compatibility space, not RAM (node RAM is AS 3) and not
+  MMR space. It must complete as an uncached byte read with some answer instead of a stall; see
+  [accesses to undefined MMR offsets](../../platforms/sn2/address-map.md#accesses-to-undefined-mmr-offsets).
 - Also check that an `ld1.a` that completes allocates an ALAT entry and `chk.a.clr` falls
   through, and that a recovery `ld1` to the same UC address completes.
 - A model that stalls on an unpopulated uncached read where hardware returns data or an error
