@@ -732,20 +732,51 @@ a PIC bus 0 memory BAR at PCI address `0x70_0000`, below) the Crosstalk address 
   mapping table: sixteen small windows at `base + i << 24` (`i << 28` for an odd, TIO, NASID), six big-window slots,
   each slot written invalid with a value `0x300 | slot << 12` (widget 3 is Linux's "invalid widget"). **All six writes go
   to the address of ITTE1**, not to ITTE`slot` (the address is a loop constant), so after this ITTE1 holds `0x5300` and
-  ITTE2 to ITTE6 keep 0 from the first-stage set-up. The release routine (`0xffb71110`) has the same defect.
+  ITTE2 to ITTE6 keep 0 from the first-stage set-up. The release routine (`0xffb71110`) has the same defect. The pattern is
+  the argument transposition of the public Linux 2.4 SN2 `IIO_ITTE_DISABLE` macro (`include/asm-ia64/sn/io.h`), which calls the
+  entry writer with window and I/O bit swapped: that writes widget 3, I/O bit = window, to the first entry, and Linux's own
+  init loop (hub set-up in `arch/ia64/sn/io/io.c` at `8ef7d46c94d5`) takes the same path.
 - The mapper (`0xffb70ba0`, slot 2 of the hub provider table at `0xffc2b8d8`; the BAR mapping `0xffb31fb0` calls it, which
   is where `pdi_pio_mapped_addr` comes from, inferred from the call chain) takes a Crosstalk address and size. If `address + size` is at most 16 MiB it returns the widget's small window
   and writes nothing. Otherwise the span must fit in 512 MiB; it reuses a slot already mapping the same 512 MiB chunk of
   the same widget, or takes **the highest-numbered free slot** (so the first big window handed out is window 6), writes
   `ITTE = widget << 8 | address >> 29 & 0x1f`, reads it back (value ignored), and returns
-  `0x8_2000_0000 + slot << 29 + nasid << 38` (bit 63 set) plus the address's low 29 bits.
-- No ITTE access exists in the SAL runtime ELF, the EFI ELF or the other compressed components of the image (searched for
-  the register offset constants); EFI reaches PCI memory through SAL `IOIF_PCI_SAFE` or the addresses SAL handed out.
+  `0x8_2000_0000 + slot << 29 + nasid << 38` (bit 63 set) as the base in a per-window record (+0x28); it returns the record, and its caller
+  adds the address's low 29 bits. The mapper also returns 0 for a size below the minimum in argument 4 or for a request without flag bit 0.
+- One reader exists, `0xffb6f4a0`: from a node address it takes the nasid (bits 48:38) and the window (bits 31:29), and for a
+  non-zero window loads ITTE `0x400160 + 8 * (window - 1)` (8-byte load), caches it, takes the widget from bits 11:8 and treats
+  an offset of 6 or more (Crosstalk address `0xc000_0000` and up, the PIC bus 1 alias) as the second head; window 0 uses the
+  small-window bits 27:24 instead. This is the PROM's own use of the numbering above (software expectation), the same decode as the public Linux
+  2.4 SN2 `shubio.c` error handler (`window - 1`, `(itte & 0x1f) << 29`).
+- A literal search for the move-long immediates of the entry addresses (`0x400160` to `0x400188`, `0x1c00160` to `0x1c00188`,
+  and the global `0x8000_0008_01c0_0160` forms) and for 8-byte data literals finds users only in the five SAL_B functions above, none in
+  the SAL runtime ELF, the EFI image or the other inflated components. Addresses built in two steps (a `0x400000` base plus a small offset) are
+  not excluded; EFI reaches PCI memory through SAL `IOIF_PCI_SAFE` or the addresses SAL handed out.
 
 **Byte lanes.** The II treats a big and a small window alike for data; no source gives the II any byte swap or lane
 rule, and none was found in the PROM code on this path (**unknown** for hardware, inferred only that PIO data is not
-modified by the II). Sizes 1, 2, 4 and 8 occur: the PROM uses 4-byte widget accesses and 8-byte II register accesses, EFI
+modified by the II). The lane rule lives in the PIC: Device(n) bit 13 for the device windows and Control bit 22 for the memory alias. Sizes 1, 2, 4 and 8 occur: the PROM uses 4-byte widget accesses and 8-byte II register accesses, EFI
 a 2-byte store through a big window. The swap rules that matter are the PIC's own, in [the PIC page](../pic/README.md#pic-widget-space-and-pio-windows).
+
+### Review (PIO windows, 2026-11-16)
+
+Independent re-read by a reviewer who wrote none of it, of commit e664785, in Ghidra with the repository's IA-64 module on `shub1snprom.bin` of snprom 10.54
+(`--sn2-prom --no-analysis`, addresses `0xffab1cc0`, `0xffb70960`, `0xffb70ba0`, `0xffb71110`, `0xffb31010`, `0xffb31fb0`,
+`0xffb6f4a0`, plus the 8-byte store and load helpers `0xffa0e640` and `0xffa0e5a0`), with objdump as a cross-check, against Linux linux-mips `c9bace5bce3e` and `8ef7d46c94d5`.
+
+**Confirmed.**
+- Window number from node-offset bits 31:29, entry at `0x400160 + 8 * (n - 1)`, widget 11:8, offset 4:0, I/O bit 12, Crosstalk address `offset << 29 | low 29 bits`: Linux 2.4 `io.h` (`IIO_ITTE_*`), `shubio.c` and v5.3 `addrs.h` (`BWIN_SIZE_BITS` 29, `NODE_BWIN_BASE0` = base + 512 MiB, `HUB_NUM_BIG_WINDOW` 6, `SWIN0_BIGWIN` 6). Established as a software definition.
+- Worked example: node offset `0xc070_0008` is window 6, `0x400188`, relative `0x70_0008`; ITTE6 = `15 << 8 | 2` = `0xf02` gives `0x4070_0008`. Arithmetic checked.
+- First stage `0xffab1cc0` writes entries 0 to 6 with zero (7 stores at `0x1c00160 + 8i` through small window 1 + 8 MiB).
+- Mapper `0xffb70ba0`: op table `0xffc2b8d8` entry +0x10 (descriptor to `0xffb70ba0`; `0xffb71110` is +0x18). Small window when `address + size <= 16 MiB`; 512 MiB span limit; reuse by same widget and 512 MiB chunk; otherwise the highest free of six slots; 8-byte store of `widget << 8 | address >> 29 & 0x1f` then an 8-byte load whose value is dropped.
+- Init `0xffb70960` and release `0xffb71110`: the target address is the constant `0x8000_0008_01c0_0160 | nasid << 38`, which is ITTE1 (objdump `movl r37=0x8000000801c00160`, hoisted out of the loop), value `0x300 | slot << 12`, six slots, last value `0x5300`.
+
+**Changed.**
+- "Nothing else touches the entries" was wrong: `0xffb6f4a0` reads them (added above). Mapper return value is a record, not the address (fixed).
+- The init/release address constant is the Linux 2.4 `IIO_ITTE_DISABLE` argument transposition, so the PROM copies a known vendor defect (added above); the grade of the writes is unchanged.
+- The literal search is stated for what it covers; two-step computed addresses are not excluded.
+
+**Not checked.** How the table `0xffc2b8d8` is installed in a provider record (`+0xe0`) and who calls `0xffb70960`; I/O-bit behaviour; the reset value of an entry; computed addresses in the SAL runtime and EFI (the SAL runtime has move-long constants of `0x400000` at sites that look like a size table, not read).
 
 ## Consistency with Bedrock
 

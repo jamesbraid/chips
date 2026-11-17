@@ -956,8 +956,12 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of `pic_attach2` (`0x
 Where a processor access to a PIC widget lands, per head. A PIC widget has two PCI heads in one widget address space: head 0
 at widget offset 0, head 1 at `+0x80_0000` (the PROM's window pointer for head 1). Source: the SAL runtime's resource-to-Crosstalk
 translation (`0xffb31010`, SAL_B of the 5.04 image, read in Ghidra and cross-checked with objdump) and the PCI scan above;
-the Bridge and XBridge address maps are siblings and fill no field. Grades are **established** as the PROM's computation
-unless marked; hardware decode is **inferred** from it.
+the XBridge address map is a sibling and fills no field. The public Linux 2.4 `include/asm-ia64/sn/pci/bridge.h` (`8ef7d46c94d5`) defines the
+PIC layout in its own words: bus 1 at `PIC_BUS1_OFFSET` `0x800000`, configuration at `0x20000` + 4 KiB per device, device windows, and the PIC memory aliases
+(`PICBRIDGE0_PIO32` `0x4000_0000` to `0x7fff_ffff`, `PICBRIDGE0_PIO64` `0x8000_0000` to `0xbfff_ffff`, `PICBRIDGE1_PIO32` `0xc000_0000` to `0xffff_ffff`,
+`PICBRIDGE1_PIO64` `0x1_0000_0000` to `0x1_3fff_ffff`), with a comment citing the PIC programmer's reference (revision 0.8, not held) and saying PIC has no I/O alias.
+Grades are **established** as the PROM's computation unless marked; the hardware decode is **established as a published-driver definition** where that header
+states it (head 1 offset, the four aliases, no I/O alias, device-window sizes) and **inferred** elsewhere.
 
 | Widget offset, head 0 | Head 1 | What the PROM uses it for |
 |---|---|---|
@@ -965,8 +969,8 @@ unless marked; hardware decode is **inferred** from it.
 | `0x2_1000 + slot * 0x1000 + reg` | `0x82_1000 + ...` | type 0 configuration, `slot` 0 to 3, `reg + size` at most `0x100` per function (function `f` adds `0x100 * f`) |
 | `0x20_0000`, `0x40_0000` | `0xa0_0000`, `0xc0_0000` | device windows 0 and 1 (2 MiB each): memory or I/O BARs the PROM allocated from the device's direct-window pool; I/O BARs are mapped only here |
 | `0x60_0000`, `0x70_0000` | `0xe0_0000`, `0xf0_0000` | device windows 2 and 3 (1 MiB each), same rule |
-| `0x4000_0000` + PCI address | `0xc000_0000` + PCI address | memory BARs outside the pools: up to `0x3fff_0000` of PCI memory; also what a BAR above 16 MiB needs |
-| anything else | | unmapped: the mapper prints a failure; `0x8000_0000` to `0xbfff_ffff` and the 64-bit and I/O aliases of the Bridge family are not used by the PROM (what the PIC does there: **unknown**) |
+| `0x4000_0000` + PCI address | `0xc000_0000` + PCI address | memory BARs outside the pools. The mapper takes this path when the range ends at or below 1 MiB, or starts at `0x70_0000` or above and ends at or below `0x3fff_0000`; PCI `0x10_0000` to `0x6f_ffff` is not served here. Head 1 uses `0xc000_0000` only on a part whose chip type is 2 |
+| anything else | | unmapped: the mapper prints a failure. The PROM does not use the 64-bit aliases (`0x8000_0000` head 0, `0x1_0000_0000` head 1, defined by the public header) and there is no I/O alias; what the chip does there is **unknown** |
 
 Reaching them from the SHub: widget offsets below 16 MiB (registers, config, device windows) go through the widget's small
 window `w` (`0x8_0000_0000 | nasid << 38 | w << 24`); the `0x4000_0000` and `0xc000_0000` memory aliases need a big window,
@@ -980,12 +984,35 @@ The Device-register window base is the bits-11:0 field in 1 MiB units above (`(w
 **Config space.** Offsets as above, 4-byte aligned words, no byte swizzle in the address (see the PCI scan section below);
 the PROM issues only 4-byte config accesses, so 1- and 2-byte lane behaviour is not exercised there.
 
-**Byte lanes and swap.** Unknown for PIC in any citable source (see the swap section above). What the PROM does: it clears
-Device-register bit 13 (`dev_swap`) and sets control bits 31:30 (and 29 except on revision 1; what those control bits do is
-unknown here); the IOC4 and QLogic parts are driven with plain little-endian register accesses of the access's own size (EFI's
-2-byte store of 5 at BAR + 8 is one). A model should serve 1-, 2- and 4-byte accesses through the alias as address-preserving
-bytes of the PCI register, same for small and big windows (the II adds no rule); whether the PIC itself swaps at the
-alias is **unknown**.
+**Byte lanes and swap.** No held PIC source states the lane rule; the Bridge (rev 4.0) and XBridge (rev 0.5) specifications, appendix "Byte Swapping",
+do for their own chips (siblings: **inferred** for PIC). Two separate controls: Device(n) bit 13 `dev_swap` swaps PIO through the device windows, and Control bit 22
+`mem_swap` swaps PIO to PCI memory above widget space, which is the `0x4000_0000` alias. On a little-endian system those tables give lane identity with the bit
+clear (the byte at address a on PCI byte lane a mod 4) and, with it set, a byte reversal inside the access width (2-byte `AB` becomes `BA`, 4-byte `ABCD` becomes `DCBA`); half-word and word
+swapping are not offered. What the PROM does (**established**, `0xffb31010`, `0xffab4760`, `0xffab44a0`): per slot it clears Device bit 13, and a device-window mapping is refused for a request
+carrying flag `0x1000` (byte stream). For the alias, a request with `0x1000` sets Control bit 22 and any other request clears it; the first alias mapping on a bus fixes the mode and a later
+request for the other mode fails. Control bits 31:30 and 29 are the parity enables for the translation RAM, the response and the request path (`PIC_CTRL_PAR_EN_*`, established as names), not a lane rule. The IOC4 and
+QLogic parts are driven with plain little-endian register accesses of their own size (EFI's 2-byte store of 5 at BAR + 8 is one). A model should
+serve 1-, 2- and 4-byte accesses at the alias with identity lanes while Control bit 22 is clear, reverse them inside the access width when it is set, and leave the device
+windows to Device bit 13 (the II adds no rule). Whether the PIC matches the sibling tables, and which flag the QLogic request carries, are **unknown**; the Bridge errata
+list says Bridge's own `mem_swap` and `io_swap` did not enable the swapper on that part.
+
+### Review (PIC widget space, 2026-11-16)
+
+Independent re-read of commit e664785 by a reviewer who wrote none of it, in Ghidra (`--sn2-prom --no-analysis`) on `shub1snprom.bin` of snprom 10.54, objdump as the cross-check, against
+Linux 2.4 `bridge.h` and `pcibr_dvr.c` (`8ef7d46c94d5`) and XBridge rev 0.5 chapter 7 and appendix A.
+
+**Confirmed.**
+- `0xffb31010`: configuration at `0x21000 + slot * 0x1000` (bus 1 `0x821000`), refused above `0x100` bytes or with flag `0x1000`; device windows `0x20_0000`, `0x40_0000` (2 MiB) then `0x60_0000`, `0x70_0000` (1 MiB), bus 1 at `+0x80_0000`; I/O type 2 only through windows; alias `0x4000_0000` and, for bus 1 of a chip-type-2 part only, `0xc000_0000`.
+- Head 1 at `0x80_0000`, configuration at `0x20000` plus the device number (the PROM passes slot + 1), ATE RAM `0x10000`, external RAM `0x80000`, window sizes: Linux 2.4 `bridge.h`. XBridge rev 0.5 Table 84 has the same first four windows for devices 0 to 3 and a 1 GiB PCI memory alias at `0x4000_0000`.
+- Example `0x8_c070_0008` (window 6, ITTE6 = `0xf02`) is consistent with the II page.
+
+**Changed.**
+- The 64-bit aliases and the absence of an I/O alias are defined by the public header (see above); "unknown" is now "defined, unused by the PROM". Head 1's `0xc000_0000` alias is established as a driver definition.
+- The alias condition was too loose (range end at or below 1 MiB, or start at `0x70_0000` and end at or below `0x3fff_0000`).
+- Control bits 31:30 and 29 are not unknown: parity enables, as this page's register unit already says.
+- Byte lanes: the PROM programs Control bit 22 for the alias; the earlier "address-preserving, nothing else" advice is replaced by the two-control rule above. Device bits: bit 13 `dev_swap`; bit 12 memory or I/O space; bits 11:0 the window base in 1 MiB units (2 MiB units for devices 0 and 1). XBridge Table 83 drives PCI address bits 31:30 to zero in memory space, which matches the PROM masking the window to 30 bits.
+
+**Not checked.** PIC programmer's reference (not held); that the PIC copies the XBridge swap tables; the flag the QLogic request carries; the `+0x1000` flag meaning for configuration; behaviour of the 64-bit aliases.
 
 ## PCI scan and the protected read (stop at `0xffb5cf50`)
 

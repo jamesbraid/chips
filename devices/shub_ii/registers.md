@@ -223,7 +223,7 @@ Array of 2 registers, stride 8.
 
 ### Register `itte`
 
-Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7. SAL 5.04 PROM: all seven written 0 (site 0xffab1cc0) by the first stage; its SAL runtime mapper later writes widget << 8 | offset into the highest free entry from 6 down to 1 (site 0xffb70ba0), and a defective init and release write 0x300 | slot << 12 to ITTE1 only (see README, PIO windows).
+Translation table entry mapping one SHub big window to a Crosstalk address: a 5-bit offset joined to the window-relative address bits, a 4-bit widget number and an I/O space bit. The header numbers the entries 1 to 7; the kernel numbers them 0 to 6, and uses the top big window as a stand-in for small window 0 to work around a defect on the processor-interface side. Header names IIO_ITTE1 to IIO_ITTE7. SAL 5.04 PROM: all seven written 0 (site 0xffab1cc0) by the first stage; its SAL runtime mapper later writes widget << 8 | offset into the highest free entry from 6 down to 1 (site 0xffb70ba0), a defective init and release (the transposed-argument pattern of Linux 2.4 IIO_ITTE_DISABLE) write 0x300 | slot << 12 to ITTE1 only, and one routine reads them (0xffb6f4a0); see README, PIO windows.
 
 Array of 7 registers, stride 8.
 
