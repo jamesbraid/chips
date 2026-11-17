@@ -729,3 +729,19 @@ Independent review of chips commit `14dc77b` (the section "Request 0x1007 and th
 ## Geoid consumers of the identity requests
 
 `0x0003`, `0x000e` and `0x0013` feed the node geoid through `0xffaac4b0`; the field mapping and the replies for a lone 350 are in [KLCONFIG: geoid and module id](../../../platforms/sn2/klconfig.md#geoid-and-module-id). No new request code was found. Related, not an L1 request: `shub_discover` reads an L1-pushed word from SHub scratch `0x1_101d_0080`; its layout (type byte `l`; slab bits 18:16, bay 25:20, rack 34:26, slot 38:35, module type forced to `c`) is **inferred** from `0xffa8d120` and is not yet modelled.
+
+## Requests after boot: text commands, the clock and the event clear
+
+Requests the runtime makes after the console is up. Frames are as in "Conventions"; addresses are SAL_B in `shub1snprom.bin` 10.54. Read in Ghidra, objdump cross-check, no emulator. L1 side: sysco `software/firmware/l1/sn2-power-time-requests-1.62.1.md`.
+
+| Request | Site | Header byte | Destination word | Arguments | Reply the PROM reads | Grade |
+|---|---|---|---|---|---|---|
+| `0x0000` text command | `0xffa0d760` (`version`), `0xffa0d3d0` (reset), `0xffa0d610` (power-down) | the open handle: `0x12` for the reset text, one per call otherwise | `0x0ffff003`, or `0x1ffff003` for the L2 forms (task 3) | one string, tag 1, NUL-terminated | `version` (`0xffa8c9a0`): status 0 only is tested; the reset and power-down texts: any valid frame, not parsed | established |
+| `0x200e` time of day get | `0xffa7f190` | `5 + slice` | `0x0ffff006` | none (six bytes) | status 0, then six integers, tags 0: year, month, day, hour, minute, second | established |
+| `0x200d` time of day set | `0xffa7f430` | `5 + slice` | `0x0ffff006` | six integers, same order | status only | established |
+| `0x100a` event subchannel clear | `0xffa7efe0` | `5 + slice` | `0x0ffff006` | none | none read (the L1 sends no reply); only the type `l` power-down path sends it | established |
+
+- **Strings sent (established).** `version`; `p <partition> rst` (L2) and `* rst` (L1) for reset; `p <partition> pwr d` and `* pwr d` for power-down. The `*` form is the L1's send-to-all command; `p <n>` is routed by an L2.
+- **Timeouts and the L2 probe.** The reset text is sent and waited for with the standard wait (`0xffa82c10`, 3,000,000 ticks); the `version` probe and the power-down texts wait 20,000,000 ticks (`0xffa82a10`, `0xffa0d760`). Whether a silent `version` probe also takes the `0x8d` die path was not read (**unknown**). The probe's destination word is `0x1ffff003`, but the L1 routes only on the task number, so an L1 that answers `version` with status 0 makes the PROM believe an L2 exists and send `p <partition> rst`. A model should therefore treat `p <n> rst` and `* rst` alike.
+- **`0x200e` with no L2 or chip.** The reply must carry six integers; a different count gives `-33` and the clock falls back to 1998-01-01 (section 6.4 of [runtime-services.md](../../sal/runtime-services.md)).
+- **Order seen on a 350 (inferred).** `0x200e` once at the first `GetTime` and again after 300 s of elapsed RTC; `0x200d` only from `SetTime`; `0x0000` only on `reset`; nothing on `poweroff`.

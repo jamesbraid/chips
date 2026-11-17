@@ -50,9 +50,9 @@ SN-specific ids (the `SN_SAL_*` of `sn_sal.h`). Every id here is established pre
 | `0x02000021` to `0x0200002c` | console PUTC, GETC, PUTS, GETS, GETS_TIMEOUT, POLL, INTR, PUTB, (`29` read bytes), XMIT_CHARS, READC, (`2c` flush) | `sn_console.c`, EFI, early printk | `0xffb16d50` (`21`) through `0xffb178a0` (`2c`): `22` `0xffb16e30`, `23` `0xffb16f40`, `28` `0xffb170a0`, `24` `0xffb17190`, `25` `0xffb17270`, `29` `0xffb17360`, `26` `0xffb17480`, `2a` `0xffb17560`, `2b` `0xffb17650`, `27` `0xffb17760`; rt rows from `rt:0x78b0` | the system-controller (L1) UART on the SHub junk bus; no IOC4 | no console only |
 | `0x0200002d` | console callback register | EFI only | `0xffb179b0` (SAL_B only; stores the pointer, returns 0) | none | n/a |
 | `0x02000008` | flash and variable store (EFI only) | `PlInitNvVarStoreFlash`, EFI variable services | `0xffb182c0` | node flash | EFI starts with no variables; Linux unaffected ([efi-boot.md](../firmware/snprom/efi-boot.md#1-boot-options-and-the-variables)) |
-| `0x0200000a`/`0b` | clock set / get | EFI `SetTime`/`GetTime` | `0xffb14200`, `0xffb14300`, via `0xffa1d1e0`/`0xffa1cef0` | SHub RTC `0x81_101c_0000` and a chip base-time method (`+0xb8`, unread: 1998-01-01 if it fails) | `GetTime` always returns success to the kernel |
+| `0x0200000a`/`0b` | clock set / get | EFI `SetTime`/`GetTime` | `0xffb14200`, `0xffb14300`, via `0xffa1d1e0`/`0xffa1cef0` | SHub RTC `0x81_101c_0000` plus a base time from a time-of-day chip or L1 request `0x200e` (section 6; 1998-01-01 if both fail) | `GetTime` always returns success to the kernel |
 | `0x02000013` | go virtual (EFI `SetVirtualAddressMap`) | EFI only | `0xffb14450` (case 0 walks the node table and rewrites the node-record pointers at `0x1000038` and block A `+0x50`/`+0xa0`; read as a pointer re-base, **inferred**) | none | the kernel tolerates a failed `SetVirtualAddressMap` |
-| `0x02000002` | SYSTEM_RESET (and callback `0x5000`) | EFI `ResetSystem`, `machine_restart` paths | `0xffb1ba90` | L1 reset request | n/a |
+| `0x02000002` | SYSTEM_RESET (and callback `0x5000`) | EFI `ResetSystem`, `machine_restart` paths | `0xffb1ba90` | INIT IPIs, then L1 text command `* rst` (section 6) | n/a |
 | `0x02000045` | start I/O (EFI only) | EFI start-up | `0xffb20350` | pool buffer for I/O | ignored |
 | `0x02000051` to `0x0200005f`, `0x64` | IOIF: error interrupt, `PCI_SAFE`, slot enable/disable, `GET_HUBDEV_INFO` (`55`), `GET_PCIBUS_INFO` (`56`), `GET_PCIDEV_INFO` (`57`), flush lists (`58`, `5a`), `IOIF_INIT` (`5f`), PCI topology (`64`) | I/O discovery (section 5) | one dispatcher, `0xffb1e660` (the `0x...5e` case is the exported label), SAL_B only | SHub/xtalk widget registers, the bridge objects in the PROM's pcfg | `0x57` errors **stop** (`BUG_ON`); a `0x55` error only skips that node's set-up (`continue`, in both trees read); `0x56` with a positive status means "no such bus" |
 | `0x0200004a` | IOIF_INTERRUPT (alloc, free, redirect) | `sn_intr_alloc` and friends | `0xffb1f970`, SAL_B only | SHub II interrupt routing, the bridge's interrupt registers | device without interrupt |
@@ -61,7 +61,7 @@ SN-specific ids (the `SN_SAL_*` of `sn_sal.h`). Every id here is established pre
 | `0x02000030` | SYSCTL_OP (board lookups) | `sn_ioboard_to_pci_bus`, hwperf, topology | `0xffb1d910`, `rt:0xe490` | system-controller tables | degrades |
 | `0x02000043` | IROUTER_OP (open, close, send, receive, interrupt status, on, off, init) | `scdrv_init` and the `/dev/snsc` driver | `0xffb19720`, `rt:0xaff0` | UART interrupt enable (`IER` bit 0); `OPEN` and `SEND` use the request slots and L1 frames | init and interrupt on send no frame; a missing driver or PROM only loses `/dev/snsc` |
 | `0x02000044` | SYSCTL_EVENT: L1 request `0x1007` naming subchannel 19 as the event channel | `scdrv_event_init` (snsc_event.c), console nasid only | `0xffb1d710`, `rt:0xe290` -> `sysctl_event_init` `rt:0x4cb80` | one L1 request, frame in [the 0x1007 section](../firmware/snprom/l1-requests.md#request-0x1007-and-the-kernel-console) | status 0 reply returns r9 = 19; an error status returns it in r9 and the driver gives up on events; **no reply at all (3,000,000 ticks) takes the node-die path (`ERR 8d`) and stops the machine** |
-| `0x02000038`/`39`/`3a`/`3b` | SYS_SERIAL_GET, PARTITION_SERIAL_GET, SYSCTL_PARTITION_GET, SYSTEM_POWER_DOWN | `/proc`, old-PROM fallback, power-off | `0xffb1c6c0`, `0xffb1c7a0`, `0xffb1cdd0`, `0xffb1bf10` | block B strings, L1 | degrades |
+| `0x02000038`/`39`/`3a`/`3b` | SYS_SERIAL_GET, PARTITION_SERIAL_GET, SYSCTL_PARTITION_GET, SYSTEM_POWER_DOWN | `/proc`, old-PROM fallback, power-off | `0xffb1c6c0`, `0xffb1c7a0`, `0xffb1cdd0`, `0xffb1bf10` | block B strings, L1; `0x3b` does nothing unless the module type is `l` (section 6) | degrades |
 | `0x02000012`/`06`, `0x02000060`, `0x02000061` | PRINT_ERROR, LOG_CE, HUB_ERROR_INTERRUPT, BTE_RECOVER | error paths | `0xffb13570`, `0xffb13070`, (IOIF dispatcher), `0xffb5fb50` | none | n/a |
 | `0x02000050` | HWPERF_OP | `sn_hwperf_init` | runtime only, `rt:0x8650` | pcfg objects | degrades |
 
@@ -106,12 +106,12 @@ switches to the virtual wrappers (`efi.c`, established). The PROM's implementati
 | Service | Kernel use | PROM implementation | Platform hardware | If it fails |
 |---|---|---|---|---|
 | `SetVirtualAddressMap` | once, in `efi_enter_virtual_mode` | `RtPlSetVirtualAddressMap` `0x121800` (and `0x12d0e0`); calls SAL `0x02000013` | none | degrades (prints "unable to switch EFI into virtual mode"; physical wrappers stay) |
-| `GetTime` | once at boot for the wall clock | `RtSNGetTime`: SAL `0x0200000b` (seven u16 fields; returns success whatever SAL returned; accuracy 50 ppm) | SHub RTC `0x81_101c_0000` plus the chip base-time method; if that fails the base is 1998-01-01 | degrades (clock at the base) |
+| `GetTime` | once at boot for the wall clock | `RtSNGetTime` (EFI `0x1093c0`): SAL `0x0200000b` (seven u16 fields, the last in milliseconds; returns success whatever SAL returned; accuracy 50 ppm) | SHub RTC `0x81_101c_0000` plus a base time from a chip or L1 request `0x200e` (section 6); if that fails the base is 1998-01-01 | degrades (clock at the base) |
 | `SetTime` | `hwclock`, ntp | SAL `0x0200000a` | same | degrades |
 | `GetVariable`, `GetNextVariableName`, `SetVariable` | `efivars`, elilo (`EDD30`) | sample variable engine (`RtVarFind`, `RtSetVariable`, `RtVarGarbageCollect`) over the callback `0x3000` | node flash (64 KiB store) | degrades |
 | `GetWakeupTime`, `SetWakeupTime` | RTC alarm | stubs returning `EFI_UNSUPPORTED` (`0x8000000000000003`) | none | degrades |
 | `GetNextHighMonotonicCount` | none | real | none | n/a |
-| `ResetSystem` | `machine_restart`, `machine_halt` | `RtPlResetSystem` `0x122950`: cold and shutdown send callback `0x5000` op 2, warm op 1; other types `EFI_UNSUPPORTED` | L1 reset request | degrades (no reboot) |
+| `ResetSystem` | `machine_restart` (warm) | `RtPlResetSystem` `0x122950`: types 0, 1 and 2 all call callback `0x5000`; other types `EFI_UNSUPPORTED` | L1 text command `* rst` (section 6); shutdown resets too | degrades (no reboot) |
 | `ConvertPointer` | internal | loops forever on an address outside every known range | none | hang if a runtime descriptor was not mapped |
 
 **Time source summary.** Wall clock: SHub RTC counter (`0x81_101c_0000`) and the chip's base time (probably the system controller's clock, **inferred**; the method was not read). Kernel
@@ -191,6 +191,54 @@ The serial console is **SAL, not a UART the kernel drives**: early output is `CO
 
 - The PIC register contract after `ioremap` (control, ATE, interrupt enable/address, force-interrupt) and the DMA address translation the PROM sets up: [devices/pic](../../devices/pic/README.md) and the open questions in [questions/sn2-sal-open.md](../../questions/sn2-sal-open.md).
 - The runtime-side handlers of `0x01000006`, `0x01000009`, `0x01000020` and the physical-id r9, and the SAL_B side of `0x02000013` beyond case 0.
+
+## 6. Power-down, reset and the time of day
+
+Read in Ghidra on `shub1snprom.bin` 10.54 (SAL_B, no analysis for the EFI ELF) with `ia64-linux-gnu-objdump` for the constants the decompiler hid; Linux from the community tree `nsafran1217/linux-sn2` (mirror head `69571599c5`) and `linux-history`. No emulator ran. Request frames, the reply parser and the identity cache are in [l1-requests.md](../firmware/snprom/l1-requests.md); the L1 side is in sysco `software/firmware/l1/sn2-power-time-requests-1.62.1.md`.
+
+### 6.1 What the kernel calls
+
+| Action | Kernel path (established) | Firmware call |
+|---|---|---|
+| `poweroff` | `machine_power_off` runs the legacy `pm_power_off`, which `sn_setup` set to `ia64_sn_power_down` (`arch/ia64/sn/kernel/setup.c:529`, `sn_sal.h:751`); that issues SAL `0x0200003b` with no arguments and then spins forever | SAL `SYSTEM_POWER_DOWN`; no EFI call (the EFI power-off handler is registered only where `efi_poweroff_required()` is true, which the default is not) |
+| `reboot` | `machine_restart` calls `efi_reboot(REBOOT_WARM)`, which calls `efi.reset_system(EFI_RESET_WARM)` | EFI `ResetSystem` |
+| `halt` | `machine_halt` calls `cpu_halt` (`arch/ia64/kernel/process.c:572`): `PAL_HALT_INFO`, then `PAL_HALT` | PAL only; no SAL, EFI or L1 traffic |
+| clock at boot | `timekeeping_init` -> `read_persistent_clock64` -> `efi_gettimeofday` (`efi.c:254`): one `efi.get_time` call; an error gives 0 | EFI `GetTime` |
+| clock afterwards | clocksource `sn2_rtc`, the SHub RTC at `0x1_101c_0000` (55 bits, rating 450); `hwclock` through `rtc-efi` calls `efi.get_time`/`set_time` | the SHub RTC counts from boot only |
+
+### 6.2 SAL `SYSTEM_POWER_DOWN` (`0x0200003b`, `0xffb1bf10`)
+
+- **Gate (established).** The handler counts the node list (node block `+0x10`) and returns 0 at once when two or more nodes are present. It then reads the identity cache (the `0x0003` reply, module word and type letter, folded to lowercase) and returns status 0 **unless the type is `l` (0x6c, compare at `0xffb1c276`)**. For the Altix 350's `f` (Opus TIO, inferred) or `o` (ColdFire Opus) the call sends no L1 frame, writes no register and returns 0, so Linux spins with the machine on. `l` is the ColdFire parser's `dorado` letter (sysco `personalities.md`).
+- **Type `l` path (established, not reachable on a 350).** L1 request `0x100a` with no arguments (`0xffa7efe0`; destination `0x0ffff006`, see l1-requests.md), then for each node the flag write below, an INIT IPI to every other CPU, then `0xffa0d610`: with an L2 present, text `p <partition> pwr d` to the L2; without one and with a partition number, a warning "system is partitioned but L2 is unreachable" and a spin; otherwise text `* pwr d` to the L1; then it spins.
+- **What real hardware does (unknown).** No capture of an Altix 350 shutting down is held. The kernel's `pm_power_off` is the only power-off call, and the PROM does nothing for the 350's type letters, so a real 350 either stays powered at "Power down." or this PROM build is not the one that powers off (inferred, not established).
+
+### 6.3 SAL `SYSTEM_RESET` (`0x02000002`, `0xffb1ba90`; also EFI callback `0x5000`)
+
+EFI `RtPlResetSystem` (EFI export address `0x122950`) accepts types 0, 1 and 2 and calls `RtSalCallBack`; the SAL handler stores its arguments and never branches on them, so cold, warm and shutdown behave the same (established from the code read).
+
+1. For each node: set bit 59 in the node's state word `0x1_5003_1550` through the node window (`0xffa0e880`, bracketed by a lock pair at `0x1_101d_0200`/`0x1_101d_0208`; the lock reading is inferred).
+2. For each other CPU in the CPU list: write `0x8000_0000_0000_0005 | (cpu id << 4)` to `0x9_1000_0380` of that CPU's node, the `ipi_int` register with type 5 (INIT) and the send bit (established; [shub registers](../../devices/shub/registers.md)).
+3. Master node, `0xffa0d3d0` (established): partition number by request `0x0009` (cached); a text probe `version` (task 3, target `0x1ffff000`) decides whether an L2 exists; with an L2 (any status-0 reply, which an L1 gives because it routes on the task number only), text `p <partition> rst` goes to it. Without one: partition 0 sends text `* rst` to the L1 (target `0x0ffff000`); a partition number prints "WARNING: system is partitioned but L2 is unreachable ... This reset may not fully reset the partition" and falls through. After a successful send the code spins until the L1 resets the node. If the send fails, or in the fall-through case, it writes 1 to SHub `0x1_1006_0300` (not in the register map, role unknown) and spins.
+
+The text command is request code `0x0000` on task 3 with one string argument (l1-requests.md, "Requests after boot"). The PROM waits for any valid reply frame and does not read it; silence for 3,000,000 ticks takes the `0x8d` die path.
+
+### 6.4 The time of day
+
+- **PROM entry (established).** EFI `RtSNGetTime` (`0x1093c0`) calls SAL `0x0200000b` (`sal_0b`, `0xffb14300`) with a 14-byte buffer of seven u16: year, month, day, hour, minute, second, milliseconds. EFI copies them into `EFI_TIME` (milliseconds times 1,000,000 is the nanosecond field), zeroes the time zone, ignores the SAL status and reports accuracy 50 ppm. `RtSNSetTime` (`0x109250`) reverses the copy and calls SAL `0x0200000a`.
+- **Per-node time record (established, `0xffa1cef0`, `0xffa1c8d0`).** The node block holds a pointer (`+0x48`) to a record with the base time (seven u16), the SHub RTC value in microseconds at capture (`+0x10`; counter times the period in ns from `rtc_ctl`, divided by 1000, `0xffa0da70`), the previous result (`+0x18`, `+0x28` packed) and a valid word (`+0x30`). `GetTime` returns the base plus elapsed seconds (`0xffa1c570` carries into minutes to years) and refetches the base when more than 300,000,000 microseconds have passed. A result earlier than the previous one is replaced by the previous one.
+- **Base source, method slot 23 of the SHub 1 chip table (`0xfface1e0`, established).**
+  1. A BCD time-of-day chip, `0xffaf36a0`: an 8-bit device at the base of a type `0x70` component of the master node's I/O plus `0x80000` (`0xffaf2960`). It is probed once by writing register `0xb`, `6` and reading `6` back: `0xff` selects layout 0 (registers `0x7ff8` to `0x7fff`, a timekeeper SRAM), anything else layout 1 (registers `1, 2, 4, 8, 9, 10`). The year is the BCD year plus a base year read from the chip's NVRAM: signature `NBY` at `0xf7e0` (layout 1: `0x20`) followed by base-year BCD digits; **without the signature the base year is 1970**. A year below 1998 becomes 1998. The read fails (-1) when no chip object exists. Whether an Altix 350 has this chip is unknown.
+  2. Otherwise L1 request `0x200e` (`0xffa7f190`): no arguments, destination `0x0ffff006`, reply status 0 then six integers year, month, day, hour, minute, second. The PROM stores them as they are: no century offset, no clamp, milliseconds 0. A reply without the six arguments is `-33`; no reply parks the node (`0x8d`).
+  3. If the method fails, the base is 1998-01-01 00:00:00 and the RTC value is captured. This default and the year clamp are the only fixed dates; the constant 1997 appears in the code only as the "year below 1998" compare.
+- **SetTime (established, slot 24 `0xfface390`).** It writes the chip when one exists (year as BCD of year minus 1992, and 1992 into the NVRAM base) and always sends L1 request `0x200d` (six integers in the same order, `0xffa7f430`); a failure prints "NOTE: Unable to set system controller time of day clock". It then refreshes the record. Linux `hwclock --systohc` therefore reaches the L1 or the chip, never the SHub.
+- **Why a model prints 1997 (unknown).** The PROM does not produce 1997 from a zero or unset source: no source gives 1998-01-01 as the default, and a zero L1 reply gives year 0. A chip without the `NBY` signature gives 1970 plus the year register, so a host-time chip returning `yy = 27` would print 1997. Check which path the model takes: a `0x200e` frame on the L1 link proves the L1 path.
+
+### 6.5 What a model must provide
+
+- **Power-off.** Nothing on the link: the PROM sends no frame for a 350. The only trace is SAL `0x0200003b` entering `0xffb1bf10` and the kernel's "Power down." line, so a machine-level power-off needs a hook outside the device model (SAL entry or console text), or the run is ended by the host.
+- **Reboot.** Answer `version` with status 0, then answer the text command on task 3 (`* rst` or `p <n> rst`, request code `0x0000`) with status 0, header `0x20 | handle`, argument count 0, then issue the machine reset (`qemu_system_reset_request`). Reset needs no SHub write.
+- **Halt.** Nothing.
+- **Time.** Answer `0x200e` with the host UTC from QEMU's standard RTC clock as six big-endian integers (four-digit year first); answer `0x200d` with status 0, optionally moving an offset against the host clock. Do not give the node a time-of-day chip unless it also carries the `NBY` signature and base year.
 
 ## Review
 
