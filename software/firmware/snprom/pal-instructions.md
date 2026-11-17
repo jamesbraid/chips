@@ -645,6 +645,47 @@ state, and the memory the written-back line goes to. **A model must** not fault,
 addressed line (leaving it valid and clean or invalidating it, as the SDM allows); a model without cache state can execute it as a nop and
 the routine still returns r8 = 0. Whether the Altix 350 boot reaches the `inv` = 0 arm was not traced (**unknown**).
 
+## 7. PAL_HALT_LIGHT and PAL_HALT (PAL_B 5.73)
+
+Read in the shipped image with the Ghidra IA-64 module (`unknown_insn(0x108000000)` appears once, straight-line, in the 28 and 29 decompiles), cross-checked with `ia64-linux-gnu-objdump`. Addresses are image addresses (PAL_B link address minus `0x88000`). The SDM (rev 2.3 vol 2, PAL_HALT p. 2:399, PAL_HALT_INFO p. 2:401, PAL_HALT_LIGHT p. 2:403, Table 5-8 p. 2:118) is used for the contract only.
+
+**Dispatch (established).** Indexes 28 and 29 enter `0xffe9dfb0` directly, then `0xffe9e000` and `0xffe9e190`. Index 29 goes on to `0xffe9e380`: `PSR & 0x2044002` must be 0 (be, i, dfl, lp clear, so **psr.i must be 0**) and `it`, `dt`, `rt` must be all set or all clear, else `r8 = -2` (`0xffe9e8f0`). It then branches to the handler at **`0xffea2d10`**. Indexes 28 and 257 come from the static table (index table `0xffe9f6e0`, handler table `0xffe9fb00`, both with mask `0x2044002`): 28 is `0xffea2070`, 257 is `0xffea2bf0`.
+
+**PAL_HALT_LIGHT body (established).**
+1. `r8 = -2`, `r9` to `r11` = 0; any of `r29` to `r31` nonzero returns -2.
+2. Save `psr`; `rsm ic` if set; `mf`.
+3. Unless msr[1152] bit 18, msr[1237] bit 2 or msr[1572] bit 18 is set: two msr[1730] [strobe loops](pal-msrs.md#msr-1728-and-1730-strobe-loops) step the 3:0 and 11:8 nibbles down to 0 (`0xffea2de0`, `0xffea2eb0`).
+4. msr[1553] bits 43:42 = 3; `cr.pta` bit 0 cleared; msr[1640] bit 54 set; msr[1730] bit 43 set and bit 36 clear; `srlz.i`.
+5. Save `pmd4` to `pmd7` (bits 63:47 cleared, bit 47 set if the matching `pmc0` overflow bit 4 to 7 is set). For each `pmc4` to `pmc7` whose event field (bits 15:8) is 0x12, 0, or 0x70 to 0x73, save bit 5 (oi) and clear it, with `srlz.i`.
+6. **The reserved M-word `0x108000000` at `0xffea32b6`** (bundle `0xffea32b0`: `nop.m`, the word, `nop.i`), no `msr[1546]` command armed. No loop surrounds it.
+7. Zero those `pmd`s, restore `pmd` and oi, clear msr[1730] bits 43 and 36, msr[1640] bit 54 and msr[1553] bits 43:42, restore `cr.pta`.
+8. Same skip test as step 3; otherwise the nibbles step up to 15 (`0xffea34b0`, `0xffea3580`).
+9. `mf.a`, `r8 = 0`, `ssm ic` if cleared, `br.few 0xffe9ede0` (the common return).
+
+**Is the word the halt? Inferred.** It is the only non-architected instruction on the path, and the window around it is the one the earlier sections list among the five no-command sites. All five are the same window and all five are halts: `0xffea27c6` (PAL_HALT), `0xffea32b6` (29), `0xffea3c86` (522), `0xffea41d6` (518) and `0xffe7f1f6`, the early-boot stop, which is a halt inside a loop (it closes the window and branches back to `0xffe7f110`, so it re-halts after every wake). Each sets msr[1553] bits 43:42 to a nonzero value just before the word: 3, 3, 3, 2, 1 in the order listed (established). A raw scan of every `0x108000000` in the PAL_B 5.73 span `0xffe78000` to `0xfff00000` (191 words) finds no other site with a msr[1553] bits 43:42 write within 90 instructions before it, except `0xffea4366` where the write is the clear of the 518 window; that site is the PAL 520 handler's command site. So the code supports the rule "msr[1553] bits 43:42 nonzero and no command armed". The span holds 191 words, not the 211 counted earlier; the difference is not reconciled. What the silicon does at the word is unknown, and so is whether bits 43:42 select the halt depth.
+
+**Copies (established).** PAL_HALT (28) has the same window and word at `0xffea27c6`. Index 522 (`0xffea36e0`) is the 29 routine with msr[1553] = 2. Index 518 (`0xffea40b0`) writes `pmc0` = 1 (freeze), uses msr[1553] = 1, has no nibble loops and restores `pmc0` after the word (`0xffea41d6`). What 518 and 522 are to a caller is unknown.
+
+**What wakes it (code established, hardware unknown).** Neither handler reads `cr.irr`, `cr.tpr` or any wake-status MSR, never sets psr.i and never checks anything after the word; only the PMU and window registers it saved are touched. It returns `r8 = 0` through the common return and never vectors, since psr.i is 0. The SAL park loop (`0xffa9acd0`) calls 29 with `r29` to `r31` = 0 and tests `cr.irr0` bit 0 itself, so a spurious return is harmless. The hardware wake condition is not in the code. The SDM says an unmasked external interrupt, PMI, MCA, INIT or reset. Its Table 5-8 gives the test to ignore psr.i for: NMI (vector 2) always; ExtINT (vector 0, what the thread wake sends) if TPR.mmi is 0, TPR.mic not applying; vectors 16 to 255 if TPR.mmi is 0 and class > TPR.mic; all only above any in-service vector.
+
+**PAL_HALT (established).** `r29` must be 2 (other states return -2), `r31` 0, `r30` an 8-byte aligned pointer with bits 62:50 clear, always dereferenced (no NULL check). Three words are read: type and size (bits 63:16 must be 0, size 0/1/2/4/8, type 0/1/2), address, data. Type 1 loads into `r9`; type 2 stores; type 0 or size 0 does no I/O; anything else returns -2. Then the same window and halt as 29; returns `r8 = 0`.
+
+**PAL_HALT_INFO (established, decoded once and rechecked against the raw `movl` bytes).** Stacked; `r33` is the buffer (8-byte aligned; bits 62:50 clear when dt is clear, else `r8 = -2`). It stores 8 doublewords and does not halt. With the SDM field widths (exit 15:0, entry 31:16, power 59:32 in mW; im and co at bits 60 and 61 from the Linux `pal.h` layout, both set here):
+
+| Entry | Value | exit | entry | power |
+|---|---|---|---|---|
+| 0 (LIGHT_HALT) | `0x300088b8232821fc` | 8700 cycles | 9000 cycles | 35000 mW, im=1, co=1 |
+| 2 | `0x300088b836b021fc` | 8700 | 14000 | 35000 mW, im=1, co=1 |
+| 1, 3 to 7 | 0 | not implemented | | |
+
+This matches PAL_HALT accepting only state 2.
+
+**A model must (inferred).**
+- Execute the word without a fault. Keep an "armed command" flag: `msr[1546]` with bit 63 set arms it and the word consumes it (section 6.1). In every command site the word follows its own write, so disarming after use is safe. A word with nothing armed and msr[1553] bits 43:42 nonzero is the halt (state 1, 2 or 3 is the value there); no site in the image has the bits clear and nothing armed, so that case is unknown (a no-op is the safe choice).
+- At the halt, stop the vCPU until the wake test above holds, evaluated without psr.i. Then continue at the next bundle with every register unchanged and nothing delivered.
+- Step the msr[1730] nibbles as the strobe-loop section describes. A nibble that does not step hangs the PAL right after wake (`0xffea34b0`).
+- Provide `pmc0` and `pmc4` to `pmc7`, `pmd4` to `pmd7` as plain registers.
+
 ## Questions left (unknown)
 
 1. What the reserved encodings do on Itanium 2 and Madison (item 1). The code-side dependence is settled in section 6: the M-word performs the pending cache-array command, the B-unit word is an `rfi`-like transfer, and `0x36`-class opcode-1 words are write-back-by-index.
