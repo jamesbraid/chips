@@ -25,5 +25,6 @@
 | Page | Title | Summary |
 |---|---|---|
 | [altix-distro-install.md](linux/altix-distro-install.md) | Installing a full Altix Linux distribution | Scope: an Altix 350 booting PROM 10.54 (SAL 5.04) with elilo. |
+| [installer-hang-under-relocation.md](linux/installer-hang-under-relocation.md) | Installer hang under relocation (Debian 7.11 ia64, Linux 3.2.78) | Sibling of sn2-io-discovery-3.2.md. |
 | [sn2-early-boot.md](linux/sn2-early-boot.md) | SN2 early boot: what the 2.6.5-7.244 Altix kernel needs from firmware | From the kernel entry point through `start_kernel`, `setup_arch`, `sn_setup` and `sn_cpu_init`: every table... |
 | [sn2-io-discovery-3.2.md](linux/sn2-io-discovery-3.2.md) | SN2 I/O discovery in the Debian 7.11 ia64 kernel (Linux 3.2.78) | How the Linux 3.2 kernel that Debian 7.11 ships for ia64 finds the PCI buses and devices of an SN2 machine (Altix... |
