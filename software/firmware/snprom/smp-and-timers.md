@@ -301,6 +301,55 @@ Details in [pal-msrs.md](pal-msrs.md#pal-520-0x208). In short: SAL_B calls it at
 - Whether the transfer area is per slice on hardware layouts (sized by slice argument; the sizer body was not read).
 - How two CPUs holding the same address in L3 state 3 avoid each other's bus snoops.
 
+### Counting CPUs ("%d CPUs on %d nodes found.")
+
+Why a model that runs two processors still prints `1 CPUs on 1 nodes found.` Read from the same flat listing and the 10.54 image; no run backs a grade. The line is printed by `number_cpus_and_nodes` (`0xffaeedf0`, message at `0xffbbcc90`, print at `0xffaef340`; the name is the PROM's own string at `0xffbbcc58`). Its only caller is `hwcfg_node_probe` (`0xffaf1350`, from `0xffaa7090` at `0xffaa713c`), run by `main_three` on the master processor once the global-master bit (`cpu_bits` bit 1) is set (`0xffad765c` to `0xffaa048c`).
+
+**Where the counts come from (established as code).** Neither `cpu_bits` nor a processor's own progress word is read there. The routine walks the node list the probe built, and for each node fetches the CPU-class board (class `0x10`, `0xffaa9530(nasid, 16)`; the board type the hub builder stores is `0x11`) in the KLCONFIG block in node memory. For every component of type 1 on that board it takes the slice (byte `+24`) and the flag byte (`+2`). Flag bit 0 set counts the CPU (it gets the next CPU number in `+28`); flag value 2 is a disabled CPU, numbered after the enabled ones and not counted. The second number is the node count the probe returns, not recomputed. A node with no CPU-class board prints `number_cpus_and_nodes: Error:No cpu brd on nasid %d` and adds nothing.
+
+**Who creates the CPU components (established as code).** `init_klcfg_hub` (`0xffaa1ea0`, from `0xffa9fe80` at `0xffa1b3dc` in `main_two`'s master test, so before the probe) calls `0xffaa1da0` for slices `4*slab` to `4*slab + 3`. A slice gets a component only if all of these hold:
+
+| # | Condition | Site | What the model provides |
+|---|---|---|---|
+| 1 | bit `slice` of the L1 processor-presence word is set | `0xffae8660` (L1 request `0x0010`, [l1-requests.md](l1-requests.md#8-0x0010-processor-presence-progress-0x10)) at `0xffaa207c`, tested at `0xffaa1e06` | presence AND enable word with bits 0 and 2 for CPUs 0 and 1 (`0x5`). A negative return (a bad count, `-100`) is replaced by `0xf`, which passes this row |
+| 2 | the front-side-bus status bit for the slice is set | `0xffa11710` to `0xffa115e0` to `0xffa11560`: one `ld8` of `0x8000_0009_2002_0080 + (nasid << 38)`, returns bit `slice / 2`; slices 1 and 3 return 0 without a read unless `cpuid[2]` is the simulator value | bit 0 for CPU 0 and **bit 1 for CPU 1** (value `0x3`). The master reads bit 0 here too, for its own slice |
+| 3 | then `init_klcfg_cpu` (`0xffaacbd0`, from `0xffaa1e8c`) creates the component and sets the enabled flag only if `cpu_bits` bit `26 + slice` reads 1 (`0xffa99870(obj, 26 + slice)` at `0xffaacda8`, global window of the node) | CPU 1: bit 28 | CPU 1 has set its own bit 28 before the master runs `0xffa1b3dc`; nothing clears it before the probe. A clear bit makes flag 2, reason 253 unless `DisCpusReason` names one, and the CPU is not counted |
+
+Rows 1 and 2 decide whether a component exists at all; row 3 only decides enabled or disabled. The CPU table at block A `+0x18` that the SAL tables and the boot-processor choice use is written by `0xfface0b0` under rows 2 and 3 as well (entry iff the front-side-bus bit is set; flag word 1 iff `cpu_bits` bit `26 + slice` is set), so a CPU invisible to row 2 is missing from the MADT too.
+
+**What the master waits for in `main` (established as code).** `main` calls `0xffa99cf0` on every processor, before the table writer and the KLCONFIG build.
+
+1. Each processor takes its socket from PAL_FIXED_ADDR bit 1 (`0xffa9b1f0` to `0xffa9ae80`; the Madison PAL answers PAL_LOGICAL_TO_PHYSICAL with -1 and the fixed address is `msr[1559]` bits 21:19 shifted left by one, so CPU 1 is socket 1, slice 2, `cr.lid` field 2). It stores a 3-bit field at bit `47 + 3 * socket` of `cpu_bits` (`0xffa99dcc`; value `r9[39:32]` of PAL_LOGICAL_TO_PHYSICAL, or 1 on -1: bits 52:50 hold 1 for CPU 1) and sets its own bit `26 + slice` (`0xffa99dfc`).
+2. It counts the present sockets: itself without a read, the other one by the front-side-bus bit (`0xffa11560`, row 2). Then it polls every 500 microseconds until every present socket's 3-bit field is non-zero (`0xffa99ea0` to `0xffa99f50`), and sums the fields into the expected CPU total.
+3. It then polls `cpu_bits` bits 29:26 every 500 microseconds until the number set equals that total (`0xffa99f70` to `0xffa99fd6`).
+4. For each slice whose bit 26+i is still clear it calls `0xffa9fba0`, which halts only when the slice is the caller's own. Nothing is printed and nothing fails.
+
+So a socket the front-side-bus bit does not show is not waited for and not counted, even when the CPU runs and sets bit 28; and a socket it does show but whose CPU never writes its field costs the full timeout below and is still counted if bit 28 is set later (the build is after the wait).
+
+**Timeouts.**
+
+| Wait | Site | Deadline | Units | On expiry |
+|---|---|---|---|---|
+| socket fields non-zero | `0xffa99f30` to `0xffa99f5c` | `0x4c4b3f` = 4,999,999, compared with a running sum | microseconds requested from the delay `0xffa0db90` (500 per round), not measured time | falls through (established) |
+| ready bits 29:26 equal the expected total | `0xffa99fb6` to `0xffa99fdc` | same | same | falls through (established) |
+| slice barrier `0xffa9a130` | | none found: the loop reads `cpu_bits` and has no counter | | never (inferred from the absence of a counter in the listing) |
+
+The delay (`0xffa0db90`) converts microseconds to nanoseconds and then to ticks of the SHub real-time counter `0x81_101c_0000`, with the period from `0x1_1006_0280` bits 13:4 (`0xffa0da00`, inferred), and spins on the counter. A model whose counter does not advance spins forever instead of timing out.
+
+**Disabling (question of a separate result).**
+
+- The L1 report is request `0x0010`, sent three times: `main_early_disable` (`0xffad34a0`, via `0xffad3a7c`), `init_klcfg_hub` (`0xffaa207c`) and the probe step of `main_three` (`0xffad3ed0`, called at `0xffaa047c`). Only `main_early_disable` acts on it per processor: each processor tests bit `cr.lid[26:23]` of the presence-and-enable word and the letter `A + slice` in `DisabledCpus`; a clear bit or a listed letter gives progress `0x87` (135), `0xffa9f750` (clears that CPU's flag word in the block A `+0x18` table) and `0xffa9fba0`, which for the caller's own slice halts at `0xffaeb7c0`. So CPU 1 (`C`) needs bit 2 in the L1 word or it halts before it is counted (established as code).
+- `DisabledCpus` (letters `A` to `D`, slices 0 to 3) and `DisCpusReason` are SAL environment strings read by `0xffad6e30` ([efi-boot.md](efi-boot.md)); blank means nothing disabled. They also clear the table flag of a listed CPU for every entry (`0xffad39c0`), and set the reason code in the KLCONFIG component (`0xffaace6c`). The `disable` and `enable` shell commands (`0xffa9f2c0`) edit them. If the scan finds no CPU that is both present and not listed, `0xffa0af70` runs; what it does was not read (unknown).
+- There is no separate "CPU disabled" result beyond these: the OS sees it as the table flag (MADT local-SAPIC flag bit 0) and, for the SAL runtime, the boot state of [SN_SAL_SET_CPU_NUMBER](#what-releases-a-parked-processor-established-as-code). The string `CPU disabled from POD.` (`0xffba7608`) is only in a pointer table (`0xffbd7838`); its user was not read (unknown). Whether the SAL runtime carries any other presence service was not searched (unknown).
+
+**What the model must provide for CPU 1 to be counted** (all three are needed; the first is the likely miss when two processors run but one is reported):
+
+1. `0x1_2002_0080` of the node (`0x8000_0009_2002_0080` global form) reads with bit 1 set (and bit 0 set): established that the code needs it; that the register is a per-FSB agent-present word is inferred from the name and use.
+2. The L1 `0x0010` reply (or an error, which becomes `0xf`) has presence and enable bit 2 set, and CPU count and node count within the limits (4, 16).
+3. CPU 1 sets `cpu_bits` bit 28 before the master builds KLCONFIG, and the 3-bit field at bits 52:50 (value 1 on this PAL), which needs only the plain shared word and node lock already modelled.
+
+Unknown: the meaning of bits 4 and 5 and the full register layout on hardware; whether `0xffa0af70` (all CPUs disabled) changes the count; the `update_klcfg_cpuinfo` routine (strings at `0xffbb64a0` to `0xffbb6510`), which fills per-CPU data after the components exist and was not located.
+
 ## Review (independent, chips c669e77 and fbb3bc7: per-slice table, PAL 520 and the overlay recipe)
 
 Independent re-read of the section "5. Multi-CPU entry and the per-slice table" as it stands after `c669e77`, against a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` SAL 5.04 loaded at `0xffa00000` (binutils 2.44, re-run toolchain image), the Itanium SDM rev 2.3 vol 2 text and Itanium 2 reference manual 251110-001 to -003. The reviewer wrote none of it and used no restricted source. `fbb3bc7` is the earlier version of the same section; its "only slice 0 has a record" reading is withdrawn by `c669e77`, and the review covers the final text. The fault values and the 12-word table dump are model output and were checked only for arithmetic against the code.
