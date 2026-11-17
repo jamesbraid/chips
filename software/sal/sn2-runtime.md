@@ -317,11 +317,15 @@ What `SAL_SET_VECTORS` and `SAL_MC_SET_PARAMS` store and who reads it, from `rt:
 
 | Call | Linux caller | Stored in the node record (`main_ptov([block A + 0x90])`, every present node) | Read by |
 |---|---|---|---|
-| `SET_VECTORS` 0 (OS_MCA) | `ia64_mca_init` | `+0` entry, `+8` gp, `+16` length; also marks the caller's boot state 2 | MCA hand-over `0xffa02e00` |
+| `SET_VECTORS` 0 (OS_MCA) | `ia64_mca_init` | `+0` entry, `+8` gp, `+16` length; also marks the caller's boot state 2 | MCA hand-over `0xffa02e00`, which branches straight to `+0` with r1 = `+8`, r8 = `+120`, r9 = `+112` |
 | `SET_VECTORS` 1 (OS_INIT) | `ia64_mca_init` | `+24/32/40` monarch entry, gp, length; `+48/56/64` slave | INIT path (not read past the entry) |
 | `SET_VECTORS` 2 (boot rendezvous) | `init_smp_config` | `+72` entry, `+80` gp, `+88` length | the slave loop `0xffafcdd0`, on vector `0x12` |
-| `MC_SET_PARAMS` 1 (rendezvous interrupt) | `ia64_mca_init` | vector and timeout; timeout under 49000 gives -2 with r9 = 49000 | rendezvous routine `0xffa04220` |
+| `MC_SET_PARAMS` 1 (rendezvous interrupt) | `ia64_mca_init` | vector `+0x80`, timeout `+0x88`, flags `+0x90`; a timeout under 49000 is stored as 49000 and the call returns -2 with r9 = 49000 | rendezvous routine `0xffa04220` |
 | `MC_SET_PARAMS` 2 (wakeup) | `ia64_mca_init` | interrupt mechanism: vector; memory-location mechanism: address | MCA rendezvous release |
 | `MC_SET_PARAMS` 3 (CPE) | `ia64_mca_init` | corrected-error vector | `plat_notify_cpe_handler` |
 
 The three entry triples are separate words; a registration of one type never touches another. A SAL cross-call from another processor overwrites `+72/+80`.
+
+### Review (MCA and INIT vectors)
+
+**Confirmed:** the slot offsets for `SET_VECTORS` types 0, 1 and 2 and the 49000 minimum. **Changed:** the hand-over goes straight to the OS entry, and a short timeout is stored clamped; both in the rows above and in [smp-and-timers](../firmware/snprom/smp-and-timers.md#review). **Not checked:** the INIT path past its entry.
