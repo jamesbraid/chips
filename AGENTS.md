@@ -54,7 +54,7 @@ Full text and the checks that enforce it: `retools/tools/README-analysis.md#evid
 - `platforms/<board>/`: topology, address map, boot and PROM of one machine; bricks in `platforms/bricks/`.
   `software/kernel/`: how IRIX drives a part. `questions/`: one page per open question. `references/`: the
   specification index (`documents/`) and the public source trees (`code/`, submodules).
-- `evidence/inventory/`, `evidence/coverage.md`: written by `retools/tools/inventory.py`; never edit by hand.
+- `generated/inventory/`, `COVERAGE.md`: written by `retools/tools/inventory.py`; never edit by hand.
   `tools/configs/`: one census config per chip, marked spec-backed or no-spec. `tools/config/`: inventory settings,
   pinned manifests and the allow-lists the checks read. `tools/setup-clone.sh` is the bootstrap stub.
 - Commit small. Subjects are lowercase, component-prefixed imperatives (`docs: ...`, `tools: ...`); the body says why.
@@ -63,9 +63,9 @@ Full text and the checks that enforce it: `retools/tools/README-analysis.md#evid
 ## Done
 
 A chip row is done when every inventory row in its area is `understood` (label, role and hardware effect, a derivation
-specific to the item) or `no-software-dependency`. `evidence/inventory/README.md` has the grading rules. An independent
-audit re-derives a sample of `understood` rows from the binaries and records the result in `evidence/inventory/audits.tsv`
-(procedure: evidence/reading-brief.md).
+specific to the item) or `no-software-dependency`. `generated/inventory/README.md` has the grading rules. An independent
+audit re-derives a sample of `understood` rows from the binaries and records the result in `generated/inventory/audits.tsv`
+(procedure: tools/reading-brief.md).
 
 ## Reading MIPS code from the shipped binaries
 
@@ -89,7 +89,7 @@ audit re-derives a sample of `understood` rows from the binaries and records the
 
 ## Procedure for a chip
 
-1. Fill `root/` (evidence/irix-files.md) and run `retools/tools/inventory.py` to see the rows.
+1. Fill `root/` (references/irix-files.md) and run `retools/tools/inventory.py` to see the rows.
 2. Write `tools/configs/<chip>.json`: the images, the seeds, the chip-type compares and the literal-pool settings.
 3. Run `retools/tools/chips/run.sh tools/configs/<chip>.json` (tools/README.md); read `devices/<chip>/census/census.md`.
 4. Turn each register into an entry in `devices/<chip>/README.md`; read the function in full before labelling it established.

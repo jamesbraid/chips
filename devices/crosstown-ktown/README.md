@@ -310,7 +310,7 @@ kernel's widget probe and the PROM's link bring-up were not traced for this page
 - 007-4311-002 spells the second-generation channel Xtown2, 007-4240-002 and 007-4365-002 spell it
   Crosstown2, and 007-4264-001 uses Xtown2 for the cable and Ktown2 for the board. All are SGI usage for the
   same thing (007-4311-002 p8).
-- The `ktown` row of the [naming audit](../../evidence/interconnect-naming.md) table still reads "inferred / unknown" and
+- The `ktown` row of the [naming audit](../../references/interconnect-naming.md) table still reads "inferred / unknown" and
   predates that page's own correction note. Published manuals (007-3439-002 p73, 007-3457-005 pp14, 48) and
   shipped binaries (`irsaudit`, `kona.a`, `configmon`, `icrash`) name it, so it is an SGI term.
 
@@ -337,7 +337,7 @@ and fifth partly in what they implied, noted below), and one unchecked item was 
 ## Related pages
 
 - [Crosstalk (XIO) link and widget](../crosstalk/README.md) for the link layer that Crosstown and Xtown2 carry.
-- [Interconnect naming audit](../../evidence/interconnect-naming.md) for the names used here.
+- [Interconnect naming audit](../../references/interconnect-naming.md) for the names used here.
 
 ## Sources
 

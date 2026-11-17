@@ -20,7 +20,7 @@ and interrupt writes. Three exist in the families covered here:
 
 II (the I/O interface) and LB (the local block) are units inside the Hub and Bedrock, not chip
 names; "Hub II" and "Bedrock II" are not names of chips. Board names follow
-[interconnect-naming.md](../../evidence/interconnect-naming.md). IP35 is also the architecture name shared by
+[interconnect-naming.md](../../references/interconnect-naming.md). IP35 is also the architecture name shared by
 all the Bedrock boards.
 
 Names: the Hub and Bedrock names are SGI's (Origin Theory of Operations 007-3439-002 p28;
@@ -56,7 +56,7 @@ A checker raised five problems; each was re-checked against the shipped 6.5.30 k
 shipped SN1 headers and the public trees. Result: four confirmed, one partly right.
 
 - *Chip names (confirmed).* "Hub II" and "Bedrock II / LB" are gone from the host-end
-  table. II and LB are units inside the chips, as [interconnect-naming.md](../../evidence/interconnect-naming.md)
+  table. II and LB are units inside the chips, as [interconnect-naming.md](../../references/interconnect-naming.md)
   rules.
 - *Board names (confirmed).* The table now lists IP31 for Origin 2000/Onyx2 at 250 MHz and
   above, and IP34 (Fuel), IP35, IP39 (Onyx 4), IP45 and IP53 as Bedrock boards, with the

@@ -16,7 +16,7 @@ __pycache__/
 *.tmp
 irixhistory
 
-# Proprietary IRIX binaries (see evidence/irix-files.md)
+# Proprietary IRIX binaries (see references/irix-files.md)
 root
 root/
 

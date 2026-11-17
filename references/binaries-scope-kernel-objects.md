@@ -7,7 +7,7 @@ names, data symbols and undefined imports are read from the file under `root/`.
 
 Labels: every entry here is inferred. It classifies from the symbol table and the imports. No routine body was read in
 full. "Excluded" means the rule named in the entry takes the object's routines out of the function table; the rule texts
-are in the [function scope section](inventory/README.md#function-scope). Objects with no routine rows say so.
+are in the [function scope section](../generated/inventory/README.md#function-scope). Objects with no routine rows say so.
 
 ## Network, STREAMS and cluster objects (scope rule 2)
 

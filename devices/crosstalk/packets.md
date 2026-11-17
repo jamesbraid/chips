@@ -29,7 +29,7 @@ and where they come from:
 | DIDN, SIDN, PACTYP, TNUM, CT, DS, GBR, VBPM, ERROR, BO | field names in the Crossbow and Bridge ASIC specifications and in the shipped IRIX headers |
 | XB_CTRL_*, XBCMDTYP_*, WIDGET_* | symbol names in the shipped IRIX headers and Linux headers, cited as software names |
 
-[interconnect-naming.md](../../evidence/interconnect-naming.md) records which names SGI's own
+[interconnect-naming.md](../../references/interconnect-naming.md) records which names SGI's own
 hardware documents use and which exist only in operating-system software.
 
 ## 1. Layers

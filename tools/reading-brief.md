@@ -61,6 +61,6 @@ a hypothesis, stated as such, never evidence.
 An auditor who did not write the entries draws a random sample of rows graded `understood` (at least 12 per
 table with that many) and, for each, re-derives the claim from the binary or the cited page without reading
 the entry's derivation first. Verdict per row: `real` (holds up), `shallow` (true but taken from a name or
-credited without behaviour), `wrong` (contradicted). Append one row per table to `evidence/inventory/audits.tsv`
+credited without behaviour), `wrong` (contradicted). Append one row per table to `generated/inventory/audits.tsv`
 (columns as in that file's header) and say in the commit which rows were wrong and what was fixed. Entries
 found wrong are corrected before any new work in that area.

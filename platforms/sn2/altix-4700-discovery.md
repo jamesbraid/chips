@@ -152,8 +152,8 @@ The brick-type letters belong to the controller family shared with the earlier m
 ## The PROM and sizes held
 
 SGI's own `README` shipped inside the PROM packages says `shub2snprom.bin` supports the Altix 4700, and the 450 from
-build 10.23 on (see [evidence/sn2-holdings.md](../../evidence/sn2-holdings.md)). The held SHub 2 images
-([evidence/ia64-binaries.md](../../evidence/ia64-binaries.md)) are the route to settle the unknown entries above; no
+build 10.23 on (see [references/sn2-holdings.md](../../references/sn2-holdings.md)). The held SHub 2 images
+([references/ia64-binaries.md](../../references/ia64-binaries.md)) are the route to settle the unknown entries above; no
 reading of them is on this page. Nothing here comes from a 4700 boot log.
 
 ## Not covered

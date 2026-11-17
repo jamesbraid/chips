@@ -47,7 +47,7 @@ Shipped binaries: SGI ProPack 4 and 6 ia64 kernels and modules, some with debug 
 
 SGI shipped the SN2 PROM (PAL, SAL and EFI in one flash image) as the `snprom` package on ProPack media. The images
 below are read by [software/firmware/snprom](../software/firmware/snprom/README.md); the files are copied into `root/`
-and never committed ([evidence/irix-files.md](irix-files.md) lists them with checksums).
+and never committed ([references/irix-files.md](irix-files.md) lists them with checksums).
 
 | Image | snprom package | SAL build | Board named in the image | Size (bytes) | sha256 | Container |
 |---|---|---|---|---:|---|---|

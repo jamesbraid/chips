@@ -646,7 +646,7 @@ extracted; the name of the container file each was extracted from was not record
 | `kernel-2.4.21-sgi300r3/boot/System.map-2.4.21-sgi300r3` | SGI Altix 2.4.21 kernel `2.4.21-sgi300r3` (symbol map only) | 980666 | `fab6f81ab66e3bd73159994573c6c488f69c741bafa2578ebffcd7a4c23e02ad` |
 
 `root/sn2/prism-t2/` also exists: a community Linux build for IA-64 with its own `SHA256SUMS`, carrying no SGI firmware
-([evidence/sn2-holdings.md](sn2-holdings.md)). It is not listed above.
+([references/sn2-holdings.md](sn2-holdings.md)). It is not listed above.
 
 The tooling to read the images is the `ia64-linux-gnu-objdump`, `-readelf` and `-nm` in the retools container image
 (`retools/tools/re-run ia64-linux-gnu-objdump ...`; a raw flash image is read with `-b binary -m ia64 --adjust-vma=`

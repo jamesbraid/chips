@@ -9,7 +9,7 @@ most of a register map, which is why they get confused. They are not one chip at
 | **Xbridge** | Origin 300 I/O bridge; one chip with two Bridge-like PCI sections and a crossbar section inside | Origin 300 and Onyx 300 (IP45 board); Origin 3000 P-brick and X-brick (SGI's L1 text also names the I-brick as carrying one); not shown here: OpenBSD says later Origin 200/2000 boards used it too (inferred, no capture) and calls Fuel "Origin 300 like", but Fuel is a different board (IP34) and no Xbridge capture of it is recorded. The list is what the manuals and captures show, not a proven-complete census | `0xd002`, manufacturer 36 (`0x24`) |
 | **PIC** (PCI interface chip) | PCI-X bridge, two PCI-X buses (heads), 4 device slots each | Origin 350 / Onyx 350 / Tezro (IP53 class); IX-brick and PX-brick | `0xd102` (head 0) and `0xd112` (head 1's register set), manufacturer 36 (`0x24`) |
 
-Names, with where each comes from (the naming audit is [interconnect-naming.md](../../evidence/interconnect-naming.md)):
+Names, with where each comes from (the naming audit is [interconnect-naming.md](../../references/interconnect-naming.md)):
 
 - **Bridge**: SGI hardware term. *Origin and Onyx2 Theory of Operations* (007-3439-002), printed p86, "Bridge ASIC": it
   converts the XIO link to the PCI bus protocol and adds address mapping, interrupt control, read prefetching and

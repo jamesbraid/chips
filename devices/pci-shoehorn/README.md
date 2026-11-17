@@ -85,4 +85,4 @@ Status: draft, not independently reviewed.
 
 - [pci-shoebox.md](../pci-shoebox/README.md): the three-slot Origin 2000 PCI carrier, a different board with a different part.
 - [octane-pci-module.md](../octane-pci-module/README.md): the three-slot Octane PCI card cage.
-- [interconnect-naming.md](../../evidence/interconnect-naming.md): the names the IP27 board list gives the PCI boards.
+- [interconnect-naming.md](../../references/interconnect-naming.md): the names the IP27 board list gives the PCI boards.

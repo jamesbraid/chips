@@ -12,8 +12,8 @@ IP35):
 Grades: **E** established (read in the named bytes, or a published page states it; address or page given), **I** inferred
 (a reasoned reading, reasoning given), **U** unknown (route to settle it given). Companion pages: [reset fetch, ckseg1 and
 the Bedrock node number](decode-reset-and-kseg1.md), [IP27 PROM node numbering](ip27/prom-node-numbering.md),
-[IP35 NASID numbering](ip35/nasid-numbering.md), [write timing](../evidence/hub-bedrock-config-write-timing.md),
-[run-time decode changes](../evidence/runtime-address-decode-changes.md). Register pages: [Hub](../devices/hub/README.md),
+[IP35 NASID numbering](ip35/nasid-numbering.md), [write timing](../questions/hub-bedrock-config-write-timing.md),
+[run-time decode changes](../questions/runtime-address-decode-changes.md). Register pages: [Hub](../devices/hub/README.md),
 [Hub processor interface](../devices/hub_pi/README.md), [Hub memory and directory](../devices/hub_md/README.md),
 [Bedrock processor interface](../devices/bedrock_pi/README.md).
 
@@ -175,7 +175,7 @@ known case of a mapped uncached page to boot flash.
 |---|---|---|---|
 | IRIX Hub `mlreset(0)` | 6.5.22 IP27 `sd` at 0xc000000000026138 (`ori 1` at 0x26134), 6.5.30 0xc00000000002638c (`ori 1` at 0x26388) | the mask of regions that hold a probed node, **with bit 0 forced on**, to every node's processor interface through its node alias | E |
 | IRIX Bedrock `mlreset(0)` | 6.5.22 IP35 `sd` at 0xc00000000004e5b8, 6.5.30 0xc00000000004dc80, for interface 0 (offset 0x18) and interface 1 (0x200018) | the region mask **without** forcing bit 0 | E |
-| IP35 PROM 6.210 | 0x1fc5c1d0 to 0x1fc5c1f8, both interfaces | the same value it stores to the local-block region-present register (0x604020), see [write timing](../evidence/hub-bedrock-config-write-timing.md) section 3.4 | E |
+| IP35 PROM 6.210 | 0x1fc5c1d0 to 0x1fc5c1f8, both interfaces | the same value it stores to the local-block region-present register (0x604020), see [write timing](../questions/hub-bedrock-config-write-timing.md) section 3.4 | E |
 | IP27 PROM 6.156 | none found | three searches found no store ([prom-node-numbering.md](ip27/prom-node-numbering.md)); the monitor ELF was not read | I |
 
 Values read after the stock PROM in a published console log (an OpenBSD boot printing the registers before writing them): an
@@ -194,7 +194,7 @@ the IP27 PROM is known to make (0x1fc01140), so something later wrote it: the re
 | IRIX Bedrock `mlreset` | does not force bit 0, consistent with "cached-alias accesses are not affected" | E for the code, I for the link |
 | IRIX `handle_cac_buserr`, the only reader of PI 0x18 in the kernels | reads the local register through the pool word 0x9200000001000018, shifts 1 by `nasid_to_region(node of the faulting address)`, and when the bit is clear prints "Region 0x%x, region not populated, node 0x%x paddr 0x%x" (message tag 2939) and returns 3; when set it goes on to the partition and poisoned-page checks. 6.5.22 IP27: routine 0xc000000000036b80, load at 0x36d14 to 0x36d28, pool word at 0xc0000000014cb0e8, string at 0xc00000000140b388; 6.5.22 IP35 routine 0xc00000000005e2e0, 0x5e3d8 to 0x5e3f4 (pool 0xc00000000159a2e0); 6.5.30 IP27 load at 0x36fe0, IP35 at 0x5db34. The check runs when the error spool has no matching record (results 0 and -1 of `get_matching_spool_addr`) | E |
 | IRIX `dobuserre` (6.5.22 IP27 0xc000000000035870) calls `handle_cac_buserr` (call at 0x35b80), `handle_uncac_buserr` (0x35b50) or `handle_io_buserr` (0x35c94) by the class of the faulting address. Only the cached handler reads PI 0x18 | E |
-| No route derived from it | nothing in either kernel computes a destination from PI 0x18; routing tables are programmed elsewhere (network interface, [run-time decode changes](../evidence/runtime-address-decode-changes.md)) | E for IRIX, I for the chips |
+| No route derived from it | nothing in either kernel computes a destination from PI 0x18; routing tables are programmed elsewhere (network interface, [run-time decode changes](../questions/runtime-address-decode-changes.md)) | E for IRIX, I for the chips |
 
 **Answer.** On both chips a clear bit turns a cached (coherent) request that targets that region into an error reply, which the
 processor takes as a bus error; it does not change where a request is sent (that is the physical address's node field and the
@@ -258,7 +258,7 @@ header's N mode and eight in M mode.
   temporarily sets bit 29 around a call at 0x1fc2c030 and restores the old word at 0x1fc2c070 (**E** for the stores, **I** for the
   purpose).
 - **Timing (53:34).** The PROM writes the flash timing fields (0x1fc1c428 to 0x1fc1c460, from variables) and so does IRIX
-  `cpuprom_map` only when a program maps the PROM space ([run-time decode changes](../evidence/runtime-address-decode-changes.md)).
+  `cpuprom_map` only when a program maps the PROM space ([run-time decode changes](../questions/runtime-address-decode-changes.md)).
   These change how fast the flash answers, not what answers. **E.**
 - **Reset value.** U. The header's `MMC_RESET_DEFAULTS` (all bank codes 7, premium directory and ignore ECC set) is a value
   software writes, not a read from hardware.

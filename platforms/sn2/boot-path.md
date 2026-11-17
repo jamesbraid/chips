@@ -3,13 +3,13 @@
 A map for planning the remaining reverse-engineering of the SN2 boot path on the Altix 350 (SHub 1, IP57 node board, base
 I/O card on a PIC). For each stage it says what happens, the hardware touched, the interface to the next stage, where our
 evidence is and how it is graded, and what is still unknown. It does not re-derive anything: the owning page carries the
-reading and its review. Binaries are listed in [the IA-64 inventory](../../evidence/ia64-binaries.md).
+reading and its review. Binaries are listed in [the IA-64 inventory](../../references/ia64-binaries.md).
 
 **Grades** follow [AGENTS.md](../../AGENTS.md): **established**, **inferred**, **unknown**. A page's review state is one of
 *reviewed* (an independent review section names the cleared scope), *written-unreviewed*, *in progress* or *not started*.
 Linux is cited as `v5.3:path` (line numbers are those of the v5.3 file); SGI's Linux platform code counts as vendor source
 under the evidence order. The PROM image read is `shub1snprom.bin`, SAL 5.04, snprom 10.54 (sha256 `51ccf9ad...3a34617`),
-which SGI's README for the package names as the image for the Altix 350 ([holdings](../../evidence/sn2-holdings.md#system-firmware)).
+which SGI's README for the package names as the image for the Altix 350 ([holdings](../../references/sn2-holdings.md#system-firmware)).
 Whether that image boots a real 350 has not been shown. Everything about the node board (IP57) is inferred from the manual, because
 the PROM names only IP41 ([boot-sequence](../../software/firmware/snprom/boot-sequence.md#node-board-identification-ip41-ip57-others)).
 
@@ -192,7 +192,7 @@ physical address: a region-bits virtual address is rejected.
 **Evidence.** Two ELILO builds (3.16 and Debian 3.4-7.sarge.1) and the 3.16 source are now read: the boot-parameter layout, the memory-map
 hand-off, the kernel load address and entry, and the register state at the jump (`r28` only) are on
 [ELILO on IA-64](../../software/boot/elilo-ia64.md), established. **Unknown**: which release SGI shipped, and its `elilo.conf` and boot partition
-image ([inventory](../../evidence/ia64-binaries.md#boot-path-coverage)). The kernel side of the interface, `ia64_boot_param` use at
+image ([inventory](../../references/ia64-binaries.md#boot-path-coverage)). The kernel side of the interface, `ia64_boot_param` use at
 `v5.3:arch/ia64/kernel/setup.c` (lines 312 to 360, 407 to 412, 533), is established.
 
 **Gaps.**
@@ -268,7 +268,7 @@ was not checked), and the L1/L2 command-line tools.
 
 **Evidence.** **Not started.** No ProPack RPM, initrd, root file system, or user-space tool is held (inventory: "zero standalone ...
 initrd, userland or library files"). The `snxsc_firmware` package is controller firmware with host-side flash tools, listed
-in [the inventory](../../evidence/ia64-binaries.md) and read on the controller side in sysco. Hardware userland touches
+in [the inventory](../../references/ia64-binaries.md) and read on the controller side in sysco. Hardware userland touches
 directly: unknown; the kernel mediates everything through the SAL, so the only direct hardware access found is `mmtimer`'s
 user-mapped RTC counter at v4.9.
 

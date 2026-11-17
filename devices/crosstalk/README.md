@@ -10,7 +10,7 @@ where to look.
 
 | Topic | Page |
 |---|---|
-| Every name, where it comes from, part numbers | [interconnect-naming.md](../../evidence/interconnect-naming.md) |
+| Every name, where it comes from, part numbers | [interconnect-naming.md](../../references/interconnect-naming.md) |
 | Crossbow, XXBOW, PXBOW: parts, registers, link bring-up | [xbow-family.md](../xbow/family.md) |
 | Bridge, Xbridge, PIC as widgets | [bridge-family.md](../bridge/family.md) |
 | HEART, Hub, Bedrock: windows, interrupts, timeouts, credits | [crosstalk-host-ends.md](host-ends.md) |
@@ -365,7 +365,7 @@ may instead be an ATE parity-error register: unknown), Crossbow `0x70` (non-func
 its errata), the Kona graphics widget `0x98`/`0x9c`, MardiGras graphics `0x011098`.
 
 **Identification words** (revision field varies; part and manufacturer from the shipped
-6.5.30 headers, OpenBSD tables and census, [interconnect-naming.md](../../evidence/interconnect-naming.md)
+6.5.30 headers, OpenBSD tables and census, [interconnect-naming.md](../../references/interconnect-naming.md)
 section 2):
 
 | Part | Mfr | Chip | Grade |
@@ -543,7 +543,7 @@ those wired to a Crossbow becomes the master that registers the first widget.
 
 ## 9. Names
 
-Settled in [interconnect-naming.md](../../evidence/interconnect-naming.md) from SGI manuals, kernel,
+Settled in [interconnect-naming.md](../../references/interconnect-naming.md) from SGI manuals, kernel,
 firmware and header strings. Used here: XIO, Crosstalk (and XTalk/xtalk in SGI's own
 firmware text and hardware-graph paths), widget, Crossbow/XBOW, XXBOW and PXBOW (header
 and kernel names; not found in the manuals searched), Bridge, Xbridge, PIC, HEART, Hub,
@@ -625,7 +625,7 @@ KTOWN, and the letters in HQ4, XG and TIO, stand for is unknown.
 
 ## Sources
 
-- Component pages: [interconnect-naming.md](../../evidence/interconnect-naming.md),
+- Component pages: [interconnect-naming.md](../../references/interconnect-naming.md),
   [xbow-family.md](../xbow/family.md), [crosstown-ktown.md](../crosstown-ktown/README.md),
   [bridge-family.md](../bridge/family.md), [crosstalk-host-ends.md](host-ends.md),
   [crosstalk-packets.md](packets.md); kudzu `docs/kernel/xtalk-software.md`.

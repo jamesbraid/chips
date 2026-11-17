@@ -17,7 +17,7 @@ source); the SLES 9 SP3 kernel `2.6.5-7.244-sn2` in the same root confirms which
 
 The four images below are flash images that end at 4 GiB: the file maps to the top of the 32-bit physical space (a 6 MiB file
 at `0xffa00000`, a 12 MiB file at `0xff400000`). Files are listed in
-[evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels) with sizes and sha256.
+[references/irix-files.md](../../../references/irix-files.md#sn2-firmware-and-kernels) with sizes and sha256.
 
 | Image | Package | SAL banner | CPU board name | SHub | Notes |
 |---|---|---|---|---|---|
@@ -27,7 +27,7 @@ at `0xffa00000`, a 12 MiB file at `0xff400000`). Files are listed in
 | `shub2snprom.bin` | snprom-10.54-70399 | SAL 1.54, built 2008-11-11 | IP65 | SHub 2 | Newest SHub 2 build held; same line as the 10.40 image |
 | `ip65prom.bin` | snprom-10.11-52277 | SAL 1.11, built 2006-10-18 | IP65 | SHub 2.0 | Earlier build of the `shub2snprom.bin` line |
 
-Four more images are in the root and listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels):
+Four more images are in the root and listed in [references/irix-files.md](../../../references/irix-files.md#sn2-firmware-and-kernels):
 `snprom.bin` from snprom 3.32 (SAL 3.32) and 4.20 (SAL 4.20), both IP41 and SHub 1, and `shub1snprom.bin` (SAL 5.04, built
 2008-11-11, IP41, SHub 1) and `shub2snprom.bin` (SAL 1.54, built 2008-11-11, IP65, SHub 2; read in [devices/shub/shub2.md](../../../devices/shub/shub2.md)) from snprom 10.54. The SAL 5.04 image is the newest SHub 1
 build held and is the one SGI's own `README.snprom` says boots the Altix 350 and both Prism models; its FIT and first
@@ -195,7 +195,7 @@ by what the hardware reports.
   in `README.snprom`. Which product each image serves is stated by SGI's `README.snprom` (package 10.54, below), not by
   the images: `shub1snprom.bin` supports the Altix 330, 350, 3300, 3700, 3700 Bx2 and both Prism models,
   `shub2snprom.bin` the Altix 4700 and 450 (established as SGI's statement of intent; see
-  [evidence/sn2-holdings.md](../../../evidence/sn2-holdings.md#system-firmware)). So the SHub 1 image's `IP41` is a
+  [references/sn2-holdings.md](../../../references/sn2-holdings.md#system-firmware)). So the SHub 1 image's `IP41` is a
   build target covering boards the string does not name, and how it tells an IP57 from an IP41 at run time is a
   question for [boot-sequence.md](boot-sequence.md). The SAL_B of all four also
   contains a literal board identity string `Part:030-1604-001;Name:IP41;...` and an `IBRICK` one (a built-in default
@@ -568,11 +568,11 @@ What the 2.6.5 SN2 kernel looks for (`efi_init`, `ia64_sal_init`, `acpi_boot_ini
 
 The ordered reading of both SAL_B init paths, which EFI configuration tables are installed, and the exact register
 accesses of memory sizing are the open items of [boot-sequence.md](boot-sequence.md) for SAL 5.04; see [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md).
-The images, the root layout and the kernel in use are listed in [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels).
+The images, the root layout and the kernel in use are listed in [references/irix-files.md](../../../references/irix-files.md#sn2-firmware-and-kernels).
 
 ## Review
 
-Independent review of chips commits `98bcb20..fe7f0ae` (this page, [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md), the SN2 firmware section of [evidence/irix-files.md](../../../evidence/irix-files.md#sn2-firmware-and-kernels) and the PROM-view lines on the SHub, SN2 address-map and SAL pages), examined at `a399d6d`. The reviewer did not write the page. Method: parse the FIT and unpack the components with a fresh script, then re-read the binaries with the retools `ia64-linux-gnu-objdump`, `-readelf` and `-nm`. Nothing in the page was taken from its own tables.
+Independent review of chips commits `98bcb20..fe7f0ae` (this page, [questions/sn2-prom-open.md](../../../questions/sn2-prom-open.md), the SN2 firmware section of [references/irix-files.md](../../../references/irix-files.md#sn2-firmware-and-kernels) and the PROM-view lines on the SHub, SN2 address-map and SAL pages), examined at `a399d6d`. The reviewer did not write the page. Method: parse the FIT and unpack the components with a fresh script, then re-read the binaries with the retools `ia64-linux-gnu-objdump`, `-readelf` and `-nm`. Nothing in the page was taken from its own tables.
 
 **Checks and results.**
 

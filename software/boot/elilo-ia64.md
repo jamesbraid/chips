@@ -9,7 +9,7 @@ How ELILO, the EFI boot loader of the SLES 9 and ProPack era Altix, loads a Linu
   - `ia64-boot/elilo/elilo-3.4-7.sarge.1-ia64.efi` (SHA-256 starts `7e70c2a4`, from the Debian package `elilo_3.4-7.sarge.1_ia64.deb`), called **build 3.4** below.
 - **Source:** the GPL source of ELILO 3.16 (`ia64-boot/elilo/elilo-3.16-all.tar.gz`, inner `elilo-3.16-source.tar.gz`): `elilo.c`, `bootparams.c`, `alloc.c`, `util.c`, `ia64/{system,plain_loader,gzip,fpswa,config,sysdeps.h}`. It names things. ELILO 3.4 source is not held, so every fact about build 3.4 comes from its binary alone.
 - **Linux:** v2.6.5 `include/asm-ia64/system.h` (the kernel's copy of the structure) and `arch/ia64/kernel/head.S`, the Library `linux-history` root.
-- **Grades** follow [AGENTS.md](../../AGENTS.md). **Established**: read in the named binary (function names are the binary's own) and agreeing with the source where the source exists. **Inferred**: reasoned. **Unknown**: not settled. Which ELILO release SGI shipped on the Altix media is **unknown**: neither build is from an SGI package, and no SGI `elilo.efi` or `elilo.conf` is held ([inventory](../../evidence/ia64-binaries.md)).
+- **Grades** follow [AGENTS.md](../../AGENTS.md). **Established**: read in the named binary (function names are the binary's own) and agreeing with the source where the source exists. **Inferred**: reasoned. **Unknown**: not settled. Which ELILO release SGI shipped on the Altix media is **unknown**: neither build is from an SGI package, and no SGI `elilo.efi` or `elilo.conf` is held ([inventory](../../references/ia64-binaries.md)).
 
 ## The sequence
 

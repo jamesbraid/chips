@@ -16,8 +16,8 @@ Grades are the repository's three: **E** established (the code path or table was
 page states it; address or page given), **I** inferred (a reasoned reading, reasoning given), **U** unknown (route to
 settle it given). Companion pages: [IP27 node numbering](ip27/prom-node-numbering.md),
 [IP35 reset window](../questions/ip35-reset-window.md), [IP35 boot flash](ip35/boot-flash.md),
-[write timing](../evidence/hub-bedrock-config-write-timing.md) and
-[run-time decode changes](../evidence/runtime-address-decode-changes.md). Register pages:
+[write timing](../questions/hub-bedrock-config-write-timing.md) and
+[run-time decode changes](../questions/runtime-address-decode-changes.md). Register pages:
 [Hub](../devices/hub/README.md), [Bedrock](../devices/bedrock/README.md),
 [Bedrock local block](../devices/bedrock_lb/README.md).
 
@@ -110,7 +110,7 @@ bytes.
     cached mapping, whose first act is a hop to KSEG1, is called at 0x1fc613ec, after the write; "Local %s entering slave
     loop" is followed by `jalr` to 0xbfc00010 at 0x1fc61af4. **E** for the call sites, **I** for their order relative
     to the write (addresses, not a traced flow).
-  - IRIX never writes a node number ([run-time decode changes](../evidence/runtime-address-decode-changes.md), **E**) and
+  - IRIX never writes a node number ([run-time decode changes](../questions/runtime-address-decode-changes.md), **E**) and
     calls PROM slot 0xbfc00038 from `allowboot` after the numbers are final (section 3).
   - So KSEG1 and flash-window references keep working after the number changes. I: the PROMs would not run
     otherwise. Why they keep working (compatibility and node-bits-zero references always mean the local node, or flash
@@ -129,7 +129,7 @@ bytes.
 - IP27 has the same shape: the slave loop re-creates the ASID 1 flash mapping after memory is configured and runs from it
   uncached (**E**, 0x1fc01c0c to 0x1fc04884 per [node numbering](ip27/prom-node-numbering.md)).
 - No kernel store to a node number, region-present, cached-alias or memory-configuration register after `mlreset`
-  ([run-time decode changes](../evidence/runtime-address-decode-changes.md), **E** for resolved store sites), so nothing under IRIX changes
+  ([run-time decode changes](../questions/runtime-address-decode-changes.md), **E** for resolved store sites), so nothing under IRIX changes
   the answer at run time.
 
 ## 3. The compatibility segment (ckseg1) in the PROMs and the kernels

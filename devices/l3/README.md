@@ -6,7 +6,7 @@ page records that and how the L3 reaches the controllers. Grades follow [AGENTS.
 
 Sources: SGI, *SGIconsole Hardware Connectivity Guide*, 007-4340-003, printed pp. 1 to 7 (cited as read); *SGI L1 and
 L2 Controller Software User's Guide* 007-3938-005 p. 8; *SGI Altix 3000 User's Guide* 007-4579-001 p. 71; Linux v2.5.0 `include/asm-ia64/sn/ksys/l1.h`; sysco
-`evidence/controllers.md` and `evidence/irix-files.md` for the held software.
+`evidence/controllers.md` and `references/irix-files.md` for the held software.
 
 ## What the sources say
 

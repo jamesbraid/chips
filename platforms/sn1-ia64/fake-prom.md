@@ -37,7 +37,7 @@ PROM and a Medusa defconfig (`arch/ia64/sn/configs/sn1/defconfig-prom-medusa`). 
 date: v2.5.0 predates the 2.5.2 ia64 patch of 2002-01-16, while 020722 is dated 2002-07-22. Its fake PROM is dated
 later, but its contents have not been compared with the v2.5.0 copy described in [the fake PROM section](#2-the-fake-prom).
 Neither tree is shown to boot in the sources read. The two have not been compared. Details and patch names are in
-[the source evidence](../../evidence/sn1-ia64-sources.md#24-series-patches).
+[the source evidence](../../references/sn1-ia64-sources.md#24-series-patches).
 
 ## 2. The fake PROM
 

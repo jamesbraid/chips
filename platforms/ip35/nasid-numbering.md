@@ -35,7 +35,7 @@ No vendor source text was used. The facts below come from the binary reading and
 | The four Cx-brick boards take consecutive NASIDs in the order board 1, 2, 0, 3 | [Cx-brick node numbering](../bricks/cxbrick.md#module-identity-and-node-names) |
 | Module and slab names come from the L1's rack, slot and `0x000e` answers, not from the NASID | [Cx-brick, brick type letter 6](../bricks/cxbrick.md#brick-type-letter-6-in-the-prom-and-kernel) |
 | The Bedrock region-size field (bits 47:46) and its coarse value | [Bedrock local block](../../devices/bedrock_lb/README.md#identity-and-node-number), `devices/bedrock_lb/registers.toml` |
-| Hub and Bedrock node-number writes, and the ordering of those writes | [Hub and Bedrock node-number write timing](../../evidence/hub-bedrock-config-write-timing.md) |
+| Hub and Bedrock node-number writes, and the ordering of those writes | [Hub and Bedrock node-number write timing](../../questions/hub-bedrock-config-write-timing.md) |
 
 This page does not restate them.
 
@@ -56,7 +56,7 @@ This page does not restate them.
 
 | Fact | Grade | Evidence and limit |
 |---|---|---|
-| If any hub's NASID is 64 or more after the offset, the PROM sets the flag-word bit that selects region size 1, and prints "Note: Setting region size to %d (%s mode)", with the size and the mode name filled in. Node-number distribution later writes that size into every hub's node-number word. Region size 1 is the coarse value of the Bedrock local block. | established | The loop that tests each hub against 64, the flag store and the message. The node-number setter's stores to the same register are read in [the write-timing page](../../evidence/hub-bedrock-config-write-timing.md). |
+| If any hub's NASID is 64 or more after the offset, the PROM sets the flag-word bit that selects region size 1, and prints "Note: Setting region size to %d (%s mode)", with the size and the mode name filled in. Node-number distribution later writes that size into every hub's node-number word. Region size 1 is the coarse value of the Bedrock local block. | established | The loop that tests each hub against 64, the flag store and the message. The node-number setter's stores to the same register are read in [the write-timing page](../../questions/hub-bedrock-config-write-timing.md). |
 | The `force_coarse` setting can force a larger region size. The PROM then prints "*** Warning: force_coarse = %d". | established | Same routine. The switch name is also noted in the write-timing page. |
 
 ## What IRIX does with NASIDs

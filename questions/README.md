@@ -206,7 +206,7 @@ Corrections found while tagging. These are not fixed here.
   offsets, DMA engines, subcode and clock paths are not read here. Next: read `rad_start_device`, `rad_create_device`, `rad_set_*_if_params`
   in the IP35 and IP30 objects.
 - **Fuel and Octane support for the DM8; Fuel support for the RAD board.** *[route: missing source: hinv captures or SGI support lists]* The Fuel evidence is a single user's hinv; the IP30 build
-  carries `mad_dd.o` but no SGI document lists the Octane as a host (evidence/audio-survey.md).
+  carries `mad_dd.o` but no SGI document lists the Octane as a host (software/kernel/audio-survey.md).
 - **USB audio converter for the Fuel (007-4530-001).** *[route: missing source: USB descriptors or a teardown]* The class driver is `usbaudio_dd.o`; the converter's chip is not named anywhere read.
 - **IP35 board-identification word: class 0xc, bits 11:4, and what a real processor module drives in bits 3:0.**
   *[route: hardware only: a raw read or a node-board service manual]* Both PROM segments and the kernel read only

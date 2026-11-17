@@ -5,7 +5,7 @@ hub chip, the same Crosstalk I/O, the same routers and L1 controllers, and a new
 the Bedrock's processor interfaces and the Itanium buses. The Linux code calls it SN1, SNIA or SNI64 and the board
 IP35 (the headers also say IP37). This page says what the code establishes about that machine and how its view of the
 chips differs from the MIPS view the rest of this repository takes. The files and their versions are listed in
-[evidence/sn1-ia64-sources.md](../../evidence/sn1-ia64-sources.md); paths below are from the Linux v2.5.0 snapshot
+[references/sn1-ia64-sources.md](../../references/sn1-ia64-sources.md); paths below are from the Linux v2.5.0 snapshot
 unless a version is given. The processor-bus ASIC has its own page: [synergy.md](synergy.md). The fake PROM SGI's simulator ran, with the kernel tags and configuration it was built for, is in [fake-prom.md](fake-prom.md).
 
 Grades follow the repository rules. SGI's own Linux platform code is vendor source, so what it defines is

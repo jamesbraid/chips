@@ -11,7 +11,7 @@ there is no generated contract for it.
 Grades: **established** (stated in a cited source, or drawn in one), **inferred**
 (from established facts or from a sibling platform), **unknown** (with what would
 settle it). The IX-brick is not the Origin 350 compute module, whose hardware graph
-also prints `IXbrick`. See [interconnect-naming.md](../../evidence/interconnect-naming.md).
+also prints `IXbrick`. See [interconnect-naming.md](../../references/interconnect-naming.md).
 
 ## Sources
 

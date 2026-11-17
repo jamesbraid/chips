@@ -25,15 +25,15 @@
   "index": [
    "README.md",
    "AGENTS.md",
-   "evidence/irix-files.md",
-   "evidence/coverage.md",
+   "references/irix-files.md",
+   "COVERAGE.md",
    "questions/README.md",
    "references/documents/specs.md",
    "references/documents/published-sources.md"
   ],
   "dumps": [],
   "skip": [
-   "evidence/inventory/*",
+   "generated/inventory/*",
    "devices/*/registers*.md",
    "formats/*/format*.md",
    "devices/dm2/dma.md",
@@ -46,8 +46,8 @@
    "devices/dm8/README.md",
    "devices/hollywood-dsp/README.md",
    "software/kernel/audio-drivers.md",
-   "evidence/audio-survey.md",
-   "evidence/reading-brief.md"
+   "software/kernel/audio-survey.md",
+   "tools/reading-brief.md"
   ]
  },
  "prepare": [],

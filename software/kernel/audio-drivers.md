@@ -4,7 +4,7 @@ Scope: every audio driver object, master file, configuration line and inventory 
 builds held here, which hardware each drives, which builds carry it, and which SGI product shipped with that hardware. Labels as
 in [AGENTS.md](../../AGENTS.md): **established**, **inferred**, **unknown**. I read the driver objects named below as a binary
 reader (instruction level, with the toolchain's call and argument summary); for these drivers this page is binary-only. Survey
-of the options per machine: [survey.md](../../evidence/audio-survey.md). The DM8 board: [dm8.md](../../devices/dm8/README.md).
+of the options per machine: [survey.md](audio-survey.md). The DM8 board: [dm8.md](../../devices/dm8/README.md).
 
 Builds examined: 6.5.30 (`IP27`, `IP30`, `IP32`, `IP35` object directories, linked kernels `unix.IP27`, `unix.IP30`, `unix.IP35`,
 the `IP22` directory holds one object) and 6.5.22 (the same plus a full `IP22` directory, linked kernels for IP27, IP30, IP35 and

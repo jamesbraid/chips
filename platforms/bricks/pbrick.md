@@ -117,7 +117,7 @@ carries head E. That pairing is inferred, and it stands or falls with the widget
 
 Three XBridge chips is the count the manuals give (`007-4240-002 p. 140`, Figure 2-24). OpenBSD's
 `xbridge.c` mentions six XBridge chips on one Crossbow for a P-brick. That conflict is recorded in
-[interconnect-naming.md](../../evidence/interconnect-naming.md) and is still open.
+[interconnect-naming.md](../../references/interconnect-naming.md) and is still open.
 
 Unknown: the silicon revision of each XBridge, whether all three match, each chip's mode strap, and
 reset values and reset propagation between chips. A P-brick part-number inventory or a register read
@@ -286,4 +286,4 @@ No P-brick is held here, and no physical test is proposed for this enclosure.
   enclosure that has a similar slot count.
 - [origin300-pci-expansion-module.md](origin300-pci-expansion-module.md): the Origin 300 module with
   the same six-widget view.
-- [interconnect-naming.md](../../evidence/interconnect-naming.md): the open chip-count conflict.
+- [interconnect-naming.md](../../references/interconnect-naming.md): the open chip-count conflict.

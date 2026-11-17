@@ -131,7 +131,7 @@ tools/setup-clone.sh --root /path/to/your/irix/files
 retools/tools/re-run retools/tools/defs/ci-check
 ```
 
-You'll need Podman, git, python3 and your own IRIX 6.5.30 files. [evidence/irix-files.md](evidence/irix-files.md)
+You'll need Podman, git, python3 and your own IRIX 6.5.30 files. [references/irix-files.md](references/irix-files.md)
 lists which ones.
 
 ## How far along
@@ -139,15 +139,15 @@ lists which ones.
 Still a long way to go on the functions. The open questions are in [questions/](questions/README.md).
 If you spot a mistake or have a manual we don't, [open an issue](https://github.com/jamesbraid/chips/issues).
 
-<!-- coverage:begin. Regenerate: retools/tools/re-run python3 retools/tools/inventory.py, then re-extract these rows from evidence/coverage.md. Never type them. -->
+<!-- coverage:begin. Regenerate: retools/tools/re-run python3 retools/tools/inventory.py, then re-extract these rows from COVERAGE.md. Never type them. -->
 | Table | Rows | % understood | % located or better |
 |---|---:|---:|---:|
-| [binaries](evidence/inventory/binaries.tsv) | 3092 | 20.2 | 20.3 |
-| [functions](evidence/inventory/functions.tsv) | 6836 | 17.5 | 74.4 |
+| [binaries](generated/inventory/binaries.tsv) | 3092 | 20.2 | 20.3 |
+| [functions](generated/inventory/functions.tsv) | 6836 | 17.5 | 74.4 |
 | functions (distinct names) | 2570 | 25.2 | 97.7 |
-| [mmio](evidence/inventory/mmio.tsv) | 87 | 70.1 | 70.1 |
-| [ioctls](evidence/inventory/ioctls.tsv) | 6 | 100.0 | 100.0 |
-| [spec-registers](evidence/inventory/spec-registers.tsv) | 174 | 100.0 | 100.0 |
+| [mmio](generated/inventory/mmio.tsv) | 87 | 70.1 | 70.1 |
+| [ioctls](generated/inventory/ioctls.tsv) | 6 | 100.0 | 100.0 |
+| [spec-registers](generated/inventory/spec-registers.tsv) | 174 | 100.0 | 100.0 |
 <!-- coverage:end -->
 
 ## License

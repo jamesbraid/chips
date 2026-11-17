@@ -184,7 +184,7 @@ or Onyx 350 therefore never plays analog.
 
 ### Correction: the Tezro tower's onboard audio
 
-[drivers.md](../../software/kernel/audio-drivers.md) and [survey.md](../../evidence/audio-survey.md) said the Tezro
+[drivers.md](../../software/kernel/audio-drivers.md) and [survey.md](../../software/kernel/audio-survey.md) said the Tezro
 tower's onboard audio was probably a RAD at board 13. That is withdrawn. Review of
 the published Tezro hinv records (11 single-module records from 10 captures that
 list adapter IDs and carry an IO9) finds the tower's onboard audio is the ICE1724

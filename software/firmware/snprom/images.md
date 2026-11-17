@@ -19,8 +19,8 @@ Everything else is taken from the pages named, at the commits named.
 
 Pages synthesised (chips `c567510`, sysco `5d62fbd`):
 [snprom README](README.md) (`1579f00`), [boot path](boot-sequence.md) (`c567510`),
-[SN2 holdings](../../../evidence/sn2-holdings.md) (`c4a3255`),
-[irix-files](../../../evidence/irix-files.md#sn2-firmware-and-kernels) (`ec38a7e`),
+[SN2 holdings](../../../references/sn2-holdings.md) (`c4a3255`),
+[irix-files](../../../references/irix-files.md#sn2-firmware-and-kernels) (`ec38a7e`),
 [Altix 350](../../../platforms/sn2/altix-350.md) and [Altix 3000](../../../platforms/sn2/altix-3000.md) (`94c62dd`),
 [Prism](../../../platforms/sn2/prism.md) (`06bdc20`), and in sysco `software/firmware/l1/sn2-prom-link-1.62.1.md`
 (`5d62fbd`) and `sn2-l1-1.62.1-packages.md` (`8ceefe9`).
@@ -57,7 +57,7 @@ Banner, build time and size: established (strings and FIT read by me). The 10.54
 bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`. This is catalogue metadata: the rpm is
 not in the chips root and was not re-hashed for this page, so nobody here has tied it to the extracted files (the
 extracted `shub1snprom.bin` and `README.snprom` hashes above are the only ones computed). No container hash is recorded
-for the other packages, and [irix-files](../../../evidence/irix-files.md#sn2-firmware-and-kernels) says the container
+for the other packages, and [irix-files](../../../references/irix-files.md#sn2-firmware-and-kernels) says the container
 name of most images was not recorded when the files were copied. A Library search for the 10.54 rpm file name found
 nothing. The route to close this is to hash the rpm in the owner's package mirror, compare it with the catalogue value,
 and check the rpm header against the extracted files.
@@ -251,7 +251,7 @@ before the first L1 request, and the order of the identity queries (unknown on b
    `README.snprom` puts Prism on the SHub 1 image, which agrees with the figure.
 5. **`prism.md` was stale.** It said no PROM image is held and that the meaning of "snprom supports Prism" is unknown; the
    held 10.54 `README.snprom` states it. Corrected in the review commit to point here and to
-   [the holdings page](../../../evidence/sn2-holdings.md).
+   [the holdings page](../../../references/sn2-holdings.md).
 6. **Register stride (resolved in review).** The UART is spaced 8 bytes apart: the UART driver and the PROM's own
    accesses use fixed addresses `0x8000000ffed40000 + 0, 8, ... 0x38`. The sysco page's `sc_shub_dev_reg` shifts the
    index left by 6 and is a separate chipset accessor whose users in the UART driver were not found; sysco's page is

@@ -28,7 +28,7 @@ reading, reasoning given), **U** unknown (route to settle given). Addresses are 
 5. The PROM writes the Bedrock memory-configuration word as a read-modify-write that is the last instruction of its
    routine, with the node's other processors parked in rendezvous polls, so in effect one processor is issuing
    accesses. **E**
-   ([ip35-prom-mp-presence-poll.md](../questions/ip35-prom-mp-presence-poll.md) item 3, re-read here).
+   ([ip35-prom-mp-presence-poll.md](ip35-prom-mp-presence-poll.md) item 3, re-read here).
 6. The Hub PROM's node-number write has the same shape as the Bedrock one (three stores, each between `sync`
    instructions and followed by a 20-count loop, with a 4240-count loop on each side), per
    [ip27-prom-node-numbering.md](../platforms/ip27/prom-node-numbering.md), which this page does not repeat. **E** there.
@@ -42,7 +42,7 @@ reading, reasoning given), **U** unknown (route to settle given). Addresses are 
 | IRIX 6.5.30 `unix.IP27` | sha256 `567474674eaa83d36431e70f079a35819d0bc3ce1d4b4a2758b8e891b5acc463` |
 | IRIX 6.5.30 `unix.IP35` | sha256 `412a1aae553a348376bc30cacbaf65044de1745d30222f02ec5f88297dcb1dfa` |
 | IP27 PROM | segment `ip27prom`, banner "SGI Version 6.156 built 11:27:56 AM Nov 18, 2003", load 0xc00000001fc00000, sha256 of the unpacked segment `c2c69bf33c375b43ec7ac511fab41ddf595be1b6838ae717e58a9a1273437fdd` |
-| IP35 PROM | "SGI Version 6.210 built 02:33:51 PM Aug 26, 2004", sha256 of the unpacked segment `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`; addresses are 6.210 addresses, the style of [ip35-reset-window.md](../questions/ip35-reset-window.md) |
+| IP35 PROM | "SGI Version 6.210 built 02:33:51 PM Aug 26, 2004", sha256 of the unpacked segment `554924380189a03a512156af2faa38344902f251b49fd5c80c253c23ecaff27b`; addresses are 6.210 addresses, the style of [ip35-reset-window.md](ip35-reset-window.md) |
 
 All four kernels are linked, with symbols. Instruction text was read from `objdump` output (n64 MIPS-IV, numeric
 register names). Literal pool words were read from the images at `gp` plus the displacement. Store sites in the kernels
@@ -74,7 +74,7 @@ imported in the register maps and are **E** as statements of the header, not of 
 | Bedrock | local-block `region_present` | 0x604020 | regions that can receive an invalidate; sampled when an invalidate arrives (header) | `devices/bedrock_lb/registers.toml` |
 | Bedrock | local-block `nodes_absent` | 0x604028 | four 16-bit entries: node in 7:0, valid bit 15 | `devices/bedrock_lb/registers.toml` |
 | Bedrock | memory `memory_config` | 0x780008 | per-DIMM bytes (enables 1:0, width 3, size 7:4); bank select 33:32; survives a soft reset (header) | `devices/bedrock_md/registers.toml` |
-| Bedrock | memory `junk_bus_timing` | 0x7a0008 | flash setup-hold 7:0 and enable 15:8 | `devices/bedrock_md/registers.toml`, [ip35-prom-poll-timing.md](../questions/ip35-prom-poll-timing.md) |
+| Bedrock | memory `junk_bus_timing` | 0x7a0008 | flash setup-hold 7:0 and enable 15:8 | `devices/bedrock_md/registers.toml`, [ip35-prom-poll-timing.md](ip35-prom-poll-timing.md) |
 
 ## 1. What the chip documents (U)
 
@@ -218,8 +218,8 @@ The code is one routine around `0x1fc60f40` to `0x1fc61400`. In order:
 What this shows (**E** for the sequence, **I** for the readings):
 
 - Every processor is held at a rendezvous (`0x1fc68fe0`, loops read local-block scratch registers with no
-  timeout, per [ip35-prom-reset-barrier.md](../questions/ip35-prom-reset-barrier.md) and
-  [ip35-prom-mp-presence-poll.md](../questions/ip35-prom-mp-presence-poll.md)) around the change. Only the elected processor
+  timeout, per [ip35-prom-reset-barrier.md](ip35-prom-reset-barrier.md) and
+  [ip35-prom-mp-presence-poll.md](ip35-prom-mp-presence-poll.md)) around the change. Only the elected processor
   stores.
 - Instruction fetch and data access move onto an uncached mapping of the node's own RAM at node-number-zero addresses
   before the change (UALIAS), so the PROM keeps running from its RAM copy through the change. That is what a design
@@ -277,14 +277,14 @@ store, not re-read here). At `0x1fc54f14` and
 the routine. **E** (read here in 0x1fc54ee0 to 0x1fc54f18 and 0x1fc56d94 to 0x1fc56e28). The surrounding
 condition: the memory step is master-only, and the node's other processors are inside the rendezvous polls (they
 execute register reads and flag stores only) while it runs, per
-[ip35-prom-mp-presence-poll.md](../questions/ip35-prom-mp-presence-poll.md) item 3. **E** there. Whether a later routine
+[ip35-prom-mp-presence-poll.md](ip35-prom-mp-presence-poll.md) item 3. **E** there. Whether a later routine
 rewrites the word after release is **U** (same page).
 
 ### 3.6 Cached-alias size (E)
 
 PROM: `sd` of 1 to `0x9200000001000028` at `0x1fc009ac`, just after the first TLB install and after the first
 barrier stores (`0x1fc007d4` to `0x1fc00828`), before the flash-timing store (`0x1fc00b98`); the next loads read PI
-offset 0x20, not 0x28 (census and [ip35-reset-window.md](../questions/ip35-reset-window.md)). Only PI0's register is
+offset 0x20, not 0x28 (census and [ip35-reset-window.md](ip35-reset-window.md)). Only PI0's register is
 written. **E.** Whether every processor of the node executes it or only one is **U** (not traced).
 
 IRIX: `mlreset(0)`, 6.5.30 `0xc00000000004d94c` (0x480 bytes), 6.5.22 `0xc00000000004e270` (0x4b4). Per compact node,
