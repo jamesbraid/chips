@@ -24,7 +24,7 @@ its `System.map` puts `unw_init` at `0xa000000100a09a10` and `__end_unwind` at
   `unw` fields at `+0x130..0x160` and stores `kernel_table` start, end, array and length; inferred
   as the 3.2.78 source of this build.) Not SN2 specific: generic ia64 init code.
 - What it computes: `table->end = KERNEL_START + end[-1].end_offset`. `__end_unwind` is a `char[]`
-  (`include/asm/sections.h:26`), so gcc reads the 8-byte `end_offset` as eight `ld1.a`. The main
+  (`include/asm/sections.h:26`), so gcc reads the 8-byte `end_offset` as eight `ld1.a` (inferred). The main
   path, `0xa000000100a0a0a0`: `ld1.a r26=[r29]` with `r29 = r28 + 0x1ffffffffffffff1`
   (`add` at `a0a076`, `movl` at `a0a066`), `r28 = &__end_unwind = 0xa0000001008e1620`
   (`ld8` at `a0a056`, end of `.IA_64.unwind`, `0x888040 + 0x595e0`). `chk.a.clr r26` is at
@@ -75,10 +75,11 @@ its `System.map` puts `unw_init` at `0xa000000100a09a10` and `__end_unwind` at
 
 ## Q3: what the model needs
 
-The hang is model-side or memory-map-side, not a kernel bug. The same read happens on real
-hardware: unmapped or unpopulated memory just returns data (the result only feeds
-`table->end`, used by kernel backtraces). Cause is not a 64 MB alignment, boot parameter or
-relocation problem. (inferred)
+The hang is model-side or memory-map-side, not a kernel bug (inferred). The same read happens on
+real hardware: unmapped or unpopulated memory just returns data (unknown; see
+[accesses to undefined MMR offsets](../../platforms/sn2/address-map.md#accesses-to-undefined-mmr-offsets)).
+The result only feeds `table->end`, used by kernel backtraces. Cause is not a 64 MB alignment,
+boot parameter or relocation problem (inferred).
 - Physical `0x1008e1611` is node field 0, AS 0: compatibility space, not RAM (node RAM is AS 3) and not
   MMR space. It must complete as an uncached byte read with some answer instead of a stall; see
   [accesses to undefined MMR offsets](../../platforms/sn2/address-map.md#accesses-to-undefined-mmr-offsets).
