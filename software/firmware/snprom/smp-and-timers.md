@@ -233,44 +233,67 @@ Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump l
 
 ## 5. Multi-CPU entry and the per-slice table
 
-Why a second processor (slice 2, `cr.lid` `0x0100_0000`) faults in the SAL_B reset path of SAL 5.04. Read from a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin`; Itanium SDM rev 2.3 vol 2 (245318) and vol 3 (323207) for `extr` and `cr.lid`. No run backs a grade, and nothing here is hardware evidence for how a real second processor behaves.
+Why a second processor (slice 2, `cr.lid` `0x0100_0000`) faults in the SAL_B reset path of SAL 5.04 when it shares the early RAM at `0x1000000` with slice 0. Read from a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (PAL_B 5.73 for procedure 520); Itanium SDM rev 2.3 vol 2 (245318) and vol 3 (323207); Itanium 2 reference manual 251110-003 Table 2-5 for the L3 geometry. The fault values quoted are from a model that runs both processors over one shared RAM; they are model behaviour, used here only to check the reading.
 
-**What `0xffba0000` is (established).** It is the common interruption stub, not a reset entry. The vector stubs in the table at `0xffb98000` set `r28=pr`, `r30` = handler (`0xffac6a20`, or `0xffac6970` when ISR.ni is set) and `r31` = vector number, then `br.few 0xffba0000` (for example `0xffb9ff5c`). The stub reads the per-slice record, loads the pointer at record `+0x80` (the exception save area), walks the physical-to-virtual list at `[[0x1000038] + 0x50]` when `psr.dt` is set, and saves state there. `psr.ic` is clear until `ssm 0x2000` at `0xffba0c16`.
+**Summary.** The early table and everything it points to are built at the same physical addresses by every processor, and the builder then swaps the one record into the running processor's own slot. That only works if each processor has a private copy of `0x1000000` to `0x103ffff`. PAL procedure 520 provides it on hardware by installing that range as lines of one L3 way in the calling processor's own cache, and the PROM leaves that mode in the jump to RAM, after saving what it needs to a per-slice area in node memory. A model with one shared RAM there lets two builders and two swaps interleave on one table, so a processor reads `0xfe` from its own slot.
 
 ### 1. The extract (established)
 
 `0xffba000c`: `extr.u r26=r26,23,4` takes `cr.lid` bits 26:23, four bits, zero-extended. SDM vol 3 `extr`: the field starts at `pos6` and runs `len6` bits to the left. Vol 2 section 5.8.3.1: `cr.lid` has eid in 23:16 and id in 31:24, so the field is id[2:0] plus eid[7]. CPU 0 (lid 0) gives 0, CPU 1 (lid `0x01000000`) gives 2. With `+2` the entries read are slot 2 (`0x1000010`) and slot 4 (`0x1000020`). The PROM sets lid itself: SAL_A `0xffc4edc0` writes `dep.z r2=r32,23,4` (`0xffc4edd0`), with r32 = PAL `r33 & 3` (`0xffc4ea7c`, called at `0xffc4e37c`), and PAL_B 5.73 builds `r33` as msr[1559] bits 21:19 shifted left by one (`0xffed7bd8`, `0xffed7bde`). The model's `0x01000000` and msr bits = slice >> 1 therefore agree with the PROM. The id/eid split is not the PROM's view: it treats bits 26:23 as one slice number, and the node-id install `0xffaec2b0` later writes `cr.lid` again.
 
-### 2. The table (established for layout and writer, inferred for the observed values)
+`0xffba0000` itself is the common interruption stub, not a reset entry: the vector stubs at `0xffb98000` set `r28=pr`, `r30` = handler, `r31` = vector and branch to it; it loads the per-slice record and its save area at `+0x80`, so a fault taken with a bad slot faults again here (`ld8 [0xfe + 0x80]` at `0xffba0060`).
 
-- **What it is.** A table of pointers at physical `0x1000000` (slot n at `0x1000000 + 8n`), RAM from reset, not PAL code. It is cache-resident early: every CPU calls PAL 520 with `0x1000000` and `0x40000` (`0xffa9b586`, reached from `0xffa9bd5c` in `0xffa9bce0`, called by `0xffa94b10` at `0xffa1e19c`) before the builder runs. That each CPU gets a private copy is inferred.
-- **Writer.** The builder `0xffac42d0(layout, nasid, flag)`, called by every CPU at `0xffa1e1b6` as `(0, 0, 0)`, right after the PAL 520 call. It runs the carver `0xffac4230` over size tables in flash: odd entry = marker stored with bit 0 cleared, even = a size taking the next pointer, zero = stores `0x7f`. Nothing else writes the early table. Later `(1, nasid, ...)` calls rebuild it in the node window (`0xffac7a50`, `0xffacc00c`, `0xffad7a7c`).
-- **Early layout (table `0xffbe6b28`, read as words).** Slot 0 = 0, slot 1 = 2, slot 2 = `0x1000100` (record, `0xa000` bytes), slots 3 to 5 = `0xfe`, slot 6 = `0x7f`, slot 7 = `0x100a100` (block A), slot 8 = `0x101a100`. A second carve (table `0xffbe6bc8`, start `0x101a900`) rewrites slots 9 up: slot 9 = `0x101a900` (stack area of slice 0, `[slot + 16]` is its backing store), slots 10 to 12 = `0xfe`, slot 13 = `0x7f`, slot 14 = `0x1024900`. A third carve fills the slot 2 record from `0xffbe6c48`: `+0x80` is a `0x1500`-byte save area at `0x1000300`, `+0xd8` is `0x7f`.
-- **Consequence (established arithmetic).** Only slice 0 has a record and a stack early. Slice 2 reads slot 4 = `0xfe` and slot 11 = `0xfe`. The reset entry then does `st8 [rec+0x88]` (`0xffa1e286`, address `0x186`), `ld8 [[slot 9+n] + 16]` (`0xffa1e370`, address `0x10e`), and `main` reads `[rec+0x188]` (`0xffa19cf0`, address `0x286`). Those match the observed ifa values `0x186` and `0x286`. The stub's own `ld8 [0xfe + 0x80]` at `0xffba0060` is the repeat.
-- **ifa caveat.** With `psr.ic` clear a nested fault must leave IFA, ISR and IIP unchanged (SDM vol 2 section 5.8, p. 2:101), so a reported `ifa` can be the first fault's, not the stub load's. Read `cr.iip` before reading anything else: if it is `0xffa1e286`, the first fault is the `+0x88` store.
-- **`0x106` and `0x206`.** Not a word the builder can write (it writes 0, 2, `0xfe`, `0x7f` or pointers of `0x1000100` and above). As ar.pfs images they are sof 6 with sol 2 and sol 4. Inferred: something spilled a register frame or pushed a stack over slot 4. Settle by dumping `0x1000000` to `0x1000060` at the fault.
+### 2. The builder is slice-dependent (established)
 
-### 3. What a second CPU needs (established as code; the SHub values are what the code requires)
+`0xffac42d0(layout, nasid, flag)`, called by every processor at `0xffa1e1b6` as `(0, 0, 0)`, right after PAL 520:
 
-- `cr.lid` writable, readable and serialised (SAL_A, then `0xffaec2b0`, which halts with progress `0xc3` on a mismatch).
-- msr[1559] bits 21:19 = 1 for CPU 1 (`r33` = 2).
-- Per-slice SHub state, shared between CPUs: the election pair `0x81_101d_0088`/`0x80` (slice + 1, read back; a loser must not zero `cpu_bits`), `cpu_bits` `0x81_5003_1550` with `1540` and `1560`, the node lock `0x1_101d_0200`/`0208`, per-slice progress history `0x81_5003_1500 + 16 * slice`, the junk-bus LED rows, `0x1_2002_0080` (read for slices 0 and 1 only, `0xffa99e2c`), and the slice-paired `pio_write_status`. SCRATCH-style locks are plain storage plus the lock protocol.
-- Per CPU, not shared (inferred): the early RAM at `0x1000000`.
-- Whether the model's values match is not decidable from the PROM; it did not read the model.
+- **Base.** It reads the local NASID from `SH_SHUB_ID` (`0x1_1006_0580`, bits 42:32) and compares it with `nasid`. When they match the table base is plain `0x1000000`; otherwise it is the node window `0x8000_0030_0100_0000 | nasid << 38`.
+- **Carves.** The carver `0xffac4230(in, out, next, flag)` walks a size list in flash: an odd entry is a marker stored with bit 0 cleared (skipped when `flag` is non-zero), an even entry stores `next` and adds the size, a zero entry stores `0x7f`, `-1` ends the list and stores the final `next`. Layout 0 uses `0xffbe6b28` (into slots 0 to 9 from `0x1000100`), `0xffbe6bc8` (slots 9 to 15 from `0x101a900`), then fills the record named by slot 2 from `0xffbe6c48` (headed `CPUPDATA`, offsets array at `+0x200`) and the arena named by slot 9 (headed `CPUTDATA`, offsets at `+0x180`). Layout 0 then skips the per-slice blocks that follow (`(p1) br` at `0xffac49f0`; the first of them reads slot 3). Before the swap the table is: slot 0 = 0, slot 1 = 2, slot 2 = `0x1000100`, slots 3 to 5 = `0xfe`, slot 6 = `0x7f`, slot 7 = `0x100a100`, slot 8 = `0x101a100`, slot 9 = `0x101a900`, slots 10 to 12 = `0xfe`, slot 13 = `0x7f`, slot 14 = `0x1024900`.
+- **The swap (`0xffac6080` to `0xffac6100`, layout 0 on the local node only).** It reads `cr.lid` bits 26:23 = n and exchanges slot 9 with slot 9+n, then slot 2 with slot 2+n, with plain loads and stores (no lock, no `cmpxchg`). Then it writes `SAL-DATA` to slot 0 (`0xffac6206`).
+- **Result for one processor.** Slice 0: no change. Slice 2 alone: slot 2 = `0xfe`, slot 4 = `0x1000100`, slot 9 = `0xfe`, slot 11 = `0x101a900`. Every slice gets its record at `0x1000100` and its stack arena at `0x101a900`, in its own slot.
+- **Layout 1 (node window, `0xffac7a50` and `main_three`).** Uses `0xffbe6b78` and `0xffbe6c08`: four 1 MiB records and four 1 MiB arenas, one per slot 2 to 5 and 9 to 12, at `(nasid << 38) + 0x30_0200_0000` and `+0x30_0300_0000`, and no swap. Only the master runs it.
 
-### 4. Start-up order (code facts; hardware mechanism unknown)
+The earlier reading on this page ("only slice 0 has a record early"; "nothing else writes the early table") missed the swap; it is withdrawn.
 
-- **No hold in the code.** SAL_A has no wait for a non-winner (`0xffc4e970` returns either way). SAL_B entry `0xffa1de00` has no slice test before the builder. The park routine `0xffa9ac80` only holds a non-zero hardware thread. Every CPU runs PAL 520, the builder, the record store, the stack load and `main` the same way.
-- **The data contradicts that.** The early table gives only slice 0 a record and a stack, so on the PROM's own terms a slice-2 CPU cannot pass `0xffa1e286` and `0xffa1e370` before the node-window rebuild. This contradicts the earlier statement in section 1 that every slice runs the reset path in step. Re-starting CPU 1 after the rebuild also fails: its builder call would rewrite the shared table in the early layout.
-- **Unknown.** What makes the second CPU wait or have a record on real hardware (SHub or L1 holding slice 2 in reset, a PAL-side rendezvous, or tolerance of misaligned physical accesses with `psr.ac` clear, which the SDM leaves to the implementation). Routes to settle it: a PAL_B read of what msr[1559] holds on a second CPU, a captured real boot, and the L1 CPU-presence reply.
+### 3. Why the range must be private (established as code; the hardware mechanism inferred)
 
-### 5. The MTTCG fault (`0xffa1bec0`, ifa `0x8f`)
+- Every processor's early record is `0x1000100`, its arena `0x101a900`, its backing store `[[slot 9+n] + 16]` and its stack that plus `0x7ff0` (`0xffa1e360` to `0xffa1e3ac`). Two processors on one memory there would share a record, a stack and an RSE backing store, whatever the order.
+- The swap moves the record out of slot 2 when n is not 0. On shared memory a later slice-0 reader then finds `0xfe` in slot 2; a later builder run on slice 0 puts `0xfe` back in slot 4.
+- Nothing in SAL_A or the SAL_B reset path holds a slice back before the builder (`0xffc4e970` returns either way; `0xffa1de00` has no slice test; `0xffa9ac80` holds only a non-zero hardware thread). Every present slice runs this code at once, as section 1 says.
 
-A different path (established). `0xffa1bdd0` reads the same slot, `[0x1000000 + 8 * (2 + n)]`, then the field at `+0xd8` of the record. For slice 0 early that field is `0x7f`, and `st4.rel [0x7f + 16]` at `0xffa1bec0` faults at `0x8f`. This is the print routine in the section "The print routine's per-CPU object" of [boot-sequence.md](boot-sequence.md), so it ran on CPU 0 (slice 2 would have faulted on its own `ld8` first). Something raised an early interruption or print on CPU 0. Whether CPU 1's stray stores through `0xfe`-derived addresses caused it is unknown.
+So the PROM depends on `0x1000000` to `0x103ffff` being per processor from the PAL 520 call until it leaves that mode. On hardware no DRAM is configured at this point (the master sets memory up later in `main`), and the range is held in each processor's own L3 (PAL 520 below). Graded inferred for the hardware: the code shows the dependency and what 520 writes, not what the silicon does with it.
 
-### What the model must change
+### 4. PAL 520 sets the private range up (handler established as code; meaning inferred)
 
-1. Do not run CPU 1 through the reset entry together with CPU 0 until its early RAM and record exist. The PROM as read cannot do that.
-2. Give each CPU its own `0x1000000` area (PAL 520 preload), not one shared RAM, until the node-window rebuild.
-3. Keep the SHub scratch words in section 3 shared and lock-correct between CPUs.
-4. Capture `cr.iip`, `cr.ipsr`, `cr.isr` and `0x1000000` to `0x1000060` at the first fault.
+Details in [pal-msrs.md](pal-msrs.md#pal-520-0x208). In short: SAL_B calls it at `0xffa9b586` with `r29 = 0x1000000`, `r30 = 0x40000`, `r31 = 0`. The PAL_B 5.73 handler (`0xffea42a0`) counts enabled L3 ways from msr[1536] bits 59:48 at 256 KiB a way, returns -4 if `r30 + r31` is larger and -5 if `r29` is not 256 KiB aligned, sets a group of msr bits (among them msr[1504] bits 24, 32 and 33, or 16, 40 and 41, chosen by `cpuid[3]` bits 15:8 against 3), and for each 256 KiB chunk issues one command with tag `r29 >> 18`, state 3 and a set range of 2048 entries, then one with sixteen zero data words (`0xffea4ad0`, `0xffea4fb0`). Read as an L3 tag-array write over one whole way followed by a zero data write (inferred from the field layout: tag shifted by 22, seven ECC bits computed over it, a 2048-entry range per way). With 128-byte lines and 4 ways per MB (251110-003 Table 2-5), one Madison L3 way is 256 KiB at any cache size. The SHub is not touched.
+
+### 5. Leaving the private range (established as code)
+
+- **Save.** In the jump to RAM (`0xffac6bb0`), before any barrier, each processor copies the parts of its early records it keeps into a 16 KiB transfer area in node memory, sized per slice by `0xffadff10(..., n)` from `(nasid << 38) + 0x30_0300_0000` (`0xffac6d50` to `0xffac6ebc`; the per-slice offset is inferred from the slice argument).
+- **Exit.** The first `0xffaf5c80` call (low 16 bits not `0xfffe`) runs `0xffa9bdb0`: progress `0x42`, `ptr.d` and `ptr.i` of the translation for `0x1000000` with page size 2^18 (`0xffaebb30`) and four further data purges (`0xffb20710`), then **PAL 520 with `r29 = r30 = r31 = 0`** (`0xffa9c046`), which takes the handler's disable path (`0xffea4900`): it clears the msr bits the enable set and writes no tags. Then PAL 530 and the processor test.
+- **After.** In `0xffac7400` the master rebuilds the table at plain `0x1000000` with layout 1 (`0xffac7a50`, records in node memory, no swap); every processor then passes the barrier `0xffa9a130` at `0xffac745c` and reads its slot 9+n there (`0xffac7460`). From here `0x1000000` is ordinary shared node memory, written by the master only. What hardware does with the L3 lines at the disable (drop or write back) is **unknown**; the code never reads them again and does not depend on a write-back.
+
+### 6. The faults, explained (established arithmetic on the reading above; the interleavings inferred)
+
+| Fault | Read | Why the slot held `0xfe` |
+|---|---|---|
+| cpu0 `0xffa1e286` `st8 [rec+0x88]`, ifa `0x186` | slot 2 at `0xffa1e230` | cpu0 finished its builder with slot 2 = `0x1000100` (r41 to r43 at the fault, `0x1000000`, `0x1000010` and `0x1000100`, are the builder's last values: the `SAL-DATA` base, the slot-2 address and the swap's load of it), then cpu1's swap stored `0xfe` into slot 2 and the record into slot 4. The table dumped at that fault is exactly slice 2's single-processor result above. |
+| cpu1 `0xffa80680` `ld8 [rec+0x188]`, ifa `0x286` | slot 4 at `0xffa80640` | cpu1 passed its own reset path, then cpu0's builder rewrote slots 3 to 5 with `0xfe`. |
+| `0xffa86f90` `ld8 [rec+0x18]`, ifa `0x116` | own slot at `0xffa86f50` | Same, in another routine. |
+| `0xffa1bec0` `st4.rel [0x7f+16]`, ifa `0x8f` | own record `+0xd8` | Both builders carve the same record `0x1000100`; a second run puts the carve's `0x7f` back in a field the first processor had already set (inferred; the setter of `+0xd8` was not traced). |
+
+`0x106` and `0x206` in the table, reported earlier, are consistent with two processors spilling register frames into one backing store; not shown.
+
+### What the model must provide
+
+1. **A per-processor overlay of the L3-installed range.** While a processor is in this mode, its loads and stores to the range PAL 520 installed (`0x1000000` to `0x103ffff` here) go to memory private to that processor, zero-filled, and are never seen by other processors or by DMA.
+   - Entry: the PAL 520 tag-install commands. The handler writes msr[1545] = `tag << 22 | ecc << 3 | 3` and msr[1546] with command bits 63:52 = `0x94c` and the set range, then the undecodable slot; tag `0x40` = address `0x1000000`, one way = 256 KiB. A model that keys on the range from these writes needs nothing guest-specific; one that keys on the PAL 520 arguments at PAL entry is an approximation and needs that stated and reviewed.
+   - Exit: the disable path of the same handler, the msr[1504] write that clears bits 24, 32 and 33 (or 16, 40 and 41 on the other path). At exit drop the overlay without writing it to memory.
+2. Nothing in the SHub. The election, `cpu_bits`, node lock and progress registers stay shared and lock-correct as already modelled.
+3. When the fault recurs, capture `cr.iip`, `cr.ipsr`, `cr.isr` and `0x1000000` to `0x1000060`. With `psr.ic` clear a nested fault leaves IFA, ISR and IIP from the first one (SDM vol 2 section 5.8, p. 2:101). Separately, `cr.isr` `0x0000_0802_0000_0000` for the `st8` in slot 1 of `0xffa1e280` has `ei` (bits 42:41) = 0; SDM vol 2 Table 3-7 (p. 2:37) gives `ei` = `ipsr.ri` for faults, so it should be 1. Not checked against the model.
+
+### Unknown
+
+- What the L3 does with the installed lines on the 520 disable path, and which msr[1504] bits stop write-back or replacement. Settle by an Itanium 2 microarchitecture document that defines msr[1504] and the msr[1546] `0x94c` and `0x949` commands (none of the held revisions does), or a captured boot from a two-processor system with progress readout.
+- The meaning of the undecodable slot that commits each command (see [pal-instructions.md](pal-instructions.md)).
+- Whether the transfer area is per slice on hardware layouts (sized by slice argument; the sizer body was not read).
