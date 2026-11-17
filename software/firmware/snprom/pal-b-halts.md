@@ -41,7 +41,7 @@ entry. `r7 = 0xcccc` is a marker a debugger can see, nothing reads it. The code 
 `r30` is meant for an external probe is **unknown**; the stop is a deliberate halt, not a poll.
 
 **Every way in** (established, branch scan of the whole image): `0xffe7f100` is entered only by fall-through from `0xffe7f07c`.
-`0xffe7f000` is entered from these:
+`0xffe7f000` is entered by fall-through from `0xffe7ec10`, the shared unexpected-interruption target of fifty PAL_B vector sites (see [Secondary CPU at the switch to RAM](smp-and-timers.md#secondary-cpu-at-the-switch-to-ram)), and from these:
 
 | Site | Form | Reason in `r30` | Context |
 |---|---|---|---|
