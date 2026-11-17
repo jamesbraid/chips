@@ -213,21 +213,23 @@ byte at `BAR0 + 0x80000 + (reg ^ 3)`. Return host UTC as BCD in the map below. N
   touches the L1. So a model that answers `0x200e` with six integers but still shows a chip object (the default once an IOC4 is scanned,
   below) never has its L1 reply read.
 - **What creates the chip object.** `0xffaf2dc0` (first use only, cached; a failure is cached too) allocates 0x18 bytes, calls `0xffaf2d30`, then the probe
-  `0xffaf2870`. `0xffaf2d30` calls `0xffaf2960`, which walks the lboards of the master node (`0xffb23930`: the node whose board carries the flag below) for
+  `0xffaf2870`. `0xffaf2d30` calls `0xffaf2960`, which walks the lboards of the node that `0xffb23930` returns (a stored NASID word, with -2 as a sentinel; it does not search boards) for
   a board whose type class (`brd_type` +5, high nibble) is `0x7` (`0x71` to `0x7f`, the I/O boards) and whose `brd_flags` byte (+9) has bit `0x10`. None: no
   chip, L1 fallback. Found: object `+0` = 1 and `+8` = base + `0x80000`.
 - **Who sets that flag (the discovery probe).** The PCI scan `0xffb36020`, for each device number on a bus, reads the id dword of function 0 and compares it with
   `0x100a` (device, bits 31:16) and `0x10a9` (vendor, bits 15:0). A match calls `0xffb32680(nasid, bus slot, device number)`: it finds the lboard of that NASID whose `brd_slot`
-  (+10) equals the bus slot and whose class is `0x7`, ORs `0x10` into `brd_flags`, and stores the slot in bits 59:56 and the device number in bits 63:60 of the
-  qword at board `+8`. (`0xffaed410` already put the second-PIC-bus bit, address bit 23 of the bus's widget address, in bit 48 of that qword.) No strap, no PROM
-  variable and no L1 reply is consulted. The chip is believed present exactly when the scan sees an IOC4 under an I/O board. The simulator signature
-  (`cpuid[2]` = `0xaeeeeeee8badbeef`, see the driver section) is the one other branch: `0xffaf36a0` then returns 0 at once without filling the buffer, which also gives a zero month (**established**).
+  (+10) equals the bus slot and whose class is `0x7`, ORs `0x10` into `brd_flags`, and stores the slot in bits 59:56 and the device index (PCI slot + 1) in bits 63:60 of the
+  qword at board `+8`. The stored device index is the scan's device number plus one (established: Ghidra `(param_3 & 0xff) + 1 << 0x3c`, listing `adds r34=1`), and all
+  window and configuration arithmetic below uses that stored value. (`0xffaed410` already put the second-PIC-bus bit, address bit 23 of the bus's widget address, in bit 48 of that qword.)
+  No strap, no PROM variable and no L1 reply is consulted. The chip is believed present exactly when the scan sees an IOC4 under an I/O board. The simulator signature
+  (`cpuid[2]` = `0xaeeeeeee8badbeef`, see the driver section) is the one other branch: `0xffaf36a0` then returns 0 at once without writing the caller's buffer. The caller
+  `0xffa1c8d0` does not clear that buffer, so the month is whatever was on its stack (**unknown**). The 1998-01-01 default is written only on a negative status.
 
 ### 2. Chip access (established, part identity inferred)
 
-- **Address.** `0xffaf2960` takes the board's `+8` qword (device number, slot, bus bit) and builds the IOC4's address in three steps. (a) Widget base of the PIC:
+- **Address.** `0xffaf2960` takes the board's `+8` qword (device index, slot, bus bit) and builds the IOC4's address in three steps. (a) Widget base of the PIC:
   `(nasid << 38) + widget * 0x1000000 + 0x8_0000_0000` with bit 63 set, for an even NASID (a SHub; the odd, TIO form uses `widget * 0x10000000` and no `0x8_0000_0000`). (b)
-  The window of PCI device `d` (low 3 bits of the device number): for `d` 0 to 2, `d * 0x200000`, plus `0x800000` on bus B; for `d` 3 to 7,
+  The window of device index (PCI slot + 1), with `d` its low 3 bits: for `d` 0 to 2, `d * 0x200000`, plus `0x800000` on bus B; for `d` 3 to 7,
   `d * 0x100000 + 0x300000` on bus A and `d * 0x100000 + 0xb00000` on bus B. Widget number is the board's slot. (c) The IOC4's BAR 0, a 32-bit read of PCI configuration offset `0x10` at
   `widget base (+0x800000 on bus B) + 0x20000 + d * 0x1000 + 0x10`, masked with `0xfffff0` and ORed into (a) | (b). The chip window is that value plus `0x80000`
   (`0xffaf2d30`). So it is the IOC4's byte-bus window 0 (BAR 0 + `0x80000`; offsets from the public 2.6.5 IOC4 header), **not** a SHub junk-bus device. A model cannot place it on the junk bus.
@@ -263,11 +265,11 @@ byte at `BAR0 + 0x80000 + (reg ^ 3)`. Return host UTC as BCD in the map below. N
 
 ### 4. Model behaviour
 
-- **Option A, matches real hardware: present the chip.** Under the IOC4's BAR 0 + `0x80000`, a byte device with 64 KiB of RAM (or 32 KiB mirrored) and a lane-swapped address (`phys = reg ^ 3`):
+- **Option A, matches real hardware: present the chip.** Under the IOC4's BAR 0 + `0x80000`, a byte device with 64 KiB of RAM (or 32 KiB mirrored), which the PROM addresses at `window + (reg ^ 3)`:
   1. RAM: bytes read back what was written, so the probe (register 6 = `0xff`) selects layout 0.
   2. Registers `0x7ff9`..`0x7fff` (excluding `0x7ffc`) return host UTC as BCD at read time: seconds, minutes, hours (24 h), date, month, and year `(year - 1970)` (or `year % 100` with `N`,`B`,`Y` and base digits for the century in `0xf7e0`..`0xf7e4`); a write of `0x40` to `0x7ff8` needs no special behaviour for a model that never changes between reads (it should hold the read value until the write of 0).
   3. Back `0xf7e0`..`0xf7e4` with the same RAM so `SetTime` sticks.
-  - Observed on the emulator (not hardware): the PROM's `reg ^ 3` cancels against the PIC's own lane swap on the IOC4 window, so the device behind the IOC4 sees the logical register number. A 32 KiB device must mirror (decode 15 address bits) rather than drop accesses above `0x7fff`; otherwise `0xf7e0`..`0xf7e4` neither persist nor read back, and the base year stays 1970.
+  - The PIC's own byte-lane swap on the IOC4 window cancels the PROM's `reg ^ 3`, so the device behind the IOC4 sees the logical register number. Observed on the emulator; inferred for hardware. A 32 KiB device must mirror (decode 15 address bits) rather than drop accesses above `0x7fff`; otherwise `0xf7e0`..`0xf7e4` neither persist nor read back, and the base year stays 1970.
   4. The IOC4 config space must show BAR 0 as assigned by the PROM at offset `0x10` of the device's `0x20000 + d * 0x1000` window, and the PIC's device windows must carry byte accesses to the IOC4 BAR (the IOC4 model does this already for its other registers).
 - **Option B, only for a node with no IOC4: leave it out.** Then GetTime uses L1 request `0x200e`: status 0 then six integers (year as four digits, month, day, hour, minute, second), and the PROM stores them unchanged. This is not what a 350 with an IO9 does.
 - **Do not** fill the chip window with zeros, and do not hide the IOC4 to reach the L1 path on a machine that has an IO9 or IO10.
