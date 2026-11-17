@@ -13,6 +13,8 @@ read afterwards, to report agreement and conflict, never to supply a fact; the r
 the offsets the code reached.
 
 Field layouts and driver behaviour from the SGI Linux drivers: [registers-extra.md](registers-extra.md), [linux-driver-notes.md](linux-driver-notes.md).
+The ATA channel as the SLES 9 kernel, later Linux and the PROM's EFI use it (task file, DMA table and sequences, interrupts,
+ATAPI, installer): [ata.md](ata.md).
 
 Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, `census-sites.tsv`), config
 [`tools/configs/ioc4.json`](../../tools/configs/ioc4.json), header [`generated/c/ioc4.h`](../../generated/c/ioc4.h).

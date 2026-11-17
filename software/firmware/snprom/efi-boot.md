@@ -111,9 +111,9 @@ The PCI root node is built by `AltixRootBridgeDevicePathConstructor`; its ACPI H
 vendor/device (`10a9:100a`) through the PciIo protocol, `Start` enables PCI attributes `0x700` (I/O, memory and bus master), and the pass-through then talks to the IDE task-file registers (`Ioc4WritePortB` writes
 through a register-offset table in the image's data at `0x200880`; resets wait for BSY to clear with a 31,000-unit bound). The BIOS emulator and `PciVgaMiniPort`/`VgaClass` exist only to run a VGA option ROM (efi.md section 1); an IDE or SCSI
 **option ROM is not run**. What a model must supply: a PCI root bridge answering config reads for vendor/device and class through SAL `0x01000010`/`0x01000011` (and I/O or memory BAR access through SN SAL `0x02000052`),
-an IOC4 whose IDE registers behave like an ATA task file with BSY/DRQ and PIO data transfer (**unknown**: the register-level contract of the IOC4 ATA pass-through was not read), and `cpuid[2]` not equal to
+an IOC4 whose IDE registers behave like an ATA task file with BSY/DRQ and PIO data transfer (established: the register contract is read in [the IOC4 ATA page](../../../devices/ioc4/ata.md)), and `cpuid[2]` not equal to
 `0xaeeeeeee8badbeef` (the simulator signature that makes the three pass-throughs decline, efi.md section 5).
-No interrupt is needed by the pass-through as read (it polls: the `Stall` calls and BSY loops); that is **inferred**, since the interrupt path was not traced.
+No interrupt or DMA is needed by the pass-through (it sets nIEN and polls with `Stall`; read in full, see [the IOC4 ATA page](../../../devices/ioc4/ata.md#6-what-each-consumer-reads-or-needs)).
 
 ## EFI memory map on a lone node
 
@@ -161,7 +161,6 @@ What the PROM's memory-descriptor builder (`0xffac8120`, with `0xffacf560` doing
 - The flash offset and sector map of the 64 KiB variable store, and the chip-object flash methods behind `0x02000008` ops 5 to 7: decode the node chip object's methods
   at `+0x40`/`+0x48`/`+0x50`/`+0xa0` to `+0xb0` (reached through `0xffa1c2e0`), or compare flash before and after `bcfg`.
 - The El Torito per-media-type handling and the exact no-emulation sector count: finish the jump table of `PartitionInstallElToritoChildHandles` (the decompiler truncates it; disassembly at `0x5d410`).
-- The IOC4 ATA pass-through register contract (`Ioc4WritePortB`, `Ioc4StatusWaitForBSYClear`, PIO read path) and whether interrupts or DMA are used.
 - The ACPI root-bridge node values in device paths, and whether `BootOrder` auto-boot reaches the shell option on an empty machine (a model run).
 - Whether SGI shipped media use a FAT El Torito image or a different layout: no SGI install medium is held (stage 5 of the boot path).
 

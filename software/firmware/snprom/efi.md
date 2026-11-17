@@ -283,7 +283,7 @@ PROM is bypassed or already ran to `0xffaf8c50`; a synthetic SAL_B must supply w
 9. `cpuid[2]` not equal to `0xaeeeeeee8badbeef` if disks are wanted (otherwise the IOC4, QLogic and Sil0680 drivers decline and the SATA driver wants `fffe:fffe`) (**established**).
 10. For a disk boot: PCI config and BAR access through SAL `0x01000010`/`0x01000011`, an IOC4 (`10a9:100a`) with working IDE registers or one of the controllers in
     the table of section 5, a GPT or MBR disk with a FAT partition, and a `Boot####` variable or `\EFI\BOOT\BOOTIA64.EFI` (**established** for the driver checks;
-    the register-level contract of the IOC4 pass-through was not read).
+    the IOC4 pass-through register contract is on [the IOC4 ATA page](../../../devices/ioc4/ata.md)).
 11. PAL: EFI calls PAL for cache flushing (`RtPlCacheFlush`) and cache preload ("cache preloading PAL call failed" is a message, not a stop);
     exact calls and their tolerance were not read (**unknown**).
 
@@ -341,7 +341,7 @@ has no IA-64 target on this host, so no disassembler cross-check was possible; e
 7. Debug switch: established.
 8. RTC: established, with the formula. The tick period is `((reg[0x81_1006_0280] >> 4) & 0x3ff) * 10 + 10`, and `Stall(n)` waits `n * 1000 / period` ticks of `0x81_101c_0000`.
 9. **Changed.** The simulator signature is tested by `Ioc4AtapiScsiPassThruDriverBindingSupported`, `QlogicScsiPassThruDriverBindingSupported` and `Sil0680ScsiPassThruDriverBindingSupported` (all decline), by the SATA driver (accepts only `fffe:fffe`), by `InitializePciRootBusList` (scans buses 0 to 3 instead of 0 to `0xff`), `FatLoadFatEntry`, `AltixPciDeviceInit` (skips the Vitesse quirk) and the RTC helpers, where it shifts the tick count right by 7 and skips the 100-count spin: a shift, not "halves". An emulator must leave `cpuid[2]` at its real value.
-10. Disk boot: established for the checks listed; the register contract of the IOC4 pass-through was not read. Added: `InitializePciRootBusList` does config reads of every bus 0 to `0xff` through the root bridge protocol and treats vendor `0xffff` as absent.
+10. Disk boot: established for the checks listed; the IOC4 pass-through register contract is on [the IOC4 ATA page](../../../devices/ioc4/ata.md). Added: `InitializePciRootBusList` does config reads of every bus 0 to `0xff` through the root bridge protocol and treats vendor `0xffff` as absent.
 11. PAL: unchanged, unknown.
 
 **Not checked.** The three PE32+ drivers beyond their headers; PAL calls; the SAL_B side of callbacks `0x3000`, `0x5000`, `0x6000` and the L1 store of the debug-switch word; ACPI table contents; descriptor-type decoding in `0xffac8120`; EDK II "last commit with IPF" and the `ver` fields beyond the strings; the arena contents behind the record.
