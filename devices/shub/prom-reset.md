@@ -1269,3 +1269,13 @@ Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-
 **Not checked.** The klconfig walk callees beyond `0xffaa0fc0`; `0xffa4fb40`, `0xffa50f00` and `0xffa4f6c0`'s callers; the L1 die-on-silence path (taken from the l1-requests page); the console call `0xffa1f170` and the print routine; other FIT components and the compressed SAL runtime (the register may be touched there); the `+0x35` and `+0x5b` field semantics beyond their tests. The l1-requests page labels the `0x0012` step "progress 0x26", while `0xffa485a0` writes 0x25; not changed here.
 
 **Model requirements.** No change: the registers, reset 1, write-0 behaviour, `cpu_bits` bit 1 = 1 and `0x1_5003_1560` bit 2 = 0 stand.
+
+## Review of the SCRATCH2 identity notes
+
+Independent re-read on 2026-11-16 (PROM 10.54 `0xffa8d120`, `0xffa8cea0`, `0xffa60a70`; the L1 side is in sysco).
+
+**Confirmed.** The PROM decode: tag byte `0x6c`; rack bits 34:26 (9 bits), bay 25:20, slot 38:35, slab 18:16 (3 bits), partition 15:8, bit 19 a flag handled by `0xffaac0a0`; module packed with type `c` by `0xffa7d010`. The writer `0xffa8cea0` keeps bits 63:39 and bit 19 and writes through `0xffa0c560`. Value `0x0410006c` for rack 1, bay 1, SHub 0, partition 0.
+
+**Changed.** The L1 writes the rack as 10 bits (low 6 in the data word, `(cfg[8] >> 6) & 0xf` in the high word), so rack bit 9 lands on bit 35, which the PROM reads as slot bit 0; harmless for racks below 512. The PROM-side writer function first polls a word for up to 10 s ("timed out locking"; register not decoded), see the klconfig review.
+
+**Not checked.** Whether the local SHub ever takes the writer path; hardware reads.

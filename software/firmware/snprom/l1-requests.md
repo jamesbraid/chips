@@ -765,6 +765,16 @@ Requests the runtime makes after the console is up. Frames are as in "Convention
 | `0x100a` event subchannel clear | `0xffa7efe0` | `5 + slice` | `0x0ffff006` | none | none read (the L1 sends no reply); only the type `l` power-down path sends it | established |
 
 - **Strings sent (established).** `version`; `p <partition> rst` (L2) and `* rst` (L1) for reset; `p <partition> pwr d` and `* pwr d` for power-down. The `*` form is the L1's send-to-all command; `p <n>` is routed by an L2.
-- **Timeouts and the L2 probe.** The reset text is sent and waited for with the standard wait (`0xffa82c10`, 3,000,000 ticks); the `version` probe and the power-down texts wait 20,000,000 ticks (`0xffa82a10`, `0xffa0d760`). Whether a silent `version` probe also takes the `0x8d` die path was not read (**unknown**). The probe's destination word is `0x1ffff003`, but the L1 routes only on the task number, so an L1 that answers `version` with status 0 makes the PROM believe an L2 exists and send `p <partition> rst`. A model should therefore treat `p <n> rst` and `* rst` alike.
+- **Timeouts and the L2 probe.** The reset text is sent and waited for with the standard wait (`0xffa82c10`, 3,000,000 ticks); the `version` probe and the power-down texts wait 20,000,000 ticks (`0xffa82a10`, `0xffa0d760`). A silent `version` probe takes the `0x8d` die path after 20,000,000 us; the die routine returns and the reset continues on the L1 path (established, `0xffa82a10`, `0xffad2cb0`). The probe's destination word is `0x1ffff003` and counts as an L2 only for reply status exactly 0. The ColdFire `O` L1 does not route that word to its command task: it sends a routing-error reply when no L2 is attached (sysco `sn2-power-time-requests-1.62.1.md`), so the PROM sends `* rst` to `0x0ffff003`. A model answers the probe with an error status, never 0.
 - **`0x200e` with no L2 or chip.** The reply must carry six integers; a different count gives `-33` and the clock falls back to 1998-01-01 (section 6.4 of [runtime-services.md](../../sal/runtime-services.md)).
 - **Order seen on a 350 (inferred).** `0x200e` once at the first `GetTime` and again after 300 s of elapsed RTC; `0x200d` only from `SetTime`; `0x0000` only on `reset`; nothing on `poweroff`.
+
+### Review of "Requests after boot"
+
+Independent re-read on 2026-11-16 (PROM 10.54 in Ghidra, `0xffa0d3d0`, `0xffa0d760`, `0xffa8c9a0`, `0xffa82a10`, `0xffa81f40`, `0xffa82270`).
+
+**Confirmed.** Destination words (`0x0ffff003`, `0x1ffff003`, task 6 for `0x200e`, `0x200d`, `0x100a`); request code 0 with one tag-1 string; the strings; `0x200e` expects 12 argument bytes (six integers); the reply parser returns the status word as is, status `-0x6a` is special-cased, and a negative status with a string argument copies the text out; `0x100a` is read-less.
+
+**Changed.** The probe paragraph above. Frame header detail: the first four reply bytes are the status, so only status 0 satisfies the probe.
+
+**Not checked.** The ColdFire `version` handler `0xffe4c01c` (not reached for `0x1ffff003`); the ARM catch-all for a type-1 destination (the ARM router `0x109af8` also treats `0x1ffff` as non-local).
