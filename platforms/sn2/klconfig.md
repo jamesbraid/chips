@@ -277,6 +277,48 @@ Sources, per field: NASID, SHub part and revision from the SHub registers; modul
 - **SPD**: memory bank sizes only.
 - **PROM variables**: `DisabledCpus` and `DisCpusReason` can mark a CPU disabled in its component.
 
+## Geoid and module id
+
+Traced in the IA-64 Ghidra module (`--sn2-prom --no-analysis`, address ranges) with a flat objdump cross-check on `shub1snprom.bin` (snprom 10.54). Linux is the `nsafran1217/linux-sn2` tree (SGI platform code, same files as v5.3).
+
+### The kernel's path (established)
+
+- `scdrv_init` (`drivers/char/snsc.c`) names each system-controller node `format_module_id(geo_module(g), BRIEF)` plus `^slot#slab`, with `g = cnodeid_get_geoid(cnode)`. That function returns `hubdev_info.hdi_geoid`, the first member of the per-node structure. The structure comes from SAL `IOIF_GET_HUBDEV_INFO` (`0x55`, direct path) or from the pointer in the node's ACPI `_CRS` (ACPI path).
+- `geoid_t` is 12 bytes (the PCI-card member sets the size): module `u32` at +0, type `u8` at +4, one byte at +5 with slab in the low nibble and slot in the high nibble, `hdi_nasid` at +12. Types: 1 module, 2 node, 3 router, 4 I/O controller, 5 card, 6 CPU, 7 memory.
+- `geo_module`, `geo_slot` and `geo_slab` return `0xffffffff`, `0xff` and `0xff` when the type byte is 0. `format_module_id` prints `'0'+class`, `'0'+group`, `'0'+num` of `rack = m >> 16`, then the type character, then the bay (`m & 0xff`) in at least two digits. For `0xffffffff` the rack is 65535: class 655 wraps to a non-printable byte, group 3, num 5; the type byte `0xff` is the second non-printable. So `?35?255^255#255` means exactly one thing: **`hdi_geoid.type == 0`**. A valid type-2 geoid built from failed L1 replies would print slot and slab 15 (the PROM masks `0xff` to a nibble), never 255.
+- A good lone 350 gives `001c01^0#0`: rack 1, type `c`, bay 1, slot 0, slab 0.
+
+### The PROM's path (established unless marked)
+
+| Field | Source | Site |
+|---|---|---|
+| module | L1 `0x0003` word `rack << 6 | bay` and type letter (lowercased); packed `rack << 16 | type << 8 | bay` | `0xffa7d1f0`, `0xffa7d510`, `0xffa7d010` |
+| type character | `0x0003` letter; `f`, `l`, `b`, `{` become `c` when L1 `0x000e` returns slab 0 or `0xff` (also `o`, `5`, `m`, `@` become `c` unconditionally) | `0xffa7d510` |
+| slab | L1 `0x000e` (low nibble of byte +5) | `0xffa7d950`, `0xffa7ce90` |
+| slot | L1 `0x0013` first integer (high nibble of byte +5); `0xff` on error, masked to 15 | `0xffa7d760`, `0xffa7cbe0` |
+| type 2 (node) | always written by the builder, whatever the L1 said | `0xffaac4b0`, packer `0xffa11f10` |
+
+1. `main` (`0xffa19a20`) re-initialises the local node record (`0xffa197f0` -> `0xffa0f8c0`, which sets an all-zero, type-0 geoid and partition `0xff`), then stores the `0xffaac4b0(2, nasid)` result at record +8 (8 bytes) and +16 (4 bytes) and the L1 `0x0009` partition at +5. The PROM's own console text (`000c00#0a`, `module/000c00/slab/0`) is printed from this record and the L1 cache, so it can be valid while the kernel's geoid is not.
+2. `0xffa47290` copies that record into the configuration table (tag `PCFG`, 0x48-byte entries, record at entry +0x30, geoid at +0x38 and +0x40) through `0xffa450e0`. Only `shub_discover` (`0xffa5df20`, ops slot `0x1c0`, reached from the neighbour crawl `0xffa45780`) rewrites an entry's geoid: it reads the L1 "pushed data" word (SHub scratch register `0x1_101d_0080` path, `0xffa8d120`) and on failure prints "shub_discover: sysctl_get_pushed_data failed" and stores a **type-0** geoid. With no linked port the crawl does not reach it (inferred from the port-flag test; not run).
+3. At SAL runtime `0xffb28df0` (called from the I/O setup `0xffb2d450`, itself reached from the `IOIF` handlers) walks the table entries of class SHub or TIO whose partition byte equals the local one and, per entry, `0xffb28c30` allocates a `0xc78`-byte node record: geoid copied from the entry to +0 (8 plus 4 bytes), `nasid` at +0xc, peer `0xffff` at +0xe. `0x55` copies the first `0x2f0` bytes of that record (`0xffb3d8e0`); it returns 1 and copies nothing if the NASID is not on the node list.
+4. Other places that make a type-0 geoid: `0xffa11f10` with type 0 (also used as the default of `0xffa12440` and `0xffb22720`).
+
+### Why the model shows `?35?255^255#255`
+
+Established: the kernel read a type-0 `hdi_geoid`. Not established: which PROM step produced it. By the reading above, a node whose L1 answers `0x0003`/`0x000e`/`0x0013` (even with zeros, which gives `000c00`) reaches the table with a type-2 geoid, so the L1 values are not the cause. Candidates, in order: (a) `0x55` returned non-zero or was not called, leaving the kernel's zeroed structure (**inferred**: the kernel `kzalloc`s it and skips on a non-zero status); (b) `shub_discover` ran and failed on the pushed-data word (**inferred**: only if the crawl reaches it); (c) the record at `[[0x1000038]+0x38]` is rebuilt after `main` without a refill (**unknown**: not seen in the direct callers of `0xffa0f8c0`). A run that logs the `0x55` result and dumps the first 16 bytes of the returned structure separates (a) from (b) and (c); that is the route.
+
+### What the model must answer for a lone 350 at rack 1, bay 1
+
+Reply payloads, frame grammar of [the L1 request page](../../software/firmware/snprom/l1-requests.md#conventions-used-below) (status 4 bytes, count, arguments tag `00` plus 4-byte big-endian integer):
+
+| Request | Payload |
+|---|---|
+| `0x0003` | `00000000 02 00 00000041 00 00000046` (word `1 << 6 | 1`, type `F`) |
+| `0x000e` | `00000000 01 00 00000000` (slab 0) |
+| `0x0013` | `00000000 02 00 00000000 00 00000046` (slot 0, type `F`) |
+
+The PROM lowercases `F`, sees slab 0 and uses type `c`, so the module is `0x00016301` and the geoid `001c01^0#0` (**inferred** for `F`: no real 350 reply is held; rack 001 and bay 01 are the example's choice). These replies fix the L1-derived fields only; they do not by themselves clear the type-0 symptom (previous section).
+
 ## 3. What Linux reads, and what breaks
 
 Linux reads only the board list header and three board fields. Everything else in the structures is written for other

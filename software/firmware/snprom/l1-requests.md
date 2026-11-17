@@ -725,3 +725,7 @@ Independent review of chips commit `14dc77b` (the section "Request 0x1007 and th
 - "The kernel does not come back" from the die path is now inferred (the code returns, the stop is a model observation).
 
 **Not checked.** That ops-table slots `+0x248` and `+0x250` are `sc_uart_rxintr` and `sc_uart_txintr` was read from the call sites and their consistency (readc re-enable, xmit disable), not from the table. The `+0x800`/`+0x804` ring read in `l1sc_intr_status`. `sysctl_display_text` as request `0x1005`. `PUTB`'s per-byte buffering helper `0x7f7a0`. The `-106` second-status path (decompiler lost it). Whether the 3,000,000 ticks are 3 s. Hardware delivery of the UART interrupt.
+
+## Geoid consumers of the identity requests
+
+`0x0003`, `0x000e` and `0x0013` feed the node geoid through `0xffaac4b0`; the field mapping and the replies for a lone 350 are in [KLCONFIG: geoid and module id](../../../platforms/sn2/klconfig.md#geoid-and-module-id). No new request code was found. Related, not an L1 request: `shub_discover` reads an L1-pushed word from SHub scratch `0x1_101d_0080`; its layout (type byte `l`; slab bits 18:16, bay 25:20, rack 34:26, slot 38:35, module type forced to `c`) is **inferred** from `0xffa8d120` and is not yet modelled.
