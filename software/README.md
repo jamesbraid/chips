@@ -23,4 +23,5 @@
 
 | Page | Title | Summary |
 |---|---|---|
+| [altix-distro-install.md](linux/altix-distro-install.md) | Installing a full Altix Linux distribution | Scope: an Altix 350 booting PROM 10.54 (SAL 5.04) with elilo. |
 | [sn2-early-boot.md](linux/sn2-early-boot.md) | SN2 early boot: what the 2.6.5-7.244 Altix kernel needs from firmware | From the kernel entry point through `start_kernel`, `setup_arch`, `sn_setup` and `sn_cpu_init`: every table... |
