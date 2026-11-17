@@ -1,0 +1,21 @@
+{
+ "default": "software/kernel/{1}",
+ "rules": [
+  {"match": "/pcibr\\.o$", "dir": "devices/bridge"},
+  {"match": "/xtalk\\.o$", "dir": "devices/crosstalk"},
+  {"match": "/(xbow|xbmon)\\.o$", "dir": "devices/xbow"},
+  {"match": "/(if_ef|ioc3_pckm|ioc3ei)\\.o$|sio_ioc3\\.o", "dir": "devices/ioc3"},
+  {"match": "/(ioc4|ioc4_pckm|ioc4_ei)\\.o$|sio_ioc4\\.o", "dir": "devices/ioc4"},
+  {"match": "/(mvp|a3_dd|if_me|pcimh|mhpckm|if_ecf|mace)\\.o$", "dir": "devices/mace"},
+  {"match": "crime\\.a\\(", "dir": "devices/crime"},
+  {"match": "/rad_dd\\.o$", "dir": "devices/rad1"},
+  {"match": "/(l1_command|l1|elsc)\\.o$|sio_l1\\.o", "dir": "devices/l1"},
+  {"match": "/nic\\.o$", "dir": "devices/ds2502"},
+  {"match": "/eeprom\\.o$", "dir": "devices/bedrock"},
+  {"match": "/ecplp\\.o$", "dir": "devices/ecplp"},
+  {"match": "/pic\\.o$", "dir": "devices/pic"},
+  {"match": "/heart\\.o$", "dir": "devices/heart"},
+  {"match": "/sn0drv\\.o$", "dir": "devices/hub"},
+  {"match": "^sbin/stand/", "dir": "software/firmware"}
+ ]
+}

@@ -1,0 +1,11 @@
+# Readings: `IP27/usr/cpu/sysgen/IP27boot/os.a(tstamp.o)`
+
+One entry per routine, filed here from the reading batches by binary.
+
+- `log_tstamp_event` in `IP27/usr/cpu/sysgen/IP27boot/os.a(tstamp.o)` at 0x2fc
+  **Inferred.** Reads the halfword at 0xffffffffffffc420 (the `lh` at 0x304), uses it to index `sym(pdaindr)` in 16-byte steps and loads a pointer at +8 (the `ld` at 0x320). It stores doublewords at +0x300 (0x374), +0x8, +0x28, +0x20, +0x18 and +0x10 (0x378 to 0x388) and a word at +0x0 (0x38c); the facts do not name the base register of these stores. `atomicIncWithWrap` at 0x400 is reached only on the side of the `beq` at 0x3bc where the doubleword at +0x288 of the per-CPU record is nonzero. `getsr` (0x538), `issplprof` (0x540), `splhi` (0x550), `compare_and_dec_int_gt` (0x590), `sv_signal` (0x5a0) and `splx` (0x5a8) sit behind further tests: the `beq` at 0x524, the `bne` at 0x530, the `bne` at 0x548 (taken when `issplprof` returns nonzero) and the tests at 0x55c, 0x568, 0x57c and 0x588; `sv_signal` runs only when `compare_and_dec_int_gt` returns nonzero (the `beq` at 0x598). The return at 0x3b0 is one of an unresolved value, `ret(atomicIncWithWrap)`, `ret(issplprof)` and `ret(splx)`. Role (from name): appends a timestamp event to a per-CPU log; the facts do not show the log layout.
+  Reviewed: 2026-11-12
+
+- `log_tstamp_vevent` in `IP27/usr/cpu/sysgen/IP27boot/os.a(tstamp.o)` at 0x5c8
+  **Inferred.** Role (from name): the variable-length form of `log_tstamp_event` at 0x2fc. It makes the same `sym(pdaindr)` lookup (the `lh` at 0x5d0 and the `ld` at 0x5ec). It loads 8-byte words at +0x0, +0x8, +0x10 and +0x18 (0x67c to 0x69c) and stores a word at +0x0 and doublewords at +0x10, +0x18, +0x20, +0x8 and +0x28 (0x678 to 0x6ac); the facts do not name the base registers, so a copy from a1 is not shown. The `bne` at 0x6a8 goes to 0x710 when a2 is below 0x28, and the `beq` at 0x710 goes to 0x748 when a2 is zero. On the nonzero side `bcopy` is called at 0x73c, with further `bcopy` calls at 0x8c8, 0x8dc and 0x8f0. It calls `atomicAddWithWrap` at 0x814 where the event routine calls `atomicIncWithWrap`. `getsr` (0x9d8), `issplprof` (0x9e0), `splhi` (0x9f0), `compare_and_dec_int_gt` (0xa30), `sv_signal` (0xa40) and `splx` (0xa48) sit behind the same kind of tests as in the event routine.
+  Reviewed: 2026-11-12
