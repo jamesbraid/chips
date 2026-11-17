@@ -231,7 +231,7 @@ Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump l
 
 **Not checked.** The PROM-side rebuild of the NASID in the thread-wake sender beyond the existing page text, the SHub's own pid decode (unknown, as stated), and the `msr[1559]` bit meanings on hardware.
 
-## 5. Multi-CPU entry and the per-slice table
+## 6. Multi-CPU entry and the per-slice table
 
 Why a second processor (slice 2, `cr.lid` `0x0100_0000`) faults in the SAL_B reset path of SAL 5.04 when it shares the early RAM at `0x1000000` with slice 0. Read from a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (PAL_B 5.73 for procedure 520); Itanium SDM rev 2.3 vol 2 (245318) and vol 3 (323207); Itanium 2 reference manual 251110-003 Table 2-5 for the L3 geometry. The fault values quoted are from a model that runs both processors over one shared RAM; they are model behaviour, used here only to check the reading.
 
@@ -247,7 +247,7 @@ Why a second processor (slice 2, `cr.lid` `0x0100_0000`) faults in the SAL_B res
 
 `0xffac42d0(layout, nasid, flag)`, called by every processor at `0xffa1e1b6` as `(0, 0, 0)`, right after PAL 520:
 
-- **Base.** It reads the local NASID from `SH_SHUB_ID` (`0x1_1006_0580`, bits 42:32) and compares it with `nasid`. When they match the table base is plain `0x1000000`; otherwise it is the node window `0x8000_0030_0100_0000 | nasid << 38`.
+- **Base.** It reads the local NASID from `SH_SHUB_ID` (`0x8000_0081_1006_0580`, the PROM's form with bits 63 and 39 set; bare `0x1_1006_0580` is the node-local MMR offset), bits 42:32, and compares it with `nasid`. When they match the table base is plain `0x1000000`; otherwise it is the node window `0x8000_0030_0100_0000 | nasid << 38`.
 - **Carves.** The carver `0xffac4230(in, out, next, flag)` walks a size list in flash: an odd entry is a marker stored with bit 0 cleared (skipped when `flag` is non-zero), an even entry stores `next` and adds the size, a zero entry stores `0x7f`, `-1` ends the list and stores the final `next`. Layout 0 uses `0xffbe6b28` (into slots 0 to 9 from `0x1000100`), `0xffbe6bc8` (slots 9 to 15 from `0x101a900`), then fills the record named by slot 2 from `0xffbe6c48` (headed `CPUPDATA`, offsets array at `+0x200`) and the arena named by slot 9 (headed `CPUTDATA`, offsets at `+0x180`). Layout 0 then skips the per-slice blocks that follow (`(p1) br` at `0xffac49f0`; the first of them reads slot 3). Before the swap the table is: slot 0 = 0, slot 1 = 2, slot 2 = `0x1000100`, slots 3 to 5 = `0xfe`, slot 6 = `0x7f`, slot 7 = `0x100a100`, slot 8 = `0x101a100`, slot 9 = `0x101a900`, slots 10 to 12 = `0xfe`, slot 13 = `0x7f`, slot 14 = `0x1024900`.
 - **The swap (`0xffac6080` to `0xffac6100`, layout 0 on the local node only).** It reads `cr.lid` bits 26:23 = n and exchanges slot 9 with slot 9+n, then slot 2 with slot 2+n, with plain loads and stores (no lock, no `cmpxchg`). Then it writes `SAL-DATA` to slot 0 (`0xffac6206`).
 - **Result for one processor.** Slice 0: no change. Slice 2 alone: slot 2 = `0xfe`, slot 4 = `0x1000100`, slot 9 = `0xfe`, slot 11 = `0x101a900`. Every slice gets its record at `0x1000100` and its stack arena at `0x101a900`, in its own slot.
@@ -265,7 +265,7 @@ So the PROM depends on `0x1000000` to `0x103ffff` being per processor from the P
 
 ### 4. PAL 520 sets the private range up (handler established as code; meaning inferred)
 
-Details in [pal-msrs.md](pal-msrs.md#pal-520-0x208). In short: SAL_B calls it at `0xffa9b586` with `r29 = 0x1000000`, `r30 = 0x40000`, `r31 = 0`. The PAL_B 5.73 handler (`0xffea42a0`) counts enabled L3 ways from msr[1536] bits 59:48 at 256 KiB a way, returns -4 if `r30 + r31` is larger and -5 if `r29` is not 256 KiB aligned, sets a group of msr bits (among them msr[1504] bits 24, 32 and 33, or 16, 40 and 41, chosen by `cpuid[3]` bits 15:8 against 3), and for each 256 KiB chunk issues one command with tag `r29 >> 18`, state 3 and a set range of 2048 entries, then one with sixteen zero data words (`0xffea4ad0`, `0xffea4fb0`). Read as an L3 tag-array write over one whole way followed by a zero data write (inferred from the field layout: tag shifted by 22, seven ECC bits computed over it, a 2048-entry range per way). With 128-byte lines and 4 ways per MB (251110-003 Table 2-5), one Madison L3 way is 256 KiB at any cache size. The SHub is not touched.
+Details in [pal-msrs.md](pal-msrs.md#pal-520-0x208). In short: SAL_B calls it at `0xffa9b586` with `r29 = 0x1000000`, `r30 = 0x40000`, `r31 = 0`. The PAL_B 5.73 handler (`0xffea42a0`) counts enabled L3 ways from msr[1536] bits 59:48 at 256 KiB a way, returns -4 if `r30 + r31` is larger and -5 if `r29` is not 256 KiB aligned, sets a group of msr bits (among them msr[1504] bits 24, 32 and 33, or 16, 40 and 41, chosen by `cpuid[3]` bits 15:8 against 3), and for each 256 KiB chunk issues one command with tag `r29 >> 18`, state 3 and a set range of 2048 entries, then one with sixteen zero data words (`0xffea4ad0`, `0xffea4fb0`). Read as an L3 tag-array write over one whole way followed by a zero data write (inferred from the field layout: tag shifted by 22, seven ECC bits computed over it, a 2048-entry range per way). With 128-byte lines and 4 ways per MB for parts up to 6 MB (251110-003 Table 2-5), one Madison L3 way is 256 KiB: 2048 sets × 128 bytes, with 24 ways = 6 MB. The up-to-9 MB row has 2 ways per MB, so a way is 512 KiB there; the PAL arithmetic fits parts up to 6 MB. The SHub is not touched.
 
 ### 5. Leaving the private range (established as code)
 
@@ -289,14 +289,17 @@ Details in [pal-msrs.md](pal-msrs.md#pal-520-0x208). In short: SAL_B calls it at
 1. **A per-processor overlay of the L3-installed range.** While a processor is in this mode, its loads and stores to the range PAL 520 installed (`0x1000000` to `0x103ffff` here) go to memory private to that processor, zero-filled, and are never seen by other processors or by DMA.
    - Entry: the PAL 520 tag-install commands. The handler writes msr[1545] = `tag << 22 | ecc << 3 | 3` and msr[1546] with command bits 63:52 = `0x94c` and the set range, then the undecodable slot; tag `0x40` = address `0x1000000`, one way = 256 KiB. A model that keys on the range from these writes needs nothing guest-specific; one that keys on the PAL 520 arguments at PAL entry is an approximation and needs that stated and reviewed.
    - Exit: the disable path of the same handler, the msr[1504] write that clears bits 24, 32 and 33 (or 16, 40 and 41 on the other path). At exit drop the overlay without writing it to memory.
+   - The per-CPU copy block runs only when `cpuid[3]`'s family is not 0x20, so the model must present Madison's family.
+   - Whether the PROM's accesses through the 2^18 translation are write-back was not checked, so an overlay should accept any memory attribute.
 2. Nothing in the SHub. The election, `cpu_bits`, node lock and progress registers stay shared and lock-correct as already modelled.
-3. When the fault recurs, capture `cr.iip`, `cr.ipsr`, `cr.isr` and `0x1000000` to `0x1000060`. With `psr.ic` clear a nested fault leaves IFA, ISR and IIP from the first one (SDM vol 2 section 5.8, p. 2:101). Separately, `cr.isr` `0x0000_0802_0000_0000` for the `st8` in slot 1 of `0xffa1e280` has `ei` (bits 42:41) = 0; SDM vol 2 Table 3-7 (p. 2:37) gives `ei` = `ipsr.ri` for faults, so it should be 1. Not checked against the model.
+3. When the fault recurs, capture `cr.iip`, `cr.ipsr`, `cr.isr` and `0x1000000` to `0x1000060`. With `psr.ic` = 0, IPSR, IIP, IFA, IIM and IHA are left unchanged (SDM vol 2 section 5.5, pp. 2:101 to 2:102). ISR is overwritten on every interruption except a Data Nested TLB fault, and ISR.ni is set to 1. Separately, `cr.isr` `0x0000_0802_0000_0000` for the `st8` in slot 1 of `0xffa1e280` has `ei` (bits 42:41) = 0; SDM vol 2 Table 3-7 (p. 2:37) gives `ei` = `ipsr.ri` for faults, so it should be 1. Not checked against the model.
 
 ### Unknown
 
 - What the L3 does with the installed lines on the 520 disable path, and which msr[1504] bits stop write-back or replacement. Settle by an Itanium 2 microarchitecture document that defines msr[1504] and the msr[1546] `0x94c` and `0x949` commands (none of the held revisions does), or a captured boot from a two-processor system with progress readout.
 - The meaning of the undecodable slot that commits each command (see [pal-instructions.md](pal-instructions.md)).
 - Whether the transfer area is per slice on hardware layouts (sized by slice argument; the sizer body was not read).
+- How two CPUs holding the same address in L3 state 3 avoid each other's bus snoops.
 
 ## Review (independent, chips c669e77 and fbb3bc7: per-slice table, PAL 520 and the overlay recipe)
 
