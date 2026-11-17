@@ -489,7 +489,7 @@ What the SHub 1 console UART is, what is at the other end and what its datasheet
 - ST16C550 (Exar, Rev. 4.30, LSR bit-5): same sentence as the PC16550D ("this bit causes the UART to issue an interrupt to CPU when the THR interrupt enable is set"). Only the LSR bit 5 and MCR text were checked in this copy.
 - Linux `serial8250_THRE_test` (`drivers/tty/serial/8250/8250_port.c`): "Real 16550s should always reassert this interrupt whenever the transmitter is idle and the interrupt is enabled." It writes IER 0, then `UART_IER_THRI`, and reads IIR; a part that does not reassert gets `UART_BUG_THRE` and a backup timer. It never writes THRI over THRI. Software expectation for 0 to 1 only.
 - None of the above says a THRE interrupt already cleared by an IIR read comes back on a same-value IER write. A reading of the datasheets as "THRE and ETBEI" being a level fits the text of the LSR bullet but contradicts the IIR-read reset in Table IV and Table 7-5, so a model cannot take the level reading from them.
-- The functional argument for 3 to 3 (the PROM and Linux flow in rule 4 stalls without it) is software-expectation grade at most: Linux has a fallback timer (`sn_console.c`, the 60 Hz timer noted above) that was not read for whether it would hide a missed THRE on real hardware.
+- The functional argument for 3 to 3 (the PROM and Linux flow in rule 4 stalls without it) is software-expectation grade. The 60 Hz fallback timer cannot hide a missed THRE: `sn_sal_timer_poll` transmits and re-arms only while `sc_port.irq` is 0 (`sn_console.c` lines 612 to 629), and `sn_sal_switch_to_interrupts` sets it once the IRQ is granted (lines 697 to 719), so in interrupt mode only the UART interrupt moves transmit.
 
 **1. What the part is and where it sits.**
 
