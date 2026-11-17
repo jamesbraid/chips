@@ -86,3 +86,24 @@ relocation problem. (inferred)
   through, and that a recovery `ld1` to the same UC address completes.
 - A model that stalls on an unpopulated uncached read where hardware returns data or an error
   response needs that fixed independent of this kernel.
+
+## Review (commits f78eac5, 6dd869e and the 3666ff7 edit)
+
+Independent review of chips commits `f78eac5` and `6dd869e` and of the part of `3666ff7` that rewrites the Q3 bullet, examined at those revisions. The reviewer wrote none of it. Method: a copy of the installer `vmlinux` (sha256 `f2c573c29dbb...`) disassembled with `ia64-linux-gnu-objdump` and its section headers and `.got` bytes read directly; Linux 3.2.78 `arch/ia64/kernel/unwind.c`, `unwind_i.h`, `head.S`, `include/asm/sections.h`, `include/asm/pgtable.h` and `include/asm/unwind.h` from kernel.org (the Library holds no 3.2.78 ia64 tree). Nothing was run.
+
+**Confirmed.**
+- `unw_init` at `0xa000000100a09950` has no `alloc` (leaf) and sits in `.init.text` (`0xa000000100a00000`); `.IA_64.unwind` is `0xa000000100888040` plus `0x595e0`, so `__end_unwind` is `0xa0000001008e1620`.
+- The eight `movl` constants are `0x1ffffffffffffff0` to `f7` (one per byte load). The main path loads `r28` from the GOT with `ld8` at `a0a056`, the `movl r30=0x1ffffffffffffff1` is at `a0a066`, `add r29=r28,r30` at `a0a076`, `ld1.a r26=[r29]` at `a0a0a0`, `chk.a.clr r26` to `a0a4a0` at `a0a106`. The stub at `a0a4a0` reloads with `ld1`, shifts, ORs and does `br.few` to `a0a110`. The sum is `0xc0000001008e1611`, region 6, physical `0x1_008e_1611`. The bundle hand decode is right.
+- GOT: `r28` comes from `addl r28=-2096176,r1` (`a0a03c`), which is `r1 - 0x1ffc30`; with `r1 = .got + 0x200000` that slot is `0xa000000100ca2900` and holds `20 16 8e 00 01 00 00 a0`, i.e. `0xa0000001008e1620`. The start-table slot at `r1 - 0x1ffda8` holds `0xa000000100888040`, which independently confirms `r1`. The section list has no relocation section.
+- Between `a0a0a0` and `a0a106` there is no call, `invala`, `rfi` or `srlz`; the one store is `st8 [r10]=r31` at `a0a0e0`.
+- Source: `init_unwind_table` is `unwind.c:2082-2094`, `unw_init` ends at `:2281` with the call at `:2279`, `__end_unwind` is `char[]` (`sections.h:26`), `KERNEL_TR_PAGE_SHIFT` is `_PAGE_SIZE_64M` (`pgtable.h:585`), and `head.S:238-247` pins the TR from `mov r3=ip` with `dep r2=0,r3,0,KERNEL_TR_PAGE_SHIFT`.
+
+**Findings.**
+1. **Q3 still says unmapped memory "just returns data" and grades it inferred.** `3666ff7` says on the address-map page that no source shows what a load to a hole returns and that survival on real machines is a premise. The two pages now disagree. Fix: grade "unmapped or unpopulated memory just returns data" and "the same read happens on real hardware" **unknown** (a premise), and keep "model-side or memory-map-side" as the working conclusion only if the Debian 7.11 netinst is known to boot on a real Altix, which no cited source says.
+2. The bullet that says gcc reads the 8-byte `end_offset` "as eight `ld1.a`" because `__end_unwind` is a `char[]` is an explanation, not a reading. `struct unw_table_entry` is three plain `u64` (`unwind.h:96-100`, not packed). The byte loads and the masking are established from the binary; the reason is **inferred** at best. Fix: label it so, as the masking already is "unknown".
+3. The claim that Debian's own mckinley kernel has the same eight constants and the same plain region 5 GOT values (and the System.map addresses quoted in the first section) was not checked: the package is in another session's scratch and was not unpacked.
+4. `r10 = &unw.kernel_table.start` for the one store was not traced.
+
+**Verdict.** Accept the disassembly, the GOT evidence, the head.S TR pinning and the `unw_init` / `init_unwind_table` attribution as written. Finding 1 must be fixed before a model session relies on Q3's last bullet; the model requirement itself (complete an uncached byte read at physical `0x1_008e_1611` with some answer) stands as a requirement of this kernel, not as a claim about hardware.
+
+**Not verified.** The `ia64_tpa` call-site greps (`setup.c:228-233`, `mca.c:2007-2047`, `smpboot.c:854`, `machine_kexec.c`, `efi.c:208`, `patch.c:111`, `pci_dma.c:428`); the Debian mckinley package facts (item 3); the ALAT statement, which the page makes without a citation (the architecture's allowance to drop entries was not checked against the held Itanium manual); the two-line ALAT test, which was not run.

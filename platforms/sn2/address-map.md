@@ -178,3 +178,22 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 - Big window reach: the translation-table comment in `shubio.h` gives 16 GiB per widget for M-mode (five offset bits with SysAD[28:0]) and, for N-mode, five bits with SysAD[27:0] plus the IOSP bit as Crosstalk[47], 8 GiB. The page's wording matches.
 
 **Findings.** One mechanical wording fix, made. **Cleared:** findings 1 and 2 of the first review as now worded. **Not cleared:** as before (finding 3, the AS = 0 node-field reading, GET space, SHub 2 NASID shift).
+
+## Review (accesses to undefined MMR offsets, commit 3666ff7)
+
+Independent review of chips commit `3666ff7` (the address-map section), examined at that revision. The reviewer wrote none of it. Method: the SGI Linux 2.4 `shub_mmr.h` from the Library (root `linux-mips`, `include/asm-ia64/sn/sn2/shub_mmr.h`), read as text; the PROM `shub1snprom.bin` (SAL 5.04) re-read in the Ghidra IA-64 module and as image bytes. Nothing was run.
+
+**Confirmed.**
+- Decode: `0x1_008e_1610` has bits 38 and up clear (node field 0), bits 37:36 clear (AS 0) and bit 35 clear, so it is local resources space with space id 0 under the page's own AS = 0 table. The AS 3 memory base `0x30_0000_0000` follows from `3 << 36`.
+- `SH_PI_ERROR_SUMMARY` is `0x1_2006_0680`; bit 25 `ADDR_ACCESS` ("Access to Address is not supported") is at `shub_mmr.h` line 7791-7794, next to bit 24 `REQ_FORMAT` ("FSB request format not supported"). `SH_PI_ERROR_MASK` is `0x1_2005_0a80`, INIT `0x7ffffffff`, `ADDR_ACCESS` at bit 25 (lines 6334-6466): a set bit masks detection.
+- The PROM function `0xffa23600` looks up `AttrCheck` with no buffer (only the sign of the status is used, so any value, including an empty one, counts as set) and writes `0x8020_0000` to `SH_PI_ERROR_MASK` when it is present (list at `0xffbd92d8`) and `0x8320_0000` when it is absent (`0xffbd9388`); the earlier lists at `0xffbd9280` and `0xffbd9330` hold `0x1_8020_0000` and `0x1_8320_0000`. `0x8320_0000` is bits 31, 25, 24 and 21.
+- The approximation is labelled as one, states its limitation and gives a discriminating test (a real read of an AS 0 offset above 4 GiB).
+
+**Findings.**
+1. **The register-range figures do not match the 2.4 header.** The page says the registers for this range "stop at `0x1_0005_1000` and resume at `0x1_0183_0200`". In the 2.4 header the `0x1_0005_xxxx` block continues to `SH_MD_DQRP_MMR_DIR_TBLMASK` `0x1_0005_4020` and the BIST registers at `0x1_0005_8xxx`, `0x1_0006_8xxx` and `0x1_0006_9000`; the last one below `0x1_1000_0000` is `SH_MD_DQRS_MMR_YAMOPW_ERR` at `0x1_0006_a000`; nothing in the header is at `0x1_0183_0200`. The conclusion (`0x1_008e_xxxx` is a hole even with bit 35 set) is unchanged. Fix the two figures and drop "I did not enumerate". (The enumeration used a regex over the `#define` lines of the Library's text rendering of the file; a register defined another way would be missed.)
+2. **The flash is not "below 4 GiB" in the PROM's own access path.** The PROM maps the node flash at `(nasid << 38) | 0x8000000fff800000`, i.e. offset `0xf_ff80_0000`, which has bit 35 set and is therefore the node's global window, not the compatibility space. The sentence "the compatibility space holds only the 16 MiB alias, the flash at `0xff80_0000` and the port-space window" is about the processor-side window and stays true, but a reader will want the second flash address named, because the occupant list of AS 0 offsets above 4 GiB is the page's argument. This does not affect the `0x1_008e_1610` decode. See [PROM variables](../../software/firmware/snprom/efi-boot.md#prom-variables).
+3. Grade: the decode is labelled "established as arithmetic over the header's layout"; it is that, provided the header's space-id reading of the node field (stated in the AS = 0 section) is itself the grade of that section. No change needed.
+
+**Verdict.** Accept, with finding 1 fixed. "Complete with zeros" is correctly an approximation and not hardware behaviour.
+
+**Not verified.** The forced write error at `0x1_1005_0608` and the "no machine check" claim (taken from [prom-reset.md](../../devices/shub/prom-reset.md), not re-read); which early mask list the PROM selects by default; the v5.3 `huberror.c` and `mca.c` statements; that real Altix machines survive the load.
