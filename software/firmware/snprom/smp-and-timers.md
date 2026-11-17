@@ -125,13 +125,67 @@ All six stores land in the per-node record `rec = main_ptov([block A + 0x90])`; 
 
 The runtime services `SAL_PROBE`/`sal_probe_resume_on_mca` (`rt:0x83c50`), `register_no_fault_zone_virtual` and `_physical` (`rt:0x3f70`, `0x4050`) and the `sal_event_*_mc_region` family (`rt:0x3a6e0`, `0x3a8a0`, `0x3abc0`) are the names of the machinery that lets an MCA during a protected PIO read return to the OS instead of dying. They hang off the path above: the SAL check handler consults the registered no-fault regions before choosing to hand over to OS_MCA or to resume. The decisions inside `0xffa07230` and the region walk were **not** read in this pass (**unknown**), so the exact condition that turns a read of an empty slot into "return to the probe" is open; [the probe call](../../sal/sn2-runtime.md) has the PROM-side result values (r8 = 1 and r9 = -1 when the protected read faulted).
 
+## 5. Processor ids (cr.lid) and IPI pids
+
+How `cr.lid`, the 16-bit processor id (the PROM calls it the pid, Linux the SAPIC id or physical id), the SAL tables and the `SH_IPI_INT` message fit together. PROM facts are from `shub1snprom.bin` 10.54 (Ghidra and objdump); Linux is `linux-history` plus the local `linux-sn2` mirror (`arch/ia64/include/asm/sn/sn_cpuid.h`, `sn_sal.h`, `shub_mmr.h`, `arch/ia64/sn/kernel/{setup.c,sn2/sn2_smp.c}`, `arch/ia64/kernel/acpi.c`).
+
+### Layout (established from the PROM code)
+
+SDM rev 2.3 vol 2 part 1 section 5.8.3.1 (p. 2:122, Figure 5-6, Table 5-10) puts `id` in `cr.lid` bits 31:24 and `eid` in 23:16, "initialized by platform firmware", and says the two fields correspond to bits 19:4 of the interrupt message. SN2 gives those sixteen bits a meaning of its own, and the byte split is only where the architecture's boundary happens to fall:
+
+| `cr.lid` bits | pid bits | Meaning | Where it shows |
+|---|---|---|---|
+| 22:16 | 6:0 | NASID bits 6:0 | SAL_B `0xffaec240`; `chipset_get_nasid` extr 0..6 |
+| 26:23 | 10:7 | slice (4-bit field; only bits 24:23 are ever set) | `extr.u cr.lid,23,4` at every use (progress history `0x81_5003_1500 + 16 * slice`, per-CPU record `[0x1000000 + 8*(2 + slice)]`, save area `0x58000 + (slice << 13)`) |
+| 31:27 | 15:11 | NASID bits 11:7 | same routine |
+| 15:0 | | zero | |
+
+In SDM terms `eid` = NASID[6:0] | slice[0] << 7 and `id` = slice[3:1] | NASID[11:7] << 3. The pages that say "slice is `cr.lid` bits 26:23" and the SDM id/eid split therefore agree; the NASID is not in bits 26:23. `cr.lid = (((nasid >> 7) & 0x1f) << 11 | slice << 7 | (nasid & 0x7f)) << 16`.
+
+### Values for NASID 0
+
+| slice | `cr.lid` | pid | SDM (id, eid) |
+|---|---|---|---|
+| 0 | `0x0000_0000` | `0x0000` | (`0x00`, `0x00`) |
+| 1 | `0x0080_0000` | `0x0080` | (`0x00`, `0x80`) |
+| 2 | `0x0100_0000` | `0x0100` | (`0x01`, `0x00`) |
+| 3 | `0x0180_0000` | `0x0180` | (`0x01`, `0x80`) |
+
+In general pid = `cr.lid >> 16`. NASID 2, slice 2 is pid `0x0102`.
+
+**Which slices this PROM produces (established arithmetic, inferred consequence).** SAL_A takes the slice from `r33 & 3`, where `r33` is PALE_RESET's processor-id word. Every PAL_A in the image (7.31 `0xfffc4dd0`, 5.37 `0xfffcb9d0`, 1.27 `0xfffd2180`) builds it as `msr[1559]` bits 21:19 shifted left by one, so bit 0 is always 0 and the slice is 0 or 2 (one processor per front-side bus, matching SAL_B reading the agent-status register only for slices 0 and 2). `msr[1559]` bit 21 set makes `r33` bit 3 set and SAL_A spins. PAL_FIXED_ADDR (PAL_B 5.73 `0xffea1df0`) returns the same value. The PROM never makes slice 1 or 3 on SHub 1; the format and the four-slice code in SAL_B reserve them. A two-processor Altix 350 on NASID 0 is `cr.lid` `0x0000_0000` and `0x0100_0000`. What `msr[1559]` bits 21:19 hold on hardware (presumably the bus agent position): **unknown**.
+
+### What writes `cr.lid` (established)
+
+1. Nothing before SAL_A reads or writes it except PAL's own self-test (PAL_B sub-test 4 writes patterns and restores, [pal-b-halts.md](pal-b-halts.md#3-what-the-groups-test-and-what-a-healthy-processor-returns)). The reset value is **unknown**; the SDM says firmware loads it (p. 2:122).
+2. **SAL_A, reason 0 only** (`0xffc4edc0`, call at `0xffc4e386`): `cr.lid = (r33 & 3) << 23`, then `srlz.d`. NASID bits are zero. PALE_RESET's mask fields (SDM 11.2.2, p. 2:289, and Figure 11-8, p. 2:293: `id_mask` and `eid_mask`, `r33` bits 47:32) are zero in this PAL, so every bit of 31:16 is programmable.
+3. **SAL_B node-id install** (`0xffaec240`, from `0xffad7aa0`, every CPU): keeps the slice from the current `cr.lid`, merges the NASID as above, writes, `srlz.d`, reads back; a mismatch writes progress `0xc3` and halts. On a lone node the NASID is 0 and the value does not change.
+
+A model needs `cr.lid` bits 31:16 read/write with exact readback (the halt in step 3 and the PAL self-test both depend on it), and an interrupt-delivery path keyed on the same 16 bits.
+
+### What SAL tells Linux (established)
+
+- The CPU table the SAL system tables are built from holds `{u16 pid, u16 flags}` per present slice ([os-handoff-tables.md](os-handoff-tables.md)). The MADT local-SAPIC entry carries SAPIC id = `pid >> 8` and EID = `pid & 0xff`, so Linux's `cpu_physical_id` = `(id << 8) | eid` = pid (`acpi.c`), and `get_sapicid()` = `(cr.lid >> 16) & 0xffff` (`sn_cpuid.h`) is the same number.
+- `SN_SAL_GET_SAPIC_INFO(pid)` (`rt:0x85f0`): nasid = `(pid & 0x7f) | ((pid >> 11) << 7)`, subnode 0, slice = `(pid >> 7) & 0xf`. `sn_cpu_init` stores them in `phys_cpuid[]`, so `get_nasid()` and `get_slice()` come from this call. Linux's own fallback (`nasid = pid & 0xfff`, slice from bits 13:12) runs only if SAL says "not implemented", which this PROM does not, so it never applies here.
+
+### The IPI pid (established for the sender, inferred for the hardware)
+
+`SH_IPI_INT` is `0x1_1000_0380` of the target node. The message Linux sends (`sn_send_IPI_phys`, `shub_mmr.h`: type shift 0, agent 3, pid 4, base 21, vector 52, send 63) is
+
+`1 << 63 | vector << 52 | 0xfee << 21 | pid << 4 | type`
+
+with pid = the target's `cr.lid >> 16` as above. The NASID is not in the message: the store goes to `0x8_0000_0000 + (nasid << 38) + 0x1_1000_0380`, and `nasid` is rebuilt from the pid (`pid[6:0]`, then `pid[15:11]` shifted to `[11:7]`), by the PROM and (through `GET_SAPIC_INFO`) by Linux. The PROM's own messages use the same pid with base 0. Examples for NASID 0: IPI vector `0x12` to slice 2 is `0x8120_0000_0000_0000 | 0x0100 << 4` = `0x8120_0000_0000_1000`; the PMI message to slice 2 is `0x8010_0000_0000_1002`.
+
+The SHub's own rule for choosing the slice from the pid, and whether it compares pid bits 15:11 and 6:0 at all after the address has chosen the node, is not in any read code: **unknown**. The inference that it uses pid bits 10:7 rests on the PROM's per-slice comparator and `SH_LOCAL_INT*_CONFIG` values, which carry the slice in the same bits ([interrupts.md](../../../devices/shub/interrupts.md#processor-id-and-message-layout-the-prom-uses)).
+
 ## Unknowns
 
 - Per-slice register behind the boot state (`mcrz_flg`), and what a write of 1 to its field is needed to look like on hardware.
 - The hook at `0xffa1f7b0` that can override the boot-processor choice.
 - Processor state at `start_ap` entry (PSR, RSE).
 - Whether hardware sets `cr.irr0` bit 0 for a vector-0 external interrupt (the PROM's thread park depends on it; irrelevant on a processor without threads).
-- The region-walk and classification inside `0xffa07230` and `0xffa03c60`; the PAL half of the machine-check hand-over (`PALE_CHECK` to the SAL return and `PAL_MC_RESUME`).
+- The region-walk inside `0xffa07230` and `0xffa03c60`. The PAL half of the machine-check hand-over (`PALE_CHECK` to `PAL_MC_RESUME`) is read in [pal-b-halts.md](pal-b-halts.md#pale_check-and-the-machine-check-hand-off); what an empty-slot bus error latches for PAL to call it contained is still open there.
+- What the SHub does with the pid to pick a slice, and what `msr[1559]` bits 21:19 hold on hardware ([Processor ids](#5-processor-ids-crlid-and-ipi-pids)).
 - `msr[1559]` bits 26:22 on hardware.
 
 ## Sources
