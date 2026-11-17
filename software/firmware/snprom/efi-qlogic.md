@@ -23,14 +23,12 @@ The assert sits in the bus-mode probe, `0x26b710` (established). Its arguments a
 | Access | PCI I/O protocol `Mem.Read` / `Mem.Write`, width 1 (16 bit), BAR index 1, offset = base + `0x06`, count 1; base is 0 (`ha[1]`, zeroed in `0x2685d0`) | established |
 | `tmp1` | the value read first | established |
 | `tmp2` | the value read back after writing `tmp1 | 0x0008` | established |
-| Bit 3 (`0x0008`) | the ISP1040-style "SXP register select" bit (`BIU_PCI_CONF1_SXP` in NetBSD `ispreg.h`) | inferred |
+| Bit 3 (`0x0008`) | the ISP1020/1040 "SXP register select" bit (`BIU_PCI_CONF1_SXP` in NetBSD `ispreg.h`). Its meaning on the 12160 is **unknown**: NetBSD's 1080/12160 register routines select the SXP banks with bits 9:8 and never use bit 3 | unknown (meaning); established (the driver stores, reads back and restores it) |
 
 The code writes bit 3, reads the register back and asserts the bit stuck. It then reads the register at `0xf6` (the SXP
 "DIFF pins" register in the ISP SXP block: Linux names `0xf2` `scsiControlPins`, NetBSD puts DIFF pins four bytes after
 control pins), which is only meaningful if bit 3 selected the SXP bank in the window at `0x80` to `0xff`.
-Linux `qla1280.c` selects that bank on the 12160 with `0x0100` (`SET_SXP_BANK`) instead; this driver uses the older bit. A real chip
-therefore keeps bit 3 and, with bits 9:8 clear, shows the SXP block. That is **inferred** from the driver passing on shipped
-hardware: no ISP12160 data sheet is in the Library, and Linux defines the bit as `ISP_CFG1_SXP` (bit 0) and never uses it.
+Linux `qla1280.c` selects that bank on the 12160 with `0x0100` (`SET_SXP_BANK`) and NetBSD with bits 9:8 (`BIU_PCI1080_CONF1_SXP0`/`SXP1`); the 1040-class bit 3 is not what the 1080 family uses. The driver passing on shipped hardware shows only that bit 3 is a read/write bit that reads back; that it shows an SXP bank is **not** established. No ISP12160 data sheet is in the Library, and Linux defines `ISP_CFG1_SXP` as bit 0 and never uses it.
 
 The "Firmware Rev 6" line printed before is not firmware. `QlogicScsiPassThruDriverBindingSupported` (`0x188360`) reads the first
 64 bytes of PCI configuration space, accepts vendor `0x1077` device `0x1216`, and prints segment, bus, device, function from
@@ -91,16 +89,15 @@ commands and report success.
 ## 3. Verdict
 
 A real ISP12160 does not depend on firmware the driver loaded for this assert. Bit 3 of bus configuration 1 is a plain register
-bit on the chip (read/write, selects the SXP bank in the `0x80` window): the driver sets it, reads it back and restores the old
+bit on the chip (read/write; whether it selects an SXP bank on this chip is unknown, see section 1): the driver sets it, reads it back and restores the old
 value, with the RISC paused and no mailbox command in flight. The model keeps only bits 9:8 of that register, so bit 3 never
-sticks. **Model fix:** store bit 3 of bus configuration 1 (inferred: with bit 3 set and bits 9:8 clear the window at `0x80` should show the SXP block).
+sticks. **Model fix:** store bit 3 of bus configuration 1 (established as the requirement of the driver's two checks); what the window at `0x80` shows with it set is unknown, and the driver accepts any value read at `0xf6`.
 
 The sequence a faithful model must produce for the probe to pass (all 16-bit accesses to BAR 1):
 
 1. write `0xc0` = `0x2000`; reads of `0xc0` return bit `0x20` set within 10,000 polls.
 2. read `0x06` = `tmp1`; write `0x06` = `tmp1 | 0x0008`; read `0x06`: bit 3 set (line 1990).
-3. read `0xf6`: bit `0x1000` set for an LVD bus; the driver treats `0x0800` as high-voltage differential and anything else
-   as single-ended (`0x0400`), and stores 4, 2 or 1 as the bus mode. Any value is accepted. Whether a real Altix 350 cable reads as LVD
+3. read `0xf6`: the driver returns bus mode 2 when bit `0x1000` is set, 1 when it is clear and `0x0800` is set, else 0 (the page's earlier "4, 2 or 1" and a `0x0400` test do not exist). Any value is accepted. Whether a real Altix 350 cable reads as LVD
    or single-ended is **unknown**; LVD is the chip's native mode.
 4. write `0x06` = `tmp1`; read `0x06` equals `tmp1` (line 2006), so bit 3 must clear again.
 5. `Stall(100)`, write `0xc0` = `0x3000`; reads of `0xc0` return bit `0x20` clear within 10,000 polls.
@@ -112,3 +109,18 @@ the meaning of the DMA-bank writes in step 4.
 
 Public: Linux `drivers/scsi/qla1280.c` and `qla1280.h` (Library root `linux-history`); NetBSD `sys/dev/ic/ispreg.h` (Library root
 `netbsd-src`); the QEMU `sgi-origami` page `docs/system/mips/sgi/hardware/qlogic-isp.rst`. No external URL was fetched.
+
+## Review
+
+Independent re-read of `f81a3c0` against `shub1snprom.bin` 10.54 (sha256 `51ccf9ad...`): the EFI ELF was re-extracted from the FIT type `0x1f` entry (`0xffca5ec0`, gunzip, 2,495,544 bytes), read with `ia64-linux-gnu-objdump -d` and with the retools Ghidra export (`--no-analysis`, decompile of `0x26b710` and `0x2685d0`). Linux `qla1280.h` (`linux-history`) and NetBSD `ispreg.h`, `isp_pci.c` (`netbsd-src`).
+
+**Confirmed.**
+- `0x26b710`: asserts `ql2.c` line `0x7c6` with `tmp2 & 0x0008` (strings at ELF `0x1ce260`, `0x1ce2e0`; the `and` that feeds it is at file offset `0x17b9f6`, ELF `0x16b9f6`) and line `0x7d6` with `tmp2 == tmp1`; skipped when CPUID register 2 is `0xaeeeeeee8badbeef`.
+- The five-step sequence and every access: PCI I/O `Mem.Read`/`Mem.Write`, width 1, BAR 1; HCCR `0xc0` = `0x2000` with `Stall(100)` before each read and a 10,000-read poll for bit `0x20` set; read `0x06`, write `tmp1 | 8`, read back; read `0xf6`; write `tmp1`, read back, compare; `Stall(100)`; HCCR = `0x3000` and poll bit `0x20` clear. A timeout in either poll returns -1.
+- "Firmware Rev 6": the argument is the byte at configuration offset 8 of the 64 bytes read in `QlogicScsiPassThruDriverBindingSupported` (vendor `0x1077`, device `0x1216` compares at `0x884dc`, `0x8859c`); the format is the "Qlogic 12160 SCSI Controller detected: Firmware Rev %d" string.
+- Linux `ISP_CFG1_SXP` is bit 0 (`qla1280.h` line 141); NetBSD `BIU_PCI_CONF1_SXP` is `0x0008`.
+- The opening of the earlier init (bus control `5`, `Stall(50)`, host command `0x1000`, `0x3000`) and the mailbox echo constants `0x1111`..`0x7777`; the driver image is 27,706 bytes of 13,853 words at ELF `0x205ad0` and its words sum to zero modulo 65,536.
+
+**Changed (fixed above).** Bit 3's meaning: NetBSD uses it as the SXP select only for the 1020/1040 and selects banks with bits 9:8 on the 1080 family, so the earlier "inferred SXP select on the 12160" is regraded unknown; the model requirement (store the bit) stands. The bus-mode return value is 2, 1 or 0 from `0xf6` bits `0x1000`, `0x0800`; there is no `0x0400` test and no value 4.
+
+**Not checked.** The 13,853-word loop bound and mailbox numbers of the download, `EXECUTE_FIRMWARE`, `ABOUT_FIRMWARE`, the set-parameter and queue mailboxes and the DMA-bank writes of section 2 (only the image extent, its checksum and the first reset steps were re-read); no emulator ran.

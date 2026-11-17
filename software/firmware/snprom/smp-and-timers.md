@@ -153,7 +153,7 @@ In SDM terms `eid` = NASID[6:0] | slice[0] << 7 and `id` = slice[3:1] | NASID[11
 
 In general pid = `cr.lid >> 16`. NASID 2, slice 2 is pid `0x0102`.
 
-**Which slices this PROM produces (established arithmetic, inferred consequence).** SAL_A takes the slice from `r33 & 3`, where `r33` is PALE_RESET's processor-id word. Every PAL_A in the image (7.31 `0xfffc4dd0`, 5.37 `0xfffcb9d0`, 1.27 `0xfffd2180`) builds it as `msr[1559]` bits 21:19 shifted left by one, so bit 0 is always 0 and the slice is 0 or 2 (one processor per front-side bus, matching SAL_B reading the agent-status register only for slices 0 and 2). `msr[1559]` bit 21 set makes `r33` bit 3 set and SAL_A spins. PAL_FIXED_ADDR (PAL_B 5.73 `0xffea1df0`) returns the same value. The PROM never makes slice 1 or 3 on SHub 1; the format and the four-slice code in SAL_B reserve them. A two-processor Altix 350 on NASID 0 is `cr.lid` `0x0000_0000` and `0x0100_0000`. What `msr[1559]` bits 21:19 hold on hardware (presumably the bus agent position): **unknown**.
+**Which slices this PROM produces (established arithmetic, inferred consequence).** SAL_A takes the slice from `r33 & 3`, where `r33` is PALE_RESET's processor-id word. Every PAL_A in the image (7.31 `0xfffc4dd0`, 5.37 `0xfffcb9d0`, 1.27 `0xfffd2180`) builds it as `msr[1559]` bits 21:19 shifted left by one, so bit 0 is always 0 and the slice is 0 or 2 (one processor per front-side bus, matching SAL_B reading the agent-status register only for slices 0 and 2). `msr[1559]` bit 21 set makes `r33` bit 3 set; SAL_A then spins, but only on reason 3 (the recovery-check entry, `0xffc4ed16` to `0xffc4ed3c`). On reason 0, which writes `cr.lid`, only `r33 & 3` is used. PAL_FIXED_ADDR (PAL_B 5.73 `0xffea1df0`) returns the same value. The PROM never makes slice 1 or 3 on SHub 1; the format and the four-slice code in SAL_B reserve them. A two-processor Altix 350 on NASID 0 is `cr.lid` `0x0000_0000` and `0x0100_0000`. What `msr[1559]` bits 21:19 hold on hardware (presumably the bus agent position): **unknown**.
 
 ### What writes `cr.lid` (established)
 
@@ -174,7 +174,7 @@ A model needs `cr.lid` bits 31:16 read/write with exact readback (the halt in st
 
 `1 << 63 | vector << 52 | 0xfee << 21 | pid << 4 | type`
 
-with pid = the target's `cr.lid >> 16` as above. The NASID is not in the message: the store goes to `0x8_0000_0000 + (nasid << 38) + 0x1_1000_0380`, and `nasid` is rebuilt from the pid (`pid[6:0]`, then `pid[15:11]` shifted to `[11:7]`), by the PROM and (through `GET_SAPIC_INFO`) by Linux. The PROM's own messages use the same pid with base 0. Examples for NASID 0: IPI vector `0x12` to slice 2 is `0x8120_0000_0000_0000 | 0x0100 << 4` = `0x8120_0000_0000_1000`; the PMI message to slice 2 is `0x8010_0000_0000_1002`.
+with pid = the target's `cr.lid >> 16` as above. The NASID is not in the message: the store goes to `0x8_0000_0000 + (nasid << 38) + 0x1_1000_0380`, and `nasid` is rebuilt from the pid (`pid[6:0]`, then `pid[15:11]` shifted to `[11:7]`), by the PROM and (through `GET_SAPIC_INFO`) by Linux. The PROM's own messages use the same pid with base 0. Examples for NASID 0, PROM style (base 0): IPI vector `0x12` to slice 2 is `0x8120_0000_0000_0000 | 0x0100 << 4` = `0x8120_0000_0000_1000`; the PMI message to slice 2 is `0x8010_0000_0000_1002`. Linux's version of the first adds `0xfee << 21`: `0x8120_0001_fdc0_1000`. The PROM's self-sent "bus error" message (`0xffa31a50`) also sets the agent bit (bit 3), which Linux never does; see [interrupts.md](../../../devices/shub/interrupts.md).
 
 The SHub's own rule for choosing the slice from the pid, and whether it compares pid bits 15:11 and 6:0 at all after the address has chosen the node, is not in any read code: **unknown**. The inference that it uses pid bits 10:7 rests on the PROM's per-slice comparator and `SH_LOCAL_INT*_CONFIG` values, which carry the slice in the same bits ([interrupts.md](../../../devices/shub/interrupts.md#processor-id-and-message-layout-the-prom-uses)).
 
@@ -216,3 +216,17 @@ Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2
 - The "byte 8" wording for the feature descriptor now says mask byte 0x08.
 
 **Not checked.** The A24 write of `rtc_ctl = 0x1_0000_0041` (cited from the reset page), the Linux-side `ia64_mca_init` ordering beyond the calls named, `0xffa07230` and `0xffa03c60`, the writers of `rec+112/120`, the `0xffa1f7b0` hook, `msr[1559]` on hardware, and the INIT path past its entry.
+
+### Review of section 5 (processor ids)
+
+Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump listing plus Ghidra (`--sn2-prom --no-analysis`), SDM rev 2.3 vol 2 sections 5.8.3.1 and 11.2.2.2, the local `linux-sn2` mirror (`sn_cpuid.h`, `addrs.h`, `shub_mmr.h`, `sn_sal.h`, `setup.c`, `sn2_smp.c`).
+
+**Confirmed.**
+- The `cr.lid` layout: SAL_B `0xffaec240` computes pid = `(nasid & 0x7f) | slice << 7 | (nasid >> 7 & 0x1f) << 11`, writes `pid << 16`, `srlz.d`, reads back and on mismatch writes progress `0xc3` (195). SAL_A `0xffc4edc0` writes `(r32 & 15) << 23` with `r32 = r33 & 3` from `0xffc4ea70`. SDM p. 2:122 (id 31:24, eid 23:16, bits 19:4 of the message) and the id/eid translation in the page. The NASID 0 table and `pid = 0x0102` for NASID 2 slice 2.
+- Slices 0 and 2 only: PAL_A 7.31 `0xfffc4dd0`, 5.37 `0xfffcb9d0` and 1.27 `0xfffd2180` all do `extr.u r33=r33,19,3` then `shl r33=r33,1` on msr[1559]; PAL_FIXED_ADDR `0xffea1df0` returns the same value. These three are the only `mov r33=msr[r2]` sites with that shape.
+- Reason 0 is the only SAL_A path to the `cr.lid` writer (`0xffc4e386`); the SDM mask fields (`r33` bits 47:32, 0 = programmable) are zero here.
+- `GET_SAPIC_INFO` at `0xffb196c0`: nasid `(id & 0x7f) | (id >> 11) << 7`, slice `(id >> 7) & 15`. Linux: `get_sapicid()` is `(cr.lid >> 16) & 0xffff`; `cpu_physical_id` is `id << 8 | eid`; the fallback decode runs only on "not implemented"; the `SH_IPI_INT` field shifts and `0xfee << 21`; the target address `GLOBAL_MMR_PHYS_ADDR(nasid, SH1_IPI_INT = 0x110000380)`.
+
+**Changed (fixed above).** The SAL_A spin on `r33` bit 3 is reason 3 only. The IPI examples were PROM style (base 0) without saying so; Linux's value is given.
+
+**Not checked.** The PROM-side rebuild of the NASID in the thread-wake sender beyond the existing page text, the SHub's own pid decode (unknown, as stated), and the `msr[1559]` bit meanings on hardware.
