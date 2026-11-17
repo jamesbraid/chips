@@ -689,6 +689,49 @@ This matches PAL_HALT accepting only state 2.
 - Step the msr[1730] nibbles as the strobe-loop section describes. A nibble that does not step hangs the PAL right after wake (`0xffea34b0`).
 - Provide `pmc0` and `pmc4` to `pmc7`, `pmd4` to `pmd7` as plain registers.
 
+### PAL_HALT_LIGHT entry checks (an OS call, PAL_B 5.73, SAL 5.04)
+
+Read on 2026-11-17 in a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (SAL 5.04, snprom 10.54, sha256 `51ccf9ad...`), cross-read against the SDM (rev 2.3 vol 2, Tables 11-56 and 11-59, PAL_HALT_LIGHT p. 2:403) and Linux `arch/ia64/kernel/pal.S` and `include/asm/pal.h`. Nothing ran. Question: why does an OS static call to PAL_HALT_LIGHT return without reaching the halt body?
+
+**Answer (established): the OS never reaches PAL_B.** The `PAL_PROC` the SAL system table gives the OS is `0x01ff_f800`, not a PAL_B stub. SAL_B copies two small routines into the PAL range at `0xffb12900` (single caller `0xffafaefc`, from `0xffad763c`; the copy runs only when `0xffa0ff30` returns nonzero, a CPU-id walk not traced, **unknown**): `[0xffb123a0, 0xffb12750)` to `0x01ff_fc00` (SAL_PROC) and `[0xffb12750, 0xffb12900)` (0x1b0 bytes) to `0x01ff_f800` (PAL_PROC). The source pointers are the globals at `gp - 1353360/-1353328/-1353480/-1353320` (gp `0xffd98000`); the values read from the image are those four addresses, and the destinations are the `movl` constants at `0xffb12936` and `0xffb12986`. The SAL's own PAL wrappers (`0xffa1d430` and the static wrappers after it, the SAL park loop `0xffa9acd0`) do not use this routine; they branch to the per-CPU entry directly, so SAL parks in the real halt body and the OS does not.
+
+**The PAL_PROC routine (established, `0xffb12750`).**
+1. Index test: `r14 = 28`, `r15 = 29`, `r16 = 522`; `p7` = (`r32` is one of them). It tests **`r32`, the first stacked argument, not `r28`**. Linux's `ia64_pal_call_static` allocates `in0` as `r32` and copies it to `r28`, so for Linux `r32` equals the index (inferred from the wrapper source; the trace did not show `r32`). A caller that does not keep the index in `r32` skips this test.
+2. CPU test: `cpuid[3]` bits 39:16 (architecture revision, family, model) are compared with `0x002000` (family 0x20, model 0, Montecito). `p7` stays set only if they differ.
+3. If `p7`: `r8 = r9 = r10 = r11 = 0` and `br.cond b0` at `0xffb127ac`. No MSR is touched.
+4. Otherwise (any other index, or a family 0x20 model 0 CPU): `r2 = ((cr.lid >> 23) & 0xf) + 2`; with psr.i and psr.dt cleared (`rsm`) read `r8 = [[0x1000000 + 8*r2] + 136]`, the per-CPU PAL entry the SAL stored at `+0x88`, then restore psr.l. If psr.dt is 0, `br b6` to it. If psr.dt is 1, read `[0x1000038] + 80` (a table of 24-byte entries, start, end, offset, ended by a start above the target), find the entry holding `r8` and add its offset, then `br b6`. So in virtual mode the PAL code must be reachable at the translated address (inferred reading of the table; the table's contents are not read).
+
+**Madison and every Itanium 2 (family 0x1f) therefore get "success" with no halt** for PAL_HALT (28), PAL_HALT_LIGHT (29) and index 522. `r8 = 0`, `r9` to `r11` = 0. The model's Madison (`cpuid[3] = 0x1f010504`) is in this set. On silicon the same code runs, so a real Altix 350 with this SAL also returns at once (established for the code and the family test; that Linux then spins is inferred from the idle loop source). Only family 0x20 model 0 is passed to PAL_B; family 0x20 model 1 and later are not (their `cpuid[3]` bits 39:16 differ from `0x002000`). Why SGI did this is **unknown**.
+
+**PSR decode (checked).** `0x1010084a2010`: set bits 4 (mfl), 13 (ic), 17 (dt), 19 (dfh), 22 (di), 27 (rt), 36 (it), 44 (bn); be, up, ac, i, pk, dfl, sp, pp, db, lp, tb, cpl, is, mc, id, da, dd, ss, ri, ed, ia and vm clear. This is a legal entry state per SDM Table 11-56 (virtual mode: dt, rt, it all 1, ic 1, bn 1, i 0). Linux clears psr.i with `rsm psr.i` just before the branch, and restores psr.l (so psr.i returns) after.
+
+**If the call did reach PAL_B (every check, with this PSR, `r28 = 29`, `r29` to `r31` = 0).** The model's Madison cannot get here through `0x01ff_f800`, but a direct call to the PAL_B entry would see:
+
+| Order | Where | Test | Value | Result |
+|---|---|---|---|---|
+| 1 | `0xffe9dcc0` (stub PAL_B + `0x10010`) | psr.be (`0xffe9dcec`) | 0 | pass (set returns -2 via `0xffe9e8e0`) |
+| 2 | `0xffe9dcf0`, `0xffe9dd00` | `r28` = 33 or 26 | no | pass |
+| 3 | `0xffe9dd10` to `0xffe9dd3c` | `r28` in {522, 518, 28, 29} | 29 | jump to `0xffe9dfb0` (skips the strobe loops) |
+| 4 | `0xffe9dfb0` to `0xffe9dffc` | clear msr[1416] bit 16, poll until bit 40 is clear | model must return bit 40 clear | else hangs here, a model failure |
+| 5 | `0xffe9e000` to `0xffe9e02c` | msr[1237] bit 5 | first call 0, later 1 | 0: runs `0xffe9e030` (stores psr.mc as msr[1237] bit 0 clear/set and psr.ic as bit 1, an `rfi` with mc and bn set and ic cleared back to `0xffe9e140` when mc was clear, then sets bit 5); 1: go on |
+| 6 | `0xffe9e190` | `r28` = 29 or 1 | 29 | `0xffe9e380` |
+| 7 | `0xffe9e380` to `0xffe9e3cc` | `psr & 0x2044002` (be, i, dfl, lp) must be 0 | 0 | pass (else -2 at `0xffe9e8f0`) |
+| 8 | same | `psr & 0x1008020000` (it, rt, dt) all or none | all | pass (mixed returns -2) |
+| 9 | `0xffe9e3d0` | branch to handler | | `0xffea2d10` |
+| 10 | `0xffea2d10` to `0xffea2d3c` | `r29`, `r30`, `r31` zero | 0 | pass (else -2 at `0xffea36d0`) |
+| 11 | `0xffea2d40` | psr.ic set: `rsm ic`, `mf` | | continue |
+| 12 | `0xffea2d70` to `0xffea2ddc` | msr[1152] bit 18, msr[1237] bit 2, msr[1572] bit 18 | model-dependent | any set skips the nibble loops to `0xffea2fe0`, otherwise the loops run |
+
+None of the PAL_B checks reads a feature bit, `PAL_PROC_GET_FEATURES` state, `PAL_HALT_INFO` state or a per-CPU halt enable (established; PAL_HALT_INFO stores a table and sets nothing). The index-range and "halt not supported" tests are not in PAL_B for these indexes; the only "not supported" gate is the family test above.
+
+**What the guest sees (established return, inferred loop).** `r8 = 0` with `r9` to `r11` = 0, back to Linux's local label. Linux's `arch_cpu_idle` enables interrupts and calls the wrapper, which restores psr.l (psr.i back on), then disables interrupts and returns to the idle loop, which asks again. The CPU never sleeps. A model must not treat the 176,653 calls in 4 s as a fault: the firmware makes this a busy loop on every Itanium 2.
+
+**What the model can change.** Nothing in PAL or the SAL image is wrong. To make idle cheap, the options are (design choices, not read from firmware): present a family 0x20 model 0 CPU (the PAL pair then comes from a 7.x PAL_B whose halt body is a different image and was not read for this path), or give the vCPU a yield when it runs the `br.cond b0` at the PAL_PROC routine's no-op return (`0x01ff_f800 + 0x5c`) with `r32` = 29. The second is a guest-visible shortcut and needs its own review under the no-special-cases rule.
+
+**Where to break in ia64-qemu to tell causes apart.** (1) Dump `0x01ff_f800`: it should hold the 0x1b0 bytes at flash `0xffb12750` (compare against the image; if it is zero or different, the copy at `0xffafaefc` did not run or the OS was given another address: check `0xffa0ff30`). (2) Break at `0x01ff_f850` (or the virtual alias Linux uses): `r32` = 29, `r17` = `0x1f01` after the `extr`, `p7` = 1, then the branch slot at `0x01ff_f85c` leaves to `b0`. A wrong `r32` shows here (index not 29: Linux wrapper broken); a wrong `r17` means a different `cpuid[3]`. (3) For a direct PAL_B test, read the per-CPU entry at `[[0x1000000 + 8*(2 + cr.lid[26:23])] + 0x88]` and break at the PAL_B copy's `+0x10010` stub (flash `0xffe88010` is the original) and at `0xffe9dcc0`, `0xffe9dfb0`, `0xffe9e380`, `0xffea2d10` (flash addresses; in the shadow copy add the copy base minus `0xffe78000`). A wrong PSR is seen at `0xffe9e380` (`r22`); a wrong `r28` at `0xffe9dd10`; an msr value at `0xffe9dfe0` (msr[1416] bit 40) or `0xffe9e010` (msr[1237]).
+
+Independent review of this subsection has not been done.
+
 ## Questions left (unknown)
 
 1. What the reserved encodings do on Itanium 2 and Madison (item 1). The code-side dependence is settled in section 6: the M-word performs the pending cache-array command, the B-unit word is an `rfi`-like transfer, and `0x36`-class opcode-1 words are write-back-by-index.
