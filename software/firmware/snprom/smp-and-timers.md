@@ -380,6 +380,28 @@ Which one CPU 1 took is **unknown** without a capture. Candidates from the code 
 - A call trace from `0xffac6edc` of CPU 1 through `0xffa9a130`, `0xffa9bdb0`, `0xffa1da50` (PAL 520), `0xffaeb560`, `0xffb208b0` and `0xffaf5da0`.
 For CPU 0, `r8` and `r9` at `0xffaf5da0` give the failing-group decode.
 
+### CPU 0 taking repeated external interrupts in RAM
+
+Read from the same flat listing and SDM rev 2.3 vol 2 (`cpu/itanium/`); nothing was run. A model trace showed CPU 0 delivering vector offset `0x3000` hundreds of times, from three RAM
+addresses (`0x30027e41c0`, `0x30027e4da0`, `0x300255de10`) with an unchanged `cr.ifa`.
+
+- **`0x3000` is the External Interrupt vector (established).** Table 5-7, pp. 2:113 to 2:114, and the vector description, p. 2:186. Its defined parameters are IIP, IPSR, IIPA, IFS, IVR and ISR, not IFA,
+  so a stale `cr.ifa` there means nothing. `cr.ivr` names the vector that was taken, and 15 is "spurious".
+- **PAL's own handler at that offset (established).** With `cr.iva` at PAL_B (`0xffe78000`) the handler is `0xffe7b000`: it reads `cr.ivr`; for a vector other than 255 it writes `cr.eoi` and does
+  `rfi` back to the interrupted instruction, nothing else. An interrupt source that stays asserted is then taken again at once, so the interrupted address repeats. Whether `cr.iva` still points at PAL
+  there is **unknown**; the SAL and EFI tables were not read for this.
+- **The three addresses are not in the SAL shadow copy (established as code).** They are node-window addresses (`0x30_0000_0000` plus offsets `0x255de10`, `0x27e41c0`, `0x27e4da0`). The shadow copy
+  of the flash is at offsets `0xa00000` to `0xffffff` ([the SAL shadow copy](boot-sequence.md#the-sal-shadow-copy-and-its-destination)), and the other RAM images the PROM makes are the SAL runtime and the EFI
+  ELF, which its loader (`0xffaf8690`) places at run-time-chosen addresses. No static offset maps these three back to PROM addresses; the load base is **unknown** until a run reports it. To settle it,
+  read 16 bytes at each address and search the inflated EFI and runtime images for them.
+- **A likely source (inferred).** SAL call `0x6000` op 1 arms the interval timer on vector `0xef` for EFI's countdowns ([runtime-services.md](../../sal/runtime-services.md)), so an EFI idle loop takes
+  timer interrupts for as long as it waits, and taking `0x3000` repeatedly there is expected. What would be a defect: an interrupt that fires while `ar.itc` is past `cr.itm` instead of once when they are
+  equal (SDM vol 2, section 3.3.4.2, p. 2:33), or one whose handler never clears the source. Capture at each delivery `cr.ivr`, `cr.iva`, `cr.itm`, `ar.itc` and `cr.itv`: `0xef` with `itc` moving past `itm` and `itm` being
+  rewritten is the tick; the same `itm` reprogrammed never, or a vector that is not `0xef`, `0x12` or `0x13`, is not.
+- **A CPU 0 that is running here did not take SAL's failure tail (established as code).** SAL keeps any non-zero `r8` from PAL_TEST_PROC as fatal for that processor (`0xffb20a40`, then `0xffaf5da0`
+  falling to the spin at `0xffaf5f30`). A group's `-3` is non-fatal only inside PAL (`0xffebf000`). So a CPU 0 in RAM means `r8` was 0 at `0xffaf5da0`, or the test was skipped (`r34` = 0 at `0xffaf5d60`, or the
+  low nibble of `r45` = 1 at `0xffaf5d70`). Groups 4, 8 and 10 failing and the shell still being reached do not fit that code; check `r8` there.
+
 ## Review (independent, chips c669e77 and fbb3bc7: per-slice table, PAL 520 and the overlay recipe)
 
 Independent re-read of the section "5. Multi-CPU entry and the per-slice table" as it stands after `c669e77`, against a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` SAL 5.04 loaded at `0xffa00000` (binutils 2.44, re-run toolchain image), the Itanium SDM rev 2.3 vol 2 text and Itanium 2 reference manual 251110-001 to -003. The reviewer wrote none of it and used no restricted source. `fbb3bc7` is the earlier version of the same section; its "only slice 0 has a record" reading is withdrawn by `c669e77`, and the review covers the final text. The fault values and the 12-word table dump are model output and were checked only for arithmetic against the code.
