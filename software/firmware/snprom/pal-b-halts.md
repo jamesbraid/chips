@@ -245,7 +245,7 @@ and 57 for the duration and calls each of eleven groups with the test address, s
 | 6 | `0xffeff020` | 34 | not read beyond the entry | `0x8000000002` |
 | 7 | `0xffefc680` | 44 | region registers and translation | `0x200000002` |
 | 8 | `0xffefd2f0` | 43 | performance monitor registers | `0x1000000002` |
-| 9 | `0xffef98f0` | 42 | debug registers (runs only if msr[1714] bit 50 is set) | `0x2000000002` |
+| 9 | `0xffef98f0` | 42 | debug registers, instruction breakpoints and single step, see [group 9](#group-9-0xffef98f0-debug-registers-instruction-breakpoints-and-single-step) (skipped if msr[1714] bit 50 is set) | `0x2000000002` |
 | 10 | `0xfff003b0` | 16 to 23, one per sub-test | eight cache-array and error-log sub-tests; first one `0xfff00b30` | bit 43 plus the sub-test number minus one, and bit 0 (`0x80000000001`, `0x100000000001`, ...) |
 | 11 | `0xfff04ff0` | 31 to 24, one per sub-test | eight more array sub-tests; fails at once if msr[1640] bit 62 is set | bit 50 plus the sub-test number, and bit 0 (`0x8000000000001`, `0x10000000000001`, ...) (`0x7f8000000000001` when bit 62 was already set) |
 
@@ -328,6 +328,85 @@ log `r8` after each helper call at `0xffefd4dc`, `0xffefd53c`, `0xffefd5cc` and 
 **Unknown.** Groups 3, 5 and 6 beyond their entry and failure constants; which of msr[1505] to msr[1508] holds which error-log bit; the
 meaning of msr[1640] bits 61 and 57.
 
+### Group 9 (`0xffef98f0`): debug registers, instruction breakpoints and single step
+
+Read in a flat `ia64-linux-gnu-objdump` listing of the image and the handlers it uses; nothing was run. The group is `0xffef98f0` to `0xffefa200`
+(early exit), with the epilogue at `0xffefa040` and two helpers: `0xffefa220` (register patterns) and `0xffefa420` (a memory loop). The function
+at `0xffefa4c0` after them is group 2's (its call is at `0xffefc5f0`), not part of this group. Table slot 9 is at `0xffefc510`. The runner passes
+`r32` test address, `r33` size, `r34` attributes, `r35` skip word and `r36` a backing-store pointer. All of this is *established* as code.
+
+**When it runs (established).** It returns at once, leaving the runner's `r8 = r9 = 0`, if skip bit 42 is set (`0xffef9900`) or msr[1714] bit 50 is
+**set** (`0xffef9920`: `tbit.z p0,p1` then a branch on `p1`, the same form as the skip bits). The low 42 bits of msr[1714] hold an address `>> 8` that PAL writes (`0xffea1b40`); bit 50 sits above them and is only read (`0xffed62d0`
+copies it into a value it builds, `0xffeb87f0` tests it). What it means is **unknown**. So the group runs where the processor reports the bit clear, and a
+model that reports it differently on two processors runs the group on one only.
+
+**Steps, in order (established).** A failing step jumps to the epilogue with `p56` set.
+
+1. Save `dbr[0..7]` and `ibr[0..7]` (`r43` to `r58`; restored at `0xffefa150`).
+2. Pattern test, `0xffefa220`, for `P` = 0, -1, `0x5555...`, `0xaaaa...`. It writes `P` to the even registers, `P & 0xc0ffffffffffffff` to the odd DBRs and
+   `P & 0x80ffffffffffffff` to the odd IBRs, then `srlz.d` and `srlz.i`, and reads back. Every even register must read back all 64 bits. The plm and
+   ignored bits (61:56, 62:56) are cleared before the write, so nothing here shows whether they are stored.
+3. Small values (`0xffef9ac0` to `0xffef9c90`): `dbr[0..7]` = 1, 2, 3, 4, 5, 11, 12, 13 and `ibr[0..7]` = 6, 7, 8, 9, 10, 14, 15, 16, read back and compared.
+4. Reads msr[1440], msr[1046], pmc[13] and pmc[14] (`0xffef9ca0` to `0xffef9d10`). It fails unless msr[1440] and msr[1046] are 0, pmc[13] bit 32 is 0 and
+   pmc[14] bit 12 is 0. *Software expectation*: Itanium 2 requires PMC13 to hold `0x2078fefefefe` (bit 32 clear) and PMC14 bit 12 is reserved
+   (Itanium 2 Processor Reference Manual 251110-003, section 10.3.6 note, p. 100, and Figure 10-16, p. 97). What msr[1440] and msr[1046] mean is **unknown**.
+5. Arm four breakpoint pairs (`0xffef9d20` to `0xffef9e70`, then `srlz.i`): `ibr[0,2,4,6]` = the bundles `0xffefa420`, `0xffefa440`, `0xffefa460`
+   and `0xffefa4a0` of the helper (`ip + 1792, 1824, 1856, 1920`), `ibr[1,3,5,7]` = `0x8fffffffffffffff` (x = 1, plm = 15, mask all ones);
+   `dbr[0,2,4,6]` = `r32 + 8, +40, +72, +104`, `dbr[1,3,5,7]` = `0xcfffffffffffffff` (r = w = 1, plm = 15, mask all ones). Itanium 2 has four pairs of each
+   (Reference Manual p. 97 and p. 99).
+6. Debug run (below), then single-step run (below).
+7. Epilogue `0xffefa040`: clears psr.db and psr.mc through the rfi helper `0xffe96bd0`, flushes the backing store, restores the debug registers, calls
+   `0xffebf000` with `r8 = -1`, `r9 = 0x2000000002` on failure and `0` on success.
+
+**Debug run (established).** The helper `0xffefa420(r32, 22)` stores -1 to `r32`, then loops 22 times over `ld8 r39=[r37],8` and `st8 [r38]=r40,8`
+(`r37 = r32`, `r38 = r32 + 8`): iteration `i` loads `r32 + 8(i-1)` and stores `r32 + 8i`. It is called twice. Call 1 has psr.db clear and the group requires
+`r15 == 0`. Call 2 has psr.db, psr.ic set and psr.i clear (through the rfi helper) and requires `r15 == 0x0000000c00040004`. Handler `0xffe7d900` (IVT offset
+`0x5900`) reads ISR and IPSR and adds to `r15`: `1 << 32` if ISR.x (bit 32), `1 << 16` if ISR.w (bit 33), `1` if ISR.r (bit 34). For x it sets IPSR.id (bit 37), for r or w it
+sets IPSR.dd (bit 39); then `rfi` to the same IIP and IPSR.ri. For none of the three it adds `1 << 48` and moves IIP on by one bundle, which cannot match. It reads no
+other field (not ISR.ei, not IFA). It also toggles `r14` bit 24 (x) or bit 47 (r, w); this group does not test `r14`. So the expected total is 12 instruction faults, 4 write
+and 4 read faults, 20 interruptions in this order:
+
+| # | IIP | Cause | ISR (x bit 32, w bit 33, r bit 34, ei bits 42:41) |
+|---|---|---|---|
+| 1 to 3 | `0xffefa420` | ibr[0], slots 0, 1, 2 | `0x100000000`, `0x20100000000`, `0x40100000000` |
+| 4 to 6 | `0xffefa440` | ibr[2] | same three |
+| 7 to 9 | `0xffefa460` | ibr[4] | same three |
+| 10 to 17 | `0xffefa470`, pairs for `r32 + 8, 40, 72, 104` | iterations 1, 2, 5, 6, 9, 10, 13, 14: store (w, slot 1) then load (r, slot 0) | store `0x20200000000`, load `0x400000000`; IFA = the address |
+| 18 to 20 | `0xffefa4a0` | ibr[6], slots 0, 1, 2 | as 1 to 3 |
+
+*Software expectation* (the PAL was written to pass on silicon; no manual states the per-slot count): an Instruction Debug fault is raised for every slot of a matching bundle,
+nops included. SDM rev 2.3 vol 2 states the rules this rests on. Section 7.1 (p. 2:151, p. 2:153): a matching Itanium instruction faults even if its qualifying predicate is false, and an
+IBR matches any instruction in the bundle at the address. PSR.id and PSR.dd are "disabled on the first restart instruction" and are cleared by the successful execution of each
+instruction (Table 3-2, pp. 2:27 and 2:29; section 5.5.4, p. 2:104). So the handler's `id` suppresses slot 0 only, and slot 1 faults next with ISR.ei = 1 and IPSR.ri = 1. The debug vector (p. 2:200)
+sets ISR.ei to the faulting slot and, for an instruction fault, leaves ISR.x set and r, w clear (vol 2 Table 3-7, p. 2:37: ISR.ei equals IPSR.ri for a fault). The match rule for data is any byte of the aligned
+datum (section 7.1.2, p. 2:154): the 8-byte accesses at `r32 + 8` and so on match, the ones at `r32` and `r32 + 16` do not.
+
+**Single-step run (established).** `r41 = 1 << 57`, `r8 = r9 = r10 = 0`; the rfi helper sets IPSR.ss (bit 40) and lands at `0xffefa020`, whose bundle is `mov r8=r41`, `mov r9=r41`,
+`mov r10=r41` (slots 0 to 2). Handler `0xffe7e000` (IVT offset `0x6000`) sets `r30 = 0x6000`, takes `ei = ISR.ei`, requires register `r(8 + ei)` to equal `1 << 57`, and clears it (`xor`). On a mismatch
+it branches to `0xffe7ec10`, the silent stop. It rewrites IPSR with ss cleared only for `ei = 2`; for `ei` 0 and 1 the saved IPSR keeps ss and the `rfi` steps the next slot. The group then
+requires `r8 = r9 = r10 = 0` (`0xffefa030`). A correct run has exactly three traps: (IIP `0xffefa020`, IPSR.ri 1, ISR.ei 0), (`0xffefa020`, 2, 1) and (`0xffefa030`, 0, **2**). The
+third trap has moved IIP and IPSR.ri to the next bundle, but ISR.ei still names the slot just executed (SDM vol 2 p. 2:208: "ISR.ei bits are set to indicate which instruction caused the exception";
+Table 3-7 p. 2:37: for traps ISR.ei is the slot of the excepting instruction; section 7.1, p. 2:151: IIPA and ISR.ei point to the trapped instruction). ISR.code bit 3 is set (Table 8-3, p. 2:171).
+The `rfi` that enters the test does not trap (p. 2:208).
+
+**What fails and how (established as code).** A wrong count, a wrong register readback or an unreadable PMU precondition sets `r8 = -1` and `r9 = 0x2000000002`. Bits 1:0 of that are 2, so the
+result routine `0xffebf000` does not take the fatal arm (that needs 3); PAL_TEST_PROC returns -3 and SAL's failure tail applies. The route to `0xffe7f100` from this group is only the
+single-step handler's check above, or any vector that has no handler here. At the stop `r30` is the last handler's vector (`0xffe7ec10` and `0xffe7f000` to `0xffe7f100` do not write it) and
+`r18` and `r21` hold the last ISR and IIP, so `r30 = 0x6000` with ISR.ei not 2 pins this check.
+
+**Reading one model's trace (inferred).** A trace of the last interruptions on the second processor ended with 20 debug faults (vector `0x5900`, last at `0xffefa4a0`, ISR `0x100000000`) and then three single-step
+traps at `0xffefa020` and `0xffefa030`, and no later delivery before the stop. 20 and 3 are the counts a correct run delivers. Those faults and traps need no rule beyond the ones above
+to be right, so the counts do not show a defect. Two things in that trace do. The summary gives one IIP and ISR for the 20; if that is the last of them it should be slot 2 (ISR `0x40100000000`), not ei = 0. And the
+stop right after the third trap means the single-step handler's check failed, which is what a third trap reporting ISR.ei = 0 (the new IPSR.ri) instead of 2 gives. Traps 1 and 2 passed their checks
+(otherwise the stop comes sooner), so ISR.ei was right for slots 0 and 1 and wrong at the bundle boundary. The rule to implement: for a trap, ISR.ei is the slot that just completed even when IIP and IPSR.ri
+have wrapped to slot 0 of the next bundle. This is **inferred** from the code, the SDM and the trace as reported; the model was not seen. The check that settles it: `r30`, `r18` (bits 42:41) and `r21` at `0xffe7f100`.
+
+**Why only the second processor (inferred).** The group reads no `cr.lid`, no msr[1559] and nothing per slice (every `msr`, `pmc` and `cr` read in `0xffef98f0` to `0xffefa4c0` is in the list above): the
+code is the same on every processor. Its per-processor inputs are `r32` (the slice's test buffer, `base + n * size`, see [smp-and-timers.md](smp-and-timers.md#secondary-cpu-at-the-switch-to-ram)), msr[1714] bit 50, msr[1440], msr[1046], pmc[13], pmc[14] and the
+debug register file. Candidates for a model that fails only with two processors, none checked: msr[1714] bit 50 differing by processor, so only one runs the group (the other processor's
+earlier result shows no group 9 bit either way, so it cannot tell skipped from passed); the debug registers, psr.id, psr.dd or psr.ss held once for both processors instead of per processor; or debug state
+cached with translated code that both processors, running these same bundles, share. The first is the cheapest to check: log whether `0xffef9920` falls through on each processor.
+
 ### What SAL passes (established, SAL_B 5.73)
 
 The progress-`0x36` call chain is `0xffaf5c80`, then `0xffb208b0`, then `0xffb20be0`, then the static wrapper `0xffa1d960`, which
@@ -339,7 +418,7 @@ In the model's run `test_address` is `0x3003800000` and `test_info` is `0x800000
 Across the 15 records and the terminator, `test_params` is `0x51` (11 records and the terminator) or `0x10000051` (4 records).
 Attributes are `0x51`, so the cacheable bit is set. `test_control` is 0, or `0x1000` (bit 12, which PAL always skips anyway). So SAL
 skips nothing: the skip word the groups see is only `0x803058081000` (bits 12, 19, 27, 28, 30, 36, 37, 47). Groups 4 (bit 46), 8 (bit 43),
-10 (every sub-test but 4) and 11 (every sub-test but 4, 5, 7) all run, as do groups 1, 2, 3, 5, 6, 7 and 9 (group 9 also needs msr[1714] bit 50).
+10 (every sub-test but 4) and 11 (every sub-test but 4, 5, 7) all run, as do groups 1, 2, 3, 5, 6, 7 and 9 (group 9 also needs msr[1714] bit 50 clear).
 
 SAL's handling of the result (`0xffb20a40` onward and `0xffaf5da0`): a non-zero `r8` is kept and progress `0xc1` is written. If `r8` is
 zero and `te` is set, `r8` becomes the `state` field and `0xc1` is written when that is non-zero, else progress `0x37`. The caller continues
