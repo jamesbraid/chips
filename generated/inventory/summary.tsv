@@ -1,7 +1,7 @@
 table	rows	out_of_scope	understood	understood_with_open	understood_distinct	templated	located	named_only	undocumented	no_software_dependency	pct_understood	pct_located_or_better	pct_mentioned	pct_done	unresolved_sites	truncated	audited_real_pct	audited_sample	audited_date	computes	reused	multi_unit	shared_address	address_unknown	input
-binaries	3092	0	625	0	625	3	4	170	2293	0	20.2	20.3	25.8	20.2							0				
-functions	6836	91457	1199	188	921	3689	3887	1651	99	0	17.5	74.4	98.6	17.5			85.0	20	2026-11-02		0	0	18	0	
-functions (distinct names)	2570	21681	648	153	644	1829	1862	27	33	0	25.2	97.7	98.7	25.2							0				
+binaries	3092	0	626	0	626	3	4	170	2292	0	20.2	20.4	25.9	20.2							0				
+functions	6836	91457	1199	188	921	3688	3887	1651	99	0	17.5	74.4	98.6	17.5			85.0	20	2026-11-02		0	0	18	0	
+functions (distinct names)	2570	21681	648	153	644	1828	1862	27	33	0	25.2	97.7	98.7	25.2							0				
 mmio	87	0	61	2	59	0	0	26	0	0	70.1	70.1	100.0	70.1	23						0				
 tokens	0	0	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 ioctls	6	0	6	0	1	0	0	0	0	0	100.0	100.0	100.0	100.0							0				
@@ -2768,7 +2768,7 @@ functions in IP35/usr/cpu/sysgen/IP35boot/pciio.o	108	0	0	0	0	107	108	0	0	0	0.0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciio_ppb.o	18	0	0	0	0	18	18	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pciiox.o	2	0	2	0	2	0	0	0	0	0	100.0	100.0	100.0	100.0							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pgrpidbg.a(pgrpidbg.o)	0	5	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
-functions in IP35/usr/cpu/sysgen/IP35boot/pic.o	13	0	0	0	0	13	13	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
+functions in IP35/usr/cpu/sysgen/IP35boot/pic.o	13	0	0	0	0	12	13	0	0	0	0.0	100.0	100.0	0.0							0	0	0	0	
 functions in IP35/usr/cpu/sysgen/IP35boot/pipefs.a(pipevnops.o)	0	21	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP35/usr/cpu/sysgen/IP35boot/pipemod.o	0	3	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				
 functions in IP35/usr/cpu/sysgen/IP35boot/ppp_fram.o	0	18	0	0	0	0	0	0	0	0	0.0	0.0	0.0	0.0							0				

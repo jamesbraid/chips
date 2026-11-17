@@ -142,7 +142,7 @@ If you spot a mistake or have a manual we don't, [open an issue](https://github.
 <!-- coverage:begin. Regenerate: retools/tools/re-run python3 retools/tools/inventory.py, then re-extract these rows from COVERAGE.md. Never type them. -->
 | Table | Rows | % understood | % located or better |
 |---|---:|---:|---:|
-| [binaries](generated/inventory/binaries.tsv) | 3092 | 20.2 | 20.3 |
+| [binaries](generated/inventory/binaries.tsv) | 3092 | 20.2 | 20.4 |
 | [functions](generated/inventory/functions.tsv) | 6836 | 17.5 | 74.4 |
 | functions (distinct names) | 2570 | 25.2 | 97.7 |
 | [mmio](generated/inventory/mmio.tsv) | 87 | 70.1 | 70.1 |
