@@ -167,7 +167,7 @@ Assume the minimum of [sn2-runtime](../sal/sn2-runtime.md#what-a-synthetic-sal-f
 
 The Debian 7.11 kernel (Linux 3.2.78) is read call by call, with structure offsets, on [SN2 I/O discovery in the 3.2 kernel](sn2-io-discovery-3.2.md).
 
-Which path an SN2 kernel takes to find its PCI buses, what gates each, and what the SAL 5.04 PROM of snprom 10.54 (`shub1snprom.bin`) hands over. Kernel facts are from the linux-sn2 tree at the v7.0-rc1 and v7.3-rc3 tags (the SN I/O code is identical in both; the v7.0 GPU tag was not available). PROM facts are from the SAL_B handlers read in Ghidra. Grades follow the page header.
+Which path an SN2 kernel takes to find its PCI buses, what gates each, and what the SAL 5.04 PROM of snprom 10.54 (`shub1snprom.bin`) hands over. Kernel facts are from the linux-sn2 tree at the v7.0-rc1 and v7.3-rc3 tags (the discovery path is the same in both, and `io_common.c` and `setup.c` differ only in DMA-related code; the v7.0 GPU tag was not available). PROM facts are from the SAL_B handlers read in Ghidra. Grades follow the page header.
 
 **The gate (established, kernel source).** `sn_io_early_init` (an `arch_initcall` in `io_common.c`) copies the DSDT's OEM revision into `sn_acpi_rev`. `SN_ACPI_BASE_SUPPORT()` is `sn_acpi_rev >= 0x20101`.
 - True: `sn_io_acpi_init` (`io_acpi_init.c`). It calls `acpi_get_devices` for `SGIHUB` and `SGITIO`, which copies each hub's `hubdev_info` out of a vendor-typed `_CRS` resource, then calls `SN_SAL_IOIF_INIT` (0x5f) once and panics unless status and v0 are both 0. The kernel makes no `0x55`, `0x56` or `0x57` call on this path. Bus and device records (`pcibus_bussoft`, `pcidev_info`, `sn_irq_info`) also come from vendor `_CRS` resources, matched by `_SEG`, `_BBN` and `_ADR`. The PCI root bridges come from the generic ACPI scan of the namespace.
@@ -197,6 +197,12 @@ Unverified: that this sequence is what the run did (the check is two `ACPI: RSDP
 - The exact PAL index list: only the call sites in the early-boot functions were matched; the MCA registration calls were not decoded.
 - The `candidate_dev` index is settled (1, `sysctl_rt_dev`, item 10). The block A node and CPU table writers are read (`0xffacbce0`, `0xfface0b0`); the node-table writer is class-0 method slot 2, called by `main` (see os-handoff-tables.md); open: the multi-node result.
 
+## Review of the 350 summary, block A, I/O SAL and console (second reader)
+
+Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292` by a reader who did not write them. Every address below was re-read in the IA-64 Ghidra module (`--sn2-prom --sal-runtime --no-analysis` with address ranges) and cross-checked against a flat objdump of the same image and the inflated SAL runtime ELF; no grade rests on a model run.
+
+**Changed.** Items 8 and 10 and the closing unknown now carry the corrected figures: the console index is settled (1), PUTB is buffered and flushed, `pcidev_info` is `0x60` bytes, and the heap bound is `0x30_0249_ae80`. The 350's I/O brick letter stays open (see the [klconfig review](../../platforms/sn2/klconfig.md)).
+
 ## Review
 
 Independent review of chips commit `a4bfcf2`, examined at that revision. The reviewer wrote none of it. Method: the held `vmlinuz` inflated and read in Ghidra (setup_arch, efi_init, efi_get_iobase, efi_get_pal_addr, efi_enter_virtual_mode, efi_map_pal_code, the ACPI NUMA and MADT parsers, ia64_sal_init, early_sn_setup, sn_setup, sn_cpu_init, ia64_mca_init, init_smp_config, cpu_init), a whole-text `ia64-linux-gnu-objdump` listing for the entry state, the SAL-id constants and the PAL index loads, and the newest copy of the SN setup file from the Library `linux-history` root (tags are not addressable there).
@@ -225,14 +231,6 @@ Independent review of chips commit `a4bfcf2`, examined at that revision. The rev
 **Gaps.** Added: SRAT processor entries are mandatory; PAL code size limit; the NASID -1 stop depends on the SAL's r9. Items 9 (RTC counting) and 10 (console routing) of the failure list are not needed to reach `sn_setup`; they matter from the first timer read and the first console write, and `GET_MASTER_NASID`, `LOG_CE`, `PRINT_ERROR` and `GET_FIT_COMPT` are in [sn2-runtime](../sal/sn2-runtime.md)'s "other calls" table (only absent from its minimum list). Not in chips at all: `PHYSICAL_ID_INFO` (`0x01000013`) and the PCI config calls (`0x01000010`/`0x11`), all after `sn_setup`. The claim that those later calls tolerate -1 was not checked. Missing from the kernel's post-`sn_cpu_init` list: `PROBE` (`0x03`, legacy PCI reads) and `SYSCTL_OP` (`0x30`, `tiocx_init`).
 
 **Not checked.** The 26 helper functions of the ACPI and EFI parsers beyond those named; the SHub register addresses in the last section; how an early-console write reaches `CONSOLE_PUTB` (`sn_func` indirection, still inferred); the `v5.3` comparison rows.
-
-## Review of the 350 summary, block A, I/O SAL and console (second reader)
-
-Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292` by a reader who did not write them. Every address below was re-read in the IA-64 Ghidra module (`--sn2-prom --sal-runtime --no-analysis` with address ranges) and cross-checked against a flat objdump of the same image and the inflated SAL runtime ELF; no grade rests on a model run.
-
-**Changed.** Items 8 and 10 and the closing unknown now carry the corrected figures: the console index is settled (1), PUTB is buffered and flushed, `pcidev_info` is `0x60` bytes, and the heap bound is `0x30_0249_ae80`. The 350's I/O brick letter stays open (see the [klconfig review](../../platforms/sn2/klconfig.md)).
-
-## Review
 
 Independent review of chips commit `fdcff0a` (the "I/O discovery in SN2 kernels" section), 2026-11-16, record shared with [the 3.2 page](sn2-io-discovery-3.2.md#review).
 

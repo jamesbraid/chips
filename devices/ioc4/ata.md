@@ -54,7 +54,7 @@ register as a 16-bit access. The EFI driver's offset table (ELF `0x200880`, twel
 
 - One channel only, master and slave on it. EFI offers targets 0 and 1 and LUN 0, nothing else.
 - **Status read is also the interrupt acknowledge in software.** The 2.6.5 driver's byte-read hook, applied when the port low
-  12 bits are `0x11c`, reads `other_ir` at `0x0c` (the port minus `0x110`) after a status read whose bits `0x51` are not all
+  12 bits are `0x11c`, reads `other_ir` at `0x0c` (the port minus `0x110`) after a status read whose bits `0x51` (2.6.5-specific; the 3.2.78 IDE driver tests the busy bit instead) are not all
   clear; if bits 1:0 are set it writes 3 to `0x0c` and reads it back. The decompiled `sgiioc4_INB` in `sgiioc4.ko` has the same
   mask, offset and write. Whether the chip also clears the bit when the drive status is read is **unknown**: a model that
   clears nothing itself is consistent with every driver, because each acknowledges with the write.
@@ -87,7 +87,7 @@ DMA block, word `n` at `0x140 + 4n`. Roles and bits: [coverage.md](coverage.md) 
 
 Entries never cross a 64 KiB boundary of the address (the drivers split there). The table holds one fourth of a page of
 entries (`PAGE_SIZE / 64`; 256 on a 16 KiB page). A full 64 KiB entry is written as length 0 by the 2.6.5 driver (masked to
-16 bits) and as `0x10000` by the later trees (bit 16 set, outside the field). Both ran on hardware, so reading the field as
+16 bits) and as `0x10000` by the later trees (bit 16 set, outside the field). Hardware use of the 7.3 port is not supported, so reading the field as
 its low 16 bits with 0 meaning 64 KiB is consistent with both: **inferred**. A list without an end flag, an unaligned address,
 and an entry longer than the drive transfers are **unknown**.
 

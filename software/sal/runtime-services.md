@@ -252,11 +252,11 @@ lists) and in the linux-sn2 tree (`arch/ia64/sn/kernel/sn2/sn_hwperf.c`, `sn_pro
 
 - **Open** (`sn_topology_open`, `sn_hwperf_enum_objects`): `sn_hwperf_init` runs once under a mutex: `GET_MASTER_NASID` (`0x02000004`), then `HWPERF_OP` with opcode 1 (heap size, size
   argument 8), the kernel's own `vmalloc` of that size, opcode 2 (install heap), and `0x200a` (object count). Then `HWPERF_OP` `0x200c` (enumerate objects) fills a `vmalloc`ed array of
-  `count * 0x120` bytes. Any status other than 0 becomes `-EINVAL` and `open` fails; nothing waits.
+  `count * 0x120` bytes. Any status other than 0 becomes `-EINVAL` and `open` fails; nothing waits. `sn_hwperf_init` also runs at `device_initcall` (`sn_hwperf_misc_register_init`), so the heap and count calls happen at boot.
 - **Show** (`sn_topology_show`, once per object): on the first object it calls `GET_SN_INFO` (a nonzero status is a `BUG`), prints the `partition` line, and calls `GET_PCI_TOPOLOGY`
   (`0x02000064`) with a page-sized buffer, retrying with larger buffers up to 15 pages only while the status is neither 0 nor -1. For each object it formats a line from the object
   record, and for an object with ports calls `HWPERF_OP` `0x200d` (enumerate ports) with `ports * 12` bytes. A node or TIO object also gets a nearest-node search that calls `0x200d`
-  for the node and for its router.
+  for the node and for its router, unless the node has both CPUs and memory.
 - **No wait.** There is no completion, retry on a "busy" status, `smp_call_function_single` or `work_on_cpu`: those are only in `sn_hwperf_op_cpu`, which the ioctl path reaches, not
   `/proc`. Every call is a plain `SAL_CALL_NOLOCK` on the reading CPU. The loops are bounded by the object count, the port count (a `BUG_ON` above 16 ports) and 15 buffer sizes.
 - **seq_file buffers a whole read (standard behaviour, inferred: the generic code was not re-read).** The first `read` collects every object's output before copying any of it to the reader, so the file's text cannot reach `cat` in pieces from a
@@ -290,7 +290,7 @@ So the kernel's retry loop ends at the first buffer size. (Established for the c
 
 With a type-0 hubdev geoid (see [klconfig.md](../../platforms/sn2/klconfig.md#geoid-and-module-id)) the object's location string is the PROM's placeholder for an invalid geoid (`<invalid>`,
 selected when `geo_valid` fails; inferred that type 0 is invalid, the test was not decoded). The kernel's `sscanf` of it fails, `sn_hwperf_geoid_to_cnode` returns -1 and `show` prints
-one `node -1 <invalid> ...` line with no nasid, distance or CPU lines and skips the nearest-node search. No loop or wait: it only makes the topology file wrong.
+one `node -1 <invalid> ...` line with no nasid, distance or CPU lines and skips the nearest-node search. The port loop still runs, but nothing waits: it only makes the topology file wrong.
 
 ### What does stall: console transmit after 127 bytes (inferred from the read code)
 
