@@ -230,3 +230,47 @@ Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump l
 **Changed (fixed above).** The SAL_A spin on `r33` bit 3 is reason 3 only. The IPI examples were PROM style (base 0) without saying so; Linux's value is given.
 
 **Not checked.** The PROM-side rebuild of the NASID in the thread-wake sender beyond the existing page text, the SHub's own pid decode (unknown, as stated), and the `msr[1559]` bit meanings on hardware.
+
+## 5. Multi-CPU entry and the per-slice table
+
+Why a second processor (slice 2, `cr.lid` `0x0100_0000`) faults in the SAL_B reset path of SAL 5.04. Read from a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin`; Itanium SDM rev 2.3 vol 2 (245318) and vol 3 (323207) for `extr` and `cr.lid`. No run backs a grade, and nothing here is hardware evidence for how a real second processor behaves.
+
+**What `0xffba0000` is (established).** It is the common interruption stub, not a reset entry. The vector stubs in the table at `0xffb98000` set `r28=pr`, `r30` = handler (`0xffac6a20`, or `0xffac6970` when ISR.ni is set) and `r31` = vector number, then `br.few 0xffba0000` (for example `0xffb9ff5c`). The stub reads the per-slice record, loads the pointer at record `+0x80` (the exception save area), walks the physical-to-virtual list at `[[0x1000038] + 0x50]` when `psr.dt` is set, and saves state there. `psr.ic` is clear until `ssm 0x2000` at `0xffba0c16`.
+
+### 1. The extract (established)
+
+`0xffba000c`: `extr.u r26=r26,23,4` takes `cr.lid` bits 26:23, four bits, zero-extended. SDM vol 3 `extr`: the field starts at `pos6` and runs `len6` bits to the left. Vol 2 section 5.8.3.1: `cr.lid` has eid in 23:16 and id in 31:24, so the field is id[2:0] plus eid[7]. CPU 0 (lid 0) gives 0, CPU 1 (lid `0x01000000`) gives 2. With `+2` the entries read are slot 2 (`0x1000010`) and slot 4 (`0x1000020`). The PROM sets lid itself: SAL_A `0xffc4edc0` writes `dep.z r2=r32,23,4` (`0xffc4edd0`), with r32 = PAL `r33 & 3` (`0xffc4ea7c`, called at `0xffc4e37c`), and PAL_B 5.73 builds `r33` as msr[1559] bits 21:19 shifted left by one (`0xffed7bd8`, `0xffed7bde`). The model's `0x01000000` and msr bits = slice >> 1 therefore agree with the PROM. The id/eid split is not the PROM's view: it treats bits 26:23 as one slice number, and the node-id install `0xffaec2b0` later writes `cr.lid` again.
+
+### 2. The table (established for layout and writer, inferred for the observed values)
+
+- **What it is.** A table of pointers at physical `0x1000000` (slot n at `0x1000000 + 8n`), RAM from reset, not PAL code. It is cache-resident early: every CPU calls PAL 520 with `0x1000000` and `0x40000` (`0xffa9b586`, reached from `0xffa9bd5c` in `0xffa9bce0`, called by `0xffa94b10` at `0xffa1e19c`) before the builder runs. That each CPU gets a private copy is inferred.
+- **Writer.** The builder `0xffac42d0(layout, nasid, flag)`, called by every CPU at `0xffa1e1b6` as `(0, 0, 0)`, right after the PAL 520 call. It runs the carver `0xffac4230` over size tables in flash: odd entry = marker stored with bit 0 cleared, even = a size taking the next pointer, zero = stores `0x7f`. Nothing else writes the early table. Later `(1, nasid, ...)` calls rebuild it in the node window (`0xffac7a50`, `0xffacc00c`, `0xffad7a7c`).
+- **Early layout (table `0xffbe6b28`, read as words).** Slot 0 = 0, slot 1 = 2, slot 2 = `0x1000100` (record, `0xa000` bytes), slots 3 to 5 = `0xfe`, slot 6 = `0x7f`, slot 7 = `0x100a100` (block A), slot 8 = `0x101a100`. A second carve (table `0xffbe6bc8`, start `0x101a900`) rewrites slots 9 up: slot 9 = `0x101a900` (stack area of slice 0, `[slot + 16]` is its backing store), slots 10 to 12 = `0xfe`, slot 13 = `0x7f`, slot 14 = `0x1024900`. A third carve fills the slot 2 record from `0xffbe6c48`: `+0x80` is a `0x1500`-byte save area at `0x1000300`, `+0xd8` is `0x7f`.
+- **Consequence (established arithmetic).** Only slice 0 has a record and a stack early. Slice 2 reads slot 4 = `0xfe` and slot 11 = `0xfe`. The reset entry then does `st8 [rec+0x88]` (`0xffa1e286`, address `0x186`), `ld8 [[slot 9+n] + 16]` (`0xffa1e370`, address `0x10e`), and `main` reads `[rec+0x188]` (`0xffa19cf0`, address `0x286`). Those match the observed ifa values `0x186` and `0x286`. The stub's own `ld8 [0xfe + 0x80]` at `0xffba0060` is the repeat.
+- **ifa caveat.** With `psr.ic` clear a nested fault must leave IFA, ISR and IIP unchanged (SDM vol 2 section 5.8, p. 2:101), so a reported `ifa` can be the first fault's, not the stub load's. Read `cr.iip` before reading anything else: if it is `0xffa1e286`, the first fault is the `+0x88` store.
+- **`0x106` and `0x206`.** Not a word the builder can write (it writes 0, 2, `0xfe`, `0x7f` or pointers of `0x1000100` and above). As ar.pfs images they are sof 6 with sol 2 and sol 4. Inferred: something spilled a register frame or pushed a stack over slot 4. Settle by dumping `0x1000000` to `0x1000060` at the fault.
+
+### 3. What a second CPU needs (established as code; the SHub values are what the code requires)
+
+- `cr.lid` writable, readable and serialised (SAL_A, then `0xffaec2b0`, which halts with progress `0xc3` on a mismatch).
+- msr[1559] bits 21:19 = 1 for CPU 1 (`r33` = 2).
+- Per-slice SHub state, shared between CPUs: the election pair `0x81_101d_0088`/`0x80` (slice + 1, read back; a loser must not zero `cpu_bits`), `cpu_bits` `0x81_5003_1550` with `1540` and `1560`, the node lock `0x1_101d_0200`/`0208`, per-slice progress history `0x81_5003_1500 + 16 * slice`, the junk-bus LED rows, `0x1_2002_0080` (read for slices 0 and 1 only, `0xffa99e2c`), and the slice-paired `pio_write_status`. SCRATCH-style locks are plain storage plus the lock protocol.
+- Per CPU, not shared (inferred): the early RAM at `0x1000000`.
+- Whether the model's values match is not decidable from the PROM; it did not read the model.
+
+### 4. Start-up order (code facts; hardware mechanism unknown)
+
+- **No hold in the code.** SAL_A has no wait for a non-winner (`0xffc4e970` returns either way). SAL_B entry `0xffa1de00` has no slice test before the builder. The park routine `0xffa9ac80` only holds a non-zero hardware thread. Every CPU runs PAL 520, the builder, the record store, the stack load and `main` the same way.
+- **The data contradicts that.** The early table gives only slice 0 a record and a stack, so on the PROM's own terms a slice-2 CPU cannot pass `0xffa1e286` and `0xffa1e370` before the node-window rebuild. This contradicts the earlier statement in section 1 that every slice runs the reset path in step. Re-starting CPU 1 after the rebuild also fails: its builder call would rewrite the shared table in the early layout.
+- **Unknown.** What makes the second CPU wait or have a record on real hardware (SHub or L1 holding slice 2 in reset, a PAL-side rendezvous, or tolerance of misaligned physical accesses with `psr.ac` clear, which the SDM leaves to the implementation). Routes to settle it: a PAL_B read of what msr[1559] holds on a second CPU, a captured real boot, and the L1 CPU-presence reply.
+
+### 5. The MTTCG fault (`0xffa1bec0`, ifa `0x8f`)
+
+A different path (established). `0xffa1bdd0` reads the same slot, `[0x1000000 + 8 * (2 + n)]`, then the field at `+0xd8` of the record. For slice 0 early that field is `0x7f`, and `st4.rel [0x7f + 16]` at `0xffa1bec0` faults at `0x8f`. This is the print routine in the section "The print routine's per-CPU object" of [boot-sequence.md](boot-sequence.md), so it ran on CPU 0 (slice 2 would have faulted on its own `ld8` first). Something raised an early interruption or print on CPU 0. Whether CPU 1's stray stores through `0xfe`-derived addresses caused it is unknown.
+
+### What the model must change
+
+1. Do not run CPU 1 through the reset entry together with CPU 0 until its early RAM and record exist. The PROM as read cannot do that.
+2. Give each CPU its own `0x1000000` area (PAL 520 preload), not one shared RAM, until the node-window rebuild.
+3. Keep the SHub scratch words in section 3 shared and lock-correct between CPUs.
+4. Capture `cr.iip`, `cr.ipsr`, `cr.isr` and `0x1000000` to `0x1000060` at the first fault.
