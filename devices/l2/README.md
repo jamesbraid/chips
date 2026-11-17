@@ -74,9 +74,9 @@ traffic, the console-baud conflict and the 4700's LVDS path. No Altix 3000 produ
 is assumed to be the 1.x line sysco reads (inferred from the manual's firmware-version strings, 007-4579-001 p. 44:
 `V1.17.7`; 007-3938-005 p. 5 for the 4700 change). Sysco reads 1.44.0 in full and compares L2 1.62.0 from the
 Internal Support Tools 3.24 disc (the set that carries the L1 1.62.1 the SN2 PROM link page reads) against 1.48.0 in
-its `evidence/version-diffs.md`; this page did not read that comparison.
+the "Version diffs" section of its `COVERAGE.md`; this page did not read that comparison.
 
 ## Related pages in the sysco repository
 
 `software/firmware/l2/README.md`, `daemon.md`, `l1-conversation.md`, `partition-task.md`, `router-packet.md`,
-`platforms/l2/board-contract.md`, and `evidence/controllers.md`.
+`platforms/l2/board-contract.md`, and `software/firmware/controllers.md`.
