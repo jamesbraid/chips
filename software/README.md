@@ -17,6 +17,7 @@
 | Page | Title | Summary |
 |---|---|---|
 | [audio-drivers.md](kernel/audio-drivers.md) | Audio drivers in IRIX 6.5.30 and 6.5.22 | Scope: every audio driver object, master file, configuration line and inventory string found in the IRIX 6.5.30 and... |
+| [audio-survey.md](kernel/audio-survey.md) | Audio options of the Fuel, Tezro and Octane | Scope: which audio hardware the SGI documents and the IRIX 6.5.30 IP30 and IP35 driver objects tie to the Fuel (IP35... |
 | [bridge-pci-driver-windows.md](kernel/bridge-pci-driver-windows.md) | Bridge and XBridge: the PCI windows and swap controls IRIX drives | What the IRIX 6.5.30 Octane and Origin kernels do to a Bridge (part `0xc002`, manufacturer 54) or XBridge (part... |
 
 ## linux
