@@ -431,6 +431,29 @@ The kernel (`sn_console.c`) never touches the junk-bus UART. All of it goes thro
 - **Polled fallback (established).** Before `request_irq` succeeds, and when it fails ("console proceeding in polled mode"), a 60 Hz kernel timer calls `POLL` and `PUTB`; no interrupt is needed for that.
 - **What the L1 must have in place.** Output: the console subchannel is learnt from the node's class-2 frame header (`header & 0x1f`, which is 4 for this console). Input: the L1 console must be in console (pass-through) mode, state 1 of the ColdFire management port (entered from the locked prompt with control-D; sysco `console-behaviour.md`); the ARM L1 sends one frame per character addressed to the subchannel it learnt. No acknowledgement or flow control exists in either direction; a full 128-byte ring only masks the receive interrupt.
 
+### Is there an input limit near 80 characters? (read 2026-11-16, nothing run)
+
+A model run showed an 83-character command producing no output. Read in the SAL 5.04 runtime in Ghidra (`l1sc_receive` `rt:0x53b80`, `sc_cons_readc` `rt:0x7ec10`, `sc_cons_poll`
+`rt:0x7eaa0`, `l1sc_intr_status` `rt:0x52a00`) and in the linux-sn2 `drivers/tty/serial/sn_console.c`. Grades as above.
+
+- **The PROM ring holds 127 characters, not 80 (established).** The ring of index 4 is 128 bytes at `ctx + 4 * 0x98 + 0x21c`; a byte is taken only while the read index differs from the
+  tentative write index plus one (mask `0x7f`), so at most 127 committed characters wait there. A full ring sets the index's bit in `ctx+0x40`, calls the chip hook at `+0x248` and returns -21;
+  `READC` clears the bit and calls the hook again when it takes a character. A bad CRC returns -22 and drops that frame, a frame with no room for its two CRC bytes -23, a closed
+  poll gate -24. A frame is committed (its characters become readable) only on a good CRC.
+- **One poll consumes everything in the UART (established).** `l1sc_receive` is a byte state machine that reads the UART until no byte is available; after each good frame it goes back to
+  waiting for a header and keeps going, so one `POLL`, one `INTR` status call or one `READC` that had been blocked takes every complete frame the UART holds, up to the ring's room. It is
+  not one character per call.
+- **The kernel has no limit near 80 (established).** `sn_receive_chars` loops `INTR` status then `READC` until the status shows no receive-ready, or until `tty_insert_flip_char` fails
+  (characters then stay in the PROM ring). Interrupt mode drains on every receive interrupt, polled mode on every 60 Hz tick. No kernel buffer is smaller than the ring.
+- **Wire size (established arithmetic).** One frame per character is six bytes (`7e`, header, character, two CRC bytes, `7e`), more when a byte is escaped. 83 characters are about 500
+  bytes on the UART, close to a 512-byte buffer; 127 characters would be about 760 bytes. So a limit near 80 characters is not the PROM ring (about 127 characters) or the kernel. If the
+  limit is on input at all, it sits in the model's path from its L1 to the UART (a buffer or queue of about 512 bytes that drops, or a receive FIFO without flow control). This is
+  inferred from the arithmetic and the absence of any other limit: the model was not read.
+- **The likelier second cause is output, not input (inferred).** The kernel sends output through `XMIT_CHARS`, which takes at most 127 bytes per call and relies on a second
+  transmit-ready interrupt to continue (see [SN_SAL_HWPERF_OP and sn_topology](../../sal/runtime-services.md#7-sn_sal_hwperf_op-and-sn_topology)). A command whose echo plus output, or whose
+  output alone, is longer than 127 bytes in one write stops in the same place. An 83-character command that echoes its text can cross that line. Two checks tell them apart, neither run:
+  send 120 characters in one console write to a command that prints nothing and check the next prompt appears (input path), then run a short command that prints 200 bytes (output path).
+
 ### What a model must do
 
 1. Answer `0x1007` with `25 00 00 00 00 00` (header `0x20 | n` for the request's index n) and record 19 as the event subchannel (event word 0x13; setting `0x13`). Send no events unless one is wanted: if one is sent, its header is `0x53` and it must be a complete event frame.

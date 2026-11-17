@@ -240,6 +240,78 @@ The text command is request code `0x0000` on task 3 with one string argument (l1
 - **Halt.** Nothing.
 - **Time.** Answer `0x200e` with the host UTC from QEMU's standard RTC clock as six big-endian integers (four-digit year first); answer `0x200d` with status 0, optionally moving an offset against the host clock. Do not give the node a time-of-day chip unless it also carries the `NBY` signature and base year.
 
+## 7. SN_SAL_HWPERF_OP and sn_topology
+
+What `cat /proc/sgi_sn/sn_topology` makes the PROM do, read on 2026-11-16 in Ghidra (`shub1snprom.bin` 10.54, SAL runtime mapped with `--sn2-prom --sal-runtime --no-analysis`, address
+lists) and in the linux-sn2 tree (`arch/ia64/sn/kernel/sn2/sn_hwperf.c`, `sn_proc_fs.c`, `arch/ia64/include/asm/sn/sn_sal.h`, `sn2/sn_hwperf.h`,
+`drivers/tty/serial/sn_console.c`). Grades as in [AGENTS.md](../../AGENTS.md). Nothing was run.
+
+**Why this was read.** A model boot to a shell printed the two header lines of the file and then stopped, with the host CPU idle.
+
+### The kernel side (established)
+
+- **Open** (`sn_topology_open`, `sn_hwperf_enum_objects`): `sn_hwperf_init` runs once under a mutex: `GET_MASTER_NASID` (`0x02000004`), then `HWPERF_OP` with opcode 1 (heap size, size
+  argument 8), the kernel's own `vmalloc` of that size, opcode 2 (install heap), and `0x200a` (object count). Then `HWPERF_OP` `0x200c` (enumerate objects) fills a `vmalloc`ed array of
+  `count * 0x120` bytes. Any status other than 0 becomes `-EINVAL` and `open` fails; nothing waits.
+- **Show** (`sn_topology_show`, once per object): on the first object it calls `GET_SN_INFO` (a nonzero status is a `BUG`), prints the `partition` line, and calls `GET_PCI_TOPOLOGY`
+  (`0x02000064`) with a page-sized buffer, retrying with larger buffers up to 15 pages only while the status is neither 0 nor -1. For each object it formats a line from the object
+  record, and for an object with ports calls `HWPERF_OP` `0x200d` (enumerate ports) with `ports * 12` bytes. A node or TIO object also gets a nearest-node search that calls `0x200d`
+  for the node and for its router.
+- **No wait.** There is no completion, retry on a "busy" status, `smp_call_function_single` or `work_on_cpu`: those are only in `sn_hwperf_op_cpu`, which the ioctl path reaches, not
+  `/proc`. Every call is a plain `SAL_CALL_NOLOCK` on the reading CPU. The loops are bounded by the object count, the port count (a `BUG_ON` above 16 ports) and 15 buffer sizes.
+- **seq_file buffers a whole read (standard behaviour, inferred: the generic code was not re-read).** The first `read` collects every object's output before copying any of it to the reader, so the file's text cannot reach `cat` in pieces from a
+  stuck `show`. Two header lines on the screen therefore came through the console after `show` had finished, which points at the console path, not at `sn_topology`.
+
+### The PROM side (`salruntime_hwperf_op`, `rt:0x8650`)
+
+The object table is the pcfg object list: record `0x48` bytes per object of type 7 (SHub, TIO, router), pointer to it at block A `+0x40`. Opcodes carry the kernel's copy flag bits.
+
+| Opcode | What the PROM does | Status |
+|---|---|---|
+| `1` | Counts type-7 pcfg objects, stores the count, writes `count * 0x48` through the pointer. Needs a size argument of at least 8 | 0, or 1 |
+| `2` | Zeroes the buffer and fills one 9-word record per object (index, lock, chip identity, chip-function table). Sets this and the shared flag per object from its partition byte | 0; 1 if short; `0xfe` if no objects |
+| `0x200a` | Stores the object count. Needs opcode 2 to have run (the object table pointer is zero before) | 0; `0xfe` before opcode 2; 1 if size under 8 |
+| `0x200b` | Chip-function `+0x350` (distance), stores one word | 0, `0xfe`, 1 |
+| `0x200c` | A size argument of exactly 8 returns `count * 0x120`. Otherwise per object: chip-function `+0x340` fills name and location, then the id (the object's index in the pcfg list) and the flag bits | 0; 1 if the buffer is under `count * 0x120` |
+| `0x200d` | Chip-function `+0x348` for the object index in a0; a size of 8 returns the required size (`0x18` for SHub and TIO, `0x60` for the NUMAlink routers) | 0, or `0xfe` when the function is negative |
+
+Everything else returns `0xfe`. The chip-function routines read memory only: `shub_hwperf_object_info` (`rt:0x19550`) and the TIO and router twins copy a name and format the geoid with
+`hwcfg_format_geoid`; `shub_hwperf_port_info` (`rt:0x19630`) reads two port records of the pcfg entry; `shub_hwperf_object_distance` (`rt:0x198b0`) compares geoids. **None of them sends an
+L1 request, touches a SHub register, takes a lock that can be held elsewhere or loops on a status.** The only statuses the call returns are 0, 1 and `0xfe` (and a negated chip-function result);
+**it never returns 4 ("busy")**, so there is no PROM path the kernel's retry code could be answering. The record layout the kernel reads is `0x120` bytes: id at `+0`, flag bits at `+8`,
+name at `+0x18`, location at `+0x98`, port count at `+0x118` (2 for SHub and TIO). The name is "SHub 1.1", "SHub 1.2" or "SHub 1.x" by chip revision byte, or "TIO 1.x"; the kernel finds the kind
+by the substrings "SHub", "TIO" and "Router".
+
+`GET_PCI_TOPOLOGY` (`0xffb44bf0`, SAL_B, case `0x64` of the I/O dispatcher) was read in full: it clears the buffer, then for each segment up to the I/O state's maximum and each of 256 bus numbers
+looks the bus up in the bus lists (`0xffb2a140`), formats one text line per bus object and appends it. It sends no L1 request, ignores the buffer length except for the clear, and always returns 0.
+So the kernel's retry loop ends at the first buffer size. (Established for the control flow; the text format was not decoded.)
+
+### The type-0 geoid cannot make the walk loop
+
+With a type-0 hubdev geoid (see [klconfig.md](../../platforms/sn2/klconfig.md#geoid-and-module-id)) the object's location string is the PROM's placeholder for an invalid geoid (`<invalid>`,
+selected when `geo_valid` fails; inferred that type 0 is invalid, the test was not decoded). The kernel's `sscanf` of it fails, `sn_hwperf_geoid_to_cnode` returns -1 and `show` prints
+one `node -1 <invalid> ...` line with no nasid, distance or CPU lines and skips the nearest-node search. No loop or wait: it only makes the topology file wrong.
+
+### What does stall: console transmit after 127 bytes (inferred from the read code)
+
+The file's text is well over 127 bytes (the `partition` line alone is about 150), written by one `write` from `cat`. In interrupt mode the kernel's `sn_transmit_chars` sends it with `XMIT_CHARS` (`0x0200002a`), which takes **at most 127
+bytes, one send buffer**, and returns the count taken or 0 when the previous buffer has not drained. It then stops and waits. The kernel never enables the transmit interrupt itself
+(`sn_console.c` only enables receive and disables transmit). The PROM turns the UART transmit interrupt on in `l1sc_send_async`, pushes the buffer out from `l1sc_send_intr` when the status
+call sees the transmit-ready bit of the interrupt identification register, and reports "transmit" to the kernel only on the next pass, when that bit is set again and nothing is pending
+(`l1sc_intr_status`, `rt:0x52a00`). A UART model that raises the transmit-holding-register-empty interrupt once and does not raise it again after the data-register writes lets
+a write of up to 127 bytes finish and stalls every longer one: the first 127 bytes (the two header lines and the start of the `partition` line) appear and the rest never leaves. The host
+CPU is idle because the guest is waiting for an interrupt. A **model must** set the transmit-holding-register-empty condition again after each write to the data register while
+interrupt-enable bit 1 is set, cleared by reading the interrupt identification register. The test that tells this from a topology fault: `cat /proc/sgi_sn/sn_topology > /tmp/x` finishes, and any
+command with more than 127 bytes of output stalls. Not run.
+
+### What a model must provide for `/proc/sgi_sn/sn_topology`
+
+- `HWPERF_OP` opcodes 1, 2, `0x200a`, `0x200c`, `0x200d` as above (status 0). `0x200b` and the acquire and MMR opcodes are not used by `/proc`.
+- One record per object with name containing "SHub" (and "TIO" for a TIO), flag bit 0 set for the local partition, a location in the `RRRtBB#S` or `RRRtBB^SS#S` form and a port count of 2 for a node.
+  The port records (port, connected object id, connected port) with an id that matches no record print "endpoint disconnected". An object with no flag bits is skipped.
+- A valid geoid for the node, or the topology line carries `node -1`.
+- `GET_PCI_TOPOLOGY` status 0 with text, or status -1 (kernel skips the section).
+
 ## Review
 
 Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysis` on `shub1snprom.bin` 10.54, plus the EFI ELF from FIT type `0x1f`), kernel side against the Library `linux-history` tree (the `arch/ia64/include/asm` layout, the era this page cites) and the public community tree `nsafran1217/linux-sn2` (Linux 7.3-rc3 with an ia64 revert, read from the holdings mirror, commit `69571599c5`). No emulator ran.
