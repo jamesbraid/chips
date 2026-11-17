@@ -115,6 +115,47 @@ an IOC4 whose IDE registers behave like an ATA task file with BSY/DRQ and PIO da
 `0xaeeeeeee8badbeef` (the simulator signature that makes the three pass-throughs decline, efi.md section 5).
 No interrupt is needed by the pass-through as read (it polls: the `Stall` calls and BSY loops); that is **inferred**, since the interrupt path was not traced.
 
+## EFI memory map on a lone node
+
+What the PROM's memory-descriptor builder (`0xffac8120`, with `0xffacf560` doing the carve-outs and `0xffac7ff0` appending one descriptor) puts in the map for node 0 with N GiB in bank 0, what EFI's `GetMemoryMap` adds, and whether a kernel linked at 64 MiB can load. Read on 2026-11-16 in a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (sha256 `51ccf9ad...`) and the EFI ELF (`GetMemoryMap`, `AllocatePages`, `FindFreePagesI`, `PlInstallMemoryMap`, with the runtime-type jump table read from the ELF bytes). Nothing was run. [os-handoff-tables.md](os-handoff-tables.md#2-the-efi-memory-map) has the builder's inputs; this section is the resulting map.
+
+**Map for NASID 0, bank 0 of N GiB, N at least 2 (established).** B = `0x30_0000_0000`. The usable length is 31/32 of the bank record (the top 1/32 never appears); for a record under 2 GiB the last `64 MiB - len/31` of it is a type 8 descriptor of attribute 8 (32 MiB for a 1 GiB record). Attributes: 1 UC, 8 WB, 9 WB+UC, `0x1000` WP; bit 63 RUNTIME. "GetMemoryMap" is what EFI returns (descriptor size `0x30`, version 1): its switch on the type (jump table at ELF `0x1a72f8`) ORs bit 63 into types 5, 6 and 13 and passes every other attribute through.
+
+| Start | Size | Type | PROM attribute | GetMemoryMap attribute |
+|---|---|---|---|---|
+| `0x0100_0000` (AS 0) | 16 MiB | 13 PAL code | `0x8000000000000009` | same |
+| B | 64 KiB | 8 unusable | 9 | 9 |
+| B + `0x1_0000` | 448 KiB | 6 runtime data | `0x1001` | `0x8000000000001001` |
+| B + `0x8_0000` | 3.5 MiB | 4 boot data | 1 | 1 |
+| B + `0x40_0000` | 28 MiB (to `+0x200_0000`) | 6 | `0x1009` | `0x8000000000001009` |
+| B + `0x200_0000` | 16 MiB (to `+0x300_0000`) | 6 | 9 | `0x8000000000000009` |
+| B + `0x300_0000` | 48 MiB (to `+0x600_0000`) | 4 boot data | 9 | 9 |
+| B + `0x600_0000` | to B + 31N/32 GiB | 7 conventional | 9 | 9 |
+| `0xff80_0000` | 8 MiB | 11 MMIO | `0x8000000000000001` | same |
+| `0x1fff_ffff_fc00_0000` | 64 MiB | 12 port space | `0x8000000000000001` | same |
+| `0x8_0000_0000` | 32 GiB | 11 MMIO (SHub 1) | `0x8000000000000001` | same |
+
+- **No type 5 descriptor on bank 0 (established).** The type 5 start is node base + `0xa0_0000` (block A `+0x28` masked, see [the shadow copy](boot-sequence.md#the-sal-shadow-copy-and-its-destination)); the builder emits a type 5 range only when that start is above the running offset, and after the carve-outs the offset is B + `0x600_0000`. The compare and skip at `0xffacf9f6` (branch to `0xffacfb30`) and the type 5 emitter at `0xffacfa90` were followed, so this is read from the code, not only from the arithmetic. The 6 MiB SAL shadow lies inside the `0x1009` type 6 range.
+- **What covers `0x0..0x100_0000`.** Nothing in AS 0, and nothing at low physical addresses at all, except the PAL descriptor at `0x100_0000` (which is also where the pointer table lives; the PROM reads that RAM through the AS 0 alias, [address map](../../../platforms/sn2/address-map.md#as--0-local-resources-mmrs-and-compatibility)) and the flash and port-space windows. Every RAM descriptor is in the AS 3 window. The pointer table at AS 0 `0x100_0000` is the same RAM as B + `0x100_0000`, inside the `0x1009` type 6 range; the SAL shadow at B + `0xa0_0000` is inside the same range.
+- **Block A (B + `0x240_0000`, 6 MiB), block B (B + `0x2a0_0000`, 2 MiB) and the four 1 MiB per-slot regions (B + `0x200_0000` to `+0x240_0000`)** all lie in the type 6, attribute 9 range, as does the PROM's heap behind block A. SAL_B loads the EFI image (memory size `0x255fe8`, 64 KiB aligned) with an arena allocation from the pointer at block A `+0x1f8` (`0xffaf883c` calls `0xffac3da0` with it), so the image is **inferred** to sit in that heap, also inside the same type 6 range. The exact address was not computed.
+- **EFI's own allocations (inferred placement, established mechanism).** `PlInstallMemoryMap` hands EFI the largest type 7 range first, then the rest. `AllocatePages` with `AllocateAnyPages` calls `FindFreePagesI`, which keeps the highest-ending type 7 descriptor that fits and takes pages from its top, so EFI's pools, the 16 MiB `SnStartIo` buffer and the 128 KiB variable-store image come off the **top of bank 0**, not the bottom; the bottom of the conventional range stays free. Runtime types (5, 6, 9, 10) are 8 KiB aligned. Sizes and order of EFI's allocations were not enumerated, so the exact end of conventional memory is **not checked**.
+- **Where conventional memory starts: B + `0x600_0000`** (96 MiB into the node window), established above.
+
+**What covers 64 MiB (`0x400_0000`).**
+- AS 0 form `0x400_0000`: **no descriptor** (established; the PAL range ends at `0x200_0000` and the next AS 0 descriptor is the flash window at `0xff80_0000`). `AllocatePages(AllocateAddress)` there fails, because the EFI page code needs the whole range to be type 7.
+- AS 3 form B + `0x400_0000` = `0x30_0400_0000`: **type 4 (boot services data), attribute 9**, inside B + `0x300_0000` to `+0x600_0000` (established). Also not free: EFI only reuses boot data after `ExitBootServices`.
+- AS 0 node-4 alias `0x100_0400_0000` is never in the map.
+
+**Where a kernel loads (established for the code, inferred that this machine follows it).**
+- **ELILO.** The loader takes `p_paddr` of the lowest `PT_LOAD` as a physical address and calls `AllocatePages(AllocateAddress)` for the span (`alloc_kmem`, ELILO 3.16 `alloc.c`). If that fails and relocation is off it prints `gzip.c(447): relocation is disabled, cannot load kernel` (`ia64/gzip.c:446-447`; the plain loader has the same at `ia64/plain_loader.c:293-294`). With `relocatable` (global or per image) or `-r`, `find_kernel_memory` (`util.c`) takes the lowest `EfiConventionalMemory` descriptor with a 256 MiB-aligned address inside it that still holds the whole span, and the loader shifts every address by `new_addr - ROUNDDOWN(low_addr, 256 MiB)`.
+- **The kernel moves by 64 MiB multiples.** `_start` does `mov r3 = ip` and clears the low `KERNEL_TR_PAGE_SHIFT` (26: 64 MiB) bits to get the physical base for its one pinned translation (`arch/ia64/kernel/head.S`, the `itr` block, in the linux-sn2 mirror at 7.3-rc3 and in `linux-history`); `KERNEL_TR_PAGE_SHIFT` is `_PAGE_SIZE_64M` and `LOAD_OFFSET = KERNEL_START - KERNEL_TR_PAGE_SIZE` puts `p_paddr` at 64 MiB (`arch/ia64/include/asm/page.h`, `pgtable.h`). The held SLES 9 SN2 kernel does the same ([SN2 early boot](../../linux/sn2-early-boot.md)). So a 256 MiB shift keeps the alignment, and the kernel runs wherever ELILO puts it. This corrects earlier text here that called the kernel immovable.
+- **On this PROM's map:** first type 7 starts at B + `0x600_0000`; the next 256 MiB boundary is B + `0x1000_0000`, so `relocatable` loads the held kernel (span `0x4000000` to `0x4d34d60`) at `0x30_1400_0000` with entry `0x30_1400_8320`. Without it, the `gzip.c(447)` stop is the faithful outcome on this PROM.
+- **SGI shipped it that way.** SGI's own example `elilo.conf` for Altix has a global `relocatable` line: SGI ProPack for Linux Start Here, `007-4558-014` (PDF page 63, techpubs root, `library/manuals/4000/007-4558-014/pdf/`) and the Linux Configuration and Operations Guide `007-4633-009` (PDF page 31), both with `prompt`, `timeout=50`, `relocatable`, then the image stanza. ELILO's own `ChangeLog` credits SGI: "kernel relocation on memory error. Based on code from Brent Casavant <bcasavan@sgi.com>" (2001-08-01) and "patch from SGI to fix load offset for relocatable kernels (Jack Steiner, Brent Casavant)" (2002-02-21); `docs/README.txt` documents `relocatable`. That the shipped option exists because SN2 memory does not start at low physical memory is **inferred** (the manuals state the option, not the reason; the map above gives the reason).
+
+**Faithfulness verdict.** The model's report that `0x4000000` is not free matches the PROM: the PROM never describes it as conventional in either address form. The `gzip.c(447)` stop is the PROM's own behaviour for an `elilo.conf` without `relocatable`; no memory-map change is needed. The fix is `relocatable` in `elilo.conf` (or `-r` at the ELILO prompt). The model keeps the PROM's types; conventional memory runs from B + `0x600_0000` to the bank's end, so `find_kernel_memory` finds B + `0x1000_0000` as long as the span fits below the end of the type 7 range.
+
+**Not checked:** the other nodes' banks and the multi-node order; the sort step between the builder and EFI; `AddRange` merging in EFI; what EFI's own allocations and `ExitBootServices` do to the map; whether the SN2 kernel itself needs anything else at its physical base (only its `p_paddr` and `ip` use were read). The kernel was not run.
+
 ## 4. Unknowns and routes
 
 - The flash offset and sector map of the 64 KiB variable store, and the chip-object flash methods behind `0x02000008` ops 5 to 7: decode the node chip object's methods
