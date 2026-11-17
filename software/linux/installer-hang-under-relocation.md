@@ -41,6 +41,14 @@ its `System.map` puts `unw_init` at `0xa000000100a09a10` and `__end_unwind` at
   The same formula decodes `0xa000000100000000` correctly in the same function. (established)
   Debian's own mckinley kernel has the identical eight constants at
   `0xa000000100a0a0c0..a0a270`. Why gcc masks the offset: unknown.
+- The base is the plain region 5 address, so the carry is real. `__gp` is `.got + 0x200000`
+  (`System.map` of the mckinley build: `__gp = 0xa000000100ea42f0`, `.got` at `...ca42f0`). Installer
+  `.got` is at `0xa000000100ca2530`, so `r1 = 0xa000000100ea2530` and the slot `r1-0x1ffc30` is
+  `0xa000000100ca2900`, holding `0xa0000001008e1620` on disk (bytes `20 16 8e 00 01 00 00 a0`).
+  The neighbouring start slot `r1-0x1ffda8` holds `0xa000000100888040`, the start of
+  `.IA_64.unwind`, which confirms the gp. Debian's mckinley image has the same plain
+  region 5 values (`__end_unwind` slot `0xa0000001008e0d20`, start slot `0xa000000100887788`). Neither file has
+  any relocation section (static EXEC), so nothing rewrites the slots at load. (established)
 - The working hypothesis (`__pa` on an image address instead of `ia64_tpa`) is wrong for this
   access: there is no `__pa` or `tpa` here. The physical address is the link virtual address
   with the region bits dropped, so it does not depend on where elilo put the image. (established)
