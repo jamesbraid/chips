@@ -343,3 +343,16 @@ Independent re-read on 2026-11-16: PROM in Ghidra (`--sn2-prom`, SAL_B of `shub1
 **Changed.** The `version` probe: it is true only for status exactly 0 and the L1 does not give that (above). A silent probe was "unknown": it waits 20,000,000 us, takes the die routine, which returns, and the reset continues (the 3,000,000-tick wait of the reset text takes the same path). SAL `0x3b` returns -3 on an identity read failure. Capture of the RTC on a failed base read. The kernel path to `pm_power_off` in 7.3 is `do_kernel_power_off`, which registers `pm_power_off` as a legacy sys-off handler; older trees call it directly. The reply and time rows of 6.5 as edited. Address notation for the state word.
 
 **Not checked.** The callback `0x5000` descriptor from `RtSalCallBack` to `0xffb1ba90` (taken from the earlier review); the chip probe `0xffaf2870` (write 6 to register `0xb`, read back); whether an Altix 350 has the time-of-day chip; the `linux-history` Library tree (only the community tree was read); `0x0009` caching in `0xffa7db00`; what the die routine's bit in `0x1_101d_0080` does at the L1.
+
+### Review of the HWPERF and console input commits
+
+Independent review of chips commit `623bb57` (section 7 here and the input-limit section of [l1-requests.md](../firmware/snprom/l1-requests.md)), 2026-11-16, record shared with [the 3.2 page](../linux/sn2-io-discovery-3.2.md#review).
+
+**Confirmed (kernel side, linux-sn2 7.3-rc3 and 3.2.78).** Opcode numbers (`0x200a` to `0x200d`, heap size 1, install heap 2), the init order (master NASID, heap size with an 8-byte argument, install, object count), the object record size `0x120` with fields at `+0`, `+8`, `+0x18`, `+0x98`, `+0x118`, port record 12 bytes, any non-zero status becoming `-EINVAL`, no wait or retry on the `/proc` path, the 15 buffer sizes of the PCI topology loop, `GET_SN_INFO` failing with `BUG`. `sn_transmit_chars` leaves its loop when the PROM takes fewer bytes than offered, and the kernel enables only the receive interrupt, so the transmit stall reading is consistent with the code. `sn_receive_chars` loops until no receive-ready or until `tty_insert_flip_char` fails.
+
+**Findings (none blocks).**
+1. The nearest-node search makes no SAL call for a node that has CPUs and memory (it returns "trivially successful" before the port query). Fix: say `0x200d` for the node and router is made only when the node lacks CPUs or memory.
+2. `sn_hwperf_init` also runs at `device_initcall` (`sn_hwperf_misc_register_init`), so the heap and count calls happen at boot, not only at first open of `sn_topology`. Fix: add that.
+3. For a type-0 geoid the object's port loop still runs, so `0x200d` is still called and `numalink` lines still print; "no loop or wait" holds. Fix: one clause.
+
+**Verdict.** Accept. **Not checked:** every PROM address and status in section 7 and in the ring description (`rt:0x8650`, `0xffb44bf0`, `rt:0x53b80`, `rt:0x7ec10`, `rt:0x52a00`); the 83-character reading, which the page rightly leaves inferred; the 7.3 copy of the topology buffer loop.

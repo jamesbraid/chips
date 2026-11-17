@@ -217,3 +217,16 @@ at PACKET with abort). Device-path, El Torito and file-system details: [efi-boot
   it and `qla1280` plus `sr_mod` load in the ramdisk. The IOC4 ATAPI CD works on both sides (EFI and kernel). Booting from one
   drive and installing from the other is probably fine. What would settle it: decompile the `linuxrc` CD-search routine (the
   function around the "Found CD in %s" string), or run the install in a model with each arrangement.
+
+## Review
+
+Independent review of chips commit `ddbdaf7` (this page and the pointer edits in efi.md and efi-boot.md), 2026-11-16, record shared with [the 3.2 discovery page](../../software/linux/sn2-io-discovery-3.2.md#review).
+
+**Confirmed against public source.** Linux 2.6.5 `drivers/ide/pci/sgiioc4.c` and `include/asm-ia64/sn/ioc4.h`: task file at `0x100` with a 4-byte stride, control `0x120`, DMA block `0x140` with words 0 to 8 as listed, interrupt block at `0x0` with status `0xc`, set `0x14`, clear `0x1c`; byte-bus bases `0x80000` to `0xe0000`; table entry of four big-endian words with address in word 1, length in bits 15:0 and end flag bit 31; entry count `PAGE_SIZE / 64`; a 64 KiB entry written as length 0; direction `0x4` for a disk read; setup and completion order, the 200-read stop poll, the 16-word ending area and the 8-byte count slack; the `0x51` status-read hook writing 3 to `0xc`; revision below 46 refused (also in 3.2.78 and `pata_sgiioc4.c` at 7.3). 3.2.78 `drivers/misc/ioc4.c`: command word `0x140`, calibration and the ISP12160-at-slot-3 test. The error-address layout and master id 8 (`include/linux/ioc4.h`). The 7.3 libata port forces PIO with the ATAPI DRQ comment and writes a 64 KiB entry as `0x10000`.
+
+**Findings (none blocks).**
+1. "Both ran on hardware" (the 64 KiB entry paragraph) is unsupported for the 7.3 port; only the 2.6.5 driver is known to have shipped. Fix: drop the clause and keep the length-0 reading inferred from the 2.6.5 driver alone.
+2. The `0x51` mask belongs to 2.6.5 and the SLES module. The 3.2.78 IDE driver tests the busy bit instead (`sgiioc4.c:295`). Fix: say the status-read acknowledge differs by driver version, which supports the page's own "unknown whether the chip clears it".
+3. The page fetched a linuxrc source file from a public URL; the project rule is Library-first. Not a content fault; note for the author.
+
+**Verdict.** Accept. **Not checked:** everything read from the SLES 9 installer media and the shipped modules (`ioc4.ko` writes, `linuxrc` strings and module list), the EFI driver offsets and its polling, and the IRIX-derived rows; I had no access to those artifacts.

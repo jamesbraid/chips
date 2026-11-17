@@ -141,3 +141,17 @@ Pages read: cdimage.debian.org 7.11.0 ia64 iso-cd listing; sources.debian.org li
 
 Uncertain items: the machine-type choice in the Debian, CentOS 4 and Fedora 9 kernels; whether Debian's installer writes `console=ttySG0`; whether the Altix 350 uses SHub 1 or SHub 2; whether the ISOs' El Torito catalogues work in PROM 10.54 as-is.
 
+
+## Review
+
+Independent review of chips commit `514d6e8`, 2026-11-16, record shared with [the 3.2 discovery page](sn2-io-discovery-3.2.md#review). No model-specific detail or internal name remains; the sources are SGI manuals, public kernel trees and public archive listings.
+
+**Confirmed.** 007-4633-017 revision history (ProPack 3 SP1 to SP3 and SP5, ProPack 4 to SP3, ProPack 5, ProPack 6 to SP5), 007-4558-014 CD set (ProPack 3 SP6, open source CD 1 to 3, proprietary CD 4), 007-4727-003 as the ProPack 4 / SLES 9 SP3 guide. The mmtimer register table against `shub_mmr.h` (every SHub 1 and SHub 2 offset listed, RTC1 pending bit 24, ID shift 52, PID shift 4). Absence of `mmtimer.c`, `sgi-xp` and `sgi_hotplug.c` from the linux-sn2 tree, and presence of `snsc`, `ioc4`, `ioc4_serial`, `sn_console` and `tiocx`. `pata_sgiioc4` revision test. `sn_hwperf` at `device_initcall`. Debian 7.11.0 ia64 ISO sizes (CD 646M, 647M, 628M; netinst 258M; DVD 4.4G), the CentOS 4.7 files under the 4.9 vault path and their sizes, and CentOS 5.11 having only i386 and x86_64.
+
+**Findings (none blocks).**
+1. "ProPack 6 (to SP6)" is not supported by the cited revision history, whose last entry is Service Pack 5 (007-4633-017, October 2009). Fix: say SP5, or cite the page of 007-5482-007 that names SP6.
+2. "Kernel numbers are my reading" and "what I read" are first person. Fix: "inferred from the distribution versions" and "what was read".
+3. Two statements contradict the repository's own pages. The Debian `IA64_GENERIC` is established by the shipped 3.2.78-1 config (`CONFIG_IA64_GENERIC=y`, `CONFIG_IA64_SGI_SN2` unset), not inferred; and the Altix 350 carries SHub 1 (the PROM pages), so the "which SHub" caveat and the SHub 2 column can go. Fix: edit both.
+4. The row "older kernels (2.6.5 to 2.6.18) use the non-ACPI path" is stated without a source for 2.6.16 and 2.6.18; 2.6.5 is correct (no I/O ACPI code in that tree). Fix: limit it to 2.6.5 or cite.
+
+**Verdict.** Accept. **Not checked:** 007-4837-006 and 007-5482-007 contents, the EFI device-path strings quoted from 007-4558-014 page 17 (the text search did not index them), the Fedora, Gentoo, SLES 9 RC5, Scientific Linux and OpenVZ rows, Debian update CD 12, the 007-4660-002 block diagram, and every "Inferred" severity (they are labelled as such).

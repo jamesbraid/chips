@@ -231,3 +231,13 @@ Independent review of chips commit `a4bfcf2`, examined at that revision. The rev
 Independent review of chips commits `e009a62`, `f7dba3f`, `962c477` and `a6cb292` by a reader who did not write them. Every address below was re-read in the IA-64 Ghidra module (`--sn2-prom --sal-runtime --no-analysis` with address ranges) and cross-checked against a flat objdump of the same image and the inflated SAL runtime ELF; no grade rests on a model run.
 
 **Changed.** Items 8 and 10 and the closing unknown now carry the corrected figures: the console index is settled (1), PUTB is buffered and flushed, `pcidev_info` is `0x60` bytes, and the heap bound is `0x30_0249_ae80`. The 350's I/O brick letter stays open (see the [klconfig review](../../platforms/sn2/klconfig.md)).
+
+## Review
+
+Independent review of chips commit `fdcff0a` (the "I/O discovery in SN2 kernels" section), 2026-11-16, record shared with [the 3.2 page](sn2-io-discovery-3.2.md#review).
+
+**Confirmed.** In the linux-sn2 7.3-rc3 tree: `acpi_initialize_tables` memsets the static array and does not reset `current_table_count` (`tbxface.c`); `acpi_tb_get_next_table_descriptor` appends; `acpi_tb_resize_root_table_list` copies only entries with a non-zero address and never updates `acpi_gbl_dsdt_index` (`tbdata.c:586-640`); `acpi_tb_load_namespace` reads `tables[acpi_gbl_dsdt_index]` and returns `AE_NO_ACPI_TABLES` when it is not a DSDT (`tbxfload.c:118-125`); `acpi_table_init` runs from `setup_arch` and again from `sn_setup` after the four feature calls. The gate, the `0x5f` panic, the ignored feature status and the no-`0x55/56/57` claim match the source. The 7.0 failure is therefore a sound reading, and it correctly stays inferred.
+
+**Finding (not a blocker).** "The SN I/O code is identical in both" tags is slightly off: `io_common.c` gains one `sn_dma_set_ops` call and `setup.c` loses DMA and module-notifier code between them; the discovery path is unchanged. Fix: say "the discovery code is identical".
+
+**Verdict.** Accept. **Not checked:** the PROM facts graded established (`0xffb60170`, `0xffb5fc90`, `0xffb20230`, `0xffb58ca0`, `0xffb1e660`); the first-pass entry count of four.
