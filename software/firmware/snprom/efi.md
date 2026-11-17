@@ -287,7 +287,7 @@ PROM is bypassed or already ran to `0xffaf8c50`; a synthetic SAL_B must supply w
 11. PAL: EFI calls PAL for cache flushing (`RtPlCacheFlush`) and cache preload ("cache preloading PAL call failed" is a message, not a stop);
     exact calls and their tolerance were not read (**unknown**).
 
-The boot options, the variable-store access path, the device paths the disk drivers build and what the shell needs to run a loader from a CD or disk are in [efi-boot.md](efi-boot.md); the runtime services Linux calls are tabulated in [the runtime-services page](../../sal/runtime-services.md).
+The boot options, the variable-store access path, the device paths the disk drivers build and what the shell needs to run a loader from a CD or disk are in [efi-boot.md](efi-boot.md); the runtime services Linux calls are tabulated in [the runtime-services page](../../sal/runtime-services.md). The QLogic ISP12160 driver's initialisation sequence and its `ql2.c` assert are in [efi-qlogic.md](efi-qlogic.md).
 
 ## Unknowns and routes
 
