@@ -179,7 +179,8 @@ Other pages: [boot-sequence](../../software/firmware/snprom/boot-sequence.md#2-i
   for both call chains, the flag test and the table choice.)
 - **The PROM programs no translation.** All seven translation table entries are written zero and never again. The IWI,
   IIDSR, IIDEM, local and SXB protection and override registers are never read or written on this path, and nothing is
-  touched through a big window. Everything the PROM reaches in a widget goes through small windows. (Established for the
+  touched through a big window on this path. Everything the first-stage PROM reaches in a widget goes through small windows; the
+  SAL runtime's mapper does program ITTEs (see [PIO windows](#pio-windows)). (Established for the
   code read. A search of the whole SAL_B for the constants of those registers found users only in the memory test `0xffa7a960`
   (documented in [node-bringup](../../software/firmware/snprom/node-bringup.md)), the BTE error clean-up `0xffa94d40` and
   code at `0xffb45080` to `0xffb745e0`; no direct call from `main_three` reaches that last block, only table dispatch,
@@ -691,6 +692,60 @@ Independent re-read of the rows above and of the PIC set-up they call, on 2026-1
 **Not confirmed from the decompile.** The discarded read-backs after the `0xf003000` write (row 9) are not visible: the decompiler drops unused loads, and the listing of `0xffab0380` was not dumped. Treat "each read back" as the earlier reader's listing reading, inferred here. The `0xffa0ff30` and flag-2 gates in front of `0xffab38b0` and the `0xffab1b60` record builder were not read.
 
 **Grades.** Unchanged: the rows stay established for access, offset, value and order; names and the meaning of unnamed bits stay as graded.
+
+## PIO windows
+
+How a processor load or store reaches a widget through the SHub 1 II. Source: the Linux v5.3 SN2 address and II headers
+(`addrs.h`, `shubio.h`, `hubdev.h`, `pcibr_dma.c`) for the definitions, and SAL_B in the 5.04 image (snprom 10.54) for
+what the PROM programs. Addresses below are node-global: `0x8_0000_0000 | nasid << 38 | node offset`, with bit 63 added
+for a physical uncached access.
+
+**Which window (established, header macros).** The node offset splits on bits 31:29 (for offsets below 4 GiB, bit 32 clear):
+
+| Node offset | Window |
+|---|---|
+| `0` to `0x0fff_ffff` | small window `w` = bits 27:24: widget `w`'s own address space at xtalk offset bits 23:0 (16 MiB). Widget 0 is reached through big window 7 by Linux (see below) |
+| `0x2000_0000` to `0xffff_ffff` | big window `n` = bits 31:29 (1 to 7), 512 MiB each, translated through ITTE`n` |
+| bit 32 set, or the II block at small window 1 plus 8 MiB | SHub registers, not widgets (see [address map](../../platforms/sn2/address-map.md#io-windows-shub-1)) |
+
+Linux numbers big windows 0 to 6 (`NODE_BWIN_BASE(nasid, i)` = base + 512 MiB + `i` << 29) and ITTE entries 0 to 6, so
+window number `n` in address bits 31:29 is Linux index `n - 1` and register `IIO_ITTEn`. Index 6 (window 7) is kept back as
+the stand-in for small window 0, so only indices 0 to 5 (windows 1 to 6) are handed out. The flush-list code in
+`pcibr_dma.c` indexes its copy of the ITTEs by the address bits themselves, which confirms the numbering.
+
+**The ITTE (established, header for the fields).** `IIO_ITTEn` is at `0x400160 + 8 * (n - 1)`; widget number bits 11:8,
+offset bits 4:0, I/O-space bit 12 (Linux's `HUB_PIO_MAP_TO_MEM` is 0 and `_TO_IO` is 1; what a set bit does in hardware:
+**unknown**, no shipped software sets it). The Crosstalk address is `(ITTE[4:0] << 29) | node offset[28:0]` on the widget
+`ITTE[11:8]`, so a window reaches 32 steps of 512 MiB, 16 GiB of a widget; whether a clear I/O bit is "memory" and a set
+bit "I/O" space of the widget is **inferred** from those names. Reset value and what an access through an entry that was
+never written does: **unknown** (the PROM writes every entry before use, below).
+
+**Worked example, `0x8_c070_0008` (nasid 0).** Node offset `0xc070_0008`; bits 31:29 = 6, so ITTE6 (`0x400188`, Linux
+index 5); window-relative `0x70_0008`. With ITTE6 = `0xf02` (widget 15, offset 2, the value the PROM's mapper writes for
+a PIC bus 0 memory BAR at PCI address `0x70_0000`, below) the Crosstalk address is `0x4070_0008` on widget 15: PCI memory
+`0x70_0008` of head 0. The decode is inferred from the definitions; the ITTE6 value is the PROM's mapper computation
+(established as code) applied to a BAR address read off the stop (inferred).
+
+**What the PROM programs (established as code, SAL_B).**
+- The first-stage set-up (`0xffab1cc0`) writes all seven entries 0, as above.
+- A hub provider routine (`0xffb70960`; reached through the provider tables, its caller not traced) initialises the hub's
+  mapping table: sixteen small windows at `base + i << 24` (`i << 28` for an odd, TIO, NASID), six big-window slots,
+  each slot written invalid with a value `0x300 | slot << 12` (widget 3 is Linux's "invalid widget"). **All six writes go
+  to the address of ITTE1**, not to ITTE`slot` (the address is a loop constant), so after this ITTE1 holds `0x5300` and
+  ITTE2 to ITTE6 keep 0 from the first-stage set-up. The release routine (`0xffb71110`) has the same defect.
+- The mapper (`0xffb70ba0`, slot 2 of the hub provider table at `0xffc2b8d8`; the BAR mapping `0xffb31fb0` calls it, which
+  is where `pdi_pio_mapped_addr` comes from, inferred from the call chain) takes a Crosstalk address and size. If `address + size` is at most 16 MiB it returns the widget's small window
+  and writes nothing. Otherwise the span must fit in 512 MiB; it reuses a slot already mapping the same 512 MiB chunk of
+  the same widget, or takes **the highest-numbered free slot** (so the first big window handed out is window 6), writes
+  `ITTE = widget << 8 | address >> 29 & 0x1f`, reads it back (value ignored), and returns
+  `0x8_2000_0000 + slot << 29 + nasid << 38` (bit 63 set) plus the address's low 29 bits.
+- No ITTE access exists in the SAL runtime ELF, the EFI ELF or the other compressed components of the image (searched for
+  the register offset constants); EFI reaches PCI memory through SAL `IOIF_PCI_SAFE` or the addresses SAL handed out.
+
+**Byte lanes.** The II treats a big and a small window alike for data; no source gives the II any byte swap or lane
+rule, and none was found in the PROM code on this path (**unknown** for hardware, inferred only that PIO data is not
+modified by the II). Sizes 1, 2, 4 and 8 occur: the PROM uses 4-byte widget accesses and 8-byte II register accesses, EFI
+a 2-byte store through a big window. The swap rules that matter are the PIC's own, in [the PIC page](../pic/README.md#pic-widget-space-and-pio-windows).
 
 ## Consistency with Bedrock
 

@@ -951,6 +951,42 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of `pic_attach2` (`0x
 
 **Grades.** Unchanged, except that the address formula, the empty-slot rule, the device-ID checks and the ioboard list are now read in the decompile twice and stay established.
 
+## PIC widget space and PIO windows
+
+Where a processor access to a PIC widget lands, per head. A PIC widget has two PCI heads in one widget address space: head 0
+at widget offset 0, head 1 at `+0x80_0000` (the PROM's window pointer for head 1). Source: the SAL runtime's resource-to-Crosstalk
+translation (`0xffb31010`, SAL_B of the 5.04 image, read in Ghidra and cross-checked with objdump) and the PCI scan above;
+the Bridge and XBridge address maps are siblings and fill no field. Grades are **established** as the PROM's computation
+unless marked; hardware decode is **inferred** from it.
+
+| Widget offset, head 0 | Head 1 | What the PROM uses it for |
+|---|---|---|
+| `0` to `0x1_ffff`, `0x8_0000` up | `+0x80_0000` | the register file and the external translation RAM at `0x8_0000` (small window) |
+| `0x2_1000 + slot * 0x1000 + reg` | `0x82_1000 + ...` | type 0 configuration, `slot` 0 to 3, `reg + size` at most `0x100` per function (function `f` adds `0x100 * f`) |
+| `0x20_0000`, `0x40_0000` | `0xa0_0000`, `0xc0_0000` | device windows 0 and 1 (2 MiB each): memory or I/O BARs the PROM allocated from the device's direct-window pool; I/O BARs are mapped only here |
+| `0x60_0000`, `0x70_0000` | `0xe0_0000`, `0xf0_0000` | device windows 2 and 3 (1 MiB each), same rule |
+| `0x4000_0000` + PCI address | `0xc000_0000` + PCI address | memory BARs outside the pools: up to `0x3fff_0000` of PCI memory; also what a BAR above 16 MiB needs |
+| anything else | | unmapped: the mapper prints a failure; `0x8000_0000` to `0xbfff_ffff` and the 64-bit and I/O aliases of the Bridge family are not used by the PROM (what the PIC does there: **unknown**) |
+
+Reaching them from the SHub: widget offsets below 16 MiB (registers, config, device windows) go through the widget's small
+window `w` (`0x8_0000_0000 | nasid << 38 | w << 24`); the `0x4000_0000` and `0xc000_0000` memory aliases need a big window,
+so a PIC memory BAR is reached at `0x8_0000_0000 | nasid << 38 | n << 29 | (PCI address & 0x1fff_ffff)`, `n` being the big window whose ITTE the mapper set
+([PIO windows](../shub_ii/README.md#pio-windows)). Example: widget 15, head 0, PCI memory `0x70_0008` is
+`0x4070_0008` on the widget, ITTE offset 2, window-relative `0x70_0008`; the first mapping gets window 6, giving
+`0x8_c070_0008` (the BAR address is read off a stop, **inferred**). Whether the alias is a 1:1 map of PCI memory and what
+bits 31:30 of a device window's PCI address do (`Device(n)` window base) is **inferred** from the PROM's arithmetic only.
+The Device-register window base is the bits-11:0 field in 1 MiB units above (`(window >> 20) & 0xfff`); it is the direct window the device-window rows above reach.
+
+**Config space.** Offsets as above, 4-byte aligned words, no byte swizzle in the address (see the PCI scan section below);
+the PROM issues only 4-byte config accesses, so 1- and 2-byte lane behaviour is not exercised there.
+
+**Byte lanes and swap.** Unknown for PIC in any citable source (see the swap section above). What the PROM does: it clears
+Device-register bit 13 (`dev_swap`) and sets control bits 31:30 (and 29 except on revision 1; what those control bits do is
+unknown here); the IOC4 and QLogic parts are driven with plain little-endian register accesses of the access's own size (EFI's
+2-byte store of 5 at BAR + 8 is one). A model should serve 1-, 2- and 4-byte accesses through the alias as address-preserving
+bytes of the PCI register, same for small and big windows (the II adds no rule); whether the PIC itself swaps at the
+alias is **unknown**.
+
 ## PCI scan and the protected read (stop at `0xffb5cf50`)
 
 Traced on snprom 10.54 (SHub 1) in Ghidra with the repository's IA-64 module, beside an objdump listing. Decompiler output is navigation; each claim below was checked against the listing or a constant.
