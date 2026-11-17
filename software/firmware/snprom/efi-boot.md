@@ -194,6 +194,88 @@ Read path for a lookup: `getenv` (`0xffad6e30`) -> open the node's flash object 
 - *Autoboot:* the SAL has no autoboot variable; the EFI boot manager reads `Boot####`, `BootOrder` and `Timeout` from the EFI store (section 1). The L1 debug switch has bits named `2000 no autoboot`, `0020 default env`, `0100 no disable`, `0400 plain cons`, `0800 no NUMAlink`, `4000 no I/O` (strings only; the code that tests each bit was not traced, so what `default env` does to the lookups above is unknown).
 - A simulator signature in the CPU ID makes `getenv` answer only `PartitionID` and `NASID` (`0xffad6640`); that path is a fallback after a failed flash open, not a skip of the flash.
 
+## GetTime and the TOD chip
+
+Why EFI `GetTime` can return month 0, and what a model must present so it returns a real date. Read in Ghidra
+(`--sn2-prom --no-analysis`, decompile of the named addresses) and re-checked against a flat `ia64-linux-gnu-objdump`
+listing for the byte-lane arithmetic and the probe sequence. `shub1snprom.bin` 10.54, SAL_B addresses. No emulator ran;
+not yet independently reviewed. The call chain above the chip (`RtSNGetTime`, SAL `0x0200000b`, the per-node time record) is in
+[the runtime services page](../../sal/runtime-services.md#64-the-time-of-day) and is not repeated.
+
+**What the model must present (the answer).** An IOC4 (PCI `10a9:100a`) on a PIC bus whose BAR 0 + `0x80000` is a byte-wide clock
+chip. Reads of `0xff` at logical register 6 select the M48T35-style map; anything else selects the DS1286-style map. Every access is one
+byte at `BAR0 + 0x80000 + (reg ^ 3)`. Return host UTC as BCD in the map below. Nothing on the L1 link or in the SHub decides this.
+
+### 1. Branch choice (established)
+
+- Slot 23 of the SHub 1 chip table (`0xfface1e0`) is chip-first. It calls the BCD reader `0xffaf36a0` and only when that returns nonzero
+  (it returns `-1` only when no chip object exists) calls the L1 request `0x200e` (`0xffa7f190`). Success from the chip path never
+  touches the L1. So a model that answers `0x200e` with six integers but still shows a chip object (the default once an IOC4 is scanned,
+  below) never has its L1 reply read.
+- **What creates the chip object.** `0xffaf2dc0` (first use only, cached; a failure is cached too) allocates 0x18 bytes, calls `0xffaf2d30`, then the probe
+  `0xffaf2870`. `0xffaf2d30` calls `0xffaf2960`, which walks the lboards of the master node (`0xffb23930`: the node whose board carries the flag below) for
+  a board whose type class (`brd_type` +5, high nibble) is `0x7` (`0x71` to `0x7f`, the I/O boards) and whose `brd_flags` byte (+9) has bit `0x10`. None: no
+  chip, L1 fallback. Found: object `+0` = 1 and `+8` = base + `0x80000`.
+- **Who sets that flag (the discovery probe).** The PCI scan `0xffb36020`, for each device number on a bus, reads the id dword of function 0 and compares it with
+  `0x100a` (device, bits 31:16) and `0x10a9` (vendor, bits 15:0). A match calls `0xffb32680(nasid, bus slot, device number)`: it finds the lboard of that NASID whose `brd_slot`
+  (+10) equals the bus slot and whose class is `0x7`, ORs `0x10` into `brd_flags`, and stores the slot in bits 59:56 and the device number in bits 63:60 of the
+  qword at board `+8`. (`0xffaed410` already put the second-PIC-bus bit, address bit 23 of the bus's widget address, in bit 48 of that qword.) No strap, no PROM
+  variable and no L1 reply is consulted. The chip is believed present exactly when the scan sees an IOC4 under an I/O board. The simulator signature
+  (`cpuid[2]` = `0xaeeeeeee8badbeef`, see the driver section) is the one other branch: `0xffaf36a0` then returns 0 at once without filling the buffer, which also gives a zero month (**established**).
+
+### 2. Chip access (established, part identity inferred)
+
+- **Address.** `0xffaf2960` takes the board's `+8` qword (device number, slot, bus bit) and builds the IOC4's address in three steps. (a) Widget base of the PIC:
+  `(nasid << 38) + widget * 0x1000000 + 0x8_0000_0000` with bit 63 set, for an even NASID (a SHub; the odd, TIO form uses `widget * 0x10000000` and no `0x8_0000_0000`). (b)
+  The window of PCI device `d` (low 3 bits of the device number): for `d` 0 to 2, `d * 0x200000`, plus `0x800000` on bus B; for `d` 3 to 7,
+  `d * 0x100000 + 0x300000` on bus A and `d * 0x100000 + 0xb00000` on bus B. Widget number is the board's slot. (c) The IOC4's BAR 0, a 32-bit read of PCI configuration offset `0x10` at
+  `widget base (+0x800000 on bus B) + 0x20000 + d * 0x1000 + 0x10`, masked with `0xfffff0` and ORed into (a) | (b). The chip window is that value plus `0x80000`
+  (`0xffaf2d30`). So it is the IOC4's byte-bus window 0 (BAR 0 + `0x80000`; offsets from the public 2.6.5 IOC4 header), **not** a SHub junk-bus device. A model cannot place it on the junk bus.
+- **Access path.** Single byte `ld1` or `st1` at a physical address (`psr.dt` and `psr.i` cleared, `mf.a` after, `0xffa0e5f0`/`0xffa0e6e0`) with bit 63 set (uncached). Register `x` is
+  addressed at window + `(x & ~3) + 3 - (x & 3)`, that is `x ^ 3`: bytes are lane-swapped within each 32-bit word. All offsets below are logical registers; the physical byte is `x ^ 3`.
+- **Probe, once (`0xffaf2870`, established).** Write `0` to register `0xb`, `0xff` to register 6, `0x80` to register `0xb`, read register 6. `0xff` reads back: layout 0. Anything else: layout 1.
+  (Physical bytes `8`, `5`, `8`, `5`.) The PROM cannot fail the probe: an absent or dead chip (reads of 0, writes ignored) selects layout 1, it does not fall back to the L1.
+- **Layout 0** (M48T35 / DS1742 family map, **inferred** from the register positions: control at `0x7ff8`, clock in the top eight bytes of the part). Write `0x40` to `0x7ff8`
+  (freeze for read), read, write `0` to `0x7ff8`. Seconds `0x7ff9`, minutes `0x7ffa`, hours `0x7ffb`, date `0x7ffd`, month `0x7ffe`, year `0x7fff`; the day-of-week byte `0x7ffc` is not read. Physical bytes
+  `0x7ffb`, `0x7ffa`, `0x7ff9`, `0x7ff8`, `0x7ffe`, `0x7ffd`, `0x7ffc`. The part's SRAM is only 32 KiB, so the signature registers below at `0xf7e0` alias to `0x77e0`
+  on a 32 KiB chip (**inferred**); a model may decode the full window or mirror.
+- **Layout 1** (DS1286 map, **inferred** from the positions: command register at `0xb` whose bit 7 is the transfer-enable bit). Write `0` to register `0xb` (freeze), read, write `0x80`. Seconds register 1, minutes 2, hours 4,
+  date 8, month 9, year `0xa`; physical bytes 2, 1, 7, `0xb`, `0xa`, 9. The 1/100 second byte, alarms and day register are not used.
+- **Decode.** Each BCD register is read twice; both reads are the same byte. The value is `((b >> 4) & 0xf) * 10 + (b & 0xf)`, with no range check and no masking of control bits in the hours, month or date
+  bytes, so the model must keep their upper bits clear (24-hour mode). There is no update-in-progress poll and no latch beyond the freeze write.
+- **Year.** `year = BCD(year register) + base`, where the base year comes from `0xffaf2f70` (read first): registers `0xf7e0`, `0xf7e1`, `0xf7e2` (layout 1: `0x20`, `0x21`, `0x22`) must read the characters `N`, `B`, `Y`;
+  then the two-digit BCD at `0xf7e3` (layout 1 `0x23`) plus 100 times the BCD at `0xf7e4` (layout 1 `0x24`) is the base. Without the signature the base is `0x7b2` (1970). The result is clamped: below `0x7ce` (1998) it becomes 1998.
+  `SetTime` (`0xfface390`) writes 1992 there and the year minus 1992 into the register (runtime services page). A model with no signature therefore stores year minus 1970; with the signature it can hold any base. Milliseconds are 0.
+- **Why all-zero reads give month 0 (established).** Register 6 reads 0, not `0xff`, so layout 1 is chosen. Registers 1, 2, 4, 8, 9, `0xa` all read 0: second, minute, hour, date and month are 0. No `NBY`, so base 1970 plus year 0 is 1970, which the clamp raises to
+  1998. The record becomes 1998-00-00 00:00:00. Nothing checks the month; SAL returns success and `GetTime` passes it on, so Linux 3.2's `rtc_year_days` indexes with month 0 and oopses.
+
+### 3. Real hardware
+
+- **Does a 350 have the chip? Yes for a base I/O card with an IOC4 (established as printed for the IO9, part and layout unknown).** The Altix 350 owner's guide lists the IO9's IOC-4 as providing "NVRAM and time-of-day clock"
+  ([base I/O cards](../../../platforms/sn2/altix-350-base-io.md#the-io9); the IO10 also carries an IOC4, but its time-of-day listing was not checked). With an IOC4 under the base I/O board, the PROM above takes the chip path and never
+  asks the L1 for the time on `GetTime`. The L1 does keep its own clock (a BCD timekeeper in the ColdFire `O` L1's address space at `0x2000_07f8`,
+  [sysco](https://github.com/jamesbraid/sysco) `software/firmware/l1/sn2-power-time-requests-1.62.1.md`) and answers `0x200e` from it, but on a 350 with an IO9 or IO10 that answer is only the fallback. `SetTime`
+  writes both. That the L1 path is taken only for a node with no scanned IOC4 is **inferred** from the order of the two calls; it was not run.
+- **Which map the real chip uses is unknown.** The PROM probes at run time; the IP35 monitor uses the same probe ([IP35 PROM time-of-day](../../../platforms/ip35/prom-tod-clock.md)) and the Origin 200/2000 base I/O board carries an M48T35 ([base I/O](../../../devices/baseio/README.md)).
+  No document or capture for the 350's part was found, so neither layout can be called the 350's. Either is a valid model; layout 0 needs no extra care for the probe.
+- **A faithful "probe fails and the PROM falls back to the L1" does not exist.** The code has no failure return after the chip object is created. The only ways to the L1 are an IOC4-less scan (no `10a9:100a` function 0 on any bus
+  under a class 7 board) or an unreadable board list. Neither is faithful on a 350 with an IO9/IO10.
+
+### 4. Model behaviour
+
+- **Option A, matches real hardware: present the chip.** Under the IOC4's BAR 0 + `0x80000`, a byte device with 64 KiB of RAM (or 32 KiB mirrored) and a lane-swapped address (`phys = reg ^ 3`):
+  1. RAM: bytes read back what was written, so the probe (register 6 = `0xff`) selects layout 0.
+  2. Registers `0x7ff9`..`0x7fff` (excluding `0x7ffc`) return host UTC as BCD at read time: seconds, minutes, hours (24 h), date, month, and year `(year - 1970)` (or `year % 100` with `N`,`B`,`Y` and base digits for the century in `0xf7e0`..`0xf7e4`); a write of `0x40` to `0x7ff8` needs no special behaviour for a model that never changes between reads (it should hold the read value until the write of 0).
+  3. Back `0xf7e0`..`0xf7e4` with the same RAM so `SetTime` sticks.
+  4. The IOC4 config space must show BAR 0 as assigned by the PROM at offset `0x10` of the device's `0x20000 + d * 0x1000` window, and the PIC's device windows must carry byte accesses to the IOC4 BAR (the IOC4 model does this already for its other registers).
+- **Option B, only for a node with no IOC4: leave it out.** Then GetTime uses L1 request `0x200e`: status 0 then six integers (year as four digits, month, day, hour, minute, second), and the PROM stores them unchanged. This is not what a 350 with an IO9 does.
+- **Do not** fill the chip window with zeros, and do not hide the IOC4 to reach the L1 path on a machine that has an IO9 or IO10.
+
+### Open
+
+- Which part and layout the IO9 and IO10 IOC4 byte bus carries: needs a capture or a parts list for the base I/O card.
+- Byte-bus strobe and chip-select timing on the IOC4 (the PROM writes control `0x20` elsewhere): no effect on the model's byte reads.
+
 ## 4. Unknowns and routes
 
 - The flash offset and sector map of the 64 KiB variable store, and the chip-object flash methods behind `0x02000008` ops 5 to 7: decode the node chip object's methods
