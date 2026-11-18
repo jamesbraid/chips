@@ -2,7 +2,7 @@
 
 The PROM keeps its environment (`setenv`, `printenv`, the variables that boot reads) in a 93CS56 serial EEPROM on the HPC3. This page covers the layout, the checksum, the defaults and the write order, for the IP22 image `SGI Version 5.1 Rev B IP22 Sep 16, 1993 (BE)`, part 070-8127-002, sha256 `be6b22c3b90adf6eebc18da11ce49e59292eeab35b694c6e8bd75ef485a40241`. Byte offsets are from the start of the store.
 
-Grades: **established** (read in the image or a published source, the claim follows), **observed** (a boot capture), **software expectation**, **inferred**, **unknown**. The part is the 93CS56, not the DS1286 or DS1386 RAM. The checksum and init routines take the serial path when bit 0 of the system ID register (physical `0x1fbd9858`) is set. This image reads that bit as its machine test and so runs the serial path on IP22. Established: the PROM read in the routine, and the public Linux header that names the bit `SGIOC_SYSID_FULLHOUSE`. The same image also holds the DS1386 path (base `0x1fbe0100`, one byte per 32-bit word), which the Indy PROM takes. The Indy image `070-9101-011` has the same record table: the same offsets, lengths and defaults. Its write path is not decoded here. IP28 is not covered.
+Grades: **established** (read in the image or a published source, the claim follows), **observed** (a boot capture), **software expectation**, **inferred**, **unknown**. The part is the 93CS56, not the DS1286 or DS1386 RAM. The checksum and init routines take the serial path when bit 0 of the system ID register (physical byte `0x1fbd985b`; the public Linux header says these IOC registers must not be word-accessed) is set. This image reads that bit as its machine test and so runs the serial path on IP22. Established: the PROM read in the routine, and the public Linux header that names the bit `SGIOC_SYSID_FULLHOUSE`. The same image also holds the DS1386 path (base `0x1fbe0100`, one byte per 32-bit word), which the Indy PROM takes. The Indy image `070-9101-011` has the same record table: the same offsets, lengths and defaults. Its write path is not decoded here. IP28 is not covered.
 
 ## Layout
 
@@ -48,7 +48,7 @@ The offsets of the first 250 bytes come from the IRIX header; byte 250 onward is
 
 ## Checksum
 
-Source: IRIX 6.5.7 `stand/arcs/lib/libsk/ml/IP12nvram.c` (`nvchecksum`), with the PROM's own routine checked by disassembly.
+Source: a reading of the IRIX 6.5.7 source, with the PROM's own routine checked by disassembly.
 
 1. Start with `c = 0xa5` (8 bits).
 2. For each word `w` from 0 to 127, with bytes `2w` (high) and `2w+1` (low):
@@ -63,7 +63,7 @@ The PROM's validity check (`FUN_c00000001fc2c0dc`) compares byte 0 with `c` and 
 
 ## Power-on reads and defaults
 
-Both branches of the PROM's `init_env` walk the same 27-record table, so every variable is loaded on each boot. Established. The defaults below come from the table strings. An empty default is not written when the store is reinitialised.
+Both branches of the PROM's `init_env` walk the same 27-record table (the table above lists 29 rows; which two fall outside the walk is not recorded), so every variable is loaded on each boot. Established. The defaults below come from the table strings. An empty default is not written when the store is reinitialised.
 
 | Variable | Default | Grade |
 |---|---|---|
@@ -86,7 +86,7 @@ The consumers of `console`, `AutoLoad`, the OSLoad fields and `netaddr` are the 
 - `setenv` writes the variable's bytes word by word, each word in place: write-enable, WRITE, wait for ready, write-disable. Established (`FUN_c00000001fc2b860`, `FUN_c00000001fc2bf10`, and the same sequence in IRIX source).
 - After the data, the checksum is recomputed and byte 0 is written last, as a read-modify-write of word 0.
 - The writer copies the field's full length from the value pointer and does not stop at the NUL. A value shorter than its field therefore stores the bytes that follow its NUL in the caller's buffer. Established (writer loop, and the same copy in the IRIX source). The contents of those bytes are unknown. The defaults fit their fields exactly, so a blank-store reset is not affected, and `setenv console d` fits (`d`, NUL).
-- The 93CS56 erases on WRITE. There is no append, no wear levelling and no separate erase cycle. Established.
+- The 93CS56 erases on WRITE. There is no append, no wear levelling and no separate erase cycle. Inferred: no 93CS56 datasheet is held, and the PROM issues no separate erase command.
 - Revision and checksum are written together when the store is reinitialised (revision first, then checksum). Established (`FUN_c00000001fc2c170`).
 - Interrupted write: the checksum is last, so an interrupted `setenv` leaves a stale checksum. The next boot reinitialises the whole store to defaults. Inferred from the write order and the reinit branch.
 - `resetenv`: not decoded. Unknown.

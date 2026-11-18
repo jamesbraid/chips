@@ -292,7 +292,7 @@ PAL zeroes it (SDM: reserved).
   (`0xffef9386`) re-arms r18, so the four `chk.a.nc` (`0xffef9396` to `0xffef93b0`) miss on r2, f10 and f7 and hit on r18: exactly 3 (`0xffef93b6`).
   Block 3 checks r0 to r31, never loaded since the `invala`: all 32 must miss (`0xffef96f6`). Block 4 follows with no `invala` in between and
   no store, so the 32 block-2 entries (r37 to r68) are still live; the plain `mov` that restores r37 and r38 (`0xffef95e0`) does not invalidate
-  (SDM vol 1 section 4.4.5.3.2 lists the only invalidation events). `ld8.a r32` (`0xffef9710`) and `ldfd.a f32` (`0xffef9716`) are therefore the
+  (a plain register write is not one of the invalidating events in SDM vol 1 section 4.4.5.3.2, though p. 1:67 lets an implementation drop entries at any time; the test relies on the Itanium 2 keeping them). `ld8.a r32` (`0xffef9710`) and `ldfd.a f32` (`0xffef9716`) are therefore the
   33rd and 34th inserts into a full 32-entry table. They must evict an old entry, not be dropped, and the newest entry must survive the next
   insert: `chk.a.nc f32` (`0xffef9726`) hits after `invala.e r32`, and after the second `ld8.a r32` (`0xffef9730`) and `invala.e f32`
   (`0xffef9736`) `chk.a.nc r32` (`0xffef9740`) hits. Block 4 also needs `invala.e` of a GR to leave the FR of
