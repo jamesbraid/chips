@@ -57,6 +57,7 @@
 | [mbcs/](mbcs/README.md) | MBCS (RASC Core Services) | Mode: no-spec. |
 | [menet/](menet/README.md) | MENET: the four-port Fast Ethernet and asynchronous serial XIO board | The MENET (part 030-0873) is an XIO board for the Origin 2000 and Onyx2. |
 | [mscsi/](mscsi/README.md) | MSCSI: the four-channel SCSI XIO board | The MSCSI is an XIO board for the Origin 2000 and Onyx2, and for the GIGAchannel of the Origin 200. |
+| [octane-digital-video/](octane-digital-video/README.md) | Scoping datasheet: OCTANE Digital Video option (Galileo 1.5 board on the XIO module; IRIX driver `srv`, VL module `mgv`) | Status: scoping draft, not independently reviewed. |
 | [octane-pci-module/](octane-pci-module/README.md) | OCTANE PCI module (the Octane PCI card cage) | The OCTANE PCI module is the optional three-slot PCI card cage of the Octane and Octane2. |
 | [pci-shoebox/](pci-shoebox/README.md) | PCI shoebox: the Origin 2000 PCI carrier assembly | The PCI shoebox is an XIO board for the Origin 2000 and Onyx2. |
 | [pci-shoehorn/](pci-shoehorn/README.md) | PCI shoehorn (the single-slot XIO-to-PCI adapter, 030-1275) | The PCI shoehorn is an SGI XIO option board with one Bridge and one PCI slot. |
