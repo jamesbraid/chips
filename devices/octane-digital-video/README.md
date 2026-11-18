@@ -22,6 +22,8 @@ section 7.
 | M1 | SGI *OCTANE Digital Video and OCTANE Compression Installation Guide*, 007-3466-001 | board names, slots, flex cables, expected `hinv` text |
 | M2 | SGI *OCTANE Digital Video Programmer's Guide*, 007-3513-001 (shipped as the `OctDigVid_PG` book in `impactvideo.books`) | VL nodes, formats, header names |
 | H1 | Public Usenet posts, by message-id: `aud1v6$slq$1@news.lucky.net` (an Octane with the option: `videod -verbose` and `hinv -m -c video` output), `a43mev$8cn@netaxs.com` (board identifies itself as GALILEO15, part 030-0931-003 rev C), `WXvo9.1574$%25S.104377537@newssvr14.news.prodigy.com` (`/dev/mgv` missing), `35EADABF.ACB68815@cs.unc.edu` (the `MAKEDEV` stanzas), `32B054B6.2847@shoreline-studios.com` (what "mgv" stands for in SGI's own vocabulary), `6seppt$1t9q5@fido.engr.sgi.com` (Onyx2 video is DIVO) | product names, hinv captures, device node wiring |
+| D1 | Discreet Smoke 5.0, Flame 7.6 (`7.6OCT`) and Flint 8.3.4 for IRIX 6.5 IP30, read from installed guest disks (product binary `smoke_IRIX_6.5_ip30`, `flame_IRIX_6.5_ip30`, `flint_IRIX_6.5_ip30`; the shipped `init.cfg`). Licence and key files not read | the DL video layer (section 9) |
+| G1 | The IMPACT graphics workspace (jamesb/gr4): `devices/mgras/registers.md`, `board-identity.md`, `readings/mgras.a-mgras_mco.o.md` | the HQ4 window as the graphics driver sees it (8.3) |
 | C1 | This repository: [bridge](../bridge/README.md), [crosstalk](../crosstalk/README.md), [dm2](../dm2/README.md) | Bridge identification and mode bit, widget conventions, sibling video board |
 
 Disassembly in this pass is `mips64-linux-gnuabi64-objdump` and `nm` over the extracted objects through the retools
@@ -153,9 +155,10 @@ board events. `srv_ioctl` (read in full) dispatches by command word:
 
 | Command | Meaning | Grade |
 |---|---|---|
-| `0x76640001` | store the board count (`srv_nboards`) to the user word | E |
-| `0x76640002` | get board info: copies a 24-byte argument block (ABI-translated for 32-bit callers), then `copyout` of up to 64 bytes starting at the per-board record +8 (board name `mgv`, TMI and CSC revisions, test results) | E |
-| `0x7664000a` | initialise the board (`srvInitialize`, not read further) | E |
+| `0x76640001` (`VID_GETNUM_BOARDS`, name from `mgv.so` messages) | return the board count (`srv_nboards`) as the ioctl's return value | E |
+| `0x76640002` (`VID_GETBOARDINFO`) | argument block `{int index; u32 buffer; u32 length}` (12 bytes for an n32 caller, widened to 24 in the kernel); `copyout` of `min(length, 64)` bytes from per-board record +8 to the buffer; the ioctl's return value is the byte count | E |
+| `0x76640004` (`VID_ATTACH_BOARD`) | not a case of `srv_ioctl`; it falls to `srvPrivate`, which logs `srv_Private: Invalid ioctl` at note level and **returns 0**. Every command the driver does not know therefore succeeds | E |
+| `0x7664000a` | initialise the board: `srvInitialize` calls `srv_reset(board, 0)`, which writes CC indirect register 38 and re-runs `srv_init_regs` (the register sequence of 2.1) | E |
 | `0x6d67....` ("mg", 71 distinct sites in `mgv.so`) | the board's private commands: get and set config, window, mux select, CC1, CLUT load and read, digital in and out control, TMI control, key and effect read and write, auto-wipe, genlock and ksync control, EDH, trigger setup and wait, `PutFrame`, MSC and UST read, event queue and poll select, register read and write (`MGV_GETREG`, `MGV_SETREG`), VGI1 setup, DMA and unsetup, diagnostics | E (names), U (numbers and structures) |
 | `0x6b73....` ("ks") | kitchen-sync (framelock) controls | E |
 
@@ -168,14 +171,13 @@ whole-function traces.
 | Step | What the software does | Needs from the model | Grade |
 |---|---|---|---|
 | 1 | `videod` scans `/usr/lib32/dmedia/video/*.so`; for each it loads the DSO (`Loading DSO (%s)`) and calls its device-dependent bind function (`mgvBind` in `mgv.so`). A bind that finds no hardware prints `no device found` and the module is dropped; `videod` exits `no devices found` only if every module is dropped. A transcript of a real Octane shows `impact.so` binding one board while `mgv.so` found none | the DSO, the base `videod` and `libvl` are all that is needed on the guest | E (strings, public post) |
-| 2 | `mgv.so` opens `/dev/mgv`, which must resolve to `/hw/srv`; it issues `0x76640001` (count) and `0x76640002` (info, 64 bytes) and fails the bind on a short or failed answer. The 2002 post reports exactly this symptom for a machine with the option but the node absent | the `srv` hwgraph node with working open and the two ioctls | E (call sites), I (that count 0 or failure is what dropped the module) |
+| 2 | `mgv.so`'s device init (`mgvDeviceInfo` callback) calls `RM_Open`, which opens `/dev/mgv` and runs the exact sequence in section 8.2; any failure drops the module. The 2002 post reports exactly this symptom for a machine with the option but the node absent | the `srv` hwgraph node and section 8.2 | E |
 | 3 | `mgv.so` also opens `/dev/graphics` (and `/dev/opengl`) and asks it for board info, to find which graphics board hosts the video (strings `IMPACTSR`, `IMPACTPC`, `_mgvManagedBy`) | an ImpactSR graphics device that answers | E (strings), I (purpose) |
-| 4 | `impact.so` (from `impactdm`) opens `/dev/mgv` as well; a public post shows `impactBind: can't open /dev/mgv` on a machine with only the compression board | `/dev/mgv` for the shared module | E |
+| 4 | `impact.so` (from `impactdm`) `impactBind` opens `/dev/mgv`; on failure it prints `impactBind: can't open %s: %s`, opens `/dev/null` instead and **still adds the device**. So `impact` lists with or without the video board | none | E |
 | 5 | VL clients call `vlOpenVideo` (connects to `videod`), `vlGetDeviceList`, `vlGetDevice`, `vlGetNode`, `vlCreatePath`, `vlSetupPaths`, then `vlBeginTransfer` and buffers (`vlCreateBuffer`, `vlRegisterBuffer`, `vlGetNextValid`, `vlPutFree`). `libvl` exports all of these (`directvl` and `videodvl` variants). The device-independent calls need nothing from the hardware | the daemon running; enumeration and open succeed once step 2 does | E (exports) |
 | 6 | "Products start" needs only steps 1 to 5. Running video needs the DMA, interrupt and register behaviour in section 2, plus a signal source model | defer | I |
 
-Not examined for this scoping: the Discreet DL video layer itself (what it calls beyond VL, and whether it opens
-`/dev/mgv` directly). See section 4 and the last list.
+The Discreet DL layer is read in section 9.
 
 ## 4. Holdings
 
@@ -187,7 +189,7 @@ Not examined for this scoping: the Discreet DL video layer itself (what it calls
 | IP30 kernel objects for the GIO bridge and the HQ4 driver | the 6.5.22 and 6.5.30 kernel object sets | held |
 | `videod`, `libvl`, `vl.h` | the DIVO/VL extract (`vl-6.5.30m`) in the chips root | held; `vl_mgv.h` and `vl_impact.h` are named in M2 and **not extracted** from the overlays yet |
 | Installation guide 007-3466-001, Programmer's Guide 007-3513-001 | the techpubs library (guide); the Programmer's Guide inside `impactvideo.books` | held |
-| Discreet Flame, Flint, Smoke installers | partial: Effects 7.1, Flame 4.02 media, spark 7.71 for O2 and the 2007 Flame, Smoke and Fire sets are in the software mirror | **Flame 7.x, Flint 7.7.2SE and 8.3.4, Smoke 4.0.3 and 5.0 for Octane were not found by name** |
+| Discreet products with the DL video layer | Smoke 5.0, Flame 7.6 and Flint 8.3.4 are held as installed Octane guest disk images (section 9); install media for Flame 7.x, Flint 7.7.2SE and Smoke 4.0.3 are not in the software mirror by name | held as disks; Flame 7.0, Flint 7.7.2SE, Smoke 4.0.3 not read |
 | A real board's register captures, VGI1 window map, firmware | none | missing, and not expected: the driver shows none |
 | Owner's or service manual with block diagram of the Galileo 1.5 board | none | missing; 007-3466-001 is installation only |
 
@@ -205,7 +207,7 @@ Not examined for this scoping: the Discreet DL video layer itself (what it calls
 | Flex-cable function; DV daughterboard role; GIO slot assignment on the XIO module | background | not needed for a software model; settle only if a capture exists |
 | Widget number the XIO module takes on an Octane | needed for `hinv -mv` location | a published `hinv -mv` capture with the option; none held |
 
-## 6. Plan
+## 6. Plan (passes 1 to 4 done in section 8; kept for the record)
 
 Smallest set that makes a board that is present, enumerates and opens:
 
@@ -228,9 +230,183 @@ module model rather than as a standalone widget. Real video (DMA, interrupts, th
 unmapped (section 5) and should wait. The Discreet requirement beyond VL has not been read. This is I, not E: it rests
 on the 6.5.30 and early 6.5 drivers and the VL module, not on a run.
 
+## 8. Present, enumerates, opens: the model contract
+
+What a QEMU model must present so that **unmodelled IRIX 6.5.30 `srv.a` and `mgv.so` attach, enumerate and open**,
+and `videod` lists the board. The device node, the three ioctls and the hinv line are produced by the unmodified guest
+driver; the model supplies hardware only. Graded as in the rest of this page. Passes 1 to 3 of the plan are folded in.
+
+### 8.1 Ioctl numbers (pass 1)
+
+The programmer's-guide header names (`vl_mgv.h`, `vl_impact.h`) are not held (section 4); the `0x6d67....` numbers
+below are the immediates that precede an `ioctl` call in `mgv.so`, matched to the nearest exported function, so the
+function column is approximate (E for the number, I for the attribution). The names `VID_GETNUM_BOARDS`,
+`VID_GETBOARDINFO` and `VID_ATTACH_BOARD` are the module's own message strings (E).
+
+| Command | Name or caller | Argument | Grade |
+|---|---|---|---|
+| `0x76640001` | `VID_GETNUM_BOARDS` | none; count is the return value | E |
+| `0x76640002` | `VID_GETBOARDINFO` | `{int index; u32 buf; u32 len}` (n32, 12 bytes); return value is bytes copied, at most 64 | E |
+| `0x76640004` | `VID_ATTACH_BOARD` | `{int index; 8 zero bytes}`; driver returns 0 as an unknown command | E |
+| `0x7664000a` | initialise | none | E |
+| `0x6d670021` | set trigger or control block, sent once after init | a block built by `mgvGetCtrlTriggerInfo`, about 32 bytes; return value must be 0 or more | E (number, use), U (layout) |
+| `0x6d670001`..`0x6d67003f` | the private set seen at call sites: `1 2 3 5 7 8 9 a f 10 11 14 15 17 18 1a 1b 1c 1d 1e 1f 20 21 23 24 26 27 28 29 2a 2e 2f 30 3f` | per command | E (numbers), U (structs) |
+
+`mgv.so` call sites also use `/dev/graphics` commands 101, 102 and 103 (8.2).
+
+### 8.2 What the open path requires (pass 2)
+
+`mgvDeviceInfo` (name `mgv`) names an init callback. It calls `RM_Open`, which reaches `SUPP_Open`, `MGV_OpenFD` and
+`MGV_FindResources` in `mgv.so`, read in full. Any failure returns nonzero and `videod` drops the module
+(`no device found`). The sequence, with the condition each step needs:
+
+| Step | Call | Required | Grade |
+|---|---|---|---|
+| 1 | `open("/dev/mgv", O_RDONLY)` | succeeds (the `srv` hwgraph node exists, 8.5) | E |
+| 2 | ioctl `0x76640001` | returns above 0 | E |
+| 3 | for each board *i*: ioctl `0x76640002` with length 20 | returns 20 or more; the buffer starts with a NUL-terminated name | E |
+| 4 | if the name equals `mgv`: open `/dev/mgv` again, ioctl `0x76640004` | returns 0 or more | E |
+| 5 | ioctl `0x7664000a` | returns 0 or more | E |
+| 6 | ioctl `0x6d670021` with the trigger block | returns 0 or more | E |
+| 7 | ioctl `0x76640002`, board 0, length 64 | returns 64 (the driver copies exactly 64) | E |
+| 8 | read word at buffer +40 (board record +48, the TMI revision byte) | below 13 or equal to 15 marks features available; 13, 14 or above 15 prints `Warning - Video texturing not supported on old TMI hardware` and clears the texture resource | E (code), I (meaning of the printed text) |
+
+`/dev/graphics` is opened by a separate routine of `mgv.so` that never fails the bind: `open("/dev/graphics",
+O_RDWR|O_NONBLOCK)`, `fcntl` close-on-exec, ioctl 101 for the board count, ioctl 102 per board with a 204-byte buffer,
+matching the name against `IMPACTPC` or `IMPACTSR`, reading a one-byte refresh code at buffer +42 (50, 60 or 72 select a
+floating-point value) and a flag at +53, then ioctl 103. Failure of any step prints through `ErrorF` and returns 0 (`mgvdd:
+Couldn't find gfx! Default to IMPACT on board 0`). The graphics driver is a separate model (section 2.3); it is not part
+of this contract. E. `/dev/opengl` is opened by `impact.so`, not `mgv.so`.
+
+### 8.3 The graphics-side coupling (pass 3)
+
+Read in full: `_gameraProbeVideo`, `_srvProbeVideo`, `_srv_init_dcbctrl`, `_srv_reset` of `srv_main.o`/`srv_init.o`,
+`giobr.o`. The IMPACT graphics workspace's pages, which record the same HQ4 window from the graphics driver's side
+(`devices/mgras/registers.md`, `board-identity.md`, `readings/mgras.a-mgras_mco.o.md`), are cited where they cover it.
+
+| Fact | Value | Grade |
+|---|---|---|
+| `MgrasBoards` | a table of two records of 88 bytes, filled by the graphics driver before `srv` probes. Record +0: the uncached register base of the HQ4 window (64-bit pointer); +8: a pointer to the graphics driver's per-board structure; +24: a nonzero word when the entry is valid. The structure at +8 holds, at its +200, a pointer to a block whose byte at +55 is the HQ revision (1 = rev A per the graphics workspace's `HQ_REVISION`) | E (offsets), I (meaning of +55) |
+| Probe | for each valid record in order: store the 32-bit value `0x4210` at base `+0x61000`; load the byte at base `+0x70008`; the first record whose byte is `0x11` wins and its base becomes the video chip window. No match returns 0, the driver prints `No SpeedRacer Pro Video (srv)` and fails | E |
+| Same byte, other reader | the graphics driver's multi-channel-option probe reads the same offset and accepts a high nibble of 4 as "option present", `0xff` as absent. A video board therefore reads `0x11`, which is not a multi-channel option, and a missing board reads `0xff`. The graphics workspace calls this the option ID byte at DCB device 0 | E (both probes), I (that one byte serves both) |
+| DCB address layout | the graphics workspace decodes a DCB address as device in bits 14:10, register select in bits 9:7, data width in bits 4:3 (1 is one byte), the low bit pattern `...8` being a one-byte access. Decoding this driver's windows with that rule: `0x70008` is device 0 select 0, the AB block `0x72800` is device 10, CC `0x73000` is device 12, GAL `0x73400` is device 13, CSC `0x73800` is device 14, each with one-byte accesses at select *n* (the `(n & 7) * 0x80 + 8` rule of 2.2) | I (the graphics workspace grades the layout inferred) |
+| HQ4 revision byte effect | when the byte is 1 the driver writes 0 to base `+0x61010`; any other value leaves it | E |
+| DCB control stores | `_srv_init_dcbctrl` stores `1`, `0x4210`, `0x208a`, `0x1004` at base `+0x61070`, `+0x61068`, `+0x61050`, `+0x61060`. The graphics workspace lists a 12-entry `dcb_ctrl` array (fields: setup 12:10, hold 8:6, width 4:2, async acknowledge 1, sync acknowledge 0) at a different offset; whether the two are the same registers is unknown | E (stores), U (alias) |
+| Video option bit | the graphics workspace records that bit 7 of the byte at HQ4 `+0x071708` is **clear** when a video option board is present. The video driver does not read it | I (source grades it inferred) |
+
+### 8.4 Hardware accesses the model must serve (every one on the attach and init path)
+
+All register facts E unless marked. A model that answers every other access with zero is, per the code read, accepted
+(section 8.6); only the rows marked **required** change the outcome.
+
+**GIO-mode Bridge widget (the XIO module's video board)**
+
+| Access | Required behaviour | Grade |
+|---|---|---|
+| Widget ID word at offset 4 | part `0xc002`, manufacturer 54; revision field as any Bridge revision the kernel accepts | E |
+| Widget status word at offset `0xc` | bit 5 **clear** (GIO mode) **required**: with it set `giobr_attach` returns -1 and the PCI path would take the widget instead | E |
+| Window of 16 MiB | `xtalk_piotrans_addr` of 0x1000000 at offset 0 | E |
+| Slot probe | 32-bit reads at window offsets `0x200004`, `0x600004`, `0x700004`, `0x800004` through `badaddr_val`: a bus error means no board in that slot. Slot 0 returns a word whose low 7 bits are `0x11` **required**; slots 1 to 3 must fault or return 0 | E (offsets, mask), I (the value is the product ID: the driver's key `0x11000000` and stored board product ID 17) |
+| Slot windows | slot 0 4 MiB at `0x200000` (VGI1 registers, mapped by `srv_attach`), slot 1 2 MiB at `0x600000` (second VGI1, mapped only if `srv_ignore_2vgi1` is 0), slot 2 1 MiB at `0x700000`, slot 3 4 MiB at `0x800000`. The sizes of slots 0 and 1 are confirmed by `srv_attach`; the table's slot 2 window overlaps slot 1, as read | E |
+| Bridge register file | `do_giobr_hw_init` and `do_giobr_bridge_config` read and write the usual Bridge widget registers (control, interrupt, request-buffer, ATE) and size the SSRAM by writing and reading back a 64-bit pattern at the Bridge's SSRAM window (offset `0x80000`); behave as a Bridge | E (access), U (which registers differ in GIO mode) |
+| NIC | `nic_bridge_vertex_info` reads the board's one-wire part: supplies `GALILEO15 Board: part 030-0931-003 rev C` to `hinv -m` | E (call), I (the strings are from captures) |
+| GIO interrupts | lines 4, 6, 7 allocated; 5 for a second VGI1. The model need not raise any of them for open | E |
+
+**HQ4 window (graphics model)**
+
+| Access | Required behaviour | Grade |
+|---|---|---|
+| base `+0x61000` 32-bit write `0x4210` | accepted | E |
+| base `+0x70008` byte read | returns **`0x11` required** | E |
+| base `+0x61010`, `+0x61050`, `+0x61060`, `+0x61068`, `+0x61070` 32-bit writes | accepted | E |
+| GAL direct register 3 (`+0x73400 + 3*0x80 + 8 = +0x73588`) byte write `1`, then 300 delay units, then direct register 2 byte read | the read is the board revision byte stored at record +32; `0x24` is consistent with both the printed `4.2` and the driver's `& 0xf >= 4` test | E (access), I (0x24) |
+| TMI indirect register 147 (index to GAL direct 6, data at direct 7) byte read | the TMI revision byte; `2` matches the printed `TMI: revision 2`. Values 13, 14 and above 15 disable texturing in `mgv.so` (8.2 step 8) | E (access), I (value 2) |
+| CSC direct register 3 byte read | the driver stores the value plus 1 as the CSC revision; read `0` for the printed `CSC: revision 1` | E (access), I (value 0) |
+| CC indirect register 38 write | accepted; written during `srv_reset` | E |
+| all other block accesses in `srv_init_regs` (`_srv_init_edh`, `_srv_input_standard_detection`, `_srv_init_xpoint`, `_srv_init_videoin`, `_srv_init_videoout`, `_srv_init_genlock`, `_srv_init_CC`, `_srv_init_AB`, `_srv_init_CSC`, `_srv_init_TMI`, `_srv_init_cc1_io`, `_srv_init_CC1Int`, `_srv_init_i2c`) | byte writes and reads in the ranges of 2.2; their return values are ignored on the attach path (they set test bits only in the diagnostic ioctl) | E for the ignored returns of `srv_init_regs` |
+
+**Process conditions**
+
+| Condition | Effect | Grade |
+|---|---|---|
+| installed memory above 1.5 GiB (`maxmem` above `0x18000` pages) | the driver reserves 2 x 50 MiB of low memory; if that fails the load fails with `Can't load srv driver:not enough low memory` | E |
+| i2c engines (`i2c_*`, EDH and ML sequences) | polled with `us_delay` and the `srv_i2c_timeout` and `i2c_reset_delay` (300000) tunables. A model that never acknowledges costs delay time and returns errors that `srv_init_regs` ignores; not traced to a hang | U |
+
+### 8.5 The node, the three ioctls and the hinv entry
+
+| Item | Value | Grade |
+|---|---|---|
+| Hardware-graph node | `/hw/srv` (character device `srv`, driver prefix `srv_`), made by `srv_attach`; `/dev/mgv` is a link made by `MAKEDEV` at boot when `/hw/srv` exists | E |
+| Ioctls | `VID_GETNUM_BOARDS`, `VID_GETBOARDINFO` and `VID_ATTACH_BOARD`/init as in 8.1, all served by the guest driver | E |
+| `hinv` line | `Digital Video: unit 1, revision 4.2, TMI: revision 2, CSC: revision 1`, from `add_to_inventory(class 12, type 11, controller 0, unit = board count, state = rev | TMI << 8 | CSC << 12)` with the revisions above | E (call), I (the byte for 4.2) |
+| `hinv -m` board line | `GALILEO15 Board: part 030-0931-003 rev C` from the widget NIC | I |
+
+### 8.6 What may be left unmodelled for this milestone
+
+E for each, from the code read: the second VGI1 (default ignored); every VGI1 register and descriptor (the driver
+touches the window only at the first DMA setup); GIO interrupt sources (no handler runs without an interrupt, and the
+missed-interrupt timer acts only while a transfer is active); video signal sources and sinks; the EDH and ML parts
+behind I2C (until a path uses them); the OCTANE Compression board; the `0x6d67....` set beyond `0x6d670021`. **Not**
+safely unmodelled: anything the Discreet layer drives after the board opens (section 9), because `vlSetupPaths` runs the
+private ioctls that program the DCB blocks.
+
+## 9. The Discreet DL video layer (software expectation)
+
+Read from the shipped monolithic product binaries of Smoke 5.0, Flame 7.6 (build `7.6OCT`) and Flint 8.3.4 on IRIX
+6.5 for IP30 (n32, with a symbol table). All three carry the same video layer (`libimpact/Video.C`, `videoOctane.C`,
+`videoIOOctane.C`, `videoImpact.C`) and the same strings. Disassembly of Smoke 5.0; Flame 7.6 and Flint 8.3.4 compared by
+string sets only. Licence and key material on the disks was neither read nor copied. Grade here: **software expectation**
+(shipped-binary behaviour), written E for read in full and I for call-list readings.
+
+**Requirements beyond VL enumeration (lead finding)**
+
+1. **The screen nodes need the graphics path.** The output path is a `VL_SCREEN` source into a `VL_VIDEO` drain (plus a
+   `VL_INTERNAL` colour-space node and an optional `VL_VIDEO` loopback); the input path is a `VL_VIDEO` source into
+   `VL_MEM` and `VL_SCREEN` drains. `VL_SCREEN` nodes are the graphics board's, so the DL cannot run video on the Digital
+   Video board alone. E (message strings `SetupSrcNode (VL_SCREEN) failed`, `SetupDrnNode (VL_VIDEO) failed`,
+   `SetupDrnNode (VL_MEM) failed`, `SetupCscNode (VL_INTERNAL) failed`, `SetupExtNode (VL_VIDEO, loopback) failed`).
+2. **Starting the product with `Video OctaneVideo` configured already opens a screen-to-video path.** `VideoInit`
+   reads the configured device type; type 1 (`OCTANEVIDEO`) calls `InitVideoOctane`, which tail-calls
+   `VideoOctaneVideoOutput(1, 0)`. That builds the path and runs `vlSetupPaths`, whose work in `mgv.so` is the private
+   `0x6d67....` ioctl set, hence DCB block writes. "Board present, enumerates, opens" may therefore be enough for the
+   listing but not for the products' first screen. E (call chain), I (that `vlSetupPaths` reaches the DCB).
+3. **The X server's `XSGIvc` extension.** The DL queries its version, the video screen info, gamma maps and sets the
+   screen input sync source; it prints `Failed to query video screen info from XSGIvc` and `Cannot set gamma: XSGIvc
+   extension not supported by X server` when it is missing. This belongs to the graphics model and X server, not the
+   board. E (strings and imports).
+4. **Digital-media buffers.** Transfers use the `dmBuffer*` pool calls and `vlDMPoolRegister`, ring size from the
+   environment variable `DL_VL_RING_SIZE` (`vl_ring_size` and `vl_ring_size_ui` globals). Only after a transfer starts.
+   E (imports).
+5. **Environment switches that change behaviour on Octane:** `DL_OCTANE_Y_OFFSET_WORKAROUND`, `DL_OCTANE_CONST_HUE`,
+   `DL_MGV_FLIP_DOMINANCE`, `DL_HDCAM_OCTANE_OUTPUT_KEEP_GFX_GENLOCK`, `DL_OCTANE2_BIG_MESH_FIX`,
+   `DL_OCTANE2_MESH_LAST_ADD`. Not required. E (strings).
+
+**What it lists, opens and treats as failure**
+
+| Step | Behaviour | Grade |
+|---|---|---|
+| Configuration | `init.cfg` line `Video <device>, <input>`: Smoke 5.0 ships `Video OctaneVideo, Serial1`; Flint 8.3.4 ships `Video OctaneVideo, DEFAULT, Serial1`. The device names the parser holds are `OCTANEVIDEO`, `XT-DIGVID`, `DIVO` and `NO_VIDEO`; `NO VIDEO` is the menu label | E |
+| No device configured | `VideoInit` returns at once when the stored device type is unset (-1) and its second flag is clear | E |
+| Connect | `Video::Video` calls `vlOpenVideo(NULL)`, then `vlGetNode(server, VL_DEVICE, 0, 0)` (`VL_DEVICE` is 3 in `vl.h`). Each failure logs `(file,function,line) error:  vlOpenVideo failed` or `vlGetNode failed` and the constructor still returns an object | E |
+| No server | `SetupPath` begins by testing the connection and returns the stored error (-1) at once | E |
+| Device list | `SetupPath` calls `vlGetDeviceList`, reads 48-byte `VLDevice` records (`vl.h`: device id, name, node count, node list pointer, private) and compares each name with the wanted name. The wanted name is **`impact`**: the `ImpactVideo` constructor copies it, and `OctaneVideo` inherits it | E |
+| Name not found | `(...) warning:  Found no video device named "impact".  Using device named "<first>"` and the first device is used. An empty list was not traced | E (message and branch), U (empty list) |
+| Open path | `vlCreatePath`, `vlAddNode`, `vlSetupPaths(server, path, 1, VL_SHARE, VL_SHARE)` (the stream and control usage arguments are both 2), `vlSelectEvents`, `vlBeginTransfer`; each failure logs `<call> failed` and the caller returns | E (call order and arguments from the listing), I (argument meaning) |
+| "No video list" | the string does not occur in the three binaries. The nearest paths are the `NO_VIDEO` configuration and the `Found no video device` warning above | E (absence by string search) |
+
+**Consequence for the model.** `videod` must list the device `impact` (always bound by `impact.so`) and the Digital Video
+nodes must be reachable through it; a missing or failed `mgv.so` bind leaves the DL with a list that has no
+`VL_VIDEO` or `VL_MEM` serial nodes, and it logs node-setup failures while the product keeps running. How `mgv.so` hangs
+its nodes under the `impact` device (the `metaXDevInit` and `metaTrap*` imports of `impact.so` and `mgv.so`) was not
+traced: I.
+
 ## Not done in this pass
 
-- Ghidra was not used; objdump only. No whole-function decompile of the DMA or interrupt routines.
+- Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
+  interrupt routines.
 - The Indigo2 `mgv.a`, the `octane_ic` compression image, the `srv_i2c.o` and `srv_edh.o` routines were not read.
-- The Discreet DL layer and the Flame, Flint, Smoke binaries were not read or located by version.
+- The DL layer was read for device selection and node setup only, not for its video-timing and transfer code; Flame 7.6
+  and Flint 8.3.4 were compared with Smoke 5.0 by string sets, not disassembly. Flame 7.0 and Smoke 4.0.3 not read.
+- The programmer's-guide headers `vl_mgv.h` and `vl_impact.h` are not held, so the `0x6d67....` ioctl structures are not
+  decoded.
 - No `hinv -mv` capture with a widget location for this board was found.
