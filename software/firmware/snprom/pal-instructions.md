@@ -900,3 +900,25 @@ msr[1664] bit 0 figure (the 5.73 count of four was not recounted, three seen); b
 the objdump cross-check; PAL_HALT's store-path address checks; the 520 handler.
 
 **Grades.** Unchanged except as listed: the ALAT policy sentence is weaker (a requirement, not "no policy"), the PAL_HALT_INFO field positions are stronger (established, SDM).
+
+## Review (independent, chips 7279c36: PAL_HALT_LIGHT entry checks)
+
+Re-read of "PAL_HALT_LIGHT entry checks" against a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (SAL 5.04, sha256 `51ccf9ad...`), SDM rev 2.3 vol 2 (Tables 11-56 and 11-59, PAL_HALT_LIGHT p. 2:403) and Linux `arch/ia64/kernel/pal.S` from the held 7.3 tree. The reviewer wrote none of it and read no restricted source. Nothing ran.
+
+**Verdict: the established claims hold. Four wording fixes, none changes a grade.**
+
+**Confirmed (instruction level).**
+- The PAL_PROC routine is `[0xffb12750, 0xffb12900)`, 0x1b0 bytes. It loads 28, 29 and 522, compares `r32` (not `r28`), reads `cpuid[3]`, extracts bits 39:16 and compares with `0x2000`, then `(p7) br.cond b0` at `0xffb127ac`. `p7` stays set only when the index matches and the CPU word differs. A cpuid word of `0x1f010504` gives `0x1f01`, so Madison is in the no-op set.
+- The copier is `0xffb12900`. Its two source pairs are the globals at `gp - 1353360/-1353328` and `gp - 1353480/-1353320`; read from the image they are `0xffb123a0`/`0xffb12750` and `0xffb12750`/`0xffb12900`. The destinations are the `movl` constants `0x1fffc00` (first range) and `0x1fff800` (second). The one call is `0xffafaefc`, inside `0xffafaea0`, whose one call is `0xffad763c`; it runs only when `0xffa0ff30` returns non-zero (`0xffafaec0`).
+- The SAL system table entry-point descriptor (`0xffafc600` to `0xffafc64c`) stores `0x1fff800` at +8 (PAL_PROC) and `0x1fffc00` at +16 (SAL_PROC). So "the OS never reaches PAL_B" is established.
+- Every row of the PAL_B table: `0xffe9dcec` tests psr.be (bit 1) and returns -2 via `0xffe9e8e0`; 33 and 26 are tested at `0xffe9dcf0`/`0xffe9dd00`; 522, 518, 28 and 29 branch to `0xffe9dfb0` at `0xffe9dd3c`; `0xffe9dfb0` clears msr[1416] bit 16 and polls bit 40 clear; `0xffe9e000` branches on msr[1237] bit 5 (set: `0xffe9e190`); `0xffe9e190` sends 29 or 1 to `0xffe9e380`; `0xffe9e380` masks `0x2044002` (be, i, dfl, lp) and the all-or-none mask `0x1008020000` (dt, rt, it) and returns -2 at `0xffe9e8f0`; `0xffe9e3d0` branches to `0xffea2d10`; `0xffea2d10` requires `r29` to `r31` zero; `0xffea2d70` to `0xffea2ddc` test msr[1152] bit 18, msr[1237] bit 2 and msr[1572] bit 18 and skip to `0xffea2fe0` when any is set.
+- PSR `0x1010084a2010` decodes to bits 4, 13, 17, 19, 22, 27, 36 and 44 (mfl, ic, dt, dfh, di, rt, it, bn). Table 11-56 allows each of those values at entry. PAL_HALT_LIGHT is at p. 2:403 and Table 11-59 exists as cited.
+- Linux `ia64_pal_call_static` keeps the index in `in0` (`r32`), copies it to `r28`, does `rsm psr.i` before the branch and `mov psr.l` after. That matches the "inferred" grade on the `r32` point.
+
+**Findings.**
+1. Step 3 of the routine says `r8 = r9 = r10 = r11 = 0` happens "if `p7`". The four `mov rN = r0` at `0xffb1278c` to `0xffb1279c` are not predicated; only the `br.cond` is. Fix: write "`r8` to `r11` are zeroed on every entry; the other path overwrites `r8`".
+2. Table row 5: "stores psr.mc as msr[1237] bit 0 clear/set" does not give the polarity. At `0xffe9e046` `p1` is "psr.mc is 0", and `(p01) dep r16=-1,...,0,1` sets bit 0 when mc is clear, so bit 0 is NOT psr.mc. Bit 1 is psr.ic as written. Fix: state "bit 0 = not psr.mc, bit 1 = psr.ic".
+3. "None of the PAL_B checks reads a feature bit... (established)" is an absence claim over a path I read only to `0xffea2ddc`. The strobe loops after it and the halt body were not read. Fix: grade it "established for the checks in the table; the rest of the path not read", or read to the halt body.
+4. The call count "176,653 calls in 4 s" and the model's `cpuid[3]` value come from a model run and cannot be checked from the image. Fix: say they are model output.
+
+**Not verified.** The CPU-id walk in `0xffa0ff30` (the page marks it unknown); the 7.x PAL_B halt body; the model-run figures.
