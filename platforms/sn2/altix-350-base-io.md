@@ -296,7 +296,7 @@ A model that boots the held SN2 kernel needs, in order of how much of it is esta
 
 1. A PIC behind the SHub's I/O link with two buses, the card's four slots (device numbers unknown for the add-in slots)
    and eight interrupt pins whose targets the SAL interrupt call writes.
-2. An IOC4 on bus 1 at slot 1 with the IDE channel; a SCSI (IO9) or SATA (IO10) controller at slot 3. Both are
+2. An IOC4 on the PIC's first bus (the guides' "bus 1", PCI bus 0 in the device table) at device 1 with the IDE channel; a SCSI (IO9) or SATA (IO10) controller at device 3. Both are
    established as what the Linux variant test wants. The Ethernet part and its slot are unknown.
 3. A console delivered through the SAL console calls, not through an IOC4 UART.
 4. An L1 that answers the module type and board reads of device 1 with an IPMI-style area, so the PROM's I/O record
