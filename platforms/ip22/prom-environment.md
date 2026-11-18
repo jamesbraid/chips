@@ -114,3 +114,52 @@ Blank store: the exact bytes after reinitialising an erased store are unknown. T
 ## Observed
 
 A PROM-console capture of a live IP22 ran `printenv`: `console=g`, `diskless=0`, `dbaud=9600`, `volume=128`, `sgilogo=y`, `autopower=y`, `AutoLoad=Yes`, `TimeZone=PST8PDT`, plus `netaddr` and `eaddr`. The runtime-only variables `ConsoleIn`, `ConsoleOut`, `NoAutoLoad` and `cpufreq` are set in memory and not stored. Observed. `volume=128` is not the default, so that store was set after reinit.
+
+## Review (IP22 PROM environment, f3d2d71)
+
+Independent review on 2026-11-18 by a reviewer who did not write this page. Revision: the page as added in f3d2d71; it is unchanged on main at e0a328f. Sources: the public linux-mips tree at c9bace5bce3 (`arch/mips/sgi-ip22/ip22-nvram.c`, `arch/mips/include/asm/sgi/hpc3.h`, `ioc.h`, `pi1.h`, `ip22.h`, `arch/mips/sgi-ip22/ip22-hpc.c`), the public NetBSD and OpenBSD sgimips and sgi trees for the variable names, and an independent public emulator of the same store, used only as a cross-check and never as an authority. The IP22 PROM image is listed in `references/prom-images.md` but is not held in this checkout, so no PROM byte was read. The reviewer did not read the IRIX sources the page cites.
+
+**Method.** Offsets were computed by hand from the struct definitions in the Linux headers. The record table was checked by summing its field sizes (it tiles the 256 bytes exactly). The checksum and the setenv delta were recomputed in a script that uses the page's algorithm, over 2000 random stores for the delta.
+
+**Claims.** Numbered in page order. Verdicts: confirmed, wrong, unsupported, UNSURE.
+
+| No. | Line | Claim | Checked against | Verdict |
+|---|---|---|---|---|
+| 1 | 5 | The store is a 93CS56 (128x16), not DS1286 or DS1386 RAM | Linux `ip22-nvram.c`: the 93CS56 read path is taken when `ip22_is_fullhouse()`, otherwise a byte path over `bbram`. `hpc3.h` calls `rtcregs` the Dallas clock | confirmed |
+| 2 | 9 | The EEPROM register is at physical 0x1fbb0008 | `eeprom` is at offset 0x30008 in `struct hpc3_regs`, base 0x1fb80000 | confirmed |
+| 3 | 9 | The PROM reaches the control bits at 0xbfbb000b (low byte) | Address follows from claim 2 and big-endian byte order. The PROM's own access not read | confirmed for the address; UNSURE for the PROM side |
+| 4 | 5 | The serial path is taken when bit 0 of sysid is set | `SGIOC_SYSID_FULLHOUSE` is 0x01, tested by `ip22_is_fullhouse()` | confirmed for Linux; the PROM's test UNSURE |
+| 5 | 5 | The sysid register is at physical 0x1fbd9858 | The IOC base 0x1fbd9800 is `pbus_extregs[6]` (confirmed). `pi1_regs` is 0x28 bytes, then 0x18 bytes of IOC fields, then three pad bytes, so sysid is at +0x5b, physical 0x1fbd985b. The header also says these registers are byte-wide and word access is wrong | wrong as a byte address; 0x1fbd9858 is the first pad byte of the containing word |
+| 6 | 5 | The DS1386 path has base 0x1fbe0100, one byte per 32-bit word | `bbram` is at offset 0x60100 in `hpc3_regs`. Linux reads `bbram[reg] & 0xff` from a u32 array | confirmed |
+| 7 | 5 | The Indy image 070-9101-011 has the same record table | Not checked: no Indy PROM byte read here. Linux's IP24 path shows byte access only. The emulator treats both models as one block layout, which is not evidence | UNSURE |
+| 8 | 9 | The store is 256 bytes, 128 big-endian 16-bit words | Linux 128x16 comment; big-endian target | confirmed |
+| 9 | 13-45 | Field offsets and lengths | Offsets 0, 1, 2, 116, 121, 122, 178, 232, 236, 239 and 250 agree with the emulator. The rest rests on the IRIX header and the PROM record table, neither read | UNSURE (the other offsets) |
+| 10 | 53-58 | Checksum: seed 0xa5, word 0 uses byte 1 only, rotate left after each word, byte 0 equals the result, byte 1 is 0x08 | Same algorithm as the emulator. The cited IRIX source and the PROM loop not read. No public tree searched has it | UNSURE |
+| 11 | 60 | Checksum covers all bytes except byte 0, including 250 to 255 | As claim 10; the emulator agrees | UNSURE |
+| 12 | 62 | The PROM's validity check prints `NVRAM checksum is incorrect: reinitializing.` and writes defaults | PROM not read; message not checked | UNSURE |
+| 13 | 68-77 | Defaults: console g, dbaud 9600, diskless 0, TimeZone PST8PDT, AutoLoad Y, volume 80, sgilogo y, autopower y | Emulator defaults agree on all eight, with the same offsets. The PROM table not read | UNSURE (agrees with the emulator) |
+| 14 | 78-79 | Defaults netaddr 192.0.2.1 and eaddr ff:ff:ff:ff:ff:ff | Not checked. The emulator has no netaddr default and leaves eaddr alone. 192.0.2.0/24 is the documentation range, so the page should say whether the string is the PROM's or a placeholder | UNSURE |
+| 15 | 80 | Every other record defaults to empty | Not checked | UNSURE |
+| 16 | 66 | Both `init_env` branches walk the same 27-record table | The table at lines 13 to 45 has 29 rows, and the page does not say which two sit outside the walk | inconsistent (count) |
+| 17 | 86 | setenv writes word by word: write-enable, WRITE, wait for ready, write-disable | PROM not read. The emulator uses the same opcodes, which is not evidence | UNSURE |
+| 18 | 88 | The writer copies the full field length and does not stop at the NUL | No source | UNSURE |
+| 19 | 87 | The checksum is recomputed and byte 0 is written last, as read-modify-write of word 0 | PROM not read | UNSURE |
+| 20 | 90 | Revision and checksum are written together, revision first | PROM not read | UNSURE |
+| 21 | 89 | The 93CS56 erases on WRITE, with no append, wear levelling or separate erase cycle, marked established | No datasheet cited. None held in the public roots searched; the one hit (a PLX PCI9060 datasheet) was not opened | unsupported |
+| 22 | 91 | An interrupted setenv leaves a stale checksum and the next boot reinitialises | Follows from claim 19, not checked | UNSURE (inferred) |
+| 23 | 94-102 | setenv console d changes byte 0 by XOR 0x81, from a word-1 delta of 0x03 rotated right | Recomputed over 2000 random stores with the page's algorithm: the XOR delta is 0x81 every time | confirmed (self-consistency only) |
+| 24 | 103 | An erased store has checksum 0x5a | Recomputed for an all-0xFF store: 0x5a | confirmed |
+| 25 | 116 | The printenv capture values, and that ConsoleIn, ConsoleOut, NoAutoLoad and cpufreq are runtime only | Capture not in this checkout and not cited by file | UNSURE |
+| 26 | 105-112 | Unknowns list | Scope statements, not claims. Note: 0xbfbe04e8 is byte 250 of the DS1386 store (0x3e8 past the `bbram` base at a 4-byte stride), the eaddr position. The page could say so | not a verdict |
+
+**Hygiene.** The page names no internal hosts, scratch paths, tool names, or emulator names. Checked by grep.
+
+**Findings.**
+- Claim 5 is wrong as stated. The register byte is at 0x1fbd985b. A word read at 0x1fbd9858 returns the register in its low byte, but the Linux header says these registers must not be read as words. Fix the address and say which byte or word is meant.
+- Claim 16 is inconsistent. The count is 27 in the text and 29 rows in the table.
+- Claim 21 is unsupported. Either cite a 93CS56 datasheet or grade the claim as inferred.
+- Every PROM-derived claim (7, 12 to 20, 22, 25) is UNSURE until someone with the IP22 PROM image checks it against the disassembly. This review did not do that.
+
+**Cleared scope.** Claims 1, 2, 4 (for Linux), 6, 8, 23 and 24. The arithmetic in claims 2, 5 and 26 was checked by hand. Not cleared: claim 5 as written, claim 16, claim 21, and every PROM-derived claim.
+
+**Not verified.** The IP22 PROM image and any disassembly of it. The IRIX sources the page cites, which were not read. The Indy image. A 93CS56 datasheet, none of which is held. The printenv capture. `resetenv`. No restricted source was opened, and no restricted search result was opened or shown.
