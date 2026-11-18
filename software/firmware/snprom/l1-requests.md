@@ -509,7 +509,7 @@ The held 7.3 tree, which the sections above cite, differs from 3.2 on exactly th
 
 Not read: link order of the console and system-controller drivers, the 3.2 `sn_lb_int_war_check` (`irq.c:425` onward, PCI only), the Debian binary.
 
-### Node console UART: part and link (read 2026-11-17, nothing run; not yet independently reviewed)
+### Node console UART: part and link (read 2026-11-17, nothing run; independently reviewed, see the review at the end)
 
 What the SHub 1 console UART is, what is at the other end and what its datasheets say about THRE. Grades: established, software expectation, inferred, unknown.
 

@@ -231,7 +231,7 @@ then writes msr[1546] again, `srlz.d`, M word. The constants are chosen by `cpui
 |---|---|---|---|
 | PAL_B 2.14, 2.15, 2.20, 2.24, 2.25 | same word in all | 12668, all three classes | one value, the same in all three classes |
 | PAL_B 5.73 (Dell, Intel, IBM) | same | 12668 | the same value, all three classes |
-| PAL_B 7.79 (SGI) | same | 12668 (two classes), 2989 (third) | three different values, one equal to the 2.x and 5.73 value |
+| PAL_B 7.79 (SGI) | same | 12668 for `cpuid[3]` revision byte 8 or below (two classes: 3 or below, 4 to 8), 2989 (`0xbad`) for above 8 (the third) | three different values, one equal to the 2.x and 5.73 value (the 4 to 8 class). [pal-instructions.md](../snprom/pal-instructions.md) site K gives the same split; the two pages agree, the older one-line summary of 7.79 as `0x317c` omitted the third class |
 
 So the table is not an SGI addition: the 2.x and 5.73 builds that Dell, Intel and IBM ship carry it with the same command and
 the same expected constant in every revision class, and 7.79 refines it per revision. That the routine checks a hardware

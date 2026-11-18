@@ -199,7 +199,7 @@ Read path for a lookup: `getenv` (`0xffad6e30`) -> open the node's flash object 
 Why EFI `GetTime` can return month 0, and what a model must present so it returns a real date. Read in Ghidra
 (`--sn2-prom --no-analysis`, decompile of the named addresses) and re-checked against a flat `ia64-linux-gnu-objdump`
 listing for the byte-lane arithmetic and the probe sequence. `shub1snprom.bin` 10.54, SAL_B addresses. No emulator ran;
-not yet independently reviewed. The call chain above the chip (`RtSNGetTime`, SAL `0x0200000b`, the per-node time record) is in
+independently reviewed (see [the review below](#review-gettime-and-the-tod-chip-commits-d26fa73-and-50487ce)). The call chain above the chip (`RtSNGetTime`, SAL `0x0200000b`, the per-node time record) is in
 [the runtime services page](../../sal/runtime-services.md#64-the-time-of-day) and is not repeated.
 
 **What the model must present (the answer).** An IOC4 (PCI `10a9:100a`) on a PIC bus whose BAR 0 + `0x80000` is a byte-wide clock
