@@ -698,7 +698,7 @@ Read on 2026-11-17 in a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bi
 **The PAL_PROC routine (established, `0xffb12750`).**
 1. Index test: `r14 = 28`, `r15 = 29`, `r16 = 522`; `p7` = (`r32` is one of them). It tests **`r32`, the first stacked argument, not `r28`**. Linux's `ia64_pal_call_static` allocates `in0` as `r32` and copies it to `r28`, so for Linux `r32` equals the index (inferred from the wrapper source; the trace did not show `r32`). A caller that does not keep the index in `r32` skips this test.
 2. CPU test: `cpuid[3]` bits 39:16 (architecture revision, family, model) are compared with `0x002000` (family 0x20, model 0, Montecito). `p7` stays set only if they differ.
-3. If `p7`: `r8 = r9 = r10 = r11 = 0` and `br.cond b0` at `0xffb127ac`. No MSR is touched.
+3. `r8` to `r11` are zeroed on every entry: the moves at `0xffb1278c` to `0xffb1279c` are unpredicated, not "if `p7`". If `p7`: `br.cond b0` at `0xffb127ac`. No MSR is touched.
 4. Otherwise (any other index, or a family 0x20 model 0 CPU): `r2 = ((cr.lid >> 23) & 0xf) + 2`; with psr.i and psr.dt cleared (`rsm`) read `r8 = [[0x1000000 + 8*r2] + 136]`, the per-CPU PAL entry the SAL stored at `+0x88`, then restore psr.l. If psr.dt is 0, `br b6` to it. If psr.dt is 1, read `[0x1000038] + 80` (a table of 24-byte entries, start, end, offset, ended by a start above the target), find the entry holding `r8` and add its offset, then `br b6`. So in virtual mode the PAL code must be reachable at the translated address (inferred reading of the table; the table's contents are not read).
 
 **Madison and every Itanium 2 (family 0x1f) therefore get "success" with no halt** for PAL_HALT (28), PAL_HALT_LIGHT (29) and index 522. `r8 = 0`, `r9` to `r11` = 0. The model's Madison (`cpuid[3] = 0x1f010504`) is in this set. On silicon the same code runs, so a real Altix 350 with this SAL also returns at once (established for the code and the family test; that Linux then spins is inferred from the idle loop source). Only family 0x20 model 0 is passed to PAL_B; family 0x20 model 1 and later are not (their `cpuid[3]` bits 39:16 differ from `0x002000`). Why SGI did this is **unknown**.
@@ -713,7 +713,7 @@ Read on 2026-11-17 in a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bi
 | 2 | `0xffe9dcf0`, `0xffe9dd00` | `r28` = 33 or 26 | no | pass |
 | 3 | `0xffe9dd10` to `0xffe9dd3c` | `r28` in {522, 518, 28, 29} | 29 | jump to `0xffe9dfb0` (skips the strobe loops) |
 | 4 | `0xffe9dfb0` to `0xffe9dffc` | clear msr[1416] bit 16, poll until bit 40 is clear | model must return bit 40 clear | else hangs here, a model failure |
-| 5 | `0xffe9e000` to `0xffe9e02c` | msr[1237] bit 5 | first call 0, later 1 | 0: runs `0xffe9e030` (stores psr.mc as msr[1237] bit 0 clear/set and psr.ic as bit 1, an `rfi` with mc and bn set and ic cleared back to `0xffe9e140` when mc was clear, then sets bit 5); 1: go on |
+| 5 | `0xffe9e000` to `0xffe9e02c` | msr[1237] bit 5 | first call 0, later 1 | 0: runs `0xffe9e030` (stores msr[1237] bit 0 as NOT psr.mc (set when mc is clear) and bit 1 as psr.ic, an `rfi` with mc and bn set and ic cleared back to `0xffe9e140` when mc was clear, then sets bit 5); 1: go on |
 | 6 | `0xffe9e190` | `r28` = 29 or 1 | 29 | `0xffe9e380` |
 | 7 | `0xffe9e380` to `0xffe9e3cc` | `psr & 0x2044002` (be, i, dfl, lp) must be 0 | 0 | pass (else -2 at `0xffe9e8f0`) |
 | 8 | same | `psr & 0x1008020000` (it, rt, dt) all or none | all | pass (mixed returns -2) |
@@ -722,7 +722,7 @@ Read on 2026-11-17 in a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bi
 | 11 | `0xffea2d40` | psr.ic set: `rsm ic`, `mf` | | continue |
 | 12 | `0xffea2d70` to `0xffea2ddc` | msr[1152] bit 18, msr[1237] bit 2, msr[1572] bit 18 | model-dependent | any set skips the nibble loops to `0xffea2fe0`, otherwise the loops run |
 
-None of the PAL_B checks reads a feature bit, `PAL_PROC_GET_FEATURES` state, `PAL_HALT_INFO` state or a per-CPU halt enable (established; PAL_HALT_INFO stores a table and sets nothing). The index-range and "halt not supported" tests are not in PAL_B for these indexes; the only "not supported" gate is the family test above.
+None of the checks listed above reads a feature bit, `PAL_PROC_GET_FEATURES` state, `PAL_HALT_INFO` state or a per-CPU halt enable (established for those checks, read up to `0xffea2ddc`; PAL_HALT_INFO stores a table and sets nothing). The index-range and "halt not supported" tests are not in PAL_B for these indexes; the only "not supported" gate is the family test above.
 
 **What the guest sees (established return, inferred loop).** `r8 = 0` with `r9` to `r11` = 0, back to Linux's local label. Linux's `arch_cpu_idle` enables interrupts and calls the wrapper, which restores psr.l (psr.i back on), then disables interrupts and returns to the idle loop, which asks again. The CPU never sleeps. A model must not treat the 176,653 calls in 4 s as a fault: the firmware makes this a busy loop on every Itanium 2.
 

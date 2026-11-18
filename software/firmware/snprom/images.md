@@ -163,7 +163,7 @@ block is an IA-32 BIOS image for the processor's IA-32 mode is inferred from the
   SAL_B found the same set: 1, 2, 3, 12, 22, 26, 29, 41, 42, 0x208 and 530, plus whatever the four call wrappers
   carry): 1 CACHE_FLUSH, 2 CACHE_INFO, 3 CACHE_INIT, 4 CACHE_SUMMARY, 9 and 10 BUS_GET/SET_FEATURES, 12 FIXED_ADDR, 14
   FREQ_RATIOS, 17 and 18 PROC_GET/SET_FEATURES, 20 VERSION, 21 MC_CLEAR_LOG, 22 MC_DRAIN, 25 MC_ERROR_INFO, 26
-  MC_RESUME, 29 HALT_LIGHT, 30 COPY_INFO, 32 PMI_ENTRYPOINT, 37 MEM_FOR_TEST, 41 PREFETCH_VISIBILITY, 42
+  MC_RESUME, 29 HALT_LIGHT, 30 COPY_INFO, 32 PMI_ENTRYPOINT, 37 TEST_INFO, 41 PREFETCH_VISIBILITY, 42
   LOGICAL_TO_PHYSICAL, 256 COPY_PAL, 258 TEST_PROC, 259 and 260 CACHE_READ and CACHE_WRITE, and the implementation-specific
   99, 520 (0x208, arguments `0x1000000` and `0x40000`), 528 and 530. Names are Linux `pal.h` numbering (software
   expectation). Wrapper-passed indexes were not all resolved, so this is the static set. The meanings of 99, 520, 528

@@ -287,7 +287,7 @@ Re-enumerated for SAL 5.04 SAL_B (`0xffa01000` to `0xffc4e000`) from every call 
 | 29 | PAL_HALT_LIGHT | `0xffa9acd0`, `0xffaeb8d0` (idle loop) | established |
 | 30 | PAL_COPY_INFO | `0xffa9e78c` | established |
 | 32 | PAL_PMI_ENTRYPOINT | `0xffa3deec` | established |
-| 37 | PAL_MEM_FOR_TEST | `0xffac701c` (in the jump to RAM), `0xffb21a7c` | established |
+| 37 | PAL_TEST_INFO | `0xffac701c` (in the jump to RAM), `0xffb21a7c` | established |
 | 41 | PAL_PREFETCH_VISIBILITY | `0xffb20c40` | established |
 | 42 | PAL_LOGICAL_TO_PHYSICAL | `0xffa9ad80`, `0xffa9ae00`, `0xffa9ae80`, `0xffa9af90` | established |
 | 99 | not in pal.h | `0xffa9c44c` | unknown; between the architected 51 and 256 |
@@ -1226,7 +1226,7 @@ A model run of `shub1snprom.bin` (SAL 5.04, snprom 10.54) delivered its first ba
 - Bit 63 on a code address comes from the static PAL call wrappers: `0xffa1da50` (under `0xffa1da00`) and `0xffa1dc20` both run `dep r8=-1,r8,63,1` on the entry before `mov b6=r8`; the stacked wrappers `0xffa1d8c0` and `0xffa1d960` do not. When the PSR is already physical (`it`, `dt`, `rt` clear) the wrapper skips `rfi` and does `br.few b6` with the current PSR at `0xffa1db50`.
 - The entry comes from `0xffa1d430`: the per-CPU record pointer at `[0x1000000 + 8 * (2 + cr.lid[26:23])]`, field `+0x88`. `0xffa1d690` is the writer.
 - In the jump to RAM (`0xffac6bb0`) `0xffa9e730` calls PAL_COPY_INFO (30), then PAL_COPY_PAL (256). It stores the aligned destination plus PAL_COPY_PAL's r9; `0xffac6d3c` masks that with `0x1fffffffffffffff` and passes it to `0xffa1d690`.
-- The "Switching to RAM %s..........and testing CPU" print is at `0xffac6f10` to `0xffac6f4c`, after that store. The next PAL call is PAL_MEM_FOR_TEST (37) at `0xffac701c`, through `0xffa1da00`. So the faulting jump is most likely that call (inferred), at the new PAL entry `0x1812ba0` with bit 63.
+- The "Switching to RAM %s..........and testing CPU" print is at `0xffac6f10` to `0xffac6f4c`, after that store. The next PAL call is PAL_TEST_INFO (37) at `0xffac701c`, through `0xffa1da00`. So the faulting jump is most likely that call (inferred), at the new PAL entry `0x1812ba0` with bit 63.
 - The SAL copy (`0xfface570`) is written to `((block A `+0x28` & 0xf_ff00_0000) + 0xa00000) | 1 << 40`, which is `0xa00000 | 1 << 40` on NASID 0 (not `0xe00000`; [the mask](#the-sal-shadow-copy-and-its-destination)), and carries bit 40. A bit-63-only address `0x1812ba0` cannot be in it, and the copy is not the entry.
 - No bundle or slot-0 instruction of `shub1snprom.bin` corresponds to this IIP. The bytes there are whatever PAL_COPY_PAL left. **Unknown**: the contents, and why the entry is `0x1812ba0` (the static arithmetic puts the shadow destination near `0x2483580` before alignment). To settle it, dump the record's `+0x88`, the bundle at physical `0x1812ba0` and the PAL_COPY_INFO and PAL_COPY_PAL returns.
 
