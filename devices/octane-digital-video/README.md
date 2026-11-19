@@ -249,7 +249,7 @@ function column is approximate (E for the number, I for the attribution). The na
 | `0x76640002` | `VID_GETBOARDINFO` | `{int index; u32 buf; u32 len}` (n32, 12 bytes); return value is bytes copied, at most 64 | E |
 | `0x76640004` | `VID_ATTACH_BOARD` | `{int index; 8 zero bytes}`; driver returns 0 as an unknown command | E |
 | `0x7664000a` | initialise | none | E |
-| `0x6d670021` | set trigger or control block, sent once after init | a block built by `mgvGetCtrlTriggerInfo`, about 32 bytes; return value must be 0 or more | E (number, use), U (layout) |
+| `0x6d670021` | set-genlock-control command (`srvSetCtrl` -> `_srvGenCtl`, pair of `0x6d670022`), sent once after init | a block built by `mgvGetCtrlTriggerInfo`, about 32 bytes; return value must be 0 or more | E (number, handler), U (layout) |
 | `0x6d670001`..`0x6d67003f` | the private set seen at call sites: `1 2 3 5 7 8 9 a f 10 11 14 15 17 18 1a 1b 1c 1d 1e 1f 20 21 23 24 26 27 28 29 2a 2e 2f 30 3f` | per command | E (numbers), U (structs) |
 
 `mgv.so` call sites also use `/dev/graphics` commands 101, 102 and 103 (8.2).
@@ -400,13 +400,196 @@ nodes must be reachable through it; a missing or failed `mgv.so` bind leaves the
 its nodes under the `impact` device (the `metaXDevInit` and `metaTrap*` imports of `impact.so` and `mgv.so`) was not
 traced: I.
 
+## 10. Start-up path: from the Discreet layer to the DCB registers
+
+Pass 5. Companion table of every register access, bit by bit: [srv-register-map.md](srv-register-map.md). Grades as
+above (E read in full, I reasoned, U unknown). Kernel objects are the 6.5.30 `impactvideo` overlay's `srv.a` and
+`mgv.so`; the held Discreet guest disks carry **none of them** (10.1).
+
+### 10.1 What the guests have today
+
+The three installed guests (Smoke 5.0, Flame 7.6, Flint 8.3.4, all IRIX 6.5.21f on Octane) carry `videod`, `libvl`
+(`dmedia/arch/videodvl`) and `libdmedia`, and in the kernel object set only `mgvstubs.a`. There is no
+`/usr/lib32/dmedia/video` directory, no `impact.so`, `mgv.so` or `srv.a`, and no `/dev/mgv`. E (directory reads). So
+today the video list is empty (10.10); a model needs the `impactdm` and `impactvideo` overlays installed first. Whether
+the 6.5.30m overlays run on a 6.5.21f kernel is unknown (U); the original-6.5 Octane Digital Video image is the other
+candidate and its `srv.a` differs in size and checksum.
+
+### 10.2 The call chain
+
+| Stage | What happens | Grade |
+|---|---|---|
+| 1. DL | `VideoInit` with device type `OCTANEVIDEO` calls `InitVideoOctane`; Smoke 5.0 and Flame 7.6 tail-call `VideoOctaneVideoOutput(1, 0)`, Flint 8.3.4 `InitVideoOctane(bool)` calls it | E |
+| 2. DL | `VideoOctaneVideoOutput` builds an `OctaneVideo` (a `Video` with device name `impact`), converts the configured timing, sync, field dominance and format to VL values, sets up a `VL_SCREEN` source, a `VL_INTERNAL` colour-space node and a `VL_VIDEO` drain (`SetupSrcNode`, `SetupCscNode`, `SetupDrnNode` through the object's methods), sets controls (`vlSetControl`) and calls `vlSetupPaths(server, path, 1, VL_SHARE, VL_SHARE)`. `vlBeginTransfer` is not called here: `VideoOctaneStartOutput` and `VideoOctaneSetInput` do that later | E |
+| 3. videod and `impact.so` | `vlSetupPaths` reaches the meta device `impact` (10.8), which routes to the `mgv` sub-device's `mgvSetupPath` | E (call), I (routing detail) |
+| 4. `mgv.so` | `mgvSetupPath` allocates the path's resources and activates them. Each resource that changes runs its `MGV_SetParams_<resource>` through the resource manager's `RM_AddUser` (the call site is the resource record's SetParams slot). The 38 resource records, by resource type: Vin (3), Vout (3), Csc (1), Screen (6), Board (1), CC1Cbar (1), Trigger (1), VBAR (1), Tex (1), CC1 (1), Events (1), and 18 records with a no-op handler. Order inside a path follows the resource list index and the path's nodes; not traced further | E (records), I (order) |
+| 5. ioctl | each `SetParams` issues the private ioctls of 10.3 on the `/dev/mgv` descriptor | E |
+| 6. `srv` | the handler of each ioctl reads or writes DCB registers (10.4) | E |
+
+### 10.3 Ioctl number to handler (every case of the driver's switch)
+
+Read by running the driver's compare tree over each number `0x6d670001` to `0x6d670043` (E). A number not listed
+reaches the default branch, which logs `srv_Private: Invalid ioctl` and returns 0. Command names in quotes are
+the module's own strings; the others are the handler names.
+
+| Number | Handler | Number | Handler |
+|---|---|---|---|
+| `01` | `srv_setreg` ("MGV_SETREG") | `1f` | `srvSetCtrl` -> `_srvMuxSel` |
+| `02` | `srv_getreg` ("MGV_GETREG") | `20` | `srvGetMuxSel` |
+| `03` | `srvSetWin` ("MGV_SETWIN") | `21` | `srvSetCtrl` -> `_srvGenCtl` |
+| `04` | `srvGetWin` | `22` | `srvGetGenlockCtl` |
+| `05` | `srvCC1PutFrame` | `23` | `srvSetCtrl` -> `_srvcc1Ctl` |
+| `07` | `srvSetCtrl` -> `_srvClutCtl` | `24` | `srvGetcc1Ctl` ("MGV_GETCC1_CTL") |
+| `08` | `srvGetClutCtl` ("MGV_GETCLUT_CTL") | `25` | `srv_force_reset` |
+| `09` | `srvSetConfig` ("MGV_SET_CONFIG") | `26` | `srvSetTMICtl` |
+| `0a` | `srvGetConfig` ("MGV_GET_CONFIG") | `27` | `srvGetTMICtl` ("MGV_GETTMI_CTL") |
+| `0b` | `srvTriggerWait` | `28` | `srvVgi1DMA` |
+| `0f` | `srvSetCtrl` -> `_srvDVinCtl` | `29`, `2a` | `srvVgi1Setup`, `srvVgi1UnSetup` |
+| `10` | `srvGetDVinCtl` ("MGV_GETDIN_CTL") | `2b` | `srvTriggerSetup` |
+| `11` | `srvSetCtrl` -> `srvEffectWrite` | `2c`, `2d` | `srv_vgi1_reg` (VGI1 register read and write) |
+| `12` | `srvEffectRead` | `2e`, `2f`, `30` | `mgvTriggeredCtrlPost`, `Ready`, `Flush` |
+| `13`, `14` | `srvSetPollSel`, `srvGetPollSel` | `32` to `3c` | diagnostics (`srvDiag*`, EDH) |
+| `15` | `srvSetCtrl` -> `srvKeyerWrite` | `3d`, `3e` | `srvGetKsyncCtl`, `srvSetKsyncCtl` |
+| `16` | `srvKeyerRead` | `3f` | `srvQueueEvent` |
+| `17` | `srvSetCtrl` -> `srvYUVColor` | `1c`, `1d` | `srvGetAutowipe`, `srvSetAutowipe` |
+| `18` | `srvSetCtrl` -> `srvLoadClut` | `1e` | `srvGetMSCandUST` |
+| `19` | `srvReadClut` | `1b` | `srvGetDVoutCtl` ("MGV_GETDOUT_CTL") |
+| `1a` | `srvSetCtrl` -> `_srvDVoutCtl` | | |
+
+`srvSetCtrl` commands dispatch through a 29-entry jump table in `srvDoCtrlChange` (indexed by number minus `0x6d670007`; every other entry is the default). They copy in a 112-byte structure, then either apply it at once through
+`srvDoCtrlChange` or enqueue it as a triggered control that a CC1 or VGI1 interrupt applies at a named field
+(`mgvMSCTriggeredCtrlWakeup`, `mgvGPITriggeredCtrlWakeup`, `mgvInLineTriggeredCtrlWakeup`). Which path the first screen-to-video
+set-up takes was not decided; the model should deliver the CC1 interrupt either way (10.7). I.
+
+### 10.4 Register writes in order, per block
+
+The full decoded sequences are in [srv-register-map.md](srv-register-map.md): the bit-id accessor with its 389-entry
+table, the attach-time sequence (steps 0 to 15, with every default table value), and the program-order accesses of each
+control handler above. Summary of what is established:
+
+| Block | Attach-time writes | Start-up-time writes (handlers) |
+|---|---|---|
+| HQ4 DCB control (`+0x61000..0x61070`) | `1`, `0x4210`, `0x208a`, `0x1004`, and 0 at `+0x61010` for revision 1 | none |
+| GAL direct (`+0x73400`) | 3 = 1, then 2 read | none outside reset |
+| GAL indirect | crosspoint 240..255, DV in reg 2, DV out regs 8..13, genlock regs 14..16, 20, 21, 26, 39, cc1-io regs 5..7, I2C regs 36 and 37 | DV in regs 2 to 4 (`_srvDVinCtl`), DV out regs 8 to 13, mux/genlock regs 33 to 35, 17 to 24 (timer) |
+| CC direct (`+0x73000`) | 0, 3, 4 | 0 bit 0 (frame control), 4 |
+| CC indirect | the 66-entry default table (38 = `0xa0`), 38 final `0xa2`, 40, 41 | 0, 1, 3, 9, 16, 32, 36, 38 (`_srvconfig`), 54 to 56 (CC1Cbar and window), others per `srvcc1Ctl` |
+| AB direct and indirect (`+0x72800`) | direct 0..7 table, indirect 16..23 and 32..38 zero, direct 5 from the board record | AB 5, 6, 21, 22, 37, 38 around window enable and `_srvconfig` |
+| CSC (`+0x73800`) | direct 2 = 1, delay 2, 0 | indirect 0 and 1 bits (`_srvClutCtl`) |
+| TMI (via GAL 6/7) | 17 defaults at 0x80..0x95 and 18 at 0x60..0x71, 5 to 12 microsecond delays | none unless a texture node is used |
+| EDH, ML (I2C, GAL 36 and 37) | part select and a sequence | none seen |
+
+Values written at start-up come from the VL controls the DL layer set (timing, sync source, format, precision) through
+`mgv.so`'s resource parameters: they are parameters, not constants, so a per-product value list was not produced. What
+the three products differ in is below.
+
+### 10.5 Read-backs, polls and waits that change the outcome
+
+| Where | What is read | Exit or check | Effect on a RAM model | Grade |
+|---|---|---|---|---|
+| Probe | byte at `+0x70008` | must be `0x11` | required value | E |
+| `_srv_reset` | GAL direct 2, TMI 147, CSC direct 3 | stored only; revision nibble below 4 clears the I2C workaround flag | any value | E |
+| Init tables (`_gal_reg_check`) | read-back of each table entry | skipped on the attach path (diagnostic ioctl `0x6d670036` only) | none | E |
+| `i2c_poll` (every I2C byte: EDH and ML parts) | GAL indirect 37 bit 7 | loop `us_delay(10)` until bit 7 clears or `srv_i2c_timeout` (1000) polls, then it writes `0xc3` to register 37 and returns -1 | **RAM fails**: `_srv_init_i2c` leaves register 37 = `0xc1` (bit 7 set), so each poll waits 10 ms and errors. The result is ignored on the attach path, so it still attaches, slowly | E |
+| `srv_itimer` (every `gal15itimeout` = 25 ticks, armed at attach) | GAL indirect 17 bit 0 and, if set, 17 & `0x50` until clear; 3, 4, 14, 15, 22 to 24; CC indirect 38 bit 7 | a RAM model reads 0 and idles. If bit 0 of 17 reads set and `0x50` never clears, the timer spins | return 0 for GAL 17 bits 0, 4 and 6 | E (flow), I (meanings) |
+| `srv_field_wait` (window enable, `srvCC1PutFrame`) | CC indirect 38 bits 7 and 5 | if either is set: sleep on `srv_fieldwait_sv` for that many CC1 field interrupts; if both clear: spin `delay(1)` that many times | **interrupt required** (10.7); CC indirect 38 is `0xa2` after attach, so the wait is interrupt-driven | E |
+| `_srv_enab_win`, `_srv_enableBC` | AB 37, 38, 22, 21, 6 bits and CC 54, 55 fields | each read is followed by a write that clears then restores the same bit around a field wait; no compare of the value | RAM satisfies | E |
+| `_srvWaitForTMIXferStart`, `_srvWaitForVertLineCnt` | TMI and graphics line counter | texture transfers only | not on the path | E |
+| `_srvWaitForFifo` (`srvCC1PutFrame`) | CC FIFO count | framebuffer put-frame only | not on the path | E |
+
+### 10.6 Are plain write-through RAM arrays enough?
+
+For the CC, AB, CSC, TMI and GAL blocks: **yes for storage and read-modify-write, no for four registers**, so a model
+should be RAM plus these overrides (I for the overrides' exact bit meanings, E for the code that needs them):
+
+1. GAL indirect 37 bit 7 (I2C busy) must read 0 so `i2c_poll` returns at once; otherwise start-up works but spends
+   about 10 ms per I2C byte.
+2. GAL indirect 17 bit 0 and bits 4 and 6 (`0x50`) must read 0 unless a field event is pending, so `srv_itimer` idles.
+3. CC1 field interrupts (GIO line 6) must be delivered at the field rate once CC indirect 38 bits 5 or 7 are set, or
+   every `srv_field_wait` blocks in `sv_wait_sig`.
+4. The probe byte `0x11` at `+0x70008` and the three revision reads of `_srv_reset` (10.5).
+
+No read-back compare of a written value was found on the attach path or in the handlers of 10.4. Not examined: the
+handlers `srvEffectWrite`, `srvKeyerWrite`, `srvYUVColor` and `srvLoadClut` (`0x11`, `0x15`, `0x17`, `0x18`; their
+register paths use the same accessor), `srv_edh.o`, and the VGI1 paths. U.
+
+### 10.7 Interrupts and DMA the path waits for
+
+CC1 field interrupts on GIO line 6 (`srv_cc1_interrupt` wakes `srv_fieldwait_sv`): needed by `_srv_enableBC` and
+`_srv_enab_win` (reached from the `0x6d670003` window command, which `MGV_SetParams_CC1Cbar` sends for its window
+parameters) and by triggered controls. No VGI1 DMA or line 4 interrupt is waited for by a screen-to-video path: the DMA
+engine is used by the `VL_MEM` nodes, which this first path does not use. A model that never raises line 6 hangs
+`vlSetupPaths` inside `videod` on the first window enable. E for the wait, I that the first path reaches it.
+
+### 10.8 How `mgv.so` hangs its nodes under the device `impact`
+
+`impact.so` is a **meta device**; `mgv.so` is one of its sub-devices. E from the code:
+
+- `videod` loads `impact.so` and calls `impactBind`, which opens `/dev/mgv` (falling back to `/dev/null`) and calls
+  `AddDevice`, which runs `__meta__AddDevice`.
+- `__meta__AddDevice` opens the sub-device's file (`/dev/mgv`, with the message `__meta__AddDevice: can't open /dev/mgv:
+  <error>` on failure), loads the sub-device DSO through `__meta__loadDSO`, runs the sub-device's init and its
+  cross-device init, and on any failure prints `deviceInit fails` or `XDevInit fails` and skips that sub-device.
+- `__meta__loadDSO` builds `/usr/lib32/dmedia/video%s/%s.so` (the `_VL_ROOT` variable prefixes `video`), `dlopen`s it,
+  `dlsym`s `<name>DeviceInfo` and `<name>XDevInfo`, refuses a DSO whose version differs from `videod`'s
+  (`is not the same version as videod`) or whose cross-device protocol is not version 4 (`have different cross-device
+  protocols`).
+- `mgv.so` exports `mgvDeviceInfo` (name `mgv`; its init callback runs `RM_Open`, 8.2) and `mgvXDevInfo` (protocol 4, six
+  callbacks). `impact.so` runs `metaXDevInit` and `metaBuildFlowGraph` to merge the sub-device's nodes into the meta
+  device's node list (`__meta__MergeDevice`), so a client sees one device `impact` with the `mgv` nodes inside. The
+  `mgv` side calls back into the meta device for source queries (`metaQuerySource`, `metaFindDevPathNode`,
+  `metaIsMetaNodeOnMetaPath`, `metaTrapSetupPaths`, `metaTrapSetConnection`, event notifiers).
+- `videod` also loads `mgv.so` on its own (the transcript in section 3 shows both DSOs loading), through
+  `mgvDeviceInfo`; that load needs the same `RM_Open` to succeed. I (whether the stand-alone load adds a second
+  device or is merged away).
+
+Consequence: with the `mgv` sub-device missing or failing, `impact` still lists but without the `VL_VIDEO` serial
+nodes and the video-side `VL_MEM` nodes, so the DL's `SetupDrnNode (VL_VIDEO)` fails.
+
+### 10.9 Flame 7.6 and Flint 8.3.4 against Smoke 5.0
+
+Disassembled and compared function by function (call names, immediates, string references), addresses ignored:
+
+- **Flame 7.6 against Smoke 5.0: identical** in `InitVideoOctane`, `VideoOctaneVideoOutput`, `VideoOctaneVideoInput`,
+  `VideoOctaneStartOutput`, `VideoOctaneSetInput`, `VideoOctaneSetOutput`, `SetupSrcNode`, `SetupDrnNode`,
+  `SetupExtNode`, `BeginTransfer` and the `Video` constructor. The only difference is a string constant in `SetupPath`.
+  E.
+- **Flint 8.3.4 differs in four ways, none in the VL skeleton:** `InitVideoOctane` takes a flag and calls
+  `VideoOctaneVideoOutput` itself; timing comes from `VideoGetCurrentTiming` with `convertDLVideoTimingToVlTiming`
+  (Smoke and Flame use `GetVideoStandard` with `convertDLVideoStandardToVlTiming`), which carries the HD timings;
+  `VideoOctaneSetInput` also calls `VideoOctaneSetOutputDigitalFilterState` and `VideoOctaneVideoOutput(1)`;
+  `SetupPath` takes a second argument. The device name, node kinds, `vlSetupPaths` arguments and the error strings are the
+  same. E.
+- **Same driver-side demands**: because the VL calls are the same, the `mgv.so` resources and ioctls of 10.2 to 10.4
+  apply to all three. A different timing value changes register values, not the set of registers. I.
+
+### 10.10 An empty VL device list
+
+- `videod` with no usable DSO exits: the string `no devices found` and the public transcript `Fatal server error: no
+  devices found` (a 1996 post). E (string), I (exit).
+- In the DL layer: `vlOpenVideo(NULL)` returns no server, `Video::Video` logs `vlOpenVideo failed`, then `vlGetNode failed`,
+  and returns an object anyway; `SetupPath` returns -1 at once. `VideoOctaneVideoOutput` then logs its node-setup
+  failures and the product keeps running with no video. E (code), I (that the products start; the earlier guest runs
+  with `Video OctaneVideo` configured and no board agree).
+- With `videod` running and a list that has devices but none called `impact`, the DL warns and uses the first device (9).
+
+### 10.11 What is still unknown
+
+- The actual register values for each product's configuration (they are VL parameters); the `srvEffectWrite`, `srvKeyerWrite`,
+  `srvYUVColor` and `srvLoadClut` handlers; whether `srvSetCtrl` applies at once or by trigger during the first path.
+- The meaning of GAL indirect 17, 22 to 24 and CC indirect 54 to 56 beyond the roles their routine names give.
+- Behaviour of `mgv.so`'s stand-alone load (10.8) and of 6.5.30m overlays on a 6.5.21f kernel (10.1).
+- Settle by: a trace of an unmodified run once a model answers the 10.6 overrides; the `vl_mgv.h` header for parameter
+  structures; reading `srv_edh.o` and the remaining `srvSetCtrl` cases.
+
 ## Not done in this pass
 
 - Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
   interrupt routines.
 - The Indigo2 `mgv.a`, the `octane_ic` compression image, the `srv_i2c.o` and `srv_edh.o` routines were not read.
-- The DL layer was read for device selection and node setup only, not for its video-timing and transfer code; Flame 7.6
-  and Flint 8.3.4 were compared with Smoke 5.0 by string sets, not disassembly. Flame 7.0 and Smoke 4.0.3 not read.
+- The DL layer was read for device selection, node setup and the start-up call chain, not for its video-timing and transfer
+  code; Flame 7.6 and Flint 8.3.4 were compared with Smoke 5.0 by disassembly of the video functions (section 10.9). Flame 7.0
+  and Smoke 4.0.3 not read.
 - The programmer's-guide headers `vl_mgv.h` and `vl_impact.h` are not held, so the `0x6d67....` ioctl structures are not
   decoded.
 - No `hinv -mv` capture with a widget location for this board was found.
