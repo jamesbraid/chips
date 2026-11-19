@@ -107,3 +107,4 @@
 | [xbow/](xbow/README.md) | Xbow (Crossbow) | Mode: spec-backed (see references/documents/specs.md: Crossbow ASIC Specification, revision 12.0; its register map... |
 | [xframe/](xframe/README.md) | Neterion Xframe 10-Gigabit Ethernet controller | The Neterion Xframe, formerly S2io, is a 10-gigabit Ethernet controller on PCI and PCI-X add-in cards. |
 | [xio_fc/](xio_fc/README.md) | Datasheet: SGI XIO Fibre Channel board (XT-FC-2P / X9-FC-2P family, Adaptec AIC-1160) | Status: research draft, not independently reviewed. |
+| [xthd/](xthd/README.md) | XT-HD (XT-DIGVID): the present, enumerates, opens, passes-start-up contract | Status: scoping draft, not independently reviewed. |
