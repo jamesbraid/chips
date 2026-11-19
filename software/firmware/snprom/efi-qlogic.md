@@ -28,7 +28,7 @@ The assert sits in the bus-mode probe, `0x26b710` (established). Its arguments a
 The code writes bit 3, reads the register back and asserts the bit stuck. It then reads the register at `0xf6` (the SXP
 "DIFF pins" register in the ISP SXP block: Linux names `0xf2` `scsiControlPins`, NetBSD puts DIFF pins four bytes after
 control pins), which is only meaningful if bit 3 selected the SXP bank in the window at `0x80` to `0xff`.
-Linux `qla1280.c` selects that bank on the 12160 with `0x0100` (`SET_SXP_BANK`) and NetBSD with bits 9:8 (`BIU_PCI1080_CONF1_SXP0`/`SXP1`); the 1040-class bit 3 is not what the 1080 family uses. The driver passing on shipped hardware shows only that bit 3 is a read/write bit that reads back; that it shows an SXP bank is **not** established. No ISP12160 data sheet is in the Library, and Linux defines `ISP_CFG1_SXP` as bit 0 and never uses it.
+Linux `qla1280.c` selects that bank on the 12160 with `0x0100` (`SET_SXP_BANK`) and NetBSD with bits 9:8 (`BIU_PCI1080_CONF1_SXP0`/`SXP1`); the 1040-class bit 3 is not what the 1080 family uses. The driver passing on shipped hardware shows only that bit 3 is a read/write bit that reads back; that it shows an SXP bank is **not** established. No ISP12160 data sheet is in our holdings, and Linux defines `ISP_CFG1_SXP` as bit 0 and never uses it.
 
 The "Firmware Rev 6" line printed before is not firmware. `QlogicScsiPassThruDriverBindingSupported` (`0x188360`) reads the first
 64 bytes of PCI configuration space, accepts vendor `0x1077` device `0x1216`, and prints segment, bus, device, function from
@@ -107,12 +107,11 @@ the meaning of the DMA-bank writes in step 4.
 
 ## Sources
 
-Public: Linux `drivers/scsi/qla1280.c` and `qla1280.h` (Library root `linux-history`); NetBSD `sys/dev/ic/ispreg.h` (Library root
-`netbsd-src`); the QEMU `sgi-origami` page `docs/system/mips/sgi/hardware/qlogic-isp.rst`. No external URL was fetched.
+Public: Linux `drivers/scsi/qla1280.c` and `qla1280.h` (Linux history tree); NetBSD `sys/dev/ic/ispreg.h` (NetBSD source tree); the QEMU `sgi-origami` page `docs/system/mips/sgi/hardware/qlogic-isp.rst`. No external URL was fetched.
 
 ## Review
 
-Independent re-read of `f81a3c0` against `shub1snprom.bin` 10.54 (sha256 `51ccf9ad...`): the EFI ELF was re-extracted from the FIT type `0x1f` entry (`0xffca5ec0`, gunzip, 2,495,544 bytes), read with `ia64-linux-gnu-objdump -d` and with the retools Ghidra export (`--no-analysis`, decompile of `0x26b710` and `0x2685d0`). Linux `qla1280.h` (`linux-history`) and NetBSD `ispreg.h`, `isp_pci.c` (`netbsd-src`).
+Independent re-read of `f81a3c0` against `shub1snprom.bin` 10.54 (sha256 `51ccf9ad...`): the EFI ELF was re-extracted from the FIT type `0x1f` entry (`0xffca5ec0`, gunzip, 2,495,544 bytes), read with `ia64-linux-gnu-objdump -d` and with the retools Ghidra export (`--no-analysis`, decompile of `0x26b710` and `0x2685d0`). Linux `qla1280.h` (Linux history tree) and NetBSD `ispreg.h`, `isp_pci.c` (`netbsd-src`).
 
 **Confirmed.**
 - `0x26b710`: asserts `ql2.c` line `0x7c6` with `tmp2 & 0x0008` (strings at ELF `0x1ce260`, `0x1ce2e0`; the `and` that feeds it is at file offset `0x17b9f6`, ELF `0x16b9f6`) and line `0x7d6` with `tmp2 == tmp1`; skipped when CPUID register 2 is `0xaeeeeeee8badbeef`.

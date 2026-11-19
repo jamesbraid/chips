@@ -464,4 +464,4 @@ Independent re-read on 2026-11-16: PROM 10.54 in Ghidra (`0xffaac4b0`, `0xffa7ca
 
 **Changed.** `0x55` also fills sixteen groups of widget words after the `0x2f0` copy (edited above). `0xffa60a70` first polls a word for up to 10 s (its timeout message says "timed out locking"; which register that is was not decoded) before it writes, and every message in it names TIO; the TIO-only reading of the writer stays **inferred** but is now better supported.
 
-**Not checked.** The class selector `3` of the table iterator in `0xffb28df0`; the call of ops slot `0x1c8` inside `0xffa450e0`; `0xffa197f0`/`0xffa0f8c0` and the "partition `0xff`" claim; `0xffa7d950`, `0xffa7d760`; the manual prompts; `linux-history` (not queried).
+**Not checked.** The class selector `3` of the table iterator in `0xffb28df0`; the call of ops slot `0x1c8` inside `0xffa450e0`; `0xffa197f0`/`0xffa0f8c0` and the "partition `0xff`" claim; `0xffa7d950`, `0xffa7d760`; the manual prompts; Linux history tree (not queried).

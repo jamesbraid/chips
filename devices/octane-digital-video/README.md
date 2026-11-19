@@ -5,7 +5,7 @@ Octane (IP30) Digital Video option reveals about its hardware and what a "board 
 needs. It is not a register manual. Labels follow [AGENTS.md](../../AGENTS.md): **E** established, **I** inferred,
 **U** unknown. Where the request asked for a "software expectation" grade, that is **E** here when the whole
 routine or table was read from a shipped binary, and **I** when it is a reading from call lists or names.
-Nothing here depends on a physical board. No IRIX source or restricted Library document was read.
+Nothing here depends on a physical board. No IRIX source or restricted held document was read.
 
 The question it answers: can IRIX's driver and the Digital Video layer (VL, `videod`) be made to accept a modelled
 board, enough that Flame, Flint and Smoke on an Octane see a video device, open it and start? Short answer in
@@ -193,7 +193,7 @@ The Discreet DL layer is read in section 9.
 | Octane Compression 6.5 image | same mirror (`octane_ic_6.5`) | held, not read; the compression board is a separate option on the same module |
 | IP30 kernel objects for the GIO bridge and the HQ4 driver | the 6.5.22 and 6.5.30 kernel object sets | held |
 | `videod`, `libvl`, `vl.h` | the DIVO/VL extract (`vl-6.5.30m`) in the chips root | held; `vl_mgv.h` and `vl_impact.h` are named in M2 and **not extracted** from the overlays yet |
-| Installation guide 007-3466-001, Programmer's Guide 007-3513-001 | the techpubs library (guide); the Programmer's Guide inside `impactvideo.books` | held |
+| Installation guide 007-3466-001, Programmer's Guide 007-3513-001 | the SGI printed manuals library (guide); the Programmer's Guide inside `impactvideo.books` | held |
 | Discreet products with the DL video layer | Smoke 5.0, Flame 7.6 and Flint 8.3.4 are held as installed Octane guest disk images (section 9); install media for Flame 7.x, Flint 7.7.2SE and Smoke 4.0.3 are not in the software mirror by name | held as disks; Flame 7.0, Flint 7.7.2SE, Smoke 4.0.3 not read |
 | A real board's register captures, VGI1 window map, firmware | none | missing, and not expected: the driver shows none |
 | Owner's or service manual with block diagram of the Galileo 1.5 board | none | missing; 007-3466-001 is installation only |

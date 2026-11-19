@@ -398,7 +398,7 @@
 /*
  * Master clock select of clock generator 3, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.
  */
-/* clockgen_master_3: w32, reset unknown; public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg */
+/* clockgen_master_3: w32, reset unknown; public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg */
 #define RAD1_CLOCKGEN_MASTER_3_OFFSET                0xa8u /* inferred */
 #define RAD1_CLOCKGEN_MASTER_3_MASTER_192K_SHIFT     0 /* inferred */
 #define RAD1_CLOCKGEN_MASTER_3_MASTER_192K_MASK      0x1u
@@ -407,7 +407,7 @@
 /*
  * Master clock select of clock generator 2, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.
  */
-/* clockgen_master_2: w32, reset unknown; public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg */
+/* clockgen_master_2: w32, reset unknown; public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg */
 #define RAD1_CLOCKGEN_MASTER_2_OFFSET                0xacu /* inferred */
 #define RAD1_CLOCKGEN_MASTER_2_MASTER_192K_SHIFT     0 /* inferred */
 #define RAD1_CLOCKGEN_MASTER_2_MASTER_192K_MASK      0x1u
@@ -416,7 +416,7 @@
 /*
  * Master clock select of clock generator 1, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.
  */
-/* clockgen_master_1: w32, reset unknown; public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg */
+/* clockgen_master_1: w32, reset unknown; public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg */
 #define RAD1_CLOCKGEN_MASTER_1_OFFSET                0xb0u /* inferred */
 #define RAD1_CLOCKGEN_MASTER_1_MASTER_192K_SHIFT     0 /* inferred */
 #define RAD1_CLOCKGEN_MASTER_1_MASTER_192K_MASK      0x1u
@@ -425,7 +425,7 @@
 /*
  * Master clock select of clock generator 0, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.
  */
-/* clockgen_master_0: w32, reset unknown; public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg */
+/* clockgen_master_0: w32, reset unknown; public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg */
 #define RAD1_CLOCKGEN_MASTER_0_OFFSET                0xb4u /* inferred */
 #define RAD1_CLOCKGEN_MASTER_0_MASTER_192K_SHIFT     0 /* inferred */
 #define RAD1_CLOCKGEN_MASTER_0_MASTER_192K_MASK      0x1u

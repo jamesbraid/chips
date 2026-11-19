@@ -144,9 +144,9 @@ So: the Ethernet controller on the Altix IO9 and IO10 is **unknown**; a Broadcom
 hypothesis, inferred from the three items above and the sibling card. No Altix capture of `lspci` is held.
 
 - If the Ethernet part is a BCM5701 (inferred above, not established), its register reference is the Broadcom "BCM57XX Host
-  Programmer Interface Specification", 57XX-PG105-R, which the Library holds among its datasheets. No standalone BCM5701
+  Programmer Interface Specification", 57XX-PG105-R, which we hold among its datasheets. No standalone BCM5701
   datasheet is public; the Linux `tg3` driver is the other reference.
-- No public VSC 7174 datasheet exists: a Library and web search (2026-11-15) found none. Linux `sata_vsc.c` is the only
+- No public VSC 7174 datasheet exists: a search of held sources and the web (2026-11-15) found none. Linux `sata_vsc.c` is the only
   source for that part here.
 
 ## The riser identity record
@@ -399,11 +399,11 @@ sampled.
 
 ### Review (PCI scan and the device table, 2026-11-16)
 
-Independent re-read of the section "Devices on the PIC's buses" against `shub1snprom.bin` 10.54 in Ghidra (IA-64 module, listings checked) and the Library sources named below; the PIC-side findings are in [the PIC page's review](../../devices/pic/README.md#review-pci-scan-and-the-protected-read).
+Independent re-read of the section "Devices on the PIC's buses" against `shub1snprom.bin` 10.54 in Ghidra (IA-64 module, listings checked) and our holdings sources named below; the PIC-side findings are in [the PIC page's review](../../devices/pic/README.md#review-pci-scan-and-the-protected-read).
 
 **Confirmed.**
 - The IOC3/IOC4 slot rule: the error string is printed by the bus-address allocator (`0xffb38260`) when the IOC's slot number is 3 or more, and the allocation returns 0 (the message says "Current slot is" slot + 1). The QLogic ids `0x1240`, `0x1280`, `0x1216` get 3 response buffers (`0xffb3ef90` calls `0xffb33880`); a failure only prints.
-- Linux `ioc4_variant` (`drivers/misc/ioc4.c`, linux-history): QLogic ISP 12160 or Vitesse VSC 7174 on the IOC4's bus at PCI slot 3. `arch/ia64/include/asm/sn/pic.h` (same root) says device `n - 1` is configuration window `n` (windows `0x21000` to `0x24000`, external slots 1 to 4), so slot 3 is window 3. Both rows of window 3 stay established.
+- Linux `ioc4_variant` (`drivers/misc/ioc4.c`, Linux history tree): QLogic ISP 12160 or Vitesse VSC 7174 on the IOC4's bus at PCI slot 3. `arch/ia64/include/asm/sn/pic.h` (same root) says device `n - 1` is configuration window `n` (windows `0x21000` to `0x24000`, external slots 1 to 4), so slot 3 is window 3. Both rows of window 3 stay established.
 - No manual names the Ethernet part or a window. Re-read: *SGI Altix 350 System User's Guide* 007-4660-002 pp.112 and 122 (base I/O options and Table 3-3: only "SATA internal port" and the 36-pin serial connector with the IO10, SCSI ports with the IO9); the IO9 and IO10 pages cited above. The card goes in "PCI slot 1", the riser, which is not a PIC window. The BCM5701 window 4 row stays inferred.
 - The only wait in the scan is the 100000-tick (microsecond clock) lock spin in the protected-read wrapper.
 

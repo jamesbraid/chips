@@ -20,7 +20,7 @@ Linux platform code or a published manual), **inferred** (reasoned, reasoning gi
   objects the firmware reports. No register offset of the router or of the node's network interface is defined in
   the kernel headers (the 502-line `shub_mmr.h` has none, and the 2.6.24 `shubio.h` defines only the I/O interface's
   own link registers). Everything register-level below therefore comes from the PROM.
-- **Published manuals** (techpubs 007-4823-001 Altix 4700 guide pp.61, 65, 66; 007-4579-001 Altix 3000 guide pp.135
+- **Published manuals** (SGI printed manuals 007-4823-001 Altix 4700 guide pp.61, 65, 66; 007-4579-001 Altix 3000 guide pp.135
   and 140; the CR-brick and Altix 350 pages already in [../../platforms/sn2/](../../platforms/sn2/README.md)). Result:
   product and port facts only. No manual held states a router register.
 - **The held SN2 PROM images** (SNPROM 10.54 build 70399, both the SHub 1 and the SHub 2 image; 10.40, 10.11, 4.43
@@ -217,7 +217,7 @@ port-configuration routine at `0xff4c8580`; objdump to cross-check the vector ro
 functions (`0xff4a9540`, `0xff4af370`) and the global-initialisation routine around `0xff4c7d30`. The register table
 was re-parsed independently (not from the writer's script): record layout of 16-byte registers and 8-byte fields, found
 from the table's descriptor in the image. Linux v5.3 `sn_hwperf.c`, `sn_hwperf.h`, `sn_sal.h`, `klconfig.h`,
-`module.h`, `shub_mmr.h` and v2.6.24 `shubio.h` were fetched and read; manual pages were read in the Library at the
+`module.h`, `shub_mmr.h` and v2.6.24 `shubio.h` were fetched and read; manual pages were read in our holdings at the
 printed page numbers.
 
 **Confirmed.**

@@ -117,7 +117,7 @@ A PROM-console capture of a live IP22 ran `printenv`: `console=g`, `diskless=0`,
 
 ## Review (IP22 PROM environment, f3d2d71)
 
-Independent review on 2026-11-18 by a reviewer who did not write this page. Revision: the page as added in f3d2d71; it is unchanged on main at e0a328f. Sources: the public linux-mips tree at c9bace5bce3 (`arch/mips/sgi-ip22/ip22-nvram.c`, `arch/mips/include/asm/sgi/hpc3.h`, `ioc.h`, `pi1.h`, `ip22.h`, `arch/mips/sgi-ip22/ip22-hpc.c`), the public NetBSD and OpenBSD sgimips and sgi trees for the variable names, and an independent public emulator of the same store, used only as a cross-check and never as an authority. The IP22 PROM image is listed in `references/prom-images.md` but is not held in this checkout, so no PROM byte was read. The reviewer did not read the IRIX sources the page cites.
+Independent review on 2026-11-18 by a reviewer who did not write this page. Revision: the page as added in f3d2d71; it is unchanged on main at e0a328f. Sources: the public Linux/MIPS tree tree at c9bace5bce3 (`arch/mips/sgi-ip22/ip22-nvram.c`, `arch/mips/include/asm/sgi/hpc3.h`, `ioc.h`, `pi1.h`, `ip22.h`, `arch/mips/sgi-ip22/ip22-hpc.c`), the public NetBSD and OpenBSD sgimips and sgi trees for the variable names, and an independent public emulator of the same store, used only as a cross-check and never as an authority. The IP22 PROM image is listed in `references/prom-images.md` but is not held in this checkout, so no PROM byte was read. The reviewer did not read the IRIX sources the page cites.
 
 **Method.** Offsets were computed by hand from the struct definitions in the Linux headers. The record table was checked by summing its field sizes (it tiles the 256 bytes exactly). The checksum and the setenv delta were recomputed in a script that uses the page's algorithm, over 2000 random stores for the delta.
 
@@ -145,7 +145,7 @@ Independent review on 2026-11-18 by a reviewer who did not write this page. Revi
 | 18 | 88 | The writer copies the full field length and does not stop at the NUL | No source | UNSURE |
 | 19 | 87 | The checksum is recomputed and byte 0 is written last, as read-modify-write of word 0 | PROM not read | UNSURE |
 | 20 | 90 | Revision and checksum are written together, revision first | PROM not read | UNSURE |
-| 21 | 89 | The 93CS56 erases on WRITE, with no append, wear levelling or separate erase cycle, marked established | No datasheet cited. None held in the public roots searched; the one hit (a PLX PCI9060 datasheet) was not opened | unsupported |
+| 21 | 89 | The 93CS56 erases on WRITE, with no append, wear levelling or separate erase cycle, marked established | No datasheet cited. None held in the public sources searched; the one hit (a PLX PCI9060 datasheet) was not opened | unsupported |
 | 22 | 91 | An interrupted setenv leaves a stale checksum and the next boot reinitialises | Follows from claim 19, not checked | UNSURE (inferred) |
 | 23 | 94-102 | setenv console d changes byte 0 by XOR 0x81, from a word-1 delta of 0x03 rotated right | Recomputed over 2000 random stores with the page's algorithm: the XOR delta is 0x81 every time | confirmed (self-consistency only) |
 | 24 | 103 | An erased store has checksum 0x5a | Recomputed for an all-0xFF store: 0x5a | confirmed |

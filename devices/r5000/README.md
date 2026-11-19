@@ -24,7 +24,7 @@ Facts in this page are the manual's or the overview's unless marked otherwise. A
 - The ISA is MIPS IV, with MIPS I to III compatibility (manual section 6.2.2, printed page 104) and 64-bit integer registers. Established (manual).
 - The physical address space is 36 bits. Extended user addressing covers 40 bits. With extended addressing off, the 32-bit segment and privilege view applies. Privileged and unmapped segment encodings follow the manual's chapter 6, not a blanket mask. Established (manual).
 - The manual's feature list gives a 200 MHz core for the µPD30500-200 (250 MHz for the 30500A-250) and an external bus up to 100 MHz (printed page 2). Established (manual). That is the processor's interface limit, not an O2 bus clock.
-- The overview says multiprocessor hooks exist, but the first production version lacks that support. Overview only; the overview could not be located in the Library for this verification, so this is unverified.
+- The overview says multiprocessor hooks exist, but the first production version lacks that support. Overview only; the overview could not be located in our holdings for this verification, so this is unverified.
 - The manual's EC field gives processor-to-system divisors of codes 0 to 6 as 2 to 8. The overview describes multipliers of 2, 3 and 4. The two sources do not agree on the later ratios, so only the manual's table is recorded as its own claim. Unknown for ratios above 4 until a source settles them.
 
 ## Joint TLB

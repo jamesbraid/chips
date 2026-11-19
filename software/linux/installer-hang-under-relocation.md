@@ -90,7 +90,7 @@ boot parameter or relocation problem (inferred).
 
 ## Review (commits f78eac5, 6dd869e and the 3666ff7 edit)
 
-Independent review of chips commits `f78eac5` and `6dd869e` and of the part of `3666ff7` that rewrites the Q3 bullet, examined at those revisions. The reviewer wrote none of it. Method: a copy of the installer `vmlinux` (sha256 `f2c573c29dbb...`) disassembled with `ia64-linux-gnu-objdump` and its section headers and `.got` bytes read directly; Linux 3.2.78 `arch/ia64/kernel/unwind.c`, `unwind_i.h`, `head.S`, `include/asm/sections.h`, `include/asm/pgtable.h` and `include/asm/unwind.h` from kernel.org (the Library holds no 3.2.78 ia64 tree). Nothing was run.
+Independent review of chips commits `f78eac5` and `6dd869e` and of the part of `3666ff7` that rewrites the Q3 bullet, examined at those revisions. The reviewer wrote none of it. Method: a copy of the installer `vmlinux` (sha256 `f2c573c29dbb...`) disassembled with `ia64-linux-gnu-objdump` and its section headers and `.got` bytes read directly; Linux 3.2.78 `arch/ia64/kernel/unwind.c`, `unwind_i.h`, `head.S`, `include/asm/sections.h`, `include/asm/pgtable.h` and `include/asm/unwind.h` from kernel.org (we hold no 3.2.78 ia64 tree). Nothing was run.
 
 **Confirmed.**
 - `unw_init` at `0xa000000100a09950` has no `alloc` (leaf) and sits in `.init.text` (`0xa000000100a00000`); `.IA_64.unwind` is `0xa000000100888040` plus `0x595e0`, so `__end_unwind` is `0xa0000001008e1620`.

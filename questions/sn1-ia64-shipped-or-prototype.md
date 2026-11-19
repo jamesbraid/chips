@@ -16,7 +16,7 @@ Still unknown:
 - Which Itanium stepping and board revision the prototypes used. The simulator ran with `cpu_stepping A`; the ia64 tree dropped
   A1-step support in December 2000.
 
-Routes tried: Library mail (`linux-ia64-list`, `lkml-list`, `usenet-comp`) for SN1, Synergy, Medusa, fakeprom and "Itanium
+Routes tried: mailing list archives (linux-ia64, lkml and usenet comp.) for SN1, Synergy, Medusa, fakeprom and "Itanium
 Origin" over 2000 to 2005; TechPubs (the text index has no hit for "Merced"; the filename-only search for "Itanium" returns manual numbers without text, so it
 proves nothing; the Origin 3000 technical configuration guide `007-4311-002`, which a web search summary says has a Merced glossary entry, is not at the
 probed TechPubs path); the public web (Computerworld, Slashdot, ESJ, Tech Monitor,
@@ -24,4 +24,4 @@ Linux Journal, HPCwire 2000, 2003, 2009).
 
 Next route: an SGI product announcement or price list for an Itanium Origin or Onyx dated 2001 or 2002, a field-service document,
 the 2001 SGI trade-show material, or a mailing-list report of a boot on SN1 hardware by someone outside SGI. The Origin 3000 guides of 2000 to 2001
-(`007-4311-002` if it can be added to the Library) should be opened for any Itanium mention before this is called closed.
+(`007-4311-002` if it can be added to our holdings) should be opened for any Itanium mention before this is called closed.

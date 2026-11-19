@@ -2,7 +2,7 @@
 
 Synergy is the chip between a Bedrock processor interface and an Itanium front-side bus. It exists only on the IA-64
 node; the MIPS Origin 3000 node connects R12000s to the Bedrock directly. No specification is held, and no document found
-(Library mail, TechPubs, or the public web) names or describes the chip outside the Linux source. Everything here comes from
+(mailing list archive, TechPubs, or the public web) names or describes the chip outside the Linux source. Everything here comes from
 SGI's Linux port (`include/asm-ia64/sn/synergy.h`, `arch/ia64/sn/sn1/synergy.c`, `sn1/irq.c`, `sn_cpuid.h`,
 `nodepda.h`, v2.5.0 snapshot; `include/asm-ia64/sn/sn1/synergy.h` and `arch/ia64/sn/kernel/sn1/synergy.c` from v2.5.7 to
 v2.5.72, same content with small edits) one cross-check in the Bedrock memory page, and the 2.4-series patches described below. The platform context is in
@@ -60,7 +60,7 @@ The offsets, widths and grades of every register below and in the next section a
 
 Source: SGI's SN1 code as published in the Linux/IA-64 project's 2.4.16 and 2.4.18 patch series (`linux-2.4.16-ia64-011126`,
 `linux-2.4.18-ia64-020410` and `020722`; `include/asm-ia64/sn/sn1/synergy.h`, `arch/ia64/sn/kernel/sn1/{cache.c,iomv.c,
-synergy.c,error.c}`, `arch/ia64/sn/kernel/irq.c`, `arch/ia64/sn/fakeprom/`). The v2.5.0 snapshot in the Library has neither `0xae0` nor `0x330`/`0x338`; the 2.4.18 header's register set is the v2.5.0 set plus them. Rows marked v2.5.0 come from that snapshot's headers, which the first pass did not read. The 2.4.0-test10 patch of November 2000, the first
+synergy.c,error.c}`, `arch/ia64/sn/kernel/irq.c`, `arch/ia64/sn/fakeprom/`). The v2.5.0 snapshot in our holdings has neither `0xae0` nor `0x330`/`0x338`; the 2.4.18 header's register set is the v2.5.0 set plus them. Rows marked v2.5.0 come from that snapshot's headers, which the first pass did not read. The 2.4.0-test10 patch of November 2000, the first
 to add `arch/ia64/sn/` files (the August 2000 test6 patch only edits three existing files there), already has the mask registers and the fake PROM's `FSB_CONFIG` write.
 
 | Fact | Grade | Source |
@@ -99,7 +99,7 @@ Question: function, which Itanium, bus conversion.
   menu offers McKinley as a processor type only as a generic choice. No source states "Merced" beside "Synergy", so
   the identification is inferred.
 - Registers beyond the known ones. Only 20 offsets are known: the 8 mask registers, 8 performance registers, `FSB_CONFIG`, the L4 way mask and the two write-status registers. Nothing
-  else was found in the Library, in kernel mail (2000 to 2003), or on the web.
+  else was found in our holdings, in kernel mail (2000 to 2003), or on the web.
 
 ## Not known
 
@@ -111,7 +111,7 @@ interrupt path through Synergy, and the meaning of the A and B performance event
 
 ## Review
 
-Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Library root `linux-history` at commit 381ab1f5 (v2.5.0) with `read_library`: `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Linux history tree at commit 381ab1f5 (v2.5.0): `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.
 
 Checks, confirmed: every offset in the table (`0x2a0` to `0x2d8` mask pairs named VEC_MASK3A..0B, perf registers `0xab0` to `0xaf8`) against `synergy.h`; `SSPEC_BASE 0xe0000000000`; the remote window arithmetic (`HSPEC_BASE`, `NODE_OFFSET` at `<<33`, `+0x30000000`, Synergy 0 and 1 at `0x04000000` and `0x05000000`); the four-store remote write and one-load remote read; the "which fsb?" comments; `FSB_CONFIG` at `0x450` written as `(nasid<<16)|(syn<<9)` after eight all-ones stores at `0x2a0..0x2d8` (comment "Set the NASID in the FSB_CONFIG register"); base `0x80000e0000000000`; the LID layout (id 31:24, eid bit 17 Synergy, bit 16 slot) and `cpu_physical_id_to_synergy` in `sn_cpuid.h`. The page grades the field meanings of `0x450` inferred and every other bit unknown, which is right.
 
@@ -124,7 +124,7 @@ Cleared scope: all offsets, address arithmetic, access sequences, the `FSB_CONFI
 
 ## Review (SN1 IA-64 Synergy and Bedrock differences)
 
-Independent review, 2026-11-15, by a reviewer who wrote none of these pages. Reviewed chips revision 8961c72 (Synergy commits c014b16 and 7fce3c0). Sources read: the Linux/IA-64 project patches `linux-2.4.16-ia64-011126`, `linux-2.4.17-ia64-011226`, `linux-2.4.18-ia64-020410`, `020508`, `020722` and 2.4.0 `test6-000811`, `test10-001101`, `test10-001115`, `test11-001206` (kernel.org ia64 ports directory, read directly, not through Ghidra; no binary claim exists on these pages); and from the Library root `linux-history` at v2.5.0 (`381ab1f5`): `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `include/asm-ia64/sn/sn1/{hubpi.h,ip27config.h,addrs.h}`, `arch/ia64/sn/sn1/{synergy.c,irq.c}`. About 45 facts were checked.
+Independent review, 2026-11-15, by a reviewer who wrote none of these pages. Reviewed chips revision 8961c72 (Synergy commits c014b16 and 7fce3c0). Sources read: the Linux/IA-64 project patches `linux-2.4.16-ia64-011126`, `linux-2.4.17-ia64-011226`, `linux-2.4.18-ia64-020410`, `020508`, `020722` and 2.4.0 `test6-000811`, `test10-001101`, `test10-001115`, `test11-001206` (kernel.org ia64 ports directory, read directly, not through Ghidra; no binary claim exists on these pages); and from the Linux history tree at v2.5.0 (`381ab1f5`): `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `include/asm-ia64/sn/sn1/{hubpi.h,ip27config.h,addrs.h}`, `arch/ia64/sn/sn1/{synergy.c,irq.c}`. About 45 facts were checked.
 
 Confirmed: all 20 offsets and names (mask pairs `0x2a0` to `0x2d8`, `0xab0` to `0xaf8`, `0xae0`, `0x330`/`0x338`, `0x450`); `SSPEC_BASE`; remote window arithmetic (`<<33`, `+0x30000000`, `0x04000000`/`0x05000000`, so `0x34000000`/`0x35000000`); remote read at `reg`, write at `reg<<2`; L4 64 MB, 8 ways, 512-byte blocks; the way-walk (write `0xff ^ (1<<way)`, nine aliases 8 MB apart, write 0); the barrier polling `GBL_PERF_B` for `cpuid_to_synergy` true and `GBL_PERF_A` otherwise, after reading the Bedrock revision register, 5 microsecond sleep, comment "wait ... to clear"; bit 45 enable; 40-bit counter mask; `FSB_CONFIG` write value and the all-ones mask writes (offsets `0x2a0` to `0x2d8`) before it; vectors 65 and 182, their handlers' bit lists, `bit_pos_to_irq` clamp, 2.4.18 `irq_to_bit_pos` (plain minus 64) against the v2.5.0 one (minus 64 again above 127); the Synergy-mode comment (SysAD bit 52) and "bit 8 ... synergy mode bit"; junk-bus defaults `0xff`/`0xff`, `0x0c`/`0x02`, `0x10`/`0x10`; address pairs `0xc0000a`/`0xc0000b` and `0xc00002`/`0xc00003`, the bit 43 clear on the PCI ROM address, and the `^4` register structures; `runsim` settings (`swizzling on`, `syn_cac_64m_8w`, `cpu_stepping A`); `0xae0` absent from 2.4.0-test10 and present from 2.4.16; `0x330`/`0x338` absent from 2.4.16 and 2.4.17 and present from 2.4.18-020410; test10-001115 the first patch adding `arch/ia64/sn/` files. The generated tree is current and `ci-check` exits 0.
 

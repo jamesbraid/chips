@@ -32,10 +32,10 @@ settle it given). Companion pages: [IP27 node numbering](ip27/prom-node-numberin
 | MIPS R10000 Microprocessor User's Manual, version 2.0 (October 10, 1996) | section 6.23 "Support for Uncached Attribute"; chapter 16 on xkphys, the compatibility spaces and the Cold Reset exception |
 | US 6,751,698 B1 (Bedrock) | boot flash reached through the LBOOT and RBOOT spaces; read in [IP35 boot flash](ip35/boot-flash.md) |
 
-Not read: PROM 6.211 (patch 7208) and the base-media IP27 PROM 6.11; neither is in the held roots, so nothing below is
+Not read: PROM 6.211 (patch 7208) and the base-media IP27 PROM 6.11; neither is in the held sources, so nothing below is
 a statement about them (**U**). No Hub or Bedrock specification is held, so every statement about what the chip does is
 from software behaviour (**I**) or a published page, never a chip document. The IP35 PROM's BaseIO image and the IP27
-monitor ELF inside the PROM were not read. One Library text search for the PROM's own boot notes returned a hit in
+monitor ELF inside the PROM were not read. One search of the held text for the PROM's own boot notes returned a hit in
 vendor source; it was not opened.
 
 Method for the scans below: `objdump` listings of the two unpacked PROM segments and the four kernels (text sections),

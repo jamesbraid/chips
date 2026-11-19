@@ -44,10 +44,10 @@ do not appear in the objects are this sheet's role labels, not vendor names.
 | U3 | comp.sys.sgi `3A0602C2.9D1C6F58@al.com.au` | Octane (IP30) `hinv` with two `AIC-1160` controllers |
 | U4 | comp.sys.sgi `3ADB3AC0.D64D9952@xiotech.com`, `lIEB6.468$g3.52088@news7.onvoy.net` | Board markings assy `030-0927003E`, FAB `034-0927-002 rev B`, "Adaptec AIC-11606", SOL 04-20-99; fabric-login behaviour |
 | U5 | comp.sys.sgi `3fafc818.0304010217.1b59be6e@posting.google.com` | Marketing name "XT-FC-2P … 2 port Fibre Channel XIO controller for SGI Origin/Onyx2, DB9 copper" |
-| U6 | comp.sys.sgi `nicoya-9688D8.14274812022006@shawnews…`, quoting SGI techpubs *Octane2 Duo Installation Guide* | XIO device map; device 13 = PCI module; FC board occupies an XIO quadrant |
+| U6 | comp.sys.sgi `nicoya-9688D8.14274812022006@shawnews…`, quoting SGI SGI printed manuals *Octane2 Duo Installation Guide* | XIO device map; device 13 = PCI module; FC board occupies an XIO quadrant |
 | U9 | comp.sys.sgi `362276F0.10A8855F@csd.sgi.com`, `7psh8j$pos$1@nnrp1.deja.com`, `89sdal$42k$1@nnrp1.deja.com` | FC disks/LUNs presented as SCSI targets on an `AIC-1160` controller; multi-board use; O2000/O2100 |
 | D1 | Discreet *Smoke 5.0 Installation Guide* pp. 103, 106 | "SGI XIO Fibre Channel board" in the Octane2 XIO slot for the R-series; `hinv` "AIC-1160, revision 2"; `xt_fc_2p_O` product |
-| M1 | SGI *Fibre Channel PCI Option Board and XIO Option Board Owner's Guide*, part 007-3633-006 (SGI techpubs; earlier issues -002 to -005 also exist; later boards in 007-4240-001/-002). Table 1-4 (printed p. 10), printed pp. 10-17 | Marketing codes, board part numbers, supported platforms, required IRIX, connectors, the no-fabric and Class 3 / FC-AL-only limits. It does not name the controller chip and gives no registers |
+| M1 | SGI *Fibre Channel PCI Option Board and XIO Option Board Owner's Guide*, part 007-3633-006 (SGI SGI printed manuals; earlier issues -002 to -005 also exist; later boards in 007-4240-001/-002). Table 1-4 (printed p. 10), printed pp. 10-17 | Marketing codes, board part numbers, supported platforms, required IRIX, connectors, the no-fabric and Class 3 / FC-AL-only limits. It does not name the controller chip and gives no registers |
 | B1 | Shipped IRIX `fcadp` driver archive `usr/cpu/sysgen/IP30boot/fcadp.a` (6.5.30; cross-checked `IP27boot` and `IP35boot`), members `fcadp.o hwconfig.o hwutil.o hwintr.o hwtrans.o hwlip.o ulmutil.o` — ELF64 big-endian MIPS, not stripped. Disassembled clean-room. | PCI vendor/device match, BAR/PIO windows, bridge/DMA/interrupt path, chip register offsets, reset and firmware-load sequence, TCB command path, loop/login behaviour |
 | B2 | Device-registration config `var/sysgen/master.d/fcadp` (`$Revision: 1.9 $`, readable config, not source) | Driver prefix `fcadp`, SCSI thread class and `scsi` dependency, default loop host-id tunable `fcadp_hostid = 125` |
 
@@ -55,7 +55,7 @@ The SGI owner's guide for these boards (M1, part 007-3633-006) is a published SG
 and anchors identity, part numbers, platforms and the loop-only limit. It gives
 no registers and does not name the controller chip, so the chip identification
 still rests on the driver and the newsgroup posts (U1, U4). No AIC-1160
-programming document was found. The techpubs reference in U6 is the Octane2
+programming document was found. The SGI printed manuals reference in U6 is the Octane2
 install guide quoted verbatim by the poster. With no public register document, the
 disassembled driver (B1) is the sole source for the register and command contract
 below.

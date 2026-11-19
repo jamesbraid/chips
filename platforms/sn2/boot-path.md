@@ -274,7 +274,7 @@ user-mapped RTC counter at v4.9.
 
 **Gaps.**
 1. Which SGI hardware daemons and tools ProPack installs and starts at boot. Route: the ProPack manual 007-3844-001 ("Start
-   Here") and driver guide 007-4520-006 are in the Library, not read for this; ProPack media is not held.
+   Here") and driver guide 007-4520-006 are in our holdings, not read for this; ProPack media is not held.
 2. The shipped initrd's module list (IDE, SCSI, IOC4, `sgi-xp` is irrelevant on one node).
 3. Console for init: `console=ttySG0` on the kernel line, not yet confirmed from a shipped bootloader configuration.
 

@@ -131,7 +131,7 @@ How the PROM tells these modules apart in its hardware list is not printed. See 
 A compute brick without processors named "M-brick" appears only in two Linux comments: "C-brick, M-bricks, and TIOs" in
 `v5.3:arch/ia64/include/asm/sn/arch.h`, and "C/M bricks" in `build_cnode_tables` (`v5.3:arch/ia64/sn/kernel/setup.c`),
 both meaning nodes that count toward the kernel's compact node limit. **Established** that the comments exist. No
-`MODULE_*`, `KLTYPE_*` or `L1_BRICKTYPE_*` constant, and no manual in the Library, names an M-brick; a search of the
+`MODULE_*`, `KLTYPE_*` or `L1_BRICKTYPE_*` constant, and no manual in our holdings, names an M-brick; a search of the
 Linux history tree for `MODULE_MBRICK` and `M-brick` found only that comment. So an Altix 3000 M-brick, if it shipped, is
 **unknown**; the 4700 "M2" blade is its documented successor, a memory-only SHub 2 compute blade
 (`007-3938-005` p.51; [altix-4700.md](altix-4700.md)). The C-brick's option of "0 or 4 processors" in the 3000 guide

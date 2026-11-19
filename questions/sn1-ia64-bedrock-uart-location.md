@@ -16,4 +16,4 @@ the power-on says the PROM, not the kernel, was the first code to run, and says 
 
 Next route: the SN1 IA-64 PROM or a hardware note, neither held; or the Medusa simulator documentation. A route in the held
 sources: open `drivers/char/serial.c` and `kernel/printk.c` at the v2.5.0 commit (the hack the comment names), which the
-Library's text index does not cover but `read_library` opens by commit id.
+held text index does not cover but opening by commit id does.

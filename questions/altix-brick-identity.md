@@ -18,7 +18,7 @@ v5.3, the KLCONFIG structure and what Linux reads from it, the geoid fields and 
 4. The IP57 and interface-board EEPROM layouts (not printed in any guide read).
 5. The router-to-node link map of the CR-brick and the meaning of the Altix 350 rear labels IS1, IS2 and REPEAT.
 
-**Routes tried.** Linux v5.3 and v2.6.12 headers and the files that use them; the three guides; a Library search for an
+**Routes tried.** Linux v5.3 and v2.6.12 headers and the files that use them; the three guides; a search of held sources for an
 M-brick (found only two comments).
 **Next route.** Read the `snprom` SAL handlers in Ghidra (`retools/tools/re-run --ghidra-export --sn2-prom`) for the
 KLCONFIG builder; a captured `config` line or `/proc/sgi_sn/sn_topology` from real hardware, if any is published.

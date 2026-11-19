@@ -8,7 +8,7 @@ Known: [platforms/sn1-ia64/synergy.md](../platforms/sn1-ia64/synergy.md) records
 `0x450` (`FSB_CONFIG`) from SGI's fake PROM, written with `(nasid << 16) | (synergy << 9)`, and from the 2.4.16 and 2.4.18 patch series `0xae0` (L4 way disable) and `0x330`/`0x338` (polled as a PIO write barrier). The Synergy's
 function and its Itanium (first generation) are settled to the grades on that page; the register file beyond those 20 offsets is not, and the polarity and bits of `0x330`/`0x338` are unsettled: the loop waits for nonzero, the comment says it waits for a status to clear.
 
-Routes tried: Library mail 2000 to 2005 and the public web (Computerworld, HPCwire, Linux Journal, Slashdot, ESJ; no page names the chip); every file under `arch/ia64/sn/` and `include/asm-ia64/sn/` in the Linux v2.5.0 snapshot, and a probe of
+Routes tried: mailing list archive 2000 to 2005 and the public web (Computerworld, HPCwire, Linux Journal, Slashdot, ESJ; no page names the chip); every file under `arch/ia64/sn/` and `include/asm-ia64/sn/` in the Linux v2.5.0 snapshot, and a probe of
 `synergy.h` and `synergy.c` at v2.5.7 to v2.5.72 (the same register set). The IRIX tree for the MIPS machine does not
 carry Synergy because the MIPS node has none.
 

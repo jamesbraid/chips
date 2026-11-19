@@ -461,7 +461,7 @@ Read from a flat `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (SAL 5.04
 ## Processor behaviour the self-tests depend on
 
 What the Intel manuals say about the checks and the fault that these groups rely on. Each fact cites its document, section and printed
-page, and the Library file under `cpu/itanium/`.
+page, and our holdings file under `cpu/itanium/`.
 
 *Established.* A failing `chk.s`, `chk.a` or `fchkf` either branches to its target or takes a Speculative Operation fault, and the
 manual leaves the choice to the implementation. `check_branch_implemented(check_type)` returns TRUE or FALSE for each check type, and

@@ -160,7 +160,7 @@ The chain, each link read in full (E):
    then falls into the same code as command 1; command 1 calls `phost_reboot` (0xc000000000314ff8) with the function code
    from the second argument. Commands 4, 8 and 256 do other things (remount and similar, not followed). Which user
    program passes which command and function code (`reboot`, `init 6`, `halt`) is **U**: no `reboot`, `halt`, `init`
-   or `shutdown` binary is in the held roots, so the mapping rests on the usual System V names (function 0 halt,
+   or `shutdown` binary is in the held sources, so the mapping rests on the usual System V names (function 0 halt,
    1 boot, 2 interactive boot, 3 standalone boot, 9 power off; I).
 2. `phost_reboot` calls `mdboot` (0xc0000000002af460) with that function code. `mdboot` takes a lock, runs every routine
    of the shutdown callback table (0xc0000000015400f8), interrupts every other CPU with `cpuaction` to run a stop routine

@@ -168,7 +168,7 @@ The PROM and runtime listings were scanned for (a) every 64-bit `movl` immediate
 
 ## Where a PIC interrupt lands on SHub 1
 
-What a PCI-X bridge (PIC) behind a SHub 1 writes, and which SHub register takes it. Sources, all SGI's own SN2 Linux platform code: the 2.4-series tree as carried by the linux-mips `linux-2.4` branch at `8ef7d46c94d5` (`arch/ia64/sn/io/sn2/shub_intr.c`, `arch/ia64/sn/io/sn2/pcibr/pcibr_intr.c`, `include/asm-ia64/sn/sn2/shub_mmr.h`, `include/asm-ia64/sn/pci/pic.h`), and Linux v5.3 for the later firmware-call form (`arch/ia64/sn/kernel/irq.c`, `arch/ia64/sn/pci/pcibr/pcibr_provider.c`, `arch/ia64/include/asm/sn/intr.h`). The v5.3 header carries none of these registers; the 2.4 header does.
+What a PCI-X bridge (PIC) behind a SHub 1 writes, and which SHub register takes it. Sources, all SGI's own SN2 Linux platform code: the 2.4-series tree as carried by the Linux/MIPS `linux-2.4` branch branch at `8ef7d46c94d5` (`arch/ia64/sn/io/sn2/shub_intr.c`, `arch/ia64/sn/io/sn2/pcibr/pcibr_intr.c`, `include/asm-ia64/sn/sn2/shub_mmr.h`, `include/asm-ia64/sn/pci/pic.h`), and Linux v5.3 for the later firmware-call form (`arch/ia64/sn/kernel/irq.c`, `arch/ia64/sn/pci/pcibr/pcibr_provider.c`, `arch/ia64/include/asm/sn/intr.h`). The v5.3 header carries none of these registers; the 2.4 header does.
 
 **Who computes the address.** In v5.3 the kernel never does: `sn_intr_alloc` calls `SN_SAL_IOIF_INTERRUPT` and the firmware returns the Crosstalk address in `irq_xtalkaddr`; `pcibr_target_interrupt` only writes it (established, see [software/sal](../../software/sal/sn2-runtime.md)). In the 2.4 tree the kernel computed it itself, in `do_hub_intr_alloc` and again in `sn_shub_redirect_intr` (established, same expression in both):
 
@@ -238,7 +238,7 @@ Independent review of chips commit `9c8d78a` (this page), examined at chips `fad
 
 ## Review (PIC interrupt and XN compare pages)
 
-Checked against the 2.4 tree (linux-mips `linux-2.4`, `8ef7d46c94d5`: `shub_mmr.h`, `shub_intr.c`, `ml_SN_intr.c`, `pcibr_intr.c`, `bridge.h`), the later Linux `pcibr_provider.c`/`pcibr_reg.c`, and `shub1snprom.bin` in Ghidra (no analysis, ranges) with objdump as a cross-check.
+Checked against the 2.4 tree (Linux/MIPS `linux-2.4` branch, `8ef7d46c94d5`: `shub_mmr.h`, `shub_intr.c`, `ml_SN_intr.c`, `pcibr_intr.c`, `bridge.h`), the later Linux `pcibr_provider.c`/`pcibr_reg.c`, and `shub1snprom.bin` in Ghidra (no analysis, ranges) with objdump as a cross-check.
 
 - **Confirmed.** `SH_II_INT0` `0x1_1000_0000`, `SH_II_INT1` `0x1_1000_0100`, config `0x80`/`0x180`, enable `0x200`/`0x280`; address `nasid << 36 | 1 << 47` with slice 0 giving INT0 and any other slice INT1, in both `do_hub_intr_alloc` and `sn_shub_redirect_intr`; `pcibr_setpciint` stores `(vect << 48) & 0x00ff_0000_0000_0000 | addr & 0xffff_ffff_ffff` at `p_int_addr[pin]` (`0x130 + 8n`); a retarget (2.4 redirect, later `pcibr_target_interrupt`) rewrites only the low 48 bits. The PROM stores all four at the cited routine (`0xffb73a40`; calls at `0xffb73c1c`, `0xffb73c4c`, `0xffb73c7c`, `0xffb73cac`), and the values are as written.
 - **Added.** The selection nuance, the 2.4 kernel's identical config and enable stores, and the PROM's own record table naming the registers.

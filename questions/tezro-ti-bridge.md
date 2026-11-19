@@ -121,7 +121,7 @@ seven Origin 350 and Onyx 350 postings with an IO9 board line); the Tezro guides
 
 ## What the TI manual fixes, and two driver steps not yet recorded
 
-Page numbers are the PCI2050 data manual's printed pages (SCPS053B, 2003 edition in the Library); each was re-read against the PDF. The two IRIX driver readings at the end were not re-derived.
+Page numbers are the PCI2050 data manual's printed pages (SCPS053B, 2003 edition in our holdings); each was re-read against the PDF. The two IRIX driver readings at the end were not re-derived.
 
 - **Device number to IDSEL. Established (TI DS Table 3-2, p. 3-4).** Device `n` on the secondary bus is selected by
   asserting `S_AD(16+n)` as IDSEL, for `n` = 0 to 15. Device 2 is `S_AD18`. Which board routes that line is still unknown.

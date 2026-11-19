@@ -36,10 +36,10 @@ MUX_BITS = { value = 0x10, grade = "established", from = "IRIX 6.5.30 IP27 rad_d
 MUX_PROBE_PASSES = { value = 0x400, grade = "inferred", from = "IRIX 6.5.30 IP27 rad_dd.o rad_update_subsys .text 0x3150-0x318c holds the write; the 1024-pass mask is from the reviewed audio notes, not re-read here", doc = "Status passes between rewrites of the gpio_data register; with the roughly 1 ms status interval this gives the 1.024 s cadence observed on the bus. Inferred" }
 GAIN_BIAS = { value = 0x48, grade = "established", from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_analog_out_if_params", doc = "Added to a driver dB-to-register value to form a gain byte in the gain register; zero means mute" }
 GAIN_BRINGUP = { value = 0xd6d6d6d6, grade = "established", from = "IRIX 6.5.30 IP30 rad_dd.o rad_start_subsys .text 0xae8-0xaf8", doc = "Value the driver writes to the gain register at start on the analog-capable boards" }
-CLOCKGEN_COUNT = { value = 4, grade = "inferred", from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31)", doc = "Number of clock generators; select bit 28 + n of the clock load register loads generator n" }
-CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog input rate" }
-CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
-CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
+CLOCKGEN_COUNT = { value = 4, grade = "inferred", from = "public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31)", doc = "Number of clock generators; select bit 28 + n of the clock load register loads generator n" }
+CLOCKGEN_ANALOG_IN = { value = 0, grade = "established", from = "public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog input rate" }
+CLOCKGEN_ANALOG_OUT = { value = 1, grade = "established", from = "public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the analog output rate" }
+CLOCKGEN_AES_OUT = { value = 2, grade = "established", from = "public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe", doc = "Clock generator that sets the AES3 output rate" }
 PCI_CLASS_OCTANE = { value = 0, grade = "established", from = "public Linux lspci capture of the onboard RAD, linux-pci-list message 20170213224512.GA8080@bhelgaas-glaptop.roam.corp.google.com (2017-02-13), bus 0 device 3 function 0", doc = "PCI class code of the onboard RAD on the Octane board: the 24-bit class field (config offset 0x08 bits 31:8) reads zero. Revision 0xc0 is the same listing's byte (REV_OCTANE)" }
 UST_TICK_NS_FIXED = { value = 960, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc) rad_reset_ust, board 13 path", doc = "Tick period in nanoseconds that the reset routine stores for the counter at 0x30. The other choice is computed from the Bedrock register (see devices/rad1/facts-outside-registers.md). Which choice a given machine gets is unknown" }
 UST_BEDROCK_FLAG_MASK = { value = 0xf000, grade = "established", from = "IRIX 6.5.30 IP35 rad_dd.o (SHA-256 e19248075cd2bb245f722f6b10792db5629f199eb71b7276eae87ecaec5438fc), 64-bit load of the Bedrock real-time clock control register at load", doc = "Mask applied to the value read from the Bedrock real-time clock control register (0x604200 in the local block) at load" }
@@ -478,7 +478,7 @@ offset = 0xa0
 access = "w"
 width = 32
 grade = "established"
-from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_clockgen .text 0x7234, 0x7300; rad_start_subsys .text 0xa38 (0x02000001); public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_clockgen .text 0x7234, 0x7300; rad_start_subsys .text 0xa38 (0x02000001); public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Loads one clock generator: set select bit 28 + n and the integer divisor minus one in the low bits. Rate = master / (divisor + remainder / denominator), with the remainder in clockgen_frac. A 64-bit store to this offset appears in one setup path. Bring-up value 0x02000001 loads no generator (bit 25 is set in such words; meaning unknown). Linux writes flag bits 10:9 as 0x600 or 0x200 and the Octane PROM 0x400; their effect is unknown."
 
 [registers.clockgen_load.fields]
@@ -495,7 +495,7 @@ offset = 0xa4
 access = "w"
 width = 32
 grade = "established"
-from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_clockgen .text 0x722c, 0x72e8; public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "IRIX 6.5.30 IP30 rad_dd.o rad_set_clockgen .text 0x722c, 0x72e8; public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Fractional part of the clock divisor: the remainder in bits 31:16 and 0x10000 minus the denominator in bits 15:0."
 
 [registers.clockgen_frac.fields]
@@ -511,7 +511,7 @@ offset = 0xa8
 access = "w"
 width = 32
 grade = "inferred"
-from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Master clock select of clock generator 3, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver."
 
 [registers.clockgen_master_3.fields]
@@ -522,7 +522,7 @@ offset = 0xac
 access = "w"
 width = 32
 grade = "inferred"
-from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Master clock select of clock generator 2, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver."
 
 [registers.clockgen_master_2.fields]
@@ -533,7 +533,7 @@ offset = 0xb0
 access = "w"
 width = 32
 grade = "inferred"
-from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Master clock select of clock generator 1, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver."
 
 [registers.clockgen_master_1.fields]
@@ -544,7 +544,7 @@ offset = 0xb4
 access = "w"
 width = 32
 grade = "inferred"
-from = "public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg"
+from = "public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg"
 doc = "Master clock select of clock generator 0, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver."
 
 [registers.clockgen_master_0.fields]

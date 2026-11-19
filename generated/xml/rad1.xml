@@ -225,19 +225,19 @@
       <expect field="denominator_complement" value="65389"/>
     </test>
   </struct>
-  <struct name="CLOCKGEN_MASTER_3" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xa8" access="w" reset="unknown">
+  <struct name="CLOCKGEN_MASTER_3" size="4" grade="inferred" from="public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xa8" access="w" reset="unknown">
     <doc>Master clock select of clock generator 3, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
     <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
-  <struct name="CLOCKGEN_MASTER_2" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xac" access="w" reset="unknown">
+  <struct name="CLOCKGEN_MASTER_2" size="4" grade="inferred" from="public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xac" access="w" reset="unknown">
     <doc>Master clock select of clock generator 2, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
     <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
-  <struct name="CLOCKGEN_MASTER_1" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb0" access="w" reset="unknown">
+  <struct name="CLOCKGEN_MASTER_1" size="4" grade="inferred" from="public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb0" access="w" reset="unknown">
     <doc>Master clock select of clock generator 1, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
     <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
-  <struct name="CLOCKGEN_MASTER_0" size="4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb4" access="w" reset="unknown">
+  <struct name="CLOCKGEN_MASTER_0" size="4" grade="inferred" from="public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg" register="yes" offset="0xb4" access="w" reset="unknown">
     <doc>Master clock select of clock generator 0, at 0xb4 - 4 * n. Bit 0 selects the 192 kHz master when set and 176.4 kHz when clear. Higher bits are unknown. The shipped drivers' writes to this offset were not read directly; the layout is from the public driver.</doc>
     <field name="master_192k" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
@@ -384,10 +384,10 @@
     <field name="adat_present" start="6" size="1" type="uint" grade="inferred"/>
   </struct>
   <constant name="BAR0_SIZE" value="0x2000" grade="inferred"/>
-  <constant name="CLOCKGEN_AES_OUT" value="0x2" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
-  <constant name="CLOCKGEN_ANALOG_IN" value="0x0" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
-  <constant name="CLOCKGEN_ANALOG_OUT" value="0x1" grade="established" from="public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
-  <constant name="CLOCKGEN_COUNT" value="0x4" grade="inferred" from="public Linux RAD1 driver (linux-mips posting, 2008-07-31)"/>
+  <constant name="CLOCKGEN_AES_OUT" value="0x2" grade="established" from="public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_IN" value="0x0" grade="established" from="public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_ANALOG_OUT" value="0x1" grade="established" from="public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe"/>
+  <constant name="CLOCKGEN_COUNT" value="0x4" grade="inferred" from="public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31)"/>
   <constant name="DESC_ENTRIES" value="0x10" grade="inferred"/>
   <constant name="DESC_ENTRY_BYTES" value="0xc" grade="established"/>
   <constant name="DESC_STATUS_ENTRY" value="0xf" grade="inferred"/>

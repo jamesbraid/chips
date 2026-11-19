@@ -12,7 +12,7 @@ the sysco repository. The L2 and L3 are in [../l2/README.md](../l2/README.md) an
 Grades follow [AGENTS.md](../../AGENTS.md).
 
 - **SGI Linux, SN1 on IA-64**, `arch/ia64/sn/io/l1.c` and `include/asm-ia64/sn/ksys/l1.h`,
-  `include/asm-ia64/sn/sn1/uart16550.h` at Linux v2.5.0 (`linux-history` snapshot, commit 381ab1f5). SGI's own platform
+  `include/asm-ia64/sn/sn1/uart16550.h` at Linux v2.5.0 (Linux history tree snapshot, commit 381ab1f5). SGI's own platform
   code for the Bedrock node, so what it defines is **established**. It is the only readable source that names the
   fields of the link header and message body.
 - **SGI Linux, SN2**, `arch/ia64/include/asm/sn/sn_sal.h`, `intr.h`, `l1.h`, `drivers/char/snsc.c`, `snsc.h`,
@@ -282,9 +282,9 @@ Independent review of this page, [../l2/README.md](../l2/README.md), [../l3/READ
 [../../questions/l1-l2-l3-host-protocol.md](../../questions/l1-l2-l3-host-protocol.md), by a reviewer who did not write them.
 
 **What was reviewed and how.** About 60 statements were checked against their cited source.
-Linux v2.5.0 (`linux-history` snapshot 381ab1f5): `l1.c` read in full, `l1.h` and `uart16550.h`.
+Linux v2.5.0 (Linux history tree snapshot 381ab1f5): `l1.c` read in full, `l1.h` and `uart16550.h`.
 Linux v5.3 single files: `sn_sal.h`, `intr.h`, `snsc.c`, `snsc.h`, `snsc_event.c`, `sn_console.c`, `shub_mmr.h`.
-Manual pages read in the Library: 007-3938-005 printed pp. 1 to 5, 8 to 10, 12 to 15, 19 to 20, 50 and 137; 007-4579-001
+Manual pages read in our holdings: 007-3938-005 printed pp. 1 to 5, 8 to 10, 12 to 15, 19 to 20, 50 and 137; 007-4579-001
 pp. 37, 39, 44, 71 and 72, 64; 007-4340-003 pp. 3 to 5 and 7. The sysco notes the pages quote were opened to check the
 quoted lines and file names (the cross-linked files exist; the framing format directory is in sysco, not here). A Ghidra export
 of the SHub 1 PROM 10.54 image was attempted for the PROM claims; its result is below. The IRIX `l1.o` readings

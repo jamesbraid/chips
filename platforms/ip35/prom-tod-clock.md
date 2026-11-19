@@ -58,9 +58,9 @@ stores are listed; the claim that the two year bases never collide was removed (
 - Layout on IO7: inferred, weak. The same guide (printed p. 2-7) lists an NVRAM test range `0x7fd1` to `0x7ff7` for IO7.
   That range ends just below layout 1's freeze byte `0x7ff8`; layout 2 puts its command register at byte `0xb`. The
   probe itself was never observed on an I-brick.
-- Part: **unknown**. Library searches for the chip found no source that names it on IO7: "IO7", "007-4653" (the
-  Origin 3900 guide: no parts list), "M48T35", "DS1742", "DS1286", "DS1687" and "timekeeper" over the techpubs,
-  irix-mirrors, irix-artifacts and origami-docs roots; "I-brick battery real-time clock IO7 replace" and "I-brick NVRAM
-  time of day clock battery" over techpubs (no hits); "field replaceable unit I-brick" and "030-1557" (the I-brick board
+- Part: **unknown**. Searches of held sources for the chip found no source that names it on IO7: "IO7", "007-4653" (the
+  Origin 3900 guide: no parts list), "M48T35", "DS1742", "DS1286", "DS1687" and "timekeeper" over the SGI printed manuals,
+  held IRIX and datasheet collections; "I-brick battery real-time clock IO7 replace" and "I-brick NVRAM
+  time of day clock battery" over SGI printed manuals (no hits); "field replaceable unit I-brick" and "030-1557" (the I-brick board
   part prefix; only Origami's own notes). The M48T35 and DS1742 hits are about the Origin 200, the Origin 350's IOC4 and
   the Origami models, not IO7. M48T35 and DS1742 share layout 1, so the layout cannot tell them apart.

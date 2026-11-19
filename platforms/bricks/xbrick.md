@@ -38,7 +38,7 @@ does, not what the hardware does.
   Software expectations only.
 - L1 firmware 1.44.0, from the IRIX 6.5.30 `l1.bin` composite (the Base 1MB and MIPS 2MB packages), read from the
   controller images. Read by a reader of the binary; not yet checked by a second reader.
-- Public Linux SN1 and IA-64 headers and `ml_iograph.c` (linux-mips tree), and the OpenBSD SGI headers and
+- Public Linux SN1 and IA-64 headers and `ml_iograph.c` (Linux/MIPS tree tree), and the OpenBSD SGI headers and
   `xbow.c` (pinned revision `2df91d80c104`). Software expectations, one port's or one kernel's. The line references
   below are as given by the import source. They were not re-read against the trees while this page was written.
 - Usenet, unreviewed: `911aj8$8sude$1@fido.engr.sgi.com` and `a3nqjg$968ip$1@fido.engr.sgi.com`. Informal
@@ -67,7 +67,7 @@ draft states the same mapping in words, so two vendor documents agree on it. One
 **Conflict, software side.** The IRIX 6.5.30 IP35 kernel's X-brick table maps widgets 8, 9, 12 and 13 to XIO slots 1,
 3, 2 and 4. Read against the table above, widget 9 (port 9) is slot 3 in the software and slot 2 in the documents,
 and widget 12 (port C) is slot 2 in the software and slot 3 in the documents. The public Linux SN1 table for the same
-brick, `ml_iograph.c` in the linux-mips tree, gives 8 to slot 1, 9 to slot 3, C to slot 2 and D to slot 4, which
+brick, `ml_iograph.c` in the Linux/MIPS tree tree, gives 8 to slot 1, 9 to slot 3, C to slot 2 and D to slot 4, which
 agrees with IRIX. The source record also reports a Linux v2.5.40 reading that differs from that table for widgets 9
 and 12 (slots 1, 2, 3 and 4 for widgets 8, 9, 12 and 13). That reading is not re-checked here, and it disagrees with
 the SN1 table within Linux. The IRIX table is an **inferred** expectation. The Onyx 3000 capture in

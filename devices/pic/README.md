@@ -300,7 +300,7 @@ relocations; `pcibr_force_interrupt` and `pcibr_intr_func` read in full).
   pin's destination as the I/O interface interrupt register of the target node, `SH_II_INT0` (`0x1_1000_0000`, processor
   slice 0) or `SH_II_INT1` (`0x1_1000_0100`, other slices), with the NASID at bit 36 and bit 47 set, and stored it with the
   vector in bits 55:48 into the pin's per-pin address register (`shub_intr.c` `do_hub_intr_alloc`, `pcibr_intr.c`
-  `pcibr_setpciint`; linux-mips `linux-2.4` at `8ef7d46c94d5`). The data written is inferred to be `0x100 | vector`, which is
+  `pcibr_setpciint`; Linux/MIPS `linux-2.4` branch at `8ef7d46c94d5`). The data written is inferred to be `0x100 | vector`, which is
   the `SEND` bit and `IDX` field of `SH_II_INT0`. Later kernels get the address from firmware instead. Detail and grades:
   [SHub 1 interrupts](../shub/interrupts.md#where-a-pic-interrupt-lands-on-shub-1).
 - **Status is the pin level, not the packet** (established: the header's own description,
@@ -770,7 +770,7 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of snprom 10.54 (`shu
 
 ### Review (the three writes and the id-word guard, commit a132551)
 
-Independent re-read on 2026-11-16 in Ghidra (IA-64, `--sn2-prom --no-analysis`) of snprom 10.54 (`shub1snprom.bin`): `0xffab0c00` and the accessors `0xffab3f40`, `0xffab41f0`, `0xffab5d90`, `0xffab6030` and `0xffabcfb0`. The field names were checked against the public Linux 2.4 SN2 tree (`include/asm-ia64/sn/pci/pic.h`, `arch/ia64/sn/io/sn2/pcibr/pcibr_rrb.c`, library root `linux-mips`).
+Independent re-read on 2026-11-16 in Ghidra (IA-64, `--sn2-prom --no-analysis`) of snprom 10.54 (`shub1snprom.bin`): `0xffab0c00` and the accessors `0xffab3f40`, `0xffab41f0`, `0xffab5d90`, `0xffab6030` and `0xffabcfb0`. The field names were checked against the public Linux 2.4 SN2 tree (`include/asm-ia64/sn/pci/pic.h`, `arch/ia64/sn/io/sn2/pcibr/pcibr_rrb.c`, library Linux/MIPS tree).
 
 **Confirmed.**
 
@@ -1030,7 +1030,7 @@ Traced on snprom 10.54 (SHub 1) in Ghidra with the repository's IA-64 module, be
 
 ### Review (PCI scan and the protected read)
 
-Independent re-read on 2026-11-16 on `shub1snprom.bin` 10.54 (flat at `0xffa00000`) in Ghidra with the repository's IA-64 module, with an objdump listing of every address below. The register names were checked against `arch/ia64/include/asm/sn/pic.h` in the Library `linux-history` root.
+Independent re-read on 2026-11-16 on `shub1snprom.bin` 10.54 (flat at `0xffa00000`) in Ghidra with the repository's IA-64 module, with an objdump listing of every address below. The register names were checked against `arch/ia64/include/asm/sn/pic.h` in the Linux history tree.
 
 **Confirmed.**
 - Call chain below `pic_attach` and the three passes: `pic_attach` calls `pic_attach2` once per bus (bus 1 at `+0x800000` from the bridge address, `0xffb6d4b0`); `pic_attach2` calls `0xffb36020` at `0xffb6e89c`, `0xffb37520` at `0xffb6e93c` and `0xffb37e70` at `0xffb6e9cc`; `0xffb36020` to `0xffb34860` (size 4) to `0xffb351d0` to `0xffaeb170` to `0xffb0f4b0`, which calls the leaf `0xffb5cf20` at `0xffb0f73c` (return `0xffb0f740`). The `ld4` is at `0xffb5cf50`.
@@ -1038,7 +1038,7 @@ Independent re-read on 2026-11-16 on `shub1snprom.bin` 10.54 (flat at `0xffa0000
 - Multifunction: header type is read with the unprotected accessor `0xffb6b380` (a 4-byte `ld4.acq` at `(reg & ~3)`, shifted and masked, so register `0xe` is the load at `+0xc`); bit 7 set gives protected reads of function 1 to 7 (function 1 only on a type-3 record at revision 1).
 - Leaf and recovery table: range `0xffb5cf20` to `0xffb5cf80` and resume `0xffb5cf90` come from the three descriptors at `0xffc4d950`, `0xffc4d958` and `0xffc4d960`; the resume bundle returns r8 = 1, r9 = 0; the completion path returns r8 = 0, r9 = the data. A faulted read stores all-ones, not zero, into the caller's buffer (wrapper `0xffb0f4b0`, after `0xffb0f780`).
 - Machine-check path: `0xffa01020` branches to `0xffa01080`, which calls `0xffa02ff0` at `0xffa01b5c`; that calls `0xffa07230`, which calls `0xffa05610` only for check type 0 with bits 9 and 18 of the processor state parameter clear (bit 9 set goes to the fatal branch first); `0xffa05610` replaces the two saved instruction pointers inside a registered range by the resume address, clears the restart-instruction bits of the saved status and sets the data-translation bit from the entry, and `0xffa07230` then reports the check as recovered.
-- Interrupt enable: `0xffb34720` reads `+0x108`, clears `0x100400000800` (bits 44, 34, 11) and reports whether the register changed; `0xffb347c0` sets the same mask. `+0x108` is `p_int_enable` and `+0x110` is `p_int_rst_stat` in the linux-history `pic.h` struct. That file has no bit names; the bit names come from this repository's register table (taken from the 2.4 SN2 kernel headers).
+- Interrupt enable: `0xffb34720` reads `+0x108`, clears `0x100400000800` (bits 44, 34, 11) and reports whether the register changed; `0xffb347c0` sets the same mask. `+0x108` is `p_int_enable` and `+0x110` is `p_int_rst_stat` in the Linux history tree `pic.h` struct. That file has no bit names; the bit names come from this repository's register table (taken from the 2.4 SN2 kernel headers).
 - Polarity: the wrapper returns 1 on success and 0 on a fault, and `0xffb351d0` returns `wrapper != 1`: 0 on success, 1 on a fault, -1 on a bad size or alignment. The probe tests the result against zero.
 - Lock spin: `0xffb5d040` retries the lock until the microsecond clock `0xffa0da70` has advanced by 100000 (100 ms), with a table of 32 entries; the wrapper ignores a failed registration.
 - IOC3/IOC4 and QLogic special-casing, BAR sizing and the command register (bits 2:0 ORed in, or 2 and 0 for `0x9004:0x1160`, written only if a bit is missing and as command value only).
@@ -1100,7 +1100,7 @@ Make the load take a synchronous machine check, with these effects:
 
 ### Review of the empty-slot trace (2026-11-16)
 
-Independent re-read in Ghidra (`--sn2-prom --no-analysis`, `shub1snprom.bin` 10.54, objdump as cross-check) and against the Library trees `linux-mips` (the linux-2.4 branch at `8ef7d46c94d5`, and `linux-2.4-mips`), `linux-ia64-list` and the community tree `linux-sn2` (7.3).
+Independent re-read in Ghidra (`--sn2-prom --no-analysis`, `shub1snprom.bin` 10.54, objdump as cross-check) and against the Linux/MIPS tree (the linux-2.4 branch at `8ef7d46c94d5`, and `linux-2.4-mips`), the linux-ia64 mailing list archive and the community tree `linux-sn2` (7.3).
 
 **Confirmed.**
 - `0xffa07230`: check type 0 (`param_1 < 2` and the type-0 test before `0xffa05610`), `us` (PSP bit 9) set sends it to the non-recovered result, `cm` (bit 18) clear is required, and `0xffa05610` is called only for type 0. Bit positions checked against `pal_processor_state_info_t` in `pal.h` (us 9, cm 18, mi 12 by field count).

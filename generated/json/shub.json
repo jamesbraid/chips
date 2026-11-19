@@ -2114,7 +2114,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
+   "from": "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
   },
   {
    "unit": "shub",
@@ -3239,7 +3239,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub",
@@ -3257,7 +3257,7 @@
    "hi": 49,
    "lo": 3,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub",
@@ -3266,7 +3266,7 @@
    "hi": 2,
    "lo": 2,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub",
@@ -3284,7 +3284,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub",
@@ -4293,7 +4293,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+   "from": "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",
@@ -4307,7 +4307,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+   "from": "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",
@@ -4321,7 +4321,7 @@
    "space": null,
    "reset": "unknown",
    "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+   "from": "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
   },
   {
    "unit": "shub",

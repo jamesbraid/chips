@@ -844,7 +844,7 @@
 /*
  * Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours.
  */
-/* lb_reg_1005_0608: w64, reset unknown; SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) */
+/* lb_reg_1005_0608: w64, reset unknown; SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) */
 #define SHUB_LB_REG_1005_0608                        0x110050608 /* inferred */
 
 /*
@@ -1175,7 +1175,7 @@
 #define SHUB_CRB_TIMEOUT_SKID_SKID_INPLACE           (SHUB_CRB_TIMEOUT_SKID_SKID_MASK << SHUB_CRB_TIMEOUT_SKID_SKID_SHIFT)
 
 /*
- * FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written.
+ * FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written.
  */
 /* pi_reg_2001_0100: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name */
 #define SHUB_PI_REG_2001_0100                        0x120010100 /* established */
@@ -1777,7 +1777,7 @@
 /*
  * Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the word, shift it left 8, put the code in the low byte, write it back. The code is never read for a decision; any reset value is tolerated and the register must return what was last written. SAL_A also reads slice 1 and slice 3 words (0x150031510, 0x150031530) and copies them, ORed with 0x60, to LED registers. The block is the network interface's by address; the PROM uses it as plain storage (inferred). The SGI 2.4 SN2 header names this offset SH_XN_MD_IILB_CMP_EXP_DATA0 at 0x1_5003_1500, SH_XN_MD_IILB_CMP_EXP_DATA1 at 1510, SH_XN_MD_IILB_CMP_ENABLE0 at 1520 and SH_XN_MD_IILB_CMP_ENABLE1 at 1530: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
  */
-/* cpu_hist: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset */
+/* cpu_hist: rw64, reset unknown; SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
 #define SHUB_CPU_HIST                                0x150031500 /* established */
 #define SHUB_CPU_HIST_COUNT                          4
 #define SHUB_CPU_HIST_STRIDE                         16
@@ -1785,13 +1785,13 @@
 /*
  * Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it, and a later routine writes 0 to it on another node through the node-object write (site 0xffa5d48c). No read exists on the direct-call reset path. The method tables reached through the chip object hold methods that treat it as a set of flags indexed by a bit number: claim bit n (wait until it reads clear, set it, with an optional deadline in microseconds; returns -1 on timeout), test bit n, and clear bit n, each as a read-modify-write under the lock pair lb_lock2 and lb_lock2_status, on this node (site 0xffa0efd0, 0xffa0f580) or through the global window of another (site 0xffa0f1a0, 0xffa0f3a0, 0xffa0f430, 0xffa0f650). That the flags are claims is inferred from the sequence; which bit numbers callers use was not traced, and whether any of these methods runs before the console start is unknown. The word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA0: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
  */
-/* fw_word_1540: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset */
+/* fw_word_1540: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
 #define SHUB_FW_WORD_1540                            0x150031540 /* inferred */
 
 /*
  * Firmware per-processor state word; the name is ours. The winner of the SAL_A election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, set in the SAL_B reset entry), 26 + slice (set by the local-master arbitration, polled until the other present processors have set theirs), 30 + slice and bit 34 (a second barrier), 35 + slice (set in the SAL_B reset entry), and a 3-bit count at bit 47 (even slice) or bit 50 (odd slice) that each present slice publishes from a PAL call and the master waits for as that many ready bits among 29:26 (inferred). Bits are set and cleared by read-modify-write under the lock pair lb_lock and lb_lock_status. The SAL_A error path clears bits 29:26. The meanings are inferred from use; the word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA1: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown.
  */
-/* cpu_bits: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset */
+/* cpu_bits: rw64, reset unknown; SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset */
 #define SHUB_CPU_BITS                                0x150031550 /* established */
 
 /*

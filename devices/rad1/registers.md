@@ -44,10 +44,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `analog_out_mode` | 0x90 | w | 32 |  |  | unknown | established |  |
 | `clockgen_load` | 0xa0 | w | 32 |  |  | unknown | established |  |
 | `clockgen_frac` | 0xa4 | w | 32 |  |  | unknown | established |  |
-| `clockgen_master_3` | 0xa8 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg |
-| `clockgen_master_2` | 0xac | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg |
-| `clockgen_master_1` | 0xb0 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg |
-| `clockgen_master_0` | 0xb4 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg |
+| `clockgen_master_3` | 0xa8 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg |
+| `clockgen_master_2` | 0xac | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg |
+| `clockgen_master_1` | 0xb0 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg |
+| `clockgen_master_0` | 0xb4 | w | 32 |  |  | unknown | inferred | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg |
 | `config_b8` | 0xb8 | w | 32 |  |  | unknown | unknown |  |
 | `config_bc` | 0xbc | w | 32 |  |  | unknown | unknown |  |
 | `desc_lo` | 0x400 | rw | 32 | 16 |  | unknown | established |  |
@@ -358,7 +358,7 @@ Master clock select of clock generator 3, at 0xb4 - 4 * n. Bit 0 selects the 192
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
+| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
 
 ### Register `clockgen_master_2`
 
@@ -366,7 +366,7 @@ Master clock select of clock generator 2, at 0xb4 - 4 * n. Bit 0 selects the 192
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
+| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
 
 ### Register `clockgen_master_1`
 
@@ -374,7 +374,7 @@ Master clock select of clock generator 1, at 0xb4 - 4 * n. Bit 0 selects the 192
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
+| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
 
 ### Register `clockgen_master_0`
 
@@ -382,7 +382,7 @@ Master clock select of clock generator 0, at 0xb4 - 4 * n. Bit 0 selects the 192
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (linux-mips posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
+| 0 | `master_192k` | inferred |  | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) snd_rad1_set_cg | 1 selects the 192 kHz master, 0 the 176.4 kHz master |
 
 ### Register `config_b8`
 
@@ -635,10 +635,10 @@ Slot word at byte offset 0x78 of each status slot. Bits not listed are never rea
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `BAR0_SIZE` | 0x2000 | inferred |  | Bytes of BAR0 the driver maps; a lower bound on the decode size. The BAR sizing response itself is not measured |
-| `CLOCKGEN_AES_OUT` | 0x2 | established | public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the AES3 output rate |
-| `CLOCKGEN_ANALOG_IN` | 0x0 | established | public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the analog input rate |
-| `CLOCKGEN_ANALOG_OUT` | 0x1 | established | public Linux RAD1 driver (linux-mips posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the analog output rate |
-| `CLOCKGEN_COUNT` | 0x4 | inferred | public Linux RAD1 driver (linux-mips posting, 2008-07-31) | Number of clock generators; select bit 28 + n of the clock load register loads generator n |
+| `CLOCKGEN_AES_OUT` | 0x2 | established | public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the AES3 output rate |
+| `CLOCKGEN_ANALOG_IN` | 0x0 | established | public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the analog input rate |
+| `CLOCKGEN_ANALOG_OUT` | 0x1 | established | public Linux RAD1 driver (Linux/MIPS mailing list posting of 2008-07-31, message-id 48914C74.6090309@gentoo.org) snd_rad1_setrate_pipe | Clock generator that sets the analog output rate |
+| `CLOCKGEN_COUNT` | 0x4 | inferred | public Linux RAD1 driver (Linux/MIPS mailing list posting, 2008-07-31) | Number of clock generators; select bit 28 + n of the clock load register loads generator n |
 | `DESC_ENTRIES` | 0x10 | inferred |  | Number of 12-byte descriptor RAM entries. The shipped drivers use entries 0 to 7 for the eight data channels and (inferred) entry 15 for the status ring |
 | `DESC_ENTRY_BYTES` | 0xc | established |  | Size of one descriptor RAM entry |
 | `DESC_STATUS_ENTRY` | 0xf | inferred |  | Descriptor RAM entry that holds the status ring's descriptor. Inferred from the offsets; no source names it |

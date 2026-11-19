@@ -1,28 +1,28 @@
 # SGI SN1 on IA-64: where the Linux source lives and how long it lasted
 
-The Library root `linux-history` holds SGI's Linux port to the Bedrock-based IA-64 node ("SN1", also spelled SNIA
-or SNI64 in the code). This page lists every file of that port the Library can show, the kernel versions each lived in,
+The Linux history tree holds SGI's Linux port to the Bedrock-based IA-64 node ("SN1", also spelled SNIA
+or SNI64 in the code). This page lists every file of that port our holdings can show, the kernel versions each lived in,
 and what hardware it describes. SGI's own Linux platform code ranks with the IRIX source as vendor source, so a fact it
 defines is `established` (rule: the SN2 program's evidence rule, confirmed for SN1 as well). The hardware reading is in
 [platforms/sn1-ia64/README.md](../platforms/sn1-ia64/README.md).
 
 ## How the files were found
 
-- `linux-history` carries two snapshots the full-text index can search: a v2.5.0 tree (repository name `linux-2.5.0`)
+- Linux history tree carries two snapshots the full-text index can search: a v2.5.0 tree (repository name `linux-2.5.0`)
   and the tip of kernel.org's history repository (about v2.6.12, where only SN2 remains). Any other revision opens
-  with `read_library` or `resolve_library` given a commit id, but is not searchable. Tag-to-commit ids came from
+  given a commit id, but is not searchable. Tag-to-commit ids came from
   `git ls-remote --tags` on the public `history.git` (ref names only, nothing cloned).
 - The 157 files below are every file under `arch/ia64/sn/` and `include/asm-ia64/sn/` in the v2.5.0 snapshot. The index
   of that snapshot holds only those two directories. Files elsewhere that name SN1 are not enumerated. One was found by
   name and checked: `include/asm-ia64/machvec_sn1.h`. Others (`arch/ia64/config.in`, `arch/ia64/Makefile`) were opened
   directly. A kernel-wide list of SN1 touch points is unknown.
 - `history.git` starts at v2.5.0, so anything older than that is dated from mail only.
-- File contents were read from the Library's own text-search service for the v2.5.0 snapshot. Line counts below are
+- File contents were read from our own text-search service for the v2.5.0 snapshot. Line counts below are
   from that snapshot.
 
 ## Version range (established unless marked)
 
-Probes are `resolve_library` results for a path at a tag's commit.
+Probes are lookups for a path at a tag's commit.
 
 | Tag (commit) | What exists | Source |
 |---|---|---|
@@ -36,9 +36,9 @@ Probes are `resolve_library` results for a path at a tag's commit.
 | 2003-06-18 | The ia64 maintainer's "initial sync with 2.5.72" pull lists `arch/ia64/sn/io/sn1/pcibr.c` (7704 lines removed) and other `io/sn1/` files as deleted from the ia64 tree. | mail `marc-linux-ia64-105592269615698` |
 | 2003-08-31 | An SGI engineer, against the 2.4 tree: "delete some remnants of support for the SGI SN1 platform" in `config.in`. So the 2.4-line ia64 tree kept an SN1 option until then. | mail `marc-linux-ia64-106233674100576` |
 | 2003-09-27 to 2004-01-27 | Last SN1 file `include/asm-ia64/machvec_sn1.h` removed ("SN1 support was removed from the tree a long time ago", a kernel developer, 2003-09-27; resent 2003-11-03 and 2004-01-22; merged in the pull of 2004-01-27). | mail `marc-linux-ia64-106467195826288`, `marc-linux-ia64-106788416532540`, `20040122181150.GZ15871@localhost`, `200401270137.i0R1bEqF012062@napali.hpl.hp.com` |
-| tip of `linux-history` (about v2.6.12) | None of the SN1-only paths exist. `arch/ia64/sn/` holds SN2 only. | search of the tip repository |
+| tip of Linux history tree (about v2.6.12) | None of the SN1-only paths exist. `arch/ia64/sn/` holds SN2 only. | search of the tip repository |
 
-Not settled: the exact mainline commit that removed the SN1 directories (between v2.5.72 and v2.5.73; the Library
+Not settled: the exact mainline commit that removed the SN1 directories (between v2.5.72 and v2.5.73; our holdings
 holds no log), and the first mainline version that carried SN1 (the 2.4 series was the ia64 patch tree's, and
 `history.git` does not reach back that far).
 
@@ -244,17 +244,17 @@ paths in them come from the first-pass survey. Nothing here is tested on hardwar
   2.4.18 as the base, so it applies to a plain 2.4.18 tree.
 - Synergy read through 2026-11-15 from `linux-2.4.0-test10-ia64-001115`, `linux-2.4.16-ia64-011126`, `linux-2.4.17-ia64-011226`,
   `linux-2.4.18-ia64-020410` and `linux-2.4.18-ia64-020722`: the first three lack the write-status registers; `0xae0` is
-  in all but the first. The patch files are fetched from the kernel.org ia64 ports directory above; the Library holds no copy.
+  in all but the first. The patch files are fetched from the kernel.org ia64 ports directory above; we hold no copy.
 - Simulator and PROM: SGI's Medusa simulator is not public. `runsim` is a launcher script that drives the simulator, not
-  the simulator. No SN1 PROM other than the fake PROM is known. Searches of the web, archive.org and the Library found no
+  the simulator. No SN1 PROM other than the fake PROM is known. Searches of the web, archive.org and our holdings found no
   SN1 PROM image or simulator binary (2026-11-14). Unknown whether one exists elsewhere.
 
 ## Review
 
-Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Library root `linux-history` at commit 381ab1f5 (v2.5.0) with `read_library`: `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from 842b367, 55a5bcc, f5ab671 and the earlier SN1 IA-64 commits through 15a5a4e). Sources read from the Linux history tree at commit 381ab1f5 (v2.5.0): `arch/ia64/sn/fprom/{main.c,fpromasm.S,fpmem.c,fw-emu.c,README,fprom.lds}`, `include/asm-ia64/sn/{synergy.h,sn_cpuid.h}`, `arch/ia64/sn/sn1/{smp.c,irq.c}`, `arch/ia64/config.in`, `arch/ia64/sn/io/klgraph_hack.c`. Tag commit ids checked with `git ls-remote --tags` on kernel.org's history.git (v2.5.0 381ab1f5, v2.5.6 50b1b006, v2.5.7 085c9a18, v2.5.40 7570df54, v2.5.72 1eba1937, v2.5.73 6c7a48fb). Press pages fetched 2026-11-14.
 
-Checks: the tag-to-commit ids in the version table (all six match `git ls-remote --tags`); the row count of the file table (158 rows: 157 files under `arch/ia64/sn/` and `include/asm-ia64/sn/`, plus the one file found by name, `machvec_sn1.h`, as the text says); the descriptions of the files read above (`fprom/*`, `synergy.h`, `sn_cpuid.h` "eid bit 1 = Synergy, bit 0 = FSB slot", `smp.c` IPI stores at PI `+0x80/+0x88`, `irq.c` IRQ = bit + 64); the README line count of 86 for `fprom/README` is the page's own count (the Library reader returned 84 lines of text, a difference of trailing blank lines). Probes at tags other than v2.5.0 were not re-run; the mail ids were not re-fetched.
+Checks: the tag-to-commit ids in the version table (all six match `git ls-remote --tags`); the row count of the file table (158 rows: 157 files under `arch/ia64/sn/` and `include/asm-ia64/sn/`, plus the one file found by name, `machvec_sn1.h`, as the text says); the descriptions of the files read above (`fprom/*`, `synergy.h`, `sn_cpuid.h` "eid bit 1 = Synergy, bit 0 = FSB slot", `smp.c` IPI stores at PI `+0x80/+0x88`, `irq.c` IRQ = bit + 64); the README line count of 86 for `fprom/README` is the page's own count (our holdings reader returned 84 lines of text, a difference of trailing blank lines). Probes at tags other than v2.5.0 were not re-run; the mail ids were not re-fetched.
 
-Findings: none needing edits. Not checked: the per-tag `resolve_library` probe results and the dated mail ids.
+Findings: none needing edits. Not checked: the per-tag lookup results and the dated mail ids.
 
 Cleared scope: the file inventory, the tag commit ids and the descriptions of the files read. Not cleared: the version-range table's probe results and mail citations.

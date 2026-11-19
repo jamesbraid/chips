@@ -742,7 +742,7 @@ Independent review of this subsection has not been done.
 
 ## Review
 
-Independent review of chips commit `adac12b` (this page), examined at that commit. The reviewer did not write the page. Method: load `shub1snprom.bin` (SAL 5.04, `snprom-10.54-70399`) through the retools Ghidra export with the IA-64 module, dump every slot (1,155,916 lines), and recount from that listing with a fresh script, not the page's own tables; read the SDM table cells from rendered pages (vol 3 pdf pages for printed 3:345, 3:349 and 3:350) and the legend pages as text; read the patent text on Google Patents (the Library had no patent root to try first). Branch targets, immediates and bit positions were compared with the listing; `objdump` was not needed.
+Independent review of chips commit `adac12b` (this page), examined at that commit. The reviewer did not write the page. Method: load `shub1snprom.bin` (SAL 5.04, `snprom-10.54-70399`) through the retools Ghidra export with the IA-64 module, dump every slot (1,155,916 lines), and recount from that listing with a fresh script, not the page's own tables; read the SDM table cells from rendered pages (vol 3 pdf pages for printed 3:345, 3:349 and 3:350) and the legend pages as text; read the patent text on Google Patents (our holdings had no patent root to try first). Branch targets, immediates and bit positions were compared with the listing; `objdump` was not needed.
 
 **Confirmed (re-read, established).**
 

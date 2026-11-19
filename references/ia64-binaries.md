@@ -1,7 +1,7 @@
 # IA-64 binaries held for SN2 and SN1
 
-Inventory of the IA-64 binaries this repository holds or can reach through the Library for SGI's SN2 machines (Altix 350,
-3000, 4700, Prism) and the SN1 IA-64 platform. It lists each file by its chips RE root path or Library id, with its
+Inventory of the IA-64 binaries this repository holds or can reach through our holdings for SGI's SN2 machines (Altix 350,
+3000, 4700, Prism) and the SN1 IA-64 platform. It lists each file by its repository path or holdings id, with its
 sha256, kind, product, ELF status and machine. It is a list, not a reading: nothing here is a register contract. Grades
 follow [sn2-holdings](sn2-holdings.md): established (read in the file), inferred, unknown.
 
@@ -27,7 +27,7 @@ installation media are not in these counts; they are in [IA-64 Linux media](#ia-
 | 11 | `prism-t2/lib/modules/7.3.0-epic1-SN2-GPU-eb5ca12536d3-ia64/kernel/drivers/char/agp/sgi-agp.ko` | kernel module | `sgi-agp`, from the same community build | yes, IA-64 ELF64 relocatable, not stripped | `.symtab` and `.strtab`; no DWARF | Prism (the only SGI module in that build; the GPU bridge driver) | `6401ee6982513ab41a249c7a05dcb32764d3ec5536338005a3d6bee28171e13c` |
 
 Totals by kind: PROM image 8, kernel ELF 2, kernel module 1. Zero standalone PAL/SAL, EFI application, elilo, initrd,
-userland or library files in this root. The Library's media hold members for those stages (see below).
+userland or library files in this root. The held media hold members for those stages (see below).
 
 Notes on the rows:
 
@@ -43,30 +43,30 @@ Notes on the rows:
 - Text files in the root (`System.map` files, `config`, `MODULE-LIST.txt`, `PROVENANCE.txt`, `os-release`,
   `radeon-prism.conf`, `README.snprom`, `RPM-INFO.txt`) are not binaries and are not counted.
 
-## Library
+## Held media
 
-The Library holds ProPack manuals (for example 007-3844-001, "SGI ProPack 1.2 for Linux -230 Edition Start Here"), other
+We hold ProPack manuals (for example 007-3844-001, "SGI ProPack 1.2 for Linux -230 Edition Start Here"), other
 SGI manuals, and linux-ia64 list mail. It also holds IA-64 Linux installation media in its IRIX mirror tree: the ProPack 4
-SP3 CD1 to CD3 and QuickTransit 1.2 ISOs, found by the Library ids in the media table, and the SLES 9 and SLES 11 ISOs
-from the same mirror. The earlier version of this page said the Library held none of this. That was wrong: a search for
+SP3 CD1 to CD3 and QuickTransit 1.2 ISOs, found by our holdings ids in the media table, and the SLES 9 and SLES 11 ISOs
+from the same mirror. The earlier version of this page said our holdings held none of this. That was wrong: a search for
 "ProPack 4 SP3" on 2026-11-15 returned manuals and mail but not the ISOs, so a missed search does not prove absence. The
-Library still holds no IA-64 kernel build outside those packages and no elilo or initrd outside the media.
+We still hold no IA-64 kernel build outside those packages and no elilo or initrd outside the media.
 
 The kudzu RE root names no ProPack or ia64 media in its `irix-files.md`, so it adds nothing here.
 
 ## IA-64 Linux media
 
-ISO 9660 images from the Library's IA-64 Linux mirror. Nothing was copied or extracted. Member paths are the names
+ISO 9660 images from the held copies. Nothing was copied or extracted. Member paths are the names
 `isoinfo -f` prints, so 8.3 names with a `;1` suffix. Versions are read from strings in the RPM bytes, not from parsed
 RPM headers, so they are read, not verified. Sizes are bytes.
 
-| Media | Bytes | sha256 | Product, release and Library id | Boot-relevant members |
+| Media | Bytes | sha256 | Product, release and holdings id | Boot-relevant members |
 |---|---|---|---|---|
-| ProPack 4 SP3 CD1 | 32528384 | `fbb6dd1fae0fa77db0e2882ceb114c41450eee302b51e28b52891a64b3000e27` | SGI ProPack 4 for Linux SP3, release notes disc. `irix-mirrors:mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD1.iso` | `/DOCS/README.TXT`, `/DOCS/RPMS.TXT`; `/SGI/IA64/MMTIMER_.RPM`; `/SGI/IA64/KM_SN2_*.RPM` |
-| ProPack 4 SP3 CD2 | 125089792 | `c3015971749c9729b599e7c5d23c84423f9f88f0b25596a00ba85b3ca51d2b5c` | SGI ProPack 4 for Linux SP3. `irix-mirrors:mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD2.iso` | `/SGI/IA64/SNPROM_4.RPM` (`snprom-4.43-44607` in its strings, the build of row 1); `KM_SN2_S/U/X.RPM`; `SGI_*.RPM`; `XVM_CMDS.RPM` |
-| ProPack 4 SP3 CD3 | 476696576 | `e3d42f1417a3ca585562a43f78e88947d9aeabf1ee99d79e957419de907fd479` | SGI ProPack 4 for Linux SP3, System Extensions disc (per a 2006 linux-ia64 list post). `irix-mirrors:mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD3.iso` | `/SGI/IA64/KERNEL_2.RPM` (`2.6.5-7.244` in its strings); `KERNEL_R.RPM` (`2.6.5-7.244-rtgfx`); `SGI_*.RPM`; `SAX2`, `XFREE86` packages |
-| QuickTransit 1.2 IA-64 | 324823040 | `40d7b33209a28d42df8ef52ea866403702c2b688b7a37ee61e39b36c2a3fc772` | QuickTransit V1.2 for Linux IA-64. `irix-mirrors:mirror.rqsall.com/misc/ia64linux/SGI/QuickTransit_V1_2_Linux_IA-64.iso` | None. Seven files: `INSTALL`, `README.TXT`, `EULA.TXT`, and four RPMs (`QUICKTRA.RPM`, `LIBUNWIN.RPM` and two more). Not a boot stage |
-| SLES 9 SP3 GM CD1 | 734969856 | `bb6d5e3167ffd089ebafe6831afb544070bab528516bb4a0609699290f6bc0fe` | SUSE Linux Enterprise Server 9 SP3 for ia64, disc 1. The Library's IA-64 Linux mirror | `/BOOT/IMAGE.`, `/BOOT/INITDISK.GZ`, `/BOOT/RESCUE.`; `/SUSE/IA64/KERNEL_S.RPM` (`2.6.5-7.244-sn2` in its strings), `KERNEL_D.RPM` (`2.6.5-7.244-default`), `KERNEL_6.RPM`, `MKINITRD.RPM` |
+| ProPack 4 SP3 CD1 | 32528384 | `fbb6dd1fae0fa77db0e2882ceb114c41450eee302b51e28b52891a64b3000e27` | SGI ProPack 4 for Linux SP3, release notes disc. `mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD1.iso` | `/DOCS/README.TXT`, `/DOCS/RPMS.TXT`; `/SGI/IA64/MMTIMER_.RPM`; `/SGI/IA64/KM_SN2_*.RPM` |
+| ProPack 4 SP3 CD2 | 125089792 | `c3015971749c9729b599e7c5d23c84423f9f88f0b25596a00ba85b3ca51d2b5c` | SGI ProPack 4 for Linux SP3. `mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD2.iso` | `/SGI/IA64/SNPROM_4.RPM` (`snprom-4.43-44607` in its strings, the build of row 1); `KM_SN2_S/U/X.RPM`; `SGI_*.RPM`; `XVM_CMDS.RPM` |
+| ProPack 4 SP3 CD3 | 476696576 | `e3d42f1417a3ca585562a43f78e88947d9aeabf1ee99d79e957419de907fd479` | SGI ProPack 4 for Linux SP3, System Extensions disc (per a 2006 linux-ia64 list post). `mirror.rqsall.com/misc/ia64linux/SGI/ProPack4_for_Linux_SP3_CD3.iso` | `/SGI/IA64/KERNEL_2.RPM` (`2.6.5-7.244` in its strings); `KERNEL_R.RPM` (`2.6.5-7.244-rtgfx`); `SGI_*.RPM`; `SAX2`, `XFREE86` packages |
+| QuickTransit 1.2 IA-64 | 324823040 | `40d7b33209a28d42df8ef52ea866403702c2b688b7a37ee61e39b36c2a3fc772` | QuickTransit V1.2 for Linux IA-64. `mirror.rqsall.com/misc/ia64linux/SGI/QuickTransit_V1_2_Linux_IA-64.iso` | None. Seven files: `INSTALL`, `README.TXT`, `EULA.TXT`, and four RPMs (`QUICKTRA.RPM`, `LIBUNWIN.RPM` and two more). Not a boot stage |
+| SLES 9 SP3 GM CD1 | 734969856 | `bb6d5e3167ffd089ebafe6831afb544070bab528516bb4a0609699290f6bc0fe` | SUSE Linux Enterprise Server 9 SP3 for ia64, disc 1. Held copy | `/BOOT/IMAGE.`, `/BOOT/INITDISK.GZ`, `/BOOT/RESCUE.`; `/SUSE/IA64/KERNEL_S.RPM` (`2.6.5-7.244-sn2` in its strings), `KERNEL_D.RPM` (`2.6.5-7.244-default`), `KERNEL_6.RPM`, `MKINITRD.RPM` |
 | SLES 9 SP3 GM CD2 | 574881792 | `a77c92eb67ebbe34bc00a27476cfeb2cb21b230aa19ee191cecacd6b81aeea35` | As above, disc 2 | Kernel source RPM only (`/SUSE/SRC/KERNEL_S.RPM`); no ELILO |
 | SLES 9 SP3 GM CD3 | 681666560 | `efa1e4675b34149bfeeaa27192a21c517ef1ffaafd72f2136b224e7d1feb7681` | As above, disc 3 | Source RPMs: `KERNEL_6/D/S`, `LINUXRC_`, `MKINITRD` |
 | SLES 9 RC5 CD1 | 291710976 | `98f112a7043965e5af1f9a8c365aa6b81391841e717bdd183707fe799f64961e` | SLES 9 ia64 RC5 (pre-release), disc 1 | `/BOOT/IMAGE.`, `/BOOT/INITDISK.GZ`, `/BOOT/ROOT.`, `/BOOT/RESCUE.`, `/BOOT/RESCUEFL.` |
@@ -75,7 +75,7 @@ RPM headers, so they are read, not verified. Sizes are bytes.
 | SLES 9 RC5 CD4 | 600064000 | `8d2417dc2bd35e1171fd279891ca1ca461eb0ef47256749469448c0db37d3a7c` | SLES 9 ia64 RC5, disc 4 | `/SUSE/IA64/LINUXRC_.RPM` |
 | SLES 9 RC5 CD5 | 680937472 | `ccb2ddb02c4b199858d90acc664d6d66e56697bffd4751e9c3e70d488674320e` | SLES 9 ia64 RC5, disc 5 | Source RPMs: `/SUSE/SRC/ELILO_3_.RPM`, `LINUXRC_`, `MKINITRD` |
 | SLES 9 RC5 CD6 | 662325248 | `388b6eb3d061274968797c8ebd7a74eb41e02c4dd55e41757eddec56513d3836` | SLES 9 ia64 RC5, disc 6 (36 files) | None by name |
-| SLES 11 SP4 DVD1 | 3359084544 | `5eabd5dd5ffb21a9f37c023ddac951206c75ecd53ba6527ca5b39c4cb172581d` | SLES 11 SP4 ia64, DVD 1. The Library's IA-64 Linux mirror | `/BOOT/IA64/INITRD.` (52118160 B); `/BOOT/IA64/ROOT.` (61341696 B, installer root); `/BOOT/IA64/IMAGE.` and `/BOOT/IA64/EFI.` (both 59609088 B, identity not checked); `/BOOT/IA64/LOADER/` (empty directory); `/SUSE/IA64/ELILO_3_.RPM`; `KERNEL_S.RPM` (93229827 B, version not read), `KERNEL_D.RPM`, `KERNEL_T.RPM`, `MKINITRD.RPM` |
+| SLES 11 SP4 DVD1 | 3359084544 | `5eabd5dd5ffb21a9f37c023ddac951206c75ecd53ba6527ca5b39c4cb172581d` | SLES 11 SP4 ia64, DVD 1. Held copy | `/BOOT/IA64/INITRD.` (52118160 B); `/BOOT/IA64/ROOT.` (61341696 B, installer root); `/BOOT/IA64/IMAGE.` and `/BOOT/IA64/EFI.` (both 59609088 B, identity not checked); `/BOOT/IA64/LOADER/` (empty directory); `/SUSE/IA64/ELILO_3_.RPM`; `KERNEL_S.RPM` (93229827 B, version not read), `KERNEL_D.RPM`, `KERNEL_T.RPM`, `MKINITRD.RPM` |
 | SLES 11 SP4 DVD2 | 5369047040 | `c70f88270249db007e9f2bc1caf12cb1486d09be006f9d4a26e9a63a63a1721c` | SLES 11 SP4 ia64, DVD 2 | Source and no-source RPMs: `/SUSE/SRC/ELILO_3_.RPM`, `KERNEL_*` |
 
 Release match. The ProPack 4 SP3 README describes SP3 as an overlay on SLES 9 SP3. Its RPM list names km-sn2 modules
@@ -89,7 +89,7 @@ xpc, L1, L2 or system-controller package name appears on the four SGI discs by n
 ## SN1 IA-64
 
 Nothing held. The only SN1 firmware is SGI's simulator fake PROM, which the Linux 2.5 tree builds from source; no SN1
-binary was found in the chips root or the Library. See [sn1-ia64-sources](sn1-ia64-sources.md) and
+binary was found in the chips root or our holdings. See [sn1-ia64-sources](sn1-ia64-sources.md) and
 [platforms/sn1-ia64/fake-prom.md](../platforms/sn1-ia64/fake-prom.md).
 
 ## Boot path coverage

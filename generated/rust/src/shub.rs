@@ -2289,7 +2289,7 @@ pub mod crb_timeout_skid {
         }
     }
 }
-/// FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table (established)
+/// FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5 and in  (established)
 pub mod pi_reg_2001_0100 {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x120010100;

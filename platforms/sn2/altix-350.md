@@ -8,7 +8,7 @@ console and interrupt paths. It holds no register facts.
 Sources: SGI, *Important Note: SGI IO10 PCI Option for Altix 350*, `007-4374-001`. SGI, *SGI Altix 350 System User's Guide*, `007-4660-001` (2004, cited "-001") and `007-4660-002` (cited "-002"),
 printed pages of each. SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (April 2006), whose
 revision log adds the Altix 350 at revision 003 (May 2004). Linux v5.3 as `v5.3:path`; the Linux history tree
-(`linux-history` 981a2edd) for the IOC4 base driver, which v5.3 no longer has. Grades: see [the SN2 README](README.md).
+(Linux history tree 981a2edd) for the IOC4 base driver, which v5.3 no longer has. Grades: see [the SN2 README](README.md).
 A page number with no revision tag is a -001 page.
 
 **-001 and -002 differ, and -002 is the later and fuller guide.** -001 describes only the ring of up to eight modules,
@@ -72,7 +72,7 @@ for a Bedrock on the 350.
 | SHub | On the IP57 board. Blocks: crossbar (XN), processor interface (PI), memory and directory interface (MD), two network interfaces (NI), I/O interface (II), local block (LB) (-001 p.104; -002 p.112 and the "Super Hub" name in -002 p.68) | established as listed. Generation 1 or 2: **unknown** (README) |
 | PIC | On the PCI riser card; two buses of two slots (-001 p.105, p.99 diagram; the -002 logic diagram p.107 is the same). It sits behind an "XIO" link from the SHub in the diagram. | established that a PIC is present and that the buses are two with two slots each (-001 pp.96, 109); the XIO link is drawn, not described |
 | IOC4 on the IO9 | One IDE channel for the DVD-ROM, NVRAM and the time-of-day clock (-001 p.104; -002 p.114) | established |
-| IOC4 on the IO10 | The Linux IOC4 base driver treats the IO10 as an IOC4 card: it lists three variants, IO9, IO10 and PCI-RT, "each brings out different combinations of IOC4 signals" (`linux-history:drivers/misc/ioc4.c`, function `ioc4_variant`, line 225) | established that an IOC4 is on the IO10; **unknown** which of its functions the IO10 uses: the guide says serial ports come out on the 36-pin MDR connector (-002 p.112) and says nothing about the IOC4 |
+| IOC4 on the IO10 | The Linux IOC4 base driver treats the IO10 as an IOC4 card: it lists three variants, IO9, IO10 and PCI-RT, "each brings out different combinations of IOC4 signals" (Linux history tree, drivers/misc/ioc4.c, function `ioc4_variant`, line 225) | established that an IOC4 is on the IO10; **unknown** which of its functions the IO10 uses: the guide says serial ports come out on the 36-pin MDR connector (-002 p.112) and says nothing about the IOC4 |
 | SATA controller on the IO10 | A Vitesse VSC 7174 at PCI slot 3 on the IO10's bus, as the driver finds it (same `ioc4_variant`); a 2008 patch says boards with an IO10 cannot boot without the Vitesse SATA driver (message `alpine.BSF.1.10.0812100942580.16859@pkunk.americas.sgi.com`) | established from the driver; the guide says only "serial ATA" (-002 pp.112 to 113) |
 | SCSI controller on the IO9 | A QLogic ISP 12160 at PCI slot 3 on the IO9's bus (same function) | established from the driver; the guide says Ultra160 SCSI (-001 p.99 diagram and p.197) |
 | Ethernet on the IO9 and IO10 | One 10/100/1000 BaseT port | established as a port (-001 p.104; -002 p.72); the controller part is **unknown** (not named in either guide, not searched in the Linux sources yet) |
@@ -173,7 +173,7 @@ Findings addressed in 9995be1; renewed review needed for the changed claims.
 
 ### Renewed review
 
-Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in our holdings (SGI printed manuals); PDF page = printed page plus the offset noted per document. 
 
 **Checked.** 007-4660-002 printed p.66 (PDF 94): "up to 192 GB of memory" with 32 processors, one or two routers and 64 slots; p.68 (PDF 96): the NUMAlink "create a single contiguous memory in the system of up to 384 GB". The introduction now gives both figures and points to the Memory row, which already marks the limit unknown. Right. (p.66 also mentions 17U and 39U racks; the page does not use them.)
 

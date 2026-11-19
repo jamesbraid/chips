@@ -90,7 +90,7 @@ Local offset `0x7_0000_0000 + a` is the PROM space: the processor's 32-bit compa
 
 ### Review
 
-Independent review of this section at chips commit ec6f28e, by a reviewer who did not write it. Ghidra (IA-64 processor, `--sn2-prom --no-analysis`) decompiled the functions named below; the instruction listing was not available (the host `objdump` has no IA-64 and the container one did not start under load), so conditions read only from the decompile are marked. Linux 2.4 `prominfo_proc.c` and `sn2/addrs.h` read from the Library `linux-mips` root at 8ef7d46c.
+Independent review of this section at chips commit ec6f28e, by a reviewer who did not write it. Ghidra (IA-64 processor, `--sn2-prom --no-analysis`) decompiled the functions named below; the instruction listing was not available (the host `objdump` has no IA-64 and the container one did not start under load), so conditions read only from the decompile are marked. Linux 2.4 `prominfo_proc.c` and `sn2/addrs.h` read from the Linux/MIPS tree at 8ef7d46c.
 
 **Confirmed.**
 - `LB_PROM_SPACE` 0x7_0000_0000 and the FIT rebase; `GLOBAL_MMR_SPACE` has bit 35 set, which explains the extra bit in the flash base.

@@ -40,7 +40,7 @@ SN-specific ids (the `SN_SAL_*` of `sn_sal.h`). Every id here is established pre
 | Id | Name | Kernel use | PROM handler | Platform hardware | If it fails |
 |---|---|---|---|---|---|
 | `0x0200001e` | GET_SN_INFO | `sn_cpu_init` (twice on the boot CPU) | `0xffb60640`, `rt:0x31d0` | SHub NASID register `0x1_1006_0580` | -1 selects SHub 1 defaults; < -1 **stops** (BUG) |
-| `0x02000068` | SET_CPU_NUMBER | `sn_cpu_init` (v5.3, the linux-history tree and linux-sn2 7.3; result ignored) | `0xffb13a70`, `rt:0x47d0` | per-CPU record at `0x1000000` | ignored |
+| `0x02000068` | SET_CPU_NUMBER | `sn_cpu_init` (v5.3, the Linux history tree tree and linux-sn2 7.3; result ignored) | `0xffb13a70`, `rt:0x47d0` | per-CPU record at `0x1000000` | ignored |
 | `0x0200001a` | SET_ERROR_HANDLING_FEATURES | `sn_setup` | `0xffb13890`, `rt:0x45f0` | none | ignored |
 | `0x02000066` | SET_OS_FEATURE_SET | `sn_setup`: 2.6.3x calls 0, 1, then `PCISEGMENT_ENABLE`, `ACPI_ENABLE` before `acpi_table_init`; the held 2.6.5 calls 0 and 1 only | `0xffb5fc90` | block B `+0xc8` flag word | ignored; features 2 and 3 make the PROM rebuild the DSDT |
 | `0x02000005` | GET_KLCONFIG_ADDR | `sn_setup` per node | `0xffb19c20` | KLCONFIG in block A (64 KiB into the hwcfg block) | 0 or a bad board list **stops** (BUG) |
@@ -121,7 +121,7 @@ timekeeping after boot: the processor ITC/ITM for the tick (period from `SAL_FRE
 
 1. Entry-point descriptor in the SAL system table (type 0 first, at `+0x60`) and an EFI system table with the `IBI SYST` signature and a readable (or null) vendor string ([os-handoff-tables.md](../firmware/snprom/os-handoff-tables.md)).
 2. `GET_SN_INFO` with a status below -1 (BUG), `GET_KLCONFIG_ADDR` with a null result or bad board list, `GET_SAPIC_INFO` with a status below -1.
-3. `GET_PCIDEV_INFO` (`0x57`) with an error (`BUG_ON`); a `0x55` error skips the node and leaves it half set up; a missing bus is a positive `0x56` status in linux-sn2 (the page earlier said r9 = 1; linux-sn2 tests the returned status; linux-history was not read for this call).
+3. `GET_PCIDEV_INFO` (`0x57`) with an error (`BUG_ON`); a `0x55` error skips the node and leaves it half set up; a missing bus is a positive `0x56` status in linux-sn2 (the page earlier said r9 = 1; linux-sn2 tests the returned status; Linux history tree was not read for this call).
 4. `SAL_PCI_CONFIG_READ` that does not return all-ones for a missing device (the generic scan sees a phantom device) or never returns data.
 5. The ACPI 2.0 tables: an SRAT with a processor entry, a MADT ([sn2-early-boot.md](../linux/sn2-early-boot.md#where-a-model-that-implements-only-what-chips-documents-today-fails)).
 6. The SHub registers in section 5.2 below: a frozen RTC or a wrong `PIO_WRITE_STATUS` value hangs the kernel.
@@ -194,7 +194,7 @@ The serial console is **SAL, not a UART the kernel drives**: early output is `CO
 
 ## 6. Power-down, reset and the time of day
 
-Read in Ghidra on `shub1snprom.bin` 10.54 (SAL_B, no analysis for the EFI ELF) with `ia64-linux-gnu-objdump` for the constants the decompiler hid; Linux from the community tree `nsafran1217/linux-sn2` (mirror head `69571599c5`) and `linux-history`. No emulator ran. Request frames, the reply parser and the identity cache are in [l1-requests.md](../firmware/snprom/l1-requests.md); the L1 side is in sysco `software/firmware/l1/sn2-power-time-requests-1.62.1.md`.
+Read in Ghidra on `shub1snprom.bin` 10.54 (SAL_B, no analysis for the EFI ELF) with `ia64-linux-gnu-objdump` for the constants the decompiler hid; Linux from the community tree `nsafran1217/linux-sn2` (mirror head `69571599c5`) and Linux history tree. No emulator ran. Request frames, the reply parser and the identity cache are in [l1-requests.md](../firmware/snprom/l1-requests.md); the L1 side is in sysco `software/firmware/l1/sn2-power-time-requests-1.62.1.md`.
 
 ### 6.1 What the kernel calls
 
@@ -314,7 +314,7 @@ command with more than 127 bytes of output stalls. Not run.
 
 ## Review
 
-Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysis` on `shub1snprom.bin` 10.54, plus the EFI ELF from FIT type `0x1f`), kernel side against the Library `linux-history` tree (the `arch/ia64/include/asm` layout, the era this page cites) and the public community tree `nsafran1217/linux-sn2` (Linux 7.3-rc3 with an ia64 revert, read from the holdings mirror, commit `69571599c5`). No emulator ran.
+Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysis` on `shub1snprom.bin` 10.54, plus the EFI ELF from FIT type `0x1f`), kernel side against the Linux history tree tree (the `arch/ia64/include/asm` layout, the era this page cites) and the public community tree `nsafran1217/linux-sn2` (Linux 7.3-rc3 with an ia64 revert, read from the holdings mirror, commit `69571599c5`). No emulator ran.
 
 **Confirmed.**
 - Every SAL_B handler address in the two SAL tables of this page matches the dispatch table (`sal_<id>` entries, about 70 ids compared, including `0x01000010` `0xffb1e300`, `0x01000011` `0xffb1e4b0`, `0x01000012` `0xffb60270`, `0x0200000a`/`0b`, `0x02000013`, `0x0200002d`, `0x02000066` `0xffb5fc90`, `0x02000068` `0xffb13a70`, console `0x21`..`0x2c`). `0x01000006` and `0x01000020` thunk to `0xffb1daf0`, which returns -1; `0x01000009` returns -3 on failure of `0xffb204c0(1)`; `0x01000013` calls `0xffa0dcf0` and returns 0.
@@ -322,7 +322,7 @@ Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysi
 - Callback `0x6000` is `0xffb140a0`; op 1 arms with vector `0xef`. Callbacks `0x3000`, `0x5000`, `0x7000` descriptors match.
 - The Linux SAL ids in `sn_sal.h` (console `0x21`..`0x2b`, `0x1e`, `0x1d`, `0x65`, `0x66`, `0x68`, `0x5`, `0x4a`, `0x51`..`0x57`, `0x60`, `0x61`, `0x64`) match this page; `sn_setup` calls `SET_OS_FEATURE_SET` with 0, 1, then `PCISEGMENT_ENABLE` (3), then `ACPI_ENABLE` (2) before `acpi_table_init` in linux-sn2 too; `GET_SN_INFO`/`GET_SAPIC_INFO` map `-1` (not implemented) to a fixed decode and any other negative status is returned (and the caller `BUG()`s); `sn2_rtc` rating 450, 55-bit mask; `sn_ack_irq` reads `SH_EVENT_OCCURRED` and writes the alias; PTC path (`mm_users == 1` local purge, `SH1_PTC_0/1`, `PIO_WRITE_STATUS` pending-count idle value all ones on SHub 1).
 
-**Differences between trees (linux-history 2.6.3x vs linux-sn2 7.3).**
+**Differences between trees (Linux history tree 2.6.3x vs linux-sn2 7.3).**
 - ROM BAR: 2.6.3x maps and sizes it at device fixup; 7.3 marks it shadowed and does not map it (section 5.3). A model that backs the ROM address is safe for both.
 - `sn_force_interrupt_flag`: present in 2.6.3x (`irq.c`), removed in 7.3; both force an interrupt after each PIC device interrupt.
 - `pci_scan_bus` (2.6.3x) against `pci_scan_root_bus` (7.3); the PCI error interrupt is handled in the SAL (`IOIF_ERROR_INTERRUPT`) in both, and 7.3 panics ("Fatal Bridge Error") when that call returns negative.
@@ -336,13 +336,13 @@ Independent re-read on 2026-11-16: PROM side in Ghidra (`--sn2-prom --no-analysi
 
 ### Review of section 6 (power-down, reset, time of day)
 
-Independent re-read on 2026-11-16: PROM in Ghidra (`--sn2-prom`, SAL_B of `shub1snprom.bin` 10.54 and the EFI ELF inflated from FIT type `0x1f`), `ia64-linux-gnu-objdump` cross-check of `0xffb1c276`, `0xffa82a10` and `0xffa1cd30`; ColdFire `O` package 3 (1.62.1) in Ghidra; Linux from the `nsafran1217/linux-sn2` mirror (head `69571599c5`). No emulator ran.
+Independent re-read on 2026-11-16: PROM in Ghidra (`--sn2-prom`, SAL_B of `shub1snprom.bin` 10.54 and the EFI ELF inflated from FIT type `0x1f`), `ia64-linux-gnu-objdump` cross-check of `0xffb1c276`, `0xffa82a10` and `0xffa1cd30`; ColdFire `O` package 3 (1.62.1) in Ghidra; Linux from the `nsafran1217/linux-sn2` tree (head `69571599c5`). No emulator ran.
 
 **Confirmed.** SAL `0x3b` at `0xffb1bf10`: node-count gate, `l` compare at `0xffb1c276`, `0x100a` (`0xffa7efe0`) then bit 59, INIT IPIs and `0xffa0d610` with the `pwr d` texts and the partitioned warning; `0xffb1ba90` (INIT IPI value `0x8000_0000_0000_0005 | id << 4`, text strings `p %d rst`, `* rst`, `version`, the `0x1_1006_0300` write is `0x81_1006_0300` with the local bit); EFI `RtPlResetSystem` accepts types 0 to 2 and calls the callback; `RtSNGetTime`/`RtSNSetTime` field copies, milliseconds times 1,000,000, accuracy 50 ppm; SAL `0x0b` (`0xffb14300`) returns -3 when the record read fails (EFI ignores it); the 300 s refresh and the monotonic clamp; slot 23 (`0xfface1e0`, chip first, then `0x200e`) and slot 24 (`0xfface390`, chip write then `0x200d`, the NOTE text); `0x200e` six-integer parse with -33 otherwise; the BCD chip layouts, `NBY` signature, 1970 default, 1998 clamp, year minus 1992 on write; 1998-01-01 fallback. Linux: `pm_power_off = ia64_sn_power_down` (`setup.c:529`), `machine_restart` to `efi_reboot(REBOOT_WARM)`, `machine_halt` to `cpu_halt` (PAL only), `efi_gettimeofday` zeroes on error.
 
 **Changed.** The `version` probe: it is true only for status exactly 0 and the L1 does not give that (above). A silent probe was "unknown": it waits 20,000,000 us, takes the die routine, which returns, and the reset continues (the 3,000,000-tick wait of the reset text takes the same path). SAL `0x3b` returns -3 on an identity read failure. Capture of the RTC on a failed base read. The kernel path to `pm_power_off` in 7.3 is `do_kernel_power_off`, which registers `pm_power_off` as a legacy sys-off handler; older trees call it directly. The reply and time rows of 6.5 as edited. Address notation for the state word.
 
-**Not checked.** The callback `0x5000` descriptor from `RtSalCallBack` to `0xffb1ba90` (taken from the earlier review); the chip probe `0xffaf2870` (write 6 to register `0xb`, read back); whether an Altix 350 has the time-of-day chip; the `linux-history` Library tree (only the community tree was read); `0x0009` caching in `0xffa7db00`; what the die routine's bit in `0x1_101d_0080` does at the L1.
+**Not checked.** The callback `0x5000` descriptor from `RtSalCallBack` to `0xffb1ba90` (taken from the earlier review); the chip probe `0xffaf2870` (write 6 to register `0xb`, read back); whether an Altix 350 has the time-of-day chip; the Linux history tree (only the community tree was read); `0x0009` caching in `0xffa7db00`; what the die routine's bit in `0x1_101d_0080` does at the L1.
 
 ### Review of the HWPERF and console input commits
 

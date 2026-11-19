@@ -77,7 +77,7 @@ Board names as the manuals print them (established):
   riser to its underside (007-4701-003 pp.92, 94; 007-4774-001 pp.187, 189). Neither guide says AGP or TIOCA (text search of
   both), so the AGP-through-TIOCA path in [the overview](prism.md) is not established by these guides.
 - The GPU is ATI silicon, outside chips' scope. No public board-level FireGL X2 document is known to this page. A search of
-  the Library techpubs root for "Radeon R350 FireGL X2 Prism" (2026-11-15) returned only the three Prism guides. The web was
+  the SGI printed manuals for "Radeon R350 FireGL X2 Prism" (2026-11-15) returned only the three Prism guides. The web was
   not checked.
 
 - An XG2N carries two pipes; each pipe has two DVI-I outputs, a "left" and a "right channel" (Figures 1-1 to 1-4, pp.3 and 4).
@@ -127,7 +127,7 @@ message list (pp.124 to 129) and the technical specification tables other than A
 
 ## Review
 
-Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the SGI printed manuals, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
 
 Checks: Tables 3-1 and 3-2 (007-4701-003 pp.60 and 61: every limit in the page's table matches, including 17U and 39U rack counts and the optional L2 row), p.28 (two-module minimum, 16 processors, 192 GB, 28 slots), p.65 (routed systems have four to eight modules plus two routers), the record of revision (X3-256 added in -003, L2 references removed), the `gfxtopology -v` listing (007-4751-001 PDF 18, printed p.18: four lines, buses 23, 27, 39 and 43, `SG2`), and the page's reading of it (port 1 and 2 of 001c02 and 001c03; the second pipe of each XG2N lists a different brick's CPUs, correctly marked unknown). The IP57 and ring-is-NUMAlink-4 statements are inferred, not established, as graded. The TIOCA reference is to the overview, whose v5.3 facts were checked there.
 

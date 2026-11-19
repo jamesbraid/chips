@@ -707,12 +707,12 @@ Array of 4 registers, stride 128.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `writes_ok` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll. |
+| 63 | `writes_ok` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll. |
 | 61:56 | `pending_write_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason. |
-| 49:3 | `write_error_address` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | Address associated with the error response. The PROM does not read it. |
-| 2 | `write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set. |
+| 49:3 | `write_error_address` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | Address associated with the error response. The PROM does not read it. |
+| 2 | `write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set. |
 | 1 | `write_deadlock` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | A deadlock response was detected for a PIO write. |
-| 0 | `multi_write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | More than one PIO write error occurred. The PROM self test accepts it in place of write_error. |
+| 0 | `multi_write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | More than one PIO write error occurred. The PROM self test accepts it in place of write_error. |
 
 ### Register `pio_write_status_alias`
 

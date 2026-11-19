@@ -8,7 +8,7 @@ those pages hold the register-field names. Labels are the repository's: **establ
 
 Sources, all read for this page:
 
-- Linux 2.6.5 `drivers/ide/pci/sgiioc4.c` and `include/asm-ia64/sn/ioc4.h` (Library root `linux-history`, tag `v2.6.5`).
+- Linux 2.6.5 `drivers/ide/pci/sgiioc4.c` and `include/asm-ia64/sn/ioc4.h` (Linux history tree, tag `v2.6.5`).
   The 2.6.5 tree has no IOC4 core driver and no IOC4 serial driver.
 - Linux 2.6.33-era `drivers/ide/sgiioc4.c` (same root, merge `981a2edd1922`) and the Linux 7.3 IA-64 tree's
   `drivers/ata/pata_sgiioc4.c`, `drivers/misc/ioc4.c`, `include/linux/ioc4.h` (a local mirror of a 7.3 IA-64 port).
@@ -227,6 +227,6 @@ Independent review of chips commit `ddbdaf7` (this page and the pointer edits in
 **Findings (none blocks).**
 1. "Both ran on hardware" (the 64 KiB entry paragraph) is unsupported for the 7.3 port; only the 2.6.5 driver is known to have shipped. Fix: drop the clause and keep the length-0 reading inferred from the 2.6.5 driver alone.
 2. The `0x51` mask belongs to 2.6.5 and the SLES module. The 3.2.78 IDE driver tests the busy bit instead (`sgiioc4.c:295`). Fix: say the status-read acknowledge differs by driver version, which supports the page's own "unknown whether the chip clears it".
-3. The page fetched a linuxrc source file from a public URL; the project rule is Library-first. Not a content fault; note for the author.
+3. The page fetched a linuxrc source file from a public URL; the project rule is to check held sources first. Not a content fault; note for the author.
 
 **Verdict.** Accept. **Not checked:** everything read from the SLES 9 installer media and the shipped modules (`ioc4.ko` writes, `linuxrc` strings and module list), the EFI driver offsets and its polling, and the IRIX-derived rows; I had no access to those artifacts.

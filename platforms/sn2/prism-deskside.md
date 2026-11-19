@@ -66,7 +66,7 @@ Findings addressed in 9995be1; renewed review needed for the changed claims.
 
 ### Renewed review
 
-Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in the Library (`techpubs` root); PDF page = printed page plus the offset noted per document. 
+Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote none of them. Reviewed chips commit f5ab671 (contains 1d4f24f and 9995be1). Grading rule: sgi-retools `tools/README-analysis.md` "Evidence order" at c50bfeb. Checked against the printed pages in our holdings (SGI printed manuals); PDF page = printed page plus the offset noted per document. 
 
 **Checked.** 007-4772-001 (PDF page = printed page + 22). p.21 (PDF 43): "installed in PCI slot 1, (the top PCI slot)". p.27 (PDF 49): "The system's base I/O board always occupies bus 1, slot 1, and the static I/O daughter board is permanently installed in the top slot (bus 1, slot 2)". The page records both and takes bus 1 slot 1; right. p.23 (PDF 45): the daughter-card connector list (four USB A, L1 diagnostic USB-B, L1 console DB9, IS IN and IS Repeat). The page now cites pp.23, 27. Right.
 
@@ -76,7 +76,7 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 
 ### Review of the Prism additions
 
-Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the SGI printed manuals, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
 
 Checks: 007-4772-001 p.7 (rear panel: base I/O card, static daughter card with USB, DB-9 and `IS IN` and `IS REPEAT`, "one or (optionally) two graphics boards (pipes)", AGP-5 and AGP-6 on the Figure 1-4 rear view); the record of revision (-001 April 2005, -002 October 2005, ProPack 4 SP2) and the -002 contents (diagnostics from p.116 and XF86Config changes from p.122). The processor, NUMAlink-absence, AGP 4X/8X (p.26), compositor (p.10) and ImageSync (p.19) statements were not re-read page by page beyond p.7; they rest on the earlier review of -001. The Itanium-2 inference is marked inferred.
 

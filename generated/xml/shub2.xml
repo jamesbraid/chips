@@ -373,12 +373,12 @@
   </struct>
   <struct name="PIO_WRITE_STATUS" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070200" access="r" count="4" stride="128" reset="unknown">
     <doc>PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones. The write_error, multi_write_error, write_error_address and writes_ok fields are the SHub 1 header's; the SHub 2 layout was not read.</doc>
-    <field name="writes_ok" start="63" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
+    <field name="writes_ok" start="63" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
     <field name="pending_write_count" start="56" size="6" type="uint" grade="established"/>
-    <field name="write_error_address" start="3" size="47" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
-    <field name="write_error" start="2" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
+    <field name="write_error_address" start="3" size="47" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
+    <field name="write_error" start="2" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
     <field name="write_deadlock" start="1" size="1" type="uint" grade="established"/>
-    <field name="multi_write_error" start="0" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
+    <field name="multi_write_error" start="0" size="1" type="uint" grade="established" from="SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"/>
   </struct>
   <struct name="PIO_WRITE_STATUS_ALIAS" size="8" grade="inferred" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x20070208" access="w" count="4" stride="128" reset="unknown">
     <doc>Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.</doc>

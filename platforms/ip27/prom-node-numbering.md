@@ -314,7 +314,7 @@ brackets:
    function 1, or `prom_reboot` 0xc0000000001ff66c (0xc0000000001fab28) for 0, 2, 3 and 9 (pointers in the global pointer
    table at gp-7440 and gp-7432). `prom_reboot` calls `prom_reinit` 0xc0000000000194b4 (no power-off branch on IP27;
    the IP35 one has it) unless the machine is panicking. Which user program passes which function code is **U** (no
-   `reboot`, `halt` or `init` binary in the held roots; the System V names are I).
+   `reboot`, `halt` or `init` binary in the held sources; the System V names are I).
 2. `prom_reinit` calls `he_arcs_restart` 0xc000000000029978 (0xc0000000000296c4) and `prom_autoboot` calls `he_arcs_reboot`
    0xc000000000029998 (0xc0000000000296e4). Neither calls an ARCS vector. Both enter the routine at 0xc000000000029814
    (0xc000000000029560) with 0x0ead0030 (restart) or 0x0ead0040 (reboot).

@@ -2461,7 +2461,7 @@
    "hi": 63,
    "lo": 63,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub2",
@@ -2479,7 +2479,7 @@
    "hi": 49,
    "lo": 3,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub2",
@@ -2488,7 +2488,7 @@
    "hi": 2,
    "lo": 2,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub2",
@@ -2506,7 +2506,7 @@
    "hi": 0,
    "lo": 0,
    "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
+   "from": "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0"
   },
   {
    "unit": "shub2",

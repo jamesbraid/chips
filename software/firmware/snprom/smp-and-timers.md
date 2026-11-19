@@ -1,6 +1,6 @@
 # SN2 PROM: starting the other processors, the clocks, and machine checks
 
-How the SHub 1 PROM (snprom 10.54, `shub1snprom.bin`: SAL_B 5.04 at `0xffa00000`, PAL_B 5.73 at `0xffe78000`, SAL runtime component read as `rt:0x...`) brings up more than one processor, which clock values it reports, and what happens on a machine check or INIT. What Linux ia64 asks of it at each step is tied to the handler that answers. Linux is the public `linux-history` tree (`arch/ia64/kernel/smpboot.c`, `sal.c`, `mca.c`, `arch/ia64/sn/kernel/{setup.c,sn2/sn2_smp.c,sn2/timer.c}`, `asm/sal.h`); it has the SN2 platform code and is a later tree than v5.3, which matters only where noted.
+How the SHub 1 PROM (snprom 10.54, `shub1snprom.bin`: SAL_B 5.04 at `0xffa00000`, PAL_B 5.73 at `0xffe78000`, SAL runtime component read as `rt:0x...`) brings up more than one processor, which clock values it reports, and what happens on a machine check or INIT. What Linux ia64 asks of it at each step is tied to the handler that answers. Linux is the public Linux history tree tree (`arch/ia64/kernel/smpboot.c`, `sal.c`, `mca.c`, `arch/ia64/sn/kernel/{setup.c,sn2/sn2_smp.c,sn2/timer.c}`, `asm/sal.h`); it has the SN2 platform code and is a later tree than v5.3, which matters only where noted.
 
 Method: Ghidra (`--sn2-prom --no-analysis`, address ranges, plus `--sal-runtime` for the runtime's own symbol names), cross-checked against a flat `ia64-linux-gnu-objdump` listing of the same image and of the inflated runtime ELF. Grades: **established** = the whole routine was read; **inferred** = a reasoned reading, reasoning given; **unknown** = not settled. No run of any model backs a grade. Register-level interrupt facts are in [interrupts.md](../../../devices/shub/interrupts.md), the `cpu_bits` word and node lock in [prom-reset.md](../../../devices/shub/prom-reset.md#the-node-lock-used-by-a28-a29-a34-and-a37).
 
@@ -127,7 +127,7 @@ The runtime services `SAL_PROBE`/`sal_probe_resume_on_mca` (`rt:0x83c50`), `regi
 
 ## 5. Processor ids (cr.lid) and IPI pids
 
-How `cr.lid`, the 16-bit processor id (the PROM calls it the pid, Linux the SAPIC id or physical id), the SAL tables and the `SH_IPI_INT` message fit together. PROM facts are from `shub1snprom.bin` 10.54 (Ghidra and objdump); Linux is `linux-history` plus the local `linux-sn2` mirror (`arch/ia64/include/asm/sn/sn_cpuid.h`, `sn_sal.h`, `shub_mmr.h`, `arch/ia64/sn/kernel/{setup.c,sn2/sn2_smp.c}`, `arch/ia64/kernel/acpi.c`).
+How `cr.lid`, the 16-bit processor id (the PROM calls it the pid, Linux the SAPIC id or physical id), the SAL tables and the `SH_IPI_INT` message fit together. PROM facts are from `shub1snprom.bin` 10.54 (Ghidra and objdump); Linux is Linux history tree plus the `linux-sn2` tree (`arch/ia64/include/asm/sn/sn_cpuid.h`, `sn_sal.h`, `shub_mmr.h`, `arch/ia64/sn/kernel/{setup.c,sn2/sn2_smp.c}`, `arch/ia64/kernel/acpi.c`).
 
 ### Layout (established from the PROM code)
 
@@ -190,11 +190,11 @@ The SHub's own rule for choosing the slice from the pid, and whether it compares
 
 ## Sources
 
-Shipped PROM image only plus the public Linux files named at the top (`linux-history` mirror; no other URLs were opened). The SGI-held SN2 kernel-tools mirror was not opened.
+Shipped PROM image only plus the public Linux files named at the top (Linux history tree mirror; no other URLs were opened). The SGI-held SN2 kernel-tools mirror was not opened.
 
 ## Review
 
-Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2-prom --sal-runtime`, full analysis) on `shub1snprom.bin` 10.54, with the inflated runtime ELF and a flat `ia64-linux-gnu-objdump` of the image as a cross-check. Ghidra's decompile is empty or a thunk for `0xffaebe90`, `0xffaebef0` and the PAL_B body at `0xffea1e60` (it does not model `ar.itc` writes or `msr` reads there), so those three were read from objdump only. Linux side: `linux-history` through the Library, and the local `linux-sn2` mirror (7.3-rc3). The quarantined SGI kernel-tools mirror was not opened.
+Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2-prom --sal-runtime`, full analysis) on `shub1snprom.bin` 10.54, with the inflated runtime ELF and a flat `ia64-linux-gnu-objdump` of the image as a cross-check. Ghidra's decompile is empty or a thunk for `0xffaebe90`, `0xffaebef0` and the PAL_B body at `0xffea1e60` (it does not model `ar.itc` writes or `msr` reads there), so those three were read from objdump only. Linux side: Linux history tree through our holdings, and the `linux-sn2` tree (7.3-rc3). The quarantined SGI kernel-tools mirror was not opened.
 
 **Confirmed.**
 
@@ -203,7 +203,7 @@ Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2
 - Slave loop: `0xffafd310` (fresh stack, `0xfffe`), `0xffafcdd0` (mailbox signature `0x43505543616c6c53` at `+0xd8` of the per-CPU record, boot state 1 via `0xffa03eb0`, progress 0x46, busy-poll of vectors 0x12 and 0x13); vector 0x12 clears the word at `+16`, sets state 2, progress 0x47 and calls `[rec+72]` with gp `[rec+80]` through `0xffb55c60`, which re-enters the loop if the entry returns; vector 0x13 calls `0xffb035e0` with five mailbox fields and stores the result at `+56`. The boot state is bits 51:50 of a per-slice register.
 - `SAL_SET_VECTORS` slots: type 0 at `+0/8/16` (and caller state 2), type 1 at `+24..+64`, type 2 at `+72/80/88`, written for every present NASID in the table; `SET_CPU_NUMBER` stores `2n` at `+0x110`, and for n = 0 only runs `sal_event_boot_master`, which sets state 3 and clears present bit 26+slice for each other present processor whose state is not 1.
 - PAL_FREQ_RATIOS: `msr[1559]` bits 26:22 = M, M from 8 to 24 gives r9 = r11 = `(M << 32) | 2` and r10 = `0x1_0000_0001`; other M gives -3; r29..r31 nonzero gives -2. PAL_FREQ_BASE gives -1 with r9..r11 = 0. SAL_FREQ_BASE: type 0 = 200,000,000 (simulator signature branch aside), type 1 = status 0 with r9 = -1, type 2 = `1e9 / ((rtc_ctl[13:4]) * 10 + 10)`. Other types give -2. Linux asks types 0 and 2 as the page says, and its fallback for a bad RTC value is 33.3 MHz.
-- `ar.itc = 0` at `0xffaebea0` and `0xffaebf00`. The ITC-drift bit is bit 3 of the platform-features mask (value 8), and both linux-history and 7.3-rc3 `smp_callin` skip `ia64_sync_itc` when it is set. `init_smp_config`, `ia64_mca_init`, `sn_cpu_init` and `sn_send_IPI_phys` match the table in section 2, including the `0x12` AP wake vector in the type 5 SAL descriptor.
+- `ar.itc = 0` at `0xffaebea0` and `0xffaebf00`. The ITC-drift bit is bit 3 of the platform-features mask (value 8), and both Linux history tree and 7.3-rc3 `smp_callin` skip `ia64_sync_itc` when it is set. `init_smp_config`, `ia64_mca_init`, `sn_cpu_init` and `sn_send_IPI_phys` match the table in section 2, including the `0x12` AP wake vector in the type 5 SAL descriptor.
 - MCA entry: SAL_A offset 0x20 branches to `0xffa01080`; save area `0x58000 + (slice << 13)`, 58 PAL words copied to `+8`, stack `0x18000 + (slice << 16)` with sp `+0xfff0`, `bsw.1`, `gp = 0xffd98000`, call `0xffa02ff0`; progress 0x39 in `0xffa02e00`. The 49000 minimum is as described, with the correction below.
 
 **Changed (fixed above).**
@@ -219,7 +219,7 @@ Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2
 
 ### Review of section 5 (processor ids)
 
-Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump listing plus Ghidra (`--sn2-prom --no-analysis`), SDM rev 2.3 vol 2 sections 5.8.3.1 and 11.2.2.2, the local `linux-sn2` mirror (`sn_cpuid.h`, `addrs.h`, `shub_mmr.h`, `sn_sal.h`, `setup.c`, `sn2_smp.c`).
+Independent re-read of `66008b4` against `shub1snprom.bin` 10.54: flat objdump listing plus Ghidra (`--sn2-prom --no-analysis`), SDM rev 2.3 vol 2 sections 5.8.3.1 and 11.2.2.2, the `linux-sn2` tree (`sn_cpuid.h`, `addrs.h`, `shub_mmr.h`, `sn_sal.h`, `setup.c`, `sn2_smp.c`).
 
 **Confirmed.**
 - The `cr.lid` layout: SAL_B `0xffaec240` computes pid = `(nasid & 0x7f) | slice << 7 | (nasid >> 7 & 0x1f) << 11`, writes `pid << 16`, `srlz.d`, reads back and on mismatch writes progress `0xc3` (195). SAL_A `0xffc4edc0` writes `(r32 & 15) << 23` with `r32 = r33 & 3` from `0xffc4ea70`. SDM p. 2:122 (id 31:24, eid 23:16, bits 19:4 of the message) and the id/eid translation in the page. The NASID 0 table and `pid = 0x0102` for NASID 2 slice 2.

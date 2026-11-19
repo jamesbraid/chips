@@ -16,7 +16,7 @@
 >   bridge, 007-4365-002 p10). The earlier claim that SGI's guides call PIC
 >   "Xbridge" conflated two chips.
 > - **"Software only" was too strong.** XTalk appears in SGI's own software
->   guides (007-0911 series). PXBOW and XXBOW were not found by a Library search
+>   guides (007-0911 series). PXBOW and XXBOW were not found by a search of held sources
 >   of the SGI manuals, which shows only that this search missed them, not that
 >   SGI never used the names. Every row below graded "software only" is
 >   downgraded to "not found in the SGI manuals searched" until it is checked
@@ -112,9 +112,9 @@ internal identifiers are reproduced.
 | **F** | Shipped firmware, `usr/cpu/firmware/`: `ip27prom.img` (both releases), `ip35prom.img`, `IP30prom.bin`, `ip32prom.image`, `io6prom.img` | `strings -a`. The IO6 image gave no interconnect names (it may be packed; unverified). The IO4 image is a different bus and was not searched here |
 | **U** | Shipped userland, 6.5.30: `sbin/hinv`, `usr/gfx/gfxtopology`, `usr/bin/icrash` | `strings -a` |
 | **I** | IRIS InSight books on the 6.5.30 media (SGI's own hardware guides as HTML): `OrOn2_Theops`, `OrOn2_ProgRef`, `OrOn2_SitePrep`, `Or2000_Rack_OG`, `Or2000_Desk_OG`, `Onyx2_Rack_OG`, `Origin200_OG`, `Origin200_MG`, `Origin300_UG`, `Origin300_SP_UG`, `Origin_3K_OG`, `Onyx_3K_OG`, `Onyx300_UG`, `Fuel_UG`, `L1andL2Con_UG`, `DevDriver_PG` | full-text search for every name, then read the hit |
-| **M** | Library TechPubs PDFs, by document number and printed page: 007-3410-001, 007-3439-002, 007-3938-006, 007-4240-002, 007-4264-001, 007-4365-002, 007-4377-001, 007-4520-007, 007-4633-017 | `tools/library-pdf find` and `text` |
+| **M** | SGI printed manuals (held PDFs), by document number and printed page: 007-3410-001, 007-3439-002, 007-3938-006, 007-4240-002, 007-4264-001, 007-4365-002, 007-4377-001, 007-4520-007, 007-4633-017 | held PDF text search |
 | **C** | This repository's census of the shipped binaries (`chips/<chip>/README.md`, `include/*.h`) | read for the part numbers the kernel code compares against |
-| **L** | Public Linux: `arch/mips` in v7.2-rc7; `arch/ia64/sn` and `arch/mips/include/asm/xtalk` in the 2018 `linux-mips` history, which still has the Altix tree | grepped for every name |
+| **L** | Public Linux: `arch/mips` in v7.2-rc7; `arch/ia64/sn` and `arch/mips/include/asm/xtalk` in the 2018 Linux/MIPS tree history, which still has the Altix tree | grepped for every name |
 | **O** | OpenBSD `sgi` port, `sys/arch/sgi/xbow/` and `sys/arch/sgi/{include,sgi}/` | grepped for every name |
 
 A local, unpublished Linux working branch sits in the reference tree. It is not
@@ -386,7 +386,7 @@ package marking.
   connect an InfiniteReality graphics pipe to a CR-brick"). K: the IP35 kernel
   has a PIC driver object, a PIC register-dump debug routine and a PIC asic-type
   value. O `xbowdevs` and `xbridge.c`. C `devices/pic/README.md`. The shipped
-  header refers to an SGI "PIC manual"; it was not found in the Library.
+  header refers to an SGI "PIC manual"; it was not found in our holdings.
 - **Grade.** Established as SGI's own name and as a part number. **Not
   Xbridge.** Two-widget structure: established (O); adjacency of the widget
   numbers: unknown. Test: enumerate widgets on a PIC brick.
@@ -461,7 +461,7 @@ package marking.
   `ip35prom` ("Bedrock Rev: %lld", "built for bedrock rev. 1.1 or greater",
   and per-block error-dump lines); K IP35 kernel (the same lines); H (a
   Bedrock register header). The headers cite an SGI interface specification
-  for the Bedrock; it was not found in the Library searches made.
+  for the Bedrock; it was not found in our holdings searches made.
 - **Hub II.** No chip has this name in any source. "II" is the I/O interface
   block of Hub and Bedrock, the Crosstalk side. Evidence: panel label `XIO (II)`
   (M 007-4240-002 p125); the PROM's Hub and Bedrock error-dump text labels this
@@ -580,7 +580,7 @@ A brick letter does not imply a chip outside this table.
 | SHub | Altix manual 007-4520-007; Linux; one IRIX name | established |
 | Junkbus | L1 text | established |
 | Crosstown, KTOWN, Ktown2, Crosstown2, Xtown, Xtown2 | manuals, kernel archive, script | established |
-| HQ4, XG | shipped headers | name established; expansion unknown. Settling test: search the Library for the spelled-out names in the graphics manuals and board guides; no held source spells either out, so until one does the expansion stays unknown |
+| HQ4, XG | shipped headers | name established; expansion unknown. Settling test: search our holdings for the spelled-out names in the graphics manuals and board guides; no held source spells either out, so until one does the expansion stays unknown |
 | UXHEART, GHBridge, HXBOW | one IP30 PROM only | unknown. A byte search of the held firmware images, the IP30 and IP27 kernels, the IP32 and IP35 kernel objects and `sbin/` finds the three strings in `IP30prom.bin` alone. Settling test: a second occurrence in another PROM revision, a shipped manual or a public PROM listing; absent that, no software dependency is recorded |
 
 ## 5. What this means for the datasheets

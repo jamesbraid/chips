@@ -113,4 +113,4 @@ SCPS053B ("TI DS", the PCI2050B manual agrees on these registers); the public Li
 
 Codec parts, subsystem IDs, EEPROM image, whether anything else sits behind the bridge, the primary bus number
 written to `0x18` (`pciio_info_bus_get` of the bridge), the bridge variant. Audio libraries are not held in any
-local root (searched `chips` and `kudzu` roots, depth 6).
+local root (searched the chips and kudzu trees, depth 6).

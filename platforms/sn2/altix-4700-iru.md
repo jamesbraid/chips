@@ -143,7 +143,7 @@ read against the node-discovery code ([questions/altix-4700-open.md](../../quest
 Independent review, 2026-11-15, by a reviewer who wrote none of these pages. Reviewed the four pages of this item at chips
 commit 01c6b5f: this page, [the discovery page](altix-4700-discovery.md), [the graphics page](graphics-attachment.md) and
 [the open questions](../../questions/altix-4700-open.md). Method: every cited Linux v5.3 file was fetched as a single file
-and read against the claim; manual claims were checked against the printed pages in the Library (007-4823-001, PDF page =
+and read against the claim; manual claims were checked against the printed pages in our holdings (007-4823-001, PDF page =
 printed + 20, confirmed on pp.46, 53, 107; 007-4857-001, +22; 007-3938-005, +26; 007-4954-001, +6). About 60 facts were
 checked. No page here makes a claim from a binary, so no Ghidra reading was needed or run.
 

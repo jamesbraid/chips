@@ -79,7 +79,7 @@ width = 64
 grade = "established"
 reset = 0x0010300000000000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SHUB_ID_INIT 0x0010300000000000, MASK 0x011f37ffffffffff; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SHUB_ID_INIT 0x0010300000000000, MASK 0x011f37ffffffffff; no source states a power-on default"
 doc = "SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects revision 3 and part 0x4363; those are PROM expectations, not header facts. See prom-reset.md."
 
 [registers.shub_id.fields]
@@ -159,11 +159,11 @@ reset = "unknown"
 doc = "PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data."
 
 [registers.pio_write_status.fields]
-multi_write_error = { bits = [0, 0], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "More than one PIO write error occurred. The PROM self test accepts it in place of write_error." }
+multi_write_error = { bits = [0, 0], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "More than one PIO write error occurred. The PROM self test accepts it in place of write_error." }
 write_deadlock = { bits = [1, 1], grade = "established", doc = "A deadlock response was detected for a PIO write." }
-write_error = { bits = [2, 2], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set." }
-write_error_address = { bits = [49, 3], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "Address associated with the error response. The PROM does not read it." }
-writes_ok = { bits = [63, 63], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (linux-mips 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll." }
+write_error = { bits = [2, 2], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set." }
+write_error_address = { bits = [49, 3], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "Address associated with the error response. The PROM does not read it." }
+writes_ok = { bits = [63, 63], grade = "established", from = "SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0", doc = "No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll." }
 pending_write_count = { bits = [61, 56], grade = "established", doc = "Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason." }
 
 [registers.pio_write_status_alias]
@@ -302,7 +302,7 @@ access = "w"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SGI SN2 Linux 2.4 tree (linux-mips linux-2.4 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0, SH_II_INT1); arch/ia64/sn/io/sn2/shub_intr.c (do_hub_intr_alloc)"
+from = "SGI SN2 Linux 2.4 tree (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0, SH_II_INT1); arch/ia64/sn/io/sn2/shub_intr.c (do_hub_intr_alloc)"
 doc = "I/O interface interrupt 0 and 1 (SH_II_INT0, SH_II_INT1): the register a PIC's interrupt write lands on, through the Crosstalk address nasid << 36 | 1 << 47 | offset. Bits 7:0 are the processor vector, bit 8 sends it to the processor interface (header: a pulse). The data a PIC writes is inferred to be 0x100 | vector. Not accessed by the PROM."
 
 [registers.ii_int.fields]
@@ -317,7 +317,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SGI SN2 Linux 2.4 tree (linux-mips linux-2.4 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0_CONFIG, SH_II_INT1_CONFIG); SAL 5.04 PROM sites 0xffb73bf6 and 0xffb73c26 (stores of pid << 4)"
+from = "SGI SN2 Linux 2.4 tree (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0_CONFIG, SH_II_INT1_CONFIG); SAL 5.04 PROM sites 0xffb73bf6 and 0xffb73c26 (stores of pid << 4)"
 doc = "Destination of the I/O interface interrupt n (SH_II_INTn_CONFIG): delivery type, target processor id and optional vector base, the ipi_int layout without send or vector. The PROM writes the processor id of slice 0 to n = 0 and of slice 2 to n = 1 and never reads them."
 
 [registers.ii_int_config.fields]
@@ -334,7 +334,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SGI SN2 Linux 2.4 tree (linux-mips linux-2.4 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0_ENABLE, SH_II_INT1_ENABLE); SAL 5.04 PROM sites 0xffb73c56 and 0xffb73c86 (store of 1)"
+from = "SGI SN2 Linux 2.4 tree (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_II_INT0_ENABLE, SH_II_INT1_ENABLE); SAL 5.04 PROM sites 0xffb73c56 and 0xffb73c86 (store of 1)"
 doc = "Bit 0 enables the I/O interface interrupt n. The PROM writes 1 to both and never reads them."
 
 [registers.ii_int_enable.fields]
@@ -366,7 +366,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SGI SN2 Linux 2.4 tree (linux-mips linux-2.4 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_PROC0_ERR_INT_CONFIG at 0x110000a80); SAL 5.04 PROM name table 0xffbfabb0 (SH_PROC0 to 3_ERR_INT_CONFIG); read and written by the NASID-change routine 0xffaec340"
+from = "SGI SN2 Linux 2.4 tree (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) include/asm-ia64/sn/sn2/shub_mmr.h (SH_PROC0_ERR_INT_CONFIG at 0x110000a80); SAL 5.04 PROM name table 0xffbfabb0 (SH_PROC0 to 3_ERR_INT_CONFIG); read and written by the NASID-change routine 0xffaec340"
 doc = "Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced."
 
 [registers.proc_err_int_enable]
@@ -436,13 +436,13 @@ width = 64
 grade = "inferred"
 reset = 0x7ffffffff
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_INIT 0x7ffffffff, MASK 0xfffffffff; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PTC_PARMS_INIT 0x7ffffffff, MASK 0xfffffffff; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
 doc = "Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM writes a value built from a value it read and the constant 0x23c34600 (used when bit 31 of a call result is set) and reads it back; the header splits the word into PTC_TO_WRAP (bits 23:0, time-out period) and PTC_TO_VAL (bits 35:24, time-out valid); what the PROM's value means is not decoded. Neither the PROM nor the runtime stores to ptc itself."
 
 [registers.ptc_parms.fields]
-ptc_to_wrap = { bits = [23, 0], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_WRAP", doc = "Header field PTC_TO_WRAP, the time-out period. Name and position are the header's; the PROM's use is not decoded." }
-ptc_to_val = { bits = [35, 24], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_VAL", doc = "Header field PTC_TO_VAL, described as time-out valid. Name and position are the header's; the meaning is inferred." }
+ptc_to_wrap = { bits = [23, 0], grade = "inferred", from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_WRAP", doc = "Header field PTC_TO_WRAP, the time-out period. Name and position are the header's; the PROM's use is not decoded." }
+ptc_to_val = { bits = [35, 24], grade = "inferred", from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PTC_PARMS_PTC_TO_VAL", doc = "Header field PTC_TO_VAL, described as time-out valid. Name and position are the header's; the meaning is inferred." }
 
 # Registers the SHub 1 PROM touches from reset to the console start (SAL 5.04). Linux v5.3 names none
 # of them; every name below is ours and says so. Offsets and use are from the PROM sites in each entry.
@@ -463,7 +463,7 @@ width = 64
 grade = "established"
 reset = "unknown"
 from = "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
-doc = "FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at linux-mips linux-2.4 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written."
+doc = "FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 header at Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5 and in the PROM's name table; the key is our earlier label). SAL_A reads it and writes it back with bit 24 (serialize_fsb_en) set, using the read value for nothing else. The PROM sets bit 24 around the NASID change in 0xffa976e0 and around writes to 0x120000000. Any reset value is tolerated; bit 24 must be settable and read back as written."
 
 [registers.pi_reg_2001_0100.fields]
 bit24 = { bits = [24, 24], grade = "established", from = "SGI 2.4 SN2 header shub_mmr_t.h (serialize_fsb_en); SAL 5.04 PROM sites 0xffc4e816 and 0xffa97796", doc = "serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back)." }
@@ -495,7 +495,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+from = "SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
 doc = "Progress history of processor slice n (n = cr.lid bits 26:23, 0 to 3), 16 bytes apart; the name is ours. Every progress code is written as: read the word, shift it left 8, put the code in the low byte, write it back. The code is never read for a decision; any reset value is tolerated and the register must return what was last written. SAL_A also reads slice 1 and slice 3 words (0x150031510, 0x150031530) and copies them, ORed with 0x60, to LED registers. The block is the network interface's by address; the PROM uses it as plain storage (inferred). The SGI 2.4 SN2 header names this offset SH_XN_MD_IILB_CMP_EXP_DATA0 at 0x1_5003_1500, SH_XN_MD_IILB_CMP_EXP_DATA1 at 1510, SH_XN_MD_IILB_CMP_ENABLE0 at 1520 and SH_XN_MD_IILB_CMP_ENABLE1 at 1530: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown."
 
 [registers.fw_word_1540]
@@ -504,7 +504,7 @@ access = "rw"
 width = 64
 grade = "inferred"
 reset = "unknown"
-from = "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+from = "SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
 doc = "Firmware flag word; the name is ours. SAL_A's election winner writes 0 to it, and a later routine writes 0 to it on another node through the node-object write (site 0xffa5d48c). No read exists on the direct-call reset path. The method tables reached through the chip object hold methods that treat it as a set of flags indexed by a bit number: claim bit n (wait until it reads clear, set it, with an optional deadline in microseconds; returns -1 on timeout), test bit n, and clear bit n, each as a read-modify-write under the lock pair lb_lock2 and lb_lock2_status, on this node (site 0xffa0efd0, 0xffa0f580) or through the global window of another (site 0xffa0f1a0, 0xffa0f3a0, 0xffa0f430, 0xffa0f650). That the flags are claims is inferred from the sequence; which bit numbers callers use was not traced, and whether any of these methods runs before the console start is unknown. The word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA0: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown."
 
 [registers.cpu_bits]
@@ -513,7 +513,7 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset"
+from = "SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset"
 doc = "Firmware per-processor state word; the name is ours. The winner of the SAL_A election zeroes it. Bits the PROM uses: 21 + slice (tested in 0xffa1d430, set in the SAL_B reset entry), 26 + slice (set by the local-master arbitration, polled until the other present processors have set theirs), 30 + slice and bit 34 (a second barrier), 35 + slice (set in the SAL_B reset entry), and a 3-bit count at bit 47 (even slice) or bit 50 (odd slice) that each present slice publishes from a PAL call and the master waits for as that many ready bits among 29:26 (inferred). Bits are set and cleared by read-modify-write under the lock pair lb_lock and lb_lock_status. The SAL_A error path clears bits 29:26. The meanings are inferred from use; the word must read back what was written. The SGI 2.4 SN2 header names this offset SH_XN_MD_NI0_CMP_EXP_DATA1: a 64-bit debug-compare register of the node crossbar (header text: 'MD compare ... input expected data' and 'enable'; reset 0, all 64 bits implemented). The PROM uses it as plain storage (inferred from its use; a model must keep all 64 bits). Whether a non-zero compare value or enable arms a hardware debug trigger is unknown."
 
 [registers.fw_debug_word]
@@ -559,7 +559,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH2_INIT 0x0, MASK 0xffffffffffffffff; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH2_INIT 0x0, MASK 0xffffffffffffffff; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg"
 doc = "L1 link state word in the local block; the name is ours. The header calls this offset SH_SCRATCH2 (one 64-bit field, MASK all ones, INIT 0); its alias SH_SCRATCH2_ALIAS is at +8 (0x1101d0108). SAL_A's election winner sets bits 41:39 to 7 by read-modify-write, keeping the other bits. An earlier reading says the L1 start checks bits 41:39 for 7; a later review found no reader that does, so that requirement is unconfirmed and plain storage satisfies the write. Other bits are used by the L1 transport and are not decoded here. The PROM's node-object builder (site 0xffa8b5d0, run for the local node by main, slot 95 and slot 81) tests bits 41:39 for 7 and, if so, clears them, saves bits 49:42 from the register, rewrites bits 49:42 incremented modulo 256, then clears bit 63; so the second run finds 0 in bits 41:39 (review of the node set-up traces)."
 
@@ -573,8 +573,8 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH4_INIT 0x0, MASK 0x1; no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH4 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH4_INIT 0x0, MASK 0x1; no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH4 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ed30 (take), 0xffa0ee40 (release), 0xffa0e730 (user)"
 doc = "Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_lock_status); the lock use is the PROM's, and our name stays for that role. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred."
 
 [registers.lb_lock_status]
@@ -583,7 +583,7 @@ access = "r"
 width = 64
 grade = "inferred"
 reset = "unknown"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH4_ALIAS (address only); SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH4_ALIAS (address only); SAL 5.04 PROM site 0xffa0ed30 (the poll); the offset-form variant site 0xffa0e880 reads 0x1101d0208 on a remote node"
 doc = "Firmware lock status. The header names this offset SH_SCRATCH4_ALIAS and gives no description, so what a read does is unknown; the lock use is the PROM's and our name stays for that role. The bit it tests is the one bit of SH_SCRATCH4. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 microsecond deadline, then it writes 0 to lb_lock and keeps polling, so a status that never reads 0 hangs the PROM. A read side effect is unknown. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred."
 
 [registers.lb_lock2]
@@ -593,8 +593,8 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH3_INIT 0x0, MASK 0x1; no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH3 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH3_INIT 0x0, MASK 0x1; no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH3 (mask 0x1, INIT 0); SAL 5.04 PROM site 0xffa0ee40 (release, shared with lb_lock), 0xffa0ed30 (forced release on timeout), 0xffa0eee0 (release on another node), 0xffa0f046 and 0xffa0f5a6 (callers)"
 doc = "Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for that role. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred."
 
 [registers.lb_lock2_status]
@@ -603,7 +603,7 @@ access = "r"
 width = 64
 grade = "inferred"
 reset = "unknown"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_SCRATCH3_ALIAS (address only); SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_SCRATCH3_ALIAS (address only); SAL 5.04 PROM site 0xffa0ed30 (this-node poll), 0xffa0ad80 (other-node poll), 0xffa0ef40 (descriptor entry), 0xffa0f056 and 0xffa0f5b6 (callers)"
 doc = "Second firmware lock status. The header names this offset SH_SCRATCH3_ALIAS and gives no description; the other-node routine tests bit 0 only, which is the one bit of SH_SCRATCH3. The lock use is the PROM's and our name stays for that role. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The other-node routine, reading it through the node-object read, proceeds when bit 0 reads 0 and ignores the other bits, so a model must keep bit 0 at 0 when the lock is free. A status that never reads 0 times out after 1,000,000 microseconds (forced release on this node, error -9 on another). A read side effect is unknown. Linux v5.3 does not define the lock; the meaning is inferred."
 
 [registers.lb_slice_rec]
@@ -624,7 +624,7 @@ width = 64
 grade = "established"
 reset = 0x100000000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_INIT 0x100000000, MASK 0x313ff3ff1; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_GC_SRC_CTRL_INIT 0x100000000, MASK 0x313ff3ff1; no source states a power-on default"
 from = "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
 doc = "Real-time clock control; the name is ours. The PROM writes 0x100000000, then writes 0 to rtc, then writes 0x100000041, all at the SAL_B reset entry, before any read. The tick period in nanoseconds is 10 times (the period field + 1); with the PROM's write the field is 4, 50 ns, 20 MHz, which is also what SAL_FREQ_BASE for the real-time clock returns (1,000,000,000 divided by the period). The reset value never reaches the PROM. The PROM's own name table and the 2.4 header call this offset SH_GC_SRC_CTRL ('SHub Global Clock Control', mask 0x313ff3ff1, INIT 0x100000000: enable counter bit 0, max count bits 13:4, counter 25:16, toggle bit 28, source select 33:32); the 0x100000041 write is enable plus max count 4. Roles of the other bits are inferred only. If a read returned 0 the PROM would assume a 10 ns period (100 MHz); every PROM deadline is in microseconds scaled by this period, so the counter must tick at the rate the field gives."
 
@@ -632,8 +632,8 @@ doc = "Real-time clock control; the name is ours. The PROM writes 0x100000000, t
 period = { bits = [13, 4], grade = "inferred", from = "SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period", doc = "Tick period field: the PROM and the SAL runtime both compute the period in nanoseconds as 10 times (value + 1), a software expectation read in two places; that the counter really ticks at that rate is inferred. Written 4 by the PROM. The header calls it MAX_COUNT." }
 mode = { bits = [33, 32], grade = "inferred", from = "SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1)", doc = "Read by an interconnect-phase routine that branches on 1, 2 and 3, and set to 1 by another. Written 1 by the reset entry. Meaning inferred only; the header calls it SOURCE_SEL." }
 run = { bits = [0, 0], grade = "inferred", from = "SAL 5.04 PROM site 0xffa94d06 (clear), 0xffa94d26 (set), 0xffa967e6 (clear)", doc = "Clear when the PROM writes the counter to 0, set after; cleared again by an interconnect-phase routine. A run control is inferred from that order only; the header calls it ENABLE_COUNTER." }
-counter = { bits = [25, 16], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_COUNTER; shub_mmr_t.h counter field", doc = "Header field COUNTER, a 10-bit count. The header gives its position only; that the clock advances here is inferred." }
-toggle_bit = { bits = [28, 28], grade = "inferred", from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_GC_SRC_CTRL_TOGGLE_BIT; shub_mmr_t.h toggle_bit field", doc = "Header field TOGGLE_BIT. The header states no role; the PROM's two writes leave it clear." }
+counter = { bits = [25, 16], grade = "inferred", from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_GC_SRC_CTRL_COUNTER; shub_mmr_t.h counter field", doc = "Header field COUNTER, a 10-bit count. The header gives its position only; that the clock advances here is inferred." }
+toggle_bit = { bits = [28, 28], grade = "inferred", from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_GC_SRC_CTRL_TOGGLE_BIT; shub_mmr_t.h toggle_bit field", doc = "Header field TOGGLE_BIT. The header states no role; the PROM's two writes leave it clear." }
 
 [registers.pi_slice_present]
 offset = 0x120020080
@@ -770,7 +770,7 @@ access = "w"
 width = 64
 grade = "inferred"
 reset = "unknown"
-from = "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
+from = "SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460)"
 doc = "Not a register: an unmapped offset in the local block that the PROM stores 0 to on purpose, to force a PIO write error (inferred; the error mechanism is not documented). The store must set pio_write_status bit 2 (or bit 0) of the issuing slice: the PROM then spins with no delay and no deadline until it does (established as code). The PROM later expects lb_error_detail 2 to hold 0x110050608 >> 3 in its low 30 bits, pi_error_detail_1 to hold 0x110050608 in bits 32:3, and lb_error_detail 1 to end in 0xe9 or 0xea; none is required, and zero in all three skips the error-clear lists. Runs on every slice after the node set-up barrier, unless cpuid[2] is 0xaeeeeeee8badbeef. The name is ours."
 
 [registers.pi_error_detail_1]
@@ -780,8 +780,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5) SH_PI_ERROR_DETAIL_1_INIT, value 0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips 8ef7d46c94d5) names the offset (one 64-bit STATUS field); SAL 5.04 PROM site 0xffa24ee8"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PI_ERROR_DETAIL_1_INIT, value 0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) names the offset (one 64-bit STATUS field); SAL 5.04 PROM site 0xffa24ee8"
 doc = "Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown."
 
 [registers.pi_error_mask]
@@ -791,7 +791,7 @@ width = 64
 grade = "established"
 reset = 0x7ffffffff
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_ERROR_MASK_INIT 0x7ffffffff, MASK 0x7ffffffff; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_ERROR_MASK_INIT 0x7ffffffff, MASK 0x7ffffffff; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI error mask (header name SH_PI_ERROR_MASK, valid bits 34:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) 0x1_8320_0000 (0x1_8020_0000 with AttrCheck), then from main_three (0xffa23600, called from 0xffae3160) 0x8320_0000 (0x8020_0000 with AttrCheck), which unmasks bad_snoop (bit 32); 0x8320_0000 is livelock, addr_access, req_format and hung_bus. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -802,7 +802,7 @@ width = 64
 grade = "established"
 reset = 0x7ffe00000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_AFI_ERROR_MASK_INIT 0x7ffe00000, MASK 0x7ffe00000; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_AFI_ERROR_MASK_INIT 0x7ffe00000, MASK 0x7ffe00000; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI AFI error mask (SH_PI_AFI_ERROR_MASK, valid bits 34:21). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask, then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask. The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -813,7 +813,7 @@ width = 64
 grade = "established"
 reset = 0x1fffff
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_CRBP_ERROR_MASK_INIT 0x1fffff, MASK 0x1fffff; no source states a power-on default"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_CRBP_ERROR_MASK_INIT 0x1fffff, MASK 0x1fffff; no source states a power-on default"
 from = "SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50"
 doc = "PI CRBP error mask (SH_PI_CRBP_ERROR_MASK, valid bits 20:0). The header gives INIT as all valid bits set and describes each bit as masking detection of its source, so a set bit masks. The PROM writes it twice from lists, both at the node own NASID in the global window with an 8-byte store and no read-back: early in main (chip-object method 0xffa236f0) the same value as pi_error_mask (no bit of it is in the valid range), then from main_three (0xffa23600, called from 0xffae3160) the same value as pi_error_mask (no bit of it is in the valid range). The default lists are chosen by the environment variable AttrCheck: absent gives the first value, present the second. Bits outside the valid mask have no register bit."
 
@@ -1253,8 +1253,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_ENABLE0 ('IILB compare NI0 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_ENABLE0 ('IILB compare NI0 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni0_cmp_enable1]
@@ -1264,8 +1264,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_ENABLE1 ('IILB compare NI0 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_ENABLE1 ('IILB compare NI0 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_sic_cmp_exp_hdr0]
@@ -1275,8 +1275,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_SIC_CMP_EXP_HDR0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_EXP_HDR0 ('PI compare SIC input expected header0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_SIC_CMP_EXP_HDR0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_EXP_HDR0 ('PI compare SIC input expected header0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_sic_cmp_hdr_enable0]
@@ -1286,8 +1286,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_SIC_CMP_HDR_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_HDR_ENABLE0 ('PI compare SIC header enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_SIC_CMP_HDR_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_HDR_ENABLE0 ('PI compare SIC header enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_ni1_cmp_enable1]
@@ -1297,8 +1297,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_NI1_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_ENABLE1 ('MD compare NI1 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_NI1_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_ENABLE1 ('MD compare NI1 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_exp_hdr0]
@@ -1308,8 +1308,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_EXP_HDR0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_EXP_HDR0 ('MD compare SIC input expected header0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_EXP_HDR0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_EXP_HDR0 ('MD compare SIC input expected header0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it twice through the slice-indexed tables at 0xffbd8ae0, 0xffbd8b00 and 0xffbd8b20 in the routine at 0xffa222a0 (local window)"
 doc = "A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_ni1_cmp_enable0]
@@ -1319,8 +1319,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_NI1_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_ENABLE0 ('MD compare NI1 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_NI1_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_ENABLE0 ('MD compare NI1 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_ni0_cmp_enable0]
@@ -1330,8 +1330,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_NI0_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_ENABLE0 ('PI compare NI0 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_NI0_CMP_ENABLE0_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_ENABLE0 ('PI compare NI0 input enable0', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_ni0_cmp_enable1]
@@ -1341,8 +1341,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_NI0_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_ENABLE1 ('PI compare NI0 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_NI0_CMP_ENABLE1_INIT, value zero; the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_ENABLE1 ('PI compare NI0 input enable1', all 64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM zeroes it through the global window at 0xffa2bd60 and reads it back at 0xffa2b340 and 0xffa2b430"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni1_cmp_enable1]
@@ -1352,8 +1352,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it twice per node (first and last of the five lists), as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_lb_cmp_exp_data1]
@@ -1363,8 +1363,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_LB_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_LB_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_lb_cmp_enable0]
@@ -1374,8 +1374,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_LB_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_LB_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_lb_cmp_enable1]
@@ -1385,8 +1385,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_LB_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_LB_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_LB_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ii_cmp_exp_data0]
@@ -1396,8 +1396,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_II_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_II_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbde8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ii_cmp_exp_data1]
@@ -1407,8 +1407,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_II_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_II_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ii_cmp_enable0]
@@ -1418,8 +1418,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_II_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_II_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ii_cmp_enable1]
@@ -1429,8 +1429,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_II_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_II_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_II_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_md_cmp_exp_data0]
@@ -1440,8 +1440,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_MD_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_MD_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_md_cmp_exp_data1]
@@ -1451,8 +1451,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_MD_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_MD_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe18)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_md_cmp_enable0]
@@ -1462,8 +1462,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_MD_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_MD_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_md_cmp_enable1]
@@ -1473,8 +1473,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_MD_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_MD_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_MD_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_pi_cmp_exp_data0]
@@ -1484,8 +1484,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_PI_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_PI_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_pi_cmp_exp_data1]
@@ -1495,8 +1495,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_PI_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_PI_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_pi_cmp_enable0]
@@ -1506,8 +1506,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_PI_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_PI_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe48)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_pi_cmp_enable1]
@@ -1517,8 +1517,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_PI_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_PI_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_PI_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni0_cmp_exp_data0]
@@ -1528,8 +1528,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni0_cmp_exp_data1]
@@ -1539,8 +1539,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI0_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI0_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni1_cmp_exp_data0]
@@ -1550,8 +1550,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_iilb_ni1_cmp_enable0]
@@ -1561,8 +1561,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_IILB_NI1_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_IILB_NI1_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbe78)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data1]
@@ -1572,8 +1572,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data2]
@@ -1583,8 +1583,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA2_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA2 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA2_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA2 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data3]
@@ -1594,8 +1594,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA3_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA3 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA3_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA3 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data_enable0]
@@ -1605,8 +1605,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data_enable1]
@@ -1616,8 +1616,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data_enable2]
@@ -1627,8 +1627,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE2_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE2 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE2_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE2 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data_enable3]
@@ -1638,8 +1638,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE3_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE3 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA_ENABLE3_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA_ENABLE3 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_iilb_cmp_exp_data0]
@@ -1649,8 +1649,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_IILB_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_IILB_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_iilb_cmp_exp_data1]
@@ -1660,8 +1660,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_IILB_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_IILB_CMP_EXP_DATA1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_iilb_cmp_enable0]
@@ -1671,8 +1671,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_IILB_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_IILB_CMP_ENABLE0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_iilb_cmp_enable1]
@@ -1682,8 +1682,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_IILB_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_IILB_CMP_ENABLE1_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_IILB_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_ni0_cmp_exp_data0]
@@ -1693,8 +1693,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_NI0_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_NI0_CMP_EXP_DATA0_INIT, value zero where read (the 1100 to 11f0 block was read; the rest are by the same pattern, not individually read); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_NI0_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM writes 0 to it through the global window of this node, by the list writer at 0xffae3f50 fed from 0xffa2b580 in 0xffa2bd60 (list at 0xffbdbea8)"
 doc = "A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_hdr_enable0]
@@ -1704,8 +1704,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_HDR_ENABLE0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_HDR_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage; stored 0xff00000000 through the local window at 0xffa30d7c in 0xffa30d40, read per slice by 0xffa30dc0 (slot picked by cr.lid bits 26:23 from the array at 0xffbdd068)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_HDR_ENABLE0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_HDR_ENABLE0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage; stored 0xff00000000 through the local window at 0xffa30d7c in 0xffa30d40, read per slice by 0xffa30dc0 (slot picked by cr.lid bits 26:23 from the array at 0xffbdd068)"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_ni1_cmp_exp_data1]
@@ -1715,8 +1715,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_NI1_CMP_EXP_DATA1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage; stored 0xff00000000 through the local window at 0xffa30d9c in 0xffa30d40, read per slice by 0xffa30dc0 (array at 0xffbdd068)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_NI1_CMP_EXP_DATA1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_EXP_DATA1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage; stored 0xff00000000 through the local window at 0xffa30d9c in 0xffa30d40, read per slice by 0xffa30dc0 (array at 0xffbdd068)"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_sic_cmp_hdr_enable1]
@@ -1726,8 +1726,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_SIC_CMP_HDR_ENABLE1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_HDR_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: zeroed through the local window at 0xffa4852c in 0xffa483d0, once per node (gated by 0xffa0ff30); no reader found"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_SIC_CMP_HDR_ENABLE1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_HDR_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: zeroed through the local window at 0xffa4852c in 0xffa483d0, once per node (gated by 0xffa0ff30); no reader found"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_pi_sic_cmp_exp_hdr1]
@@ -1737,8 +1737,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_PI_SIC_CMP_EXP_HDR1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_EXP_HDR1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: zeroed through the local window at 0xffa4854c in 0xffa483d0, once per node (gated by 0xffa0ff30); no reader found"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_PI_SIC_CMP_EXP_HDR1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_PI_SIC_CMP_EXP_HDR1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: zeroed through the local window at 0xffa4854c in 0xffa483d0, once per node (gated by 0xffa0ff30); no reader found"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_ni0_cmp_enable1]
@@ -1748,8 +1748,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_NI0_CMP_ENABLE1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_NI0_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage in the routine at 0xffa42a30: loaded at 0xffa42d3c and 0xffa42ffc, stored at 0xffa433dc, and zeroed through the local window at 0xffa4850c in 0xffa483d0 (gated by 0xffa0ff30); the stored values are not decoded"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_NI0_CMP_ENABLE1_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_NI0_CMP_ENABLE1 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage in the routine at 0xffa42a30: loaded at 0xffa42d3c and 0xffa42ffc, stored at 0xffa433dc, and zeroed through the local window at 0xffa4850c in 0xffa483d0 (gated by 0xffa0ff30); the stored values are not decoded"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM loads, stores and zeroes; the values it keeps are not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_ni1_cmp_exp_data0]
@@ -1759,8 +1759,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_NI1_CMP_EXP_DATA0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage used as a counter: 0xffa46980 loads it through the local window and stores the value plus one (0xffa469ac, 0xffa469cc)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_NI1_CMP_EXP_DATA0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_NI1_CMP_EXP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: plain storage used as a counter: 0xffa46980 loads it through the local window and stores the value plus one (0xffa469ac, 0xffa469cc)"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM uses as a counter, loading it and storing the value plus one. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.xn_md_sic_cmp_data0]
@@ -1770,8 +1770,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: read only: loaded through the global window of a NASID passed in (0xffa6b71c, 0xffa6cc9c, 0xffa6cdac); the PROM never writes it, and what it reads is not decoded"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XN_MD_SIC_CMP_DATA0_INIT, value zero (not individually read for this register); the macro says initial value, no source states a power-on default"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XN_MD_SIC_CMP_DATA0 (64 bits); the SHub 1 PROM's own name table agrees; SAL 5.04 PROM: read only: loaded through the global window of a NASID passed in (0xffa6b71c, 0xffa6cc9c, 0xffa6cdac); the PROM never writes it, and what it reads is not decoded"
 doc = "A debug-compare word of the node crossbar that the PROM uses as plain storage: a word the PROM only reads, through the global window of a NASID it is given; the value is not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown."
 
 [registers.lb_liq_ctl]
@@ -1956,8 +1956,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_STAT_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_STAT (mask 0xf); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_STAT_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_STAT (mask 0xf); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in its link probe and compares the low nibble with 9, nothing else. 9 is taken as link up (inferred from the use: the probe then checks the link credit words and reports success). Any other value is a link that is not up; no PROM code separates a link that is down from a port with no cable. The INIT of zero is a not-up value, so a node with no NUMAlink cable keeps the hardware path."
 
 [registers.ni_llp_stat.fields]
@@ -1972,8 +1972,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_RESET_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_RESET (mask 0x3); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_RESET_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_RESET (mask 0x3); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says bits generate pulses. The PROM writes 1 (link reset) to each port whose probe says not up, up to three times with delays of 100, 200 and 400 microseconds. A write must not make link_reset_state read 9. Never read."
 
 [registers.ni_llp_reset.fields]
@@ -1989,8 +1989,8 @@ width = 64
 grade = "established"
 reset = 0x1
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_RESET_EN_INIT, value 0x1 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_RESET_EN (mask 0x1; NI1 at 0x150002010); SAL 5.04 PROM write 0xffa0e650 from the fence method 0xffa60410 (slot 62), called by intcon_pttn_erect_reset_fences 0xffa51200 at 0xffa5167c; read by the port-fill method 0xffa5e0b0 only when SH_SCRATCH1 bit 40 is set"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_RESET_EN_INIT, value 0x1 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_RESET_EN (mask 0x1; NI1 at 0x150002010); SAL 5.04 PROM write 0xffa0e650 from the fence method 0xffa60410 (slot 62), called by intcon_pttn_erect_reset_fences 0xffa51200 at 0xffa5167c; read by the port-fill method 0xffa5e0b0 only when SH_SCRATCH1 bit 40 is set"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 allows a warm reset received on the link to reset the SHub. The partition-fence routine writes 0 to the port of every link whose neighbour is absent or outside the node's partition, and 1 to the rest, once per boot, in port order, and never reads the register back. The port-fill method reads it only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement of bit 0 as a per-port flag; that read is not on a lone node's path. A lone node needs one bit of storage that resets to 1 and reads back what was written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred from the header text; the register does not touch the link state or LLP_RESET."
 
 [registers.ni_llp_reset_en.fields]
@@ -2005,8 +2005,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_CHAN_MODE_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_CHAN_MODE (mask 0x1f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_CHAN_MODE_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_CHAN_MODE (mask 0x1f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written."
 
 [registers.ni_llp_chan_mode.fields]
@@ -2021,8 +2021,8 @@ width = 64
 grade = "established"
 reset = 0x7fc6ffd00
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_CONFIG_INIT, value 0x7fc6ffd00 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_CONFIG (mask 0x3fffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_CONFIG_INIT, value 0x7fc6ffd00 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_CONFIG (mask 0x3fffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it straight back with MAXBURST set to 400; no other bit changes and the value read is never tested, so a plain read/write register satisfies it. This is the read that stops a model at 0x1_5000_0020."
 
 [registers.ni_llp_config.fields]
@@ -2040,8 +2040,8 @@ width = 64
 grade = "established"
 reset = 0xa5fffff
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_TEST_CTL_INIT, value 0xa5fffff (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_TEST_CTL (mask 0x7ff3f3ffffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_TEST_CTL_INIT, value 0xa5fffff (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_TEST_CTL (mask 0x7ff3f3ffffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link retry is needed, and finally writes bits 41:40 to the mode chosen from chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40 are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no test running is unknown. A plain read/write register satisfies it."
 
 [registers.ni_llp_test_ctl.fields]
@@ -2056,8 +2056,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LLP_ERR_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LLP_ERR (mask 0x1fffffffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LLP_ERR_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LLP_ERR (mask 0x1fffffffffffff); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss trap) is set it writes the word back with that bit clear and reads again; a bit still set makes the probe return 0 and the port counts as not ready. A model returns 0 and the probe goes on to the link state."
 
 [registers.ni_llp_err.fields]
@@ -2072,8 +2072,8 @@ width = 64
 grade = "established"
 reset = 0x1800
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_LINK_0_FLOW_INIT, value 0x1800 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names SH_XNNI0_LINK_0_FLOW to _3_FLOW; PROM name table agrees (records 104 to 114); SAL 5.04 PROM probe 0xffa5cf40 (read)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_LINK_0_FLOW_INIT, value 0x1800 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names SH_XNNI0_LINK_0_FLOW to _3_FLOW; PROM name table agrees (records 104 to 114); SAL 5.04 PROM probe 0xffa5cf40 (read)"
 doc = "Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9."
 
 [registers.xnni1_link_flow]
@@ -2085,8 +2085,8 @@ width = 64
 grade = "established"
 reset = 0x1800
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI1_LINK_0_FLOW_INIT, value 0x1800 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names SH_XNNI1_LINK_0_FLOW to _3_FLOW; PROM name table agrees (records 104 to 114); SAL 5.04 PROM probe 0xffa5cf40 (read)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI1_LINK_0_FLOW_INIT, value 0x1800 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names SH_XNNI1_LINK_0_FLOW to _3_FLOW; PROM name table agrees (records 104 to 114); SAL 5.04 PROM probe 0xffa5cf40 (read)"
 doc = "Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9."
 
 [registers.xnni_fifo02_flow]
@@ -2098,8 +2098,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_FIFO02_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_FIFO02_FLOW (mask 0x00000f0f0f0f0f0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_FIFO02_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_FIFO02_FLOW (mask 0x00000f0f0f0f0f0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it."
 
 [registers.xnni_fifo13_flow]
@@ -2111,8 +2111,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_FIFO13_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_FIFO13_FLOW (mask 0x00000f0f0f0f0f0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_FIFO13_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_FIFO13_FLOW (mask 0x00000f0f0f0f0f0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it."
 
 [registers.xnni_ni_flow]
@@ -2124,8 +2124,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_NI_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_NI_FLOW (mask 0xff0fff0fff0fff0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_NI_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_NI_FLOW (mask 0xff0fff0fff0fff0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it. Only touched when the environment variable NoTimeouts is set."
 
 [registers.xnni_dead_flow]
@@ -2137,8 +2137,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_DEAD_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_DEAD_FLOW (mask 0xff0fff0fff0fff0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_DEAD_FLOW_INIT, value 0x0 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_DEAD_FLOW (mask 0xff0fff0fff0fff0f); the SHub 1 PROM name table agrees (records 81 to 105 and 261 to 281); SAL 5.04 PROM slot 55 (0xffa5d850) and its probe 0xffa5cf40"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it."
 
 [registers.iilb_local_table]
@@ -2150,8 +2150,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_LOCAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_IILB_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_IILB_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Local routing table of the I/O-interface side local block: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
 
 [registers.iilb_global_table]
@@ -2163,8 +2163,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_IILB_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_IILB_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Global routing table of the I/O-interface side local block: 16 doublewords, same entry layout as iilb_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
 
 [registers.iilb_over_ride_table]
@@ -2174,8 +2174,8 @@ width = 64
 grade = "established"
 reset = 0x8000000000000000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_IILB_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_IILB_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_IILB_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_IILB_OVER_RIDE_TABLE (mask 0x800000000000003f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of the I/O-interface side local block; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.pi_local_table]
@@ -2187,8 +2187,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_LOCAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_PI_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Local routing table of the processor interface: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
 
 [registers.pi_global_table]
@@ -2200,8 +2200,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_PI_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Global routing table of the processor interface: 16 doublewords, same entry layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
 
 [registers.pi_over_ride_table]
@@ -2211,8 +2211,8 @@ width = 64
 grade = "established"
 reset = 0x8000000000002000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_PI_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_PI_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_PI_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_PI_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.ni0_local_table]
@@ -2224,8 +2224,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_LOCAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Local routing table of network interface port 0: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
 
 [registers.ni0_global_table]
@@ -2237,8 +2237,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Global routing table of network interface port 0: 16 doublewords, same entry layout as ni0_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
 
 [registers.ni0_over_ride_table]
@@ -2248,8 +2248,8 @@ width = 64
 grade = "established"
 reset = 0x8000000000000000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI0_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI0_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI0_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI0_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.ni1_local_table]
@@ -2261,8 +2261,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_LOCAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI1_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI1_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Local routing table of network interface port 1: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
 
 [registers.ni1_global_table]
@@ -2274,8 +2274,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI1_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI1_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Global routing table of network interface port 1: 16 doublewords, same entry layout as ni1_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
 
 [registers.ni1_over_ride_table]
@@ -2285,8 +2285,8 @@ width = 64
 grade = "established"
 reset = 0x8000000000000000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_NI1_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_NI1_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_NI1_OVER_RIDE_TABLE_INIT, value 0x8000000000000000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_NI1_OVER_RIDE_TABLE (mask 0x800000000000001f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.md_local_table]
@@ -2298,8 +2298,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_LOCAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_MD_LOCAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_MD_LOCAL_TABLE (mask 0x800000000000003f, depth 128); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Local routing table of the memory and directory unit: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced)."
 
 [registers.md_global_table]
@@ -2311,8 +2311,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_MD_GLOBAL_TABLE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_MD_GLOBAL_TABLE (mask 0x800000000000003f, depth 16); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Global routing table of the memory and directory unit: 16 doublewords, same entry layout as md_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM."
 
 [registers.md_over_ride_table]
@@ -2322,8 +2322,8 @@ width = 64
 grade = "established"
 reset = 0x8000000000002000
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_MD_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_MD_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_MD_OVER_RIDE_TABLE_INIT, value 0x8000000000002000 (macro only; no source states a power-on default)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_MD_OVER_RIDE_TABLE (mask 0x8000000000003f3f); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage."
 
 [registers.xnni_vcswitch_flow]
@@ -2335,8 +2335,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_VCSWITCH_FLOW_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_VCSWITCH_FLOW (mask 0x701010101); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0 and SAL 5.04 PROM 0xffa5c900 (progress 0x1c step)"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_VCSWITCH_FLOW_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_VCSWITCH_FLOW (mask 0x701010101); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0 and SAL 5.04 PROM 0xffa5c900 (progress 0x1c step)"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM addresses it as base + port * 0x200). Virtual-channel switch control of the crossbar-to-NI path: bit 0 NI_VCFIFO_DATELINE_SWITCH, bit 8 PI_VCFIFO_SWITCH, bit 16 MD_VCFIFO_SWITCH, bit 24 IILB_VCFIFO_SWITCH (each swaps VC0/2 with VC1/3), bits 34:32 sync-bypass and async-fifo controls (header). 0xffa5c900 reads it and writes it back with bit 24 inverted, runs the neighbour loop, and inverts it again (on a lone node the loop does nothing, so the register ends where it began). Slot 59 reads it and ORs 0x100 (0x101 when the port record has flag 0x20 set). A plain read/write register satisfies both."
 
 [registers.xnni_inject_age]
@@ -2348,8 +2348,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_XNNI0_INJECT_AGE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_XNNI0_INJECT_AGE (mask 0xffff); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_XNNI0_INJECT_AGE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_XNNI0_INJECT_AGE (mask 0xffff); SAL 5.04 PROM slot 59 (0xffa5e880), the router set-up method called from the walk 0xffa5b5d0"
 doc = "NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header). Slot 59 reads it and writes it back with bits 15:8 set to 0xc0 (value AND 0xffffffffffff00ff OR 0xc000), only when the node has no NUMAlink 4 router entry (count 0), which is the case for a lone node. A plain read/write register satisfies it."
 
 [registers.vec_data]
@@ -2359,8 +2359,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_DATA_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_DATA (mask 0xffffffffffffffff); SAL 5.04 PROM vector write 0xffa0c560 and read 0xffa0bd20"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_VEC_DATA_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_VEC_DATA (mask 0xffffffffffffffff); SAL 5.04 PROM vector write 0xffa0c560 and read 0xffa0bd20"
 doc = "Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead."
 
 [registers.vec_route]
@@ -2370,8 +2370,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_ROUTE_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_ROUTE; SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_VEC_ROUTE_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_VEC_ROUTE; SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
 doc = "Route of a vector request: the 16-nibble route word shifted down 4 bits (the first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has no remaining hops the PROM stores 0xf00000000 (a 0xf in nibble 8). Not read back."
 
 [registers.vec_parms]
@@ -2381,8 +2381,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_PARMS_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_PARMS (mask 0xc0003ffffffffffb); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_VEC_PARMS_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_VEC_PARMS (mask 0xc0003ffffffffffb); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
 doc = "Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1 write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3), PIO_ID bits 45:35, START bit 62, BUSY bit 63 (header). The PROM first polls bit 63 until clear (at most 1024 reads), then writes (hops - 1) * 2 | offset AND 0x7fffffff8 | 0x40000e4000000000 for a read (PIO_ID 0x1c8) or | 0x400003d800000001 for a write (PIO_ID 0x7b); START (bit 62) launches the message. The PROM never reads BUSY again after the write; completion is read from SH_VEC_STATUS."
 
 [registers.vec_rddata]
@@ -2392,8 +2392,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_RDDATA_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_RDDATA; SAL 5.04 PROM 0xffa0bd20"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_VEC_RDDATA_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_VEC_RDDATA; SAL 5.04 PROM 0xffa0bd20"
 doc = "Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown)."
 
 [registers.vec_status]
@@ -2403,8 +2403,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_VEC_STATUS_INIT, value 0x0 (macro only)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_VEC_STATUS (mask 0xcfffffffffffffff); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_VEC_STATUS_INIT, value 0x0 (macro only)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_VEC_STATUS (mask 0xcfffffffffffffff); SAL 5.04 PROM 0xffa0bd20 and 0xffa0c560"
 doc = "Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35, SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM writes 0 before each request and reads it: bit 63 already set at that point makes the request fail with -1. After the request it polls (100 microseconds apart, at most 1024 times) until bit 63 is set. The reply is a success only when OVERRUN is clear, TYPE is 0 for a read or 1 for a write, PIO_ID is 0x1c8 (read) or 0x7b (write) and ADDRESS equals the request address bits; OVERRUN gives -2, TYPE 4, 5 or 6 give -4, -5, -6, anything else -3. Writing 0 must clear bit 63."
 
 [registers.lb_error_summary]
@@ -2414,8 +2414,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_LB_ERROR_SUMMARY_INIT (macro only; read as zero here)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names the offset SH_LB_ERROR_SUMMARY; SAL 5.04 PROM 0xffa0b9a0 (vector pre-check) and the poll in 0xffa0bd20 and 0xffa0c560"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_LB_ERROR_SUMMARY_INIT (macro only; read as zero here)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset SH_LB_ERROR_SUMMARY; SAL 5.04 PROM 0xffa0b9a0 (vector pre-check) and the poll in 0xffa0bd20 and 0xffa0c560"
 doc = "Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set while waiting for a reply means the reply status is not examined that pass. A model returns 0."
 
 [registers.lb_error_detail]
@@ -2427,6 +2427,6 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "inferred"
-reset_from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) SH_LB_ERROR_DETAIL_1_INIT (macro only; read as zero here)"
-from = "SGI 2.4 SN2 header (linux-mips linux-2.4 8ef7d46c94d5) names SH_LB_ERROR_DETAIL_1 at 0x1_1005_0200; the five-register stride is the PROM's (0xffa0b9a0 and 0xffa0bd20 write 0 to 0x200, 0x280, 0x300, 0x380 and 0x400); names for 2 to 5 follow the stride and were not each checked"
+reset_from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) SH_LB_ERROR_DETAIL_1_INIT (macro only; read as zero here)"
+from = "SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names SH_LB_ERROR_DETAIL_1 at 0x1_1005_0200; the five-register stride is the PROM's (0xffa0b9a0 and 0xffa0bd20 write 0 to 0x200, 0x280, 0x300, 0x380 and 0x400); names for 2 to 5 follow the stride and were not each checked"
 doc = "Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it."

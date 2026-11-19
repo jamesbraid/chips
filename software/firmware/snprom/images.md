@@ -14,7 +14,7 @@ with the reasoning given. *unknown*: not settled, with the route that would sett
 clean); the FIT and top-of-image words of the SHub images; the SAL banner and build time of each; the
 processor-stepping rows in each SHub 1 SAL_A; the SAL_A 5.04 node set-up and progress-register constants; the SAL_B
 reset entry and the call order of `main()`; the UART window constants in SAL_B; the decompressed EFI strings of the three
-SHub 1 images; `IP57` and `Prism` string counts. The manual pages cited were re-read in the Library `techpubs` root.
+SHub 1 images; `IP57` and `Prism` string counts. The manual pages cited were re-read in the SGI printed manuals.
 Everything else is taken from the pages named, at the commits named.
 
 Pages synthesised (chips `c567510`, sysco `5d62fbd`):
@@ -58,7 +58,7 @@ bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`
 not in the chips root and was not re-hashed for this page, so nobody here has tied it to the extracted files (the
 extracted `shub1snprom.bin` and `README.snprom` hashes above are the only ones computed). No container hash is recorded
 for the other packages, and [irix-files](../../../references/irix-files.md#sn2-firmware-and-kernels) says the container
-name of most images was not recorded when the files were copied. A Library search for the 10.54 rpm file name found
+name of most images was not recorded when the files were copied. A search of held sources for the 10.54 rpm file name found
 nothing. The route to close this is to hash the rpm in the owner's package mirror, compare it with the catalogue value,
 and check the rpm header against the extracted files.
 
@@ -284,8 +284,8 @@ Not an order; the current list with routes is [questions/sn2-prom-open.md](../..
 
 The page reviewed below also carried a list of F and S discriminating tests, a recommendation of one image and machine as a first target, and a blocker list; those were removed from this page, and the review's remarks on them (tests F2, F4, F7 to F9, section 9) are kept as the record of what facts they rested on.
 
-Independent review of commit `9de55f3` by a reviewer who wrote none of it, read against the held binaries and the Library
-`techpubs` manuals. Tools: `ia64-linux-gnu-objdump` through `retools/tools/re-run` on the images in `root/sn2/`, Python
+Independent review of commit `9de55f3` by a reviewer who wrote none of it, read against the held binaries and our holdings
+SGI printed manuals. Tools: `ia64-linux-gnu-objdump` through `retools/tools/re-run` on the images in `root/sn2/`, Python
 for the FIT, gzip components and hashes, `strings` on the decompressed components. Nothing copied into the repository.
 The corrections the review found are folded into the text above (processor tables, the top-of-image block, test F2, the
 grading of the recommendation, the container hash); the contradictions list now records the resolutions.
@@ -302,7 +302,7 @@ grading of the recommendation, the container hash); the contradictions list now 
 - `README.snprom` (10.54): `shub1snprom.bin` lists Altix 330, 350, 3300, 3700, 3700 Bx2, Prism Rackmount and Prism
   Deskside; `shub2snprom.bin` lists Altix 4700 and 450. The page's statement about 10.20 and 10.23 comes from the
   holdings catalogue; the README does not say it.
-- Manuals, read at the printed page numbers the page uses (the Library PDF index runs 24 to 28 pages ahead of them):
+- Manuals, read at the printed page numbers the page uses (our holdings PDF index runs 24 to 28 pages ahead of them):
   007-4579-001 p.77 (Altix 3300: up to 12 processors, one IX-brick, no routers, single power bay, optional L2, 17U; up
   to three C-bricks) and p.99 (the C-brick is two nodes joined by NUMAlink, two processors each; the manual says "ASIC",
   not "SHub", so "two SHubs" is the page's inference); 007-4660-001 p.100 (IP57 board: twelve DIMM slots), p.101

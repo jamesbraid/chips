@@ -10,8 +10,7 @@ Altix compute nodes with ATI FireGL graphics boards attached over AGP. It shippe
 | Extreme | [prism-extreme.md](prism-extreme.md) | CR-bricks and I/O bricks in 40U racks with XG2N modules, 8 to 128 processors |
 
 Sources, grades and page conventions are those of [the SN2 README](README.md). Nothing here is IRIX. Page numbers are
-printed pages. The held PDFs sit at `techpubs:library/manuals/4000/<number>/pdf/<number>.pdf` (Library root
-`techpubs`; 007-3938 is under `3000`); the extra page offset between PDF page and printed page is 22 for 007-4701 and 007-4772, 26 for 007-4774.
+printed pages. The held PDFs are SGI printed manuals, filed by number under the 4000 series; 007-3938 is under `3000`. The extra page offset between PDF page and printed page is 22 for 007-4701 and 007-4772, 26 for 007-4774.
 
 ## Documents and revisions (established)
 
@@ -124,7 +123,7 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 - The parts index lists "AGP Riser for Prism Dual TIO Riser (2 Molex Connectors)" `030-2053-001` and "AGP Riser for
   Onyx4/Prism (1 Molex Connector)" `030-1872-005`, a riser power cable `018-1193-002`, "Onyx4/Prism FireGL sync cable"
   `015-0412-003`, "Prism XG2N image sync cable" `018-1191-001`, "Onyx4/Prism PCA PCI Image Sync 2" `030-1986-001` and
-  "FireGL X3 AGP 256MB" `030-2071-002` (Origami library parts-index extract, `docs/library/graphics-missing-acquisition-20260813-metadata/kona-missing-4dwm-root-disposition.tsv`
+  "FireGL X3 AGP 256MB" `030-2071-002` (parts-index extract, no public copy
   lines 200, 201, 259, 260, 288, 390, 392, 393). These are index records, not SGI Linux code or a manual: they establish
   that the parts exist and are shared between Onyx4 and Prism; that the "dual TIO riser" carries two TIO chips (one per
   pipe) is **inferred** from the name and the one-bus-per-pipe labels.
@@ -249,7 +248,7 @@ The open questions are in [questions/prism-open.md](../../questions/prism-open.m
 
 ## Review
 
-Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the `techpubs` Library root, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
+Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the SGI printed manuals, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.
 
 Checks, all confirmed unless listed under findings:
 - Document identities and dates from each record of revision: 007-4701-003 and -004 (Oct 2004, Feb 2005, May 2005 with the FireGL X3-256 card and no L2 text, Oct 2005 ProPack 4 SP2), 007-4772-001 (Apr 2005) and -002 (Oct 2005), 007-4774-001 (May 2005) and -002 (Oct 2005), 007-4602-003 (Jul 2005 adds Prism), 007-3938-004 (p.iii adds the Prism). The 22 and 26 page offsets (007-4774-001 PDF 86 is printed p.60; 007-4772 PDF 7 is vii).

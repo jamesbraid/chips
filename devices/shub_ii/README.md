@@ -339,7 +339,7 @@ needs a warm reset; what `0x1_1007_1080` is; the failure signal of the protected
 ## The II and BTE set-up after the first BTE read (`0xffab22d0`)
 
 Read in Ghidra (IA-64 module, `--sn2-prom --no-analysis`) on `shub1snprom.bin` of snprom 10.54, from the disassembly. Names:
-"2.4" is `include/asm-ia64/sn/sn2/shubio.h` in linux-mips at 8ef7d46c (offsets all match; it carries no INIT values for
+"2.4" is `include/asm-ia64/sn/sn2/shubio.h` in Linux/MIPS tree at 8ef7d46c (offsets all match; it carries no INIT values for
 the II, so every reset value stays **unknown**); "PROM" is the register-name table of the SHub 1 error decoder
 (records `{name offset:32, field-list word:32, register offset:64}` at `0xffc075c0` to `0xffc08040`, name pool base
 `0xffc08068`; pairing re-derived from `II_IGFX0`).
@@ -762,7 +762,7 @@ a 2-byte store through a big window. The swap rules that matter are the PIC's ow
 
 Independent re-read by a reviewer who wrote none of it, of commit e664785, in Ghidra with the repository's IA-64 module on `shub1snprom.bin` of snprom 10.54
 (`--sn2-prom --no-analysis`, addresses `0xffab1cc0`, `0xffb70960`, `0xffb70ba0`, `0xffb71110`, `0xffb31010`, `0xffb31fb0`,
-`0xffb6f4a0`, plus the 8-byte store and load helpers `0xffa0e640` and `0xffa0e5a0`), with objdump as a cross-check, against Linux linux-mips `c9bace5bce3e` and `8ef7d46c94d5`.
+`0xffb6f4a0`, plus the 8-byte store and load helpers `0xffa0e640` and `0xffa0e5a0`), with objdump as a cross-check, against Linux Linux/MIPS tree `c9bace5bce3e` and `8ef7d46c94d5`.
 
 **Confirmed.**
 - Window number from node-offset bits 31:29, entry at `0x400160 + 8 * (n - 1)`, widget 11:8, offset 4:0, I/O bit 12, Crosstalk address `offset << 29 | low 29 bits`: Linux 2.4 `io.h` (`IIO_ITTE_*`), `shubio.c` and v5.3 `addrs.h` (`BWIN_SIZE_BITS` 29, `NODE_BWIN_BASE0` = base + 512 MiB, `HUB_NUM_BIG_WINDOW` 6, `SWIN0_BIGWIN` 6). Established as a software definition.

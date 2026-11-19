@@ -2,7 +2,7 @@
 
 Scope: an Altix 350 booting PROM 10.54 (SAL 5.04) with elilo. Section 3 grades what an emulator needs beyond the ISP12160 SCSI disk and CD, the PIC bridge, the IOC4's PCI identity and the L1 console. No PROM reverse engineering was done for this page; it reads SGI's manuals and the public kernel sources.
 
-Sources: SGI manuals in the Library techpubs root (007-4558-014, 007-4727-003, 007-4837-006, 007-5482-007, 007-4633-007/-013/-017, 007-4660-002); kernel sources in the local linux-sn2 mirror (tag v7.3-rc3-epic1-sn2-gpu) and Library `linux-history` (mmtimer.c).
+Sources: SGI manuals in the SGI printed manuals (007-4558-014, 007-4727-003, 007-4837-006, 007-5482-007, 007-4633-007/-013/-017, 007-4660-002); kernel sources in the linux-sn2 tree (tag v7.3-rc3-epic1-sn2-gpu) and Linux history tree (mmtimer.c).
 
 ## 1. SGI install procedure and boot media
 
@@ -42,14 +42,14 @@ The CD appears as `Pci(2|1)/Ata(Primary,Master)/CDROM(Entry1)` (IOC4 ATAPI). Dis
 
 ## 2. Kernel features ProPack adds, and what they need
 
-From the linux-sn2 tree (7.3-rc3 fork) and `linux-history`.
+From the linux-sn2 tree (7.3-rc3 fork) and Linux history tree.
 
 | Feature | Source | Hardware / SAL it uses |
 |---|---|---|
 | sn_console (`ttySG0`) | drivers/tty/serial/sn_console.c | SN_SAL_CONSOLE_PUTB, GETC, READC, POLL, INTR, XMIT_CHARS; polled or interrupt driven |
 | snsc (/dev/sn/ L1/L2 channels, events) | drivers/char/snsc*.c | SN_SAL_IROUTER_OP (open, close, send, recv, intr), SN_SAL_SYSCTL_EVENT |
 | sn_hwperf | arch/ia64/sn/kernel/sn2/sn_hwperf.c | SN_SAL_HWPERF_OP (op 1 heap size, 2 install heap, 10 object count, 12 enum objects, 100-102 cpu/node/nasid) |
-| mmtimer | `linux-history` drivers/char/mmtimer.c | no SAL; SHub RTC MMRs (section 3) |
+| mmtimer | Linux history tree drivers/char/mmtimer.c | no SAL; SHub RTC MMRs (section 3) |
 | ioc4 core | drivers/misc/ioc4.c | IOC4 BAR0 MMIO, clock calibration via GPCR/INT_OUT, interrupt enable clear |
 | sgiioc4 IDE | drivers/ata/pata_sgiioc4.c (libata); old `ide/pci/sgiioc4.c` in 2.6 | IOC4 ATA taskfile at BAR0+0x100, DMA regs at +0x140, 16-byte big-endian PRD entries |
 | ioc4_serial (ttyIOC4) | drivers/tty/serial/ioc4_serial.c | IOC4 serial ports and interrupts |
@@ -99,7 +99,7 @@ Severity key: B = boot-blocking (kernel or installer will not start), I = instal
 
 ### MMTIMER: SHub RTC registers
 
-From `linux-history` drivers/char/mmtimer.c and `arch/ia64/include/asm/sn/shub_mmr.h`. Values are `LOCAL_MMR_ADDR` offsets.
+From Linux history tree drivers/char/mmtimer.c and `arch/ia64/include/asm/sn/shub_mmr.h`. Values are `LOCAL_MMR_ADDR` offsets.
 
 | Register | SHub 1 | Use |
 |---|---|---|

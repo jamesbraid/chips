@@ -1063,7 +1063,7 @@ Independent re-read of the section above in Ghidra and an ia64 listing of snprom
 
 ## `SH_SCRATCH1` (`0x1_101d_0080`) and its alias: what touches which bits
 
-Read in the Ghidra decompiles of snprom 10.54 (`shub1snprom.bin`); no instruction listing. The 2.4 header gives `SH_SCRATCH1` as one 64-bit field, reset 0, and `SH_SCRATCH1_ALIAS` at `0x1_101d_0088` with an address only (established). Linux v5.3 has no name for either (a search of the Library `linux` root found none; that root's v5.3 coverage was not confirmed).
+Read in the Ghidra decompiles of snprom 10.54 (`shub1snprom.bin`); no instruction listing. The 2.4 header gives `SH_SCRATCH1` as one 64-bit field, reset 0, and `SH_SCRATCH1_ALIAS` at `0x1_101d_0088` with an address only (established). Linux v5.3 has no name for either (a search of the Linux mainline tree found none; that root's v5.3 coverage was not confirmed).
 
 | Order | Site | Access | Bits |
 |---|---|---|---|
@@ -1107,11 +1107,11 @@ Changed:
 - The `id` of `SH_LOCAL_INT0_CONFIG` masks `nasid >> 7` to five bits.
 - The word the `0x6c` test reads is named `SH_SCRATCH2` here by address; `registers.toml` still labels `0x1_101d_0100` `lb_l1_state`. Left as is.
 
-Not checked: the 2.4 header names, valid bits and INIT values quoted for the five PI error registers and `SH_SCRATCH1` (the header is not in this clone; no Linux v5.3 hit for `SH_SCRATCH1` in the Library `linux` root); the other nine lists of `0xffa30b40` beyond their counts; `0xffa24810`; the `0xffa20e30` table; the four nonzero-NASID calls. The five PI first-error and mask registers have reset `unknown` in `registers.toml` while the quoted header INIT is 0 (first-error) or all valid bits (masks); that is under-claimed, not wrong. Grades unchanged otherwise.
+Not checked: the 2.4 header names, valid bits and INIT values quoted for the five PI error registers and `SH_SCRATCH1` (the header is not in this clone; no Linux v5.3 hit for `SH_SCRATCH1` in the Linux mainline tree); the other nine lists of `0xffa30b40` beyond their counts; `0xffa24810`; the `0xffa20e30` table; the four nonzero-NASID calls. The five PI first-error and mask registers have reset `unknown` in `registers.toml` while the quoted header INIT is 0 (first-error) or all valid bits (masks); that is under-claimed, not wrong. Grades unchanged otherwise.
 
 ### Review (`SH_FSB_VGA_REMAP`, commit 4055b2f)
 
-Independent re-read in Ghidra and an objdump listing of snprom 10.54 (`shub1snprom.bin`), and the SGI Linux 2.4 headers (`shub_mmr.h`, `shub_mmr_t.h`, linux-mips commit `8ef7d46c94d5`, read through the Library). Nothing was run.
+Independent re-read in Ghidra and an objdump listing of snprom 10.54 (`shub1snprom.bin`), and the SGI Linux 2.4 headers (`shub_mmr.h`, `shub_mmr_t.h`, Linux/MIPS tree commit `8ef7d46c94d5`, read through our holdings). Nothing was run.
 
 **Confirmed.**
 - Header: offset `0x120010180`, mask `0x4001fffffffe0000`, INIT 0, fields offset 35:17, asid 37:36, nid 48:38, enable 62; bits 61:49 reserved.
@@ -1127,7 +1127,7 @@ Independent re-read in Ghidra and an objdump listing of snprom 10.54 (`shub1snpr
 
 ## After the block-transfer self-test: the XN accesses in `main_two` up to the NASID change
 
-What SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`) does to SHub 1 between the two-engine copy self-test (`0xffa96980`, called from `main_two` at `0xffa1b04c`, traced in [the SHub 2 page](../shub_ii/README.md)) and the call to the NASID change (`0xffacd2b0`, [below](#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three)), for a lone node. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled), with a listing cross-check of the stop routine `0xffa5c900`, the accessor leaves and the thunks. Call sites are the address of the `br.call` slot. Names are the 2.4 SN2 header (`shub_mmr.h`, linux-mips 8ef7d46c). Not independently reviewed. The accessors are `0xffa0e5a0` (8-byte read), `0xffa0e640` (8-byte write) and the 1- and 2-byte variants; each runs with interrupts masked and ends in `mf.a`, so a model sees one access per call.
+What SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`) does to SHub 1 between the two-engine copy self-test (`0xffa96980`, called from `main_two` at `0xffa1b04c`, traced in [the SHub 2 page](../shub_ii/README.md)) and the call to the NASID change (`0xffacd2b0`, [below](#the-nasid-change-and-the-node-id-install-0xffacd2b0-to-main_three)), for a lone node. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled), with a listing cross-check of the stop routine `0xffa5c900`, the accessor leaves and the thunks. Call sites are the address of the `br.call` slot. Names are the 2.4 SN2 header (`shub_mmr.h`, Linux/MIPS tree, commit 8ef7d46c). Not independently reviewed. The accessors are `0xffa0e5a0` (8-byte read), `0xffa0e640` (8-byte write) and the 1- and 2-byte variants; each runs with interrupts masked and ends in `mf.a`, so a model sees one access per call.
 
 ### The stop: `0xffa5caf0` is inside `0xffa5c900`
 
@@ -1205,7 +1205,7 @@ Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-
 
 ## Partition fences: `0xffa51200` (`intcon_pttn_erect_reset_fences`)
 
-SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`), lone node, NASID 0. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled) with an `ia64-linux-gnu-objdump` listing for call slots, immediates and predicates. Names and fields are the 2.4 SN2 header (`shub_mmr.h` at 8ef7d46c); the Linux v5.3 headers carry no NI names (a search of the Library `linux` root found none; its v5.3 coverage was not confirmed). Independently reviewed, see Review below. No external URL was read.
+SAL 5.04 (`shub1snprom.bin`, snprom 10.54, flat at `0xffa00000`), lone node, NASID 0. Read in Ghidra (IA-64, `--sn2-prom --no-analysis`, every function named decompiled) with an `ia64-linux-gnu-objdump` listing for call slots, immediates and predicates. Names and fields are the 2.4 SN2 header (`shub_mmr.h` at 8ef7d46c); the Linux v5.3 headers carry no NI names (a search of the Linux mainline tree found none; its v5.3 coverage was not confirmed). Independently reviewed, see Review below. No external URL was read.
 
 **Where it is (established).** The routine name is the PROM's own: its two error strings begin `intcon_pttn_erect_reset_fences:`. The print "Erecting partition fences .................", two tabs, is the string at `0xffbb1700` (address built at `0xffa51336`, print call `0xffa5135c`, then a console call `0xffa1f170` at `0xffa5136c`, not traced); the end prints "DONE\n" (`0xffbb16c8`, call `0xffa5152c`). Chain: `main` `0xffa19a20` to `main_two` `0xffa1ade0` to the NASID change `0xffacd2b0` to `main_three` `0xffad7280`, which calls `0xffa485a0` at `0xffad761c`; that routine calls `0xffa51200` at `0xffa4873c`. `0xffa485a0` is the partition set-up: it reads `SH_SHUB_ID`, writes progress code `0x25`, runs `0xffa50880` (prints "Checking partitioning information ....", returns 2 on a lone node), then `0xffa50bd0` (flags each port, below), then `0xffa53180`, `0xffa51200` and `0xffa517b0`. `0xffa48560`, which `main_two` calls at `0xffa1b0fc`, is a different routine that only fills a RAM page.
 
@@ -1260,7 +1260,7 @@ Header text: `SH_NI0_LLP_RESET_EN`, "Controls LLP warm reset propagation"; field
 
 ### Review
 
-Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-64, `--sn2-prom --no-analysis`) over the named addresses; `ia64-linux-gnu-objdump` over the whole image for slot addresses, immediates and predicates. Header text read through the Library at linux-mips 8ef7d46c94d5.
+Independent re-read, 2026-11-16, by a reviewer who wrote none of it. Ghidra (IA-64, `--sn2-prom --no-analysis`) over the named addresses; `ia64-linux-gnu-objdump` over the whole image for slot addresses, immediates and predicates. Header text read through our holdings at Linux/MIPS tree, commit 8ef7d46c94d5.
 
 **Confirmed.** `0xffa51200` and the two call slots `0xffa5167c` and `0xffa516dc`, with the print and "DONE" calls and the three strings; the chain `0xffad761c` to `0xffa485a0` to `0xffa4873c`, progress 0x25 (decimal 37 at `0xffa485e6`), `main_three` entered through descriptor `0xffc4d850`; slots 49 and 62 of the table at `0xffbd7c18` (descriptors `0xffc4bd50` and `0xffc4bb30`, functions `0xffa5d5b0` and `0xffa60410`); the method's operation to value mapping (operation 1 gives 0, otherwise 1), the bit 0 test of argument 4, the two-pass loop at `0x1_5000_0010 + 0x2000 p`, the mask AND `0xff`, stop on first negative; the local write path of `0xffa0c560` to `0x8000_0009_5000_0010`; the second call writing nothing (`~M & 0xff` = `0xfc`); the port-count method returning 2; `0xffa50bd0` and `0xffa53180` as described; the header facts (name, `OK`, "Allow LLP warm reset to reset SHUB", mask 1, INIT 1, NI1 stride `0x2000`); `LLP_RESET` and `LLP_STAT` not touched; the one read-back in `0xffa5e0b0` under `SH_SCRATCH1` bit 40, the only code literals for `0x1_5000_0010` in the image being that read (`0xffa5e2f6`) and the write (`0xffa60476`); the node-count check and the L1 clamp to at least `0x800`; no poll in this stretch on a lone node.
 

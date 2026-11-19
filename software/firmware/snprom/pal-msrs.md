@@ -346,7 +346,7 @@ msr[1237] bit 1 in 1.27; the second pair in 5.37 and 1.27 also runs only when `r
 144 identical copies, `T` of 0, 8 and 15, and 8 reachable from both sides). A status field set by a calibration step needs neither the direction bit nor the strobe. The step size
 (1 assumed), the strobe edge (0 to 1 of bit 48 assumed) and the reset value are **unknown**. Because every write carries the nibble back as read, a model must not let the written
 nibble bits override the stepped value. None of Intel's Itanium 2 reference manual 251110 (all three revisions), hardware developer's manual 251109 or specification update 251141
-(`docs/library/cache/cpu/itanium/`) names msr 1728 or 1730, and the Library holds no Intel patent on processor self-test or array test via MSR. The system bus is source-synchronous
+(the held Intel Itanium 2 manual) names msr 1728 or 1730, and we hold no Intel patent on processor self-test or array test via MSR. The system bus is source-synchronous
 with strobes (251109, chapter 3); bus-timing taps are a possible use, but no source says so.
 
 **What lets a model past the loops.** The simplest model that passes every loop: msr[1730] bits 3:0 and 11:8 step by one on each 0 to 1 write of bit 48, up when bit 49 is set and down when
