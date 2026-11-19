@@ -12,7 +12,8 @@ same-unit, and every hub pair is delivered by the tables the PROM writes. The 48
 rule and the 3800-series 128-processor table fails the deadlock check. A MetaRouter graph needs exactly meta on routers
 that take a rack-router cable and both role flags on repeaters, per the replay. The system tops out at 128 hubs (NASIDs
 0 to 127, 512 processors) with 44 routers and three meta bits. Vector routes may reach 14 routers; the 512-processor
-graph's longest is 7.
+graph's longest is 7. [Why the two rejections happen](#why-the-pair-check-rejects-48-processors-and-the-deadlock-check-rejects-the-3800-128-processor-draft-table)
+is its own section.
 
 ## Labels
 
@@ -100,12 +101,55 @@ Single faults on the 512-processor wiring (number walk): one rack uplink, one ne
 port-6 cable missing is accepted with "missing cable or link down"; one MetaRouter-to-repeater cable missing or
 moved to another repeater port is rejected with the paired-port error on the repeater.
 
+## Why the pair check rejects 48 processors and the deadlock check rejects the 3800 128-processor draft table
+
+Two different routines. Both ran in the replay on the graphs the draft guide prints; neither graph is a shipped
+wiring (the shipped 128-processor drawing, 8 routers and 48 cables with no unit-38 router, is the "96, 128" row
+above and is accepted). Diagnostics: [route_diagnostics.py](replay/route_diagnostics.py), objdump of the unpacked
+segment (the check below was read with objdump, not Ghidra).
+
+**Pair check (48 processors).** The routine at 0x1fc241ac is named by its own console line, "check_module at %d"
+(text at 0x1fc72338). The number calculation calls it once per router (0x1fc5da18), skipping MetaRouters when the
+global word it tests at 0x1fc5d9f4 is nonzero. Control flow, read in full (E): it returns 0 at once for a repeat router
+(flag bit 1). Otherwise, for each of the router's eight port records i (record i is port 8 - i) whose far end N is a
+router of the same meta flag, it scans the other records j. Where record j of the same router leads to a router X of
+the same meta flag, it takes X's record-i neighbour Z and N's record-j neighbour Y, and fails with "corresponding ports
+must connect to the same module" (0x1fc723a0) when Y is a router and Y is not Z; the port mask it prints is
+1 << (7 - j), so 0x80 is port 8 and 0x20 is port 6. A second error, "missing non-express links" (0x1fc723d8), prints the
+fixed mask 0xe1, which is ports 8, 7, 6 and 1. The reading of the rule is **I**: the two ways round a square of four
+routers must reach the same fourth router, so that router links can carry a consistent dimension number, which is how
+the number walk assigns them. The error ports of the replay below are **SE**.
+
+The 48-processor table (Table 2-13) has a partial second rack with one router, which takes both of the first rack's
+unit-27 router's cables on its ports 1 and 6 while taking the unit-19 router's on 7 and 8. From the first rack's unit-19
+router, port 8 then port 6 ends at the unit-27 router, while port 6 then port 8 ends at the lone router: the square
+does not close. The replay prints the error three times (ports 6, 8 and 6,
+once for each router of the triangle). The 64-processor graph examines 16 squares and all close. The 128-processor
+draft table examines 32 and all close, so this check is not what rejects it.
+
+**Deadlock check (Table 2-19).** The number walk accepts the table (hubs 0 to 31, depth 2, four MetaRouters) and route
+calculation then fails with "Error: routing cycle detected!" and "dgraph_check failed!!!" (message texts 0x1fc74bd0 and
+0x1fc74c50). The routine is the recursive dependency search at 0x1fc20be4 called from 0x1fc22a58, read in outline
+earlier and not traced here. Independent of it, an analysis of the routes the PROM wrote (every hub pair forwarded by
+the written tables, each router exit a channel, each consecutive pair on a path a dependency) finds a cycle in
+Table 2-19 and none in Table 2-23 (256 processors, 48 channels), agreeing with the PROM's verdict on both (**SE**).
+The cycle has seven channels, written as router and exit port: 002R19 p8, 002R38 p8, 013R27 p7, 012R27 p1,
+012R19 p8, 013R38 p7, 002R27 p6, and back to 002R19 p8. Two MetaRouters sit on it, each entered by a unit-19 uplink
+(002R38 on p3, 013R38 on p4) and left by a unit-27 uplink (p8, p7). The table gives the four U38 routers 3, 2, 2 and
+1 uplinks, mixed across units, and no U38-to-U38 cable. That the PROM's routes cycle because of that shape is **I**.
+What the routing code's tie-break does to produce it is **U**: the next-hop routine (0x1fc22e70) was not read in full.
+Three hand-made regularisations of the uplinks were tried; each failed earlier for another reason (the
+express-link check, or "get_route: bad routing table"), so none isolates the cause.
+
 ## Role values (E for the PROM, I for the pins)
 
 The router discovery routine reads router register 0x50 by vector read (0x1fc265a8 to 0x1fc265c4), shifts right by 20,
 keeps four bits, inverts, keeps the low two and ORs them into the flag halfword at +0x26 (0x1fc265d4 to 0x1fc26604):
-bit 0 MetaRouter, bit 1 repeat router. Bits 23:22 are shifted in with the rest of the nibble and then masked off by the low-two keep, so they never reach the flags. The public SN1 router header calls register 0x50
-the JBUS control register. The L1's router-type nibble reaches it only if L1 nibble bit n drives register bit 20 + n:
+bit 0 MetaRouter, bit 1 repeat router. Bits 23:22 are shifted in with the rest of the nibble and then masked off by the low-two keep, so they never reach the flags. The public SGI ia64 kernel patch (`linux-2.4.18-ia64-020722`, `include/asm-ia64/sn/router.h`) names register 0x50
+`RR_JBUS_CONTROL` and defines a four-bit field "router position bits" at bits 23:20 (`RJC_POS_BITS`), next to the
+read-strobe and output-enable timing fields; no code in the patch reads the field, and it says nothing of meta or
+repeat roles (E for the field position, U for its meaning). The same patch sets `MAX_NASIDS` to 128 and `MAXCPUS` to 512
+(E, public header), matching the hub limit below. The L1's router-type nibble reaches it only if L1 nibble bit n drives register bit 20 + n:
 **I**. It fits all three accepted L1 values (`0xf` 11 gives no flag; `0xe` 10 gives meta; `0xc` 00 gives both). The
 nibble reaches the router chip through the R-brick's ROUTER CONTROL expander on the L1 side
 ([R-brick page](../bricks/rbrick.md)); the pin-to-register wiring is **U**.
@@ -164,6 +208,6 @@ allowed. SE for the route search (replayed), E for the barrier's data path (read
 |---|---|---|
 | 0 | pin-to-register-0x50 mapping (does L1 nibble bit n drive register bit 20 + n) | read register 0x50 of a real meta and repeat router, or the router board and chip pin descriptions |
 | 1 | which U38 routers carry which role on shipped systems | a shipped system's `hinv` or L2 config |
-| 2 | why 2-19's routes contain a cycle; the 0x1fc22e70 next-hop and tie-break were not read in full | read both |
+| 2 | which routing choice makes 2-19's routes cycle (the cycle itself is located above); the 0x1fc22e70 next-hop and tie-break were not read in full | read both, then replay a regularised 128-processor table |
 | 3 | minimality above 288 processors | run the same check on 320 to 512 |
-| 4 | whether node distribution and the barrier complete at 128 hubs | needs a 128-hub run |
+| 4 | whether node distribution and the barrier complete at 128 hubs. The 512-processor replay numbers all 128 hubs 0 to 127 and every hub pair forwards (16,256 pairs, longest 7 routers), but neither stage can be replayed without live peers: both only poll hubs over the vector routes, so the open part is their polling time and the response of 127 real hubs | a 128-hub run of the PROM on a model or a real 512-processor console capture |
