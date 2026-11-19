@@ -693,3 +693,23 @@ Each line is one `srv_singlebit` or accessor call; `val=?` is taken from the con
 - bit147 ABi[21] mask=0x01 sh=0 R val=0
 - bit152 ABi[22] mask=0x01 sh=0 R val=0
 - bit29 CCi[18] mask=0x01 sh=4 W val=1
+
+## 5. VGI1 channel registers (slot-0 GIO window, 8-byte accesses)
+
+Channel *c* (1 or 2), register slot *r*: offset `((c << 9) + r) * 8`; global registers use *c* = 0. README section 14 has the sequences and the interrupt handling.
+
+| Offset (ch 1 / ch 2) | Slot | Name | Access seen | Value or use |
+|---|---|---|---|---|
+| global `+0x00` | 0 | gioid | read | `& 0x7f == 0x11`; bits 15:8 kept as revision |
+| global `+0x10` | 2 | sysmode | write | `0x101` |
+| global `+0x20` | 4 | chipid | read | stored, unchecked |
+| `+0x1000` / `+0x2000` | 0 | setup | write | configuration word, shadowed |
+| `+0x1010` / `+0x2010` | 2 | intenab | write | `0x10` at abort; at set-up the status mask ORed with `0x10` |
+| `+0x1020` / `+0x2020` | 4 | hparam | write | horizontal parameters |
+| `+0x1030` / `+0x2030` | 6 | vparam | write | vertical parameters |
+| `+0x1040` / `+0x2040` | 8 | stride | write | 16-bit stride |
+| `+0x1100` / `+0x2100` | 0x20 | debug | none on playback | |
+| `+0x1200` / `+0x2200` | 0x40 | trig | write | `1` arm, `2` then `0` abort, `0` disable |
+| `+0x1210` / `+0x2210` | 0x42 | dataaddr | write | start offset in the first page |
+| `+0x1220` / `+0x2220` | 0x44 | descaddr | write | descriptor page GIO address (bits 39:0) plus flags |
+| `+0x1300` / `+0x2300` | 0x60 | status | read, write-back, set-up write | event bits 0 to 4, errors 15:8; clear by writing back |

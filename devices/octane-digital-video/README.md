@@ -671,6 +671,81 @@ What this means:
    the GAL index port at `+0x73408` taking `0x25` and reads of `+0x73488` it is the I2C status, and the fix is GAL indirect 37 bit 7 reading 0 (section 10.6, override 1). I (the
    identification of the observed loop needs the raw trace addresses; this page cannot settle it from the binaries alone).
 
+## 13. The graphics query behind "Unable to find IMPACT Graphics. Assuming board 0"
+
+Pass 7, from the 6.5.30 `impact.so`, and the 6.5.30 `mgras.a` and `gfx.o` of the IP30 kernel (read by disassembly; the matched 6.5.13m overlays and a 6.5.21f kernel were not
+disassembled, so the same logic there is I). Cross-checked against the IMPACT graphics workspace (jamesb/gr4) `devices/mgras/board-identity.md`.
+
+### 13.1 Where the message comes from and what it asks
+
+| Fact | Value | Grade |
+|---|---|---|
+| Printer | `impact.so`, the routine `_mgvManagedBy` (one routine of about 700 bytes at `0x40d930`, called while a meta device is added); the string is its `fprintf(stderr, ...)` | E |
+| Device opened | `/dev/graphics` and `/dev/opengl`, each `open(..., O_RDWR|O_NONBLOCK)`, tried in turn according to a static flag (the flag starts so `/dev/opengl` is tried first; a failure falls back to the other); then `fcntl(fd, F_SETFD, FD_CLOEXEC)`. Both failing prints `_mgvManagedBy: (opengl) opened failed` and the routine returns 0 | E |
+| Ioctl 101 (`GFX_GETNUM_BOARDS`, my name) | no argument; the return value is the board count. A count of 0 or less skips the search, so the message is printed with board 0 assumed | E |
+| Ioctl 102 (`GFX_GETINFO`, my name) | argument `{int index; void *buf; int len}` (n32, 12 bytes), `len` = **204**, once per board index from 0 to count-1 | E |
+| Fields read from the 204-byte reply | **+0**: NUL-terminated name, compared with `IMPACT`, then `IMPACTPC`, then `IMPACTSR` (any of the three matches); **+53**: one byte, must be **non-zero**; **+16**: a string searched for a `.` (`strrchr`), whose tail after the dot is `atoi`'d into a global (board number). An empty +16 is skipped | E |
+| "Found" | a board whose name matches AND whose byte +53 is non-zero (the loop then breaks; with `_VL_DEBUG` set it prints `_mgvManagedBy: IMPACT gfx and video found`). A name match with byte +53 zero is **not** a hit and the loop continues. If every board fails, the message prints and board 0 is used | E |
+| Ioctl 103 (`GFX_ATTACH`, my name) | argument `{int board; u32 value}`, `value` = `0x02000000`, sent for the found board (or 0 after the message). Failure prints `_mgvManagedBy:: gfx attach failed: <errno>` | E |
+| Consequence of the message | the DL and VL keep running on board 0; the message is a missed match, not an error return | E |
+
+So a reply that makes the search succeed is: count of at least 1; for the board, name `IMPACTSR` (the only name the 6.5.30 kernel sets) and byte +53 = 1.
+
+### 13.2 Where the kernel gets the reply
+
+| Step | What the kernel does | Grade |
+|---|---|---|
+| 101 | `gfxioctl` stores `GfxNumberOfBoards`, a counter that `GfxRegisterBoard` increments, once per HQ4 widget that attached (`mgras_attach` calls it) | E |
+| 102 | `gfxioctl` copies in the 24-byte (kernel-width) argument, requires `index < GfxNumberOfBoards` and a non-null `GfxBoards[index]` (else error 19, ENODEV), and calls the board's function-table entry 0, **`MgrasInfo`** (`mgras_gfx_fncs[0]`) | E |
+| `MgrasInfo` | calls `MgrasGatherDynamicInfo`, then `copyout`s `min(len, 204)` bytes of the per-board info record (the pointer at board +200) and returns the byte count | E |
+| Info record | filled once at attach by `MgrasGatherInfo` (`mgras_init.o`): `bzero` of 204 bytes, then **name `IMPACTSR`** copied unconditionally into +0 (`strncpy`, 16 bytes), **204 stored at +36**, the HQ4 revision nibble at **+55**, and so on | E |
+| Byte +53 | `1` when **bit 7 of the byte at HQ4 base `+0x71708` is clear** (the CMAP and RA revision byte), else 0. It is then cleared to 0 and byte +54 set if the multi-channel-option probe (`mgras_mco_probe`) finds a board, or if a flat-panel probe (`mgras_fp_probe`) does. Per gr4's `board-identity.md` that bit is "clear when a video option board is present" | E (code), I (the bit's meaning; gr4 grades it inferred) |
+| Other reads on the same path | `+0x70008` read by `mgras_mco_probe` (a video board's `0x11` has high nibble 1, not the nibble 4 the probe accepts, so it is "absent", correct); the HQ4 word at base `+0x0` bits 31:28 (revision; 1 prints a prototype rev-A warning and continues); the HQ FIFO status at `+0x20100` polled until its low five bits are 12 or below; the board-version words at `+0x72408` and `+0x72488` (gr4 `board-identity.md` rows 2 and 3); stores of `0x108d` and `0x765b900f` at `+0x1000` and `+0x1008` (the DCB set-up) | E |
+| 103 | `gfxioctl` copies in `{board, value}`, requires `GfxBoards[board]` non-null and the caller not already attached (error 16), then calls function-table entry 1, **`MgrasAttach`**, which returns 22 (EINVAL) unless `value & 0x3fff` is 0 (so `0x02000000` passes) and then only maps and records, with no register access | E |
+
+What the QEMU MGRAS model must therefore present: at least one registered graphics board whose HQ4 window answers **bit 7 of `+0x71708` clear**, with the ordinary graphics ID reads the existing model already gives (the kernel computes the name and the 204-byte record itself, so no register holds "IMPACTSR"). The board count comes from the kernel's registration, not a register. If `hinv` already shows the graphics board, the likely cause is bit 7 of `+0x71708` reading 1 (a graphics-only configuration): that byte is the entire difference between "graphics only" and "graphics and video option present" for this query. The same byte makes the multi-channel option probe's `+0x70008` read matter, so the video board's `0x11` at `+0x70008` must not be disturbed by the graphics model.
+
+## 14. VGI1 channel registers for playback
+
+Pass 7b, from `srv_llvgi1_interface.o`, `srv_llvgi1_interrupt.o`, `srv_llvgi1_lib.o` and `srv_llvgi1_drb.o` of the 6.5.30 `srv.a` (read in full). Register numbers are 8-byte slots: channel *c* (1 or 2) register *r* is at slot window offset `((c << 9) + r) * 8`, so channel 1 is at `+0x1000` and channel 2 at `+0x2000`; all accesses are 8-byte (`ld`/`sd`). Names are the driver's own debug strings (section 2.2); offsets come from its register table; roles are I unless stated.
+
+### 14.1 Channel register map
+
+| Offset in channel | Slot | Name | Role | Written by | Grade |
+|---|---|---|---|---|---|
+| `+0x000` | 0 | setup | channel configuration: pixel format, direction, mode bits; a software shadow holds it (the driver never reads it back) | `srv_dma_setup`, once per transfer set-up, value from the per-channel setup word | E (write), I (fields) |
+| `+0x010` | 2 | intenab | interrupt enable; shadowed | `0x10` at abort (`srv_dma_abort_chan`) and in `srv_gio_dma_init`; at set-up the status-clear value ORed with `0x10` | E |
+| `+0x020` | 4 | hparam | horizontal parameters (active pixels, per `srv_dma_h_params`) | `srv_dma_h_params` | E (reg), I (fields) |
+| `+0x030` | 6 | vparam | vertical parameters (`srv_dma_v_params`) | `srv_dma_v_params` | E (reg), I (fields) |
+| `+0x040` | 8 | stride | line stride in bytes (a 16-bit value from the request, `lhu +20`) | `srv_dma_setup` | E (write), I (units) |
+| `+0x100` | 0x20 | debug | debug register | not touched on the playback path | U |
+| `+0x200` | 0x40 | trig | trigger: `1` arms (`srv_dma_enable_trig`), `2` then `0` aborts a pending trigger (`srv_dma_trig_abort`, the `2`-then-`0` pair seen at `0x1200` and `0x2200`), `0` disables (`srv_dma_disable_trig`). Written on both channels when the channels are paired | `lib` | E |
+| `+0x210` | 0x42 | dataaddr | 32-bit start offset of the transfer within its first page, from the request block | `srv_dma_start_dma` | E (write), I (meaning) |
+| `+0x220` | 0x44 | descaddr | GIO address of the descriptor page in bits 39:0, with flag bits above (bit 48 set in one mode); written last, after dataaddr | `srv_dma_start_dma` | E (write), I (flags) |
+| `+0x300` | 0x60 | status | interrupt and event status, read by the handler and **cleared by writing the read value back**; bit 4 is cleared by an explicit read-modify-write at abort; also written at set-up with the mask the driver is about to enable | handler, `srv_dma_abort_chan`, `srv_dma_setup` | E (access), I (clear-on-write) |
+
+### 14.2 Sequences, in order
+
+| Operation | Accesses to a channel | Grade |
+|---|---|---|
+| **Initial abort** (`srv_gio_dma_init`, once per channel, both channels attempted) | write `0x10` to intenab (`+0x1010`, `+0x2010`); trigger abort: write `2` then `0` to trig (`+0x1200`, `+0x2200`); read status (`+0x1300`, `+0x2300`), clear bit 4, write it back | E |
+| **Set-up for playback** (`srv_dma_setup`) | write setup (`+0x000`); write stride (`+0x040`); write status (`+0x300`) with the interrupt-mask value (`0x2f0b`, or `0x211` for channel types 2 and 4); write intenab (`+0x010`) with that value ORed with `0x10` | E |
+| **Transfer start** (`srv_dma_req` queues the request, `srv_dma_start_dma` issues it) | write dataaddr (`+0x210`), then descaddr (`+0x220`); then `srv_dma_enable_trig` writes trig = 1 when the transfer is triggered rather than free-running. The descriptor is a page of 8-byte entries in guest memory (16 KiB pages, one entry per page with the page's GIO address and flag bits; the exact bit layout is not decoded, U) that the chip reads by DMA | E (order), U (descriptor bits) |
+| **Next descriptor** (`srv_dma_next_dma`) | the same two writes, dataaddr then descaddr, for the next request of the same channel | E |
+| **Abort** (`srv_dma_abort_chan`) | trig abort pair, intenab = `0x10`, status read-modify-write clearing bit 4 | E |
+| **Poll** | nothing is polled in a loop on the channel registers; every status read is inside the interrupt handler | E |
+
+### 14.3 Interrupt and completion
+
+| Item | Behaviour | Grade |
+|---|---|---|
+| Line | the DMA interrupt is GIO line 4 (`srv_dma_interrupt`); line 6 is the CC1 field interrupt of section 10.7 | E |
+| Handler | reads status of **both** channels, masks to 14 bits, ignores bit 5 for logging, passes each channel's status to `srv_dma_drb_intrs`, then writes each status value back (clear) | E |
+| Status bits | bit 0: field or frame pulse, updates the UST/MSC timestamp pair (`srv_dma_do_mscust`) and runs timed controls; bit 1: descriptor consumed, driver starts the next request (`srv_dma_next_dma`); bit 3: request complete, the driver moves the request block to the completion queue and calls the per-block callback (`srv_dma_drb_to_compqueue`); bit 4: trigger event, handed to the TMI handler when the board is in TMI mode; **bits 15:8: error**, the driver disables the trigger and calls `srv_dma_post_errors` (callbacks to `mgv.so` as a transfer error event); bit 2: routed to rate handling (`_srv_vgi1_sw_rate`, `_srv_vgi1_init_rate`), role not decoded | E (routing), I (names) |
+| What a transfer needs to complete | a status of bit 3 (and bit 0 each field for the clock), then the line-4 interrupt; `intenab` bit set for what is raised. No further register read is required: completion is the interrupt plus the written-back status | E |
+| Missed-interrupt timer | with a transfer active the 25-tick timer (section 2.4) force-resets the chip if no interrupt arrives for about 2 seconds, so a model that completes nothing resets the board | E |
+| Not decoded | the descriptor entry bit layout; the `dataaddr` units; the `setup` field layout; `hparam`/`vparam` fields; what bits 2 and 5 mean | U |
+
 ## Not done in this pass
 
 - Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
