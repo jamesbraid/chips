@@ -28,6 +28,11 @@ A read returns `(register >> shift) & mask`. Ranges of ids and the block each se
 | 342 to 385 | GAL indirect |
 | 386 to 389 | k-sync offsets (software) |
 
+Index and data ports per block (direct register *n* is at `block + n*0x80 + 8`): GAL and CSC index at direct 0, data at
+direct 1; CC index direct 1, data direct 2; TMI (in the GAL block) index direct 6, data direct 7; AB takes a 16-bit
+address (high byte to direct 4, low byte to direct 3, through `MgrasWriteBfifo`) and the data at direct 1 (registers 0 to 38) or
+direct 2 (registers 0 to 3).
+
 Because every access is a read-modify-write of whole registers, a model that stores written bytes and returns them on
 read satisfies it, with the exceptions in README section 10.5.
 
@@ -436,14 +441,16 @@ writes (`_gal_reg_check`) run only for the diagnostic ioctl `0x6d670036`; the at
 **Step 0, `_srv_init_dcbctrl`** (graphics base, 32-bit): `+0x61070` = 1, `+0x61068` = `0x4210`, `+0x61050` = `0x208a`,
 `+0x61060` = `0x1004`; if the HQ revision byte is 1, `+0x61010` = 0.
 
-**Step 1, `_srv_reset`**: GAL direct 3 = 1; delay 300; GAL direct 2 read (board revision, stored); TMI indirect 147
-read (TMI revision, stored); CSC direct 3 read (CSC revision minus 1, stored); a revision nibble below 4 clears the
-I2C workaround flag; `srv_cc1_sync`: CC direct 0 read, set bit 4, write; CC indirect 38 = 1; delay 300; CC indirect 38 =
-`0x80`.
+**Step 1, `_srv_reset`**: GAL direct 3 = 1; delay 300; GAL direct 2 **read** (the plain board revision byte, stored);
+TMI indirect 147 read (TMI revision, stored); CSC direct 3 read (stored plus 1 as the CSC revision); a revision-byte low
+nibble below 4 clears the I2C workaround flag; `srv_cc1_sync`: CC direct 0 read, bit 4 set, write; GAL indirect 38 = 0;
+delay 300; GAL indirect 38 = `0x80`.
 
-**Step 2, `_srv_init_edh`**: a GAL indirect table (the routine builds it from stack values; entries not recovered), then `srv_select_edh_part` over I2C.
+**Step 2, `_srv_init_edh`**: GAL indirect table `1b=c0 1c=c0 1d=80 1e=80 20=00`, then `srv_select_edh_part` over I2C.
 
-**Step 3, `_srv_input_standard_detection`**: GAL indirect 3 read, GAL indirect 4 read, GAL indirect 4 = 1.
+**Step 3, `_srv_input_standard_detection`**: GAL indirect 3 read; if its bit 4 is set GAL indirect 4 is read too; the detected standard
+(low two bits of the register that showed a signal, else 0) is written to **GAL indirect 0**, and its bit 0 is stored in board-record
+byte +261 (a flag the CC and AB init read).
 
 **Step 4, `_srv_init_xpoint`**: GAL indirect table (the crosspoint registers, ids 240 to 255):
 `f8=8 f7=8 f5=7 f6=7 f0=7 f1=7 f2=7 f3=7 f4=7 fb=7 f9=7 fa=7 fe=0e ff=0f`.
@@ -463,25 +470,27 @@ CC indirect defaults (register=value): `00=00 01=09 02=01 03=09 04=00 08=00 09=8
 27=00 28=00 29=0a 2a=00 2b=0a 2c=00 2d..32=00 33=80 34=80 35=80 36=00 37=40 38=40 39=00 3a=00 3b=05 40..50=00`. Note
 register `0x26` (38) = `0xa0`: field-interrupt enable bits 7 and 5 are set at reset.
 
-**Step 9, `_srv_init_AB`**: AB direct table `00=00 01=00 02=00 03=00 04=20 05=03 06=02 07=00` then AB indirect
-`10..17=00 20..26=00` (default table at the driver's AB defaults); AB direct 5 = a value taken from the board
-record; AB indirect 2 write; a second table through the AB interrupt register block.
+**Step 9, `_srv_init_AB`**: AB direct 6 written `10`, `21`, `42`, `83` in turn; AB direct 5 = `(rec+260 != 1) | (rec+261 == 0 ? 0x20 : 0)`
+(both record bytes zero at attach, so `0x21`); kind-2 indirect register 0 = 4; then the kind-1 indirect table
+`00=00 01=00 02=00 03=00 04=20 05=03 06=02 07=00 10..17=00 20..26=00`.
 
-**Step 10, `_srv_init_CSC`**: CSC direct 2 = 1; delay 2; CSC direct 2 = 0.
+**Step 10, `_srv_init_CSC`**: CSC direct 2 = 1; delay 20; CSC direct 2 = 0.
 
-**Step 11, `_srv_init_TMI`**: `srvInitTMIRegs` writes a TMI indirect default table
-`80=00 82=00 83=00 84=02 85=80 86=00 87=13 88=00 89=c8 8a=01 8b=2f 8c=c0 8d=01 8e=40 92=00 94=00 95=04` and a second
-table `60=f3 61=00 62=80 63=02 64=f3 65=00 66=80 67=02 68=f3 69=00 6a=80 6b=02 6c=f3 6d=00 6e=80 6f=02 70=00 71=00`
-with 5 to 12 microsecond delays between steps; then bit 240 (GAL indirect 26 bit 0) = 1.
+**Step 11, `_srv_init_TMI`**: board-record byte +260 and the revision nibble select small changes to the default tables (not decoded); then
+`srvInitTMIRegs`: GAL direct 3 = 4, GAL direct 3 = 0, GAL direct 6 = `0x40`, GAL direct 7 = 0, GAL direct 5 = 5; delay 500 us;
+TMI indirect table `80=00 82=00 83=00 84=02 85=80 86=00 87=13 88=00 89=c8 8a=01 8b=2f 8c=c0 8d=01 8e=40 92=00 94=00 95=04`
+(16-bit registers, written through `MgrasWriteBfifo`); delay 500 us; GAL direct 5 = 12; delay 500 us; TMI indirect table
+`60=f3 61=00 62=80 63=02 64=f3 65=00 66=80 67=02 68=f3 69=00 6a=80 6b=02 6c=f3 6d=00 6e=80 6f=02 70=00 71=00`; delay 500 us;
+GAL direct 5 = 0. Then bit 240 (GAL indirect 26 bit 0) = 1. There is **no poll** of TMI indirect 129 here (README section 12).
 
 **Step 12, `_srv_init_cc1_io`**: GAL indirect `05=00 06=b0 07=81`.
 
 **Step 13, `_srv_init_CC1Int`**: bits 55 and 56 cleared, CC indirect 41 = 10, CC indirect 40 bit 0 = 0, CC direct 4 bits
 (110, 109) = 0, CC indirect 38 bit 0 = 0, then bit 55 (CC indirect 38 bit 1) = 1. Leaves CC indirect 38 = `0xa2`.
 
-**Step 14, `srv_gio_dma_init(6)`**: VGI1 window accesses; not decoded (README 2.2 path B).
+**Step 14, `srv_gio_dma_init(6)`**: the VGI1 presence check and setup, decoded in README section 11.
 
-**Step 15, `_srv_init_i2c`**: GAL indirect 37 = `0x80`, 36 = `0x55`, 37 = `0xa0`, 36 = `0x19`, 37 = `0xc1`.
+**Step 15, `_srv_init_i2c`** (skipped when the I2C workaround flag is clear; `_srv_reset` clears it for a revision-byte low nibble below 4): GAL indirect 37 = `0x80`, 36 = `0x55`, 37 = `0xa0`, 36 = `0x19`, 37 = `0xc1`.
 
 ## 4. Control handlers on the start-up path (program order within each routine)
 

@@ -67,10 +67,10 @@ All of this is `srv_main.o`, read in full (`_gameraProbeVideo`, `_srvProbeVideo`
 | Hang-off | `ksync_attach` registers the board with the kitchen-sync (framelock) layer; `idbg` commands `srv`, `srvintrlog`, `srvlog`, `srvpcc`, `srvpdrb`, `srvvgi1`, `srvvgi1d` | E |
 | Low memory | After init, if installed memory is above 1.5 GiB (`0x18000` pages, 16 KiB), the driver reserves `srv_number_of_pools * srv_poolsize` bytes of low memory with `srv_grab_lomem`; failure prints `Can't load srv driver:not enough low memory` and returns 12. The board's DMA reaches only low memory | E |
 
-`_srv_reset`: set DCB control (below); write 1 to Galileo direct register 3, delay 300, write 0 to direct register 2;
+`_srv_reset`: set DCB control (below); write 1 to Galileo direct register 3, delay 300, **read** direct register 2 (the plain board revision byte, stored);
 read the TMI revision (indirect register 147); read the CSC revision (CSC direct register 3); a TMI revision below 4 or
 a CSC revision below 4 disables a workaround and, past the limits, logs and bails; then Galileo indirect register 38
-is written 1, delayed, then 128. Read in full; E. What registers 2, 3 and 38 are is **U**.
+is written 0, delayed 300, then written `0x80`. Read in full; E. What registers 2, 3 and 38 are is **U**.
 
 ### 2.2 The two register paths
 
@@ -91,10 +91,15 @@ HQ4 **display control bus** window:
 
 Inside each block the access rule is the same, read from `srv_ccdir`, `srv_cscdir`, `srv_abdir`, `srv_galdir` and their
 indirect twins: a **direct** register *n* is the **byte** at `block + (n & 7) * 0x80 + 8` (so n=0..7 at stride `0x80`,
-bounds checked: 8 for CC, CSC and GAL, 7 for AB). An **indirect** register is reached through two direct registers:
-the index goes to direct register 1 (`block + 0x88`) and the data is read or written at direct register 2
-(`block + 0x108`); AB uses registers 3 and 4 (`+0x188`, `+0x208`); TMI uses GAL direct registers 6 and 7 (`+0x308`,
-`+0x388`). Indirect ranges from the bounds checks: GAL 0 to 39 and 240 to 255, CC 0 to 80, CSC 0 to 5, AB 0 to 38, TMI
+bounds checked: 8 for CC, CSC and GAL, 7 for AB). An **indirect** register is reached through a pair of direct registers, and the pair differs by block
+(checked against `srv_galind`, `srv_cscind`, `srv_ccind`, `srv_abind` and `srv_tmiind_hwread`): **GAL and CSC**: index
+written to direct register 0 (`block + 0x08`), data at direct register 1 (`block + 0x88`); **CC**: index to direct register 1
+(`+0x88`), data at direct register 2 (`+0x108`); **TMI** (inside the GAL block): index to GAL direct register 6 (`+0x308`), data at
+direct register 7 (`+0x388`); **AB**: a 16-bit address, high byte written to direct register 4 (`+0x208`) and low byte to
+direct register 3 (`+0x188`) by `MgrasWriteBfifo` (a graphics-driver write routine, not a plain store), then the data at
+direct register 1 (`+0x88`) for the kind-1 file (registers 0 to 38) or direct register 2 (`+0x108`) for the kind-2 file (0 to 3).
+So in the GAL and CSC blocks direct registers 0 and 1 are the indirect pair, and GAL direct register 2 is a plain register (the board
+revision read) and direct register 3 a plain control register. Indirect ranges from the bounds checks: GAL 0 to 39 and 240 to 255, CC 0 to 80, CSC 0 to 5, AB 0 to 38, TMI
 0 to 149. All accesses are 8 bits wide and serialised with a spin lock per block. E for the rule, ranges and widths. The
 meaning of any single register is U except where the driver's own names give it (see the ioctl names in 2.6).
 
@@ -306,7 +311,7 @@ All register facts E unless marked. A model that answers every other access with
 | Widget ID word at offset 4 | part `0xc002`, manufacturer 54; revision field as any Bridge revision the kernel accepts | E |
 | Widget status word at offset `0xc` | bit 5 **clear** (GIO mode) **required**: with it set `giobr_attach` returns -1 and the PCI path would take the widget instead | E |
 | Window of 16 MiB | `xtalk_piotrans_addr` of 0x1000000 at offset 0 | E |
-| Slot probe | 32-bit reads at window offsets `0x200004`, `0x600004`, `0x700004`, `0x800004` through `badaddr_val`: a bus error means no board in that slot. Slot 0 returns a word whose low 7 bits are `0x11` **required**; slots 1 to 3 must fault or return 0 | E (offsets, mask), I (the value is the product ID: the driver's key `0x11000000` and stored board product ID 17) |
+| Slot probe | 32-bit reads at window offsets `0x200004`, `0x600004`, `0x700004`, `0x800004` through `badaddr_val`: a bus error means no board in that slot. Slot 0 returns a word whose low 7 bits are `0x11` **required** (it is the low word of the 64-bit GIO_ID register at slot offset 0, section 11); slots 1 to 3 must fault or return 0 | E (offsets, mask), I (the value is the product ID: the driver's key `0x11000000` and stored board product ID 17) |
 | Slot windows | slot 0 4 MiB at `0x200000` (VGI1 registers, mapped by `srv_attach`), slot 1 2 MiB at `0x600000` (second VGI1, mapped only if `srv_ignore_2vgi1` is 0), slot 2 1 MiB at `0x700000`, slot 3 4 MiB at `0x800000`. The sizes of slots 0 and 1 are confirmed by `srv_attach`; the table's slot 2 window overlaps slot 1, as read | E |
 | Bridge register file | `do_giobr_hw_init` and `do_giobr_bridge_config` read and write the usual Bridge widget registers (control, interrupt, request-buffer, ATE) and size the SSRAM by writing and reading back a 64-bit pattern at the Bridge's SSRAM window (offset `0x80000`); behave as a Bridge | E (access), U (which registers differ in GIO mode) |
 | NIC | `nic_bridge_vertex_info` reads the board's one-wire part: supplies `GALILEO15 Board: part 030-0931-003 rev C` to `hinv -m` | E (call), I (the strings are from captures) |
@@ -322,7 +327,7 @@ All register facts E unless marked. A model that answers every other access with
 | GAL direct register 3 (`+0x73400 + 3*0x80 + 8 = +0x73588`) byte write `1`, then 300 delay units, then direct register 2 byte read | the read is the board revision byte stored at record +32; `0x24` is consistent with both the printed `4.2` and the driver's `& 0xf >= 4` test | E (access), I (0x24) |
 | TMI indirect register 147 (index to GAL direct 6, data at direct 7) byte read | the TMI revision byte; `2` matches the printed `TMI: revision 2`. Values 13, 14 and above 15 disable texturing in `mgv.so` (8.2 step 8) | E (access), I (value 2) |
 | CSC direct register 3 byte read | the driver stores the value plus 1 as the CSC revision; read `0` for the printed `CSC: revision 1` | E (access), I (value 0) |
-| CC indirect register 38 write | accepted; written during `srv_reset` | E |
+| GAL indirect register 38 writes (`0`, then `0x80` after a 300 delay) | accepted; made by `_srv_reset` | E |
 | all other block accesses in `srv_init_regs` (`_srv_init_edh`, `_srv_input_standard_detection`, `_srv_init_xpoint`, `_srv_init_videoin`, `_srv_init_videoout`, `_srv_init_genlock`, `_srv_init_CC`, `_srv_init_AB`, `_srv_init_CSC`, `_srv_init_TMI`, `_srv_init_cc1_io`, `_srv_init_CC1Int`, `_srv_init_i2c`) | byte writes and reads in the ranges of 2.2; their return values are ignored on the attach path (they set test bits only in the diagnostic ioctl) | E for the ignored returns of `srv_init_regs` |
 
 **Process conditions**
@@ -343,8 +348,7 @@ All register facts E unless marked. A model that answers every other access with
 
 ### 8.6 What may be left unmodelled for this milestone
 
-E for each, from the code read: the second VGI1 (default ignored); every VGI1 register and descriptor (the driver
-touches the window only at the first DMA setup); GIO interrupt sources (no handler runs without an interrupt, and the
+E for each, from the code read: the second VGI1 (default ignored); every VGI1 register beyond the four of section 11.2 and every descriptor; GIO interrupt sources (no handler runs without an interrupt, and the
 missed-interrupt timer acts only while a transfer is active); video signal sources and sinks; the EDH and ML parts
 behind I2C (until a path uses them); the OCTANE Compression board; the `0x6d67....` set beyond `0x6d670021`. **Not**
 safely unmodelled: anything the Discreet layer drives after the board opens (section 9), because `vlSetupPaths` runs the
@@ -471,12 +475,12 @@ control handler above. Summary of what is established:
 |---|---|---|
 | HQ4 DCB control (`+0x61000..0x61070`) | `1`, `0x4210`, `0x208a`, `0x1004`, and 0 at `+0x61010` for revision 1 | none |
 | GAL direct (`+0x73400`) | 3 = 1, then 2 read | none outside reset |
-| GAL indirect | crosspoint 240..255, DV in reg 2, DV out regs 8..13, genlock regs 14..16, 20, 21, 26, 39, cc1-io regs 5..7, I2C regs 36 and 37 | DV in regs 2 to 4 (`_srvDVinCtl`), DV out regs 8 to 13, mux/genlock regs 33 to 35, 17 to 24 (timer) |
+| GAL indirect | crosspoint 240..255, DV in reg 2, DV out regs 8..13, genlock regs 14..16, 20, 21, 26, 39, cc1-io regs 5..7, 0 (detected input standard), 38 (reset), I2C regs 36 and 37 (only when the I2C workaround flag is set, 10.5) | DV in regs 2 to 4 (`_srvDVinCtl`), DV out regs 8 to 13, mux/genlock regs 33 to 35, 17 to 24 (timer) |
 | CC direct (`+0x73000`) | 0, 3, 4 | 0 bit 0 (frame control), 4 |
 | CC indirect | the 66-entry default table (38 = `0xa0`), 38 final `0xa2`, 40, 41 | 0, 1, 3, 9, 16, 32, 36, 38 (`_srvconfig`), 54 to 56 (CC1Cbar and window), others per `srvcc1Ctl` |
-| AB direct and indirect (`+0x72800`) | direct 0..7 table, indirect 16..23 and 32..38 zero, direct 5 from the board record | AB 5, 6, 21, 22, 37, 38 around window enable and `_srvconfig` |
-| CSC (`+0x73800`) | direct 2 = 1, delay 2, 0 | indirect 0 and 1 bits (`_srvClutCtl`) |
-| TMI (via GAL 6/7) | 17 defaults at 0x80..0x95 and 18 at 0x60..0x71, 5 to 12 microsecond delays | none unless a texture node is used |
+| AB direct and indirect (`+0x72800`) | direct 6 written `10`, `21`, `42`, `83` in turn; direct 5 from the board record; kind-2 indirect 0 = 4; kind-1 table 0..7, 16..23, 32..38 | AB 5, 6, 21, 22, 37, 38 around window enable and `_srvconfig` |
+| CSC (`+0x73800`) | direct 2 = 1, delay 20, direct 2 = 0 | indirect 0 and 1 bits (`_srvClutCtl`) |
+| TMI (via GAL 6/7) | GAL direct 3, 5, 6, 7 writes, 17 defaults at 0x80..0x95 and 18 at 0x60..0x71 (16-bit, through `MgrasWriteBfifo`), four 500 microsecond delays | none unless a texture node is used |
 | EDH, ML (I2C, GAL 36 and 37) | part select and a sequence | none seen |
 
 Values written at start-up come from the VL controls the DL layer set (timing, sync source, format, precision) through
@@ -490,7 +494,7 @@ the three products differ in is below.
 | Probe | byte at `+0x70008` | must be `0x11` | required value | E |
 | `_srv_reset` | GAL direct 2, TMI 147, CSC direct 3 | stored only; revision nibble below 4 clears the I2C workaround flag | any value | E |
 | Init tables (`_gal_reg_check`) | read-back of each table entry | skipped on the attach path (diagnostic ioctl `0x6d670036` only) | none | E |
-| `i2c_poll` (every I2C byte: EDH and ML parts) | GAL indirect 37 bit 7 | loop `us_delay(10)` until bit 7 clears or `srv_i2c_timeout` (1000) polls, then it writes `0xc3` to register 37 and returns -1 | **RAM fails**: `_srv_init_i2c` leaves register 37 = `0xc1` (bit 7 set), so each poll waits 10 ms and errors. The result is ignored on the attach path, so it still attaches, slowly | E |
+| `i2c_poll` (every I2C byte: EDH and ML parts) | GAL indirect 37 bit 7 | loop `us_delay(10)` until bit 7 clears or `srv_i2c_timeout` (1000) polls, then it writes `0xc3` to register 37 and returns -1 | **RAM fails**: `_srv_init_i2c` leaves register 37 = `0xc1` (bit 7 set), so each poll waits 10 ms and errors. `_srv_init_i2c` itself runs only while the I2C workaround flag is set, and `_srv_reset` clears the flag when the board revision byte's low nibble is below 4; a revision byte of `0x24` leaves it set. The result is ignored on the attach path, so it still attaches, slowly | E |
 | `srv_itimer` (every `gal15itimeout` = 25 ticks, armed at attach) | GAL indirect 17 bit 0 and, if set, 17 & `0x50` until clear; 3, 4, 14, 15, 22 to 24; CC indirect 38 bit 7 | a RAM model reads 0 and idles. If bit 0 of 17 reads set and `0x50` never clears, the timer spins | return 0 for GAL 17 bits 0, 4 and 6 | E (flow), I (meanings) |
 | `srv_field_wait` (window enable, `srvCC1PutFrame`) | CC indirect 38 bits 7 and 5 | if either is set: sleep on `srv_fieldwait_sv` for that many CC1 field interrupts; if both clear: spin `delay(1)` that many times | **interrupt required** (10.7); CC indirect 38 is `0xa2` after attach, so the wait is interrupt-driven | E |
 | `_srv_enab_win`, `_srv_enableBC` | AB 37, 38, 22, 21, 6 bits and CC 54, 55 fields | each read is followed by a write that clears then restores the same bit around a field wait; no compare of the value | RAM satisfies | E |
@@ -581,6 +585,91 @@ Disassembled and compared function by function (call names, immediates, string r
 - Behaviour of `mgv.so`'s stand-alone load (10.8) and of 6.5.30m overlays on a 6.5.21f kernel (10.1).
 - Settle by: a trace of an unmodified run once a model answers the 10.6 overrides; the `vl_mgv.h` header for parameter
   structures; reading `srv_edh.o` and the remaining `srvSetCtrl` cases.
+
+## 11. VGI1 presence (`srv_gio_dma_init`)
+
+Pass 6, from `srv_llvgi1_interface.o` of the 6.5.30 `srv.a`, read in full. `srv_attach` ends with `srv_gio_dma_init(board, 6)`
+(through `srv_init_regs`); the board record's +152 holds the mapped slot-0 window ("giobase", 4 MiB, section 2.1) and +160 the
+optional second window.
+
+### 11.1 The identification register
+
+| Fact | Value | Grade |
+|---|---|---|
+| Register | GIO_ID, a **64-bit** register at slot-0 window offset `0x00`, read with one 8-byte load (`ld`) | E |
+| Test | `(value & 0x7f) == 0x11` (17), nothing else compared | E |
+| Byte order | the guest is big-endian: the doubleword's bits 6:0 are in the **byte at offset 7**, and bits 31:0 are the 32-bit word at offset 4. A model returns bytes `00 00 00 00 00 00 RR 11` at offsets 0 to 7 (`RR` below). The giobr slot probe's 32-bit read at slot offset `+4` is the same register, so a model that already answers that read at `+4` but returns 0 for an 8-byte read at `+0` has implemented only the low word | E |
+| Other bits | bits 15:8 are stored as the VGI1 revision (board record +44) and printed as `mgv_gio_dma_init: VGI1 rev 0x...`; the whole value is kept at +56 and printed as `GIO_ID` when the `showconfig` tunable is set. No other bit is tested; use `RR` = 0 or a plausible revision | E |
+| Width | 8 bytes; a 4-byte-only device answers the `+4` word but fails this read | E |
+| Failure | `srv_gio_dma_init: No VGI1 present` at warning level, the board record's VGI1 state pointer is cleared and the routine returns 2. The caller ignores the result, so the driver still attaches and `hinv` still prints | E |
+
+### 11.2 Everything else the presence path does
+
+In order, after the ID test, in `srv_gio_dma_init`:
+
+| Step | Access | Required | Grade |
+|---|---|---|---|
+| 1 | read 8 bytes at `+0x20` (CHIP_ID) | none: stored at state +8; with `showconfig` printed as revision (bits 31:28), part (bits 27:12), manufacturer (bits 11:1). Return any value | E |
+| 2 | **write** 8 bytes at `+0x10` (SYSMODE) | accept; the value is `((page-size code & 3) << 8) | 1`. The routine sets the kernel page size constant to 16 KiB and the code to 1, so the value is **`0x101`** | E |
+| 3 | **write** 8 bytes of 0 at `+0x1000` (channel 1 register 0, the "setup" register; a state word that is 0 at this point picks channel 1) | accept | E |
+| 4 | software only: `srv_dma_alloc_drbs` allocates the DMA request blocks; failure logs `Unable to allocate DRB memory`, releases them and fails | the guest's memory allocator | E |
+| 5 | a counter of attached boards is incremented; a second board logs `only %d srv boards supported` | one board | E |
+
+No poll, no wait, no interrupt and no further read is made. The second VGI1 is examined only when the tunable
+`srv_ignore_2vgi1` is 0 (default 1): it then reads 8 bytes at the second window's offset 0 through `badaddr_val` (a fault means
+absent), applies the same `& 0x7f == 0x11` test, prints `second VGI1 present` or `NOT present`, and repeats steps 1 to 3 on its
+window; with the default it prints `second VGI1 present but ignored` only under `showconfig`. E.
+
+Register layout that follows from the driver's own debug tables and address arithmetic: global registers at 8-byte
+register index 0, 2 and 4 are GIO_ID, SYSMODE (`+0x10`) and CHIP_ID (`+0x20`); channel *c* (1 or 2) register *r* is at
+`+((c << 9) + r) * 8`, so channel 1 starts at `+0x1000` and channel 2 at `+0x2000`. E for the arithmetic, I for the names
+beyond GIO_ID.
+
+### 11.3 What depends on VGI1 being present
+
+| Consumer | Without VGI1 | Grade |
+|---|---|---|
+| `hinv` line, `/hw/srv`, `VID_*` ioctls, `mgv.so` open and bind, the 24 nodes | unaffected: nothing on the open path tests VGI1 (the 24 nodes are static resource records, so `VL_MEM` nodes are listed though unusable) | E (open path), I (nodes) |
+| `srvVgi1Setup`, `srvVgi1UnSetup`, `srvVgi1DMA` (`0x6d670028` to `2a`) | check the state pointer and return an error | E |
+| `srv_vgi1_reg` (`0x2c`, `0x2d`), `srvGetMSCandUST` (`0x1e`), `srvTriggerSetup` (`0x2b`), `srv_force_reset` (`0x25`), frame-accurate triggered controls, the line-4 interrupt handler | dereference the cleared state pointer with no check: a **kernel fault** | E |
+| `mgv.so` `mgvGetFrontierMSC` (`vlGetFrontierMSC`, and with it `vlGetUSTMSCPair` users) | issues `0x6d67001e`: the fault above | E |
+| `VL_MEM` memory nodes: `mgvvgi1ManageTransfer` and the DMA descriptor machinery of 2.5 | cannot run | E |
+| `srv_itimer` | checks the pointer; idles | E |
+
+For the three products: the screen-to-video start-up path of section 10.2 uses neither DMA nor MSC reads (I), so
+`vlSetupPaths` for it does not need VGI1 beyond the presence test. Their transfer code does (`VideoOctaneStartOutput`,
+`VideoOctaneSetInput`, grab and put frame use `VL_MEM` nodes and the UST/MSC calls), in all three products because the
+Discreet video layer is the same (section 10.9). So present VGI1 at least to the extent of 11.1 and 11.2 now; the register
+file behind it (descriptor and channel registers, section 2.5) is needed before any frame transfer.
+
+## 12. TMI indirect register 129: who polls it, and what makes the loop exit
+
+Pass 6b. TMI indirect register 129 (`0x81`) is the TMI status register: the bit ids 259 to 263 of
+[srv-register-map.md](srv-register-map.md) are its bits 0 to 4, read from hardware (index 129 written to GAL direct 6, `+0x73708`,
+then one byte read from GAL direct 7, `+0x73788`, section 2.2). Read in full, in both the 6.5.30m `srv.a` and
+the original-6.5 image's `srv.a`:
+
+| Reader | Bit and use | Bound and exit | Reached from | Grade |
+|---|---|---|---|---|
+| `_srvWaitForTMIXferStart` | bit 1 (id 260): loop A waits until it reads 1; loop B then waits until it reads 0 | each iteration is one status read plus `us_delay(10)`; the shared bound is `2000 * gal15itimeout` iterations, **50,000** at the default of 25 (about 0.5 s). After a first loop that waits for a software flag to clear, loop A runs to the bound if bit 1 never rises; loop B likewise if it never falls. Success returns 1; a timeout returns 0 and the caller logs through `srv_add_log` and carries on (the timeout is not fatal) | a texture transfer start (`_srvStartTMITransferToTRAM`, `_srvChangeTMIBeginXferStatus`) | E |
+| `_srvStartTMITransferToTRAM` | bits 0 and 1 (ids 259, 260), single reads after the wait | no loop of its own | `srvVidTextureXfer` (`MgrasVidTextureXfer`, the graphics driver's video-texture hook) | E |
+| `srv_tmi_interrupt` | bit 0 (id 259), one read | none | the VGI1 line-4 interrupt handler | E |
+| `srv_tmiind_update_timing` | bit 2 (id 261), one read | none | `_srvconfig` (SET_CONFIG), twice | E |
+
+What this means:
+
+1. **The attach and open paths do not poll TMI indirect 129.** `_srv_init_TMI` and `srvInitTMIRegs` (section 10.4, Step 11) only write; `_srv_reset` reads TMI
+   indirect **147** once. A poll of 129 is therefore a texture-transfer start (a graphics client using video as texture, or the line-4 interrupt handler running) and
+   the loop above is the only one with a bound near this size.
+2. **What exits at once:** make TMI indirect 129 bit 1 read 1 on the first status read and 0 on the next (a start pulse seen by loop A, then loop B), and
+   have the software flag it first waits on clear (it is zero unless a transfer is pending). Any value with bit 1 stuck at 0 spins loop A to its 50,000-iteration bound
+   and returns the timeout; a value stuck at 1 passes loop A then spins loop B to the bound. With the default `gal15itimeout`, a stuck loop costs 50,000 reads and about
+   0.5 s; two stuck loops 100,000 reads. A model that reads 0 always costs one bound per call.
+3. **Where a count of 100,000 to 300,000 reads of one status register does arise on the attach path** is not TMI: it is `i2c_poll` on **GAL indirect 37**
+   (section 10.5), which reads the I2C status up to 1000 times per poll call (`srv_i2c_timeout`) and is called once or twice per byte of the EDH and ML sequences, so a few hundred
+   bytes give 100,000 to 300,000 reads when bit 7 never clears. If the guest trace shows the index port at `+0x73708` taking `0x81` before each read of `+0x73788` it is TMI 129; if it shows
+   the GAL index port at `+0x73408` taking `0x25` and reads of `+0x73488` it is the I2C status, and the fix is GAL indirect 37 bit 7 reading 0 (section 10.6, override 1). I (the
+   identification of the observed loop needs the raw trace addresses; this page cannot settle it from the binaries alone).
 
 ## Not done in this pass
 
