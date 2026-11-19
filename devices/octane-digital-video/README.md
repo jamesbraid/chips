@@ -621,8 +621,8 @@ absent), applies the same `& 0x7f == 0x11` test, prints `second VGI1 present` or
 window; with the default it prints `second VGI1 present but ignored` only under `showconfig`. E.
 
 Register layout that follows from the driver's own debug tables and address arithmetic: global registers at 8-byte
-register index 0, 2 and 4 are GIO_ID, SYSMODE (`+0x10`) and CHIP_ID (`+0x20`); channel *c* (1 or 2) register *r* is at
-`+((c << 9) + r) * 8`, so channel 1 starts at `+0x1000` and channel 2 at `+0x2000`. E for the arithmetic, I for the names
+register index 0, 2 and 4 are GIO_ID, SYSMODE (`+0x10`) and CHIP_ID (`+0x20`); a channel register's **byte offset** is
+`c * 0x1000 + (byte offset in the channel)`, with *c* = 1 or 2 (the driver builds it as `((c << 9) | r) << 3` with *r* the register **index**, the byte offset divided by 8). Channel 1 starts at `+0x1000` and channel 2 at `+0x2000`. E for the arithmetic, I for the names
 beyond GIO_ID.
 
 ### 11.3 What depends on VGI1 being present
@@ -707,7 +707,7 @@ What the QEMU MGRAS model must therefore present: at least one registered graphi
 
 ## 14. VGI1 channel registers for playback
 
-Pass 7b, from `srv_llvgi1_interface.o`, `srv_llvgi1_interrupt.o`, `srv_llvgi1_lib.o` and `srv_llvgi1_drb.o` of the 6.5.30 `srv.a` (read in full). Register numbers are 8-byte slots: channel *c* (1 or 2) register *r* is at slot window offset `((c << 9) + r) * 8`, so channel 1 is at `+0x1000` and channel 2 at `+0x2000`; all accesses are 8-byte (`ld`/`sd`). Names are the driver's own debug strings (section 2.2); offsets come from its register table; roles are I unless stated.
+Pass 7b, from `srv_llvgi1_interface.o`, `srv_llvgi1_interrupt.o`, `srv_llvgi1_lib.o` and `srv_llvgi1_drb.o` of the 6.5.30 `srv.a` (read in full). Byte offset in the slot window = `c * 0x1000 + (byte offset in the channel)`, *c* = 1 or 2, using the byte offsets in the table below (the driver computes it as `((c << 9) | r) << 3` from the register index *r*, which is the byte offset divided by 8; the `Slot` column is that index, not a further multiplier). Channel 1 is at `+0x1000` and channel 2 at `+0x2000`; all accesses are 8-byte (`ld`/`sd`). Names are the driver's own debug strings (section 2.2); offsets come from its register table; roles are I unless stated.
 
 ### 14.1 Channel register map
 
@@ -745,6 +745,21 @@ Pass 7b, from `srv_llvgi1_interface.o`, `srv_llvgi1_interrupt.o`, `srv_llvgi1_li
 | What a transfer needs to complete | a status of bit 3 (and bit 0 each field for the clock), then the line-4 interrupt; `intenab` bit set for what is raised. No further register read is required: completion is the interrupt plus the written-back status | E |
 | Missed-interrupt timer | with a transfer active the 25-tick timer (section 2.4) force-resets the chip if no interrupt arrives for about 2 seconds, so a model that completes nothing resets the board | E |
 | Not decoded | the descriptor entry bit layout; the `dataaddr` units; the `setup` field layout; `hparam`/`vparam` fields; what bits 2 and 5 mean | U |
+
+## 15. Exercising the transfer path from Smoke 5.0
+
+Pass 8. Reading of the Smoke 5.0 `smoke_IRIX_6.5_ip30` product binary (call graph from its DL video functions) and the shipped `init.cfg`; the menu paths come from the Autodesk Smoke 2007 user guide held in the Library mirror (no Smoke 5.0 guide was found in the Library mirror, so the paths are I: later release, same menus). Nothing here was run.
+
+| Item | Finding | Grade |
+|---|---|---|
+| What startup already does | `VideoInit` with `Video OctaneVideo` runs `VideoOctaneVideoOutput(1, 0)`: it builds the screen-to-video path only, which is why srv initialises both channels and programs no transfer. `vlBeginTransfer` is not reached there | E |
+| What reaches `vlBeginTransfer` | `VideoOctaneSetInput`, `VideoOctaneStartOutput` and `Video::BeginTransfer`. Their callers are `VideoSetInput`/`VideoSetOutput`/`VideoGrabFrame` and the VTR layer (`VtrStart`, `VtrOutputClipDivo`, `VtrNextFrame`, `VtrVideoIdleCB`, `VtrEndInput`, `VtrEndOutput`), the digital-disk-recorder layer (`DdrStartCommon`, `DdrEnd`) and Paint's frame-grab set-up (`PaintSetLibraryFileInit` calls `VideoGrabFrameStart`). So **clip input and output through the VTR layer is the path** | E (call graph) |
+| Prerequisite: a VTR line | the `Vtr` keyword in `init.cfg` must be uncommented. The shipped file has all `Vtr` lines commented out. The one that needs no tape machine is the last, `Vtr none, Live video, SERIAL1, HOUSE, SERIAL1, HOUSE, /dev/tty4d1, AUTO, -3, 0, 0.50, 1.00, 0.00, 0.00, 8, vtrcueing`; its serial device is not used for control. The line already present, `Video OctaneVideo, Serial1`, selects the board and its input; `Sync House` selects the sync | E (file), I (the `none` line needs no serial device: the guide says Live Video is for devices without RS-422 control) |
+| Output | EditDesk: enter a clip library, select a clip, click **Output Clip** (or SHIFT+F9 on the EditDesk); in the Output Clip menu set the **VTR Device / Device Name** box to **Live Video** (Start and Stop mode then fix to Start On Pen and Stop On Pen); enable the video tracks; click **Process**; after a moment the application asks to click anywhere to start; click, and click again to stop. This starts the video-out transfer (`VtrOutputClipDivo` and the frame loop) | I (2007 guide), E (the functions exist in 5.0) |
+| Input (record) | enter the destination clip library, click **Input Clip** (F9), set the VTR Device box to **Live Video**, name the clip and enable the tracks, click **Process**, click anywhere to start and again to stop (capture also stops when the framestore is full). This starts the capture transfer (`vtr_input_clip_error`, `VideoSetInput`) | I |
+| Project format | the project's video standard and frame size must be one the board supports in the non-square-pixel serial digital modes (the Programmer's Guide says the serial I/O produces valid output only in CCIR non-square pixel mode); the `Sync` and `Video` lines set the timing | I |
+| Not this path | the **Preview** and playback to the broadcast monitor use the screen-to-video path already set up at start; the DDR device lines in `init.cfg` (`Audiodevice`, and external disk recorders) are serial-controlled devices, not the board | I |
+| What this does to the model | a Live Video output start makes srv program a channel, and the first `Process` is where the descriptor, trigger and line-4 interrupt behaviour of section 14 first matter | I |
 
 ## Not done in this pass
 

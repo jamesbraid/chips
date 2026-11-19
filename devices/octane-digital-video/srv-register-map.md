@@ -696,7 +696,7 @@ Each line is one `srv_singlebit` or accessor call; `val=?` is taken from the con
 
 ## 5. VGI1 channel registers (slot-0 GIO window, 8-byte accesses)
 
-Channel *c* (1 or 2), register slot *r*: offset `((c << 9) + r) * 8`; global registers use *c* = 0. README section 14 has the sequences and the interrupt handling.
+Byte offset in the slot window = `c * 0x1000 + (byte offset in the channel)`, *c* = 1 or 2; global registers use *c* = 0. Table offsets are already byte offsets; the Slot column is the register index the driver uses (byte offset / 8, combined as `((c << 9) | r) << 3`) and must not be multiplied again. README section 14 has the sequences and the interrupt handling.
 
 | Offset (ch 1 / ch 2) | Slot | Name | Access seen | Value or use |
 |---|---|---|---|---|
