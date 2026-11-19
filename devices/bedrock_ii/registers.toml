@@ -9,7 +9,7 @@ public_from = ["Linux 2.5.40", "Linux ia64", "OpenBSD", "Origin 3000 System Arch
 offset_macro = "bare"
 
 [constants]
-BTE_REGISTER_SIZE = { value = 0x30, grade = "inferred", from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, BTEOFF_STAT to BTEOFF_INT, and irix/kern/sys/SN/SN1/snacioregs.h, II_IBLS0 to II_IBIA0", doc = "Extent of one block transfer engine's registers: six registers eight bytes apart from the engine's base (status, source, destination, control, notification, interrupt). The source defines the six offsets and the distance from engine 0 to engine 1, the stride of the engine registers here, but no size symbol, so the size is the end of the last register; nothing is defined between it and the next engine." }
+BTE_REGISTER_SIZE = { value = 0x30, grade = "inferred", from = "IRIX software (source not cited), BTEOFF_STAT to BTEOFF_INT, and II_IBLS0 to II_IBIA0", doc = "Extent of one block transfer engine's registers: six registers eight bytes apart from the engine's base (status, source, destination, control, notification, interrupt). The source defines the six offsets and the distance from engine 0 to engine 1, the stride of the engine registers here, but no size symbol, so the size is the end of the last register; nothing is defined between it and the next engine." }
 PART_BEDROCK = { value = 0xc110, grade = "inferred", doc = "Crosstalk part the SN1 header assigns to the Bedrock. The same value is named Bedrock in OpenBSD's device table. No consumer tests it and no read on silicon is recorded." }
 MANUFACTURER_BEDROCK = { value = 0x24, grade = "inferred", doc = "Manufacturer field of the Bedrock identity words: 0x24 in bits 11:1 of both power-on identity values in the firmware register table (the widget_id reset 0x1c110049 here and the revision register reset 0x23012049 in the local block). OpenBSD files the Bedrock under its 0x36 vendor, the same vendor it gives the Hub, whose own table reset also reads 0x24, so that grouping is a naming convenience and not a value read from the chip. Earlier versions of this map gave 0x36. Read on silicon unknown." }
 PROTECTION_OVERRIDE_KEY = { value = 0x53474972756c6573, grade = "established", doc = "The 64-bit key the SN1 tree names for protection_override: the ASCII string SGIrules." }
@@ -23,7 +23,7 @@ width = 64
 grade = "established"
 reset = 0x1c110049
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_WID at image offset 0x15fa18 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_WID at image offset 0x15fa18 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Widget identification. Echoes the manufacturer and revision fields of the local block's revision register and carries the Bedrock's crosstalk part. Its value follows the local revision register."
 
 [registers.widget_id.fields]
@@ -38,7 +38,7 @@ width = 64
 grade = "established"
 reset = 0x3fc03ff040a
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ILCSR at image offset 0x15fad8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ILCSR at image offset 0x15fad8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Link control and status. Both public Linux ports read bit 13 and skip the node's crosstalk when it is clear. The stock PROM reads it before touching any widget and then sets bit 8. The header gives no meaning for the four values of the status field, and its remote-power bit has no text. That the bit means link up is inferred from how the I/O error interrupt set-up uses it."
 
 [registers.link_control.fields]
@@ -59,7 +59,7 @@ width = 64
 grade = "established"
 reset = 0xfffffffffffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ILAPR at image offset 0x15fa60 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ILAPR at image offset 0x15fa60 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "One enable bit per processor region. The header states that at reset every region is permitted, and gives no number. The shipped Origin 350 PROM register table gives sixty set bits, 0x0fffffffffffffff, so the top four bits of the 64-bit field are clear at reset; that value is used. A processor PIO is performed only when the requester's region bit is set; otherwise it gets an error response. Readable only by permitted regions or through the local alias. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and the table does write 64 set bits for single 64-bit fields elsewhere (three registers of the processor interface block and the first register of the memory-directory block), so the four clear bits are not how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source."
 
 [registers.local_access_protection.fields]
@@ -70,7 +70,7 @@ offset = 0x400108
 access = "w"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ILAPO (offset and name; the header states no access)"
+from = "IRIX software (source not cited), II_ILAPO (offset and name; the header states no access)"
 doc = "Writing the 64-bit ASCII key the SN1 tree names sets the writer's own region bit in local access protection. A write through the local alias does nothing. The header union gives a nine-bit field while its description says a 64-bit key, a self-contradiction. No public consumer writes the register."
 
 [registers.outbound_widget_access]
@@ -80,7 +80,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IOWA at image offset 0x15fa90 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IOWA at image offset 0x15fa90 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Qualifies every PIO and graphics write the Bedrock launches toward a widget. The stock PROM enables widget 0 and widgets 8 to F in it; IRIX saves it, writes zero and restores it around PIO request-buffer programming."
 
 [registers.outbound_widget_access.fields]
@@ -94,7 +94,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IIWA at image offset 0x15faa8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIWA at image offset 0x15faa8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Qualifies every request a widget launches at the Bedrock, including DMA and interrupt writes. The stock PROM enables widget 0 and widgets 8 to F. IRIX and the Itanium port read it only. The header's text also exempts incoming replies from the mask."
 
 [registers.inbound_widget_access.fields]
@@ -108,7 +108,7 @@ width = 64
 grade = "established"
 reset = 0xffffffffffffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IIDEM at image offset 0x15fac0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIDEM at image offset 0x15fac0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Eight bits per widget, one per DMA master (device) 0 to 7. A request passes when its device bit and the widget's inbound bit are both set. The header says the bits are set by writing a one. IRIX clears a device by writing back the old value with the device bit cleared, which under write-one-to-set clears nothing. Which behaviour the hardware has is unknown. Hardware clears a bit itself when an error requires the device to be shut out."
 
 [registers.inbound_device_error_mask.fields]
@@ -128,7 +128,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IIDSR at image offset 0x15fb08 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIDSR at image offset 0x15fb08 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Destination of every II-detected non-BTE error interrupt. The header's struct puts the node at bits 16:9 and the PI select at bit 8; its companion macros put the node at 15:8. The struct governs: the Itanium consumer writes through it. The PI register address is hard-coded per PI select (see the PI0 and PI1 constants)."
 
 [registers.interrupt_destination.fields]
@@ -145,10 +145,10 @@ offset = 0x4001e8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IMEM (offset and name; the header states no access); shipped IRIX kernel I/O error handlers (read sites)"
+from = "IRIX software (source not cited), II_IMEM (offset and name; the header states no access); shipped IRIX kernel I/O error handlers (read sites)"
 reset = 0x111
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IMEM at image offset 0x15fd18 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IMEM at image offset 0x15fd18 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write-one-to-set per the header. The header's description says the hub clears each field when an error requires that source to be shut down and that software sets a field by writing one. The companion header's macro comments instead call bits 0, 4 and 8 shut-down flags, and the Itanium error handler reads them that way. The register description and the recovery write govern. No Linux header states the reset value. The later chip's recovery write re-enables a source by setting its bit, which agrees with the value in the PROM register table. The shipped kernel's I/O error handlers read this register; a hand-written row once recorded it as read-only on that basis, but reads alone do not show it cannot be written, so rw stays."
 notes = "The kernel reading named this register flags and called both bits role unknown; the header's names (widget_0_enable at bit 0, bte_0_enable at bit 4) are kept."
 
@@ -165,7 +165,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IECLR at image offset 0x15fd48 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IECLR at image offset 0x15fd48 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write-one-to-clear. Clears the named bits elsewhere in the unit. The Itanium probe writes all ones; a bit written with one reads back as zero."
 
 [registers.error_clear.fields]
@@ -186,7 +186,7 @@ width = 64
 grade = "established"
 reset = 0xf
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IPRB0 at image offset 0x15fc28 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IPRB0 at image offset 0x15fc28 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Per-widget PIO flow control for widget 0. Writing the credit field re-arms the spurious-write detector, which persists until the register is written again even when error clear is used. The Itanium probe writes credits 1 for a crossbar at widget 0 and 3 when the widget is directly connected."
 
 [registers.pio_request_buffer_w0.fields]
@@ -210,7 +210,7 @@ width = 64
 grade = "established"
 reset = 0xf
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IPRB8 to II_IPRBF at image offset 0x15fc40 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IPRB8 to II_IPRBF at image offset 0x15fc40 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "PIO request buffers for widgets 8 to F, eight registers at a stride of eight bytes; the first is widget 8. Same layout as the widget 0 entry."
 
 [registers.pio_request_buffer_w8.fields]
@@ -234,7 +234,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IPRTE0 to II_IPRTE7 at image offset 0x15fe08 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IPRTE0 to II_IPRTE7 at image offset 0x15fe08 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Outstanding-read table that the read-response timeout works on. Access direction is not stated by the header. No consumer is recorded."
 
 [registers.pio_read_address.fields]
@@ -270,7 +270,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICCR at image offset 0x15ff40 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICCR at image offset 0x15ff40 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Software control of the request buffers. It has priority over crosstalk and BTE requests. The header names the commands nop, wake, timeout, eject and flush; their numeric codes are not given in the header and are unknown."
 
 [registers.request_buffer_control.fields]
@@ -287,7 +287,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBLS0 to II_IBLS1 at image offset 0x160570 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBLS0 to II_IBLS1 at image offset 0x160570 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "One copy per block transfer engine; engine 1's block is 64 KiB above engine 0's. A legitimate write sets busy and clears error, with the length loaded in cache lines; the engine decrements the length per line and clears busy at the end."
 
 [registers.bte_length_status.fields]
@@ -304,7 +304,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBSA0 to II_IBSA1 at image offset 0x160588 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBSA0 to II_IBSA1 at image offset 0x160588 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Source physical address of the transfer. Low seven bits are zero (128-byte lines). After a transfer the register reads the address one line past the last line moved, or the failed line after a data error; hardware behaviour here is unknown."
 
 [registers.bte_source.fields]
@@ -319,7 +319,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBDA0 to II_IBDA1 at image offset 0x1605a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBDA0 to II_IBDA1 at image offset 0x1605a0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Destination physical address of the transfer. Same layout and end-of-transfer behaviour as the source register."
 
 [registers.bte_destination.fields]
@@ -334,7 +334,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBCT0 to II_IBCT1 at image offset 0x1605b8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBCT0 to II_IBCT1 at image offset 0x1605b8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Writing this register starts the transfer. Reading it terminates any transfer in progress, and stopping one engine can disturb the other. The header states this protocol; the start-on-write and terminate-on-read behaviour is inferred from the header's comments, and whether busy is observable after a start is unknown."
 
 [registers.bte_control.fields]
@@ -351,7 +351,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBNA0 to II_IBNA1 at image offset 0x1605d0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBNA0 to II_IBNA1 at image offset 0x1605d0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Address that receives the completion write-invalidate. The Itanium consumer sets its line to all ones before the start and expects the final length-status value to be deposited there."
 
 [registers.bte_notification_address.fields]
@@ -366,7 +366,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBIA0 to II_IBIA1 at image offset 0x1605e8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBIA0 to II_IBIA1 at image offset 0x1605e8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Where the engine's completion interrupt goes. No public consumer programs it. The PROM's hub check does."
 
 [registers.bte_interrupt_address.fields]
@@ -383,8 +383,8 @@ stride = 0x20
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_A to II_ICRBE_A at image offset 0x15ff88 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICRB0_A (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_A to II_ICRBE_A at image offset 0x15ff88 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICRB0_A (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
 doc = "First word of the request-buffer table. Entry i (0 to 14) has three 64-bit words, crb_a, crb_b and crb_c, at these offsets plus 0x20 times i. The header names the fourth word of each entry, crb_d, as well; the field meanings of the entry words are not given by any source held here."
 
 
@@ -397,8 +397,8 @@ stride = 0x20
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_B to II_ICRBE_B at image offset 0x15ffa0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICRB0_B (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_B to II_ICRBE_B at image offset 0x15ffa0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICRB0_B (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
 
 
 [registers.crb_c]
@@ -410,8 +410,8 @@ stride = 0x20
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_C to II_ICRBE_C at image offset 0x15ffb8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICRB0_C (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_C to II_ICRBE_C at image offset 0x15ffb8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICRB0_C (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: offsets and stride only"
 
 # Registers the header names that the first reading missed. The header gives each a name, an offset and a
 # one-line description and no access type, so the access is an assumption and each is graded inferred.
@@ -423,8 +423,8 @@ width = 64
 grade = "inferred"
 reset = 0x4011
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_WCR at image offset 0x15fa48 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_WCR (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_WCR at image offset 0x15fa48 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_WCR (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_WCR (name and offset)"
 doc = "Crosstalk widget control register (the header's IO widget control). The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xffffffffff801fe0
 
@@ -443,8 +443,8 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ILLR at image offset 0x15faf0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ILLR (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ILLR at image offset 0x15faf0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ILLR (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ILLR (name and offset)"
 doc = "IO LLP log register: the link-level protocol log, next to link_control. The header states no access type, so rw is assumed. No field layout is recorded here."
 
 [registers.graphics_map]
@@ -456,8 +456,8 @@ stride = 0x8
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IGFX0 to II_IGFX1 at image offset 0x15fb20 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IGFX0 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IGFX0 to II_IGFX1 at image offset 0x15fb20 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_IGFX0 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IGFX0 and IIO_IGFX1 (name and offset)"
 doc = "IO graphics node-widget map, two registers (0 and 1) eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here."
 
 [registers.scratch]
@@ -469,8 +469,8 @@ stride = 0x8
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ISCR0 to II_ISCR1 at image offset 0x15fb50 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ISCR0 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ISCR0 to II_ISCR1 at image offset 0x15fb50 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ISCR0 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ISCR0 and IIO_ISCR1 (name and offset)"
 doc = "IO scratch registers 0 and 1, eight bytes apart. The header states no access type, so rw is assumed. No field layout is recorded here."
 
 [registers.translation_table_entry]
@@ -482,8 +482,8 @@ stride = 0x8
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ITTE1 to II_ITTE7 at image offset 0x15fb80 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ITTE1 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ITTE1 to II_ITTE7 at image offset 0x15fb80 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ITTE1 (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ITTE1 to IIO_ITTE7 (name and offset)"
 doc = "IO translation table entries 1 to 7, eight bytes apart; the first is entry 1. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xffffffffffffe0e0
 
@@ -499,8 +499,8 @@ width = 64
 grade = "inferred"
 reset = 0x3ffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IXCC at image offset 0x15fd00 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IXCC (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IXCC at image offset 0x15fd00 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_IXCC (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXCC (name and offset)"
 doc = "IO crosstalk credit count timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xfffffffffc000000
 
@@ -514,8 +514,8 @@ width = 64
 grade = "inferred"
 reset = 0xfffffff03ffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IXTT at image offset 0x15fd30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_IXTT (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IXTT at image offset 0x15fd30 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_IXTT (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_IXTT (name and offset)"
 doc = "IO crosstalk timeout threshold. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xf0000000fc000000
 
@@ -531,7 +531,7 @@ width = 64
 grade = "inferred"
 reset = 0x8
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IBCR at image offset 0x15fd60 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IBCR at image offset 0x15fd60 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 from = "Linux 2.5.40 SN1 register headers: IIO_IBCR (name and offset)"
 doc = "IO BTE control register: the one register that controls both transfer engines, as against bte_control, which each engine has. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xfffffffffffffef0
@@ -547,8 +547,8 @@ width = 64
 grade = "inferred"
 reset = 0xff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICTO at image offset 0x15ff58 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICTO (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICTO at image offset 0x15ff58 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICTO (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTO (name and offset)"
 doc = "IO CRB timeout. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xffffffffffffff00
 
@@ -562,8 +562,8 @@ width = 64
 grade = "inferred"
 reset = 0xffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICTP at image offset 0x15ff70 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICTP (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICTP at image offset 0x15ff70 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICTP (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICTP (name and offset)"
 doc = "IO CRB timeout prescaler. The header states no access type, so rw is assumed. No field layout is recorded here. Field layout added from the header's structure; the rsvd mask is its members named reserved (header naming only)."
 rsvd = 0xffffffffff000000
 
@@ -579,8 +579,8 @@ stride = 0x20
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_D to II_ICRBE_D at image offset 0x15ffd0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
-from = "irix-657m-src irix/kern/sys/SN/SN1/snacioregs.h, II_ICRB0_D (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
+reset_from = "IP35 PROM 6.210 register table, entry II_ICRB0_D to II_ICRBE_D at image offset 0x15ffd0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
+from = "IRIX software (source not cited), II_ICRB0_D (offset and name; the header states no access); Linux 2.5.40 SN1 register headers: IIO_ICRB0_D to IIO_ICRBE_D (offsets and stride only)"
 doc = "Fourth word of each request-buffer entry. Entry i (0 to 14) is at this offset plus 0x20 times i. Read-only is carried over from the sibling words crb_a to crb_c and is inferred."
 
 [registers.widget_status]
@@ -590,7 +590,7 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_WSTAT at image offset 0x15fa30 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_WSTAT at image offset 0x15fa30 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 from = "Linux 2.5.40 SN1 register headers: IIO_WSTAT (name and offset), ii_wstat structure; shipped IRIX kernel I/O error handlers (read sites)"
 doc = "Crosstalk widget status. The register's name and layout are from the header; the header gives no access type, so the census reads it as read-only and the register is graded inferred. The shipped kernel's I/O error handlers only read it, which agrees with r but does not show the register cannot be written. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_WSTAT; the header's short name is WSTAT."
 rsvd = 0xfffffffeff00fdc0
@@ -666,7 +666,7 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH1 at image offset 0x15fdc0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH1 at image offset 0x15fdc0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH1 (name and offset), ii_iieph1 structure; shipped IRIX kernel I/O error handlers (read sites)"
 doc = "Incoming error packet header, part 1. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH1; the header's short name is IIEPH1."
 rsvd = 0xffffeef080080080
@@ -686,7 +686,7 @@ width = 64
 grade = "inferred"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH2 at image offset 0x15fdd8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry II_IIEPH2 at image offset 0x15fdd8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 from = "Linux 2.5.40 SN1 register headers: IIO_IIEPH2 (name and offset), ii_iieph2 structure; shipped IRIX kernel I/O error handlers (read sites)"
 doc = "Incoming error packet header, part 2. The register's name and layout are from the header; the header gives no access type. The shipped kernel's I/O error handlers only read it, so access is r; that is a reading of observed use, not a stated access, and the register stays graded inferred. The reset is the power-on table value recorded for this offset in the census unit. The rsvd mask is the structure's members named reserved; it is the header's naming only. The register name is ours, spelled out from the header's description of IIO_IIEPH2; the header's short name is IIEPH2."
 rsvd = 0xfffffec000000000

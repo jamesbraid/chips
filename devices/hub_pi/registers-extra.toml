@@ -21,10 +21,10 @@ offset = 0x0
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CPU_PROTECT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CPU_PROTECT"
 reset = 0xffffffffffffffff
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CPU_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c18"
+reset_from = "IRIX software (source not cited), register PI_CPU_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c18"
 doc = "CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access."
 
 [registers.pi_prot_override]
@@ -32,7 +32,7 @@ offset = 0x8
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_PROT_OVRRD; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_PROT_OVRRD"
 doc = "Protection override register, named PI_PROT_OVRRD in the header as the way to clear a CPU protection bit. The header gives neither an unlock value nor a behaviour, so none is imported. The IRIX register table confirms the access."
 
 [registers.pi_io_protect]
@@ -40,10 +40,10 @@ offset = 0x10
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_IO_PROTECT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_IO_PROTECT"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c48"
+reset_from = "IRIX software (source not cited), register PI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c48"
 doc = "Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access."
 
 [registers.pi_reply_level]
@@ -51,10 +51,10 @@ offset = 0x60
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_REPLY_LEVEL; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_REPLY_LEVEL"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_REPLY_LEVEL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d38"
+reset_from = "IRIX software (source not cited), register PI_REPLY_LEVEL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6d38"
 doc = "Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. The IRIX register table confirms the access."
 
 [registers.pi_nmi_b]
@@ -62,7 +62,7 @@ offset = 0x78
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_NMI_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_NMI_B"
 doc = "Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired with the processor A register at the same stride. The IRIX register table confirms the access."
 
 [registers.pi_softreset]
@@ -70,7 +70,7 @@ offset = 0x80
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_SOFTRESET; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_SOFTRESET"
 doc = "Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. The IRIX register table confirms the access."
 
 [registers.pi_cc_pend_set_a]
@@ -78,7 +78,7 @@ offset = 0xc8
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CC_PEND_SET_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CC_PEND_SET_A"
 doc = "Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access."
 
 [registers.pi_cc_pend_set_b]
@@ -86,7 +86,7 @@ offset = 0xd0
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CC_PEND_SET_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CC_PEND_SET_B"
 doc = "Cross-call interrupt pending set for processor B, named PI_CC_PEND_SET_B in the header. The header's pairing rule puts it eight bytes above the processor A set. The IRIX register table confirms the access."
 
 [registers.pi_cc_pend_clr_a]
@@ -94,10 +94,10 @@ offset = 0xd8
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CC_PEND_CLR_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CC_PEND_CLR_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_PEND_CLR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e88"
+reset_from = "IRIX software (source not cited), register PI_CC_PEND_CLR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6e88"
 doc = "Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. The IRIX register table confirms the access."
 
 [registers.pi_cc_pend_clr_b]
@@ -105,10 +105,10 @@ offset = 0xe0
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CC_PEND_CLR_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CC_PEND_CLR_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_PEND_CLR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ea0"
+reset_from = "IRIX software (source not cited), register PI_CC_PEND_CLR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6ea0"
 doc = "Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_cc_mask]
@@ -116,10 +116,10 @@ offset = 0xe8
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CC_MASK; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CC_MASK"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CC_MASK (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6eb8"
+reset_from = "IRIX software (source not cited), register PI_CC_MASK (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6eb8"
 doc = "Cross-call interrupt mask, named PI_CC_MASK in the header. The IRIX register table confirms the access."
 
 [registers.pi_rt_filter_ctrl]
@@ -127,10 +127,10 @@ offset = 0x168
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_RT_FILTER_CTRL; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_RT_FILTER_CTRL"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_RT_FILTER_CTRL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7008"
+reset_from = "IRIX software (source not cited), register PI_RT_FILTER_CTRL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7008"
 doc = "Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The IRIX register table confirms the access."
 
 [registers.pi_bist_write_data]
@@ -138,7 +138,7 @@ offset = 0x200
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_WRITE_DATA; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_WRITE_DATA"
 doc = "Built-in self-test write data, named PI_BIST_WRITE_DATA in the header. The IRIX register table confirms the access."
 
 [registers.pi_bist_read_data]
@@ -146,10 +146,10 @@ offset = 0x208
 access = "r"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_READ_DATA; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_READ_DATA"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_BIST_READ_DATA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7038"
+reset_from = "IRIX software (source not cited), register PI_BIST_READ_DATA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7038"
 doc = "Built-in self-test read data, named PI_BIST_READ_DATA in the header. The IRIX register table confirms the access."
 
 [registers.pi_bist_count_targ]
@@ -157,7 +157,7 @@ offset = 0x210
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_COUNT_TARG; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_COUNT_TARG"
 doc = "Built-in self-test count and target, named PI_BIST_COUNT_TARG in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
 [registers.pi_bist_ready]
@@ -165,10 +165,10 @@ offset = 0x218
 access = "r"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_READY; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_READY"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_BIST_RDY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7068"
+reset_from = "IRIX software (source not cited), register PI_BIST_RDY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7068"
 doc = "Built-in self-test ready indicator, named PI_BIST_READY in the header. The IRIX register table confirms the access."
 
 [registers.pi_bist_shift_load]
@@ -176,7 +176,7 @@ offset = 0x220
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_SHIFT_LOAD; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_SHIFT_LOAD"
 doc = "Built-in self-test control, named PI_BIST_SHIFT_LOAD in the header. The IRIX register table confirms the access."
 
 [registers.pi_bist_shift_unload]
@@ -184,7 +184,7 @@ offset = 0x228
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_SHIFT_UNLOAD; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_SHIFT_UNLOAD"
 doc = "Built-in self-test control, named PI_BIST_SHIFT_UNLOAD in the header. The IRIX register table confirms the access."
 
 [registers.pi_bist_enter_run]
@@ -192,7 +192,7 @@ offset = 0x230
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BIST_ENTER_RUN; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BIST_ENTER_RUN"
 doc = "Built-in self-test control, named PI_BIST_ENTER_RUN in the header. The IRIX register table confirms the access."
 
 [registers.pi_gfx_page_a]
@@ -200,10 +200,10 @@ offset = 0x300
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_PAGE_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_PAGE_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_PAGE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70c8"
+reset_from = "IRIX software (source not cited), register PI_GFX_PAGE_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70c8"
 doc = "Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. The IRIX register table confirms the access."
 
 [registers.pi_gfx_page_a.fields]
@@ -214,10 +214,10 @@ offset = 0x308
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_CREDIT_CNTR_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_CREDIT_CNTR_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_CREDIT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70e0"
+reset_from = "IRIX software (source not cited), register PI_GFX_CREDIT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70e0"
 doc = "Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. The IRIX register table confirms the access."
 
 [registers.pi_gfx_bias_a]
@@ -225,10 +225,10 @@ offset = 0x310
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_BIAS_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_BIAS_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_BIAS_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70f8"
+reset_from = "IRIX software (source not cited), register PI_GFX_BIAS_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd70f8"
 doc = "Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. The IRIX register table confirms the access."
 
 [registers.pi_gfx_int_cntr_a]
@@ -236,10 +236,10 @@ offset = 0x318
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_INT_CNTR_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_INT_CNTR_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7110"
+reset_from = "IRIX software (source not cited), register PI_GFX_INT_CNTR_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7110"
 doc = "Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. The IRIX register table confirms the access."
 
 [registers.pi_gfx_page_b]
@@ -247,10 +247,10 @@ offset = 0x328
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_PAGE_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_PAGE_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_PAGE_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7140"
+reset_from = "IRIX software (source not cited), register PI_GFX_PAGE_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7140"
 doc = "Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. The IRIX register table confirms the access."
 
 [registers.pi_gfx_page_b.fields]
@@ -261,10 +261,10 @@ offset = 0x330
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_CREDIT_CNTR_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_CREDIT_CNTR_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_CREDIT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7158"
+reset_from = "IRIX software (source not cited), register PI_GFX_CREDIT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7158"
 doc = "Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_gfx_bias_b]
@@ -272,10 +272,10 @@ offset = 0x338
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_BIAS_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_BIAS_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_BIAS_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7170"
+reset_from = "IRIX software (source not cited), register PI_GFX_BIAS_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7170"
 doc = "Graphics bias for processor B, named PI_GFX_BIAS_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_gfx_int_cntr_b]
@@ -283,10 +283,10 @@ offset = 0x340
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_GFX_INT_CNTR_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_GFX_INT_CNTR_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_GFX_INT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7188"
+reset_from = "IRIX software (source not cited), register PI_GFX_INT_CNTR_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7188"
 doc = "Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_err_status0_a_rclr]
@@ -294,7 +294,7 @@ offset = 0x438
 access = "r"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_ERR_STATUS0_A_RCLR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_ERR_STATUS0_A_RCLR"
 doc = "Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
 cor = 0xffffffffffffffff
 
@@ -312,7 +312,7 @@ offset = 0x458
 access = "r"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_ERR_STATUS0_B_RCLR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_ERR_STATUS0_B_RCLR"
 doc = "Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits."
 cor = 0xffffffffffffffff
 
@@ -330,7 +330,7 @@ offset = 0x470
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_SPOOL_CMP_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_SPOOL_CMP_A"
 doc = "Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. The header gives no field layout. The IRIX register table confirms the access."
 
 [registers.pi_spool_cmp_b]
@@ -338,7 +338,7 @@ offset = 0x478
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_SPOOL_CMP_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_SPOOL_CMP_B"
 doc = "Error spool compare for processor B, named PI_SPOOL_CMP_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_crb_timeout_a]
@@ -346,7 +346,7 @@ offset = 0x480
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CRB_TIMEOUT_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CRB_TIMEOUT_A"
 doc = "Timed-out CRB entries for processor A, named PI_CRB_TIMEOUT_A in the header. The header gives no field layout. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
 [registers.pi_crb_timeout_b]
@@ -354,7 +354,7 @@ offset = 0x488
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_CRB_TIMEOUT_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_CRB_TIMEOUT_B"
 doc = "Timed-out CRB entries for processor B, named PI_CRB_TIMEOUT_B in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
 [registers.pi_sysad_errchk_en]
@@ -362,10 +362,10 @@ offset = 0x490
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_SYSAD_ERRCHK_EN; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_SYSAD_ERRCHK_EN"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_SYSAD_ERRCHK_EN (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7380"
+reset_from = "IRIX software (source not cited), register PI_SYSAD_ERRCHK_EN (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7380"
 doc = "Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. The IRIX register table confirms the access."
 
 [registers.pi_sysad_errchk_en.fields]
@@ -381,10 +381,10 @@ offset = 0x498
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BAD_CHECK_BIT_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BAD_CHECK_BIT_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_FORCE_BAD_CHECK_BIT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7398"
+reset_from = "IRIX software (source not cited), register PI_FORCE_BAD_CHECK_BIT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7398"
 doc = "Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. The IRIX register table confirms the access."
 
 [registers.pi_bad_check_bit_b]
@@ -392,10 +392,10 @@ offset = 0x4a0
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_BAD_CHECK_BIT_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_BAD_CHECK_BIT_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_FORCE_BAD_CHECK_BIT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73b0"
+reset_from = "IRIX software (source not cited), register PI_FORCE_BAD_CHECK_BIT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73b0"
 doc = "Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_nack_cnt_a]
@@ -403,10 +403,10 @@ offset = 0x4a8
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_NACK_CNT_A; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_NACK_CNT_A"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CNT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73c8"
+reset_from = "IRIX software (source not cited), register PI_NACK_CNT_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73c8"
 doc = "Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. The IRIX register table confirms the access."
 
 [registers.pi_nack_cnt_a.fields]
@@ -418,10 +418,10 @@ offset = 0x4b0
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_NACK_CNT_B; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_NACK_CNT_B"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CNT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73e0"
+reset_from = "IRIX software (source not cited), register PI_NACK_CNT_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73e0"
 doc = "Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. The IRIX register table confirms the access."
 
 [registers.pi_nack_cnt_b.fields]
@@ -433,10 +433,10 @@ offset = 0x4b8
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, PI_NACK_CMP; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), PI_NACK_CMP"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_NACK_CMP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73f8"
+reset_from = "IRIX software (source not cited), register PI_NACK_CMP (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd73f8"
 doc = "Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access."
 
 [registers.pi_rt_local_ctrl]
@@ -509,7 +509,7 @@ grade = "established"
 from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71d0"
+reset_from = "IRIX software (source not cited), register PI_ERR_INT_MASK_A (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71d0"
 
 [registers.pi_err_int_mask_a.fields]
 spool_cmp_b = { bits = [0, 0], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
@@ -546,7 +546,7 @@ grade = "established"
 from = "census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_ERR_INT_MASK_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71e8"
+reset_from = "IRIX software (source not cited), register PI_ERR_INT_MASK_B (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd71e8"
 
 [registers.pi_err_int_mask_b.fields]
 spool_cmp_b = { bits = [0, 0], grade = "inferred", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Mask bit paired with the same pending bit. The header gives no layout for the mask registers; this layout is inferred from the pending register." }
@@ -683,7 +683,7 @@ grade = "established"
 from = "census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed)"
 reset = 0xf
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register PI_CALIAS_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c90"
+reset_from = "IRIX software (source not cited), register PI_CALIAS_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd6c90"
 
 [registers.pi_calias_size.fields]
 size = { bits = [3, 0], grade = "inferred", enum = "pi_calias_size", from = "public Linux SN0 Hub processor-interface header: field layout and masks", doc = "Cached alias size: 0 is none, then 4 KiB doubling to 64 MiB at 15. The header lists values 0 to 15 and gives no field extent; four bits is the width that holds them." }

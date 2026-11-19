@@ -37,10 +37,10 @@ offset = 0x600400
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_IO_PROTECT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_IO_PROTECT"
 reset = 0xffffffffffffffff
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80a0"
+reset_from = "IRIX software (source not cited), register NI_IO_PROTECT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80a0"
 doc = "PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access."
 
 [registers.ni_io_prot_ovrrd]
@@ -48,7 +48,7 @@ offset = 0x600408
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_IO_PROT_OVRRD; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_IO_PROT_OVRRD"
 doc = "PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access."
 
 [registers.ni_return_vector]
@@ -56,7 +56,7 @@ offset = 0x600308
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_RETURN_VECTOR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_RETURN_VECTOR"
 doc = "Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access."
 
 [registers.ni_port_parms]
@@ -64,14 +64,14 @@ offset = 0x608000
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_PORT_PARMS; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_PORT_PARMS"
 reset = 0x1bf0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PORT_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8190"
+reset_from = "IRIX software (source not cited), register NI_PORT_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8190"
 doc = "Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header. The fields are graded on their own. The IRIX register table confirms the access."
 
 [registers.ni_port_parms.fields]
-null_timeout = { bits = [15, 10], grade = "established", from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PORT_PARMS, field NULL_TIMEOUT", doc = "Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The IRIX register table places the field at 15:10, as the shift and the default constant do." }
+null_timeout = { bits = [15, 10], grade = "established", from = "IRIX software (source not cited), register NI_PORT_PARMS, field NULL_TIMEOUT", doc = "Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The IRIX register table places the field at 15:10, as the shift and the default constant do." }
 max_burst = { bits = [9, 0], grade = "established", doc = "Maximum burst, ten bits at 9:0, named NPP_MAXBURST in the header." }
 
 [registers.ni_age_cpu0_pio]
@@ -79,10 +79,10 @@ offset = 0x600508
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_CPU0_PIO; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_CPU0_PIO"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80e8"
+reset_from = "IRIX software (source not cited), register NI_AGE_CPU0_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80e8"
 doc = "CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 [registers.ni_age_cpu0_pio.fields]
@@ -95,10 +95,10 @@ offset = 0x600518
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_CPU1_PIO; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_CPU1_PIO"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8118"
+reset_from = "IRIX software (source not cited), register NI_AGE_CPU1_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8118"
 doc = "CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 [registers.ni_age_cpu1_pio.fields]
@@ -111,10 +111,10 @@ offset = 0x600520
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_GBR_MEMORY; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_GBR_MEMORY"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8130"
+reset_from = "IRIX software (source not cited), register NI_AGE_GBR_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8130"
 doc = "Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 [registers.ni_age_gbr_memory.fields]
@@ -127,10 +127,10 @@ offset = 0x600528
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_GBR_PIO; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_GBR_PIO"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_GBR_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8148"
+reset_from = "IRIX software (source not cited), register NI_AGE_GBR_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8148"
 doc = "Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 [registers.ni_age_gbr_pio.fields]
@@ -143,10 +143,10 @@ offset = 0x600530
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_IO_MEMORY; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_IO_MEMORY"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_IO_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8160"
+reset_from = "IRIX software (source not cited), register NI_AGE_IO_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8160"
 doc = "I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 [registers.ni_age_io_memory.fields]
@@ -159,10 +159,10 @@ offset = 0x600538
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NI_AGE_IO_PIO; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), NI_AGE_IO_PIO"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_IO_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8178"
+reset_from = "IRIX software (source not cited), register NI_AGE_IO_PIO (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8178"
 doc = "I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access."
 
 # Routing table entries after the first. The census names entry 0 of each table. The header gives
@@ -198,7 +198,7 @@ grade = "established"
 from = "census: 18 sites, 16 routines (r); census: 5 sites, 4 routines (r, indexed)"
 reset = 0x20020
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50"
+reset_from = "IRIX software (source not cited), register NI_STATUS_REV_ID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f50"
 doc = "Layout of the status, revision and identity register, ni_status_rev_id. The header names the port status bits separately; this word uses the same names. The census of the shipped IRIX Origin 200/2000 kernel (the census field table) shows the register read with a shift of 8 and a nine-bit mask for the node number, a shift of 4 for the chip revision and a test of bit 17 for the region size; the header's layout agrees."
 
 [registers.ni_status_rev_id.fields]
@@ -232,7 +232,7 @@ grade = "established"
 from = "census: 3 sites, 2 routines"
 reset = 0x1
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80"
+reset_from = "IRIX software (source not cited), register NI_PROTECTION_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f80"
 doc = "Layout of the protection configuration register, ni_protection."
 
 [registers.ni_protection.fields]
@@ -246,7 +246,7 @@ grade = "established"
 from = "census: 2 sites, 1 routines"
 reset = 0x3fffffe000f00f0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98"
+reset_from = "IRIX software (source not cited), register NI_GLOBAL_PARMS (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f98"
 doc = "Layout of the global link parameters register, ni_global_parms. The header's comment on the credit-timeout field repeats the wording of the field above it; the name used here is the mask's own name."
 
 [registers.ni_global_parms.fields]
@@ -350,7 +350,7 @@ grade = "established"
 from = "census: 9 sites, 3 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0"
+reset_from = "IRIX software (source not cited), register NI_AGE_CPU0_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd80d0"
 doc = "Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field."
 
 [registers.ni_age_cpu0_memory.fields]
@@ -366,7 +366,7 @@ grade = "established"
 from = "census: 9 sites, 3 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100"
+reset_from = "IRIX software (source not cited), register NI_AGE_CPU1_MEMORY (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd8100"
 doc = "Layout of each of the eight ageing registers, ni_age_cpu0_memory through ni_age_io_pio. The census names two of them. The header gives the channel field its own names and no meaning for the congestion field."
 
 [registers.ni_age_cpu1_memory.fields]
@@ -387,8 +387,8 @@ cor = 0xffffffffffffffff
 NI_META_ENTRIES = { value = 32, grade = "established", doc = "Meta routing table entry count, named NI_META_ENTRIES in the public header." }
 NI_LOCAL_ENTRIES = { value = 16, grade = "established", doc = "Local routing table entry count, named NI_LOCAL_ENTRIES in the public header." }
 NI_PORT_ERROR_COUNT_MAX = { value = 0xff, grade = "established", doc = "Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header." }
-NI_PORT_PARMS_DEFAULTS = { value = 0x1bf0, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by stand/arcs/IP27prom/net.c by Hub revision", doc = "Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
-NI_PORT_PARMS_HUB20_DEFAULTS = { value = 0x7f0, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubni.h, NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by stand/arcs/IP27prom/net.c by Hub revision", doc = "Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
+NI_PORT_PARMS_DEFAULTS = { value = 0x1bf0, grade = "established", from = "IRIX software (source not cited), NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by IRIX software (source not cited) by Hub revision", doc = "Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
+NI_PORT_PARMS_HUB20_DEFAULTS = { value = 0x7f0, grade = "established", from = "IRIX software (source not cited), NPP_RESET_DEFAULTS and NPP_RESET_DFLT_HUB20; written by IRIX software (source not cited) by Hub revision", doc = "Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2." }
 NI_BASE = { value = 0x600000, grade = "established", doc = "Start of the network interface registers, from the header." }
 NI_BASE_TABLES = { value = 0x630000, grade = "established", doc = "Start of the routing tables, from the header." }
 NI_NASID_TO_FINEREG_SHIFT = { value = 0x0, grade = "established", doc = "Shift from a node number to its region number in fine mode, where each node is a region." }

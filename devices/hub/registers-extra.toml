@@ -18,10 +18,10 @@ offset = 0x410020
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_IBNA_0; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), IIO_IBNA_0"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBNA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e60"
+reset_from = "IRIX software (source not cited), register II_IBNA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e60"
 doc = "Notification address of engine 0, the twin of the engine 1 slot in the census. Offset and name are from the public header. The IRIX register table confirms the access."
 
 [registers.iio_ibia_0]
@@ -29,10 +29,10 @@ offset = 0x410028
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_IBIA_0; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), IIO_IBIA_0"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBIA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e78"
+reset_from = "IRIX software (source not cited), register II_IBIA0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e78"
 doc = "Interrupt address of engine 0. Offset and name are from the public header. The IRIX register table confirms the access."
 
 [registers.iio_ibia_0.fields]
@@ -44,10 +44,10 @@ offset = 0x420028
 access = "rw"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, II_IBIA1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access"
+from = "IRIX software (source not cited), II_IBIA1"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBIA1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f08"
+reset_from = "IRIX software (source not cited), register II_IBIA1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7f08"
 doc = "Interrupt address of engine 1. Offset and name are from the public header. The IRIX register table confirms the access."
 
 [registers.iio_ibia_1.fields]
@@ -64,8 +64,8 @@ width = 64
 grade = "established"
 reset = 0x1c101048
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7800"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, II_WID; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
+reset_from = "IRIX software (source not cited), register II_WID (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7800"
+from = "IRIX software (source not cited), II_WID; public Linux SN0 Hub I/O header (pinned linux tree): IIO_WID and hubii_wid_u"
 doc = "Widget identification register of the Hub widget. Offset and field layout are from the public header. The header gives no access type and no reset value, so the The IRIX register table confirms the access."
 
 [registers.iio_wid.fields]
@@ -80,8 +80,8 @@ width = 64
 grade = "established"
 reset = 0xffffffffffffffff
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILAPR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd78a8"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_ILAPR; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
+reset_from = "IRIX software (source not cited), register II_ILAPR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd78a8"
+from = "IRIX software (source not cited), IIO_ILAPR; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPR"
 doc = "Local access protection register, named and placed by the public header. The header gives no fields, access type or reset. The IRIX register table confirms the access."
 
 [registers.iio_ilapo]
@@ -89,7 +89,7 @@ offset = 0x400108
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, II_ILAPO; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO"
+from = "IRIX software (source not cited), II_ILAPO; public Linux SN0 Hub I/O header (pinned linux tree): IIO_ILAPO"
 doc = "Protection override register, named and placed by the public header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access."
 
 # Big-window translation entries. The header numbers them 0 to 6 and says the hardware manuals
@@ -103,8 +103,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, registers II_ITTE1 to II_ITTE7 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a40"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubpi.h, II_ITTE2; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
+reset_from = "IRIX software (source not cited), registers II_ITTE1 to II_ITTE7 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a40"
+from = "IRIX software (source not cited), II_ITTE2; public Linux SN0 Hub I/O header (pinned linux tree): IIO_NUM_ITTES, IIO_ITTE_BASE, IIO_ITTE"
 doc = "Big-window translation entry n, for n from 0 to 6. Entry 0 is at the register offset and each later entry is eight bytes further on. The IRIX register table confirms the access."
 
 [registers.iio_itte.fields]
@@ -119,7 +119,7 @@ offset = 0x400148
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_IGFX_1; public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
+from = "IRIX software (source not cited), IIO_IGFX_1; public Linux SN0 Hub I/O header, pinned linux tree: IIO_IGFX_1 (offset and name)"
 doc = "Graphics node and widget register 1, the twin of iio_igfx_0 in the census. The header gives both the same field layout: widget number in bits 3:0, node number in bits 12:4, processor number at bit 16 and a valid bit at bit 20. The header gives no access type, so rw is assumed."
 
 [registers.iio_igfx_1.fields]
@@ -135,8 +135,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_SCRATCH_REG0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a10"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, II_SCRATCH_REG0; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
+reset_from = "IRIX software (source not cited), register II_SCRATCH_REG0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a10"
+from = "IRIX software (source not cited), II_SCRATCH_REG0; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG0 (offset and name)"
 doc = "Scratch register 0. The header names its bit uses for software only and gives a mask of the bits that exist, 0x0000000f00f11fff. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated."
 rsvd = 0xfffffff0ff0ee000
 
@@ -147,8 +147,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a28"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IIO_SCRATCH_REG1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
+reset_from = "IRIX software (source not cited), register II_SCRATCH_REG1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7a28"
+from = "IRIX software (source not cited), IIO_SCRATCH_REG1; public Linux SN0 Hub I/O header, pinned linux tree: IIO_SCRATCH_REG1 (offset and name)"
 doc = "Scratch register 1, the twin of register 0. The IRIX register table confirms the access. Only the bits in the header's IIO_SCRATCH_MASK, 0x0000000f00f11fff, exist; the rsvd mask is its complement. Established as the header's statement that not all bits are available; whether the missing bits read zero is not stated."
 rsvd = 0xfffffff0ff0ee000
 
@@ -161,7 +161,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WSTAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7830"
+reset_from = "IRIX software (source not cited), register II_WSTAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7830"
 doc = "The rsvd mask is the members the header's structure names reserved (rsvd1 to rsvd4); the header gives no read or write behaviour for them, so the mask is the header's naming, graded established as a header fact only."
 rsvd = 0xfffffffeff00fd80
 
@@ -181,7 +181,7 @@ grade = "established"
 from = "census: 2 sites, 2 routines"
 reset = 0x4001
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_WCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7860"
+reset_from = "IRIX software (source not cited), register II_WCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7860"
 doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
 rsvd = 0xffffffffff801fe0
 
@@ -201,7 +201,7 @@ grade = "established"
 from = "census: 6 sites, 3 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IOWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7908"
+reset_from = "IRIX software (source not cited), register II_IOWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7908"
 doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
 rsvd = 0xffffffffffff00fe
 
@@ -217,7 +217,7 @@ grade = "established"
 from = "census: 2 sites, 2 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7938"
+reset_from = "IRIX software (source not cited), register II_IIWA (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7938"
 doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
 rsvd = 0xffffffffffff00fe
 
@@ -233,7 +233,7 @@ grade = "established"
 from = "census: 2 sites, 1 routines (rw); census: 6 sites, 4 routines (rw, indexed)"
 reset = 0x3fc03ff000a
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILCSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7998"
+reset_from = "IRIX software (source not cited), register II_ILCSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7998"
 doc = "The rsvd mask is the structure's rsvd, rsvd2, rsvd3 and rsvd4 members (the two bits at 7:6 are named rsvd1 and described as the data ready offset, so they are a field here); header naming only."
 rsvd = 0xfffffc00fc00c200
 
@@ -255,7 +255,7 @@ grade = "established"
 from = "census: 2 sites, 1 routines (rw); census: 3 sites, 2 routines (rw, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ILLR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79b0"
+reset_from = "IRIX software (source not cited), register II_ILLR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79b0"
 doc = "The rsvd mask is the structure's rsvd member (bits 63:32); header naming only."
 rsvd = 0xffffffff00000000
 
@@ -271,7 +271,7 @@ grade = "established"
 from = "census: 12 sites, 5 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IIDSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79c8"
+reset_from = "IRIX software (source not cited), register II_IIDSR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd79c8"
 
 [registers.iio_iidsr.fields]
 sent = { bits = [28, 28], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Interrupt sent (IIO_IIDSR_SENT)." }
@@ -336,7 +336,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (w, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e00"
+reset_from = "IRIX software (source not cited), register II_IBLS0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e00"
 
 [registers.iio_ibls_0.fields]
 length = { bits = [15, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Length." }
@@ -351,7 +351,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e48"
+reset_from = "IRIX software (source not cited), register II_IBCT0 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e48"
 
 [registers.iio_ibct_0.fields]
 zfil_mode = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Zero-fill mode (IBCT_ZFIL_MODE)." }
@@ -366,7 +366,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines (r); census: 3 sites, 1 routines (rw, indexed)"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBLS1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e90"
+reset_from = "IRIX software (source not cited), register II_IBLS1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7e90"
 
 [registers.iio_ibls_1.fields]
 length = { bits = [15, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Length." }
@@ -381,7 +381,7 @@ grade = "established"
 from = "census: 3 sites, 1 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IBCT1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ed8"
+reset_from = "IRIX software (source not cited), register II_IBCT1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7ed8"
 
 [registers.iio_ibct_1.fields]
 zfil_mode = { bits = [0, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Zero-fill mode (IBCT_ZFIL_MODE)." }
@@ -396,7 +396,7 @@ grade = "established"
 from = "census: 6 sites, 3 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICMR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d70"
+reset_from = "IRIX software (source not cited), register II_ICMR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d70"
 
 [registers.iio_icmr.fields]
 p_cnt = { bits = [3, 0], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "IIO_ICMR_P_CNT." }
@@ -416,7 +416,7 @@ grade = "established"
 from = "census: 7 sites, 1 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d88"
+reset_from = "IRIX software (source not cited), register II_ICCR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d88"
 doc = "The header gives the commands as values already in place (0x100, 0x200, 0x400, 0x800) next to a command mask of 0xff at shift 7, which disagree; they are recorded here as single bits, graded inferred."
 
 [registers.iio_iccr.fields]
@@ -434,7 +434,7 @@ grade = "established"
 from = "census: 8 sites, 3 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d40"
+reset_from = "IRIX software (source not cited), register II_IFDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d40"
 doc = "The rsvd mask is the structure's rsvd and rsvd1 members; header naming only."
 rsvd = 0xffffffffffff8080
 
@@ -450,7 +450,7 @@ grade = "established"
 from = "census: 5 sites, 2 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_IPDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d10"
+reset_from = "IRIX software (source not cited), register II_IPDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d10"
 
 [registers.iio_ipdr.fields]
 pnd = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Pending (IIO_IPDR_PND)." }
@@ -463,7 +463,7 @@ grade = "established"
 from = "census: 3 sites, 1 routines"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register II_ICDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d28"
+reset_from = "IRIX software (source not cited), register II_ICDR (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7d28"
 
 [registers.iio_icdr.fields]
 pnd = { bits = [4, 4], grade = "established", from = "public Linux SN0 Hub I/O header: field layout and masks", doc = "Pending (IIO_ICDR_PND)." }
@@ -513,8 +513,8 @@ IIO_IBCT_POISON = { value = 0x100, grade = "established", doc = "Poison bit of t
 # Length/status busy bit. The census carries the same value as an inferred constant.
 IIO_IBLS_BUSY = { value = 0x100000, grade = "established", doc = "Busy bit of the length/status register, named IBLS_BUSY in the public header." }
 # I/O error clear bits for the two engines. The public header marks both meanings with a question mark.
-IIO_IECLR_BTE0 = { value = 0x20000, grade = "inferred", from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IECLR_BTE0", doc = "Clears engine 0's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred. The IRIX header defines the same bit and marks its comment with question marks, so the meaning stays inferred." }
-IIO_IECLR_BTE1 = { value = 0x40000, grade = "inferred", from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, IECLR_BTE1", doc = "Clears engine 1's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred. The IRIX header defines the same bit and marks its comment with question marks, so the meaning stays inferred." }
+IIO_IECLR_BTE0 = { value = 0x20000, grade = "inferred", from = "IRIX software (source not cited), IECLR_BTE0", doc = "Clears engine 0's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred. The IRIX header defines the same bit and marks its comment with question marks, so the meaning stays inferred." }
+IIO_IECLR_BTE1 = { value = 0x40000, grade = "inferred", from = "IRIX software (source not cited), IECLR_BTE1", doc = "Clears engine 1's latched error, per the public header's name. The header's comment on the bit is marked uncertain, so the meaning is inferred. The IRIX header defines the same bit and marks its comment with question marks, so the meaning stays inferred." }
 # Hub I/O field masks. Values are the header's masks, shifted into place.
 IIO_WID_PART_HUB = { value = 0xc101, grade = "established", doc = "Widget part number the public header's comment assigns to the Hub (hub=c101)." }
 IIO_WSTAT_ECRAZY = { value = 0x100000000, grade = "established", doc = "Crazy bit of the widget status register, bit 32, named ECRAZY in the public header ('Hub gone crazy'). The header gives no behaviour for it." }
@@ -523,7 +523,7 @@ IIO_WSTAT_TXRETRY_MASK = { value = 0x7f0000, grade = "established", doc = "Trans
 IIO_WCR_DIR_CON = { value = 0x20000, grade = "established", doc = "Widget direct-connect bit, bit 17 of the widget control register, named in the public header's structure." }
 IIO_LLP_CSR_IS_UP = { value = 0x2000, grade = "established", doc = "Link-up bit, bit 13 of the link control and status register, named IS_UP in the public header. The header names the bit only; what the other values of the status field mean is not imported." }
 IIO_LLP_CSR_LLP_STAT_MASK = { value = 0x3000, grade = "established", doc = "Two-bit link status field, bits 13:12, named LLP_STAT_MASK in the public header." }
-LNK_STAT_WORKING = { value = 0x2, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubio.h, LNK_STAT_WORKING", doc = "Value of the link status field the public header names WORKING. The name is the driver's expectation. The header names no other value of the field. The IRIX header defines the name with this value." }
+LNK_STAT_WORKING = { value = 0x2, grade = "established", from = "IRIX software (source not cited), LNK_STAT_WORKING", doc = "Value of the link status field the public header names WORKING. The name is the driver's expectation. The header names no other value of the field. The IRIX header defines the name with this value." }
 IIO_ILCSR_WARM_RESET = { value = 0x100, grade = "established", doc = "Warm reset bit of the link control register, bit 8, named ILCSR_WARM_RESET in the public header. The census carries the same value as an inferred constant. The header gives no behaviour for it." }
 IIO_ILCSR_LLP_EN = { value = 0x400, grade = "established", doc = "Link enable bit, bit 10 of the link control register, named llp_en in the public header's structure." }
 IIO_ILCSR_BM8 = { value = 0x800, grade = "established", doc = "Eight-bit mode bit, bit 11 of the link control register, named bm8 in the public header's structure." }

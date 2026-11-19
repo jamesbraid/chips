@@ -29,7 +29,7 @@ offset = 0x200090
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_MEM_DIMM_INIT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name)"
+from = "IRIX software (source not cited), MD_MEM_DIMM_INIT; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_MEM_DIMM_INIT (offset and name)"
 doc = "Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
 [registers.md_mem_dimm_init.fields]
@@ -41,7 +41,7 @@ offset = 0x200098
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_DIR_DIMM_INIT; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name)"
+from = "IRIX software (source not cited), MD_DIR_DIMM_INIT; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_DIR_DIMM_INIT (offset and name)"
 doc = "Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write."
 
 [registers.md_dir_dimm_init.fields]
@@ -53,7 +53,7 @@ offset = 0x220058
 access = "w"
 width = 64
 grade = "established"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_LED1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor)"
+from = "IRIX software (source not cited), MD_LED1; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_LED1 (offset, name and the description eight-bit LED for the second processor)"
 doc = "Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred. The IRIX register table confirms the access."
 
 [registers.md_led1.fields]
@@ -66,8 +66,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77d0"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_1; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)"
+reset_from = "IRIX software (source not cited), register MD_UREG1_1 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77d0"
+from = "IRIX software (source not cited), MD_UREG1_1; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_1 (offset and name)"
 doc = "Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access."
 
 [registers.md_ureg1_2]
@@ -75,7 +75,7 @@ offset = 0x220090
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_2; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_2; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_2 (offset and name)"
 doc = "Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_3]
@@ -83,7 +83,7 @@ offset = 0x220098
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_3; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_3; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_3 (offset and name)"
 doc = "Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_4]
@@ -91,7 +91,7 @@ offset = 0x2200a0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_4 and the CPU_LED_ADDR macro; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_4 and the CPU_LED_ADDR macro; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_4 (offset and name)"
 doc = "Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers."
 
 [registers.md_ureg1_5]
@@ -99,7 +99,7 @@ offset = 0x2200a8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_5; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_5; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_5 (offset and name)"
 doc = "Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_6]
@@ -107,7 +107,7 @@ offset = 0x2200b0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_6; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_6 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_6; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_6 (offset and name)"
 doc = "Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_7]
@@ -115,7 +115,7 @@ offset = 0x2200b8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_7; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_7 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_7; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_7 (offset and name)"
 doc = "Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_8]
@@ -123,7 +123,7 @@ offset = 0x2200c0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_8; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_8 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_8; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_8 (offset and name)"
 doc = "Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_9]
@@ -131,7 +131,7 @@ offset = 0x2200c8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_9; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_9 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_9; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_9 (offset and name)"
 doc = "Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_10]
@@ -139,7 +139,7 @@ offset = 0x2200d0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_10; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_10 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_10; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_10 (offset and name)"
 doc = "Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_11]
@@ -147,7 +147,7 @@ offset = 0x2200d8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_11; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_11 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_11; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_11 (offset and name)"
 doc = "Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_12]
@@ -155,7 +155,7 @@ offset = 0x2200e0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_12; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_12 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_12; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_12 (offset and name)"
 doc = "Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_13]
@@ -163,7 +163,7 @@ offset = 0x2200e8
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_13; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_13 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_13; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_13 (offset and name)"
 doc = "Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_14]
@@ -171,7 +171,7 @@ offset = 0x2200f0
 access = "rw"
 width = 64
 grade = "inferred"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_14; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name)"
+from = "IRIX software (source not cited), MD_UREG1_14; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_14 (offset and name)"
 doc = "Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed."
 
 [registers.md_ureg1_15]
@@ -181,8 +181,8 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_UREG1_15 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77e8"
-from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MD_UREG1_15; stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg for access; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)"
+reset_from = "IRIX software (source not cited), register MD_UREG1_15 (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd77e8"
+from = "IRIX software (source not cited), MD_UREG1_15; public Linux SN0 Hub memory/directory header, pinned linux tree: MD_UREG1_15 (offset and name)"
 doc = "Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access."
 
 # ---- MD: memory and directory (configuration, migration, error latches)
@@ -194,7 +194,7 @@ grade = "established"
 from = "census: 3 sites, 3 routines (r); census: 13 sites, 12 routines (rw, indexed)"
 reset = 0x1e7fbc3fffffff
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458"
+reset_from = "IRIX software (source not cited), register MD_MEMORY_CONFIG (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7458"
 doc = "Layout of the memory configuration register. Bank descriptors take bits 23:0, three bits each. The timing fields and the bank-size codes are named by the header, and their meaning is only partly stated there."
 
 [registers.md_memory_config.fields]
@@ -225,7 +225,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines"
 reset = 0x400
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470"
+reset_from = "IRIX software (source not cited), register MD_REFRESH_CONTROL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7470"
 doc = "Layout of the refresh control register."
 
 [registers.md_refresh_control.fields]
@@ -241,7 +241,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines"
 reset = 0x3212
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0"
+reset_from = "IRIX software (source not cited), register MD_MOQ_SIZE (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd75f0"
 doc = "Layout of the outgoing queue size register."
 
 [registers.md_moq_size.fields]
@@ -256,7 +256,7 @@ grade = "established"
 from = "census: 6 sites, 1 routines"
 reset = 0x18b100002
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608"
+reset_from = "IRIX software (source not cited), register MD_MLAN_CTL (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7608"
 doc = "Layout of the one-wire (Microlan) control register."
 
 [registers.md_mlan_ctl.fields]
@@ -410,7 +410,7 @@ grade = "established"
 from = "census: 1 sites, 1 routines"
 reset = 0xc0
 reset_grade = "established"
-reset_from = "irix-657m-src stand/arcs/lib/libkl/hwreg/hwreg_hub.hwreg, register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488"
+reset_from = "IRIX software (source not cited), register MD_FANDOP_CAC_STAT (field reset values are the system reset initial values); the same table is in the IP27 PROM 6.156 image at 0xd7488"
 
 [registers.md_fandop_cac_stat.fields]
 addr = { bits = [31, 6], grade = "established", from = "public Linux SN0 Hub memory/directory header: field layout and masks", doc = "Address, 26 bits (MFC_ADDR_MASK 0x3ffffff at shift 6)." }
@@ -471,10 +471,10 @@ values = { size_empty = { value = 0, grade = "established" }, size_8mb = { value
 [constants]
 # Default values the header defines for the registers above. They are what software writes as a
 # starting value, so the reset of the hardware is not established by them.
-HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS = { value = 0x1e7fbc3fffffff, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by stand/arcs/lib/libkl/ml/hub.c and stand/arcs/IP27prom/mdir.c", doc = "Composite default of the memory configuration register, built from the header's default constant. The header gives it as a value software writes, not a reset read from hardware. Eight bank codes of 7, reply guarantee 15, both directory and ignore-ECC bits set, and the four timing fields at their header values. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
-HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS = { value = 0x400, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by stand/arcs/lib/libkl/ml/hub.c and stand/arcs/IP27prom/mdir.c", doc = "Default value of the refresh control register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
-HUB_MD_MOQ_SIZE_RESET_DEFAULTS = { value = 0x3212, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by stand/arcs/lib/libkl/ml/hub.c and stand/arcs/IP27prom/mdir.c", doc = "Default value of the outgoing queue size register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
-HUB_MD_MLAN_CTL_RESET_DEFAULTS = { value = 0x18b100000, grade = "established", from = "irix-657m-src irix/kern/sys/SN/SN0/hubmd.h, MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by stand/arcs/lib/libkl/ml/hub.c and stand/arcs/IP27prom/mdir.c", doc = "Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
+HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS = { value = 0x1e7fbc3fffffff, grade = "established", from = "IRIX software (source not cited), MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by IRIX software (source not cited)", doc = "Composite default of the memory configuration register, built from the header's default constant. The header gives it as a value software writes, not a reset read from hardware. Eight bank codes of 7, reply guarantee 15, both directory and ignore-ECC bits set, and the four timing fields at their header values. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
+HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS = { value = 0x400, grade = "established", from = "IRIX software (source not cited), MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by IRIX software (source not cited)", doc = "Default value of the refresh control register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
+HUB_MD_MOQ_SIZE_RESET_DEFAULTS = { value = 0x3212, grade = "established", from = "IRIX software (source not cited), MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by IRIX software (source not cited)", doc = "Default value of the outgoing queue size register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
+HUB_MD_MLAN_CTL_RESET_DEFAULTS = { value = 0x18b100000, grade = "established", from = "IRIX software (source not cited), MMC_RESET_DEFAULTS, MRC_RESET_DEFAULTS, MMS_RESET_DEFAULTS and MLAN_RESET_DEFAULTS; written by IRIX software (source not cited)", doc = "Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register." }
 HUB_MD_MLAN_CTL_ACCESS_BYTES = { value = 8, grade = "established", doc = "Access size in bytes of the one-wire control register in the shipped IRIX kernel accessor: its loads and stores there are doubleword (census context). Bit 33 belongs to the upper phase field, so a 32-bit access cannot write the whole register; that consequence follows from the field layout, not from a trace." }
 
 # Memory bank granule. A bank index is the address bits above bit 28 (the header's shift for 512 MB).

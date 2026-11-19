@@ -31,7 +31,7 @@ width = 64
 grade = "established"
 reset = 0x23012049
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_REV_ID at image offset 0x161410 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_REV_ID at image offset 0x161410 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Revision and identity. The header says this register carries the chip identity and sets the node's ID and the size of each region. The manufacturer, part and revision fields are assigned by IBM under the IEEE 1149.1 scheme, and the header does not say whether they are writable. The I/O interface's widget identification register echoes the manufacturer and revision fields."
 
 [registers.rev_id.fields]
@@ -48,7 +48,7 @@ width = 64
 grade = "established"
 reset = 0xfffffffffffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_CPU_PERMISSION at image offset 0x161428 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_CPU_PERMISSION at image offset 0x161428 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Processor PIO access permission, one bit per region. A region whose bit is clear gets no write access to the local block, network interface, crossbar or memory-directory registers, and no read that would change state. A write or a state-changing read from such a region is not performed and gets an error reply. The header calls it the access-rights vector for those four units. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and the table does write 64 set bits for single 64-bit fields elsewhere (three registers of the processor interface block and the first register of the memory-directory block), so the four clear bits are not how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source."
 
 [registers.cpu_permission.fields]
@@ -68,7 +68,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_IO_PERMISSION at image offset 0x161458 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_IO_PERMISSION at image offset 0x161458 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "The same per-region access vector as cpu_permission, applied to accesses that come from the I/O interface side rather than from a processor."
 
 [registers.io_permission.fields]
@@ -91,7 +91,7 @@ width = 64
 grade = "established"
 reset = 0xfffffffffffffff
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_REGION_PRESENT at image offset 0x161488 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_REGION_PRESENT at image offset 0x161488 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Regions that can receive an invalidate. The block samples it when an invalidate arrives. If an invalidate names a processor interface in a region whose bit is clear, the block acknowledges on that interface's behalf. The region size in the revision register sets how many nodes share one bit. The table record behind this reset (decoded from the firmware image) is one field spanning bits 63:0 whose reset is 0x0fffffffffffffff; the same record appears for this register, the local block's processor permission and its region present register, and the table does write 64 set bits for single 64-bit fields elsewhere (three registers of the processor interface block and the first register of the memory-directory block), so the four clear bits are not how the table writes all-ones. Whether the silicon reads them clear is not settled by any public source."
 
 [registers.region_present.fields]
@@ -104,7 +104,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_NODES_ABSENT at image offset 0x1614a0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_NODES_ABSENT at image offset 0x1614a0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Four 16-bit entries, one per slot. Each entry holds a node number in its low eight bits and a valid bit at bit 15. A node listed with its valid bit set cannot receive an invalidate."
 
 [registers.nodes_absent.fields]
@@ -124,7 +124,7 @@ width = 64
 grade = "established"
 reset = 0x31e300002
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_MICROLAN_CTL at image offset 0x1614b8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_MICROLAN_CTL at image offset 0x1614b8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Control for a one-wire serial bus to the node board's add-only serial PROM. The header names the part as a Dallas 1990A and says the PROM holds the node board's serial number and configuration. Bytes travel least-significant bit first. The header gives no unit for the timing fields, no completion latency and no sequence of commands, so the timing and the transaction are unknown. The public Linux SN1 tree does not use this register outside its header."
 
 [registers.microlan_ctl.fields]
@@ -142,7 +142,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_BITS at image offset 0x1614d0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_BITS at image offset 0x1614d0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Local-block error bits. Reads do not change them. A write sets the bits it names. Any set bit raises the block's error request to both processor interfaces (bit 55 of their pending-1 register). The header says the contents survive a reset."
 
 [registers.error_bits.fields]
@@ -175,7 +175,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_HDR1 at image offset 0x161500 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_HDR1 at image offset 0x161500 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Header of the first packet that caused an error. It is captured while valid is clear, and valid is then set. A later error while valid is set sets overrun and leaves the rest alone. The err_type value uses the same bit numbering as error_bits, so err_type 5 means rp_long. Not relevant for a global clock drop."
 
 [registers.error_hdr1.fields]
@@ -193,7 +193,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_HDR2 at image offset 0x161518 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_HDR2 at image offset 0x161518 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Address field from the header of the first packet that caused an error. Not relevant for a global clock drop."
 
 [registers.error_hdr2.fields]
@@ -206,7 +206,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_DATA at image offset 0x161530 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_ERROR_DATA at image offset 0x161530 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Data flit of the first erroring packet, for the error kinds that carry data."
 
 [registers.error_data.fields]
@@ -219,7 +219,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_DEBUG_SELECT at image offset 0x161548 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_DEBUG_SELECT at image offset 0x161548 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Chooses which internal signals appear on the debug pins. The header gives no list of the choices."
 
 [registers.debug_select.fields]
@@ -232,7 +232,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_DEBUG_PINS at image offset 0x161560 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_DEBUG_PINS at image offset 0x161560 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Value on the chip's debug pins."
 
 [registers.debug_pins.fields]
@@ -245,7 +245,7 @@ width = 64
 grade = "established"
 reset = 0x100000640
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_RT_LOCAL_CTRL at image offset 0x161578 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_RT_LOCAL_CTRL at image offset 0x161578 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Local source of the real-time clock. The local block gives the clock to both processor interfaces. With use_internal set it generates the clock from the Bedrock's system clock, with its period set by max_count. With it clear it filters an incoming global clock instead (see rt_filter_ctrl)."
 
 [registers.rt_local_ctrl.fields]
@@ -262,7 +262,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_RT_FILTER_CTRL at image offset 0x161590 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_RT_FILTER_CTRL at image offset 0x161590 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Filtering of an incoming global clock, used when rt_local_ctrl use_internal is clear. Simple filtering drops single-cycle glitches. Complex filtering (mask_enable set) expects positive edges at regular intervals, tracks missing and unexpected edges, and generates an edge itself when one is missing. Under either option the clock it hands the processor interfaces stays high for (2 * max_count + 1 - offset) / 2 cycles of the block's system clock after each positive edge. Clock loss is error bit gclk_drop."
 
 [registers.rt_filter_ctrl.fields]
@@ -280,7 +280,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0 at image offset 0x1615a8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0 at image offset 0x1615a8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Plain storage. The header says it is reset to zero."
 
 [registers.scratch0.fields]
@@ -293,7 +293,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1 at image offset 0x1615c0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1 at image offset 0x1615c0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Plain storage. The header says it is not reset, and does not name the reset it means."
 
 [registers.scratch1.fields]
@@ -306,7 +306,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2 at image offset 0x1615d8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2 at image offset 0x1615d8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Plain storage. The header says it is not reset, and does not name the reset it means."
 
 [registers.scratch2.fields]
@@ -319,7 +319,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG3 at image offset 0x1615f0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG3 at image offset 0x1615f0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "One-bit storage (bit 0 of a 64-bit word). The header gives no reset value. The public Linux ia64 L1 driver uses it as a hub-wide lock: it releases the lock by writing zero to this address."
 
 [registers.scratch3.fields]
@@ -332,7 +332,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG4 at image offset 0x161608 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG4 at image offset 0x161608 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "One-bit storage (bit 0 of a 64-bit word). The header gives no reset value, and the public Linux tree shows no use of it."
 
 [registers.scratch4.fields]
@@ -345,7 +345,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0_WZ at image offset 0x161620 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG0_WZ at image offset 0x161620 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write-if-zero alias of scratch 0. A write is accepted only when the current value is zero."
 
 [registers.scratch0_wz.fields]
@@ -358,7 +358,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1_WZ at image offset 0x161638 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG1_WZ at image offset 0x161638 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write-if-zero alias of scratch 1. A write is accepted only when the current value is zero."
 
 [registers.scratch1_wz.fields]
@@ -371,7 +371,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2_WZ at image offset 0x161650 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG2_WZ at image offset 0x161650 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write-if-zero alias of scratch 2. A write is accepted only when the current value is zero."
 
 [registers.scratch2_wz.fields]
@@ -384,7 +384,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG3_RZ at image offset 0x161668 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG3_RZ at image offset 0x161668 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Read-set-if-zero alias of scratch 3 (one bit, bit 0 of a 64-bit word). A read returns the old value and sets the bit when it was zero, so a single read is a test-and-set. The public Linux ia64 L1 driver takes its hub-wide lock this way and reads until it gets zero."
 
 [registers.scratch3_rz.fields]
@@ -397,7 +397,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG4_RZ at image offset 0x161680 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_SCRATCH_REG4_RZ at image offset 0x161680 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Read-set-if-zero alias of scratch 4 (one bit). A read returns the old value and sets the bit when it was zero."
 
 [registers.scratch4_rz.fields]
@@ -410,7 +410,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_PARMS at image offset 0x161698 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_PARMS at image offset 0x161698 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Vector I/O request parameters. A write sends one request, and the block replies to the write at once without waiting for the operation. The request is built from three registers: the route, the write data and this one, which should be written last. Software waits for busy to clear before it starts."
 
 [registers.vector_parms.fields]
@@ -427,7 +427,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_ROUTE at image offset 0x1616b0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_ROUTE at image offset 0x1616b0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Outgoing vector route for the next request. The header gives no field layout."
 
 [registers.vector_data]
@@ -437,7 +437,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_DATA at image offset 0x1616c8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_DATA at image offset 0x1616c8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Write data for an outgoing vector write, and the data value for a read reply."
 
 [registers.vector_status]
@@ -447,7 +447,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_STATUS at image offset 0x1616e0 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_STATUS at image offset 0x1616e0 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Return status of the last vector request. Software clears it before launching a request. The block leaves the fields unchanged when a reply has an error. A reply that arrives while valid is already set sets overrun and leaves the rest alone. Otherwise the block loads the source, ids, address and type, sets valid, and updates return and read data. The header does not say what a write of a nonzero value does."
 
 [registers.vector_status.fields]
@@ -466,7 +466,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_RETURN at image offset 0x1616f8 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_RETURN at image offset 0x1616f8 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Return route from the last reply. The block stores it only for an error-free reply that arrives while valid is clear."
 
 [registers.vector_read_data]
@@ -476,7 +476,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_READ_DATA at image offset 0x161710 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_READ_DATA at image offset 0x161710 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Read data from the last reply, under the same update rule as vector_return."
 
 [registers.vector_status_clear]
@@ -486,7 +486,7 @@ width = 64
 grade = "established"
 reset = 0x0
 reset_grade = "established"
-reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_STATUS_CLEAR at image offset 0x161728 (field reset values are the system reset initial values; layout per irix-657m-src stand/arcs/include/hwreg.h)"
+reset_from = "IP35 PROM 6.210 register table, entry LB_VECTOR_STATUS_CLEAR at image offset 0x161728 (field reset values are the system reset initial values; layout per IRIX software (source not cited))"
 doc = "Clear the vector status. The header gives the same field layout as vector_status and says only that this register clears it. It does not say whether a read or a write does the clearing, so that is unknown."
 
 [registers.vector_status_clear.fields]
