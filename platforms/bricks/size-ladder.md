@@ -195,6 +195,32 @@ excludes I/O and storage racks. All **established**.
 | 30 | 480 | 960 | 24 | 6 |
 | 32 | 512 | 1024 | 24 | 6 |
 
+### Router cabling above four Cx-bricks
+
+Question: which router port joins which brick, per size. **No retained manual prints it.** The 3900 guide, the Cx
+partitioning guide and the Cx-brick addendum give the facts below; their figures draw bricks and not cables, and the
+cabling draft `108-xxxx-PR2` has no Cx-brick table (its 1,243 compute-to-router rows and 844 router-to-router rows are
+all C-bricks and 3800 racks).
+
+| Fact | Grade | Source |
+| --- | --- | --- |
+| The Cx-brick has four external NUMAlink connectors, labelled NUMAlink 1 (port A), 6 (F), 7 (G) and 8 (H). A and F go to one other Cx-brick; G and H each go to a separate R-brick; with four Cx-bricks all four go to Cx-bricks | established | `007-4572-001` pp. 4, 11; `007-4653-001` p. 60 |
+| With 6 or 8 Cx-bricks there are exactly 2 R-bricks, so every Cx-brick has one cable to each. With 16 Cx-bricks there are 4 R-bricks: 32 cable ends fill all 32 R-brick ports, so no R-brick has a cable to another R-brick. With 8 Cx-bricks, 16 ends fill both R-bricks | inferred (arithmetic on Table 2-1, an eight-port R-brick and "separate R-brick") | `007-4653-001` p. 46 |
+| The 512-processor system has 24 R-bricks in two router racks, 101 and 102, each holding 12 named "Metarouter" (labels 1nn in rack 101 and 2nn in rack 102, nn being the bays 08, 10, 16, 18, 24, 26, 28, 30, 32, 34, 36, 38 that the 3900 guide p. 38 lists) | established (figure labels) | `007-4426-001` p. 5, Figure 1-2 |
+| The two racks hold the same twelve bays each, and a Cx-brick has two R-brick ports, which suggests plane 1 (rack 101) and plane 2 (rack 102) with G to one plane and H to the other. 12 per plane equals the 3800's 12 unit-38 routers at 512 processors (8 MetaRouters and 4 repeat routers) and 32 Cx-bricks equal that system's 32 rack-router uplinks, four per MetaRouter. This is a fit, not a statement: it fails at smaller sizes (Table 2-1 has 9 per plane at 288 processors against the 3800's 6) | inferred, weak | the same figure; [3800 ladder](#the-3800-ladder) |
+| Cx-brick n sits in rack 001 + m/2 at bay 7 + 8q for even m and 11 + 8q for odd m, where q = (n - 1) / 8 and m = (n - 1) mod 8 (integer division): Cx 1 to 8 are bays 7 and 11 of racks 001 to 004, Cx 9 to 16 bays 15 and 19, 17 to 24 bays 23 and 27, 25 to 32 bays 31 and 35 | established (figure, and the L2 `part` command list that names slots 7, 11, 15, 19, 23, 27, 31, 35 of racks 1 to 4) | `007-4426-001` pp. 5, 9 |
+| Above 18 Cx-bricks "specific bricks must reside in each partition" and the Cx-bricks are in three or four compute racks; partitions of more than two Cx-bricks are striped across the compute racks. Partitions must be topologically contiguous | established | `007-4426-001` pp. 4 to 5 |
+| Which R-brick port each G and H cable reaches, which of A and F meets which, the split of the 24 R-bricks into roles, and which Cx-brick pairs as A and F partners | **unknown** | no retained source; a 3900 `hinv` with router ports or an L2 `config` from a six-Cx-brick or larger system would settle it |
+
+The external connector numbers 1, 6, 7 and 8 match the four non-node router ports that the cabling draft names
+("C to R: Links 2, 3, 4 or 5; Router to Router: Link 1, 6, 7, 8", Table 2-1, printed p. 2-19, which the draft itself
+flags as needing update) and the PROM uses for routers of the 3600 and 3800 (node ports 2 to 5; see
+[the PROM page](../ip35/metarouter-route-and-roles.md#why-the-pair-check-rejects-48-processors-and-the-deadlock-check-rejects-the-3800-128-processor-draft-table),
+whose second error prints the mask of ports 8, 7, 6 and 1), and the Origin 300 NUMAlink module's published USB note
+puts modules on router ports 2 to 5 and servers on 1, 6, 7 and 8. So the labels are very probably the router's port
+numbers (**inferred**), and A and F would then be the ports 1 and 6 that rack routers use for their paired in-rack links.
+That pairing is the draft's rule for racks; it is not stated for Cx-bricks.
+
 ## Onyx 3200, 3400 and 3800
 
 The Onyx 3000 guide (revision `-002`, November 2001) gives the graphics models. A system has G-bricks
@@ -276,6 +302,8 @@ contents (p. 13), but no page numbers a D-only rack.
 | Origin 3400: one I-brick at U21 of the single rack, up to three more I/O bricks from U36 downward (no utility shelf if three are fitted); two racks: I/O in rack `101` with I-brick at U20 | established, Internal config p. 97 and p. 99 |
 | Origin 3200: one I-brick at U14, one optional I, P, X or D at U10 | established, Internal config p. 95 |
 | Origin 3900: the IX-brick and I/O bricks go above the Cx-bricks in the compute racks (the 512-processor figure puts two I or IX bricks in each router rack); a third rack added for I/O is a compute rack | established, 3900 guide p. 47; Cx partitioning p. 5 |
+| Origin 3900: an I/O brick belongs to the partition of the Cx-brick it attaches to, and may attach to two Cx-bricks if both are in that partition; each partition needs one IX-brick; a server has at most eight I/O bricks | established, Cx partitioning p. 4; 3900 guide p. 47 |
+| I/O rack cabling for the large sizes: the Internal config manual's rack-to-rack plans stop at four compute and four I/O racks (3800 only). Which C-brick XIO port reaches which I-brick bay at 128 to 512 processors, for either model, and how many I-bricks each partition has at each size, are **unknown**; the cabling draft carries no I/O rows, and the only I/O cable data in it is that the C-brick I/O interface port goes to XIO 10 or XIO 11 of an I-, P- or X-brick (2 m within 24 U) | established (the plans and the XIO ports); unknown (the rest) | Internal config pp. 102 to 105; `108-xxxx-PR2` Table 2-1 (printed p. 2-19, flagged by the draft as unreliable) |
 | One L2 controller serves each rack that holds C-bricks (Cx-bricks); the L2 has four USB ports; a rack with an R-brick needs an L2 | established, Config guide p. 42; Owner's guide p. 75; 3900 site guide p. 19 |
 
 ## Cross-check against the L1 and L2 firmware
@@ -330,6 +358,8 @@ established unless marked):
 | Which two ports of a six-port R-brick are disabled | the L1's `router` handling traced to the router's port enable, or a six-port R-brick's `router` output |
 | Whether racks above 018 or the packed rack form appear in a console session | a captured multi-rack `cfg` listing from an Origin 3800 or 3900 |
 | Whether SGI shipped an Origin 3800 in a layout other than the printed ones between 128 and 512 processors | a system with 160 to 480 processors in a public `hinv` |
+| Origin 3900 router port per cable above four Cx-bricks, and the role split of its R-bricks | a 3900 `hinv` with router ports, an L2 `config`, or a cabling guide for it |
+| I/O rack cabling (XIO port to bay) and I-bricks per partition at 128 to 512 processors | a multi-rack `hinv` or L2 `config` |
 
 ## Sources not used
 
