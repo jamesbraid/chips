@@ -23,6 +23,7 @@
 | [crime/](crime/README.md) | CRIME | Mode: spec-backed (see references/documents/specs.md: CRIME 1.5 Specification, revision 0.3; its CPU interface and... |
 | [crosstalk/](crosstalk/README.md) | Crosstalk (XIO): the link, its widgets and its host ends | Overview datasheet of the SGI I/O link called XIO (SGI's trademark) or Crosstalk (the protocol and fabric name; the... |
 | [crosstown-ktown/](crosstown-ktown/README.md) | Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards | What these four names are, which is a protocol, which a board, which a cable, how an XIO link changes when it leaves... |
+| [divo/](divo/README.md) | Scoping datasheet: DIVO and DIVO-DVC digital video options (Onyx2 and Origin XIO boards; IRIX driver `divo`, VL module `DIVO.so`) | Status: scoping draft, not independently reviewed. |
 | [dm2/](dm2/README.md) | Scoping datasheet: SGI DMediaPro DM2 (XT-DIGVID) XIO video board, with DIVO as the fallback | Status: scoping draft, not independently reviewed. |
 | [dm8/](dm8/README.md) | DMediaPro DM8 PCI audio option | The DM8 is a commercial off-the-shelf audio design, not an SGI ASIC board. |
 | [dp83843/](dp83843/README.md) | DP83840A and DP83843 Ethernet transceivers | The Ethernet controller on the Origin 200 and Origin 300 base I/O boards reaches its 10/100 Mb/s transceiver only... |
