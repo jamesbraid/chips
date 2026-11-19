@@ -2,7 +2,7 @@
 
 Question answered: on an Octane (IP30), how does the PROM find out that no PS/2 keyboard is attached to the IOC3, what does it do with the answer,
 and what does it leave in `ConsoleIn` and `ConsoleOut`. Ratings follow [AGENTS.md](../../AGENTS.md): **established**, **software expectation**,
-**inferred**, **unknown**. The IP30 PROM code was **not** decompiled; the sections below rest on public IRIX 6.5.7 source, on the shipped image
+**inferred**, **unknown**. The IP30 PROM code was **not** decompiled; the sections below rest on IRIX software (source not cited), on the shipped image
 containing the same strings, and on the matching code in the IO6 PROM, which was decompiled ([ip27/prom-console-input.md](../ip27/prom-console-input.md)).
 Nothing here is observed on hardware.
 
@@ -19,9 +19,7 @@ The kernel side is in kudzu `software/kernel/ip27-ip30-ioc3-pckm-absent-device.m
   `0x97330`), "keyboard()" (`0x97798`), "pckbd_install: Keyboard/mouse not attached to an IOC3 or IOC4" (`0x9cc78`), `nogfxkbd` (`0x94608`, `0x9ccf6`,
   `0xd5028`), "ConsoleWarning" (`0x9d510`), "Select Keyboard Layout" (`0x987a0`). Established (the strings exist); the code that uses them is the
   library code below by inference from the identical IO6 PROM.
-- The 6.5.7 source tree used for the structure: the standalone I/O library driver (`stand/arcs/lib/libsk/io/ioc3_pckm.c`), its console setup
-  (`lib/libsk/lib/saio.c`), the machine layer (`lib/libsk/ml/IP30.c`, `ml/nvram.c`) and the IP30 power-on keyboard test
-  (`stand/arcs/ide/godzilla/ioc3/pon_pckm.c`).
+- IRIX software (source not cited) used for the structure: the standalone I/O library driver, its console setup, the machine layer and the IP30 power-on keyboard test.
 
 ## Probe
 

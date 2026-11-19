@@ -55,8 +55,8 @@ is in [prom-md-config.md](prom-md-config.md); the word's fields and the probe ar
    of 64 MB or less skips the 1 GB advance of the base; irrelevant for 256 MB and larger banks.)
 7. **IRIX copes. Established** for the 6.5.30 IP35 kernel (kudzu `software/kernel/ip35-memory-error-address-decode.md`):
    the slot-size routine always XORs by +58, and the memory-error decoders XOR address bits 31:30 by bits 33:32 of the
-   word. The public 6.5.7 source defines the field as the bank-to-physical-address mapping and halves it in an IP27 memory-size
-   routine (the NVRAM condition on that use is from the 6.5.30 IP27 kernel, see the kudzu page); the 6.5.7 tree was not
+   word. IRIX software (source not cited) defines the field as the bank-to-physical-address mapping and halves it in an IP27 memory-size
+   routine (the NVRAM condition on that use is from the 6.5.30 IP27 kernel, see the kudzu page); IRIX software (source not cited) was not
    searched for IP35 code, so nothing is claimed about it.
 
 ## Conclusion

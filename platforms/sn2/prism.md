@@ -205,7 +205,7 @@ Established, from the guides:
 ## What carries over from voyager
 
 [voyager](https://github.com/jamesbraid/voyager) documents the ATI R300 (FireGL X1) and R350 (FireGL X2) as IRIX 6.5.30
-drives them on the Onyx4 UltimateVision (IP35), and says it reads the IRIX binaries, the public IRIX 6.5.7 source, AMD register references and the
+drives them on the Onyx4 UltimateVision (IP35), and says it reads the IRIX binaries, IRIX software (source not cited), AMD register references and the
 radeon drivers. This section uses only its public README, `devices/README.md` and `questions/open-questions.md`.
 
 Could transfer, **inferred** only until a Prism board is identified:
@@ -260,7 +260,7 @@ Checks, all confirmed unless listed under findings:
 
 Findings:
 1. Mechanical, fixed: the held-PDF path pattern is wrong for 007-3938 (it is under `manuals/3000`, not `4000`); the -002 deskside row said the revision "adds" a diagnostics and XF86Config chapter, but the record of revision says only ProPack 4 SP2 (the contents do list the chapters), so the row now says that.
-2. Mechanical, fixed: the voyager section said voyager "reads only" binaries, radeon drivers and AMD references; its README also lists the public IRIX 6.5.7 source. It also said voyager's boards sit behind a PIC-fronted slot; voyager's open question says PIC against XBridge is unsettled (a PIC is established only as a case the IRIX kernel handles). The page now says PIC or XBridge, left open.
+2. Mechanical, fixed: the voyager section said voyager "reads only" binaries, radeon drivers and AMD references; its README also lists IRIX software (source not cited). It also said voyager's boards sit behind a PIC-fronted slot; voyager's open question says PIC against XBridge is unsettled (a PIC is established only as a case the IRIX kernel handles). The page now says PIC or XBridge, left open.
 3. Not edited: `drivers/char/agp/sgi-agp.c` and its Kconfig sit outside the platform-code trees the evidence order ranks first, yet the AGP 8x-only statement is graded established. The SN2 README's recorded decision keeps the equivalent IOC4 driver rows established, so this follows precedent; the owner can relabel.
 4. Not edited: the Team module count. Table 3-2 allows 1 compute plus 2 graphics (three modules) up to 5 plus 4 (nine), while the cabling text (p.65) says four to eight modules; prism-power-team.md quotes the text only.
 5. Not checked: the 2005 mailing-list message ids and dates for the TIOCA patch series, the parts-index line numbers, the Prism XL page, 007-4663-002, 007-4784, 007-4796 (titles only) and the ATI external listings. Those statements stay as the author graded them (the external ones are not evidence).

@@ -5,8 +5,7 @@ leave behind. Ratings follow [AGENTS.md](../../AGENTS.md).
 
 ## Evidence
 
-- The 6.5.7 standalone-library NVRAM and flash code (`stand/arcs/lib/libsk/ml/IP30nvram.c`, `ml/nvram.c`, `ml/sflash.c`, `lib/setenv.c`), the IP30
-  NVRAM and flash headers (`IP30nvram.h`, `sflash.h`) and the first-stage PROM's read-only copy (`stand/arcs/IP30prom/rprom_nvram.c`). Read in full;
+- IRIX software (source not cited): the standalone NVRAM and flash code, the IP30 NVRAM and flash headers and the first-stage PROM's read-only copy. Read in full;
   facts are written in our own words.
 - `root/firmware/IP30prom.bin` (6.5.30, `platforms/ip30/prom.bin`), read in Ghidra as a flat MIPS image at `0x9fc00000` (decompiles of the four routines named below) and cross-checked with objdump. Image
   offsets below are file offsets; the program address is `0x9fc00000` plus the offset (confirmed by the default-string pointers in the variable table, which are
@@ -197,9 +196,9 @@ covers whatever is stored.
 ## Review
 
 Independent review of this page against the 6.5.30 image (read in Ghidra as a flat MIPS image at `0x9fc00000`, decompiles checked against objdump) and the
-public 6.5.7 NVRAM library source. Confirmed, with the grades above unchanged unless noted:
+IRIX software (source not cited). Confirmed, with the grades above unchanged unless noted:
 
-- Store layout. Every offset and length in the layout table matches the 6.5.7 header and the image's 27-row variable table (name, default pointer,
+- Store layout. Every offset and length in the layout table matches IRIX software (source not cited) and the image's 27-row variable table (name, default pointer,
   store offset, length). The six flash variables carry offset 555. Console is offset 3, 2 bytes; the revision byte is offset 2, value 7.
 - Checksum (`0x6b200`). Seed `0xa5`; for store offsets 2 to 241 inclusive: XOR the byte in, rotate left one bit in 8 bits; the loop reads the in-memory
   copy. Stored at offset 1 (register `0x0f`). Matches the page, including that offset 0 and offset 1 are not covered.
@@ -217,5 +216,5 @@ public 6.5.7 NVRAM library source. Confirmed, with the grades above unchanged un
 Corrected: the variable table has 27 variables plus a terminator (not 28 rows); the flash-header checksum is graded inferred (the page used a label this
 repository does not define); the second `console` byte after a typed `setenv console d` is not established as `00` (below); the netaddr tail in a real
 reinitialised store is `ff ff ff ff` from byte 16, not zeros. For a typed `setenv`, the value pointer is the argument inside the monitor's token list
-(public source: `libsc/lib/parser.c`, `lib/stringlist.c`, `cmd/env_cmd.c`), a never-cleared stack buffer, and the writer copies two bytes from it, so
+(IRIX software, source not cited), a never-cleared stack buffer, and the writer copies two bytes from it, so
 the second byte is whatever follows the argument's NUL. Not read: the flash PDS routines (source only, as the page says) and the first-stage image.

@@ -12,7 +12,7 @@ Sources and grades:
   Ghidra as flat code at `0x81000000`. The routines named below were read in full. Addresses are loaded addresses.
   Strings and tables in the data part sit 8 or 16 bytes below the file position, because the segment holds more than
   one load block: use pointers, not file offsets.
-- **IRIX 6.5.7 public source**, the kernel's IP32 flash file and header (`IP32flash.c`, `IP32flash.h`): the kernel's own
+- **IRIX software (source not cited)**, the kernel's IP32 flash file and header: the kernel's own
   writer of the same segment. Facts are in my words. The shipped 6.5.30 IP32 kernel object carries the same routine
   names and messages (`flash_write_env`, "nvram table overflow") but was not read in full.
 - **Flash dump**: the 512 KiB PROM 4.18 image in a public PROM mirror (`ip32prom.rev4.18.bin`, SHA-256
@@ -174,7 +174,7 @@ checked against a store the stock PROM wrote on an emulator (identical bytes), a
   (the setting loop runs with the segment already known). Code reading only.
 - The meaning of every consumer of `diagmode`, `keybd`, `nogfxkbd`, `lang`, `scsiretries` and `pagecolor`; only the
   call sites are known.
-- Whether the real kernel at 6.5.22 and 6.5.30 differs from the 6.5.7 source in header version string or length rules.
+- Whether the real kernel at 6.5.22 and 6.5.30 differs from IRIX software (source not cited) in header version string or length rules.
 - The calendar clock's 114 or 242 user-RAM bytes are not used by this PROM for the environment; no use of them by this
   PROM was found, and the kernel's reader of them is separate (see [devices/mace/README.md](../../devices/mace/README.md)).
 

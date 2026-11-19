@@ -8,7 +8,7 @@ Grades: **established** (read in the image or a published source, the claim foll
 
 The store is 256 bytes, 128 big-endian 16-bit words. The HPC3 register at physical `0x1fbb0008` drives the chip; the PROM reaches its control bits at `0xbfbb000b` (the low byte). Established (PROM bit-bang, and the Linux `ip22-nvram.c` read path).
 
-Each variable has a fixed offset and length, and its value is a NUL-terminated string that fills the field. The offsets and lengths match the IRIX 6.5.7 header and the PROM's own record table (the table's code field equals the byte offset for every record). Established.
+Each variable has a fixed offset and length, and its value is a NUL-terminated string that fills the field. The offsets and lengths match IRIX software (source not cited) and the PROM's own record table (the table's code field equals the byte offset for every record). Established.
 
 | Offset | Length | Item |
 |---|---|---|
@@ -48,7 +48,7 @@ The offsets of the first 250 bytes come from the IRIX header; byte 250 onward is
 
 ## Checksum
 
-Source: a reading of the IRIX 6.5.7 source, with the PROM's own routine checked by disassembly.
+Source: a reading of IRIX software (source not cited), with the PROM's own routine checked by disassembly.
 
 1. Start with `c = 0xa5` (8 bits).
 2. For each word `w` from 0 to 127, with bytes `2w` (high) and `2w+1` (low):
@@ -59,7 +59,7 @@ Source: a reading of the IRIX 6.5.7 source, with the PROM's own routine checked 
 
 The checksum covers all 256 bytes except byte 0, including the protected bytes 250 to 255. Established: the PROM loop in `FUN_c00000001fc2b5d0` was read in the disassembly; the decompiler's output for word 0 was misleading and was not used.
 
-The PROM's validity check (`FUN_c00000001fc2c0dc`) compares byte 0 with `c` and requires byte 1 to be `0x08`. A mismatch in either prints `NVRAM checksum is incorrect: reinitializing.` and writes the defaults. Established. The IRIX source tries the checksum twice; the PROM shows one comparison. Minor, unresolved.
+The PROM's validity check (`FUN_c00000001fc2c0dc`) compares byte 0 with `c` and requires byte 1 to be `0x08`. A mismatch in either prints `NVRAM checksum is incorrect: reinitializing.` and writes the defaults. Established. IRIX software (source not cited) tries the checksum twice; the PROM shows one comparison. Minor, unresolved.
 
 ## Power-on reads and defaults
 
@@ -83,9 +83,9 @@ The consumers of `console`, `AutoLoad`, the OSLoad fields and `netaddr` are the 
 
 ## setenv and the write order
 
-- `setenv` writes the variable's bytes word by word, each word in place: write-enable, WRITE, wait for ready, write-disable. Established (`FUN_c00000001fc2b860`, `FUN_c00000001fc2bf10`, and the same sequence in IRIX source).
+- `setenv` writes the variable's bytes word by word, each word in place: write-enable, WRITE, wait for ready, write-disable. Established (`FUN_c00000001fc2b860`, `FUN_c00000001fc2bf10`, and the same sequence in IRIX software, source not cited).
 - After the data, the checksum is recomputed and byte 0 is written last, as a read-modify-write of word 0.
-- The writer copies the field's full length from the value pointer and does not stop at the NUL. A value shorter than its field therefore stores the bytes that follow its NUL in the caller's buffer. Established (writer loop, and the same copy in the IRIX source). The contents of those bytes are unknown. The defaults fit their fields exactly, so a blank-store reset is not affected, and `setenv console d` fits (`d`, NUL).
+- The writer copies the field's full length from the value pointer and does not stop at the NUL. A value shorter than its field therefore stores the bytes that follow its NUL in the caller's buffer. Established (writer loop; same copy in IRIX software, source not cited). The contents of those bytes are unknown. The defaults fit their fields exactly, so a blank-store reset is not affected, and `setenv console d` fits (`d`, NUL).
 - The 93CS56 erases on WRITE. There is no append, no wear levelling and no separate erase cycle. Inferred: no 93CS56 datasheet is held, and the PROM issues no separate erase command.
 - Revision and checksum are written together when the store is reinitialised (revision first, then checksum). Established (`FUN_c00000001fc2c170`).
 - Interrupted write: the checksum is last, so an interrupted `setenv` leaves a stale checksum. The next boot reinitialises the whole store to defaults. Inferred from the write order and the reinit branch.
@@ -134,7 +134,7 @@ Independent review on 2026-11-18 by a reviewer who did not write this page. Revi
 | 7 | 5 | The Indy image 070-9101-011 has the same record table | Not checked: no Indy PROM byte read here. Linux's IP24 path shows byte access only. The emulator treats both models as one block layout, which is not evidence | UNSURE |
 | 8 | 9 | The store is 256 bytes, 128 big-endian 16-bit words | Linux 128x16 comment; big-endian target | confirmed |
 | 9 | 13-45 | Field offsets and lengths | Offsets 0, 1, 2, 116, 121, 122, 178, 232, 236, 239 and 250 agree with the emulator. The rest rests on the IRIX header and the PROM record table, neither read | UNSURE (the other offsets) |
-| 10 | 53-58 | Checksum: seed 0xa5, word 0 uses byte 1 only, rotate left after each word, byte 0 equals the result, byte 1 is 0x08 | Same algorithm as the emulator. The cited IRIX source and the PROM loop not read. No public tree searched has it | UNSURE |
+| 10 | 53-58 | Checksum: seed 0xa5, word 0 uses byte 1 only, rotate left after each word, byte 0 equals the result, byte 1 is 0x08 | Same algorithm as the emulator. The cited IRIX software (source not cited) and the PROM loop not read. No public tree searched has it | UNSURE |
 | 11 | 60 | Checksum covers all bytes except byte 0, including 250 to 255 | As claim 10; the emulator agrees | UNSURE |
 | 12 | 62 | The PROM's validity check prints `NVRAM checksum is incorrect: reinitializing.` and writes defaults | PROM not read; message not checked | UNSURE |
 | 13 | 68-77 | Defaults: console g, dbaud 9600, diskless 0, TimeZone PST8PDT, AutoLoad Y, volume 80, sgilogo y, autopower y | Emulator defaults agree on all eight, with the same offsets. The PROM table not read | UNSURE (agrees with the emulator) |
@@ -162,4 +162,4 @@ Independent review on 2026-11-18 by a reviewer who did not write this page. Revi
 
 **Cleared scope.** Claims 1, 2, 4 (for Linux), 6, 8, 23 and 24. The arithmetic in claims 2, 5 and 26 was checked by hand. Not cleared: claim 5 as written, claim 16, claim 21, and every PROM-derived claim.
 
-**Not verified.** The IP22 PROM image and any disassembly of it. The IRIX sources the page cites, which were not read. The Indy image. A 93CS56 datasheet, none of which is held. The printenv capture. `resetenv`. No restricted source was opened, and no restricted search result was opened or shown.
+**Not verified.** The IP22 PROM image and any disassembly of it. The IRIX software the page cites (source not cited) was not read. The Indy image. A 93CS56 datasheet, none of which is held. The printenv capture. `resetenv`. No restricted source was opened, and no restricted search result was opened or shown.

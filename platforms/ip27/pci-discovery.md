@@ -2,7 +2,7 @@
 
 Status: imported from published sources, not independently reviewed. Labels follow [AGENTS.md](../../AGENTS.md).
 The device-number map rests on the owner's guide and public `hinv` listings. The guest-slot behaviour is a
-reading of IRIX 6.5.7 kernel code that no chips binary has been checked against yet; it stays **inferred**
+reading of IRIX software (source not cited) that no chips binary has been checked against yet; it stays **inferred**
 until the route in [open questions](../../questions/README.md) settles it.
 
 This page holds no register contract. The Bridge registers are in [bridge-family.md](../../devices/bridge/family.md) and
@@ -21,7 +21,7 @@ for any card or on-board part.
 | 0 | On-board QLogic SCSI adapter (`1077:1020`) | Listings of the on-board QLogic at PCI slots 0 and 1 [5][6][7] | observed |
 | 1 | On-board QLogic SCSI adapter (`1077:1020`) | Same listings [5][6][7] | observed |
 | 2 | Integrated IOC3 (Ethernet, serial, parallel, keyboard and mouse, real-time clock, one-wire identity) | IRIX `hinv` path `xtalk/8/pci/2` [6]; the sub-device list is from the kernel reading in [8] | observed (IOC3 at 2); inferred (sub-device list) |
-| 3 | Guest half of the dual-slot pairing with device 2. Skipped before any configuration read, given a bare placeholder record and no driver | IRIX 6.5.7 kernel reading [8] | inferred |
+| 3 | Guest half of the dual-slot pairing with device 2. Skipped before any configuration read, given a bare placeholder record and no driver | IRIX software (source not cited), reading [8] | inferred |
 | 4 | Not a chassis slot. Whether anything answers here is not known | The owner's guide lists slots 5, 6 and 7 only [1]; no listing shows a device at 4 | unknown |
 | 5 | Option slot, chassis label 5 | Guide: "provide PCI IDs 5, 6, and 7" [1]; a card at `pci id 5` in a PROM listing [2] | established (the label); inferred (that the chassis label is the PCI ID) |
 | 6 | Option slot, middle chassis slot | Guide [1]; a card in the middle slot reported at PCI slot 6 [3][4]; a card at device 6 [5] | established (the label); observed (the chassis position) |
@@ -76,11 +76,11 @@ by host and guest graph edges. Its configuration space is never read, and no dri
 
 When the platform setup recognises the base I/O as an Origin 200 I/O board, it marks device 3 as the guest of
 device 2. It also declares the IOC3's sub-functions on device 2. This is the only dual-slot marking the Origin
-200 platform code makes. Every other device number is left to the walk. **Inferred** from the IRIX 6.5.7 kernel
+200 platform code makes. Every other device number is left to the walk. **Inferred** from IRIX software (source not cited)
 reading [8]. The IP27 and IP30 kernels both call the guest-information routine that marks a slot's guest
 (`pcibr_slot_guest_info_init` is named in [ip27-kernel-bridge-routines.md](../../software/kernel/ip27/bridge-routines.md) and
 [ip30-kernel-bridge-routines.md](../../software/kernel/ip30/bridge-routines.md)). Its body has not been read against an
-Origin 200 build. The pairing is also described as a 6.5.7 reading only, so a second IRIX 6.5.x release is
+Origin 200 build. The pairing is also described as a reading of IRIX software (source not cited) only, so a second IRIX 6.5.x release is
 needed before it is treated as stable across that line.
 
 The reason given for the pairing is that the IOC3 and device 3 share one Bridge slot's request, grant and
@@ -126,6 +126,6 @@ Verification note: [1] was re-read in the published guide and matches, including
     https://nekonomicon.irixnet.org/forum/14/16729597/1.html: PCI-SCSI at `pci id` 0 and 1, the IOC3 at 2 and an
     option SCSI card at 6. **Observed.**
 
-[8] IRIX 6.5.7 kernel, Bridge PCI attach and the Origin 200 platform setup, as a reading of the kernel code. The
+[8] IRIX software (source not cited), Bridge PCI attach and the Origin 200 platform setup, as a reading of the kernel code. The
     routines are the ones named in [ip27-kernel-bridge-routines.md](../../software/kernel/ip27/bridge-routines.md). No address in a
     chips binary is cited yet. **Inferred** (software expectation, not checked against a chips binary).

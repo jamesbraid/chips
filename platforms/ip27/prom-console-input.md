@@ -1,7 +1,7 @@
 # IP27 PROMs: keyboard detection and the console choice with no keyboard
 
 Question answered: on an Origin 200, Origin 2000 or Onyx2, which PROM probes the PS/2 keyboard and mouse on the base I/O board's IOC3, how, and
-what does the PROM do with the answer. Ratings follow [AGENTS.md](../../AGENTS.md): **established** (public IRIX 6.5.7 source and the shipped image
+what does the PROM do with the answer. Ratings follow [AGENTS.md](../../AGENTS.md): **established** (IRIX software, source not cited, and the shipped image
 agree), **software expectation**, **inferred**, **unknown**. No real-hardware capture of a keyboard-less boot is held, so nothing here is observed.
 
 The kernel side is in kudzu `software/kernel/ip27-ip30-ioc3-pckm-absent-device.md`. IP30 is in [ip30/prom-console-input.md](../ip30/prom-console-input.md).

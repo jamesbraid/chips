@@ -85,7 +85,7 @@ a media node. Established from the decompiled `BuildDevicePath` and `GetTargetLu
 Media nodes added by the `Partition` driver (`PartitionDriverBindingStart` `0x15bac0`): a hard-drive node (type 4, subtype 1) for an MBR or GPT partition
 (`PartitionInstallMbrChildHandles` `0x161260`, `PartitionInstallGptChildHandles` `0x15d880`) and, for a CD, a **CD-ROM node** (type 4, subtype 2, length `0x18`: boot entry number, start and size
 of the boot image in 512-byte units; display `CDROM(Entry%x)`) from `PartitionInstallElToritoChildHandles` (`0x15cf10`). An ATAPI CD therefore appears as
-`.../Pci(..)/Ata(Primary,Master)/CDROM(Entry0)`; a disk as `.../Ata(..)/HD(Part,Sig..)`. The generic EFI 1.10 text forms are by the specification; the PROM prints them with its own device-path library (`lib/dpath.c`).
+`.../Pci(..)/Ata(Primary,Master)/CDROM(Entry0)`; a disk as `.../Ata(..)/HD(Part,Sig..)`. The generic EFI 1.10 text forms are by the specification; the PROM prints them with its own device-path library.
 The PCI root node is built by `AltixRootBridgeDevicePathConstructor`; its ACPI HID/UID values were not decoded (**unknown**: whether the UID is the SAL bus number or a bus index).
 
 ## 3. What the Shell needs to run ELILO from a CD or a disk

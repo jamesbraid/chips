@@ -6,9 +6,7 @@ bytes does `setenv` leave behind (the case that matters is `setenv console d`). 
 
 ## Evidence
 
-- The 6.5.7 standalone-library NVRAM code (`stand/arcs/lib/libsk/ml/SN0nvram.c`, `ml/nvram.c`, `lib/setenv.c`, `libkl/ml/SN0nvram.c`,
-  `libkl/ml/iodiscover.c`), the NVRAM header (`sys/SN/nvram.h`), the flash-log code (`libkl/ml/promlog.c`, `ip27log.c`, `sys/SN/promlog.h`,
-  `stand/arcs/IP27prom/Promlog/promlog.txt`). Read in full; facts are in our own words.
+- IRIX software (source not cited): the standalone-library NVRAM code, its NVRAM header and the flash-log code. Read in full; facts are in our own words.
 - `root/firmware/io6prom.img` (segment `io6prom`, load `0x11c00000`) and `root/firmware/ip27prom.img` (load `0x1fc00000`), unpacked with
   `retools/tools/chips/promgen64.py` and read as a disassembly (objdump) and, for the IO6 routines below, in Ghidra as a flat image at `0x11c00000`. Read and matching the source: the checksum routine
   (`0x11c799e0`), the byte writer (`0x11c7bf8c`), the multi-byte writer (`0x11c7bfe8`), the checksum updater (`0x11c7bf20`), the validity test
@@ -34,7 +32,7 @@ reads and writes the master base I/O board's part; every other base I/O board's 
 ## Layout of the Timekeeper NVRAM
 
 Fixed offset, fixed length, one NUL-padded ASCII field per variable; offsets are into the 32 KiB part. Layout revision 4. Every row below was read
-from the shipped IO6 PROM's table and agrees with the 6.5.7 header, which lacks only `dumpdev` and `tg0mode` at the end. Established.
+from the shipped IO6 PROM's table and agrees with IRIX software (source not cited), which lacks only `dumpdev` and `tg0mode` at the end. Established.
 
 | Offset | Len | Variable | Default | Offset | Len | Variable | Default |
 |---|---|---|---|---|---|---|---|
@@ -121,7 +119,7 @@ Because XOR then rotate is linear, the result has a closed form, with `N = 0x7fd
   shipped parser was not read); **unknown** what the stale byte is in a given session. An emulator should write `64 00`, which is what a clean run gives.
 - `AutoLoad` stores only the first character, upper-cased. `netaddr` is parsed to four raw bytes. `dbaud` is range-checked first. Established.
 - `resetenv` writes every row but the two password keys, then sets the revision and the checksum. The password keys are untouched. Established.
-- Writes to the master part are mirrored to each slave base I/O board's part, except offsets `0x3885` to `0x7fd0` in the 6.5.7 source; in the shipped
+- Writes to the master part are mirrored to each slave base I/O board's part, except offsets `0x3885` to `0x7fd0` in IRIX software (source not cited); in the shipped
   IO6 image the byte-copy helper (`0x11c677dc`) skips `0x3926` to `0x7fd0`, the end of `tg0mode` onward (inferred: the helper's bounds, its caller was
   not read); each slave's checksum is recomputed from its own bytes. Single-board machines (Origin 200) have no slave. Established (source).
 - **Interrupted write.** There is no journal. A reset after the field bytes but before the checksum byte leaves a stale checksum; the next boot
@@ -183,12 +181,12 @@ result to `0x04bc`. On a store that is already valid, nothing else changes.
    commands. A captured serial session with a store dump would settle which. It does not affect validity.
 2. The part's contents at power-on before any PROM write, and the free-space bytes between the named fields.
 3. Whether the module system controller's 2 KiB NVRAM carries anything the PROMs read as environment.
-4. The IO6 PROM's variable table in releases other than the shipped image (6.5.7 differs by the last two rows).
+4. The IO6 PROM's variable table in releases other than the shipped image (IRIX 6.5.7 software, source not cited, differs by the last two rows).
 
 ## Review
 
 Independent review against the IO6 image (`io6prom.img`, segment `io6prom`, read in Ghidra as a flat image at `0x11c00000`, decompiles checked against
-objdump) and the public 6.5.7 library source. Confirmed, grades unchanged unless noted:
+objdump) and IRIX software (source not cited). Confirmed, grades unchanged unless noted:
 
 - Layout. All 42 rows of the shipped variable table (48-byte rows: name, default pointer, offset, length) match the page's offsets and lengths,
   including `console` at `0x0f` (2 bytes), the checksum at `0x04bc`, the restart block at `0x046f` and the added `dumpdev` and `tg0mode`. Defaults match

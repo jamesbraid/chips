@@ -2,7 +2,7 @@
 
 Question. On the O2 (IP32) the PROM talks to the keyboard and mouse through the two PS/2 ports in the MACE I/O chip. How does it decide a keyboard or mouse is absent, which registers does it touch, and what does it do with the console?
 
-Method. Disassembly of the shipped O2 PROM image `ip32prom.image` (6.5.30 media, sha256 `11230c353cb14fcc50ede286df228e169e32fc9e5a2206276ae29c259fafb23c`). The image is unpacked and runs from an address with file offset 0 at `0x80ff6cf8`; that base was found by matching string references (about 480 consistent hits) and is inferred. Addresses below use it. Read against the public 6.5.7 PROM library source (`stand/arcs/lib/libsk/io/mh_kbd.c`, `saio.c`; not quoted) and the published `prom(1M)` manual page. The kernel side is in kudzu (`software/kernel/headless-keyboard-ip22-ip32.md`). The Indy and Indigo2 page is [../ip22/prom-console-input.md](../ip22/prom-console-input.md).
+Method. Disassembly of the shipped O2 PROM image `ip32prom.image` (6.5.30 media, sha256 `11230c353cb14fcc50ede286df228e169e32fc9e5a2206276ae29c259fafb23c`). The image is unpacked and runs from an address with file offset 0 at `0x80ff6cf8`; that base was found by matching string references (about 480 consistent hits) and is inferred. Addresses below use it. Read against IRIX software (source not cited; not quoted) and the published `prom(1M)` manual page. The kernel side is in kudzu (`software/kernel/headless-keyboard-ip22-ip32.md`). The Indy and Indigo2 page is [../ip22/prom-console-input.md](../ip22/prom-console-input.md).
 
 Grades: **established**, **software expectation**, **inferred**, **unknown**. No hardware capture of a headless O2 is held, so nothing is **observed**.
 

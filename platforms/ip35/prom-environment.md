@@ -13,7 +13,7 @@ checksum here are the same design, with the differences listed below.
   (`0x130db488`), the per-variable setter (`0x1300d504`), the defaults loop (`0x130e3208`, shared with `resetenv` at `0x130a5bec`), the `setenv` command
   (`0x130130e8`), the NVRAM base lookup (`0x130e3964`) and the slave mirror (`0x130da2b4`, `0x130c6fc0`). The CPU PROM is the 6.210 payload loaded at
   `0xc00000001fc00000`; the log routines at `0x1fc12e70` to `0x1fc14d9c` and `0x1fc18558` to `0x1fc18830` were read.
-- The public 6.5.7 header `sys/SN/nvram.h` and the stand-alone NVRAM library (`libsk/ml/SN0nvram.c`): the shipped monitor agrees with it row by row, and
+- IRIX software (source not cited), its NVRAM header and stand-alone NVRAM library: the shipped monitor agrees with it row by row, and
   with the IP27 sibling's reading of the Origin 2000 image.
 - Cross-check, model behaviour only: 1,152 NVRAM images left by the shipped PROM in emulator runs all satisfy the checksum rule below, and 936 of them
   hold every table row except `ConsolePath`, `oldConsolePath` and `dbgname`, including the neighbouring-memory bytes described under "How `setenv`
@@ -138,8 +138,8 @@ Established for the names (each is a lookup key in the code); the CPU PROM's rea
   the next message text. The two password keys (17 bytes from the empty string) hold `2e 6d 66 69 6e 64 00 00 70...` (`.mfind`, `p...`). Established for
   the copy; the byte values are read from the 6.210 image.
 - **Consequence for `console`.** The row is two bytes. `setenv console d` stores `64 xx`, where `xx` is the byte after the argument's NUL: the setenv
-  command passes the parsed argument, a pointer into the parser's packed token list in a never-cleared stack buffer (public source:
-  `libsc/lib/parser.c`, `lib/stringlist.c`, `cmd/env_cmd.c`; the shipped parser was not read), so `xx` is `00` only when that stale byte is zero.
+  command passes the parsed argument, a pointer into the parser's packed token list in a never-cleared stack buffer (IRIX software, source not cited;
+  the shipped parser was not read), so `xx` is `00` only when that stale byte is zero.
   Typing `d2` stores `64 32` (serial port 1). `resetenv` and the reinitialise pass store `64 00` or `67 00` from the default string in the image.
   Established for the copy and for the default strings; the stale byte is unknown. An emulator should write `64 00`.
 - Mirrors. A write to the master part goes to every other base I/O board's part, except offsets `0x393a` to `0x7fd0`. Each slave's checksum is
