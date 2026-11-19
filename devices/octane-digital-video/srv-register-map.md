@@ -713,3 +713,19 @@ Byte offset in the slot window = `c * 0x1000 + (byte offset in the channel)`, *c
 | `+0x1210` / `+0x2210` | 0x42 | dataaddr | write | start offset in the first page |
 | `+0x1220` / `+0x2220` | 0x44 | descaddr | write | descriptor page GIO address (bits 39:0) plus flags |
 | `+0x1300` / `+0x2300` | 0x60 | status | read, write-back, set-up write | event bits 0 to 4, errors 15:8; clear by writing back |
+
+## 6. VGI1 channel status register: fields the driver consumes
+
+| Bits | Role | Source |
+|---|---|---|
+| 0 | vertical pulse | `srv_dma_drb_intrs` |
+| 1 | descriptor boundary (start next request) | same |
+| 3 | end of DMA | same |
+| 4 | trigger event | same |
+| 5 | start-of-frame marker, required with the start vertical (`0x21`) | `srv_interrupt_check_loop` |
+| 15:8 | errors (`0x8000` and `0x4000` are also set synthetically by the driver) | same |
+| 26:16 | line counter | `srv_dma_do_mscust` |
+| 32 | field parity | `_srv_vgi1_sw_rate`, `srv_dma_do_mscust` |
+| 47:33 | field counter, 15 bits | `srv_dma_do_mscust` |
+
+Event-sequence rules (README 16.2): per request `0x21`, `0x01`, then a separate `0x08`. Error recovery writes intenab `0x11` and status `0x2f0b` to both channels, after trig `2` then `0`.

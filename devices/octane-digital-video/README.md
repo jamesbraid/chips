@@ -761,6 +761,81 @@ Pass 8. Reading of the Smoke 5.0 `smoke_IRIX_6.5_ip30` product binary (call grap
 | Not this path | the **Preview** and playback to the broadcast monitor use the screen-to-video path already set up at start; the DDR device lines in `init.cfg` (`Audiodevice`, and external disk recorders) are serial-controlled devices, not the board | I |
 | What this does to the model | a Live Video output start makes srv program a channel, and the first `Process` is where the descriptor, trigger and line-4 interrupt behaviour of section 14 first matter | I |
 
+## 16. Why srv aborts after each request, and the CSC control failure
+
+Pass 9, from `srv_llvgi1_interrupt.o` (`srv_dma_interrupt`, `srv_dma_drb_intrs`, `srv_interrupt_check`, `srv_interrupt_check_loop`, `srv_dma_do_mscust`, `srv_dma_next_dma`), `srv_clut.o`, `srv_hq4_dma.o`, and `mgv.so`/Smoke 5.0 for the CSC control (6.5.30 build; read by disassembly). The evidence trace (`vgi1-dma/`, 20261118) was read: it shows set-up and then only status polls (`0x1`, then `0x0`) with no `bit 5`, no `bit 3`, and none of the field-count bits below, so it does not itself show the failure; the cause below is from the driver code. Grades: E read in full, I reasoned, U unknown.
+
+### 16.1 Status register fields the driver consumes (beyond the low bits of section 14)
+
+| Bits of the 64-bit status | Use | Grade |
+|---|---|---|
+| 0 | vertical (field) pulse | E |
+| 1 | descriptor boundary: start the next request (`DB_DN ... do next`) | E |
+| 2 | rate/timing event, not decoded | U |
+| 3 | end of DMA (`E_DMA`): completion of the request in flight | E |
+| 4 | trigger event (handed to the TMI handler) | E |
+| **5** | **start-of-frame marker: must accompany the vertical that begins a request** (16.2). Masked out of the interrupt log, but the sequence check depends on it | E (use), I (meaning) |
+| 15:8 | error bits: any set takes the error path of 16.3 | E |
+| 26:16 | line counter at the event (read by `srv_dma_do_mscust`) | E (use), I (name) |
+| **32** | **field parity**: used (as `status << 31 < 0`) to pick the field in `_srv_vgi1_sw_rate`, `_srv_vgi1_init_rate` and in the field-order bookkeeping | E (use), I (name) |
+| **47:33** | **free-running field counter** (15 bits): `srv_dma_do_mscust` takes the difference from the previous value to count fields and compute the MSC | E |
+
+A status register that returns only the low bits gives the driver a constant field counter and parity.
+
+### 16.2 The event-sequence check (this is what decides abort)
+
+`srv_interrupt_check` takes `status & 0x2b` (bits 0, 1, 3, 5) and runs `srv_interrupt_check_loop`, a small state machine with two software counters per channel: C (starts seen, `pcc+472`) and F (DMA in flight, `pcc+476`). It returns "error" (1) or "ok" (0). I executed the routine's instructions over every combination of those bits (with `srv_ignore_vgi1_warning` at its default 1, so no messages print). The result, with s the status low bits:
+
+| Event | When it is legal | Effect |
+|---|---|---|
+| vertical + start marker (`0x21`, or `0x23`) | any time | C = C + 1 |
+| vertical alone (`0x01`) | F = 0 | if C ≥ 1 then F = 1 (the request is now in flight); a vertical while F = 1 is an **error** ("missing end-of-DMA") |
+| end of DMA (`0x08`, `0x0a`, `0x28`), **not** coincident with a vertical | F = 1 (or C ≥ 1) | C = C − 1, F = 0 |
+| end of DMA with C = 0 and F = 0 | never | **error** (end-of-DMA with no start seen) |
+| end of DMA coincident with a vertical (`0x09`, `0x0b`) while F = 1 | never | **error** |
+| any interrupt with F = 1 that carries no end-of-DMA bit | never | **error** |
+| bit 1 alone (`0x02`) while F = 1 | never | **error**; with F = 0 it is ignored |
+
+So per request the channel must produce, in this order: a vertical carrying bit 5; a plain vertical; then a **separate** end-of-DMA interrupt before the next vertical. A model that signals start with bit 1 and completion with bit 3 but never sets bit 5 leaves C at 0, and the end of DMA then hits "end-of-DMA with C = 0": error. A model that raises bit 3 together with the next vertical hits the coincident case: error. Either gives exactly an abort after every request. E (code), I (the C and F names).
+
+### 16.3 What an error does (the abort and requeue)
+
+In order, in `srv_interrupt_check` and then `srv_dma_drb_intrs`:
+
+1. `srv_dma_trig_abort`: write `2` then `0` to trig on this channel and its paired channel.
+2. `status |= 0x8000` (a synthetic error bit) and the channel state word gets `0x80000`; `srv_dma_next_dma` returns at once while that state bit is set, so nothing is requeued until recovery clears it.
+3. Because bits 15:8 are now set: `srv_dma_disable_trig` (trig = 0); if bit 8 is set, read the debug register (`+0x100`) into the channel (`pcc+104`); save intenab, then write intenab = `0x11` and status = `0x2f0b` (clear all) to this channel and the paired one; clear the counters (C, F and the outstanding-request count); mark error recovery; `srv_dma_post_errors` calls the channel's error callback (a transfer-error event to `mgv.so`).
+4. On the next event without bit 5 ("Error Recovered"): restore intenab from the saved value, clear the recovery flag, and if the channel was running, "Error Restart": zero the request's counts and set the channel's request-pending state so the same request is issued again on the next start.
+
+That sequence, repeated per request, is the observed "abort and requeue". E.
+
+### 16.4 What a correct completion looks like
+
+| Step | Register-level behaviour | Grade |
+|---|---|---|
+| Queue | driver writes dataaddr, descaddr (and trig = 1 if triggered); no readback | E |
+| Start | on the next vertical: status `0x21` (bits 0 and 5), plus bit 1 as the descriptor boundary if the model has one; the driver reads status, writes the read value back to clear, and starts the next descriptor request on bit 1 | E (0x21), I (bit 1 timing) |
+| In flight | next vertical: status `0x01` | E |
+| End | a separate interrupt with status `0x08` (end of DMA) before the following vertical | E |
+| Request retired | `srv_dma_drb_intrs` counts end-of-DMA events in the request (`+40`); the request completes when that count equals its required count (`+112`; 0 means "complete at first end-of-DMA") and, in count mode (channel state bit `0x80`), moves to the completion queue and calls the buffer callback | E (flow), I (field meanings) |
+| Field counter | bits 47:33 advance by one per field and parity (bit 32) alternates; the MSC step treats a jump of 2 or more as a missed field and does a trig abort with synthetic status `0x4000` (also an error path) | E |
+| Watchdog | about 2 s without an interrupt during a transfer force-resets the chip (section 2.4) | E |
+| Readbacks | status (both channels) every interrupt; GAL indirect 25 bit 0 on the trigger-mode path; the debug register only after an error | E |
+
+### 16.5 What ends a Process after about 1300 requests
+
+Not determined. No comparison against a count of that size exists in the VGI1 driver (`srv_llvgi1_*`, `srv_vgi1_dma`); the driver has per-channel counters (starts, completions, outstanding) with no limit. The candidates left are in the user-space layer: Smoke's output loop (`VtrOutputClipDivo` and `ImpactVideoOut::WaitNextFrame`, which logs `failed due to event: <name>` when a video event other than a frame arrives, E for the string) counting frames or giving up on repeated transfer-error events (`srv_dma_post_errors` raises one per abort), or the clip length itself (the evidence clip's last frame is 300). With the abort loop fixed the count may stop mattering; if it still ends at 1300, log the number of `srv_dma_post_errors` calls: a match means an error counter. U.
+
+### 16.6 `vlSetControl failed (CSC)`
+
+| Fact | Value | Grade |
+|---|---|---|
+| Caller | Smoke 5.0 `OctaneVideo::SetCSCControls` sets, in this order, the controls `csc_in_packing` (`0x4d470052`), `csc_out_packing` (`0x53`), `csc_in_range` (`0x50`), `csc_out_range` (`0x51`), `csc_const_hue` (`0x54`), `csc_alpha_correction` (`0x55`) and optionally `csc_output_filter_disable` (`0x60`). Each failure prints the same text, prefixed with the file, function **and source line**: **373** in_packing, **377** out_packing, **381** in_range, **385** out_range, **389** const_hue, **393** alpha_correction. The line number in the Smoke log names the control | E |
+| Values Smoke passes | packings: `convertDLFrameFormatToVLPacking` returns the constant **55** (`VL_PACKING_444_8`, 3-byte RGB) for both; ranges: `convertDLColorSpaceFormatToVLValue` returns 4, 10, 1 or 2 depending on the colour space (601 or 709, set by `ipGetColorspace`), -1 when it has no match; const hue and alpha correction are 0 or a mode flag | E |
+| What `mgv.so` does | `MGV_SetParams_Csc` copies the parameters into a request and sends two private ioctls, `0x6d670018` (load colour-space tables) and `0x6d670007` (set the CSC bits). It has **no** numeric range test of its own: if either ioctl returns negative it marks every parameter of the request as failed (state 3). The control table gives defaults only (in/out range default 4 `yuv_ccir`, packing default `rgba_8`), with no minimum or maximum | E |
+| What `srv` does | `_srvClutCtl` writes each field through the single-bit accessor (masks, no error); `srvGetClutArgs` fails with EFAULT on a bad copy or returns 1 when the coefficient flag is set. The only ioctl failure source on a normal start is the **table load**: `_srv_csc_load` calls `_srv_csc_hq4_tdma`, which sets up a graphics-board DMA of the 1024-byte tables (`srv_hq4_setup_vdma`) and `_srv_hq4_wait_dma` polls an HQ4 busy bit (bit 12 of an HQ4 register in the `+0x2xxxx` window) up to 200 times at about 500 ns, then aborts the transfer by setting bit 1 of the HQ4 control word at `+0x81010`, logs, and returns an error | E (flow), U (the exact HQ4 register offset of the busy bit) |
+| Does a model register feed the check? | **Yes, indirectly**: a CSC table load needs the MGRAS (HQ4) model to complete the video-to-texture DMA: the busy bit must clear within about 100 microseconds of polling. The range message itself ("out of range") is a VL-layer error text; the srv handlers contain no range compare, so which of `videod`'s validation or the HQ4 failure raised it is **not settled** from the binaries. The Smoke log's line number (16.6, first row) and a count of `_srv_hq4_wait_dma` timeouts in the kernel log settle it | I |
+
 ## Not done in this pass
 
 - Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
