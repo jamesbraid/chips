@@ -202,7 +202,7 @@ The "firmware" is **eight Xilinx FPGA configurations**, not code for a CPU. E fo
 | VBOB message formats and replies | about 12 message kinds in 24-byte frames; the reply side is not read | the library's `xhd*` functions and the `vbob_config` tool |
 | XG revision, widget ID register readback, reset values, what bit 5 of status means | a handful of words | no shipped software reads them. Settled only by a capture of a board's status and ID words, which is a physical test and needs the agreement procedure in the repository rules; or recorded as "chosen by the implementer" |
 | FPGA parts, bitstream internals | 8 bitstreams | not needed to model software-visible behaviour; settled by reading the bitstream headers only if a model wanted to run them |
-| Video timing, UST generation, LUT behaviour, packing and colour-space maths | n/a (data path) | a model that does not run the FPGAs must implement the packings and conversions the ML module selects; their definitions are in the owner's guides |
+| Video timing, UST generation, LUT behaviour, packing and colour-space maths | n/a (data path) | a model that does not run the FPGAs must implement the packings and conversions the ML module selects; the packings, their selection and Flame's default are in the [pixel-format note](pixel-formats.md), the colour-space maths is still open |
 
 ## 10. Verdict: is a model reachable from what the shipped software reveals?
 
@@ -247,6 +247,7 @@ mailbox protocol and the board bus map.
 - [VBOB control messages](vbob.md)
 - [FPGA info table and load protocol](fpga-load.md)
 - [DMA start path: map RAM entries, pipe control writes, start, completion, errors](dma.md)
+- [Pixel formats: packings, how one is selected, what Flame 9.0 requests by default](pixel-formats.md)
 - [Video interrupts and the status ring](interrupts-status.md)
 - ioctl dispatch: every command, argument block and return code (the kudzu repository, `docs/dm2-ioctl.md`)
 - [GIF FPGA registers, XG register block and the widget block](gif-registers.md)
