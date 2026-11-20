@@ -831,10 +831,93 @@ Not determined. No comparison against a count of that size exists in the VGI1 dr
 | Fact | Value | Grade |
 |---|---|---|
 | Caller | Smoke 5.0 `OctaneVideo::SetCSCControls` sets, in this order, the controls `csc_in_packing` (`0x4d470052`), `csc_out_packing` (`0x53`), `csc_in_range` (`0x50`), `csc_out_range` (`0x51`), `csc_const_hue` (`0x54`), `csc_alpha_correction` (`0x55`) and optionally `csc_output_filter_disable` (`0x60`). Each failure prints the same text, prefixed with the file, function **and source line**: **373** in_packing, **377** out_packing, **381** in_range, **385** out_range, **389** const_hue, **393** alpha_correction. The line number in the Smoke log names the control | E |
-| Values Smoke passes | packings: `convertDLFrameFormatToVLPacking` returns the constant **55** (`VL_PACKING_444_8`, 3-byte RGB) for both; ranges: `convertDLColorSpaceFormatToVLValue` returns 4, 10, 1 or 2 depending on the colour space (601 or 709, set by `ipGetColorspace`), -1 when it has no match; const hue and alpha correction are 0 or a mode flag | E |
+| Values Smoke passes | **Corrected in section 17**: `convertDLFrameFormatToVLPacking` (constant 55) is not what these calls use. The packing values are literals in `SetOutputCSCControls` / `SetInputCSCControls` / `SetMemoryControls`, chosen by one global flag (17.1) | E |
 | What `mgv.so` does | `MGV_SetParams_Csc` copies the parameters into a request and sends two private ioctls, `0x6d670018` (load colour-space tables) and `0x6d670007` (set the CSC bits). It has **no** numeric range test of its own: if either ioctl returns negative it marks every parameter of the request as failed (state 3). The control table gives defaults only (in/out range default 4 `yuv_ccir`, packing default `rgba_8`), with no minimum or maximum | E |
 | What `srv` does | `_srvClutCtl` writes each field through the single-bit accessor (masks, no error); `srvGetClutArgs` fails with EFAULT on a bad copy or returns 1 when the coefficient flag is set. The only ioctl failure source on a normal start is the **table load**: `_srv_csc_load` calls `_srv_csc_hq4_tdma`, which sets up a graphics-board DMA of the 1024-byte tables (`srv_hq4_setup_vdma`) and `_srv_hq4_wait_dma` polls an HQ4 busy bit (bit 12 of an HQ4 register in the `+0x2xxxx` window) up to 200 times at about 500 ns, then aborts the transfer by setting bit 1 of the HQ4 control word at `+0x81010`, logs, and returns an error | E (flow), U (the exact HQ4 register offset of the busy bit) |
-| Does a model register feed the check? | **Yes, indirectly**: a CSC table load needs the MGRAS (HQ4) model to complete the video-to-texture DMA: the busy bit must clear within about 100 microseconds of polling. The range message itself ("out of range") is a VL-layer error text; the srv handlers contain no range compare, so which of `videod`'s validation or the HQ4 failure raised it is **not settled** from the binaries. The Smoke log's line number (16.6, first row) and a count of `_srv_hq4_wait_dma` timeouts in the kernel log settle it | I |
+| Does a model register feed the check? | **No. Superseded by section 17**: the rejecting component is `videod`'s enumeration check, not the driver, and the guest trace shows every ioctl returning OK and the HQ4 busy bit always clear. The HQ4 text above describes a real but unfired path (17.4) | E |
+
+## 17. The CSC `vlSetControl` failure, traced end to end
+
+Pass 10. Inputs: a guest trace from the model run (`evidence/octane-digital-video-20261118/csc-trace/`, Smoke 5.0 on IRIX 6.5.13f, `videod` request log plus the kernel ioctl and HQ4 counts); Smoke 5.0 `smoke_IRIX_6.5_ip30`, the guest's `videod` (6.5.13f disk), and `mgv.so`, `impact.so`, `srv.a` read by disassembly. Addresses below are for the 6.5.30 `mgv.so` (576100 bytes); I compared the value tables with the original-6.5 overlay's `mgv.so` (494048 bytes, the "Octane Impact Video" set) and the value lists are identical, so the conclusions hold for the 6.5.13 overlay set that the trace used (not itself available to me; U for any difference there). Grades: E read in code or data, I reasoned, U unknown.
+
+### 17.1 What Smoke sends, and why it is the same on real hardware
+
+| Fact | Value | Grade |
+|---|---|---|
+| Where the numbers come from | `OctaneVideo::SetOutputCSCControls` (0x10f3a5a0, playback) and `SetInputCSCControls` (0x10f3a500, capture) compute the packings and ranges from literals, then call `SetCSCControls` (0x10f3a140). `SetMemoryControls` (0x10f39a70) sets the memory node's packing the same way. The earlier "constant 55" function (0x10f389c0) is a one-instruction stub that these paths do not call | E |
+| The switch | one Smoke global, `VideoInputHDCAM` (0x11dc164c, `.bss`, so 0 unless `VideoInputHDCAM_Set(bool)` runs), read with a conditional move. Flag 0: input packing **32 (`bgr_8_p`)**, input range 2 (`rgb_full`); flag non-zero: packing 27 (`yuv422_10`) and input range 8 (`yuv_ccir`) | E |
+| Playback, flag 0 | `csc_in_packing` = 32, `csc_out_packing` = 5 (`yuv422_8`) when the pixel depth argument is 8 and the colour space is not 10, 27 (`yuv422_10`) for depth other than 8, 19 or 21 (`yuva4444_8` / `_10`) for colour space 10; `csc_in_range` = 2, `csc_out_range` = the colour-space value (8 in the trace). These match the trace exactly (in 0x20, out 5, in-range 2, out-range 8) | E |
+| Capture, flag 0 | the same table with the roles swapped: `csc_in_packing` = the computed 5/27/19/21 and **`csc_out_packing` = 32**. So line **373** (`csc_in_packing`) fails on playback and line **377** (`csc_out_packing`) on capture. The trace shows 373; a log showing 377 means the capture variant ran: check which | E (code), U (which variant the 377 log came from) |
+| Does it depend on what the model reports? | No. The choice uses only the Smoke flag, a bit-depth argument and the colour space. Nothing is read from the board, the `vlinfo` node list or the option ids | E |
+| Does Smoke stop at the failure? | No. `SetCSCControls` prints and falls through to the next control, so csc_out_packing, the ranges, hue and alpha are always attempted. "Later controls never reached" is not what the code does; in the trace they are all sent | E |
+
+### 17.2 Why 32 is rejected: `videod`, not the driver, not a register
+
+1. `videod` `ProcSetControl` (0x10007d40) looks the control up, copies the value, and calls the device vector slot at +0x88: for device `impact` that is `__meta__SetControl` (in `impact.so`), which hands controls it does not own to the sub-device `mgv`'s handler (`__meta__SetControlSubdev`, 0x407c20, vector +136). E.
+2. `mgv`'s CSC node handler (0x410700 in `mgv.so`; table of 17 case addresses at 0x43c8b4 indexed by control id minus `0x4d470050`; `csc_in_packing` goes to 0x410a34, then 0x410ff0) first calls `videod`'s **`ddNormalizeControl`** (0x10008db0) on the value. (I did not trace the hop from the +136 slot to this handler through `mgv`'s node tables; the order in the trace, ioctl before the reply, matches it. I.) For an enumerated control this calls the helper at 0x10008d00, which searches the control's item list (36-byte items: 32-byte name, then the 32-bit value at +32). If the value is **not in the list** it **overwrites the value with the first item's value and returns 25**. E.
+3. The handler does not stop on that result. It keeps the replaced value, stores it, runs its resource helpers, calls `ioctl(0x6d670007)` (this is the ioctl in the trace right before the reply), and finally returns the normaliser's 25 unless a helper failed (then 17 or 2). `videod` turns the non-zero return into the 160-byte error reply; `libvl` makes `vlSetControl` return -1, and Smoke prints its message. E.
+4. The CSC node's `csc_in_packing` and `csc_out_packing` list has **11 items** (records at 0x441f20 in 36-byte steps, list at 0x441b48): `rgba_8` 1, `yuv422_8` 5, `yuva4444_8` 19, `yuva4444_10` 21, `abgr_8` 22, `auyv4444_8` 23, `yuva4224_10` 26, `yuv422_10` 27, `auyv4444_10` 28, `rgba_10` 29, `abgr_10` 30. **32 (`bgr_8_p`) is not in it.** The range list (0x441ab8) is `rgb_full` 2, `yuv_full` 5, `yuv_ccir` 8, `rgb_rp175` 13. E.
+5. Consequence: the replaced value is the first item, **`rgba_8` (1)**: the CSC input packing ends up programmed as 4-byte RGBA, while the framestore is 3-byte BGR. Playback of 24-bit frames still goes to the ioctl and the hardware; the colour order and byte count the CSC assumes differ from the memory. E (replacement), I (effect on pixels).
+6. `mgv.so` also contains a 15-item packing list (at 0x441cd8; first 11 equal to the CSC list, then `a2_bgr_10` 24, `bgr_8_p` 32, `a2_uyv_10` 25, `uyv_8_p` 33) and shorter ones, and `_mgvFindPackingAndCsc` (0x42b7e0, jump table 0x43e2c0) accepts 32 as an RGB-class packing. I could not find which node owns the 15-item list (no data pointer to it), so whether the **memory node's** control 7 accepts 32 on real hardware is **U**; if the node uses a list without 32 the same replacement happens there. A guest `vlinfo` control dump of that node settles it.
+
+Real hardware: the value lists are static tables in `mgv.so` (`MGVMakeControlAttribs`, 0x40e700, does no hardware query), the normaliser is in `videod`, and Smoke's choice is independent of the board, so the same request is rejected the same way on real hardware. I (the identical `mgv.so` and `videod` are the only inputs). Smoke treats the failure as non-fatal. E (no abort in code), I (that this is why it runs on a real Octane).
+
+### 17.3 Every way the ioctl path can fail, and what the driver does
+
+There is no negative ioctl return on this path in the trace, and the code allows few. `mgv.so` `MGV_SetParams_Csc` (0x42fb80) returns non-zero only for an unknown parameter id (it prints with `printf` on stdout, not syslog) or when `ioctl` itself returns negative; it then marks all its parameters state 3. The driver side, in `srv.a`:
+
+| Source | Return | Logged | Fed by a register? |
+|---|---|---|---|
+| `srvGetClutArgs` copy-in failure | EFAULT (14) | no | no |
+| `_srv_csc_load` argument copy-in (`copyin_xlate`) failure | 14 | no | no |
+| `_srv_csc_load` calling `_srv_csc_hq4_tdma`, which fails when `srv_hq4_vdma` fails | 5 | `cmn_err` | the HQ4 busy poll, 17.4 |
+| `_srvClutCtl` (0x6d670007) | none: every field is written through the single-bit accessor with masks | no | no |
+| `srvDoCtrlChange` default case | none seen for CSC | no | no |
+
+No CSC block read feeds any of these: `_srv_csc_read` is a separate read ioctl, `_srv_csc_load` has no read-back or compare. E.
+
+### 17.4 Does a CSC table or coefficient load need a status read?
+
+The load is one HQ4 DMA plus register writes, with one status poll, and the trace shows it is never the failure.
+
+| Step of `_srv_csc_load` (flag bit `0x4000`: table, `0x2000`: coefficients) | Access | Grade |
+|---|---|---|
+| strobe | CSC direct 2 = 0, then = 4 | E |
+| address | CSC indirect 2 = low byte, indirect 3 = high byte of (block number << 10) + offset | E |
+| select data port | CSC direct 0 (index) = 4 | E |
+| the table (up to 1024 bytes, each 16-bit value sent low byte first) | **HQ4 video DMA**: `_srv_csc_hq4_tdma` builds a descriptor and calls `srv_hq4_setup_vdma` / `srv_hq4_vdma` / `srv_hq4_unsetup_vdma`; the bytes are meant for the CSC data port selected just before (the DMA's destination argument not decoded). Graphics-side writes: `0x81018` = `0xc`, `0x81010` = `0x11` (kick), `0x81000` = descriptor | E (flow), I (destination), trace (counts) |
+| coefficients (up to 9 values) | CSC indirect 2 = 0, indirect 3 = 0, direct 0 = 5, then each value as two writes to direct 1 (low, high) | E |
+| end | CSC direct 2 = 0, then = 8 | E |
+
+The wait: `_srv_hq4_wait_dma` polls bit 12 (`0x1000`) of the HQ4 register at graphics offset `0x20000` up to 200 times with a 500 ns delay, then sets bit 1 of the control word at `0x81010`, writes a `cmn_err` and fails the load. The trace shows 41436 reads of `0x20000` all returning `0x13` (bit 12 clear), so the wait never runs and prints nothing; that is why SYSLOG has no HQ4 or timeout line. The HQ4 theory is not the cause of this failure; it remains the only way a CSC table load can fail with a message. E.
+
+**What this means for black frames:** the table bytes reach the CSC **only through the HQ4 DMA**. If the model's graphics side clears the busy bit and counts the kicks but does not read the descriptor's buffer and write the bytes into the CSC data port, the CSC keeps its power-up table. Whether that makes the output black depends on whether the model applies the CSC to the data (I do not know the model). This is the one register-level path from "no CSC programmed" to black. I (mechanism), U (whether the model does it).
+
+### 17.5 How often the VGI1 vertical pulse comes, and what the driver does with it
+
+| Fact | Value | Grade |
+|---|---|---|
+| Per-board constants | `srv_dma_setup` (in `srv.a`, interface object) sets, from a standard byte at board-record +228: **0 (525-line, 59.94 Hz): field period 16,683,350 ns (`0x00fe9156`), line period 63,556 ns (`0xf844`)**; non-zero (625-line, 50 Hz): field period 20,000,000 ns (`0x01312d00`), line period 64,000 ns (`0xfa00`). The field period is kept only for request mode 4; other modes zero it | E (values), I (which standard the byte selects; consistent with the numbers) |
+| Uses | request end UST = start UST + field period (mode 4); UST of a field start = interrupt timestamp - (status line counter, bits 26:16) x line period | E |
+| The pulse | the vertical (status bit 0) is **per field**. The field counter in status bits 47:33 must grow by **exactly 1 per vertical pulse** (15-bit wrap); a step of 2 or more takes the "missed field" path: log, trig abort, synthetic status `0x4000`, error recovery | E |
+| MSC | advances by the field-counter step in mode 1 (once per field), and once per **two** fields (step >> 1) in modes 2 and 3; modes 0 and 4 depend on the field-order flag. I read mode 1 as interleaved frames, 2 and 3 as one field type only, 0 and 4 as separate fields, from the public capture-type names (not checked against the header) | E (arithmetic), I (names) |
+| Per request | two verticals (the first with bit 5) and a separate end-of-DMA, as in 16.2, for a frame request: both fields in one request (the trace has `vparam` with two field ranges) | E |
+| Wall clock | the driver never compares the interval between interrupts with a period. Its only time check is the 2 s no-interrupt watchdog (2.4) | E |
+
+So the faithful cadence is **one vertical pulse per field: every 16.683 ms (NTSC) or 20 ms (PAL)**, a frame request therefore every 33.37 ms (40 ms), the field counter +1 and parity alternating at each pulse. A model that raises one pulse per 33.37 ms (frame rate) still satisfies the driver, but then a two-vertical request takes 66.7 ms and MSC/UST advance at half the true rate; that is a guest-speed accommodation, not the hardware behaviour. If the model keeps the pulse at the field rate the guest has to keep up with 60 interrupts a second plus the frame work; if it cannot, slow the whole video clock and say so, but keep the 2:1 ratio of pulses to requests. Interlaced against progressive: no progressive standard appears in the driver's constants, only the two above; for it the mode and the pulse count would change, U.
+
+### 17.6 Are the black frames a separate cause?
+
+The CSC control failure does not make the output black by itself: the node is programmed (ioctls OK), with input packing `rgba_8` instead of `bgr_8_p`, input range `rgb_full`, output `yuv422_8`, output range `yuv_ccir`. A wrong packing gives wrong colours or garbage, not zeros. The remaining causes, each with the check that separates it:
+
+| Cause | Check | Grade |
+|---|---|---|
+| The source frames are black (a freshly created clip has no picture) | read the first DMA buffer's bytes at the descriptor before any conversion; non-zero means the data are real | U |
+| The model reads the wrong memory (descriptor page list entries are 64-bit with the GIO address in the low word >> 14; `dataaddr` is an offset in the first page; page size and bus address space are not decoded) | same check: all-zero reads point at the address translation | U |
+| The CSC table never arrives (17.4) | compare the model's CSC table store with the 1024-byte buffer at the `0x81000` descriptor | I |
+| The setup word (`0x9fff0080184c` in the trace) selects a format the sink does not unpack | not decoded: the `setup` fields are U (section 14) | U |
+
+I did not find any TMI or GAL read that gates pixel data on this path: TMI indirect 129 is read only while waiting for a transfer start (section 12), and nothing in `_srv_csc_load` or the packing handlers touches it.
 
 ## Not done in this pass
 

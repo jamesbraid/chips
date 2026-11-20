@@ -729,3 +729,19 @@ Byte offset in the slot window = `c * 0x1000 + (byte offset in the channel)`, *c
 | 47:33 | field counter, 15 bits | `srv_dma_do_mscust` |
 
 Event-sequence rules (README 16.2): per request `0x21`, `0x01`, then a separate `0x08`. Error recovery writes intenab `0x11` and status `0x2f0b` to both channels, after trig `2` then `0`.
+
+## 7. CSC block table and coefficient load, and the VGI1 timing constants (README 17)
+
+CSC block: direct 0 = index, direct 1 = data, direct 2 = strobe; indirect 2/3 = address low/high; indirect 4 = table data port (filled by an HQ4 video DMA, not by register writes); indirect 5 = coefficient port (up to 9 values, low byte then high byte).
+
+| Step | Access | Source |
+|---|---|---|
+| begin | direct 2 = 0, direct 2 = 4 | `_srv_csc_load` |
+| table address | indirect 2 = (block << 10 + offset) low byte, indirect 3 = high byte; direct 0 = 4 | same |
+| table data | HQ4 video DMA of up to 1024 bytes: graphics `0x81018` = `0xc`, `0x81010` = `0x11`, `0x81000` = descriptor; busy poll: bit 12 of the register at graphics `0x20000` (<= 200 reads) | `_srv_csc_hq4_tdma`, `_srv_hq4_wait_dma` |
+| coefficients | indirect 2 = 0, indirect 3 = 0, direct 0 = 5, then direct 1 low/high per value | same |
+| end | direct 2 = 0, direct 2 = 8 | same |
+
+`videod` replaces an enumerated control value that is not in the node's list with the list's first item and returns VL error 25; `mgv` still applies the replacement and the ioctl. CSC packing list (value): `rgba_8` 1, `yuv422_8` 5, `yuva4444_8` 19, `yuva4444_10` 21, `abgr_8` 22, `auyv4444_8` 23, `yuva4224_10` 26, `yuv422_10` 27, `auyv4444_10` 28, `rgba_10` 29, `abgr_10` 30. Range list: `rgb_full` 2, `yuv_full` 5, `yuv_ccir` 8, `rgb_rp175` 13. Other packing values `mgv.so` knows: `a2_bgr_10` 24, `a2_uyv_10` 25, `bgr_8_p` 32, `uyv_8_p` 33.
+
+VGI1 timing constants (`srv_dma_setup`): standard byte 0: field period 16,683,350 ns, line period 63,556 ns; non-zero: 20,000,000 ns and 64,000 ns. Status field counter (47:33) must grow by exactly 1 per vertical pulse.
