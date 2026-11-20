@@ -11,6 +11,8 @@ TABLE is a guide table number (19 for Table 2-19) or `3600:48p` style.  For each
         N (joined by the port at record index i), the other router X on record index j, X's index-i neighbour
         Z and N's index-j neighbour Y.  Record index k is router port 8 - k.  The check fails when Y != Z.
         (Entry numbers are the replay's table indices.)
+  ROLES the role flags given to each U38 router (default: meta flag if it takes a rack-router cable, both flags
+        if it takes only U38 cables); set ROLES="003r38=3,004r38=1" to override.
   CDG   a cycle, if any, in the channel dependency graph of the routes the PROM wrote: forward every hub
         pair through the written tables (as `sim` does), make each router-to-router exit a channel and each
         consecutive pair on a path a dependency.  The PROM's own deadlock check is a separate routine; this
@@ -79,6 +81,10 @@ if __name__ == "__main__":
             f, p, i = S[a[5:]]; M.T[a] = {"procs": 0, "rows": mk(f, p, i)}; key = a; roles = {}
         else:
             key = int(a); roles = roles_for(M.T[key]["rows"])
+            # ROLES="003r38=3,004r38=1" overrides router roles (0 ordinary, 1 meta flag, 3 meta and repeat flags)
+            for kv in filter(None, os.environ.get("ROLES", "").split(",")):
+                n, v = kv.split("="); roles[n] = int(v)
+            print("ROLES", a, dict(sorted(roles.items())))
         PAIR.clear()
         rp, t, ridx, h0, hubs, links, nums = M.trial(key, roles=roles, quiet=True)
         print("PAIR", a, "squares examined:", len(PAIR))

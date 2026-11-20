@@ -179,6 +179,44 @@ ports 2, 5 and 6). MetaRouters and repeaters skip the uniqueness set (0x1fc23964
 72, 76). The local-bit count is a static 4 (the computing routine, 0x1fc5c438 with its only store at 0x1fc5caf4, exits
 for 64 or more hubs).
 
+## Repeat routers at 416 to 512 processors
+
+Which U38 routers are repeaters, and is the L1 value `0xc` the right setting? Replay of PROM 6.210 over Tables 2-28 to
+2-31 with [route_diagnostics.py](replay/route_diagnostics.py) (`ROLES=` overrides a router's flags) and an exhaustive
+number walk over role assignments (every way of giving the repeat-and-meta flag pair to 1, 2, 3, 4 or 5 U38 routers
+with the rest MetaRouters; 0.3 s per walk). The draft prints only the rule (neighbouring racks' U38 routers, printed
+p. 2-28); no table labels a role.
+
+| Fact | Grade | Evidence |
+| --- | --- | --- |
+| Exactly one assignment passes the number walk in each table: 416 and 448 processors, repeaters 004R38 and 014R38 (the two U38 routers that take no rack-router uplink); 480 and 512 processors, repeaters 004R38, 005R38, 014R38 and 015R38; every other U38 router a MetaRouter. Of 45 pairs at 416 and at 448, of 495 four-sets at 480 and at 512, and of the other set sizes (1 and 3 at 416 and 448, 3 and 5 at 480 and 512), none other passes | software expectation (replay; roles tried were meta-only or both flags, so "ordinary" for U38 routers is not covered) | `walk` outcomes, 2026-11-19 |
+| Both flags are required on a repeater. Repeat flag only (register bits 21:20 `01`) passes the number walk and fails route calculation ("bad routing table"); meta flag only, or ordinary, fails the number walk on the repeater's paired ports; a MetaRouter given both flags fails | software expectation | ten single-router variants at 448 and 480 |
+| With the full assignment, route calculation and the deadlock check pass at 416, 448, 480 and 512, the pair check closes every square (96, 96, 112 and 128 examined), and the dependency walk finds no cycle | software expectation | same replay |
+| The printed drawings mark the same routers: at 416 the U38 routers of racks 004 and 014 are drawn in a different colour; at 480 and 512 the four central U38 routers (004, 005, 014, 015) carry no uplink port numbers and are joined to the MetaRouters by bundles marked 4. The drawings do not say "repeater" | established (figure content) for what is drawn; inferred for the reading | `108-0266-001` printed pp. 81, 83, 84 |
+| The public SGI ia64 kernel headers keep three router types (`KLTYPE_ROUTER`, `KLTYPE_META_ROUTER`, `KLTYPE_REPEATER_ROUTER`) and two independent flags, `PCFG_ROUTER_META` and `PCFG_ROUTER_REPEATER`, tested by separate macros. They do not say whether a repeater carries the meta flag | established | `linux-2.4-klconfig.h`; patch `linux-2.4.18-ia64-020722` (`IS_META`, `IS_REPEATER`) |
+| The L1 value `0xc` makes a repeater read both flags (register bits 21:20 `00`) if the L1 nibble's bit n reaches register bit 20 + n. Support: the nibble values `0xe` (meta) and `0xc` (repeater) differ from `0xf` in nested bits (bit 4 clear for both, bit 5 clear only for the repeater, controller repository, `platforms/bricks/router-role-setting.md`), which is the nesting the PROM needs (repeater: both flags; meta: one). Against the other order (bit n to register bit 23 - n) neither value would read as a role. The mapping itself is not read | inferred, strong | this section; [role values](#role-values-e-for-the-prom-i-for-the-pins) |
+| A real repeater's register 0x50 | unknown | needs a read of register 0x50 on a repeater, or the router board's position-pin schematic |
+
+## 416 processors: 184 cables printed in the table, 204 in the drawing
+
+Table 2-28 has 184 cable rows (104 compute, 26 in-rack, 12 neighbouring-rack, 26 uplink, 16 U38 to U38); the drawing
+`108-0266-001` printed p. 81 prints "204 cables" for 13 racks, 36 R-bricks and 104 C-bricks. The table is consistent
+with its neighbours: the same row classes give 164, 200, 222 and 240 at 384, 448, 480 and 512 processors, all equal to
+the drawings' totals.
+
+- **The PROM accepts the 184-cable graph (software expectation).** Number walk, route calculation (which includes the
+  deadlock check) and the pair check all pass; the pair check closes 96 squares; the dependency walk finds no cycle.
+  Repeaters are 004R38 and 014R38.
+- **The 204-cable graph cannot be built (not rebuilt).** The drawing prints no cable list, only 13 racks of bricks,
+  ten U38 routers and a few port digits, so the endpoints of the 20 cables beyond the table are not recorded in any
+  retained source. By arithmetic they cannot exist among these routers: with the table's 184 cables the 36 R-bricks
+  have 24 unused ports of eight, in twelve routers (ten of them U38 routers and the two rack routers of rack 007), which
+  allows at most 12 more cables, not 20 (**inferred**: assumes eight-port R-bricks and the same 36 routers). Also, 204 would exceed 200 at
+  448 processors, which has eight more compute cables. So the PROM's checks cannot tell the two graphs apart, since
+  only one is buildable; the printed 204 is probably a typo or counts some cables twice (**inferred**).
+- What would settle it: a vector-level extraction of the drawing's cables (each endpoint's brick and port), a
+  shipped 416-processor `hinv` or L2 `config`, or the draft's own cable total for the table (it prints none).
+
 ## Limits
 
 | Limit | Value | Grade | Where |
@@ -207,7 +245,7 @@ allowed. SE for the route search (replayed), E for the barrier's data path (read
 | # | Unknown | Route |
 |---|---|---|
 | 0 | pin-to-register-0x50 mapping (does L1 nibble bit n drive register bit 20 + n) | read register 0x50 of a real meta and repeat router, or the router board and chip pin descriptions |
-| 1 | which U38 routers carry which role on shipped systems | a shipped system's `hinv` or L2 config |
+| 1 | which U38 routers carry which role on shipped systems: the replay and the drawings agree on four (two at 416 and 448), but no printed label or listing says so | a shipped system's `hinv` or L2 config |
 | 2 | which routing choice makes 2-19's routes cycle (the cycle itself is located above); the 0x1fc22e70 next-hop and tie-break were not read in full | read both, then replay a regularised 128-processor table |
 | 3 | minimality above 288 processors | run the same check on 320 to 512 |
 | 4 | whether node distribution and the barrier complete at 128 hubs. The 512-processor replay numbers all 128 hubs 0 to 127 and every hub pair forwards (16,256 pairs, longest 7 routers), but neither stage can be replayed without live peers: both only poll hubs over the vector routes, so the open part is their polling time and the response of 127 real hubs | a 128-hub run of the PROM on a model or a real 512-processor console capture |
