@@ -197,6 +197,8 @@ excludes I/O and storage racks. All **established**.
 
 ### Router cabling above four Cx-bricks
 
+Superseded in part by [Origin 3900 router cabling](origin3900-cabling.md): the connector numbers are the router port numbers (A=1, F=6, G=7, H=8, established by the R-brick's own lettering), and PROM replays of candidate graphs at 4 to 16 Cx-bricks are there. The rows below keep what they said when written.
+
 Question: which router port joins which brick, per size. **No retained manual prints it.** The 3900 guide, the Cx
 partitioning guide and the Cx-brick addendum give the facts below; their figures draw bricks and not cables, and the
 cabling draft `108-xxxx-PR2` has no Cx-brick table (its 1,243 compute-to-router rows and 844 router-to-router rows are
