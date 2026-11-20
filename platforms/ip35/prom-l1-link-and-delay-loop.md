@@ -71,6 +71,45 @@ requests of section 2.
 | XBridge accesses at 0x7c (28) and two XBow register errors | The PROM string pool has the input/output discovery messages ("XBOW LINK %d does NOT have NUMAlink connection! Skipping", "Widget present, but link not alive!", "Xbow arbitration delay..."), which is where absent widgets are probed. Which routine reads 0x7c of a bridge, and with what base, was not found: the offset has no row in the XBridge register census and the immediate does not appear as a plain load displacement. | inferred that these are discovery probes of absent or partly modelled widgets; the exact step is **unknown**. The probe pc is in the model's log if run with the guest-error log and the pc; it is not in the retained evidence |
 | Whether any of them is a register the PROM expects the L1 to have set | no. The L1 sets no hub register: the PROM sets its own timer, node numbers and I/O. What the PROM takes from the L1 is rack, bay, brick type and the debug switches, and a failure of each is tolerated. | inferred (from the request list) |
 
+## Follow-up: the stall is the global barrier wait (return address 0x1fc44984)
+
+A second launch (all CPUs at `0x1fc6b834` with `ra` = `0x1fc44984`, checkpoint doublewords slice 0 `0x53`, `0x54`, then `0x5a`; slices 1 to 3
+`0x1e`, then `0x5b`; the counter at 1.25 MHz and D = 160) rules out the blink loops of section 1 and a hung counter. Read with objdump of
+the same segment; the barrier itself is described on the [topologies sheet](../../../origami/docs/datasheets/origin3000-topologies.md) of the
+emulator project, so only the new facts are graded here.
+
+| Question | Answer | Grade |
+| --- | --- | --- |
+| Caller | `0x1fc44984` is inside `0x1fc44758`, the wait of the global barrier `0x1fc5ea08`; `0x1fc44758` has four call sites, all in that routine. After each failed poll it calls the delay with 100,000 units (`0x1fc4497c`, 100 ms at 1.25 MHz), then `0x1fc50b14(0)` (a console poll, not read further), and polls again. | established |
+| What it polls | A vector read (`0x1fc5cf3c`, address `0x608008`) of the target hub's local-block scratch 1. It ends the wait when bit 13 of that word has the wanted value (1 for the "set" wait, 0 for the "clear" wait); bits 34:19 carry the barrier's line number. It also gives up on a hub whose bit 40 or bit 35 is set, and on Ctrl-C. There is no timeout. | established |
+| Who writes it | The target hub's own lead processor, by a local store to its scratch 1 (the global master for every other lead; the other leads for the master). Not an interrupt and not the L1. | established |
+| Which barrier line and which target | Not in the retained samples. The first barrier a lead reaches after discovery is line 4315 (`0x1fc60c04`), then 4348 (`0x1fc60c70`); the slice 0 path after `0x5a` goes there. At the stop, `a3` of the call is in `s3` (the line), the target entry index in `s1` and the wait kind in `s4`: reading `s3`, `s1`, `s4` on a stuck CPU decides it. | inferred for 4315 |
+| Why all 8 CPUs | By the PROM only a node's lead processor (the lowest-numbered present slice, test `0x1fc68f64`, slice from `0x9200000001000020`) runs the barrier loop; any other returns at once (`0x1fc5ea14` to `0x1fc5ea30`). All CPUs showing `ra` `0x1fc44984` therefore needs either every CPU to pass the lead test in the model (II scratch 0 bits 4+j, local `0x400150`, as seen from `0x1400150`) or a second entry into `0x1fc44758` that the call-site list does not show. Not settled. | unknown |
+
+Checkpoints (the per-slice doubleword is written by `0x1fc6b54c(code)`; decimal in the code, hex here):
+
+| Code | Store | Meaning | Grade |
+| --- | --- | --- | --- |
+| `0x53`, `0x54` | `0x1fc68314`, `0x1fc68338` | bracket the call `0x1fc66978(...)` in the boot-string interpreter (`0x1fc6813c`, called from the main routine at `0x1fc69c10`, after its L1 requests), made by a lead whose II scratch 0 bit 1 is clear. That call writes its own `0x4a` and `0x4b`. | established for the stores; the call's purpose not read |
+| `0x1d`, `0x1e` | `0x1fc68224`, `0x1fc6824c` | end of the interpreter's string. `0x1e` then `0x5b` is the normal sequence for a non-lead slice: it skips the lead-only block. | established |
+| `0x5b` | `0x1fc6092c` | every slice, in the per-processor start routine `0x1fc60760` (reached through a pointer table at `0x1fc6efa4`), after "node discovery begins" prints and `0x1fc68fe0` | established |
+| `0x4f`, `0x5a` | `0x1fc609b4`, `0x1fc609dc` | lead only (`0x1fc68f64` true): `0x4f` before `0x1fc6017c`, `0x5a` after it, then `0x1fc5ff88`, the discovery, the unconditional print at `0x1fc60bc8` and barrier 4315 | established |
+
+So `0x5a` on slice 0 and `0x5b` on slices 1 to 3 is the expected pair for one lead and three non-leads; after `0x5a` the next steps are discovery and the first global
+barrier, and a non-lead goes on to the "Local Slave" rendezvous. The checkpoints do not move because the barrier does not pass.
+
+**No output.** Before this point the PROM has already executed unconditional prints (`0x1fc680cc`, for example at `0x1fc60bc8`), and the barrier prints
+"waiting for node with nic ... at global barrier..." every 100 polls (10 s). None reached ioc3-a or ioc3-b, so the console in use is not the IOC3 port (or the print does
+not leave the PROM). The console is an indirect object chosen at console initialisation (`0x1fc3c9ac` calls through a pointer in the global table); where it is chosen was
+not traced. **The PROM does have an ELSC back end that sends through the L1 request layer** (probe `0x1fc29450`, "Switching to ELSC UART") and a junk-UART back end. If the
+default is ELSC, console text leaves as L1 frames, which would explain the empty UART and IOC3 and the continued stream of bad frames (the barrier's 10-second prints and
+its console poll would keep producing them). That the lengths 40, 50 and 51 are console text is **inferred**, not shown.
+
+**L1 requests.** Established: the open at `0x1fc69ad0` sends code `0x0003` first and then code `0x0001`, inside the main routine before the interpreter call at `0x1fc69c10` and so before `0x53`
+and `0x5a`; the request primitive returns after 2 s without resending, and the main path continues (the [timeouts page](prom-l1-request-timeouts.md)). So the stall is not a
+missing L1 reply for those two requests. Requests later in main (`0x1fc6a53c`, `0x1fc6aefc`, `0x1fc6b134`) and any made during discovery were not traced, so a later need for a
+reply is **unknown**; the barrier itself uses no L1 traffic.
+
 ## Not settled
 
 | Item | Route |
