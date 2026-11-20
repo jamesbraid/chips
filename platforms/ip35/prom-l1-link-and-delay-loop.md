@@ -75,8 +75,7 @@ requests of section 2.
 
 A second launch (all CPUs at `0x1fc6b834` with `ra` = `0x1fc44984`, checkpoint doublewords slice 0 `0x53`, `0x54`, then `0x5a`; slices 1 to 3
 `0x1e`, then `0x5b`; the counter at 1.25 MHz and D = 160) rules out the blink loops of section 1 and a hung counter. Read with objdump of
-the same segment; the barrier itself is described on the [topologies sheet](../../../origami/docs/datasheets/origin3000-topologies.md) of the
-emulator project, so only the new facts are graded here.
+the same segment; the barrier's handshake (two phases in local-block scratch 1) is the one read earlier in the [metarouter page](metarouter-route-and-roles.md#node-number-distribution-and-the-barrier), and the new facts are graded here.
 
 | Question | Answer | Grade |
 | --- | --- | --- |
