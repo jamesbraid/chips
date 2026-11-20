@@ -745,3 +745,14 @@ CSC block: direct 0 = index, direct 1 = data, direct 2 = strobe; indirect 2/3 = 
 `videod` replaces an enumerated control value that is not in the node's list with the list's first item and returns VL error 25; `mgv` still applies the replacement and the ioctl. CSC packing list (value): `rgba_8` 1, `yuv422_8` 5, `yuva4444_8` 19, `yuva4444_10` 21, `abgr_8` 22, `auyv4444_8` 23, `yuva4224_10` 26, `yuv422_10` 27, `auyv4444_10` 28, `rgba_10` 29, `abgr_10` 30. Range list: `rgb_full` 2, `yuv_full` 5, `yuv_ccir` 8, `rgb_rp175` 13. Other packing values `mgv.so` knows: `a2_bgr_10` 24, `a2_uyv_10` 25, `bgr_8_p` 32, `uyv_8_p` 33.
 
 VGI1 timing constants (`srv_dma_setup`): standard byte 0: field period 16,683,350 ns, line period 63,556 ns; non-zero: 20,000,000 ns and 64,000 ns. Status field counter (47:33) must grow by exactly 1 per vertical pulse.
+
+## 8. Event poll queue, MSC/UST and CC1 field interrupt (README 18)
+
+Ioctls: `0x6d67000b` sleeps until the CC1 interrupt wakes it (needs GAL indirect 25 bit 0 and the wait flag); `0x13` sets the 64-bit event select mask and a line number; `0x14` returns {mask, line, count} (24 bytes) then `count` 8-byte events `(type << 56) | data56`; `0x1e` returns MSC, UST, next MSC ("none" is `0x7fffffffffffffff`).
+
+Event types: 10, 11 CC1 field (data -1); 12, 13 VGI1 channel 0 and 1 vertical with status bit 32 = 0, 14, 15 with bit 32 = 1 (data = MSC, only when the MSC changed); 31 external trigger; 32, 33 VGI1 error. Queue depth 1024; overflow sets mask bit 36.
+
+CC1 field interrupt: ack CC indirect 38 bit 0; write CC indirect 39 = 1; read CC indirect 44 bit 0 (line bit 8) and 45 (line bits 7:0); field count += round(UST delta / field period) + 1.
+
+HQ4 table DMA writes: graphics `0x11028` = `0x02000000`, `0x60018` = control, `0x81018`, `0x81000` (descriptor), `0x81010` (kick); poll `0x20000` bit 12; no read-back.
+

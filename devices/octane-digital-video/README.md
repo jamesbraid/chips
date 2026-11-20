@@ -919,6 +919,63 @@ The CSC control failure does not make the output black by itself: the node is pr
 
 I did not find any TMI or GAL read that gates pixel data on this path: TMI indirect 129 is read only while waiting for a transfer start (section 12), and nothing in `_srv_csc_load` or the packing handlers touches it.
 
+## 18. Event poll, MSC/UST and the preroll stall
+
+Pass 11. Inputs: the model traces (`evidence/octane-digital-video-20261118/bgr24-and-stall/`, `csc-trace/`); `srv.a` (original-6.5 overlay build, 479044 bytes; the guest's 6.5.13 build was not available, U for differences), `mgv.so` of the same overlay, `videod` and `libvl` from the Smoke 5.0 guest disk, and the Smoke 5.0 binary, all by disassembly. Grades: E read in code, I reasoned, U unknown. **The exact test Smoke applies before it leaves preroll was not recovered** (18.3); what is established is below, with the checks that settle the rest.
+
+### 18.1 The two ioctls
+
+| Item | Behaviour | Grade |
+|---|---|---|
+| `0x6d67000b` | `srvTriggerWait` (`srv_misc.o`). **No structure, no result.** It counts itself in a waiter counter (board +8500), sets bit `0x2000000` in the board flag word (+140) and **sleeps** on `srv_extrigwait_sv` until woken, then returns 0. The only waker is `srv_cc1_interrupt` (the CC1 field interrupt, GIO line 6), and only on an interrupt where **GAL indirect 25 bit 0 reads 1** and that flag is set: it clears the flag and signals. A model that never sets GAL 25 bit 0 leaves the caller asleep for ever; one that sets it on every field wakes it every field. Smoke's roughly 15 returns per second (about 700 in 45 s) means the wake happens, at a quarter of the 59.94 Hz field rate. The `0x6d67` prefix is shared with the graphics driver, so if that descriptor is the graphics board's, this is not `srv` at all (U) | E (code), U (which fd) |
+| `0x6d670013` | `srvSetPollSel`: copies in 16 bytes: a 64-bit **event select mask** (bit n selects event type n) and a 32-bit **line number** (0 to 263 for 525-line, 0 to 625 for 625-line; else EINVAL 22; stored plus 10 or plus 6). If the mask has bits 10 or 11 it programs the line compare through single-bit ids 55, 62 and 63 | E |
+| `0x6d670014` | `srvGetPollSel`: copies in 24 bytes (the requested count at +12), then returns: +0 the select mask as it was; +8 the line number (stored value minus 10 or 6, only when mask bits 10 or 11 are set); +12 the **count returned** (the smaller of the request and the queue length); then **count 8-byte events** at +16. It removes them from the queue and clears one bit of the mask (the queue-overflow bit, 36). Nothing is computed from status or counters here; it only drains the queue | E |
+| Event entry | `srv_events_handler(board, type, data)` appends `(type << 56) | (data & 0x00ffffffffffffff)` **only if mask bit `type` is set**; types above 36 go to `cmn_err`. The queue holds 1024 entries; the 1025th sets bit 36 of the mask (overflow) and is dropped. Each append clears wait bit `0x20` (+140) and calls `pollwakeup` | E |
+| Who posts | VGI1 vertical (`srv_dma_do_mscust`): type **12 or 13** (channel 0 or 1) when status bit 32 is 0, **14 or 15** when it is 1, data = the channel's **MSC**, and **only when the MSC changed** since the last post. Errors (`srv_interrupt_check`, `srv_dma_drb_intrs`): type 32 or 33 with the MSC. CC1 field interrupt (`srv_cc1_interrupt`): type **10 or 11** (by the field-order bit) with data -1, if mask bits 10 or 11 are set; type 31 for the external trigger | E |
+| Poller | the ioctl is issued by `mgv.so` `MGV_GetParams_Events` (for the parameter id 70), at the rate the guest's event timer runs (about 14 Hz in your trace): events reach `videod` and Smoke in batches of about 4 at 60 fields/s | E (caller), I (rate from your trace) |
+
+### 18.2 MSC and UST, and what the driver needs per field
+
+**VGI1 (requests).** `srv_dma_setup` sets MSC, UST and the next-MSC to "none" (`0x7fffffffffffffff`) and the channel flag `0x2000` ("first interrupt"). `srv_dma_do_mscust`, on the first vertical: MSC = 0 if status bit 32 is 0, else 1 (and the same into the next-MSC); clears the flag; runs `_srv_vgi1_init_rate`. After that, per vertical: the step is the change of the **status field counter** (bits 47:33, 15-bit wrap); a step of 2 or more is a missed field (trig abort, status `0x4000`, error recovery). The MSC then advances by the step in mode 1, by `step >> 1` in modes 2 and 3, and by `(step >> 1) + 1` in modes 0 and 4 unless the field-order flag is 1. UST of that field = interrupt timestamp minus (status bits 26:16) x line period (63,556 ns or 64,000 ns). `srvGetMSCandUST` (0x6d67001e) returns the stored MSC, UST and next-MSC; "none" (all ones) until the first vertical. E.
+
+**CC1 (field interrupt).** `srv_cc1_interrupt` acknowledges (CC indirect 38 bit 0), wakes `srv_fieldwait_sv`, and when the board flag `0x10` is clear **writes 1 to CC indirect 39 and reads CC indirect 44 bit 0 and CC indirect 45** to get a 9-bit line counter (bit 8 from 44). It converts the current UST to a field-start UST: UST minus line counter x line period (plus a fixed offset), then **adds to the board's field count (+8504) the number of field periods since the previous interrupt**, from the UST delta divided by 16,683,350 ns (525-line) or 20,000,000 ns (625-line), rounded to nearest, plus 1. So this path **does use real elapsed time**: an interval that is not the field period makes the count jump (a 2x period counts 2 fields per interrupt). It then posts type 10 or 11. E.
+
+What the driver needs from the model, per field:
+
+| Where | Value |
+|---|---|
+| VGI1 status, each field | bit 0 set; bit 32 alternating; bits 47:33 +1 exactly; bits 26:16 = the line number of the event (any value below the lines per field; zero only shifts the UST by up to one field); bit 5 on the vertical that starts a request; the end-of-DMA as its own interrupt (16.2) |
+| CC1 field interrupt (GIO line 6) | one per field at the real period, so the UST delta rounds to one field; CC indirect 39 writable, CC 44 and 45 returning a small line number (not stuck at a stale value); CC 38 clearable; GAL indirect 25 bit 0 set when an external-trigger wake is wanted (18.1) |
+| Intervals | the field period for the standard (16.683 ms or 20 ms). A longer interval is read as missed fields by the CC1 path, so the faithful period and a slowed guest cannot both be hidden by stretching it |
+
+The line counter at end-of-DMA only is **not** a problem for the UST maths: it is a multiplier on the line period, so zero is accepted, but it would be wrong by up to a field. The stall in the evidence is not explained by it.
+
+### 18.3 What Smoke waits for (traced as far as it goes)
+
+| Fact | Value | Grade |
+|---|---|---|
+| Wait loop | `ImpactVideoOut::WaitNextFrame` (0x10f3d350): `select` on the VL event descriptor with a 50 ms timeout, then `vlPending` and `vlNextEvent`. **Only VL event 11 (`VLEvenVerticalRetrace` in `libvl`'s name table) is a frame tick**: it increments a counter (this + 20), and a count equal to a limit held in the video object (+28) returns -1. Any other event type aborts with "failed due to event: <name>". A timeout with no event returns 0 (not an error, "try again") | E |
+| Frame hand-over | `PutNextFrame` (0x10f3d6a0) gets a free buffer from the buffer ring, copies the frame, `vlDMBufferPutValid`s it and decrements the same counter; no free buffer is an error | E |
+| Sync loop | `SyncWithFrameReference` (0x10f3d980), always on (the constructor sets the flag at +28 to 1), waits the same way for events 9 (`VLTransferComplete`) and 11, calling a callback held at +24 with the count and acting on the value it returns; events 3, 5 and 7 are handled, 10 aborts. The callback's identity, and so the exact value it compares, was not recovered | E (loop), U (callback) |
+| MSC/UST | the video-out code in the Smoke binary has **no** call to `vlGetUSTMSCPair` or `vlGetFrontierMSC`. Its pacing is event counting, not an MSC or UST target | E (no references found in the video and VTR code ranges) |
+
+So the preroll does not test a field-counter value or an MSC target that the model could fail to reach. It consumes event 11 ticks and frees ring buffers. Since the events come to Smoke via `mgv.so` from 18.1 (types 10 and 11 by the CC1 path, 12 to 15 by VGI1), a stuck preroll with only vertical events seen is consistent with: ticks arriving but the ring never freeing a slot, or the frame callback never returning the value the sync loop waits for. Both need a runtime look.
+
+### 18.4 Is the 25 requests per second at 2.4 fields each a cause?
+
+A frame request needs two fields (16.2), so at 59.94 fields/s 29.97 requests/s are needed. 25/s means the driver is late: each late request lets a field pass with no data, the field counter then steps by 2 (the missed-field path: abort and requeue, 16.3), and `mgv` queues black for the empty slot. A guest that falls behind by about 17 percent therefore produces exactly the stuck-in-black behaviour, independent of the counters. I (mechanism), U (that the queueing of black is `mgv`'s underrun fill). Checks that settle it: count `srv_dma_post_errors`-type events (types 32 and 33) in the poll results; log the field-counter step per request (2 or more is the late case); log the 0x14 returns (types and counts) to see whether the type 11 events keep arriving while no request is queued.
+
+### 18.5 The CSC table DMA
+
+| Question | Answer | Grade |
+|---|---|---|
+| Must the HQ4 video DMA complete? | The driver needs only that the busy bit (graphics `0x20000` bit 12) reads clear within 200 polls. It does not check that data moved. The table matters only to whatever reads the CSC | E |
+| Sequence in `srv_hq4_vdma` | writes graphics `0x11028` = `0x02000000`; `0x60018` = the control word; `0x81018` = the word with `0xc` in its low nibbles; `0x81000` = the 64-bit descriptor (physical buffer address in the low 48 bits plus control bits above); `0x81010` = the kick word (low bits `0x11`); then `_srv_hq4_wait_dma` | E |
+| Read-back afterwards | none: no read of the table, the CSC, a DMA status or a completion counter. After the wait the buffer is freed (`kvpfree` in `srv_hq4_unsetup_vdma`) and the ioctl returns 0 or the wait's -1 | E |
+| Wait failure | after 200 polls of the 0x1000 bit: sets bit 1 of the word at `0x81010`, logs through `srv_add_log` and `cmn_err`, returns -1 and `_srv_csc_load` returns 5 | E |
+
+Not required for the preroll: a model that clears busy at once passes. It matters only if the model applies the CSC to the pixels.
+
 ## Not done in this pass
 
 - Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
