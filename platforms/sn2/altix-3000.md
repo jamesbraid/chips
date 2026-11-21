@@ -7,23 +7,36 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Read: contents, pp.79 to 82 (models and architecture), pp.99 and 108 (C-brick). The 3300 model text
-(p.77), the rack chapter and the rest of the brick chapters were not read.
+README](README.md). Read: pp.77 to 83 (models, architecture, features), p.87 (components), pp.99 to 101 (C-brick
+overview and features), and p.108 (C-brick specifications) from an earlier reading. Driver guide pp.13 and 16 to 17.
+Page numbers are printed; the PDF index is 24 pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter
+and the rest of the brick chapters were not read.
 
 ## Established (007-4579-001)
 
 - Two models: the **3300** and the **3700**. The 3700 has up to 512 Itanium 2 processors, at least one IX-brick per 64
   processors and at least four 8-port routers per 32 processors, in 40U racks with a power bay and PDU each (p.79).
+- The **3300** has up to 12 Itanium 2 processors, one IX-brick, "no routers", one power bay and an optional L2 with no
+  touch display, in a 17U rack that holds up to three C-bricks (p.77; the 17U rack is listed again on p.87).
 - A coherent domain is up to 64 processors, and the whole system has one memory space of up to 2 TB (p.81).
 - The **C-brick** is 3U and holds two processor nodes joined internally; each node has two processors and 16 DIMM slots
   on one custom ASIC (p.99). Processors in a C-brick must run at one frequency, and DIMMs are added in groups of eight
   (p.108). 48 VDC input, about 1125 W (p.108).
-- The **R-brick** router is an 8-port crossbar, joined to C-bricks by "highly specialized cables" (p.81).
+- The **R-brick** is a 2U, 8-port router brick (p.87), an 8-port crossbar. C-bricks join it by "highly specialized
+  cables" (p.81).
 - Each rack with C-bricks has an L2 controller; rack 001 carries an L2 touch display (p.79).
-- The SC-brick of the driver guide is the same brick: "two SHub chipsets", sixteen DIMM slots per SHub, one L1 and a
-  console port, two NUMAlink channels and two Xtown2 (Crosstown) channels (007-4520-006 pp.16 to 17), with the node
-  chip named SHub there and "Super-Bedrock" in the user's guide. Inferred that SC-brick and C-brick are one brick (same
-  node count, DIMM slots and ports).
+- The node chip is the **Super-Bedrock ASIC** (p.81; "two Super-Bedrock ASICs" on p.87). The driver guide calls the
+  same role "SHub" ("two SHub chipsets", 007-4520-006 p.16). The one-part identity is inferred: both describe the
+  crossbar between processors, memory, network and I/O. Neither gives a chip generation; "NUMA 3" (p.81) names the
+  system architecture.
+- Inside the C-brick the nodes are joined by "a single 6.4-GB/s NUMAlink 4 channel" (p.81); the driver guide says "a
+  NUMAlink 4 channel" (007-4520-006 p.13). p.101 instead lists "two internal 3.2-GB/s (each direction) NUMAlink
+  channels (one per node)". The rate agrees (3.2 each way is 6.4 total); the count does not.
+- Outside the C-brick: "two external 1.6-GB/s (each direction) NUMAlink channels (one per node)" and two Xtown2
+  channels per node, 1.2 GB/s each direction (p.101). The guide does not name the external generation on the pages
+  read. The driver guide's SC-brick has two "6.4-GB/s (each direction)" NUMAlink channels and two "2.4-GB/s" Xtown2
+  channels (007-4520-006 p.17). That differs from p.101 and may be a product or revision difference; not settled.
+- Inferred that the driver guide's SC-brick is this brick: 3U, two nodes, 16 DIMM slots per node.
 
 Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in [brick-identity.md](brick-identity.md).
 
@@ -31,15 +44,22 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 | Chip | Grade and source |
 |---|---|
-| SHub, two per C-brick | established. Generation unknown (README) |
+| Node chip, two per C-brick: "Super-Bedrock ASIC" (user guide) or SHub (driver guide) | role established by both guides; the one-part identity inferred. Generation unknown (README) |
 | PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The Altix guide's figure labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
-| Router (8-port) | established as a part in the R-brick; its register map is not held |
+| Router (8-port) | established as a part in the R-brick (p.81, p.87). The guide does not name its family, so neither the NUMAlink 3 nor the NUMAlink 4 register map is established for this brick |
 
 ## Open
 
-- How the guide's "NUMAlink 4" for the C-brick's internal channel relates to the NUMAlink 3 cables of the R-brick
-  (README).
-- The 3300's layout (p.77, unread). It is a smaller 3000 with fewer bricks, inferred from the name; unread.
+- The NUMAlink generation of the external cables. The guide prints their rate (p.101) and no name. Settling test: a
+  page of the guide or its cabling guide that names the cable.
+- Channel count inside the C-brick: one channel (p.81) or two (p.101). Figure 5-2, the C-brick block diagram on
+  printed p.102, is not read and would settle it.
+- Node-chip generation (SHub 1 or 2): unknown from both guides.
+- Plan conflict, not edited here: `docs/research/sn-family-closure-20260913.md` in the Origami repository (the SN2
+  Altix 3000 row) says the fabric is "NUMAlink 3, same R-brick" and cites 007-4579-001 p.80. The guide gives NUMAlink 4
+  for the internal channel (p.81) and no generation for the external cable (p.101). A plan that treats the Altix 3000
+  fabric as NUMAlink 3 needs that record corrected or a source for NUMAlink 3 here. The family-order plan itself is not
+  in the Origami worktree, so it was not checked.
 - The C-brick L1 type character: not settled (sysco `sn2-brick-packages.md`).
 
 ## Review
@@ -66,3 +86,10 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 **Findings.** None.
 
 **Cleared:** the 17U removal and the PIC row. The first review's other cleared scope stands.
+
+### Changes of 2026-11-20
+
+Not reviewed. The 17U rack is restored: it is on p.77 and p.87, which the 2026-11-14 check did not read. Changed
+claims: the 3300 bullet and its 17U figure, the node-chip naming and identity, the internal and external channel
+rates and counts, the SC-brick rates against p.101, and the Router row. Renewed independent review is needed before
+these are cleared.
