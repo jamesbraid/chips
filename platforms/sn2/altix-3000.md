@@ -91,3 +91,20 @@ Not reviewed. The 17U rack is restored: it is on p.77 and p.87, which the 2026-1
 claims: the 3300 bullet and its 17U figure, the node-chip naming and identity, the internal and external channel
 rates and counts, the SC-brick rates against p.101, and the Router row. Renewed independent review is needed before
 these are cleared.
+
+### Review of the changes of 2026-11-20
+
+Independent review, 2026-11-21, by a reviewer who wrote none of these pages. Reviewed chips revision fee9859. Read
+007-4579-001 printed pp.77, 79, 81, 87, 99 and 101 from the held PDF (PDF index is printed page plus 24).
+
+Confirmed: p.77 (3300: up to 12 processors, one IX-brick, "no routers", one power bay, 17U rack, optional L2 and no
+touch display, up to three C-bricks in the model list); p.79 (3700 figures, L2 touch display on rack 001); p.81
+(Super-Bedrock ASIC, "single 6.4-GB/s NUMAlink 4 channel", 8-port router ASIC, "highly specialized cables", 2 TB); p.87
+(17U rack for the 3300, 2U 8-port R-brick, "two Super-Bedrock ASICs"); p.99 (two nodes, 16 DIMM slots each, one custom
+ASIC); p.101 (two internal 3.2-GB/s channels, two external 1.6-GB/s channels, two 1.2-GB/s Xtown2 channels; the page does
+not name NUMAlink 4). The one-versus-two channel conflict is real and recorded as open. The 3300 index row, the
+snprom image paragraph and the references index row agree with the guide. Grades are right: the node-chip identity is
+inferred, the NUMAlink 4 label is the guide's statement for the internal channel only.
+
+Findings: none. Cleared: the 3300 bullet, node-chip naming, channel counts and rates, and the Router row.
+
