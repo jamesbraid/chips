@@ -1060,7 +1060,7 @@ For a model: a live preview needs the window registers and the video-input path 
 
 ## 20. The window registers, the setup-word bits and the VL event numbering
 
-Pass 13. Same inputs as section 19 (original-6.5 overlay `srv.a` and `mgv.so`; `videod`, `libvl` and Smoke 5.0 from the guest disk). Grades: E read in code or data, I reasoned, U unknown. **The window path is decoded to the register, units and call level; the meaning of every bit in the per-window control registers is not**, and the section says where.
+Pass 13. Same inputs as section 19 (original-6.5 overlay `srv.a` and `mgv.so`; `videod`, `libvl` and Smoke 5.0 from the guest disk). Grades: E read in code or data, I reasoned, U unknown. **The window path is decoded to the register, units and call level; the per-window control bits are decoded in section 21.**
 
 ### 20.1 The window request and where the registers live
 
@@ -1128,6 +1128,73 @@ So in the playback trace word `0x9fff0080184c`, **bit 47 is `vgi_dynroundmode` =
 | Smoke's mask | `0xffffc7ff` clears bits 11, 12 and 13, i.e. reasons 13, 14 and 15, **the three vertical-retrace events**, and keeps `TransferComplete` | E |
 
 So `ImpactVideoOut/In::WaitNextFrame` counts `VLTransferComplete` (reason 11): one per finished buffer transfer, not one per field. Section 18.3 and 19.6 wrongly named it a vertical-retrace event; the corrections are applied there. Consequences for the preroll stall: the frame tick comes from request completion in `mgv` (`vlDMBufferPutValid` and the transfer-complete event), which needs end-of-DMA from the model for every request; field-rate vertical events are filtered out by Smoke's own mask. `SyncWithFrameReference` also reacts to reason 9 (`VLSequenceLost`, counted as a lost frame and allowed), 7 (`VLStreamStarted`) and 10 (`VLControlChanged`) as no-ops, and to 3 (`VLStreamPreempted`) and 5 (`VLStreamAvailable`) by calling the video object's handlers. Everything else aborts with "failed due to event". `videod` special-cases wire type 11 in `PathEventNotify` (transfer complete): it consults the path's owner record before queueing, and drops legacy clients' `TransferComplete` and vertical-retrace events (the `0x3a00` filter in `WriteEventsToClient`). E.
+
+## 21. The per-window control bits, zoom and decimation, and the offset registers
+
+Pass 14. Same inputs as section 20 (`srv.a` `srv_window.o`, `mgv.so` `mgvsdValueChangedCallback` and the offset routine beside `mgvConstrainWindow`, original-6.5 overlay build). Grades: E read in code, I reasoned, U unknown. The table in `srv_window.o` has 120 bytes per window; the byte offsets below are offsets into that record, and `srv_singlebit` ids are the numbers of the bit table (srv-register-map section 2).
+
+### 21.1 Which VL control sets which request field
+
+The screen-drain node has nine controls (control table at the node's list, names read from the `mgv.so` data): `freeze` (VL id 0x12), `showgfx` (`0x4d470080`), `deinterlace` (`0x4d47003c`), `window` (8), `origin` (2), `size` (4), `zoom` (0x2c), `offset` (3) and `alpha_not_pixel` (`0x4d470025`). Their callback is `mgvsdValueChangedCallback`; it keeps the 64-byte request inside the drain's state (request = state + 36) and sets bits in the request's valid-field flags (+60):
+
+| VL control | Request field | Flag | Applied by `srv_win_ops` as | Default | Grade |
+|---|---|---|---|---|---|
+| `showgfx` | +44 := 0 when the value is non-zero, 1 when it is 0 | 0x400 | writes the **enable bit** with the value of +44 (21.2) | the state starts with +60 = 7100 (0x1bbc): bits 0x4, 0x8, 0x10, 0x20, 0x100, 0x200, 0x400, 0x800, 0x1000 set, so every field is written at first set-up; `showgfx` starts 0 (video shown) | E |
+| `deinterlace` | +56 := value | 0x2000 | writes the **deinterlace bit** (21.2) | 0 | E |
+| `freeze` | +52 := (value != 0) | 0x1000 | writes the **freeze bit** | 0 | E |
+| `origin`, `size`, `window` | left, right, top, bottom (+12, +16, +20, +24), clamped to 1280 x 1024 | 0x4, 0x8, 0x10, 0x20 (0x28 or 0x14 together) | the edge registers of section 20.2 | from the board's input size | E |
+| `zoom` | +32 := (N - 1) + ((D - 1) << 4) for the fraction N/D, after the fraction is reduced so that N or D is 1 | 0x80 | the zoom or decimation field (21.3) | 0 (1:1) | E |
+| `offset` | +36 (x) and +40 (y), each clamped at -512 and -256, and +48 := 1 | 0x100, 0x200, 0x800 | the offset registers and the **offset-enable bit** (21.2) | 0 | E |
+| `alpha_not_pixel` | none: the callback accepts the value and sets no flag | none | nothing; **no key-source bit is written by the window path** | | E |
+
+After a `zoom` change the callback recomputes the rectangle (new size = source size x N / D, clamped to 1280 x 1024), zeroes the offsets and sets flags 0xb00 (offset registers and offset-enable); after any change that touches top, bottom, zoom or the y offset it runs the offset routine of 21.4 and sets 0x40. The request +8 (flag 0x2) has no producer in this callback (U); `srv_win_ops` writes it to a CC register (A: CC indirect 1, B and C: CC indirect 3). E for the write, U for the meaning.
+
+### 21.2 The per-window bits (A / B / C)
+
+All are AB-block single-bit ids written through `srv_singlebit` (index and data at direct 4 and 3 for AB, section 8.4). A and B are laid out alike; C lacks some slots.
+
+| Record offset | A / B / C id | Location | Name (from the code that writes it) | Set from | Grade |
+|---|---|---|---|---|---|
+| 60 | 0x84 / 0x93 / 0xa2 | AB 5 / 21 / 37, bit 0 | **window enable** | flag 0x400 through `_srv_enab_win` with the value of +44; `showgfx` = 0 gives 1 (enabled) | E |
+| 64 | 0x85 / 0x94 / 0xa3 | bit 1 | **deinterlace** (frame as against field display of the window) | flag 0x2000 (`deinterlace`); also forced to 1 when the zoom word is 0, and, for B and C, when a zoom is set and the bit at record offset 92 is already 1 | E (writes), I (meaning from the control name) |
+| 68 | 0x86 / 0x95 / 0xa4 | bit 2 | **offset enable** | written 1 with flags 0x100 and 0x200, and with the value of +48 for 0x800 | E (writes), I (name) |
+| 72 | 0x87 / 0x96 / 0xa5 | bits 5:3 (3 bits) | **zoom factor field** | flag 0x80 (21.3) | E |
+| 76 | 0x88 / 0x97 / - | bit 6 | part of the source mode (read when mode 5 is selected) | the mode in +4 (flag 0x1) | I |
+| 80 | 0x89 / - / - | bit 7 (A only) | no writer found | | U |
+| 84 | 0x8a / 0x98 / 0xa6 | AB 6 / 22 / 38, bit 0 | **freeze** (hold the window picture); the enable code toggles it as a latch around a field wait | flag 0x1000 (`freeze`) | E (writes), I (name) |
+| 88 | 0x8b / 0x99 / - | bit 1 | source mode bit (written in every mode change) | +4 | I |
+| 92 | - / 0x9a / - | AB 22 bit 2 (B only) | read by the zoom path; if set the deinterlace bit is forced on | | E (read), U (meaning) |
+
+**The window enable bit is therefore AB register 5 bit 0 (window A), AB 21 bit 0 (B), AB 37 bit 0 (C).** `_srv_enab_win` writes it (request +44), and for B and C also runs the latch sequence: `_srv_enableB` / `_srv_enableBC` write CC indirect 2 = 0x19 then 0x99 and CC indirect 4 = 0x08 then 0x88 around a wait for the next field (`srv_field_wait`) while toggling the freeze latch (ids 152 and 166). So enabling B or C takes effect at a field boundary. E for the sequence, I for "latch".
+
+Source and field-mode bits: the request's mode (+4, 0 to 7) is applied through literal ids, not the table: ids 84 to 86 (CC indirect 54 bits 2:0, CC 54 bits 6:4 and CC 55 bits 2:0), 0x88, 0x8b/0x99 and 0xd2/0xd3 (GAL indirect 7 bits 0 and 4); `_srv_compat_inputs` reads ids 90 and 91 (CC indirect 57, bits 2:0 and 6:4) and rejects a B/C input pair it calls incompatible. These are the input-mux selects; I did not map each mode value to a source. U.
+
+### 21.3 Zoom and decimation
+
+The word at request +32 holds the nibbles of a VL fraction N/D: low nibble = N - 1 (zoom), next nibble = D - 1 (decimation). `mgv` reduces the fraction so that one side is 1, so a window is either enlarged by an integer or reduced by an integer.
+
+| Word | Meaning | Written to | Grade |
+|---|---|---|---|
+| 0x00 | 1:1; deinterlace bit forced to 1; both fields cleared | zoom field := 0 (AB 5/21/37 bits 5:3), decimation register := 0 | E |
+| 0x01 to 0x06 (low nibble) | zoom by N = nibble + 1, **2x to 7x** | zoom field := nibble; decimation register := 0 | E |
+| 0x10 to 0x70 (next nibble) | decimation by D = nibble + 1, **1/2 to 1/8** | zoom field := 0; decimation register := nibble (AB 7 for A; 0x17 for B; the table lists 0x17 for C as well, which looks like a copy slip) | E |
+| both nibbles non-zero | rejected with "Cannot set both zoom and decimation" (EINVAL); a nibble outside 1 to 6 (zoom) or 1 to 7 (decimation) gives "Invalid zoom factor" or "Invalid decimation factor" | | E |
+
+The scale factors follow from `mgvsdValueChangedCallback`: the control getter returns (low nibble + 1) as the numerator and (next nibble + 1) as the denominator, and the zoom setter stores N - 1 and D - 1. Whether the hardware field value n means a factor of n + 1 is the driver's convention; the code never states the hardware factor, so the factor itself is I. **The edges do not change in `srv`**: left, right, top and bottom stay screen rectangle edges, and `mgv` has already scaled the rectangle (source size x N / D) before they are written.
+
+### 21.4 CC registers 0x0d/0x0e, 0x15/0x16, 0x1d/0x1e
+
+These hold the request's +28 value, a **9-bit vertical offset in video lines**: bit 8 goes to CC 0x0d (A), 0x15 (B) or 0x1d (C), and the low 8 bits to CC 0x0e, 0x16 or 0x1e. They are written when flag 0x40 is set (`srv_win_ops`, E). `mgv` computes the value in the routine beside `mgvConstrainWindow` (E, as a formula):
+
+`offset = y_offset(+40) + K x (1 + 1/Z) - C x (R / F)`, truncated to an integer
+
+with Z = N from the zoom word (the low nibble + 1; a value of 0 or less is refused with a message), C = (top + bottom) / 2 of the window in screen lines, F a floating-point value held in the input record (+208), and (K, R) = (131.25, 15.734) for the NTSC-family standards (record value 0 or 2) or (156.25, 15.625) for the PAL-family ones (1 or 3). R matches the line rate in kHz of each family. The result moves the picture start so that a zoomed window stays centred on the same source lines. I for the meaning (vertical start line of the displayed source, in lines), E for the formula and constants; the exact origin of the line count is U, and F is not decoded.
+
+So a model that positions the preview needs: the six edges (section 20), the enable bit, the zoom or decimation fraction (21.3), the signed x and y offsets (the AB pairs of 21.5) and this vertical start offset.
+
+### 21.5 The offset registers (`origin` and `offset` controls)
+
+The x offset (+36, flag 0x100) is written as a high part (`value >> 8`) and a low byte into the AB pair (high, low) = (0, 1) for A, (0x10, 0x11) for B and (0x20, 0x21) for C. The y offset (+40, flag 0x200) goes to (2, 3) for A, (0x12, 0x13) for B and (0x22, 0x23) for C. For A the bit table gives AB 2 eight bits and AB 3 three bits, the reverse of the code's order (high part to AB 2); B uses the widths the other way. I treat A's y pair as swapped in the table and take AB 3 as the three-bit high part; U. Offsets are signed: x down to -512 and y down to -256 (clamps in the `offset` setter); the sign convention in the registers is not shown. E for the registers, U for the encoding.
 
 ## Not done in this pass
 

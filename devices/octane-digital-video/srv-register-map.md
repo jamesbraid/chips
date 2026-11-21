@@ -784,3 +784,20 @@ Horizontal edge = 5 x coarse (CC) + fine (AB), range 0..1279; top and bottom are
 
 Setup-word bits with a VL control: 5 outputblank, 14 inputround, 15 outputexpand, 46 roundtype, 47 dynroundmode (README 20.4). VL event numbering: reason = wire type; 11 is `VLTransferComplete`, 13 to 15 are the vertical-retrace events; select masks include bit (reason - 2) (README 20.5).
 
+## 11. Window control bits, zoom and offsets (README 21)
+
+| Function | A | B | C |
+|---|---|---|---|
+| enable | AB 5 b0 (id 0x84) | AB 21 b0 (0x93) | AB 37 b0 (0xa2) |
+| deinterlace | AB 5 b1 (0x85) | AB 21 b1 (0x94) | AB 37 b1 (0xa3) |
+| offset enable | AB 5 b2 (0x86) | AB 21 b2 (0x95) | AB 37 b2 (0xa4) |
+| zoom field (value N - 1, 1 to 6) | AB 5 [5:3] (0x87) | AB 21 [5:3] (0x96) | AB 37 [5:3] (0xa5) |
+| decimation (value D - 1, 1 to 7) | AB 7 | AB 0x17 | AB 0x17 (table entry) |
+| freeze | AB 6 b0 (0x8a) | AB 22 b0 (0x98) | AB 38 b0 (0xa6) |
+| x offset high, low | AB 0, 1 | AB 0x10, 0x11 | AB 0x20, 0x21 |
+| y offset high, low | AB 2, 3 (table order, likely swapped) | AB 0x12, 0x13 | AB 0x22, 0x23 |
+| vertical start offset, bit 8 / low byte | CC 0x0d / 0x0e | CC 0x15 / 0x16 | CC 0x1d / 0x1e |
+| request +8 (flag 0x2) | CC 1 | CC 3 | CC 3 |
+
+Request +32: low nibble N - 1 (zoom 2x to 7x), next nibble D - 1 (decimation 1/2 to 1/8), only one non-zero. Request +28 = y_offset + K x (1 + 1/N) - centre_line x R / F, K, R = 131.25, 15.734 (NTSC family) or 156.25, 15.625 (PAL family). Valid-field flags (+60): 0x1 mode, 0x2 +8, 0x4 left, 0x8 right, 0x10 top, 0x20 bottom, 0x40 +28, 0x80 +32, 0x100 +36, 0x200 +40, 0x400 enable (+44), 0x800 +48, 0x1000 freeze (+52), 0x2000 deinterlace (+56). Window-mode bits written through literal ids: CC 54 [2:0] and [6:4], CC 55 [2:0], AB 5 b6, GAL 7 b0/b4.
+
