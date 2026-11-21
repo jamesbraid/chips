@@ -255,11 +255,8 @@ The route, each step established from SGI's Linux code except where marked.
 3. **The address is chosen by the PROM.** `SN_SAL_IOIF_INTERRUPT` (id `0x0200004a`) with operation 1 asks the PROM for a
    vector (0x3c to 0xe6, `IA64_SN2_FIRST_DEVICE_VECTOR` and `IA64_SN2_LAST_DEVICE_VECTOR`), a target NASID and slice, and
    returns the crosstalk address in `irq_xtalkaddr`; operation 2 frees and 3 redirects (`v5.3:arch/ia64/sn/kernel/irq.c`).
-   In the held PROM the handler (`0xffb1f970`, decompiler output) dispatches the three operations to a provider table
-   indexed by bridge type (types 2 PIC, 3 TIOCP, 4 TIOCA, 5 TIOCE as the kernel numbers them; the scan of bridges in
-   `0xffb2aff0` branches the same way) and fails with "NULL provider pointer" when no provider is registered. The
-   provider functions themselves, and so the exact address layout, are in the compressed SAL runtime, not read here
-   (**unknown**). The packet lands on the SHub's I/O interface and becomes one of its interrupt events (inferred: the kernel clears an
+   In the held PROM the handler (`0xffb1f970`, decompiler output) dispatches the three operations to the provider kept per (NASID, widget) in the node record (`+0x958 + 0x30 * widget`) and fails with "NULL provider pointer" when none is registered. The
+   SHub provider is in SAL_B, not the compressed runtime, and is read: it picks the target node and slice (the bridge's own node first, another node only if it has no processor), picks the vector, and returns `target nasid << 36 | 1 << 47 | SH_II_INT0` (slice 0) or `SH_II_INT1` as the address; the PIC's own registers are programmed at scan time (established; [SHub interrupts](../../devices/shub/interrupts.md#the-firmwares-interrupt-allocator-sn_sal_ioif_interrupt)). The packet lands on the SHub's I/O interface and becomes one of its interrupt events (inferred: the kernel clears an
    event register, below, and names no other path).
 4. **The SHub delivers a vector.** The kernel acknowledges by reading the SHub event-occurred register and writing its
    alias (`sn_ack_irq`, `v5.3:arch/ia64/sn/kernel/irq.c`); the exact SHub register bits are with the SHub pages.

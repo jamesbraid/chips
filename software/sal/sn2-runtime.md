@@ -184,7 +184,7 @@ Offsets are computed from the SGI headers in `v5.3` (and the same files in the h
   - **free:** looks up the record in the per-irq list at block B state `+0x78` (indexed by irq) by cookie, calls the provider's `+0x30`; -3 if not found.
   - **redirect:** same lookup keyed on the record's irq and cookie, provider `+0x38` with the new NASID and slice; on 0 copies back NASID, slice and xtalk address.
   - Anything else prints "Invalid provider_call" and returns -3.
-- **What the provider does inside** (the SHub interrupt-target and PIC/TIO interrupt-address programming) is not read here; see [interrupts.md](../../devices/shub/interrupts.md) for what the first-stage code does and the open item in [../../questions/sn2-sal-open.md](../../questions/sn2-sal-open.md).
+- **What the provider does inside (established, read in the 5.04 and 4.90 SAL_B, not the compressed runtime):** the SHub provider's three methods choose a target node and slice, pick an irq from `0x3c` to `0xe6` (or the one asked for), build the crossbar address `target nasid << 36 | 1 << 47 | SH_II_INT0` (slice 0) or `SH_II_INT1`, and keep a `0x50`-byte record per allocation; they store to no register. The PIC programming happens at scan time, not in this call. Detail, ordering, the multi-node rules and the 4.43 differences: [interrupts.md](../../devices/shub/interrupts.md#the-firmwares-interrupt-allocator-sn_sal_ioif_interrupt). Still unread: the TIO methods in the listing (decompile only), the SHub 2 build.
 
 ## Other calls the kernel makes after boot
 
@@ -257,7 +257,7 @@ Everything else the kernel tolerates as "not implemented" (-1); the unknown-id p
 
 ## Not read
 
-- The provider operations behind `IOIF_INTERRUPT` and the bus object's methods (SHub interrupt targets, PIC and TIO interrupt address programming, bridge error decode), the BAR mapping and the contents of `GET_PCI_TOPOLOGY`: the question stays open in [questions/sn2-sal-open.md](../../questions/sn2-sal-open.md).
+- The bus object's methods other than interrupt allocation (bridge error decode), the BAR mapping and the contents of `GET_PCI_TOPOLOGY`: the question stays open in [questions/sn2-sal-open.md](../../questions/sn2-sal-open.md). The `IOIF_INTERRUPT` providers are read: see above.
 - The L1 message types behind each console call other than the framing, and the `sc_nl4r_*` and `sc_tio_*` UART front ends' register accesses.
 - `CLEAR_STATE_INFO`, `SAL_PCI_CONFIG_*`, `REGISTER_PHYSICAL_ADDR`, `UPDATE_PAL`, `PHYSICAL_ID_INFO`, `SN_SAL_COHERENCE`, `MEMPROTECT`, `XP_ADDR_REGION`, the `SYSCTL_*` calls other than the ones above, `IROUTER_OP`, `SYSCTL_EVENT`, `BUS_CONFIG`: handlers named on the [firmware page](../firmware/snprom/README.md#sal-dispatch), not read here.
 - Any SHub 2 image: this page reads only the SHub 1 SAL 5.04 build.
@@ -299,7 +299,7 @@ Independent review of chips commit `0e74293` (this page), examined at that revis
 2. The "Where Linux and the PROM disagree" item 1 (`GET_SAPIC_INFO`) is a real mismatch of formats only if the fallback were ever used for this PROM; whether the kernel's `cr.lid` layout on SHub 1 matches the PROM's decoding stays unknown. Not an established statement either way.
 3. The 2.6.12 `PCI_TOPOLOGY` id `0x62` and any 2.6.12 call of `HUB_ERROR_INTERRUPT` were not searched beyond the files read; the page's v2.6.12 list is only as complete as those files.
 
-**Not checked.** The bodies behind `IOIF_INTERRUPT` providers, `0x51` to `0x54`, `0x58`, `0x5a`, `0x5c` to `0x5e`; `GET_FIT_COMPT`, `SYS_SERIAL_GET` and `PARTITION_SERIAL_GET` arithmetic, `SYSCTL_OP`, `HWPERF_OP` opcodes, `LOG_CE`, `PRINT_ERROR`; every row of the standard SAL calls table (`SET_VECTORS`, `GET_STATE_INFO*`, `MC_SET_PARAMS`, `MC_RENDEZ`, `CACHE_FLUSH`), though their row and runtime addresses match the tables; the console device backends; the parser at `0xffa154a0`; the 2.6.5 kernel; any SHub 2 image. Decompiler output was used for names and navigation only.
+**Not checked.** `0x51` to `0x54`, `0x58`, `0x5a`, `0x5c` to `0x5e`; `GET_FIT_COMPT`, `SYS_SERIAL_GET` and `PARTITION_SERIAL_GET` arithmetic, `SYSCTL_OP`, `HWPERF_OP` opcodes, `LOG_CE`, `PRINT_ERROR`; every row of the standard SAL calls table (`SET_VECTORS`, `GET_STATE_INFO*`, `MC_SET_PARAMS`, `MC_RENDEZ`, `CACHE_FLUSH`), though their row and runtime addresses match the tables; the console device backends; the parser at `0xffa154a0`; the 2.6.5 kernel; any SHub 2 image. Decompiler output was used for names and navigation only.
 
 ## Review of the 350 summary, block A, I/O SAL and console (second reader)
 
