@@ -1,52 +1,60 @@
 # SGI Visual Workstation 320 and 540 firmware and NT software: open questions
 
-Open points from [software/visws](../software/visws/README.md). The firmware is not held; everything known about it is
+Open points from [software/visws](../software/visws/README.md). One firmware image (PROM 1.0006) is held and read; the rest is
 read from NT's HAL and loader, SGI's firmware guide, SGI release notes reposted to Usenet and the public Linux port. The
 platform and chip questions are in [visws-open.md](visws-open.md). Each entry: question, routes tried, next route.
 
 ## The firmware image and the update package
 
-[route: software now for the first step; then missing binary] No PROM image, update floppy or flash dump is held. Routes
-tried: Library search (all roots, mail, text and artifact modes) for the 320 and 540 firmware; the Origami firmware registry
-(no entry); a file listing of both held Recovery CD ISOs (CD-1 v1.1 and CD-2 v1.0). The CD-2 installer has an "SGI
-Firmware" item that copies a PROM image to a floppy, but its payload sits in InstallShield 3 archives (`data1.cab` and
-friends) whose file tables were not unpacked. Next: write an extractor for that archive format (the compression is the
-PKWARE implode scheme) and list the files; if a PROM image is inside, it becomes the first firmware held. If not, the
-only source is SGI's support downloads, of which no copy is mirrored.
+[settled for 1.0006; route: missing binary for the other versions] The Recovery CD-2 v1.0 route failed: unpacking its
+InstallShield 3 archives (unshield reads them) shows drivers, help and documentation and no firmware item; the cabinets are
+dated 1999-05-27, before the first update package. The image was found elsewhere: SGI's PROM 1.0006 update package is in a
+public driver archive already mirrored, and its 512 KiB flash image is read in [software/visws/firmware.md](../software/visws/firmware.md)
+and [boot-path.md](../software/visws/boot-path.md). Still not held: any other version (1.0002 to 1.0005, 1.1002 to 1.1005), the
+update utility's flashing code path (`flash_upgrade` was named, not read), and how it treats the 0x200-byte file header, the
+erased environment sector and the boot block. Next: the 1.1xxx update packages from SGI's support site (no stable address on
+record), then read `flash_upgrade` in the held image.
 
 ## Shipping firmware version and early release notes
 
 [route: missing source] The notes held start at 1.0002 (see [firmware.md](../software/visws/firmware.md)); there are no notes
-for 1.0000, 1.0001 or 1.0003, and the version the first units shipped with is unknown. Next: a release-notes file from
+for 1.0000, 1.0001 or 1.0003, and the version the first units shipped with is unknown. The held 1.0006 package's own
+ReadMe repeats the 1.0002 to 1.0006 entries and adds nothing earlier. Next: a release-notes file from
 the support site, or a hardware-inventory capture from an early unit.
 
-## The environment block: entry layout and checksum
+## The environment block: HAL side and defaults
 
-[route: software now] The block's place (last 8 KiB sector, 24-byte trailer, checksum dword) is read; how entries are
-laid out and how the checksum is computed are not. Next: read `HalpCreateShadowTable`, `HalpCopyShadowVariableName`,
-`HalpMakeNewImage`, `HalpCheckSumSegment`, `HalpStringCksum` and `HalpGenerateChecksum` in `halborg.dll` (all located by the
-debug file, not yet read).
+[route: software now] The firmware side is read ([firmware.md](../software/visws/firmware.md)): validity test, `NAME=value`
+entries, 24-byte trailer, zero-sum checksum. Open: whether the HAL's rewrite (`HalpCreateShadowTable`, `HalpMakeNewImage`,
+`HalpStringCksum`, `HalpGenerateChecksum`) produces the same bytes, the factory default variables (the default table the
+firmware loads on an invalid block), the multiple spellings of the loader variable names, the format of the repair floppy's
+`BOOTVARS._`, and the meaning of the trailer's first dword. Next: read the default table in the main module and the HAL
+routines.
 
 ## Flash sector map and the rest of the flash
 
-[route: missing source] The part name `M29F400T` is a HAL symbol; no datasheet is held, so the sector map, and the size of the
-firmware code area, are inferred. Next: the part's datasheet; a flash dump.
+[route: missing source] The part name `M29F400T` is a HAL symbol and the image layout fits a top-boot four-megabit part; no
+datasheet is held, so the sector map is inferred. The patch record, the module table and the boot block are mapped; not yet
+read: the Pentium II and III microcode tables, the disk, network and SCSI drivers and the diagnostics in the main module.
+Next: the part's datasheet; read those parts of the main module.
 
 ## The ARC tree and the loader's firmware calls
 
-[route: software now] Only the nodes the HAL looks for are known ("SGI REV INFO", "SYS TYPE", "BOARD REV"), plus that the
-system node carries a product identifier; the identifier string, the processor, memory, disk and adapter nodes, and the
-firmware-call table `arcldr.exe` uses ("unimplemented firmware vector" with an id) are not decoded. Next: read
-`DumpArcInfo`, `HalpFixupCpuRegistryNode` and the registry-node code of `halborg.dll`, and the firmware-vector use in
-`arcldr.exe`, to list the calls and the tree.
+[route: software now] Settled: the system parameter block at `0x1000`, the 35-entry firmware vector at `0x1200` (standard ARC
+order) and the 15-entry private vector at `0x1300`, the loader's reading of the block, the tree nodes the firmware builds by
+name. Open: component classes, types and keys of every node, the private vector's purpose, which vector numbers `arcldr.exe`
+calls, and the identifier string's exact role (`SGI-000_ARCx86` is inferred). Next: read the tree builder (`borg_cpu_install`,
+`cpu_makecfgroot`) and enumerate the loader's `call *` sites through the vector.
 
-## Whether firmware assigns PCI resources and sizes memory
+## Memory programming, graphics split and PCI resources
 
-[route: missing binary] The HAL enumerates PCI buses and assigns base address registers itself; Linux accepts firmware
-assignments if present. Whether the firmware does so first, how it sizes memory, programs the Cobalt memory block and
-chooses the graphics buffer split (the HAL only reads the descriptors), and the reset order are not recoverable
-without a firmware image. Next: the firmware image (first entry), or a capture of the Cobalt and Lithium registers
-after the firmware's initialisation (a post-initialisation read is not a reset value).
+[route: software now] Settled: memory is sized from sixteen Cobalt bank registers; who writes the processor table; the boot-block
+PIIX4, NS87307 and Lithium set-up. Open: how the Cobalt memory controller is programmed and its reset values (not found in the
+code read); how `cogfxmem` and `gfxmem_alloc` choose the graphics split; whether the firmware assigns PCI resources for any
+device (no generic walk found, boot-device drivers not traced); the meanings of the Lithium `+0x48`, `+0x58`, `+0x60`-`+0x70`
+and Cobalt APIC `+0xffc` writes; the small windows at `0xfe000000`, `0xff000000`, `0xff004000`, `0xff018000` and `0xff01c000`;
+where the embedded legacy-BIOS image is mapped. Next: read the memory-controller programming and the graphics allocator in the
+main module; a capture of the Cobalt and Lithium registers after the firmware's initialisation is not a reset value.
 
 ## Cobalt revision values and the older boards
 
@@ -70,7 +78,8 @@ and graphics pages need them.
 
 ## Linux's ARC loaders
 
-[route: missing binary] The loaders `larc.exe` and `arclx.exe` and the `la2210.vw` kernel image name are known from
-installation reports only. Whether they are in the held SGI Linux CDs, how they build the `boot_params` block (memory size,
-command line) from the firmware's descriptors, and who writes the processor table at `0x1e00` are not read. Next: unpack
-the held Visual Workstation Environment 3.0 and ProPack 1.3 images and look for the loader and its install notes.
+[route: missing binary] Settled negative for the held discs: Visual Workstation Environment 3.0 and ProPack 1.3 Visual Workstation
+Edition target the 230, 330 and 550, ship kernels 2.2.15, 2.2.16 and 2.3.99 with the Visual Workstation option off, and contain no
+`larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). Open: the loaders,
+how they build `boot_params` (memory size, command line), and the older SGI Linux for the 320 and 540 (Red Hat 6.0 era) that used
+them. Next: an SGI Linux 2.2.10-era workstation release or its install floppy images.
