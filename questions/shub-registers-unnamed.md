@@ -10,7 +10,7 @@ Status: **unknown**, for all of the below.
 - `ipi_access`: layout and write behaviour unknown; it is read harmlessly by the cross-partition driver.
 - `pi_cam_control`: the value 0x8000000000000010 the kernel writes on a revision 2 or lower SHub 1 is unexplained.
 - `ptc`: whether the purge reaches the sender's own processors, what the acknowledge is, whether SHub 2's ps field is wider than two bits.
-- How a PIC bridge interrupt reaches a processor: the kernel comment says PIC interrupts target a SHub interrupt register while bridges on a TIO do not; the register is not named.
+- How a PIC bridge interrupt reaches a processor: settled for SHub 1. The PIC writes to `SH_II_INT0` or `SH_II_INT1` of the target node (address built by the firmware allocator, [interrupts](../devices/shub/interrupts.md#the-firmwares-interrupt-allocator-sn_sal_ioif_interrupt)). Open: whether a write with the send bit clear does anything, the packet layout (still inferred) and the path behind a TIO.
 - The mapping from unit to register address block (bits 31:28) is inferred from names.
 
 Routes tried: the Linux v5.3 SN2 platform headers and kernel files read for the register contract (listed in [devices/shub/README.md](../devices/shub/README.md)); we hold no SHub specification, PROM or SAL image (inventory in the program notes, 2026-11-14).
