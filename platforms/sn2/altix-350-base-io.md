@@ -26,7 +26,7 @@ itself. Everything graded here follows [AGENTS.md](../../AGENTS.md): **establish
 | What the IO10 carries | An IOC4, a Vitesse VSC 7174 serial ATA controller at PCI slot 3 of the card's bus, a 36-pin serial connector and an Ethernet port | established for the IOC4 and the VSC 7174; Ethernet controller part **unknown** |
 | Riser identity record | The PROM reads no record from the riser as such on an Altix 350. The record it reads for a base I/O node comes from the system controller (device 1), in the format of an IPMI board information area | established for the reader; which physical EEPROM device 1 is: **unknown** |
 | Console the PROM expects | One of the PROM's system-controller console objects (named SysCt). Neither the IO9's nor the IO10's IOC4 is a boot console | established from the console selector; the Linux console calls reach the same device |
-| Interrupt route | Device INTx pin, PIC interrupt pin (one of eight), crosstalk write to a SHub address chosen by the PROM, vector 0x3c to 0xe6 on a CPU | established as a chain; the pin each device uses on the 350: **unknown** (inferred from a sibling card, below) |
+| Interrupt route | Device INTx pin, PIC interrupt pin (one of eight), crosstalk write to a SHub address chosen by the PROM, vector 0x3c to 0xe6 on a CPU | established as a chain; pin for device `d` INTA is `d - 1`, INTB `(d + 3) & 7` (established); which `d` each card's parts take: inferred (below) |
 
 ## The riser and where the card sits
 
@@ -240,12 +240,13 @@ for this page.
 The route, each step established from SGI's Linux code except where marked.
 
 1. **The device raises INTx on the PCI bus.** Which of the PIC's eight interrupt pins an INTA to INTD of a slot lands
-   on is decided by the PIC's wiring and its device-to-pin register, and is **unknown** for the 350. The Linux kernel
-   never computes it: it receives the bit with the rest of the device's interrupt record from the PROM
-   (`sn_irq_info.irq_int_bit`, "Bridge interrupt pin"; `v5.3:arch/ia64/include/asm/sn/intr.h`, filled by
-   `sal_get_pcidev_info` in `sn_io_slot_fixup`, `v5.3:arch/ia64/sn/kernel/io_init.c`). The sibling card on the
-   MIPS Origin 350 puts the IOC4 on pin 0, the ISP 12160 on pin 2 and the BCM5701 on pin 3 (same IO9 placement question
-   as above); inferred, not established, that the Altix PROM assigns the same pins.
+   on is decided by the PROM. The Linux kernel never computes it: it receives the bit with the rest of the device's
+   interrupt record from the PROM (`sn_irq_info.irq_int_bit`, "Bridge interrupt pin"; `v5.3:arch/ia64/include/asm/sn/intr.h`,
+   filled by `sal_get_pcidev_info` in `sn_io_slot_fixup`, `v5.3:arch/ia64/sn/kernel/io_init.c`). The PROM's rule, read in
+   snprom 10.54 and 4.43 ([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)): for PCI device number `d` (1 to 4; Linux `PCI_SLOT`), INTA and INTC raise pin
+   `d - 1` and INTB and INTD pin `(d + 3) & 7`, the same on both PIC buses and on the IO9 and IO10. Established. With the IOC4 at
+   device 1, the ISP 12160 or VSC 7174 at 3 and the Ethernet part at 4 (placement inferred, above) the pins are 0, 2 and 3, which
+   is also what the MIPS Origin 350 capture shows for its IO9.
 2. **The PIC latches the pin and sends a message.** It has eight pins (status register bits 7:0 at offset `0x100`),
    a per-pin host address register at `0x130 + 8n` holding a 48-bit crosstalk address, force registers at `0x180 + 8n`
    and `0x1c0 + 8n`, and an error interrupt view at `0x170` (`v5.3:arch/ia64/include/asm/sn/pic.h`; the PIC page has
@@ -471,13 +472,13 @@ bind to, and is the same model the IO9 needs.
   0.5) reprograms by shifting an SVF file through the system controller to the brick's JTAG chain; the script says it works only for PX and
   IX bricks with an IO9, and that the file's tag is "IOC4 PROM, Rev". Whether an Altix 350's IO9 carries the same part and the same
   JTAG path is **unknown**; no register of the chip depends on it.
-- The INTx to PIC pin map: no function among the named 4.43 runtime symbols handles the device-information call `0x02000057` (its handler
-  was not found there, not proven absent); the question stays open as in the interrupt section above.
+- The INTx to PIC pin map is settled: the device-information call `0x02000057` is handled at `0xffb3dbc0` in 10.54 (`0xffb31770` in 4.43),
+  and the pin rule is in the interrupt section above.
 
 ## Open points
 
 Filed in [the base I/O question page](../../questions/altix-base-io-cards.md): the Ethernet controller part and slot on
-both cards, the PCI slot numbers of the riser's four slots, the INTx to PIC pin map on the 350, the module type byte an
+both cards, the PCI slot numbers of the riser's four slots, the module type byte an
 Altix 350 L1 reports and so which brick name the PROM gives the node, what device 1 is, and where the SAL runtime builds
 the per-device records.
 
@@ -572,8 +573,8 @@ Independent re-read of the section "Devices on the PIC's buses" against `shub1sn
 
 The page's wiring and identity claims at the grade given in the table above, with the corrections in this section: IO9 and
 IO10 contents by the Linux variant test and the guides; the PIC-behind-riser layout; the board record format; the base I/O
-node selection rule; the interrupt chain from the PIC pin to the SAL allocator. Not cleared: the Ethernet part and slots,
-the INTx to pin map, and anything in the compressed SAL runtime, none of which was read.
+node selection rule; the interrupt chain from the PIC pin to the SAL allocator. Not cleared: the Ethernet part and slots.
+The INTx to pin map was read afterwards in the SAL runtime (PIC page, same section as above).
 
 ### Review (PIC attach items 6 to 8, commit 043c9f6)
 

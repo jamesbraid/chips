@@ -65,8 +65,9 @@ Which SCSI channel of the ISP 12160 drives the external VHDCI connector, and whi
 - **Altix placement.** The IOC4 at device 1, the ISP 12160 at device 3 and the BCM5701 at device 4 are the Altix's
   expected numbering, **inferred** from the sibling and from the PROM's window rule on
   [the base I/O page](altix-350-base-io.md#devices-on-the-pics-buses). Not established for the Altix.
-- **Interrupts.** Captured on the Origin 350 as logical interrupt inputs 0 (IOC4), 2 (ISP 12160) and 3 (BCM5701). What
-  each means on the Altix PIC is **unknown**; the question says the capture does not establish the pin or route.
+- **Interrupts.** Captured on the Origin 350 as logical interrupt inputs 0 (IOC4), 2 (ISP 12160) and 3 (BCM5701). The Altix
+  PROM maps device `d` INTA to PIC pin `d - 1` ([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)), which gives the same 0, 2 and 3 for devices 1, 3 and 4
+  (established rule; the device placement stays inferred).
 - **Riser.** `-001` p.105 says the riser's nonstandard connector "connects to the IO9 card". `-002` p.115 says "the system's
   base I/O card". Whether the IO9 uses the same connector as the IO10 is **unknown**.
 
@@ -115,8 +116,7 @@ repository's hardware rules.
   running IO9 machine.
 - **Whether the IOC4 serial lines reach the card edge**, and which of them the PROM or Linux uses. Settles: a schematic,
   or a probe of the card on a running machine.
-- **The Altix PIC pins for the IOC4, ISP 12160 and BCM5701**, and the PCI device numbers on the Altix. Settles: the PROM's
-  interrupt table for the IO9 read under the base I/O page's method, or a PIC routing capture on an Altix IO9.
+- **The PCI device numbers of the IOC4, ISP 12160 and BCM5701 on the Altix** (the PIC pins follow from them). Settles: `lspci` from an Altix IO9.
 - **Fitted EEPROM for the BCM5701** and whether the MAC address is read from it. Settles: a board-level read on a physical
   IO9, or a published SGI IO9 document that names the part.
 - **Real-time interrupt connector behaviour under IRIX.** The manual says it is not supported under Linux. Settles: an IRIX

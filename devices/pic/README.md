@@ -925,6 +925,47 @@ Two things are allocated, in this order. Established unless marked.
 
 The value left in `int_device` after the attach reset (`0x6db6db`, all lines to device 3, written once at `0xffb6e38c`) is replaced one field at a time. For an IOC4 in slot 1 and a SATA controller in slot 3, each with interrupt pin A (pin 1; the pin value is the device's, not read here), the lines are 1 and 3: `int_device` field 1 becomes 1 (`0x6db6cb` from `0x6db6db`; field 3 becomes 3, which it already is), `+0x138` gets the IOC4's irq in 55:48 and the address, `+0x148` gets the SATA controller's, and bits 1 and 3 of `+0x108` are set (on top of the late-init OR constant below). The irq numbers are the first free ones in `0x3c` to `0xe6` unless the kernel requests one through `SN_SAL_IOIF_INTERRUPT` (alloc, a request of -1 picks one); with no request, the first line allocated in the scan gets `0x3c` and the next `0x3d`; devices on the same bus and line index get the same irq number in separate records, which share one target. The address is the hub provider's, `nasid << 36 | 1 << 47 | SH_II_INT0` (chosen slice 0) or `SH_II_INT1` (any other slice) with the **target** node's NASID: read in full and checked in the listing (`hub_intr_alloc` `0xffb73df0`, address builder `0xffb739e0`; the hub table is `0xffc2b8e8`, node record `+0x2d8`), the same expression as the 2.4 kernel. How the target node and slice are chosen, the irq search, and the stores that point `SH_II_INT0`/`SH_II_INT1` at a processor are in [the SHub interrupt page](../shub/interrupts.md#the-firmwares-interrupt-allocator-sn_sal_ioif_interrupt) (established, SAL 5.04 and 4.90 identical). The tables at `0xffc2b0b8` (type 4) and `0xffc2b188` (type 5) mentioned earlier are address-translation methods, unrelated. Two lines of one bus that map to the same line index get the same irq number in separate records (share count 2), as the SHub page states.
 
+### Which PIC pin an INTA to INTD lands on, and what SAL call `0x02000057` returns (snprom 10.54 and 4.43, SHub 1)
+
+Read in the Ghidra decompiles of both images, each function in full. Established unless marked.
+
+**The handler.** The runtime's SAL dispatch (`sal_0200005e` at `0xffb1e660` in 10.54; `sal_02000060` at `0xffadf9d0` in 4.43) switches on the call id; `case 0x2000057` calls `0xffb3dbc0` in 10.54 (`0xffb31770` in 4.43, same body). Arguments, matching Linux's `sal_get_pcidev_info`: segment, bus, devfn, a pointer for the device record and a pointer for the interrupt record. It finds the device's record in the bus's list (`0xffb2aeb0`, 4.43 `0xffb22700`): the node whose device byte at `+0x64` equals `devfn >> 3 & 0x1f` and whose function byte at `+0x65` equals `devfn & 7` (a record with the id word at `+0x68` equal to `-1` never matches). It then:
+
+1. Rewrites qword 7 of the device record (Linux `pdi_slot_host_handle`) as `(host function's device << 3 | host function's function) | host bus number << 32 | segment << 40` (bus number read from the bus record the host function points to, `+0x80`, word at `+8`; the host function is the record at `+0x238`).
+2. Copies 12 qwords (`0x60` bytes) of the device record to the caller: seven mapped BAR addresses (qwords 0 to 6), the host handle (7), then four pointers (8 to 11); qword 11, at `+0x58`, is the pointer to the interrupt record.
+3. If that pointer is non-zero, copies the 10 qwords (`0x50` bytes) it points at to the second buffer; otherwise leaves the buffer alone. Returns 0 either way, so a device with no interrupt pin returns a success with an untouched interrupt buffer.
+
+**The interrupt record (`0x50` bytes, built by the bus provider's `+0x50` method `0xffb6c4f0` in 10.54; the pin function in 4.43 is `0xffb43e50`).** Field offsets agree with Linux `struct sn_irq_info` (`v5.3:arch/ia64/include/asm/sn/intr.h`):
+
+| Offset | Linux field | Value the PROM stores |
+|---|---|---|
+| `+0x08` | `irq_nasid` (16 bits) | `0xffff` until the interrupt call picks a target |
+| `+0x0c` | `irq_slice` | `-1` until then |
+| `+0x14` | `irq_irq` | the allocated vector, first unused in `0x3c` to `0xe6` |
+| `+0x18` | `irq_int_bit` | the PIC pin, formula below |
+| `+0x20` | `irq_xtalkaddr` | the crosstalk address, written by the connect step above |
+| `+0x28` | `irq_bridge_type` | first word of the record the device's `+0x88` pointer names (read as the bridge type, 2 for a PIC: inferred from the Linux field name) |
+| `+0x30` | `irq_bridge` | the word at `+0x20` of the record at `+0x80` of the bus record (read as the bridge pointer: inferred from the Linux field name) |
+| `+0x38` | `irq_pciioinfo` | the device record (a PROM pointer; Linux replaces it) |
+| `+0x44`, `+0x48`, `+0x4c` | cookie, flags, share count | counter, 1, 1 (from the earlier paragraph) |
+
+**The pin formula.** `0xffb6c460(host, pin)` returns `host.slot` for config pin 1 (INTA) and 3 (INTC), `(host.slot + 4) & 7` for pin 2 (INTB) and 4 (INTD), and 0 for any other value. It reads `host.slot` at `+0x278` (10.54; `+0x274` in 4.43) of the host function's record, written by the slot scan `0xffb36020` with its slot argument; the same call stores the record's device byte `+0x64` as `slot + 1` (`0xff` stays `0xff`). A function other than 0 of a slot, or a device behind a PCI-to-PCI bridge, uses the host function's `slot`, and for a device behind a bridge the pin is first rotated through each bridge on the way by a table lookup (`0xffb43680`, "pciio_ppb_intr_map"; the table was not read). Nothing in the formula looks at the bus number, the ioboard type or the PIC revision.
+
+**Linux's device number is the scan's slot plus one.** The runtime's config read (`salruntime_pci_config_read`, 4.43) addresses `bridge base + 0x20000 + device * 0x1000` with `device = devfn >> 3 & 0x1f`, and refuses a device outside 1 to 4 (`0x10000b230`: `device - 1 < 4`). The scan's `slot * 0x1000 + 0x21000` is the same address, so Linux `PCI_SLOT(devfn)` is the scan's `slot + 1`.
+
+**Result.** For Linux device `d` on a PIC bus (valid 1 to 4), with `s = d - 1`:
+
+| Config pin | Pin | PIC pin number (`irq_int_bit`, status bit, `+0x130 + 8n` register) |
+|---|---|---|
+| INTA, INTC | 1, 3 | `d - 1` |
+| INTB, INTD | 2, 4 | `(d + 3) & 7` |
+
+so device 1 INTA is pin 0 and INTB pin 4; device 3 INTA is pin 2; device 4 INTA is pin 3. INTA and INTC of a device share a pin, as do INTB and INTD. The `int_device` field for pin `n` is then written with `s`. This is the same as "PIC input = device - 1" for INTA, and the pins the MIPS Origin 350 capture reports (0, 2, 3 for the devices the Altix PROM would place at 1, 3, 4). Each PIC bus has its own register file (head 1 at `+0x80_0000`), so the eight pins are per bus and the rule is the same on both. On the IO9 and IO10 the PROM does not depend on the board: IOC4 at device 1 (pin 0), ISP 12160 or VSC 7174 at device 3 (pin 2), Ethernet at device 4 (pin 3) if the device placement is as the base I/O page states (inferred; the formula is established).
+
+**What Linux reads.** `sn_io_slot_fixup` makes the call once per `pci_dev` (`v5.3:arch/ia64/sn/kernel/io_init.c`), takes `pdi_pio_mapped_addr[]` for the BARs and, in `sn_pci_fixup_slot`, uses the interrupt record only when `irq_irq` is non-zero (`v5.3:arch/ia64/sn/kernel/io_common.c`). It reads `irq_irq` (the device's `dev->irq`), `irq_int_bit` (`>= 0`: line interrupt, the pin number used as a bit index in `pcibr_target_interrupt`, `1 << bit`, and in `pcibr_force_interrupt`), `irq_bridge_type` (selects the provider and the lost-interrupt workaround, PIC only), and `irq_bridge`/`irq_xtalkaddr` through the `SN_SAL_IOIF_INTERRUPT` call. Observed: `sn_check_intr` ANDs `irq_int_bit` itself, not `1 << irq_int_bit`, with the status byte, so the workaround never fires for pin 0 and tests the wrong bits for other pins; a model that wants Linux's lost-interrupt recovery to run should not rely on it for the IOC4 on pin 0. The kernel never computes a pin.
+
+Not read: the EFI side's use of the record (`AltixPciDeviceInit`, `0x285f40` in the 10.54 EFI), the bridge rotation table at `0xffb43680`, and 10.40 (the 4.43, 5.04 and 10.54 images agree).
+
 ### Late error interrupt set-up (`0xffb6cef0`, bus provider `+0x88`, run by `IOIF_INIT` and the first `0x55`)
 
 Short and read in full. Allocate irq `0x33` from the hub provider's `+0x28` (NASID at record `+0x102`, target and slice both all ones); a negative result prints "WARNING: pcibr_error_intr_init: Interrupt allocation failed!" and the code carries on with whatever the record held. Then: `+0x38` low 48 bits = the allocated record's address word (`0xffab57a0`, a read-modify-write that keeps bits 63:48), `+0x128` = the record's irq (`0xffabb4a0`); for a type-3 bridge only (a TIO, not this PIC) the eight per-pin address registers are initialised. Then `+0x108` (interrupt enable) is read, ORed with `0x7eff7ffefe00` and written (`0xffab9980`, `0xffab9c30`); for a PIC whose revision test passes (revision 1: bit 39 and bit 9 are cleared from the constant, `& 0xffffff7ffffffdff`) `+0x28` is first written `0x750`. A flush read of `+0x50` follows. The OR constant `0x7eff7ffefe00` and the two ANDs (`0xffffff7fffffffff`, then `-513`) were read in the listing (`0xffb6d0d6`, `0xffb6d1a6`, `0xffb6d1c0`); the `0x00003eff7ffffe00` constant in the audit notes at the end of this page belongs to a different binary and is not a conflict.

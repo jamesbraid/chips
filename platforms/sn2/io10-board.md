@@ -56,8 +56,8 @@ No other chip, oscillator, flash part, RTC, EEPROM or power-sequencing part is n
   (`PCI_SLOT(devfn) == 3`). The rule is established as SGI's driver rule, not a measurement of a board. The IOC4 sits at device 1 on the bus, by
   the PROM's window rule on the [base I/O page](altix-350-base-io.md#devices-on-the-pics-buses); that placement is
   inferred, not established for the IO10.
-- **Interrupts.** The INTx pins the IOC4 and VSC use, and the PIC pin each reaches, are unknown. The Origin 350 IO9 capture
-  gives logical interrupt numbers that are not this card's routing (see the [IO9 page](io9-board.md#pci-position)).
+- **Interrupts.** The PROM maps device `d` INTA to PIC pin `d - 1` ([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)), so the IOC4 at device 1 uses pin 0
+  and the VSC at device 3 pin 2, if the device placement above holds (inferred). The rule is established; it takes no input from the board.
 - **Riser bus.** The option note and `-001` p.105 describe the riser's connector as "nonstandard" and "connects to the
   IO9 card" (`-001`), and `-002` p.115 says "the system's base I/O card". Whether the IO10 uses the same connector is
   unknown.
@@ -130,8 +130,7 @@ capture from an IO10 machine, or the PCI ID the Linux `tg3` driver binds on one.
 - **Ethernet controller part, exact PCI device id and slot.** Settles: the IO10 parts list, a card photograph, or a
   capture from a running IO10 machine.
 - **IO10 chip revisions** (IOC4 and VSC 7174). Settles: `lspci -vnn` from an IO10 machine, or the chips' own documents.
-- **INTx routing for the IOC4, VSC and any Ethernet part**, and the PIC pins they reach. Settles: a PIC routing capture on an
-  IO10 machine, or the PROM's interrupt code for the IO10 read under the base I/O page's method.
+- **Device numbers of the IOC4, VSC and Ethernet part** (the pin follows from the number). Settles: `lspci` from an IO10 machine.
 - **Which serial port is the PROM's and the Linux console.** Settles: a console capture on an IO10 machine with the
   multi-port cable, or the PROM's console selector read on the [base I/O page](altix-350-base-io.md).
 - **Whether the DVD is on SATA or IDE**, and whether the IO10's IOC4 has NVRAM and a time-of-day clock. Settles: the

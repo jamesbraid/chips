@@ -20,11 +20,10 @@ bus ([IO9 placement](ip35-io9-pci-wiring.md)); whether the Altix cards repeat th
 
 ## INTx to PIC pin map on the Altix 350
 
-[software now] The PIC pin an INTA to INTD of each slot raises, and the pin the base card's IOC4, SCSI or SATA and Ethernet
-parts use, are chosen in the PROM's PCI device information call (`SN_SAL_IOIF_GET_PCIDEV_INFO`, 0x02000057), not in the
-kernel. Its handler is in the compressed SAL runtime; the SAL_B table has no named function for it. Next: decompress
-and load the runtime component of the 10.54 image (the repository's IA-64 module reads SAL_A and SAL_B only) and read
-the handler for 0x02000057 and the interrupt allocator behind 0x0200004a.
+Answered. The PROM's PCI device information call (`SN_SAL_IOIF_GET_PCIDEV_INFO`, 0x02000057) returns a pin of `d - 1` for
+INTA and INTC and `(d + 3) & 7` for INTB and INTD of PCI device `d`, read in snprom 10.54 and 4.43
+([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)). Remaining: the PCI device numbers themselves (above), and the rotation a bridge applies to a
+device behind it (table at `0xffb43680`, not read).
 
 ## What the L1 returns for an Altix 350 module
 
