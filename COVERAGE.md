@@ -173,8 +173,8 @@ Grades:
 | GBE (O2 display back end) | O2 (IP32) | devices/gbe (263-line page, spec-backed display map) | elsewhere | Partial in this repository, and canonical in the CRIME graphics repository, so check the map there before claiming full coverage; the gbe.h header is an empty generated stub. | GBE ASIC specification rev 1.1 (1996); Linux gbefb.c (fbdev driver, not read). |
 | VICE (O2 video imaging and compression engine) | O2 (IP32) video option; IRIX user-level library and kernel probe | devices/vice (9-line README, empty registers.toml, coverage note) | stub | No register map; the prose covers the presence probe, ID register and error path only; no field layouts, reset values, microcode load or reset sequence. | VICE Design Specification 099-0123-003 (1997; register map not transcribed); IRIX kernel probe objects (software expectation). |
 | VICE (second entry, VICE A/B/C) | O2 (IP32) | devices/vice (9-line README, empty registers.toml) | stub | As above; microcode load routines, reset order and DMA and event path unread. | VICE Design Specification 099-0123-003 (held; OCR text, no register table). |
-| Cobalt (Visual Workstation 320/540 chipset) | SGI Visual Workstation 320 and 540 (x86) | none | out of scope | An x86 part, outside the MIPS and IA-64 scope. The Linux MIPS Cobalt platform is a different company's hardware and must not be counted. | Linux x86 visws headers (history tree; contents not read). |
-| Lithium (Visual Workstation PCI and memory chip) | Visual Workstation 320 and 540 (x86) | none | out of scope | An x86 part, outside the MIPS and IA-64 scope; role unconfirmed. | Linux x86 visws lithium.h (history tree; not read). |
+| Cobalt (Visual Workstation 320/540 system ASIC: processor interface, memory controller, interrupt controller, timer; the 3D engine is excluded here) | SGI Visual Workstation 320 and 540 (x86) | devices/cobalt (7 registers, README) | partial | Only the CPU block (revision, timer) and the interrupt controller are mapped, from SGI's Linux code; no reset values, no memory controller, no error or cache-interrupt registers, no identification field; no BIOS, driver or specification held. Open points in questions/visws-open.md. The Linux MIPS Cobalt platform is a different company's hardware and is not this chip. | Linux visws code, 2.2 to 3.14 (read in full), see references/visws-sources.md. |
+| Lithium (Visual Workstation 320/540 I/O ASIC: two PCI bridges and the audio engine) | Visual Workstation 320 and 540 (x86) | devices/lithium (19 registers, README) | partial | Only the bridges' bus-number and interrupt-enable words and the audio engine are mapped; no error, memory-window or configuration-decode behaviour, no reset values; bus numbering unconfirmed; no BIOS, driver or specification held. Open points in questions/visws-open.md. | Linux visws code and the SGI-written sound driver, see references/visws-sources.md. |
 | AV1 / AV2 (O2 video option chip names) | Unknown | none | unsure | No mention of AV1 or AV2 as an SGI ASIC in the repository or searches; the O2 video option is covered by VICE; the origin of the names is unknown. | None found. |
 
 ### Graphics, video, audio and option boards
@@ -202,12 +202,12 @@ Grades:
 | Grade | Rows |
 |---|---|
 | full | 0 |
-| partial | 36 |
+| partial | 38 |
 | stub | 10 |
 | missing | 37 |
 | elsewhere | 6 |
 | unsure | 2 |
-| out of scope | 2 |
+| out of scope | 0 |
 | **Total** | **93** |
 
 ### Most important gaps
