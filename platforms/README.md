@@ -9,6 +9,7 @@
 | [sn1-ia64/](sn1-ia64/README.md) | SN1 on IA-64 (Bedrock node with Itanium processors) | In 2000 to 2003 SGI ran Linux on a node that is the Origin 3000 node with Itaniums in place of R12000s: the same... |
 | [sn2/](sn2/README.md) | SN2: the IA-64 Altix and Prism machines | SN2 is SGI's name, in the Linux platform code, for the NUMAflex generation that pairs Intel Itanium 2 processors... |
 | [uv/](uv/README.md) | Altix UV and the UV hub family (UV1 to UV5) | SGI's x86 successor to the Itanium Altix is a cache-coherent NUMA machine built from blades, each carrying a hub... |
+| [visws/](visws/README.md) | SGI Visual Workstation 320 and 540 (Linux name "visws") | An IA-32 workstation SGI sold in 1999 and 2000 with Windows NT, built from SGI's own system chips and a few standard... |
 
 ## bricks
 
