@@ -608,3 +608,32 @@ SATA port table at ELF address `0x200dc8` dumped from the inflated 10.54 EFI and
   "BAR 0 plus offset", which is inferred equality.
 - **Not changed.** The Ethernet verdict ("Tigon 3 family, inferred") follows from the typed ids and the shipped driver; it is a
   reasonable inference, and the exact IO10 id stays unknown.
+
+### Review (INTx to PIC pin rule, commit 539a1c5)
+
+Independent review, 2026-11-21, by a reviewer who wrote none of it. Reviewed chips revision 539a1c5. Decompiled in Ghidra
+(`--sn2-prom --sal-runtime`): 10.54 `shub1snprom.bin` and 4.43 `snprom.bin`; Linux v5.3 `intr.h`, `irq.c`,
+`io_init.c`, `io_common.c`, `pcibr_provider.c`.
+
+- **Confirmed.** The `0x2000057` case calls `0xffb3dbc0` (10.54, inside `sal_0200005e` at `0xffb1e660`) and `0xffb31770`
+  (4.43, inside `sal_02000060` at `0xffadf9d0`); the record lookup `0xffb2aeb0` (device byte `+0x64`, function byte
+  `+0x65`, id word `+0x68` not -1; 4.43 `0xffb22700`); the host-handle rewrite, the 12-qword device copy, the 10-qword
+  interrupt copy and the return of 0; the builder `0xffb6c4f0` stores `0xffff`, -1, the irq, the pin, the device record,
+  the bridge type word and the bridge pointer at the offsets listed; the pin functions `0xffb6c460` (10.54, slot at
+  `+0x278`) and `0xffb43e50` (4.43, `+0x274`): INTA and INTC give the slot, INTB and INTD `(slot + 4) & 7`, anything
+  else 0, and the builder rotates through `0xffb43680` ("pciio_ppb_intr_map") only when the record is not its own host.
+  The scan (`0xffb36020`) stores its slot argument at host `+0x278`. Config addressing: the PIC type-0 address builder
+  (`0xffabed10`, 10.54) adds `(slot + 1) * 0x1000 + 0x20000`; the 4.43 runtime `pci_cfg_read_w` and `_b` add
+  `device * 0x1000 + 0x20000`, and `salruntime_pci_config_read` refuses a device outside 1 to 4 through `0x10000b230`.
+  So Linux's device number is the scan slot plus one. Linux: `sn_irq_info` offsets, `sn_check_intr` ANDs the pin number
+  with the status byte, `pcibr_target_interrupt` and `pcibr_force_interrupt` use `1 << bit` and `bit`.
+- **Fixed.** The label "Observed" for the Linux reading is not a chips word; it is established from the public source.
+- **Fixed.** The `irq_bridge` row said the record at `+0x80` of the bus record; the code takes the host function's `+0x80`
+  (which is the bus record).
+- **Fixed.** The older paragraph above the new section gave lines 1 and 3 for an IOC4 in "slot 1" and a SATA controller in
+  "slot 3". Those numbers are scan slots; a note now says Linux devices 1 and 3 give lines 0 and 2.
+- **Not checked.** The device byte `+0x64` being stored as slot plus one (taken from the arguments of the allocation call
+  in the scan, not traced into it); the `int_device` field write for pin `n` (not in the functions read); the
+  rotation table; the EFI side. The 10.54 handler sits in the main image at `0xffb3dbc0`, not in the inflated runtime;
+  the runtime holds the config access functions only.
+
