@@ -132,8 +132,8 @@ carry a request in both directions; the reply's `INPORT`, route and `TYPE` field
 ## Barriers, master election and the stages after distribution with a second node
 
 Read for this contract in the same image (Ghidra decompile, plus the `ia64-linux-gnu-objdump` listing for every call
-site and constant; Ghidra misses some direct `br.call` sites, so callers come from the listing). Nothing was run. Not
-independently reviewed. Grades as above; **stand-in choice** marks a value the stand-in invents.
+site and constant; Ghidra misses some direct `br.call` sites, so callers come from the listing). Nothing was run.
+Reviewed (see the end of the page). Grades as above; **stand-in choice** marks a value the stand-in invents.
 
 ### Where the barriers run
 
@@ -160,8 +160,9 @@ The record's entries are a list sorted by the geoid compare `0xffa11ab0` (it is 
 entry goes in front). The key, in order: the 32-bit geoid word with bits 15:8 masked (rack in 31:16, bay in 7:0, built
 by `0xffa7d010` from `SCRATCH2` bits 34:26 and 25:20), then a 4-bit field (`SCRATCH2` bits 38:35), then a signed 4-bit
 field (`SCRATCH2` bits 18:16), then the geoid kind (2 for a node found through `SCRATCH2`). The partition byte
-(`SCRATCH2` 15:8) is not in the key. Established for the compare; the mapping of the two 4-bit fields from `SCRATCH2` is
-inferred from the argument order at `0xffa5df20`.
+(`SCRATCH2` 15:8) is not in the key. Established, including the mapping of the two 4-bit fields (`0xffa8d120` outputs
+and the arguments of the geoid builder `0xffa11f10` at `0xffa5dfdc`: bits 47:44 and 43:40 of the geoid) and the
+constant `99` in bits 15:8 that the compare masks.
 
 The array holds, in list order, every entry of class 1 (a node) whose flag word has neither `0x10000` (claimed, or dead)
 nor `0x800000` (`SCRATCH1` bit 22, finished discovery); the partition array also needs the same partition byte. The
@@ -170,7 +171,8 @@ tie; the winner's index is stored (record `+4` global, `+8` partition), `cpu_bit
 the local entry, and "Global master is %I" / "Partition master is %I" is printed. Established.
 
 `0xffa44ba0` (called between the elections and the first barrier) ORs the published switches of every non-claimed node:
-flag `0x100000` (`SCRATCH1` bit 20), `0x200000` (bit 18) and `0x400000` (bit 19) become `cpu_bits` bits 13, 14 and 15,
+flag `0x100000` (`SCRATCH1` bit 20), `0x200000` (bit 18) and `0x400000` (bit 19) become `cpu_bits` bits 13, 14 and 15
+(the walk includes A's own entry, so bit 13 is always set),
 and it then calls the router routine `0xffa5c900` ("nl4r_mip_clear failed" on a negative result). Established. This
 is the reader the bit table lists as "not found"; `cpu_bits` bits 14 and 15 are tested in `main_three` at `0xffad76a0` and
 `0xffad7736` (what the branches do was not read).
@@ -208,7 +210,10 @@ Established.
 
 - **Local node is the elected master (index 0):** read own word, write it back with bit 17 set; for every other entry
   that is a node, is not flagged `0x810000` and (partition scope) has the partition byte: wait for its bit 17 **set**;
-  then write own word (the first read value, bit 17 clear); wait for every such entry's bit 17 **clear**.
+  then read own word again and write it back with bit 17 clear; wait for every such entry's bit 17 **clear**. The
+  partition scope tests the byte only when the byte passed in is non-zero: the wrapper passes the local entry's
+  partition byte, so with a local byte of 0 (A's `SCRATCH2` `0x0410006c` has bits 15:8 clear) the global-barrier
+  fallback waits on every unflagged node whatever its partition byte; the arrays of the tree barrier still filter.
 - **Another node is the master:** wait for the master's bit 17 set; read own word, write it with bit 17 set; wait for the
   master's bit 17 clear; write own word with bit 17 clear.
 - **The wait (`0xffa43670`):** prints "> Waiting for master|slave set|clear: index %d, %I, nasid %d", then loops: read
@@ -224,9 +229,9 @@ Established.
 | # | Model | What the stand-in must do | Grade |
 |---|---|---|---|
 | 1 | **S1, claimed stand-in** (flag `0x10000`) | Nothing for any barrier or election: it is in no candidate array, so every wrapper call sees `count` 1, writes only A's own `0x1_5003_13f0`, `13d0` and `1570`, reads no remote register and prints "Tree barrier passed." (`count` 1 and `pos` 0 checked in the loop bounds). A is the global and the partition master. A's NASID is 0 only if A sorts first (see row 5). | established (code); inferred (the whole-run consequence) |
-| 2 | **Self-published, bit 22 set** | `SCRATCH1` constant with bits 55:54 non-zero (claim skipped), bit 22 set, bits 15:0 equal to A's object count (2 for two nodes), bits 39 and 41 clear: A's wait loop is satisfied by the count, and flag `0x800000` keeps the stand-in out of every candidate array, the election, and both barriers. A passive stand-in suffices for the barriers. Because the flags are decoded once at the crawl (`0xffa5e0b0`; bit 22 to `0x800000`), the first read of the word during the crawl must already carry bit 22. Not programmed by A (distribution skips an unclaimed entry): the stand-in's own tables and NASID are a **stand-in choice**. | established (decode, filters, wait loop); inferred (that nothing else reads it) |
+| 2 | **Self-published, bit 22 set** | `SCRATCH1` constant with bits 55:54 non-zero (claim skipped), bit 22 set, bits 15:0 equal to A's object count (2 for two nodes), bits 39 and 41 clear: A's wait loop is satisfied by the count, and flag `0x800000` keeps the stand-in out of every candidate array, the election, and both barriers. A passive stand-in suffices for the barriers. Because the flags are decoded once at the crawl (`0xffa5e0b0`; bit 22 to `0x800000`), the first read of the word during the crawl must already carry bit 22. Keep bit 40 clear: the wait loop (`0xffa47870`) tests only entries whose NASID-final byte is clear, and distribution (`0xffa5b5d0`) gives such an unclaimed entry the number -1 and skips it; with bit 40 set the entry is numbered like a claimed one and A's table writes (slot `0x1d8`) can reach it. With bit 40 clear A does not program the stand-in: its own tables and NASID are a **stand-in choice**. Stage 0x23 does not touch it (it needs flag `0x10000`), so no board record is built for it, and the board-walk driver (`0xffaa7190`, from `0xffaa7090`) prints "setup_hub_port: no connecting hub board! Node %d port %d" for each port and goes on (its callers ignore the result). | established (decode, filters, wait loop, distribution numbering, stage 0x23 condition); inferred (that nothing else reads it: the three `0x810000` sites are the only readers of the flag by constant, and no accessor call with index `0x18` was found, in a listing search that is not exhaustive) |
 | 3 | **Self-published, bit 22 clear** | A passive stand-in cannot pass the tree barrier. As a candidate it needs a peer that writes A's `0x1_5003_13f0` (position 1) with the sense value and then A's `0x1_5003_1570` to release (the roles in the tree table); with a constant `0x1_5003_1580` A prints "tree barrier at %I timed out" after 240 s and falls back to the global barrier. There, if A is the master (it is, on a tie, when it sorts first), the stand-in's `SCRATCH1` must read with bit 17 **set** at the first read of the set wait and **clear** at the first read of the clear wait; bit 17 of A's own word is set when the first wait starts and cleared before the second, so "bit 17 equals A's bit 17" is the simplest rule, or "set on one read, then clear". If the stand-in is the master (its word has bit 21, or it sorts first on a score tie) the roles reverse and it must drive A's wait: no passive answer. | established |
-| 4 | **S1, partition** | A stand-in with a different partition byte (`SCRATCH2` bits 15:8) is not in A's partition arrays; with the same byte a claimed stand-in is still excluded. | established |
+| 4 | **S1, partition** | A stand-in with a different partition byte (`SCRATCH2` bits 15:8) is not in A's partition arrays (so not in the partition tree barrier); with the same byte a claimed stand-in is still excluded. A local partition byte of 0 turns the byte filter off in the global-barrier loops (see that section). | established |
 | 5 | NASID order | `0xffa4d390` numbers type-1 entries in **list order** with 0, 2, 4, and so on (not in insertion order): A is NASID 0 only if its geoid compares lower than the stand-in's. With A's `SCRATCH2` `0x0410006c` (rack 1, bay 1) and the stand-in's `0x0420006c` (bay 2) it does. With no router in the table the fat-tree depth is 0 (debug-level prints "ftdepth = 0" and "nasid_nlocal_bits = 1", no `nasid_loop` message). | established (order, depth); the writer of A's own `SCRATCH2` low bits was not traced here |
 
 The geoid compare treats the stand-in as the same chip as A when rack, bay, the two 4-bit fields and the kind all match.
@@ -238,11 +243,81 @@ calls are local with a claimed stand-in (row 1).
 
 | # | Stage | Accessed by | What a claimed stand-in sees | Grade |
 |---|---|---|---|---|
-| 1 | Progress 0x23 walk `0xffa1a9e0`, then a partition barrier, then `0xffa1ac80` | `main_three` at `0xffad74fc`, `0xffad7510` | For each entry of class 1 or 3 in A's partition with flag `0x10000` set and the "NASID final" byte (`+0x5b` bit 0) clear: the latch `0xffa1a6d0` (below), then flag `0x4000000` set and a call of **class slot 5** (`0xffacc6e0`, the node set-up of the SHub page) on that entry. `0xffa1ac80` calls **class slot 6** (`0xffaccae0`) for entries with that flag. The class pointer is the entry's own `+0x50` (the 40-byte entry copy overlaps the saved-class slot, which is how the call reads it). So the claimed stand-in is the target of the remote node set-up; this settles that slot 5 has callers. Every register access of those two methods goes through the node-object helpers with the stand-in's route and NASID, so it reaches the stand-in as vector requests or global-window accesses: the full list is **unknown** (only the local-node reading exists on the SHub page). | established (conditions, targets); unknown (bodies for a remote node) |
-| 2 | Latch `0xffa1a6d0` | stage 1 | Read the stand-in's `SCRATCH1` (vector); if bit 56 is set stop; else take lock 17 (class slot `0xd8`, `0xffa0f1a0`), read the word again, write it with bit 56 set (vector write), release (slot `0xf0`, `0xffa0f650`). The lock acts on the stand-in's own registers: a vector read of `0x1_101d_0188` (bit 0 must read 0; polled for up to 1 s, then -9) takes a spin lock, the lock word `0x1_5003_1540` is read and written (bit 17 set to lock, cleared by the release, which repeats the spin lock) through the global window `0x9_5003_1540 \| nasid << 38`, and a vector write of 0 to `0x1_101d_0180` frees the spin lock. A plain-storage stand-in satisfies it; the global window must route by the NASID A assigned. | established |
-| 3 | Interrupt scrub `0xffae3160`, after the first global barrier of `main_three` | `main_three` | Local to A. With a port up (A's own link mask, class slot `0x1b0`) it skips the "no NI ports are up" notice and runs the ICC underflow workaround: A's own `0x1_5002_1400 + 8 * k` (saved, written, restored), `0x1_2000_0100` (saved, `0x5f5e06`, restored), `0x1_2000_0180` (saved, count + 2, restored), 20 zero stores (`WrbWARCnt` default 20) at 128-byte strides below `0x4_0000_0000` in node `nasid ^ 0x400`'s window, a 4 s and a 1 s wait, then `0xffa30b40` and `0xffa24810`. Whether the stores leave the NI port was not read. | established (list); unknown (the effect on the link) |
-| 4 | Board walk `0xffaa03f0` (`0xffaa7090`, `0xffaf1350`, `0xffaeeb20`, `0xffaedff0`), after the progress 0x26 code, partition master only (`cpu_bits` bit 1) | `main_three` at `0xffad765c` | For each connection of A's HUB component it reads two bytes of the peer's board record at the peer's memory window `(peer nasid << 38) + 0x30_0000_0000 + offset`. So the peer's RAM must answer. Whether a claimed stand-in's record is built by A first (stage 1) was not read. | established (the reads); unknown (the source of the record) |
+| 1 | Progress 0x23 walk `0xffa1a9e0`, then a partition barrier, then `0xffa1ac80` | `main_three` at `0xffad74fc`, `0xffad7510` | For each entry of class 1 or 3 in A's partition with flag `0x10000` set and the "NASID final" byte (`+0x5b` bit 0) clear: the latch `0xffa1a6d0` (below), then flag `0x4000000` set and a call of **class slot 5** (`0xffacc6e0`, the node set-up of the SHub page) on that entry. `0xffa1ac80` calls **class slot 6** (`0xffaccae0`) for entries with that flag. The class pointer is the entry's own `+0x50` (the 40-byte entry copy overlaps the saved-class slot, which is how the call reads it). So the claimed stand-in is the target of the remote node set-up; this settles that slot 5 has callers. The accesses of the two methods are in [the section below](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk). | established (conditions, targets); the bodies as graded there |
+| 2 | Latch `0xffa1a6d0` | stage 1 | Read the stand-in's `SCRATCH1` (vector); if bit 56 is set stop; else take lock 17 (class slot `0xd8`, `0xffa0f1a0`), read the word again, write it with bit 56 set (vector write), release (slot `0xf0`, `0xffa0f650`). The lock acts on the stand-in's own registers: a vector read of `0x1_101d_0188` (bit 0 must read 0; polled for up to 1 s, then -9) takes a spin lock, the lock word `0x1_5003_1540` is read and written (bit 17 set to lock, cleared by the release, which repeats the spin lock; the wait for bit 17 to clear has no deadline, the third argument is 0) through the global window `0x9_5003_1540 \| nasid << 38`, and a vector write of 0 to `0x1_101d_0180` frees the spin lock. A plain-storage stand-in satisfies it; the global window must route by the NASID A assigned. | established |
+| 3 | Interrupt scrub `0xffae3160`, called just before the first global barrier of `main_three` (`0xffad73cc`, then `0xffad73dc`) | `main_three` | Local to A. With a port up (A's own link mask, class slot `0x1b0`) it skips the "no NI ports are up" notice and runs the ICC underflow workaround: A's own `0x1_5002_1400 + 8 * k` (saved, written, restored), `0x1_2000_0100` (saved, `0x5f5e06`, restored), `0x1_2000_0180` (saved, count + 2, restored), 20 zero stores (`WrbWARCnt` default 20) at 128-byte strides below `0x4_0000_0000` in node `nasid ^ 0x400`'s window, a 4 s and a 1 s wait, then `0xffa30b40` and `0xffa24810`. Whether the stores leave the NI port was not read. | established (list); unknown (the effect on the link) |
+| 4 | Board walk `0xffaa03f0` (`0xffaa7090`, `0xffaf1350`, `0xffaeeb20`, `0xffaedff0`), after the progress 0x26 code, partition master only (`cpu_bits` bit 1) | `main_three` at `0xffad765c` | For each connection of A's HUB component it reads bytes `+5` and `+9` of the peer's board record and sets bit 3 of `+9` (a write) at `(peer nasid << 38) + 0x30_0000_0000 + offset`, so that memory must answer reads and writes. The record is built by A in stage 1 (slot 99) in the stand-in's RAM or, if it is memory-less, in A's RAM; details and the router branch in [the section below](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk). | established (reads, write, address, source of the record); unknown (the three closing routines) |
 | 5 | Console and `Loading EFI` | `main_three` at `0xffad76ec` to `0xffad777c` | `0xffae77a0` reads only the RAM table of CPU ids at `[0x1000038] + 0x18` and `cr.lid`; no register access, so a stand-in without CPUs is not an input. | established |
+
+### What the PROM does to a claimed remote node: class slots 5 and 6, and the board walk
+
+Read in the same image (Ghidra decompile, objdump listing for the branch conditions). Slots 5 and 6 are sequences of
+calls through the class method table of the entry's chip class (SHub 1: the table at `0xffbd7c18`); the entry copy is
+the object (`obj`: the NASID A assigned is the halfword at `+0`, the vector route at `+0x18`, the class at `+0x20`).
+Every method below reads its NASID and route from `obj`, so each register access reaches the stand-in either through
+its global window (bit 63, `0x8_0000_0000`, `nasid << 38` and the offset, so `1_101d_0100` appears as
+`0x8000_0009_101d_0100` with the NASID shifted in) or, when `obj`'s route is non-zero, through the vector engine (slots 45 and 46 and the latch). The
+local-node rows of [prom-reset.md](../../../devices/shub/prom-reset.md#slot-5-after-the-permission-set-up-slot-by-slot)
+therefore describe the stand-in's accesses too, with the stand-in's NASID in place of A's; this section lists where the
+remote case differs. **Stub choice** marks a value the stand-in invents. Nothing was run.
+
+**Slot 5 (`0xffacc6e0`), in order (established from the listing).** Print (A's console); slot 36; slot 95; slot 85;
+slot 97; `0xffa788b0(nasid)`; when it returns 0 ("no memory"): `0xffa13190(index, 0x15, 1)` (sets flag `0x2000000` in A's
+entry) and `0xffa0afd0(obj)`; slot 45 (read `SCRATCH1`); a negative result prints a message and stops here; else slot 46
+(write it back with bits 57 and 40 set, whatever else it held); then slots 3, 81, 99 and 92 with the no-memory flag as
+the fourth, third, third and third argument. **Slot 6 (`0xffaccae0`)**: `ffa129f0(index, 0x15)` (the same flag), then
+slots 37, 96, 98, 4, 64, 82, 100, 86, 93 with it.
+
+| # | Call | Accesses at the stand-in | What it needs back | Grade |
+|---|---|---|---|---|
+| 1 | slot 36 `0xffa96180` | `0xffa964e0(obj, 2, 50)` (the `SH_GC_SRC_CTRL` write of the SHub page), write 0 to `1_101c_0000` (`rtc`), slot 34 (`0xffa95c20`, the SHub page's store list), read `1_2000_0000` and `1_1006_0580` (`SHUB_ID`), write `1_2000_0000` OR-ed with `0x3f1` (`SHUB_ID` bits 31:28 below 3) or `0x3b03f7`, then `0xffa97960(nasid)`: read `SHUB_ID`, six permission writes (`1_1006_0000`, `0400`, `0180`, `0380`, `0480`, `0100`) | nothing tested. The mask in the permission writes comes from the node table of block A in A's RAM, so it depends on whether A has put the stand-in's NASID in it (not read) | established (accesses); unknown (mask value) |
+| 2 | slot 95 `0xffa1ef70` to `0xffa1f430` | NASID differs from A's, so the remote branch: `0xffa8fb80` reads `SCRATCH2` `1_101d_0100` (the offset comes from slot 78) in the `0x8_0000_0000` form and writes it back with bits 41:39 set to 7; then `0xffa8f960` runs the node-object body `0xffa8b5d0` with `obj` as the node and the record in A's RAM. That body is the one in the SHub page's slot 95 table: the UART step is taken because bits 41:39 now read 7 (poll the line status at `0xf_fed4_0028 \| nasid << 38` until bit 6 is set, 100 ms limit, then the eight line-control writes), the lock on `1_5003_1540` bit 6 (slot 71 via `1_101d_0188` and `1_101d_0180`) and its release, the `SCRATCH2` read, clear bits 41:39, increment bits 49:42, write bit 63 clear, and the read-backs. Last, an L1 request `0x100b` goes out from A's own channel, not from the stand-in | `SCRATCH2` must read back what was written (bits 41:39 = 7); the UART line status must read with bit 6 set within 100 ms; `1_101d_0188` bit 0 clear | established (branch, accesses); inferred (that the UART steps are the SHub page's rows 3 and 4: same code, remote NASID; that the `0x100b` request is A's own, its argument being A's slice record) |
+| 3 | slot 85 `0xffa23850` | `0xffa2bd60`, the two error lists, then `0xffa23a20(obj, local)`; per slice `i` whose bit `0x1a + i` is set in A's local `cpu_bits`: write `SH_LOCAL_INT0/1_CONFIG`, write `SH_INT_NODE_ID_CONFIG` `1_1000_0300` = A's NASID or `0x800` (the stand-in is not the local node), write the enables `0x7ef`; one read of `1_1001_0000` (`SH_EVENT_OCCURRED`) whose `& 0x7ef` selects error-list clears | storage; `SH_EVENT_OCCURRED` 0 skips the clears | established (same constants as the SHub page rows, remote NASID) |
+| 4 | slot 97 `0xffa6a100` | with memory flag 0, on the stand-in's NASID and whatever the DIMM word holds: `0xffa733d0` (`1_0003_0000` read-modify-write, `1_0005_0000` write), `0xffa78100` (DIMM discovery `0xffa77bb0`, controller programming, DRAM initialisation commands), `0xffb94670`, `0xffb94680`, `0xffa6f000` (the test driver), `0xffa788b0` (read `SH_JNR_DIMM_CFG` `1_0001_0010`) and `0xffa7c6d0` while the debug-word bit 8 is clear; `0xffa782c0` and `0xffa73590` only if `0xffa788b0` is non-zero. A zero result (every bank byte's density bits 2:0 equal 7) is "no memory": `0xffa0afd0(obj)` sets bit 58 of the stand-in's `SCRATCH1` through slots 45 and 46 (vector). The DIMM word is the PROM's own output: discovery writes it from SPD answers, which it requests through the node's L1 channel (`0xffa7fcb0(nasid)`, a node record built from the entry, so by inference the stand-in's UART); no answer for a bank gives density 7 on the SHub page's evidence (local node) | the registers of the SHub page's slot 97 table and [memory-init.md](../../../devices/shub/memory-init.md) as plain storage at the stand-in's NASID, plus L1 replies over the stand-in's UART (no DIMM in any slot) or a tolerable timeout (its length not read) | established (order, test, no-memory path); inferred (the L1 channel is the stand-in's UART); unknown (remote behaviour of discovery, timeouts) |
+| 5 | slots 45, 46 | vector read of `SCRATCH1` `1_101d_0080`, write back with bits 57 and 40 set (so the stand-in's word ends with at least bits 40, 56 (the latch) and 57 set, and bit 58 when memory-less) | the read result is not tested | established |
+| 6 | slot 3 `0xffacbfa0` (memory present only) | `0xffac42d0(1, nasid, 0)` and the RAM table work in the stand-in's memory: reads `[0x8000_0030_0100_0070 \| nasid << 38]` and `[... 0100_0038]` (the pointer table at node offset `0x0100_0000`), writes a 40-byte copy of the entry, the heap arena (`0xffadd540`), copies A's words `0x1000040` and `0x1000078` into the same offsets of the stand-in, then `0xffafbca0` (the EFI-store checksum: 16 reads of 64 KiB from the stand-in's flash, `0xffa0fa00`) | real RAM behind node offset `0x0100_0000` and above, readable and writable, and a flash window; the checksum text only changes a message | established (accesses); inferred (that the flash is the stand-in's) |
+| 7 | slot 81 `0xffa915f0` | memory present: record work in the stand-in's RAM (`[0x1000010]`, `0x188`) and `0xffa80720`; memory-less: `0xffa8f9c0(obj, local)` builds the record in A's RAM and a missing record prints a message (`0xffbb4978`) and returns | no register beyond rows 1 and 2 | established (shape); unknown (bodies) |
+| 8 | slot 99 `0xffaacaf0` | memory present: `0xffaa0100(nasid)` allocates the `0xb0000`-byte hardware-configuration block from the stand-in's heap and lays it out (stores into the stand-in's RAM); then, always, the board builder `0xffa9fe80(obj, 0x11, flag)` (see the board record below) | see rows 6 and the board record | established |
+| 9 | slot 92 `0xffaadae0` | `0xffa99870(obj, 2)`: read `1_5003_1550` of the stand-in (global window) and test bit 2. Set: no I/O set-up. Clear: slot 91 (`0xffaad720`, the I/O initialisation of the SHub page: long, includes II-block accesses at the stand-in) and, if it returns 0 or less, a locked read-modify-write setting bit 2 (`1_101d_0208` poll, `1_101d_0200` release). Then `0xffb91760` | **stub choice:** bit 2 of `1_5003_1550` reads 1, which skips the whole I/O set-up | established (test); unknown (slot 91 body, as on the SHub page) |
+| 10 | slot 6: slots 37, 96, 64, 82, 100, 86 | nothing: each method is a 16-byte return | | established |
+| 11 | slot 6: slot 98 `0xffa6a310` and slot 4 `0xffacc680` | only when the flag is 0 (memory present). Slot 98 reads the stand-in's RAM pointer (`0x8000_0030_0100_0038 \| nasid << 38`, then `+0x188`) and stores a zero word. Slot 4 is the EFI-store synchronisation `0xffaf72e0`: for every present NASID it reads `SH_JNR_DIMM_CFG` and the checksum word at `[[0x0100_0070] + 0x80]` of that node's RAM, votes, and, if A's checksum loses, copies flash blocks from the winner (`0xffaf6640`) | RAM and flash as in row 6 | established (accesses); unknown (the copy's reads and writes) |
+| 12 | slot 6: slot 93 `0xffaadc10` | `0xffab38b0(nasid)`: on the slice gate, `0xffa99870(obj, 2)` again; clear: prints "Discovering local I/O on nasid %d" and runs `0xffab15c0`: the crossbar initialisation `0xffab0560` on the stand-in's window (`0x8000_0008_0000_0000 \| nasid << 38`; it compares the node's link with the crossbar master and prints "early return from xbow_init" if they differ, else walks the widget ports), then a 4-byte identification read at that window and a continue only for part `0xd000` or `0xd100`; any other value prints "New Widget %x connected to HUB." and stops. Set (row 9's stub choice): returns at once | | established (gate, first read); unknown (the rest of the I/O walk) |
+
+**The peer's board record (established for the source and the condition).** Slot 99's board builder `0xffa9fe80` goes
+to `0xffaa1ea0(obj, 0x11, flag)`, which allocates the board (`0xffaed240` through `0xffaa4c60`), writes type `0x11`, the
+node's geoid words from `obj` and the chip method `+0x138` (slot 39, a global read of `SHUB_ID` bits 31:28), builds the
+HUB component (`0xffaa1310`: the board's EEPROM text through an L1 request to the node, `0xffaeccd0`; a failure prints
+"init_klcfg_hub: Could not retrieve EEPROM info on nasid %d" and continues; the two port-connection slots are set to
+`0xffff`), the error structures (`0xffaa4f50`, `0xffaa4560`) and the rest. So the record exists only because A built it
+in stage 0x23. Where it lives: `0xffaa4c60` asks `0xffa99b80(entry)` whether the node is memory-less: that reads the
+stand-in's `SCRATCH1` (vector) and answers memory-less if bit 58 is set, or if bit 39 is set with bit 57 clear; any other
+word means it has memory. A memory-bearing node's board is allocated in its own RAM (`0xffaa33a0`), a memory-less
+node's in a memory-bearing node of the same partition (A, `0xffaa3960`; "WARNING: Unable to find host for memless node %d!"
+if none). The connections that tie A's HUB component to the stand-in's board are written by `0xffaa7190` (called from
+`0xffaa7090`, before the walk) through `setup_hub_port` (`0xffaa5c30`), which needs the peer's board: it finds it by
+NASID and geoid and otherwise prints "setup_hub_port: no connecting hub board!". It runs on the partition master only.
+
+**The board walk (`0xffaa03f0`; partition master only, after the slice gate).** `0xffaf1350` ("hwcfg_node_probe") finds
+A's own type `0x11` board in A's block and breadth-first walks the connections of each HUB component (two entries per
+HUB, a 12-byte record each: peer NASID halfword, flag byte, a 32-bit board offset, port halfword). For each connected
+board it forms `(offset & 0x7fffffcfffffffff) | ((nasid << 38) + 0x30_0000_0000)` (a physical address in the peer's, or
+its host's, memory), reads byte `+5` (type: high nibble `0x10` node board, `0x30` router board, other values print
+"Unknown brd type"), reads byte `+9` and sets its bit 3 (the visited mark) **with a write**, and, for a node board, reads
+the board's components (`0xffaa93c0`) and queues it; for a router board it also runs the router chip's class slots
+`0x330` and `0x338` (`nl4r_config_global` and a per-port method) and follows the router's ports. Afterwards it checks
+that the master HUB's NASID equals A's ("node_probe: Error - Master hub NASID == 0x%x not 0x%x") and runs
+`0xffaeedf0`, `0xffaef420`, `0xffaefa20` (not read). The memory the walk reads and writes is the board memory above, so
+a claimed stand-in needs no register access here beyond rows 1 to 9; a memory-less one adds nothing to its own side.
+Grade: established (the reads, the write of `+9`, the address form, the source of the record); unknown (the three
+closing routines and the router branch for a node-only configuration).
+
+**What a stub must give for the two models (inferred as a summary of the rows; every value marked is a stub choice).**
+
+| Model | Stub requirements |
+|---|---|
+| bit-22 stand-in (unclaimed) | None of this section runs (stage 0x23 needs flag `0x10000`). Keep bit 40 clear. The board walk prints "no connecting hub board" per port and goes on. |
+| claimed S1 stand-in, memory-less | Plain storage for the registers in rows 1 to 5 and the SHub page's slot 97 tables at the stand-in's NASID (`SCRATCH1` and `SCRATCH2` read back what was written; the vector lock pair `1_101d_0188` reads 0 with bit 0 clear and `1_101d_0180` takes writes); UART line status `0xf_fed4_0028` reading bit 6 set; an L1 behind the UART that answers the SPD and EEPROM requests with "no DIMM" and an error (stub choice), or silence with the timeout lengths unread; `1_5003_1550` bit 2 set (stub choice) to skip I/O set-up; `1_5003_1540` bits 6 and 17 clear. A's RAM hosts the board. |
+| claimed S1 stand-in with memory | The above, plus RAM and a flash window at the stand-in's NASID for rows 6, 7, 8 and 11, and real SPD answers. Use the memory-less model first. |
 
 ### The router routines: when they run
 
@@ -269,10 +344,13 @@ calls are local with a claimed stand-in (row 1).
   `sysctl_vec_*` request builders (`0xffa8f900` and its callers) and the sysco repository's controller side.
 - What `0` and `4` select in a node's direction tables, and the meaning of `POSITION`: route: the node table-write
   routines (`0xffa5e880`, `0xffa5e510`) read against the SHub 1 header names, and the Linux `sn_hwperf` heap.
-- What the node set-up (class slot 5, `0xffacc6e0`) and slot 6 (`0xffaccae0`) access on a claimed stand-in, and how the
-  peer's board record the board walk reads (`0xffaedff0`) comes to exist in its memory. Route: read those bodies for a
-  remote entry (the SHub page has only the local reading), and the board-record builder `0xffa9fe80`; a run with the
-  stand-in under the interpreter would show model behaviour only, never hardware.
+- What slots 5 and 6 leave unread on a claimed stand-in ([the section above](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk)):
+  the remote behaviour of DIMM discovery over the stand-in's UART and the timeout when the L1 does not answer (`0xffa7fcb0`,
+  `0xffa77bb0`, `0xffa7bd60`), the memory-present bodies of slots 3, 81 and 99, slot 91's I/O set-up, the EFI-store copy
+  `0xffaf6640`, the builders `0xffaa1a10`, `0xffaa1930`, `0xffaa5450`, `0xffaa2760` and the three closing routines of the
+  board walk (`0xffaeedf0`, `0xffaef420`, `0xffaefa20`), and the mask `0xffa97960` writes for the stand-in's NASID. Route:
+  read those bodies with the stand-in's NASID; a run with the stand-in under the interpreter would show model behaviour only,
+  never hardware.
 - Whether the ICC underflow workaround's 20 stores at `0xffae3160` leave A's NI port when a port is up, and what the
   `cpu_bits` 14 and 15 branches at `0xffad76a0` and `0xffad7736` do.
 - What `0xffa5c900` ("nl4r_mip_clear") accesses when the table has a router.
@@ -303,3 +381,20 @@ Independent review of chips `08c8955`. The reviewer wrote none of it. Method: `s
 - `0x1_1007_1000`, `0x1_1001_0008` and `0x1_1001_0088` are written only when the error summary reads non-zero; a stand-in that always returns 0 never sees them.
 
 **Not checked.** The call sites of the router set-up routines `nl4r_init_global` and `nl4r_config_global` (so whether they run during discovery), the crawl routine `0xffa47290`'s own port test for router ports, the global barrier and `main_three`, the geoid hashing at `0xffa11ab0`, and the claim that A's `SCRATCH2` is `0x0410006c` (taken from another page). The `0x1_5003_03a0` flow-register mask values were read only from the decompile.
+
+Independent review of chips `2ff39a3` (the barrier section of this page and the `boot-sequence.md` changes). The reviewer wrote none of it. Method: `shub1snprom.bin` (sha256 `51ccf9ad...`) imported with the SN2 PROM profile of the IA-64 Ghidra module and decompiled whole; the decompiles and the `ia64-linux-gnu-objdump` listing came from an earlier run over the same image (hash checked), and the slot 5 and 6 bodies, which that run had no functions for, from a second Ghidra run seeded at their entry addresses. Every cited address re-read; call sites searched in the listing. Nothing was run.
+
+**Confirmed.** The wrappers `0xffa44710` and `0xffa44950` (record `+4` or `+8`, array `+0x20` or `+0x40`, partition byte at entry 0 `+0x35`, the gate `0xffa0ff30`, `cpu_bits` bit 4) and all eight call sites; that no call site tests the result; the tree barrier `0xffa42a30` row by row (sense from `0x1_5003_1570`, the two child flags `0x1_5003_13f0` and `0x1_5003_13d0` from the table at `0xffbdfbb0`, the release writes, the 240 s test on the awaited node's `0x1_5003_1580`, the two failure texts); the global barrier `0xffa43d20` and its wait `0xffa43670` (bit 17, no deadline, the `^C` exit, bits 41 and 39); the election `0xffa42640` (class 1, mask `0x810000`, scores 2 and 1, tie to the earlier list entry, the index stored as an array index so that index 0 is the local entry); the geoid compare `0xffa11ab0` as a three-way compare with the key order stated, and the insertion `0xffa450e0`; the flag decode (bit 22 to `0x800000`) and the three `0x810000` sites; the stage 0x23 walk, the latch `0xffa1a6d0` and the lock routines `0xffa0f1a0` and `0xffa0f650`; `0xffa44ba0` and its mapping to `cpu_bits` 13 to 15; the slot addresses 5 and 6 and their table (`0xffbd7c18`, entries `0xffbd7c40` and `0xffbd7c48`).
+
+**Corrected in this review.**
+- The interrupt scrub `0xffae3160` runs just before the first global barrier of `main_three`, not after it.
+- The master branch of the global barrier re-reads its own word before the clear write; and the partition scope filters by partition byte only when the byte is non-zero, which A's `0x0410006c` (bits 15:8 clear) makes a no-op in the global-barrier fallback.
+- A self-published stand-in with bit 22 is skipped by distribution only while its bit 40 is clear; with bit 40 set it is numbered and can be programmed. The wait loop also tests only entries whose bit 40 is clear.
+- When A is not first in list order the tree barrier roles swap (A writes the neighbour's flag and waits for its own `1570`); the boot-sequence text had only the A-root case.
+- The mapping of the two 4-bit geoid fields is established, not inferred.
+- The board walk reads bytes `+5` and `+9` and writes bit 3 of `+9`; it did not read "two bytes".
+- The latch's lock wait has no deadline.
+
+**The bit-22 claim.** It holds. Flag `0x800000` is set in the decode whatever the other bits; the election and both global-barrier loops skip entries with `0x810000`; the tree barrier walks only the election's array; the distribution and stage 0x23 skip the entry. The listing search for other readers (the `0x810000` constant, the flag accessor with index `0x18`, bit 23 tests near the flags offset) found none, but it is not exhaustive. The earlier statement it overturns ("no passive stand-in satisfies that") was about the bit-22-clear case and stays true for that case.
+
+**Not checked.** The bodies listed under "What slots 5 and 6 leave unread"; the `main_two` position of the elections relative to distribution (only the call order around `0xffa1b14c` was read); the nesting of `main_three` calls between `0xffad7436` and `0xffad766c` beyond the barrier and stage calls.

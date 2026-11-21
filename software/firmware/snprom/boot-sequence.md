@@ -499,7 +499,8 @@ configuration list; the partition master also needs the same partition byte. Sco
 printed. A claimed neighbour (`0x10000`) and a neighbour that published bit 22 are never candidates, so the barriers
 (tree `0xffa42a30`, global `0xffa43d20`) see only the local node and touch only local registers. A neighbour that
 published its own word without bit 22 is a candidate: the tree barrier then needs that node to write A's
-`0x1_5003_13f0` and `0x1_5003_1570` (240 s per wait, "tree barrier at %I timed out", then the global barrier, which has no
+`0x1_5003_13f0` and `0x1_5003_1570` when A sorts first (A is then the root; otherwise A writes the neighbour's
+`13f0` or `13d0` and waits for its own `1570`) (240 s per wait, "tree barrier at %I timed out", then the global barrier, which has no
 timeout and needs the neighbour's `SCRATCH1` bit 17 to follow A's).
 
 **Distribution (`0xffa5b5d0`, established for the selection, inferred for the tail).** With no barrier failure
