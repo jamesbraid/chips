@@ -12,7 +12,7 @@ cited by [sn2-runtime.md](sn2-runtime.md), [os-handoff-tables.md](../firmware/sn
 addresses. Kernel side: a mainline Linux source snapshot of the 2.6.3x era (`arch/ia64/kernel/{sal,efi,time,smpboot,setup}.c`, `arch/ia64/mm/tlb.c`,
 `arch/ia64/include/asm/{pal,sal,system}.h`, `arch/ia64/sn/kernel/{setup,irq,io_init}.c`, `arch/ia64/sn/kernel/sn2/{timer,sn2_smp}.c`, `ptc_deadlock.S`,
 `arch/ia64/sn/pci/pcibr/pcibr_provider.c`, `drivers/serial/sn_console.c`), plus the v5.3 and v2.6.12 reads already recorded in the pages above. *Established* here is what the
-kernel source does or the PROM routine does; **inferred** and **unknown** are marked. The one emulator run is section 8; it shows which calls were issued, not what hardware does. The kernel's 2.6.3x tree is not the held 2.6.5-7.244 kernel; the
+kernel source does or the PROM routine does; **inferred** and **unknown** are marked. The one emulator run is section 8; it shows which calls were issued, not what hardware does, and its rows are graded inferred. The kernel's 2.6.3x tree is not the held 2.6.5-7.244 kernel; the
 differences that matter are named where they occur ([sn2-early-boot.md](../linux/sn2-early-boot.md#differences-from-v53)).
 
 Failure column: **stops** = the kernel panics, BUGs or hangs; **degrades** = it prints a message and continues with a default or without the feature.
@@ -314,7 +314,7 @@ command with more than 127 bytes of output stalls. Not run.
 
 ## 8. Calls seen in an emulator run of the stock images (2026-11-21)
 
-Run: the stock SAL 5.04 PROM (`shub1snprom.bin`, snprom 10.54) to the EFI shell, then ProPack 2.6.5-7.244-sn2 (boot and login), then RHEL 5.11 2.6.18-398 (boot and commands), with every SAL call logged. A call is **established** only as "seen in an emulator run of the stock binary"; anything about hardware is **inferred** at most. The run summary does not split every count by binary, and it records return values only where noted.
+Run: the stock SAL 5.04 PROM (`shub1snprom.bin`, snprom 10.54) to the EFI shell, then ProPack 2.6.5-7.244-sn2 (boot and login), then RHEL 5.11 2.6.18-398 (boot and commands), with every SAL call logged. Every call below is **inferred** (seen in an emulator run of the stock binary): an emulator run shows what the model and the software did, not what the software must do or what hardware does, so none of it is established. The run summary does not split every count by binary, and it records return values only where noted.
 
 - **`SN_SAL_PROBE` (`0x02000003`) was never issued** by the PROM, ProPack or RHEL. The PROM handler is the PROBE row of the SAL table in section 1, and the reading stands for any caller. The S4 consequence is in [smp-and-timers.md](../firmware/snprom/smp-and-timers.md#the-empty-pci-slot-recovery).
 - **PCI config.** `PCI_CONFIG_READ` (`0x01000010`) and `PCI_CONFIG_WRITE` (`0x01000011`) were seen in the runs.
@@ -368,3 +368,7 @@ Independent review of chips commit `623bb57` (section 7 here and the input-limit
 3. For a type-0 geoid the object's port loop still runs, so `0x200d` is still called and `numalink` lines still print; "no loop or wait" holds. Fix: one clause.
 
 **Verdict.** Accept. **Not checked:** every PROM address and status in section 7 and in the ring description (`rt:0x8650`, `0xffb44bf0`, `rt:0x53b80`, `rt:0x7ec10`, `rt:0x52a00`); the 83-character reading, which the page rightly leaves inferred; the 7.3 copy of the topology buffer loop.
+
+### Review of section 8 (commit ec5c29b: calls seen in an emulator run)
+
+Independent review, 2026-11-21, by a reviewer who did not write it. The section was graded "established" for the calls seen; under this repository's rule that emulator runs show model behaviour, that is too strong, and it is now graded inferred (seen in an emulator run of the stock binary), here and in the matching paragraph of [smp-and-timers.md](../firmware/snprom/smp-and-timers.md#the-empty-pci-slot-recovery). The negative result for `0x02000003` is one run of three binaries: it says those kernels did not issue the call in that run, not that no path of theirs does. The counts and devfn values were not re-run and are taken as reported. Checked in this repository: `0x02000013`, `0x02000056`, `0x02000057`, `0x0200005a` and `0x0200005f` appear in the table of section 1 under the names given (the other ids were not looked up); the table has no row for `0x02000010` while [README.md](README.md) lists it with its arguments, which the open question should cite.
