@@ -123,15 +123,15 @@ link-layer configuration `+0x1888`, test control `+0x1890`, link state `+0x1898`
 count `+0x18e0`; error summary, first error, report mask `+0x2200` to `+0x2218`, error detail `+0x2000`, detail clear
 `+0x2100`; test-point select `+0x2700`; performance configuration `+0x7000` with 37 counters to `+0x7138`.
 
-Table sizes are **inferred** from the gaps to the next register: the local table 512 doublewords (`+0x0` to `+0x1000`),
-the global table 256, the neighbour table 8. The PROM text "Local Table:" and the table dumps are consistent with that
-but no loop bound was read.
+Table sizes are **established** from the loop bounds of the PROM's table writer and table dump: the local table 512
+doublewords (`+0x0` to `+0x1000`), the global table 256, the neighbour table 8 ([global-config.md](global-config.md)).
 
 Routing table entries (established for the fields): local and global tables hold `VALID` (bit 63) and a direction
 field (`DIR0`, bits 4:0, in the port tables); the local-block tables use `DIR1`; the neighbour table holds `VALID` and
 a 14-bit `NEIGHBOR_ID` (bits 13:0), which is as wide as a NASID the Altix address map allows. What a direction value
-selects (a port number 0 to 7, plus codes for the local block and for "no route") is **unknown**: no loop that writes
-the tables was read.
+selects (a port number 0 to 7, plus codes for the local block and for "no route") is **unknown**: the loops that
+write the tables were read ([global-config.md](global-config.md)), but the route calculation that builds the byte
+they copy was not.
 
 ## Identity and link reads
 
@@ -178,13 +178,14 @@ they program, read in full for the first and third (SHub 2 SAL 10.54): `nl4r_ini
 first-error (`0x2000`), error summary (`0x2010`), first-error (`0x2020`), report mask (`0x2030`) and error detail
 (`0x2050`, `0x2060`) registers, writes `0xc000000000000000`
 (`FORCE_EN` and `CLEAR`) to `PORT_PERF_WIN`, and sets `FREE` in all sixteen reply-gather buffers (`0x4f00` to
-`0x4f78`, stride 8). `nl4r_config_port` takes a port number n and, at `0x7000000 + n * 0x1000000` plus the port-block
+`0x4f78`, stride 8). It also copies the node's clock period into `RTC_INTRN_CNTRL` (`0x1001908`), sets the local-block clock select to `0xf` and writes a timestamp to `0x2008`; the write order and the rest are in [global-config.md](global-config.md). `nl4r_config_port` takes a port number n and, at `0x7000000 + n * 0x1000000` plus the port-block
 offset, zeroes the error summary and first-error words, writes 1 to the error-detail-clear register, zeroes both link
 error counters, and writes `0x5c0000000006` to the error-report mask: the retry, check-bit and sequence-number count
 non-zero bits, `EXTEND_TURN_ERR`, `RCV_LINK_RESET` and `RCV_WARM_RESET`. Because the base is `0x7000000 + n *
 0x1000000`, port block A (`0x8000000`) is n = 1: the PROM numbers ports 1 to 8, as the Origin 3000 router does. The
-middle routine, `nl4r_config_global`, could not be located by the Ghidra export (no function matched its string address)
-and was not read; the global parameters and the routing tables it writes are **unknown**.
+middle routine, `nl4r_config_global`, is read in [global-config.md](global-config.md): it locks the router, runs
+`nl4r_init_global`, and sets the real-time-clock source select of each connected port; it writes no routing table.
+The tables are written by a separate routine, also described there.
 
 ## What an emulator author can rely on
 
@@ -195,7 +196,7 @@ and was not read; the global parameters and the routing tables it writes are **u
 3. Link and timeout counts (`SEND_DEADLOCK_TO_VAL`, `DEADLOCK_TO_VAL`, `TAIL_TO_VAL`, the LLP `MAXRETRY` and
    `NULLTIMEOUT`, credits) are tuning values; their units are not stated anywhere read.
 
-Open items are listed in [../../questions/numalink4-router-open.md](../../questions/numalink4-router-open.md).
+What the PROM programs into a router, in order, and how the Altix 350 attaches modules to one or two routers: [global-config.md](global-config.md). Open items are listed in [../../questions/numalink4-router-open.md](../../questions/numalink4-router-open.md).
 
 ## Checks against the sources
 
@@ -261,7 +262,9 @@ printed page numbers.
 
 **Not checked.** The 10.40, 10.11 and 4.43 tables (only the strings were confirmed present); the SHub 1 dispatch table
 and its four entries; the name pointer returned by the router match function; SAL `hwperf_op` and any ProPack module
-use of router registers; `nl4r_config_global` (still unread); 2.6.x and ProPack kernel files; manual pp.65 and 66.
+use of router registers; 2.6.x and ProPack kernel files. A later pass read the Altix 4700 guide (007-4823-001) printed pp.61, 65 and 66 and
+found them to support the dense router module's link LEDs and its 32 NUMAlink channels at 3.2 GB/s each way
+(reported by that pass, not re-read here). `nl4r_config_global` is read in [global-config.md](global-config.md).
 
 **Cleared scope.** Register numbers, names, bit ranges and flags (established as table contents, 10.54 SHub 2 image); vector
 send and read sequence; node link and vector registers; what Linux does and does not do with routers; open

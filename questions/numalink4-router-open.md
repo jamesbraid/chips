@@ -9,10 +9,21 @@ missing source for any value no software reads.
 
 Open items, each with the route that settles it:
 
-- Router global and routing-table programming: `nl4r_config_global` (SHub 2 SAL 10.54, string address referenced from
-  about `0xff4c84b6`; the Ghidra export found no function at that address) and the callers that fill the local, global
-  and neighbour tables from the computed routes. Settles the global parameters values, what a `DIR0` value selects, the
-  table lengths and the meaning of the `0xf` terminator nibble in the vector route register.
+- Settled in [global-config.md](../devices/router_nl4/global-config.md): `nl4r_config_global` (clock-source select per
+  connected port, under the router lock), the table writer and the table lengths (512, 256 and 8 per port).
+- What a direction value in a routing-table entry selects, and the `0xf` terminator nibble of the vector route
+  register. Route: the route calculation `0xff4663d0` and what it calls in SHub 2 SAL 10.54 (not read; the writer only
+  copies a byte), then the dump routine's printing.
+- The inputs of the table writer (`0xff471a80`): which call uses compare mode and which write-everything, which router
+  gets six and which two multicast translation writes, the `set_force_local` value and the multicast `NODE_ID`
+  arithmetic. Route: its caller `0xff467320` and the graph record it walks.
+- The `RTC_SOURCE` select encoding (`0xf` after initialisation), the `0x2008` timestamp and the node method behind it,
+  the units of the router lock timeout, and whether `0x1038` is a read-and-set. Route: the node method at slot `0x160`
+  (SHub 2 `0xff4ae400`); the encodings and units may have no software route.
+- The order of the three router phases in one boot (table distribution, the board walk that sets the clock source, the
+  partition fences). Route: the callers of `0xff42cd80` and `0xff4e7470` in SHub 2 SAL 10.54.
+- The Altix 350 guide (007-4660-002) prose on p.69 puts the router on "port 0"; its cable tables and figures put it on
+  port 1. Route: another guide revision or a photograph of a cabled system.
 - Reply type codes 4, 5 and 6 of the vector status register and which of the PROM's vector error strings each is.
   Route: the PROM's error decoder around the "Vector Request Route Error" strings, and the callers of the vector read.
 - The vector write path: the type bit value and whether the same lock is used. Route: the write routine beside the
