@@ -71,7 +71,10 @@ that does to the minimum. No document read says which shipped.
   CR-brick block diagram labels its four nodes "SHUB 1.2" and "IP57 Node Card" (007-4774-001 Figure 3-3, p.60) while its
   text calls the machine fourth-generation NUMAlink-4 (p.59). That label is the first place a manual names a SHub
   revision for a Prism, and it conflicts with the Altix 3700 Bx2 reading in [the README](README.md#which-chip-where)
-  (inferred SHub 2); see [the question page](../../questions/prism-open.md).
+  (inferred SHub 2); see [the question page](../../questions/prism-open.md). The graphics kernel on the ProPack 4SP4 disc
+  has SHub 1 and SHub 2 handlers and a patch, `patches.rtgfx/dont-use-ptcga-for-shub1`, for PIO machine checks on SHub 1
+  systems when the X server stopped and started. That suggests SHub 1 graphics machines ran the kernel (**inferred**); the
+  patch names no Prism, so the Prism SHub stays **unknown**.
 - **Node board.** IP57 for the rackmount modules is inferred: the parts index lists "Altix 350/Prism CPU Board" as
   `030-2038-001` with the tag `IP57`, and the Altix 350 guide names IP57 ([altix-350.md](altix-350.md)); the Prism guides
   never print "IP57" for the 2U modules (they do in the Extreme figure, above).
@@ -100,6 +103,16 @@ Established, from SGI's Linux platform code (v5.3 tree). The TIO bridge chips th
   `v5.3:drivers/char/agp/Kconfig` ties `AGP_SGI_TIOCA` to `IA64_SGI_SN2`. The Deskside guide says "AGP 4X/8X support"
   for its board (007-4772-001 p.26): the board may do 4x, the platform side offers 8x only. Established for both
   statements; their reconciliation is inferred (the board negotiates down, but a 4x-only card was not tested).
+- **The 2.6.5-7.308-rtgfx kernel (ProPack 4SP4 disc, read 2026-11-21).** `sgi-agp.ko` imports `tioca_list`,
+  `tioca_gart_found` and `tioca_fastwrite_enable` (`nm -u`, observed). Its source patch `patches.rtgfx/sgi-agp` creates one AGP
+  bridge per TIOCA instance on `tioca_list`. The bridge device is the last VGA-class device with an AGP capability on that
+  instance's device list, and the bridge is created whether or not one matched. The later `sgi-agp-empty-bus` patch skips
+  instances with an empty device list (established from the patch text). The driver therefore assumes one AGP display
+  device per TIOCA, a **software expectation**; the TIOCA count per XG2N stays **unknown**. `fglrx.ko` carries the strings
+  `Provider is TIOCA = %d` and the functions `firegl_snia_is_tioca` and `firegl_snia_closest_node` (established from the
+  binary; the logic is not read). Its modinfo depends are `agpgart,usbcore`, and it has no PCI alias table, so the X server
+  picks the board. The same kernel builds the TIOCE provider (`tioce_bus_fixup` in `System.map`); which Prism shape uses
+  TIOCE is **unknown**.
 - SGI posted TIOCA support in early 2005 (patch series "altix: AGP bridge support for tioca chip", first posted
   2005-02-04, resent 2005-02-08 and 2005-03-10, message id `20050310215538.16305.1181.18064@attica.americas.sgi.com`);
   the ia64 maintainer's pull request of 2005-04-25 lists `tioca_provider.c` (message id
@@ -142,6 +155,13 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
   AGP 8x board with 256 MB, introduced August 2004; ATI's FireGL X2-256 is R350-based (some references say R360). SGI's
   "X2PRO" name was not found outside SGI. **Unknown** whether X2PRO is the X2-256 part; the X3-256 as R420 is inferred from
   external listings.
+- **Chip table in the driver (table text established; board mapping not).** `fglrx_drv.o` (8.12.1) holds rows of the form
+  `name (family device-ID)`: `FireGL X2-256/X2-256t (R350 4E4B)`, `FireGL X3-256 (R420 4A4D)`, `FireGL X1 (R300 4E47)`, and
+  V-series and T2 rows for RV350 `4154`, RV370 `5B64`, RV380 `3E54`, RV410 `5E48` and R423 `5550`. The table has no `X2PRO`
+  string, so which chip SGI's X2PRO-256 is stays **unknown**. The X3-256 to R420 `4A4D` pairing is established in the
+  driver; that the Prism X3 board is that device is **inferred**. Reading the second field as the PCI device ID is a software
+  expectation. The public `pci.ids` names agree for `4A4D` and `4E4B`, but that list is external. SGI's `gfxtopology` maps
+  the lspci names `R300`, `R350`, `RV350` and `R420` to board type `SG2` (script text, established).
 - Each board has 256 MB: 128 MB framebuffer plus 128 MB "retained-object" memory; the driver spills to system memory when
   that fills (007-4751-001 p.5; established). `/proc/dri/N/umm` reports a free AGP aperture of 1065091072 bytes, which is
   1 GiB minus 8.25 MiB, matching the 1 GiB AGP-mapped window above (inferred match).
@@ -210,8 +230,12 @@ Established, from the guides:
   (007-4701-003 pp.134 to 145). Pipe numbers become screen numbers and the `gfxtopology` card-type string is `SG2`
   (007-4751-001 p.19).
 - Diagnostics: `runalldiags -basic` runs `torpedo`, `olcmt` and `pandora` (007-4772-002 pp.120, 121).
-- **Unknown:** the `fglrx` driver version, the XFree86 version, the kernel version of ProPack 4 SP2, and the ATI board
-  device IDs. No guide states them.
+- **Package versions (ProPack 4SP4 extensions disc, read 2026-11-21).** `fglrx` 8.12.1 (`fglrx-4_3_99_8.12.1-sgi404r1`; the
+  version string is in `fglrx_drv.o`), kernel `2.6.5-7.308-rtgfx` (`CONFIG_IA64_SGI_SN2=y`, `CONFIG_AGP_SGI_TIOCA=m`),
+  XFree86 `4.3.99.902-43.91sgi404r1` (source RPM present, not read), `sgi-vizserver` 3.5.2.1 and `sgi-gfxtools` 1.0.
+  Established as the package set on that disc. The disc is labelled ProPack "4SP4", but its vizserver README says Prism runs
+  ProPack 4 Service Pack 3 (section 2.4.1). Which service pack the disc matches is **unknown**, and so is the ProPack 4 SP2
+  kernel the guides name. The ATI device IDs are in [the chip table](#graphics-boards-and-outputs).
 
 ## What carries over from voyager
 
