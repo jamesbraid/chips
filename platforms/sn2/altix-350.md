@@ -115,8 +115,9 @@ to 154: eight NUMAlink-4 connectors A to H (also numbered 1 to 8), L1 controller
 tables (-002 pp.81 to 85) put the router on NUMAlink 1 of modules 5 to 12 in a single-plane system and join the
 modules in pairs on NUMAlink 0 (1 with 5 through 4 with 8, 9 with 13 through 12 with 16), so modules 1 to 4 and 13 to 16
 sit two hops from the router; a dual-plane system adds a second router on NUMAlink 1 of modules 1 to 4 and 13 to 16.
-The prose of p.69 says "port 0" for the router link and "port 1" for the module pairs, the reverse of the tables and
-figures; the tables are used and the contradiction is open. Full cabling, port use and the PROM side:
+For single plane only, the prose of p.69 says "port 0" for the router link and "port 1" for modules 9 to 16, the reverse
+of Table 2-3 and Figure 2-12; the dual-plane prose agrees with Table 2-4. The tables are used and the single-plane
+contradiction is open. Full cabling, port use and the PROM side:
 [../../devices/router_nl4/global-config.md](../../devices/router_nl4/global-config.md).
 
 ## Console and controller path

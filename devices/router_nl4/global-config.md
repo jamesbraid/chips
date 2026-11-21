@@ -71,7 +71,9 @@ holds the router's eight port entries) and a port number, here called the upstre
 The meaning (inferred, from the register and field names and the clock-distribution warning): the router receives the
 global real-time clock on one port and forwards it out of every connected port; each connected port, and the router's
 own local block, is told which port the clock comes from. The upstream port is the port the PROM's discovery request
-entered by (the `INPORT` field, bits 43:40 of register 0, minus 1; see below). Hardware semantics of the select
+entered by. The router's method slot `0x1a0` returns `INPORT` (bits 43:40 of register 0) minus 1, and both the
+discovery crawl (`0xff44e52c`) and the hop code (`0xff4681ac`) add 1 back, so the stored upstream port is the 1-based
+`INPORT`; `nl4r_config_global` subtracts 1 again to form the select. Hardware semantics of the select
 encoding are unknown; no write of the select to an unconnected port is made.
 
 Nothing else is written: no routing table, no protection or reset register, and the result is not read back.
@@ -159,11 +161,12 @@ Established as call structure (SHub 2 10.54), not traced as a timeline:
 - `0xff467320` walks the router vertices. For each one flagged as needing programming it calls the vertex's slot
   `0x1d8`, the table writer for a router, the node's version for a node and the TIO's for a TIO. A failure prints
   `distribute_numbers: vector 0x%lx from %I failed: %s` (a router failing to answer).
-- `0xff503b90` walks the board graph (the strings `Cpu brd on nasid %d has no HUB!`, `Router vertex queue limit %d
+- `0xff502d50`, called by `0xff503b90` (at `0xff503d2c`), walks the board graph (the strings `Cpu brd on nasid %d has no HUB!`, `Router vertex queue limit %d
   exceeded!`, queue size 2,880 entries; at most 2,048 nodes: `number_node_board(): nasid_table exceeded`). For each
   router board it builds the router's handle from the stored route, calls **`nl4r_config_global` with the upstream
   port** the walk entered by, then **`nl4r_config_port` for each of ports 1 to 8 that has a neighbour**, and queues
-  the neighbours (a router neighbour is followed through `0xff502790`; a node neighbour is queued). That is where
+  the neighbours (a router neighbour is followed through `0xff502790`; a node neighbour is queued). The slot `0x330`
+  and `0x338` calls are in `0xff502d50` itself. That is where
   the clock routing is set; it is run from the PROM's klconfig numbering, not from the discovery crawl.
 - `0xff4e7470` runs `Erecting partition fences` (`nl4r_fence_ports`); the clear of "MIP" state
   (`nl4r_mip_clear`) runs when a link is found down. Neither was read.
@@ -195,8 +198,8 @@ Established by comparing what was read:
 - All four SHub 1 builds from snprom 4.20 on (4.20, 4.43, 10.40, 10.54) hold the `nl4r_` strings; 3.32 holds only two
   of them; the SHub 2 images (10.11, 10.40, 10.54) hold seven. The `R4_` register table is in all of them. For 4.20 and
   10.40 only the strings were checked.
-- Chip dispatch: the SHub 1 image tests `0x239` in three places (`0xffa53916`, `0xffa5b6b0`, `0xffa5c11c`) beside the
-  `0x3017` NL3 tests; a SHub 1 node therefore recognises and programs a NUMAlink 4 router exactly as a SHub 2 node
+- Chip dispatch: the SHub 1 image loads 569 (`0x239`) as an argument at `0xffa53916`, `0xffa5b6b0` and `0xffa5c11c`, and compares
+  against it at `0xffa5c5a6` and in the predicate at `0xffa949ec`, beside the `0x3017` NL3 tests; a SHub 1 node therefore recognises and programs a NUMAlink 4 router exactly as a SHub 2 node
   does. That an Altix 350 router option uses this path is the product fact below, and is not shown by a run.
 - Same source: the two images were built from one tree. This means the multi-node walk, the numbering and the route
   tables of a SHub 1 machine with a router (Altix 350 with the optional router, 3700 Bx2) are the ones read here, not a
@@ -224,9 +227,9 @@ offset +28). Established as the guide's statements.
   above; router 2's A to H go to NUMAlink 1 of modules 1 to 4 and 13 to 16 (its A to D to modules 1 to 4, E to H to
   modules 13 to 16). NUMAlink 0 still pairs 1 with 5, 2 with 6, 3 with 7, 4 with 8, 9 with 13, 10 with 14, 11 with 15
   and 12 with 16. Every module then has one port on a router and one on a partner, which is on the other router.
-- The guide contradicts itself once: the prose of p.69 says the single-plane router goes to "port 0" and the second
-  set of modules to "port 1" (and the reverse for dual plane), while Tables 2-3 and 2-4 and both figures have the
-  router on NUMAlink 1 and the module-to-module cables on NUMAlink 0 throughout. The tables are the longer and
+- The guide contradicts itself once, for single plane only: the prose of p.69 puts the router on "port 0" and modules 9
+  to 16 on "port 1", while Table 2-3 and Figure 2-12 have the router on NUMAlink 1 and the module-to-module cables on
+  NUMAlink 0. The dual-plane prose (router links on port 1, module pairs joined port 0 to port 0) agrees with Table 2-4. The tables are the longer and
   self-consistent statement and are used here; which is right on the hardware is **unknown**.
 - Each system or partition needs one base I/O card (IO10 or IO9) in a base compute module (p.72).
 - The guide gives no cabling rules beyond the tables (no length limit, no rule on which module may be 1 to 16, and no
@@ -235,6 +238,7 @@ offset +28). Established as the guide's statements.
 
 ## Unknown
 
+- Where the upstream port in the walk record (offset 16) is first set, and where the per-port dateline flag comes from.
 - The encodings of the `RTC_SOURCE` select fields (what `0xf` means; whether the upstream port's own select matters).
 - What the `0x2008` timestamp write is for, and the node method at slot `0x160`.
 - The units of the lock timeout; whether `0x1038` really is a read-and-set (inferred from the loop only).
