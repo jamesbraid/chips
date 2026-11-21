@@ -22,9 +22,11 @@ p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF pag
   groups of four, up to 16 GB (p.78).
 - Base I/O is on the node board, not on a card: the base module has "factory-installed disk drive(s), base I/O, and
   memory" (p.70). Figure 3-4 (p.76) labels an LSI SAS/SATA controller, a Broadcom dual GigE, a NEC USB host controller, a
-  Silicon Image PCI-to-IDE bridge for the DVD-ROM, a PIC, a 133 MHz PCI-X bus and 66 MHz and 33 MHz PCI buses. These come
-  from the figure's text layer and have not been checked against the picture. The contents list no riser card and no
-  add-in base I/O card.
+  Silicon Image PCI-to-IDE bridge for the DVD-ROM, a PIC, a 133 MHz PCI-X bus and 66 MHz and 33 MHz PCI buses. The picture
+  matches these labels (checked 2026-11-21; the drawn label reads "Silcon Image"). The 133 MHz PCI-X bus (B0) carries the
+  internal PCI-X slot and the LSI controller. The 66 MHz PCI bus (B1) carries the Broadcom and two PCI bridges. One bridge
+  leads to a 33 MHz segment with the NEC USB host controller, the other to a 33 MHz segment with the Silicon Image bridge
+  that feeds the DVD-ROM. The contents list no riser card and no add-in base I/O card.
 - L2: "The Altix 330 system L1 operates in (emulated) L2 mode. Need for a separate optional hardware L2 system controller
   has been eliminated" (p.47).
 
