@@ -452,7 +452,9 @@ the arguments, build a stack at `0xa13fc000` and call `0x81040d28`. Loading the 
 absolute branches resolve; read at any other base the code looks like data. No decompression is involved; the scan only needs a PROM
 image entry with this base. The `sloader` and `post1` segments (which start with code in place of the extra two words) were not decoded here. Twenty `lui` loads of the CRIME window base
 (`0xb400....`) and 74 of the MACE bases (`0xbf08`, `0xbf28`, `0xbf30`, `0xbf31` and `0xbf32`) are in the firmware, which is the material the CRIME and MACE
-open entries wait for. The layout agrees with the independent public decompiler of this image (its notes give the same load address,
+open entries wait for. Recounted 2026-11-21 from a fresh disassembly of the 298608 bytes at `0x9348`: 20 CRIME-base
+and 74 of the MACE bases as listed (established). Also in the segment and not counted above: 24 `lui 0xbf33`, 13
+`lui 0xbf3a`, and one each of `0xbf10`, `0xbf18` and `0xbf20`; their role is not settled. The layout agrees with the independent public decompiler of this image (its notes give the same load address,
 length and "branch over SHDR" structure).
 
 ## Open
