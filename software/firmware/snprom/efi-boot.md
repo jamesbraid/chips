@@ -67,8 +67,8 @@ the same device [PROM variables](#prom-variables) describes: 8 MiB of 16-bit AMD
 
 Program and read run in `0x1000`-byte chunks, each under the node flash lock (a software method of the node object, `+0xd8` lock and `+0xf0` unlock; not decoded: a model must supply whatever it touches, unknown).
 Every program is followed by a read-back compare (mismatch: status -12, "Data verify failed"), and the per-word poll waits for the written value to read back, up to 3,000,000 microseconds per step, with an error-bit (`0x20`) check. An odd start or end byte is merged with the neighbouring flash byte into a full word. The flash error-text table also has status -2, "Cannot program a 0 into a 1", and -1, "Unknown manufacturer/device ID"; nothing on the paths read here returns either (unknown which path does).
-What the CFI table must say for the probe to pass (`0xffad22f0` and `0xffaceb80`): `Q`, `R`, `Y` at words `0x10` to `0x12`; primary command set 2 at word `0x13`, 0 at word `0x14`; interface code (word `0x28`) 1 or 2; device size
-`1 << (word 0x27)` at least `0x800000`; erase-region count (word `0x2c`) 1 to 4; per region two words of sector count minus 1 and two of sector size in 256-byte units, and the PROM reads the regions in reverse order, so a one-region
+What the CFI table must say for the probe to pass (`0xffad22f0` and `0xffaceb80`): `Q`, `R`, `Y` at words `0x10` to `0x12`; primary command set 2 at word `0x13`, 0 at word `0x14`; interface code (word `0x28`) 1 or 2 (the test is `(code + 1) & 2`, so 5 and 6 would pass too); device size
+`1 << (word 0x27)` at least `0x800000`; erase-region count (word `0x2c`) at most 4 (zero passes the probe, and every erase then fails); per region two words of sector count minus 1 and two of sector size in 256-byte units, and the PROM reads the regions in reverse order, so a one-region
 uniform 64 KiB part avoids the question; a non-zero write-buffer exponent (word `0x2a`) selects the buffered program sequence. Manufacturer and device ids are read but not tested. An erase whose block falls outside every region fails with
 "cfi_sector_erase: sector position error". **Unknown:** the real chip, its sector geometry (the code reads it from the chip, and the image does not name it) and whether SHub or L1 gates writes to the flash window.
 
@@ -418,3 +418,19 @@ Independent re-read on 2026-11-17 by a reviewer who wrote neither commit. Image 
 **Grades.** The established items above hold, except the item 2 claim. Inferred stands for the part identity, both register maps (positions match an M48T35-style top-of-SRAM clock and a DS1286-style command register) and the 32 KiB alias at A15. The "L1 only for a node with no scanned IOC4" statement is inferred, as written.
 
 **Not checked.** Who calls `0xffaf2d30` apart from `0xffaf2dc0`; the SHub 2 image; the IO10's time-of-day listing; whether the real part is 32 KiB or 64 KiB; the L1 clock address in the sysco page.
+
+## Review (independent, chips 10df302: where the EFI variable store lives)
+
+Independent re-read of `10df302` against `shub1snprom.bin` 10.54 (sha256 `51ccf9ad...`): a flat `ia64-linux-gnu-objdump` listing of the image at `0xffa00000` (binutils 2.44, re-run toolchain image) and the EFI ELF gunzipped from FIT entry 11 (`0xffca5ec0`). The reviewer wrote none of it and used no restricted source.
+
+**Confirmed.**
+- Handler `0xffb182c0`: op above 7 returns -2 (`0xffb18c60` to `0xffb18530`); op 4 limits bank count to 16 and bank size to `0x10000`, else count zeroed and -2.
+- Address arithmetic: read and update use `0x100000 + (bank << 16) + offset` (`0xffb18460`, `shl 16`, `addl 1048576`); clear uses block `16 + bank` (`0xffb183f0`). The hand-off builder `0xffafc140` stores 16 and `0x10000` at record `+0x48` and `+0x50`.
+- Worker `0xffb17ae0`: read calls method `+0x70`; update calls `+0x50` then `+0x60`; clear calls `+0x50` then `+0x58`; a non-zero chip status becomes -3. The method table at `0xffbd7c18` has the map (`0xffacea70`, window `0x8000000fff800000`), probe wrapper `0xffaceb80` (requires device size above `0x7fffff`), erase wrapper `0xffacec70` and the lock and unlock slots at `+0xd8` and `+0xf0`.
+- CFI probe `0xffad22f0`: reset `0xf0`@0; autoselect `0xaa`@`0x555`, `0x55`@`0x2aa`, `0x90`@`0x555`; CFI query `0x98`@`0x55`; `Q`, `R`, `Y` at words `0x10` to `0x12`; command set 2 at `0x13`; 0 at `0x14`.
+- Checksum value `0x956bac74` is compared in the checksum routine (`0xffaf6ec6`) and the vote routine (`0xffaf7426`); the 16-block loop with `0x10000` reads is in `0xffaf6640`. Bank header magic `0x6c726276` is compared as a 32-bit load, with byte `+6` required zero and the state byte at `+7` complemented (EFI `0x30e56`, `0x31270`).
+
+**Changed (fixed above).**
+- The interface code test is `(code + 1) & 2`, so 5 and 6 also pass, not only 1 and 2. The erase-region count test only rejects more than 4: zero passes the probe.
+
+**Not checked.** Programmed and buffered-write sequences and the erase polling, the checksum algorithm itself (so "the checksum of an all-`0xff` region is `0x956bac74`" is taken from the page), the vote tie-break, the slot-count arithmetic (14), the shell `flash` command claim for ops 5 to 7, the EFI-side bounds checks, `RtVarGarbageCollect` and the bank state sequence, the flash map blocks 4 to 11 and the `0x200000` to `0x7fffff` image claim, and the model contract paragraph (a summary of the above). The record format stays **inferred**, as graded: no store capture exists.
