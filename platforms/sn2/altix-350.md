@@ -110,7 +110,14 @@ module are in the cabling chapter (printed pp.46 to 48 of -001), not read for th
 router, a connection to "port 0" of up to eight modules, and modules 9 to 16 on the open "port 1" of the first eight.
 Dual plane: two routers, each connected from its port A to "port 1" of two modules, with the two modules also joined
 port 0 to port 0 (-002 pp.69 to 71, Figures 2-3 and 2-4). Established as described. The router is an "R-brick" in the
-guide's wording (-002 p.105), a separate enclosure with its own chapter (Chapter 6 "Optional Router", not read).
+guide's wording (-002 p.105), a separate enclosure with its own chapter (Chapter 6 "Optional Router", read, printed pp.149
+to 154: eight NUMAlink-4 connectors A to H (also numbered 1 to 8), L1 controller, 3.2 GB/s each way per link). The cable
+tables (-002 pp.81 to 85) put the router on NUMAlink 1 of modules 5 to 12 in a single-plane system and join the
+modules in pairs on NUMAlink 0 (1 with 5 through 4 with 8, 9 with 13 through 12 with 16), so modules 1 to 4 and 13 to 16
+sit two hops from the router; a dual-plane system adds a second router on NUMAlink 1 of modules 1 to 4 and 13 to 16.
+The prose of p.69 says "port 0" for the router link and "port 1" for the module pairs, the reverse of the tables and
+figures; the tables are used and the contradiction is open. Full cabling, port use and the PROM side:
+[../../devices/router_nl4/global-config.md](../../devices/router_nl4/global-config.md).
 
 ## Console and controller path
 
@@ -145,7 +152,7 @@ calls. A single module has no router and uses no network ports. Its SHub generat
 - SHub generation of the 350 (README).
 - The memory limit (96, 192 or 384 GB) and the DIMM size options (-001 printed p.173 and the -002 equivalent, not read).
 - The Ethernet controller on the IO9 and the IO10, and the chips behind the IO10's serial ports and DVD-ROM connection.
-- The router chapter of -002 (printed Chapter 6) and the cabling chapter of both guides.
+- The cabling chapter of -001 (the router chapter and cable tables of -002 are read, see Topology).
 - The router or link chip, if any, between the two NUMAlink connectors and the SHub (the guide draws two NUMAlink
   blocks beside the SHub on -001 p.99 and -002 p.107 and says nothing about a router).
 
