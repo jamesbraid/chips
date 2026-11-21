@@ -77,6 +77,9 @@ Corrections found while tagging. These are not fixed here.
   the JUICE field (control bits 7:5), the watchdog's operation (only a store of 0), and the contents of 0x58 and 0x270.
   Valid end state unless a PROM or diagnostic routine that sets them is found. The PROM's bank-sizing loops use
   indexed addresses, so the census records only their bases, and the diagnostic's CRIME routines are stripped.
+  Needs deeper binary RE (attempted 2026-11-21: disassembled the firmware segment and followed each `lui 0xb400`
+  base for 80 instructions; offsets 0x0 to 0xc, 0x38, 0x200 to 0x240 reached, 0x248, 0x270 and 0x58 not reached.
+  That search does not follow a base set in another routine, so no absence is settled).
 - **Bedrock census: accessor seeds.** *[route: software now; tool work]* The IOC3 and IOC4 censuses have run (their configs carry seeds), the Hub census has output (`devices/hub/census/`, one seeded argument) and the Bedrock census has output too (693 sites in 195 rows, `devices/bedrock/census/`), but `tools/configs/bedrock.json` has empty `seeds`, so no accessor argument is followed and eleven of its images still use the flagged `auto-min` gp fallback although their options records carry the value. Next: write the accessor seeds (the hub-state and node-index accessors) and switch the images to the options-record gp, then rerun `retools/tools/chips/run.sh`.
 - **MACE: write- and read-failure behaviour.** *[route: software now; hardware residue: an ISA device that never answers, since the specification gives no timeout]* The graded answers (what sets each PCI error flag, what the error
   address register latches, which interrupt fires) are in devices/mace/README.md, "Error reporting for a refused or
@@ -86,6 +89,10 @@ Corrections found while tagging. These are not fixed here.
   controller no timeout or error flag); a second error's effect on the latched address. Next: CRIME's own error
   registers (the CRIME census), and the compressed IP32 PROM's PCI and ISA probes once it can be read.
 - **IP32 PROM: no census config reads the firmware segment yet.** *[route: software now; unlocks the MACE failure and CRIME register entries]* The premise of the earlier entry is gone: the `firmware` segment is not compressed, it is plain code loaded at `0x81000000` (devices/mace/README.md, "IP32 PROM image layout"). Open: a census image entry for the IP32 PROM with that base (file offset `0x9348`, 298608 bytes), seeds for its CRIME and MACE window loads (20 CRIME-base and 74 MACE-base `lui` sites), the same for the `sloader` and `post1` segments, and decoding the string and table subsections after the code. Next: add the config entries and run the scan.
+  Attempted 2026-11-21: `tools/configs/crime.json` already has an `ip32-prom` entry, but it reads the whole file at
+  `0xbfc00000`, not the segment at `0x81000000`. The raw image kind has no offset or length, so the segment needs a
+  cut file or a new image kind (retools change, not done here). The segment disassembles to 74,390 lines with the
+  container's mips64 objdump, and the page's 20 and 74 counts reproduce. Tool work, not binary RE; the census run was not done.
 - **MACE: blocks reached through run-time pointers.** *[route: software now]* The Ethernet driver (`if_me.o`), the 16550 serial driver
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
