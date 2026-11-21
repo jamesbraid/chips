@@ -16,7 +16,7 @@ p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF pag
   router in a "single-plane" configuration (p.58, and the contents' "Optional Router Configurations", p.61).
 - SHub blocks as on the 350: XN, PI, MD, two NI, II and LB (p.79).
 - The guide names the interconnect "NUMAlink-4" (p.57); the first 350 guide (-001) does not number it, the second (-002) does.
-- Node board: an "IP67 node board" with eight DIMM slots (p.75). Figure 3-4 (p.76) labels its node chip "SHub 1.2 ASIC".
+- Node board: eight DIMM slots (p.75). Figure 3-4 (p.76) labels it "IP67 node board" and its node chip "SHub 1.2 ASIC".
   The text calls the chip "Super Hub (SHub)" (p.79) and gives no generation.
 - Memory: DIMMs of "double data rate synchronous dynamic random-access memory (DDR1 SDRAM)", four or eight per module, in
   groups of four, up to 16 GB (p.78).
@@ -38,7 +38,7 @@ p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF pag
 | PCI slots | 1 | 4 |
 | Disks | SATA or SAS | -001: SCSI through the IO9. -002: serial ATA through the standard IO10, SCSI only with the optional IO9 |
 | Base I/O | two Ethernet, two USB, SAS/SATA connector on the module | -001: the IO9 PCI card. -002: the IO10 PCI card as standard, the IO9 optional |
-| Node board | IP67, eight DIMM slots (p.75) | IP57 (-001 contents) |
+| Node board | IP67 (Figure 3-4, p.76), eight DIMM slots (p.75) | IP57 (-001 contents) |
 | Memory | DDR1 SDRAM, 4 or 8 DIMMs (p.78) | DDR SDRAM, 4, 8 or 12 DIMMs (-002 p.110) |
 | PCI riser | none described | four PCI/PCI-X slots on a riser with a PIC ASIC (-001 p.105) |
 | L2 controller | none; the L1 runs in emulated L2 mode (p.47) | up to one (-001 p.71, Table 2-1) |
@@ -46,8 +46,8 @@ p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF pag
 | Routerless topology | module to module (two) or router | ring |
 
 The 350 column is from the two 350 guides (007-4660-001 and -002; see [the 350 page](altix-350.md)). The 330 guide does
-not name an IO9, IO10 or IOC4. Its base I/O chips are read from Figure 3-4's text layer only; the open route is a look at
-the figure's picture, or a PCI tree from a 330. Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown;
+not name an IO9, IO10 or IOC4. Its base I/O chips are read from Figure 3-4, checked against the picture; a PCI tree
+from a 330 would add the PCI ids. Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown;
 the L1 packages that name an IP node board for it are not tied to the 330 (sysco `sn2-brick-packages.md`).
 
 ## Review
@@ -78,4 +78,27 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 ### Changes of 2026-11-21
 
 Not reviewed. Changed claims: the sources line, the node-board, memory, base I/O and L2 bullets, and the comparison rows
-for node board, memory, riser and L2. Renewed independent review is needed before these are cleared.
+for node board, memory, riser and L2. Renewed independent review is needed before these are cleared. The figure's bus
+wiring was reviewed below; the other claims were checked in the review that follows.
+
+### Review of the changes of 2026-11-21
+
+Independent review, 2026-11-21, by a reviewer who wrote none of these pages. Reviewed chips revision 1c3917d. Read
+007-4790-001 printed pp.47, 70, 75, 76, 78 and 79 from the held PDF (PDF index is printed page plus 24); the Altix 350
+guides 007-4660-001 (offset 24) and -002 (offset 28) for the comparison column. Figure 3-4 was viewed as a picture
+(PDF page 100, rendered at 130 and 300 dpi).
+
+Confirmed against the picture: every label the base I/O bullet names. The 133 MHz PCI-X bus B0 runs to the internal
+PCI-X slot and the LSI SAS/SATA controller; the 66 MHz PCI bus B1 runs to the Broadcom dual GigE and to two PCI bridges;
+one bridge leads over a 33 MHz PCI line to the NEC USB host controller, the other over a 33 MHz line to the Silicon
+Image PCI-to-IDE chip, which connects to the DVD-ROM drive. The label reads "Silcon Image". The figure also labels a
+1200 MB/s link between the SHub's II block and the PIC and "NUMAlink 3/4" on the port; the page records neither.
+Confirmed in the text: p.47 L2 quote, p.70 base I/O sentence, p.75 eight DIMM slots, p.78 DDR1 SDRAM and groups of four,
+p.79 "Super Hub (SHub)" with no generation. The 350 column: IP57 in the -001 contents, DDR SDRAM on 4, 8 or 12 DIMMs
+(-002 printed p.110), the riser with a PIC ASIC (-001 printed p.105), "L2 controller: None to 1" (-001 printed p.71).
+
+Corrected: the "IP67" label is on the figure (p.76), not on p.75; a paragraph under the comparison table still said the
+chips were read from the text layer only and the picture was unchecked.
+
+Findings: none other. Cleared: the sources line, node-board, memory, base I/O and L2 bullets and the four comparison
+rows.
