@@ -206,6 +206,75 @@ Established by comparing what was read:
   different algorithm (inferred from the identical routines; the SHub 1 board-walk and route-calculation routines were
   compared by instruction match, not read in full).
 
+## Router access from a SHub 1 node (SAL 5.04)
+
+Read in Ghidra (whole-image decompile of `shub1snprom.bin`, SAL 5.04) with an `ia64-linux-gnu-objdump` listing checked at
+the constants; every access is a vector request in the SHub 1 form of
+[node-access.md](node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it). Numbers below are router
+register numbers, the value of `ADDRESS` after the image's own mask (bit 38 of the argument, which the image sets on router
+addresses, is dropped by the mask on a vector request). Not independently reviewed; nothing was run.
+
+**Which chip is a router (established).** `0xffa0f7e0` offers the part number (register 0 bits 27:12) to four method
+tables. Part `0x239` selects the table at `0xffbd8318`, whose name method returns "NL4router"; `0x3017` "NL3router"
+(`0xffbd7f98`); `0x4363` "SHub"; `0x4422` "TIO". So the earlier statement that `0x239` and `0x4422` were inferred from the
+SHub 2 tables only is closed for the SHub 1 image: both are read in full there, and the NL4 table has eight ports
+(`0xffa66f70` returns 8), tables of 512 and 256 entries (`0xffa66f50`, `0xffa66f60`) and 2 as its type code
+(`0xffa66f80`; a SHub's is 1).
+
+**Lock (established for the code, inferred for the register).** Acquire (`0xffa9a6f0`, through `0xffa0ad80`): vector-read
+`0x1038` (`SCRATCH3_ALIAS`) until bit 0 of the data is clear, polling with the platform delay, with a timeout of
+10,000,000 us (10 s; `nl4r_config_global` passes it; `cache_advert` passes 0, one try); a timeout is -9. Release
+(`0xffa9a750`): vector-write 0 to `0x1030` (`SCRATCH3`). That a read of `0x1038` itself sets bit 0 (a test-and-set) is
+**inferred** from the loop: a model that always reads bit 0 clear also works, but then the lock gives no exclusion.
+
+**First contact: "cache_advert" (`0xffa67070`, slot `0x1c0`; established, with `0xffa668b0`).**
+
+1. Read `SCRATCH0` (`0x1000`). Non-zero: somebody already advertised this router; if the lock was taken release it; return 0
+   without marking the entry as programmed by this master.
+2. Zero: try the lock once; while the word is still zero and the lock was not obtained, re-read every 10 ms for up to
+   10 s ("cache_advert: timed out locking 0x%lx from %I", then carry on as if locked).
+3. Still zero: first-time router set-up `0xffa66460`. Writes `RTC_SOURCE` (`0x1001900`) `0x888888888`, `0x1010` 0,
+   `0x1001938` 1; read-modify-write `0x20` clearing bits 20:16 and 12:8; for ports 1 to 8 (port base
+   `0x8000000 + (n - 1) * 0x1000000`) read-modify-write `+0x18d0` (each of four bytes: low six bits cleared, bit 0
+   set) and set bit 29 of `+0x1840`; ten virtual-channel credit registers (`0x2000010`, `0x2000030` ... `0x20000f0`,
+   `0x2000120`, `0x2000140`, each at `+0`, `+8`, `+0x10`, `+0x18`) written `0x111111111`; ten age registers (`0x2000400`,
+   `0x2000408`, `0x2000428`, `0x2000430`, `0x2000438`, `0x2000440`, `0x2000410`, `0x2000418`, `0x2000420`, `0x2000448`)
+   written `0x10101010`.
+4. Ask the router's own system controller for its module id, slot and slab (`0xffa80dd0`, `0xffa80f90`, `0xffa81170`) over
+   the vector path (the L1 mailbox registers `0x30` to `0x48`; the conversation was not read). A failure prints
+   "cache_advert: sysctl_vec_moduleid_get failed" (or `slot_get`, `slab_get`) and the build goes on with the error
+   values.
+5. Write `SCRATCH0` (`0x1000`) = module id (bits 31:0) | slab << 32 | slot << 42 | bit 41 (if `0xffaac160` is non-zero) |
+   `0x0400008000000000` (bits 58 and 39). Release the lock; mark the entry programmed (`+0x2b` bit 1).
+
+**Insert (`0xffa67220`, slot `0x1c8`; established).** From the chip word: the position pins (bits 47:44, inverted) set the
+router's level bits in the entry. If bit 40 of the word passed in (the `SCRATCH0` word; clear after step 5 above) is set it
+reads `PROTECTION_CONFIG` (`0x1003018`) and keeps bits 21:8; otherwise the id is 0xffff. Read `GLOBAL_PARM0` (`0x10`). For
+each port n = 1 to 8: write 1 to the port's `+0x2208` (error-summary clear) and read `+0x2200` (error summary) into the
+port record; the record's link flag is set when chip-word bit `32 + n - 1` (port link-up) is set and bit 0 of the error
+summary is clear.
+
+**Per-boot configuration from the board walk (`0xffaedff0` and `0xffaaa840`, `0xffaaab20`, `0xffaab070`; established).**
+`nl4r_config_global` (`0xffaaab20`): lock (10 s), `nl4r_init_global` (`0xffaaa840`), read `RTC_SOURCE` (`0x1001900`), set
+the select nibble of every connected port to the upstream port number minus one and bits 3:0 to the same value, write it
+back, call node slot `0x160` and write its result to `0x2008`, unlock. `nl4r_init_global` writes 0 to `0x2000`, `0x2010`,
+`0x2020`, `0x2050`, `0x2060`, `0x2030`, `0xc000000000000000` to `0x1003100` (`PORT_PERF_WIN`); then writes the RTC delay
+(the platform clock period divided by 10, minus 1) to `RTC_INTRN_CNTRL` (`0x1001908`), sets bits 3:0 of `RTC_SOURCE` to
+`0xf`, writes the result of node slot `0x160` to `0x2008`, and writes `0x8000000000000000` to the 16 registers `0x4f00` to
+`0x4f78` (`MCAST_REP_GATHER_BUF`). `nl4r_config_port` (`0xffaab070`), per port n: `+0x2200` 0, `+0x2210` 0,
+`+0x2100` 1, `+0x18a0` 0, `+0x18a8` 0, `+0x2218` `0x5c0000000006`. Where in the boot this runs relative to the crawl is
+unchanged from the SHub 2 reading: it is part of the board walk, not of discovery.
+
+**Table writes (`0xffa67cb0`, slot `0x1d8`, with `0xffa695f0`; established as the registers written).** For each port: local
+table at `port base + 0 + 8 * entry` (512 entries), global table at `+0x1000` (256), neighbour table at `+0x1800` (8),
+each entry `VALID` (bit 63) with the turn count of the next section of [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504); then the multicast destination table
+(`0x4e80` + 8 * i) and `0x4f90` (`MCAST_DEST_VEC_0`), the local-block tables at `0x5000` and `0x6000`, `GLOBAL_PARM0` (`0x10`), `0x4000` (`LB_DATELINE`) and a read-modify-write of `PROTECTION_CONFIG` (`0x1003018`), then `SCRATCH0` bit 40. The dump routine
+`0xffa69760` reads the same tables back and prints each local-table row as one 32-bit word, one nibble per port 1 to 8
+(the low four bits of that port's entry) in the format "%03x:%08lx", then the global table the same way and the eight
+neighbour rows as four-digit words.
+
+The router's address decode for `0x1_0000_0000` and the L1 mailbox protocol remain **unknown**.
+
 ## Altix 350: how modules attach to routers (007-4660-002)
 
 Published guide, Altix 350 System User's Guide 007-4660-002, printed pages 69 to 71, 81 to 85 and 149 to 154 (PDF
@@ -241,12 +310,16 @@ offset +28). Established as the guide's statements.
 - Where the upstream port in the walk record (offset 16) is first set, and where the per-port dateline flag comes from.
 - The encodings of the `RTC_SOURCE` select fields (what `0xf` means; whether the upstream port's own select matters).
 - What the `0x2008` timestamp write is for, and the node method at slot `0x160`.
-- The units of the lock timeout; whether `0x1038` really is a read-and-set (inferred from the loop only).
+- Whether `0x1038` really is a read-and-set (inferred from the loop only). The timeout is 10,000,000 microseconds
+  (10 s) in `nl4r_config_global` and 0 (one try) in the router's first-contact routine ([above](#router-access-from-a-shub-1-node-sal-504)).
 - The input flags of the table writer (compare or write-everything mode, the type test for the two multicast tables,
   the `set_force_local` value, the `NODE_ID` arithmetic of the multicast entries) and who passes them.
 - The order of the three router phases (table distribution, clock walk, fences) in one boot, and the fence routine.
-- What the direction nibble in a table entry selects (a port 0 to 7, or a local-block or no-route code): the writer
-  copies a byte; the route calculation that builds it (`0xff4663d0` and the routines it calls) was not read.
+- What the direction nibble in a table entry selects: **partly settled** in the SHub 1 image, whose route programmer
+  calls the value "turns" and stores `(out - in)` modulo the port count for each router
+  ([boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504));
+  `0xf` is "no route". Open: what the node-end values 0 and 4 select in a node's own tables, and whether the SHub 2
+  routine `0xff4663d0` differs (its SHub 1 counterpart is `0xffa5a670`).
 - Whether any guest behaviour is changed by the router tables a model leaves empty: a model that answers register 0 and
   accepts these writes lets the PROM run; whether the PROM then checks routes by sending traffic through the router was
   not read.

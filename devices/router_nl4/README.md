@@ -55,8 +55,9 @@ hold three entries (SHub 2, `0x239`, TIO `0x4422`) in that table, though the SHu
 compares a chip's part number with `0x3017` at six sites (for example `0xff45b4bc`, `0xff4b8f9c`), so it knows the
 NUMAlink 3 router part too; the SHub 1 images hold four (SHub 1 `0x4363`, `0x3017`, `0x239`,
 `0x4422`). Read in full: the three compare constants in the SHub 2 image and the name each entry returns; the SHub 1
-compare constants were located but its name entries were not read, so the pairing of `0x3017` with `NL3router` there is
-inferred from the strings.
+image's four compare constants and the name each entry returns ("SHub", "NL3router", "NL4router", "TIO") were read in
+the SAL 5.04 build too ([router access](global-config.md#router-access-from-a-shub-1-node-sal-504)), so the pairing of
+`0x3017` with `NL3router` and `0x4422` with `TIO` is established there, not inferred.
 
 The NUMAlink 3 router's own register table (`RR_` names) is in the SHub 1 images. Its numbers match the public Origin
 3000 router header positions already recorded in [../router_sn1/registers.toml](../router_sn1/registers.toml): global

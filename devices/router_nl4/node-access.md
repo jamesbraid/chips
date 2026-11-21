@@ -24,7 +24,7 @@ PROM's vector routine builds a TIO address for an odd NASID).
 
 `ADDRESS` is the router register number (it is a doubleword number in bits 34:3, so the field takes the byte offset
 directly). `PIO_ID` is a tag the request carries and the reply repeats. `TYPE` in `VEC_PARMS` selects read (0) or
-write (1, inferred: the PROM's read path writes 0 and its write routine was not read). The reply's `TYPE` is a status
+write (1; established in the SHub 1 image, where the write routine was read: [below](#shub-1-sal-504-the-vector-request-as-the-image-sends-it)). The reply's `TYPE` is a status
 code (below).
 
 ### The read sequence the PROM uses (established, SHub 2 SAL 10.54, read in full; constants confirmed in objdump)
@@ -45,7 +45,7 @@ code (below).
    equal to the request is success; `TYPE` 4, 5 or 6 are errors -4, -5, -6; anything else -3. A poll that runs out is
    -7 after the retries.
 
-What a reply `TYPE` of 4, 5 and 6 mean is not stated in what was read. The PROM's error decoder has the strings
+What a reply `TYPE` of 4, 5 and 6 mean is not stated in what was read (the SHub 1 image's mapping of the three to its messages is [below](#shub-1-sal-504-the-vector-request-as-the-image-sends-it)). The PROM's error decoder has the strings
 "Vector Request Route Error", "Vector Reply Route Error", "VERRA, Vector address error", "VERRC, Vector command
 error" and "VERAC, Vector address/command error", and the SHub error text "Hub got invalid vector err from rtr",
 "Hub got protection err from rtr", "Hub got HW err accessing rtr". Mapping codes 4, 5 and 6 onto them is **unknown**.
@@ -65,6 +65,72 @@ route (shifted down one nibble) goes into `VEC_ROUTE`. If it is then zero, the r
 `0xf` first; why is **unknown**. The PROM's own limit is sixteen hops: "Max vector length 16 exceeded on path 0x%lx".
 Every later nibble is the output port number at the next router (inferred). The reply's route comes back in
 `VEC_RETURN` (the routers build it on the way; the PROM keeps it for the return route, inferred from the name).
+
+## SHub 1 (SAL 5.04): the vector request as the image sends it
+
+Established, read in full in `shub1snprom.bin`: the read `0xffa0bd20(route, nasid, address, &data)` and the write
+`0xffa0c560(route, nasid, address, data)`, decompiled in Ghidra and checked against an `ia64-linux-gnu-objdump` listing at
+every constant below. They are the SHub 1 counterparts of the SHub 2 routines described above (`0xff419e80`,
+`0xff41ad30`). Differences from the SHub 2 sequence: the SHub 1 routines poll the local block's error summary between
+sends, the SHub 2 routines poll the vector registers only, and the SHub 1 vector registers carry the `0x1_0000_0000` bias
+(the global-window form is `0x8000_0009_0000_0000 + offset | nasid << 38`).
+
+**Route 0.** No vector request; the address goes to the node's own window. Not covered here.
+
+**Route not 0.**
+
+1. Software lock number 9 (`0xffa0f750(9, 5000000)`, 5,000,000 ticks); failure prints "WARNING: breaking vector lock on
+   node %d." and carries on.
+2. Pre-check `0xffa0b9a0`: read `SH_LB_ERROR_SUMMARY` (`0x1_1005_0580`); if bit 16 is set write `0x10000` to its alias at
+   `+8` and to `0x1_1005_0508`, and if `0x1_1005_0600` bit 16 is set clear it, the five detail words (`0x1_1005_0200`,
+   `0280`, `0300`, `0380`, `0400`) and `0x1_1007_1100`; if the summary was exactly `0x10000` also write 8 to
+   `0x1_1001_0008` and `0x1_1001_0088` and clear bit 3 of `0x1_1007_1000`. Returns 1 when it found an old error; the
+   request then waits 100 us and retries.
+3. Write 0 to `VEC_STATUS`, read it back; bit 63 still set is result -1 ("Hub got HW err accessing rtr").
+4. Poll `VEC_PARMS` bit 63 (`BUSY`), at most 1024 reads; if it never clears wait and retry.
+5. Write `0xdeadbeefdeadbeef` to `VEC_RDDATA` (read) or the data to `VEC_DATA` (write), the route to `VEC_ROUTE`: the route
+   with its first nibble dropped (`route >> 4`), or, when that is zero, the value `0xf00000000` (nibble 8 set to 0xf).
+6. Write `VEC_PARMS` = `START` (bit 62) `| PIO_ID << 35 | (address & 0x7_ffff_fff8) | NI_PORT << 1 | TYPE`, with
+   `NI_PORT` = first route nibble minus one (**the node-bring-up page's wording "(hops - 1) * 2" is wrong: it is
+   (first nibble - 1) * 2**). Read: `0x40000e4000000000` (PIO_ID `0x1c8`, TYPE 0). Write: `0x400003d800000001` (PIO_ID
+   `0x7b`, TYPE 1). The write type bit is therefore established, not inferred.
+7. Up to 1024 passes: wait 100 us; read the error summary; **if bit 16 is clear** read `LB_ERROR_DETAIL_1` (`0x1_1005_0200`)
+   and, when its low byte is `0xe9` (read) or `0xea` (write), clear `0x1_1007_1100` and the five detail words; then read
+   `VEC_STATUS`; bit 63 set ends the wait (for a read the data is then read from `VEC_RDDATA`). A pass with summary bit
+   16 set does not look at `VEC_STATUS`. 1024 passes without a valid reply: release the lock, wait, retry; the waits start at
+   `0x727` us (about 1.8 ms) and multiply by 4 per attempt; eight attempts, then -7.
+8. Judge the status (lock released first): `OVERRUN` (bit 62) set is -2; `TYPE` 4 is -4, 5 is -5, 6 is -6; `TYPE` 0 (read) or
+   1 (write) with `PIO_ID` equal to the request's and `(request ^ status) & 0x7_ffff_fff8` zero (the address echoed in
+   bits 34:3) is success; anything else is -3. The `SOURCE` field is not examined.
+
+**Reply codes as the image reports them (established for the mapping, inferred for the hardware meaning).** The message
+for each result is chosen by `0xffa0cfd0` from the image's message table:
+
+| Result | Reply | Text printed |
+|---|---|---|
+| -1 | `VEC_STATUS` bit 63 already set before the send | "Hub got HW err accessing rtr." |
+| -2, -3 | overrun; any mismatch of type, PIO_ID or address | "Hub got overrun/mismatch rply." |
+| -4, -5 | reply `TYPE` 4, reply `TYPE` 5 | "Hub NI saw too many link errors." |
+| -6 | reply `TYPE` 6 | "Hub got protection err from rtr." |
+| -7, -9 | no reply after eight attempts; router lock not taken in 10 s | "Rtr is not replying--may be dead." |
+| -8 | (no producer found in these two routines) | "Hub got invalid vector err from rtr." |
+| other | | "Hub NI got a misc err from Rtr." |
+
+So reply type 6 is a protection error; types 4 and 5 are grouped with link errors by the image. The hardware's own names
+for the three codes are not in the image: the "VERRA", "VERRC" and "VERAC" strings it carries (vector address error,
+command error, address and command error) are names in a message-type table (the same table that has "BFLSH" and
+"BERSE"), not reply types. The strings "Vector Request Route Error" and "Vector Reply Route Error" are bits 14 and 15 of
+one error-summary decode table at `0xffbd96b8` (bit names, the register that table decodes was not identified), so no
+reply type is tied to them. **Unknown** remains: which of types 4, 5 and 6 a route error produces.
+
+**Chip identification word and its sibling fields.** The read of register 0 of any chip at the end of a route, which the
+crawl does first, is issued with address `0x1_0000_0000` in SHub 1 (the SHub 2 image uses 0). For a node the word has the
+part number in bits 27:12, the revision in 31:28, the NASID in 42:32 (used when the node's `SCRATCH1` bit 40 is set) and,
+for the link-quality step, the node's port number in bit 56. For the NL4 router it is the router's register 0 (see
+[registers.md](registers.md#register-status_rev_id)): part `0x239`, the 1-based router port the request entered by in bits 43:40
+(`INPORT`), the link-up flags of ports A to H in bits 39:32, the position pins in 47:44 (the image tests them inverted),
+`LOCAL_POK` in bit 57 and the per-port error flags in 55:48. That the router ignores bit 32 of the address (so that
+`0x1_0000_0000` reads register 0) is **inferred**: the image has no other read for it.
 
 ## Link registers of the node (established as names and numbers; roles inferred)
 

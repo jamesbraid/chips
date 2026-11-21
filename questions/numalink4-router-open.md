@@ -12,8 +12,11 @@ Open items, each with the route that settles it:
 - Settled in [global-config.md](../devices/router_nl4/global-config.md): `nl4r_config_global` (clock-source select per
   connected port, under the router lock), the table writer and the table lengths (512, 256 and 8 per port).
 - What a direction value in a routing-table entry selects, and the `0xf` terminator nibble of the vector route
-  register. Route: the route calculation `0xff4663d0` and what it calls in SHub 2 SAL 10.54 (not read; the writer only
-  copies a byte), then the dump routine's printing.
+  register. **Partly settled** in the SHub 1 SAL 5.04 image: a router entry is a count of "turns", `(out - in)` modulo 8
+  with 1-based ports, `0xf` is "no route", and the route register holds absolute output ports with `0xf` in nibble 8
+  when no hop remains ([boot-sequence.md](../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504)).
+  Open: the node-end values 0 and 4, why nibble 8 is set to `0xf`, and the SHub 2 routine `0xff4663d0` itself (SHub 1
+  counterpart `0xffa5a670`).
 - The inputs of the table writer (`0xff471a80`): which call uses compare mode and which write-everything, which router
   gets six and which two multicast translation writes, the `set_force_local` value and the multicast `NODE_ID`
   arithmetic. Route: its caller `0xff467320` and the graph record it walks.
@@ -25,10 +28,17 @@ Open items, each with the route that settles it:
 - The Altix 350 guide (007-4660-002) single-plane prose on p.69 puts the router on "port 0"; its cable table (pp.81 to 82)
   and Figure 2-12 (p.83) put it on NUMAlink 1. Checked 2026-11-21: -001 has no router text, and no -003 or -004 is held.
   Route: a photograph of a cabled single-plane system, or an SGI errata notice for -002. Neither is held.
-- Reply type codes 4, 5 and 6 of the vector status register and which of the PROM's vector error strings each is.
-  Route: the PROM's error decoder around the "Vector Request Route Error" strings, and the callers of the vector read.
-- The vector write path: the type bit value and whether the same lock is used. Route: the write routine beside the
-  read routine at `0xff419e80`.
+- Reply type codes 4, 5 and 6 of the vector status register. **Mapping settled, meaning not:** the SHub 1 image reports
+  6 as "Hub got protection err from rtr" and 4 and 5 as "Hub NI saw too many link errors"; the "Vector Request Route
+  Error" and "Vector Reply Route Error" strings are bits 14 and 15 of an error-summary decode table, and "VERRA",
+  "VERRC", "VERAC" are message-type names, so no reply type is tied to them
+  ([node-access.md](../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it)).
+  Route: the SHub 2 image's vector-status decoder, or a hardware capture (owner approval).
+- The vector write path. **Settled** for SHub 1: type bit 1, `PIO_ID` `0x7b`, the same software lock (number 9), the same
+  error-summary poll; the SHub 2 write is `0xff41ad30`, not compared line by line.
+- Whether the router decodes address bit 32 (the SHub 1 PROM reads register 0 with address `0x1_0000_0000`), the
+  framing of the router's system-controller mailbox (`0x30` to `0x48`) and the PROM's wait per request. Route: the
+  `sysctl_vec_*` request builders in the SHub 1 image (`0xffa8f900` and its callers) and the sysco repository.
 - The router serial number ("NIC") read the PROM console exposes as `rnic`: which register or channel. Route: the
   console command's handler and the L1 mailbox registers `ASIC_TO_L1_*` and `L1_TO_ASIC_*`.
 - The L1 mailbox protocol (`ASIC_TO_L1_STATUS`, `_DATA`, `L1_TO_ASIC_STATUS`, `_DATA`): the PROM's `sc_nl4r_*` routines

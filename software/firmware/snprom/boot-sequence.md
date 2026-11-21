@@ -388,7 +388,146 @@ All of these go through the PROM's remote-register read `0xffa0bd20` (and write 
 
 **Retries and timeouts in the path.** Per port, a failed neighbour read is retried up to three times before the crawl returns an error (counter at `0xffa477e6`); the retry around the whole crawl waits `0x989680` ticks; the "Waiting for peers" loop uses `0x11e1a300` per chip and `2,000,000` in one case (`0xffa48210`); the state-word wait is `0x11e1a300`. The deadlines are microseconds (300 s), not ticks: see [the loop section](#the-waiting-for-peers-loop).
 
-**Not read.** The vector-request routines the crawl uses for linked ports (`0xffa45780`, `0xffa469f0`, `0xffa5b5d0` and the router and TIO ops tables); the meaning of the other bits of the `0x1_101d_0080` word that `0xffa5e0b0` copies into the entry flags (bits 16 to 22, 41, 58); the sibling ops tables at `0xffbd7f98`, `0xffbd8318` and `0xffbd8698` (the table read here is the first of four, selected for the SHub 1 by the `0x1_5000_0000` block and the `0xffa959d0` read, inferred); the master selection routine beyond its first screens; the simulator branch of the fifo loop (the CPU ID signature test at `0xffa5d156`).
+**Not read here; read since.** The crawl's neighbour step, the vector routines, the four ops tables, the meaning of the bits of the `0x1_101d_0080` word that `0xffa5e0b0` copies into the entry flags, and the master selection are read in [the next section](#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504). Still not read: the simulator branch of the fifo loop (the CPU ID signature test at `0xffa5d156`).
+
+## NUMAlink discovery with a linked port: the neighbour crawl (SAL 5.04)
+
+What `main_two` does when a network port reports a link, so there is a neighbour to find. Same image and method as the
+sections above: `shub1snprom.bin`, SAL_B, Ghidra decompiles (`--sn2-prom`, whole image) with an
+`ia64-linux-gnu-objdump` listing checked at the branch tests and constants quoted here. The wire-level request format is in
+[the router node-access page](../../../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it);
+what a stand-in neighbour has to answer is in [numalink-neighbours.md](numalink-neighbours.md). Not independently
+reviewed; nothing was run. Names such as "discover_object" are strings the image prints.
+
+**Address checks (established; corrections in bold).** `0xffa47290` is the crawl (prints "Discovering NUMAlink
+connectivity", "DONE", "Found %d objects"; its failure text is "LLP link was up but could not talk to router.").
+`0xffa45780(table, entry, port)` is its per-neighbour step ("discover_object"). `0xffa469f0` reads the neighbour's word at
+`0x1_5003_1580` (a progress counter the PROM increments in `0xffa46980`). `0xffa46a50` is "intcon_chklink".
+**`0xffa5b5d0` is not a vector routine: it is "intcon_distribute_numbers" ("Distributing routing tables").** The vector
+read is `0xffa0bd20` and the write `0xffa0c560`. The SHub 2 image's counterparts, matched by size and strings:
+`0xff44fd70` (crawl, 1504 bytes in both images), `0xff450350` (the wait, 2912), `0xff4663d0` ("Calculating routes", 3920)
+is SHub 1 `0xffa5a670` (3936), `0xff467320` is `0xffa5b5d0` (2848), the SHub 2 read `0xff419e80` is `0xffa0bd20` and its
+write neighbour `0xff41ad30` is `0xffa0c560`.
+
+### The word at `0x1_101d_0080` (`SH_SCRATCH1`): who writes each bit and who reads it
+
+The register is the firmware's own mailbox between nodes (established: every writer found is PROM code). A node's PROM
+builds its word in `0xffa46530` and publishes it through ops slot `0x170` (a write of `0x1_101d_0080`); a neighbour reads it
+through slot `0x168` and decodes it in the port-fill method `0xffa5e0b0` into the 32-bit flag word of its table entry
+(descriptor `+0x38`, entry `+0x68`) and four bytes (descriptor `+0x3c` to `+0x3f`). Decode read in the listing.
+
+| Bit(s) | Producer | Entry flag it sets | Meaning |
+|---|---|---|---|
+| 15:0 | `0xffa47870`: the node's object count, written after its own crawl | none (compared in the wait loop) | how many objects the node found; established |
+| 16 | `0xffa46530`: bit 3 of the per-processor word `0x81_5003_1550` | `0x40000` | copy of that bit, whose own meaning is unknown; +1 in the master score |
+| 18, 19 | `0xffa46530`: debug word `0x81_5003_1560` bits 4:3 equal 2 (bit 18), equal 1 (bit 19) | `0x200000`, `0x400000` | published switches; no reader of the flags found (search of the decompiles, not exhaustive) |
+| 20 | `0xffa46530`: always 1 | `0x100000` | published with every word; no reader found |
+| 21 | `0xffa46530`: set when the environment variable `GlobalMaster` is not negative | `0x80000` | master preference: +2 in the master score |
+| 22 | `0xffa47870` sets it on its own word after the wait loop | `0x800000` | "this node finished discovery"; an entry with it is excluded from the master election |
+| 23 to 38 | constants `5` and `4` in the image (bytes at `0xffba20e8`, `0xffba20e9`) | bytes `+0x3e`, `+0x3f` | the SAL version, printed as "Prom=%x.%02x" (5.04); the print string settles it |
+| 39 | `0xffa5d2a0` on a neighbour it claims; `0xffa0aee0` and the exception park paths (`0xffaf5c80`, `0xffc4e030`) on a node's own word | `0x10000` | "claimed by a discovering master, or dead": the claimer programs it; it is not waited for and cannot be elected master |
+| 40 | `0xffa4eb40` (`main_three`, after the node installs its NASID), node-object method 5 | none; selects how the NASID and link mask are taken | "my NASID is final": set, the reader takes the NASID from bits 42:32 of the neighbour's chip identification word and the link mask from a live probe of the neighbour; clear, NASID `0xffff` (unassigned) and the mask from bits 55:54 |
+| 41 | the same exception and park paths; `0xffa5d2a0` forces it when its wait times out | `0x1010000` (with `0x10000`) unless debug-word bit 8 is set | "took an exception, disabled" |
+| 46 to 49 | `0xffa46530`, from an L1 request (`0xffa7fab0`) | byte `+0x3c` | printed as "ShrMode"; meaning inferred from the print |
+| 50 to 53 | `0xffa46530`, from the environment variable `force_coarse` (when debug-word bit 5 is clear) | byte `+0x3d` | printed as "Syssize"; inferred |
+| 54, 55 | `0xffa5d6a0` ("shub_port_status"): bit p = port p has a link | port-record link bit | the node's own view of which ports are up; established |
+| 56 | latch at `0xffa1a6d0` (test and set under lock 0x11); bits 57 and 40 by node-object method 5 | none read | unknown |
+| 58 | the twin routine `0xffa60a70` for the TIO chip type | `0x2000000` | TIO marker; inferred (no SHub 1 writer) |
+
+**Link-up** for a port is not a bit of this word; it is the node's own network registers, read by `shub_port_status`
+(`0xffa5d6a0`, one port at a time in `0xffa5cf40`), in this order (established): `LLP_ERR` at `0x1_5000_0048 + p * 0x2000`
+(if bit 27, `POWER_NOT_OK`, is set it is written back clear and read again; still set means "down", result 0, no message);
+`LLP_STAT` at `0x1_5000_0000 + p * 0x2000`, low nibble must be 9, any other value is result -1 and the printed
+"shub_port_status: vector 0x%lx/%d NI%d from %I failed"; then, unless CPU ID register 2 equals the simulator value
+`0xaeeeeeee8badbeef`, each of `0x1_5000_1040 + p * 0x2000 + 16 * i`, i = 0 to 3, is read until bits 22:16 are non-zero
+(128 tries each, then -1). Result 1 sets bit p of the 54:55 mask. The register at `0x1_5000_0010 + (p << 13)`
+(`LLP_RESET_EN`, reset 1) is read only by `0xffa5e0b0`, only when bit 40 of the neighbour's word is set, and a clear bit 0
+becomes port-record bit 1 (port fenced); established for the access, inferred for the meaning of the bit.
+
+### The crawl step, in order (established, `0xffa45780`)
+
+1. Route of the neighbour = the entry's route with the port appended as a new nibble (`0xffa0cf60`). A route is a list of
+   non-zero nibbles, lowest first, ended by a zero nibble (`0xffa0ce70` counts them). The crawl passes the 1-based port
+   index (1 = NI0, 2 = NI1); more than 15 hops prints "WARNING: Max vector length 16 exceeded".
+2. `0xffa46a50` ("intcon_chklink") vector-reads the chip identification word at node offset `0x1_0000_0000` along that
+   route. A failure prints "intcon_chklink: vector read 0x%lx CHIPID from %I failed" and is retried once. Bits 27:12 are
+   the part number and 31:28 the revision, stored in the descriptor; `0xffa0f7e0` offers the part to four method tables:
+   `0x4363` "SHub" (`0xffbd7c18`), `0x3017` "NL3router" (`0xffbd7f98`), `0x239` "NL4router" (`0xffbd8318`), `0x4422`
+   "TIO" (`0xffbd8698`). **This settles what the router pages left open: in the 5.04 image `0x239` is the NUMAlink 4 router
+   and `0x4422` is the TIO; the names are read from the tables.** A part outside the four leaves a null table.
+3. The link-quality check (same routine). The method pair `0x1a0` and `0x1a8` of the neighbour's table gives the port the
+   link lands on and two link error counters. For a SHub the port is bit 56 of the chip word (`0xffa5d5d0`) and the
+   counters are the bytes 0 and 1 of that port's `LLP_ERR` (`+0x48`, `0xffa5d5e0`); for an NL4 router the port is bits 43:40
+   of the word minus one (`0xffa66f90`) and the counters are bits 15:0 and 47:16 of the router port's register at port
+   base `+0x18a0` (`0xffa66fb0`). The same counters are read at the near end of the link (the chip before the neighbour on
+   the path). The chip word is then read 1, 2 or 4 more times (debug-word bits 1:0 equal 0, 2, 3; value 1 skips the check)
+   and a counter that grew by more than 50 is reported ("Detected %d %s errors in port %d") and fails the step.
+4. Slot `0x1c0` of the neighbour's table ("discover"): for a SHub `0xffa5df20` (the claim, below); for an NL4 router
+   `0xffa67070` (lock, identity word; see [router access](../../../devices/router_nl4/global-config.md#router-access-from-a-shub-1-node-sal-504)).
+   A negative result prints "discover_object: vector 0x%lx from %I failed: %s" and the step returns.
+5. `0xffa450e0` inserts the descriptor into the configuration table unless the same chip is already there (the compare is
+   on the geoid words, `0xffa11ab0`), then calls slot `0x1c8` (the decode above for a SHub, `0xffa67220` for a router). The
+   local port record then keeps the entry index and the neighbour's port number (bit 56 plus one, or bits 43:40). A failed
+   chip read sets bit 2 of the port-record byte `+3` instead.
+
+**The claim (`0xffa5d2a0`, called by `0xffa5df20`; established).** Read the neighbour's word. Bits 55:54 non-zero: return at
+once, nothing written ("already prepared"). Word 0, or bit 41 or 39 set: go on. Any other non-zero word: poll every 10 ms
+until 300 s pass or the console interrupt check fires, then force the word to bit 41 and go on. Going on: write 0 to the
+neighbour's `0x1_5003_1550` and `0x1_5003_1540`, set bit 39, clear 55:54, run `shub_port_status` against the neighbour (the
+reads of the previous section, through the vector path), put its mask in bits 55:54, write the word back, and set bit 1 of
+descriptor byte `+0x2b` (the "programmed by this master" mark). Then `0xffa5df20` vector-reads `0x1_101d_0100`
+(`SH_SCRATCH2`) through `0xffa8d120`, accepts it only when the low byte is `0x6c`, and builds the neighbour's geoid from it;
+a failed read prints "shub_discover: sysctl_get_pushed_data failed" and stores a type-0 geoid. Two nodes that produce the
+same geoid are one chip to the insert in step 5, which then adds nothing.
+
+**The wait (`0xffa47870`, established).** After its crawl the node reads its own word, sets bits 15:0 to its object count,
+writes it and prints "Waiting for peers to complete discovery". For each other entry that is a node (class byte 1) with its
+NASID not final (qword `+0x58` masked with `0x1ff0000` equals `0x10000`) **and flag `0x10000` clear**, it polls the
+neighbour's word: bits 15:0 non-zero and equal to its own count is done (a different count prints "Inconsistent discovery
+results" and fails the discovery); bits 15:0 zero with bit 41 or 39 set is "took an exception, disabling" (flags
+`0x1010000`); otherwise it reads the neighbour's counter at `0x1_5003_1580`, restarts a 300 s deadline whenever the counter
+changed, and sleeps 2 s (100 us under the simulator signature). A timeout is not fatal ("Timed out waiting for %I"). An
+entry with flag `0x10000` is skipped, so a neighbour the node claimed is not waited for. Last, the node sets bit 22 on its
+own word and prints "Discovery results". The earlier statement that the loop is skipped on a lone node still holds.
+
+**Master selection (`0xffa42640`; `0xffa445b0` for the global master; established for the test, inferred for the use of the
+result).** Candidates are entries of class 1 (a node) whose flags have neither `0x10000` nor `0x800000`; the partition
+master also needs the same partition byte. Score: +2 for flag `0x80000` (word bit 21), +1 for `0x40000` (bit 16); the
+highest wins and the earlier entry wins a tie (the local node is entry 0). It prints "Global master is %I". A claimed
+neighbour carries `0x10000`, so it is never a candidate, and the tree barrier (`0xffa42a30`, which walks the candidate
+array) then sees only the local node and touches only local registers (inferred from the array's use), as on a lone node.
+A neighbour that published its own word without being claimed is a candidate unless it carries bit 22; the barrier then
+needs that neighbour's own PROM to write the local node's `0x1_5003_13f0` (`0xffa42a30` polls it, 240 s, then compares
+the neighbour's counter and returns -1 if unchanged), which no passive stand-in does.
+
+**Distribution (`0xffa5b5d0`, established for the selection, inferred for the tail).** With no barrier failure
+(`cpu_bits` bit 4 clear) and no entry flagged `0x1000000`, slot `0x1d8` ("write the node's tables") is called on each entry
+whose NASID is not final and whose byte `+0x5b` bit 1 is set: the local node, every neighbour that was claimed and every
+NL4 router that was advertised (`0xffa668b0` sets the same bit). Unclaimed self-published peers are skipped (they program
+themselves). For a node the method is `0xffa5e880`; every write is a vector request on the neighbour's route, in this order:
+per NI port the local table (128 entries at `0x1_5002_2000 + port * 0x1000`), global table (16 at `+0x400`), override table
+(`+0x480`, written 0), flow registers `0x1_5003_03a0`, `0x1_5003_0400` at `port * 0x200` (read-modify-write); then the memory
+(`0x1_5002_4000`), I/O (`0x1_5002_0000`) and processor-interface (`0x1_5002_1000`) tables in the same shape; for a claimed
+neighbour also the port set-up `0xffa5d850` (LLP configuration, flow registers, a link reset `LLP_RESET` = 1 retried for up
+to about 700 us while `shub_port_status` stays -1), `0xffa9fc70` (write `0x0001000100000000` to `0x1_2000_0000`, clear bits
+29:26 of `0x1_5003_1550`, wait 300 ms) and, through `0xffa95a30`, a read-modify-write of the neighbour's `SH_SHUB_ID`
+(`0x1_1006_0580`: NASID in bits 42:32 plus two size fields). The values are the direction nibbles of the next paragraph. If
+the entry's NASID was already final each write is read back first and written only when different. The NASIDs come from
+`0xffa4d390`: type-1 entries get 0, 2, 4, ... from the defaults `NASIDOffset` 0 and `NASIDStride` 2, so a second node is
+NASID 2 (inferred; no variable is set in a default run).
+
+**Direction values are "turns" (established as code; hop semantics inferred).** The route programmer `0xffa54b80` prints
+"Setting %s path 0x%lx port %d local table entry %d to %d turns" and, for each router on a path, stores `(out - in)`
+modulo the router's port count (8 for an NL4 router; `in` and `out` are 1-based router ports; the code adds the count when
+`out < in`). A router table entry is therefore a turn count from the entry port, 0 being the entry port itself; a vector
+route, in contrast, holds absolute output ports. At the node ends the stored value is not a turn count: the node method
+`0xffa5e510` replaces it with 0 when the neighbour is a router and 4 when it is a node. Nibble `0xf` is "no route"
+everywhere (the table pool is filled with `0xff`). "Outgoing route: 0x" and "Return route: 0x" print the absolute port
+nibbles, last hop first. What 0 and 4 select inside a node's tables is **unknown**.
+
+Open after this reading: the global barrier `0xffa43d20`; `main_three` for more than one node (console, NASID install on
+the neighbour); `0xffa95a30`'s size fields; the other callers of slot `0x1c0`; the L1 conversation the router discovery
+runs over the vector path.
 
 ## The "Waiting for peers" loop
 
@@ -439,10 +578,10 @@ The run executed the shipped SAL_B (integer instructions only, one processor, th
 ## Gaps remaining before "Loading EFI"
 
 1. Which SPD sets and which L1 command-id meanings the real controller uses (the SPD positions, reply layout, test-completion bits, IBLS0 address and the source of bit 11 are settled above; what the selector 4 means to the L1 and what the real L1 reports for an empty slot are not).
-2. The initialisation of the route-table "next entry" index that stopped the interpreter run, and the interconnect registers on the non-skip path (DIP bit 11 clear; the local node's NI reads are now read, [above](#numalink-discovery-with-the-skip-bit-clear-and-no-link); the linked-port crawl is not).
+2. The initialisation of the route-table "next entry" index that stopped the interpreter run, and the interconnect registers on the non-skip path (DIP bit 11 clear; the local node's NI reads are now read, [above](#numalink-discovery-with-the-skip-bit-clear-and-no-link); the linked-port crawl is read [above](#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504)).
 3. The whole of `main_three`: widget id read, credits, riser EEPROM, PCI walk, console selection (read statically below; not run).
 4. PAL 99, 520, 528, 530 meanings.
-5. The `0x81_101d_0080` and `0x81_101d_0088` relation.
+5. The `0x81_101d_0080` and `0x81_101d_0088` relation. (The bits of the word are decoded [above](#the-word-at-0x1_101d_0080-sh_scratch1-who-writes-each-bit-and-who-reads-it); the alias is still open.)
 
 ## Review
 
