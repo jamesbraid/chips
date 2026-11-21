@@ -1,14 +1,18 @@
 # Visual Workstation 320 and 540: what an emulator must provide
 
-Two routes: run the firmware image (not held), or replace it with a small stand-in that leaves the machine in the state
+Two routes: run the firmware image (only PROM 1.0006 is held), or replace it with a small stand-in that leaves the machine in the state
 the operating system software expects. Grades as in the [README](README.md). Everything below is a requirement
 derived from shipped NT software and the public Linux port; the chipset's register behaviour itself is in the chip
 pages.
 
 ## Running the real firmware
 
-Not possible today: no PROM image, update floppy or flash dump is held ([README.md](README.md)). If one turns up, the
-flash is 512 KiB mapped at `0xfff80000` (software expectation: the HAL maps and programs it), accessed as a 16-bit
+The PROM 1.0006 image is held ([firmware.md](firmware.md)), so this route can be tried; no run has been done. What the image
+asks of the machine before it reaches its main module: RAM that works up to 16 MiB with no sizing (the boot block copies
+the flash to `0x80000` and expands the firmware to `0xf00000`-`0xff0264`), the Lithium configuration window at
+`0xfd0000f8`/`0xfd0000fc` and the PIIX4 behind it, an NS87307 answering on ports `0x2e`/`0x2f`, the 8259 and DMA
+ports, MSR and MTRR instructions, and Cobalt bank registers at `0xc6000048` and up that report populated banks
+([boot-path.md](boot-path.md)). The flash is 512 KiB mapped at `0xfff80000` (software expectation: the HAL maps and programs it), accessed as a 16-bit
 AMD-command-set flash with the usual two-cycle unlock; the ARC environment lives in its top 8 KiB sector, which the
 operating system rewrites, so the device needs a persistent, erasable model. The firmware would additionally need the
 chips the HAL expects (PIIX4, NS87307, CMOS RTC, 8259 pair, floppy, IDE and SCSI), a keyboard (a USB or PS/2
@@ -82,7 +86,7 @@ A standard Windows installer will not do: the SGI setup program replaces the HAL
 
 ## Not known
 
-The graphics-memory split, the stand-in's ARC services at the byte level (the loader's call table is not decoded), the
-PROM's reset and device-initialisation order, and any BIOS-style entry points; and whether the real firmware or the OS
-assigns PCI resources, which determines whether an emulated stand-in must. See
+The graphics-memory split, the stand-in's ARC services at the byte level (the table's layout is in [boot-path.md](boot-path.md); which entries the loader calls is not enumerated), the
+the Cobalt memory controller's programming and reset values, where the embedded legacy-BIOS image is mapped; and whether the real firmware or
+the OS assigns PCI resources, which determines whether an emulated stand-in must. See
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
