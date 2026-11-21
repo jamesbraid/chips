@@ -42,10 +42,11 @@ Hub id as printed by the PROM ("HUB at 0x0 attached as widget 0x%x", string at `
 
 No verbose trace exists for a plain Origin 350 ("SN12 2U Server.", `0x1fc70318`) or an Onyx4 host. Layout evidence from IRIX `hinv` (a device's `xtalk/N` is its own widget, so the hub cannot be N):
 
-- The same part, IP53_4CPU 030-1868-001 rev C, sits in a Tezro (bridges at xtalk/11 and 15, Odyssey at 12; hub 0xa in the separate deskside Tezro trace), an Origin 350 and an Onyx4 host. So the hub id is not fixed by the board part.
+- The same part, IP53_4CPU 030-1868-001 rev C, sits in a Tezro (bridges at xtalk/11 and 15, Odyssey at 12; hub 0xa in the separate deskside Tezro trace) and an Origin 350. So the hub id is not fixed by the board part.
+- Onyx4 hosts appear on two node boards. One Onyx4 listing shows IP53_4CPU 030-1868-001 rev C and 030-1868-002 rev A, each with a CG brick at xtalk/10. Others show IP59_4CPU 030-1989-003 (rev C and D): the "Artemis" Onyx 350 prototype/Onyx4 (CG brick bridge at xtalk/15 in that capture) and a NUMAlinked Onyx/Origin 350 system mixing IP59 and IP53 nodes. The IP35 PROM serves both boards, so the Onyx4 conclusion rests on the shared PROM code, not on one board part.
 - Onyx4 hosts list the CG brick at xtalk/10 beside the IXbrick bridge at 15. Onyx 350 with InfiniteReality4 lists KTOWN2 at xtalk/10 and, on a second module, a video board at xtalk/12. The hub is therefore not 10 there.
 
-Sources, verbatim: `/storage/nvme/origami/evidence/o350-hub-widget-20261121/` (README, SHA256SUMS).
+Sources (public captures): the Onyx 350 graphics blade trace at just.graphica.com.au/tips/sgi-o350-chimera-notes/; the Tezro trace at forums.irixnet.org/thread-3613.html; the Origin 300 at forums.irixnet.org/thread-2737.html; the Fuel at forums.irixnet.org/thread-3238.html; hinv listings at just.graphica.com.au/tips/what-is-inside-that-box-sgi-hinv/ (quad Tezro, Onyx 350 with InfiniteReality4, NUMAlinked Onyx/Origin 350), wiki.preterhuman.net/SGI_Onyx4, forums.irixnet.org/thread-2263.html (Artemis) and nekonomicon.irixnet.org/forum/14/16728909/1.html (32-CPU Onyx4).
 
 **Verdict.** Onyx4 host: not 10; **inferred 0xb**, because the PROM only anticipates 10 or 11 and the only IP53 id seen with a graphics widget at 10 is 0xb. Plain Origin 350: **unknown, inferred 0xb** by the same module layout (an IRIXnet poster describes the Onyx4 expansion module as the same as an Origin 350 module with a different front plate). Both stay inferred until a verbose PROM trace or a read of `II_WCR` exists. The Tezro stays 10.
 
