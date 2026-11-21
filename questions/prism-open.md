@@ -17,14 +17,19 @@ Status: **unknown** for everything below. What is established is on [the Prism o
 - **GPU part.** The guides name "FireGL X2PRO-256" and "FireGL X3-256" only. Which ATI chip each board carries (R350-class for the
   X2PRO, R420-class for the X3 by external listings) and the PCI vendor and device IDs are not in any SGI source. Route: `lspci`
   output or `fglrx` device tables from a ProPack disk image; the held T2/Linux image has neither. The 2019 log's boot VGA
-  device (0006:00:00.0) prints no device ID.
+  device (0006:00:00.0) prints no device ID. The public pci.ids list names 1002:4a4d "R420 GL [FireGL X3-256]" and
+  1002:4e4b "R350 GL [FireGL X2 AGP Pro]". That is an external name list, not SGI evidence, and no held capture prints
+  a 1002 ID, so the mapping to a board stays unknown.
 - **PROM and SAL.** No snprom build is tied to the Prism, and no PROM is held. The one constraint known: SHub 1 needs SAL
   revision 4.06 or later for TIOCA (`v5.3:arch/ia64/sn/pci/tioca_provider.c`). Whether the Prism PROM emits a PCDP VGA entry for the
   AGP card, and whether graphics boards carry an option ROM, is unknown. Route: PROM image or the disk's `/usr/cpu/firmware`;
-  boot capture of the EFI shell. The 2019 logs print an `HCDP=` EFI table and no `PCDP=` entry; whether a PCDP table exists is
-  unknown.
+  boot capture of the EFI shell. The 2019 logs (kernels 3.8.13 and 4.14.83) print `PCDP: v3 at 0x31efead110`, the address of the
+  EFI `HCDP=` entry, so the firmware passes a PCDP v3 table (observed, as posted). The dump does not show its entries,
+  so whether one describes the graphics adapter is unknown.
 - **Software versions.** `fglrx`, XFree86 and ProPack 4 SP2 kernel versions are not printed in any guide. Route: a ProPack disk
-  image's `rpm -qa` and `/etc/sgi-release`. The held image is T2/Linux and has neither.
+  image's `rpm -qa` and `/etc/sgi-release`. The held image is T2/Linux and has neither. Checked 2026-11-21: the Library
+  search finds no ProPack 4 Service Pack 4 FireGL package set (the fglrx, km-rtgfx-fglrx and vizserver names return only a ProPack 4 Service Pack 3 CD1 README
+  and RPM listing, which the reader cannot open), so no package list is read.
 - **Minimum rackmount build.** Table 3-1 lists four processors as the minimum while the XG2N text allows zero CPUs. Route:
   a configuration list or an order guide; none held.
 - **L1 for XG2N.** The L1 and L2 guide's brick-type table has no XG2N letter; `gfxtopology` reports `c`. Route: an L1 `config`

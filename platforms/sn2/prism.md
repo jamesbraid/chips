@@ -108,7 +108,8 @@ Established, from SGI's Linux platform code (v5.3 tree). The TIO bridge chips th
 - Linux selects the VGA console from the firmware's PCDP table, because the platform firmware passes too little ACPI data
   to find a VGA adapter (`v5.3:arch/ia64/sn/kernel/setup.c`, `sn_scan_pcdp`, comment above it). The Prism guide tells the
   user to put the Linux console monitor on pipe 0's left channel (007-4701-003 p.18). Established that the kernel needs
-  PCDP; **inferred** that the Prism firmware publishes a PCDP VGA entry for that card.
+  PCDP; **inferred** that the Prism firmware publishes a PCDP VGA entry for that card. The 2019 boot logs show a PCDP v3
+  table at the address of the EFI HCDP entry (observed, as posted); its entries are not printed.
 
 How the AGP boards attach to a node, from the manuals plus the parts index (inferred where marked):
 
