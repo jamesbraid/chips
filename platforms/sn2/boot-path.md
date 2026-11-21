@@ -161,8 +161,9 @@ is a tar of three EFI drivers, `drv_fpswa.efi` among them (the floating-point so
 - EFI configuration tables: it installs the SAL system table, the ACPI 2.0 RSDP (the ACPI 1.0 slot is 0 and adds nothing), an HCDP table and the debug image table, and the PCI option ROM table
   when its count is nonzero; MPS is not installed and nothing installs SMBIOS (established,
   [efi.md](../../software/firmware/snprom/efi.md#3-configuration-tables-and-where-sn2-specific-data-lives)). The tables themselves (ACPI, memory map, SAL system table, runtime services) are in [os-handoff-tables.md](../../software/firmware/snprom/os-handoff-tables.md).
-- Variable store: a flash-backed store at the top of the address space, "Syncing EFI var. store" at `0xffaf6640` and `0xffaf6d10`.
-  Role inferred; contents and layout unknown. EFI runtime time calls go through SAL ids `0x0a` and `0x0b`, variable calls through `0x08` (established from the EFI image's constants, per the snprom README).
+- Variable store: 16 banks of 64 KiB at flash offsets `0x100000` to `0x1fffff` of each node's boot flash (CFI flash behind the SHub, no L1 or IOC4 involved), reached by SAL id `0x02000008` and
+  callback `0x3000`; "Syncing EFI var. store" at `0xffaf6640` and `0xffaf6d10` copies and checksums it across nodes. EFI runtime time calls go through SAL ids `0x0a` and `0x0b`
+  ([efi-boot.md](../../software/firmware/snprom/efi-boot.md#1-boot-options-and-the-variables), established; the record layout is inferred).
 - Boot manager and variables: the Intel sample boot manager with `Boot####`, `BootOrder`, `BootNext`, `Timeout` (default 7 s) and a default
   option per removable block device, file system, network and shell; the store is read and written through SAL
   ([efi.md](../../software/firmware/snprom/efi.md#5-boot-manager-variables-and-finding-the-boot-loader), established). No capture of the 350's EFI shell is held.
@@ -171,7 +172,7 @@ is a tar of three EFI drivers, `drv_fpswa.efi` among them (the floating-point so
 Simple File System on the boot partition (the PROM carries SATA and ATA pass-through drivers for IOC4).
 
 **Gaps.**
-1. The SAL_B handlers behind EFI's flash variable store (`0x02000008`) and callbacks (`0x3000`, `0x5000`, `0x6000`), and the flash format.
+1. The SAL_B handlers behind EFI's reset and timer callbacks (`0x5000`, `0x6000`); the variable store callbacks are read ([efi-boot.md](../../software/firmware/snprom/efi-boot.md#1-boot-options-and-the-variables)).
 2. Whether the 350 PROM publishes an ACPI 2.0 DSDT with `SGIHUB` devices or the older direct I/O description (the RSDP builders are unread).
 3. Which of the console routes `p` and `r` the SAL console calls take.
 4. Flash variable-store format and what survives power loss.

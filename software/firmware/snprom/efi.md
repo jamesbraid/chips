@@ -218,16 +218,15 @@ registration and the banner: `SataBus`, `ScsiBus`, `ScsiDisk`, `Ioc4AtapiScsiPas
 10 clear, an endless loop that runs the internal commands `bootmgr` and `bmaint` (`InitializeBootManager`, `InitializeBootMaintenance`). With bit 10 set it
 prints the hardware report (`BmPlatBanner` calls `HinvReport`), connects everything and starts the shell `nshell`.
 
-**Variables (established mechanism, inferred layout).** A flash-backed store. `PlInitNvVarStoreFlash` (`0x121d60`) allocates 0x20000
-bytes of runtime memory, installs the variable store protocol (`f088cd91-a046-11d2-8e42-00a0c969723b`), then calls SN SAL
-`0x02000008` with function 4, `0x10` and `0x10000` (the record's `0x48` and `0x50`), the buffer and 0x20000. SAL_B's function 4 only
-bounds-checks the first two (at most `0x10` and `0x10000`), fills the buffer header and probes each node's flash for writability; it copies no store data to EFI (reviewed).
-Reads, updates and erases go to SAL by the callback pair at `0x38`/`0x40` of the record: `RtSalCallBack(0x8000000000003000, op, ...)` with
-op 1 to clear, 2 to read and 3 to update a byte range, after a bounds check against the store size. Time uses SN SAL `0x0a` (set) and `0x0b` (get); reset uses
+**Variables (established path and flash location, inferred record layout).** A flash-backed store of 16 banks of 64 KiB at flash offsets `0x100000` to `0x1fffff` of each node's boot flash,
+the same flash that holds the PROM log. `PlInitNvVarStoreFlash` (`0x121d60`) allocates 0x20000 bytes of runtime memory, installs the variable store protocol
+(`f088cd91-a046-11d2-8e42-00a0c969723b`) with the bank count `0x10` and bank size `0x10000` that SAL_B's hand-off record carries (`+0x48`, `+0x50`), then calls SN SAL `0x02000008` function 4 with them, the buffer and its
+length. Function 4 bounds-checks both, fills the buffer header and probes each node's flash; it copies no store data. Clear (erase a bank), read and update go to SAL by `RtSalCallBack(0x8000000000003000, op, bank, offset, length, buffer, header, 0)`,
+op 1 to 3, through function pointers at `+0x28`, `+0x30` and `+0x38` of the store record (the SAL entry pair `RtSalCallBack` calls is the hand-off record's `0x38`/`0x40`); SAL_B turns them into CFI flash erase, read and program at `0x100000 + (bank << 16) + offset`.
+The flash path, part requirements, commit and garbage-collection behaviour and the blank-store boot are in [efi-boot.md](efi-boot.md#1-boot-options-and-the-variables). Time uses SN SAL `0x0a` (set) and `0x0b` (get); reset uses
 callback id `0x5000` and the timer callback id `0x6000`. The variable engine (`RtVarFind`, `RtSetVariable`,
-`RtVarGarbageCollect`, two banks with transaction state, a CRC-32) is the sample implementation's. "Syncing EFI var. store" is printed by SAL_B
-(`0xffaf6640`, `0xffaf6d10`, boot-sequence). The flash chip, sector map and which SAL_B routine implements op 4 and the callbacks were **not read**; with the
-store absent or the SAL call failing, `PlInitNvVarStoreFlash` ignores the status, so EFI would start with an empty variable set (inferred).
+`RtVarGarbageCollect`, banks with state bytes, a CRC-32) is the sample implementation's. "Syncing EFI var. store" is printed by SAL_B (`0xffaf6640`, `0xffaf6d10`) when it copies and checksums the sixteen blocks across nodes.
+With the store absent or the flash not probing, SAL answers success without writing and reads return erased data, so EFI starts with an empty variable set and keeps changes in RAM until reset (established from the SAL handler).
 
 **Default boot options (established).** With no `Boot####` variable, `BmReadVariables` builds the list: one option per removable
 Block I/O handle, then one per non-removable block or file-system handle, one per Simple Network handle (a PXE load) and one per
@@ -293,7 +292,7 @@ The boot options, the variable-store access path, the device paths the disk driv
 
 - Builders of the SAL system table, both ACPI RSDPs and the memory descriptor array (`0xffafca90`, `0xffb5c9b0`, `0xffb5a2f0`, `0xffac8120`) and the
   allocator behind the record (`0xffac30c0`): read to settle the words beyond `0x58`, the ACPI contents and the descriptor types the PROM passes.
-- The SAL_B side of `0x02000008` and the callbacks `0x3000`, `0x5000`, `0x6000`: settle the variable store format, flash sectors and what a timer needs to deliver.
+- The SAL_B side of the callbacks `0x5000` and `0x6000`: what a timer needs to deliver. (The `0x02000008` and `0x3000` side is read: [efi-boot.md](efi-boot.md#1-boot-options-and-the-variables).)
 - `InitializeAltixPciRootBridge`, `AltixPciDeviceInit` and how they treat the answers of `0x56`, `0x57` and `0x52`: settle the PCI root bridge contract for the emulator.
 - The system table's firmware vendor and revision: find the writer, or read them from a running capture. The product release of the sample is unknown.
 - Which of `p`, `r` in the PROM console string is which controller route, and whether a PCDP table is filled for a serial console.

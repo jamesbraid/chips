@@ -25,33 +25,71 @@ this GUID, parses `Boot####` and `Driver####` into option lists, then orders the
 name was found in the boot manager; the `bcfg`, `dmpstore` and `set` shell commands read and write the same store (strings of the shell help).
 Shell aliases and `set` values are stored in the same variable store (shell help text: "stored in EFI NVRAM").
 
-**Where the store lives (established for the access path, unknown for the flash address).**
-- EFI reads and writes the store only through SAL callback id `0x8000000000003000` (`RtPlReadStore` `0x122450`, `RtPlUpdateStore` `0x1226d0`,
-  `RtPlClearStore` `0x1222d0`): operation 1 clears a byte range, 2 reads one and 3 updates one, after a bounds check against the store size.
-  Each passes the request to `RtSalCallBack` (`0x122c80`) with the offset, length, buffer (physical when `psr.dt` is on) and the store's cookie.
-- The callback table row for id `0x...3000` in SAL_B (row 99 of the table at `0xffc25ec8`) points at the descriptor of SAL id `0x02000008` (handler `0xffb182c0`),
-  so one SAL_B routine serves both the set-up call and the store traffic. Its operations (established, switch on the second argument):
-  0 (`0xffad4ec0`, a per-node bitmap walk; role not decoded), **1, 2, 3 (clear, read, update: all one helper, `0xffb17e40`)**, 4 (set-up), 5, 6, 7 (three
-  chip-object methods at `+0xa0`, `+0xa8`, `+0xb0` of the node chip's method table: flash chip operations, not decoded). Any other operation returns -2.
-- **Operation 4 (established).** Called once from `PlInitNvVarStoreFlash` (`0x121d60`) with flash id (`<= 0x10`), store size (`<= 0x10000` bytes), the buffer and
-  its length (0x20000). It writes the buffer header: an int count of request slots that fit (each slot is `0x2020` bytes), a short **index of the first node whose
-  flash answers as writable** (`-1` if none), and a pointer at `+8` to the work area that follows the slots (the request queue the helpers use; the slots themselves start `0x2010` into the buffer); it probes each present node by calling chip methods `+0x40` then `+0x50`.
-  It copies no store contents. So the variable store is a flash region of at most **64 KiB** (`0x10000`), reached on the **first node with writable flash**,
-  moved in 8 KiB (`0x2000`) chunks by a request queue (reads go to the first writable node only; clear and update requests are issued for every present node, **inferred** from the helper's loop, whose arguments the decompiler did not name) (helpers `0xffaf49a0`, `0xffaf49d0`, `0xffaf5540`); EFI keeps a 0x20000-byte runtime copy of the header and slots.
-- **Flash address range: unknown.** The 8 MiB flash window at `0xff80_0000` ([os-handoff-tables.md](os-handoff-tables.md#2-the-efi-memory-map)) holds the
-  FIT and images; the region offset of the 64 KiB store inside the node flash is set by the chip-object flash methods
-  (`+0xa0`/`+0xa8`/`+0xb0`, reached through `0xffa1c2e0`), which were not decoded; `+0x40`/`+0x48`/`+0x50` are decoded in [PROM variables](#prom-variables) (the clear command erases blocks `0x10` to `0x1f` of the flash, so the store lies inside `0x100000` to `0x1fffff`). Route: read those methods for the sector base, or diff
-  the flash of a machine before and after `bcfg boot add`. A model may back the store with 64 KiB of RAM; EFI cannot tell, provided `0x02000008` ops 1 to 3 behave as below.
-- **Contract a model must meet (established as the caller's contract):** op 4 returns status 0 for a flash id `<= 0x10` and size `<= 0x10000` (otherwise it zeroes the count and returns -2) and writes a buffer header;
-  EFI's callers pass op 1 = clear, 2 = read, 3 = update with (offset, length, buffer) and read the status back. With a first-writable-node short of -1, PROM op 2 does not fail: it fills the buffer with `0xff` and returns 0, so a model
-  that never reports a writable node still gets an empty, readable (but not persistent) store. `PlInitNvVarStoreFlash` ignores the op 4 status. A store that always reads back all `0xff` (erased) is a valid empty store.
+**Where the store lives (established: read in full in SAL_B 5.04 and the EFI component of `shub1snprom.bin` 10.54, with disassembly cross-checks).**
+The store is 16 banks of 64 KiB in each node's own boot flash, at flash offsets `0x100000` to `0x1fffff`, reached through the node's flash chip object. No L1, IOC4 or
+other device is involved. The pieces, in the order a request meets them:
+- **EFI side.** `PlInitNvVarStoreFlash` (`0x121d60`) builds a `0x50`-byte record and installs it as the variable store protocol. The record holds the signature `vedv`
+  (`0x76656476`), the 0x20000-byte buffer that SAL op 4 fills (record `+0x10`), the device kind 7 (`+0x18`), the bank size (`+0x1c`), the bank count (`+0x20`) and
+  three function pointers at `+0x28`, `+0x30` and `+0x38`, which the engine calls through protocol offsets `0x10` (clear a bank), `0x18` (read) and `0x20` (update). A fourth slot (`+0x40`, a
+  bank-grow hook) is left zero. (The pair at `0x38`/`0x40` of the SAL hand-off record is a different thing: the SAL callback entry that `RtSalCallBack` (`0x122c80`) calls, [efi.md](efi.md).) The bank size and count are not EFI's: SAL_B's hand-off builder
+  (`0xffafc140`) writes `0x10` at hand-off record `+0x48` and `0x10000` at `+0x50`, `PlInstallBaseDevices` forwards them, and op 4 only checks them against those same limits.
+  The three functions (`RtPlClearStore` `0x1222d0`, `RtPlReadStore` `0x122450`, `RtPlUpdateStore` `0x1226d0`) call `RtSalCallBack(0x8000000000003000, op, bank, offset, length, buffer, header, 0)`
+  (op 1 clear: `bank` and `header` only), after checking `offset + length` against the bank size. A zero status word is success; anything else becomes `EFI_UNSUPPORTED`.
+  A buffer address is converted to physical when `psr.dt` is set. Only ops 1, 2, 3 and the op 4 set-up are used by the variable engine; ops 5 to 7 belong to the EFI shell `flash` command (`InitializeFlash`, whole 8 MiB images, not read further).
+- **SAL_B side.** Callback id `0x...3000` (row 99 of the table at `0xffc25ec8`, descriptor `0xffc4b1f0`) and SAL id `0x02000008` share one handler, `0xffb182c0`, and the same register layout:
+  `r32` id, `r33` op, `r34` to `r38` the arguments. Any op above 7 returns -2.
+- **Address arithmetic (established, disassembly `0xffb18460` to `0xffb184bc`, `0xffb183f0`).** Read and update (ops 2, 3) use the flash byte offset
+  `0x100000 + (bank << 16) + offset`; clear (op 1) erases 64 KiB block number `0x10 + bank`, i.e. the same bank. The constant `0x100000` is in SAL_B, not in EFI or in a variable.
+  The PROM's own copy and checksum routines walk blocks `0x10` to `0x1f` (`0xffaf6640`, `0xffaf6d10`), and the "Clearing nasid %d EFI variables" command (`0xffb0ad60`) erases the same sixteen blocks.
+- **Op 4, set-up (established).** Arguments: bank count (at most `0x10`), bank size (at most `0x10000`), the 0x20000-byte buffer and its length; otherwise it zeroes the count and returns -2. It
+  fills the buffer header (an int count of request slots, a short index of the first node whose flash probes writable or -1, a pointer at `+8` to the work area after
+  the slots) and returns 0. The slot count follows from the length (hand arithmetic on the decompiled constants gives 14 for 0x20000; not run). It copies no store contents. For each
+  present node it calls the chip methods map (`+0x40`), reset (`+0x48`) and probe (`+0x50`); a probe failure prints a message and does not abort. `PlInitNvVarStoreFlash` ignores the status.
+- **Ops 1 to 3 (established).** Each node with memory gets one request (reads: only the first writable node), run as a cooperative task by the worker `0xffb17ae0` over a per-node
+  flash object. Request `+0x10` is the op, `+0x14` the offset or block, `+0x0` the buffer and `+0x8` the length. The worker maps the node's flash and calls: read = method `+0x70`; update = probe (`+0x50`) then program (`+0x60`);
+  clear = probe then erase (`+0x58`). A non-zero chip status becomes -3 in the request; the handler returns the last non-zero request status. **A failed probe is not an error:** clear and update return success without
+  touching the flash, and a read with no writable node fills the buffer with `0xff` and returns 0. A model whose flash does not probe therefore gives EFI a working store for the current boot only (the engine keeps a RAM copy of each bank).
+- **Every node holds its own copy.** The requests of ops 1 and 3 go to every node that has memory, so each node's flash carries the whole store. In a multi-node machine SAL_B checksums the sixteen blocks of each node at boot
+  (`0xffaf6d10`, stored at node record `+0x80`; the checksum of an all-`0xff` region is `0x956bac74` and prints as "(empty)"), votes (`0xffaf72f0`, "EFI var. chksum nasid ... vote") and
+  copies the winner's blocks over a differing node (`0xffaf6640`: read 64 KiB, erase, program, per block). A one-node Altix 350 has nothing to copy. (The vote's tie-break rule and the copy order on three or more nodes were not read.)
 
-**Record format (inferred from `RtVarParseStore` `0x131be0`, the sample engine's parser, plus the two-bank layout in efi.md).** The store is a sequence of 4-byte aligned
-records; `0xffff` in the first u16 ends the log. A record starts with a u16 whose low 12 bits are the record length from the header and whose bit pattern
-`(w & 0x8200) == 0x8000` marks it valid and not deleted; a second u16 holds the attributes; the vendor GUID follows (16 bytes) so the name starts `0x14` bytes in;
-the name is UCS-2 and NUL-terminated, then the data; the last byte of the record is stored complemented as a commit marker. A CRC-32 and garbage collection
-(`RtVarGarbageCollect`, two banks) are the engine's own. Grade **inferred**: the field meanings come from the parser's arithmetic, not from a writer, and the bit
-meanings are not confirmed against a captured store. An emulator never needs this layout unless it wants to read variables host-side.
+**Flash path and part (established for what the code requires; the real part is unknown).** The node flash object (class "SHub", method table at `0xffbd7c18`) maps the flash at `(nasid << 38) | 0x8000000fff800000` (`0xffacea70`),
+the same device [PROM variables](#prom-variables) describes: 8 MiB of 16-bit AMD-style (command set 2) flash read as aligned 8-byte loads and written with 16-bit stores at byte addresses `2 * word`. Commands:
+
+| Step | Sequence (word addresses) |
+|---|---|
+| reset | `0xf0` at 0 |
+| probe (`0xffad22f0`) | reset; autoselect `0xaa`@`0x555`, `0x55`@`0x2aa`, `0x90`@`0x555`, read words 0 and 1 and keep them without checking them; reset; CFI query `0x98`@`0x55`; reset |
+| erase one 64 KiB block (`0xffad2730`) | `0xaa`@`0x555`, `0x55`@`0x2aa`, `0x80`@`0x555`, `0xaa`@`0x555`, `0x55`@`0x2aa`, `0x30` at each hardware sector in the block, poll the data to read `0xff`, then blank-check |
+| program, no write buffer (`0xffad1860`) | per word `0xaa`@`0x555`, `0x55`@`0x2aa`, `0xa0`@`0x555`, the data, poll |
+| program, with write buffer (`0xffad1b30`) | `0xaa`, `0x55`, `0x25` at the sector with word count minus 1, up to 32 words, `0x29` at the sector |
+| read (`0xffad2940`) | aligned 8-byte loads, copied out byte by byte, at most `0x1000` bytes per lock |
+
+Program and read run in `0x1000`-byte chunks, each under the node flash lock (a software method of the node object, `+0xd8` lock and `+0xf0` unlock; not decoded: a model must supply whatever it touches, unknown).
+Every program is followed by a read-back compare (mismatch: status -12, "Data verify failed"), and the per-word poll waits for the written value to read back, up to 3,000,000 microseconds per step, with an error-bit (`0x20`) check. An odd start or end byte is merged with the neighbouring flash byte into a full word. The flash error-text table also has status -2, "Cannot program a 0 into a 1", and -1, "Unknown manufacturer/device ID"; nothing on the paths read here returns either (unknown which path does).
+What the CFI table must say for the probe to pass (`0xffad22f0` and `0xffaceb80`): `Q`, `R`, `Y` at words `0x10` to `0x12`; primary command set 2 at word `0x13`, 0 at word `0x14`; interface code (word `0x28`) 1 or 2; device size
+`1 << (word 0x27)` at least `0x800000`; erase-region count (word `0x2c`) 1 to 4; per region two words of sector count minus 1 and two of sector size in 256-byte units, and the PROM reads the regions in reverse order, so a one-region
+uniform 64 KiB part avoids the question; a non-zero write-buffer exponent (word `0x2a`) selects the buffered program sequence. Manufacturer and device ids are read but not tested. An erase whose block falls outside every region fails with
+"cfi_sector_erase: sector position error". **Unknown:** the real chip, its sector geometry (the code reads it from the chip, and the image does not name it) and whether SHub or L1 gates writes to the flash window.
+
+**Flash map around the store (established unless marked).** Offsets in the 8 MiB flash: `0x000000` to `0x01ffff` the PROM variable log (two 64 KiB blocks), blocks 4 to 11 the error log (read in [PROM variables](#prom-variables)),
+`0x100000` to `0x1fffff` the EFI store, `0x200000` to `0x7fffff` the 6 MiB PROM image (the shipped file; inferred: the unspecified remainder is erased). Whether the factory flash carries anything in `0x100000` to `0x1fffff` is unknown.
+
+**Record format (inferred from `RtVarParseStore` `0x131be0`, `VarStoreAddBank` `0x130c60` and `RtSetVariable` `0x12ee60`, the sample engine's code; no store capture exists).**
+- *Bank:* an 8-byte header at bank offset 0: the 32-bit value `0x6c726276` (bytes `76 62 72 6c`), a u16 sequence number at `+4`, a byte at `+6` that must be 0, and at `+7` the bank state, stored complemented so that an erased `0xff` is state 0. The bank is accepted when the
+  magic matches, `+6` is 0 and state bit 0 is clear or bit 1 is set. Records follow from offset 8.
+- *Record:* a u16 whose low 12 bits are the length, header included (the parser requires bit 15 set and bit 9 clear in it), a u16 attributes word, the 16-byte vendor GUID (so the UCS-2 name starts 0x14 bytes in), the NUL-terminated name, the data, and a final state byte stored complemented: new records get `0x7f`, and
+  the engine ORs state bits `1` then `2` in (clear-only writes) as it replaces or deletes the record. Records start 4-byte aligned; a first u16 of `0` or `0xffff` ends the bank. `SetVariable` takes data of at most `0x400` bytes and attributes within the low three bits (runtime without boot-service access is refused).
+- *Commit and garbage collection:* a new record is appended to the current spare bank and the old record gets state bit 1, then bits 1 and 2. When a bank is full, `RtVarGarbageCollect` (`0x132ac0`) picks a bank holding deleted space, copies its live records into a bank that holds only a header (`RtVarMove`), steps the
+  source and target bank states through `1`, `8`, `2`, `4`, erases the source (clear op, then a fresh header with the next sequence number) and picks a new spare (`RtVarGetTransactionBank`, which also renumbers the banks from 0 when the 16-bit sequence reaches `0xffff`).
+  At the next boot `VarCheckBanks` (`0x130250`) finishes any move a power loss interrupted. These bank state steps are why the update op must allow clearing bits in place.
+- *Blank or corrupt store at boot:* `VarAddDevice` (`0x130040`) reads every bank's header (all 16, sequence numbers assigned in order). A bank whose header is invalid, which includes all `0xff`, is erased through op 1 and given a fresh header, so a blank flash costs sixteen erases (each polled up to 3 s) and sixteen
+  8-byte header writes on first boot, then holds no variables; `BmSetDefaultBootOptions` rebuilds the boot list ([defaults](#1-boot-options-and-the-variables)). A bank with a record of impossible length (under 4 bytes of payload or past the bank end) is erased and reformatted whole, so its variables are lost. A failed read marks the bank in error and drops it from the list without erasing it. Nothing in SAL_B checks the contents.
+  With no writable flash the engine still works from its RAM copy until reset.
+- An emulator needs this layout only to read or seed variables on the host side; for persistence it needs the flash, not the format.
+
+**Model contract (summary).** Persistence needs: an 8 MiB, x16, AMD-command-set flash with CFI (`QRY`, set 2, size exponent `0x17`, one uniform 64 KiB region), mapped as described above, with the PROM image in `0x200000` to `0x7fffff` and `0xff` elsewhere, backed by a host file that is written
+back; reads served as aligned 8-byte loads; 16-bit stores accepted at the flash base (reset `0xf0`) even for lookups; erase of a 64 KiB block and program with read-back must behave like real flash (only 1 to 0 transitions, erased reads `0xff`). A model that wants the unwritable behaviour instead leaves the probe failing (`QRY` absent): EFI then runs from RAM and nothing persists.
 
 **Auto-boot or Shell (established mechanism, inferred outcome with nothing installed).**
 - `InitializeBootManager` (`0x109760`) reads variables, loads drivers (`BmLoadDrivers`), looks for `BootNext` (`BmBootNextOption`), then loops forever on `BmBootMenu` (`0x247da0`).
@@ -182,7 +220,7 @@ Read path for a lookup: `getenv` (`0xffad6e30`) -> open the node's flash object 
 **4. Writes (established for the command sequences; the chip is read only through CFI).** Every write is under the node's flash lock (`0xfface890`). Flash is 16 bits wide in a command-set-2 (AMD-style) part; word addresses below are in 16-bit words from the flash base.
 - Probe (`0xffad22f0`): reset `0xf0` at word 0; autoselect (`0xaa` at `0x555`, `0x55` at `0x2aa`, `0x90` at `0x555`) and read manufacturer at word 0 and device at word 1; reset; CFI query `0x98` at word `0x55`; the query must read `Q`, `R`, `Y` at words `0x10` to `0x12` and primary command set 2 at `0x13`; device size, write-buffer size, number of erase regions (at most 4) and region geometry are read from the query data; reset.
 - Erase (`0xffad2730`, per 64 KiB block): `0xaa`/`0x55`/`0x80`/`0xaa`/`0x55` unlock at `0x555`/`0x2aa`, then `0x30` at the sector, then poll for the data to read back as `0xff` (toggle and timeout checks in `0xffad1040`), then a blank check. Sector size comes from the query's region table.
-- Program: without a write buffer, per word `0xaa`/`0x55`/`0xa0` at `0x555`/`0x2aa`/`0x555`, then the data word, then poll (`0xffad1860`). With a write buffer (query size field non-zero), `0xaa`/`0x55`, then `0x25` at the sector with word count minus 1, the words, `0x29` at the sector (`0xffad1b30`, up to 32 words). Each program is followed by a read-back compare (`0xffad1820`), and programming a 0 over a 1 is refused ("Cannot program a 0 into a 1").
+- Program: without a write buffer, per word `0xaa`/`0x55`/`0xa0` at `0x555`/`0x2aa`/`0x555`, then the data word, then poll (`0xffad1860`). With a write buffer (query size field non-zero), `0xaa`/`0x55`, then `0x25` at the sector with word count minus 1, the words, `0x29` at the sector (`0xffad1b30`, up to 32 words). Each program is followed by a read-back compare (`0xffad1820`), and a mismatch fails with "Data verify failed" (the message "Cannot program a 0 into a 1" is in the error table; its producer was not found).
 - So a model needs, for a `setenv` that sticks: an 8 MiB, 16-bit, AMD-command-set flash with a CFI table (including `QRY`), at the node window, with persistent contents. A flash that only reads (RAM-backed or read-only) is enough for `getenv` if it accepts the reset store and the 8-byte reads of the read path, so a prepared image with `NoACPIIO=1` needs no command emulation; `setenv`, `initlog` and the EFI store fail with "Flash PROM not writable" when the probe fails. Erase time-outs follow the poll routine; the poll constants were not decoded.
 
 **5. Other variables that matter for boot (established as read sites, unless marked).** The table of settable names (PROM strings) and the decompiled read sites:
@@ -281,8 +319,7 @@ byte at `BAR0 + 0x80000 + (reg ^ 3)`. Return host UTC as BCD in the map below. N
 
 ## 4. Unknowns and routes
 
-- The flash offset and sector map of the 64 KiB variable store, and the chip-object flash methods behind `0x02000008` ops 5 to 7: decode the node chip object's methods
-  at `+0x40`/`+0x48`/`+0x50`/`+0xa0` to `+0xb0` (reached through `0xffa1c2e0`), or compare flash before and after `bcfg`.
+- The real flash part and its sector geometry, the node flash lock (`+0xd8`/`+0xf0` of the node object), whether SHub or L1 gates writes to the flash window, and what the factory flash holds in `0x100000` to `0x1fffff`: a capture of the flash before and after `bcfg boot add` would settle the last two; the part number is on the board.
 - The El Torito per-media-type handling and the exact no-emulation sector count: finish the jump table of `PartitionInstallElToritoChildHandles` (the decompiler truncates it; disassembly at `0x5d410`).
 - The ACPI root-bridge node values in device paths, and whether `BootOrder` auto-boot reaches the shell option on an empty machine (a model run).
 - Whether SGI shipped media use a FAT El Torito image or a different layout: no SGI install medium is held (stage 5 of the boot path).
