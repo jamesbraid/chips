@@ -12,7 +12,7 @@ cited by [sn2-runtime.md](sn2-runtime.md), [os-handoff-tables.md](../firmware/sn
 addresses. Kernel side: a mainline Linux source snapshot of the 2.6.3x era (`arch/ia64/kernel/{sal,efi,time,smpboot,setup}.c`, `arch/ia64/mm/tlb.c`,
 `arch/ia64/include/asm/{pal,sal,system}.h`, `arch/ia64/sn/kernel/{setup,irq,io_init}.c`, `arch/ia64/sn/kernel/sn2/{timer,sn2_smp}.c`, `ptc_deadlock.S`,
 `arch/ia64/sn/pci/pcibr/pcibr_provider.c`, `drivers/serial/sn_console.c`), plus the v5.3 and v2.6.12 reads already recorded in the pages above. *Established* here is what the
-kernel source does or the PROM routine does; **inferred** and **unknown** are marked. No emulator ran. The kernel's 2.6.3x tree is not the held 2.6.5-7.244 kernel; the
+kernel source does or the PROM routine does; **inferred** and **unknown** are marked. The one emulator run is section 8; it shows which calls were issued, not what hardware does. The kernel's 2.6.3x tree is not the held 2.6.5-7.244 kernel; the
 differences that matter are named where they occur ([sn2-early-boot.md](../linux/sn2-early-boot.md#differences-from-v53)).
 
 Failure column: **stops** = the kernel panics, BUGs or hangs; **degrades** = it prints a message and continues with a default or without the feature.
@@ -311,6 +311,18 @@ command with more than 127 bytes of output stalls. Not run.
   The port records (port, connected object id, connected port) with an id that matches no record print "endpoint disconnected". An object with no flag bits is skipped.
 - A valid geoid for the node, or the topology line carries `node -1`.
 - `GET_PCI_TOPOLOGY` status 0 with text, or status -1 (kernel skips the section).
+
+## 8. Calls seen in an emulator run of the stock images (2026-11-21)
+
+Run: the stock SAL 5.04 PROM (`shub1snprom.bin`, snprom 10.54) to the EFI shell, then ProPack 2.6.5-7.244-sn2 (boot and login), then RHEL 5.11 2.6.18-398 (boot and commands), with every SAL call logged. A call is **established** only as "seen in an emulator run of the stock binary"; anything about hardware is **inferred** at most. The run summary does not split every count by binary, and it records return values only where noted.
+
+- **`SN_SAL_PROBE` (`0x02000003`) was never issued** by the PROM, ProPack or RHEL. The PROM handler is the PROBE row of the SAL table in section 1, and the reading stands for any caller. The S4 consequence is in [smp-and-timers.md](../firmware/snprom/smp-and-timers.md#the-empty-pci-slot-recovery).
+- **PCI config.** `PCI_CONFIG_READ` (`0x01000010`) and `PCI_CONFIG_WRITE` (`0x01000011`) were seen in the runs.
+- **ProPack 2.6.5-7.244-sn2.** `IOIF_GET_PCIBUS_INFO` (`0x02000056`) 256 calls; `IOIF_GET_PCIDEV_INFO` (`0x02000057`) 3 calls, at boot only; `IROUTER_OP` (`0x02000043`) calls with values in 3072 to 4095. The summary does not say whether that range is an argument or a call id, so it is not decoded here.
+- **RHEL 2.6.18-398.** `IOIF_GET_DEVICE_DMAFLUSH_LIST` (`0x0200005a`) 512 calls and `IOIF_INIT` (`0x0200005f`). Never `0x02000056`, `0x02000057` or `0x02000064`.
+- **`0x02000057` before any OS.** Three calls in the PROM and EFI phase, with devfn `0x8`, `0x18` and `0x20`, and three in ProPack's boot with segment 0, bus 1 and the same devfns. The table above places `0x57` in the OS-facing I/O dispatcher, so a pre-OS caller is unexplained ([open questions](../../questions/sn2-sal-open.md)).
+- **Probe-like calls the kernels make return 0.** `SN_SAL_NO_FAULT_ZONE_VIRTUAL` (`0x02000010`) and `SN_SAL_LOG_CE` (`0x02000006`). This table has no row for `0x02000010`.
+- **PROM ids the Linux header does not name.** `0x02000008` (once), `0x02000029` (twice), `0x0200002d` (once) and `0x02000045` (once) are already named in the table above. `0x02000013` was seen twice in physical mode during ELILO, which the go-virtual row (the SetVirtualAddressMap case) does not account for ([open questions](../../questions/sn2-sal-open.md)).
 
 ## Review
 
