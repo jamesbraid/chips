@@ -22,8 +22,9 @@ Open items, each with the route that settles it:
   (SHub 2 `0xff4ae400`); the encodings and units may have no software route.
 - The order of the three router phases in one boot (table distribution, the board walk that sets the clock source, the
   partition fences). Route: the callers of `0xff42cd80` and `0xff4e7470` in SHub 2 SAL 10.54.
-- The Altix 350 guide (007-4660-002) single-plane prose on p.69 puts the router on "port 0"; its cable table and figure put it on
-  port 1. Route: another guide revision or a photograph of a cabled system.
+- The Altix 350 guide (007-4660-002) single-plane prose on p.69 puts the router on "port 0"; its cable table (pp.81 to 82)
+  and Figure 2-12 (p.83) put it on NUMAlink 1. Checked 2026-11-21: -001 has no router text, and no -003 or -004 is held.
+  Route: a photograph of a cabled single-plane system, or an SGI errata notice for -002. Neither is held.
 - Reply type codes 4, 5 and 6 of the vector status register and which of the PROM's vector error strings each is.
   Route: the PROM's error decoder around the "Vector Request Route Error" strings, and the callers of the vector read.
 - The vector write path: the type bit value and whether the same lock is used. Route: the write routine beside the

@@ -7,7 +7,7 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Cited pages of 007-4579-001: 77, 79, 81, 87, 99, 101, 108, 135 and 140 (the R-brick chapter's
+README](README.md). Cited pages of 007-4579-001: 33, 77, 79, 81, 87, 99, 101, 102, 107, 108, 135 and 140 (the R-brick chapter's
 overview and rear panel). Cited pages of 007-4520-006: 13, 16 to 19. Page numbers are printed; the PDF index is 24
 pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the rest of the brick chapters were not read.
 
@@ -26,6 +26,10 @@ pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the r
 - Each rack with C-bricks has an L2 controller; rack 001 carries an L2 touch display (p.79).
 - The node chip is the **Super-Bedrock ASIC** (p.81; "two Super-Bedrock ASICs" on p.87). The driver guide calls the
   same role "SHub" ("two SHub chipsets", 007-4520-006 p.16).
+- Memory: "commodity off-the-shelf memory DIMMs. The DIMM card is a JEDEC standard 184-pin card" (p.107). The driver
+  guide's SC-brick figure labels its memory "DDR SDRAM memory" (007-4520-006 p.17, Figure 2-2). Neither guide names DDR2.
+- The control cable is a "NUMAlink 3 cable": the L1 USB hub reaches four C-brick L1s over it (p.33, Table 2-1). That
+  names the L1 control path, not the internal or external data channels.
 - Inside the C-brick the nodes are joined by a NUMAlink 4 channel, but the count conflicts. p.81 says "a single
   6.4-GB/s NUMAlink 4 channel", and the driver guide says "a NUMAlink 4 channel" (007-4520-006 p.13). p.101 says "two
   internal 3.2-GB/s (each direction) NUMAlink channels (one per node)" and does not name NUMAlink 4.
@@ -52,8 +56,14 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 - Inferred: 3.2 GB/s each way is the 6.4 GB/s total of p.81, so the two rates agree and only the channel count differs.
 - The NUMAlink generation of the external cables. The guide prints their rate (p.101) and no name. Settling test: a
   page of the guide or its cabling guide that names the cable.
-- Channel count inside the C-brick: one channel (p.81) or two (p.101). Figure 5-2, the C-brick block diagram on
-  printed p.102, is not read and would settle it.
+- Channel count inside the C-brick: one channel (p.81) or two (p.101). Figure 5-2 (printed p.102) was read from its text
+  layer, not the picture: it has one "6.4 GB/s" label between the two ASICs, which fits one channel, but three labels read
+  "6.4 GB/s" and the text does not say which is the ASIC-to-ASIC link. Unknown until the picture is checked or a page names
+  the channel.
+- Node chip clock: unknown. The pages read give none. The driver guide's "900 MHz" (007-4520-006 p.13) is the Itanium 2
+  processor, not the chip.
+- DDR or DDR2: the guides say DDR SDRAM (driver p.17) and a 184-pin JEDEC card (p.107). The 184-pin count is the DDR
+  DIMM form factor; that reading is inferred from the pin count, not stated by either guide.
 - Plan conflict, not settled here: a plan elsewhere treats the Altix 3000 external fabric as NUMAlink 3 ("same
   R-brick") and cites 007-4579-001 p.80, which this page did not read. The guide does not contradict that for the
   external fabric, because it names no generation for the external cable (p.101). It does name NUMAlink 4 for the
@@ -107,4 +117,9 @@ snprom image paragraph and the references index row agree with the guide. Grades
 inferred, the NUMAlink 4 label is the guide's statement for the internal channel only.
 
 Findings: none. Cleared: the 3300 bullet, node-chip naming, channel counts and rates, and the Router row.
+
+### Changes of 2026-11-21
+
+Not reviewed. Changed claims: the sources line, the memory and NUMAlink 3 cable bullets, the Figure 5-2 reading and the
+channel, clock and DDR open items. Renewed independent review is needed before these are cleared.
 

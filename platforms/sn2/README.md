@@ -43,7 +43,8 @@ The manuals rarely name the generation:
 | Machine | SHub generation | Grade and source |
 |---|---|---|
 | Altix 4700 | 2 | established: the L1 guide calls the compute blades C1 and C2 "SHub 2.x based" (007-3938-005 p.50) |
-| Altix 3000, 3700 Bx2, 350, 330, 450 | not stated | unknown. Route: a boot log or `/proc/sgi_sn` capture from each, or the generation flag the PROM returns |
+| Altix 330 | label "SHub 1.2"; generation not stated | the figure label is established as printed (007-4790-001 p.76, Figure 3-4); reading it as SHub 1 is inferred from the number |
+| Altix 3000, 3700 Bx2, 350, 450 | not stated | unknown. Route: a boot log or `/proc/sgi_sn` capture from each, or the generation flag the PROM returns |
 | Altix 3700 Bx2 | probably 2 | inferred only from timing: the guide is dated November 2004 and the Linux patch series adding "support for new chipset" (SHub 2) is dated 1 December 2004 (message `20041201203852.GA26131@sgi.com` on the linux-ia64 list) |
 
 The 350 and 330 guides list the same SHub blocks: a crossbar (XN), a processor interface

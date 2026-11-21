@@ -109,7 +109,9 @@ module are in the cabling chapter (printed pp.46 to 48 of -001), not read for th
 **Routers (-002 only).** One or two NUMAlink-4 routers join eight to sixteen modules (-002 p.69). Single plane: one
 router, a connection to "port 0" of up to eight modules, and modules 9 to 16 on the open "port 1" of the first eight.
 Dual plane: two routers, each connected from its port A to "port 1" of two modules, with the two modules also joined
-port 0 to port 0 (-002 pp.69 to 71, Figures 2-3 and 2-4). Established as described. The router is an "R-brick" in the
+port 0 to port 0 (-002 pp.69 to 71, Figures 2-3 and 2-4). Established as described. -001 has no router: its ring text
+(printed pp.69, 71 to 74) and its configuration table (p.71) name none, and its contents have no router chapter. No -003 or
+-004 is in the Library (resolve_library, 2026-11-21). The router is an "R-brick" in the
 guide's wording (-002 p.105), a separate enclosure with its own chapter (Chapter 6 "Optional Router", read, printed pp.149
 to 154: eight NUMAlink-4 connectors A to H (also numbered 1 to 8), L1 controller, 3.2 GB/s each way per link). The cable
 tables (-002 pp.81 to 85) put the router on NUMAlink 1 of modules 5 to 12 in a single-plane system and join the

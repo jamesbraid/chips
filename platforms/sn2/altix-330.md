@@ -4,8 +4,8 @@ The Altix 330 is a 1U Itanium 2 server module that can run alone or be cabled to
 what the user's guide prints. It holds no register facts.
 
 Sources: SGI, *SGI Altix 330 System User's Guide*, `007-4790-001` (2005), printed pages; Linux v5.3 as `v5.3:path`.
-Grades: see [the SN2 README](README.md). Only the contents, the architecture text (pp.57 to 58), the system features
-(p.70) and the SHub description (p.79) were read. A console note, `007-4805-001`, was not.
+Grades: see [the SN2 README](README.md). Read: the contents, pp.47, 57 to 61, 69, 70, 75, 76, 78, 79 and 81. Not read:
+p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF page minus 24.
 
 ## What is established (007-4790-001)
 
@@ -16,6 +16,17 @@ Grades: see [the SN2 README](README.md). Only the contents, the architecture tex
   router in a "single-plane" configuration (p.58, and the contents' "Optional Router Configurations", p.61).
 - SHub blocks as on the 350: XN, PI, MD, two NI, II and LB (p.79).
 - The guide names the interconnect "NUMAlink-4" (p.57); the first 350 guide (-001) does not number it, the second (-002) does.
+- Node board: an "IP67 node board" with eight DIMM slots (p.75). Figure 3-4 (p.76) labels its node chip "SHub 1.2 ASIC".
+  The text calls the chip "Super Hub (SHub)" (p.79) and gives no generation.
+- Memory: DIMMs of "double data rate synchronous dynamic random-access memory (DDR1 SDRAM)", four or eight per module, in
+  groups of four, up to 16 GB (p.78).
+- Base I/O is on the node board, not on a card: the base module has "factory-installed disk drive(s), base I/O, and
+  memory" (p.70). Figure 3-4 (p.76) labels an LSI SAS/SATA controller, a Broadcom dual GigE, a NEC USB host controller, a
+  Silicon Image PCI-to-IDE bridge for the DVD-ROM, a PIC, a 133 MHz PCI-X bus and 66 MHz and 33 MHz PCI buses. These come
+  from the figure's text layer and have not been checked against the picture. The contents list no riser card and no
+  add-in base I/O card.
+- L2: "The Altix 330 system L1 operates in (emulated) L2 mode. Need for a separate optional hardware L2 system controller
+  has been eliminated" (p.47).
 
 ## Differences from the 350
 
@@ -25,13 +36,17 @@ Grades: see [the SN2 README](README.md). Only the contents, the architecture tex
 | PCI slots | 1 | 4 |
 | Disks | SATA or SAS | -001: SCSI through the IO9. -002: serial ATA through the standard IO10, SCSI only with the optional IO9 |
 | Base I/O | two Ethernet, two USB, SAS/SATA connector on the module | -001: the IO9 PCI card. -002: the IO10 PCI card as standard, the IO9 optional |
+| Node board | IP67, eight DIMM slots (p.75) | IP57 (-001 contents) |
+| Memory | DDR1 SDRAM, 4 or 8 DIMMs (p.78) | DDR SDRAM, 4, 8 or 12 DIMMs (-002 p.110) |
+| PCI riser | none described | four PCI/PCI-X slots on a riser with a PIC ASIC (-001 p.105) |
+| L2 controller | none; the L1 runs in emulated L2 mode (p.47) | up to one (-001 p.71, Table 2-1) |
 | NUMAlink ports | 1 | 2 |
 | Routerless topology | module to module (two) or router | ring |
 
-All established from the 330 guide and the two 350 guides (007-4660-001 and -002; see [the 350 page](altix-350.md)). The 330 guide does not name an IO9 or IOC4; the base I/O chips of the 330 are
-**unknown** (route: the 330 guide's internal-components pages, printed pp.75 to 80, read in full, or a PCI tree from a
-330). Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown; the L1 packages that name an IP node
-board for it are not tied to the 330 (sysco `sn2-brick-packages.md`).
+The 350 column is from the two 350 guides (007-4660-001 and -002; see [the 350 page](altix-350.md)). The 330 guide does
+not name an IO9, IO10 or IOC4. Its base I/O chips are read from Figure 3-4's text layer only; the open route is a look at
+the figure's picture, or a PCI tree from a 330. Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown;
+the L1 packages that name an IP node board for it are not tied to the 330 (sysco `sn2-brick-packages.md`).
 
 ## Review
 
@@ -57,3 +72,8 @@ Renewed review of the changed claims only, 2026-11-14, by a reviewer who wrote n
 **Findings.** None.
 
 **Cleared:** the 350 comparison rows for both revisions.
+
+### Changes of 2026-11-21
+
+Not reviewed. Changed claims: the sources line, the node-board, memory, base I/O and L2 bullets, and the comparison rows
+for node board, memory, riser and L2. Renewed independent review is needed before these are cleared.
