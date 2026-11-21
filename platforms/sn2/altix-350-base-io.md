@@ -128,8 +128,8 @@ either, and the IO10's SATA and the IO9's SCSI controller are found by `ioc4_var
   `CONFIG_SCSI_QLOGIC_1280=m`). That is a build setting, not a statement of the card's contents. Established as read;
   inferred as a hint for the Ethernet part.
 - **The SHub 1 PROM images 4.43 and 10.40 carry a PCI inventory printer with typed components** QLFIBRE, GIGENET,
-  QLSCSI, SATA, IOC3 and a Tigon 3 klconfig builder (`init_klcfg_tg3`); the 10.54 image has no such strings in plain text
-  (they may sit in the compressed runtime, not read). The names are a taxonomy of what the PROM can type, so the
+  QLSCSI, SATA, IOC3 and a Tigon 3 klconfig builder (`init_klcfg_tg3`); the 10.54 image has none of them, in SAL_B or in the
+  runtime (see [what the firmware does per device](#what-the-shub-1-firmware-does-per-device))). The names are a taxonomy of what the PROM can type, so the
   gigabit controller is typed as a Tigon 3 on the PROM that has the strings. Established as strings in 4.43 and 10.40;
   inferred as the Altix 350 Ethernet part (a Broadcom BCM57xx part).
 - **The MIPS-side sibling card.** On an Origin 350 IO9 (PCI-X behind a PIC, the same IOC4 and ISP 12160) public boot
@@ -347,6 +347,130 @@ Independent re-read on 2026-11-16 of the list above against the Ghidra decompile
 - Items 1 to 3 and 4 hold: no configuration access before the first I/O SAL call; slot `s` at `0x21000 + 0x1000 * s`; an empty slot is a failed protected read or a low half of `0xffff`; IOC3 and IOC4 in slots 0 to 2 only; the QLogic IDs; no Vitesse constant in the functions read. Item 5 (no devices is not fatal) was read at the slot loops only and stays inferred.
 - Item 2's slot ranges are incomplete. Slots 0 to 3 on the second bus need the record field at `+0xbc` to be 1 and `0xffb32470` true; other ioboard types (`0x6d`, `0x76`) have their own ranges (PIC page review).
 - Item 6: the byte the PROM tests before the PCI reset (`main_three`) and the halfword `pic_attach2` checks come from different L1 requests (code 3 and `0x13`), the second falling back to the first when the L1 does not support it. So "do both read the same byte" is answered in part: they do when the L1 rejects request `0x13`, which is not settled for a 350. An `F` reply is lower-cased to `0x66`; the KLCONFIG board type that byte maps to is `0x7e`. The advice to answer `o` (`0x6f`) or the IX value `0x3d` stands as a model choice, not a finding.
+
+## What the SHub 1 firmware does per device
+
+Read for this section: `snprom-4.43-44607/boot/efi/snprom.bin` (sha256 `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb`),
+`snprom-10.40-62478/.../shub1snprom.bin` (`26170cc8...`) by strings, and `snprom-10.54-70399/.../shub1snprom.bin` (`51ccf9ad...`).
+Components were cut out by FIT entry and inflated; the 4.43 SAL runtime (FIT type 0x12) was read in Ghidra with its
+dynamic symbols (addresses below are runtime link addresses, `rt:`; the Ghidra address adds `0x100000000`), and the 10.54 EFI
+(type 0x1f) was decompiled (addresses are the Ghidra export's, as in [the EFI page](../../software/firmware/snprom/efi.md)).
+Decompiler output is navigation; every constant below was checked in the function text, and the port table in a byte dump.
+Nothing was run.
+
+### Which builds carry the PCI inventory and klconfig builders
+
+- **4.43:** the builders and the PCI scan are in the SAL runtime (`rt:pci_discover` `0x207c0`, `rt:bridge_discover` `0x1ed80`,
+  `rt:init_klcfg_tg3` `0x325e0`, `rt:init_klcfg_qscsi` `0x327a0`, `rt:init_klcfg_ioc4` `0x32990`, `rt:ioc4_discover` `0x33050`,
+  `rt:kl_init_pci` `0x1f6b0`). Established.
+- **10.40:** the same builder strings are in SAL_B, not the runtime (strings only; functions not read). Established as strings.
+- **10.54:** SAL_B and the runtime have none of the `init_klcfg_*` (except `init_klcfg_vgagfx`), `GIGENET`, `QLSCSI`, `Tigon3`
+  or `IOC4_ATA` strings; the scan is the later `pciio_*` code the PIC page reads. Established as absence of strings in both
+  inflated components (the earlier statement that they might sit in the runtime is answered: they do not).
+
+### The 4.43 scan and the typing table (established, read in full)
+
+`bridge_discover` calls `pci_discover` once per PIC bus (bus 1 at the widget base plus `0x800000`) when the part is `0xd102` or
+`0xd112` with manufacturer 0x24. `pci_discover` reads the id word of PCI device numbers **4, 3, 2, 1 in that order** (configuration
+window `0x20000 + 0x1000 * n`, as in [the table above](#devices-on-the-pics-buses)), prints `%s Widget %x PCI bus %d slot %d pciid %08x`
+and picks the record builder by the id word (device in the high half):
+
+| id (vendor:device) | printed name | record built |
+|---|---|---|
+| `10a9:100a` IOC4 | IOC4 | `ioc4_discover`: `init_klcfg_ioc4` (struct type `0x29`, marks the board's base-I/O flag, calls the base-I/O master election) plus a second record of type `0x2e` "IOC4_ATA", one unit |
+| `1077:1216` ISP 12160 | QLSCSI | type `0x25` (SCSI), subtype `0xb`, 2 unit slots |
+| `1077:2200` | QLFIBRE | type `0x25`, subtype `0x20`, 1 unit |
+| `1725:7174` Vitesse | SATA | type `0x25`, subtype `0x28`, 3 unit slots (why 3 for a four-port part is **unknown**) |
+| `14e4:1644`, `14e4:1645`, `14e4:16a7` | GIGENET | `init_klcfg_tg3`: type `0x27` "Tigon3 GigE", PCI revision recorded |
+| `11c1:5801`, `11c1:5802` | USB | `init_klcfg_usb` |
+| `1002:4e44`, `1002:4e47` | PCI GFX | `init_klcfg_pcigfx` |
+| `10a9:0003` IOC3 | IOC3 | generic record |
+| anything else | UNKNOWN | generic record, no type |
+
+Every record carries the slot, the PIC bus, the NASID and the PCI revision byte. The type numbers are the PROM's; the names are the strings of its `klcfg` dump command. The PROM has no IO9 or IO10
+identity of its own: the card is the set of records the scan produced (IOC4 + ISP 12160 or IOC4 + Vitesse). Established for the
+table; the type-number to name map is inferred from the order of the name table beside the dump command.
+The only Ethernet ids typed are Broadcom 5700, 5701 and 5703C; any other gigabit part prints UNKNOWN and gets no gigabit record.
+
+### Per-device initialisation
+
+For each recognised device `kl_init_pci` (`rt:0x1f6b0`) runs before the record is built (established):
+
+1. Read the PCI command register, write it back with bits 2:1 (memory, bus master) set.
+2. In the PIC Device register of the slot (device number minus 1): clear bits 12:0, then set the window offset (bits 11:0, the
+   assigned address >> 20) and bit 12. Bit 29 is cleared too when the bridge part is `0xe000` or `0xe010` (not a PIC; irrelevant
+   to the Altix 350).
+3. Write BAR0 (config `0x10`) with the assigned base. `14e4:1645` and `14e4:16a7` also write the upper half of the address to config `0x14` (a 64-bit
+   memory BAR); `1644` takes the plain BAR0 path. The ISP 12160 writes the same base to BAR0 and BAR1 (`0x14`). Other devices only BAR0.
+4. **Vitesse only** (not under the simulator signature): write `0x4000` (32-bit) at BAR0 + `0x140 + 0x200 * (n + 1)` for the
+   four ports n = 0 to 3 (the registers at offset `0x140` of each port block). Linux's `sata_vsc.c` has no name for that offset
+   (its port block is `(n + 1) * 0x200` with task file at `0x00`, DMA at `0x64..0x70` and the SCRs at `0x100..0x108`), so the register's
+   role is **unknown**; the value is a fixed constant.
+
+The IOC4 record builder `ioc4_init` (`rt:0x32db0`) first reads config register `0x10`, derives the chip's register window from the
+bridge's device window (2 MiB windows for devices 1 and 2, 1 MiB for the others; the same derivation `get_pcilink_status` uses) and calls
+the routine named in its own assert text `early_ioc4_nvram_init` (`rt:0x32bb0`), which does exactly this and nothing else
+(skipped when the processor-id register holds the simulator signature):
+PCI command |= 6, latency timer = `0xff`, IOC4 `0x20` <- 0 then |= `0xf`, `0x38` <- 0, `0x30` <- `0x1000f0`. Despite the name, **it touches no
+NVRAM, no clock and no byte-bus register** (established, whole function read); the register values are the same ones the
+IP35 PROM writes ([IOC4 page](../../devices/ioc4/README.md#what-the-altix-prom-does-to-the-ioc4)).
+
+### IO9 and IO10 differences in the PROM (established as read; interpretation inferred)
+
+| | IO9 | IO10 |
+|---|---|---|
+| Scan result | IOC4 (+ IOC4_ATA), ISP 12160 as QLSCSI | IOC4 (+ IOC4_ATA), Vitesse as SATA |
+| Device-specific init | none beyond BARs; ISP 12160 buffers (10.x), EFI ISP driver ([EFI QLogic page](../../software/firmware/snprom/efi-qlogic.md)) | the `0x4000` writes to the Vitesse per-port `0x140` registers, in the 4.43 runtime and again in the 10.54 EFI (below) |
+| Ethernet | Broadcom 5700/5701/5703C typed GIGENET if present | same table; no part named |
+| Serial, RTC, NVRAM | none touched by the PROM on either card | same |
+
+### The EFI side (10.54, 4.43 and 10.40 carry the same driver set)
+
+- **Vitesse.** `AltixPciDeviceInit` (`0x285f40`) calls SAL `0x02000057` (the PCI device information call) for every device, gets the
+  seven BAR addresses and the interrupt record, reads option-ROM information through config `0x30` (`GetOpRomInfo`, loads an image if one is found) and, outside the simulator, for `1725:7174` at PCI device number 3 writes `0x4000` to BAR0 + `0x200 * i + 0x140`, i = 1 to 4,
+  the same writes as the runtime's `kl_init_pci`. Established. (The device-number test confirms slot 3 for the IO10's SATA part.)
+- **SATA bus driver** (`SATABusDriverBindingSupported` `0x189b00`): accepts by PCI class 01, subclass 06 only (any vendor); vendor
+  `0x1725` prints "Vitesse Serial ATA detected". Start enables PCI attributes `0x700`. Registers are reached with the PCI I/O
+  protocol's memory read and write on **BAR 0**, byte, word or dword, from a four-entry table of 16-bit offsets at `0x200dc8`
+  (ELF address, 38 bytes per port; port n: base `0x200 * (n + 1)`): task file as Linux, alternate status `+0x28`, device control
+  `+0x29`, SStatus `+0x100`, SError `+0x104`, SControl `+0x108`, the `+0x140` register, interrupt status at chip offset 0, mask at 4.
+  Established for the table; the role of the offsets follows Linux's names (software expectation).
+- **Port bring-up** (`DetectSATAController` `0x18c430`): SControl <- 0, wait 100 us, <- 1 (reset), 2 ms, <- 0, 20 ms; then up to 2000 times
+  wait 200 us and read the interrupt status dword, taking the port's byte, until bits 1:0 are non-zero (link event); then up to 160000
+  times wait 200 us and read alternate status until it is neither `0x7f` nor BSY-set; then `SataIntrClearSError` (`0x18beb0`) maps each
+  set bit 6..0 of the port's interrupt byte to a write of a mask to SError (CRC `0x200000`, T `0x100`, P `0x400`, R `0x400000`,
+  E `0x800`, M `0x2`, phy change `0x10000`). A model must raise a phy-change or message bit in the port's interrupt byte after
+  SControl returns to 0 and present BSY clear, or the 2000-poll loop times out (what the caller does after that timeout was not traced).
+  Identify and PIO data use the task-file registers; software reset writes device control `6`, waits 10 us, writes `2`, then waits for BSY clear (`0x18ed40`). No DMA, no interrupt: it polls.
+- **IOC4 IDE** is the IO9 and IO10 DVD-ROM/ATAPI path; see [the EFI boot page](../../software/firmware/snprom/efi-boot.md) and
+  [the IOC4 ATA page](../../devices/ioc4/ata.md).
+- **Ethernet.** The type 0x22 archive carries three drivers: `drv_b57undi64.efi` (Broadcom NetXtreme UNDI, "Copyright (c) 2000-2005
+  Broadcom"), `drv_lsisas.efi` (LSI SAS, for the Altix 4700 family) and `drv_fpswa.efi`. The EFI proper has the generic SNP and PXE
+  base code and no other network driver (searched for Intel, Realtek, Marvell, e1000, Tigon strings in the inflated EFI: none). The
+  UNDI driver's table lists the 5700 to 5714 families (`1644`, `1645`, `1646`, `1647`, `1648`, `16a6`, `16a7`, `16a8`, `16c6`, `16c7`,
+  `1653`, `1654`, `165d`, `165e`, `1696`, `170d`, `170e`; read as vendor/device pairs in the data table, not decoded entry by entry), so
+  it does not pick the card's exact part.
+
+### Ethernet verdict
+
+Both cards' gigabit port is a **Broadcom Tigon 3 family part** (inferred, strongly): the PROM types only Broadcom `1644`, `1645` and
+`16a7` as gigabit Ethernet, the only network EFI driver shipped in every SHub 1 build is Broadcom's, the shipped kernel builds `tg3`,
+and the Origin 350 IO9 capture has a BCM5701 (`14e4:1645`). Which exact device id the **IO10** carries is **unknown**; nothing in the
+firmware distinguishes IO9 from IO10 for Ethernet. A model that presents `14e4:1645` on the IO10 is what every consumer here can
+bind to, and is the same model the IO9 needs.
+
+### Not found in the firmware (each is a negative over the images named)
+
+- No PROM access to an IOC4 byte-bus device (NVRAM, time-of-day) on a base I/O card in the 4.43 runtime; the time of day the SAL calls
+  return comes from the SHub's real-time counter (`chipset_rtc_time`, `rt:0xe160`, reads `0x81101c0000`) and the system controller
+  (`sysctl_time_of_day_set`), not from a card. Established for the 4.43 runtime; not traced for 10.54.
+- No serial console on an IOC4 UART (the earlier console section stands).
+- The IO9's IOC4 has a **configuration EEPROM** that SGI's `flashioc4` script (held, `snxsc_firmware-1.62.1/usr/sbin/flashioc4`, version
+  0.5) reprograms by shifting an SVF file through the system controller to the brick's JTAG chain; the script says it works only for PX and
+  IX bricks with an IO9, and that the file's tag is "IOC4 PROM, Rev". Whether an Altix 350's IO9 carries the same part and the same
+  JTAG path is **unknown**; no register of the chip depends on it.
+- The INTx to PIC pin map: no function among the named 4.43 runtime symbols handles the device-information call `0x02000057` (its handler
+  was not found there, not proven absent); the question stays open as in the interrupt section above.
 
 ## Open points
 

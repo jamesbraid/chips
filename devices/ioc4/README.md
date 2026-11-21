@@ -385,6 +385,27 @@ register-level behaviour (no specification held), and the Itanium host's own lan
 on lane 7:0 is inferred from the host being little-endian, not read). A bit-19 flip on the PIC therefore also flips the
 IOC4's own byte order, exactly as for the IOC3 behind a Bridge.
 
+## What the Altix PROM does to the IOC4
+
+SHub 1 PROM 4.43 build 44607 (`snprom-4.43-44607/boot/efi/snprom.bin`, sha256 `035274812b5065bde3f1b3227a23c05637d8a13f7cab7736ddde4718d46f02eb`),
+SAL runtime component, function `early_ioc4_nvram_init` (runtime link address `0x32bb0`; called from `ioc4_init` `0x32db0`), read in full in Ghidra
+with the repository's IA-64 module. **Established** as code; the roles are the ones on this page.
+
+- PCI command register: OR in `0x6` (memory space, bus master); latency timer `0xff`.
+- Skipped entirely when the processor-id register holds the simulator signature (`0xaeeeeeee8badbeef`).
+- Otherwise: `0x20` <- 0, then `0x20` |= `0xf`; `0x38` <- 0; `0x30` <- `0x1000f0`. Same values as the IP35 PROM above (the 0x20 pulse reduced to the
+  final `0xf`; no `0x28` access).
+- No other register is touched: no serial, ATA, keyboard, byte-bus (NVRAM and clock) or interrupt register, in spite of the routine's name.
+  The 10.54 EFI's IOC4 driver only runs the ATA task file ([ATA page](ata.md)).
+- The PROM's board scan accepts the IOC4 at PCI device numbers 1 to 4 in 4.43 and only 0 to 2 in 10.40 and 10.54 (the error text for slot 3 and up).
+- The same function runs for the IO9 and the IO10; nothing in the PROM depends on which card holds the chip.
+
+**Against Linux (software expectation, from this page's Altix section).** SGI's `ioc4_probe`, `ioc4_serial` and `sgiioc4` touch the rest of the
+block: enables and status, the serial rings and UARTs, the ATA registers, the pin words `0x40..0x5c`, and the extra
+clock calibration through `0x28`. Both cards give the same register traffic; `ioc4_variant` only labels the card, and the serial and IDE
+drivers skip only the PCI-RT variant. The PROM leaves the serial, keyboard, ATA and NVRAM blocks entirely to the OS. Whether the IO10 wires
+the transceiver-select pins `4..7` (set as outputs by both the PROM and Linux) is **unknown**.
+
 ## Reset expectations
 
 None read. `ioc4_attach` writes the control, GPIO control, enables and both status registers before use; everything else is unknown.

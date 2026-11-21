@@ -7,9 +7,7 @@ next route. Route tags in brackets.
 
 [missing source] Neither guide (007-4660-001, -002) nor SGI's Linux platform code names the part behind the
 10/100/1000BaseT port, or its PCI slot. Tried: both guides' base I/O pages; `v5.3:drivers/misc/ioc4.c` and the SN2
-platform code (no mention); the strings of the held SHub 1 PROMs (4.43 and 10.40 carry a Tigon 3 klconfig builder, the
-10.54 image no plain strings for it); the shipped SN2 kernel's configuration (the `tg3` driver is a module). Next:
-the SAL runtime component of the 10.54 image, where the per-device record builders may live; a boot log or `lspci` from an
+platform code (no mention); the held SHub 1 PROMs (4.43 and 10.40 carry a Tigon 3 klconfig builder that types Broadcom 1644, 1645 and 16a7 only; 10.54 has no builder; every build's EFI ships only Broadcom's UNDI driver, see [the per-device section](../platforms/sn2/altix-350-base-io.md#what-the-shub-1-firmware-does-per-device)); the shipped SN2 kernel's configuration (the `tg3` driver is a module). Narrowed to the exact Broadcom device id of the IO10 (inferred Tigon 3 family). Next: a boot log or `lspci` from an
 Altix 350 with either card; an Altix IO9 board manual.
 
 ## Slot numbers on the riser
