@@ -7,7 +7,7 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Cited pages of 007-4579-001: 77, 79, 81, 87, 99, 101, 108 and 135 to 140 (the R-brick chapter's
+README](README.md). Cited pages of 007-4579-001: 77, 79, 81, 87, 99, 101, 108, 135 and 140 (the R-brick chapter's
 overview and rear panel). Cited pages of 007-4520-006: 13, 16 to 19. Page numbers are printed; the PDF index is 24
 pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the rest of the brick chapters were not read.
 
@@ -41,7 +41,7 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 | Chip | Grade and source |
 |---|---|
 | Node chip, two per C-brick: "Super-Bedrock ASIC" (user guide) or SHub (driver guide) | role established by both guides; the one-part identity inferred. Generation unknown (README) |
-| PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The Altix guide's figure labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
+| PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The driver guide's Figure 2-3 (007-4520-006 p.19) labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
 | Router (8-port) | established as a part in the R-brick (p.81, p.87). The guide does not name its family, so neither the NUMAlink 3 nor the NUMAlink 4 register map is established for this brick |
 
 ## Open
