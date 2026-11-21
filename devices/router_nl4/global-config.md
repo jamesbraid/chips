@@ -9,7 +9,7 @@ Method. Ghidra (IA-64 module, `--sn2-prom`, no auto-analysis, decompile of each 
 (`shub2snprom.bin`, snprom 10.54) and SHub 1 SAL 5.04 (`shub1snprom.bin`, snprom 10.54). Every constant quoted was
 read again in an `ia64-linux-gnu-objdump` listing of the same image (run in the re-run container); the two agree
 unless a line says otherwise. Names are the PROM's own strings and register table. The SHub 1 4.43 image
-(`snprom.bin`, snprom 4.43) was compared by its listing only. Not independently reviewed.
+(`snprom.bin`, snprom 4.43) was compared by its listing only. Reviewed: see [Review](#review).
 
 Grades follow [AGENTS.md](../../AGENTS.md). **established**: the whole routine read; **inferred**: reasoned, reasoning
 given; **unknown**: not settled. Addresses are the SHub 2 image's unless marked SHub 1.
@@ -182,7 +182,7 @@ Established by comparing what was read:
   `nl4r_config_global` (`0xffaaab20`), `nl4r_config_port` (`0xffaab070`) and the NUMAlink 3 pair `nl3r_config_global`
   (`0xffaaa4e0`) and `nl3r_config_port` (`0xffaaa740`). The SHub 2 images have no `nl3r_` routine.
 - The SHub 1 routines write the same registers with the same values, with the vector request's address carrying the
-  SHub 1 bias: bit 38 is set (`0x40_0000_1900` for `RTC_SOURCE`, `0x40_0000_2000`-form for the init list); the port
+  SHub 1 bias: bit 38 is set (`0x40_0100_1900` for `RTC_SOURCE`, `0x40_0000_2000`-form for the init list); the port
   base is `0x40_0800_0000 + (n - 1) * 0x1000000`. The two lists of writes (seven and six) are identical in value.
   `nl4r_init_global` and the distribution routine (`Distributing routing tables`, `0xffa5b5d0`) match the SHub 2
   instruction for instruction after the addresses are removed; `nl4r_config_port` and the board walk (`0xffaedff0`)
@@ -252,3 +252,26 @@ offset +28). Established as the guide's statements.
   not read.
 - Whether a SHub 1 Altix 350 PROM has a different path for the three-node-and-fewer case (rings need no router) than
   for the router case: the route calculation is the same routine, and it was read only for a lone node.
+
+## Review
+
+Independent review, 2026-11-21, by a reviewer who wrote none of this page. Reviewed chips revision fee9859. Method: a
+fresh `ia64-linux-gnu-objdump` listing of `shub2snprom.bin` (snprom 10.54, base `0xff400000`) and `shub1snprom.bin`
+(base `0xffa00000`); Altix 350 guide 007-4660-002 printed pp.69 and 149 read from the held PDF.
+
+Checked and confirmed in the listing: the lock (`0xff4b3000` reads `0x1038`, timeout `0x989680`; unlock at `0xff4b3050`
+writes 0 to `0x1030`); `nl4r_init_global` (period from bits 13:4 of `0x2_1006_0700`, times 10 plus 10; the helper
+`0xff4b31c0` called with port 8 writes period/10-1 to `0x1001908`, then sets the low nibble of `0x1001900` to `0xf`; the
+sixteen `FREE` writes to `0x4f00` on); `nl4r_config_global` (invalid-port warning on 0, `upstream - 1` into the
+fields, slot `0x160`, router handle method slots `0x330` and `0x338` called inside `0xff502d50` at `0xff502ef0` and
+`0xff5030c0`); the table writer's constants (loop bounds 512, 256 and 8 over `0x8000000`, `0x8001000`, `0x8001800`;
+16 multicast entries; local-block tables at `0x5000` and `0x6000`; `GLOBAL_PARM0` mask `0xff0000`; `LB_DATELINE`
+`0x4000` from bit 4; `PROTECTION_CONFIG` `0x1003018` with `NODE_ID` at bits 21:8 and the bit-22 shifts); `INPORT`
+minus 1 in the method at `0xff470d50` and the `+1` at `0xff44e52c`; the SHub 1 bias (bit 38, port base
+`0x40_0800_0000`) and the `0x239` compare at `0xffa5c5a6`; the Altix 350 guide's p.69 prose against its tables.
+
+Finding, fixed: the SHub 1 `RTC_SOURCE` request address was printed `0x40_0000_1900`; the listing (`0xffaaaca6`)
+has `0x40_0100_1900`.
+
+Not re-checked: the multicast translation constants of step 6, the dateline flag byte, the SHub 1 4.43 comparison, the
+instruction-match ratio and the dump routine `0xff473510`, the Altix 350 tables 2-3 and 2-4. Grades as written stand.
