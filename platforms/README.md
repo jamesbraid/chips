@@ -83,6 +83,7 @@
 | [prom-boot-waits-and-reply-parser.md](ip35/prom-boot-waits-and-reply-parser.md) | IP35 PROM 6.210: the waits behind the stall, the L1 reply parser and the UART inputs | Question. |
 | [prom-console-input.md](ip35/prom-console-input.md) | IP35 PROM 6.210: what the boot PROM does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip35/prom-environment.md) | IP35 PROM environment: the base I/O NVRAM and the CPU PROM log in node flash | Question answered: on a Fuel, a Tezro or Origin 350, or an Origin 3200 or Onyx 3000, where do the PROMs keep their... |
+| [prom-host-xio-port.md](ip35/prom-host-xio-port.md) | IP35 PROM 6.210: how the node's own crossbar (XIO) port is chosen | Question. |
 | [prom-l1-link-and-delay-loop.md](ip35/prom-l1-link-and-delay-loop.md) | IP35 PROM 6.210: the delay loop at 0x1fc6b834 and the node side of the L1 link | Question. |
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
 | [prom-lead-test-and-shared-uart.md](ip35/prom-lead-test-and-shared-uart.md) | IP35 PROM 6.210: the lead-processor test and the node's shared L1 UART | Question. |

@@ -22,7 +22,7 @@ bus ([IO9 placement](ip35-io9-pci-wiring.md)); whether the Altix cards repeat th
 
 Answered. The PROM's PCI device information call (`SN_SAL_IOIF_GET_PCIDEV_INFO`, 0x02000057) returns a pin of `d - 1` for
 INTA and INTC and `(d + 3) & 7` for INTB and INTD of PCI device `d`, read in snprom 10.54 and 4.43
-([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)). Remaining: the PCI device numbers themselves (above), and the rotation a bridge applies to a
+([PIC page](../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)). Remaining: the PCI device numbers themselves (above), and the rotation a bridge applies to a
 device behind it (table at `0xffb43680`, not read).
 
 ## What the L1 returns for an Altix 350 module
