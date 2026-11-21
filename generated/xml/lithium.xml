@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
+<genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
+  <doc>Offsets and bits are software definitions from the Linux Visual Workstation code: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
+  <space name="bridge" unit="byte"/>
+  <space name="audio" unit="byte"/>
+  <struct name="HOST_CTL" size="4" grade="established" register="yes" offset="0x0" access="rw" space="audio" reset="unknown">
+    <doc>Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. The three low bits are named by the driver but never tested.</doc>
+    <field name="reset" start="15" size="1" type="uint" grade="established"/>
+    <field name="link_enable" start="14" size="1" type="uint" grade="established"/>
+    <field name="link_failure" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="link_codec" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="link_ready" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="INTR_STATUS" size="4" grade="established" register="yes" offset="0x10" access="rw" space="audio" reset="unknown">
+    <doc>Audio interrupt status. The driver clears pending bits by writing ones to the bits it wants cleared, and writes all ones to clear everything, so the bits are write-one-to-clear (inferred from the driver's use; no comment says so). It then masks the value it read with the mask register.</doc>
+    <field name="link_err" start="15" size="1" type="uint" grade="established"/>
+    <field name="comm2_trig" start="3" size="1" type="uint" grade="established"/>
+    <field name="comm2_underflow" start="2" size="1" type="uint" grade="established"/>
+    <field name="comm1_trig" start="1" size="1" type="uint" grade="established"/>
+    <field name="comm1_overflow" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="INTR_MASK" size="4" grade="established" register="yes" offset="0x14" access="rw" space="audio" reset="unknown">
+    <doc>Audio interrupt enable mask, same bit layout as the status. The driver sets bits by read-modify-write and clears them the same way.</doc>
+  </struct>
+  <struct name="CODEC_COMMAND" size="4" grade="established" register="yes" offset="0x18" access="rw" space="audio" reset="unknown">
+    <doc>Codec register access. A write starts a codec register read or write; the driver waits until busy clears (about two ticks at most) before and after. For a write it puts the data in codec_data first; for a read it reads codec_data afterwards.</doc>
+    <field name="busy" start="15" size="1" type="uint" grade="established"/>
+    <field name="dir" start="7" size="1" type="uint" grade="established"/>
+    <field name="addr" start="0" size="7" type="uint" grade="established"/>
+  </struct>
+  <struct name="CODEC_DATA" size="4" grade="established" register="yes" offset="0x1c" access="rw" space="audio" reset="unknown">
+    <doc>Codec register data, 16 bits used by the driver.</doc>
+  </struct>
+  <struct name="COMM1_BASE" size="4" grade="established" register="yes" offset="0x100" access="rw" space="audio" reset="unknown">
+    <doc>Input DMA ring buffer base: the 40-bit physical address shifted right 8, with bit 29 set. The driver says bit 37 of the address (bit 29 here) must be set, and that it enables cache coherence. The ring is up to 8 KiB, 256 byte-aligned. The driver also writes this register once with the output buffer's address even when only output is used, because the input channel carries stray data otherwise (the driver quotes the NT driver on this).</doc>
+  </struct>
+  <struct name="COMM1_CTL" size="4" grade="established" register="yes" offset="0x104" access="rw" space="audio" reset="unknown">
+    <doc>Input DMA control and pointers. The two low bytes are the write and read pointers in 32-byte chunks; for the input channel the hardware advances the write pointer and software the read pointer. The driver reads and writes each pointer as a single byte, at the first and second byte of this register.</doc>
+    <field name="reset" start="31" size="1" type="uint" grade="established"/>
+    <field name="size" start="28" size="3" type="uint" grade="inferred"/>
+    <field name="dma_enable" start="27" size="1" type="uint" grade="established"/>
+    <field name="tmask" start="24" size="3" type="uint" grade="established"/>
+    <field name="tptr" start="16" size="8" type="uint" grade="established"/>
+    <field name="rptr" start="8" size="8" type="uint" grade="established"/>
+    <field name="wptr" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="COMM1_CFG" size="4" grade="established" register="yes" offset="0x108" access="rw" space="audio" reset="unknown">
+    <doc>Input DMA configuration.</doc>
+    <field name="lock" start="15" size="1" type="uint" grade="inferred"/>
+    <field name="slot" start="4" size="3" type="uint" grade="established"/>
+    <field name="direction" start="3" size="1" type="uint" grade="established"/>
+    <field name="mode" start="2" size="1" type="uint" grade="established"/>
+    <field name="format" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="COMM2_BASE" size="4" grade="established" register="yes" offset="0x10c" access="rw" space="audio" reset="unknown">
+    <doc>Output DMA ring buffer base, same encoding as comm1_base.</doc>
+  </struct>
+  <struct name="COMM2_CTL" size="4" grade="established" register="yes" offset="0x110" access="rw" space="audio" reset="unknown">
+    <doc>Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer.</doc>
+  </struct>
+  <struct name="COMM2_CFG" size="4" grade="established" register="yes" offset="0x114" access="rw" space="audio" reset="unknown">
+    <doc>Output DMA configuration, same layout as comm1_cfg.</doc>
+  </struct>
+  <struct name="UST_LOW" size="4" grade="established" register="yes" offset="0x200" access="r" space="audio" reset="unknown">
+    <doc>Low word of a 64-bit counter the driver calls unadjusted system time, microseconds since boot.</doc>
+  </struct>
+  <struct name="UST_HIGH" size="4" grade="established" register="yes" offset="0x204" access="r" space="audio" reset="unknown">
+    <doc>High word of the same counter. The driver reads it before and after the other words and retries if it changed.</doc>
+  </struct>
+  <struct name="AUDIO1_UST" size="4" grade="established" register="yes" offset="0x300" access="r" space="audio" reset="unknown">
+    <doc>Time stamp of the input channel's last sample counter update.</doc>
+  </struct>
+  <struct name="AUDIO1_MSC" size="4" grade="established" register="yes" offset="0x304" access="r" space="audio" reset="unknown">
+    <doc>Input media stream counter: samples processed as of audio1_ust.</doc>
+  </struct>
+  <struct name="AUDIO2_UST" size="4" grade="established" register="yes" offset="0x308" access="r" space="audio" reset="unknown">
+    <doc>Time stamp for the output channel.</doc>
+  </struct>
+  <struct name="AUDIO2_MSC" size="4" grade="established" register="yes" offset="0x30c" access="r" space="audio" reset="unknown">
+    <doc>Output media stream counter.</doc>
+  </struct>
+  <struct name="BUS_NUMBER" size="2" grade="established" register="yes" offset="0x44" access="r" space="bridge" reset="unknown">
+    <doc>Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read. Whether the register is writable is unknown (only read).</doc>
+    <field name="subordinate" start="8" size="8" type="uint" grade="inferred"/>
+    <field name="primary" start="0" size="8" type="uint" grade="established"/>
+  </struct>
+  <struct name="INT_ENABLE" size="2" grade="established" register="yes" offset="0x46" access="rw" space="bridge" reset="unknown">
+    <doc>Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. Reset state unknown, and so whether the firmware leaves it masked.</doc>
+    <field name="intd" start="7" size="1" type="uint" grade="inferred"/>
+    <field name="intc" start="6" size="1" type="uint" grade="inferred"/>
+    <field name="intb" start="5" size="1" type="uint" grade="inferred"/>
+    <field name="inta_4" start="4" size="1" type="uint" grade="inferred"/>
+    <field name="inta_3" start="3" size="1" type="uint" grade="inferred"/>
+    <field name="inta_2" start="2" size="1" type="uint" grade="inferred"/>
+    <field name="inta_1" start="1" size="1" type="uint" grade="inferred"/>
+    <field name="inta_0" start="0" size="1" type="uint" grade="inferred"/>
+  </struct>
+  <constant name="AUDIO_PAGE1" value="0xff00f000" grade="established"/>
+  <constant name="AUDIO_PAGE2" value="0xff010000" grade="established"/>
+  <constant name="AUDIO_PHYS" value="0xff001000" grade="established"/>
+  <constant name="DEVICE_ID" value="0x1002" grade="established"/>
+  <constant name="DMA_CHUNK" value="0x20" grade="established"/>
+  <constant name="PCI_A_PHYS" value="0xfc000000" grade="established"/>
+  <constant name="PCI_B_PHYS" value="0xfd000000" grade="established"/>
+  <constant name="VENDOR_ID" value="0x10a9" grade="established"/>
+</genxml>

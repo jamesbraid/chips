@@ -20,6 +20,7 @@
 | [bedrock_xb/](bedrock_xb/README.md) | Bedrock internal crossbar (XB) | The crossbar is the switch inside the Bedrock node controller that connects its units to one another. |
 | [bridge/](bridge/README.md) | Bridge and XBridge | Mode: no-spec (see references/documents/specs.md: the Bridge and XBridge specification scans held in this repository... |
 | [cad-duo-pci-card/](cad-duo-pci-card/README.md) | Cad Duo PCI card (030-1155-002) | The Cad Duo is an SGI option board, part 030-1155-002. |
+| [cobalt/](cobalt/README.md) | Cobalt: the Visual Workstation system ASIC (CPU block, interrupt controller, timer) | Mode: no-spec. |
 | [crime/](crime/README.md) | CRIME | Mode: spec-backed (see references/documents/specs.md: CRIME 1.5 Specification, revision 0.3; its CPU interface and... |
 | [crosstalk/](crosstalk/README.md) | Crosstalk (XIO): the link, its widgets and its host ends | Overview datasheet of the SGI I/O link called XIO (SGI's trademark) or Crosstalk (the protocol and fabric name; the... |
 | [crosstown-ktown/](crosstown-ktown/README.md) | Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards | What these four names are, which is a protocol, which a board, which a cable, how an XIO link changes when it leaves... |
@@ -53,6 +54,7 @@
 | [l2/](l2/README.md) | L2 system controller (Origin 3000 and Altix 3000 racks; the Altix 4700 software L2) | Mode: no-spec. |
 | [l3/](l3/README.md) | L3 system controller (a console host, not a controller) | Mode: no-spec. |
 | [lh28f800su/](lh28f800su/README.md) | LH28F800SU: x16 flash command set, status and pins | Status: transcribed from the published Sharp datasheet, *LH28F800SU 8M Flash Memory*, SMT96107 (May 1996), printed... |
+| [lithium/](lithium/README.md) | Lithium: the Visual Workstation I/O ASIC (two PCI bridges and the audio engine) | Mode: no-spec. |
 | [lucent_ohci/](lucent_ohci/README.md) | AT&T/Lucent 11C1:5802 two-port OHCI USB host controller | The part is a two-port USB host controller with an OpenHCI register interface, PCI vendor `0x11c1`, device `0x5802`. |
 | [mace/](mace/README.md) | MACE | Mode: spec-backed (see references/documents/specs.md: MACE I/O ASIC Specification, chip revision 2.0, 31 May 1996... |
 | [mbcs/](mbcs/README.md) | MBCS (RASC Core Services) | Mode: no-spec. |

@@ -1,0 +1,598 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/lithium/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "host_ctl",
+   "offset": 0,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.reset",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.link_enable",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.link_failure",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.link_codec",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.link_ready",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "intr_status",
+   "offset": 16,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "intr_status.link_err",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "intr_status.comm2_trig",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "intr_status.comm2_underflow",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "intr_status.comm1_trig",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "intr_status.comm1_overflow",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "intr_mask",
+   "offset": 20,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "codec_command",
+   "offset": 24,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "codec_command.busy",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "codec_command.dir",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "codec_command.addr",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "codec_data",
+   "offset": 28,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm1_base",
+   "offset": 256,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm1_ctl",
+   "offset": 260,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.reset",
+   "hi": 31,
+   "lo": 31,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.size",
+   "hi": 30,
+   "lo": 28,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.dma_enable",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.tmask",
+   "hi": 26,
+   "lo": 24,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.tptr",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.rptr",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_ctl.wptr",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm1_cfg",
+   "offset": 264,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_cfg.lock",
+   "hi": 15,
+   "lo": 15,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_cfg.slot",
+   "hi": 6,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_cfg.direction",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_cfg.mode",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "comm1_cfg.format",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm2_base",
+   "offset": 268,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm2_ctl",
+   "offset": 272,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "comm2_cfg",
+   "offset": 276,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "ust_low",
+   "offset": 512,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "ust_high",
+   "offset": 516,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "audio1_ust",
+   "offset": 768,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "audio1_msc",
+   "offset": 772,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "audio2_ust",
+   "offset": 776,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "audio2_msc",
+   "offset": 780,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "bus_number",
+   "offset": 68,
+   "access": "r",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": "bridge",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "bus_number.subordinate",
+   "hi": 15,
+   "lo": 8,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "bus_number.primary",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "int_enable",
+   "offset": 70,
+   "access": "rw",
+   "width": 16,
+   "count": 1,
+   "stride": 2,
+   "space": "bridge",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.intd",
+   "hi": 7,
+   "lo": 7,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.intc",
+   "hi": 6,
+   "lo": 6,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.intb",
+   "hi": 5,
+   "lo": 5,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.inta_4",
+   "hi": 4,
+   "lo": 4,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.inta_3",
+   "hi": 3,
+   "lo": 3,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.inta_2",
+   "hi": 2,
+   "lo": 2,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.inta_1",
+   "hi": 1,
+   "lo": 1,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "int_enable.inta_0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "AUDIO_PAGE1",
+   "value": 4278251520,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "AUDIO_PAGE2",
+   "value": 4278255616,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "AUDIO_PHYS",
+   "value": 4278194176,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "DEVICE_ID",
+   "value": 4098,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "DMA_CHUNK",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_A_PHYS",
+   "value": 4227858432,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_B_PHYS",
+   "value": 4244635648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "VENDOR_ID",
+   "value": 4265,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

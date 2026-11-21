@@ -1,0 +1,338 @@
+{
+ "schema": "defs-flat/1",
+ "source": "devices/cobalt/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "apic_lo",
+   "offset": 0,
+   "access": "rw",
+   "width": 32,
+   "count": 30,
+   "stride": 16,
+   "space": "apic",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.mask",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.level",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.vector",
+   "hi": 7,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "apic_hi",
+   "offset": 4,
+   "access": "rw",
+   "width": 32,
+   "count": 30,
+   "stride": 16,
+   "space": "apic",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "apic_id",
+   "offset": 4092,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "apic",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_id.enable",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_rev",
+   "offset": 8,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_ctrl",
+   "offset": 16,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_ctrl.timer_mask",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_ctrl.timer_run",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_stat",
+   "offset": 32,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_stat.timer_intr",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_timeval",
+   "offset": 48,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_8259",
+   "value": 12,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_AS",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_CPU",
+   "value": 28,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_IDE0",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_IDE1",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_LINES",
+   "value": 30,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_LI_AUDIO",
+   "value": 22,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_NMI",
+   "value": 29,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PCIA_BASE0",
+   "value": 0,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PCIA_BASE123",
+   "value": 5,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PCIB_BASE0",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PCIB_BASE123",
+   "value": 13,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PHYS",
+   "value": 3288334336,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_PIIX4_USB",
+   "value": 7,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_RE",
+   "value": 25,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_VIDIN0",
+   "value": 18,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_VIDIN1",
+   "value": 19,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_VIDOUT0",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_VIDOUT1",
+   "value": 17,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "CPU_MAX",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "CPU_NUM_PHYS",
+   "value": 7680,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "CPU_PHYS",
+   "value": 3254779904,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "TIME_HZ",
+   "value": 100000000,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}
