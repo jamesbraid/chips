@@ -328,3 +328,21 @@ Checked against the 2.4 tree (Linux/MIPS `linux-2.4` branch, `8ef7d46c94d5`: `sh
 - **Added.** The selection nuance, the 2.4 kernel's identical config and enable stores, and the PROM's own record table naming the registers.
 - **Still inferred.** The packet data `0x100 | vector`: the source shows the register layout, never a PIC write. A model that drops writes with bit 8 clear will lose interrupts if the PIC sends the bare vector, so it should log that case rather than ignore it.
 - **Not checked.** The ProPack symbol map claim (not looked up) and the SAL runtime's PIC provider.
+
+## Review (firmware allocator)
+
+Independent review, 2026-11-21, by a reviewer who wrote none of this section. Reviewed chips revision fee9859. Method: a
+fresh `ia64-linux-gnu-objdump` listing of `shub1snprom.bin` (snprom 10.54, SAL 5.04, base `0xffa00000`).
+
+- **Confirmed in the listing.** The address builder (`0xffb739e0`): bit 47, `nasid << 36`, `0x1_1000_0000` for slice 0
+  and `0x1_1000_0100` otherwise. The late-init store order (`0xffb73a40`): `0x1_1000_0300` first and only on the
+  no-processor path, then `0x1_2005_0a80`, `0x1_2005_0500`, `0x1_1000_0980` (pid `<< 4 | 0xe9 << 52`),
+  `0x1_1000_0a00` (`0x2000`), `0x1_1000_0080`, `0x1_1000_0180`, `0x1_1000_0200`, `0x1_1000_0280`; nine stores, matching
+  the stated count. The INT1 pid carries slice 2. The irq search (`0xffb8fee0`): range `0x3c` to `0xe6`, a request above
+  `0xe6` fails, a requested irq joins that list with share count plus one, the tie rule replaces on an equal count
+  (highest number wins), the record is `0x50` bytes with flag bit 0 set. The handler (`0xffb1f970`): provider at node
+  record `+0x958`. The presence bit `26 + slice`.
+- **Not re-checked.** The SHub 1.1 revision test, the nearest-node choice, free and redirect, the SAL 4.90 and 4.43
+  comparisons, the TIO methods (stay inferred), and the claim that nothing else stores to a register. Grades as written
+  stand.
+- **Findings.** None.
