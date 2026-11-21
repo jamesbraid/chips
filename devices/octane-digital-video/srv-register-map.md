@@ -801,3 +801,11 @@ Setup-word bits with a VL control: 5 outputblank, 14 inputround, 15 outputexpand
 
 Request +32: low nibble N - 1 (zoom 2x to 7x), next nibble D - 1 (decimation 1/2 to 1/8), only one non-zero. Request +28 = y_offset + K x (1 + 1/N) - centre_line x R / F, K, R = 131.25, 15.734 (NTSC family) or 156.25, 15.625 (PAL family). Valid-field flags (+60): 0x1 mode, 0x2 +8, 0x4 left, 0x8 right, 0x10 top, 0x20 bottom, 0x40 +28, 0x80 +32, 0x100 +36, 0x200 +40, 0x400 enable (+44), 0x800 +48, 0x1000 freeze (+52), 0x2000 deinterlace (+56). Window-mode bits written through literal ids: CC 54 [2:0] and [6:4], CC 55 [2:0], AB 5 b6, GAL 7 b0/b4.
 
+## 12. Capture start/end rules and drop counting (README 22)
+
+Channel state (`srv_interrupt_check_loop`): C = starts seen (+464), F = in flight (+468). C=0: `0x21` -> C=1; EOD -> error. C>=1, F=0: EOD consumed first (C-1); vertical -> F=1 (and C+1 if bit 5). F=1: any vertical = error; EOD alone -> F=0, C-1. So the next request's `0x21` may sit on the field right after the second vertical only if its end-of-DMA arrived earlier as a separate interrupt.
+
+Request programming (`srv_dma_start_dma`): write `+0x1210`/`+0x2210` (dataaddr) then `+0x1220`/`+0x2220` (descaddr, bit 48 set when not in count mode); no `trig` write. Called on status bit 1 and on the first vertical after an empty-queue enqueue; not from end-of-DMA.
+
+Smoke drop counter (`DivoVideoCaptureSubSystemWait`): `select` on the VL descriptor, timeout 1,100,000 / frame rate microseconds (36.7 ms NTSC, 44 ms PAL); a timeout, `VLSequenceLost` (9), `VLSyncLost` (6) or `VLTransferFailed` (12) adds one.
+

@@ -788,7 +788,7 @@ A status register that returns only the low bits gives the driver a constant fie
 
 | Event | When it is legal | Effect |
 |---|---|---|
-| vertical + start marker (`0x21`, or `0x23`) | any time | C = C + 1 |
+| vertical + start marker (`0x21`, or `0x23`) | any time (but see 22.1: with C >= 1 and F = 0 it also sets F = 1) | C = C + 1 |
 | vertical alone (`0x01`) | F = 0 | if C ≥ 1 then F = 1 (the request is now in flight); a vertical while F = 1 is an **error** ("missing end-of-DMA") |
 | end of DMA (`0x08`, `0x0a`, `0x28`), **not** coincident with a vertical | F = 1 (or C ≥ 1) | C = C − 1, F = 0 |
 | end of DMA with C = 0 and F = 0 | never | **error** (end-of-DMA with no start seen) |
@@ -1195,6 +1195,54 @@ So a model that positions the preview needs: the six edges (section 20), the ena
 ### 21.5 The offset registers (`origin` and `offset` controls)
 
 The x offset (+36, flag 0x100) is written as a high part (`value >> 8`) and a low byte into the AB pair (high, low) = (0, 1) for A, (0x10, 0x11) for B and (0x20, 0x21) for C. The y offset (+40, flag 0x200) goes to (2, 3) for A, (0x12, 0x13) for B and (0x22, 0x23) for C. For A the bit table gives AB 2 eight bits and AB 3 three bits, the reverse of the code's order (high part to AB 2); B uses the widths the other way. I treat A's y pair as swapped in the table and take AB 3 as the three-bit high part; U. Offsets are signed: x down to -512 and y down to -256 (clamps in the `offset` setter); the sign convention in the registers is not shown. E for the registers, U for the encoding.
+
+## 22. Capture cadence: end-of-DMA against the next start, requests in flight, and what Smoke counts as dropped
+
+Pass 15. Inputs: `srv.a` (`srv_interrupt_check_loop`, `srv_dma_drb_intrs`, `srv_dma_next_dma`, `srv_dma_next_drb`, `srv_dma_start_dma`, `srv_dma_req`), the Smoke 5.0 binary (`DivoVideoCaptureSubSystemWait`, `VtrInputClipDivo`), original-6.5 overlay build, by disassembly. Grades: E read in code, I reasoned, U unknown. This corrects the state table of 16.2 where noted.
+
+### 22.1 Can end-of-DMA and the next request's first vertical coincide?
+
+No. The state machine, re-read instruction by instruction (counter C at channel +464 counts starts seen, flag F at +468 means "a request is in flight"; `s` is the status masked with `0x2b`):
+
+| State | Event | Result | Grade |
+|---|---|---|---|
+| any | bit 1 | cleared from `s` when F = 0; with F = 1 and nothing else, an error | E |
+| C = 0, F = 0 | vertical with bit 5 (`0x21`) | C = 1 | E |
+| C = 0, F = 0 | end-of-DMA | error (EOD with no start) | E |
+| C >= 1, F = 0 | end-of-DMA (even together with a vertical) | consumed first: C = C - 1; then the rest of `s` is processed again | E |
+| C >= 1, F = 0 | vertical, no EOD | **F = 1**; and if bit 5 is set, also C = C + 1 (so `0x21` here gives C + 1 and F = 1; 16.2 said F only changed on a plain vertical) | E |
+| F = 1 | **any vertical, with or without EOD** | **error** | E |
+| F = 1 | end-of-DMA alone | F = 0, C = C - 1; remaining bits processed with F = 0 | E |
+| F = 1 | anything else (bit 1 or bit 5 without EOD) | error | E |
+
+So for a two-vertical (frame) request: `0x21` (C = 1), `0x01` (F = 1), then a **separate** end-of-DMA interrupt (F = 0, C = 0), and only then the next request's `0x21`. The next request's first vertical can fall on **the very next field** after the second vertical, as long as the end-of-DMA has been delivered, as its own interrupt and with its status read, before that vertical. If end-of-DMA and the vertical are pending together (one status read of `0x29`/`0x09`) the driver sees a vertical with F = 1 and aborts the request. Hence the cadence is **two fields per frame request**: verticals at fields n and n+1, end-of-DMA between field n+1's vertical and field n+2's vertical, next request's `0x21` at field n+2. A model that raises end-of-DMA at (or just after) the field n+2 boundary, or that waits one field after end-of-DMA before it will start the next request, produces three fields per request. For a one-field request (capture modes 1 to 3) F never becomes 1: `0x21` then a separate end-of-DMA per field, and the next `0x21` on the following field. E for the rules, I for how much margin the guest interrupt latency needs (not measured).
+
+### 22.2 How many requests are in flight, and what the driver writes
+
+| Fact | Value | Grade |
+|---|---|---|
+| Queue | each `srv_dma_req` appends a request block to the channel's list (`srv_dma_drb_to_reqqueue`); no limit short of the client's buffers | E |
+| First request | `srv_dma_req` sets the current-request pointer (+160) when it was empty and sets channel flag `0x1`; the **next vertical interrupt** sees the flag, runs the rate set-up, calls `srv_dma_next_dma` and clears the flag | E |
+| Programming a request | `srv_dma_next_dma` -> `srv_dma_next_drb` (advance the current pointer) -> `srv_dma_start_dma`, which writes **two 64-bit registers of the channel**: `dataaddr` (`+0x1210` or `+0x2210`; the offset into the first page, plus the per-buffer value at request +0x6c or +0x68) and `descaddr` (`+0x1220` or `+0x2220`; the descriptor page's DMA address in bits 39:0, with bit 48 set when the request is not in count mode). It writes **no `trig`**; `trig` is touched only for triggered requests and on aborts | E |
+| When the next request is programmed | in the handler for status **bit 1** (descriptor boundary: `srv_dma_next_dma` at the `status & 2` test, before the EOD test) and in the first-vertical flag path above. The **end-of-DMA handler does not call it**: it counts the end, completes the request and moves the list head (+152) to the next one | E |
+| Depth | at most **two in flight**: the request running in hardware and the next one, whose `dataaddr`/`descaddr` are written when the board reports the running request's descriptor consumed (bit 1, normally together with the start vertical: `0x23`) and which the board then chains into at the next request boundary with no driver action | E (writes), I (chaining; the hardware side is not read) |
+| Capture caveat | for capture `srv_dma_setup` enables only bits 0, 4 and 9 (`0x211`, section 19.1), so bit 1 and bit 3 raise no interrupt of their own. The handler still tests them in every status it reads. A model should therefore latch bit 1 into the status read at the start vertical and bit 3 into a separate end interrupt (or at least a separate status read before the next vertical); what the board really does is U | E (enable mask), U (hardware) |
+
+### 22.3 What Smoke counts as a dropped frame
+
+The counter is the global `VideoDroppedFrame` (0x11dc1658). Its increments are in `DivoVideoCaptureSubSystemWait` (0x10f2eaf0):
+
+| Where | Condition | Grade |
+|---|---|---|
+| 0x10f2ed04 to 0x10f2f57c | **No VL event within the wait.** Each frame wait calls `select` on the VL event descriptor with a timeout of **1,100,000 / frame rate microseconds** (`GetVideoFrameRate`; the constant is the float at 0x11ca07e4). That is 1.1 frame periods: **36.7 ms at 29.97 fps, 44 ms at 25 fps**. If `select` does not return 1 (timeout) the counter is incremented | E |
+| 0x10f2ed54 (reason 9, `VLSequenceLost`) | counter + 1 when the sequence flags are set (otherwise the queue is flushed) | E |
+| 0x10f2ed8c (reason 6, `VLSyncLost`) | counter + 1 | E |
+| 0x10f2eda8 (reason 12, `VLTransferFailed`) | counter + 1 after freeing the buffer | E |
+| 0x10f2ef40 to 0x10f2f020 (reason 11, `VLTransferComplete`, and 8) | after the buffer's UST/MSC pair is saved, the position is compared with the VTR location and field parity; when it is out by more than a tolerance (global at 0x11dc0d84) and the tape is controllable, up to 1000 1-ms sleeps wait for it to catch up, and the counter is incremented if it does not. With no VTR (live input) this branch is not taken | E (code), I (live input) |
+
+**The printed text:** the Smoke log line is `%d : Dropped frame %d,  resuming at TC %s` (string at 0x1181adc0), written by `Log` from `VtrInputClipDivo` (0x10b80260) when the capture wait returns early and the loop resumes; `VtrInputClipDivo` also zeroes the counter at the start of each take (0x10b7f4b8) and reads it at the end (0x10b7fffc). `dropped_frame = %d,count = %d` (0x11847ab8) is a debug line in other code. A catalogue message with the text "Frame dropped" was not found in the binary; it may be held in a message file. U for that wording.
+
+**What this means for the model:** a field-counter step or an MSC gap does not by itself count. What counts is **time between VL events**: any gap longer than 1.1 frame periods on the VL descriptor is one dropped frame. Events that wake the `select` are the ones `mgv` posts: `VLTransferComplete` (one per finished request), and the others above; the vertical-retrace events are masked out by Smoke (20.5). At the current cadence of one request per three fields (50 ms) every wait times out at 36.7 ms and the counter rises on each request; at the correct two fields per request (33.4 ms) none does. The tolerance that remains is 3.3 ms (NTSC) or 4 ms (PAL) of jitter per frame, so the model's guest-speed slowdowns must keep the real time between completions below those limits, or slow the frame rate Smoke is told (`GetVideoFrameRate`) so that the timeout scales with it.
 
 ## Not done in this pass
 
