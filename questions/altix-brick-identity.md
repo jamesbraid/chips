@@ -22,3 +22,10 @@ v5.3, the KLCONFIG structure and what Linux reads from it, the geoid fields and 
 M-brick (found only two comments).
 **Next route.** Read the `snprom` SAL handlers in Ghidra (`retools/tools/re-run --ghidra-export --sn2-prom`) for the
 KLCONFIG builder; a captured `config` line or `/proc/sgi_sn/sn_topology` from real hardware, if any is published.
+
+## Altix 3000 C-brick: SHub generation and board code (2026-11-21)
+
+Settled: the 3300 and 3700 C-brick are SHub 1 ([altix-3000.md](../platforms/sn2/altix-3000.md#shub-generation)). Still
+unknown: which L1 type (`C (IP37)`, `C (IP41)` or `C (IP45)`, strings in `l1-1.62.1.bin`) is the 3000 C-brick, the SHub 1
+stepping on it, and whether the Bx2 is SHub 1 or 2 (`README.snprom` lists it for the SHub 1 image). Route: an EEPROM
+info area or `/proc/sgi_sn/sn_topology` capture from a 3300 or 3700; the SAL 5.04 board-identity code in Ghidra.

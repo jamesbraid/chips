@@ -33,7 +33,7 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
   registers. Established that it exists in the CR-brick; unknown what its port registers look like.
 - The CR-brick is the first brick in these guides with two I/O ports (nodes 1 and 3) from four nodes; the other nodes
   have no external I/O port. Established as drawn.
-- Whether the CR-brick's SHub is generation 2 is not stated (README: inferred from timing only).
+- Whether the CR-brick's SHub is generation 2 is not stated (README: inferred from timing only). SGI's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin`, which points the other way; it may mean the 3700 and not the Bx2. Unknown (see [altix-3000.md](altix-3000.md#shub-generation)).
 
 ## Review
 

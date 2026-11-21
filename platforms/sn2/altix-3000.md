@@ -46,14 +46,55 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 | Chip | Grade and source |
 |---|---|
-| Node chip, two per C-brick: "Super-Bedrock ASIC" (user guide) or SHub (driver guide) | role established by both guides; the one-part identity inferred. Generation unknown (README) |
+| Node chip, two per C-brick: "Super-Bedrock ASIC" (user guide) or SHub (driver guide) | role established by both guides; the one-part identity inferred. Generation: SHub 1 (see [SHub generation](#shub-generation)); the exact stepping is unknown |
 | PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The driver guide's Figure 2-3 (007-4520-006 p.19) labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
 | Router (8-port) | established as a part in the R-brick (p.81, p.87). The guide does not name its family, so neither the NUMAlink 3 nor the NUMAlink 4 register map is established for this brick |
+
+## SHub generation
+
+Verdict: the 3300 and 3700 C-brick use **SHub 1**, not SHub 2. The 3300 is an extension of the Altix 350 (SHub 1)
+work, not of the SHub 2 stream. Checked 2026-11-21 against the snprom packages held in the chips root.
+
+- **Established** (shipped package text): `README.snprom` in snprom 10.54 build 70399 says `shub1snprom.bin` supports
+  the Altix 330, 350, 3300, 3700, 3700 Bx2 and both Prism models, and `shub2snprom.bin` supports the Altix 4700 and 450
+  only. The 3300 and the 3700 are named for the SHub 1 image. This is the vendor's statement of which image to flash
+  on an Altix 3000 series system ("flash -a shub1snprom.bin"), not a boot capture.
+- **Established** (string in the SHub 2 image): `shub2snprom.bin` (10.54, SAL 1.54 for board `IP65`) carries
+  "SHUB2 does not support XIO I/O." The C-brick reaches its IX- and PX-bricks over two NODE XIO (II) connectors
+  (007-4579-001 pp.105 to 106, quoted above), so a SHub 2 C-brick would have no I/O path. This is the second,
+  independent reason; it is inferred as a rule about the hardware, because the string is a PROM refusal and not a
+  register fact.
+- **Established**: the three first-generation Altix 3000 PROM builds held, `snprom.bin` 3.32 (build 30085, "SAL 3.32
+  rel040406 IP41", 6 April 2004), 4.20 (build 40503, "rel050614 IP41") and 4.43 (build 44607, "rel051202 IP41"), name no
+  SHub 2 board and no `IP65`; 4.20 and 4.43 also carry "SHUB 1.1 present" interrupt-targeting workarounds. All three
+  predate the SHub 2 line: the Altix 3700 Bx2 guide is dated November 2004 and the Linux SHub 2 patch series
+  1 December 2004 (see the README). The 2.4.21 ProPack 3 kernel map held has no SHub 2 symbol, and the 2.6.5 SN2 kernel
+  map names `shub1_bte_error_handler` and no SHub 2 one (symbol lists, not source).
+- **Inferred**: the SHub 1 images are named `snprom.bin` before 10.20 and `shub1snprom.bin` after (the README
+  says the file "has been renamed"), so the first-generation Altix 3000 and every later SHub 1 machine share one image
+  line. Reasoning: the README rename sentence and the identical `IP41` banner across 3.32 to 5.04.
+- **Established**: the L1 firmware (`l1-1.62.1.bin`) has a brick-type name table with `C (IP35)`, `C (IP37)`,
+  `C (IP41)`, `C (IP45)`, `C (Twister)`, `C (Vortix)`, `Opus`, `Gemini`, `Dorado`, `Opus TIO`, `Opus IP65` and `NL4R`
+  (strings at file offsets `0x5908b` to `0x59173`). `Opus IP65` is the only name carrying the board of the SHub 2
+  PROM. IP41 code in the L1 prints "SH%d NI0 always NL4 on IP41 brick" and handles several SHubs per brick.
+  **Unknown**: which of `C (IP37)`, `C (IP41)` and `C (IP45)` is the 3000 C-brick; the L1 table does not name a
+  product, and the PROM images know only `IP41`. The type table gives no SHub generation.
+- **Unknown**: no register read from a 3300 or 3700 exists. The SHub 1 identity part word at `0x1_0000_0000` would
+  settle the stepping (1.1 or 1.2), and the generation flag `SN_SAL_GET_SN_INFO` returns would confirm it. The Bx2
+  is listed for the SHub 1 image by the same README, which conflicts with the README's inference that it is SHub 2;
+  not settled here (see [the Bx2 page](altix-3700-bx2.md)).
+
+SHub 2 board values, checked in `shub2snprom.bin` 10.54 (function at `0xff4824e0`, read in Ghidra): the board value is
+stored at `0x5003_1240` of the node window, then compared; `0x7b` and `0x200` take the stacked-DIMM adjacency check
+(fatal "4GB or larger stacked DIMMs cannot be installed in adjacent slots" error, node-dependent), `0xa00` and `0xe00`
+return with no check, and anything else prints "UNABLE TO VERIFY DIMM CONFIGURATION: unknown board type". All four
+are established as accepted values; the images name no product for them, so the mapping to a blade is unknown. This
+finds `0xa00`, which the SHub 2 page lists as not located.
 
 ## Open
 
 - Inferred: the Super-Bedrock ASIC and the SHub are one part, from the same role in both guides. Neither guide gives a
-  chip generation, so SHub 1 or 2 is unknown.
+  chip generation; the firmware packages do (next section).
 - Inferred: the driver guide's SC-brick is this brick (3U, two nodes, 16 DIMM slots per node).
 - Inferred: 3.2 GB/s each way is the 6.4 GB/s total of p.81, so the two rates agree and only the channel count differs.
 - The NUMAlink generation of the external cables. The guide prints their rate (p.101) and no name. Settling test: a
