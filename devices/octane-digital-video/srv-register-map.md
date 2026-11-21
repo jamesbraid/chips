@@ -770,3 +770,17 @@ Setup request (72 bytes, ioctl `0x29`): +0 flags (bit 0 set = playback, clear = 
 
 Descriptor entry: low 20 bits = DMA address >> 14, last entry has `0xf` at bits 35:32. After a capture buffer completes the driver invalidates the CPU cache over its pages and queues an info record (UST, MSC, address, length).
 
+## 10. Window registers (README 20)
+
+Window request (64 bytes, ioctl `0x03`): +0 window 0..2, +4 mode, +12 left, +16 right, +20 top, +24 bottom, +28 offset, +32 zoom (low nibble) and decimation (next), +36 +40 +48 +52 +56 control-bit values, +60 valid-field flags.
+
+| Window | CC left / right | CC top-bottom high / top low / bottom low | AB fine X | Control-bit ids |
+|---|---|---|---|---|
+| A | 0x08 / 0x09 | 0x0a / 0x0b / 0x0c | 0x04 (2:0 left, 5:3 right) | 132 to 139 (AB 5 to 7) |
+| B | 0x10 / 0x11 | 0x12 / 0x13 / 0x14 | 0x14 | 147 to 154 (AB 21 to 23) |
+| C | 0x18 / 0x19 | 0x1a / 0x1b / 0x1c | 0x24 | 162 to 166 (AB 37, 38) |
+
+Horizontal edge = 5 x coarse (CC) + fine (AB), range 0..1279; top and bottom are 10-bit lines 0..1023 (CC `0x0a` bits 1:0 and 3:2 hold bits 9:8 of top and bottom). Screen pixel units, top-left origin (inferred).
+
+Setup-word bits with a VL control: 5 outputblank, 14 inputround, 15 outputexpand, 46 roundtype, 47 dynroundmode (README 20.4). VL event numbering: reason = wire type; 11 is `VLTransferComplete`, 13 to 15 are the vertical-retrace events; select masks include bit (reason - 2) (README 20.5).
+

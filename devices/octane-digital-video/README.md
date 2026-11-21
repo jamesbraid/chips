@@ -954,7 +954,7 @@ The line counter at end-of-DMA only is **not** a problem for the UST maths: it i
 
 | Fact | Value | Grade |
 |---|---|---|
-| Wait loop | `ImpactVideoOut::WaitNextFrame` (0x10f3d350): `select` on the VL event descriptor with a 50 ms timeout, then `vlPending` and `vlNextEvent`. **Only VL event 11 (`VLEvenVerticalRetrace` in `libvl`'s name table) is a frame tick**: it increments a counter (this + 20), and a count equal to a limit held in the video object (+28) returns -1. Any other event type aborts with "failed due to event: <name>". A timeout with no event returns 0 (not an error, "try again") | E |
+| Wait loop | `ImpactVideoOut::WaitNextFrame` (0x10f3d350): `select` on the VL event descriptor with a 50 ms timeout, then `vlPending` and `vlNextEvent`. **Only VL event 11 is a frame tick (**corrected in section 20.3: it is `VLTransferComplete`, not a vertical-retrace event**)**: it increments a counter (this + 20), and a count equal to a limit held in the video object (+28) returns -1. Any other event type aborts with "failed due to event: <name>". A timeout with no event returns 0 (not an error, "try again") | E |
 | Frame hand-over | `PutNextFrame` (0x10f3d6a0) gets a free buffer from the buffer ring, copies the frame, `vlDMBufferPutValid`s it and decrements the same counter; no free buffer is an error | E |
 | Sync loop | `SyncWithFrameReference` (0x10f3d980), always on (the constructor sets the flag at +28 to 1), waits the same way for events 9 (`VLTransferComplete`) and 11, calling a callback held at +24 with the count and acting on the value it returns; events 3, 5 and 7 are handled, 10 aborts. The callback's identity, and so the exact value it compares, was not recovered | E (loop), U (callback) |
 | MSC/UST | the video-out code in the Smoke binary has **no** call to `vlGetUSTMSCPair` or `vlGetFrontierMSC`. Its pacing is event counting, not an MSC or UST target | E (no references found in the video and VTR code ranges) |
@@ -1044,7 +1044,7 @@ The vertical-event machinery is the same as playback (sections 16 and 18): one v
 | Menu | Input Clip drives `VtrInputClipDivo` (0x10b7e4b0), which uses `DivoVideoCaptureSubSystemCreate`, `Start` and `Wait` (0x10f2e890, 0x10f2eae0, 0x10f2eaf0) and the `OctaneVideo*` helpers | E |
 | Input set-up | `VideoOctaneSetInput` (0x10f32bf0) converts the DL timing, format, precision, field dominance, packing and colour space to VL values, calls `VideoOctaneVideoInput(1)`, and issues `vlSetControl`/`vlGetControl` | E |
 | Capture path | `OctaneVideoIn::OctaneVideoIn` (0x10f3a8c0): an `OctaneVideo` object with source node `VL_VIDEO`, drain node kind 3 (the memory drain), a colour-space node, then `vlSetupPaths(..., VL_SHARE, VL_SHARE)` and `vlSelectEvents` with mask `0xffffc7ff` (bits 11 to 13, the vertical-retrace events, off). The CSC controls use the input-side values (17.1). Ring buffer from `CreateAndRegisterRingBuffer` | E |
-| Frame loop | `DivoVideoCaptureSubSystemWait` calls `vlNextEvent`, `vlDMBufferGetValid` and `dmBufferGetUSTMSCpair`, and `VideoSaveLastTransferTime(USTMSCpair)`; `ImpactVideoIn::WaitNextFrame` (0x10f3c5e0) treats VL event 11 as a frame tick and any other reason as an error (-1). The tension between that and the mask that clears bit 11 was not resolved (the event may be delivered regardless of the mask, or WaitNextFrame is used on a different path). | E (calls), U (event delivery) |
+| Frame loop | `DivoVideoCaptureSubSystemWait` calls `vlNextEvent`, `vlDMBufferGetValid` and `dmBufferGetUSTMSCpair`, and `VideoSaveLastTransferTime(USTMSCpair)`; `ImpactVideoIn::WaitNextFrame` (0x10f3c5e0) treats VL event 11 as a frame tick and any other reason as an error (-1). Event 11 is `VLTransferComplete`, and the mask clears only the three vertical-retrace events, so there is no conflict (section 20.3). | E (calls), U (event delivery) |
 
 ### 19.7 Video in a window (question b)
 
@@ -1057,6 +1057,77 @@ The vertical-event machinery is the same as playback (sections 16 and 18): one v
 | Flame | Flame 7.6's `VideoOctaneVideoInput` and `VideoOctaneSetInput` are identical to Smoke 5.0 (10.9), so the same screen-drain preview. Flame/Flint 8.3.4's `VideoOctaneSetInput` differs (extra filter and `VideoOctaneVideoOutput(1)` calls) but not in the VL calls named above | E (7.6), I (8.3.4) |
 
 For a model: a live preview needs the window registers and the video-input path (DV-in, CC1 timing) but no VGI1 channel traffic. The capture to a clip needs a VGI1 write channel and per-field vertical interrupts. Both can be active at once (Smoke sets up the preview first, then the capture path).
+
+## 20. The window registers, the setup-word bits and the VL event numbering
+
+Pass 13. Same inputs as section 19 (original-6.5 overlay `srv.a` and `mgv.so`; `videod`, `libvl` and Smoke 5.0 from the guest disk). Grades: E read in code or data, I reasoned, U unknown. **The window path is decoded to the register, units and call level; the meaning of every bit in the per-window control registers is not**, and the section says where.
+
+### 20.1 The window request and where the registers live
+
+| Fact | Value | Grade |
+|---|---|---|
+| Request | ioctl `0x6d670003` (`srvSetWin`), a 64-byte structure; `0x04` (`srvGetWin`) returns it. Both call `srv_win_ops(board, request, set)` | E |
+| Producer | `MGV_SetParams_Screen` (parameter id 30 on the screen drain) issues the ioctl; `mgvSetWin` builds the structure after `mgvConstrainWindow`, which clamps the rectangle: horizontal 0 to **1279**, vertical 0 to **1023** (`srv_win_ops` also writes the limit 1023), keeping a 12-line and 44-pixel margin from the neighbouring windows | E |
+| Fields | +0 window number 0, 1 or 2 (A, B, C); +4 mode 0 to 5; +12 left; +16 right; +20 top; +24 bottom; +28 an offset `mgvConstrainWindow` computes; +32 zoom and decimation word (low nibble zoom, next nibble decimation, both set is an error "Cannot set both zoom and decimation"); +36, +40, +48, +52, +56 values for window control bits; +60 **flags: which fields are valid** (0x1 mode, 0x2 and 0x40 offsets, 0x4 left, 0x8 right, 0x10 top, 0x20 bottom, 0x80 zoom/decimation, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000 control bits, 0x400 also triggers `_srv_enab_win`) | E (offsets and flags), I (names) |
+| Blocks | **CC indirect registers** (`srv_ccind`: index at direct 1, data at direct 2 of the CC block, DCB window `+0x73000`) hold the edges; **AB indirect registers** (`srv_abint`) hold the fine X bits and the window control bits. `srv_window.o` touches no other block: its only external calls are `srv_ccind`, `srv_ccdir`, `srv_abint`, `srv_singlebit` and `cmn_err`. There is no VC3 or XMAP access | E |
+| Errors | "Invalid window", "Invalid window mode", "video inputs to windows B and C incompatible", "Digital out <> in", "Invalid zoom factor", "Invalid decimation factor" | E |
+
+### 20.2 The edge registers (units and origin)
+
+The window table in `srv_window.o` (120 bytes per window, `.data`) names the registers. For windows A, B and C:
+
+| Edge | Register (A / B / C) | Encoding | Grade |
+|---|---|---|---|
+| left | CC `0x08` / `0x10` / `0x18` | 8-bit **coarse** value | E |
+| right | CC `0x09` / `0x11` / `0x19` | 8-bit coarse value | E |
+| left, right fine | AB `0x04` / `0x14` / `0x24`: bits 2:0 left, bits 5:3 right | remainder 0 to 4 | E |
+| top and bottom, high bits | CC `0x0a` / `0x12` / `0x1a`: bits 1:0 = top bits 9:8, bits 3:2 = bottom bits 9:8 | | E |
+| top, low 8 bits | CC `0x0b` / `0x13` / `0x1b` | | E |
+| bottom, low 8 bits | CC `0x0c` / `0x14` / `0x1c` | | E |
+| further CC registers | CC `0x0d`, `0x0e` / `0x15`, `0x16` / `0x1d`, `0x1e`, written from the +28 offset and flags `0x40`/`0x80` | | E (writes), U (meaning) |
+
+So the horizontal edge is `5 x coarse + fine` (`srv_win_lr` divides the request value by 5 and keeps the remainder in the AB register), a value that fits the 0 to 1279 range; top and bottom are 10-bit line numbers (0 to 1023). The units are **graphics-screen pixels and lines** of the 1280 x 1024 raster, because those are the limits `mgvConstrainWindow` enforces and `mgv` takes the rectangle from the X window geometry. The origin is therefore the screen's top-left (the limits start at 0); I did not find an explicit sign or flip. I for origin, E for the rest.
+
+### 20.3 Compositing, key source and the X window
+
+| Question | Answer | Grade |
+|---|---|---|
+| What composites the overlay | the CC and AB blocks on the video board: the window enable and mode bits are `srv_singlebit` ids `0x84` to `0x8b` (window A, AB registers 5 to 7), `0x93` to `0x9a` (B, AB 21 to 23) and `0xa2` to `0xa6` (C, AB 37 and 38), plus AB 16 to 20 / 32 to 36 for zoom and decimation (ids `0x8c` to `0x92`, `0x9b`..., see the bit table). The code does not touch the graphics board's XMAP or VC3 | E (which registers), U (what each bit means) |
+| Key source | **window rectangle**: the edges above are the only geometry the path writes. `srvKeyerWrite` (ioctl `0x15`) is a separate effect: one CC register (index 50) and four enable bits (ids 90 to 93), refused with "Digital out <> in" on mismatched I/O; `srv_win_ops` calls neither it nor any chroma or alpha register | E |
+| What the X window maps to | the screen-drain control's origin and size, which Smoke sets from the window's geometry (`CreateXWinForScreenDrn`, `MapXWinForScreenDrn`), after clamping to the raster; one drain node per window (`node_scrn_drn_a`, `_b`, `_c`) | E (path), I (that the X origin is the screen origin) |
+| What a model needs | for each active window, the six values (left, right, top, bottom, mode, enable) from CC `0x08` to `0x0c` (A), `0x10` to `0x14` (B) and `0x18` to `0x1c` (C) and AB `0x04`, `0x14`, `0x24`, assembled as in 20.2, and the window-enable bit; then replace that screen rectangle of the graphics output with the video-input picture (scaled by the zoom or decimation word, which is undecoded). B and C cannot take different video inputs | E (registers), U (enable bit and scale encoding) |
+
+### 20.4 The setup-word bits (section 19.2)
+
+`mgv.so` exposes some bits as VL controls; their getters read the bit straight from the word (the 64-bit value at request +8), so the mapping is exact:
+
+| Setup-word bit | VL control (id) | Values | Node group | Grade |
+|---|---|---|---|---|
+| 4:0 | pixel-format code from the packing | `mgvvgi1PixelDepth` and the table at `mgvPixelSize` turn it and bit 45 into bytes per pixel | both | E |
+| 5 | `vgi_outputblank` (`0x4d47004b`) | 0 `yuva`, 1 `rgba` (blanking colour space) | playback | E |
+| 6 | field dominance | `dominance_field` (`0x4d470024`): 0 `vgi_dom_f1`, 1 `vgi_dom_f2`; bit 6 also selects the `0x80` or `0x20` that `mgv` writes into bits 23:16 | both | I (bit to control link from the 23:16 test, not from a getter) |
+| 14 | `vgi_inputround` (`0x4d470047`) | 0 off, 1 on | capture | E |
+| 15 | `vgi_outputexpand` (`0x4d470048`) | 0 off, 1 on | playback | E |
+| 46 | `vgi_roundtype` (`0x4d470049`) | 0 `simple`, 1 `dynamic` | capture | E |
+| 47 | `vgi_dynroundmode` (`0x4d47004a`) | 0 `repeat`, 1 `free` | capture | E |
+| 45 | second argument of the pixel-depth function | selects the packed-24-bit variant for some codes | both | I |
+| 43:32, 44 | forced by `srv_dma_setup` (`0xfff`, 1) | | both | E |
+| 23:16 | `mgv`: `0x80` when bit 6 is set, else `0x20` | | both | E |
+| 11 | set by the format function in one packing case | | | E (set), U (meaning) |
+| 48, 49 | set by the format function when a node size field is above 256 (bit 48) or above 512 (bit 49) | | | E (set), U (meaning) |
+
+So in the playback trace word `0x9fff0080184c`, **bit 47 is `vgi_dynroundmode` = free**, a capture-side control that the playback word nevertheless carries (the word's default has it set; playback ignores it). I (that the playback word's value is default, not a choice). The remaining low bits `0x4c` (code 12, bit 6) and bits 11 and 12 follow the format and field dominance; bit 12 I could not trace to a writer, so it may come from a default word. Each control also exposes `vgi_errorrestart` (`0x4d47004c`) and `bufferquantum` (`0x4d47004d`) outside the word; the word's remaining bits (7 to 10, 13, 16 to 22 other than the `mgv` byte, 50 to 63) have no reader or writer I found. U.
+
+### 20.5 VL event numbering: the tension is a numbering offset, not a mask polarity
+
+| Fact | Value | Grade |
+|---|---|---|
+| Wire type and `reason` | the event's first byte is the wire type; `libvl` stores it unchanged as `VLEvent.reason` (`_vlEatData`, `andi 0x7f`). Wire types 0 and 1 are the reply and error codes, so events start at **2** | E |
+| Name table | `vlEventToName(n)` indexes a 25-entry table whose first two entries are `null`: reason 2 = `VLStreamBusy`, 3 `VLStreamPreempted`, 4 `VLAdvanceMissed`, 5 `VLStreamAvailable`, 6 `VLSyncLost`, 7 `VLStreamStarted`, 8 `VLStreamStopped`, 9 `VLSequenceLost`, 10 `VLControlChanged`, **11 `VLTransferComplete`**, 12 `VLTransferFailed`, **13 `VLEvenVerticalRetrace`, 14 `VLOddVerticalRetrace`, 15 `VLFrameVerticalRetrace`**, 16 `VLDeviceEvent`, 17 `VLDefaultSource`, 18 `VLControlRangeChanged`, 19 `VLControlPreempted`, 20 `VLControlAvailable`, 21 `VLDefaultDrain`, 22 `VLStreamChanged`, 23 `VLTransferError`, 24 `VLInvalidControl` | E |
+| Mask polarity | an **include** mask: `videod`'s `PathEventNotify` delivers an event only if `mask & (1 << (type - 2))` is non-zero (`vlCheckEvent` in `libvl` does the same test). Mask bit n selects reason n + 2 | E |
+| Smoke's mask | `0xffffc7ff` clears bits 11, 12 and 13, i.e. reasons 13, 14 and 15, **the three vertical-retrace events**, and keeps `TransferComplete` | E |
+
+So `ImpactVideoOut/In::WaitNextFrame` counts `VLTransferComplete` (reason 11): one per finished buffer transfer, not one per field. Section 18.3 and 19.6 wrongly named it a vertical-retrace event; the corrections are applied there. Consequences for the preroll stall: the frame tick comes from request completion in `mgv` (`vlDMBufferPutValid` and the transfer-complete event), which needs end-of-DMA from the model for every request; field-rate vertical events are filtered out by Smoke's own mask. `SyncWithFrameReference` also reacts to reason 9 (`VLSequenceLost`, counted as a lost frame and allowed), 7 (`VLStreamStarted`) and 10 (`VLControlChanged`) as no-ops, and to 3 (`VLStreamPreempted`) and 5 (`VLStreamAvailable`) by calling the video object's handlers. Everything else aborts with "failed due to event". `videod` special-cases wire type 11 in `PathEventNotify` (transfer complete): it consults the path's owner record before queueing, and drops legacy clients' `TransferComplete` and vertical-retrace events (the `0x3a00` filter in `WriteEventsToClient`). E.
 
 ## Not done in this pass
 
