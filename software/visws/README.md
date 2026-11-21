@@ -1,0 +1,55 @@
+# Visual Workstation 320 and 540: firmware and NT support software
+
+What the SGI Visual Workstation 320 and 540 (Linux name `visws`; x86, Pentium II or III, Cobalt and Lithium chipset) run
+below the operating system: the system firmware, the boot files it hands over to, the Windows NT 4.0 hardware abstraction
+layer SGI wrote for the pair, and the public Linux boot code. The chips themselves are described elsewhere: the board
+and its address map in [platforms/visws](../../platforms/visws/), Cobalt and Lithium under
+[devices/cobalt](../../devices/cobalt/) and [devices/lithium](../../devices/lithium/), the graphics engine under
+[devices/cobalt-graphics](../../devices/cobalt-graphics/). This directory only covers the software that programs them, and
+what an emulator has to provide in place of the firmware. The platform pages hold the Linux-side view
+([model-needs.md](../../platforms/visws/model-needs.md), [boot-and-detection.md](../../platforms/visws/boot-and-detection.md),
+[interrupts.md](../../platforms/visws/interrupts.md)); where this directory's HAL reading settles a point they leave open, it says so.
+
+Nothing here is copied from the binaries. Names are function, symbol, string and file names the shipped files carry;
+addresses, offsets and numbers are quoted as facts.
+
+**Grades.** *established*: read in full from a shipped binary (the whole routine or table), from the public Linux
+source, or stated by a published document. *observed*: seen in a public first-hand report (a Usenet post, a console
+capture), not independently confirmed. *software expectation*: what shipped software assumes of the hardware or
+firmware; it says what must be provided, not that the hardware does it. *inferred*: a reasoned reading, reasoning
+given. *unknown*: not settled; the route that would settle it is in
+[questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
+
+## Pages
+
+| Page | Covers |
+|---|---|
+| [firmware.md](firmware.md) | What the firmware is (an ARC-style system, not a PC BIOS), the version history, the flash part and its environment block, the update procedure |
+| [boot-path.md](boot-path.md) | What the firmware leaves behind for NT and Linux: boot files, the ARC configuration tree, memory descriptors, the processor table, the memory and device map; what is not provided (no MP table, no E820) |
+| [nt-hal.md](nt-hal.md) | The NT 4.0 HAL read function by function: Cobalt interrupt routing, timers, processor start, Lithium PCI access, error and power handling, flash environment access |
+| [emulator-requirements.md](emulator-requirements.md) | What an emulator must provide to boot Linux and NT, and what is still unknown |
+
+## What was read
+
+| Source | Held | Use |
+|---|---|---|
+| System Firmware User's Guide for Windows NT, 007-4225-001 | yes (techpubs mirror) | Firmware identity, settings screens, update procedure |
+| Silicon Graphics 320 and 540 owner's and installation guides (007-3701-001, 007-3882-001, 007-3703-003) | yes (techpubs mirror) | listed; not read |
+| SGI Recovery CD-1 v1.1 (NT 4.0 SP4 image with SGI files; 497,657,856 bytes, sha256 `041f74f9…e0a40`) | yes (software mirror) | `halborg.dll`, `halbrgup.dll`, `arcldr.exe`, `arcsetup.exe`, `sgcomp.sys`, `sgiusb00.sys`, and the CodeView symbol files `halborg.dbg` and `halbrgup.dbg` |
+| SGI Recovery CD-2 v1.0 (216,895,488 bytes) | yes | Installer for the SGI drivers and utilities. Its "SGI Firmware" item exists, but the PROM image is not among the files that can be listed without unpacking the InstallShield 3 archives; not unpacked |
+| Public Linux source: Documentation/sgi-visws.txt, `visws_quirks.c`, `arch/x86/pci/visws.c`, the `asm/visws` headers, `smpboot_hooks.h` (history tree); 2.4 `arch/i386/kernel` (linux-mips tree) | yes | Linux boot expectations, graded established |
+| SGI Linux for the workstations: Visual Workstation Environment 3.0, ProPack 1.3 Visual Workstation Edition (CD images) | yes | Boot method; listed, not unpacked |
+| Usenet: PROM release notes 1.0002 to 1.1005 (comp.sys.sgi.hardware, 2001-02-22, message `973u7b$jjr$03$1@news.t-online.com`); Linux install attempts (1999-09-23, `A7C09CFCAF83D2119C5000104B416CCF091C7D@theta.holmes.nl`; 2000-04-10, `8csntq$vku$1@nnrp1.deja.com`) | yes | Version history, firmware naming, Linux loader names |
+
+**Not found.** No PROM image, firmware update floppy or flash dump for the 320 or 540 is held, in the Library, the
+software mirrors, or the firmware registry. A 2005 Usenet thread (message `1114131220.292399.255710@g14g2000cwa.googlegroups.com`) says the update files were
+downloadable from SGI's support site, but no copy is mirrored and
+no stable address is on record, so nothing was added to the acquisition queue. The firmware itself has therefore not been read; every statement about
+firmware behaviour comes from the software that talks to it. Recovery CD v1.0 (1 to 2 processors) is not held; v1.1 (1 to
+4 processors) is.
+
+## Scope boundaries
+
+The graphics driver `sgcomp.sys` and the Cobalt graphics engine belong to [devices/cobalt-graphics](../../devices/cobalt-graphics/).
+Here the driver appears only where it interacts with firmware-reserved memory. The 230, 330 and 550 workstations use a
+different (PC BIOS) platform and are not covered.

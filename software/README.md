@@ -5,6 +5,7 @@
 | Page | Title | Summary |
 |---|---|---|
 | [sal/](sal/README.md) | SN2 SAL calls: what the Altix kernel asks of firmware | Every firmware service the Linux ia64 SN2 (Altix and Prism) kernel calls, with function number, arguments, results... |
+| [visws/](visws/README.md) | Visual Workstation 320 and 540: firmware and NT support software | What the SGI Visual Workstation 320 and 540 (Linux name `visws`; x86, Pentium II or III, Cobalt and Lithium chipset)... |
 
 ## boot
 
