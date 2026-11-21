@@ -87,9 +87,9 @@ IO10 has serial ATA, the IO9 SCSI (007-4660-002 p.112, re-read). Both cards use 
 established on the machine page under the repository's evidence rule).
 
 **Altix 3300 plus IX-brick.** The 3300 has up to 12 Itanium 2, one IX-brick, no routers, one power bay and
-an optional L2, in a 17U rack (007-4579-001 p.77, re-read; the machine page had not read p.77). Its C-brick is two SHub
-nodes joined internally, two processors each (p.99, `altix-3000.md`), so even the smallest 3300 has two SHubs, two
-NASIDs and an internal NUMAlink hop. The PROM's node-interconnect phase then reads network registers instead of taking
+an optional L2, in a 17U rack (007-4579-001 p.77). Its C-brick is two nodes joined internally by NUMAlink 4 (p.81), two
+processors each (p.99, `altix-3000.md`). The driver guide calls the node chip SHub (007-4520-006 p.16), so even the
+smallest 3300 has two node chips, two NASIDs and an internal NUMAlink hop. The PROM's node-interconnect phase then reads network registers instead of taking
 the single-node skip of section 6, and none of those registers has a contract. The IX-brick adds three PIC adapters and
 six PCI-X buses. Its compute board is the one the images name: banner and build say IP41, and sysco infers
 the C-brick reports L1 type `5`, the IP41 board (inferred). It shares the SHub 1 image with Prism but not
@@ -304,8 +304,8 @@ grading of the recommendation, the container hash); the contradictions list now 
   holdings catalogue; the README does not say it.
 - Manuals, read at the printed page numbers the page uses (our holdings PDF index runs 24 to 28 pages ahead of them):
   007-4579-001 p.77 (Altix 3300: up to 12 processors, one IX-brick, no routers, single power bay, optional L2, 17U; up
-  to three C-bricks) and p.99 (the C-brick is two nodes joined by NUMAlink, two processors each; the manual says "ASIC",
-  not "SHub", so "two SHubs" is the page's inference); 007-4660-001 p.100 (IP57 board: twelve DIMM slots), p.101
+  to three C-bricks), p.81 (the node chip is "Super-Bedrock ASIC"; the internal channel is NUMAlink 4) and p.99 (the
+  C-brick is two nodes joined by NUMAlink, two processors each; the manual says "ASIC", not "SHub"); 007-4660-001 p.100 (IP57 board: twelve DIMM slots), p.101
   (1.0 to 1.5 GHz, 1.5, 3 and 6 MB L3) and p.105 (PIC ASIC on the riser card, IO9 connector, four slots; the DVD-ROM
   needs an IO9); 007-4660-002 p.72 and p.112 (IO10 has serial, IO9 SCSI; IO10 standard, IO9 optional, in slot 1; the SHub
   block list). The machine choice follows from these. Not re-read: the page's other manual pages (69 to 71, 96, 100,
