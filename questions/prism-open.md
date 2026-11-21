@@ -13,15 +13,15 @@ Status: **unknown** for everything below. What is established is on [the Prism o
   riser" (inferred two TIOCAs). The deskside's wiring of AGP-5 and AGP-6, and what bridges the four deskside PCI-X buses, are
   unstated. Route: kernel boot log of a Prism (PCI bus numbers and `TIOCA` lines), a ProPack disk image's `dmesg` or
   `/proc/bus/pci`, ProPack kernel DWARF. Checked 2026-11-21: the 2019 public logs enumerate no AGP or TIOCA device, and the
-  held image has no log. Partly answered 2026-11-21 (one AGP bridge per TIOCA; the count per XG2N is open); see below.
+  held image has no log. Partly answered 2026-11-21 (one AGP bridge per PROM-reported TIOCA bus; the count is open); see the kernel-source section below.
 - **GPU part.** The guides name "FireGL X2PRO-256" and "FireGL X3-256" only. Which ATI chip each board carries (R350-class for the
   X2PRO, R420-class for the X3 by external listings) and the PCI vendor and device IDs are not in any SGI source. Route: `lspci`
   output or `fglrx` device tables from a ProPack disk image; the held T2/Linux image has neither. The 2019 log's boot VGA
   device (0006:00:00.0) prints no device ID. The public pci.ids list names 1002:4a4d "R420 GL [FireGL X3-256]" and
   1002:4e4b "R350 GL [FireGL X2 AGP Pro]". That is an external name list, not SGI evidence, and no held capture prints
   a 1002 ID, so the mapping to a board stays unknown. The driver table on the 2026-11-21 disc gives IDs for the X2-256 and X3-256 names; see below.
-- **PROM and SAL.** No snprom build is tied to the Prism, and no PROM is held. The one constraint known: SHub 1 needs SAL
-  revision 4.06 or later for TIOCA (`v5.3:arch/ia64/sn/pci/tioca_provider.c`). Whether the Prism PROM emits a PCDP VGA entry for the
+- **PROM and SAL.** No snprom build is tied to the Prism, and no PROM is held. The one constraint known: TIOCA setup needs SAL
+  revision 4.06 or later (`v5.3:arch/ia64/sn/pci/tioca_provider.c`; the same check in the 2.6.5 and 2.6.16 trees, which have no SHub test). Whether the Prism PROM emits a PCDP VGA entry for the
   AGP card, and whether graphics boards carry an option ROM, is unknown. Route: PROM image or the disk's `/usr/cpu/firmware`;
   boot capture of the EFI shell. The 2019 logs (kernels 3.8.13 and 4.14.83) print `PCDP: v3 at 0x31efead110`, the address of the
   EFI `HCDP=` entry, so the firmware passes a PCDP v3 table (observed, as posted). The dump does not show its entries,
@@ -46,8 +46,9 @@ disc members. They sit inside the `km-rtgfx-fglrx` and `fglrx` RPMs. The disc's 
   graphics machines ran this kernel (inferred; no Prism named).
   Route: `/proc/sgi_sn/sn_topology` or `lspci` output from a running Prism.
 - **TIOCA count and pipe wiring.** The count per XG2N is unknown. Software expectation: one AGP bridge per TIOCA instance, bound
-  to the last VGA-class AGP device on that instance's device list (`patches.rtgfx/sgi-agp`, established from the patch text).
-  The disc's `sgi-agp.ko` imports `tioca_list`, `tioca_gart_found` and `tioca_fastwrite_enable` (observed with `nm -u`).
+  to the last VGA-class AGP device on that instance's device list (`patches.rtgfx/sgi-agp`, from the patch text). The
+  2.6.5 and 2.6.16 `sgi-agp.c` read on 2026-11-21 bind to the last device on the list whatever its class; see the
+  kernel-source section below. The disc's `sgi-agp.ko` imports `tioca_list`, `tioca_gart_found` and `tioca_fastwrite_enable` (observed with `nm -u`).
   `gfxtopology` reads one `pcibus` line per pipe and prints the brick and closest CPU brick for each pipe (script text,
   established), which does not give a count. The dual TIO riser, the AGP-5 and AGP-6 wiring, and any bridge on the deskside
   PCI-X buses are not described anywhere on the disc. The vizserver release notes say an SGC PCI-X card takes the first
@@ -69,6 +70,32 @@ disc members. They sit inside the `km-rtgfx-fglrx` and `fglrx` RPMs. The disc's 
   ProPack 4 SP2 editions the guides name.
   Route: `/etc/sgi-release` and `rpm -qa` from an installed ProPack disk.
 - **PROM, SAL and PCDP.** Not answered. The disc has no PROM. The SAL 4.06 TIOCA constraint is unchanged.
+
+## Evidence from the ProPack 4 SP3 and ProPack 6 SP3 kernel source (2026-11-21)
+
+Read: `kernel-rtgfx-source-2.6.5-7.244` (ProPack 4 SP3 extensions disc, `propack-4SP3-cd3-extn.iso`) and
+`kernel-sltdebug-source-2.6.16.60-0.21` (ProPack 6 SP3 tar), public GPL files only, paraphrased. Each row states what the
+kernel expects; what the chip does is inferred. Full reading in [platforms/sn2/prism.md](../platforms/sn2/prism.md#graphics-attachment).
+
+- **TIOCA count per XG2N.** Unknown. The kernel has no per-module count. Each PROM-reported PCI bus whose ASIC type is TIOCA
+  gets one TIOCA instance (established). The part and manufacturer macros are not compared anywhere in these files.
+  Route: a booted Prism's bus list, or the PROM's bus records.
+- **Discovery.** Established: the kernel asks SAL for each bus by segment and number, then uses the XIO widget number and
+  NASID the PROM returns. Unknown: how the PROM splits a TIO into TIOCA records.
+- **SHub port per pipe.** Unknown. The per-bus record fields the kernel reads (NASID, widget number) carry no port number.
+  The record's full definition is in a header not read here.
+- **Pipe to bridge.** Established: `sgi_tioca_find_bridge` matches a bridge to a device by PCI bus. Unknown: which bus each
+  pipe sits on.
+- **Closest node.** Established: the PROM gives a closest NASID; the kernel uses its node for GART and AGP pages. 2.6.5
+  leaves the PCI controller's node unset; 2.6.16 sets it. The fglrx query that reads the closest node is not in GPL
+  source: unknown.
+- **Dual TIO riser.** Unknown. The TIOCE header's two-port array (`TIOCE_NUM_PORTS 2`) is a chip property, not a riser.
+- **Other TIO port.** TIOCE is present (`tioce.h`, `tioce_provider.c`; part `0xCE00`, manufacturer `0x36`). `tiocp.h` is
+  present with no part macro. Which Prism shape uses either is unknown.
+- **Prism constants.** None. No read file names Prism.
+- **PROM gate.** Established: the TIOCA setup checks only the SAL revision (4.06 or later). The "SHub 1 only" wording from
+  v5.3 is not confirmed by these trees; check it against v5.3 before citing it.
+  Route: the v5.3 file or a Linux 2.6.x tree from `references/code/`.
 
 ## Review
 

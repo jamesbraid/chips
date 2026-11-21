@@ -105,8 +105,9 @@ Established, from SGI's Linux platform code (v5.3 tree). The TIO bridge chips th
   statements; their reconciliation is inferred (the board negotiates down, but a 4x-only card was not tested).
 - **The 2.6.5-7.308-rtgfx kernel (ProPack 4SP4 disc, read 2026-11-21).** `sgi-agp.ko` imports `tioca_list`,
   `tioca_gart_found` and `tioca_fastwrite_enable` (`nm -u`, observed). Its source patch `patches.rtgfx/sgi-agp` creates one AGP
-  bridge per TIOCA instance on `tioca_list`. The bridge device is the last VGA-class device with an AGP capability on that
-  instance's device list, and the bridge is created whether or not one matched. The later `sgi-agp-empty-bus` patch skips
+  bridge per TIOCA instance on `tioca_list`. The patch text is not in the two source trees read below, and their
+  `sgi-agp.c` does not match this wording: it sets the bridge device to the last device on the list whatever its class,
+  and creates the bridge whether or not a VGA AGP device exists. The later `sgi-agp-empty-bus` patch skips
   instances with an empty device list (established from the patch text). The driver therefore assumes one AGP display
   device per TIOCA, a **software expectation**; the TIOCA count per XG2N stays **unknown**. `fglrx.ko` carries the strings
   `Provider is TIOCA = %d` and the functions `firegl_snia_is_tioca` and `firegl_snia_closest_node` (established from the
@@ -123,6 +124,27 @@ Established, from SGI's Linux platform code (v5.3 tree). The TIO bridge chips th
   user to put the Linux console monitor on pipe 0's left channel (007-4701-003 p.18). Established that the kernel needs
   PCDP; **inferred** that the Prism firmware publishes a PCDP VGA entry for that card. The 2019 boot logs show a PCDP v3
   table at the address of the EFI HCDP entry (observed, as posted); its entries are not printed.
+- **Two more kernel trees (read 2026-11-21).** `kernel-rtgfx-source-2.6.5-7.244` (ProPack 4 SP3 extensions disc) and
+  `kernel-sltdebug-source-2.6.16.60-0.21` (ProPack 6 SP3) carry the same TIO files. The kernel's expectations, established
+  as code; what they imply for the chip is inferred:
+  - Discovery is by PROM bus record, not by part number. `io_init.c` asks SAL for each PCI bus number and dispatches on the
+    bus's ASIC type; a TIOCA is one such record, and its XIO widget number (`bs_xid`) and NASID come from that record. The
+    part and manufacturer macros (`0xE020`, `0x24`) are declared but no read file compares them. Inferred: one TIOCA per
+    record. **Unknown:** how many TIOCA records a TIO or XG2N produces, and what the PROM does with a second TIO.
+  - Closest node: the PROM passes `ca_closest_nasid`; the kernel converts it to a node and allocates the GART table and AGP
+    pages there. 2.6.5 leaves the PCI controller's node unset (the assignment is commented out); 2.6.16 sets it to the
+    closest node. The fglrx "closest node" query is in the proprietary module, not these files: **unknown**.
+  - Bridge lookup: `sgi_tioca_find_bridge` returns the AGP bridge whose device sits on the same PCI bus as the graphics
+    device. So a pipe finds its bridge by bus number. Which bus a pipe sits on is **unknown** from these files.
+  - GART: 2 GiB aperture at `0x80000000` with the 1 GiB AGP window below the 1 GiB PCI32 window; 4 MiB of table for 4 KiB
+    pages or 1 MiB for 16 KiB pages (derived: entries times 8 bytes). PCI32 direct mode is disabled by a 2003 comment
+    (the CA addressing glitch), so PCI32 DMA always goes through the GART.
+  - Workaround IDs in `tioca_provider.h`: `PV907908`, `PV908234`, `PV895469`, `PV910244`, each a mask for revision A.
+    `PV910244` forces an explicit TLB flush on revision A. The other IDs have no code in these files.
+  - Prism: no file in `arch/ia64/sn`, `include/asm-ia64/sn` or `drivers/char/agp` names Prism. No Prism constant exists.
+  - Other port: the same trees carry TIOCE (`tioce.h`, `tioce_provider.c`) with `TIOCE_PART_NUM 0xCE00`, `TIOCE_MFGR_NUM 0x36`,
+    and `TIOCE_NUM_PORTS 2`, a per-port register array. `tiocp.h` is present with no part macro. Which Prism shape uses
+    TIOCE or TIOCP is **unknown**; the two-port count is the chip's, not evidence of a dual TIO riser.
 
 How the AGP boards attach to a node, from the manuals plus the parts index (inferred where marked):
 
@@ -188,10 +210,11 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 - **PROM and SAL.** No manual names a PROM version for any Prism. SGI's SHub 1 PROM images are held (snprom 4.43, 10.40 and
   10.54; [references/sn2-holdings.md](../../references/sn2-holdings.md)), no Prism-specific build is, and SGI's `README.snprom` in
   the 10.54 package lists Prism Rackmount and Prism Deskside among the machines `shub1snprom.bin` supports: vendor intent, not
-  a boot of a Prism ([the qualification page](../../software/firmware/snprom/images.md) grades it). The only version requirement in Linux is generic: with a SHub 1, `tioca_bus_fixup` refuses to set up a TIOCA unless
+  a boot of a Prism ([the qualification page](../../software/firmware/snprom/images.md) grades it). The only firmware requirement in Linux is generic: `tioca_bus_fixup` refuses to set up a TIOCA unless
   the SAL revision is at least `0x0406` ("SGI prom rev 4.06 or greater required for tioca support",
-  `v5.3:arch/ia64/sn/pci/tioca_provider.c`). It is skipped for SHub 2. Established as the code. The SAL calls the kernel makes
-  are on [the SAL page](../../software/sal/README.md).
+  `v5.3:arch/ia64/sn/pci/tioca_provider.c`). Established as the code. The 2.6.5-7.244 and 2.6.16.60-0.21 trees (read
+  2026-11-21, below) gate only on that revision and have no SHub test, so the "SHub 1 only" and "skipped for SHub 2" wording
+  from v5.3 is **unconfirmed** here. The SAL calls the kernel makes are on [the SAL page](../../software/sal/README.md).
 - **Public boot logs.** Two serial-console boot logs in a 2019 public forum post (forums.irixnet.org, thread 849, post 12) are
   the only Prism kernel logs held. The poster calls the machine a deskside or rack Prism with two CPUs and one node. Both print
   `booting generic kernel on platform sn2`, `SAL 3.2: SGI SN2 version 4.65` and six ACPI tables with SGI SN2 OEM IDs
