@@ -30,17 +30,32 @@ Related: [stall note](prom-l1-link-and-delay-loop.md), [lead test](prom-lead-tes
 - A model therefore owes the PROM a value for `+0x400020` bits 3:0 (and the same register through the node alias) before the crossbar step. The value the PROM then uses as the hub's port is whatever that read returns: the model's choice is final.
 - The graphics page (Voyager `ip35-prom-graphics.md`) reports that the master port must equal the hub's widget id and that a G2 sits at widget 10: consistent with section 1, since the PROM makes the hub's own link the master (`|= 5`) and, for hub id 10, treats port 11 as the other port. A host at id 10 with a G2 at widget 10 would be configured as master on the G2's port.
 
-## 4. Consequences for the Origin 350 and the Onyx4 host
+## 4. What public captures say about the host id
 
-- Both are L1 type `'7'` (class 1). The brick type does not select the port, so there is no PROM-side table row to add for `'7'`.
-- The host id must be a model answer for `II_WCR[3:0]`. For an Onyx4 host with a G2 at widget 10 the id has to be **not** 10 (the Voyager finding); 11 is the other value the code anticipates (inferred; no trace of an Onyx4 host exists).
-- For the plain Origin 350 the id does not matter to graphics, but the PROM expects 10 or 11 (any other id makes it check port 10 as the peer), so a model value outside 10 and 11 would take an untested branch.
+Hub id as printed by the PROM ("HUB at 0x0 attached as widget 0x%x", string at `0x1fc84ea8`; also `%M/0x%x/xbow_arb:` at `0x1fc88740` and "Check_master: link %d is master" at `0x1fc88718`). All need L1 `debug 0x10d`.
+
+| Machine | PROM banner | Hub id | Grade |
+| --- | --- | --- | --- |
+| Onyx 350 graphics blade (IP53 family, L1 type `'8'`) | "SN12 Graphics Blade." | 0xb | observed (one capture) |
+| Tezro deskside (IP53, `'9'`) | "SN12 Workstation." | 0xa | observed (one capture) |
+| Origin 300 (IP45) and Fuel | n/a | 0xa | observed, other boards |
+
+No verbose trace exists for a plain Origin 350 ("SN12 2U Server.", `0x1fc70318`) or an Onyx4 host. Layout evidence from IRIX `hinv` (a device's `xtalk/N` is its own widget, so the hub cannot be N):
+
+- The same part, IP53_4CPU 030-1868-001 rev C, sits in a Tezro (bridges at xtalk/11 and 15, Odyssey at 12; hub 0xa in the separate deskside Tezro trace), an Origin 350 and an Onyx4 host. So the hub id is not fixed by the board part.
+- Onyx4 hosts list the CG brick at xtalk/10 beside the IXbrick bridge at 15. Onyx 350 with InfiniteReality4 lists KTOWN2 at xtalk/10 and, on a second module, a video board at xtalk/12. The hub is therefore not 10 there.
+
+Sources, verbatim: `/storage/nvme/origami/evidence/o350-hub-widget-20261121/` (README, SHA256SUMS).
+
+**Verdict.** Onyx4 host: not 10; **inferred 0xb**, because the PROM only anticipates 10 or 11 and the only IP53 id seen with a graphics widget at 10 is 0xb. Plain Origin 350: **unknown, inferred 0xb** by the same module layout (an IRIXnet poster describes the Onyx4 expansion module as the same as an Origin 350 module with a different front plate). Both stay inferred until a verbose PROM trace or a read of `II_WCR` exists. The Tezro stays 10.
+
+Console strings that would settle it. `hinv` paths and the kernel messages need IRIX; the rest need the PROM: IRIX `hinv -vm` paths `/hw/module/<m>/<brick>/xtalk/<N>` (a device's own widget); 6.5.30 kernel (`kernel.o`) "hub widget %d, skipping xbow graph" and "Hub nasid %d got a PIO Write error from widget %d, cleaning up and continuing" (they print the hub's own id when they fire; trigger not traced); PROM `hubii_link_good: %c-brick attached to module %M.` (`0x1fc852b8`, brick letter from L1: 4 Origin 300, 8 graphics blade, 9 Tezro, A Fuel; `'7'` expected for Origin 350 and Onyx4); POD command `dgxbow` (`XBow Diagnostic`) and POD memory reads of `II_WCR` through the node alias.
 
 ## Not settled
 
 | Item | Route |
 | --- | --- |
 | What fixes `II_WCR[3:0]` in hardware (strap, L1, reset write) | a read of the register on the Origin 350 or Onyx 350 before and after PROM start, or the Bedrock pin description; only James's hardware can give the first |
-| The widget id of a real Origin 350 or Onyx4 host | the same register read, or a `hinv -v` of the module listing the node's widget |
+| The widget id of a real Origin 350 or Onyx4 host | a verbose PROM trace (`debug 0x10d`) or the register read; `hinv` alone gives only the other widgets (section 4) |
 | Whether the crossbar branch for part `0xd000`/`0xd100` is the Bedrock's internal crossbar | the register page of the XB block |
 | Who uses the class from `0x1fc68ba0` | its callers (`0x1fc694e4`, `0x1fc0f7d4` and others) |
