@@ -191,6 +191,20 @@ magic number ... reflashing"), taking about 45 s (DIVO) to 60 s (DIVO-DVC) per b
   core is possible in principle (the image is a plain MIPS-II program) but its board memory map, the LINC internal
   registers it drives and the other ASICs are **unknown**.
 
+### Memory packings the VL module offers (component depth)
+
+**Software expectation** (B2, `usr/lib32/dmedia/video/DIVO.so` 2.4, the 51-record table `divoMemPackingList` at 0x5fff4af8, 36 bytes a record with the name inline, count in `divoNumMemPackings`; names read from the data section). The VL module can select, by name, memory packings of up to 13 bits a component, which is what bounds the component depth the board path can be asked for:
+
+| Bits a component | Names (an `R` prefix is the reversed component order; `L` and `R` suffixes are left or right justified in a 16-bit word) |
+|---|---|
+| under 8 | `444_332`, `444_5_6_5`, `X4444_5551`, `4444_6`, `4_4` |
+| 8 | `444_8`, `4444_8`, `0444_8`, `242_8`, `2424_8`, `4_8` (and the `R` forms) |
+| 10 | `4444_10_10_10_2`, `2424_10_10_10_2Z`, `242_10`, `242_10_in_16_L`/`_R`, `444_10_in_16_L`/`_R`, `4444_10_in_16_L`/`_R` |
+| 12 | `444_12`, `4444_12`, `444_12_in_16_L`/`_R`, `4444_12_in_16_L`/`_R`, `242_12_in_16_L`/`_R`, `2424_12_in_16_L`/`_R` |
+| 13 | `444_13_in_16_L`/`_R`, `4444_13_in_16_L`/`_R` |
+
+The list also holds two compressed-video entries, `DV` and `SDTI_DV`, which have no component depth. The sampling digits follow the VL names (`4444` RGBA or YCbCrA, `444` three components, `242` and `2424` 4:2:2 and 4:2:2:4). The same module also has strings "Invalid VL_RICE_COMP_PRECISION value" and "64-bit packings not yet supported". What the board hardware does with a 13-bit packing, and whether any shipped application asks for one, is **unknown**: the table is the library's menu, not a hardware contract. The DM2's list ([pixel-formats.md](../dm2/pixel-formats.md)) tops out at 12 bits, so the 13-bit forms are a DIVO difference. The ucode file names (`/usr/dmedia/ucode/DIVO/4444_8...`) show each packing is a packer image chosen by name, as on the DM2, so the packing is not a register (**inferred** from the file names).
+
 ## 8. DIVO against DIVO-DVC
 
 | Aspect | DIVO | DIVO-DVC | Rating |
