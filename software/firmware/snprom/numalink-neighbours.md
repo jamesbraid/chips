@@ -10,8 +10,7 @@ mechanisms are read in [boot-sequence.md](boot-sequence.md#numalink-discovery-wi
 collects them by register.
 
 Method: Ghidra (the whole-image decompile with this repository's IA-64 processor) for every function, an
-`ia64-linux-gnu-objdump` listing for the branch tests and constants. Nothing was run, no hardware was read. Not
-independently reviewed.
+`ia64-linux-gnu-objdump` listing for the branch tests and constants. Nothing was run, no hardware was read. Independently reviewed: see [Review](#review); the corrections it made are in the text.
 
 **Grades.** *established*: read in the image (a software expectation: the PROM does this or requires this value; it says
 nothing about what the hardware does). *inferred*: reasoned, with the reasoning. *unknown*. **Stand-in choice** marks a
@@ -63,8 +62,7 @@ nibble `p + 1`. Rules: every register not listed is plain 64-bit storage (reads 
 first touch of each is logged; every request is logged with route, address and, for a write, data. Offsets are the
 stand-in's own node-relative offsets (the request's `ADDRESS` carries bit 32, so the `0x1_` bias is part of it).
 
-**Expected sequence (established, in order):** chip word reads; the link-quality re-reads; claim (read, three writes, port
-reads on both of the stand-in's ports, a write); the `SCRATCH2` read; the insert (no further access); "Discovery
+**Expected sequence (established, in order):** chip word reads; the link-quality re-reads; claim (read, two writes, port reads on both of the stand-in's ports, a write); the `SCRATCH2` read; the insert (no further access); "Discovery
 results"; route calculation (no access); distribution writes; `SH_SHUB_ID` read-modify-write; nothing more was read for
 the PROM's stages after "Distributing routing tables". With the stand-in claimed, the wait loop skips it and the tree
 barrier does not include it (inferred, see boot-sequence).
@@ -72,10 +70,10 @@ barrier does not include it (inferred, see boot-sequence).
 | # | Stand-in register | Accessed by | Answer | Log | An unexpected access means |
 |---|---|---|---|---|---|
 | 1 | chip word `0x1_0000_0000`, read | `0xffa46a50`: first, then 1, 2 or 4 more (debug-word bits 1:0 = 0, 2, 3; the value 1 skips them), retried once on error | bits 27:12 `0x4363` (established: the only value that selects the SHub method table); bits 31:28 the same revision A's own word has (stand-in choice); bits 42:32 the stand-in's NASID (read only if its `SCRATCH1` bit 40 is set; 0 until the PROM writes `SH_SHUB_ID`, stand-in choice); **bit 56 = q** (established as the field read; that it is the port is inferred); everything else 0 | every read; count | a read with a route of two or more nibbles: the crawl went through the stand-in, so a port flag leaked from the stand-in's `LLP_STAT` |
-| 2 | `LLP_ERR` `0x1_5000_0048 + q * 0x2000`, read | link-quality check; claim | bit 27 clear; bytes 0 and 1 constant (0): the PROM fails the step if a counter grows by more than 50 between its reads | each read | a write to it: the PROM cleared bit 27, which means a read returned it set |
+| 2 | `LLP_ERR` `0x1_5000_0048 + k * 0x2000`, read (k = q for the link-quality check; both ports for the claim, which reads it first on each) | link-quality check; claim | bit 27 clear; bytes 0 and 1 constant (0): the PROM fails the step if a counter grows by more than 50 between its reads | each read | a write to it: the PROM cleared bit 27, which means a read returned it set |
 | 3 | `LLP_STAT` `0x1_5000_0000 + k * 0x2000`, k = 0, 1, read | claim (`shub_port_status` against the stand-in) | port q: low nibble 9; the other port: not 9 | each read | the other port read as 9 would set both mask bits |
 | 4 | `0x1_5000_1040 + q * 0x2000 + 16 * i`, i = 0 to 3, read | same | bits 22:16 non-zero | each read | more than 128 reads of one register: the value is wrong |
-| 5 | `SCRATCH1` `0x1_101d_0080`, read | claim; the wait loop only for an entry that was not claimed | **0** on the first read (established: 0 or only bits 41 or 39 lets the claim go on; non-zero otherwise stalls the claim 300 s and then forces bit 41; bits 55:54 non-zero makes the PROM skip the claim entirely, which is the "already prepared" model, not S1) | each read | a read that returns bits 55:54 set before any write: the claim was skipped and the stand-in is not programmed |
+| 5 | `SCRATCH1` `0x1_101d_0080`, read | claim; the wait loop only for an entry that was not claimed | **0** on the first read (established: 0, or any word with bit 41 or bit 39 set and bits 55:54 clear, lets the claim go on; non-zero otherwise stalls the claim 300 s and then forces bit 41; bits 55:54 non-zero makes the PROM skip the claim entirely, which is the "already prepared" model, not S1) | each read | a read that returns bits 55:54 set before any write: the claim was skipped and the stand-in is not programmed |
 | 6 | `0x1_5003_1550`, `0x1_5003_1540`, write | claim | accept; expected data 0 | each write | none |
 | 7 | `SCRATCH1`, write | claim | accept; expected value `0x0040008000000000` for q = 0 or `0x0080008000000000` for q = 1 (bit 39, plus bit `54 + q`: only port q is up) | the write | a value with bit 41 only: the claim timed out |
 | 8 | `SCRATCH2` `0x1_101d_0100`, read | `0xffa8d120`, from `shub_discover` | low byte `0x6c`; bits 34:26 rack, 25:20 bay, 15:8 partition; **must differ from A's** (A's is `0x0410006c` for rack 1 bay 1; use `0x0420006c`, bay 2, the same partition byte; stand-in choice) | the read | a read failure prints "shub_discover: sysctl_get_pushed_data failed", and a stand-in that returns A's value is dropped as the same chip |
@@ -107,13 +105,12 @@ numbers change with `p` only). The route to the router is `p + 1`. Addresses are
 value after masking; the image writes them with bit 38 set, which the mask drops). Port block of router port n:
 `0x800_0000 + (n - 1) * 0x100_0000`. Same storage and logging rules as S1.
 
-**Expected sequence (established):** chip word reads; counter reads at both ends; `SCRATCH0` read, lock, first-time
-set-up writes, three system-controller requests, `SCRATCH0` write, unlock; insert (reads); then, if the router reports a
+**Expected sequence (established):** chip word reads; counter reads at both ends; `SCRATCH0` read, lock, a second `SCRATCH0` read (both must give 0, or the PROM treats the router as advertised and releases the lock), first-time set-up writes, three system-controller requests, `SCRATCH0` write, unlock; insert (reads); then, if the router reports a
 link on other ports, a chip word read through each; then the distribution writes.
 
 | # | Router register | Accessed by | Answer | Log | An unexpected access means |
 |---|---|---|---|---|---|
-| 1 | register 0 (`STATUS_REV_ID`), read; the request carries `ADDRESS` `0x1_0000_0000`, so the router must decode that as register 0 (**inferred**: the image has no other read for it) | `0xffa46a50` (also 1, 2 or 4 more reads) and `0xffa67220` | part `0x239` in 27:12 (established as required); `INPORT` bits 43:40 = R (established: the PROM stores it as the router's port the link lands on); bit 0 = 1; revision, manufacturer: stand-in choice; `POSITION` 47:44: 0 (the image tests them inverted; effect unknown); `LOCAL_POK` 57: 1 (stand-in choice); error flags 56:48: 0; link-up flags 39:32: see the next paragraph | every read | a read of any other register before this one: the crawl order changed |
+| 1 | register 0 (`STATUS_REV_ID`), read; the request carries `ADDRESS` `0x1_0000_0000`, so the router must decode that as register 0 (**inferred**: the image has no other read for it) | `0xffa46a50` (also 1, 2 or 4 more reads) and `0xffa67220` | part `0x239` in 27:12 (established as required); `INPORT` bits 43:40 = R (established: the PROM stores it as the router's port the link lands on); bit 0 = 1 (the `force1` field; the PROM does not test it: stand-in choice); revision, manufacturer: stand-in choice; `POSITION` 47:44: 0 (the image tests them inverted; effect unknown); `LOCAL_POK` 57: 1 (stand-in choice); error flags 56:48: 0; link-up flags 39:32: see the next paragraph | every read | a read of any other register before this one: the crawl order changed |
 | 2 | port counters `R base + 0x18a0` | link-quality check (`0xffa66fb0`: bits 15:0 and 47:16) | constant (0); a rise of more than 50 fails the step | each read | none |
 | 3 | `SCRATCH0` `0x1000`, read | `0xffa668b0` | 0 first (established: non-zero means "already advertised": the PROM then neither programs nor sets the router's mark) | each read | a non-zero first read: the router is treated as advertised by someone else |
 | 4 | lock: `SCRATCH3_ALIAS` `0x1038` read, `SCRATCH3` `0x1030` write 0 | `0xffa9a6f0`, `0xffa9a750` | read returns bit 0 clear when free (a test-and-set model sets bit 0 on a read; **inferred**); the write of 0 frees it | each access | a read with bit 0 set: the lock is held; the PROM retries for up to 10 s (`nl4r_config_global`) and a held lock at `cache_advert` makes it re-read `SCRATCH0` every 10 ms |
@@ -121,8 +118,8 @@ link on other ports, a chip word read through each; then the distribution writes
 | 6 | L1 mailbox `ASIC_TO_L1_STATUS` `0x30`, `ASIC_TO_L1_DATA` `0x38`, `L1_TO_ASIC_STATUS` `0x40`, `L1_TO_ASIC_DATA` `0x48` | the three requests of `0xffa80dd0`, `0xffa80f90`, `0xffa81170` (module id, slot, slab) | **unknown**: the framing was not read. Reads of 0 (nothing to receive) are the cheapest answer; the PROM's wait per request was not read, so the cost is unknown | every access, in order, with data: the first accesses give the framing | a refused or very slow reply: the three prints "cache_advert: sysctl_vec_moduleid_get failed" (and `slot_get`, `slab_get`) are the failure form and the PROM goes on |
 | 7 | `SCRATCH0` write | `0xffa668b0` | accept; the word is module id (31:0) \| slab << 32 \| slot << 42 \| `0x0400008000000000` (bits 58 and 39), plus bit 41 if `0xffaac160` is non-zero; if all three requests failed it is `0x0400044fffffffff` (derived) | the value | a value without bit 39: the code path changed |
 | 8 | `GLOBAL_PARM0` `0x10` read; per port n = 1 to 8: write 1 to `+0x2208`, read `+0x2200` | `0xffa67220` | read: any; `+0x2200` bit 0 clear | each access | a port whose `+0x2200` bit 0 is set is not crawled |
-| 9 | tables per port: local `+0x0` (512 entries), global `+0x1000` (256), neighbour `+0x1800` (8); multicast `0x4e80 + 8 * i`, `0x4f90`; `0x5000` and `0x6000` tables; `0x4000`; `PROTECTION_CONFIG` `0x1003018` read-modify-write; then `SCRATCH0` bit 40 | `0xffa67cb0` (distribution, only for a router the PROM advertised itself) | accept; storage with read-back | every write: address, value | writes only to ports with a link |
-| 10 | board-walk set-up: `0x2000`, `0x2010`, `0x2020`, `0x2050`, `0x2060`, `0x2030`, `0x1003100`, `0x1001908`, `0x1001900`, `0x2008`, `0x4f00` to `0x4f78`; per port `+0x2200`, `+0x2210`, `+0x2100`, `+0x18a0`, `+0x18a8`, `+0x2218` | `nl4r_init_global`, `nl4r_config_global`, `nl4r_config_port` (the board walk, `main_three` side) | accept; storage | every write | none; when in the boot this runs is open |
+| 9 | tables per port: local `+0x0` (512 entries), global `+0x1000` (256), neighbour `+0x1800` (8) and then that port's six `nl4r_config_port` writes of row 10 (`0xffa67cb0` calls `0xffaab070` itself); multicast `0x4e80 + 8 * i`, `0x4f90`; `0x5000` and `0x6000` tables; `0x4000`; `PROTECTION_CONFIG` `0x1003018` read-modify-write; then `SCRATCH0` bit 40 | `0xffa67cb0` (distribution, only for a router the PROM advertised itself) | accept; storage with read-back | every write: address, value | writes only to ports with a link |
+| 10 | board-walk set-up: `0x2000`, `0x2010`, `0x2020`, `0x2050`, `0x2060`, `0x2030`, `0x1003100`, `0x1001908`, `0x1001900`, `0x2008`, `0x4f00` to `0x4f78`; per port `+0x2200`, `+0x2210`, `+0x2100`, `+0x18a0`, `+0x18a8`, `+0x2218` (the per-port six are also written during the distribution, row 9) | `nl4r_init_global`, `nl4r_config_global`, `nl4r_config_port` (the board walk, `main_three` side) | accept; storage | every write | none; when in the boot this runs is open |
 
 **The link-up flags of register 0 decide how far the crawl goes.** The PROM crawls through every router port whose
 link-up flag (bits 39:32) is set and whose error summary bit 0 is clear. The port the node itself is on is one of them in
@@ -145,3 +142,28 @@ carry a request in both directions; the reply's `INPORT`, route and `TYPE` field
   neighbour and `main_three`. Route: read those routines; a run with the stand-in under the interpreter, which would show
   model behaviour only, never hardware.
 - The meaning of `SCRATCH1` bits 16, 18 to 20, 46 to 53 and the debug-word fields behind bits 18 and 19: no reader found.
+
+## Review
+
+Independent review of chips `08c8955`. The reviewer wrote none of it. Method: `shub1snprom.bin` (sha256 `51ccf9ad...`) imported with this repository's IA-64 loader and decompiled in Ghidra, every cited function re-read with its listing, the method tables read as raw words from the image, and the SHub 2 image (`shub2snprom.bin`) imported for the counterpart table. Nothing was run.
+
+**Confirmed.** `SH_SCRATCH1` producer `0xffa46530` and decoder `0xffa5e0b0`, every row of the bit table (including the version bytes 5 and 4 at `0xffba20e8`, the debug-word bits 4:3 and 8, and bit 3 of `0x81_5003_1550`); `shub_port_status` and its per-port helper `0xffa5cf40` (`LLP_ERR` bit 27 write-back, `LLP_STAT` nibble 9, the four `+0x1040` registers with 128 tries, the simulator skip); the part numbers `0x4363`, `0x3017`, `0x239` and `0x4422` and their method tables (slots `0x168`, `0x170`, `0x1a0`, `0x1a8`, `0x1c0`, `0x1c8`, `0x1d8`); that `0xffa5b5d0` is the distribution routine; the SHub 2 counterpart sizes of the crawl, wait, route and distribution routines; the vector read and write (all register addresses, the `PARMS` constants, `(nibble - 1) * 2`, the 1024-pass polls, the retry waits, the result-code and message map); the claim (`0xffa5d2a0`), the wait loop's skip test, the turn counts (`(out - in)` modulo the port count; node-end 0 for a router and 4 otherwise); the router lock, `cache_advert`, the set-up tables and values, register 0 field uses, the insert, and the table writer's addresses.
+
+**Corrected in this review.**
+- The claim does two writes before the port reads (`0x1_5003_1550`, `0x1_5003_1540`), not three.
+- A word with bit 41 or bit 39 set lets the claim go on whatever its other bits (55:54 clear); the page said "only".
+- The claim reads `LLP_ERR` on both of the stand-in's ports, not only on the linked one.
+- `cache_advert` reads `SCRATCH0` a second time after taking the lock; a non-zero second read is treated as advertised.
+- The router table writer `0xffa67cb0` calls `nl4r_config_port` itself for each port, so those six writes belong to the distribution row; the page and global-config.md called them board-walk only.
+- The error pre-check writes 0 to `0x1_1007_1000` when its bit 3 is set; it does not clear the one bit.
+- The vector pair is matched to SHub 2 by constants, not by size (the SHub 2 forms are larger).
+- Register 0 bit 0 is not tested by the PROM; it is a stand-in choice, not a requirement.
+
+**Contract rows the experiment should read with care.**
+- S1 row 7 and the claim: the final `SCRATCH1` value depends on the stand-in's *other* port reading down; if it reads 9 both mask bits are set (as the page says in row 3).
+- S1 row 10: with the stand-in's word bit 40 clear (the S1 case) the table writes are plain writes with no read-back; "read back what was written" is the stand-in's storage behaviour, not something the PROM checks in that pass.
+- S1 row 11: "A has no router" means no entry with part `0x239` in the configuration (a count in `0xffa5b5d0`), which holds for S1 and not for S2.
+- S2 row 6 (L1 mailbox): "reads of 0 are the cheapest answer" is a guess; the page elsewhere says the wait per request is unread. Treat it as a stand-in choice until `0xffa80dd0` is read.
+- `0x1_1007_1000`, `0x1_1001_0008` and `0x1_1001_0088` are written only when the error summary reads non-zero; a stand-in that always returns 0 never sees them.
+
+**Not checked.** The call sites of the router set-up routines `nl4r_init_global` and `nl4r_config_global` (so whether they run during discovery), the crawl routine `0xffa47290`'s own port test for router ports, the global barrier and `main_three`, the geoid hashing at `0xffa11ab0`, and the claim that A's `SCRATCH2` is `0x0410006c` (taken from another page). The `0x1_5003_03a0` flow-register mask values were read only from the decompile.

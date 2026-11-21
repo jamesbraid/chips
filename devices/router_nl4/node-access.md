@@ -84,7 +84,7 @@ sends, the SHub 2 routines poll the vector registers only, and the SHub 1 vector
 2. Pre-check `0xffa0b9a0`: read `SH_LB_ERROR_SUMMARY` (`0x1_1005_0580`); if bit 16 is set write `0x10000` to its alias at
    `+8` and to `0x1_1005_0508`, and if `0x1_1005_0600` bit 16 is set clear it, the five detail words (`0x1_1005_0200`,
    `0280`, `0300`, `0380`, `0400`) and `0x1_1007_1100`; if the summary was exactly `0x10000` also write 8 to
-   `0x1_1001_0008` and `0x1_1001_0088` and clear bit 3 of `0x1_1007_1000`. Returns 1 when it found an old error; the
+   `0x1_1001_0008` and `0x1_1001_0088` and, if bit 3 of `0x1_1007_1000` is set, write 0 to that register. Returns 1 when it found an old error; the
    request then waits 100 us and retries.
 3. Write 0 to `VEC_STATUS`, read it back; bit 63 still set is result -1 ("Hub got HW err accessing rtr").
 4. Poll `VEC_PARMS` bit 63 (`BUSY`), at most 1024 reads; if it never clears wait and retry.

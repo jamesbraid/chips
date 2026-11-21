@@ -212,7 +212,7 @@ Read in Ghidra (whole-image decompile of `shub1snprom.bin`, SAL 5.04) with an `i
 the constants; every access is a vector request in the SHub 1 form of
 [node-access.md](node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it). Numbers below are router
 register numbers, the value of `ADDRESS` after the image's own mask (bit 38 of the argument, which the image sets on router
-addresses, is dropped by the mask on a vector request). Not independently reviewed; nothing was run.
+addresses, is dropped by the mask on a vector request). Independently reviewed (Review in numalink-neighbours.md); nothing was run.
 
 **Which chip is a router (established).** `0xffa0f7e0` offers the part number (register 0 bits 27:12) to four method
 tables. Part `0x239` selects the table at `0xffbd8318`, whose name method returns "NL4router"; `0x3017` "NL3router"
@@ -262,8 +262,7 @@ back, call node slot `0x160` and write its result to `0x2008`, unlock. `nl4r_ini
 (the platform clock period divided by 10, minus 1) to `RTC_INTRN_CNTRL` (`0x1001908`), sets bits 3:0 of `RTC_SOURCE` to
 `0xf`, writes the result of node slot `0x160` to `0x2008`, and writes `0x8000000000000000` to the 16 registers `0x4f00` to
 `0x4f78` (`MCAST_REP_GATHER_BUF`). `nl4r_config_port` (`0xffaab070`), per port n: `+0x2200` 0, `+0x2210` 0,
-`+0x2100` 1, `+0x18a0` 0, `+0x18a8` 0, `+0x2218` `0x5c0000000006`. Where in the boot this runs relative to the crawl is
-unchanged from the SHub 2 reading: it is part of the board walk, not of discovery.
+`+0x2100` 1, `+0x18a0` 0, `+0x18a8` 0, `+0x2218` `0x5c0000000006`. The router table writer (`0xffa67cb0`) also calls `nl4r_config_port` itself for ports 1 to 8, after each port's tables, whenever it programs a router whose NASID is not final, so those six writes happen in the crawl's distribution as well as in the board walk; `nl4r_config_global` and `nl4r_init_global` were not found at that site.
 
 **Table writes (`0xffa67cb0`, slot `0x1d8`, with `0xffa695f0`; established as the registers written).** For each port: local
 table at `port base + 0 + 8 * entry` (512 entries), global table at `+0x1000` (256), neighbour table at `+0x1800` (8),

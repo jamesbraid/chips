@@ -396,15 +396,14 @@ What `main_two` does when a network port reports a link, so there is a neighbour
 sections above: `shub1snprom.bin`, SAL_B, Ghidra decompiles (`--sn2-prom`, whole image) with an
 `ia64-linux-gnu-objdump` listing checked at the branch tests and constants quoted here. The wire-level request format is in
 [the router node-access page](../../../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it);
-what a stand-in neighbour has to answer is in [numalink-neighbours.md](numalink-neighbours.md). Not independently
-reviewed; nothing was run. Names such as "discover_object" are strings the image prints.
+what a stand-in neighbour has to answer is in [numalink-neighbours.md](numalink-neighbours.md). Independently reviewed (see the Review in numalink-neighbours.md); nothing was run. Names such as "discover_object" are strings the image prints.
 
 **Address checks (established; corrections in bold).** `0xffa47290` is the crawl (prints "Discovering NUMAlink
 connectivity", "DONE", "Found %d objects"; its failure text is "LLP link was up but could not talk to router.").
 `0xffa45780(table, entry, port)` is its per-neighbour step ("discover_object"). `0xffa469f0` reads the neighbour's word at
 `0x1_5003_1580` (a progress counter the PROM increments in `0xffa46980`). `0xffa46a50` is "intcon_chklink".
 **`0xffa5b5d0` is not a vector routine: it is "intcon_distribute_numbers" ("Distributing routing tables").** The vector
-read is `0xffa0bd20` and the write `0xffa0c560`. The SHub 2 image's counterparts, matched by size and strings:
+read is `0xffa0bd20` and the write `0xffa0c560`. The SHub 2 image's counterparts, matched by size and strings (crawl, wait, route and distribution routines) and by the request constants (the vector pair, whose SHub 2 forms are larger: 3760 and 3488 bytes against 2112 and 2096):
 `0xff44fd70` (crawl, 1504 bytes in both images), `0xff450350` (the wait, 2912), `0xff4663d0` ("Calculating routes", 3920)
 is SHub 1 `0xffa5a670` (3936), `0xff467320` is `0xffa5b5d0` (2848), the SHub 2 read `0xff419e80` is `0xffa0bd20` and its
 write neighbour `0xff41ad30` is `0xffa0c560`.
