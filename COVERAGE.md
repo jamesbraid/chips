@@ -174,6 +174,7 @@ Grades:
 | VICE (O2 video imaging and compression engine) | O2 (IP32) video option; IRIX user-level library and kernel probe | devices/vice (9-line README, empty registers.toml, coverage note) | stub | No register map; the prose covers the presence probe, ID register and error path only; no field layouts, reset values, microcode load or reset sequence. | VICE Design Specification 099-0123-003 (1997; register map not transcribed); IRIX kernel probe objects (software expectation). |
 | VICE (second entry, VICE A/B/C) | O2 (IP32) | devices/vice (9-line README, empty registers.toml) | stub | As above; microcode load routines, reset order and DMA and event path unread. | VICE Design Specification 099-0123-003 (held; OCR text, no register table). |
 | Cobalt (Visual Workstation 320/540 system ASIC: processor interface, memory controller, interrupt controller, timer; the 3D engine is excluded here) | SGI Visual Workstation 320 and 540 (x86) | devices/cobalt (7 registers, README) | partial | Only the CPU block (revision, timer) and the interrupt controller are mapped, from SGI's Linux code; no reset values, no memory controller, no error or cache-interrupt registers, no identification field; no BIOS, driver or specification held. Open points in questions/visws-open.md. The Linux MIPS Cobalt platform is a different company's hardware and is not this chip. | Linux visws code, 2.2 to 3.14 (read in full), see references/visws-sources.md. |
+| Cobalt graphics (Visual Workstation 320/540: display back end and rendering engine) | SGI Visual Workstation 320 and 540 (x86) | devices/cobalt-graphics (overview, display-engine, graphics-engine, nt-software) | partial | Display back end registers and the mode table are graded from the Linux driver and the NT driver. The rendering engine's packet formats, most of its register window, the retrace interrupt register, the cursor, capture and gamma blocks and every reset value are unknown ([questions/cobalt-graphics-open.md](questions/cobalt-graphics-open.md)). The system side (processor interface, memory controller, interrupt controller) is the Cobalt row above. | SGI 320 datasheet and product guide; Microprocessor Report 15 Feb 1999 and Design News articles; Linux sgivwfb, visws_quirks.c and cobalt.h; SGI Cobalt Graphics Driver 5.2.4 for Windows NT 4.0 (kernel, display and OpenGL drivers with symbols). |
 | Lithium (Visual Workstation 320/540 I/O ASIC: two PCI bridges and the audio engine) | Visual Workstation 320 and 540 (x86) | devices/lithium (19 registers, README) | partial | Only the bridges' bus-number and interrupt-enable words and the audio engine are mapped; no error, memory-window or configuration-decode behaviour, no reset values; bus numbering unconfirmed; no BIOS, driver or specification held. Open points in questions/visws-open.md. | Linux visws code and the SGI-written sound driver, see references/visws-sources.md. |
 | AV1 / AV2 (O2 video option chip names) | Unknown | none | unsure | No mention of AV1 or AV2 as an SGI ASIC in the repository or searches; the O2 video option is covered by VICE; the origin of the names is unknown. | None found. |
 
@@ -202,13 +203,13 @@ Grades:
 | Grade | Rows |
 |---|---|
 | full | 0 |
-| partial | 38 |
+| partial | 39 |
 | stub | 10 |
 | missing | 37 |
 | elsewhere | 6 |
 | unsure | 2 |
 | out of scope | 0 |
-| **Total** | **93** |
+| **Total** | **94** |
 
 ### Most important gaps
 
