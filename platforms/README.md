@@ -22,6 +22,7 @@
 | [ixbrick.md](bricks/ixbrick.md) | IX-brick: Origin 3000 and Onyx 3000 I/O enclosure | The IX-brick is a 4U I/O enclosure that holds three PIC chips, two Xtown2 XIO ports, six PCI/PCI-X buses and a base... |
 | [origin300-numalink-module.md](bricks/origin300-numalink-module.md) | Origin 300 NUMAlink module | The Origin 300 NUMAlink module is the router enclosure that joins Origin 300 base modules and PCI expansion modules... |
 | [origin300-pci-expansion-module.md](bricks/origin300-pci-expansion-module.md) | Origin 300 PCI expansion module | The Origin 300 PCI expansion module adds six PCI buses to an Origin 300 over NUMAlink. |
+| [origin3900-cabling.md](bricks/origin3900-cabling.md) | Origin 3900 router cabling: what the held documents fix, and what a PROM replay accepts | Question. |
 | [pbrick.md](bricks/pbrick.md) | P-brick: Origin 3000 and Onyx 3000 PCI enclosure | The P-brick is an Origin 3000 and Onyx 3000 PCI enclosure with twelve PCI slots on six buses, three XBridge chips... |
 | [powerbay.md](bricks/powerbay.md) | Origin 3000 power bay | The power bay is the rack unit that holds the supplies for the Origin 3000 and Onyx 3000 bricks. |
 | [pxbrick.md](bricks/pxbrick.md) | PX-brick: Origin 3000 and Onyx 3000 PCI-X I/O enclosure | The PX-brick is the later PCI and PCI-X I/O enclosure for Origin 3000 and Onyx 3000 systems. |
@@ -78,8 +79,11 @@
 | [memory-population.md](ip35/memory-population.md) | IP35 node board: which DIMM pair is populated, and what the PROM and the kernel do when pair 0 is empty | Question. |
 | [metarouter-route-and-roles.md](ip35/metarouter-route-and-roles.md) | IP35 PROM on MetaRouter systems: route calculation, role values and size limits | Question. nasid-numbering.md and the router number walk stop at the numbers. |
 | [nasid-numbering.md](ip35/nasid-numbering.md) | Origin 3000 NASID numbering | This page covers how the IP35 (Bedrock) PROM numbers the hubs of a Bedrock system (their NASIDs), what it does with... |
+| [prom-boot-waits-and-reply-parser.md](ip35/prom-boot-waits-and-reply-parser.md) | IP35 PROM 6.210: the waits behind the stall, the L1 reply parser and the UART inputs | Question. |
 | [prom-console-input.md](ip35/prom-console-input.md) | IP35 PROM 6.210: what the boot PROM does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip35/prom-environment.md) | IP35 PROM environment: the base I/O NVRAM and the CPU PROM log in node flash | Question answered: on a Fuel, a Tezro or Origin 350, or an Origin 3200 or Onyx 3000, where do the PROMs keep their... |
+| [prom-l1-link-and-delay-loop.md](ip35/prom-l1-link-and-delay-loop.md) | IP35 PROM 6.210: the delay loop at 0x1fc6b834 and the node side of the L1 link | Question. |
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
+| [prom-lead-test-and-shared-uart.md](ip35/prom-lead-test-and-shared-uart.md) | IP35 PROM 6.210: the lead-processor test and the node's shared L1 UART | Question. |
 | [prom-md-config.md](ip35/prom-md-config.md) | IP35 PROM: every write to the memory controller's bank configuration during boot | Question. |
 | [prom-tod-clock.md](ip35/prom-tod-clock.md) | IP35 PROM 6.210: reading the time-of-day clock | Scope. |
