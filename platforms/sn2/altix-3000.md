@@ -30,9 +30,11 @@ pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the r
   guide's SC-brick figure labels its memory "DDR SDRAM memory" (007-4520-006 p.17, Figure 2-2). Neither guide names DDR2.
 - The control cable is a "NUMAlink 3 cable": the L1 USB hub reaches four C-brick L1s over it (p.33, Table 2-1). That
   names the L1 control path, not the internal or external data channels.
-- Inside the C-brick the nodes are joined by a NUMAlink 4 channel, but the count conflicts. p.81 says "a single
-  6.4-GB/s NUMAlink 4 channel", and the driver guide says "a NUMAlink 4 channel" (007-4520-006 p.13). p.101 says "two
-  internal 3.2-GB/s (each direction) NUMAlink channels (one per node)" and does not name NUMAlink 4.
+- Inside the C-brick the two nodes are joined by one link (established). p.81 says "a single 6.4-GB/s NUMAlink 4
+  channel"; Figure 5-2 (p.102, read from the picture) draws exactly one bar between the two node ASICs, labelled
+  "6.4 GB/s"; the driver guide's Figure 2-2 (007-4520-006 p.17) draws one link between the two SHubs labelled "6.4 GB/s"
+  and "Internal NUMAlink". p.101's "two internal 3.2-GB/s (each direction) NUMAlink channels (one per node)" is read as
+  that same link counted from each node's port: 3.2 GB/s each way is 6.4 GB/s in total (inferred reading of p.101).
 - Outside the C-brick: "two external 1.6-GB/s (each direction) NUMAlink channels (one per node)" and two Xtown2
   channels per node, 1.2 GB/s each direction (p.101). The guide does not name the external generation on the pages
   read. The driver guide's SC-brick has two "6.4-GB/s (each direction)" NUMAlink channels and two "2.4-GB/s" Xtown2
@@ -56,10 +58,6 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 - Inferred: 3.2 GB/s each way is the 6.4 GB/s total of p.81, so the two rates agree and only the channel count differs.
 - The NUMAlink generation of the external cables. The guide prints their rate (p.101) and no name. Settling test: a
   page of the guide or its cabling guide that names the cable.
-- Channel count inside the C-brick: one channel (p.81) or two (p.101). Figure 5-2 (printed p.102) was read from its text
-  layer, not the picture: it has one "6.4 GB/s" label between the two ASICs, which fits one channel, but three labels read
-  "6.4 GB/s" and the text does not say which is the ASIC-to-ASIC link. Unknown until the picture is checked or a page names
-  the channel.
 - Node chip clock: unknown. The pages read give none. The driver guide's "900 MHz" (007-4520-006 p.13) is the Itanium 2
   processor, not the chip.
 - DDR or DDR2: the guides say DDR SDRAM (driver p.17) and a 184-pin JEDEC card (p.107). The 184-pin count is the DDR
