@@ -419,10 +419,11 @@ through slot `0x168` and decodes it in the port-fill method `0xffa5e0b0` into th
 |---|---|---|---|
 | 15:0 | `0xffa47870`: the node's object count, written after its own crawl | none (compared in the wait loop) | how many objects the node found; established |
 | 16 | `0xffa46530`: bit 3 of the per-processor word `0x81_5003_1550` | `0x40000` | copy of that bit, whose own meaning is unknown; +1 in the master score |
-| 18, 19 | `0xffa46530`: debug word `0x81_5003_1560` bits 4:3 equal 2 (bit 18), equal 1 (bit 19) | `0x200000`, `0x400000` | published switches; no reader of the flags found (search of the decompiles, not exhaustive) |
-| 20 | `0xffa46530`: always 1 | `0x100000` | published with every word; no reader found |
+| 17 | `0xffa43d20` (global barrier), on each node's own word | none (not decoded) | the barrier's mailbox flag, set and cleared in two phases; see [the barriers](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node) |
+| 18, 19 | `0xffa46530`: debug word `0x81_5003_1560` bits 4:3 equal 2 (bit 18), equal 1 (bit 19) | `0x200000`, `0x400000` | published switches; `0xffa44ba0` ORs them over the non-claimed nodes into `cpu_bits` 14 and 15 (what those do is not read) |
+| 20 | `0xffa46530`: always 1 | `0x100000` | published with every word; `0xffa44ba0` ORs it over the non-claimed nodes into `cpu_bits` 13 |
 | 21 | `0xffa46530`: set when the environment variable `GlobalMaster` is not negative | `0x80000` | master preference: +2 in the master score |
-| 22 | `0xffa47870` sets it on its own word after the wait loop | `0x800000` | "this node finished discovery"; an entry with it is excluded from the master election |
+| 22 | `0xffa47870` sets it on its own word after the wait loop | `0x800000` | "this node finished discovery"; an entry with it is excluded from the master election, the candidate arrays and both barriers (mask `0x810000`) |
 | 23 to 38 | constants `5` and `4` in the image (bytes at `0xffba20e8`, `0xffba20e9`) | bytes `+0x3e`, `+0x3f` | the SAL version, printed as "Prom=%x.%02x" (5.04); the print string settles it |
 | 39 | `0xffa5d2a0` on a neighbour it claims; `0xffa0aee0` and the exception park paths (`0xffaf5c80`, `0xffc4e030`) on a node's own word | `0x10000` | "claimed by a discovering master, or dead": the claimer programs it; it is not waited for and cannot be elected master |
 | 40 | `0xffa4eb40` (`main_three`, after the node installs its NASID), node-object method 5 | none; selects how the NASID and link mask are taken | "my NASID is final": set, the reader takes the NASID from bits 42:32 of the neighbour's chip identification word and the link mask from a live probe of the neighbour; clear, NASID `0xffff` (unassigned) and the mask from bits 55:54 |
@@ -489,15 +490,17 @@ changed, and sleeps 2 s (100 us under the simulator signature). A timeout is not
 entry with flag `0x10000` is skipped, so a neighbour the node claimed is not waited for. Last, the node sets bit 22 on its
 own word and prints "Discovery results". The earlier statement that the loop is skipped on a lone node still holds.
 
-**Master selection (`0xffa42640`; `0xffa445b0` for the global master; established for the test, inferred for the use of the
-result).** Candidates are entries of class 1 (a node) whose flags have neither `0x10000` nor `0x800000`; the partition
-master also needs the same partition byte. Score: +2 for flag `0x80000` (word bit 21), +1 for `0x40000` (bit 16); the
-highest wins and the earlier entry wins a tie (the local node is entry 0). It prints "Global master is %I". A claimed
-neighbour carries `0x10000`, so it is never a candidate, and the tree barrier (`0xffa42a30`, which walks the candidate
-array) then sees only the local node and touches only local registers (inferred from the array's use), as on a lone node.
-A neighbour that published its own word without being claimed is a candidate unless it carries bit 22; the barrier then
-needs that neighbour's own PROM to write the local node's `0x1_5003_13f0` (`0xffa42a30` polls it, 240 s, then compares
-the neighbour's counter and returns -1 if unchanged), which no passive stand-in does.
+**Master selection (`0xffa42640`; `0xffa445b0` for the global master; established).** Read in full for the two-node case in
+[numalink-neighbours.md](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node).
+Candidates are the entries of class 1 whose flags have neither `0x10000` nor `0x800000`, in the geoid-sorted order of the
+configuration list; the partition master also needs the same partition byte. Score: +2 for flag `0x80000` (word bit 21),
++1 for `0x40000` (bit 16); the highest wins and the earlier list entry wins a tie. The winner's index goes to record
+`+4` (global) or `+8` (partition), `cpu_bits` bit 0 or 1 is set when the local entry wins, and "Global master is %I" is
+printed. A claimed neighbour (`0x10000`) and a neighbour that published bit 22 are never candidates, so the barriers
+(tree `0xffa42a30`, global `0xffa43d20`) see only the local node and touch only local registers. A neighbour that
+published its own word without bit 22 is a candidate: the tree barrier then needs that node to write A's
+`0x1_5003_13f0` and `0x1_5003_1570` (240 s per wait, "tree barrier at %I timed out", then the global barrier, which has no
+timeout and needs the neighbour's `SCRATCH1` bit 17 to follow A's).
 
 **Distribution (`0xffa5b5d0`, established for the selection, inferred for the tail).** With no barrier failure
 (`cpu_bits` bit 4 clear) and no entry flagged `0x1000000`, slot `0x1d8` ("write the node's tables") is called on each entry
@@ -524,9 +527,10 @@ route, in contrast, holds absolute output ports. At the node ends the stored val
 everywhere (the table pool is filled with `0xff`). "Outgoing route: 0x" and "Return route: 0x" print the absolute port
 nibbles, last hop first. What 0 and 4 select inside a node's tables is **unknown**.
 
-Open after this reading: the global barrier `0xffa43d20`; `main_three` for more than one node (console, NASID install on
-the neighbour); `0xffa95a30`'s size fields; the other callers of slot `0x1c0`; the L1 conversation the router discovery
-runs over the vector path.
+Open after this reading: the remote node set-up and the board walk that `main_three` runs against a claimed neighbour (see
+[numalink-neighbours.md](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node));
+`0xffa95a30`'s size fields; the other callers of slot `0x1c0`; the L1 conversation the router discovery runs over the vector
+path.
 
 ## The "Waiting for peers" loop
 
