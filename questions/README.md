@@ -46,6 +46,12 @@ Corrections found while tagging. These are not fixed here.
 - **Bridge and XBridge: registers above 0x298.** *[route: software now; PROM search; an accepted end state if none is found]* Whether the XBridge has registers between `0x2a0` and `0x10000`
   (the census reaches none and the public headers name none). Valid end state unless a routine that touches them is
   found. Next: the IP27 PROM and I/O-board PROM, which the scan could not resolve.
+  Attempted 2026-11-21: unpacked and disassembled both PROMs (I/O board `io6prom`, 186,922 lines at `0x11c00000`; IP27
+  `ip27prom`, 223,341 lines at `0x1fc00000`). Both are symbol-less, build string pointers as a `0xc000...` base plus a
+  displacement, and keep the Bridge window pointer in a record field, so no Bridge-register access is tied to a window
+  without a hand read from the diagnostic and error-dump routines (the `Bridge ASIC errors`, `Bridge ISR` and
+  `Bad bridge id` strings in `io6prom`). A displacement search for `0x2a0` to `0xffff` mixes in structure fields
+  (hundreds of hits) and shows nothing attributable to a Bridge. Unknown; not a negative result.
 - **Bridge and XBridge: the IP27 and I/O-board PROMs.** *[route: software now]* The window base is built at run time and neither PROM has
   symbols, so the census holds no access from them. Next: constant-fold the PROM's widget-window setup, or read the
   I/O-board PROM's bridge probe by hand.
@@ -80,6 +86,15 @@ Corrections found while tagging. These are not fixed here.
   Needs deeper binary RE (attempted 2026-11-21: disassembled the firmware segment and followed each `lui 0xb400`
   base for 80 instructions; offsets 0x0 to 0xc, 0x38, 0x200 to 0x240 reached, 0x248, 0x270 and 0x58 not reached.
   That search does not follow a base set in another routine, so no absence is settled).
+  Attempted again 2026-11-21 across routines (IP32 PROM firmware segment, file offset `0x9348`, 298608 bytes at
+  `0x81000000`, disassembled with objdump; Ghidra's entry-point analysis found 1720 functions but not the sizing code, so
+  the constant tracking below is a script over the objdump listing, not Ghidra): all 20 CRIME-base `lui` sites, the
+  base arguments at every call and the one place the firmware keeps the CRIME base in memory (a global written at
+  `0x8100c460`, never loaded anywhere in the segment) reach only offsets `0x0`, `0x4`, `0x8`, `0x38`, `0x200`, `0x208`
+  and the seven bank loads `0x210` to `0x240` (a load at `0x81003ca8` and an unrolled pointer walk from `0x81003cc4`
+  that stops after `0x240`). `0x248`, `0x270` and `0x58` are not reached (inferred: other segments and run-time
+  computed bases are not excluded; the firmware segment is the only one scanned). The `0x270` store the page records is in the
+  sloader, and `0x58` is reached by the kernel, so their contents stay open.
 - **Bedrock census: accessor seeds.** *[route: software now; tool work]* The IOC3 and IOC4 censuses have run (their configs carry seeds), the Hub census has output (`devices/hub/census/`, one seeded argument) and the Bedrock census has output too (693 sites in 195 rows, `devices/bedrock/census/`), but `tools/configs/bedrock.json` has empty `seeds`, so no accessor argument is followed and eleven of its images still use the flagged `auto-min` gp fallback although their options records carry the value. Next: write the accessor seeds (the hub-state and node-index accessors) and switch the images to the options-record gp, then rerun `retools/tools/chips/run.sh`.
 - **MACE: write- and read-failure behaviour.** *[route: software now; hardware residue: an ISA device that never answers, since the specification gives no timeout]* The graded answers (what sets each PCI error flag, what the error
   address register latches, which interrupt fires) are in devices/mace/README.md, "Error reporting for a refused or
@@ -93,6 +108,11 @@ Corrections found while tagging. These are not fixed here.
   `0xbfc00000`, not the segment at `0x81000000`. The raw image kind has no offset or length, so the segment needs a
   cut file or a new image kind (retools change, not done here). The segment disassembles to 74,390 lines with the
   container's mips64 objdump, and the page's 20 and 74 counts reproduce. Tool work, not binary RE; the census run was not done.
+  2026-11-21: sgi-retools `fcb9a77` adds optional `offset` and `length` to a raw image entry (with a test), so the
+  segment entry is `"offset": "0x9348", "length": 298608, "vma": "0x81000000"`. It is not in `tools/configs/crime.json`
+  yet: bumping chips' `retools` pin from `520957e` to that commit makes `retools/tools/defs/ci-check` report 571 stale
+  generated files (generator drift already on sgi-retools main, not from this change). Next: land a regeneration of
+  the generated tree on a newer pin, then add the entry and run the census.
 - **MACE: blocks reached through run-time pointers.** *[route: software now]* The Ethernet driver (`if_me.o`), the 16550 serial driver
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the

@@ -28,6 +28,8 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
   routine that spells an offset and misses those loops; they are read by hand below.
 - No scanned image touches `0x248` (refresh counter) or `0x4048` (the 1.5 location of the CPU error status). The
   census window covers `0x0` to `0x40ff`.
+  The IP32 PROM firmware segment (offset `0x9348`, loaded at `0x81000000`) was read separately, outside the census
+  (inferred): it reaches `0x0`, `0x4`, `0x8`, `0x38`, `0x200` and `0x208` to `0x240` only.
 
 ## What identifies the chip (established)
 
