@@ -17,7 +17,8 @@ What comes out the other end is headers you can build against, in C, Rust, Pytho
   and shoehorn).
 - **Origin 300, Origin 3000, Fuel, Tezro:** the Bedrock, PIC, the routers and the L1.
 - **Altix 350, 330, 3000, 3700, 4700, 450 and Prism (SN2):** the SHub, the TIO bridges, PIC, IOC4 and the routers. So
-  far there are machine pages and cross-checks of the I/O chips against SGI's Linux code; the SHub has no register map yet.
+  far there are machine pages and cross-checks of the I/O chips against SGI's Linux code; the SHub has a partial
+  register map in [devices/shub/](devices/shub/README.md).
 - **Crosstalk and I/O:** the XIO link, Crossbow, Bridge, XBridge, IOC3 and IOC4.
 - **CPUs:** the R5000, and the R10000 family through to the R16000.
 - **The rest:** SCSI, Ethernet, USB, FireWire and audio controllers, clocks, NVRAM, flash, and the Indy's
@@ -25,6 +26,7 @@ What comes out the other end is headers you can build against, in C, Rust, Pytho
 
 Every chip has a page under [devices/](devices/README.md). Machines and bricks are under
 [platforms/](platforms/README.md); the Altix and Prism machines are in [platforms/sn2/](platforms/sn2/README.md).
+Wire formats are under [formats/](formats/README.md), and the firmware and kernel code is under [software/](software/README.md).
 
 ## How they fit together
 
