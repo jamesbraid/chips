@@ -171,6 +171,16 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
   the SAL revision is at least `0x0406` ("SGI prom rev 4.06 or greater required for tioca support",
   `v5.3:arch/ia64/sn/pci/tioca_provider.c`). It is skipped for SHub 2. Established as the code. The SAL calls the kernel makes
   are on [the SAL page](../../software/sal/README.md).
+- **Public boot logs.** Two serial-console boot logs in a 2019 public forum post (forums.irixnet.org, thread 849, post 12) are
+  the only Prism kernel logs held. The poster calls the machine a deskside or rack Prism with two CPUs and one node. Both print
+  `booting generic kernel on platform sn2`, `SAL 3.2: SGI SN2 version 4.65` and six ACPI tables with SGI SN2 OEM IDs
+  (established, as posted). Neither names a SHub, a PROM build, a TIOCA or AGP device, or the shape; the raw HTML of page 2
+  of the thread has no `tioca`, `shub` or `agp` text. The 4.14.83 log lists PCI host bridges 0001:00 to 0006:00 and a boot VGA device at 0006:00:00.0
+  whose 256 MB BAR the kernel could not place. The 3.8.13 log puts an SGI IOC4 (10a9:100a), a PCI-to-PCI bridge (104c:ac28,
+  `PCI2050` in pci.ids), a Vitesse SATA controller (1725:7174) and a Broadcom NIC (14e4:1645) on domain 0001 bus 0. The 4.14.83
+  log has USB functions (OHCI and EHCI drivers) at 0001:01:02.0 to 0001:01:02.2, behind that bridge. Whether the bridge is PCI-X
+  is unknown: the log prints no bus mode. The shape stays unknown; this device set fits a rackmount base I/O module as well as
+  the deskside.
 - **L1.** Each module and brick has an L1 controller. The Extreme guide documents upgrading it through the `snxsc_firmware`
   package (example `snxsc_firmware-1.18.3-1`), with a boot image and two images A and B; the newer of A and B runs, and the
   other is overwritten; `flashsc --12 <addr> -p /usr/cpu/firmware/sysco/l1.bin all` updates every brick, and
@@ -230,9 +240,21 @@ Cannot transfer:
 - voyager's open questions (bus clock and width behind a pipe, PIC topology) are Onyx4-specific; on Prism the answer is
   "AGP 8x on a TIOCA" for the bus, and the topology question becomes the TIOCA-per-pipe question here.
 
-## Wanted from the held Prism disk image
+## The held Prism disk image (checked 2026-11-21)
 
-Do not extract it here. A listing of these would settle most of the unknowns:
+The held image is a 4.18 GB ISO (SHA-256 `4fde2ed38816307ff1b33fbcb2a0cb4a97f80de13edfab0aabfa9f107d98d898`). It was copied,
+checked against that hash, and its root filesystem read from the copy; nothing was run. It is a T2/Linux 26-svn community
+build (`/etc/os-release` ID `t2sde`) with kernel `7.3.0-epic1-SN2-GPU`, not an SGI ProPack image (established, from the listing).
+
+Absent from the root filesystem (established, from the listing): `/etc/sgi-release`; any PROM image, `/usr/cpu/firmware` tree,
+`snxsc_firmware`, `flashsc` or `l1.bin`; `fglrx`; `XF86Config`; and every log or capture, including `dmesg`,
+`/var/log/messages`, `/proc/sgi_sn` and `lspci` output. `/var/log` has only the faillog, lastlog, wtmp and sa entries and an
+empty journal directory.
+
+What it does hold (established, from the listing): the kernel's `sgi-agp` module, `tioca_bus_fixup`, `tioca_*` and `tioce_*`
+symbols (a software expectation, not a chip count), and a modprobe file that sets `agpmode=8` for radeon on the TIO CA bridge.
+
+Still wanted from a ProPack image; a listing of these would settle most of the unknowns:
 
 - `/etc/sgi-release`, `uname -r` strings, the kernel image and `/lib/modules/*/` (for `sgi-agp`, `agpgart`, the `fglrx`
   kernel module and its version string), the kernel's DWARF if present (structure layouts for `tioca`, `tioca_common`).

@@ -45,7 +45,10 @@ chapter; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (
 The Linux AGP bridge (TIOCA) for the two AGP slots, the part number `0xE020` and the 8x-only backend are on
 [the overview](prism.md#graphics-attachment). Whether the deskside's four PCI-X buses sit behind one PIC (two buses) and a
 second part, or something else, is unknown: the Altix 350 module has a PIC with two buses of two slots
-([altix-350.md](altix-350.md)).
+([altix-350.md](altix-350.md)). The 2019 public boot log of a single-node Prism ([the overview](prism.md#firmware)) puts a
+PCI-to-PCI bridge in front of bus 01, and bus 01 holds the USB functions. That fits the daughter board's bus 1 slot 2 if
+Linux's device numbers match the guide's slots (inferred; the same set also fits a rackmount base module). Whether that
+bridge is PCI-X is unknown.
 
 Not covered: the maintenance chapter (pp.35 to 89), the cooling and power sections, and the -002 regulatory chapters.
 
