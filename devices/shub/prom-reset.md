@@ -1290,3 +1290,7 @@ route-table distribution `0xffa5b5d0`, and the NUMAlink 3 pair `0xffaaa4e0`, `0x
 them (a node with no peer skips the discovery and the walk above). Their registers, values and order, the lock, and
 the comparison with the SHub 2 image are in [../router_nl4/global-config.md](../router_nl4/global-config.md). Read in
 Ghidra with an objdump cross-check; the page there is not yet independently reviewed.
+
+### Review (chips 792d8f5: slot 85 and the error-clear lists)
+
+Independent review, 2026-11-21, by a reviewer who did not write it. Confirmed in the image: slot 85 starts at `0xffa23850` and calls the list writer `0xffae3f50` at `0xffa2389c` and `0xffa238bc` with the lists at `0xffbd8e18` (70 entries) and `0xffbd93e0` (24 entries; the gp-relative offsets in the two `addl` instructions resolve to those addresses); the writer takes the NASID from the object's first halfword and addresses every entry through the global window, so a claimed neighbour gets the same writes; the `NI0_LLP_ERR` and `NI1_LLP_ERR` entries (`0x1_5000_0048`, `0x1_5000_2048`) hold the value 0. Not checked: the emulator run's own log.
