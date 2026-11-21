@@ -1279,3 +1279,12 @@ Independent re-read on 2026-11-16 (PROM 10.54 `0xffa8d120`, `0xffa8cea0`, `0xffa
 **Changed.** The L1 writes the rack as 10 bits (low 6 in the data word, `(cfg[8] >> 6) & 0xf` in the high word), so rack bit 9 lands on bit 35, which the PROM reads as slot bit 0; harmless for racks below 512. The PROM-side writer function first polls a word for up to 10 s ("timed out locking"; register not decoded), see the klconfig review.
 
 **Not checked.** Whether the local SHub ever takes the writer path; hardware reads.
+
+## The router routines of this image
+
+The SAL 5.04 image also carries the routines that configure a NUMAlink 4 router a SHub 1 node reaches through its two
+NI ports (`nl4r_init_global` `0xffaaa840`, `nl4r_config_global` `0xffaaab20`, `nl4r_config_port` `0xffaab070`, the
+route-table distribution `0xffa5b5d0`, and the NUMAlink 3 pair `0xffaaa4e0`, `0xffaaa740`). A lone node never reaches
+them (a node with no peer skips the discovery and the walk above). Their registers, values and order, the lock, and
+the comparison with the SHub 2 image are in [../router_nl4/global-config.md](../router_nl4/global-config.md). Read in
+Ghidra with an objdump cross-check; the page there is not yet independently reviewed.

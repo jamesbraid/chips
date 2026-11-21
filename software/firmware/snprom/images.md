@@ -74,6 +74,11 @@ predates it. 4.43 also has the only `sysctl_probe` that really probes the contro
 `SN_SAL_BTE_RECOVER` and the feature-set calls; 4.90 is the previous build of the 5.04 line. All three SHub 1 images
 carry the same three first-table processor rows (section 2) and the same top-of-image block (section 3).
 
+The NUMAlink 4 router routines of the 5.04 SHub 1 image (`nl4r_init_global`, `nl4r_config_global`, `nl4r_config_port`,
+the NUMAlink 3 pair, and the routing-table distribution) are read and compared with the SHub 2 10.54 image in
+[devices/router_nl4/global-config.md](../../../devices/router_nl4/global-config.md): same source, same register values,
+the SHub 1 vector request carrying a bias bit. The 4.43 image was compared by listing; 4.20 and 10.40 by strings only.
+
 ## 2. Machines the SHub 1 images serve
 
 **Altix 350, one module.** One base compute module is a complete system: IP57 node board with one SHub,
