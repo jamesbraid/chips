@@ -154,6 +154,40 @@
      "name": "crime-kseg1-u32"
     }
    ]
+  },
+  {
+   "label": "ip32-prom-segment",
+   "dis": "work/dis/ip32-prom-segment.s",
+   "path": "root/firmware/ip32prom.image",
+   "kind": "raw",
+   "offset": "0x9348",
+   "length": 298608,
+   "vma": "0x81000000",
+   "arch": "mips:isa64",
+   "split": "jr31",
+   "note": "IP32 PROM firmware segment: file offset 0x9348, 298608 bytes, plain code at 0x81000000 (devices/mace/README.md, IP32 PROM image layout)",
+   "const_windows": [
+    {
+     "lo": "0xffffffffb4000000",
+     "hi": "0xffffffffb4004100",
+     "name": "crime-kseg1"
+    },
+    {
+     "lo": "0x14000000",
+     "hi": "0x14004100",
+     "name": "crime-phys"
+    },
+    {
+     "lo": "0x9000000014000000",
+     "hi": "0x9000000014004100",
+     "name": "crime-xkphys"
+    },
+    {
+     "lo": "0xb4000000",
+     "hi": "0xb4004100",
+     "name": "crime-kseg1-u32"
+    }
+   ]
   }
  ],
  "report_functions": ".*",

@@ -30,8 +30,8 @@ scan follows. It does **not** reach:
   (only the three Ethernet rows the `ide` diagnostic touches are in the census), the 16550 serial driver
   `sio_ti16550.o` and the video code in `mvp.o` (one probe read). The PS/2 registers are read by hand below,
   because their base addresses sit in a constant table;
-- the IP32 PROM: the `firmware` segment is plain code (see "IP32 PROM image layout" below), but no census config reads it yet,
-  so no PROM access is in the census (open question);
+- the IP32 PROM: the `firmware` segment is plain code (see "IP32 PROM image layout" below), the CRIME census reads it
+  (`ip32-prom-segment`), but no MACE config does yet, so no PROM access is in the MACE census (open question);
 - video channel registers, the DP-RAM, the parallel DMA context registers and the serial ring pointers: no routine
   read reaches them by constant address.
 

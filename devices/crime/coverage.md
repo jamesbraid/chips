@@ -55,6 +55,6 @@ specification's own scope. No ID value was read from a running system here.)
 
 ## Not touched
 
-The other CRIME open entries need work this pass did not do: the registers no scanned image reaches wait for the IP32 PROM
-to be unpacked, the write-error behaviour has a hardware residue, and the rendering engine field layouts need a renderer or
+The other CRIME open entries need work this pass did not do: the registers no scanned image reaches (`0x248`, `0x4048`) wait for
+a routine that touches them (the IP32 PROM segment is scanned and does not), the write-error behaviour has a hardware residue, and the rendering engine field layouts need a renderer or
 X server module that is not held.

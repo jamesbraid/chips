@@ -18,7 +18,7 @@ Counts for the 55 entries:
 
 Ordered software-now list. Earlier steps unlock more entries, and each step names the entries it settles.
 
-1. Add the IP32 PROM to the census: the `firmware` segment is plain code at `0x81000000` (devices/mace/README.md), so no unpacking is needed; give it an image entry. Unlocks MACE failure, CRIME registers no image reaches, and CRIME transfer-engine tile formats.
+1. Done for CRIME 2026-11-21: the IP32 PROM firmware segment is an image entry in the CRIME census (see the closed entry under CRIME below). The MACE entry, which unlocks the MACE failure work, is still open.
 2. Hub error handlers, read in full: `hub_ioerror_handler`, `handle_uncac_buserr`, `hubni_error_handler`, `log_md_errors`, `show_hub_md_err`, `process_error_spool`, `huberror_process_stack_entry`, `hubpi_spool_get_next`. Settles Hub PI write-buffer errors, Hub directory error labels, Bedrock refused widget read, Bedrock spool entry layout and Bedrock protected-region replies.
 3. Bedrock block indexing and interrupts: `hub_error_init`, `hub_error_clear`, `intr_connect_level`, `intr_heuristic`, plus the mask code that ORs bit 24. Settles Bedrock block boundaries, Bedrock interrupt numbers and the software half of Bedrock pending bits 25 to 34.
 4. Hub registers with no named role: `per_hub_init`, `hub_ifdr_fix_value`, `hub_piomap_alloc`, `hub_piomap_free`, the unnamed routine at `0xc00000000003b440` (it stores `0x400160`), `mlreset`, `hub_error_devenable`. Settles Hub registers with no named role.
@@ -102,17 +102,8 @@ Corrections found while tagging. These are not fixed here.
   sets; whether a posted write's failure differs from a read's at the CPU; whether any MACE address returns the read
   response error bit; what a PIO to an ISA device that never answers does (the specification gives the peripheral
   controller no timeout or error flag); a second error's effect on the latched address. Next: CRIME's own error
-  registers (the CRIME census), and the compressed IP32 PROM's PCI and ISA probes once it can be read.
-- **IP32 PROM: no census config reads the firmware segment yet.** *[route: software now; unlocks the MACE failure and CRIME register entries]* The premise of the earlier entry is gone: the `firmware` segment is not compressed, it is plain code loaded at `0x81000000` (devices/mace/README.md, "IP32 PROM image layout"). Open: a census image entry for the IP32 PROM with that base (file offset `0x9348`, 298608 bytes), seeds for its CRIME and MACE window loads (20 CRIME-base and 74 MACE-base `lui` sites), the same for the `sloader` and `post1` segments, and decoding the string and table subsections after the code. Next: add the config entries and run the scan.
-  Attempted 2026-11-21: `tools/configs/crime.json` already has an `ip32-prom` entry, but it reads the whole file at
-  `0xbfc00000`, not the segment at `0x81000000`. The raw image kind has no offset or length, so the segment needs a
-  cut file or a new image kind (retools change, not done here). The segment disassembles to 74,390 lines with the
-  container's mips64 objdump, and the page's 20 and 74 counts reproduce. Tool work, not binary RE; the census run was not done.
-  2026-11-21: sgi-retools `fcb9a77` adds optional `offset` and `length` to a raw image entry (with a test), so the
-  segment entry is `"offset": "0x9348", "length": 298608, "vma": "0x81000000"`. It is not in `tools/configs/crime.json`
-  yet: bumping chips' `retools` pin from `520957e` to that commit makes `retools/tools/defs/ci-check` report 571 stale
-  generated files (generator drift already on sgi-retools main, not from this change). Next: land a regeneration of
-  the generated tree on a newer pin, then add the entry and run the census.
+  registers (the CRIME census), and the IP32 PROM's PCI and ISA probes.
+- **IP32 PROM: firmware segment census (closed 2026-11-21).** `tools/configs/crime.json` has the `ip32-prom-segment` entry (raw image, `offset` 0x9348, `length` 298608, `vma` 0x81000000, on sgi-retools `fcb9a77`). The disassembly is 74,390 lines and holds 20 CRIME-base and 74 MACE-base `lui` sites, the counts the hand count gave. The CRIME census reads the segment at 15 sites (scan, established): offsets `0x0`, `0x4`, `0x8`, `0x38`, `0x200` and `0x208`. The bank loads at `0x210` to `0x240` come from the hand search above, since the scan does not follow the indexed walk. Still open: a MACE config entry for the segment (the MACE failure and PS/2 work in devices/mace/coverage.md), the `sloader` and `post1` segments, and the string and table subsections after the code.
 - **MACE: blocks reached through run-time pointers.** *[route: software now]* The Ethernet driver (`if_me.o`), the 16550 serial driver
   (`sio_ti16550.o`, `serialio.o`), the video code (`mvp.o`) and the DP-RAM and parallel context registers take their
   addresses from records. The census has three Ethernet rows (from `ide`) and one video row. Next: constant-fold the
@@ -202,7 +193,7 @@ Corrections found while tagging. These are not fixed here.
   pages, and the antialias slope is given as 2.12 in one place and 2.14 in another. The loaders copy these words unchanged, so
   the shipped kernel does not decide them. Routes tried: the specification's register map and chapter text, the shadow loaders'
   copy order. Next: a shipped renderer or X server module that builds the words, and the public CRIME frame-buffer driver sources.
-- **CRIME memory transfer engine: the null register and the tile table formats.** *[route: software now; the held `ide.IP32` diagnostic has rendering-engine TLB tests that are stripped; the IP32 PROM is compressed until the MACE entry's route is done; an X server module and the public CRIME frame-buffer drivers are not held]* No routine in the IP32 member objects
+- **CRIME memory transfer engine: the null register and the tile table formats.** *[route: software now; the held `ide.IP32` diagnostic has rendering-engine TLB tests that are stripped; the IP32 PROM firmware segment is in the CRIME census but not yet read as a MACE census input; an X server module and the public CRIME frame-buffer drivers are not held]* No routine in the IP32 member objects
   writes `MTE.null` (`0x3070`), and no routine read builds a texture-TLB or clip-ID-TLB entry, so the entry bit layouts and
   the register's effect are open. The specification prints no entry layout. Routes tried: the shadow loaders, the clear,
   swap and copy routines, and a displacement scan of all 702 member objects. Next: the PROM, diagnostic and monitor

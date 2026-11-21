@@ -190,3 +190,17 @@ ip32-prom	prom_ffffffffbfc06b28	c102e0	?		0x38	w	8	addiu $6,$0,66 / mult $4,$6 /
 ip32-prom	prom_ffffffffbfc06b28	c2cb94	?		0x20c	r	4	sll $0,$0,0x0 / jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0
 ip32-prom	prom_ffffffffbfc06b28	c2cb98	?		0x208	r	4	jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0 / sw $25,20($29)
 ip32-prom	prom_ffffffffbfc06b28	c38bdc	?		0x4	r	4	sll $0,$0,0x0 / addiu $29,$29,-32 / sw $31,20($29) / lui $14,0xb400 / lw $2,4($14) / addiu $1,$0,160 / bne $2,$1,0xffffffffbfc38bf4 / lui $1,0x8106 / beq $0,$0,0xffffffffbfc38dd0
+ip32-prom-segment	prom_81002bac	002bec	?		0x200	w	8	jal 0x8103a76c / sw $6,24($29) / lw $6,24($29) / lui $8,0xb400 / sd $0,512($8) / sw $6,24($29) / or $4,$6,$0 / jal 0x81040d28 / lui $5,0x1
+ip32-prom-segment	prom_810039fc	003ca8	?		0x208	r	8	sll $0,$0,0x0 / jr $31 / or $2,$0,$0 / lui $14,0xb400 / ld $4,520($14) / lui $7,0x200 / or $3,$7,$0 / andi $15,$4,0x100 / beq $15,$0,0x81003cc4
+ip32-prom-segment	prom_81004d40	004d58	?		0x0	r	8	or $4,$4,$5 / jr $31 / sd $4,0($6) / lui $2,0xb400 / ld $2,0($2) / jr $31 / andi $2,$2,0xf / lui $4,0xb400 / addiu $4,$4,0
+ip32-prom-segment	prom_81004d9c	004dfc	?		0x8	w	8	lui $4,0xb400 / addiu $5,$0,1024 / addiu $4,$4,8 / bgezal $0,0x81004e24 / sd $5,0($4) / beq $0,$0,0x81004dec
+ip32-prom-segment	prom_81004e04	004e18	?		0x8	w	8	lui $4,0xb400 / addiu $5,$0,2048 / addiu $4,$4,8 / bgezal $0,0x81004e24 / sd $5,0($4) / beq $0,$0,0x81004e08 / sll $0,$0,0x0 / lui $4,0xbf31 / ld $5,8($4)
+ip32-prom-segment	prom_81004e98	004ee0	?		0x38	r	8	lui $11,0x8100 / addiu $8,$8,56 / addiu $11,$11,20260 / addiu $9,$0,512 / ld $10,0($8) / bgtz $9,0x81004ee4 / addiu $9,$9,-1 / ld $2,0($8) / jr $31
+ip32-prom-segment	prom_81004e98	004f1c	?		0x38	w	8	addiu $12,$12,20320 / addiu $15,$0,0 / addiu $24,$0,0 / mtc0 $0,c0_count / sd $0,0($9) / addiu $8,$0,23496 / ld $10,0($9) / dsll32 $10,$10,0x0 / dsra32 $10,$10,0x0
+ip32-prom-segment	prom_81006170	006208	?		0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-prom-segment	prom_81006240	006254	?		0x0	r	8	or $4,$4,$5 / jr $31 / sd $4,0($6) / lui $2,0xb400 / ld $2,0($2) / jr $31 / andi $2,$2,0xf / addiu $29,$29,-176 / sd $1,136($29)
+ip32-prom-segment	prom_81006b0c	006f98	?		0x38	w	8	addiu $6,$0,66 / mult $4,$6 / lui $5,0xb400 / ori $5,$5,0x38 / sd $0,0($5) / mflo $4 / add $4,$4,$0 / sll $0,$0,0x0 / ld $6,0($5)
+ip32-prom-segment	prom_8100dde4	00ddf4	?		0x4	r	4	beq $2,$0,0x8100ddf0 / addiu $14,$0,1 / sw $14,24($29) / lui $15,0xb400 / lw $2,4($15) / addiu $1,$0,161 / bnel $2,$1,0x8100def4 / lw $31,20($29) / jal 0x8100db6c
+ip32-prom-segment	prom_81023574	02384c	?		0x20c	r	4	sll $0,$0,0x0 / jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0
+ip32-prom-segment	prom_81023574	023850	?		0x208	r	4	jr $31 / or $2,$0,$0 / lui $14,0xb400 / lw $25,524($14) / lw $24,520($14) / addiu $29,$29,-40 / lui $4,0x200 / or $3,$4,$0 / sw $25,20($29)
+ip32-prom-segment	prom_8102f7e4	02f894	?		0x4	r	4	sll $0,$0,0x0 / addiu $29,$29,-32 / sw $31,20($29) / lui $14,0xb400 / lw $2,4($14) / addiu $1,$0,160 / bne $2,$1,0x8102f8ac

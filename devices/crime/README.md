@@ -28,8 +28,9 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
   routine that spells an offset and misses those loops; they are read by hand below.
 - No scanned image touches `0x248` (refresh counter) or `0x4048` (the 1.5 location of the CPU error status). The
   census window covers `0x0` to `0x40ff`.
-  The IP32 PROM firmware segment (offset `0x9348`, loaded at `0x81000000`) was read separately, outside the census
-  (inferred): it reaches `0x0`, `0x4`, `0x8`, `0x38`, `0x200` and `0x208` to `0x240` only.
+  The IP32 PROM firmware segment (offset `0x9348`, loaded at `0x81000000`) is in the census as `ip32-prom-segment`
+  (15 sites, established): it reaches `0x0`, `0x4`, `0x8`, `0x38`, `0x200` and `0x208`. The bank loads at `0x210` to
+  `0x240` are found by hand, not by the scan (inferred).
 
 ## What identifies the chip (established)
 
@@ -46,7 +47,7 @@ Census: [census/](census/census.md) (`census.tsv`, `fields.tsv`, `context.tsv`, 
 ## Register inventory
 
 The census reaches 26 register rows (offsets `0x0` to `0x58`, `0x200`, `0x208` to `0x240`, `0x250` to `0x270`) from the
-kernel object, the graphics object, the monitor, the diagnostic and the PROM (215 access sites). 24 rows are in the
+kernel object, the graphics object, the monitor, the diagnostic and the PROM (230 access sites). 24 rows are in the
 specification's map; `0x50` and `0x58` are not. Counting the eight bank control registers as one kind, the census
 reaches 19 register kinds; with the two the code never reaches (`0x248`, `0x4048`) the page grades 21 kinds:
 **16 established, 3 inferred, 2 unknown**.
