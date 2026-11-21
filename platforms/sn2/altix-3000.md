@@ -7,10 +7,9 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Read: pp.77 to 83 (models, architecture, features), p.87 (components), pp.99 to 101 (C-brick
-overview and features), and p.108 (C-brick specifications) from an earlier reading. Driver guide pp.13 and 16 to 17.
-Page numbers are printed; the PDF index is 24 pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter
-and the rest of the brick chapters were not read.
+README](README.md). Cited pages of 007-4579-001: 77, 79, 81, 87, 99, 101, 108 and 135 to 140 (the R-brick chapter's
+overview and rear panel). Cited pages of 007-4520-006: 13, 16 to 19. Page numbers are printed; the PDF index is 24
+pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the rest of the brick chapters were not read.
 
 ## Established (007-4579-001)
 
@@ -26,17 +25,14 @@ and the rest of the brick chapters were not read.
   cables" (p.81).
 - Each rack with C-bricks has an L2 controller; rack 001 carries an L2 touch display (p.79).
 - The node chip is the **Super-Bedrock ASIC** (p.81; "two Super-Bedrock ASICs" on p.87). The driver guide calls the
-  same role "SHub" ("two SHub chipsets", 007-4520-006 p.16). The one-part identity is inferred: both describe the
-  crossbar between processors, memory, network and I/O. Neither gives a chip generation; "NUMA 3" (p.81) names the
-  system architecture.
-- Inside the C-brick the nodes are joined by "a single 6.4-GB/s NUMAlink 4 channel" (p.81); the driver guide says "a
-  NUMAlink 4 channel" (007-4520-006 p.13). p.101 instead lists "two internal 3.2-GB/s (each direction) NUMAlink
-  channels (one per node)". The rate agrees (3.2 each way is 6.4 total); the count does not.
+  same role "SHub" ("two SHub chipsets", 007-4520-006 p.16).
+- Inside the C-brick the nodes are joined by a NUMAlink 4 channel, but the count conflicts. p.81 says "a single
+  6.4-GB/s NUMAlink 4 channel", and the driver guide says "a NUMAlink 4 channel" (007-4520-006 p.13). p.101 says "two
+  internal 3.2-GB/s (each direction) NUMAlink channels (one per node)" and does not name NUMAlink 4.
 - Outside the C-brick: "two external 1.6-GB/s (each direction) NUMAlink channels (one per node)" and two Xtown2
   channels per node, 1.2 GB/s each direction (p.101). The guide does not name the external generation on the pages
   read. The driver guide's SC-brick has two "6.4-GB/s (each direction)" NUMAlink channels and two "2.4-GB/s" Xtown2
   channels (007-4520-006 p.17). That differs from p.101 and may be a product or revision difference; not settled.
-- Inferred that the driver guide's SC-brick is this brick: 3U, two nodes, 16 DIMM slots per node.
 
 Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in [brick-identity.md](brick-identity.md).
 
@@ -50,16 +46,18 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 ## Open
 
+- Inferred: the Super-Bedrock ASIC and the SHub are one part, from the same role in both guides. Neither guide gives a
+  chip generation, so SHub 1 or 2 is unknown.
+- Inferred: the driver guide's SC-brick is this brick (3U, two nodes, 16 DIMM slots per node).
+- Inferred: 3.2 GB/s each way is the 6.4 GB/s total of p.81, so the two rates agree and only the channel count differs.
 - The NUMAlink generation of the external cables. The guide prints their rate (p.101) and no name. Settling test: a
   page of the guide or its cabling guide that names the cable.
 - Channel count inside the C-brick: one channel (p.81) or two (p.101). Figure 5-2, the C-brick block diagram on
   printed p.102, is not read and would settle it.
-- Node-chip generation (SHub 1 or 2): unknown from both guides.
-- Plan conflict, not edited here: `docs/research/sn-family-closure-20260913.md` in the Origami repository (the SN2
-  Altix 3000 row) says the fabric is "NUMAlink 3, same R-brick" and cites 007-4579-001 p.80. The guide gives NUMAlink 4
-  for the internal channel (p.81) and no generation for the external cable (p.101). A plan that treats the Altix 3000
-  fabric as NUMAlink 3 needs that record corrected or a source for NUMAlink 3 here. The family-order plan itself is not
-  in the Origami worktree, so it was not checked.
+- Plan conflict, not settled here: a plan elsewhere treats the Altix 3000 external fabric as NUMAlink 3 ("same
+  R-brick") and cites 007-4579-001 p.80, which this page did not read. The guide does not contradict that for the
+  external fabric, because it names no generation for the external cable (p.101). It does name NUMAlink 4 for the
+  internal channel (p.81). The plan's NUMAlink 3 claim needs its own source.
 - The C-brick L1 type character: not settled (sysco `sn2-brick-packages.md`).
 
 ## Review
