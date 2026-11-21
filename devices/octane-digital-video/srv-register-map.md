@@ -756,3 +756,17 @@ CC1 field interrupt: ack CC indirect 38 bit 0; write CC indirect 39 = 1; read CC
 
 HQ4 table DMA writes: graphics `0x11028` = `0x02000000`, `0x60018` = control, `0x81018`, `0x81000` (descriptor), `0x81010` (kick); poll `0x20000` bit 12; no read-back.
 
+## 9. VGI1 capture (README 19)
+
+Setup request (72 bytes, ioctl `0x29`): +0 flags (bit 0 set = playback, clear = capture), +4 channel, +8 setup word (64-bit), +24 capture mode 0 to 4, +28 stride (16-bit), +32/+36 rate fraction, +48 hstart, +50 hwidth, +52 field0 first line, +54 field0 lines, +56 field1 first line, +58 field1 lines.
+
+| Register | Encoding |
+|---|---|
+| setup `+0x1000`/`+0x2000` | driver ORs bits 43:32 = `0xfff` and bit 44; bits 4:0 pixel-format code; bits 23:16 `0x80` or `0x20` from `mgv`; remaining bits undecoded |
+| intenab `+0x10` / status clear | playback `0x2f0b` (intenab `0x2f1b`); capture `0x211` |
+| hparam `+0x20` | bits 10:0 start in clocks, bits 26:16 width in clocks (2 clocks per pixel) |
+| vparam `+0x30` | 9-bit fields at 8:0, 24:16, 40:32, 56:48: f0 first line, f0 lines, f1 first line, f1 lines |
+| stride `+0x40` | 16-bit, width x bytes per pixel |
+
+Descriptor entry: low 20 bits = DMA address >> 14, last entry has `0xf` at bits 35:32. After a capture buffer completes the driver invalidates the CPU cache over its pages and queues an info record (UST, MSC, address, length).
+

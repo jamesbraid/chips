@@ -976,6 +976,88 @@ A frame request needs two fields (16.2), so at 59.94 fields/s 29.97 requests/s a
 
 Not required for the preroll: a model that clears busy at once passes. It matters only if the model applies the CSC to the pixels.
 
+## 19. Video input: VGI1 capture, and video in a window
+
+Pass 12. Inputs: `srv.a`, `mgv.so`, `impact.so` of the original-6.5 "Octane Impact Video" overlay (the 6.5.13 build was not available), Smoke 5.0 and `libvl` from the Smoke 5.0 guest disk, by disassembly. Flame 7.6 is identical to Smoke in the input functions (10.9); Flame 8.3.4 was not re-read for this pass. Grades: E read in code, I reasoned, U unknown. **No capture trace exists, so every capture value below comes from code and from the playback trace; nothing was observed on a capturing model.**
+
+### 19.1 What selects capture
+
+| Fact | Value | Grade |
+|---|---|---|
+| Setup ioctl | `0x6d670029` (`srvVgi1Setup`, 72-byte copy-in) per channel, `0x6d67002a` to undo. `mgv.so` issues it from the function that builds the request (it also issues a second `0x29` for the paired channel, channel + 1, with setup-word bit 13 set, when the request needs two channels) | E |
+| Direction | bit 0 of the first word of the request ("flags"). **Set for playback** (the trace shows intenab `0x2f1b`, which is the set-bit value below). **Clear for capture** | E (code), I (clear = capture) |
+| What bit 0 changes in `srv_dma_setup` | set: initial channel status/interrupt base `0x2f0b`, channel state `0x2000`. Clear: base **`0x211`**, state **`0x2020`**. The base is written to the channel status register (to clear it) and, ORed with `0x10`, to intenab. So capture enables interrupts for bit 0 (vertical), bit 4 (trigger) and bit 9 (error) only | E |
+| Other `mgv` use of bit 0 | when set, `mgv` allocates a 44-byte per-channel completion block with a semaphore after the ioctl; a capture request has none | E |
+| Flags bits 1 and 2 | set: channel state `|= 0x40` and `|= 0x10000`; meaning not decoded | E (effect), U (meaning) |
+
+So for capture, completion is **not** signalled by the descriptor-boundary (bit 1) or end-of-DMA (bit 3) interrupts being enabled; the interrupt comes from the vertical (bit 0) and the driver reads the status, which still carries the other bits (section 16.1). Whether the hardware latches bits 1 and 3 into status with their interrupts disabled is not shown by the code. U; the safe model raises line 4 on the vertical with the same status bits as playback.
+
+### 19.2 The request fields
+
+The 72-byte request, as the driver reads it (offsets in the request; `h`/`w` mean 16-bit):
+
+| Offset | Meaning | Source | Grade |
+|---|---|---|---|
+| +0 | flags (19.1) | `srv_dma_setup` | E |
+| +4 | channel number (0 or 1; register block `(channel & 1) + 1`, so `0x1000` / `0x2000`) | `srvVgi1Setup` | E |
+| +8 | **setup word**, 64-bit; written as is to the channel's setup register after the driver ORs in bits 43:32 = `0xfff` and bit 44 | `srv_dma_setup` | E |
+| +24 | **capture mode**, 0 to 4: 0 = line count is the sum of both field line counts (+54 and +58); 1 and 2 = field 0 count only; 3 = field 1 count only; 4 = field 0 count with the "rate x2" flag (`0x20` in the channel record). The mode is also stored (+120) and drives the MSC step (18.2) | `srvVgi1Setup` | E (arithmetic), I (names) |
+| +28 | **stride**, 16-bit, written to the stride register (`+0x40`) | `srv_dma_setup` | E |
+| +32, +36 | field-rate fraction: the driver computes `1,000,000 x (+36) / (+32)`, doubles it when the record has `0x20`, and stores the quotient and remainder per million as a rate | `srvVgi1Setup` | E (arithmetic), U (units) |
+| +48, +50 | **hparam**: first value is the horizontal start, second the width, both in pixels | `srv_dma_h_params` | E |
+| +52, +54, +56, +58 | **vparam**: field 0 first line, field 0 line count, field 1 first line, field 1 line count | `srv_dma_v_params` | E |
+| +60, +64 | two 32-bit values copied to the channel record (+40, +44) | `srvVgi1Setup` | E (copy), U (use) |
+
+Register encodings:
+
+| Register | Encoding | Grade |
+|---|---|---|
+| hparam (`+0x20`) | bits 10:0 = start converted to clocks; bits 26:16 = width converted to clocks (`srv_dma_pixels2clocks`). Trace: `0x05a00110` = start 272, width 1440 clocks for a 720-pixel line (2 clocks per pixel) | E (code), E (trace match) |
+| vparam (`+0x30`) | four 9-bit fields at bits 8:0, 24:16, 40:32, 56:48 = field 0 first line, field 0 lines, field 1 first line, field 1 lines. Trace: `0x00f30011_00f30011` = first line 17, 243 lines, twice | E (code), E (trace match) |
+| stride (`+0x40`) | the 16-bit value; `mgv` computes it as width x `mgvvgi1PixelDepth(format)` | E |
+| setup (`+0x00`) | bits 4:0 are the pixel-format code that `srv_dma_pixeldepth` turns into bytes per pixel; bit 45 is its second argument; `mgv` also writes bits 23:16 (`0x80` when setup bit 6 is set, else `0x20`) and clears bit 13 for the first channel. Trace `0x9fff0080184c` decomposes into the driver's `0xfff` and bit 44, `mgv`'s `0x80` in 23:16, and `0x184c` in the low half. **The meaning of each remaining bit, and bit 47, is not decoded** | E (which code writes which bits), U (meaning) |
+
+The playback trace and this decode agree field for field, so the open fields of section 14 close for hparam, vparam and stride. They remain open for the setup word.
+
+### 19.3 Descriptors and cache handling
+
+`srv_dma_req` (one routine for both directions) turns each page of the client buffer into a descriptor entry: a 64-bit value whose low 20 bits are the page's GIO DMA address shifted right by the page shift (14 in the trace), upper bits cleared, and the **last** entry with `0xf` in bits 35:32. It writes the array to host memory and does a cache operation on it (flags `0x29003`) unless `srv_coherency_war` is clear. Nothing in the driver distinguishes a write list from a read list; the board decides from the setup direction. E.
+
+After a buffer completes, `_srv_dmrb_info` (called from `_srv_process_drb`) invalidates the CPU data cache over the buffer's pages (`dki_dcache_inval`, once per 16 KB page, both page lists when the record has `0x20`) when `srv_invalidate_war` is set, then builds a completion record and enqueues it to the client's FIFO (`dms_fifo_enq`). The record carries a UST taken from `nanotime` divided by 1000, the MSC, the request's start address plus offset and the buffer length. `dmBufferGetUSTMSCpair` in Smoke reads that pair for each captured frame. E (code), I (that the pair Smoke reads is this record).
+
+### 19.4 Timing, status and interrupts for capture
+
+The vertical-event machinery is the same as playback (sections 16 and 18): one vertical pulse per field, field counter +1 per pulse, bit 5 on the pulse that starts a request, MSC step by mode. Capture differences that the code shows: the interrupt base is `0x211` (19.1), the record flag `0x20` (mode 4) doubles the computed rate, and the buffer is completed only after the board has written it, so the end-of-DMA must precede the next vertical as in 16.2. The driver does **not** check data content or line count after a capture; a truncated buffer is accepted. E for the code paths, I for "same state machine": I found no direction test in `srv_interrupt_check_loop` or `srv_dma_drb_intrs`, so I treat it as direction-blind. The trigger path (`srvTriggerSetup`, `0x6d67002b`; `srv_dma_setup_trigger`) is shared; its register effects were not re-read.
+
+### 19.5 What `mgv.so` programs, in order
+
+1. Path set-up allocates the `node_dig_video_in_1` / `_2` (or `_dl`) video-input node and the `node_mem_vgi_drn_1` / `_2` / `_dl` memory drain (the playback nodes are `node_mem_vgi_src_*` and `node_dig_video_out_*`). E (node names and kinds: drains have kind 2, sources kind 1).
+2. Video-in resource: `MGV_SetParams_Vin` (ioctl `0x0f`, section 10.3), plus CSC (`0x07`, `0x18`; with the packing swap of 17.1), timing and board parameters as for output. E.
+3. The vgi1 set-up function builds the 72-byte request from the node's controls (`capturetype`, `capturerate`, window size and origin, format, packing) and issues `0x29`; it checks the channel is free (`srvVgi1Setup: Nested call` otherwise). E.
+4. The transfer thread (`mgvvgi1ManageTransfer`, runs under `schedctl` with `schedctl` arguments (1, 0, 35), which I read as a fixed priority) takes each client buffer request and, per request, issues `0x6d67003f` (queue an event: types 3 or 4 at the start, 28 or 29 at the end, selected by a flag in the transfer record, not decoded), then `0x6d670028` (`srvVgi1DMA`, which copies in a 32-byte descriptor of the buffer, maps its pages and queues the request). E (calls), U (event meanings).
+5. Completion returns through `_srvDrbCallback`, which `mgv.so` turns into `vlDMBufferPutValid` and a VL event. E.
+
+### 19.6 What Smoke calls for Input Clip
+
+| Step | Call | Grade |
+|---|---|---|
+| Menu | Input Clip drives `VtrInputClipDivo` (0x10b7e4b0), which uses `DivoVideoCaptureSubSystemCreate`, `Start` and `Wait` (0x10f2e890, 0x10f2eae0, 0x10f2eaf0) and the `OctaneVideo*` helpers | E |
+| Input set-up | `VideoOctaneSetInput` (0x10f32bf0) converts the DL timing, format, precision, field dominance, packing and colour space to VL values, calls `VideoOctaneVideoInput(1)`, and issues `vlSetControl`/`vlGetControl` | E |
+| Capture path | `OctaneVideoIn::OctaneVideoIn` (0x10f3a8c0): an `OctaneVideo` object with source node `VL_VIDEO`, drain node kind 3 (the memory drain), a colour-space node, then `vlSetupPaths(..., VL_SHARE, VL_SHARE)` and `vlSelectEvents` with mask `0xffffc7ff` (bits 11 to 13, the vertical-retrace events, off). The CSC controls use the input-side values (17.1). Ring buffer from `CreateAndRegisterRingBuffer` | E |
+| Frame loop | `DivoVideoCaptureSubSystemWait` calls `vlNextEvent`, `vlDMBufferGetValid` and `dmBufferGetUSTMSCpair`, and `VideoSaveLastTransferTime(USTMSCpair)`; `ImpactVideoIn::WaitNextFrame` (0x10f3c5e0) treats VL event 11 as a frame tick and any other reason as an error (-1). The tension between that and the mask that clears bit 11 was not resolved (the event may be delivered regardless of the mask, or WaitNextFrame is used on a different path). | E (calls), U (event delivery) |
+
+### 19.7 Video in a window (question b)
+
+| Question | Answer | Grade |
+|---|---|---|
+| Which path does a screen preview use? | Neither VGI1 to memory nor the texture loader. Smoke's live input is `VideoOctaneVideoInput` (0x10f33dc0): source `VL_VIDEO`, a **screen drain** (node kind 4 in that call), `CreateXWinForScreenDrn` with the X window id from `XGraphicsXWindowID`, `MapXWinForScreenDrn`, `BeginTransfer(0)` | E (calls), I (kind 4 = screen) |
+| What `mgv.so` does for it | the drain nodes are `node_scrn_drn_a`, `_b`, `_c` (kind 2). `MGV_SetParams_Screen` issues ioctl `0x03` (`srvSetWin`), implemented in `srv_window.o` (`_srv_enab_win`, `srv_win_tb` for top and bottom, `srv_win_lr` for left and right, `srv_win_ops`, AB-block bits through `srv_singlebit`). The "Graphics Window A/B/C" strings name the windows. This is the board's hardware video overlay: no DMA, no TMI, no VGI1 channel, no host copy | E (call chain), I (hardware overlay meaning), U (register-level decode of `srvSetWin`) |
+| Where the texture loader is used | `node_tex` and `node_tex_dl` (drains with TMI controls `tmi_type`, `tmi_round_mode`, `tmi_dominance_field`, `tmi_in_link`, `tmi_autoswap_mode`, `capturetype`, `capturerate`): `MGV_SetParams_Tex` issues `0x26` (`srvSetTMICtl`); `srvVidTextureXfer` calls `MgrasVidTextureXferStart` and `Done` in the graphics driver. That is the video-to-texture path for texture nodes; Smoke's preview does not use it | E |
+| The `0x6d670016` request | in `srv` the number `0x16` is `srvKeyerRead` (10.3). If the gr4 notes place a texture loader on `0x6d670016`, that request is the graphics driver's, not `srv`'s; I could not read those notes from here | U |
+| Flame | Flame 7.6's `VideoOctaneVideoInput` and `VideoOctaneSetInput` are identical to Smoke 5.0 (10.9), so the same screen-drain preview. Flame/Flint 8.3.4's `VideoOctaneSetInput` differs (extra filter and `VideoOctaneVideoOutput(1)` calls) but not in the VL calls named above | E (7.6), I (8.3.4) |
+
+For a model: a live preview needs the window registers and the video-input path (DV-in, CC1 timing) but no VGI1 channel traffic. The capture to a clip needs a VGI1 write channel and per-field vertical interrupts. Both can be active at once (Smoke sets up the preview first, then the capture path).
+
 ## Not done in this pass
 
 - Ghidra was not used; objdump and a small address-resolution script only. No whole-function decompile of the DMA or
