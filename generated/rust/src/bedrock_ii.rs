@@ -1,4 +1,6 @@
 // generated from devices/bedrock_ii/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 e92c529cb2bbb265e3723d89fc5bd3d81da1e957ab0763d431d0d757616456a0
 // Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values
 #![allow(dead_code)]
 

@@ -1,4 +1,6 @@
 """generated from devices/seeq_8003/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 46e4c83c2a7f9205b932e74d0bfe059d566640f9dd13045c1daa4fdc6db8b16f
 SEEQ 8003 and 80C03 Ethernet data link controller (Indy)"""
 
 UNIT = 'seeq_8003'

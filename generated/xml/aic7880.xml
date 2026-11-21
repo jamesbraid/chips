@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/aic7880/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 ac8f8281afc714636b4ace8e210fce455439bfb20a364794f5b732f8998e4655 -->
 <genxml unit="aic7880" prefix="AIC7880" title="Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract" from="Adaptec AIC-7870 Data Book (sibling, applied to AIC-7880)">
   <doc>The O2 onboard SCSI controller's host-DMA window, its DMA control and FIFO status registers, the SCB page pointer, byte counter and window, and the SCSI bus signal, transfer-control and PIO registers. Offsets and widths come from the cited Adaptec AIC-7870 data book, applied to the AIC-7880 as its sibling. Every item is inferred until an AIC-7880 book or a measurement settles it.</doc>
   <struct name="SCSISEQ" size="1" grade="inferred" from="Adaptec AIC-7870 Data Book, PDF pp. 72-73 (printed 4-3 and 4-4); sibling" register="yes" offset="0x0" access="rw" reset="0x0">

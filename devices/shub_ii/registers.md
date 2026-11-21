@@ -1,4 +1,6 @@
 <!-- generated from devices/shub_ii/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 3541c39edc6058df0dcd73d7e112d2483e25cdf0d5a3cd46149152dd0c9fcd31 -->
 
 # SHub 1 I/O interface (II): Crosstalk port, access protection, CRBs and block transfer engines
 

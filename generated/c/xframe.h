@@ -1,4 +1,6 @@
 /* generated from devices/xframe/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 3f1ba58411bf364f6941e22e5f572e709f77f3c0d7ce1256a016fceffaeb02e0 */
 /* Neterion Xframe 10-Gigabit Ethernet controller (SGI 10-Gigabit Ethernet card), the offsets, bits and layouts the held sources establish */
 #ifndef XFRAME_GEN_H
 #define XFRAME_GEN_H

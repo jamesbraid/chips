@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/mbcs/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 0847561578f481d3b528ba1836bd648ede84991c3f4dec9b2e42af20cca4328d -->
 <genxml unit="mbcs" prefix="MBCS" title="RASC Core Services (MBCS): the register block a Core Services FPGA bitstream presents on the TIO FPGA port, as SGI's Linux driver defines it">
   <doc>Offsets, widths and field positions are the definitions of SGI's Linux FPGA Core Services driver header (v5.3). They describe the Core Services block that SGI's RASC bitstreams contain; other bitstreams on the same port need not have it. The header gives no reset value and no access direction: access is what the driver does (r read, w written, rw read-modify-write or an unused placeholder), reset is unknown throughout. Offsets are from the base of the FPGA port's 256 MiB small window.</doc>
   <struct name="ID" size="8" grade="established" register="yes" offset="0x0" access="r" reset="unknown">

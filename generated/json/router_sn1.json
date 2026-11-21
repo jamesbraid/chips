@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "b70f66625e769d9712121c425a33c1e848b0297d809537cea42eec8674d89524",
  "schema": "defs-flat/1",
  "source": "devices/router_sn1/registers.toml",
  "profile": "public",

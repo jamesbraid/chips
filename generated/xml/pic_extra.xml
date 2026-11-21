@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/pic/registers-extra.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 8625d442093f1d068354ca25ec403aee88e928e39d207604767d6738ad20a128 -->
 <genxml unit="pic_extra" prefix="PIC" title="PIC bits outside the census">
   <struct name="WID_STAT" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">
     <doc>Widget status, the second word of the standard widget configuration block (`p_wid_stat`). Offset, width and name are the header definition. Access direction is not stated by the header or by any code read; nothing in the SN2 driver or the IRIX objects reaches this register, so its behaviour is unknown.</doc>

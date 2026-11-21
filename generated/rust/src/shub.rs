@@ -1,4 +1,6 @@
 // generated from devices/shub/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 0992044f04abf22b8eaa26431d14cd99899711926827c5590149f06a49a6662f
 // SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 #![allow(dead_code)]
 

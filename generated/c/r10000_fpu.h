@@ -1,4 +1,6 @@
 /* generated from devices/r10000_fpu/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 6556388524af7b6b68b45becad7a8cfc3d75f031da023673fac4a68edcda9251 */
 /* R10000 family floating-point control register cause bits */
 #ifndef R10K_GEN_H
 #define R10K_GEN_H

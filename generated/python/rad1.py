@@ -1,4 +1,6 @@
 """generated from devices/rad1/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 7a27d2922890b63bdc7b63e5987d6635761be56c0bfa930e19e752505dca5231
 SGI RAD digital audio ASIC (PCI 10a9:0005) register contract"""
 
 UNIT = 'rad1'

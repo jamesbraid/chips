@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "57e8737a3343b26b5b9baa63badf937ee000b92384357355a269d98dd44823d0",
  "schema": "defs-flat/1",
  "source": "devices/xio_fc/registers.toml",
  "profile": "public",

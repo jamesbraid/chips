@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "25a998dedd313ff21d1b53226cd2a6032d477219d8ee05e36c714d5d4a76e4ef",
  "schema": "defs-flat/1",
  "source": "devices/isp2200/registers.toml",
  "profile": "public",

@@ -1,4 +1,6 @@
 /* generated from devices/r10000_identity/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 d2842a5c402c77293eed3a25235d7f9e4e9e93075e76f5b4f972fabfc15d48aa */
 /* R10000 family processor identity and secondary-cache configuration fields */
 #ifndef R10K_GEN_H
 #define R10K_GEN_H

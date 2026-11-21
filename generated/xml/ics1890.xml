@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ics1890/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 2677952e5dcb35c5d7263390a75249ba01d1e1a2864c98a6cfa1dfe1b408648f -->
 <genxml unit="ics1890" prefix="ICS1890" title="ICS1890 10Base-T/100Base-TX PHYceiver, MII management registers (Octane base I/O)" from="ICS1890 revision G datasheet">
   <doc>The MII management registers of the ICS1890 Integrated PHYceiver, the Ethernet transceiver on the Octane and Octane2 base I/O board. The IOC3 Ethernet controller reaches the part through its MII port. Only the registers and bits the ICS1890 revision G datasheet describes here are transcribed: the identifier registers 2 and 3, and bits of the extended control register 16. Offsets are MII register numbers, one per 16-bit register. Grades say how each item was derived from the datasheet; none of it was measured on a board. Reset values are the datasheet's default column.</doc>
   <space name="mii" unit="reg"/>

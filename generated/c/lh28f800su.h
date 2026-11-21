@@ -1,4 +1,6 @@
 /* generated from devices/lh28f800su/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 71c039ffd5729e496aee717c8dfa100cd9f37ba507e648af391cd31eae7a983a */
 /* Sharp LH28F800SU 8 Mbit x16 flash: array geometry, command set, identifier and status registers */
 #ifndef LH28F800SU_GEN_H
 #define LH28F800SU_GEN_H

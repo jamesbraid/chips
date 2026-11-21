@@ -1,4 +1,6 @@
 /* generated from devices/xbow/registers-extra.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 5d0eaa0d4362a4e57ae74a9515b91ea99d1ae0b25cbc4f8dbf94696f4a778ea6 */
 /* Xbow registers outside the census */
 #ifndef XBOW_GEN_H
 #define XBOW_GEN_H

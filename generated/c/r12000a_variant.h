@@ -1,4 +1,6 @@
 /* generated from devices/r12000a_variant/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 4df134dc1016e8cf057c55413f2b161f333b9b165e5097b4b0016efb318a1b37 */
 /* R12000A mode-bit fields and performance control 0 syndrome field */
 #ifndef R12KA_GEN_H
 #define R12KA_GEN_H

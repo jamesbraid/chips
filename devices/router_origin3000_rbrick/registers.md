@@ -1,4 +1,6 @@
 <!-- generated from devices/router_origin3000_rbrick/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 5be86454e6c098bd3031660190833330588ae9a2328ee39958e21d60c7e0f456 -->
 
 # Origin 3000 R-brick router registers outside the census (vector space)
 

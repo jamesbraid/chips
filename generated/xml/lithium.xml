@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 1f9ce5d9b4c876c11bf7a33b65f387d185e256610a122c7325864fb43c537002 -->
 <genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
   <doc>Offsets and bits are software definitions from the Linux Visual Workstation code: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
   <space name="bridge" unit="byte"/>

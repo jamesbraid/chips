@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 6bd43d1a2beced09685294a1651d96ebd8187133f5b5a5408a19ea14d79ea62b -->
 <genxml unit="hub_pi_extra" prefix="HUB" title="Hub processor interface registers, bit layouts and constants outside the census" from="public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)">
   <enum name="pi_calias_size">
     <value name="size_none" value="0" grade="established"/>

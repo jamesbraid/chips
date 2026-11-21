@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58 -->
 <genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them">
   <doc>Offsets, bit positions and values are software definitions from the Linux Visual Workstation code (kernel 2.2 to 3.14). The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.</doc>
   <space name="cpu" unit="byte"/>

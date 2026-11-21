@@ -1,4 +1,6 @@
 """generated from devices/dm2/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 534766be60c23e754f44497a1ac59c97d036d7a9c9fb7fc107d2d08156f5526b
 DMediaPro DM2 (XT-DIGVID) XIO video board: widget window, XG block, FPGA load, GIF register file and word layouts"""
 
 UNIT = 'dm2'

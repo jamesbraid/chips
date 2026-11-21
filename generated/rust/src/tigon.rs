@@ -1,4 +1,6 @@
 // generated from devices/tigon/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 94c049da8c3025db0a794be8a9ac86283932e63a700df777a6180f810e530ea9
 // Alteon Tigon PCI/Gigabit Ethernet controller (SGI IRIS Gigabit Ethernet board)
 #![allow(dead_code)]
 

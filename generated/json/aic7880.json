@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "ac8f8281afc714636b4ace8e210fce455439bfb20a364794f5b732f8998e4655",
  "schema": "defs-flat/1",
  "source": "devices/aic7880/registers.toml",
  "profile": "public",

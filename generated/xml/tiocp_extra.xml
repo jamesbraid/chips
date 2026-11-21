@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tiocp/registers-extra.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 11f87d67648250748efa0557e3091fcd29937fc879c35edb7bda8e7a07b6c989 -->
 <genxml unit="tiocp_extra" prefix="TIOCP" title="TIOCP registers and constants outside the census">
   <doc>SGI's Linux Altix platform code (v5.3) defines the TIOCP register block as struct tiocp. The census unit holds the offsets the shipped IRIX accessors reach; this unit holds what the header defines beyond them and the constants of the provider. Names, offsets and layouts are software definitions.</doc>
   <struct name="STAT" size="8" grade="established" register="yes" offset="0x8" access="rw" reset="unknown">

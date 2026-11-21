@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/r10000_config/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 362dcb7df00a43068f61a7a68c09c0919ae82e712b4e06d619267bedd01d0bee -->
 <genxml unit="r10000_config" prefix="R10KCFG" title="R10000 family CP0 Config register field positions and hardwired primary-cache codes">
   <doc>Constants for the CP0 Config register as the NEC VR10000 and VR12000 user's manual lays it out: the field positions for the boot-loaded clock, endian, reset-mode and secondary-cache fields, the R12000 delayed-speculative-dirty bit, the hardwired primary-cache size codes, and the bits that a reset loads from the mode word. The secondary-cache size and line fields are in the r10000_identity unit. This unit holds constants only; the reset and write rules, and what is unknown for the R14000, are in devices/r14000/README.md. Grades: established means the processor manual states it for the R10000 and R12000 columns it names; the R14000 is not checked against a processor manual, so its use there is inferred in the page.</doc>
   <constant name="R10KCFG_BE_BIT" value="0xf" grade="established"/>

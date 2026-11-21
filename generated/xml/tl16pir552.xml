@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tl16pir552/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 3e2e50de5e5e0e4fa39c8450ad2520b250adcd93013d4b878cacd3fb64dce4f0 -->
 <genxml unit="tl16pir552" prefix="TL16PIR552" title="TI TL16PIR552 dual UART and IEEE 1284 parallel port, parallel-port register contract (Fuel and Origin 200 board part)" from="TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)">
   <doc>The parallel-port block of the TI TL16PIR552, the part marked on a revision B Fuel system board and on an Origin 200 system board. The registers are selected by three address bits and a chip select, and what an address holds depends on the mode in the ECR register, so each mode's view of the same address is its own space. Grades say how each item was derived: established means the TI datasheet states it, inferred means a reading of the datasheet's own list of bits or a reasoned extension, and unknown means the sources do not settle it. The UART channels are not described here. Fuel's wiring of this part to the IOC3, its address decode, its interrupt routing and its DMA connection are not established by these sources and are not listed. Reset values are unknown except where the datasheet states them.</doc>
   <space name="ppcs" unit="byte"/>

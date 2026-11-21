@@ -1,4 +1,6 @@
 /* generated from devices/hub_pi/registers-extra.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 6bd43d1a2beced09685294a1651d96ebd8187133f5b5a5408a19ea14d79ea62b */
 /* Hub processor interface registers, bit layouts and constants outside the census */
 #ifndef HUB_GEN_H
 #define HUB_GEN_H

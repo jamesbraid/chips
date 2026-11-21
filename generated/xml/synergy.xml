@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/synergy/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 4c3ea2546f72bcace270f575e55b39b69ccbbb218f4ea2c4bd2699014b6f3a17 -->
 <genxml unit="synergy" prefix="SYN" title="Synergy: the Itanium processor-bus ASIC of the SN1 IA-64 node (register offsets the Linux port uses)" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)">
   <doc>Offsets are in the Synergy's own register space, all 64-bit. Every offset and access sequence comes from SGI's Linux SN1 IA-64 platform code, so they are established as software facts; field meanings beyond what a comment or an operand states are inferred or unknown. No Synergy specification is held. Reset values are unknown throughout: the only writer of a power-on state is a simulator-only fake PROM.</doc>
   <struct name="VEC_MASK3_A" size="8" grade="established" from="Linux 2.4.18 IA-64 patch series and Linux v2.5.0, SGI SN1 IA-64 platform code (Synergy header and driver, cache flush, I/O barrier, fake PROM)" register="yes" offset="0x2a0" access="rw" reset="unknown">

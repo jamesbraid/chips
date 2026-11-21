@@ -1,4 +1,6 @@
 /* generated from devices/pic/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 3d439cd5a9c6040f4c489f3ad4fdb170d8de283af94a577d7c9668ef96e26cc9 */
 /* PIC (dual-head PCI-X bridge), Origin 3000 family */
 #ifndef PIC_GEN_H
 #define PIC_GEN_H

@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "6556388524af7b6b68b45becad7a8cfc3d75f031da023673fac4a68edcda9251",
  "schema": "defs-flat/1",
  "source": "devices/r10000_fpu/registers.toml",
  "profile": "public",

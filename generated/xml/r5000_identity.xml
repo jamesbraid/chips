@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/r5000_identity/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 07e1068ce26ce0f77cf78067f4062c9a866cd127df6ad62dd0ea79185aebe2d0 -->
 <genxml unit="r5000_identity" prefix="R5K" title="MIPS R5000 family processor identity, reset entries, cache geometry and TLB size" from="NEC VR5000/VR5000A 64-/32-bit Microprocessor User's Manual, U11761EJ6V0UM00, sixth edition, April 2001">
   <doc>Constants for the R5000 processor line as the NEC VR5000 user's manual and the MIPS R5000 overview describe it: the PRId and FCR0 identity words, the reset vector and the register values a cold reset and a warm entry set, the primary and secondary cache geometry, the joint TLB size and the physical and user address widths. This unit holds constants only; the CP0 and FCR31 field layouts are in the r5000_cp0 unit and the prose is in devices/r5000/README.md. Grades: established means the cited manual or overview states it; inferred means a value taken from public owner reports rather than a manual; unknown items are listed in the page.</doc>
   <constant name="R5K_COLD_RANDOM" value="0x2f" grade="established"/>

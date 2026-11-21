@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lh28f800su/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 71c039ffd5729e496aee717c8dfa100cd9f37ba507e648af391cd31eae7a983a -->
 <genxml unit="lh28f800su" prefix="LH28F800SU" title="Sharp LH28F800SU 8 Mbit x16 flash: array geometry, command set, identifier and status registers" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
   <doc>The 1 MiB flash part in x16 mode: block geometry, the compatible and extended command opcodes, the identifier words, the typical operation times and the status words read back through the status and extended-status commands. Grades: established means the manufacturer datasheet states the value; inferred means arithmetic on a stated value or a reading of the command table; unknown means the datasheet does not settle it. Which SGI board fits this part, and how its pins are wired, is not stated by the datasheet and is not listed here.</doc>
   <enum name="bsr_op">

@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/bedrock_ii/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 e92c529cb2bbb265e3723d89fc5bd3d81da1e957ab0763d431d0d757616456a0 -->
 <genxml unit="bedrock_ii" prefix="BEDROCK_II" title="Bedrock I/O interface (II) registers: field layouts, block transfer engines and reset values" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts">
   <doc>Offsets are hub-relative: the I/O interface is the block that starts 4 MiB into the node's register space. Field layouts come from the public Linux 2.5.40 SN1 headers, so they are established as header positions. Behaviour the headers describe only in comments is inferred. Reset values are unknown unless a header states one. Access directions the headers do not state are recorded as they are used by the public consumers. Where the header and a consumer disagree the field is listed with the disagreement in its doc.</doc>
   <struct name="WIDGET_ID" size="8" grade="established" from="Linux 2.5.40 SN1 register headers: names, offsets and field layouts" register="yes" offset="0x400000" access="r" reset="0x1c110049">

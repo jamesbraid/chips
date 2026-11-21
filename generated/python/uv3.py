@@ -1,4 +1,6 @@
 """generated from devices/uv3/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 25bba3f9f18f2ed1a355ee404ac42e82c65b3ce3589c1436a4961681239fd172
 UV3 (UV 300 generation) hub MMR map"""
 
 UNIT = 'uv3'

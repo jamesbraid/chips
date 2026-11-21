@@ -1,4 +1,6 @@
 <!-- generated from devices/ds1742/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 b5672543306ae2503fda41b02a00f5048d44954b349878d975e681f37ea3002a -->
 
 # Dallas DS1742W nonvolatile timekeeping RAM (Fuel L1 storage part, 3.3 V, 2 KiB)
 

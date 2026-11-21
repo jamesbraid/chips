@@ -1,4 +1,6 @@
 """generated from devices/ds1685/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 2d03aff8397fa4913c718e61cdbc7f8b15ad4905a2ec4a42ae8709b19c99ca92
 Dallas DS1685/DS1687 real-time clock and battery-backed RAM (Octane and Octane2 system boards)"""
 
 UNIT = 'ds1685'

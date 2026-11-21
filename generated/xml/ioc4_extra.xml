@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ioc4/registers-extra.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 c76a9ebe973b864f75d3bd181dbaa7e4ea1a9a32767fda897711641d5807f1b2 -->
 <genxml unit="ioc4_extra" prefix="IOC4" title="IOC4 registers outside the census">
   <struct name="GPDR" size="4" grade="established" register="yes" offset="0x38" access="rw" reset="unknown">
     <doc>Generic pin data word. The SGI header defines it at 0x38 with bits 7:0 holding the state of the eight generic pins. Offset and name are established by the header and the PROM store; no Linux driver code read touches it, and what a write does is unknown.</doc>

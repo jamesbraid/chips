@@ -1,4 +1,6 @@
 /* generated from devices/hub_ni/registers-extra.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 491bd24195abfc81c22b65262321f9a32808de8e8b25ffb6d0b0aa6ce3827496 */
 /* Hub network interface field layouts, port and vector fields, and register offsets outside the census */
 #ifndef HUB_GEN_H
 #define HUB_GEN_H

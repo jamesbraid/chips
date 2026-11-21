@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/ds1742/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 b5672543306ae2503fda41b02a00f5048d44954b349878d975e681f37ea3002a -->
 <genxml unit="ds1742" prefix="DS1742" title="Dallas DS1742W nonvolatile timekeeping RAM (Fuel L1 storage part, 3.3 V, 2 KiB)">
   <doc>The 2,048-byte battery-backed SRAM and clock part identified on a revision B Fuel board. The register contract here covers what the sources state: the clock bytes at the top of the address range and the remaining bytes as RAM. Grades say how each item was derived: established means the manufacturer specification as the source records it, inferred means a public driver, a board marking or arithmetic on an established fact. The clock byte meanings are in Table 2 of the datasheet (see the device README); the reset state and the RAM layout are not stated by the sources and are not listed.</doc>
   <space name="chip" unit="byte"/>

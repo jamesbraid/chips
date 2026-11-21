@@ -1,4 +1,6 @@
 // generated from devices/ioc4/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 ccef576c800b092fc2194a8aa07585500681e875bfc599b39ac495fed053d9e6
 // IOC4 (PCI I/O controller, later)
 #![allow(dead_code)]
 

@@ -1,4 +1,6 @@
 /* generated from devices/isp12160/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 76b80bad40a1f9ab19f16c3d95e98399a2589c9f44ea0003211709b2b5ea1212 */
 /* QLogic ISP12160 dual-channel Ultra3 SCSI host adapter (PCI 1077:1216), the constants the held sources establish */
 #ifndef ISP12160_GEN_H
 #define ISP12160_GEN_H

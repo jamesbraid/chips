@@ -1,4 +1,6 @@
 // generated from devices/uv_bau/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 2daabcb00ca4cf0ccb9e7ae19034116a669196719e08dfd2559a070a278bfaa3
 // UV broadcast assist unit (BAU): descriptor, payload queue and constants
 #![allow(dead_code)]
 

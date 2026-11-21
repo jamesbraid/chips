@@ -1,4 +1,6 @@
 // generated from devices/r5000_cp0/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 6a9b39abb11b3b99b791300a4de226fd477602f6718575488b04e14313a7ffdf
 // MIPS R5000 CP0 Config, Status, PageMask and LLAddr field positions, and FCR31 flags
 #![allow(dead_code)]
 

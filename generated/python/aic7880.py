@@ -1,4 +1,6 @@
 """generated from devices/aic7880/registers.toml by defs-gen - do not edit, change the source
+defs-gen 2
+input sha256 ac8f8281afc714636b4ace8e210fce455439bfb20a364794f5b732f8998e4655
 Adaptec AIC-7880 SCSI controller on the O2: host DMA and SCB register contract"""
 
 UNIT = 'aic7880'

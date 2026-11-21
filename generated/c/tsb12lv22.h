@@ -1,4 +1,6 @@
 /* generated from devices/tsb12lv22/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 7c0c9c2e3187c6789010517cad60bcc61d96bd60b2a5cd37bd3bb1bc955da983 */
 /* TI TSB12LV22 PCI-to-IEEE 1394 OHCI 1.00 link controller (I-brick IO7), the register facts the held sources establish */
 #ifndef TSB12LV22_GEN_H
 #define TSB12LV22_GEN_H

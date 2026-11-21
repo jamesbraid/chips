@@ -1,4 +1,6 @@
 /* generated from devices/bedrock_ni/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 04d5ffad594b1763f0ae5bf21018846c021831d98979a127f60036b8abad3823 */
 /* Bedrock network interface (NI) registers: field layouts, port error bits and routing tables */
 #ifndef BEDROCK_NI_GEN_H
 #define BEDROCK_NI_GEN_H

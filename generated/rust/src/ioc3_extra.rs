@@ -1,4 +1,6 @@
 // generated from devices/ioc3/registers-extra.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 c59900e6424ca5a2f7eb294332632d0801a78dc80e6e82309d0f37c86c0b0889
 // IOC3 registers outside the census
 #![allow(dead_code)]
 

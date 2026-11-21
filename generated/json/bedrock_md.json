@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "5ab763a1dbf1570b7df1888172fc665b0fd53a8e4cc99dde24ccac8e3ba965af",
  "schema": "defs-flat/1",
  "source": "devices/bedrock_md/registers.toml",
  "profile": "public",

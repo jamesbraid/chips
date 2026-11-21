@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/isp2200/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 25a998dedd313ff21d1b53226cd2a6032d477219d8ee05e36c714d5d4a76e4ef -->
 <genxml unit="isp2200" prefix="ISP2200" title="QLogic ISP2200 Fibre Channel host adapter (PCI 1077:2200), the host interface the public drivers use">
   <doc>The single-chip Fibre Channel host adapter of the Origin 3000 I-brick (PCI 1077:2200), as the public Linux, OpenBSD and NetBSD drivers use it. Grades say how each item was derived: established means at least two of the public driver trees state the value and agree; inferred means one driver states it, or a driver's own struct or use names it without a second source; unknown means the sources do not settle it. No QLogic programming manual for this part is held, so the register contract rests on driver agreement, and the reset state of every register is unknown. The mailbox opcodes and status values are what the drivers send and read, not measured chip behaviour.</doc>
   <enum name="hccr_cmd">

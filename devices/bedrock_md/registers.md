@@ -1,4 +1,6 @@
 <!-- generated from devices/bedrock_md/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 5ab763a1dbf1570b7df1888172fc665b0fd53a8e4cc99dde24ccac8e3ba965af -->
 
 # Bedrock memory and directory (MD) registers: field layouts, reset statements, error records and backdoor carriers
 

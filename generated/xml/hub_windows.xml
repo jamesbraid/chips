@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/hub_windows/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 433dec6921b0152c218127b867a36172e0ae5ba71149fa793336f17dac3023f3 -->
 <genxml unit="hub_windows" prefix="HUB_WIN" title="Hub register arrays whose extent is a fact of its own">
   <doc>Runs of consecutive Hub registers seen as one array each, so that the end of the run is data. Each entry overlaps the registers listed one by one in the other Hub units, which carry the individual names; the two views describe the same storage. The offsets, names and counts come from the IRIX register headers and register table named in each entry.</doc>
   <enum name="iio_prb_mode">

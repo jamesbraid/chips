@@ -1,4 +1,6 @@
 /* generated from devices/mace/registers.toml by defs-gen - do not edit, change the source */
+/* defs-gen 2 */
+/* input sha256 46f8c30b055f7f92fd720b4f96d8d6328458907ed9687b8809658c5be263490e */
 /* MACE (O2 I/O ASIC) */
 #ifndef MACE_GEN_H
 #define MACE_GEN_H

@@ -1,4 +1,6 @@
 // generated from devices/ioc3/registers.toml by defs-gen - do not edit, change the source
+// defs-gen 2
+// input sha256 b54d0ad6199ff74e5b74165da237d6bb27310e0e5dd68c0108216525798dd463
 // IOC3 (PCI I/O controller)
 #![allow(dead_code)]
 

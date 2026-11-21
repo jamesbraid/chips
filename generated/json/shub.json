@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "0992044f04abf22b8eaa26431d14cd99899711926827c5590149f06a49a6662f",
  "schema": "defs-flat/1",
  "source": "devices/shub/registers.toml",
  "profile": "public",

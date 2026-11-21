@@ -1,4 +1,6 @@
 {
+ "generator": "defs-gen 2",
+ "input_sha256": "7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4",
  "schema": "defs-flat/1",
  "source": "devices/tio/registers.toml",
  "profile": "public",

@@ -1,4 +1,6 @@
 <!-- generated from devices/router_origin3000/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 f05ec3257a5dd901126db53badb95885bd988bb22c6f7690f241e3c347fa3a6a -->
 
 # network router as the Origin 3000 kernel reaches it (register numbers of a vector access)
 
