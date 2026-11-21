@@ -83,7 +83,7 @@ byte bus) is **unknown** here.
 The Important Note describes the IO10 as a full-size PCI card for the lower slot that "connects to your system's
 internal serial ATA hard drive(s) and DVD-ROM drive and provides optional external serial ports" (007-4374-001 p.1;
 -002 p.113). Figure 1 there shows two unlabeled RT interrupt connectors, one Ethernet port and a multi-port serial
-connector; the RT connectors are not supported under Linux. The multi-port connector is a 36-pin MDR connector that a
+connector, and p.3 gives the Ethernet interface as an RJ-45 jack at 10/100/1000 Mbit/s; the RT connectors are not supported under Linux. The multi-port connector is a 36-pin MDR connector that a
 cable converts to four 9-pin serial ports, S0 to S3, each with transmit, receive, DTR, DSR, DCD, RTS, CTS and ring (pin
 table, 007-4374-001 p.2). Modules with an IO10 take no SCSI internal drives (007-4374-001 p.1). All established as
 printed.
@@ -364,7 +364,8 @@ Nothing was run.
   `rt:init_klcfg_tg3` `0x325e0`, `rt:init_klcfg_qscsi` `0x327a0`, `rt:init_klcfg_ioc4` `0x32990`, `rt:ioc4_discover` `0x33050`,
   `rt:kl_init_pci` `0x1f6b0`). Established.
 - **10.40:** the same builder strings are in SAL_B, not the runtime (strings only; functions not read). Established as strings.
-- **10.54:** SAL_B and the runtime have none of the `init_klcfg_*` (except `init_klcfg_vgagfx`), `GIGENET`, `QLSCSI`, `Tigon3`
+- **10.54:** SAL_B and the runtime have none of the PCI-device builders (`init_klcfg_tg3`, `_qscsi`, `_ioc4`, `_usb`, `_pcigfx`; the
+  node-level `init_klcfg_hub`, `_bridge`, `_cpu`, `_membnk` and `init_klcfg_vgagfx` strings are present) and none of the `GIGENET`, `QLSCSI`, `Tigon3`
   or `IOC4_ATA` strings; the scan is the later `pciio_*` code the PIC page reads. Established as absence of strings in both
   inflated components (the earlier statement that they might sit in the runtime is answered: they do not).
 
@@ -390,7 +391,7 @@ and picks the record builder by the id word (device in the high half):
 Every record carries the slot, the PIC bus, the NASID and the PCI revision byte. The type numbers are the PROM's; the names are the strings of its `klcfg` dump command. The PROM has no IO9 or IO10
 identity of its own: the card is the set of records the scan produced (IOC4 + ISP 12160 or IOC4 + Vitesse). Established for the
 table; the type-number to name map is inferred from the order of the name table beside the dump command.
-The only Ethernet ids typed are Broadcom 5700, 5701 and 5703C; any other gigabit part prints UNKNOWN and gets no gigabit record.
+The only Ethernet ids typed are Broadcom 5700 (`1644`), 5701 (`1645`) and 5703X (`16a7`, the name in Linux 2.6.18 `pci_ids.h`); any other gigabit part prints UNKNOWN and gets no gigabit record.
 
 ### Per-device initialisation
 
@@ -407,7 +408,7 @@ For each recognised device `kl_init_pci` (`rt:0x1f6b0`) runs before the record i
    (its port block is `(n + 1) * 0x200` with task file at `0x00`, DMA at `0x64..0x70` and the SCRs at `0x100..0x108`), so the register's
    role is **unknown**; the value is a fixed constant.
 
-The IOC4 record builder `ioc4_init` (`rt:0x32db0`) first reads config register `0x10`, derives the chip's register window from the
+The IOC4 record builder `ioc4_init` (`rt:0x32db0`) first reads config register `0x10` and returns without any set-up when it is already non-zero, then derives the chip's register window from the
 bridge's device window (2 MiB windows for devices 1 and 2, 1 MiB for the others; the same derivation `get_pcilink_status` uses) and calls
 the routine named in its own assert text `early_ioc4_nvram_init` (`rt:0x32bb0`), which does exactly this and nothing else
 (skipped when the processor-id register holds the simulator signature):
@@ -421,7 +422,7 @@ IP35 PROM writes ([IOC4 page](../../devices/ioc4/README.md#what-the-altix-prom-d
 |---|---|---|
 | Scan result | IOC4 (+ IOC4_ATA), ISP 12160 as QLSCSI | IOC4 (+ IOC4_ATA), Vitesse as SATA |
 | Device-specific init | none beyond BARs; ISP 12160 buffers (10.x), EFI ISP driver ([EFI QLogic page](../../software/firmware/snprom/efi-qlogic.md)) | the `0x4000` writes to the Vitesse per-port `0x140` registers, in the 4.43 runtime and again in the 10.54 EFI (below) |
-| Ethernet | Broadcom 5700/5701/5703C typed GIGENET if present | same table; no part named |
+| Ethernet | Broadcom 5700/5701/5703X typed GIGENET if present | same table; no part named |
 | Serial, RTC, NVRAM | none touched by the PROM on either card | same |
 
 ### The EFI side (10.54, 4.43 and 10.40 carry the same driver set)
@@ -434,7 +435,7 @@ IP35 PROM writes ([IOC4 page](../../devices/ioc4/README.md#what-the-altix-prom-d
   protocol's memory read and write on **BAR 0**, byte, word or dword, from a four-entry table of 16-bit offsets at `0x200dc8`
   (ELF address, 38 bytes per port; port n: base `0x200 * (n + 1)`): task file as Linux, alternate status `+0x28`, device control
   `+0x29`, SStatus `+0x100`, SError `+0x104`, SControl `+0x108`, the `+0x140` register, interrupt status at chip offset 0, mask at 4.
-  Established for the table; the role of the offsets follows Linux's names (software expectation).
+  Established for the table; the role of the offsets follows Linux's names (inferred).
 - **Port bring-up** (`DetectSATAController` `0x18c430`): SControl <- 0, wait 100 us, <- 1 (reset), 2 ms, <- 0, 20 ms; then up to 2000 times
   wait 200 us and read the interrupt status dword, taking the port's byte, until bits 1:0 are non-zero (link event); then up to 160000
   times wait 200 us and read alternate status until it is neither `0x7f` nor BSY-set; then `SataIntrClearSError` (`0x18beb0`) maps each
@@ -446,7 +447,8 @@ IP35 PROM writes ([IOC4 page](../../devices/ioc4/README.md#what-the-altix-prom-d
   [the IOC4 ATA page](../../devices/ioc4/ata.md).
 - **Ethernet.** The type 0x22 archive carries three drivers: `drv_b57undi64.efi` (Broadcom NetXtreme UNDI, "Copyright (c) 2000-2005
   Broadcom"), `drv_lsisas.efi` (LSI SAS, for the Altix 4700 family) and `drv_fpswa.efi`. The EFI proper has the generic SNP and PXE
-  base code and no other network driver (searched for Intel, Realtek, Marvell, e1000, Tigon strings in the inflated EFI: none). The
+  base code and no other network driver (searched for e1000, Realtek, Marvell and Tigon strings in the inflated EFI: none; the only "Intel"
+  strings that name a device are the SATA bus driver's, which also prints "Intel Serial ATA detected" for vendor `0x8086`). The
   UNDI driver's table lists the 5700 to 5714 families (`1644`, `1645`, `1646`, `1647`, `1648`, `16a6`, `16a7`, `16a8`, `16c6`, `16c7`,
   `1653`, `1654`, `165d`, `165e`, `1696`, `170d`, `170e`; read as vendor/device pairs in the data table, not decoded entry by entry), so
   it does not pick the card's exact part.
@@ -576,3 +578,32 @@ the INTx to pin map, and anything in the compressed SAL runtime, none of which w
 ### Review (PIC attach items 6 to 8, commit 043c9f6)
 
 Item 6 holds with one correction: the PROM also passes `m` and `v`, and the ARM L1 answers `0x0013` for a single-slot `F` brick with the plain letter `F`, which is rejected (details in the PIC page's review). Item 7: only the IOC3 stops after its first BAR; the IOC4 does not. Item 8: the pin rule and registers re-read and confirmed.
+
+### Review (what the SHub 1 firmware does per device, 2026-11-21)
+
+Independent review by a reviewer who did not write the section, of chips commit 80f1819. Method: the 4.43 SAL runtime
+(sha256 `03527481...`) and the 10.54 EFI (`51ccf9ad...` image, type `0x1f` component) decompiled in Ghidra, each constant
+checked in the function text; the 10.40 and 10.54 components cut out by FIT entry, inflated and scanned for strings; the
+SATA port table at ELF address `0x200dc8` dumped from the inflated 10.54 EFI and decoded; Linux v2.6.18 `ioc4.c`,
+`sata_vsc.c`, `pci_ids.h`; `flashioc4` re-read.
+
+- **Confirmed.** `pci_discover` scans device numbers 4, 3, 2, 1; every row of the id table (record type, subtype, unit count,
+  `IOC4_ATA` type `0x2e` built through `init_klcfg_qscsi`); `kl_init_pci` steps 1 to 4 including the upper-half write to
+  config `0x14` for `1645` and `16a7` only, the ISP 12160's two BAR writes, and the Vitesse `0x4000` write at
+  `0x140 + 0x200 * n` for n = 1 to 4 (skipped on the simulator signature); `early_ioc4_nvram_init`'s register writes and
+  that it touches nothing else; the 10.54 EFI `AltixPciDeviceInit` write (BAR 0, 32-bit, device 3, function 0) and the
+  `DetectSATAController` sequence and `SataIntrClearSError` masks; the SATA port table; no Vitesse or PCI-device builder
+  strings anywhere in 10.54, and the 10.40 builder strings in the SAL_B component; the three-driver archive (Broadcom UNDI,
+  LSI SAS, FPSWA) in all three builds; `chipset_rtc_time` and `flashioc4`.
+- **Fixed.** The 10.54 bullet said none of the `init_klcfg_*` strings are present; the node-level ones (`hub`, `bridge`, `cpu`,
+  `membnk`, `vgagfx`) are, and only the PCI-device builders are absent.
+- **Fixed.** `16a7` is Broadcom 5703X in Linux 2.6.18 `pci_ids.h`, not "5703C"; `1644` is 5700 and `1645` is 5701.
+- **Fixed.** The EFI "no Intel strings" search was wrong as written: the SATA bus driver prints "Intel Serial ATA detected"
+  for vendor `0x8086`. No Intel network driver strings exist.
+- **Added.** `ioc4_init` returns without the PCI set-up when config register `0x10` is already non-zero.
+- **Not re-checked.** The ISP 12160 buffer set-up in 10.x, the "slots 0 to 2 only" IOC4 rule in 10.40 and 10.54 (an earlier
+  review item), the microsecond unit of the EFI stall calls, and the 4.43 and 10.40 EFI driver set beyond the SATA string.
+  The Vitesse write in the runtime is addressed through the bridge window that the BAR 0 write also uses; it is read as
+  "BAR 0 plus offset", which is inferred equality.
+- **Not changed.** The Ethernet verdict ("Tigon 3 family, inferred") follows from the typed ids and the shipped driver; it is a
+  reasonable inference, and the exact IO10 id stays unknown.

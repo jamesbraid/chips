@@ -392,7 +392,8 @@ SAL runtime component, function `early_ioc4_nvram_init` (runtime link address `0
 with the repository's IA-64 module. **Established** as code; the roles are the ones on this page.
 
 - PCI command register: OR in `0x6` (memory space, bus master); latency timer `0xff`.
-- Skipped entirely when the processor-id register holds the simulator signature (`0xaeeeeeee8badbeef`).
+- Skipped entirely when the processor-id register holds the simulator signature (`0xaeeeeeee8badbeef`). The caller `ioc4_init` also skips
+  this and the PCI set-up when config register `0x10` already reads non-zero.
 - Otherwise: `0x20` <- 0, then `0x20` |= `0xf`; `0x38` <- 0; `0x30` <- `0x1000f0`. Same values as the IP35 PROM above (the 0x20 pulse reduced to the
   final `0xf`; no `0x28` access).
 - No other register is touched: no serial, ATA, keyboard, byte-bus (NVRAM and clock) or interrupt register, in spite of the routine's name.
@@ -400,7 +401,7 @@ with the repository's IA-64 module. **Established** as code; the roles are the o
 - The PROM's board scan accepts the IOC4 at PCI device numbers 1 to 4 in 4.43 and only 0 to 2 in 10.40 and 10.54 (the error text for slot 3 and up).
 - The same function runs for the IO9 and the IO10; nothing in the PROM depends on which card holds the chip.
 
-**Against Linux (software expectation, from this page's Altix section).** SGI's `ioc4_probe`, `ioc4_serial` and `sgiioc4` touch the rest of the
+**Against Linux (public driver files read; the hardware reading is inferred, from this page's Altix section).** SGI's `ioc4_probe`, `ioc4_serial` and `sgiioc4` touch the rest of the
 block: enables and status, the serial rings and UARTs, the ATA registers, the pin words `0x40..0x5c`, and the extra
 clock calibration through `0x28`. Both cards give the same register traffic; `ioc4_variant` only labels the card, and the serial and IDE
 drivers skip only the PCI-RT variant. The PROM leaves the serial, keyboard, ATA and NVRAM blocks entirely to the OS. Whether the IO10 wires
@@ -465,3 +466,11 @@ Independent review on 2026-11-15 by a reviewer who did not write these pages. Re
 - Reset values: none are stated by the Linux files, and none are claimed. Correct, but the field tables carry no reset column at all.
 
 **Cleared scope.** The field layouts in `registers-extra.toml`, the constants and `linux-driver-notes.md` as statements of what the SGI Linux v5.3 drivers define and do. Not cleared: any IRIX or PROM cross-reference (not re-read), and chip behaviour beyond what a driver shows.
+
+## Review (Altix PROM section, 2026-11-21)
+
+Independent review of the section "What the Altix PROM does to the IOC4" (chips commit 80f1819). The 4.43 SAL runtime
+decompile confirms every register write listed (command `|= 6`, latency `0xff`, `0x20` pulse to `0xf`, `0x38` zero, `0x30`
+`0x1000f0`), the simulator skip, and that the routine touches nothing else. Added: the caller skips it when config `0x10`
+is already non-zero. The Linux statements were re-read at v2.6.18 (`ioc4_variant`, serial and IDE attach skip PCI-RT only).
+The "software expectation" label was replaced with chips AGENTS.md's three ratings.
