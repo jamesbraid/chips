@@ -643,6 +643,27 @@ A model run showed an 83-character command producing no output. Read in the SAL 
 
 Grades: sender, grammar, ordering, die-on-silence, slot 19, call table, interrupt-enable semantics: established (runtime read; kernel source). ARM handler layout and the stored event word format: ARM inferred, ColdFire 1.62.1 package 3 established. Delivery of `SH_EVENT_OCCURRED` bit 20 to vector `0xe9` through local interrupt 5: inferred (the PROM writes are established, the hardware path is not read from a manual; the PROM writes enable `0x2000`, bit 13, and how that enable bit relates to event bit 20 is unknown, see [interrupts.md](../../../devices/shub/interrupts.md)). Whether the 3,000,000-tick wait is 3 s: inferred (see "Silence").
 
+## Frames to a router mailbox and to a remote node's UART
+
+Read 2026-11-21 in the SAL 5.04 SHub 1 image (Ghidra, objdump for predicates); nothing run. The controller object is the same
+`0xeb8`-byte state object as above; two things differ from the local UART case.
+
+- **Router mailbox (vector mode).** `cache_advert` asks the router for its module id, slot and slab through `0xffa80dd0`,
+  `0xffa80f90` and `0xffa81170`, which build the object with the `1` argument of `0xffa8f900` (flag word bit 5). The transmit and
+  receive routines then use the router registers `0x30`, `0x38`, `0x40` and `0x48` instead of the UART, eight bytes per word; the
+  protocol, the register mapping and the frames of an emulator run are in
+  [numalink-neighbours.md](numalink-neighbours.md#the-routers-l1-mailbox-s2-row-6). The framing, request grammar, 3 s wait and
+  die routine are the ones of this page. A silent mailbox parks the boot processor at the first request.
+- **A remote node's UART.** For a claimed neighbour the same object code runs with the neighbour's NASID and the UART reached
+  through the global window (`0xf_fed4_0000 | nasid << 38`). The wait for a reply is the same 3,000,000 us of the local node's
+  RTC. Each poll of the receiver `0xffa87830` reads the state register (`SCRATCH2`) of that node, takes and drops the software
+  lock word `0x1_5003_1540` through the global window, and reads line status `+0x28`; with bit 0 clear (no byte) the byte read
+  returns -3 (bits 3:1 set with bit 0 clear: -2). Nothing on the neighbour has to write the lock word. On expiry the die routine
+  runs with the neighbour's NASID: it writes the neighbour's `0x1_2000_0000`, waits 300 ms and does not park (the park
+  needs the local node and the calling slice). A request to a remote node that nobody answers thus costs about 3.3 s and
+  returns -24; with the sixteen DIMM reads of the remote memory discovery that is about 53 s before the node is declared
+  memory-less (inferred from the slot 97 row of the neighbour contract, not read in the remote path).
+
 ## Order and replies at a glance
 
 | Order | Code | Arguments | Reply the PROM needs | Grade |

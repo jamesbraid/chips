@@ -12,6 +12,12 @@ collects them by register.
 Method: Ghidra (the whole-image decompile with this repository's IA-64 processor) for every function, an
 `ia64-linux-gnu-objdump` listing for the branch tests and constants. Nothing was run, no hardware was read. Independently reviewed: see [Review](#review); the corrections it made are in the text.
 
+Amended on 2026-11-21 after an emulator run of the stock PROM against a stub built from this page (the rows below that
+say so were corrected by it). An emulator run shows what the PROM did against that stub, not what hardware does: where a
+row says "seen in an emulator run" the fact is graded *inferred* unless the sentence also names the code path read in the
+image. The amendments (S1 rows 2 and 10, S2 rows 4, 6 and 9, the two sections after the S2 table and the interrupt-scrub
+row) have not been independently reviewed.
+
 **Grades.** *established*: read in the image (a software expectation: the PROM does this or requires this value; it says
 nothing about what the hardware does). *inferred*: reasoned, with the reasoning. *unknown*. **Stand-in choice** marks a
 value the image does not constrain and the stand-in has to pick; it is an approximation of the hardware, not a reading.
@@ -48,7 +54,7 @@ For either case the node the PROM runs on (A) needs, besides everything its sing
 | `LB_ERROR_SUMMARY` `0x1_1005_0580`, `LB_ERROR_DETAIL_1` `0x1_1005_0200` | read 0 (bit 16 clear; low byte not `0xe9` or `0xea`); the alias, mask and detail writes are accepted | established |
 | `NI_PORT` routing | the first route nibble (1 = NI0, 2 = NI1) minus one picks the port; the remaining nibbles go to `VEC_ROUTE` shifted down one nibble, or `0xf00000000` when none remain | established |
 | `LLP_STAT` `0x1_5000_0000 + p * 0x2000` | low nibble 9 on the linked port p; any other value on the other port | established (the nibble); the other bits unknown |
-| `LLP_ERR` `0x1_5000_0048 + p * 0x2000` | bit 27 clear (the PROM writes it back clear and re-reads if set; set again means "down, no message"); bytes 0 and 1 constant | established |
+| `LLP_ERR` `0x1_5000_0048 + p * 0x2000` | bit 27 clear (the PROM writes it back clear and re-reads if set; set again means "down, no message"); bytes 0 and 1 constant. The node set-up also writes 0 to it on both ports (S1 row 2): accept the write and keep bit 27 clear after it; ignoring it was enough in an emulator run | established (reads and the write); the effect of the write on the counters is not read |
 | `0x1_5000_1040 + p * 0x2000 + 16 * i`, i = 0 to 3 | bits 22:16 non-zero (value `0x10000`: **stand-in choice**; the PROM tries 128 times per register, then fails the port; skipped when CPU ID register 2 is `0xaeeeeeee8badbeef`) | established |
 | `LLP_RESET_EN` `0x1_5000_0010 + p * 0x2000`, `LLP_CONFIG` `+0x20`, `LLP_CHAN_MODE` `+0x18`, `LLP_TEST_CTL` `+0x28`, `LLP_RESET` `+0x08`, the flow registers `0x1_5003_03a0` to `0x1_5003_0400` | storage; `LLP_RESET_EN` resets to 1 (inferred from the header's init macro) | established (the accesses) |
 
@@ -70,8 +76,8 @@ distribution that do touch it are in the same section.
 
 | # | Stand-in register | Accessed by | Answer | Log | An unexpected access means |
 |---|---|---|---|---|---|
-| 1 | chip word `0x1_0000_0000`, read | `0xffa46a50`: first, then 1, 2 or 4 more (debug-word bits 1:0 = 0, 2, 3; the value 1 skips them), retried once on error | bits 27:12 `0x4363` (established: the only value that selects the SHub method table); bits 31:28 the same revision A's own word has (stand-in choice); bits 42:32 the stand-in's NASID (read only if its `SCRATCH1` bit 40 is set; 0 until the PROM writes `SH_SHUB_ID`, stand-in choice); **bit 56 = q** (established as the field read; that it is the port is inferred); everything else 0 | every read; count | a read with a route of two or more nibbles: the crawl went through the stand-in, so a port flag leaked from the stand-in's `LLP_STAT` |
-| 2 | `LLP_ERR` `0x1_5000_0048 + k * 0x2000`, read (k = q for the link-quality check; both ports for the claim, which reads it first on each) | link-quality check; claim | bit 27 clear; bytes 0 and 1 constant (0): the PROM fails the step if a counter grows by more than 50 between its reads | each read | a write to it: the PROM cleared bit 27, which means a read returned it set |
+| 1 | chip word `0x1_0000_0000`, read | `0xffa46a50`: first, then 1, 2 or 4 more (debug-word bits 1:0 = 0, 2, 3; the value 1 skips them), retried once on error | bits 27:12 `0x4363` (established: the only value that selects the SHub method table); bits 31:28 the same revision A's own word has (stand-in choice); bits 42:32 the stand-in's NASID (read only if its `SCRATCH1` bit 40 is set; 0 until the PROM writes `SH_SHUB_ID`, stand-in choice); **bit 56 = q** (established as the field read; that it is the port is inferred); everything else 0 | every read; count | a read with a route of two or more nibbles is **expected** once the claim has published port q (row 7): the crawl steps out of the stand-in's port q, the request goes back to A and A answers it as its own chip word ([loop-back](#what-an-emulator-run-of-the-stock-prom-showed-2026-11-21)) |
+| 2 | `LLP_ERR` `0x1_5000_0048 + k * 0x2000`, read (k = q for the link-quality check; both ports for the claim, which reads it first on each); **written 0 on both ports by the node set-up** | link-quality check; claim; the error-clear list (below) | reads: bit 27 clear; bytes 0 and 1 constant (0): the PROM fails the step if a counter grows by more than 50 between its reads. The write: accept it (plain storage or ignore it, and keep bit 27 clear) | each read and write, with the caller's `b0` | a write of 0 whose caller is the list writer (return address `0xffae4050`) is expected, not a sign of a set bit 27: slot 84 (the local node) and slot 85 (the remote node set-up, so also the stand-in through its global window) write the 70-entry error-clear list at `0xffbd8e18` through `0xffae3f50`, whose `NI0_LLP_ERR` and `NI1_LLP_ERR` entries are 0 at `0x1_5000_0048` and `0x1_5000_2048` ([prom-reset.md](../../../devices/shub/prom-reset.md#the-xn-compare-words-the-prom-zeroes-in-the-chip-object-method-at-0xffa236f0)); slot 85 calls the writer at `0xffa2389c` (this list) and `0xffa238bc` (the 24-entry list at `0xffbd93e0`), established in the listing. Only a write from the probe `0xffa5cf40` is the clear of a set bit 27 (a read returned it set) |
 | 3 | `LLP_STAT` `0x1_5000_0000 + k * 0x2000`, k = 0, 1, read | claim (`shub_port_status` against the stand-in) | port q: low nibble 9; the other port: not 9 | each read | the other port read as 9 would set both mask bits |
 | 4 | `0x1_5000_1040 + q * 0x2000 + 16 * i`, i = 0 to 3, read | same | bits 22:16 non-zero | each read | more than 128 reads of one register: the value is wrong |
 | 5 | `SCRATCH1` `0x1_101d_0080`, read | claim; the wait loop only for an entry that was not claimed | **0** on the first read (established: 0, or any word with bit 41 or bit 39 set and bits 55:54 clear, lets the claim go on; non-zero otherwise stalls the claim 300 s and then forces bit 41; bits 55:54 non-zero makes the PROM skip the claim entirely, which is the "already prepared" model, not S1) | each read | a read that returns bits 55:54 set before any write: the claim was skipped and the stand-in is not programmed |
@@ -85,10 +91,17 @@ distribution that do touch it are in the same section.
 | 13 | `0x1_2000_0000`, write `0x0001000100000000`; `0x1_5003_1550` read-modify-write clearing bits 29:26; 300 ms wait on A's side | `0xffa9fc70` | accept | each access | none |
 | 14 | `SH_SHUB_ID` `0x1_1006_0580`, read then write | `0xffa95a30` | read: whatever A's reads; the PROM writes back with NASID bits 42:32 = the stand-in's new NASID (2 by the defaults, inferred) and two size fields (bits 45:44 and 52:48, values not decoded) | read and write | a NASID other than 2 means the defaults changed |
 
-Expected table values (**inferred**, from the route programmer): the stand-in's local table entry 0 (A, NASID 0) carries
-`VALID | 4` on its port q (a node neighbour at the far end gives 4, a router 0); entries with no route carry `0xf`; the
-stand-in's own entry (index 2) is valid with `0xf`. The vector route for each write is the nibble `p + 1` alone, so `VEC_ROUTE`
-reads `0xf00000000`.
+Table values (replaces an earlier inference of `VALID | 4` for local entry 0). **Established** for the rule: in `0xffa5e880`
+the value of an entry is the turn nibble of the PROM's route table for it (`0xf` when the route programmer stored none), and
+`VALID` (bit 63) is added when the entry is entry 0, or its nibble is not `0xf`, or it is the node's own entry (the
+global tables get `VALID` only for a nibble other than `0xf`). **Seen in an emulator run** for the values the stand-in
+received (the run had no router, so the route programmer stored nothing for the stand-in's own tables): local tables
+(`0x1_5002_2000` and `0x1_5002_3000`) entry 0 (A, NASID 0) and entry 2 (the stand-in) are `VALID | 0xf`, every other entry
+is plain `0xf`, the global tables are plain `0xf`, the override tables 0. The node-end turn count 4 (0 for a router, from
+`0xffa5e510`) appears in the memory (`0x1_5002_4000`), I/O (`0x1_5002_0000`) and processor (`0x1_5002_1000`) tables, which
+are written by the same routine straight after the local tables (not at progress 0x23): entry 0 is `VALID | 0x0404` (the
+nibble in both byte fields), entry 2 is `VALID | 0x0f0f`, the rest plain `0x0f0f`. The vector route for each write is the
+nibble `p + 1` alone, so `VEC_ROUTE` reads `0xf00000000`.
 
 **What S1 does not establish.** The barriers, the election and `main_three` for two nodes are read in
 [the section below](#barriers-master-election-and-the-stages-after-distribution-with-a-second-node). Two results change
@@ -113,12 +126,12 @@ link on other ports, a chip word read through each; then the distribution writes
 | 1 | register 0 (`STATUS_REV_ID`), read; the request carries `ADDRESS` `0x1_0000_0000`, so the router must decode that as register 0 (**inferred**: the image has no other read for it) | `0xffa46a50` (also 1, 2 or 4 more reads) and `0xffa67220` | part `0x239` in 27:12 (established as required); `INPORT` bits 43:40 = R (established: the PROM stores it as the router's port the link lands on); bit 0 = 1 (the `force1` field; the PROM does not test it: stand-in choice); revision, manufacturer: stand-in choice; `POSITION` 47:44: 0 (the image tests them inverted; effect unknown); `LOCAL_POK` 57: 1 (stand-in choice); error flags 56:48: 0; link-up flags 39:32: see the next paragraph | every read | a read of any other register before this one: the crawl order changed |
 | 2 | port counters `R base + 0x18a0` | link-quality check (`0xffa66fb0`: bits 15:0 and 47:16) | constant (0); a rise of more than 50 fails the step | each read | none |
 | 3 | `SCRATCH0` `0x1000`, read | `0xffa668b0` | 0 first (established: non-zero means "already advertised": the PROM then neither programs nor sets the router's mark) | each read | a non-zero first read: the router is treated as advertised by someone else |
-| 4 | lock: `SCRATCH3_ALIAS` `0x1038` read, `SCRATCH3` `0x1030` write 0 | `0xffa9a6f0`, `0xffa9a750` | read returns bit 0 clear when free (a test-and-set model sets bit 0 on a read; **inferred**); the write of 0 frees it | each access | a read with bit 0 set: the lock is held; the PROM retries for up to 10 s (`nl4r_config_global`) and a held lock at `cache_advert` makes it re-read `SCRATCH0` every 10 ms |
+| 4 | lock: `SCRATCH3_ALIAS` `0x1038` read, `SCRATCH3` `0x1030` write 0 | `0xffa9a6f0` (to `0xffa0ad80`), `0xffa9a750` | read returns bit 0 clear when free; the write of 0 frees it. The PROM only tests bit 0 of the read (`0xffa0ad80` returns on a read with bit 0 clear, else re-reads until its deadline) and writes only 0 to `0x1030`, so plain storage and a test-and-set alias (**inferred** from the name) cannot be told apart by it. Seen in an emulator run with plain storage: five reads of `0x1038`, each followed by a write of 0 | each access | a read with bit 0 set: the lock is held; the PROM retries for up to 10 s (`nl4r_config_global`) and a held lock at `cache_advert` makes it re-read `SCRATCH0` every 10 ms |
 | 5 | set-up writes: `0x1001900` (`0x888888888`), `0x1010` (0), `0x1001938` (1), `0x20` read-modify-write (clear bits 20:16 and 12:8), per port `+0x18d0` and `+0x1840` read-modify-write, 40 credit registers (`0x2000010`, `0x2000030`, `0x2000050`, `0x2000070`, `0x2000090`, `0x20000b0`, `0x20000d0`, `0x20000f0`, `0x2000120`, `0x2000140`, each at `+0`, `+8`, `+0x10`, `+0x18`) `0x111111111`, ten age registers (`0x2000400`, `0x2000408`, `0x2000428`, `0x2000430`, `0x2000438`, `0x2000440`, `0x2000410`, `0x2000418`, `0x2000420`, `0x2000448`) `0x10101010` | `0xffa66460`, once, when `SCRATCH0` was 0 | accept; storage | every write | none |
-| 6 | L1 mailbox `ASIC_TO_L1_STATUS` `0x30`, `ASIC_TO_L1_DATA` `0x38`, `L1_TO_ASIC_STATUS` `0x40`, `L1_TO_ASIC_DATA` `0x48` | the three requests of `0xffa80dd0`, `0xffa80f90`, `0xffa81170` (module id, slot, slab) | **unknown**: the framing was not read. Reads of 0 (nothing to receive) are the cheapest answer; the PROM's wait per request was not read, so the cost is unknown | every access, in order, with data: the first accesses give the framing | a refused or very slow reply: the three prints "cache_advert: sysctl_vec_moduleid_get failed" (and `slot_get`, `slab_get`) are the failure form and the PROM goes on |
+| 6 | L1 mailbox `ASIC_TO_L1_STATUS` `0x30`, `ASIC_TO_L1_DATA` `0x38`, `L1_TO_ASIC_STATUS` `0x40`, `L1_TO_ASIC_DATA` `0x48` | the requests of `0xffa80dd0`, `0xffa80f90`, `0xffa81170` (module id, slot, slab) through the frame layer `0xffa82a10`; the word protocol is [below](#the-routers-l1-mailbox-s2-row-6) | **read, not unknown**: `0x30` bit 0 clear before each word the PROM writes to `0x38` (8 frame bytes, first byte in bits 7:0, `0x7e` fill); a reply is one word at a time, `0x40` bit 0 set with 8 bytes in `0x48`, and the PROM writes 0 to `0x40` after taking it. The requests, in the order the PROM sends them: `0x0003`, `0x000e`, `0x0013`, `0x000e` (an emulator run saw all four; the code gives `0x0003` in module id, `0x000e` inside its type switch, `0x0013` in slot, `0x000e` in slab). **Silence is not survivable:** no reply within 3 s of the node's RTC parks the boot processor | every access, in order, with data | a missing reply: the PROM polls `0x40` for 3 s (about 12,647 polls in an emulator run), then takes the die path (write `0x0001000100000000` to `0x1_2000_0000`, then the park). The three prints "cache_advert: sysctl_vec_moduleid_get failed" (and `slot_get`, `slab_get`) are the form of an *error reply* (status below 0), after which the PROM goes on; they are not the form of silence |
 | 7 | `SCRATCH0` write | `0xffa668b0` | accept; the word is module id (31:0) \| slab << 32 \| slot << 42 \| `0x0400008000000000` (bits 58 and 39), plus bit 41 if `0xffaac160` is non-zero; if all three requests failed it is `0x0400044fffffffff` (derived) | the value | a value without bit 39: the code path changed |
 | 8 | `GLOBAL_PARM0` `0x10` read; per port n = 1 to 8: write 1 to `+0x2208`, read `+0x2200` | `0xffa67220` | read: any; `+0x2200` bit 0 clear | each access | a port whose `+0x2200` bit 0 is set is not crawled |
-| 9 | tables per port: local `+0x0` (512 entries), global `+0x1000` (256), neighbour `+0x1800` (8) and then that port's six `nl4r_config_port` writes of row 10 (`0xffa67cb0` calls `0xffaab070` itself); multicast `0x4e80 + 8 * i`, `0x4f90`; `0x5000` and `0x6000` tables; `0x4000`; `PROTECTION_CONFIG` `0x1003018` read-modify-write; then `SCRATCH0` bit 40 | `0xffa67cb0` (distribution, only for a router the PROM advertised itself) | accept; storage with read-back | every write: address, value | writes only to ports with a link |
+| 9 | tables per port: local `+0x0` (512 entries), global `+0x1000` (256), neighbour `+0x1800` (8) and then that port's six `nl4r_config_port` writes of row 10 (`0xffa67cb0` calls `0xffaab070` itself); multicast `0x4e80 + 8 * i`, `0x4f90`; `0x5000` and `0x6000` tables; `0x4000`; `PROTECTION_CONFIG` `0x1003018` read-modify-write; the multicast translation entries `0x4e00`, `0x4e08`, `0x4e10`, `0x4e18`, `0x4e40` (`0x80000000f1010f68`, `0x80000000f1030f69`, `0x80000000f1050f6a`, `0x80000000f1070f6b`, `0x80000000f1028787`) and `0x4f80` (`0x1f00`) from the table at `0xffbdfc90`, when bit 0 of the router entry's flag halfword is clear (when it is set, only `0x4e00` = `0x80000000f1016a6a` and `0x4e08` = `0x80000000f1016b6b` from `0xffbdfcf0`); the fence routine `nl4r_fence_ports` (`0xffa69d20`, slot `0x1f0`: lock, read-modify-write of `0x1003018`, then of the eight port reset masks `0x1003020 + 8 * i`, `i` = 0 to 7); then `SCRATCH0` bit 40 | `0xffa67cb0` (distribution, only for a router the PROM advertised itself); `0xffa69d20` | accept; storage with read-back | every write: address, value | **all eight ports are written whether or not they have a link** (the writer loops over the router's port records 1 to 8 with no link test; seen in an emulator run). `0x1003018` is read and written more than once (seen in an emulator run: `0x100`, then `0x101`; the code's two writers are the table writer, which keeps bits 21:8 and sets the nine bits 30:22, and the fence routine, which sets or clears a mask), the eight `0x1003020 + 8 * i` each read-modify-written twice |
 | 10 | board-walk set-up: `0x2000`, `0x2010`, `0x2020`, `0x2050`, `0x2060`, `0x2030`, `0x1003100`, `0x1001908`, `0x1001900`, `0x2008`, `0x4f00` to `0x4f78`; per port `+0x2200`, `+0x2210`, `+0x2100`, `+0x18a0`, `+0x18a8`, `+0x2218` (the per-port six are also written during the distribution, row 9) | `nl4r_init_global`, `nl4r_config_global`, `nl4r_config_port` (the board walk, `main_three` side) | accept; storage | every write | none; when in the boot this runs is open |
 
 **The link-up flags of register 0 decide how far the crawl goes.** The PROM crawls through every router port whose
@@ -128,6 +141,56 @@ crawl ends at the router and nothing is forwarded; (b) **full:** report the link
 `p + 1`, `R` out of router port R back to A's port `p`, so that A reads its own chip word through the router (bit 56 = p)
 and finds itself already in the table (dropped as the same chip). Option (b) is what hardware does and needs the router to
 carry a request in both directions; the reply's `INPORT`, route and `TYPE` fields for a two-hop request are inferred, not read.
+
+## The router's L1 mailbox (S2 row 6)
+
+Read on 2026-11-21 in the same image (Ghidra decompiles, `ia64-linux-gnu-objdump` for the branch predicates and
+constants). Nothing was run for this section. The requests of `cache_advert` go through the PROM's controller object in
+"vector mode" (bit 5 of its flag word at `+0x50`, set by the `1` argument of `0xffa8f900`): the object does not use the
+node's UART but four registers of the router's own register space, reached with vector requests on the router's route. An
+emulator run of the stock PROM against a stub, 2026-11-21, agrees with every row below (it answered one frame and the PROM
+accepted it).
+
+| Register | PROM access | What the PROM does with it | Grade |
+|---|---|---|---|
+| `ASIC_TO_L1_STATUS` `0x30` | read before each word it sends | bit 0 set: sleep 100 us and read again, for at most 5,000,000 us per word; on expiry the rest of the frame is dropped without an error (`0xffa8d870`) | established (access, test, limits); the reading "bit 0 = busy" is inferred |
+| `ASIC_TO_L1_DATA` `0x38` | write, 8 bytes per word | frame bytes, **first byte in bits 7:0**; when fewer than 8 remain the high bytes are `0x7e` (`0xffa8d720`) | established |
+| `L1_TO_ASIC_STATUS` `0x40` | write 0 once at start (`0xffa8e290`); read to poll; write 0 after taking a word | bit 0 set: a word is waiting in `0x48`. No other bit is tested by the two routines that read it (`0xffa8daa0` byte reader, `0xffa8dff0` drain) | established (access, bit 0); the other bits are unknown |
+| `L1_TO_ASIC_DATA` `0x48` | read, 8 bytes per word, only while `0x40` bit 0 is set | reply bytes, **first byte in bits 7:0**. The byte reader hands out one byte per call from the word it read and writes 0 to `0x40` after the eighth; the drain takes all 8 and writes 0 at once | established |
+
+The register numbers come from the NL4 router's method slot `0x268` (`0xffa8ce60`): index `i` of the controller object's
+16550-style register set maps to router offset `0x30 + 8 * (i xor 1)`, so index 0 (transmit data) is `0x38`, 1 (transmit
+status) `0x30`, 2 (receive data) `0x48` and 3 (receive status) `0x40`. The SHub class has its own slot `0x268` (`0xffa942d0`, not read here; its UART path is the
+`0x8000000ffed40000` register set of [l1-requests.md](l1-requests.md#the-link-start-before-the-first-request)). Established for the router.
+
+The bytes are the frames of [l1-requests.md](l1-requests.md#the-requests-in-order) unchanged: flag `0x7e`, header byte, big-endian
+address word, request code, argument count, arguments, then the FCS-16 (reflected `0x8408`, residue `0xf0b8`), with
+`0x7e` and `0x7d` escaped. The first frame of the emulator run, `7e 05 0f ff f0 06 00 03 69 27 7e` (request `0x0003`, no
+arguments, so no count byte), went out as two words: `7e 05 0f ff f0 06 00 03`, then `69 27 7e` and five `0x7e` fill bytes. The
+header `0x05` is the open handle `5 + slice`; the reply the PROM accepts has header `0x20 | 5 + slice` (`0x25` for slice 0) and
+any frame with residue `0xf0b8` completes the slot ([l1-requests.md](l1-requests.md), "Silence"). The status word, the
+argument count and the argument tags are then checked by `0xffa82270` ("tag and count mismatch" gives -32 and -33).
+The reply layout of each request is in the sysco repository's `software/firmware/l1/sn2-prom-link-1.62.1.md`.
+
+**Timing and silence (established).** A request first waits for the transmitter (up to 50 tries 500 us apart, then -26),
+sends, and then waits for a complete reply for 3,000,000 us of the node's own RTC (`0xffa82c10` to `0xffa82a10` to
+`0xffa82730`; the timer `0xffa0da70` is the local `0x81_101c_0000` count times the period field of `0x81_1006_0280` bits
+13:4, `field * 10 + 10` (nanoseconds, inferred), divided by 1000). On expiry the status is -24 and the die routine `0xffad2cb0` runs before any
+caller sees it; for the local node and the boot processor it parks the processor ([l1-requests.md](l1-requests.md), "Silence"). The
+router's requests are all addressed to the local controller object (the route is the router's), so a silent mailbox parks the
+boot processor at the first request; error *replies* are the case the three "failed" prints describe.
+
+**The L1's end (inferred).** The sysco repository records that for the NL4 router and TIO families the L1 reaches the chip
+through the scan chain: `NL4R_SysComInt` calls `SysComJTagReadReady`, which calls `JTAG_UART_read`; `JTAG_UART_write` and
+`JTAG_UART_read` access the test data registers `WR_SYSCOM` and `RD_SYSCOM`, packing bytes with bit-reversal masks. That
+`RD_SYSCOM` returns what the PROM wrote to `ASIC_TO_L1_DATA` and `WR_SYSCOM` fills `L1_TO_ASIC_DATA` is by name only; the
+bit reversal is the L1's own packing and is not visible in the PROM's words; the status handshake the L1 performs (when it
+clears `0x30` bit 0 and sets `0x40` bit 0) was not read. **Unknown:** the meaning of the other bits of `0x30` and `0x40`,
+whether the hardware queues a second word before the first is taken, and the real latency between a request and its reply.
+
+**For a stand-in (approximation, not a reading).** Keep `0x30` reading 0, answer a frame with header `0x20 | 5 + slice`, status
+0 and the values the request needs (rack and bay, type, slab, slot), cut into 8-byte words with `0x7e` fill; present one word
+at a time (`0x40` = 1 and the word in `0x48` until the PROM writes 0 to `0x40`, then the next word or `0x40` = 0).
 
 ## Barriers, master election and the stages after distribution with a second node
 
@@ -245,7 +308,7 @@ calls are local with a claimed stand-in (row 1).
 |---|---|---|---|---|
 | 1 | Progress 0x23 walk `0xffa1a9e0`, then a partition barrier, then `0xffa1ac80` | `main_three` at `0xffad74fc`, `0xffad7510` | For each entry of class 1 or 3 in A's partition with flag `0x10000` set and the "NASID final" byte (`+0x5b` bit 0) clear: the latch `0xffa1a6d0` (below), then flag `0x4000000` set and a call of **class slot 5** (`0xffacc6e0`, the node set-up of the SHub page) on that entry. `0xffa1ac80` calls **class slot 6** (`0xffaccae0`) for entries with that flag. The class pointer is the entry's own `+0x50` (the 40-byte entry copy overlaps the saved-class slot, which is how the call reads it). So the claimed stand-in is the target of the remote node set-up; this settles that slot 5 has callers. The accesses of the two methods are in [the section below](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk). | established (conditions, targets); the bodies as graded there |
 | 2 | Latch `0xffa1a6d0` | stage 1 | Read the stand-in's `SCRATCH1` (vector); if bit 56 is set stop; else take lock 17 (class slot `0xd8`, `0xffa0f1a0`), read the word again, write it with bit 56 set (vector write), release (slot `0xf0`, `0xffa0f650`). The lock acts on the stand-in's own registers: a vector read of `0x1_101d_0188` (bit 0 must read 0; polled for up to 1 s, then -9) takes a spin lock, the lock word `0x1_5003_1540` is read and written (bit 17 set to lock, cleared by the release, which repeats the spin lock; the wait for bit 17 to clear has no deadline, the third argument is 0) through the global window `0x9_5003_1540 \| nasid << 38`, and a vector write of 0 to `0x1_101d_0180` frees the spin lock. A plain-storage stand-in satisfies it; the global window must route by the NASID A assigned. | established |
-| 3 | Interrupt scrub `0xffae3160`, called just before the first global barrier of `main_three` (`0xffad73cc`, then `0xffad73dc`) | `main_three` | Local to A. With a port up (A's own link mask, class slot `0x1b0`) it skips the "no NI ports are up" notice and runs the ICC underflow workaround: A's own `0x1_5002_1400 + 8 * k` (saved, written, restored), `0x1_2000_0100` (saved, `0x5f5e06`, restored), `0x1_2000_0180` (saved, count + 2, restored), 20 zero stores (`WrbWARCnt` default 20) at 128-byte strides below `0x4_0000_0000` in node `nasid ^ 0x400`'s window, a 4 s and a 1 s wait, then `0xffa30b40` and `0xffa24810`. Whether the stores leave the NI port was not read. | established (list); unknown (the effect on the link) |
+| 3 | Interrupt scrub `0xffae3160`, called just before the first global barrier of `main_three` (`0xffad73cc`, then `0xffad73dc`) | `main_three` | Local to A. With a port up (A's own link mask, class slot `0x1b0`) it skips the "no NI ports are up" notice and runs the ICC underflow workaround: A's own `0x1_5002_1400 + 8 * k` (saved, written, restored), `0x1_2000_0100` (saved, `0x5f5e06`, restored), `0x1_2000_0180` (saved, count + 2, restored), 20 zero stores (`WrbWARCnt` default 20, at most 0x20) of 8 bytes at 128-byte strides ending at `0x4_0000_0000` in node `nasid ^ 0x400`'s uncached window (`0x8000_0030_0000_0000 + ((nasid ^ 0x400) << 38) + 0x4_0000_0000 - 128 * count`: for NASID 0 and 20 stores the first is at physical `0x1_0033_ffff_f600`, as seen in an emulator run), a 4 s and a 1 s wait, then `0xffa30b40(nasid, 5)` and `0xffa24810`. The stores go out of the first up NI port: before them the PROM saves and rewrites A's own `0x1_5002_1400 + 8 * ((address >> 45) & 0xf)` (entry 8 for NASID 0) with `0xf0f | port << 5 | port << 13` (port 0 or 1, the lowest up one) and restores it afterwards. Nothing is read back; the error clear that follows is the PROM's only reaction. | established (list, the routing entry, the port choice); unknown (what the neighbour does with the stores: a model that accepts and drops them is an approximation, and an emulator without a node behind the window gets a bus error) |
 | 4 | Board walk `0xffaa03f0` (`0xffaa7090`, `0xffaf1350`, `0xffaeeb20`, `0xffaedff0`), after the progress 0x26 code, partition master only (`cpu_bits` bit 1) | `main_three` at `0xffad765c` | For each connection of A's HUB component it reads bytes `+5` and `+9` of the peer's board record and sets bit 3 of `+9` (a write) at `(peer nasid << 38) + 0x30_0000_0000 + offset`, so that memory must answer reads and writes. The record is built by A in stage 1 (slot 99) in the stand-in's RAM or, if it is memory-less, in A's RAM; details and the router branch in [the section below](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk). | established (reads, write, address, source of the record); unknown (the three closing routines) |
 | 5 | Console and `Loading EFI` | `main_three` at `0xffad76ec` to `0xffad777c` | `0xffae77a0` reads only the RAM table of CPU ids at `[0x1000038] + 0x18` and `cr.lid`; no register access, so a stand-in without CPUs is not an input. | established |
 
@@ -335,13 +398,64 @@ closing routines and the router branch for a node-only configuration).
   once more). A set bit 11 of the debug word `0x81_5003_1560` skips the crawl with "*** Skipping NUMAlink discovery".
   Established.
 
+## What an emulator run of the stock PROM showed (2026-11-21)
+
+An emulator run of the stock PROM against a stub built from this page (observation only: the stub's answers are choices,
+not hardware) went past the rows above. Each item says what in the image confirms it.
+
+- **The claimed stand-in is reached through its global window.** After distribution the PROM drives the stand-in with plain
+  loads and stores at `0x88_0000_0000 + offset` (NASID 2 << 38, bit 35), not with vector requests; the run touched 239
+  registers that are not rows here. They are the accesses of slots 5 and 6 listed in
+  [the section above](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk): the `SCRATCH2`
+  read-modify-write (`0x420006c`, bay 2, to `0x3800420006c`: bits 41:39 set to 7), the UART line-status polling at
+  `0xf_fed4_0028 | nasid << 38` and its eight line-control writes, the lock words `0x1_101d_0180` and `0x1_101d_0188`, the
+  error-clear lists (row 2), and the `SCRATCH1` words: `0x0140008000000000` (the claim's `0x0040008000000000` plus the latch
+  bit 56), then `0x0740018000000000` (plus bits 57 and 40 from slots 45 and 46 and bit 58 from the memory-less path), which is
+  the sequence this page derives. The flash probe at the stand-in's offsets `0x7ff800000` and `0x7ff810000` (a 2-byte write of `0xf0`, then four 8-byte
+  reads at +0 to +0x18 of each) is **inferred** only (seen in an emulator run; the callers `0xffaceb40` and `0xffacef70` were not read).
+- **The spin after memory initialisation is a receive wait, not a lock wait.** The run polled `0x1_5003_1540` of the stand-in
+  about 8.4 million times from return address `0xffa0f300`, each read returning 0. That address is the second read in the lock
+  acquire `0xffa0f1a0` (the first is at `0xffa0f240`): `0xffa0f1a0(nasid, bit, timeout)` reads the lock word through the
+  global window, takes the spin lock `0x1_101d_0188`, reads the word again and, if the bit is clear, sets it; the release
+  `0xffa0f650` clears it. Both are the PROM's software lock on that word; the UART methods take bit 6 of it around each UART access (`0xffa93cd0`,
+  `0xffa93d80`, see [l1-requests.md](l1-requests.md#the-link-start-before-the-first-request)), and the loop takes and drops
+  it around every poll of the receiver `0xffa87830` (the run's earlier acquisitions of the word used bits 17, the latch, and
+  2; the log did not record the bit taken in the spin). Nobody has to write `0x1_5003_1540` or `0x1_5003_1550` for the loop to end, and on real hardware
+  nothing on the peer's side would: the loop ends when a complete reply frame arrives on the stand-in's UART (the line status
+  `0xf_fed4_0028` reading bit 0 set, the byte in `0xf_fed4_0000`; the stub answered `0x60`, transmitter empty and no data), which on
+  hardware is the L1 of the stand-in's brick answering the request the PROM wrote there, or when 3,000,000 us of A's RTC have
+  passed (`0xffa82730`). On expiry the die routine runs with the stand-in's NASID, so it writes the stand-in's
+  `0x1_2000_0000` and waits 300 ms but does not park (the park needs the local node), and the request fails with -24. The
+  requests on that channel at this point are most likely the sixteen `0x0006` DIMM reads of the remote memory discovery
+  (inferred from the slot 97 row; the run's log does not name the request): 16 failures, about 3.3 s each, and then the
+  node is memory-less (`SCRATCH1` bit 58). Why the run's timeout did not end the loop is a model question: the count comes
+  from A's RTC and the period field above. Grades: established (the loop, the polled registers and the limit); inferred (which request).
+- **`0x1_5003_13f0` writes.** A's own `0x1_5003_13f0` and `0x1_5003_13d0` are zeroed at `0xffa48510` to `0xffa48550` (documented
+  in [prom-reset.md](../../../devices/shub/prom-reset.md)) and written again with the sense bit by `0xffa42dc0` once per tree
+  barrier call on the first slice (the no-child case of the table in the barrier section, both words). The run logged
+  only the `13f0` word, so "three writes" is the node set-up write plus the two barrier calls of the early boot (after
+  discovery and after distribution). Established.
+- **Interrupt scrub.** The 20 zero stores at physical `0x1_0033_ffff_f600` are the scrub's stores (row 3 of the table in the
+  `main_three` section, now with the address formula and the routing-entry write). Without a node behind that window the model
+  gets a bus error; the PROM routes them out of the up port.
+- **The loop-back is not an artefact of the stub.** The claim writes `SCRATCH1` with bit `54 + q` (row 7), and row 3 needs
+  `LLP_STAT` nibble 9 on port q for the claim at all. The crawl `0xffa47290` steps every port of every entry whose record bit
+  is set; neither it nor the step `0xffa45780` tests the port an entry was reached on. So the PROM sends a chip-word read
+  with the route `p + 1, q + 1` (out of A's port p, then out of the stand-in's port q). On a real two-node cable port q is
+  the other end of the link to A's port p, so that packet comes back to A, which answers it as its own chip word, bit 56 the
+  port it arrived on; the insert (`0xffa450e0`) finds the same geoid and adds nothing. Established (code); inferred
+  (that the hardware forwards the second nibble and delivers it to A's vector engine, which is the hardware behaviour the
+  S2 option (b) also assumes). A stand-in that wants the crawl to end at it must either leave port q down in its own
+  `LLP_STAT` (then the claim does not happen) or loop the request back as the run did.
+
 ## Unknown, and the route that would settle it
 
 - What reply types 4 and 5 are, and whether a route error gives one of them: the image only groups them with link errors
   ([the vector request](../../../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it));
   route: the SHub 2 image's decoder of the vector status, or a hardware capture (needs the owner's approval).
-- The router's decode of address bit 32, the L1 mailbox framing and the PROM's wait per L1 request: route: the
-  `sysctl_vec_*` request builders (`0xffa8f900` and its callers) and the sysco repository's controller side.
+- The router's decode of address bit 32. The L1 mailbox framing and the PROM's wait per request are now read ([the
+  mailbox section](#the-routers-l1-mailbox-s2-row-6)); still unknown are the other bits of the mailbox status registers and
+  the hardware's queueing; route: the L1's scan-chain side (`JTAG_UART_read`, `JTAG_UART_write`) in the sysco repository, or a capture.
 - What `0` and `4` select in a node's direction tables, and the meaning of `POSITION`: route: the node table-write
   routines (`0xffa5e880`, `0xffa5e510`) read against the SHub 1 header names, and the Linux `sn_hwperf` heap.
 - What slots 5 and 6 leave unread on a claimed stand-in ([the section above](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk)):
@@ -351,8 +465,8 @@ closing routines and the router branch for a node-only configuration).
   board walk (`0xffaeedf0`, `0xffaef420`, `0xffaefa20`), and the mask `0xffa97960` writes for the stand-in's NASID. Route:
   read those bodies with the stand-in's NASID; a run with the stand-in under the interpreter would show model behaviour only,
   never hardware.
-- Whether the ICC underflow workaround's 20 stores at `0xffae3160` leave A's NI port when a port is up, and what the
-  `cpu_bits` 14 and 15 branches at `0xffad76a0` and `0xffad7736` do.
+- What the neighbour does with the ICC underflow workaround's 20 stores at `0xffae3160` (they do leave A's NI port when a
+  port is up, row 3 of the `main_three` table), and what the `cpu_bits` 14 and 15 branches at `0xffad76a0` and `0xffad7736` do.
 - What `0xffa5c900` ("nl4r_mip_clear") accesses when the table has a router.
 - The meaning of `SCRATCH1` bits 16 and 46 to 53, and of the debug-word fields behind bits 18 and 19: no reader found. Bits 18 to
   20 are read (OR-ed over the non-claimed nodes into `cpu_bits` 14, 15 and 13 by `0xffa44ba0`); what those `cpu_bits` do is open.

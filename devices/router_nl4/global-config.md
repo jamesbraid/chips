@@ -241,9 +241,10 @@ SHub 2 tables only is closed for the SHub 1 image: both are read in full there, 
    `0x2000408`, `0x2000428`, `0x2000430`, `0x2000438`, `0x2000440`, `0x2000410`, `0x2000418`, `0x2000420`, `0x2000448`)
    written `0x10101010`.
 4. Ask the router's own system controller for its module id, slot and slab (`0xffa80dd0`, `0xffa80f90`, `0xffa81170`) over
-   the vector path (the L1 mailbox registers `0x30` to `0x48`; the conversation was not read). A failure prints
-   "cache_advert: sysctl_vec_moduleid_get failed" (or `slot_get`, `slab_get`) and the build goes on with the error
-   values.
+   the vector path (the L1 mailbox registers `0x30` to `0x48`, a word of 8 bytes at a time; the protocol is in
+   [numalink-neighbours.md](../../software/firmware/snprom/numalink-neighbours.md#the-routers-l1-mailbox-s2-row-6)). An
+   error reply prints "cache_advert: sysctl_vec_moduleid_get failed" (or `slot_get`, `slab_get`) and the build goes on
+   with the error values; no reply at all parks the boot processor after 3 s.
 5. Write `SCRATCH0` (`0x1000`) = module id (bits 31:0) | slab << 32 | slot << 42 | bit 41 (if `0xffaac160` is non-zero) |
    `0x0400008000000000` (bits 58 and 39). Release the lock; mark the entry programmed (`+0x2b` bit 1).
 
@@ -266,13 +267,21 @@ back, call node slot `0x160` and write its result to `0x2008`, unlock. `nl4r_ini
 
 **Table writes (`0xffa67cb0`, slot `0x1d8`, with `0xffa695f0`; established as the registers written).** For each port: local
 table at `port base + 0 + 8 * entry` (512 entries), global table at `+0x1000` (256), neighbour table at `+0x1800` (8),
-each entry `VALID` (bit 63) with the turn count of the next section of [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504); then the multicast destination table
+each entry `VALID` (bit 63) with the turn count of the next section of [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504); then the multicast translation entries `0x4e00` to `0x4e40` (six writes from the table at `0xffbdfc90`, plus `0x4f80`, when bit 0 of the entry's flag halfword is clear; two writes `0x4e00` and `0x4e08` from `0xffbdfcf0` when it is set), the multicast destination table
 (`0x4e80` + 8 * i) and `0x4f90` (`MCAST_DEST_VEC_0`), the local-block tables at `0x5000` and `0x6000`, `GLOBAL_PARM0` (`0x10`), `0x4000` (`LB_DATELINE`) and a read-modify-write of `PROTECTION_CONFIG` (`0x1003018`), then `SCRATCH0` bit 40. The dump routine
 `0xffa69760` reads the same tables back and prints each local-table row as one 32-bit word, one nibble per port 1 to 8
 (the low four bits of that port's entry) in the format "%03x:%08lx", then the global table the same way and the eight
 neighbour rows as four-digit words.
 
-The router's address decode for `0x1_0000_0000` and the L1 mailbox protocol remain **unknown**.
+All eight ports' tables are written whether or not a port has a link (the writer has no link test; seen in an emulator run). The
+router fence routine `nl4r_fence_ports` (`0xffa69d20`, slot `0x1f0`, SHub 1 5.04) takes the router lock, reads and writes
+`PROTECTION_CONFIG` (`0x1003018`, setting or clearing a mask) and then reads and writes each selected port reset mask at
+`0x1003020 + 8 * i`, i = 0 to 7 (established for the accesses; the caller was not traced). A model of the router needs
+`0x1003020` to `0x1003058` as storage.
+
+The router's address decode for `0x1_0000_0000` remains **unknown**. The L1 mailbox protocol is read from the node side
+([numalink-neighbours.md](../../software/firmware/snprom/numalink-neighbours.md#the-routers-l1-mailbox-s2-row-6)); its other
+status bits and the L1's end remain unknown.
 
 ## Altix 350: how modules attach to routers (007-4660-002)
 

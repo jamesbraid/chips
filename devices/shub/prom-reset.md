@@ -357,6 +357,8 @@ That is 33 stores to 32 distinct words (`1270` is in lists 1 and 5). All are `SH
 
 The stop at `r36 = 0x80000009500315a0` was inside the leaf store helper, which has no `alloc` (frame size 2), so `r34` and above were outside its frame at the stop: their values are undefined and are not evidence of a linkage fault. The valid check is `b0` against the caller's next bundle.
 
+Slot 85 (`0xffa23850`) calls the list writer with the same two lists, the 70-entry list at `0xffbd8e18` and the 24-entry list at `0xffbd93e0` (calls at `0xffa2389c` and `0xffa238bc`, tables read from the image), using its own object's NASID: the remote node set-up of a claimed neighbour therefore writes `NI0_LLP_ERR` and `NI1_LLP_ERR` (0) and the other entries on the neighbour through its global window, which an emulator run of the stock PROM against a stub also showed (2026-11-21).
+
 After step 2, `0xffa236f0` calls `0xffae3f50` with the 70-entry list at `0xffbd8e18`, reads `SH1_SHUB_ID` (`0x81_1006_0580`, `0xffa0dcf0`), calls the attribute lookup `0xffad6e30` for `"AttrCheck"`, writes a 5-entry list (`0xffbd9280` if bit 31 of the result is clear, `0xffbd9330` if set), and then a 24-entry list at `0xffbd93e0`. The lists are given at the end of this section.
 
 | Offset (`0x1_...`) | Window | Header name (SGI 2.4 SN2) | Reset (header INIT) | Written | Read-back sites (all decoded) | Grade |

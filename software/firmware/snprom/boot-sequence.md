@@ -525,13 +525,17 @@ modulo the router's port count (8 for an NL4 router; `in` and `out` are 1-based 
 `out < in`). A router table entry is therefore a turn count from the entry port, 0 being the entry port itself; a vector
 route, in contrast, holds absolute output ports. At the node ends the stored value is not a turn count: the node method
 `0xffa5e510` replaces it with 0 when the neighbour is a router and 4 when it is a node. Nibble `0xf` is "no route"
-everywhere (the table pool is filled with `0xff`). "Outgoing route: 0x" and "Return route: 0x" print the absolute port
+everywhere (the table pool is filled with `0xff`). A node table entry gets `VALID` (bit 63) when it is entry 0, holds a
+nibble other than `0xf`, or is the node's own entry (`0xffa5e880`); in an emulator run with one claimed neighbour and no
+router the neighbour's local-table entries 0 and 2 therefore read `VALID | 0xf`, and the 4 appeared only in the
+memory, I/O and processor tables (entry 0 `VALID | 0x0404`), see
+[numalink-neighbours.md](numalink-neighbours.md). "Outgoing route: 0x" and "Return route: 0x" print the absolute port
 nibbles, last hop first. What 0 and 4 select inside a node's tables is **unknown**.
 
 Open after this reading: the remote node set-up and the board walk that `main_three` runs against a claimed neighbour (see
 [numalink-neighbours.md](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node));
-`0xffa95a30`'s size fields; the other callers of slot `0x1c0`; the L1 conversation the router discovery runs over the vector
-path.
+`0xffa95a30`'s size fields; the other callers of slot `0x1c0`. The L1 conversation the router discovery runs over the vector
+path is read: [the router's L1 mailbox](numalink-neighbours.md#the-routers-l1-mailbox-s2-row-6).
 
 ## The "Waiting for peers" loop
 
