@@ -421,3 +421,7 @@ Checked the "Madison L3 cache-as-RAM: what PAL 520's commands do in silicon" ent
 ## SGI Visual Workstation 320 and 540 (added with platforms/visws)
 
 - **Visual Workstation open points.** *[route: missing source; no BIOS, driver or specification held]* Which Lithium bridge is bus 0; whether the Cobalt timer's pending bit self-clears; the interrupt controller's reset state and in-service tracking; the 540 board-type probe that cannot return 1; the PCI interrupt map for bridge B; the memory controller and frame buffer placement; 320 revision 5 legacy interrupts under 2.6; Lithium error and decode behaviour; the processor table's producer. See [questions/visws-open.md](visws-open.md).
+
+## SGI Visual Workstation 320 and 540 firmware and NT software (added with software/visws)
+
+- **Visual Workstation firmware and NT software open points.** *[route: software now for the Recovery CD-2 unpack, the environment block, the ARC tree and the unread HAL routines; missing binary for the firmware image, memory sizing and the Linux ARC loaders]* Which files the Recovery CD-2 firmware item carries; the shipping firmware version; the environment block's entry layout and checksum; the flash sector map; the ARC tree and the loader's firmware calls; whether firmware assigns PCI resources and how it sizes memory; Cobalt Lite revisions; the meaning of the HAL's "Hugh" mode and its remaining boot options; the uniprocessor HAL; the Linux ARC loaders. See [questions/visws-firmware-open.md](visws-firmware-open.md).
