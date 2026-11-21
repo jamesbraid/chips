@@ -123,7 +123,48 @@ All six stores land in the per-node record `rec = main_ptov([block A + 0x90])`; 
 
 ### The empty-PCI-slot recovery
 
-The runtime services `SAL_PROBE`/`sal_probe_resume_on_mca` (`rt:0x83c50`), `register_no_fault_zone_virtual` and `_physical` (`rt:0x3f70`, `0x4050`) and the `sal_event_*_mc_region` family (`rt:0x3a6e0`, `0x3a8a0`, `0x3abc0`) are the names of the machinery that lets an MCA during a protected PIO read return to the OS instead of dying. They hang off the path above: the SAL check handler consults the registered no-fault regions before choosing to hand over to OS_MCA or to resume. The decisions inside `0xffa07230` and the region walk were **not** read in this pass (**unknown**), so the exact condition that turns a read of an empty slot into "return to the probe" is open; [the probe call](../../sal/sn2-runtime.md) has the PROM-side result values (r8 = 1 and r9 = -1 when the protected read faulted).
+Read in `shub1snprom.bin` 10.54 (SAL 5.04) from the flat-image listing and Ghidra with the SAL runtime mapped (`rt:` addresses are runtime-ELF offsets). The PAL half is in [pal-b-halts.md](pal-b-halts.md#pale_check-and-the-machine-check-hand-off). What this section settles is the SAL decision; what the processor latches for an empty-slot read stays open.
+
+**Verdict.** The PROM does not halt on this machine check by design. If PAL hands SAL a processor state with us = 0 and cm = 0 and the interrupted instruction pointer lies inside the range `SAL_PROBE` registered, SAL rewrites the saved instruction pointer and calls `PAL_MC_RESUME` (index 26) with new_context 0. The probe then returns to its caller with an error status. Whether the real or modelled PAL builds that state for an empty-slot bus error is **unknown** (below).
+
+**The probe side (established).** `sal_event_probe` (`rt:0x79cc0`, SAL call `0x02000003`; size must be 1, 2, 4 or 8, else it returns 2 at once) does, in order: add a no-fault region `[sal_probe, sal_probe_end]` = `rt:0x83be0` to `rt:0x83c40` with resume address `rt:0x83c50` (`sal_probe_resume_on_mca`) to the node's region table; store the probed address at `[block + slice*8 + 0x5308]` (no reader found by immediate search); `mcrz_set_probe(1)`; call `sal_probe`; `mcrz_set_probe(0)`; remove the region. `sal_probe` is one load of the size asked, a dependent `add` and `srlz.i` (so a late machine check lands inside the range), then `r8 = 0`, `r9` = data. The resume stub sets `r8 = 1`, `r9 = 0` and returns through the same epilogue. The wrapper maps this to the SAL status ([sn2-runtime.md](../../sal/sn2-runtime.md)). The region entry's flags bit 16 is the caller's `psr.dt`.
+
+**The region table (established).** Per node block `B` (`0xffa1c2e0` of the pointer at `[0x1000038] + 0x90`): lock at `B+0xb0`; up to 32 entries from `B+0xb8`, 32 bytes each: flags (bit 16 = data translation), start, end, resume address; an entry with start 0 ends the table. `0xffa05610` walks it with the saved `XIP` (record `+0x1b8`) and `IIP` (`+0x1a0`): a match is `start <= ip <= end` (end inclusive). A match replaces that slot with the resume address, clears the status slot's bits 42:41 (`psr.ri`) and sets bit 17 (`psr.dt`) from the flags. The result is per slice (`B+0x4d8+slice`, slice = `cr.lid` bits 26:23); if this slice did not match, the other slices' flags are read, and if any matched, every slice's flag is set (`0xffa10920` iterator, 100000-tick lock timeout). A lock timeout skips the sharing.
+
+**The decision (`0xffa07230(type, PSP, record)`, established).** For type 0 (machine check):
+1. If saved `IPSR` bit 13 (`psr.ic`) is clear and `0xffa31aa0` finds bit 3 of `0x1_2001_0100` set, and the node word at `B+0x53c8` is zero (it is set only by a SAL error-handling-features call; Linux is not seen to make it), SAL sets PSP us (bit 9) and clears cm and ci/co: uncontained.
+2. PSP us set: not recovered. PSP cm set: not recovered here. Otherwise `0xffa05610` must return non-zero: result 4. A zero result takes the per-type record byte at `+10` of `0xffa07e90(type)` (its writer was not traced; **unknown**).
+3. Before returning, `PAL_MC_CLEAR_LOG` (21) is called at `0xffa0742c`, and `0xffa3e640` copies the error record out. For type 0 or 1 `0xffa06370` takes the first valid-bit-3 section of the `PAL_MC_ERROR_INFO` record and stores its word at `+0x20` (the bus transaction's target in Linux's `sal_log_mod_error_info_t`; inferred) at `[B + slice*8 + 0x5328]`. It does not affect recovery.
+Result 4 (or 2) then runs `0xffa02f40`, which calls `PAL_MC_RESUME` (`0xffa37ff6`, `r28 = 0x1a`, `r29` = new_context, `r30` = min-state pointer, `r31` = 0) and does not return on success (software expectation from the SDM; the code after it only runs on failure). That failure path goes on to `0xffa217c0`, the platform error handler, which reads the SHub and bus error state (PI `0x1_2006_0100/0180/0200`, `0x1_2005_0300`, and each chip's error method); on a recovered probe none of that runs, so the PIC error status is left for Linux's own error interrupt. The OS_MCA entry is not called on the recovered path.
+
+**Linux caller (software expectation).** `SN_SAL_PROBE` is defined in the Library's Linux `sn_sal.h` trees but no caller was found in them by text search; the earlier page cites a 2.6.12 PCI-DMA fallback as the user. Whether the Linux used for S4 issues it at all is **unknown**: log the SAL call id.
+
+### What to log in an S4 run (machine check on an empty slot)
+
+Every value is read, not asserted. "Expected" is what the recovered path needs; a value outside it names the branch the PAL or SAL takes instead.
+
+| Where | What | Expected for recovery | Grade |
+|---|---|---|---|
+| SAL entry | procedure id `0x02000003`, address, size | size 1/2/4/8 | established |
+| `sal_event_probe` | region table at `B+0xb8..` (start, end, resume, flags) | start `rt:0x83be0`, end `rt:0x83c40`, resume `rt:0x83c50` | established |
+| PALE_CHECK `0xffffff90` | `msr[1640]` | bit 56 = 1; bit 57 = 0; bit 4 = 0; bit 53 = 0; bits 49:9 = min-state pointer, non-zero | established (tests), inferred (meaning of the bits) |
+| same | `msr[1643]`, `msr[0]`, `msr[1641]`, `msr[1642]` | PAL scratch for `r29`, `r30`, `r31`, predicates | established (stores), inferred (role) |
+| same | `msr[1715]` bits 15:8 against `cpuid[3]` bits 31:16 | PAL_B revision not below the gate | established |
+| PAL_B `0xffeca570` | `cr.ipsr` bit 13; `msr[1283]` bit 63 | ipsr.ic = 1 for `sal_probe` (virtual SAL call), taking `0xffed3920` | established (branch), inferred (that sal_probe runs with ic = 1) |
+| same | `msr[1237]` bits 2, 3, 4, 7; `msr[1152]` bit 18; `msr[1572]` bit 18; `msr[1728]`, `msr[1730]` | meaning unknown; log them | established (reads), unknown (meaning) |
+| classifier `0xffec9b50` | `msr[1505]` to `msr[1512]` | `(w & 0xc00001) == 0x400001` (1505 to 1508) or `(w & 0x30001) == 0x10001` (1509 to 1512) requests a rendezvous | established (tests), unknown (meaning) |
+| decoders `0xffe99bc0` | `msr[1558]` bit 13 (valid), bits 20:16 (cause), 25:21 (structure), bit 30 (expected), bit 41, bit 5 | all unknown; the cause code decides cm and us | established (reads), unknown (values) |
+| same | `msr[1417]`, `msr[1087]`, `msr[1039]`, `msr[1537]` bit 0, `msr[1282]`, `msr[1279]` bit 23, `msr[1779]`, `msr[1168]` | bus bits of `msr[1417]` (51 to 54 and the masks `0x7ff00000`, `0xff00000000`, `0x3de00000`, `0x2100000`, `0x40100`, `0x3c0f0`, `0x80200`, `0x7f00000000`) feed bc, me and the cm/us counters | established (reads), unknown (values) |
+| PAL to SAL | `r20` = 1, `r16`, `r17`, PSP `r18`, `r19` | PSP us (9) = 0, cm (18) = 0, bc (61) = 1, mn (5) = 1, mi (12) as the model decides | established (layout), inferred (bc/mi for this fault) |
+| SAL record | `+0x568..+0x588` (`r16`..`r19`/PSP at `+0x578`), `+0x1a0` IIP, `+0x1a8` IPSR, `+0x1b8` XIP, `+0x1c0` XPSR; IIP inside `[rt:0x83be0, rt:0x83c40]` | IIP before and after rewrite to `rt:0x83c50` | established |
+| SAL | return of `0xffa07230` (4 = resume, 2 = resume new context), `B+0x4d8+slice`, `B+0x53c8` (0), `B+0x5308+slice*8` (probe address), `B+0x5328+slice*8` | 4; flag 1; 0 | established |
+| SAL to PAL | `PAL_MC_ERROR_INFO` (25) summary in `r9`, then per-structure calls; `PAL_MC_CLEAR_LOG` (21); `PAL_MC_RESUME` (26) with `r29` = 0, `r30` bit 63 set, `r31` = 0 | status 0 from the first two; resume never returns | established |
+| PAL resume `0xffea84c0` | `msr[1664]` bit 0, `msr[1640]` bit 6 to `msr[1416]` bit 16 (poll bit 40), `msr[1776]`, `msr[1464]`, `msr[1283]` | restored from the min-state area | established |
+| SHub, handler | per-slice scratch word `0x1_5003_15e0` (slice 0) or `0x1_5003_1590` (slice 2), bit 44, read and written by `0xffa03c60` (slices 1 and 3 have a zero table entry; form unknown); RTC counter `0x1_101c_0000` and period `0x1_1006_0280` (timestamps, `0xffa0a4c0`) | plain storage; counter advancing | established |
+| SHub, conditional | `0x1_2001_0100` bit 3 (read only if ipsr.ic = 0) | 0 | established |
+| SHub, not expected | PI error state, `0x1_101d_0080` (scratch1 bit 41), the rendezvous IPI `0x1_1000_0380` | only on the failure path (`0xffa217c0`, handler tail) or rendezvous | established (code shape) |
+
+Reading the log: `msr[1640]` bit 56 clear ends in PAL's common error exit (r30 = 2); bit 57 set is a check inside PAL; bit 53 set forces uncontained; a zero pointer in bits 49:9 ends with r13 = 10; PSP us = 1 or cm = 1 or an IIP outside the range means SAL does not resume and hands the check to the OS_MCA entry or its fatal path.
 
 ## 5. Processor ids (cr.lid) and IPI pids
 
@@ -184,7 +225,7 @@ The SHub's own rule for choosing the slice from the pid, and whether it compares
 - The hook at `0xffa1f7b0` that can override the boot-processor choice.
 - Processor state at `start_ap` entry (PSR, RSE).
 - Whether hardware sets `cr.irr0` bit 0 for a vector-0 external interrupt (the PROM's thread park depends on it; irrelevant on a processor without threads).
-- The region-walk inside `0xffa07230` and `0xffa03c60`. The PAL half of the machine-check hand-over (`PALE_CHECK` to `PAL_MC_RESUME`) is read in [pal-b-halts.md](pal-b-halts.md#pale_check-and-the-machine-check-hand-off); what an empty-slot bus error latches for PAL to call it contained is still open there.
+- The `0xffa07e90` per-type record byte used when the region match fails. The PAL half of the machine-check hand-over (`PALE_CHECK` to `PAL_MC_RESUME`) is read in [pal-b-halts.md](pal-b-halts.md#pale_check-and-the-machine-check-hand-off); what an empty-slot bus error latches for PAL to call it contained is still open there.
 - What the SHub does with the pid to pick a slice, and what `msr[1559]` bits 21:19 hold on hardware ([Processor ids](#5-processor-ids-crlid-and-ipi-pids)).
 - `msr[1559]` bits 26:22 on hardware.
 
@@ -215,7 +256,7 @@ Independent re-read on 2026-11-16 of commit `9265099`. PROM side: Ghidra (`--sn2
 - The `0xffa02ff0` path: the rendezvous and OS hand-over are conditioned as now written; INIT is sent to processors whose state word has bits 19:18 = 2 and bit 9 clear, and what those bits mean is unknown (the earlier "not reporting" was a guess). The deadline is computed in `0xffa04220`; where it is waited on was not read.
 - The "byte 8" wording for the feature descriptor now says mask byte 0x08.
 
-**Not checked.** The A24 write of `rtc_ctl = 0x1_0000_0041` (cited from the reset page), the Linux-side `ia64_mca_init` ordering beyond the calls named, `0xffa07230` and `0xffa03c60`, the writers of `rec+112/120`, the `0xffa1f7b0` hook, `msr[1559]` on hardware, and the INIT path past its entry.
+**Not checked.** The A24 write of `rtc_ctl = 0x1_0000_0041` (cited from the reset page), the Linux-side `ia64_mca_init` ordering beyond the calls named, the writers of `rec+112/120`, the `0xffa1f7b0` hook, `msr[1559]` on hardware, and the INIT path past its entry.
 
 ### Review of section 5 (processor ids)
 

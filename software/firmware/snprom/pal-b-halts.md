@@ -858,6 +858,7 @@ In the handler region (`0xffec0000` to `0xffed5000`) and the decoders, **cm is s
 
 ### Not settled
 
+- The SAL side of the same hand-off (region match, the recovery conditions and what to log) is read in [smp-and-timers.md](smp-and-timers.md#the-empty-pci-slot-recovery); the entry tests of msr[1640] and the stage 1 tests of msr[1640], msr[1505] to msr[1512] were re-read against the listing and agree.
 - The meaning and hardware source of msr[1640] bits 4, 7, 53, 56 and 57 and of msr[1558], msr[1417], msr[1087], msr[1039], msr[1537], msr[1282], msr[1279], msr[1779], msr[1168] and msr[1505] to msr[1512]; which combination an empty-slot bus error produces.
 - Whether `p1` and `p2` at PALE_CHECK entry carry information the hardware sets, or are just preserved.
 - The PALE_INIT exit, PAL_MC_REGISTER_MEM, and the bit-57-clear and nested-check paths (`0xffed47f0`, `0xffed4510`).
