@@ -814,9 +814,9 @@ Slot range and ioboard switch (`pic_attach2`, from `0xffb6ea10`): the record's i
 `0x6d`, `0x6f` or `0x76`, else "%s: Unknown ioboard: 0x%x" and this bus is not attached (established; the source of the byte and the abort are
 [below](#where-the-ioboard-type-comes-from-and-what-an-unaccepted-one-does)). The valid-device mask and slot bytes are stored per type: `0x76`
 mask 1; `0x6d` mask 3 on the bus index 0 and mask `0xb` on bus index 1; `0x23`, `0x3d` and `0x6f` mask 3, or mask `0xf` when the record's
-brick-bus word (`+0xbc`) is 1 and the base-I/O test `0xffb32470` (a klconfig board with flag bit 4 set on this node or its parent) is true
-(established for the stores). `+0xbc` is `pci_widget_to_bus` (`0xffb6adb0`, a 19-row table at `0xffc2b2d8` keyed by ioboard type and the widget
-number at record `+4`) plus record `+0x108` (`0xffb6d550`: the table result is added to `+0x108` only when it is above zero; that `+0x108` is the bus index was not traced); for `0x6f` the table gives 1 for widget 15 and 0 for the others, and 0 prints "pci_widget_to_bus() bad
+brick-bus word (`+0xbc`) is 1 and the base-I/O test `0xffb32470` (a klconfig board with flag bit 4 set on this node or its partner) is true
+(established for the stores; [what sets the flag and `+0xbc`](#what-widens-the-device-mask-the-ix-brick-base-io-bus-sal-504)). `+0xbc` is `pci_widget_to_bus` (`0xffb6adb0`, a 19-row table at `0xffc2b2d8` keyed by ioboard type and the widget
+number at record `+4`) plus record `+0x108` (`0xffb6d550`: the table result is added to `+0x108`, the bus index, only when it is above zero); for `0x6f` the table gives 1 for widget 15 and 0 for the others, and 0 prints "pci_widget_to_bus() bad
 ioboard %d widget %d slab %d" and leaves `+0xbc` zero. Earlier text on this page and in the base I/O page said bus 0 gets 2 slots and bus 1 gets 4: the
 test is on `+0xbc`, not on the bus index alone, so with widget 15 it is the bus-index-0 PIC bus that gets slots 0 to 3 (inferred: the widget number
 read at record `+4` is the PIC's widget, not decoded from the bus-list builder).
@@ -1038,13 +1038,72 @@ Independent re-read on 2026-11-16 in the Ghidra decompiles of `pic_attach2` (`0x
 
 **Changed.** Row 7's remark on a shifted bus number: the term is `(argument & 0xff00) << 48`, which lands in bits 63:56 and is zero for bus 0 or 1. The IOC endianness sentence: `0xffb3f810` makes an unconditional first method call for every device it attaches, so no IOC-specific endianness step is shown.
 
-**Slot ranges (not rewritten in the paragraph above; a separate trace of the ioboard byte is editing it).** The decompile gives, per ioboard type: `0x23`, `0x3d`, `0x6f`: slots 0 to 1 (mask 3), widened to slots 0 to 3 (mask `0xf`) only when the record's field at `+0xbc` is 1 (the value `0xffb6d550` returns; read as "the second bus" but not shown) **and** `0xffb32470` is true, i.e. a node record with flag `0x10` in byte `+9` exists for the NASID or its partner; `0x6d`: bus 0 mask 3, bus 1 mask `0xb` (slots 0, 1 and 3); `0x76`: slot 0 only, both buses. The "base-I/O test" reading of `0xffb32470` stays inferred.
+**Slot ranges (not rewritten in the paragraph above; a separate trace of the ioboard byte is editing it).** The decompile gives, per ioboard type: `0x23`, `0x3d`, `0x6f`: slots 0 to 1 (mask 3), widened to slots 0 to 3 (mask `0xf`) only when the record's field at `+0xbc` is 1 (the value `0xffb6d550` returns; read as "the second bus" but not shown) **and** `0xffb32470` is true, i.e. a node record with flag `0x10` in byte `+9` exists for the NASID or its partner; `0x6d`: bus 0 mask 3, bus 1 mask `0xb` (slots 0, 1 and 3); `0x76`: slot 0 only, both buses. The "base-I/O test" reading of `0xffb32470` is now read in full: see the section linked from the slot-range paragraph above.
 
 **Where the ioboard halfword comes from.** `pic_attach2` stores `0xffac0420(NASID)` at record `+0x104`. For an even NASID that calls `0xffa80490` and then `0xffa7e6d0`, which returns a cached value or asks the L1 with request code `0x13` (`0xffa7cbe0`, the same target `0x4ffff000` as the brick-type query of `main_three` that uses request code 3 in `0xffa7ca10`); a reply character is lower-cased; if request `0x13` fails with -`0x65` the code falls back to the request-3 brick-type query. Under the simulator signature the value is `0x3d` for both. So the halfword is the L1's answer to a different request than the byte `main_three` tests, with a fall-back to the same one. Whether a 350's L1 answers request `0x13`, and with what, is not settled; if it fails, an `F` reply to request 3 gives `0x66` here too and the attach prints "Unknown ioboard". The odd-NASID path (`0xffa7d760`) uses the same query with a different cache slot and mask. Inferred from the decompile only; the meaning of request codes 3 and `0x13` is not read.
 
 **Not confirmed.** "No PCI devices at all is not fatal": the slot loops tolerate absent slots, but the whole of `0xffb2be00` and the interrupt and error set-up that follows were not read end to end. Slot-device register values (Device registers, BAR sizing) were not traced.
 
 **Grades.** Unchanged, except that the address formula, the empty-slot rule, the device-ID checks and the ioboard list are now read in the decompile twice and stay established.
+
+### What widens the device mask: the IX-brick base I/O bus (SAL 5.04)
+
+Read on 2026-11-22 in a flat `ia64-linux-gnu-objdump` listing (base `0xffa00000`) of `shub1snprom.bin` from snprom 10.54 build 70399, sha256
+`51ccf9ad830b85ee6c88d6d73d2512322a86454e63db51c57454679283a34617`. The routine at `0xffb32470` is in this image as described, so no other held
+image was read. Grades: the code facts are established for this image; what a model must present follows from them and is a software expectation.
+
+**Result.** For the IO9 bus of an IX-brick the PROM widens the mask from 3 to `0xf` when three things hold, all derived by the PROM itself:
+the PIC is on widget 12 (the table below gives that bus number 1 on its first head); the L1 reports the brick as `=` (`0x3d`); and an IOC4
+(vendor `0x10a9`, device `0x100a`) answered the configuration read in one of the four slots the PROM probes. The "base-I/O test" is not a register,
+an L1 value or a presence pin: it is a flag the PROM's own probe sets in the klconfig board record once it has found an IOC4. Slots are device numbers
+minus 1 (type 0 address `0x20000 + (slot + 1) * 0x1000`, from `0xffabee80`), so mask 3 covers devices 1 and 2 and mask `0xf` covers devices 1 to 4.
+The IO9 devices (IOC4 device 1, SCSI device 3, Ethernet device 4, [IX-brick page](../../platforms/bricks/ixbrick.md)) are slots 0, 2 and 3.
+
+| Step | Site | What the listing shows | Grade |
+|---|---|---|---|
+| 1 | `0xffb6ea10` switch, entry `0xffb6eae0` for `0x23`, `0x3d`, `0x6f` | record bytes `+0xe8` = 0, `+0xe9` = 1, `+0xea` = 1 and the 4-byte word at `+0xa8` = 3 (the mask). `+0xe8`/`+0xe9` read as first and last allowed slot | established (stores); field names inferred |
+| 2 | `0xffb6eb60` | reads the 4-byte word at `+0xbc`; any value other than 1 goes on with mask 3 | established |
+| 3 | `0xffb6f190`, `0xffb6f1c0` | with `+0xbc` = 1, calls `0xffb32470(halfword at +0x102)` (the NASID); zero keeps mask 3; nonzero stores `+0xe9` = 3, `+0xa8` = `0xf`, `+0xea` = 3 | established |
+| 4 | `0xffb6e04c` to `0xffb6e080` | `pic_attach2` stores the result of `0xffb6d550(record)` at `+0xbc`. That routine adds the head number (`+0x108`) to `pci_widget_to_bus(type at +0x104, widget at +4, slab)` when the table value is above zero | established |
+| 5 | `0xffb6dcbc`, `0xffb6dcf0` | `+0x108` is the third argument of `pic_attach2`: bus index 0 or 1 from `pic_attach` (`0xffb6d740`, one call per head, window and window + `0x800000`) | established |
+| 6 | table at `0xffc2b2d8`, 19 rows of 68 bytes (type, then 16 words by widget) | type `0x3d` (and `0x23`): widget 12 gives 1, widget 13 gives 5, widget 15 gives 3, others 0. So `+0xbc` is the PCI bus number 1 or 2 behind widget 12, 5 or 6 behind widget 13, 3 or 4 behind widget 15. Only widget 12, head 0 yields 1. This matches the Linux numbering in [the Altix 3000 wiring section](../../platforms/sn2/altix-3000.md#ix-brick-wiring) | established |
+
+**The test at `0xffb32470`, `F(nasid)` (established).** It walks the klconfig board records of the node `nasid` (`0xffaa8a40` gives the first, `0xffaa8dc0` the
+next through the offset at `+0xe4`) and returns 1 as soon as a board has bit 4 (`0x10`, `LOCAL_MASTER_IO6` in the public klconfig header: "master io6 for
+that node") set in its flags byte (`+9`). If none has, it takes a halfword at `+14` of the node's entry in the PROM's node table
+(`[[[0x1000040] + 0x40] + 0x70][nasid * 8]`, read with data translation off), and if that is not `-1` repeats the walk on that node (what that node is, a
+pair partner or similar, is inferred). Otherwise it returns 0. Five direct callers: `0xffb48afc`, `0xffb48dfc`, `0xffb48f1c` (the same gate in a sibling attach
+routine, not identified), `0xffb6ef0c` and `0xffb6f1ac`; `0xffb327a0` (one caller, `0xffb29a8c`) returns 1 for ioboard types `0x7b`, `0x6d` and `0x300` and tail-calls it for every other type.
+
+**Who sets the flag (established for the one site found).** `0xffb32680(nasid, widget, slot)` ORs `0x10` into `+9` of the first board on the node with
+`+10` (`brd_slot`) equal to the widget and a board type in class `0x70`, and writes the widget and the slot plus 1 into the two nibbles of byte `+15`.
+Its only caller is `0xffb36ef6`, reached from the per-slot probe `0xffb36020` when the configuration word read at the slot has vendor `0x10a9` and
+device `0x100a` (an IOC4). The board is the I/O board `bridge_discover` built for that PIC bus: `brd_slot` is the widget number
+([klconfig](../../platforms/sn2/klconfig.md#the-io-boards-on-a-one-node-altix-350-with-io10)) and the IX-brick type byte `0x3d` maps to board type `0x77`, which is in class `0x70`.
+A search of the whole image for `adds rN=9,rM` followed by a byte store, and for `or rN=16,rM`, found no other setter of that bit; `0xffb32750` is the one.
+The search covers immediate forms only.
+
+**Order, which is why mask 3 does not hide the IOC4.** `pic_attach2` fixes the probe range itself (`+0xf0` = 0 at `0xffb6dc56`, `+0xf1` = 3 at `0xffb6dc90`) and runs
+the probe, BAR-sizing and Device-register loops over slots 0 to 3 (`0xffb6e880`, `0xffb6e920`, `0xffb6e9c0`) before the type switch at `0xffb6ea10`. So the IOC4 in slot 0
+is found, the flag is set, and the later `F` call sees it. The mask and range bytes (`+0xa8`, `+0xe8` to `+0xea`) are read afterwards: the resource count
+`0xffb341b0` and the slot accessor `0xffb35b40` filter on the range bytes, and `0xffb6ede0`/`0xffb6ef0c` use the same `+0xbc` and `F` gate to pick between
+two sets of `0xffb33420` calls (four with argument 4, against a different mix of 4 and 2; not traced further).
+
+**Other types, for the record (established).** `0x76`: `+0xa8` = 1, `+0xe9` = `+0xea` = 0 (`0xffb6f230`). `0x6d`: bus index 0 gets mask 3, slots to 1; bus index 1 gets
+mask `0xb`, slots to 3, and `+0xec` = 4 (`0xffb6f2a0`). No `F` test for those.
+
+**What a model must present for all three IO9 devices to be handled as slots 0, 2 and 3.**
+
+1. The IO9's PIC on widget 12 of the IX-brick crossbar, identification `0xd102` manufacturer `0x24` as before, and its first head (the window at the widget base, not base + `0x800000`). Widget 13 or 15, or the second head, gives `+0xbc` other than 1 and mask 3.
+2. The L1 answering `=` to request `0x13` (and request 3), so the type halfword is `0x3d`.
+3. Type 0 configuration reads of that head at `+0x21000` (device 1) to return IOC4 `10a9:100a`, before `pic_attach2` reaches the switch. Reads at `+0x23000` (device 3) and `+0x24000` (device 4) to answer with the SCSI and Ethernet functions (the 3300 capture's IDs are inferred for this brick: QLogic `1077:1216`, Broadcom `14e4:1645`).
+4. Nothing in klconfig has to be faked: the PROM builds the `0x77` board with `brd_slot` 12 on the host NASID when widget 0 of the IX crossbar reads as a crossbar part (`0xd000` or `0xd100`).
+
+**Not verified.** (a) What `0xffaa8a40` returns beyond "the first board record" (its body was read only as far as the address construction at
+`node + 0x1000038`), and what the node-table halfword at `+14` names. (b) The downstream effect of mask 3 on slots 2 and 3: the stores, the range filters and the
+`F` gate are read; that the QLogic and Broadcom devices are then left without windows or attach is the expectation, not something traced to a result.
+(c) Where the widget byte at `+4` comes from (read from the bus-list entry at `+40`; that it is the crossbar port number is inferred from the 3300 capture's "widget 12").
+(d) The IDs in item 3 for device 3 and 4 beyond the one capture. (e) Images other than 10.54 were not read.
 
 ## PIC widget space and PIO windows
 
