@@ -3,7 +3,9 @@
 Does any shipped SGI PROM or IRIX tool support a little-endian MIPS machine, and what can change a machine's byte order? This page
 reads 170 PROM images and the IRIX 6.5 and 6.5.30 boot, diagnostic and flash binaries for that question only. Windows NT for MIPS
 (little-endian kernel, little-endian ARC firmware) is the reason to ask. Labels follow [AGENTS.md](../../AGENTS.md): established is a
-code path read as a listing, inferred is a reasoned reading, unknown is not settled.
+code path or string read in a listing, inferred is a reasoned reading, unknown is not settled. The image totals (170 images, `jr ra`
+counts, absence of a pattern) are the result of one scan, described under "Images read"; a pattern that was not found is inferred
+absent, not established absent.
 
 ## Answer
 
@@ -16,7 +18,7 @@ code path read as a listing, inferred is a reasoned reading, unknown is not sett
 - **Three families carry a reset-time test of `Config.BE`, and they do three different things.** The Crimson PROM (IP17) continues
   its start-up on a little-endian CPU, after storing one byte to a board register; the Indigo (IP20), Indigo2 (IP22) and Indy (IP24) PROMs rewrite the CPU-mode EEPROM back to
   big-endian and restart the CPU. The Indigo2 IMPACT, POWER Indigo2, Octane, O2 and every Origin and Fuel PROM never test it.
-  Established for each (listings below).
+  Established for each test (listings below); what each does afterwards is as graded below.
 - **The IP17 PROM is the only shipped firmware that is aware of running little-endian.** It tests the CPU's byte order 137 times,
   indexes two register-address tables by it, ships `endian` and `e2endian [big|little]` monitor commands, and refuses to load an
   executable of the wrong byte order. Established.
@@ -46,8 +48,9 @@ or IP25 CPU PROM image is held; the IRIX `symmon` boot files for IP19, IP21 and 
 as held in [prom-images.md](../../references/prom-images.md) but not in the published catalogue (an Indy 5.3 dump and an Octane 4.9
 image) were not read here.
 
-Method: every image was scanned for the encoding direction, for `mfc0`/`mtc0` of Config (CP0 register 16) and the instructions that
-follow, for `xori ...,0x8400`, and for strings; the listings quoted below were produced with the MIPS `objdump` from the toolchain
+Method (the scan result behind every count and "none found" on this page): every image was scanned for the encoding direction, for `mfc0`/`mtc0` of Config (CP0 register 16) and the instructions that
+follow (a window of 10 to 40 instructions), for `xori ...,0x8400`, and for strings. A pattern search finds only code whose
+instructions match the pattern as written, so an absence is inferred; the listings quoted below were produced with the MIPS `objdump` from the toolchain
 container and read by hand.
 
 ## IP17 (Crimson), PROM 4.0.3: the little-endian path
@@ -63,8 +66,9 @@ The little-endian awareness is pervasive and read, not guessed:
 
 - `0xbfc11ac8` returns 1 when Config bit 15 is clear (`mfc0; srl 15; andi 1; xori 1`) and is called from 137 sites. Established.
 - Two parallel tables of CPU-board and I/O register addresses sit at `0xbfc39960` (big-endian view) and `0xbfc39988`
-  (little-endian view), 11 pointers each; the little-endian pointers are the big-endian ones with the byte lane swizzled
-  (`+3` for byte registers, `+4` for the `0xbd8...` and `0xbd0...` entries, `0xbf200001` becomes `0xbf200002`). Code picks the table
+  (little-endian view), 11 pointers each; 10 of the 11 little-endian pointers are the big-endian ones with the byte lane swizzled
+  (`+3` for byte registers, `+4` for the `0xbd8...` and `0xbd0...` entries, `0xbf200001` becomes `0xbf200002`); the last pair is not a swizzle
+  (big-endian `0xbf200002`, little-endian `0xb7f40000`). Code picks the table
   with `0xbfc11ac8` (for example `0xbfc0c6d0` to `0xbfc0c6fc`). Established for the selection; the meaning of each register is not read.
 - The monitor command table (`0xbfc38560` on) has `endian` (handler `0xbfc0c7ac`, prints which order the CPU is in from the strings at
   `0xbfc39d60` and `0xbfc39d68`) and `e2endian` (handler `0xbfc0c7f4`, help text "e2 endian bit: e2endian [big|little]"). With no
@@ -74,7 +78,7 @@ The little-endian awareness is pervasive and read, not guessed:
   `0xbfc0c880`, both in the command handler. Established. That the byte is the CPU-board mode EEPROM's endian bit is inferred from the
   command name and the string "e2 endian bit".
 - The program loader rejects the wrong order: "not little endian byte order" at `0xbfc38454` and "not big endian byte order" at
-  `0xbfc38478`, and a warning "IO3B needed for little endian IO" at `0xbfc39a8c`. Strings observed; their call sites were not read.
+  `0xbfc38478`, and a warning "IO3B needed for little endian IO" at `0xbfc39a8c`. The strings are established; their call sites were not read, so what the checks do is unknown.
 
 So the Crimson PROM is endian-neutral at the level of its own code (it addresses registers through the two tables) and can be
 told to restart the other way with `e2endian`. Nothing was read that tells whether the IP17 PROM would complete a boot little-endian;
@@ -113,70 +117,89 @@ were read at the routine and the callers; their rest-of-image scans are the patt
 
 What a little-endian CPU does with these PROMs: the reset-path code up to the test is word-oriented and runs the same either way (the
 PROM's own instruction words are encoded big-endian); the flip routine uses word loads and stores only. So the stock behaviour on a
-machine that comes up little-endian is a restart into big-endian. A third test of that is not available (nobody ran it); the code
-supports the reading. Inferred.
+machine that comes up little-endian is a restart into big-endian. That reading is inferred from the code (it XORs `0x8400` into word 0 and stores `0x10000`); nobody ran it.
 
 ### The "Big Endian" write to the MC mode register
 
 IP22 5.1 and 5.3, IP24 5.0 and 5.3, IP26 and IP28 contain the same diagnostic helper, with the format string "basic_DMA_setup: set
-CPUCTRL0 = %x (Big Endian)". It is a read-modify-write of the MC register at `0xbfa00004`: set bit 1 ("refresh 4 lines"), set or
-clear bit 14 ("Snoop"; the bit names are from the format strings, so inferred), then **clear bit 18** and print the result with "(Big Endian)". Addresses: IP22 5.1 `0xbfc096a4` (the
-`and`-mask build), IP22 5.3 `0xbfc0a56c` to `0xbfc0a63c`, IP24 5.0 `0xbfc09bb4`, IP24 5.3 `0xbfc09c74`, IP26 `0xbfc0799c`, IP28
-`0xbfc094a0`. The same function is linked into the IRIX 6.5-base `ide.IP22` at `0xa8486b80` to `0xa8486ca0`. Bit 18 is the MC's
-CPU-little-endian bit in the specification the other pages cite; here the PROM clears it and labels the result big-endian, so any
-path through this helper forces the MC to big-endian regardless of the CPU. Established (code); that bit 18 is the endian bit is the
-specification's statement and the string agrees (inferred as to the bit number from the string).
+CPUCTRL0 = %x (Big Endian)". It is a read-modify-write of the MC register at `0xbfa00004`: set bit 1 (the string before it says
+"refresh 4 lines"), set or clear bit 14 (the string says "Snoop"), then clear `0x40000` (bit 18) and print the result with "(Big
+Endian)". Addresses: IP22 5.1 `0xbfc096a4` (the `and`-mask build), IP22 5.3 `0xbfc0a56c` to `0xbfc0a63c`, IP24 5.0 `0xbfc09bb4`, IP24
+5.3 `0xbfc09c74`, IP26 `0xbfc0799c`, IP28 `0xbfc094a0`. The same function is linked into the IRIX 6.5-base `ide.IP22` at
+`0xa8486b80` to `0xa8486ca0`. Established (the read-modify-write).
+
+What bit 18 means is not settled by the code. The public Linux `mc.h` (v5.3) defines `SGIMC_CCTRL0_ESNOOP` as `0x4000` (bit 14),
+`SGIMC_CCTRL0_LENDIAN` ("put MC in little-endian mode") as `0x20000` (bit 17) and `SGIMC_CCTRL0_WRESETDMEM` ("warm reset, destroys
+mem contents") as `0x40000` (bit 18). So the bit the helper clears is, by that header, the warm-reset-destroys-memory bit, not the
+little-endian bit. The label "(Big Endian)" in the format string is the only thing tying the clear to byte order; that tie is
+inferred from the string alone, and the endian meaning of the clear is unknown.
 
 ### The Indigo's NT-flavoured boot defaults
 
 The Indigo PROM 4.0.5D Rev A contains a table of pointers at `0xbfc45c40` to `0xbfc45c4c` to four default values: two copies of
 `scsi()disk(1)rdisk()partition(1)`, `osloader.exe` and `\nt\system\ntoskrnl.exe`. They are in the same order as the four variable
 descriptors `SystemPartition`, `OSLoadPartition`, `OSLoader`, `OSLoadFilename` (descriptors at `0xbfc45760`, `0xbfc4578c`,
-`0xbfc457b8`, `0xbfc457e4`). The pairing is by order, so inferred; the strings are observed. The table does not appear in any other
+`0xbfc457b8`, `0xbfc457e4`). The pairing is by order, so inferred; the strings are established. The table does not appear in any other
 PROM image (no other image contains `ntoskrnl`, `osloader.exe`, `winnt` or `windows nt`). The same PROM builds the ARC system
-parameter block (next section) and prints "Setting endianness." as one of its start-up progress lines, which is the step that holds
-the Config.BE test.
+parameter block (next section). The string "Setting endianness." exists in the image at `0xbfc42bb0`, among the start-up progress lines,
+but no code reference to it was found, and the Config.BE test runs before any console output, so the string is not tied to the
+test.
 
 ## ARC parameter block and vectors in the MIPS PROMs
 
-Searching for the constant `0x53435241` (the ARC signature, `lui 0x5343; ori 0x5241`, or as a data word) finds a builder in: IP20
-4.0.5D (`0xbfc28644`), IP26 (`0xbfc18894`), IP28 (`0xbfc165e8`), all 18 IP32 images, IO6, and the IP27 and IP35 payloads (as data
-words). It is not found in the IP22, IP24 or IP30 images by this pattern, which says nothing about their blocks (built another
-way). Read in full:
+Searching for the constant `0x53435241` (the ARC signature: `lui 0x5343` and `ori 0x5241` within 40 instructions of each other, or a
+data word) finds a builder in: IP20 4.0.5D (`lui` `0xbfc28644`, `ori` `0xbfc2864c`), IP22 5.3 E (`0xbfc376b4`, `0xbfc376c8`), IP24 5.3
+B10 (`0xbfc31974`, `0xbfc31988`), IP26 (`0xbfc18894`), IP28 (`0xbfc165e8`), IP30 4.17 (`lui` `0xbfc4e564`, `ori` `0xbfc4e58c`), all 18
+IP32 images, IO6, and the IP27 and IP35 payloads (as data words). A first pass that required the two instructions to be adjacent
+missed IP22, IP24 and IP30, which interleave other work between them. IP22 5.1, IP24 5.0 and the older IP30 images were not
+re-searched with the wide window. Read in full:
 
 - IP20 4.0.5D, `0xbfc28644` on: stores at `0xa0001000` signature, length `0x48`, version `1` (halfword at `+8`), revision `10`
   (halfword at `+0xa`), restart block 0, debug block 0, general-exception vector `0xbfc06ab0`, TLB-miss vector `0xbfc06b84`, then
-  the firmware-vector length `0x88`. Established.
+  the firmware-vector length `0x88`: a 34-slot vector. Established.
+- IP22 5.3 E (`0xbfc376ac` to `0xbfc37720`) and IP24 5.3 B10 (`0xbfc3196c` to `0xbfc319e0`), identical in shape: the same `0x48`,
+  version 1, revision 10, restart and debug 0, two exception-vector pointers into the PROM (`0x9fc36350`, `0x9fc364a4` in IP22;
+  `0x9fc30590`, `0x9fc306e4` in IP24), firmware-vector length `0x8c` (35 slots) with the vector at `0xa0001800`, private-vector
+  length `0x34` at `0xa0001c00`, adapter count 0. A `0x34`-byte table is copied to `0xa0001c00` just before. Established.
 - IP32 4.18, `0xbfc207d8` on: the same `0x48`, version 1, revision 10, restart and debug 0 and `+0x2c` (adapter count) 0; it
-  then copies a `0x8c`-byte vector to `0xa0001800` and a `0x34`-byte table to `0xa0001c00`. Established.
+  then copies a `0x8c`-byte (35-slot) vector to `0xa0001800` and a `0x34`-byte table to `0xa0001c00`. Established.
+- IP30 4.17: the signature is stored with a doubleword store at `+0x1000` of a base built with `dsll32` (`0xbfc4e594`), next to a
+  length value of 144 (`0xbfc4e560`); the rest was not read.
 
-So the MIPS PROMs and the Visual Workstation PROM use the same block layout (below), differing in vector length and in the
-exception-vector fields. All of these are big-endian words on the MIPS side; a little-endian MIPS client would read the byte
-swapped. No MIPS PROM holds a byte-swapped or dual-endian copy of any of it. Established (negative result: no swapped copy of the
-signature word `0x41524353` or `0x52414353` found by data search in the scanned images; not exhaustive for other layouts).
+So the MIPS PROMs and the Visual Workstation PROM use the same block layout (below), differing in vector length (34 slots on IP20,
+35 on IP22, IP24 and IP32, as on the Visual Workstation) and in the exception-vector fields. All of these are big-endian words on
+the MIPS side; a little-endian MIPS client would read them byte swapped. No swapped copy of the signature word (`0x41524353` or
+`0x52414353`) was found by a data search of the scanned images; that is inferred absent, and the search does not cover other
+layouts.
 
 ## IP26 and IP28: no test, constant Config writes
 
 IP26 (POWER Indigo2, R8000) and IP28 (Indigo2 IMPACT, R10000) never read bit 15 of Config in the reset path. IP28 writes Config
 with the constant `2` at `0xbfc003cc` and `3` at `0xbfc009f4` (bit 15 is 0 in both), reads Config at `0xbfc00478` (masks bit 13) and at `0xbfc00ad0` (masks bits 18:16) for sizing, and has two read-modify-write helpers that replace only bits 2:0 (`0xbfc1e77c`
-sets 3, `0xbfc1e798` sets 2, both masking with `-8`) and a bare `mtc0 a0,$16` wrapper at `0xbfc21e50` whose callers were not traced.
+sets 3, `0xbfc1e798` sets 2, both masking with `-8`) and a bare `mtc0 a0,$16` wrapper at `0xbfc21e50`. Neither `0xbfc21e50` nor `0xbfc1e798` has a direct `jal` or `j` caller (`0xbfc1e77c` has two, at
+`0xbfc00828` and `0xbfc02208`), so they are reached some other way or not at all; unknown.
 There is no `xori 0x8400` and no access to MC offset `0x30` or `0x34` in either image. Established for the writes. Where the R10000
 gets its mode word on the IP28 is not in the PROM (unknown). IP26 contains no `mtc0` of Config at all (seven reads of register 16
 only, in cache-size code).
 
 ## IP30 and IP32 (Octane, O2): no test
 
-- IP30 (21 images, 2.15 to 4.17): the reset path writes Config with `2` at `0xbfc0072c` (4.17) and never reads bit 15; there is no
-  restart or mode write. The strings `LITTLE`, `BIG` and `ENDIAN` in the PROM (file offset `0x97e68` in 4.17) are the field names the
+- IP30 (21 images, 2.15 to 4.17): the reset path writes Config with `2` at `0xbfc0072c` (4.17) and never reads bit 15. Later copies of
+  the reset code write Config at `0xbfc30504` and `0xbfc309b4`, and other Config writes sit at `0xbfc17644`, `0xbfc17660`, `0xbfc4b554`,
+  `0xbfc4b570` and `0xbfca5ee8`; none of those was read here. No restart or mode-word write was found, which is
+  inferred, not established. The strings `LITTLE`, `BIG` and `ENDIAN` in the PROM (file offset `0x97e68` in 4.17) are the field names the
   PROM uses when it decodes the Bridge control register (`IO_SWP`, `MEM_SWP` and neighbours), not CPU byte order. Established.
 - IP32 (18 images, 2.3 to 4.18): the start-up replaces Config bits 2:0 with 3 (`0xbfc0073c` to `0xbfc00750` in 4.18, a
-  read-modify-write that keeps bit 15) and no code tests bit 15. The banner says `PROM Monitor (BE)`. Established.
+  read-modify-write that keeps bit 15) and no code tests bit 15. The banner says `PROM Monitor (BE)`. Established for the start-up
+  write. Other Config writers exist and were read only at these sites: cache-bit read-modify-writes at `0xbfc01b50` (clears bits 12 and
+  3) and `0xbfc01c30` (clears bit 12), both keeping bit 15, and bare `mtc0 a0,$16` wrappers at `0xbfc0722c` and `0xbfc0e0f0` whose callers
+  were not traced. So "no writer of bit 15 found" here means none that was read, not none in the image.
 
 No writer of the O2 or Octane CPU mode word, and no cold-reset request that could reload a different one, was found in either family's
-PROM; those two reset paths were not searched exhaustively (CRIME cold-reset and the HEART mode-register reset bits not located in
+PROM (inferred absent, subject to the bare Config wrappers above); those two reset paths were not searched exhaustively (CRIME cold-reset and the HEART mode-register reset bits not located in
 the code). Unknown whether any shipped software exists that issues them.
 
-## IP27, IO6 and IP35: the flash word is compared, never tested for endian
+## IP27, IO6 and IP35: the word in flash is compared, never tested for endian
 
 The Origin 200/2000 node PROM (IP27, 36 images) and the Fuel/Origin 300/3000 PROM (IP35, 31 images) read a CPU mode word from flash,
 write it to Config, read Config back and compare:
@@ -185,30 +208,31 @@ write it to Config, read Config back and compare:
   (`0xbfc00c8c`), compare bits 15:0 (`andi 0xffff` both sides, `bne` at `0xbfc00c94`), then compare bits 24:16 (`srl 16`,
   `andi 0x1ff`, `beq` at `0xbfc00ccc`). A mismatch stores the progress code `0xb4` (`0xbfc00d04`, again at `0xbfc00d80`) and calls the routine at `0xbfc38fe0`, which
   was not read. Established for the compare; unknown for what the routine does.
-- IP35 6.210 payload: the same sequence with the flash word at `0x9000000018000064` (`0xbfc006a8`), `mtc0` at `0xbfc006ac`,
+- IP35 6.210 payload: the same sequence with the word at `0x9000000018000064` (`0xbfc006a8`), `mtc0` at `0xbfc006ac`,
   compare at `0xbfc006bc` and `0xbfc006f4`, failure code `0xb4` stored at `0xbfc00730` and `0xbfc00770`, then a call to `0xbfc50c34` (not read). The word is read at physical `0x18000064`, not
   `0x10000064`. Established. The IP27 4.9 and 5.x PROMs do not write Config at all at reset (their Config reads are the cache-size
   helpers at `0xbfc02ca0` to `0xbfc02ce4`).
 
-The compare includes bit 15, so (if bit 15 of Config cannot be written, inferred) a flash word with bit 15 clear would fail the
+The compare includes bit 15, so (if bit 15 of Config cannot be written, inferred) a word with bit 15 clear would fail the
 compare on a CPU that came up big-endian; the code does not test or select byte order itself. Whether the silicon makes bit 15 writable is not settled by this code (the write-and-compare cannot
 tell); unknown.
 
-**Writers of that flash word.** Neither the PROM nor IRIX's `flash` was decoded all the way to the mode-word store, so what follows
+**Writers of that word.** (The listing shows only an uncached load from `0x...10000064` / `0x...18000064`; that the location is the
+node's flash is the reading other pages give, not something the load shows.) Neither the PROM nor IRIX's `flash` was decoded all the way to the mode-word store, so what follows
 is what the images say they do:
 
 - 16 IP27 PROM images (6.57, 6.60, 6.62, 6.64, 6.69, 6.75, 6.80, 6.94 and 6.103 to 6.156) carry an interactive menu that asks for the secondary cache size, CPU and hub frequency,
   machine type, CPU type, then either individual fields (DDR SRAM, tandem mode bit, SysClk divisor, SCClk divisor, SCClk tap,
   outstanding requests) or the prompt "Enter raw MIPS mode bits" (format `[  0x%x] : `, string at payload `0x69538` in 6.156). The
   raw prompt can supply a word with any bit 15 value. No code reference to these strings was found by the usual `lui`/`ori`/pointer
-  searches, so where the answer is stored was not traced. Observed strings; code unread, so unknown.
+  searches, so where the answer is stored was not traced. The strings are established; the code is unread, so what it does is unknown.
 - 18 IP35 PROM images (6.131 to 6.211) list the command `setmodebits NODE [...]` ("Prgm modebits with values"), the prompt "Enter raw
   mode bits", and name the stored fields `HubModeBits` and `CpuCfg0Reg` to `CpuCfg3Reg`; there is also `verify_modebits`. The
   command table entry is at payload `0x13f9c0`; its handler was not located (the table entry carries a small id word, not a
-  pointer). Observed strings; unknown for the code.
+  pointer). The strings are established; the code is unknown.
 - 15 IO6 PROMs print the Config word with named fields (the line `<15>    MemEnd` is the bit 15 entry), 28 carry the message "CPU and PROM modebits
   mismatch."; the six IP27 images 4.9 to 5.19 carry a symbol-name table with
-  `get_endian` (its code was not located). Observed strings.
+  `get_endian` (its code was not located). The strings are established; the behaviour is unknown.
 - IRIX `/usr/sbin/flash` (6.5.30: identical bytes to `/usr/sbin/flashio`; the 6.5-base copy carries the same "Mode bit setting definitions" text; N32 big-endian) knows four board families
   (`flashio_everest`, `flashio_racer`, `flashio_sn0`, `flashio_sn1`). With `-f` it offers an overlay of configuration, prompting for
   CPU type (R10K/R12K or R14K), L2 HSTL mode, SysAD HSTL mode, secondary cache size code, tandem mode, the SysClk-to-cache-clock
@@ -232,14 +256,14 @@ is what the images say they do:
   is unknown; the name and the neighbouring `_hpc3_write2` suggest the HPC3 DMA endian bits, inferred). No `xori 0x8400` appears in
   any IP20, IP22, IP26, IP28, IP30, IP32 or IP35 kernel object, `os.a`, `sash`, `symmon` or `ide` (the only hits are `ide.IP22`
   above and noise in data sections). So no IRIX kernel or boot binary we hold writes the CPU-mode EEPROM except through the
-  unreferenced `ide.IP22` copy. Established for the scanned set (pattern search, not a full decode).
+  unreferenced `ide.IP22` copy: inferred (a word-pattern search that cannot see a mask built another way, not a full decode).
 - **Loaders.** `sash`, `sash64`, `ide*`, `ideloader`, `symmon.IP27/IP30/IP35` and the IO6, IP26, IP27, IP28, IP30, IP32 and IP35 PROMs
   carry "WARNING: file loaded but not executed: opposite endian". In `ide.IP22` the print site is `0xa84fb270`, reached after a
   successful load when a global flag at `0xa8668a30` is non-zero; the endian comparison and the flag's meaning were not decoded.
   `sash` and `ideloader` also contain `swapendian`. So the shipped loaders know the difference between executables of the two orders
-  and refuse the opposite one. Observed strings; the check itself unread.
+  and refuse the opposite one. The strings are established; the check itself is unread, so what it compares is unknown.
 - IP5, IP6 and IP12 PROMs say "inappropriate byte order" on loading (IP6 and IP12); they have no Config register (R2000/R3000) and no
-  byte-order test. Observed.
+  byte-order test. Established for the strings; the absence of a test is inferred from the pattern scan.
 
 ## Visual Workstation PROM 1.1005: a little-endian ARC firmware to copy the shape of
 
@@ -281,8 +305,9 @@ established there unless noted.
   environment strings, polls its devices once, runs `clts` and `fninit`, sets the stack to `0x61ff0` and calls the entry as
   `(argc, argv, envp)` in flat 32-bit protected mode with its own descriptor tables and page tables live (CR3 `0xd00000`). Nothing
   is quiesced because the firmware never enables interrupts. The loader reads the block fields at `0x100c` to `0x1028` once and
-  calls 13 vector slots (GetPeer, GetChild, GetConfigurationData, GetMemoryDescriptor, GetTime, Open, Close, Read, Write, Seek,
-  GetEnvironmentVariable, and Restart in setup). Nothing in the firmware is specific to NT or Linux.
+  calls fourteen vector slots (NT 4: GetPeer, GetChild, GetConfigurationData, GetMemoryDescriptor, GetTime, GetRelativeTime, Open,
+  Close, Read, GetReadStatus, Write, Seek, GetEnvironmentVariable, plus Restart in setup; Windows 2000 calls the same thirteen and its
+  setup adds display status). Nothing in the firmware is specific to NT or Linux.
 
 What this model shows for a MIPS little-endian firmware: the ARC data structures are plain 32-bit little-endian words with no
 byte-order-specific fields, so a little-endian MIPS firmware would build the same block at the same offsets and hand the same
