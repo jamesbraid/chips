@@ -67,6 +67,7 @@
 | [prom-console-input.md](ip32/prom-console-input.md) | O2 PROM 6.5.30: what it does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip32/prom-environment.md) | O2 PROM environment: the flash "env" segment, its checksums and how setenv writes it | The O2 PROM keeps its environment variables (`console`, `netaddr`, `OSLoadPartition` and so on) in one segment of... |
 | [prom-rom.md](ip32/prom-rom.md) | O2 system ROM: decode, flash aliasing and reset fetch | This page covers the O2's system ROM window as CRIME and MACE expose it, the external flash that MACE drives, and... |
+| [prom-software.md](ip32/prom-software.md) | O2 PROM software: layout, environment, console, ARCS tables, configuration tree, boot menu | This page records what the O2 (IP32) system PROM's own code does, read from the shipped flash images with a MIPS... |
 
 ## ip34
 
