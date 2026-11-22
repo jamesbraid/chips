@@ -81,6 +81,10 @@ that does to the minimum. No document read says which shipped.
 - **Base I/O.** IO10 (SATA, DVD-ROM, Ethernet, real-time interrupt ports "not supported under SGI Linux + ProPack",
   serial) in the compute modules; the parts index lists it as "Altix 350/Prism IO10 Base I/O" (`030-1948-001`). IO9 is
   optional in Power and Team and standard in the Extreme IX-brick (007-4701-003 pp.31, 33, 53; 007-4774-001 p.66).
+- **Compute-module slots.** The rear of a Prism compute module with ImageSync has four PCI/PCI-X slots, labelled PCI 1
+  to 4 in the figure. PCI 1 is bus 1 slot 1 (IO10), PCI 2 is bus 1 slot 2 (ImageSync), PCI 3 is bus 2 slot 1, and PCI 4
+  is bus 2 slot 2 (the four-port USB card) (`007-4701-003` p.7, Figure 1-6; p.31). Established as drawn. Whether a module
+  without ImageSync uses bus 1 slot 2 differently is unknown.
 - **L1 controller** in every module, with the same four services in each guide (power sequencing, environment, reset,
   identification and configuration storage).
 - **Graphics.** Two AGP pipes per XG2N and per deskside, ATI FireGL boards, DVI-I outputs, a 7-pin synchronization cable

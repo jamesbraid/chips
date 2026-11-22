@@ -7,7 +7,7 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Cited pages of 007-4579-001: 33, 77, 79, 81, 87, 99, 101, 102, 105, 107, 108, 112 to 121, 123, 135 and 140
+README](README.md). Cited pages of 007-4579-001: 33, 77, 79, 80, 81, 87, 99, 101, 102, 105, 107, 108, 112 to 121, 123, 135, 136, 137 and 140
 (the R-brick chapter's overview and rear panel; the IX-brick chapter in the wiring section). Cited pages of 007-4520-006: 13,
 16 to 19, 38, 52, 54 and 55. Cited pages of the IX addendum 007-4604-001: 2, 4 and 10. Cited page of the PX addendum
 007-4605-001: 3. Page numbers are printed; the PDF index is 24 pages ahead for 007-4579-001 and 22 for 007-4520-006. The
@@ -26,6 +26,9 @@ The rack chapter, the PX-brick chapter and the other brick chapters were not rea
   (p.108). 48 VDC input, about 1125 W (p.108).
 - The **R-brick** is a 2U, 8-port router brick (p.87), an 8-port crossbar. C-bricks join it by "highly specialized
   cables" (p.81).
+- **R-brick ports.** Ports 1, 6, 7 and 8 take R-brick to R-brick links only; ports 2 to 5 take C-bricks or R-bricks
+  (p.137, Figure 8-2). Each C-brick LINK connector (Node 0 and Node 1) joins an R-brick or another C-brick at 1.6 GB/s
+  each way (p.105). The guide does not say which R-brick port a given C-brick cable uses: unknown.
 - Each rack with C-bricks has an L2 controller; rack 001 carries an L2 touch display (p.79).
 - The node chip is the **Super-Bedrock ASIC** (p.81; "two Super-Bedrock ASICs" on p.87). The driver guide calls the
   same role "SHub" ("two SHub chipsets", 007-4520-006 p.16).

@@ -1,11 +1,11 @@
 # Altix 3700 Bx2
 
-The Bx2 replaces the C-brick and R-brick with the **CR-brick**: one 4U enclosure holding up to four SHub nodes and two
-router ASICs, and keeps the IX-, PX-brick and power bay. This page records what the guide prints. It holds no register
+The Bx2 replaces the C-brick with the **CR-brick**: one 4U enclosure holding up to four SHub nodes and two
+router ASICs. The optional eight-port R-brick, the IX- and PX-bricks and the power bay stay. This page records what the guide prints. It holds no register
 facts.
 
 Sources: SGI, *SGI Altix 3700 Bx2 User's Guide*, `007-4377-002` (November 2004), printed pages; Linux v5.3. Grades:
-see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The first revision (`007-4377-001`) was not.
+see [the SN2 README](README.md). Read: contents, pp.24, 49, 65, 67, 71, 72, 74, 97, 101 to 103. The first revision (`007-4377-001`) was not.
 
 ## Established (007-4377-002)
 
@@ -22,6 +22,11 @@ see [the SN2 README](README.md). Read: contents, pp.49, 65, 67, 72, 74. The firs
   ports F, G, H and A in an upper and a lower row, and the two XIO outputs "Node 1 XIO" and "Node 3 XIO" (p.72
   Figure 5-4).
 - Processors in a brick share a frequency; DIMMs go in groups of four per node board (p.74).
+- The optional **R-brick** is an eight-port NUMAlink 4 router (p.97). Its ports are numbered 1 to 8 and lettered A to H.
+  Ports 1, 6, 7 and 8 (A, F, G, H) carry R-brick to R-brick links only; ports 2 to 5 (B to E) carry CR-brick or R-brick
+  links (p.101; Figure 8-3, p.102). Each link runs at 3.2 GB/s each way (Table 8-2, p.103).
+- The USB-to-Ethernet placement table names one R-brick at 128 processors, two at 256 and four at 512 (Table 2-2, p.24).
+  Those rows say where an adapter goes, not how many routers a system has, so the counts are **inferred**.
 - IX-brick, PX-brick, R-brick and power bay chapters follow (contents, p.viii); the L1 and L2 emulator operation is
   Chapter 2.
 
@@ -31,6 +36,7 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 - The "NL4 router ASIC" is named in the guide and is a separate part from the SHub; no document held gives its
   registers. Established that it exists in the CR-brick; unknown what its port registers look like.
+- Which CR-brick rear connector (A, F, G or H, p.71) pairs with which R-brick port (B to E) is not stated. Unknown.
 - The CR-brick is the first brick in these guides with two I/O ports (nodes 1 and 3) from four nodes; the other nodes
   have no external I/O port. Established as drawn.
 - Whether the CR-brick's SHub is generation 2 is not stated (README: inferred from timing only). SGI's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin`, which points the other way; it may mean the 3700 and not the Bx2. Unknown (see [altix-3000.md](altix-3000.md#shub-generation)).

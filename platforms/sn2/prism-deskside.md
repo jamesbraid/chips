@@ -7,7 +7,7 @@ line, graphics attachment, firmware and Linux side are on [the Prism overview](p
 Sources: SGI, *Silicon Graphics Prism Deskside Visualization System Hardware User's Guide*, `007-4772-001` (Apr 2005),
 printed pages, and its second edition `007-4772-002` (Oct 2005, ProPack 4 Service Pack 2) for the diagnostics and XF86Config
 chapter; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (adds the Prism at revision 004, July
-2005). Grades: see [the SN2 README](README.md). Read: contents and pp.7 to 10, 17, 19 to 21, 25 to 27, 32, 33; -002 pp.120 to 122, 166.
+2005). Grades: see [the SN2 README](README.md). Read: contents and pp.7 to 10, 17, 18, 19 to 21, 25 to 27, 32, 33; -002 pp.32, 120 to 122, 166.
 
 ## Established (007-4772-001)
 
@@ -49,6 +49,11 @@ second part, or something else, is unknown: the Altix 350 module has a PIC with 
 PCI-to-PCI bridge in front of bus 01, and bus 01 holds the USB functions. That fits the daughter board's bus 1 slot 2 if
 Linux's device numbers match the guide's slots (inferred; the same set also fits a rackmount base module). Whether that
 bridge is PCI-X is unknown.
+
+Riser, TIO and interrupts: unknown. Neither edition names a riser, a dual-TIO riser, or a PIC or TIO that drives the
+PCI-X buses. The "TIO" letters in the enclosure drawing (-001 p.18, PDF 40) belong to a rotated "CAUTION" label. The
+-002 bus rule (p.32) matches -001 p.27. The only interrupt the guide names is the base I/O board's real-time interrupt
+in and out, not supported under Linux (p.21). It states no PCI interrupt routing.
 
 Not covered: the maintenance chapter (pp.35 to 89), the cooling and power sections, and the -002 regulatory chapters.
 
