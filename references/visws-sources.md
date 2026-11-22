@@ -53,6 +53,7 @@ graphics pages), the 2.2 `irq.c`/`smp.c` hooks (only their `#ifdef` lines were s
 - *Silicon Graphics 540 Visual Workstation Owner's Guide*, 007-3882-001, 210 pages: DIMM slot groups A to D, one to four Xeons, two PCI buses of 4 and 2 slots with their voltages (table A-5).
 - *Silicon Graphics Visual Workstations Software Installation Guide for Windows NT*, 007-3703-003 (1999, 40 pages): the boot partition rules and the graphics memory profile (pp. 31 to 38) read; the rest not used.
 - *Silicon Graphics 320 and 540 Visual Workstation Audio/Video User's Guide*, 007-3870-001: held and read for the hardware features, audio and sync controls (chapters 1 to 3).
+- Intel *82371AB PIIX4* Technical Product Specification, 290562-001 (April 1997), and Specification Update 297738-017 (January 2002): not SGI's, but the PIIX4 is the board's ISA bridge. Held and read for the port map, GPIO, A20 and CMOS routing; see [platforms/visws/boards-320-540.md](../platforms/visws/boards-320-540.md#the-byte-at-port-0xfb2).
 - Not held: *SD1100* 007-3866-001 (a public web PDF).
 - Articles read for the second Windows pass: the Microprocessor Report piece (15 February 1999) and the Tech Monitor piece (5 January 1999). What they and the guides say about the chips is set out in [platforms/visws/documents.md](../platforms/visws/documents.md).
 
