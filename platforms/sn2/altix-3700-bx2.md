@@ -5,7 +5,7 @@ router ASICs. The optional eight-port R-brick, the IX- and PX-bricks and the pow
 facts.
 
 Sources: SGI, *SGI Altix 3700 Bx2 User's Guide*, `007-4377-002` (November 2004), printed pages; Linux v5.3. Grades:
-see [the SN2 README](README.md). Read: contents, pp.24, 49, 65, 67, 71, 72, 74, 97, 101 to 103. The first revision (`007-4377-001`) was not.
+see [the SN2 README](README.md). Read: contents, pp.24, 49, 50, 65, 67, 68, 71, 72, 74, 97, 101 to 103. The first revision (`007-4377-001`) was not.
 
 ## Established (007-4377-002)
 
@@ -35,6 +35,76 @@ see [the SN2 README](README.md). Read: contents, pp.24, 49, 65, 67, 71, 72, 74, 
 
 Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in [brick-identity.md](brick-identity.md).
 
+## Internal wiring (Figures 3-3 and 5-2)
+
+Figure 5-2 (p.68, "CR-brick Block Diagram") is the drawing traced here. Figure 3-3 (p.50) shows the same wiring; I
+compared the two by eye and did not trace 3-3 separately. Figure 5-4 (p.72) is the rear panel. No figure prints a link
+speed or lane count. The layout as drawn:
+
+- Node 0 (top left) and Node 1 (top right) sit on the top board. Node 3 (bottom left) and Node 2 (bottom right) sit on the
+  bottom board.
+- Router A is on the top board and router B on the bottom board, with a white midplane band between them.
+- The band carries two rows of port boxes: Rtr A 0 to Rtr A 3 with XIO 0 at its upper edge, and Rtr B 0 to Rtr B 3 with
+  XIO 1 at its lower edge.
+- Each router has ports A to H. Ports B, C, D and E carry node links. Ports A, F, G and H go to the midplane row.
+- Each node has two NI pins, and each router reaches every node. Each node has one link to each router.
+- No drawn line joins router A to router B, and none joins an Rtr A box to an Rtr B box.
+
+TB1 to TB4 are labels added here for the two-cell connector boxes (TB1 and TB2 on the top board, TB3 and TB4 on the
+bottom); the figure prints no names for them. Every link drawn, with its grade. "Unknown" marks the items I could not
+settle from the figure.
+
+| # | From | Port or pin | To | Figure, page | Grade |
+|---|---|---|---|---|---|
+| 1 | Node 0 | NI0 | Router A, port D | 5-2, p.68 | established |
+| 2 | Node 0 | NI1 | Router B, port B, via top connector TB1 right cell, dashed midplane line (row 22), bottom connector TB3 right cell | 5-2, p.68 | established; dashed segment unknown |
+| 3 | Node 1 | NI0 | Router A, port C | 5-2, p.68 | established |
+| 4 | Node 1 | NI1 | Router B, port E, via top connector TB2 right cell, dashed midplane line (row 24), bottom connector TB4 right cell | 5-2, p.68 | established; dashed segment unknown |
+| 5 | Node 2 | left bottom pin | Router A, port B, via TB2 left cell, dashed midplane line (row 23), TB4 left cell | 5-2, p.68 | established; NI label and dashed segment unknown |
+| 6 | Node 2 | right bottom pin | Router B, port D, direct to the bottom connector | 5-2, p.68 | established; NI label unknown |
+| 7 | Node 3 | left bottom pin | Router B, port C, direct to the bottom connector | 5-2, p.68 | established; NI label unknown |
+| 8 | Node 3 | right bottom pin | Router A, port E, via TB1 left cell, dashed midplane line (row 21), TB3 left cell | 5-2, p.68 | established; NI label and dashed segment unknown |
+| 9 | Router A | port A | Rtr A 3 | 5-2, p.68 | established |
+| 10 | Router A | port F | Rtr A 0 | 5-2, p.68 | established |
+| 11 | Router A | port G | Rtr A 1 | 5-2, p.68 | established |
+| 12 | Router A | port H | Rtr A 2 | 5-2, p.68 | established |
+| 13 | Router B | port A | Rtr B 3 | 5-2, p.68 | established |
+| 14 | Router B | port F | Rtr B 0 | 5-2, p.68 | established |
+| 15 | Router B | port G | Rtr B 1 | 5-2, p.68 | established |
+| 16 | Router B | port H | Rtr B 2 | 5-2, p.68 | established |
+| 17 | Node 1 | XIO (red) | XIO 0, through a top-right board connector | 5-2, p.68; rear p.72 | established |
+| 18 | Node 3 | XIO (red) | XIO 1, through a bottom-left board connector | 5-2, p.68; rear p.72 | established |
+| 19 | Node 0 | XIO (red) | top board connector right of Node 0's pins; no further line drawn | 5-2, p.68 | unknown |
+| 20 | Node 2 | XIO (red) | bottom board connector right of Node 2's pins; no further line drawn | 5-2, p.68 | unknown |
+| 21 | top TB1 left cell | dashed | bottom TB3 left cell, same x | 5-2, p.68 | unknown (dashed line meaning) |
+| 22 | top TB1 right cell | dashed | bottom TB3 right cell, same x | 5-2, p.68 | unknown (dashed line meaning) |
+| 23 | top TB2 left cell | dashed | bottom TB4 left cell | 5-2, p.68 | unknown (dashed line meaning) |
+| 24 | top TB2 right cell | dashed | bottom TB4 right cell | 5-2, p.68 | unknown (dashed line meaning) |
+| 25 | Rear upper row: Port F, G, H, A upper | none drawn | no drawn element in 5-2 | 5-4, p.72 | unknown |
+| 26 | Rear lower row: Port A, H, G, F lower | none drawn | no drawn element in 5-2 | 5-4, p.72 | unknown |
+
+Notes on the table:
+
+- Rows 21 to 24 are the four dashed verticals through the midplane. Each runs straight down at the x position of a top
+  connector cell and the bottom cell beneath it. The figure has no legend for dashed lines and the text does not mention
+  them. The dashed rows are read as midplane paths only because they are drawn that way. Rows 2, 4, 5 and 8 depend on this
+  reading.
+- The rear connectors (rows 25 and 26) are drawn but not joined to anything in 5-2. The guide does not say which router
+  or which Rtr box feeds each one. The letters match the router port letters, and p.72 says each router reaches four rear
+  connectors. The guide does not say that the upper row is router A and the lower row is router B.
+- p.67 gives eight external NUMAlink channels, two per node. Figure 5-2 draws no rear connector on a node. Every node pin
+  goes to a router, and the rear connectors hang off router ports. How the eight rear connectors map onto "two per node"
+  is unknown.
+- Nodes 0 and 2 carry red XIO lines that end at board connectors (rows 19 and 20). p.71 and p.72 bring out only nodes 1
+  and 3. What the two stubs connect to is unknown.
+- Pin labels: the NI0 and NI1 labels on nodes 0 and 1 sit next to the pins in rows 1 to 4 and read as printed. The labels
+  on nodes 2 and 3 are rotated and I could not match them to pins with confidence.
+- Speeds, from the text only: the rear NUMAlink connectors run at 3.2 GB/s each direction (p.71). The two Xtown2 XIO
+  channels run at 1.2 GB/s each direction (p.67, p.71). p.67 counts eight internal NUMAlink channels, two per node, which
+  matches the eight node pins drawn.
+- Not read for this section: the guide's cabling and R-brick chapters may show the rear mapping and the dashed lines.
+  Check those before settling rows 21 to 26.
+
 ## Notes
 
 - The "NL4 router ASIC" is named in the guide and is a separate part from the SHub; no document held gives its
@@ -44,7 +114,7 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
   is not stated. Unknown.
 - The CR-brick is the first brick in these guides with two I/O ports (nodes 1 and 3) from four nodes; the other nodes
   have no external I/O port. Established as drawn.
-- **SHub generation: SHub 1.2, established by the guide's own figure.** Figure 3-3 (printed p.50, and again on p.68; "Functional Block Diagram of CR-brick", 007-4377-002) labels all four nodes "SHUB 1.2" and "IP57 Node Card" and shows XIO and NI ports on each. The vendor's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin` and not for `shub2snprom.bin`, which agrees. Three more facts point the same way: the guide gives the CR-brick two XIO ports (nodes 1 and 3, p.72) and the SHub 2 PROM refuses XIO ("SHUB2 does not support XIO I/O."); the SHub 1 PROM image carries the NUMAlink 4 router code (`nl4r_*`), so SHub 1 plus NL4 routers is a shipped combination; and SGI's 1 December 2004 Linux patch that adds SHub 2 calls it "a future SGI chipset" (message `20041201203852.GA26131@sgi.com` on linux-ia64), while the Bx2 guide is dated November 2004. The earlier reading of the Bx2 as SHub 2 rested on dates only and is withdrawn. Not captured from a running machine; the generation flag the PROM returns to Linux would still confirm it (see [altix-3000.md](altix-3000.md#shub-generation)).
+- **SHub generation: SHub 1.2, established by the guide's own figure.** Figure 3-3 (printed p.50, "Functional Block Diagram of CR-brick", 007-4377-002; the same drawing is Figure 5-2 on p.68) labels all four nodes "SHUB 1.2" and "IP57 Node Card" and shows XIO and NI ports on each. The vendor's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin` and not for `shub2snprom.bin`, which agrees. Three more facts point the same way: the guide gives the CR-brick two XIO ports (nodes 1 and 3, p.72) and the SHub 2 PROM refuses XIO ("SHUB2 does not support XIO I/O."); the SHub 1 PROM image carries the NUMAlink 4 router code (`nl4r_*`), so SHub 1 plus NL4 routers is a shipped combination; and SGI's 1 December 2004 Linux patch that adds SHub 2 calls it "a future SGI chipset" (message `20041201203852.GA26131@sgi.com` on linux-ia64), while the Bx2 guide is dated November 2004. The earlier reading of the Bx2 as SHub 2 rested on dates only and is withdrawn. Not captured from a running machine; the generation flag the PROM returns to Linux would still confirm it (see [altix-3000.md](altix-3000.md#shub-generation)).
 
 ## L1 identity and PROM handling (firmware reading)
 
