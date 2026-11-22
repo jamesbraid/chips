@@ -929,25 +929,35 @@ The value left in `int_device` after the attach reset (`0x6db6db`, all lines to 
 
 Read in the Ghidra decompiles, with the accessor bodies and their callers checked in a binutils listing of the same image.
 
-- **The field.** `pcireg_intr_dst_target_id_set` (`0xffab5230`) is a read-modify-write of `+0x38`: it loads the doubleword, ANDs it with
-  `0xfff0ffffffffffff` and ORs in `(value & 0xf) << 48` (listing `0xffab53a0` to `0xffab53e0`; it acts only when the id word says PIC).
-  `pcireg_intr_dst_addr_set` (`0xffab57a0`) replaces bits 47:0 and keeps 63:48, so a later address write leaves the target id alone.
-  Established. The PROM writes no other register that picks a host port.
+- **The field.** `pcireg_intr_dst_target_id_set` (`0xffab5230`) loads `+0x38`, ANDs it with `0xfff0ffffffffffff`, stores that
+  (`0xffab53e0`), reloads it (`0xffab53e6`), ORs in `(value & 0xf) << 48` and stores again (`0xffab5400`). That is two writes to `+0x38` per
+  call, and bits 51:48 read 0 between them. `pcireg_intr_dst_addr_set` (`0xffab57a0`) does the same to bits 47:0 (masked store
+  `0xffab5a40`, reload, ORed store `0xffab5a60`) and keeps 63:48, so a later address write leaves the target id alone. The chip type comes
+  from the soft-state handle, not an id read: the base is the doubleword at handle `+0x20` and the type halfword at `+0x34` (2 is PIC, part
+  `0xd102` or `0xd112` with manufacturer `0x24`; 3 is TIO and the accessor does nothing; -1 prints an error). Both callers pass the handle.
+  Established. Through these two accessors the PROM writes no other register that picks a host port; inline stores to `+0x38` were not
+  searched for.
 - **The writers.** There are two callers, and the image holds no pointer to `0xffab5230` that a table could call through: `pic_attach2` at
   `0xffb6e68c` (once per bus head, so twice per PIC) and `tiocp_attach` at `0xffb4819c`, where the accessor does nothing for a TIO bridge.
   `pic_attach2` passes the byte at `+0x60` of its soft-state record, which it copied (`0xffb6dd3c` to `0xffb6dd56`) from byte `+0xc` of the
   per-widget record it was handed. Every record of a node is built with the same byte, the node's own widget id: `0xffb745e0` reads the
   node's interrupt-interface widget control register (`nasid << 38 | 0x8_01c0_0020`, bits 3:0) and `0xffb45770` stores it at node `+0x2f2`;
-  the per-widget records at node `+0x940 + 0x30 * widget` copy that byte (`0xffb451e0`, `0xffb499a0`). Established.
+  the per-widget records at node `+0x940 + 0x30 * widget` copy that byte. The record setter is `0xffb6ad20`, called from three places:
+  `0xffb451e0`, `0xffb499a0` and `0xffb459cc` (inside `0xffb45770`, guarded by a widget-part check against `0xd100`). The byte starts as
+  `0xff` (node creation, `0xffb28c30`) until `0xffb45770` sets it; the field takes only 4 bits, so a record copied before then would give
+  `0xf`. Established (the initial `0xff` from the decompile and the store site).
 - **Result for the three PICs.** Widgets 12, 13 and 15 of one host node get the same target id: the host SHub's own widget id, bits 3:0 of
   its widget control register, which `main_three` wrote from the crossbar face's source-id field (`W0 + 0x08` bits 9:6, see
   [the SHub interface page](../shub_ii/README.md)). The middle PIC (15) is not treated differently from the outer ones (13, 12), and
   nothing writes a PIC's own widget number or an enclosure number into `+0x38`. Established for the code path. The number itself is
   unknown, because the crossbar hardware assigns it. Inferred value: `0xa` for a host on the first XIO port, `0xb` for the second. The PROM
-  special-cases widget ids 10 and 11 as the hub's own link (`0xffb45510` tests 10; `0xffb73050` tests 10 and 11 before printing "Xtalk Link
-  failed") and prefers link `0xa`, falling back to `0xb`. The field is four bits wide and 12, 13 and 15 are the PICs, so none of them can be the
+  prefers link `0xa` for the hub's own link and falls back to `0xb` (`0xffaaf970`, in `0xffaaf8b0`; see
+  [the SHub interface page](../shub_ii/README.md)). Two other places test the id: `0xffb45510` compares it with 10 at `0xffb45626` and skips
+  its widget scan otherwise, so on a node whose `+0xe` is not -1 an id of 11 skips the scan; `0xffb73050` is the interface error handler and
+  prints "Xtalk Link failed" for ids 10 and 11. The field is four bits wide and 12, 13 and 15 are the PICs, so none of them can be the
   host id.
-- **The address half.** Bits 47:0 of `+0x38` get the error interrupt's address (`0xffb6cfec`, late error set-up below): target NASID `<< 36`,
+- **The address half.** Bits 47:0 of `+0x38` get what is inferred to be the error interrupt's address (`0xffb6cfec`, late error set-up
+  below; the allocation is interrupt id `0x33` with no pin): target NASID `<< 36`,
   bit 47, and `SH_II_INT0` or `SH_II_INT1` (the allocator section of [SHub interrupts](../shub/interrupts.md)). The three PICs are widgets of
   the host node, so they share its NASID; each interrupt's target node and slice come from the allocator (a node with no processor retargets to
   the nearest one that has one, established there).
@@ -956,11 +966,14 @@ Read in the Ghidra decompiles, with the accessor bodies and their callers checke
   per PIC depend on the cards fitted. On the IO9's bus (widget 12, bus 1) INTA of the IOC4 at device 1, the SCSI at 3 and the Ethernet at 4
   gives pins 0, 2 and 3 slots 0, 2 and 3 (the pin rule below); unused pins keep 3. No register capture of a real PIC is held.
 - **What public SGI Linux expects.** Linux v5.3 never touches `+0x38` or `+0x120`: `pic.h` declares `p_wid_int_upper`, `p_wid_int_lower` and
-  `p_int_device`, and `pcibr_provider.c` only clears the pin's enable bit, rewrites the low 48 bits of `p_int_addr[n]` (mask
-  `PIC_HOST_INTR_ADDR`, `0x0000ffffffffffff`) with the firmware's `irq_xtalkaddr`, sets the enable bit and forces the pin. It relies on the
+  `p_int_device`, and `pcibr_provider.c` only clears the pin's enable bit, rewrites the pin's address (`pcireg_intr_addr_addr_set` in `pcibr_reg.c`,
+  low 48 bits of `p_int_addr[n]`, mask `PIC_HOST_INTR_ADDR`, `0x0000ffffffffffff`) with the firmware's `irq_xtalkaddr`, sets the enable
+  bit and forces the pin. The files read are Linux v5.3 as fetched from the kernel tree; the Library holds no v5.3 tag. It relies on the
   PROM having set the target id. The 2.4 tree (`linux-2.4` at `8ef7d46c94d5`, `arch/ia64/sn/io/sn2/shub_intr.c`) set the interrupt's target to
-  the master widget id of the device's widget info, and `hub_widget_id` returns the widget control register's `wcr_widget_id`: the host's
-  widget id, not the PIC's. Established as source. Whether the 2.4 `pcibr_setwidint` layout (the Bridge one, `0x000F0000 & (targ << 16)` in an
+  the master widget id of the device's widget info, and `hub_widget_id` returns the widget control register's `wcr_widget_id`. That the
+  master id is the value `hub_widget_id` returns was not read, so the join is unread. Inferred as a fit, not as proof: Linux defines
+  `p_wid_int` as `p_wid_int_lower` (`+0x38`), and the 2.4 `pcibr_setwidint` puts the target at upper-word bits 19:16, which matches
+  `+0x38` bits 51:48. Whether the 2.4 `pcibr_setwidint` layout (the Bridge one, `0x000F0000 & (targ << 16)` in an
   upper word) matches this PIC's `+0x38` is unknown.
 
 Not checked: SAL 4.43 and 4.90 (the allocator routines agree there; these accessors were not re-read); which node's table `pic_attach2`
