@@ -44,12 +44,13 @@ offset = 0x000
 access = "rw"
 width = 32
 grade = "established"
-doc = "Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. The three low bits are named by the driver but never tested."
+doc = "Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. PROM 1.1005 also stores link enable plus bit 8 here, as a 32-bit write on Lithium generation 5 (software/visws/boot-path.md). The three low bits are named by the driver but never tested."
 
 [registers.host_ctl.fields]
 link_ready = { bits = [0, 0], grade = "inferred", doc = "Name only (LI_HC_LINK_READY)." }
 link_codec = { bits = [1, 1], grade = "inferred", doc = "Name only (LI_HC_LINK_CODEC)." }
 link_failure = { bits = [2, 2], grade = "established", doc = "Link failure. The NT audio driver's link check (HwCheckLink) reads the halfword at offset 0 and treats the link as good when this bit is 0; it is the only bit that driver tests." }
+prom_bit8 = { bits = [8, 8], grade = "unknown", doc = "Set by the PROM's host-control store on generation 5; no audio driver reads or writes it, and its meaning is unknown." }
 link_enable = { bits = [14, 14], grade = "established", doc = "1 takes the codec link out of reset after the reset pulse." }
 reset = { bits = [15, 15], grade = "established", doc = "1 asserts the codec reset (the driver's comment calls it the active-low reset signal)." }
 

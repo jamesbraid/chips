@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536 -->
+<!-- input sha256 3f1f16f43367bf801d3487d3f46fc041d27282231a5e1ce431999a48961f8e91 -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -43,12 +43,13 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `host_ctl`
 
-Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. The three low bits are named by the driver but never tested.
+Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. PROM 1.1005 also stores link enable plus bit 8 here, as a 32-bit write on Lithium generation 5 (software/visws/boot-path.md). The three low bits are named by the driver but never tested.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 15 | `reset` | established |  |  | 1 asserts the codec reset (the driver's comment calls it the active-low reset signal). |
 | 14 | `link_enable` | established |  |  | 1 takes the codec link out of reset after the reset pulse. |
+| 8 | `prom_bit8` | unknown |  |  | Set by the PROM's host-control store on generation 5; no audio driver reads or writes it, and its meaning is unknown. |
 | 2 | `link_failure` | established |  |  | Link failure. The NT audio driver's link check (HwCheckLink) reads the halfword at offset 0 and treats the link as good when this bit is 0; it is the only bit that driver tests. |
 | 1 | `link_codec` | inferred |  |  | Name only (LI_HC_LINK_CODEC). |
 | 0 | `link_ready` | inferred |  |  | Name only (LI_HC_LINK_READY). |

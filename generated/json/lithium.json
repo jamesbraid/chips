@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536",
+ "input_sha256": "3f1f16f43367bf801d3487d3f46fc041d27282231a5e1ce431999a48961f8e91",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",
  "profile": "public",
@@ -33,6 +33,14 @@
    "hi": 14,
    "lo": 14,
    "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "field",
+   "name": "host_ctl.prom_bit8",
+   "hi": 8,
+   "lo": 8,
+   "grade": "unknown"
   },
   {
    "unit": "lithium",

@@ -1,6 +1,6 @@
 /* generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536 */
+/* input sha256 3f1f16f43367bf801d3487d3f46fc041d27282231a5e1ce431999a48961f8e91 */
 /* Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them */
 #ifndef LITHIUM_GEN_H
 #define LITHIUM_GEN_H
@@ -9,7 +9,7 @@
 
 
 /*
- * Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. The three low bits are named by the driver but never tested.
+ * Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. PROM 1.1005 also stores link enable plus bit 8 here, as a 32-bit write on Lithium generation 5 (software/visws/boot-path.md). The three low bits are named by the driver but never tested.
  */
 /* host_ctl: rw32, space audio, reset unknown */
 #define LITHIUM_HOST_CTL_OFFSET                      0x0u /* established */
@@ -19,6 +19,9 @@
 #define LITHIUM_HOST_CTL_LINK_ENABLE_SHIFT           14 /* established */
 #define LITHIUM_HOST_CTL_LINK_ENABLE_MASK            0x1u
 #define LITHIUM_HOST_CTL_LINK_ENABLE_INPLACE         (LITHIUM_HOST_CTL_LINK_ENABLE_MASK << LITHIUM_HOST_CTL_LINK_ENABLE_SHIFT)
+#define LITHIUM_HOST_CTL_PROM_BIT8_SHIFT             8 /* unknown */
+#define LITHIUM_HOST_CTL_PROM_BIT8_MASK              0x1u
+#define LITHIUM_HOST_CTL_PROM_BIT8_INPLACE           (LITHIUM_HOST_CTL_PROM_BIT8_MASK << LITHIUM_HOST_CTL_PROM_BIT8_SHIFT)
 #define LITHIUM_HOST_CTL_LINK_FAILURE_SHIFT          2 /* established */
 #define LITHIUM_HOST_CTL_LINK_FAILURE_MASK           0x1u
 #define LITHIUM_HOST_CTL_LINK_FAILURE_INPLACE        (LITHIUM_HOST_CTL_LINK_FAILURE_MASK << LITHIUM_HOST_CTL_LINK_FAILURE_SHIFT)

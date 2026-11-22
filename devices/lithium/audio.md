@@ -180,7 +180,8 @@ Ordering that matters (established unless marked):
 
 The minimum set for `sgisound.sys` to initialise and play (all of this is established from the code except where marked):
 
-- Host control: accept the `0x8000`, `0`, `0x4000` sequence; bit 2 reads 0 before and after. Linux's probe also wants the value after
+- Host control: accept the `0x8000`, `0`, `0x4000` sequence, and the 32-bit `0x4100` that PROM 1.1005 stores on Lithium generation 5
+  ([boot-path.md](../../software/visws/boot-path.md#older-releases-and-reset)): bit 14 is link enable as the NT driver uses it, bit 8 is unknown; bit 2 reads 0 before and after. Linux's probe also wants the value after
   link enable to differ from a plain `0x4000` (it treats exactly `0x4000`, or bit 1 set, as no codec), so set a ready bit.
 - Codec port: command word busy bit that is 0 (or clears at once), 16-bit write and read of data and command; register 0 reads
   `0xc001` for a short time after link enable, then bit 15 clears (within 2 ms: the driver reads at 0, 1 and 2 ms), then after the clear of PDNI in register 28

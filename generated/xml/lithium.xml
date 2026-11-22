@@ -1,15 +1,16 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536 -->
+<!-- input sha256 3f1f16f43367bf801d3487d3f46fc041d27282231a5e1ce431999a48961f8e91 -->
 <genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
   <doc>Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
   <space name="bridge" unit="byte"/>
   <space name="audio" unit="byte"/>
   <struct name="HOST_CTL" size="4" grade="established" register="yes" offset="0x0" access="rw" space="audio" reset="unknown">
-    <doc>Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. The three low bits are named by the driver but never tested.</doc>
+    <doc>Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. PROM 1.1005 also stores link enable plus bit 8 here, as a 32-bit write on Lithium generation 5 (software/visws/boot-path.md). The three low bits are named by the driver but never tested.</doc>
     <field name="reset" start="15" size="1" type="uint" grade="established"/>
     <field name="link_enable" start="14" size="1" type="uint" grade="established"/>
+    <field name="prom_bit8" start="8" size="1" type="uint" grade="unknown"/>
     <field name="link_failure" start="2" size="1" type="uint" grade="established"/>
     <field name="link_codec" start="1" size="1" type="uint" grade="inferred"/>
     <field name="link_ready" start="0" size="1" type="uint" grade="inferred"/>
