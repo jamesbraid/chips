@@ -108,33 +108,35 @@ module are in the cabling chapter (printed pp.46 to 48 of -001), not read for th
 
 ### Ring cabling
 
-Source: 007-4660-002, Figures 2-5 to 2-11 (printed pp.75 to 80) and the cabling text on pp.46 to 48. The figures
-are drawings, and the Library serves the PDF only through an authenticated viewer, so no figure was rendered here.
-The text layer gives the module numbers and the port labels only. Every port pair below is therefore **unknown**
-until the figures are rendered.
+Source: 007-4660-002, Figures 2-5 to 2-11 (printed pp.75 to 80), read as the PDF's vector paths and checked by eye at
+300 dpi. Every cable below is **established as drawn**: each figure joins every module port to exactly one other port.
 
-| Modules | Figure (printed page) | Module numbers printed | Port pairs |
+`n.p` is module n, NUMAlink p. Figure 1-27 (p.48) labels the left rear connector "NUMALINK 0" and the right one
+"NUMALINK 1", so p=0 is the left connector. The ring order is the schematic at the left of each figure.
+
+| Modules | Figure (printed page) | Ring order (schematic) | Cables |
 |---|---|---|---|
-| 2 | 2-5 (p.75) | 1, 2 | unknown |
-| 3 | 2-6 (p.75) | 1 to 3 | unknown |
-| 4 | 2-7 (p.76) | 1 to 4 | unknown |
-| 5 | 2-8 (p.77) | 1 to 5 | unknown |
-| 6 | 2-9 (p.78) | 1 to 6 | unknown |
-| 7 | 2-10 (p.79) | 1 to 7 | unknown |
-| 8 | 2-11 (p.80) | 1 to 8 | unknown |
+| 2 | 2-5 (p.75) | 1-2 | 1.0 to 2.0; 1.1 to 2.1 |
+| 3 | 2-6 (p.75) | 1-2-3 | 1.0 to 3.1; 1.1 to 2.0; 2.1 to 3.0 |
+| 4 | 2-7 (p.76) | 1-2-4-3 | 1.0 to 2.0; 1.1 to 3.1; 2.1 to 4.1; 3.0 to 4.0 |
+| 5 | 2-8 (p.77) | 1-2-4-5-3 | 1.0 to 3.1; 1.1 to 2.0; 2.1 to 4.0; 3.0 to 5.1; 4.1 to 5.0 |
+| 6 | 2-9 (p.78) | 1-2-4-6-5-3 | 1.0 to 3.1; 1.1 to 2.0; 2.1 to 4.0; 3.0 to 5.1; 4.1 to 6.0; 5.0 to 6.1 |
+| 7 | 2-10 (p.79) | 1-2-4-6-7-5-3 | 1.0 to 3.1; 1.1 to 2.0; 2.1 to 4.0; 3.0 to 5.1; 4.1 to 6.0; 5.0 to 7.1; 6.1 to 7.0 |
+| 8 | 2-11 (p.80) | 1-2-4-6-8-7-5-3 | 1.0 to 3.1; 1.1 to 2.0; 2.1 to 4.0; 3.0 to 5.1; 4.1 to 6.0; 5.0 to 7.1; 6.1 to 8.0; 7.0 to 8.1 |
 
 Established from the printed text:
 
-- Ring sizes 2 to 8 are all printed, one figure each. Sizes 3, 5, 6 and 7 are printed, not only 2, 4 and 8.
-- Every module in every figure carries two labels, "NUMAlink NUMAlink". Module 1 is the base compute module; the others
-  are "Base, CPU expansion, or CMPX module". The figures also show small numerals beside the module ports. The
-  text does not say what they mean.
-- The guide states no rule for the ring. It says "Figure 2-5 through Figure 2-11 provide some examples of the ring
-  topology" (p.74). No port rule and no rule for choosing a size is printed.
-- Pages 46 to 48 print no port list for a ring. Page 46 gives one cable between two modules, "connect the NUMAlink
-  cable to the NUMAlink connectors on both compute modules", with no port numbers. Page 47 (Figure 1-26) shows one
-  base module and one expansion module with the L2, console and TP900 links, and no ring. Page 48 is the router
-  intro and the power connector figure. The port list that the -001 text mentions (pp.46 to 48 of -001) was not read.
+- Ring sizes 2 to 8 are all printed, one figure each, including 3, 5, 6 and 7.
+- The figures print no port numbers and no numerals beside the ports. The small numbers are module numbers at each
+  rear and box numbers in the schematic.
+- Module 1 port 0 goes to module 2 at 2 and 4 modules, and to module 3 at 3 and at 5 to 8 modules. The pattern is not
+  the same across sizes.
+- The guide states no rule for the ring. It calls the figures "some examples" (p.74). No port rule and no rule for
+  choosing a size is printed.
+- Pages 46 to 48 print no ring port list. Page 46 gives one cable between two modules, "connect the NUMAlink cable to
+  the NUMAlink connectors on both compute modules", with no port numbers. Page 47 (Figure 1-26) shows one base module
+  and one expansion module with the L2, console and TP900 links, and no ring. Page 48 is the router intro and the power
+  connector figure. The port list that the -001 text mentions (pp.46 to 48 of -001) was not read.
 
 **Routers (-002 only).** Eight to sixteen modules use one or two NUMAlink-4 routers, the "R-brick" (-002 pp.48, 66,
 69, 81, 149). Single plane is one router; dual plane is two. The guide prints cable tables for both: single plane in
