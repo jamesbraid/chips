@@ -209,9 +209,12 @@ Inferred from the Linux IA-64 SN headers (checked at the pinned commit):
   (`arch/ia64/include/asm/sn/l1.h`).
 
 Those are software constants. The L1 brick-type code is what software expects the brick to
-answer, and this page cites no capture of a PX-brick's actual reply. The brick's module identifier letter is
-`#`, **established as drawn**: the Altix driver guide's Figure 5-1 (007-4520-006 p.52) prints a PX-brick as module
-`001#14`. The earlier reading that it is `p` is withdrawn. The L1 guide's table has no PX entry, and its `p` is the P-brick.
+answer, and this page cites no capture of a PX-brick's actual reply. The brick's module identifier letter is a
+**conflict**. The Altix driver guide's Figure 5-1 (007-4520-006 p.52) draws a PX-brick as module `001#14`. Linux
+`format_module_id` (`arch/ia64/sn/kernel/klconflib.c`, v5.3) maps `L1_BRICKTYPE_PX` to `p` (and IX to `i`) and says that is
+the character the brick's LCD shows. The figure is a drawing, and the same guide's Figure 2-3 is mislabelled; the Linux
+code is a software expectation. Both are graded **inferred**, and what a real LCD shows is **unknown**. The L1 guide's table
+has no PX entry, and its `p` is the P-brick.
 
 Unknown: L1 controller revision, board-area data, the real identity reply, request and reply
 encodings, how the L1 reaches the compute brick's L1, and the slot-power control path.

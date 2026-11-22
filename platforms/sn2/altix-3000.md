@@ -117,7 +117,7 @@ gives a ceiling, not a measured speed.
   and the console names the live devices. Linux numbers its bridge devices one lower (`Device(2)` for the SCSI at 3,
   `Device(0)` for the IOC4 at 1). The same card family, part `030-1771`, is on the Altix 3300 NIC (`030-1771-000`) and in
   Origin 350 captures (`-005`, `-006`); that an Origin 3000 or Onyx 3000 IX-brick uses the same numbers is inferred.
-  Device 2 is bus 1 slot 2, the serial daughtercard position, which carries no PCI function. The read is in
+  Device 2 is bus 1 slot 2, the serial daughtercard position, which is inferred to carry no PCI function (neither capture says the daughtercard was fitted). The read is in
   sysco `software/firmware/ix-px-brick-topology.md`.
   The IOC4 carries the RS-232 ports, PS/2 keyboard
   and mouse, the real-time jacks, NVRAM and the real-time clock, and an ATA bus to the DVD-ROM (driver p.18; Figure 6-3
