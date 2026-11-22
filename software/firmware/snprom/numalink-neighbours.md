@@ -726,6 +726,174 @@ Same image and method as [the scrub and clock section of boot-sequence.md](boot-
 | 8 | Barrier flags (tree barrier, global barrier) | Plain 8-byte stores and polls of `0x1_5003_13f0`, `13d0`, `1570`, `1580` (tree) and bit 17 of `SCRATCH1` (global), by vector request or global window | The value written is read back by the owner; no read-modify-write is atomic across nodes (each node only changes its own word) | established |
 | 9 | Fetch-op (AMO, address space 2) | None found in the lock, the barriers, the latch `0xffa1a6d0` or the board walk. No fetch-increment, fetch-clear, AND or OR operation, and no uncached-versus-fetch-op distinction, is used by these sites; there is nothing a stand-in must answer for them | A scan of the 64-bit `movl` immediates in `0xffa00000` to `0xffba0000` (PROM and SAL_B) for an address with bit 63 and bits 37:36 = 2 found one: `0xffb033a0`, a word handler of a stack machine (operand stack at `+0x410`, depth at `+0x510`, 32 entries; descriptor `0xffc4ce80`, table entry `0xffc4dcb0`, slot 98 of the table at `0xffc4d9a0`) that pops an address, ANDs `0x7fffffcfffffffff` and ORs `0x8000_0020_0000_0000`. Its dispatcher was not found. Two other `0x20_0000_0000` immediates (`0xffb23fa6`, ORed with a NASID shifted by 35, and `0xffb2fe06`, a compare) were not traced. Ordinary-memory atomics exist (`fetchadd8` at `0xffb0fcd0`, `0xffb0fd80`, `0xffb0fd90`, `0xffb0fe40`, a ticket lock; `cmpxchg4` at `0xffa14ae0`, `0xffa14b20`, `0xffa14b80`; `cmpxchg8` at `0xffae7a20`); none was traced to fetch-op space | inferred (a scan is not a proof: an address built by shifts would be missed); the Linux AMO encodings are in [address-map.md](../../../platforms/sn2/address-map.md#amo-space-as--2) |
 
+## NUMAlink 3 router (part `0x3017`): what the PROM accepts and does to one (read 2026-11-22)
+
+Read in the SHub 1 image (`shub1snprom.bin`, sha256 `51ccf9ad...`) from an `ia64-linux-gnu-objdump -D` listing of the whole
+image (base `0xffa00000`) and, for the SAL runtime component, of the inflated ELF (gzip stream at image offset `0x252000`).
+Every address, immediate and "no other" statement below is from those listings; Ghidra was used only to find routines. The
+runtime ELF carries symbol names, which name the PROM's anonymous routines. Nothing was run and no hardware was read, so
+every row is a software expectation. Not yet independently reviewed.
+
+### Which part numbers are accepted (established)
+
+- A router is never recognised by a test of its own. Each object found by the crawl is read once at `0x1_0000_0000`
+  through the vector read helper `0xffa0bd20` (register 0: part number bits 27:12, revision 31:28). `chipset_init_chip`
+  (`0xffa0f8c0`) stores both and calls the classifier `0xffa0f7e0`, which is table-driven: it walks the zero-terminated
+  array of four type tables at `0xffbd8a18` (`0xffbd7c18`, `0xffbd7f98`, `0xffbd8318`, `0xffbd8698`) and stores the first
+  table whose match method returns 1; if none does it returns 0. The classifier has nine direct callers (`0xffa0f9cc`,
+  `0xffa0fb6c`, `0xffa20dfc`, `0xffa44fac`, `0xffa46bcc`, `0xffa5c3fc`, `0xffa7c83c`, `0xffa8d55c`, `0xffa8d5dc`).
+- Each match method loads the 16-bit part number and compares it with one immediate, then returns 1 or 0:
+
+  | Type table | Match | Part | Name |
+  |---|---|---|---|
+  | `0xffbd7c18` | `0xffa959a0` (compare at `0xffa959ac`) | `0x4363` (17251) | "SHub" |
+  | `0xffbd7f98` | `0xffa948d0` (`0xffa948dc`) | `0x3017` (12311) | "NL3router" (`0xffa948b0`, string `0xffbb49e8`) |
+  | `0xffbd8318` | `0xffa949e0` (`0xffa949ec`) | `0x239` (569) | "NL4router" (`0xffa949c0`) |
+  | `0xffbd8698` | `0xffa97ce0` (`0xffa97cec`) | `0x4422` (17442) | "TIO" |
+
+  So `0x3017` is the NUMAlink 3 router and `0x239` the NUMAlink 4 router: those two are the only router part numbers the
+  image accepts. Any other value classifies as nothing (`boot-sequence.md` and `node-bringup.md` record what the callers do
+  with the zero). The SAL runtime has the same four-way split: `nl3r_name` (`0xee80`, runtime offset), `nl3r_probe`
+  (`0xeea0`, compare at `0xeeac` with 12311), `nl4r_probe` (compare `0xefbc` with 569), `shub_probe` (`0xfb4c`) and the TIO
+  probe (`0x10ccc`), reached through `find_chipfunc` (`0x11550`) and the tables `chipfunc_nl3r` (`0xa1f50`), `chipfunc_nl4r`,
+  `chipfunc_shub`, `chipfunc_tio`.
+- The only other reader of the array is `0xffad0c26`, the monitor listing "Supported chips:" (names only).
+- Immediate compares of the same constants outside the match methods, all found by searching the listing for `12311` and
+  `569` (decimal) and `0x3017` and `0x239` (hex, `movl` forms; none): for `0x3017` `0xffa5211c` (in `0xffa517b0`, the
+  partition meta-router set-up, string "intcon_pttn_meta_routers"): a neighbour whose part is not `0x3017` has bit 3 of the
+  halfword at record `+104` set and the routine branches to `0xffa51af0`; `0xffa5a44c` (in `0xffa59030`, the route search):
+  a record whose part (`+0x32`) is `0x3017` takes the branch to `0xffa599c0`; `0xffaa0ac6` (in `0xffaa0a30`, the klconfig
+  record builder): the router's id field is stored from a different source for `0x3017`; `0xffb0f896` (in `0xffb0f840`, the
+  operator command that prints router link status, below): any other part prints "Destination must be a router." and
+  stops, so an NL4 router is refused by it; `0xffa5ef00`, `0xffa5ef10`, `0xffa5f300`, `0xffa5f306` (in `0xffa5e880`): the
+  V0/V1 bits (bits 4 and 12, [global-config.md](../../../devices/router_nl4/global-config.md#the-terminal-hop-values-0-and-4)) of the node's own table words for a neighbour on NI port 0 or 1 that is
+  an NL3 router. Those four are writes to the node's `0x1_5002_xxxx` table registers, not router accesses. For `0x239`:
+  `0xffa5368c`, `0xffa53916` (in `0xffa53650`), `0xffa5b6b0` (distribution `0xffa5b5d0`), `0xffa5c11c`, `0xffa5c5a6`,
+  `0xffa5c60c` (route programmer `0xffa5c0f0`) and `0xffa5cd4c` (in `0xffa5c910`).
+- The listing has no other immediate 12311, 569, 17251 or 17442 in the boot routines (`0xffa00000` to `0xffb10000`); the
+  further hits above `0xffc00000` (`0xffc35f20` to `0xffc35fc0`, `0xffdfe4d0`, `0xffeaf4d0`, `0xfff617d0`) fall in the packed
+  components and strings that objdump decodes as code.
+
+### NL3 methods that reach the router (established as code; names from the runtime)
+
+Slot offsets are byte offsets in the type table (`0xffbd7f98`); the table is a pointer to a function descriptor per slot, as
+for the other chips. A slot holding the null stub `0xffa1a600` is not listed. Register numbers are the third argument of the
+vector helpers (`0xffa0bd20` read, `0xffa0c560` write) with no bit 38, which the NL4 routines add. A **port block** is
+`((p+1) & 0xe) << 15 | ((p+1) & 1) << 11` for port `p` = 1 to 8, that is `0x10000`, `0x10800`, `0x20000`, `0x20800`,
+`0x30000`, `0x30800`, `0x40000`, `0x40800`, the layout [the router page](../../../devices/router_nl4/README.md#how-software-reaches-the-router)
+records from the public header. Register names are those of the [Origin 3000 router unit](../../../devices/router_origin3000/registers.md)
+where it has the offset; the rest are unnamed. **Inferred** for every meaning in the last column.
+
+| Slot | Entry | Runtime name | Router accesses |
+|---|---|---|---|
+| `0x0`, `0x8` | `0xffa948b0`, `0xffa948d0` | `nl3r_name`, `nl3r_probe` | none |
+| `0xc8` | `0xffa9a4a0` | `nl3r_lock` | poll-read `0x518` (through `0xffa0ad80`) until bit 0 reads 0 or the argument timeout expires (-9); callers pass 10 s (`0x989680`) or 0 |
+| `0xd0` | `0xffa9a4f0` | `nl3r_unlock` | write 0 to `0x118` |
+| `0x108` | `0xffa9a550` | `nl3r_set_nasid` | read `0x10` (`PROT_CONF`), replace bits 11:8 with `(id >> 7) & 0xf`, write back |
+| `0x148` | `0xffa9a660` | `nl3r_clock_port` | read `0x20` (`GLOBAL_PARMS0`), return bits 4:1 |
+| `0x168` | `0xffa94900` | `nl3r_advert_read` | read `0x100` ("advertisement register" in the PROM's own error text) |
+| `0x170` | `0xffa94960` | `nl3r_advert_write` | write `0x100` |
+| `0x178`, `0x180`, `0x188`, `0x190` | `0xffa64280`, `0xffa64290`, `0xffa642a0`, `0xffa642b0` | | none: return 256, 16, 8 (ports), 2 (type code) |
+| `0x198` | `0xffa66440` | `nl3r_latency` | none: returns 3 for argument 2, else 255 |
+| `0x1a0` | `0xffa642c0` | | none: bits 55:52 of the register 0 word minus 1, the port the request entered by (NL4: bits 43:40) |
+| `0x1a8` | `0xffa642e0` | | read port block `+0x8` (`PORT_STATUS_ERROR`); returns the low byte and bits 15:8 |
+| `0x1c0` | `0xffa643c0` (body `0xffa63bb0`) | | first contact, see below |
+| `0x1c8` | `0xffa64570` | | for ports 1 to 8: write `+0x8` of the block with `0x4000000000` and read it back; with bit 31 of the flag argument set it first reads `0x10` |
+| `0x1d0` | `0xffa64940` | | none: edits the PROM's own route table (nibble get and set, `0xffa0cec0`, `0xffa0cf20`) |
+| `0x1d8` | `0xffa64d10` | | the table writer, see below |
+| `0x1e0` | `0xffa65a10` | | write port block `+0x200 + 8 * (entry mod 128)` for one port and entry |
+| `0x1e8` | `0xffa65b80` | | reads (diagnostic print): `+0x200 + 8 * i` for i = 0 to 127, twice, then `+0x100 + 8 * j` for j = 0 to 15, in each of the 8 port blocks |
+| `0x1f0` | `0xffa66040` | | under the lock: bit 0 of the flag argument read-modify-writes `0x10` (set or clear a mask), bit 1 does the same to `+0x18` (`PORT_RESET_MASK`) of each port in a mask |
+| `0x208` to `0x258` | `0xffa924b0` to `0xffa940c0` | `sc_uart_*` | none of the vector helpers: these are the system-controller UART routines, identical to the SHub's, with a direct local-register branch and a branch for "vector mode" (bit 5 of the controller object's flag at `+0x50`) that reaches the router through slots `0x260` to `0x268` |
+| `0x260` | `0xffa8cc10` | `sc_nl3r_dev_reg` | returns 0 |
+| `0x268` | `0xffa8cc20` | `sc_nl3r_dev_reg_offset` | maps UART register index `i` to router offset `0x240 + 8 * i` (NL4: `0x30 + 8 * (i xor 1)`) |
+| `0x280` | `0xffa8cc40` | `sc_nl3r_uart_divisor` | returns 13 |
+| `0x298` | `0xffa912d0` | `sc_nl3r_sim_data` | read `0x50000` and fill a record of fixed constants (16, 18, 26, 28, 114, 2048) from it |
+| `0x330` | `0xffaaa4e0` | `nl3r_config_global` | when its port argument is non-zero: read `0x20`, replace bits 4:1 with `port - 1`, write back; then a write to the node's own register (not the router) |
+| `0x338` | `0xffaaa740` | `nl3r_config_port` | one read of port block `+0x88` (`ERROR_CLEAR`); the value is discarded. A read that clears is possible and not shown |
+
+The NL3 table has no entry at slot `0x328`: the NL4 `nl4r_init_global` is not called for an NL3 router. The slots
+`0x208` to `0x258` are shared with the SHub table by address; the vector branch of the UART routines uses
+the register map of slot `0x268`, so an NL3 router's controller UART is at `0x240` to `0x278` (eight registers, index 0 to
+7; the framing layer `0xffa8d720`, `0xffa8d870`, `0xffa8daa0`, `0xffa8dff0` and `0xffa8e290` uses indexes 0 to 3, as for NL4,
+and `0xffa918c0`, `0xffa91c20`, `0xffa91d60` and `0xffa91f90` use others, not decoded). Which index is transmit data, status,
+receive data and receive status for NL3 is **inferred** from the NL4 mapping and not read.
+
+**First contact, slot `0x1c0` (`0xffa63bb0`), in order.**
+
+1. Read `0x100` (`0xffa94900`). Non-zero and the lock not taken here: return success without claiming (as the NL4
+   `cache_advert`).
+2. Zero: take the lock (`0xffa9a4a0`, timeout 0) and read `0x100` again, every 10 ms for up to 10 s while it stays zero
+   and the lock was not obtained (the same wait as the NL4 `cache_advert`).
+3. Still zero: `0xffa63930`: read-modify-write `0x20` (clear bit 52, bits 19:16 and the fields under `0xffeffffffff0fe01`,
+   set bit 4); read-modify-write `0x28` (bits 31:12 cleared with bit 30 set, bits 11:8 := 7); for each of the 8 port blocks
+   read-modify-write `+0x0` (low 10 bits := 400). Then read `0x50`; the module id, slot and slab requests
+   (`0xffa80dd0`, `0xffa80f90`, `0xffa81170`) through the controller UART of the router (the `0x240` registers); write `0x100`
+   with bit 31 set and bits 30:24 replaced (`0xffa94960`); unlock (write 0 to `0x118`).
+
+**The table writer, slot `0x1d8` (`0xffa64d10`).** For each port block (no lock held) the 128 entries at `+0x200 + 8 * i`
+and the 16 entries at `+0x100 + 8 * j`: read, and write only when the value differs from the one built from the PROM's route
+table (a flag argument that skips the read was not traced). Then lock (10 s timeout), read-modify-write `0x10` (set bit 13,
+replace bits 11:8 and bit 12), read-modify-write `0x100` (bit 31 set, bits 30:24 replaced), unlock, and write `0x18` with a
+word built from the PROM's per-port fields.
+
+### Where each slot is called from (established for the dispatch sites)
+
+The dispatch sites are `adds rX = slot` after the `[object + 0x20]` type-table load, followed by the descriptor load and
+`br.call` through b6. Only routines in the `intcon` family appear, so an NL3 router is driven by the same generic code
+as an NL4 router:
+
+- `0x1c0` from `0xffa45a16` in `0xffa45780` (`discover_object`); `0x1a0` from `0xffa45b00` there and `0xffa46c50` in
+  `0xffa46a50` (`intcon_chklink`); `0x1a8` from `0xffa46c96`, `0xffa46d80`, `0xffa46e50`, `0xffa46f30` in `0xffa46a50`;
+  `0x1c8` from `0xffa45510` in `0xffa450e0`; `0x188` (port count), `0x178`, `0x180`, `0x190`, `0x198` from the crawl and
+  the numbering routines.
+- `0x1d8` from `0xffa5bf30` in the distribution `0xffa5b5d0`; `0x1e0` from `0xffa5c4f0` and `0xffa5c730` in the route
+  programmer `0xffa5c0f0`; `0x1d0` from `0xffa54fd0`, `0xffa5531c`, `0xffa55a10` in `0xffa54b80`, and `0xffa5a366` in
+  `0xffa59030`.
+- `0x1f0` from `0xffa51650`, `0xffa516b0` in `0xffa51200` (the reset fences, string "intcon_pttn_erect_reset_fences") and
+  `0xffa5272c`, `0xffa52780`, `0xffa52820`, `0xffa52880`, `0xffa52a40` in `0xffa517b0` (the meta-router set-up).
+- `0x168`, `0x170`, the advertisement register: `0xffa0affc`, `0xffa0b276`, `0xffa0b5e0`, `0xffa1a710`, `0xffa1a7d0`,
+  `0xffa43f36`, `0xffa438ec`, `0xffa474b6`, `0xffa47b00`, `0xffa47eb6`, `0xffa480fc`, `0xffa5c020`, `0xffa605c6`,
+  `0xffa637dc`, `0xffa99c06` and others; the strings are "Error: reading advertisement register". `0x108` from `0xffa97836`
+  (`0xffa976e0`, the node-id install), `0xffa91c7c`, `0xffb09366`; `0x148` from `0xffa522c6` and `0xffaf0520`,
+  `0xffaf07a0`.
+- `0x330` and `0x338` from the board walk `0xffaedff0` (`0xffaee190`, `0xffaee2c6`).
+- `0x298` from `0xffa7c840` and `0xffa8d1f0`; `0x268` and the UART routines from the controller framing layer above.
+- The operator commands, which the boot does not run: the router link-status command `0xffb0f840` (register 0 at
+  `0x1_0000_0000`, then for each port block read `+0x8`, `+0x20`, `+0x28`, print them, and write 0 to `+0x20` and
+  `+0x28`, through the wrappers `0xffa0cd90` and `0xffa0ce00`), a vector dump `0xffb09620` (slot `0x1e8`), a node-id setter
+  `0xffb09210` (slot `0x108`), and two commands that call the same wrappers (`0xffb089f0`, which prints "RdData: %y", and `0xffb08ad0`; where they get
+  the register was not read).
+
+### SAL runtime (what the operating system can make the firmware do to an NL3 router)
+
+`chipfunc_nl3r` (runtime `0xa1f50`) binds `nl3r_name`, `nl3r_probe`, `nl3r_lock` (`0x11ef0`, the same `0x518` poll),
+`nl3r_unlock` (`0x11f40`, write 0 to `0x118`), `nl3r_advert_read` (`0xeed0`, `0x100`; `nl3r_advert_write` `0xef30` is
+also present), `nl3r_set_nasid` (`0x11fa0`, `0x10` bits 11:8), `nl3r_clock_port` (`0x120b0`, `0x20` bits 4:1),
+`nl3r_latency`, the `sc_uart_*` set with `sc_nl3r_dev_reg`, `sc_nl3r_dev_reg_offset` (`0x240 + 8 * i`),
+`sc_nl3r_uart_divisor` (13) and `sc_nl3r_sim_data`, and the `nl3r_hwperf_*` set. `nl3r_hwperf_acquire`, `_release` and
+`_force_release` touch no register. `nl3r_hwperf_get_mmrs` (`0x1bb80`) and `_set_mmrs` (`0x1b950`) take their addresses
+from the caller, but a validator (`0x1aeb0`) checks each against a table of 32 entries: for each of the eight port blocks,
+`+0x0`, `+0x8`, `+0x20` and `+0x28` (`0x10000` to `0x40828`). Anything else is refused. The runtime has none of the table-writing
+routines. `salruntime_irouter_op` (`0xaff0`) is the system-controller channel (`sysctl_irtr_open`, `_send_chunk` and the
+rest), not a router register access; as [the router README](../../../devices/router_nl4/README.md#how-software-reaches-the-router) says of `SN_SAL_IROUTER_OP`.
+
+### What this settles, and what it does not
+
+- **Answered.** `0x3017` is the NL3 router; `0x239` the NL4 router; no other router part is accepted. The PROM does much
+  more than read the part number to an NL3 router: it reads the part, revision and (bits 55:52) the entry port from register 0, and reads and writes the global registers
+  `0x10`, `0x18`, `0x20`, `0x28`, `0x50` (read), `0x100`, the lock pair `0x518` and `0x118`, the per-port blocks (`+0x0`, `+0x8`, `+0x18`, `+0x20`, `+0x28`
+  in the operator command, `+0x88`, the two tables at `+0x100` and `+0x200`), `0x50000` and the controller UART at `0x240`.
+  V0 and V1 are bits of the node's own tables, not router state.
+- **Unknown without a capture or hardware.** The width and effect of any of those registers; what read-to-clear the `+0x88`
+  and `+0x8` reads have; what an NL3 router returns at `0x50000`; which UART index is which; reset values (no read before
+  a write was looked for in the NL3 routines beyond the ones above). **Not read:** the bodies of `0xffa80dd0`, `0xffa80f90`,
+  `0xffa81170` and `0xffaac160` beyond their call lists, the two operator commands `0xffb089f0` and `0xffb08ad0`, the UART
+  routines `0xffa918c0` to `0xffa91f90` and the validator's use of its second column.
+- **Not checked.** That the PROM is ever run on a system whose router reports `0x3017`: the classification is code, and no
+  capture of a 3700 router's register 0 is held (inferred that a 3700 R-brick reports it, from the shared NL3 name and from
+  the guide's "NUMAlink 3 cable", 007-4579-001 pp. 31 and 33).
+
 ## Unknown, and the route that would settle it
 
 - What reply types 4 and 5 are, and whether a route error gives one of them: the image only groups them with link errors
@@ -751,6 +919,10 @@ Same image and method as [the scrub and clock section of boot-sequence.md](boot-
 - What `0xffa5c900` ("nl4r_mip_clear") accesses when the table has a router.
 - The meaning of `SCRATCH1` bits 16 and 46 to 53, and of the debug-word fields behind bits 18 and 19: no reader found. Bits 18 to
   20 are read (OR-ed over the non-claimed nodes into `cpu_bits` 14, 15 and 13 by `0xffa44ba0`); what those `cpu_bits` do is open.
+- NUMAlink 3 router ([section above](#numalink-3-router-part-0x3017-what-the-prom-accepts-and-does-to-one-read-2026-11-22)):
+  the effect and width of every register the PROM touches, which UART index is which, and what `0x50000` returns; route: a
+  register capture from a matching R-brick, or the sysco repository's router L1 side. Whether a 3700 R-brick reports
+  `0x3017`: route: one read of its register 0.
 
 ## Review
 

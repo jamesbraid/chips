@@ -320,7 +320,8 @@ Established by comparing what was read:
   router header), replaces bits 4:1 with `(port - 1) * 2` and writes it back, then does the same record clean-up. It
   takes no lock. `nl3r_config_port` makes one vector read of the port's `+0x88` register (the Origin 3000 router's
   `ERROR_CLEAR`, which is read here; a read-to-clear is possible and not established). That `0x20` bits 4:1 select the
-  clock source port is inferred from the parallel with the NL4 routine.
+  clock source port is inferred from the parallel with the NL4 routine. The runtime names this method `nl3r_clock_port`. Every other
+  NL3 method and register: [the NL3 section](../../software/firmware/snprom/numalink-neighbours.md#numalink-3-router-part-0x3017-what-the-prom-accepts-and-does-to-one-read-2026-11-22).
 - All four SHub 1 builds from snprom 4.20 on (4.20, 4.43, 10.40, 10.54) hold the `nl4r_` strings; 3.32 holds only two
   of them; the SHub 2 images (10.11, 10.40, 10.54) hold seven. The `R4_` register table is in all of them. For 4.20 and
   10.40 only the strings were checked.

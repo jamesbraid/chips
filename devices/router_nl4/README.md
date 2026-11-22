@@ -47,7 +47,7 @@ not a reading, and their access is **unknown**.
 
 | Router | Part number (bits 27:12 of register 0) | Where | Grade |
 |---|---|---|---|
-| Origin 3000 router (IP35 family) | `0x3017` | Origin 3000 R-brick; the SHub 1 PROM also carries a match function for this value, and the PROM has an `NL3router` name | the value established in both sets of binaries; that the Altix 3000 R-brick carries the same chip is inferred from the identical value and the guide's "router chip, eight-port crossbar" (007-4579-001 p.135) |
+| Origin 3000 router (IP35 family) | `0x3017` | Origin 3000 R-brick; the SHub 1 PROM also carries a match function for this value, and the PROM has an `NL3router` name | the value established in both sets of binaries; that the Altix 3000 R-brick carries the same chip is inferred from the identical value and the guide's "router chip, eight-port crossbar" (007-4579-001 p.135). SAL 5.04's accepted part numbers, its NL3 method table and every register it reaches on one: [the NL3 section](../../software/firmware/snprom/numalink-neighbours.md#numalink-3-router-part-0x3017-what-the-prom-accepts-and-does-to-one-read-2026-11-22) |
 | NUMAlink 4 router | `0x239` (569) | Altix 350 router option, 3700 Bx2 CR-brick, 4700 and 450 IRU routers, Dense router module | established: the PROM's per-chip match function compares the identification halfword with 569 and its name entry is `NL4router` |
 
 The PROM dispatches on the chip identification word through a table of per-chip method tables. The SHub 2 images
@@ -66,7 +66,11 @@ parameters, diagnostic parameters, debug address, `LB_TO_L2` at `0x40`, `L2_TO_L
 `0x8000`, and per-port blocks at `((L+1) & 0xe) << 15 | ((L+1) & 1) << 11` for link L = 1 to 8 (parameters, status and
 error, channel test at `+0x10`, reset mask at `+0x18`, histograms at `+0x20` to `+0x38`, error clear at `+0x88`, global
 table at `+0x100`, local table at `+0x200`). Established as a table of names and numbers; no field-level read of that
-table was made.
+table was made. The SHub 1 PROM reaches an NL3 router with the same port-block formula (`((p+1) & 0xe) << 15 | ((p+1) & 1) << 11`,
+read in `0xffa64d10`, `0xffa642e0` and the SAL runtime's hwperf table of `0x10000` to `0x40828`), at the global
+registers `0x10`, `0x20` and `0x28`, at `+0x8`, `+0x18` and `+0x88` of each block, and at the two tables (`+0x100`, 16
+entries; `+0x200`, 128 entries), which agrees with the header positions above; the registers it uses that this list does not
+name (`0x50`, `0x100`, `0x118`, `0x518`, `0x240` to `0x278`, `0x50000`) are in [the NL3 section](../../software/firmware/snprom/numalink-neighbours.md#numalink-3-router-part-0x3017-what-the-prom-accepts-and-does-to-one-read-2026-11-22).
 
 ## How software reaches the router
 

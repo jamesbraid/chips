@@ -69,4 +69,7 @@ Open items, each with the route that settles it:
 - Whether NUMAlink 4 router registers in the Altix 350 router option, the 3700 Bx2 CR-brick and the 4700 IRU are the
   same: one table covers all of them in the PROM (inferred identical, no per-product difference found).
 - Does the Altix 3000 R-brick chip (part `0x3017`) match the Origin 3000 router register-for-register? The numbers
-  agree; no per-register behaviour compared.
+  agree; no per-register behaviour compared. SAL 5.04 reaches the offsets `0x10`, `0x20`, `0x28`, the port-block `+0x0`, `+0x8`,
+  `+0x18`, `+0x88` and the two tables at the positions the public header gives ([the NL3 section](../software/firmware/snprom/numalink-neighbours.md#numalink-3-router-part-0x3017-what-the-prom-accepts-and-does-to-one-read-2026-11-22));
+  `0x50`, `0x100`, `0x118`, `0x518`, `0x240` to `0x278` and `0x50000` are not in the header list. That a 3700 R-brick reports
+  `0x3017` is unknown without a capture.
