@@ -253,20 +253,19 @@ probing on every BAR, and bridges whose bus-number, base and limit registers hol
 
 **Established (`1.1005@0x1107e40`, `0x1107e10`, `0x1108040`, `0x1109370`, `0x11092e0`; image at `1.1005@0x119cd64`).**
 
-- **Image and placement.** A 32 KiB BIOS ("Main BIOS v1.0", dated 01/01/99) sits in the second data module. When the V86 set-up
+- **Image and placement.** A 32 KiB BIOS ("Main BIOS  v1.0", dated 01/01/99) sits in the second data module. When the V86 set-up
   runs the PROM copies it to physical `0xf8000` to `0xfffff` (so its reset vector at `0xffff0` is the image's last paragraph) with
   plain byte stores; it also saves, for restoring afterwards, the pages at `0x1000`, `0xf0000` (32 bytes), `0xf0020` (32),
   `0xf0e00` (128) and `0xffff5` (10). Pages 0 to `0xff` (the first megabyte) are made present, writable and user-accessible in
   the PROM's page tables. No chipset shadow-control write was found: the megabyte is plain RAM (inferred).
 - **When it runs.** Conditions as in [boot-path.md](boot-path.md#legacy-bios-and-the-acpi-tables): a PCI function with a
-  valid x86 option ROM is found (flag set at `0x111bfcd`), or `DosBoot` begins with `y`; and `console` does not begin with `d`, the BIOS-skip setting (`Vx86DoNotRunBIOS`) does not begin with `y`, and the board test passes (not a first-generation 320, or `ignorehughid` set; `1.1005@0x1107ee4` to `0x1107efb`).
+  valid x86 option ROM is found (flag set at `0x111bfcd`), or `DosBoot` begins with `y`; and `console` does not begin with `d`, the BIOS-skip setting (`Vx86DoNotRunBIOS`) does not begin with `y`, and the board test passes (the board type word `0x1160380` is non-zero, the board revision word `0x1160384` is at least `0xc` (unsigned), or `ignorehughid` is set; `1.1005@0x1107ee4` to `0x1107efb`).
   A stock board with no add-in card therefore does not run it (inferred; no scan was run).
 - **Option ROMs.** For each function found, the PROM sets the command register to 2 (memory enable only), writes the ROM base
   register with the address the bridge assignment reserved for its bus plus bit 0, requires a `PCIR` data structure of type 0
   (x86), copies the image to physical `0xc0100` and up (up to ten, ending below `0xe8101`), clears the ROM base register and
   restores the command register. It keeps a table (count, end paragraph, per-ROM bus/device/function and segment) for the BIOS.
-  **The PROM never calls a ROM: the embedded BIOS does,** from its own start-up code, which scans `0xc0000` to `0xe0000` in
-  2 KiB steps for `0xaa55`, checks the byte checksum and calls offset 3 (established from the BIOS listing; whether the copy at
+  **The PROM never calls a ROM: the embedded BIOS does,** from its own start-up code, whose scanner (`0xf84d0`) looks for `0xaa55` in 2 KiB steps over `0xc0000` to `0xc7fff` (`0xf8c9c`), over `0xe0000` (a forced 64 KiB image, `0xf8410`) and in the copy-loop path (`0xf85b2`), checks the byte checksum and calls offset 3 (established from the BIOS listing; whether the copy at
   `0xc0100` is found by that scan, given its alignment, was not traced; unknown).
 - **How it is entered.** The V86 task (descriptor `0xa0` in the PROM's GDT, a 32-bit TSS the PROM builds) starts at
   `F000:FFF0` in virtual-8086 mode, entered by a hardware task switch; the PROM first programs its local APIC
