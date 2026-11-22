@@ -102,12 +102,12 @@ routing.
 
 ## Memory controller (unknown)
 
-No code read programs the memory controller: the memory size is handed over by the loader (see
+No Linux code programs the memory controller: the memory size is handed over by the loader (see
 [boot and detection](../../platforms/visws/boot-and-detection.md)) and the kernel never sees a bank register, ECC
 status or refresh setting. Facts about the memory itself, from users' posts only (inferred): 100 MHz SDRAM, 256 bits wide
 plus ECC, in banks of six non-standard DIMMs; the 320 had two banks of 128, 256 or 512 MB (1 GB maximum), the 540 had
 four banks (2 GB maximum), the first bank always populated. Nothing says how the controller decodes banks, interleaves
-or reports ECC errors. **What would settle it:** the PROM, the NT HAL or the Cobalt specification.
+or reports ECC errors. The shipped NT HAL does touch the block, but only the ECC enable bit (register `+0x00`), the error status, address and syndrome (`+0x18`, `+0x28`, `+0x30`) and the clear-by-zero of the status ([nt-hal.md](../../software/visws/nt-hal.md#cobalt-registers-the-hal-programs), established); it reads no bank register, and the firmware writes the bank registers ([boot-path.md](../../software/visws/boot-path.md#memory-controller-and-graphics-memory)). Bank decoding and the register reset values stay unknown. **What would settle it:** the Cobalt specification, or a read of a real machine.
 
 The frame buffer is the top 8 MB of memory that the kernel reserves from its own memory map; see the platform page.
 
@@ -115,9 +115,9 @@ The frame buffer is the top 8 MB of memory that the kernel reserves from its own
 
 | Unknown | Route |
 |---|---|
-| Interrupt controller reset state and enable default | A PROM or HAL read; a boot log line `Cobalt APIC enabled: ID reg` on a real machine |
-| Identification field; destination field use | A kernel boot log, an NT HAL |
+| Interrupt controller reset state and enable default | The HAL does not depend on it (it masks all 30 entries at start-up); a boot log line `Cobalt APIC enabled: ID reg` on a real machine, or the specification |
+| Meaning of the identification field | The HAL and the firmware both write 4 into bits 27:24 when they read zero, and the HAL's NMI entry uses logical destination mode with a processor bit in the high word (established for the HAL); what the field means is unknown: the specification or a boot log |
 | Whether the timer's pending bit self-clears | A real machine running 2.6 with a status read in the handler |
-| Memory controller, ECC and error reporting, bus-error and cache interrupt sources on line 28 | PROM, HAL |
+| Bus-error and cache interrupt sources on line 28 | The HAL's timer handler treats status bit 0 as an unexpected cache-operation interrupt and bit 1 as the timer; further sources: the specification |
 | Revision register values and meaning | Boot logs from real boxes (the kernel prints the value) |
 | Anything the graphics engine does through this block | The graphics pages |

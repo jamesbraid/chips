@@ -46,8 +46,7 @@ numbers above, and sets its PCI probing to that mechanism alone (BIOS and type 2
 across two host bridges (does it decode the bus number to pick a bridge?) is not described by any Linux code. This is
 Linux's expectation only (inferred).
 
-SGI's NT 4.0 HAL does not use the ports. Its PCI accessors (named `TypeBorg`, `halborg.dll` 1.3 at `0x8001ea80` to
-`0x8001ecb0`; established, read in full) reach a device through the window of the bridge that owns its bus: the address
+SGI's NT 4.0 HAL does not use the ports. Its PCI accessors (`HalpPCISynchronizeTypeBorg`, the `HalpPCIRead` and `HalpPCIWrite` routines with the `TypeBorg` suffix, and `HalpPCIConfig`, in `halborg.dll` 1.3; established, read in full) reach a device through the window of the bridge that owns its bus: the address
 register is the 32-bit word at window `+0xf8` and the data is the word at `+0xfc`, with the byte or halfword lane picked by
 the low address bits. The address word has bit 31 set, the bridge's bus number in bits 23:16 (taken from the
 bus handler's number, not from the `+0x44` word), the device number in bits 15:11, the function in bits 10:8 and the
