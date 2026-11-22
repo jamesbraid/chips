@@ -152,3 +152,5 @@ generic x86 code in 2.6.24; H. Peter Anvin deleted it in February 2014, for 3.15
 to be dead". The last working kernel for an emulator to target is therefore 3.14, though 2.6.x is what the maintainers
 last exercised. The register facts are unchanged across all versions; only the interrupt numbering and the use of the
 per-revision wiring tables differ. [Details](../../references/visws-sources.md).
+
+The two products compared (memory groups, processors, slots by bridge, board-type byte): [boards-320-540.md](boards-320-540.md).
