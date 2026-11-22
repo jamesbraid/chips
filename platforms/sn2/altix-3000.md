@@ -56,10 +56,11 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 ## IX-brick wiring
 
 Read 2026-11-21 from the IX-brick chapter of 007-4579-001 (printed pp.112 to 121), the IX addendum 007-4604-001 (pp.2, 4,
-10) and the driver guide (007-4520-006 pp.18, 19, 38, 52, 54, 55). Only Figure 6-2 (p.113) was checked on a page image,
-an existing 2026-10-26 render kept in the evidence store; the Figure 6-3, 6-6 and driver figures were checked on their text
-layer only, so their box shapes and connector placement are not confirmed. The same PIC drawing appears in the PX
-addendum (007-4605-001 p.3). These are Altix 3000 IX-bricks; the Origin 3000 IX chapter is not used.
+10) and the driver guide (007-4520-006 pp.18, 19, 38, 52, 54, 55). Figures 6-3 (p.115), 6-6 (p.120), and driver Figures
+2-3 (p.19) and 5-1 (p.52) were rendered from local copies of the manuals. Figure 6-2 (p.113) was checked on an existing
+2026-10-26 render in the evidence store. Figure 3-1 (p.38) and the hwgraph listing (p.54) were read from the text layer
+only. The same PIC drawing appears in the PX addendum (007-4605-001 p.3). These are Altix 3000 IX-bricks; the Origin 3000
+IX chapter is not used.
 
 - **Three PICs (established).** "Three PIC (PCI interface chip) ASICs are key components of the IX-brick architecture"
   (007-4579-001 p.113; 007-4604-001 p.2). Each PIC drives two PCI-X buses.
@@ -72,13 +73,14 @@ addendum (007-4605-001 p.3). These are Altix 3000 IX-bricks; the Origin 3000 IX 
   its two buses, each bus feeding its two slots. Port F is therefore the PCI-X side that carries both of a PIC's buses
   (inferred from the drawing and driver p.55, which says each host bridge adapter has two PCI-X buses). The letter F is
   not defined in any held text.
-- **XIO 10 is Node 0, Port A (established as drawn).** Driver Figure 5-1 (p.52) links the C-brick's "NODE 0 XIO (II)" to
-  "XIO link to Port 'A'", with "XIO 10" over "XIO 'A'". Node 0 is slab 0 (driver p.54 and p.55 example). Figure 5-1 is
-  drawn on the PX-brick back panel; the IX and PX addenda show the same PIC ports (IX Figure 2, p.4; PX Figure 2, p.3), so
-  the IX reading carries it across (inferred). The rear placement of XIO 10 (007-4579-001 Figure 6-6, p.120) is not
-  checked: the text layer gives the label only.
-- **XIO 11 is Node 1, Port B (established as drawn).** Same figure: "NODE 1 XIO (II)" to "XIO link to Port 'B'", with "XIO 11"
-  over "XIO 'B'". The same caveats apply, and its rear placement (Figure 6-6) is not checked.
+- **XIO 10 is Node 0, Port A (established as drawn for the PX-brick; inferred for the IX-brick).** Driver Figure 5-1 (p.52)
+  links the C-brick's "NODE 0 XIO (II)" to "XIO link to Port 'A'", with "XIO 10" over "XIO 'A'". Node 0 is slab 0 (driver
+  p.54 and p.55 example). Figure 5-1 is drawn on the PX-brick back panel. The IX and PX addenda show the same PIC ports
+  (IX Figure 2, p.4; PX Figure 2, p.3), so the IX reading carries it across. Figure 6-6 (p.120) puts the XIO 10 connector
+  between bus 2 and bus 3 on the IX-brick rear.
+- **XIO 11 is Node 1, Port B (established as drawn for the PX-brick; inferred for the IX-brick).** Same figure: "NODE 1 XIO
+  (II)" to "XIO link to Port 'B'", with "XIO 11" over "XIO 'B'". The same caveat applies. Figure 6-6 puts the XIO 11
+  connector between bus 4 and bus 5.
 - **Which crosstown box is XIO 10 (inferred).** The drawing puts the upper box on Port A and the lower on Port B. The
   label match then makes the upper box XIO 10. No held text names the boxes.
 - **Rear position is not wiring.** Connector placement shows where the cable enters, not which PIC it reaches. The
@@ -111,8 +113,7 @@ gives a ceiling, not a measured speed.
   ([the IX-brick page](../bricks/ixbrick.md)). Both put SCSI at 3 and Ethernet at 4, the reverse of Figure 2-3. Neither
   reading is chosen; a PCI listing from an IX-brick would settle it. The IOC4 carries the RS-232 ports, PS/2 keyboard
   and mouse, the real-time jacks, NVRAM and the real-time clock, and an ATA bus to the DVD-ROM (driver p.18; Figure 6-3
-  p.115). Figure 6-3 also
-  shows an "FPGA ASIC" between the IOC4 and the IDE interface; its role is not stated.
+  p.115). Figure 6-3 labels the IOC4 block "IOC4 FPGA ASIC"; the FPGA's role is not stated.
 - **Not settled.** The reason for the letter F; whether the XIO 10 cable reaches Port A by the upper box as drawn (a
   capture from an IX-brick with one C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role;
   and the chip part numbers inside the IO9 (see [the IX-brick page](../bricks/ixbrick.md)).
