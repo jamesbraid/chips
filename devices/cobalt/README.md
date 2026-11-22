@@ -201,8 +201,11 @@ with each register before and after it first writes it.
   pattern with bit 1 clear in the tick, so bit 1 clears on a written zero and a written one is harmless. Whether bit 1 clears
   by itself stays open.
 - **Interrupt controller.** Entry destination: every device entry has destination 0 and only the NMI entry is logical. The HAL
-  masks all thirty entries and the PROM writes all thirty (vector with the level bit, high word 0, mask bit chosen per line from a
-  table) before they touch the identification word, so entries accept writes while the controller is disabled. Id field: the HAL
+  masks all thirty entries; the PROM writes all thirty (`1.1005@0x1109240`) with the low word `vector | 0x18000` (level and mask) and
+  the high word 0, through the setter at `0x11091b0`, taking each line's vector from a table (`0x11a5d98`) and then clearing the mask
+  bit for every line whose vector has a registered handler (the flag the connect routine sets at `0x1108a4e`, kept at
+  `0x11536cc + 16 * vector`); those lines end up unmasked. Entry 29 gets `0xffffffff` in the low word, since its table value is
+  all ones, and 0 in the high word. All of this is done before the PROM touches the identification word, so entries accept writes while the controller is disabled. Id field: the HAL
   and the PROM main module both read the word, write 4 into bits 27:24 only if they read zero (clearing bit 8 in that store), then
   set bit 8 in every case (`1.1005@0x11092a2` to `0x11092d2`, `1.0006@0xf093a3` to `0xf093c3`). Only three PROM sites write 4
   without testing: `1.1005@0x1103de2`, `1.0006@0xf04072` and the self-test (`test+0x13fd`), the same early code in all five held

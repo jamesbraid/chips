@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 35a12479d2011e5f542f1e404c8ad96418ec1ca5a7d7910be1f9fb4db3e75137 */
+/* input sha256 030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -49,7 +49,7 @@
 #define COBALT_APIC_HI_DEST_INPLACE                  (COBALT_APIC_HI_DEST_MASK << COBALT_APIC_HI_DEST_SHIFT)
 
 /*
- * Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known. The NT HAL and the PROM main module run the same sequence: read the word, test bits 27:24, and only when they are zero clear bit 8 and the field and store 4 in the field; then in every case set bit 8 and store again. Both test the field before writing it, so each depends on the value only through whether the field is zero. The HAL masks all thirty entries first and the PROM writes all thirty first (vector with the level bit, high word 0; mask bit from a per-line table), so entries accept writes while the controller is disabled. The PROM also has three places that set the field to 4 without testing it: the self-test, the early start-up in the main module, and the same early code in every held release (1.0002 to 1.1005). The main module ends by masking all entries and clearing bit 8. No reset value is known. Addresses: the Cobalt README.
+ * Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known. The NT HAL and the PROM main module run the same sequence: read the word, test bits 27:24, and only when they are zero clear bit 8 and the field and store 4 in the field; then in every case set bit 8 and store again. Both test the field before writing it, so each depends on the value only through whether the field is zero. The HAL masks all thirty entries first and the PROM writes all thirty first (low word the vector with the level and mask bits set, then the mask bit cleared for every line that has a registered handler; entry 29 gets all ones; high word 0), so entries accept writes while the controller is disabled. The PROM also has three places that set the field to 4 without testing it: the self-test, the early start-up in the main module, and the same early code in every held release (1.0002 to 1.1005). The main module ends by masking all entries and clearing bit 8. No reset value is known. Addresses: the Cobalt README.
  */
 /* apic_id: rw32, space apic, reset unknown */
 #define COBALT_APIC_ID_OFFSET                        0xffcu /* established */
