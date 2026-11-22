@@ -106,21 +106,55 @@ intermediate modules, and the ring has a second path if one link fails (-001 pp.
 3.2 GB/s at two modules to 800 MB/s at eight (-001 p.72 Table 2-2). The cabling lists which port joins which
 module are in the cabling chapter (printed pp.46 to 48 of -001), not read for this page.
 
-**Routers (-002 only).** One or two NUMAlink-4 routers join eight to sixteen modules (-002 p.69). Single plane: one
-router, a connection to "port 0" of up to eight modules, and modules 9 to 16 on the open "port 1" of the first eight.
-Dual plane: two routers, each connected from its port A to "port 1" of two modules, with the two modules also joined
-port 0 to port 0 (-002 pp.69 to 71, Figures 2-3 and 2-4). Established as described. -001 has no router: its ring text
-(printed pp.69, 71 to 74) and its configuration table (p.71) name none, and its contents have no router chapter. No -003 or
--004 is in the Library (resolve_library, 2026-11-21). The router is an "R-brick" in the
-guide's wording (-002 p.105), a separate enclosure with its own chapter (Chapter 6 "Optional Router", read, printed pp.149
-to 154: eight NUMAlink-4 connectors A to H (also numbered 1 to 8), L1 controller, 3.2 GB/s each way per link). The cable
-tables (-002 pp.81 to 85) put the router on NUMAlink 1 of modules 5 to 12 in a single-plane system and join the
-modules in pairs on NUMAlink 0 (1 with 5 through 4 with 8, 9 with 13 through 12 with 16), so modules 1 to 4 and 13 to 16
-sit two hops from the router; a dual-plane system adds a second router on NUMAlink 1 of modules 1 to 4 and 13 to 16.
-For single plane only, the prose of p.69 says "port 0" for the router link and "port 1" for modules 9 to 16, the reverse
-of Table 2-3 and Figure 2-12; the dual-plane prose agrees with Table 2-4. The tables are used and the single-plane
-contradiction is open. Full cabling, port use and the PROM side:
+**Routers (-002 only).** Eight to sixteen modules use one or two NUMAlink-4 routers, the "R-brick" (-002 pp.48, 66,
+69, 81, 149). Single plane is one router; dual plane is two. The guide prints cable tables for both: single plane in
+Table 2-3 (pp.81 to 82) with Figure 2-12 (p.83), dual plane in Table 2-4 (p.84) with Figure 2-13 (p.85). Block diagrams
+are Figures 2-3 (p.70) and 2-4 (p.71). Its cable tables cover only the 16-module layouts, so no layout is printed for
+8 to 15 modules, and no rule chooses single or dual plane. Ring figures 2-5 to 2-11 (pp.75 to 80) cover two to eight
+modules; -001 p.70 says the base module connects to seven more, "a total of eight modules".
+
+The router has eight NUMAlink-4 connectors, A to H, which are ports 1 to 8 (Figure 6-2 p.151; Figure 6-3 p.153; Table
+2-4 "From 1st router port 1(A)"). Each link runs at 3.2 GB/s each direction (Table 6-2 p.154). Established. Every router
+connector goes to port 1 (NUMAlink 1) of one module:
+
+| Router connector (port) | Single plane (Table 2-3) | Dual plane, router 1 (Table 2-4) | Dual plane, router 2 (Table 2-4) |
+|---|---|---|---|
+| A (1) | module 5 | module 5 | module 1 |
+| B (2) | module 6 | module 6 | module 2 |
+| C (3) | module 7 | module 7 | module 3 |
+| D (4) | module 8 | module 8 | module 4 |
+| E (5) | module 9 | module 9 | module 13 |
+| F (6) | module 10 | module 10 | module 14 |
+| G (7) | module 11 | module 11 | module 15 |
+| H (8) | module 12 | module 12 | module 16 |
+
+The module-to-module links on port 0 (NUMAlink 0) are the same in both forms: 1 with 5, 2 with 6, 3 with 7, 4 with 8,
+9 with 13, 10 with 14, 11 with 15, 12 with 16. Single plane leaves port 1 of modules 1 to 4 and 13 to 16 unused
+(inferred: the tables and Figure 2-12 show no link there), so those modules reach the single-plane router through one
+module-to-module link (inferred). Dual plane puts all 16 modules on a router (Figures 2-4 and 2-13 agree with Table 2-4).
+
+**The single-plane conflict (open).** The prose on p.69 says "a single NUMAlink-4 connection is made to the port 0
+connector on the back of (up to) eight Altix 350 modules. Additional modules (9 thru 16) are connected to the open
+NUMAlink-4 port (port 1) on the modules already connected to the router." Table 2-3 (p.81) pairs connector (A) with
+"module 5 NUMAlink 1" through connector (H) with "module 12 NUMAlink 1", and Table 2-3 (p.82) pairs modules 9 to 16 on
+NUMAlink 0. Figure 2-12 (p.83) and Figure 2-3 (p.70) draw the table's wiring. The prose and the tables disagree on which
+port the router uses and which modules it reaches. The tables, both figures and the dual-plane table agree with each
+other, so this page uses the table reading (inferred). The prose stays unresolved. The dual-plane prose at p.69 matches
+Table 2-4. Open item: [questions/numalink4-router-open.md](../../questions/numalink4-router-open.md).
+
+-001 has no router: its ring text and configuration table name none, and it has no router chapter. No -003 or -004 is
+held (resolve_library, 2026-11-21). Full cabling, port use and the PROM side:
 [../../devices/router_nl4/global-config.md](../../devices/router_nl4/global-config.md).
+
+**Router L1.** One L1 controller with a two-line display of 12 characters a line, a USB "L1 port" on the rear, and a DB-9
+console (-002 pp.150, 152 to 154). Figure 6-2 (p.151) puts the L1 console and the L2 host USB on the system control
+board. Table 6-2 gives one L1 port at 12 Mbit/s. Established. The guide gives no L1 address for the router and no router
+line in the L2 `cfg` listing, which shows each module's "system controller addresses" (-002 p.56). In a dual-plane system a
+USB-to-Ethernet adapter on each router's USB port links it to an Ethernet switch (-002 p.86, Figure 2-14 p.87). The L1
+and L2 guide 007-3938-005 addresses a brick by USB port, L1 index, then rack, type character and slot (pp.10, 49, 69).
+Its type character `r` is the R-brick (Table 3-1, p.70), and its router command set (pp.108 to 109) is "valid only for
+R-bricks and NUMAlink modules". That guide shows no Altix 350 router, so the router's L1 index and its entry in the L2
+list are unknown.
 
 ## Console and controller path
 
@@ -158,6 +192,7 @@ calls. A single module has no router and uses no network ports. Its SHub generat
 - The cabling chapter of -001 (the router chapter and cable tables of -002 are read, see Topology).
 - The router or link chip, if any, between the two NUMAlink connectors and the SHub (the guide draws two NUMAlink
   blocks beside the SHub on -001 p.99 and -002 p.107 and says nothing about a router).
+- The single-plane cabling conflict (Routers above) and the router's L1 index in an Altix 350 L2 list (Router L1 above).
 
 ## Review
 

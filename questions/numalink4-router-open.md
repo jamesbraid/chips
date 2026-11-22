@@ -25,9 +25,19 @@ Open items, each with the route that settles it:
   (SHub 2 `0xff4ae400`); the encodings and units may have no software route.
 - The order of the three router phases in one boot (table distribution, the board walk that sets the clock source, the
   partition fences). Route: the callers of `0xff42cd80` and `0xff4e7470` in SHub 2 SAL 10.54.
-- The Altix 350 guide (007-4660-002) single-plane prose on p.69 puts the router on "port 0"; its cable table (pp.81 to 82)
-  and Figure 2-12 (p.83) put it on NUMAlink 1. Checked 2026-11-21: -001 has no router text, and no -003 or -004 is held.
+- Altix 350 single-plane cabling: the guide's prose contradicts its tables. Page 69 puts the router on "port 0" of up
+  to eight modules, with modules 9 to 16 on the open "port 1" of those eight. Table 2-3 (pp.81 to 82), Figure 2-12
+  (p.83) and Figure 2-3 (p.70) put the router on NUMAlink 1 of modules 5 to 12, and pair modules 1 to 4 with 5 to 8
+  and 9 to 12 with 13 to 16 on NUMAlink 0. The tables, the figures and the dual-plane Table 2-4 agree with each other,
+  so [platforms/sn2/altix-350.md](../platforms/sn2/altix-350.md) uses the table reading (inferred). Unknown: which one
+  a cabled single-plane system matches. Checked 2026-11-21: -001 has no router text, and no -003 or -004 is held.
   Route: a photograph of a cabled single-plane system, or an SGI errata notice for -002. Neither is held.
+- Altix 350 router L1: its address. The -002 guide gives the router one L1 controller and one L1 USB port (pp.150,
+  152 to 154) and no address. The L1 and L2 guide 007-3938-005 addresses a brick by USB port, L1 index, rack, type
+  character and slot (pp.10, 49, 69), and uses `r` for the R-brick (Table 3-1, p.70), but it shows no Altix 350 router.
+  Unknown: the L1 index the L2 uses for a router behind the router's USB hub, and whether the L2 `cfg` list
+  (-002 p.56) shows the router. Route: an L2 `cfg` listing from a cabled Altix 350 with a router; a physical capture
+  needs the owner's approval.
 - Reply type codes 4, 5 and 6 of the vector status register. **Mapping settled, meaning not:** the SHub 1 image reports
   6 as "Hub got protection err from rtr" and 4 and 5 as "Hub NI saw too many link errors"; the "Vector Request Route
   Error" and "Vector Reply Route Error" strings are bits 14 and 15 of an error-summary decode table, and "VERRA",
