@@ -131,6 +131,14 @@ three slots and the PIIX4, the 540 guide shows two buses of four and two slots, 
 each is. An SGI engineer's 1999 post calls the option slots "the second PCI bus, normally bus one" (inferred). The 2.4 kernel's version of the map
 (`pcibios_fixup_irqs` calling a helper that is not in the files read) is **not in any tree held**.
 
+**What the NT HAL's map says (established, [nt-hal.md](../../software/visws/nt-hal.md#interrupt-delivery-in-the-hal)).** The HAL holds a
+five-row table per bridge for each of three board generations. Bridge B's shared pins sit on entries 13 to 15, rotated per slot on
+the newest generation, so Linux 2.6's map (which reuses 5 to 7 for bridge B) is wrong for B; pin A of device *n* has its own entry on
+both bridges (*n* on A, 8 + *n* on B); bridge B device 4 is the PIIX4 with only pin D (USB, entry 7) wired. The HAL writes
+each device's interrupt line register as a first-use ordinal and maps it back to the entry itself, so firmware or a boot loader does
+not need to put entry numbers there. The oldest generation also differs for the legacy devices: the first IDE channel is entry 1 and
+the vector table has different vectors in entries 1, 3, 4 and 6.
+
 The same engineer says, for a USB keyboard failure with a PCI capture card: "the USB is implemented as a normal PCI
 device ... which has its D interrupt line tied to one of the Cobalt chipset APIC interrupt lines. None of the PCI slot
 interrupt lines are tied to that line", and that an option-card BIOS emulation mode routes the second bus's INTA to INTD
@@ -151,7 +159,7 @@ through "an 8259 interrupt controller". That emulation is a firmware matter (unk
 | Unknown | Route |
 |---|---|
 | Whether Cobalt tracks an in-service state per line | A boot log is no help; a PROM or HAL read, or the specification |
-| The real wiring of bus B's shared pins and bridge B's lines 13 to 15 | The NT HAL's interrupt table (it routes them) |
+| Whether bridge B's shared lines 13 to 15 are wired on every board | Settled for the HAL's three generations (above); a boot on hardware would show them |
 | How 320 revision 5 services the 307 devices in 2.6 | A boot of 2.6 on a rev 5 board; the 2.4 map code |
 | Lines 24 and 25, and the second source on line 28 | PROM, HAL |
 | Who programs which entries at reset | PROM |
