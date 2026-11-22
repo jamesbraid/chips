@@ -7,7 +7,8 @@ and the older notes under this directory differ, the older notes were written fo
 been re-read against this page.
 
 Images. Two O2 PROM images are held, both as a 0x100-byte container header (magic `PROM`) followed by the flash
-contents from flash offset 0:
+contents from flash offset 0. A third file beside the 4.18 image, `ip32prom.o2-seed.bin` (`8c1898c1…`, 524 288 bytes), is
+that image without the container header, padded with `0xff` to 512 KiB:
 
 | Release that carried it | PROM revision (banner date) | sha256 | Size |
 |---|---|---|---|
@@ -32,8 +33,9 @@ shapes or partial paths. **Unknown**: not settled.
 ## Flash layout (established)
 
 The flash is 512 KiB at `0xbfc00000` (the segment descriptor the PROM carries has base `0xbfc00000`, end `0xbfc80000`).
-The image holds five segments, each placed at a 0x100-aligned flash offset. Every segment begins with a branch that
-skips its own header, then a 0x40-byte header:
+The image holds five segments, each placed at a 0x100-aligned flash offset. The three code segments (sloader, post1,
+firmware) begin with the branch `0x10000011` that skips their own header; `env` begins with eight zero bytes and
+`version` with an ELF magic (the eight bytes before `SHDR` are not a branch there). Each segment has a 0x40-byte header:
 
 - `+0x08` the ASCII word `SHDR`; `+0x0c` the segment length counted from the segment base;
 - `+0x10` name length byte, `+0x11` version length byte, `+0x14` name (up to 32 bytes), `+0x34` version (8 bytes);
@@ -50,30 +52,35 @@ sums, including the stock `env` segment (checked by summing the file).
 | env | 1.0 | 0x4000 / 0x400 | same |
 | post1 | 1.0 | 0x4400 / 0x4d44 | 0x4c34 |
 | firmware | 4.18 (4.8) | 0x9200 / 0x5fffc | 0x5f27c |
-| version | 4.18 (4.8) | 0x69200 / 0x388 | same |
+| version | 4.18 (4.8) | 0x69200 (4.8: 0x68600) / 0x388 | same |
 
 Reset path (established, flash `0x0000`..): the first instruction is a branch to `0xbfc00048`, which branches to the
-first-stage entry at `0xbfc003a8`. The entry tests Status bits 20:19 and bits 13:12 of the 64-bit CRIME word at
-`0x14000008`; when either pattern matches it branches to `0xbfc007e8`, which records state at `0x80000400` and ends in a
-loop (**unknown** what condition this is). The normal path clears the general and floating registers, saves a 64-bit
-value into eight bytes of the real-time clock's battery RAM (below), and at `0xbfc006dc` calls a routine that builds a
-stack in the data cache (next section) and calls the loader main at `0xbfc00a80`. The loader main looks up `post1` then
-`firmware`, each with its checksum verified (`0xbfc00a90`..`0xbfc00ac0`), clears bits 5:4 of the low word of the 64-bit
-register at `0x1f310008`, and calls the `post1` entry with the reset reason, the firmware segment pointer and a third
+first-stage entry at `0xbfc003a8`. The entry branches to `0xbfc007e8` when Status bits 20:19 equal `0x18` or when bits 13:12 of the 64-bit CRIME word at
+`0x14000008` equal `0x3000` (established). That path compares LLAddr with `0x7d83` (an already-seen marker skips the
+saves; otherwise it stores the marker), saves ErrorEPC to `0x8000040c` and Status to `0x80000404`, sets Status, spins
+until `0x7f28008` ticks of the CRIME timer at `0x14000038` have passed, then, if the word at `0x80000400` is `0x58464552`
+(ASCII "XFER"), jumps through the word at `0x80000408`; otherwise it enters the blink loop at `0xbfc00754`
+(established). **Unknown**: what writes the `XFER` value. The normal path zeroes registers `$1`..`$31` and the floating
+registers (`0xbfc003dc`..`0xbfc00454`; `$25`, which the next stores use, is zero), and at `0xbfc006dc` calls a routine that builds a
+stack in the data cache (next section) and calls the loader main at `0xbfc00a80`. The loader main looks up `post1` with
+the finder `0xbfc01750`, which calls the checksum routine `0xbfc01874`, and `firmware` with `0xbfc016d0`, which does not
+checksum (`post1` sums the firmware later, below). It clears bits 5:4 of the low word of the 64-bit register at
+`0x1f310008` (`0xbfc00ac4`..`0xbfc00ae4`, again at `0xbfc00b14`, and in `post1` at `0xbfc044fc`..`0xbfc04510`), and calls the `post1` entry with the reset reason, the firmware segment pointer and a third
 argument. If `post1` returns, the loader falls to a fallback routine at `0xbfc00b70` and loops (`0xbfc00b34`).
 Two forever-loops (`0xbfc00738`, `0xbfc00754`) write `0x400` or `0x800` to the CRIME word at `0x14000008` and toggle bits
 5:4 of `0x1f310008` with a delay between toggles (**inferred**: error blink patterns).
 
-Battery-RAM use (established accesses, **inferred** purpose): the first stage writes the 64-bit value it holds at entry to
-bytes `0x37`..`0x3e` of the clock chip's RAM, through the MACE ISA window at `0x1f3a0007 + 0x100*n`, and on the other
-entry path increments byte `0x3f` (`0xbfc005f0`). No environment variable is stored there.
+Battery-RAM use (established accesses, **inferred** purpose): the first stage writes the 64-bit value in `$25` to bytes
+`0x37`..`0x3e` of the clock chip's RAM, through the MACE ISA window at `0x1f3a0007 + 0x100*n` (`0xbfc00520`..`0xbfc00560`).
+On the normal reset path `$25` has just been zeroed, so these bytes are cleared. When Status.BEV is set (the normal reset
+path, `0xbfc00594` to `0xbfc005f0`) it increments byte `0x3f`. No environment variable is stored there.
 
 ## Memory and cache initialisation
 
 First stage (established, `0xbfc008f0`..`0xbfc00a58`): before any DRAM is used, a routine writes cache tags with
 `cache` Index Store Tag operations so that the 4 KiB at `0x80000000` behaves as RAM, with the stack at `0x80001000`, then
-fills it with a pattern. It has three tag-setup paths keyed on the CP0 PRId implementation byte (`0x23`, `0x28`, `0x27`
-take the R5000-family path; others use a different cache operation). The fill uses the D-cache.
+fills it with a pattern. It has three tag-setup paths keyed on the CP0 PRId implementation byte: `0x23` and `0x28` together, `0x27` alone
+(`0xbfc00920`), and every other value (`0xbfc009c0`). The fill uses the D-cache.
 
 `post1` (established from strings and the routine at `0xbfc05ad4`): clears bit 0 of the 64-bit CRIME register at
 `0x14000008` (the string says "ECC off"), then sizes memory by programming and probing the eight bank-control registers
@@ -117,11 +124,13 @@ Firmware (established, run-time):
   1 SystemParameterBlock, 2 FreeContiguous, 3 FreeMemory, 4 BadMemory, 5 LoadedProgram, 6 FirmwareTemporary,
   7 FirmwarePermanent.
 
-Firmware load map (inferred from 1 100+ resolved references and the jump targets): the firmware segment is copied from
-its base to `0x81000000` as three chunks described by `{address, length}` pairs inside the segment: text
+Firmware load map (established by the loader in `post1`, `0xbfc04514`..`0xbfc0466c`): it requires the segment type byte
+at header `+0x12` to be 3, walks the `{address, length}` records from segment `+0x40`, copies each chunk to
+`address | 0xa0000000`, requires the sum of all copied and descriptor words to be 0 (a failure returns 1), calls
+`0xbfc06b28`, and jumps to the address of the final record. The chunks are: text
 `0x81000000..0x81048e70` (the segment's own header and branch are at its start), read-only data and strings
-`0x81048e70..0x81054100`, initialised data `0x81054100..0x8105ffe0`; zero-initialised data follows. The loader that does
-this copy is in `post1`; **unknown** until that code is read.
+`0x81048e70..0x81054100`, initialised data `0x81054100..0x8105ffe0`; zero-initialised data follows. The descriptor values
+and the code-address mapping were first derived from about 3000 resolved jump targets, which agree with the loader.
 
 Cache-resident stack and the `0x1f310008` word (inferred): the 64-bit register at `0x1f310008` is read-modify-written by
 `0x81004e98` (set both bits 5:4, then clear the ones named in the argument; called with `0x30` at start and `0x20` in the
@@ -135,12 +144,14 @@ error messages are a name carried over; every save goes through the flash segmen
 RTC-RAM bytes are used for variables (the only clock/RTC strings concern the time of day, `0x8102627c`, `0x81026784`).
 
 - Body (from segment `+0x40`, 0x3c0 bytes on the stock image): a sequence of `NAME=VALUE` strings each ending in a zero
-  byte, ended by an empty string. The saver (`0x8100aa64`) asserts that its work buffer (0x3ac bytes at `0x810724f4`)
-  fits the segment body, packs the surviving entries, and rewrites the whole segment with the flash write routines
+  byte, ended by an empty string. The saver (`0x8100aa64`) asserts that the segment body is at least 940 bytes, packs the surviving entries into a 940-byte stack buffer
+  (at `sp+0x5c`), and rewrites the whole segment with the flash write routines
   (`0x810396f0`), recomputing the body balance word.
 - On the stock 4.18 image the `env` body is all zero. At start (`0x8100a710`) the code finds the segment by name `env`
   and tests the first body byte. Zero (or no segment) selects the default path `0x8100ac80`, which applies the defaults
-  below and creates or rewrites the segment (`0x810394d0`, version string `1.0`, body size 940 bytes). Non-zero selects
+  below and creates the segment (`0x810394d0`, called at `0x8100ad14`; it passes the version string `1.0` from `0x8104a998`,
+  body size 940 bytes and a 0x810724f4 buffer, and the code computes a segment length of `0x3f0`; recorded as what the code
+  does, not checked against a first-boot dump). Non-zero selects
   `0x8100ad5c`, which sets each stored variable, then fills defaults for the rest. Variables are held in a table of
   string pointers at `0x81072438` (count at `0x810728a4`).
 - Lookup (`0x8100a928`) searches the flash body first, then the default table. Set (`0x8100a560`) takes
@@ -178,13 +189,15 @@ RTC-RAM bytes are used for variables (the only clock/RTC strings concern the tim
   from a helper, enables the graphics bring-up chain; otherwise the display controller is only quiesced.
 - Opening (`0x81016b84`): closes descriptors 0 and 1, opens ConsoleIn (mode 0, must return descriptor 0) then ConsoleOut
   (mode 1, descriptor 1). On a failure it prints "Cannot open ... for input/output" (with "Cannot connect to keyboard --
-  check the cable" for the keyboard error), first retries after re-selecting, then sets `NoAutoLoad` to
-  `CONSOLE OPEN FAILED.` and retries with `serial(0)`, and halts with "Cannot open any console!" if that fails too.
+  check the cable" for the keyboard error), the first failure reselects the console and retries (`0x81016c94`). On the second failure, if `console` is unset or
+  starts with `d`, the PROM calls the panic routine with "Cannot open any console!"; otherwise it sets `NoAutoLoad` to
+  `CONSOLE OPEN FAILED.`, reselects `d` and retries, and a third failure prints the same message (`0x81016cb0`..`0x81016d00`).
 - Serial: the MACE 16550 driver (`mace_16c550.c` strings, routines `0x81009658..0x8100a184`). `dbaud` is `serial(0)`,
   `rbaud` is `serial(1)` (established from `0x8100b138`). Framing, parity and overrun errors are reported as strings.
 - Keyboard and mouse: a PS/2 driver (`0x8101fe70` adds the controller `pckbd` and keyboard peripheral, and `pcms` and a
-  pointer peripheral). The controller registers are read at `0x1f320028` (data) and `0x1f320038` (status); a value
-  `0xaa` is the keyboard self-test pass. The keyboard component is added when the init flag is clear, or no earlier
+  pointer peripheral). Two ports are polled: `0x1f320008`/`0x1f320018` and `0x1f320028`/`0x1f320038` (data/status). Both check for `0xaa`
+  (self-test pass); the status bits tested are `0x10` (data ready) and `0x40`/`0x80` (errors). This page does not say
+  which port is the keyboard. The keyboard component is added when the init flag is clear, or no earlier
   probe succeeded (`0x8101f740`), or `nogfxkbd` starts with `1`. The layout table in `0x8101ffb8` is keyed by the
   `keybd` variable (names such as `de_CH`, `fr_CH`; a "Select Keyboard Layout" menu item changes it). **Inferred**: the
   register meanings; the addresses and the `0xaa` test are established.
@@ -194,10 +207,11 @@ not re-derive it.
 
 ## ARCS vectors and the system parameter block (established)
 
-`0x810174d0` builds the SPB at `0xa0001000`: signature word `0x53435241`, length `0x48`, version 1, revision 10,
+`0x810174d8` builds the SPB at `0xa0001000` (`0x810174d0` is a stub that returns 3): signature word `0x53435241`, length `0x48`, version 1, revision 10,
 RestartBlock 0, DebugBlock 0, general-exception vector `0x810175c0`, UTLB-miss vector `0x810176b8`, firmware vector length
 `0x8c` (35 entries) at `0xa0001800`, private vector length `0x34` (13 entries) at `0xa0001c00`, adapter count 0. The
-vectors are copied from tables at `0x81058840` and `0x810588cc`. After copying, `0x81000528` replaces five entries with
+vectors are copied from tables at `0x81058840` and `0x810588cc` by `0x81017514`, only when the word at `0x81054260` is
+non-zero. The patcher `0x81000530` (called at `0x81000504`) then replaces five entries with
 flash routines: Halt `0xbfc0161c`, PowerDown `0xbfc01648`, Restart `0xbfc01674`, Reboot `0xbfc016a0`,
 EnterInteractiveMode `0xbfc015f0`. Entries 8 and 19 are zero.
 
@@ -227,9 +241,9 @@ The role names are the published ARC 1.2 order; the index-to-role mapping is **i
 targets' behaviour (Open's nine open modes, Get/Set environment, memory descriptor list walk) agreeing. Private vector
 (13 entries at `0x810588cc`): entry 0 `0x81016ebc` is a device-control call (the `setenv` code uses it with request
 `0x7404` to apply a serial speed); entry 2 `0x81014928`, 3 `0x81014c48`, 4 `0x81014db8` sit beside Load/Invoke/Execute;
-entry 9 is the SPB initialiser `0x810174d0` itself; entry 12 `0x81017e1c` is the CPU clock routine that `hinv` uses.
+entry 9 `0x810174d0` is a stub that returns 3; entry 11 `0x810181d0` is what `hinv -b` calls directly (`0x8103fbe4`); entry 12 `0x81017e1c` is the CPU clock routine that `hinv` uses.
 The other private entries (1 `0x8100b0ec`, 5 `0x8100ff1c`, 6 `0x8100ffbc`, 7 `0x8100e2a0`, 8 `0x81032c28`, 10
-`0x8103a678`, 11 `0x810181d0`) are **unknown** in role.
+`0x8103a678`, 11 `0x810181d0`, role of its output) are **unknown** in role.
 
 Memory descriptors (established): a node is `{type, base page, page count, magic 0x4b45565e, next}`, sorted by base,
 list head at `0x81061770`. `GetMemoryDescriptor(0)` returns the head; any other argument must carry the magic and returns
@@ -266,7 +280,8 @@ Build order and identifiers in the 4.18 firmware (established):
    `pcms` with their peripherals), `0x81019170` (registers the integral Adaptec driver with the PCI layer, no node) and
    `0x81011f28` (the PCI bridge `MACE-PCI`, class adapter, type PCI; its slot scan then calls registered drivers, one of
    which adds the SCSI adapter, type 12, and `0x8101e630` adds disk, tape and CD-ROM peripherals). Three more records
-   at `0x810542e0`..`0x810542f8` (`0x810200c0`, `0x81027280`, `0x81035810`) carry tag 0 and were not walked in this flow;
+   at `0x810542e0`..`0x810542f8` (`0x810200c0`, `0x81027280`, `0x81035810`) carry tag 0 and were not walked in this flow (`0x810200c0` also has a direct
+   caller at `0x8101ebf4`);
    **unknown** what they are. The builder runs inside `0x81016950` in the main chain, after graphics init.
 4. A second copy of the root/CPU/cache builders (`IP32.c` strings, `0x81023664` and `0x810236bc`) sits next to the
    first (`IP32k.c`). Both are present in the image; which one the boot executes is the first (called from the table);
@@ -298,17 +313,17 @@ descriptor table at `0x81058644` (Install and Recover); what that bit does is **
 remote directory via `netinsthost`/`netinstfile`, `tapedevice`) and load `sashARCS`.
 
 Command monitor (`0x8103dec0` over the table at `0x81054100`, prompt `> `): entries are `{name, handler, usage}`; a
-leading `.` hides a command from `help` and is skipped when matching. Visible: `auto`, `boot`, `date`, `exit`, `help`,
-`hinv`, `init`, `ls`, `passwd`, `printenv`, `off`, `resetenv`, `resetpw`, `setenv`, `single`, `unsetenv`, `version`.
-Hidden: `checksum`, `dump`, `fill`, `g`/`get`, `p`/`put`, `go`, `?`, `play`, `reboot`. Handlers: `boot` `0x81047a00`, `date`
+leading `.` hides a command from `help` and is skipped when matching. The table has 28 entries: 19 visible (`auto`, `boot`, `date`,
+`exit`, `get`, `put`, `help`, `hinv`, `init`, `ls`, `passwd`, `printenv`, `off`, `resetenv`, `resetpw`, `setenv`,
+`single`, `unsetenv`, `version`) and 9 hidden (`.checksum`, `.dump`, `.fill`, `.g`, `.p`, `.go`, `.?`, `.play`, `.reboot`). Handlers: `boot` `0x81047a00`, `date`
 `0x8100e784`, `dump` `0x8100b5b8`, `fill` `0x8100a34c`, `go` `0x810478c0`, `hinv` `0x8103fb00`, `ls` `0x81048400`,
 `passwd` `0x810258a0`, `off` `0x81032c40`, `printenv` `0x8100b3b4`, `version` `0x810002fc` (prints "PROM Monitor (BE)"
 and the version segment string).
 
 ## hinv (established)
 
-`hinv [-v] [-t [-p]]` (`0x8103fb00`, flags in `0x81052e88`: `-v` 1, `-p` 2, `-t` 4, `-b` 8). `-b` calls a different
-printer through a private vector. Otherwise it records whether the processor has a secondary cache sibling, then walks
+`hinv [-v] [-t [-p]]` (`0x8103fb00`, option strings at `0x81052e90`..`0x81052e9c`: `-v` 1, `-t` 4, `-p` 2, `-b` 8). `-b` calls private
+vector entry 11 (`0x810181d0`) directly (`0x8103fbe4`) instead. Otherwise it records whether the processor has a secondary cache sibling, then walks
 the tree from the root's child and prints each node. The summary printer `0x810401b8` switches on class and type:
 
 - System (`0x00000000`): `System: ` followed by the root identifier minus its first four characters (`IP32`).

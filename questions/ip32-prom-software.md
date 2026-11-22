@@ -5,9 +5,7 @@ parts are on [the PROM software page](../platforms/ip32/prom-software.md).
 
 Status: **unknown** for everything below. Route: read the named routine in the held 6.5.30 PROM image.
 
-- **Firmware copy.** The loader that copies the firmware segment's three chunks to `0x81000000` (flash `0x4400` segment
-  `post1`, or the first stage) was not read. The load map on the page is inferred from resolved references.
-- **Reset-time branch.** The condition that sends the first-stage entry (`0xbfc003a8`) to `0xbfc007e8`.
+- **XFER marker.** What writes `0x58464552` to `0x80000400` before the `0xbfc007e8` path jumps through `0x80000408`.
 - **Private vector.** Roles of entries 1, 5, 6, 7, 8, 10 and 11 (`0x8100b0ec`, `0x8100ff1c`, `0x8100ffbc`, `0x8100e2a0`,
   `0x81032c28`, `0x8103a678`, `0x810181d0`).
 - **Driver table.** The three records at `0x810542e0`..`0x810542f8` with parent tag 0 (`0x810200c0`, `0x81027280`,

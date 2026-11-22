@@ -463,4 +463,4 @@ Checked the "Madison L3 cache-as-RAM: what PAL 520's commands do in silicon" ent
 
 ## O2 PROM software (added with platforms/ip32/prom-software.md)
 
-- **O2 PROM software.** *[route: software now]* Unknown: the routine that copies the firmware segment into RAM, the first-stage reset-time branch condition, six private ARCS vector entries, three unwalked driver records, whether the second `IP32.c` builder copy runs, the menu flag bit, and how the raw 4.18 flash dump (`a60e19b6…`) differs from the shipped image. See [questions/ip32-prom-software.md](ip32-prom-software.md).
+- **O2 PROM software.** *[route: software now]* Unknown: what writes the XFER marker the reset-time path tests, seven private ARCS vector entries, three unwalked driver records, whether the second `IP32.c` builder copy runs, the menu flag bit, and how the raw 4.18 flash dump (`a60e19b6…`) differs from the shipped image. See [questions/ip32-prom-software.md](ip32-prom-software.md).
