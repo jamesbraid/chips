@@ -20,7 +20,7 @@ HAL's behaviour in a run.
 
 [route: design decision] The 320 and 540 take Pentium II and III processors. XP x64 needs long mode, so only an emulated board with the
 Cobalt and Lithium chipset and a long-mode processor can run it. Whether a non-ACPI HAL boots on x64 is not established by Microsoft material:
-the sources say x64 has one HAL and a vendor advisory and Wikipedia say ACPI is required. Settles it: a statement from Microsoft on x64
+Chappell's study says x64 has one HAL, and the Wikipedia article on Windows Server 2003 says x64 builds "strictly require ACPI" without naming a Microsoft source (that article is about Server 2003, not XP x64; the Ntdetect.com article says only that Vista and later HALs are ACPI-only; a vendor advisory link returned an error and is not cited). Settles it: a statement from Microsoft on x64
 hardware requirements, or a run.
 
 ## Non-ACPI HAL on x64
@@ -30,15 +30,19 @@ hardware requirements, or a run.
 
 ## Time-stamp counter agreement across processors
 
-[route: missing source] Microsoft requires one performance counter frequency across processors. Whether the time-stamp counters of a 540's
-processors start together, and whether they agree after the start sequence, is not shown by any source held. Settles it: a model run, or the
-processors' documentation.
+[route: missing source] Microsoft requires one performance counter frequency across processors. The SGI HAL writes each
+processor's time-stamp counter to zero at the end of the calibration routine (`0x8002c8ab`) and in the exported `HalCalibratePerformanceCounter`
+(`0x8002d210`), which first makes all processors rendezvous on a counter. No call to the second inside the HAL was found, so the kernel is the
+caller. Whether the counters then agree to within a tick, and whether the kernel calls it on this platform, is not shown. Settles it: a model
+run, or the processors' documentation.
 
 ## HAL routines not yet read
 
-[route: software now] The SGI HAL's stall-loop scale use, the real-time clock write routine, the broadcast-call handshake layout, the IPI
-send's wait bound, the two I2C layers and `HalReportResourceUsage`'s port list are not recorded in the pages. Settles it: read each in
-full in `halborg.dll` 1.3 with its symbols.
+[route: software now] Read in the follow-up pass: the stall loop (`0x800114e0`), the real-time clock write (`0x800194f0`), the broadcast-call
+handshake (`0x800129d4`), the IPI wait loops, `HalReturnToFirmware`, `HalAllProcessorsStarted`, `HalInitializeProcessor`, `HalpInitMP`. Still
+unread: the end of `HalEndSystemInterrupt`'s argument decoding, the two I2C layers, `HalReportResourceUsage`'s port list, the common-buffer
+and crash-dump DMA routines, the ISA and internal bus handlers behind `HalGetBusData` and `HalTranslateBusAddress`, `HalpGetCmosData`'s use of
+the PIIX4 extended-CMOS bit, the environment rewrite, and the display drawing routines. Settles it: read each in full in `halborg.dll` 1.3.
 
 ## Cache-operation interrupt and the flush routines
 

@@ -21,9 +21,9 @@ the HAL must do, and what the guest sees. A gap is graded *unknown* and links an
 - **A hardware vector is a HAL choice.** The Cobalt entries hold whatever vector the HAL writes. The vector tables in
   [nt-hal.md](nt-hal.md#interrupt-delivery-in-the-hal) are SGI's choices, not hardware facts. Our HAL may pick its own, within the
   constraints in HR-INT-04.
-- **Binary reading in this pass.** No new disassembly was done for this page. The binary-derived claims below are the established
-  claims of the existing pages, each read in full there from `halborg.dll` 1.3 with its symbol file. Where those pages call a point
-  inferred or unread, it stays so here. Anything this page adds beyond them is marked.
+- **Binary reading.** Claims with an address in this page were re-read in an `objdump` listing of `halborg.dll` 1.3 (sha-256 `0926cd50…`)
+  by a follow-up pass that checked the points an independent review raised and the routines in the further-routines section. The rest are the
+  established claims of the existing pages. Where those pages call a point inferred or unread, it stays so here. Addresses are the image's.
 
 ## Sources
 
@@ -43,14 +43,14 @@ Counted from the first word of each requirement's grade line.
 
 | Grade | Requirements |
 |---|---|
-| established | 47 |
+| established | 63 |
 | observed | 0 |
 | software expectation | 2 |
 | inferred | 2 |
-| unknown | 5 |
-| Total | 56 |
+| unknown | 3 |
+| Total | 70 |
 
-The XP and XP x64 table has 16 further rows (HR-XP-01 to HR-XP-16), each marked verified, partly verified, inferred or unverified in its status column. They are not counted here.
+The XP and XP x64 table has 17 further rows (HR-XP-01 to HR-XP-17), each marked verified, partly verified, inferred or unverified in its status column. They are not counted here.
 
 ## Section list
 
@@ -63,8 +63,9 @@ The XP and XP x64 table has 16 further rows (HR-XP-01 to HR-XP-16), each marked 
 7. [Memory errors and ECC](#7-memory-errors-and-ecc)
 8. [Power management and reboot](#8-power-management-and-reboot)
 9. [Debug output and the console](#9-debug-output-and-the-console)
-10. [What XP and XP x64 expect that NT 4.0 did not](#what-xp-and-xp-x64-expect-that-nt-40-did-not)
-11. [Unknowns that block writing the HAL](#unknowns-that-block-writing-the-hal)
+10. [Further routines and exports](#further-routines-and-exports)
+11. [What XP and XP x64 expect that NT 4.0 did not](#what-xp-and-xp-x64-expect-that-nt-40-did-not)
+12. [Unknowns that block writing the HAL](#unknowns-that-block-writing-the-hal)
 
 Local APIC accesses are 32-bit loads and stores at the Intel default base `0xfee00000`. Cobalt registers are 32-bit words. Mapping all
 of them uncached is part of every requirement that touches a register.
@@ -133,14 +134,20 @@ of them uncached is part of every requirement that touches a register.
   invalid block rather than writing over it.
 - Guest sees: a graphics memory change in the control panel survives a restart and appears as descriptors on the next boot.
 
-#### HR-ARC-07 SGI HAL query classes
-- Grade: established.
-- Fact: `HaliQuerySystemInformation` answers class `0x8100001` (three cache-flush routines and a flag for cache-operation invalidate,
-  clear on Cobalt Lite) and `0x8100002` (a callback-register entry), and anything else gets status `0xc0000148`
-  ([table](nt-hal.md#the-sgi-specific-hal-interface)). The graphics driver refuses to load when the HAL lacks them ("Not an SGI HAL").
-- Our HAL must: answer both classes with the same layout when the SGI graphics driver is to run. It must store two callback slots as
-  in HR-MEM-04.
-- Guest sees: the SGI graphics driver loads. Without the classes it fails its HAL check.
+#### HR-ARC-07 SGI HAL query and set classes
+- Grade: established (disassembly of the query routine at `0x80029650` and the set routine at `0x8002b2c0`, `halborg.dll` 1.3).
+- Fact: `HalQuerySystemInformation` answers class 0 (installed bus information, through `0x8002b3a0`), class 8 (one byte, value 1), class 9 (a
+  dword from `0x80018600`), the SGI class `0x8100001` (three cache-flush routine pointers at offsets 0, 4 and 8 and a flag byte at offset 12,
+  clear on Cobalt Lite) and `0x8100002` (the callback-register entry). Any other class gets status `0xc0000148`
+  ([table](nt-hal.md#the-sgi-specific-hal-interface)). The graphics driver refuses to load when the HAL lacks the SGI classes ("Not an SGI HAL").
+  `HalSetSystemInformation` is not constant. Class 1 stores a caller-supplied pointer once, at `0x800205c8`, as the performance-counter
+  interrupt hook, and returns success only when the CPU feature word (the value `0x8002e1e0` returns, tested at `0x80028680` bit 0) has that bit
+  set and no hook is stored yet. Otherwise it returns `0xc0000001`. Every other class goes to a routine that returns `0xc0000148`. The
+  profile-vector handler for vector `0xfe` calls the stored hook with the trap frame. This corrects [nt-hal.md](nt-hal.md#the-sgi-specific-hal-interface),
+  which says the set call always answers the same.
+- Our HAL must: answer classes 0, 8 and 9 as XP's kernel expects (not established, see the note after the XP table), the two SGI classes with the same layout when the SGI
+  graphics driver is to run, and set class 1. It stores two callback slots as in HR-MEM-04.
+- Guest sees: the SGI graphics driver loads. Without the SGI classes it fails its HAL check.
 
 ## 2. Interrupts
 
@@ -310,21 +317,28 @@ of them uncached is part of every requirement that touches a register.
 - Guest sees: kernel profiling works. The count is the measured bus-clock frequency, so the local
   APIC timer must count at a true rate.
 
-#### HR-CLK-06 Performance counter
-- Grade: established for the SGI HAL's use, with the XP requirement cited in HR-XP-09.
+#### HR-CLK-06 Performance counter and its calibration
+- Grade: established for the SGI HAL's use, with the XP requirement cited in HR-XP-09. Unknown whether the processors' time-stamp counters agree.
 - Fact: `KeQueryPerformanceCounter` returns the time-stamp counter, with the calibrated frequency in its second result. The 8254 path
-  is off (`HalpUse8254` is never set) ([nt-hal.md](nt-hal.md#boot-options-the-hal-parses)). Whether the time-stamp counters of all
-  processors are synchronised on a 540 is unknown ([question](../../questions/visws-hal-requirements-open.md#time-stamp-counter-agreement-across-processors)).
-- Our HAL must: return a counter that Microsoft documents as fixed in frequency and consistent across processors (HR-XP-09). We use
-  the time-stamp counter only if the processors agree.
+  is off (`HalpUse8254` is never set) ([nt-hal.md](nt-hal.md#boot-options-the-hal-parses)). The HAL writes the time-stamp counter to zero
+  at two sites (`wrmsr` of MSR `0x10`). The first is in the calibration routine at `0x8002c8ab`, after the second RTC edge and next to a write of
+  `0xffffffff` to the local APIC initial count (`+0x380`), so the counter restarts at calibration time. The second is the exported
+  `HalCalibratePerformanceCounter` at `0x8002d210`: it disables interrupts, does a locked decrement of the caller's counter and spins until it reaches
+  zero (a rendezvous of all processors), executes `cpuid` to serialise, writes MSR `0x10` = 0 and returns. No caller inside the HAL
+  references it, so XP's kernel is the caller. Whether the processors' counters agree after that is unknown
+  ([question](../../questions/visws-hal-requirements-open.md#time-stamp-counter-agreement-across-processors)).
+- Our HAL must: export `HalCalibratePerformanceCounter` with the same rendezvous, and return a counter that Microsoft documents as fixed in
+  frequency and consistent across processors (HR-XP-09). We use the time-stamp counter only if the processors agree.
 - Guest sees: high-resolution time. A drifting counter makes timing APIs go backward between processors.
 
 #### HR-CLK-07 Stall loop
-- Grade: unknown for the mechanism (`HalpScaleTimers` is listed as read, the page does not describe the stall loop).
-- Fact: `KeStallExecutionProcessor` busy-waits at least the given microseconds and not significantly longer (HR-XP-10). The SGI
-  HAL's scale factor comes from the same calibration.
-- Our HAL must: scale a loop from the calibrated time-stamp frequency. Because the loop's hardware basis is unread, this is our
-  design, not a copied fact ([question](../../questions/visws-hal-requirements-open.md#hal-routines-not-yet-read)).
+- Grade: established (`KeStallExecutionProcessor` at `0x800114e0`, `HalInitializeProcessor` at `0x8002e2f0`).
+- Fact: the routine reads the time-stamp counter, adds the requested microseconds times a per-processor scale factor and spins on `rdtsc` until the
+  target passes. The factor is the dword at offset `0x4c` of the processor control region: `HalInitializeProcessor` sets it to 100, and the
+  calibration code stores the measured value at `0x8002c950`. A leading `cpuid` serialises the first read, and when CPU feature bit 1 is set,
+  `HalAllProcessorsStarted` overwrites it with a register move (`0x800114e4`). That is documented behaviour to copy: at least the interval, not
+  significantly longer (HR-XP-10).
+- Our HAL must: scale a loop from the calibrated time-stamp frequency per processor.
 - Guest sees: driver delays of tens of microseconds.
 
 #### HR-CLK-08 Real-time clock
@@ -339,21 +353,28 @@ of them uncached is part of every requirement that touches a register.
 ## 4. Inter-processor interrupts, NMI and cache operations
 
 #### HR-IPI-01 Kernel IPI
-- Grade: established.
-- Fact: wait for delivery status clear in the command register (`+0x300` bit 12), write `+0x310` = mask << 24, then `+0x300` = `0x8e1`
-  (fixed, logical, vector `0xe1`), then poll status before restoring flags. High word first, low word triggers. The target runs
-  begin, `KiIpiServiceRoutine`, end at the IPI level ([hot path](hal-hot-path.md#one-inter-processor-interrupt)).
-- Our HAL must: implement `HalRequestIpi` that way. Bound the wait. The SGI 8259 re-injection path polls at most `0x5000` times then breaks, and
-  the IPI path's bound was not recorded. An APIC that never clears bit 12 would otherwise hang a processor.
+- Grade: established (`HalRequestIpi` at `0x80012c64`).
+- Fact: with interrupts off, wait for delivery status clear in the command register (`+0x300` bit 12), write `+0x310` = mask << 24, then `+0x300` =
+  `0x8e1` (fixed, logical, vector `0xe1`), then poll status again before restoring flags. High word first, low word triggers. Each poll is a
+  counted loop of `0x5000` reads. When the count runs out, the code executes `int3` and then jumps back to the same read with a counter that
+  has already reached zero, so the next lap runs about 2^32 reads before the next `int3`. There is no exit and no error return. The target runs begin,
+  `KiIpiServiceRoutine`, end at the IPI level ([hot path](hal-hot-path.md#one-inter-processor-interrupt)).
+- Our HAL must: implement `HalRequestIpi` that way. A stuck delivery-status bit must break into the debugger or bug check. The SGI loop
+  does neither usefully, and a model whose bit never clears hangs a processor.
 - Guest sees: cross-processor calls from the kernel (TLB shootdowns, DPC kicks).
 
 #### HR-IPI-02 Broadcast call
-- Grade: established for the sender and receiver entry points, unknown for the handshake's layout.
-- Fact: a shared-memory handshake, then `+0x310` = mask << 24, `+0x300` = `0x8c1` (vector `0xc1`). The receiver runs at the
-  broadcast level and polls for the call.
-- Our HAL must: provide a service that runs a function on selected processors. The shared-memory protocol is our design,
-  as the SGI layout is not in the pages we hold.
-- Guest sees: nothing named. The mechanism backs cache flushing and processor-state queries.
+- Grade: established (`HalpGenericCall` at `0x800129d4`, the receiver poll at `0x80012a74`, the service entry at `0x80012928`).
+- Fact: the caller first runs the receiver poll itself, then takes a busy flag with `lock bts` on the dword at `0x80020534`. It stores the
+  function, the context and the target processor mask at `0x80020538`, `0x8002053c` and `0x80020540`. A zero mask returns at once. Otherwise
+  it writes `+0x310` = mask << 24 and `+0x300` = `0x8c1` (vector `0xc1`, fixed, logical), each after a bounded delivery-status poll, enables interrupts and keeps
+  running the receiver poll until the mask word is zero, then clears the busy flag. Each receiver, in the interrupt
+  service routine or in the caller's own wait loop, ANDs its logical-id bit (the dword at offset `0x48` of its processor control region) against the
+  mask, removes the bit with a locked AND, and calls the function with the context. The vector handler runs at the broadcast level `0x1b`: begin,
+  poll, End. `HalAllProcessorsStarted` uses it (HR-EXP-05).
+- Our HAL must: provide a service that runs a function on selected processors with this handshake or an equivalent one with the same
+  caller-visible contract: it returns after every selected processor has taken the call.
+- Guest sees: nothing named. The mechanism backs `HalAllProcessorsStarted` and cache flushing.
 
 #### HR-IPI-03 Cache-operation requests
 - Grade: unknown for the mechanism, established that the SGI HAL exports flush routines and polls (`CACHEOPPOLL`).
@@ -377,15 +398,19 @@ of them uncached is part of every requirement that touches a register.
 - Guest sees: an NMI on a bit-17 failure leaves the machine without NMI support and prints the message.
 
 #### HR-NMI-02 NMI handler
-- Grade: established for the order, unknown for what raises the sources.
-- Fact: `HalHandleNMI` calls the power-management NMI check first. It reads port `0xfb0`. If bit 2 is set it writes port `0xff3` = `0xfe` and
-  reports "not a power NMI". Otherwise it either sends the stop-grant special cycle through bridge B (HR-PWR-04) or writes ports
-  `0xff1` = `0xca`, `0xff0` = `0xba`. The Cobalt NMI entry's remote-IRR bit 14 is cleared by writing the entry back. It then prints that the system halted and
-  breaks into the debugger. What raises bit 2 and what ports `0xff0` to `0xff3` are is unknown
+- Grade: established for the order (`HalHandleNMI` at `0x8001a540`, `HalpHandleCoNMI` at `0x80016390`), unknown for what raises the sources.
+- Fact: `HalHandleNMI` calls the power-management NMI check first (`0x8001ecf0`). That check reads port `0xfb0`. If bit 2 is set it writes port
+  `0xff3` = `0xfe` and returns false ("not a power NMI"). Otherwise it either sends the stop-grant special cycle through bridge B (HR-PWR-04) or writes
+  ports `0xff1` = `0xca`, `0xff0` = `0xba`, and returns true. The handler prints that the system halted and breaks into the debugger. It then
+  calls `HalpHandleCoNMI`, which reads Cobalt entry `0x1d` (on every board, Lite included), prints a message when bit 14 is clear, clears bit
+  14 and writes the entry back, re-reads it, and returns false if bit 14 is still set (a second debugger break follows). What raises port
+  `0xfb0` bit 2 and what ports `0xff0` to `0xff3` are is unknown
   ([question](../../questions/visws-hal-open.md#what-raises-cobalt-entry-29-and-what-ports-0xff0-to-0xff3-are)).
-- Our HAL must: mirror the sequence on a real NMI and keep the unknown port writes behind a clear note, as the shipped HAL does. XP's
-  kernel treats an unclaimed NMI as bug check `0x80`, NMI_HARDWARE_FAILURE (HR-XP-13), so a non-power NMI ends there.
-- Guest sees: a stop screen, or the kernel debugger entered.
+- Our HAL must: mirror the sequence on a real NMI and keep the unknown port writes behind a clear note, as the shipped HAL does. Read entry
+  `0x1d` or the Lite entry `0x1c` consistently. The shipped HAL always reads `0x1d`, which looks like a defect on Lite boards
+  ([nt-hal.md](nt-hal.md#cobalt-registers-the-hal-programs)).
+- Guest sees: a stop in the debugger, or a halt message. The shipped HAL does not bug check here. Microsoft's page for stop code `0x80` only
+  says a hardware malfunction caused it, so that an unclaimed NMI ends there is our reading, not Microsoft's (HR-XP-13).
 
 ## 5. Starting the other processors
 
@@ -495,7 +520,9 @@ of them uncached is part of every requirement that touches a register.
 #### HR-PCI-09 The PIIX4 devices and standard ports
 - Grade: established for what the HAL touches, software expectation for the rest.
 - Fact: the 8259 pair, 8237 DMA at the usual ports (floppy and parallel use it), CMOS, and the NS87307 at `0x2e` and `0x2f`. The HAL
-  initialises the NS87307 (`Ns307InitChip`), with GPIO at `0x0fc0` and power management at `0x0fc8`. The PIIX4's power-management block is at
+  initialises the NS87307 (`Ns307InitChip`). The values `0x0fc0` (GPIO) and `0x0fc8` (power management) are not immediates in the HAL. At
+  `0x8001aac0` it selects logical devices 7 and 8 and reads each one's base from registers `0x60` and `0x61`, storing the results at `0x80028602` and
+  `0x80028608`. The values come from the firmware's boot block (step `0x10`, [boot-path.md](boot-path.md#boot-into-nt) and the boot-block table) and from Linux's `setup.c`. The PIIX4's power-management block is at
   `0xf80`, set by firmware through function 3 offset `0x40` ([boards-320-540.md](../../platforms/visws/boards-320-540.md#the-byte-at-port-0xfb2)).
 - Our HAL must: initialise the 8259s as in HR-INT-08, run the NS87307 initialisation, and never program the PM base.
 - Guest sees: legacy ports as on a PC, with the 8259 behind Cobalt entry 12.
@@ -539,10 +566,11 @@ of them uncached is part of every requirement that touches a register.
 ## 8. Power management and reboot
 
 #### HR-PWR-01 Reboot
-- Grade: established.
-- Fact: write `0x06` to port `0xcf9`, except on generation 1 boards and the 540 revision 0 (a 320 below revision 12), where bit 0 of
-  Cobalt CPU register `+0x18` is set instead (`HalpReboot`, `BoardResetAtPIIX4`).
-- Our HAL must: pick the method by HR-ARC-01 and flush the caches the shipped HAL flushes before it does.
+- Grade: established (the board test at `0x80018530`, the reboot routine at `0x80018560`).
+- Fact: the board test returns false, so the Cobalt reset is used, for the 320 (SYS TYPE 0) with BOARD REV below `0xc`, and for the 540
+  (SYS TYPE 1) with BOARD REV 0. Every other board gets a write of `0x06` to port `0xcf9`. The Cobalt path sets bit 0 of CPU-block register
+  `+0x18`. So 320 generation 2 (revisions 6 to 11) takes the Cobalt path too, as does generation 1.
+- Our HAL must: apply that exact condition from the two bytes in HR-ARC-01.
 - Guest sees: a restart through firmware.
 
 #### HR-PWR-02 Soft power button
@@ -555,28 +583,36 @@ of them uncached is part of every requirement that touches a register.
 - Guest sees: a press starts a shutdown or a stop.
 
 #### HR-PWR-03 Power off
-- Grade: established for the SGI HAL's writes, software expectation for the special cycle (Linux and the firmware both send it).
-- Fact: `HalpPwrMgmtSuspend` writes CMOS `0x61`, reads `0x60`, and if that reads `I` sets or clears bit 0 of port `0xfb5` (set below board
-  revision `0x20`). It ends by writing `0x2000` (suspend enable, type 0) to `0xf84`. The PIIX4 also wants a stop-grant special cycle
-  first. Port `0xfb5` bit 0 is PIIX4 output pin GPO8. What SGI wired to it is unknown
-  ([boards-320-540.md](../../platforms/visws/boards-320-540.md#the-byte-at-port-0xfb2)).
-- Our HAL must: write the status clear, the stop-grant (HR-PWR-04) and `0x2000` in that order. The CMOS test and the `0xfb5` write are
-  copied only if a guest shows they are needed.
-- Guest sees: the machine powers off.
+- Grade: established for the SGI HAL's writes (`HalpPwrMgmtSuspend` at `0x8001f1b0`). The order that includes a stop-grant is our design.
+- Fact: the routine writes CMOS `0x61` = `0x5a`, reads CMOS `0x60`, and if that reads `0x49` ('I') sets or clears bit 0 of port `0xfb5` (set below
+  board revision `0x20`). It then writes `0x2000` (suspend enable, type 0) to port `0xf84`. It sends no stop-grant cycle and does not clear the
+  status register. The only stop-grant send in the image is in the NMI handler (HR-PWR-04). Linux sends the cycle after the control write and
+  the firmware's main module sends it too ([boot-path.md](boot-path.md#pci-bus-numbering-and-windows)). Port `0xfb5` bit 0 is PIIX4 output pin GPO8.
+  What SGI wired to it is unknown ([boards-320-540.md](../../platforms/visws/boards-320-540.md#the-byte-at-port-0xfb2)).
+- Our HAL must: write the `0x2000` control word as the shipped HAL does, and send the stop-grant cycle (HR-PWR-04) only because Linux and
+  the firmware do. That order (status clear, stop-grant, `0x2000`) is our design and is untested on hardware. The CMOS test and the `0xfb5` write
+  are copied only if a guest shows they are needed.
+- Guest sees: the machine powers off. Whether the PIIX4 needs the stop-grant first is a hardware question the shipped NT path never answers.
 
 #### HR-PWR-04 Stop-grant special cycle
-- Grade: software expectation (shipped HAL, firmware and Linux all send it), inferred that the value is a stop-grant encoding.
+- Grade: software expectation (Linux and the firmware send it) for its use in power off. Established that the shipped HAL sends it only from the
+  NMI handler, inferred that the value is a stop-grant encoding.
 - Fact: write `0x8000ff00` to bridge B's address register at `+0xf8` (bus 0, device 31, function 7, the special-cycle encoding), then
-  `0x00120002` to the data register at `+0xfc`. Linux and the firmware do the same ([boot-path.md](boot-path.md#pci-bus-numbering-and-windows)).
-- Our HAL must: send it through bridge B's window, not through `0xcf8`.
-- Guest sees: nothing on its own. The PIIX4 powers down only after it.
+  `0x00120002` to the data register at `+0xfc`. The SGI HAL does this in the power-management NMI routine (`0x8001ecf0`) only when the byte at bridge B's
+  window `+0x08` (its revision) is nonzero. When it is zero the routine writes ports `0xff1` = `0xca` and `0xff0` = `0xba` instead. Neither
+  `HalpPwrMgmtSuspend` nor `HalReturnToFirmware`'s power-down path sends it. Linux and the firmware send the same pair
+  ([boot-path.md](boot-path.md#pci-bus-numbering-and-windows)).
+- Our HAL must: send it through bridge B's window, not through `0xcf8`, from the NMI path as the SGI HAL does, and from power off if
+  hardware needs it.
+- Guest sees: nothing on its own.
 
-#### HR-PWR-05 Halt
-- Grade: unknown.
-- Fact: the SGI HAL prints that the system halted after an NMI and breaks into the debugger. Linux does nothing on halt. No source shows
-  a halt-to-firmware path.
-- Our HAL must: halt the processors with interrupts off and leave the display text visible.
-- Guest sees: a frozen screen.
+#### HR-PWR-05 Halt, power down and restart through `HalReturnToFirmware`
+- Grade: established (`HalReturnToFirmware` at `0x80016dc0`).
+- Fact: the routine switches on an action value 0 to 3. Action 0 (halt) executes one `hlt` and returns. Action 1 (power down) calls
+  `HalpPwrMgmtSuspend` (HR-PWR-03). Actions 2 and 3 (restart, reboot) run two helpers and then the reboot routine of HR-PWR-01. Any other value
+  prints a message and breaks into the debugger. Microsoft lists the routine as "not supported and should not be used" for drivers (HR-XP-16).
+- Our HAL must: export it with those four actions. Halt must not spin with interrupts off. The shipped code returns after one `hlt`.
+- Guest sees: a stopped machine after halt, a power-off or a restart for the other actions.
 
 ## 9. Debug output and the console
 
@@ -592,19 +628,142 @@ of them uncached is part of every requirement that touches a register.
 - Guest sees: boot text and stop screens only if that driver exists.
 
 #### HR-DBG-02 Serial console and debugger port
-- Grade: established for the UARTs, software expectation for the HAL's use.
+- Grade: established for the UARTs and for the HAL's exports, software expectation for the HAL's use.
 - Fact: `serial(0)` is the 16550-compatible port at `0x3f8` (IRQ 4) and `serial(1)` at `0x2f8` (IRQ 3). Both are NS87307 UARTs that the
-  firmware activates. `HALOUT` picks screen, `COMn` (default 19200) or none. The SGI HAL prints `ARCINFO` and debugger traffic through
-  its own debug-port routines ([boot-path.md](boot-path.md#serial-output-before-the-console), [boot-path.md](boot-path.md#boot-into-nt) item 3).
-- Our HAL must: not carry a debug-port driver. XP moved the transport into the separate KDCOM module (HR-XP-07). The HAL's
-  obligation is port I/O for it and a working 16550 with the NS87307 enabled.
-- Guest sees: `/DEBUG` over COM1 works with the stock transport, if the NS87307 UART is live. This is untested.
+  firmware activates. `HALOUT` picks screen, `COMn` (default 19200) or none. The NT 4.0 HAL exports the debug-port routines `KdPortInitialize`,
+  `KdPortGetByte`, `KdPortPollByte`, `KdPortPutByte`, `KdPortRestore` and `KdPortSave` (ordinals 66 to 71) and the variable `KdComPortInUse`
+  (ordinal 65, at `0x800211a0`, a data export). Chappell lists the `KdPort*` exports as removed after 5.0 ([boot-path.md](boot-path.md#serial-output-before-the-console)).
+- Our HAL must: not carry a debug-port driver, and export `KdComPortInUse` (HR-DBG-04). The HAL's obligation is port I/O for the transport
+  module and a working 16550 with the NS87307 enabled.
+- Guest sees: `/DEBUG` over COM1 works with the stock transport if the NS87307 UART is live. This is untested.
+
+#### HR-DBG-04 `KdComPortInUse`
+- Grade: established that SGI's HAL exports it (ordinal 65, data export). Unknown whether XP's transport module imports it.
+- Fact: the export table of `halborg.dll` lists `KdComPortInUse` as a variable at `0x800211a0`. A review reported that the Windows 10 `kdcom.dll`
+  imports it from the HAL. No XP-era import list was checked, so that is unconfirmed for XP.
+- Our HAL must: export the variable. A missing export fails the transport module's load. Its value must say whether the port is claimed by the debugger.
+- Guest sees: a failed kernel debugger connection on COM1 if the export is missing.
 
 #### HR-DBG-03 The `BREAK` option and ARC dump
 - Grade: established.
 - Fact: `BREAK` enters the debugger at start-up. `ARCINFO` dumps the ARC tree to the debug port.
 - Our HAL must: keep `BREAK`. The tree dump has no XP counterpart unless the loader supplies a tree (HR-ARC-01).
 - Guest sees: the debugger at first instruction.
+
+## Further routines and exports
+
+Added after review. Each row gives the export, what the shipped code does where it was read, and what ours must do. Unread items are
+marked *unknown*. The full export list of `halborg.dll` 1.3 is 93 names, from which these are the ones the earlier sections do not cover.
+
+#### HR-EXP-01 `HalProcessorIdle`, `KeFlushWriteBuffer`, `HalMakeBeep`
+- Grade: established (`0x80017330`, `0x80019220`, `0x80016d30`).
+- Fact: `HalProcessorIdle` is `sti; ret`. `KeFlushWriteBuffer` is a bare `ret`. `HalMakeBeep` touches no hardware: it returns true only for
+  a frequency of zero, and false for any other value.
+- Our HAL must: export all three with that behaviour. A halt in the idle routine is allowed if interrupts stay enabled.
+- Guest sees: no beep. Idle returns at once.
+
+#### HR-EXP-02 `HalReadDmaCounter`
+- Grade: established for the shape, unknown for the full ISA channel mapping (`0x80017b50`).
+- Fact: for an ISA-master adapter record (byte at offset `0x4d` equal to 1) it clears the 8237 flip-flop with two writes to the base port plus
+  `0xc` and reads the channel's count register (`base + channel * 2 + 1`) through byte reads. Other adapter kinds were not read.
+- Our HAL must: read the 8237 count for ISA channels and return zero or the transfer length for others, noting that the second part is our
+  design. Obsolete in current docs (`HalReadDmaCounter` has a replacement, `ReadDmaCounter`).
+- Guest sees: floppy and parallel DMA progress.
+
+#### HR-EXP-03 `HalInitializeProcessor` and the multiprocessor phases
+- Grade: established (`0x8002e2f0`, `HalpInitMP` at `0x8002f210`).
+- Fact: `HalInitializeProcessor(n)` runs with interrupts off. It stores `-1` at offset `0x30` of the processor control region and 100 at `0x4c` (the
+  stall factor, HR-CLK-07), and sets the processor number in the control block. On processor 0 it maps the local APIC (`0xfee00000` at `0xfffe0000`) and the
+  Cobalt CPU (`0xc2000000`), memory (`0xc6000000`) and interrupt (`0xc4000000`) blocks, one page each. For every processor it raises the IRQL to
+  `0x1f`, ORs `1 << n` into the started-processor mask at `0x80028aa4` and calls the interrupt initialiser. `HalpInitMP(phase)` counts phase-1 calls,
+  and in phase 0 maps physical page 0 and allocates a page below 1 MiB for the start stub. For a nonzero phase on a nonzero processor it sets the
+  IPI-clock flag (`0x80020225` = `0xff`) ([nt-hal.md](nt-hal.md#follow-on-corrections-and-additions)).
+- Our HAL must: do the same work in whichever order XP's initialisation phases require (the phase contract is in the note after the XP table).
+- Guest sees: each processor reaching idle.
+
+#### HR-EXP-04 `HalAllProcessorsStarted`
+- Grade: established (`0x8002f280`, `0x8002f780`).
+- Fact: on processor 0 only (a byte at offset `0x51` of the control region is zero), when CPU feature bit 0 is set it broadcasts, through
+  the generic call (HR-IPI-02), a routine that writes `0xa0fe` to the local APIC performance-counter LVT (`+0x340`: vector `0xfe`, level, active
+  low, unmasked) on every started processor. When feature bit 1 is set it overwrites the first instruction of the stall routine (HR-CLK-07). It
+  returns true.
+- Our HAL must: do the same, and enable the performance-counter vector only after all processors run.
+- Guest sees: performance-counter interrupts, if a driver registers the hook of HR-ARC-07.
+
+#### HR-EXP-05 `HalBeginSystemInterrupt`, `HalEndSystemInterrupt`
+- Grade: established (`0x800135a8`, `0x80013538`).
+- Fact: the HAL's own broadcast service calls Begin with (IRQL, vector, a pointer for the old level) at `0x800129bc`. The End call's arguments were not decoded. The accesses and
+  order are in the [hot-path page](hal-hot-path.md#one-device-interrupt-cobalt-entries-other-than-the-clock-nmi-and-memory-error-entries).
+  Both are HAL exports only on x86. On x64 the kernel owns this path (HR-XP-11).
+- Our HAL must: keep the TPR-and-EOI order of HR-INT-07 for XP. The XP x64 kernel dispatch contract is not established
+  (HR-XP-17).
+- Guest sees: nothing directly.
+
+#### HR-EXP-06 Display exports
+- Grade: established for the path, unread for the drawing routines (`HalAcquireDisplayOwnership` at `0x80018610`, `HalDisplayString` at `0x80018670`,
+  `HalQueryDisplayParameters` at `0x80018730`, `HalSetDisplayParameters` at `0x80018780`).
+- Fact: `HalAcquireDisplayOwnership` stores a reset-display callback under a spin lock. `HalDisplayString` prints to the debug port only, with the
+  message "Console OUT not yet initialized", until the display-ready byte (`0x80028aa0`) is 1. Then it takes the display lock and, per character, writes
+  to the screen when bit 31 of the output-mode word is set and to the COM port when bit 30 is set. Query and set parameters pass through the
+  screen routines when the screen is selected. Under XP, boot text is the boot video driver's job (HR-DBG-01, HR-XP-08).
+- Our HAL must: export all four. `HalDisplayString` forwards to the XP boot-video path. Owner hand-off calls the stored callback.
+- Guest sees: HAL messages on the debug port or the screen.
+
+#### HR-EXP-07 Partition and drive-letter exports
+- Grade: established that they are wrappers (`IoReadPartitionTable` `0x8002b330`, `IoSetPartitionInformation` `0x8002b350`,
+  `IoWritePartitionTable` `0x8002b370`, `IoAssignDriveLetters` `0x8002b310`).
+- Fact: each calls through a table the image imports at `0x80010350`: offset `0x18` for `IoAssignDriveLetters`, `0x1c` for `IoReadPartitionTable`, `0x20` for `IoSetPartitionInformation` and `0x24` for `IoWritePartitionTable`. The table is presumably the kernel's `HalDispatchTable` (inferred from the import). Chappell lists
+  `IoAssignDriveLetters` as exported to 6.0 and the other three also from the kernel starting at 5.1.
+- Our HAL must: export them as wrappers that call the kernel's versions. No hardware is involved.
+- Guest sees: disk partition handling as on any PC. The role under XP is Chappell's table only.
+
+#### HR-EXP-08 Common-buffer and crash-dump DMA exports
+- Grade: established for the set, unknown for the code (`HalAllocateCommonBuffer` `0x80016e80`, `HalFreeCommonBuffer` `0x80016fe0`,
+  `HalFlushCommonBuffer` `0x80016fd0`, `HalAllocateCrashDumpRegisters` `0x80017530`, `IoMapTransfer`, `IoFlushAdapterBuffers`, `IoFreeMapRegisters`,
+  `IoFreeAdapterChannel`, `HalAllocateAdapterChannel`).
+- Fact: the map-register design is in HR-PCI-08. Microsoft lists the common-buffer and adapter-channel routines as obsolete or reserved for system use (HR-XP-04).
+- Our HAL must: keep them for old drivers and implement crash-dump registers so a dump can use the same adapter. The crash-dump path with
+  our own map buffer is untested.
+- Guest sees: a crash dump written to disk.
+
+#### HR-EXP-09 Bus data and address translation for the internal and ISA buses
+- Grade: established for the dispatch, unknown for the ISA and internal handlers' routines (`HalGetBusData` `0x8001fc30`,
+  `HalGetBusDataByOffset` `0x8001fc60`, `HalTranslateBusAddress` `0x8001fd30`).
+- Fact: each looks up the bus handler for the bus type and number, calls the handler's routine through its table (translation at offset
+  `0x48`), then releases the handler, and returns false when no handler exists. `HalGetBusData` calls `HalGetBusDataByOffset` with offset 0. The
+  PCI handlers are in HR-PCI-01 to 03.
+- Our HAL must: provide handlers for the internal bus, the ISA bus and PCI. The internal bus's "level" is the Cobalt entry number (HR-INT-05).
+- Guest sees: old drivers that call these routines find their devices.
+
+#### HR-EXP-10 Spin-lock, IRQL and port exports
+- Grade: established for the export list, mostly unread for the code.
+- Fact: the x86 HAL exports `KeRaiseIrql`, `KfRaiseIrql`, `KfLowerIrql`, `KeLowerIrql`, `KeGetCurrentIrql`, `KeRaiseIrqlToDpcLevel`, `KeRaiseIrqlToSynchLevel`, the
+  `KeAcquireSpinLock` family and `READ_PORT_*` and `WRITE_PORT_*` in all widths and buffer forms, plus `ExAcquireFastMutex` and its two partners. The IRQL
+  routines are the TPR accesses of HR-INT-11. On x64 the kernel exports the IRQL and spin lock routines and the HAL does not (HR-XP-11).
+- Our HAL must: export the x86 set for XP and none of the IRQL or lock routines for XP x64.
+- Guest sees: nothing named.
+
+#### HR-EXP-11 Real-time clock write
+- Grade: established (`HalSetRealTimeClock` at `0x800194f0`).
+- Fact: it sets bit 7 of CMOS register `0x0b`, writes BCD seconds, minutes, hours, day of week (register 6), day, month and the year modulo 100 into
+  registers `0`, `2`, `4`, `6`, `7`, `8` and `9`, then clears bit 7 of register `0x0b` (mask `0x7f`). It writes no century byte. The
+  read routine is HR-CLK-08.
+- Our HAL must: do the same. An RTC with a century register is not modelled.
+- Guest sees: the system date persists across a restart.
+
+#### HR-EXP-12 Flash environment code
+- Grade: established for the exports, unknown for the rewrite and the default table (`HalGetEnvironmentVariable` `0x8001bed0`,
+  `HalSetEnvironmentVariable` `0x8001bd60`).
+- Fact: HR-ARC-06 covers it. The checksum and the block rewrite are in the open question
+  ([visws-firmware-open.md](../../questions/visws-firmware-open.md#the-environment-block-hal-side-and-defaults)).
+- Our HAL must: not write the flash until the rewrite is read.
+- Guest sees: graphics memory changes work only if the write works.
+
+#### HR-EXP-13 `HalpHandleCoNMI`
+- Grade: established. See HR-NMI-02, which now carries the whole sequence.
+- Fact: the routine reads Cobalt entry `0x1d` on every board.
+- Our HAL must: see HR-NMI-02.
+- Guest sees: see HR-NMI-02.
 
 ## What XP and XP x64 expect that NT 4.0 did not
 
@@ -615,21 +774,22 @@ Learn pages describe current Windows, so a row marked "current docs" needs a che
 | # | Expectation | Source | Consequence for our HAL | Status |
 |---|---|---|---|---|
 | HR-XP-01 | Setup installs one HAL under the name `hal.dll`, and a `/HAL` switch in `boot.ini` can pick another | [Chappell, HAL variants](https://www.geoffchappell.com/studies/windows/km/hal/history/index.htm) (third-party study of shipped files) | Ours ships as `hal.dll` with an installer entry. SGI's `txtsetup.sif` machine-type entry shows the NT mechanism ([nt-drivers.md](nt-drivers.md)). | verified in a secondary source |
-| HR-XP-02 | 32-bit XP and Server 2003 have seven HALs, including three non-ACPI ones (standard PC, MPS uniprocessor, MPS multiprocessor) | Chappell as above, and [KB 309283](https://www.betaarchive.com/wiki/index.php/Microsoft_KB_Archive/309283) (Microsoft article, archive copy) | Our 32-bit HAL is a non-ACPI HAL of the MPS kind. The firmware has no usable ACPI tables ([boot-path.md](boot-path.md#legacy-bios-and-the-acpi-tables)). | verified |
-| HR-XP-03 | x64 builds have a single HAL named `hal.dll`. Wikipedia says x64 Server 2003 and later strictly require ACPI. | Chappell above, [Wikipedia, Ntdetect.com](https://en.wikipedia.org/wiki/Ntdetect.com) and a [vendor advisory](https://community.hpe.com/t5/proliant-servers-ml-dl-sl/compaq-proliant-ml350-g1-adding-second-processor/m-p/3202142) | Whether a non-ACPI x64 HAL can boot is not established by Microsoft material ([question](../../questions/visws-hal-requirements-open.md#non-acpi-hal-on-x64)). Chappell never studied XP x64. | unknown for XP x64 |
+| HR-XP-02 | 32-bit XP ships seven HALs: `hal.dll`, `halacpi.dll`, `halaacpi.dll`, `halmacpi.dll` (ACPI) and `halapic.dll`, `halmps.dll`, `halsp.dll` (non-ACPI, with `hal.dll`, the standard PC HAL). That is four non-ACPI HALs (`hal`, `halapic`, `halmps`, `halsp`). Server 2003 has six, three of them non-ACPI (`halsp.dll` is not in it). | [Chappell, HAL variants](https://www.geoffchappell.com/studies/windows/km/hal/history/index.htm) (third-party study of shipped files). KB 309283 (HAL options after Setup, a BetaArchive copy) was seen only in a search summary and not opened. | Our 32-bit HAL is a non-ACPI HAL of the MPS kind. The firmware has no usable ACPI tables ([boot-path.md](boot-path.md#legacy-bios-and-the-acpi-tables)). | verified in a secondary source; KB 309283 unverified |
+| HR-XP-03 | x64 builds of Windows have a single HAL named `hal.dll`. The Wikipedia article on Windows Server 2003 states, in its lead: "IA-64 and x64 builds of Windows Server 2003 as well as Windows Server 2008 and later strictly require ACPI". The Wikipedia article on Ntdetect.com says only that in Vista and later "the HAL only supports ACPI"; it does not mention x64. | [Chappell, HAL variants](https://www.geoffchappell.com/studies/windows/km/hal/history/index.htm) (one x64 HAL; he never studied XP x64), [Wikipedia, Windows Server 2003](https://en.wikipedia.org/wiki/Windows_Server_2003) (secondary, no Microsoft source given) | Whether a non-ACPI x64 HAL can boot is not established by Microsoft material, and Server 2003 x64 is not XP x64. Treat "x64 needs ACPI" as unverified ([question](../../questions/visws-hal-requirements-open.md#non-acpi-hal-on-x64)). | single x64 HAL verified; ACPI requirement unverified |
 | HR-XP-04 | Legacy HAL bus routines (`HalGetBusData`, `HalSetBusDataByOffset`, `HalGetInterruptVector`, `HalTranslateBusAddress`, `HalAssignSlotResources`, `HalGetAdapter` and the common-buffer routines) are obsolete but "exported only to support existing drivers". PnP supplies resources and a bus interface replaces bus data access. | [Windows kernel DDI index, Microsoft Learn](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/_kernel/) (current docs) | We must still implement them, because SGI's NT 4.0 era drivers call them. The PnP path becomes primary (HR-XP-05). | verified |
-| HR-XP-05 | Interrupt claims travel up the PnP tree to a translator at the HAL device node, which works out the routing and calls `HalGetInterruptVector` to pick processors, IRQL and vector. The result goes to the root interrupt arbiter in the PnP manager. | [Doron Holan, "Arbitration and Translation, Part 3"](https://blogs.msdn.microsoft.com/doronh/2010/05/06/arbitration-and-translation-part-3/) (Microsoft engineer's blog) | Our HAL provides ISA and PCI interrupt translators and requirement-to-resource translation, from the tables in HR-INT-06 and HR-INT-09. SGI's Windows 2000 HAL already carries translator entry points ([nt-hal.md](nt-hal.md#the-windows-2000-builds)). The entry point by which the PCI driver asks for pin routing is not established from public Microsoft material. | partly verified |
-| HR-XP-06 | A PnP driver gets its DMA adapter from `IoGetDmaAdapter`, which returns a `DMA_ADAPTER` with a table of operations. Scatter-gather and several adapter routines are "reserved for system use". | [IoGetDmaAdapter](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-iogetdmaadapter) and the DDI index above (current docs) | The HAL builds the adapter operations over the map-register design in HR-PCI-08. | verified |
-| HR-XP-07 | The kernel debugger transport is a separate module, `kdcom.dll`, linked to the kernel and the HAL. The `KdPort*` HAL exports end at 5.0. | [Chappell, HAL exports](https://www.geoffchappell.com/studies/windows/km/hal/api/index.htm), [NirSoft, kdcom.dll](https://windows10dll.nirsoft.net/kdcom_dll.html), [Microsoft Learn, KDNET extensibility](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/how-to-develop-kdnet-extensibility-modules) | No debug-port code in the HAL (HR-DBG-02). Whether stock KDCOM finds the UART without HAL help is unchecked. | verified for the split, unverified for the port lookup |
-| HR-XP-08 | Boot text and bug-check screens are drawn by `bootvid.dll`, which the kernel loads and which imports port I/O routines from the HAL. Its exports are `VidInitialize`, `VidDisplayString`, `VidBitBlt` and others. If `VidInitialize` fails, the kernel runs without it. | [NirSoft, bootvid.dll (XP)](http://xpdll.nirsoft.net/bootvid_dll.html), [a replacement-driver project](https://github.com/xdqi/nt5-hvgen2) | We ship a Cobalt boot video driver (SGI shipped `sgibvid.dll` for Windows 2000, [nt-hal.md](nt-hal.md#the-windows-2000-builds)). How `HalDisplayString` connects to it is not established here. | partly verified |
+| HR-XP-05 | Interrupt claims travel up the PnP tree to a translator at the HAL device node, which works out the routing and calls `HalGetInterruptVector` to pick processors, IRQL and vector. The result goes to the root interrupt arbiter in the PnP manager. | [Doron Holan, "Arbitration and Translation, Part 3"](https://learn.microsoft.com/archive/blogs/doronh/) (Microsoft engineer's blog, 2010: Windows 7-era hindsight about earlier systems, now archived there) | Our HAL provides ISA and PCI interrupt translators and requirement-to-resource translation, from the tables in HR-INT-06 and HR-INT-09. SGI's Windows 2000 HAL already carries translator entry points ([nt-hal.md](nt-hal.md#the-windows-2000-builds)). The entry point by which the PCI driver asks for pin routing is not established from public Microsoft material. | partly verified; post is later than XP |
+| HR-XP-06 | A PnP driver gets its DMA adapter from `IoGetDmaAdapter`, which returns a `DMA_ADAPTER` with a table of operations. Scatter-gather and several adapter routines are "reserved for system use". | [IoGetDmaAdapter](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-iogetdmaadapter) and the DDI index above (current docs). `DEVICE_DESCRIPTION` versions 2 and 3 on that page postdate XP and do not apply. | The HAL builds the adapter operations over the map-register design in HR-PCI-08. | verified for the call; versions 2 and 3 do not apply to XP |
+| HR-XP-07 | The kernel debugger transport is a separate module, `kdcom.dll`, which exports `KdSendPacket`, `KdReceivePacket` and `KdInitialize` among others. The NT 4.0 HAL exports the `KdPort*` routines and the variable `KdComPortInUse`. Chappell lists the `KdPort*` exports as removed after 5.0. A review reports that the Windows 10 `kdcom.dll` imports `KdComPortInUse` from the HAL. | [Chappell, HAL exports](https://www.geoffchappell.com/studies/windows/km/hal/api/index.htm), [NirSoft, kdcom.dll (Windows 10)](https://windows10dll.nirsoft.net/kdcom_dll.html), [Microsoft Learn, KDNET extensibility](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/how-to-develop-kdnet-extensibility-modules) | No debug-port routines in the HAL. We export `KdComPortInUse` (HR-DBG-04). The XP-era import list is unconfirmed because the source is a Windows 10 build. | verified for the split; the import list is unverified for XP |
+| HR-XP-08 | Boot text and bug-check screens are drawn through `bootvid.dll`, which exports `VidInitialize`, `VidDisplayString`, `VidBitBlt` and others (11 named exports on XP). A third-party project that replaces it reports that the kernel calls `VidInitialize` early in phase 1. | [NirSoft, bootvid.dll (XP)](http://xpdll.nirsoft.net/bootvid_dll.html) (export list), [xdqi/nt5-hvgen2](https://github.com/xdqi/nt5-hvgen2) (third party, kernel behaviour as seen by that project) | We ship a Cobalt boot video driver (SGI shipped `sgibvid.dll` for Windows 2000, [nt-hal.md](nt-hal.md#the-windows-2000-builds)). Which HAL routines `bootvid.dll` imports, whether the kernel tolerates a failing `VidInitialize`, and how `HalDisplayString` connects to it are not established by these sources. | export list verified; the rest unverified |
 | HR-XP-09 | `KeQueryPerformanceCounter` is a HAL export. The counter is monotonically nondecreasing, its frequency is fixed at boot and the same on every processor. | [KeQueryPerformanceCounter](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-kequeryperformancecounter) (current docs) | HR-CLK-06. | verified |
 | HR-XP-10 | `KeStallExecutionProcessor` is a HAL export that busy-waits at least the interval and not significantly longer, at any IRQL, for intervals under about 50 microseconds. | [KeStallExecutionProcessor](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/wdm/nf-wdm-kestallexecutionprocessor) | HR-CLK-07. | verified |
-| HR-XP-11 | Export surface changes: 5.1 adds the in-stack queued spin lock exports on x86. `HalDisableSystemInterrupt` and `HalEnableSystemInterrupt` are exported through 5.2. `HalSetTimeIncrement` through 6.2. On x64 the kernel exports the IRQL and spin lock routines and the HAL exports `HalHandleMcheck`, `HalSendNMI`, `HalIsHyperThreadingEnabled` and, in 5.2 only, `HalCallBios` and three `x86Bios*` routines. | Chappell, HAL exports (third-party table from shipped files) | We implement the x86 export set for XP and the x64 set for XP x64. The `x86Bios*` set needs a decision (HR-XP-12). | verified in a secondary source |
+| HR-XP-11 | Export surface, per Chappell (x64 "all" means 5.2 SP1 onward). x86: 5.1 adds `KeAcquireInStackQueuedSpinLock`, its `RaiseToSynch` form and `KeReleaseInStackQueuedSpinLock`. `HalDisableSystemInterrupt` and `HalEnableSystemInterrupt` run through 5.2, `HalSetTimeIncrement` through 6.2. x64: the kernel exports the IRQL and spin lock routines, and the HAL exports `HalHandleMcheck`, `HalSendNMI` and `HalIsHyperThreadingEnabled` (5.2 SP1 on), `HalCallBios` (5.2 to 6.1) and `x86BiosExecuteInterrupt`, `x86BiosInitializeBiosEx`, `x86BiosTranslateAddress` (5.2 only). `HalEnumerateProcessors` (x64 from 6.0) and `HalPerformEndOfInterrupt` and `HalRequestDeferredRecoveryServiceInterrupt` (6.1) postdate XP. | Chappell, HAL exports (third-party table from shipped files) | We implement the x86 export set for XP and the x64 set for XP x64. The `x86Bios*` set needs a decision (HR-XP-12). | verified in a secondary source |
 | HR-XP-12 | x64 has no V86 mode, so HAL BIOS calls run through an emulator, and the x86 HAL's V86 call path is not carried over. | Chappell (the `x86Bios*` and `HalCallBios` exports appear on x64 only, in 5.2) | The VisWS firmware has an embedded legacy BIOS only for some boot cases and exposes no VGA mode we know of ([boot-path.md](boot-path.md#legacy-bios-and-the-acpi-tables)). We provide neither BIOS call path unless a guest asks. | inferred |
-| HR-XP-13 | An unclaimed or hardware-failure NMI ends in bug check `0x80` NMI_HARDWARE_FAILURE, which carries no parameters. | [Bug Check 0x80](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0x80--nmi-hardware-failure) | HR-NMI-02 and HR-MEM-03 end there. | verified |
+| HR-XP-13 | Bug check `0x80` NMI_HARDWARE_FAILURE carries no parameters. Microsoft says only that "a variety of hardware malfunctions" cause it. That an unclaimed NMI leads to it is not stated on the page and is our reading. | [Bug Check 0x80](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/bug-check-0x80--nmi-hardware-failure) | HR-MEM-03 bug checks with it. HR-NMI-02 does not, as the shipped HAL does not. | verified for the code and parameters; the NMI link is inferred |
 | HR-XP-14 | Calling `KeRaiseIrql` with a level below the current one, or `KeLowerIrql` other than to restore, is a fatal error. | [Managing hardware priorities](https://learn.microsoft.com/en-us/windows-hardware/drivers/kernel/managing-hardware-priorities) | HR-INT-11 and HR-INT-12 follow it. Whether XP's kernel writes the CPU registry values that HR-ARC-05 lists is unchecked. | verified for IRQL |
-| HR-XP-15 | XP has no ARC x86 loader. Windows 2000 was the last release with the SGI loader and HAL, and later releases are unsupported. | [Wikipedia, SGI Visual Workstation](https://en.wikipedia.org/wiki/SGI_Visual_Workstation) (secondary) and a 2004 Usenet reply (message `2msncjFqmo81U1@uni-berlin.de`) that patching SGI's Windows 2000 files into XP gives only a modified Windows 2000 | The loader contract is ours (HR-ARC-01 to 04). | verified in secondary sources only |
-| HR-XP-16 | Soft-off and the HAL's shutdown path: `HalReturnToFirmware` is listed as "not supported and should not be used" for drivers. | [DDI index above](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/_kernel/) | The kernel calls it itself. Its exact contract for XP is not established from public Microsoft material, so HR-PWR-01 to 03 are written as HAL actions behind it. | unverified |
+| HR-XP-15 | Windows 2000 was the last release with the SGI-specific HAL, per Wikipedia, which links that to the end of SGI support. Wikipedia and a Usenet thread say XP is unsupported on the machine. Neither is a Microsoft statement about XP's loader. | [Wikipedia, SGI Visual Workstation](https://en.wikipedia.org/wiki/SGI_Visual_Workstation) (secondary), Usenet message `2msncjFqmo81U1@uni-berlin.de` (a 2004 reply that patching SGI's Windows 2000 files into XP gives only a modified Windows 2000) | We have no evidence about an ARC path in XP's loader, so the loader contract is ours (HR-ARC-01 to 04, [question](../../questions/visws-hal-requirements-open.md#what-loads-xp-and-what-it-hands-the-hal)). | unverified for XP's loader |
+| HR-XP-16 | Soft-off and the HAL's shutdown path: `HalReturnToFirmware` is listed as "not supported and should not be used" for drivers. | [DDI index above](https://learn.microsoft.com/en-us/windows-hardware/drivers/ddi/_kernel/) | The kernel calls it itself. Its exact contract for XP is not established from public Microsoft material, so HR-PWR-01 to 05 are written as HAL actions behind it. | unverified |
+| HR-XP-17 | The x86 HAL exports `HalBeginSystemInterrupt` and `HalEndSystemInterrupt` and the kernel dispatches device interrupts through them. On x64 the kernel exports the IRQL routines and the HAL does not export these two. | Chappell, HAL exports | The contract between the kernel and HAL for interrupt dispatch on x64 is not established from Microsoft sources. HR-EXP-05. | verified in a secondary source for the export split; the contract is unverified |
 
 Not established from public Microsoft material at all: the `HalInitSystem` phase contract, the HAL private dispatch table's contents, the
 loader block's layout, and how the PCI bus driver asks the HAL for pin routing. All four are the first things to settle before code
