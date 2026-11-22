@@ -21,7 +21,7 @@ what software expects and not what the hardware does. **Unknown** names what wou
 
 Published manuals, all SGI:
 
-- *SGI Altix 3000 User's Guide*, `007-4579-001`: the NUMAlink 3 R-brick at pp. 136 and 137, C-brick link
+- *SGI Altix 3000 User's Guide*, `007-4579-001`: the R-brick chapter at pp. 136 and 137, C-brick link
   connectors at p. 105, and the Altix 3700 router minimum and 32-processor example at pp. 79 and 80.
 - *Origin 3000 Series Technical Configuration Owner's Guide*, `007-4311-002`: R-brick at pp. 36 to 38,
   L1, L2 and L3 at pp. 41 to 43, interconnect drawings at pp. 55 to 58, base bundles at pp. 76 to 80,
@@ -152,10 +152,11 @@ the numbers in order (`007-4240-002`, pp. 194 to 196; `007-4311-002`, p. 37, Fig
   (`007-4240-002`, p. 196).
 - **Unknown.** Whether port letters, rear numbers and the chip's internal link numbers coincide. Whether a
   C-brick on port 1 passes data and fails only on management.
-- **Established.** The Altix 3000 guide prints the same port roles for its NUMAlink 3 R-brick: ports 1, 6, 7 and 8
-  are for R-brick to R-brick links only, and ports 2 to 5 are for C-bricks or R-bricks (`007-4579-001`, p. 137,
-  Figure 8-2). Each channel runs at 1.6 GB/s each way (p. 136). Whether the Altix and Origin R-bricks are one board
-  is unknown; the Altix guide does not name the router family.
+- **Established.** The Altix 3000 guide gives the same port roles in its R-brick chapter: ports 1, 6, 7 and 8 are
+  for R-brick to R-brick links only, and ports 2 to 5 are for C-bricks or R-bricks (`007-4579-001`, p. 137,
+  Figure 8-2). Its features list gives eight 1.6 GB/s channels each way (p. 136). The guide places the router in its
+  NUMA 3 architecture (p. 81) and names the cable NUMAlink 3 (pp. 31, 33). Calling the Altix router a NUMAlink 3
+  part is **inferred** from that. Whether it is one board with the Origin R-brick is unknown.
 
 ## Router function
 
@@ -308,7 +309,7 @@ These come from reading the L1 firmware shipped with a 6.5.30 IRIX release, for 
   pp. 2-24 and 2-25).
 - **Onyx 3400 and Onyx 3800.** **Established.** They use R-bricks the same way. The Onyx 3000 guide shows a dual-rack
   system with two G-bricks, four C-bricks, two R-bricks, two I-bricks and an N-brick (`007-4264-002`, p. 17).
-- **Altix 3700 (NUMAlink 3).** **Established.** A system of up to 512 processors needs at least four 8-port routers
+- **Altix 3700 (NUMA 3 architecture).** **Established.** A system of up to 512 processors needs at least four 8-port routers
   per 32 processors (`007-4579-001`, p. 79). The 32-processor example in Figure 3-3 (p. 80) draws eight C-bricks and
   four R-bricks. **Inferred** that two C-bricks per router is the usual ratio; the guide states only the minimum.
 

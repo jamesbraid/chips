@@ -7,7 +7,7 @@ line, graphics attachment, firmware and Linux side are on [the Prism overview](p
 Sources: SGI, *Silicon Graphics Prism Deskside Visualization System Hardware User's Guide*, `007-4772-001` (Apr 2005),
 printed pages, and its second edition `007-4772-002` (Oct 2005, ProPack 4 Service Pack 2) for the diagnostics and XF86Config
 chapter; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (adds the Prism at revision 004, July
-2005). Grades: see [the SN2 README](README.md). Read: contents and pp.7 to 10, 17, 18, 19 to 21, 25 to 27, 32, 33; -002 pp.32, 120 to 122, 166.
+2005). Grades: see [the SN2 README](README.md). Read: contents and pp.5, 7 to 10, 13, 17, 18, 19 to 21, 25 to 27, 32, 33, 104, 105; -002 pp.5, 14, 24, 32, 117, 120 to 122, 166.
 
 ## Established (007-4772-001)
 
@@ -24,7 +24,7 @@ chapter; SGI, *SGI L1 and L2 Controller Software User's Guide*, `007-3938-005` (
 - Two internal disks (disk 1 holds Linux), one DVD-ROM bay (p.25).
 - Processors: "one or two 64-bit Intel processors" in different clock speeds and cache sizes; an upgrade replaces the whole
   node board (pp.17, 20, 32). The guide never says Itanium; the `-002` diagnostics example runs `ia64` Linux 2.4.21-sgi305a8
-  (p.120), so Itanium 2 is inferred. No SHub is named; that is unknown, see [the open questions](../../questions/prism-open.md).
+  (p.120), so Itanium 2 is inferred. The node chip is not named. The power-on diagnostics name a Super Hub (SHub) ASIC (-001 p.104; -002 p.117) and TIO ASICs (-001 p.105; -002 p.117), without tying either to the node board, so that stays unknown, see [the open questions](../../questions/prism-open.md).
 - The rear view (Figure 2-2, p.19) shows no NUMAlink connector; the node board "connects to the interface board via two
   connectors on its underside" (p.19). So the deskside is not cabled into a ring or router: established as the absence of any
   NUMAlink label or text in the pages read; whether the node board has NUMAlink ports that are not brought out is unknown.
@@ -50,10 +50,11 @@ PCI-to-PCI bridge in front of bus 01, and bus 01 holds the USB functions. That f
 Linux's device numbers match the guide's slots (inferred; the same set also fits a rackmount base module). Whether that
 bridge is PCI-X is unknown.
 
-Riser, TIO and interrupts: unknown. Neither edition names a riser, a dual-TIO riser, or a PIC or TIO that drives the
-PCI-X buses. The "TIO" letters in the enclosure drawing (-001 p.18, PDF 40) belong to a rotated "CAUTION" label. The
--002 bus rule (p.32) matches -001 p.27. The only interrupt the guide names is the base I/O board's real-time interrupt
-in and out, not supported under Linux (p.21). It states no PCI interrupt routing.
+Riser, TIO and interrupts: unknown. Neither edition names a riser, a dual-TIO riser, or a PIC that drives the PCI-X buses, and neither says which bus a
+TIO ASIC drives. The power-on diagnostics name TIO ASICs (-001 p.105; -002 p.117) without tying them to a slot. The "TIO" letters in the enclosure drawing (-001 p.18, PDF 40) belong to a rotated "CAUTION" label. The
+-002 bus rule (p.32) matches -001 p.27. The I/O interrupt connectors the guide names are the base I/O board's real-time interrupt in and out, not supported
+under Linux (-001 p.21; -002 p.24). The guide also names the front-panel NMI switch (-001 p.5; -002 p.5), whose
+command goes to the PROM (-001 p.13; -002 p.14). It states no PCI interrupt routing.
 
 Not covered: the maintenance chapter (pp.35 to 89), the cooling and power sections, and the -002 regulatory chapters.
 

@@ -22,11 +22,14 @@ see [the SN2 README](README.md). Read: contents, pp.24, 49, 65, 67, 71, 72, 74, 
   ports F, G, H and A in an upper and a lower row, and the two XIO outputs "Node 1 XIO" and "Node 3 XIO" (p.72
   Figure 5-4).
 - Processors in a brick share a frequency; DIMMs go in groups of four per node board (p.74).
-- The optional **R-brick** is an eight-port NUMAlink 4 router (p.97). Its ports are numbered 1 to 8 and lettered A to H.
-  Ports 1, 6, 7 and 8 (A, F, G, H) carry R-brick to R-brick links only; ports 2 to 5 (B to E) carry CR-brick or R-brick
-  links (p.101; Figure 8-3, p.102). Each link runs at 3.2 GB/s each way (Table 8-2, p.103).
-- The USB-to-Ethernet placement table names one R-brick at 128 processors, two at 256 and four at 512 (Table 2-2, p.24).
-  Those rows say where an adapter goes, not how many routers a system has, so the counts are **inferred**.
+- The optional **R-brick** is an eight-port router (p.97) in the NUMAlink-4 fabric (p.49). The guide calls it a
+  "metarouter" brick (p.55). Its ports are numbered 1 to 8 and lettered A to H (Figure 8-3, p.102). Ports 1, 6, 7 and 8
+  (A, F, G, H) connect the R-brick to other R-bricks (p.101). Ports 2 to 5 (B to E) normally connect it to CR-bricks,
+  and in larger systems to R-bricks (p.101). Each link runs at 3.2 GB/s each way (Table 8-2, p.103).
+- The USB-to-Ethernet placement table (Table 2-2, p.24) lists R-brick slots at 128 processors (rack 001, U-23), 256
+  (rack 002, U-17; rack 003, U-23) and 512 (rack 003, U-05 and U-35; rack 009, U-05 and U-35). Those rows are table
+  entries. The table places adapters, so the router count is **inferred**: one R-brick at 128 processors, two at 256
+  and four at 512.
 - IX-brick, PX-brick, R-brick and power bay chapters follow (contents, p.viii); the L1 and L2 emulator operation is
   Chapter 2.
 
@@ -36,7 +39,9 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 - The "NL4 router ASIC" is named in the guide and is a separate part from the SHub; no document held gives its
   registers. Established that it exists in the CR-brick; unknown what its port registers look like.
-- Which CR-brick rear connector (A, F, G or H, p.71) pairs with which R-brick port (B to E) is not stated. Unknown.
+- The CR-brick rear has NUMAlink connectors A, F, G and H, upper and lower, eight in all (p.71; Figure 5-4, p.72; the
+  CR-brick overview on p.55 says eight NUMAlink-4 router ports). Which of them pairs with which R-brick port (B to E)
+  is not stated. Unknown.
 - The CR-brick is the first brick in these guides with two I/O ports (nodes 1 and 3) from four nodes; the other nodes
   have no external I/O port. Established as drawn.
 - **SHub generation: SHub 1.2, established by the guide's own figure.** Figure 3-3 (printed p.50, "Functional Block Diagram of CR-brick", 007-4377-002) labels all four nodes "SHUB 1.2" and "IP57 Node Card" and shows XIO and NI ports on each. The vendor's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin` and not for `shub2snprom.bin`, which agrees. Three more facts point the same way: the guide gives the CR-brick two XIO ports (nodes 1 and 3, p.72) and the SHub 2 PROM refuses XIO ("SHUB2 does not support XIO I/O."); the SHub 1 PROM image carries the NUMAlink 4 router code (`nl4r_*`), so SHub 1 plus NL4 routers is a shipped combination; and SGI's 1 December 2004 Linux patch that adds SHub 2 calls it "a future SGI chipset" (message `20041201203852.GA26131@sgi.com` on linux-ia64), while the Bx2 guide is dated November 2004. The earlier reading of the Bx2 as SHub 2 rested on dates only and is withdrawn. Not captured from a running machine; the generation flag the PROM returns to Linux would still confirm it (see [altix-3000.md](altix-3000.md#shub-generation)).
