@@ -37,6 +37,7 @@
 |---|---|---|
 | [prom-console-input.md](ip22/prom-console-input.md) | Indy, Indigo2 and Power Indigo2 PROM: what it does when no PS/2 keyboard or mouse answers | Question. |
 | [prom-environment.md](ip22/prom-environment.md) | Indigo2 (IP22) PROM environment store | The PROM keeps its environment (`setenv`, `printenv`, the variables that boot reads) in a 93CS56 serial EEPROM on... |
+| [prom-software.md](ip22/prom-software.md) | Indigo2 (IP22) PROM 5.3 Rev E: what its own software does | This page records what the shipped IP22 PROM image `SGI Version 5.3 Rev E IP22 Jan 29, 1996 (BE)` does: part... |
 
 ## ip27
 
