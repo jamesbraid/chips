@@ -430,7 +430,7 @@ Corrections found while tagging. These are not fixed here.
 
 ## Visual Workstation 320 and 540 graphics (added with devices/cobalt-graphics)
 
-- **Cobalt graphics: rendering-engine packets and registers, the display back end's unread blocks, reset values.** *[route: software now]* Unknown: the packet header and link-word layouts and opcode set; whether the host or the engine does lighting and clipping; the meaning of the engine window's table, context and interrupt registers; the register at `0xca000000`; reset values; where the NT driver puts gamma and the 2D cursor; the I2C bit positions; the pixel byte order; which ASIC hosts the display back end (Arsenic is inferred). Next: read the OpenGL driver's packet emitters and the rest of the kernel driver in Ghidra. See [questions/cobalt-graphics-open.md](cobalt-graphics-open.md).
+- **Cobalt graphics: rendering-engine packets and registers, the display back end's unread blocks, reset values.** Moved to the cobalt repository: [questions/open-questions.md](https://github.com/jamesbraid/cobalt/blob/main/questions/open-questions.md).
 
 ## Review (independent, chips c669e77: Madison L3 cache-as-RAM entry)
 
