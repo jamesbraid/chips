@@ -9,7 +9,7 @@ quoted as a symbol. Grades: see the overview.
 **Short answer to "FIFO or DMA".** The engine fetches commands by DMA from packet buffers in main memory. The host
 builds packets in memory (the memory is the same SDRAM the processors use), links them, and tells the engine which
 context to run through one control register; completion and stalls come back as two interrupt causes. There is no
-register FIFO that the host pushes words into. Software expectation. The header-word count field and the chaining packet are now known ([below](#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)); the opcode set is not.
+register FIFO that the host pushes words into. Software expectation. The header-word count field and the chaining packet are now known ([below](#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)); the opcode set is only partly known (the constant headers are [listed below](#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)).
 
 ## Register window at `0xc8000000` (`0x19000` bytes)
 
@@ -87,7 +87,7 @@ engine never needs the host's cache.
   `0x9880_4000`, `0x8000_3020`, `0x84e4_4040`, `0x99ce_00a0`, `0x9865_c020`, `0x9700_0020`, `0x9700_0040`, `0x9700_0060`,
   `0x91aa_0020`, `0x91ea_2040`, `0x93cc_0080`. The low byte tracks the packet's length in 32-byte units times 32
   (`0x20`, `0x40`, `0x60`, `0xa0`, `0x80` seen), and a family (`0x97...`, `0x98...`) repeats with different lengths. So the top
-  bits look like an opcode and the low bits a size. Inferred; the opcode list is unknown.
+  bits look like an opcode and the low bits a size. Inferred; the headers the ICD writes as constants are listed below, the computed ones are not.
 - **Texture-table packets.** `CoBuildTlbPacket` builds a packet that loads engine table entries (the `0x8000` window) from
   a list of memory pages for a texture; `CO_CREATE_TEXTLBPKT`, `CO_FREE_TEXTLBPKT` and `CO_SET_READY_TEXTLBPKT` are the
   commands the OpenGL driver uses to ask for one. Whether the table is walked by the engine or loaded by it from the
@@ -119,22 +119,69 @@ the routine named; the hardware's reading of any word is a software expectation,
    `0x10000` write), not by the escape.
 4. Completion is learned by the application polling the packet buffer (below), blocking on a kernel event, or both.
 
-**ICD escape codes. Established (`DrvOpenGLEscape`; name, input size in bytes).**
+**ICD escape codes, 5.2.4 build. Established (`DrvOpenGLEscape` in `sgcodd.dll` 5.2.4, and the call sites in `sgcoicd.dll` 5.2.4; name, input size in bytes).**
+The display driver tests the code and the sizes with `checkargs` before it acts. Every input size below was read in the display driver
+and equals the size the ICD passes at each of its 33 call sites of `__glCoExtEscape` (all read from the disassembly); the output size
+the ICD supplies equals the driver's requirement, or is larger where the driver asks for none. An escape also takes an output size,
+listed after the table.
 
-| Code | Name | Size | Code | Name | Size |
+| Code | Name | In | Code | Name | In |
 |---|---|---|---|---|---|
-| `0x40` | SETCONTEXT | `0x54` | `0x50` | CACHEOP | `0x24` |
-| `0x41` | FIRSTSETCONTEXT | `0x2c` | `0x51` | PIXELDMA_CLEANUP | `0x7c` |
-| `0x42` | CREATECONTEXT | `0x20` | `0x52` | SETUP_SCR2SCR | `0x7c` |
-| `0x43` | DELETECONTEXT | `0x14` | `0x53` | CREATE_BUFFER | `0x28` |
-| `0x44` | RELEASECONTEXT | `0x14` | `0x54` | FREE_BUFFERS | `0x40` |
-| `0x46` | SHARELISTS | `0x1c` | `0x55` | BIND_BUFFERS | `0x70` |
-| `0x47` | DESCRIBELAYERPLANE | `0x20` | `0x56` | UNBIND_BUFFERS | `0x6c` |
-| `0x48` | SWAPBUFFERS | `0x7c` | `0x57` to `0x59` | CREATE, FREE, SET_READY of a texture-table packet | `0x44`, `0x40`, `0x40` |
-| `0x4b` | SETLAYERPALETTEENTRIES | `0x28` | `0x5a`, `0x5b` | CREATE_PBUFFER, DELETE_PBUFFER | `0x50`, `0x1c` |
-| `0x4c` | FINISH | `0x18` | `0x5d` | PIXELFORMATEXTDESCRIBE | `0x20` |
-| `0x4d` | KICKSCHEDULER | `0x7c` | `0x60` to `0x62` | WAIT_FOR_HARDWARE, ALLOC_PACKET_BUFFER, FREE_PACKET_BUFFER (the order of the three names against the codes was not matched; the ICD's wait is `0x62`) | `0x18` |
-| `0x4e` | CLEARBUFFER | `0x7c` | `0x4f` | PIXELDMA | `0x7c` |
+| `0x40` | SETCONTEXT | `0x54` | `0x52` | SETUP_SCR2SCR | `0x7c` |
+| `0x41` | FIRSTSETCONTEXT | `0x2c` | `0x53` | CREATE_BUFFER | `0x28` |
+| `0x42` | CREATECONTEXT | `0x20` | `0x54` | FREE_BUFFERS | `0x40` |
+| `0x43` | DELETECONTEXT | `0x14` | `0x55` | BIND_BUFFERS | `0x70` |
+| `0x44` | RELEASECONTEXT | `0x14` | `0x56` | UNBIND_BUFFERS | `0x6c` |
+| `0x46` | SHARELISTS | `0x1c` | `0x57` | CREATE_TEXTLBPKT | `0x44` |
+| `0x47` | DESCRIBELAYERPLANE | `0x20` | `0x58` | FREE_TEXTLBPKT | `0x40` |
+| `0x48` | SWAPBUFFERS | `0x7c` | `0x59` | SET_READY_TEXTLBPKT | `0x40` |
+| `0x4b` | SETLAYERPALETTEENTRIES | `0x28` | `0x5a` | CREATE_PBUFFER | `0x50` |
+| `0x4c` | FINISH | `0x18` | `0x5b` | DELETE_PBUFFER | `0x1c` |
+| `0x4d` | KICKSCHEDULER | `0x7c` | `0x5d` | PIXELFORMATEXTDESCRIBE | `0x20` |
+| `0x4e` | CLEARBUFFER | `0x7c` | `0x60` | GET_GAMMA | none (output only) |
+| `0x4f` | PIXELDMA | `0x7c` | `0x61` | SET_GAMMA | none (output only) |
+| `0x50` | CACHEOP | `0x24` | `0x62` | WAIT_FOR_HARDWARE | `0x18` |
+| `0x51` | PIXELDMA_CLEANUP | `0x7c` | `0x63` | ALLOC_PACKET_BUFFER | `0x18` |
+| | | | `0x64` | FREE_PACKET_BUFFER | `0x18` |
+
+Output sizes (bytes the display driver requires the caller to provide): SETCONTEXT 8, FIRSTSETCONTEXT `0x18`, CREATECONTEXT `0x10`,
+DELETECONTEXT 4, RELEASECONTEXT 4, DESCRIBELAYERPLANE `0x24`, SETLAYERPALETTEENTRIES 8, PIXELDMA `0x10`, CREATE_BUFFER `0x14`,
+CREATE_TEXTLBPKT `0x18`, CREATE_PBUFFER 8, DELETE_PBUFFER 4, PIXELFORMATEXTDESCRIBE `0x30`, GET_GAMMA and SET_GAMMA `0x1c`,
+WAIT_FOR_HARDWARE 4, ALLOC_PACKET_BUFFER `0x18`; the rest need none. The codes `0x45`, `0x49`, `0x4a`, `0x5c`, `0x5e`, `0x5f` and
+anything above `0x64` return 0 (not supported) without doing anything. Two further codes, `0x1100` and `0x1101`, and the low codes `8`
+and `0x3f`, belong to the OpenGL-presence query (`OPENGL_GETINFO`, input 4, output `0x214`) and are not packet-path codes. Of the 33
+call sites in the ICD, none sends `0x60` or `0x61`: the gamma pair is sent by another component. ALLOC_PACKET_BUFFER and
+FREE_PACKET_BUFFER forward to the miniport as video IOCTLs `0x2320b4` and `0x2320b8`. An earlier version of this table gave the
+three codes `0x60` to `0x62` as WAIT_FOR_HARDWARE, ALLOC_PACKET_BUFFER and FREE_PACKET_BUFFER in an unmatched order, and had no
+gamma pair: the list above is the corrected assignment. Established.
+
+**ICD escape codes, 1999 build (`sgcodd.dll` 334,704 bytes, build 1999-04-27; byte-identical on the SGI 320 NT 4.0 install CD, Disk 1, and
+Recovery CD-2 v1.1). Established, read in Ghidra at the jump table of the dispatch routine (`0x1a6e0`, table `0x1c02c`, 36 entries from
+`0x40`).** The codes are different, not just the sizes: the 1999 build has no FINISH, no texture-table packets and no escape at `0x48`,
+but has DISPATCHCHUNK and SERIALIZE, and every code from `0x4c` up is shifted by one or two. Name, input size, output size:
+
+| Code | Name | In / out | Code | Name | In / out |
+|---|---|---|---|---|---|
+| `0x40` | SETCONTEXT | `0x50` / 8 | `0x53` | PIXELDMA_CLEANUP | `0x70` |
+| `0x41` | FIRSTSETCONTEXT | `0x30` / `0x18` | `0x54` | SETUP_SCR2SCR | `0x70` |
+| `0x42` | CREATECONTEXT | `0x20` / `0xc` | `0x55` | CREATE_BUFFER | `0x28` / `0x14` |
+| `0x43` | DELETECONTEXT | `0x14` / 4 | `0x56` | FREE_BUFFERS | `0x3c` |
+| `0x44` | RELEASECONTEXT | `0x14` / 4 | `0x57` | BIND_BUFFERS | `0x64` |
+| `0x46` | SHARELISTS | `0x1c` | `0x58` | UNBIND_BUFFERS | `0x64` |
+| `0x47` | DESCRIBELAYERPLANE | `0x20` / `0x24` | `0x59` | CREATE_PBUFFER | `0x50` / 8 |
+| `0x49` | SWAPBUFFERS | `0x70` | `0x5a` | DELETE_PBUFFER | `0x1c` / 4 |
+| `0x4c` | SETLAYERPALETTEENTRIES | `0x28` / 8 | `0x5c` | PIXELFORMATEXTDESCRIBE | `0x20` / `0x30` |
+| `0x4d` | DISPATCHCHUNK | `0x1c` | `0x5f` | GET_GAMMA | out `0x1c` |
+| `0x4e` | SERIALIZE | `0x1c` | `0x60` | SET_GAMMA | out `0x1c` |
+| `0x4f` | KICKSCHEDULER | `0x70` | `0x61` | WAIT_FOR_HARDWARE | `0x18` / 4 |
+| `0x50` | CLEARBUFFER | `0x70` | `0x62` | ALLOC_PACKET_BUFFER | `0x18` / `0x18` |
+| `0x51` | PIXELDMA | `0x70` / `0x10` | `0x63` | FREE_PACKET_BUFFER | `0x18` |
+| `0x52` | CACHEOP | `0x24` | | | |
+
+Codes `0x45`, `0x48`, `0x4a`, `0x4b`, `0x5b`, `0x5d` and `0x5e` fall to the default, which returns 0 (not supported). The 1999 ICD (`sgcoicd.dll`, 1,245,456 bytes,
+Recovery CD-2 v1.1) was not read at its call sites, so which code each of its routines sends in that build is expected from the table and
+not checked. The two builds therefore must not be mixed: an ICD and display driver of one build share one numbering. A
+model that implements only the miniport's video IOCTLs is unaffected, since the miniport never sees these codes.
 
 **Packet buffers. Established.** `InitCoPktBuffer` (`0x690186f2`) links a ring of nodes (a 40-byte descriptor each, count and size from the
 context) over one block of memory. In each node's buffer the data starts `0x20` bytes in, the last `0x180` bytes are held back as slack,
@@ -152,6 +199,41 @@ state block. Seen in the shadow table: `0x80003020`, `0x046400c0`, `0x05260480`,
 Counts from the ICD's own headers: `0x80003020`, `0x91aa0020`, `0x92eaa020`, `0x936ae020` and `0x97400020` carry one payload dword; `0x84e44040`, `0x97000040`, `0x938af040` and `0x91ea2040`
 two; `0x93cc0080` four; `0x944c42c0` twenty-two (bits 11:5 give 22, and the builder that emits it copies a 20-dword table behind the header); `0x9ed380e0` seven. `0x98804000` is a header with no payload (count 0, bit 14 set): the ICD inserts
 it before the closing packet when the context asks for a flush, so it is a one-dword marker (its meaning, inferred: pipeline flush or fence).
+
+**Headers by emitting routine (`sgcoicd.dll` 5.2.4). The header values and the routines that store them are established (every immediate header
+dword in the ICD's code was collected, 20 distinct headers, and each was attributed to the routines that write it, by the vendor's symbol names);
+what a field means to the engine is a software expectation, read from the GL state each routine copies; the engine's own use is unknown.** A
+routine writes the header, then its payload dwords, through one running pointer in the context (the context's packet cursor, its limit and an
+overflow callback that closes the node when the cursor passes the limit), so a header is always followed by exactly the payload it counts.
+
+| Header (count in bits 11:5) | Payload dwords | Written by | What the payload holds |
+|---|---|---|---|
+| `0x922a4020` | 1 | `__glCoPassFog` | fog colour: three 8-bit components in bits 31:8 |
+| `0x924a5040` | 2 | `__glCoPassAlphaFunc` | word 1: bit 31 set, comparison function in bits 27:25; word 2: reference value in bits 7:0 |
+| `0x928a7040` | 2 | `__glCoPassBlend` | word 1: destination factor in bits 23:20, source factor in 27:24, equation in 31:28 (each a 4-bit code mapped from the GL enum); word 2: constant blend colour, three bytes in 31:8 and alpha in 7:0 |
+| `0x92ca9020` | 1 | `__glCoPassLogicOp` | the logic operation in bits 31:28, equal to the GL enum minus `0x1500` |
+| `0x92eaa020` | 1 | `__glCoPassColorMask` | the 32-bit write mask, red in the top byte (written only when the mask is neither all ones nor zero) |
+| `0x930ab020` | 1 | `__glCoSetSzBuffer` | the depth and stencil buffer descriptor from the context; written after the flush marker |
+| `0x932ac040` | 2 | `__glCoPassPolygonOffset` | the units value and the factor times a scale, as a float |
+| `0x936ae020` | 1 | `__glCoPassDepthTest`, `__glCoClearBuffers` | the depth function in bits 31:29 and a mode in bits 28:27 |
+| `0x938af040` | 2 | `__glCoPassStencil`, `__glCoClearBuffers` | word 1: three 4-bit stencil operation codes (0 to 5 each), a 3-bit compare function, then two bytes of stencil state; word 2: one more byte of stencil state |
+| `0x91aa0020` | 1 | `__glCoSetDrawBuffer`, the pixel transfer routines | the draw-buffer descriptor from the context; written after the flush marker |
+| `0x91ea2040`, `0x93cc0080` | 2, 4 | `__glCoSetXferParam`, `__glCoRestoreXferParam`, `coSetTexParam` | pixel-transfer and texture parameters |
+| `0x944c42c0` | 22 | `coSetColorMatrixRegisters` | the colour-matrix registers: 22 dwords, 20 of them floats copied from the context |
+| `0x9ed380e0` | 7 | `coVhdlTexImage` | a texture image: three parameters passed by the caller, width times height, a base word, width and height packed into 15:0 and 31:16, and a final word computed from them |
+| `0x97400020` | 1 | `__glCoCreateTexLevel` | one texture-level word |
+| `0x97000040` | 2 | `ClosePacket`, `DispatchCurrentPkt`, `__glCoDlistExecutePackets` | next node position, this node position (the chain packet below) |
+| `0x98804000` | 0 | `__glCoSetDrawBuffer`, `__glCoSetSzBuffer`, `DispatchCurrentPkt` | none: a marker inserted before a buffer-descriptor change and before closing |
+| `0x84e44040` | 2 | `__glCoDrawBufferRegion`, `__glCoFillStippledTriangle`, `__glCoLinearToTileXfer` | two words read back from `0x18138` and `0x18140` of the engine window by the miniport after this header (see above) |
+| `0x80003020` | 1 | the span-store routines (`StoreALWAYS`, `ReturnRGBASpan`, `FillAASubTriangle`) | one word, the shadow table's first entry |
+| `0x9400014f` | 10 | `__glStoreSpanARGB8` | a span header; its index bits are `0xf`, the only non-zero index outside the shadow table |
+
+In the pass-state family the target field in bits 31:12 is two fields that step together: bits 31:21 are `0x491 + k` and bits 20:12 are `0xa4 + k`,
+with `k` taking the values 0 (fog), 1 (alpha function), 3 (blend), 5 (logic operation), 6 (colour mask), 7 (depth and stencil buffer), 8 (polygon
+offset), 10 (depth test) and 11 (stencil); `k` of 2, 4 and 9 was not seen. That is arithmetic on the headers above (established); that `k`
+selects a state register block of the engine is inferred. The families do not share it: the `0x91...` buffer and transfer headers, the
+`0x93cc0` and `0x944c4` headers and the texture headers have other target values. The per-vertex draw packets (`__glDrawVertexes_*`,
+`__glGenerateSetup`) build their headers from computed fields, not from constants; they were not classified, so the opcode set is not complete.
 
 **Closing a buffer and chaining. Established (`DispatchCurrentPkt` `0x6901a83a`, `ClosePacket` `0x69062118`).** The ICD ends the data in a node with a
 three-dword packet: header `0x97000040`, a dword with the next node's position in bits 31:12 and, in the low bits, a field built from the running sequence
@@ -173,7 +255,7 @@ closed node's position as its one argument.
 
 ## What is not known
 
-Opcode set and packet layouts; the contents of `0x00000` to `0x07fff` and `0x0c200` to `0x17fff`; what `0x8000` entries
+The computed packet headers (per-vertex draw packets) and the engine's use of every header listed above; the contents of `0x00000` to `0x07fff` and `0x0c200` to `0x17fff`; what `0x8000` entries
 and `0xc000` entries are in hardware terms; what the engine does on each interrupt cause; whether the engine reads the
 packet buffers by physical address or through the `0x8000` table; reset values; the Z and stencil buffer layout; how
 the engine writes pixels into the display back end's tile lists (the miniport hands it the same lists it gives the
@@ -183,10 +265,11 @@ implementation of the geometry pipeline that ends by writing packets; reading it
 
 ## Review
 
-Independent review of the OpenGL packet-path section (chips commits 7990dc9..7a40091). `sgcoicd.dll` 5.2.4 could not be opened (the
-package is an InstallShield cabinet), so the claims were checked against the 1999 `sgcodd.dll` and `sgcomp.sys` from the SGI 320 NT 4.0
-install CD. Confirmed there: the shadow-table rule that bits 11:5 of a header are the payload count (every table distance matches
-count plus one except the last entry, which runs to a padded end); the chain packet `0x97000040` with a next-position dword and a
-position-and-sequence dword; the escape dispatch on a code range from `0x40` upward. Not matching: the escape input sizes and the set of
-live codes in that build differ from the table above (for example `0x40` takes `0x50`, not `0x54`, and `0x48` is not handled), so the
-table is the 5.2.4 build's alone and remains unchecked here. The count for `0x944c42c0` was corrected from six to twenty-two.
+Independent review of the OpenGL packet-path section (chips commits 7990dc9..7a40091) could not open the InstallShield cabinet of
+`sgcoicd.dll` 5.2.4 and checked the claims against the 1999 `sgcodd.dll` and `sgcomp.sys` from the SGI 320 NT 4.0 install CD. Confirmed
+there: the shadow-table rule that bits 11:5 of a header are the payload count (every table distance matches count plus one except
+the last entry, which runs to a padded end); the chain packet `0x97000040` with a next-position dword and a position-and-sequence
+dword; the escape dispatch on a code range from `0x40` upward. The count for `0x944c42c0` was corrected from six to twenty-two.
+The escape table was then read in both builds (above): the 5.2.4 sizes in the table the review could not check were all confirmed
+against the 5.2.4 display driver and the 5.2.4 ICD's own call sites; what the review took for a transcription difference is a
+different numbering in the 1999 build, listed in full. The gamma pair and the three-code `0x60` to `0x62` row were corrected.
