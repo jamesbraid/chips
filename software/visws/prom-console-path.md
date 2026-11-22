@@ -35,7 +35,8 @@ returns its result in an MMX register: zero is a pass, any other value is stored
 | `0x11` | `test+0x9222` | `0xd4` | all | "Cobalt I/O ASIC": the Lithium identification |
 | `0x12` | `test+0x928d` | `0xd8` | all | "PiiX4": identification read |
 | `0x13` | `test+0x950f` | `0xdc` | all | "PCI Bus B": byte bit-walks of PIIX4 configuration registers |
-| `0x54` | `test+0x98c9` | `0x9c` | all | real-time clock seconds and minutes, informational |
+| `0x54` | `test+0x98c9` | `0x9c` | all | real-time clock: saves seconds and minutes at extended `0x9e`/`0x9f`, always returns 0 ([below](#rtc-row)) |
+| `0xe1` | `test+0x7ec5` | none | none (flags `0x21`) | never auto-run: its flags carry no mode bit, so the dispatcher skips it |
 | `0x51` | `test+0x92f4` | `0x90` | diagnostic, extended | "Memory Bus Noise" |
 | `0x15` | `test+0x96e4` | `0xe4` | extended | display ASIC built-in test |
 
@@ -48,16 +49,19 @@ The identifier-to-name pairs are from the main module's report table (`1.1005@0x
 - Bit 31 set is fatal. The dispatcher stores the identifier in extended byte `0x8c`, posts `0xee` to port `0x80` and
   enters the serial test manager (`test+0x4e21`): it prints on COM1, then loops waiting for a byte on COM1, as
   [boot-path.md](boot-path.md#serial-output-before-the-console) records. Only the first test of `0x0a` (the low 16 MiB)
-  can set it; every other routine folds its top two bits down into bits 29 and 28 before returning, so a failing register
-  test never has bit 31 set.
+  can set it; the register tests fold their top two bits down into bits 29 and 28 before returning, so a failing register
+  test never has bit 31 set. The DIMM check (`0x0d`) does not fold: it returns the register with bit 20 forced on, so a value
+  with bit 31 set and bit 16 clear takes the fatal path.
 - Any other non-zero value is a soft failure: the code is kept in the slot, nothing halts. In extended mode only, the
   dispatcher also sets extended byte `0x85` or `0x86` to 1 (what the retry around it does was not decoded; unknown).
 
 The visible effect of a soft failure is later, in the main module. `1.1005@0x1100dd0` counts report rows whose slot is not
 zero, not `0xdeadbeef` (skipped) and not `0x01010101` (never ran), prints "FAILED, error code 0x%08X" for each, and unless
 the CMOS marker bytes `0x7d` = `0xbb` and `0x7e` = `0x71` select the factory autoboot mode, waits for Esc ("booting paused
-by test failure") before booting. **So a model whose register tests fail soft is stopped at a prompt; one that passes
-every row is not.** (Established from the decompilation and the listing of `1.1005@0x1100b60`, `0x11008f0`, `0x1100dd0`.)
+by test failure") before booting. The marker is consumed when read (`1.1005@0x1100d70` rewrites `0x7e` to `0x8e`), so the autoboot mode
+works once; it prompts "Type 'p' for pause" and times out. In diagnostic and extended modes the report is shown even when every
+test passes (only quick mode with no failures skips it). **So a model whose register tests fail soft is stopped at a prompt; one that passes
+every row is not (in quick mode).** (Established from the decompilation and the listing of `1.1005@0x1100b60`, `0x11008f0`, `0x1100dd0`.)
 
 No beep code was found in the self-test, the boot block or the main module: their outputs are port `0x80` post codes, COM1
 text and the port `0xfb7` bit 4 line, and no access to the speaker ports (`0x42`, `0x43`, `0x61`) turns up in them (checked
@@ -69,8 +73,7 @@ CRC-16 at `0x81` to `0x89`, [boot-path.md](boot-path.md#cmos-the-real-time-clock
 (`0x90` to `0xef`) is set to 1 and the mode is 4, or 8 when standard CMOS byte `0x7f` bit 2 is set (`test+0x439d`). With a
 valid record and extended byte `0x8b` bit 0 clear, the self-test prints "About to reset for BIST", stores `0xbb` in `0x8c`,
 writes 3 to the Cobalt processor block's `+0x18` and expects a reset; where the write does not reset (a late board, see
-[devices/cobalt](../../devices/cobalt/README.md)) it continues to the "test BIST result" path, which ends in mode `0x10` and
-sets bit 7 of extended byte `0x8a` (the main module then prints "Extended boot"). Nothing in the three modules sets `0x8b` bit 0,
+[devices/cobalt](../../devices/cobalt/README.md)) it continues to the "test BIST result" path (`test+0x4276`), which tests extended byte `0x8b` bit 1 at `test+0x436e`: if set, it stores `0xba` in `0x8c` and enters the serial manager; if clear, it selects mode `0x10` and sets bit 7 of extended byte `0x8a` (the main module then prints "Extended boot"). Nothing in the three modules sets `0x8b` bit 0,
 so which mode a second boot with persistent CMOS takes on real hardware is unknown. The consequence for a model with persistent
 CMOS: a second start may run the extended set, which includes the slow tests below.
 
@@ -88,8 +91,8 @@ from 0 to 15, in order, with `base = i * 128 MiB + 64 MiB`:
 2. Read back the first word of each of the four blocks, XOR-ing the four values together; for the fourth block compare all
    eight words with `0x9abcdef0` and count mismatches.
 3. Decide the bank code. Zero mismatches: 3 when the XOR is `0x11111111` (each block read back its own pattern, a 128 MiB
-   module), otherwise 2 (the 16 MiB blocks alias, a 32 MiB-class module). Eight mismatches (nothing there): 0, except slot 0,
-   which gets 2. One to seven mismatches: 2, except slot 0, which gets 3. Slot 0 is never 0. The code goes to the bank
+   module), otherwise 2 (the 16 MiB blocks alias, a 32 MiB-class module); slot 0 gets 3 whenever it is not entirely absent (`test+0x825d`). Eight mismatches (nothing there): 0, except slot 0,
+   which gets 2. One to seven mismatches: 2, except slot 0, which gets 3. Slot 0 is never 0. The first-word read-backs of the four blocks are each followed by the same counter wait (1.1005). The code goes to the bank
    register: `0xc6000048 + 8*i` on Cobalt revisions `0xa0` and `0xa8`, `0xc6000050 + 8*i` on every other (revision read from
    `0xc2000008` each time).
 4. When the 16 slots are done, read the 16 bank registers back, store each at standard CMOS byte `0x40 + i`, and store a
@@ -107,7 +110,8 @@ The other RAM rows, all established from the listing (not run):
 - **`0x0d` "DIMM Speed Check".** One 32-bit read of the fixed address `0xc6000048`, whatever the revision. It passes (zero)
   only when bit 16 of the value read is set; otherwise the result is the value with bit 20 forced on, a soft failure. On a
   revision other than `0xa0` and `0xa8` that register is not a bank register (the banks start at `0x50`), so this is a
-  separate register whose bit 16 must read 1. Its meaning is inferred from the row's name only; the register is unknown.
+  separate register whose bit 16 must read 1. On revisions `0xa0` and `0xa8` the same address is bank register 0, which holds 3 or 2, so
+  the check always fails there. Its meaning is inferred from the row's name only; the register is unknown.
 - **`0x0b` "ECC RAM Bus".** A conditional jump at `test+0x83a4` tests flags left by the dispatcher, not by the read before it
   (no instruction between sets them), and the dispatcher's address add always leaves them in the "not zero" state, so the
   automatic run always takes the long path (established; the short path is reachable only from the manager's `rt` command, and
@@ -139,6 +143,14 @@ Costs for a model that executes them (inferred from counts, not timed): the quic
 present slot; `0x0c` and `0x51` are the slow ones, and the extended display test below spins for hundreds of millions of
 iterations if bit 31 of its status never sets.
 
+<a id="rtc-row"></a>
+**RTC row (`0x54`). Established (`test+0x98c9`, `1.1005@0x1101ca0`).** The self-test reads standard CMOS seconds and minutes and
+saves them at extended `0x9e`/`0x9f`; it returns 0. The main module then zeroes those two bytes, sets bit 0 of `0x9c` when a
+fresh read of seconds and minutes equals the saved copy (the clock did not advance between the two reads), and sets bit 0 of
+`0x9d` when the year is outside 1998 to 2040. The count function takes a non-zero `0x9c` to `0x9f` dword as a failure ("Real-time
+clock is not running!"), so a clock that does not advance, or a year outside the range, is a counted soft failure that stops
+the boot at the Esc prompt.
+
 ## Cobalt, Lithium and PIIX4 register tests
 
 **Established (listing of `test+0x910d` to `0x98c9`).** The bit-walk routine (`test+0x91ad`) takes an address and a mask and does, in
@@ -161,14 +173,17 @@ result is the last word read XOR `0x100210a9` (zero when both match). **`0x12` "
 `0xfd0000f8` and a 32-bit read of `0xfd0000fc`, XOR `0x71108086`: the PIIX4 ISA bridge's vendor and device words on bus 0,
 device 4, function 0.
 
-**`0x13` "PCI Bus B".** Byte bit-walks of PIIX4 function 0 configuration registers, all through the Lithium B window at `+0xf8`
-(address word `0x80002000 | register`, bit 31 set) and `+0xfc`: register `0x09` once with its result discarded, then
-`0x90`, `0x95`, `0xb2` and `0x93`, in that order. Each walk reads the containing dword, then for each of the same four value
-steps as above writes the whole dword back with only that byte changed, does a dummy read of bus 0 device 4 register 0 (the
-vendor word, through `+0xf8` and `+0xfc` again), and re-reads the register through the window; the masked difference is the
-failure. Finally the original dword is restored. The registers must therefore be writable bytes that hold every pattern.
-Whether registers `0x90` to `0x95` and `0xb2` are writable on the real PIIX4 was not checked against its datasheet (unknown);
-the real machine passes the test, so the model must make them hold values.
+**`0x13` "PCI Bus B".** Byte walks of PIIX4 function 0 configuration registers, through the Lithium B window at `+0xf8`
+(address word `0x80002000 | register`, bit 31 set, the register number's low two bits included) and `+0xfc`: register
+`0x09` once with its result discarded, then `0x90`, `0x95`, `0xb2` and `0x93`, in that order. The byte lane is
+`register & 3` (a mask of `0xff` rotated by it at `test+0x959d`); an independent reviewer read the lane as always 0, which
+the rotate contradicts. Each walk reads the containing dword and, for the patterns all ones, all zeros and then a single bit
+walked from `0x01` to `0x80` in the lane, writes the whole dword back with only that lane changed, does a dummy read of bus 0
+device 4 register 0 (through `+0xf8` and `+0xfc` again) and re-reads the dword; the masked difference is the failure. The
+original dword is restored last. If the window ignores the low two address bits, the aligned dwords are `0x08`, `0x90`,
+`0x94`, `0xb0` and `0x90` again; whether the window does is unknown. The registers must hold every pattern in their lane.
+Whether they are writable on the real PIIX4 was not checked against its datasheet (unknown); the real machine passes
+the test, so the model must make them hold values.
 
 **`0x10` "Cobalt Display ASIC".** First a single read check: the 32-bit word at `0xd0000014` must equal `0x666` (mask all
 bits); a mismatch returns the address and skips the rest. Then bit-walks, in this order, of the registers (address, mask):
@@ -221,7 +236,7 @@ unknown but the PROM relies on both reaching bus 0 device 4.) The writes, in ord
    (bridge B device 4 is the PIIX4). The HAL's own Cobalt line tables are independent of this (established, [nt-hal.md](nt-hal.md)).
 6. **Assignment**, bottom-up per bus (`0x111ae31`): the sizes found are packed largest first, halving from 1 GiB; memory starts
    at 1 MiB (or the size, if larger) in each root's own PCI memory space, I/O at `0x1000` on bridge B and `0x9000` on A. Memory
-   BARs are written with the PCI-side address (the CPU window address minus `0x80000000`), I/O BARs with the port address, and
+   BARs are written with the PCI-side address (the window-relative offset, which starts at 0 and gives `0x00100000` for the first memory BAR, minus `0x80000000`: the 32-bit result is `0x80100000`; the CPU address is the offset plus the window base, `0xf0000000` for bridge A and `0xf4000000` for B), I/O BARs with the port address, and
    the endpoint's command register gets bit 1 (memory) or bit 0 (I/O) added. A bridge's windows are written as I/O base and
    limit bytes (`0x1c`, `0x1d`; the upper halves `0x30` and `0x32` only when the bridge reports 32-bit I/O), the prefetch window
    (`0x24`) disabled (`0x0000ffff`), the memory base and limit words (`0x20`, `0x22`) as the address's upper 16 bits OR `0x8000`,
@@ -244,7 +259,7 @@ probing on every BAR, and bridges whose bus-number, base and limit registers hol
   `0xf0e00` (128) and `0xffff5` (10). Pages 0 to `0xff` (the first megabyte) are made present, writable and user-accessible in
   the PROM's page tables. No chipset shadow-control write was found: the megabyte is plain RAM (inferred).
 - **When it runs.** Conditions as in [boot-path.md](boot-path.md#legacy-bios-and-the-acpi-tables): a PCI function with a
-  valid x86 option ROM is found (flag set at `0x111bfcd`), or `DosBoot` begins with `y`, and `console` does not begin with `d`.
+  valid x86 option ROM is found (flag set at `0x111bfcd`), or `DosBoot` begins with `y`; and `console` does not begin with `d`, the BIOS-skip setting (`Vx86DoNotRunBIOS`) does not begin with `y`, and the board test passes (not a first-generation 320, or `ignorehughid` set; `1.1005@0x1107ee4` to `0x1107efb`).
   A stock board with no add-in card therefore does not run it (inferred; no scan was run).
 - **Option ROMs.** For each function found, the PROM sets the command register to 2 (memory enable only), writes the ROM base
   register with the address the bridge assignment reserved for its bus plus bit 0, requires a `PCIR` data structure of type 0

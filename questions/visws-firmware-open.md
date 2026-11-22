@@ -69,8 +69,8 @@ Next: trace the SCSI, IDE and network drivers' use of the PCI code.
   the Cobalt processor block's `+0x18` resets. Next: the serial manager's `wc` and `rs` commands, and a run with a persistent CMOS image.
 - **The retry around the extended set.** Extended bytes `0x85` and `0x86` are set on a soft failure in extended mode and a loop at
   `test+0x44f6` re-runs the first pass; the exit condition was not decoded.
-- **Whether PIIX4 function 0 registers `0x90`, `0x93`, `0x95` and `0xb2` hold written values.** The "PCI Bus B" test walks them; the PIIX4
-  datasheet's register map settles it.
+- **Whether PIIX4 function 0 registers `0x90` (bytes 0 and 3), `0x95` and `0xb2` hold written values, and whether the Lithium window ignores the low two address bits.** The "PCI Bus B" test walks them; the PIIX4
+  datasheet's register map and the Lithium specification settle it.
 - **How the V86 monitor treats the embedded BIOS's port accesses** (keyboard controller, speaker, 8259 and DMA, the interrupt
   redirection and I/O bitmaps of the V86 task), whether a VGA text mode is ever visible to an operating system, and whether the
   scan of `0xc0000` to `0xe0000` finds ROM images copied to `0xc0100`. Next: read `1.1005@0x1108c70`, `0x1109510` onwards and
