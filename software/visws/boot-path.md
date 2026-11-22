@@ -543,8 +543,8 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
    many 20-byte entries. Both the NT HAL and the Linux 2.6 port read it from the same place (Linux: the count at `0x1e00`,
    the table two bytes on, at most four processors). If the count is zero the HAL falls back to a built-in table. The table
    is the only processor description: there is no MP floating pointer and no ACPI. The Linux 2.2 and 2.4 ports instead
-   hard-code two processors, ids 0 and 1, with integrated local APICs. The 28 July 1999 SGI patch reads this table instead
-   ([Linux loader handoff](#linux-loader-handoff)).
+   hard-code two processors, ids 0 and 1, with integrated local APICs. The 28 July 1999 SGI patch source reads this table
+   instead, but the held SGI image is a uniprocessor build and uses neither ([Linux loader handoff](#linux-loader-handoff)).
    **Who writes it: the firmware, from every running processor.** The boot processor stores the count 1 at `0x1e00`,
    writes its own entry, copies a 0x210-byte start-up stub to physical `0x50000`, clears the local APIC error status, and sends a startup
    IPI (vector `0x50`) to all other processors, waits (longer on a 540, board type non-zero: `0xe00000` against `0x180000` loop
@@ -570,7 +570,7 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
    firmware boot entry's `OSLoader` is `larc.exe` or `arclx.exe` on a FAT floppy or partition, `OSLoadFilename` names
    the kernel image (`/la2210.vw` for a 2.2.10 kernel built for the workstation), `OSLoadPartition` the ARC path
    (`multi(0)disk(0)fdisk(0)partition(1)`), and `OSLoadOptions` the kernel command line (`root=/dev/fd0 load_ramdisk=1`).
-   Reported by users installing Red Hat 6.0 on a 320 and a 540 in 1999 and 2000; both loaders are held, see [Linux loader handoff](#linux-loader-handoff).
+   Reported by users installing Red Hat 6.0 on a 320 and a 540 in 1999 and 2000; `arclx.exe` and a second loader are held, `larc.exe` is not, see [Linux loader handoff](#linux-loader-handoff).
    SGI's later Linux releases were unpacked and checked: ProPack 1.3 Visual Workstation Edition and Visual Workstation
    Environment 3.0 (README updated 2000-12-19) name the 230, 330 and 550 (PC-BIOS workstations) only, install through a
    LILO-based installer, and ship kernels 2.2.15, 2.2.16 and 2.3.99 whose configurations read leave the Visual Workstation
@@ -580,7 +580,7 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
    history tree's 2.2 port); the 2.3.99 package carries the same files and was not read. The loaders and their `boot_params`
    handoff are in [Linux loader handoff](#linux-loader-handoff).
 2. **Kernel entry state. Established (Linux source).** The kernel reads the standard `boot_params` block and requires the
-   loader to have set the memory size field `alt_mem_k`; if it is zero the kernel prints "Bootloader didn't set memory
+   loader to have set the memory size field `alt_mem_k` (boot-block offset `0x1e0`, a byte count in the held 2.6.0-test2 build); if it is zero the kernel prints "Bootloader didn't set memory
    size" and assumes 128 MB. It does not use E820 from the loader: the platform code builds the memory map itself, as
    conventional memory below 640 KB, RAM from 1 MB up to the top of memory minus the graphics buffer, and the
    graphics buffer, at the top of memory and 8 MB by default (the size is a boot parameter, trimmed to whole megabytes),
@@ -596,72 +596,116 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
 
 ## Linux loader handoff
 
-Scope. Two loaders are held. One is the arcboot build of 21 July 1999 (tarball `linux-visws-sf-arcboot-21jul99.tar.gz`, sha256 `9dd9744f2b3d`, GPL v2; binary `linux-visws-sf-arclx.exe`, sha `0602594856d5`). The other is a 2003 loader (`arclx2-arc-linux-loader.exe.gz`, sha `ab7305f3f8ea`, no licence file held). Also held: the SGI 2.2.10 kernel `linux-visws-sf-la2210.vw` (sha `2084e3a5c4a6`) with its `.config` (`8cc09f787faa`), the 15 July and 28 July 1999 patches (`3b159076019f`, `8091710f7da4`), and a visws vmlinux that reports itself as Linux 2.6.0-test2 (`2cf6ee94a96c`). The patches were applied to mainline 2.2.10 (`88e12acf949f`) for the i386 and init files; the checks below ran on those rebuilt trees. Source is cited as `file:line` in the arcboot tree. Binaries are cited by file and file offset; for PE files the `.text` raw offset is `0x400`. Facts read from the bytes are established unless marked otherwise.
+Scope. Grades are established (read from the bytes or the source), inferred, or unknown. Held:
 
-### 1. Firmware calls, file open and read (arcboot, `arclx.exe`)
+- arcboot, the 21 July 1999 loader source (`linux-visws-sf-arcboot-21jul99.tar.gz`, sha256 `9dd9744f2b3d`) and a build of it, `linux-visws-sf-arclx.exe` (`0602594856d5`, PE link time 21 July 1999). The only licence text in the tarball is `COPYING`, the GNU GPL version 2; the source files carry an SGI copyright line and no licence notice, and `io.c` says it derives from e2fsprogs.
+- A second loader, `arclx2-arc-linux-loader.exe.gz` (`ab7305f3f8ea`; unpacks to 8,832 bytes, `c7008e1eb249`; PE link time 3 December 2002; banner "ARC Linux loader 200G2"). No source and no licence file.
+- SGI's 2.2.10 kernel `linux-visws-sf-la2210.vw` (`2084e3a5c4a6`; version string "#2 Wed Jul 28 09:13:09 PDT 1999") with its `.config` (`8cc09f787faa`), and the 15 July and 28 July 1999 patches against mainline 2.2.10 (`3b159076019f`, `8091710f7da4`).
+- `boor-vmlinux-vws.gz` (`2cf6ee94a96c`), which despite the name is a plain uncompressed ELF. It reports itself as Linux 2.6.0-test2, built 26 September 2003.
 
-- **Vectors.** The loader reads the firmware vector pointer at `0x1020` in the system parameter block at `0x1000`, then calls slot `index * 4` of the table (`arclib/spb.h:16-54`, `98-99`). Eight slots are called, and the binary makes the same calls the source does. The table here has 37 slots; see the last section.
+Mainline Linux 2.2.10 (`88e12acf949f`) and 2.4.0 (`13a80dffb749`) are the reference for what a visws-capable kernel expects. "2.2" and "2.4" below mean those trees; "patched" means 2.2.10 with either July patch applied (for every file cited as patched the cited lines are the same in both patches, except `smp.c`). Source is cited as `file:line`. Binaries are cited by link address; for the two PE loaders the file offset is the address minus `0x400c00`.
 
-  | Slot | Offset | Name | Source call sites | Direct calls in `arclx.exe` |
-  |---|---|---|---|---|
-  | 5 | `0x1214` | Restart | `arclx.c:349` | 1 |
-  | 7 | `0x121c` | EnterInteractiveMode | `misc.c:37` (in `Fatal`) | 1 |
-  | 18 | `0x1248` | GetMemoryDescriptor | `arclx.c:45`, `72` | 1 (two in source, one loop) |
-  | 23 | `0x125c` | Open | `io.c:84`, `299` | 2 |
-  | 24 | `0x1260` | Close | `io.c:113` | 1 |
-  | 25 | `0x1264` | Read | `io.c:181`, `317`, `stdio.c:51` | 3 |
-  | 27 | `0x126c` | Write | `stdio.c:25`, `98` | 2 |
-  | 28 | `0x1270` | Seek | `io.c:162`, `312` | 2 |
+### 1. Firmware calls and the load path
 
-  The other 27 slots are not called. Established.
-- **Arguments.** `_start(argc, argv, envp)` reads `OSLoadPartition`, `OSLoadFilename` and `OSLoadOptions` from the `name=value` arguments (`arclx.c:83-124`, `320-345`). `envp` is not used. A file name that carries a partition prefix (`/` after a partition name) is split into partition and file (`arclx.c:109-122`). Established.
-- **Open.** `LoadKernel` calls `file_open` (`arclx.c:283`). `file_open` first tries to open the partition as an ext2 volume through the ARC I/O manager (`io.c:325-338`). On a FAT floppy that fails, and the code calls `arc_file_open` (`io.c:287-303`). That path is the partition name followed by the file name with its leading `/` removed, so `multi(0)disk(0)fdisk(0)partition(1)` and `/la2210.vw` give `multi(0)disk(0)fdisk(0)partition(1)la2210.vw`. The two strings in the 1999 transcript, `ARC opening ...` and `ARC reading 52 bytes at offset 0`, are printed at `io.c:298` and `io.c:316` and are in the binary at file offsets `0x8003` and `0x8040`. So that transcript came from this build. Established.
-- **The 52-byte read.** `LoadKernel` reads `sizeof(Elf32_Ehdr)`, 52 bytes at offset 0 (`arclx.c:285`), and requires ELF32, little-endian, `ET_EXEC` and `EM_386` (`arclx.c:287-303`). The first read is the ELF header. Established.
-- **Load.** Each `PT_LOAD` segment is read to `p_vaddr - 0xc0000000` and its BSS after the file bytes is zeroed (`arclx.c:147-162`). The loader's allocator leaves `0x100000` to `0x2fffff` alone (`arclx.c:35-36`, `62-66`). Established.
+- **How the loaders reach the firmware. Established.** Each call reads the pointer at `0x1020` in the system parameter block at `0x1000` and calls `slot * 4` from it (`arclib/spb.h:16-54`, `98-99`; `arclib/arc.c`). The firmware page puts that vector at `0x1200` and says its length is `0x8c`, 35 entries, slots 0 to 34, and that slots 35 and 36 are absent. The loader's structure has 37 slots, which is why the two counts differ: neither loader calls slot 35 or 36, and every slot they do call is inside the firmware's 35.
+- **Calls. Established.** Both binaries have a wrapper for each of the 35 non-reserved slots (slots 8 and 19 are reserved in `spb.h`). Direct calls to the wrappers, counted in the disassembly:
 
-### 2. Handoff: arcboot build (`arclx.exe`)
+  | Slot | Offset in vector | Name | arcboot source | `arclx.exe` calls | `arclx2` calls |
+  |---|---|---|---|---|---|
+  | 5 | `0x14` | Restart | `arclx.c:349` | 1 | 1 |
+  | 7 | `0x1c` | EnterInteractiveMode | `misc.c:37` | 1 | 1 |
+  | 18 | `0x48` | GetMemoryDescriptor | `arclx.c:45`, `72` | 1 (one loop) | 2 (`0x4011f2` in the loop, `0x40163f` in `_start`, result unused) |
+  | 23 | `0x5c` | Open | `io.c:84`, `299` | 2 | 1 |
+  | 24 | `0x60` | Close | `io.c:113` | 1 | 0 |
+  | 25 | `0x64` | Read | `io.c:181`, `317`, `stdio.c:51` | 3 | 2 |
+  | 27 | `0x6c` | Write | `stdio.c:25`, `98` | 2 | 2 |
+  | 28 | `0x70` | Seek | `io.c:162`, `312` | 2 | 1 |
 
-`StartKernel(entry, cmdline)` is called with `entry = e_entry - 0xc0000000` (`arclx.c:314-316`); the stub is `loadlx/run.S:30-56`. The binary matches it: `cli` at file `0x1023`; `mov %bx,0x90020` at `0x1028` (magic `0xa33f`); `mov %bx,0x90022` at `0x1033` (offset `0x24`); a 256-byte `rep movsb` of the options string to `0x90024`; `xor %ebx,%ebx` at `0x104a`; `jmp *%eax` at `0x104f`. Established.
+  That is 13 call sites over 8 slots in `arclx.exe` and 10 over 7 in `arclx2`. The source's write path in `io.c:213` is inside `#ifdef ARC_IO_ALLOW_WRITE` (`io.c:9` leaves it off), so it is not linked. The other 29 slots (30 for `arclx2`) are never called, two of them reserved.
+- **Arguments. Established (source).** `_start(argc, argv, envp)` reads `OSLoadPartition`, `OSLoadFilename` and `OSLoadOptions` (and `LoadIdentifier`) from `name=value` arguments (`arclx.c:83-124`, `320-345`). `envp` is unused. A file name without a leading `/` that contains one is split into partition and file (`arclx.c:109-122`). The second loader prints the same four names and the same two "Invalid load" errors.
+- **arcboot open path. Established (source; the binary has the same strings).** `file_open` first tries the partition as an ext2 volume through an ARC-backed I/O manager (`io.c:325-338`). If that fails it opens the partition name followed by the file name without its leading `/`, so `multi(0)disk(0)fdisk(0)partition(1)` and `/la2210.vw` give `multi(0)disk(0)fdisk(0)partition(1)la2210.vw` (`io.c:287-303`). It then seeks and reads through `arc_seek_read` (`io.c:305-321`). The messages `ARC opening %s` and `ARC reading %u bytes at offset %u` are printed at `io.c:298` and `316` and are in `arclx.exe` at file offsets `0x8003` and `0x8040`.
+- **Reported transcripts. Inferred.** A 1999 Usenet report (`A7C09CFCAF83D2119C5000104B416CCF091C7D@theta.holmes.nl`, 1999-09-23) shows `OSLoadPartition` `multi(0)disk(0)fdisk(0)partition(1)`, `OSLoadFilename` `/la2210.vw`, then `ARC opening multi(0)disk(0)fdisk(0)partition(1)la2210.vw` and `ARC reading 52 bytes at offset 0`, with later reads that did not finish. A 2000 report of the same install names the partition `Floppy1` (`8csntq$vku$1@nnrp1.deja.com`, 2000-04-10). The strings match this `arclx.exe`, so the transcript is inferred to come from this build or a build of the same source; a sibling loader could print the same text, and `arclx2` does not (it has neither string).
+- **ELF loading, arcboot. Established.** `LoadKernel` reads 52 bytes at offset 0 (`arclx.c:285`), requires ELF32, little-endian, `ET_EXEC`, and `EM_386` or `EM_486` (`arclx.c:287-306`), and reads the program headers at `e_phoff`. Each `PT_LOAD` segment is read to `p_vaddr - 0xc0000000`, and the part of its memory size past the file bytes is zeroed (`arclx.c:147-162`). The allocator leaves `0x100000` to `0x2fffff` alone (`arclx.c:35-36`, `62-66`).
+- **ELF loading, `arclx2`. Established.** Open is the function at `0x401120` (it builds the partition-plus-file path as above and calls Open at `0x40108a`); seek-and-read is `0x401138`. `LoadKernel` is `0x4014cc`: its 52-byte read at offset 0 is the call at `0x4014e5`, the checks that follow accept `EM_386` only (`0x401579`), and `LoadProgramSegments` at `0x401380` loads and zero-fills the segments the same way. The binary contains no ext2 code, no Close call, and neither `ARC opening` nor `ARC reading`. `0x401dc4` is `printf`; it forwards to `0x401c24`.
 
-- **Boot block.** Only the old-style command line is written: magic at `0x90020`, offset at `0x90022`, 256 bytes at `0x90024`. No NUL is forced at byte 256, so options of 256 bytes or more run on past the copy (`run.S:41-46`). Inferred consequence. `EXT_MEM_K` (`0x90002`) and `ALT_MEM_K` (`0x901e0`) are not written; they keep whatever the firmware left there. Unknown.
-- **GDT.** None is loaded. Segment registers and the paging state are whatever the firmware left.
-- **Registers.** `%bx` is 0 (boot processor). `%esi` is not set. `cli` is the only interrupt step; the kernel sets its own stack.
+### 2. Handoff, arcboot build (`arclx.exe`)
 
-### 3. Handoff: 2003 loader (`arclx2.exe`)
+`StartKernel(entry, cmdline)` is called with `entry = e_entry - 0xc0000000` (`arclx.c:314-316`); the stub is `loadlx/run.S:30-56`. The binary matches it (stub at `0x401c20`): `cli` at `0x401c23`, `mov %bx,0x90020` with `0xa33f` at `0x401c28`, `mov %bx,0x90022` with `0x24` at `0x401c33`, a 256-byte `rep movsb` of the options to `0x90024`, `xor %ebx,%ebx` at `0x401c4a`, `jmp *%eax` at `0x401c4f`. Established.
 
-This loader writes a different block and puts the command line in a different place.
+- **Boot block. Established.** Only the old-style command line is written: magic at `0x90020`, offset `0x24` at `0x90022`, 256 bytes at `0x90024`. Nothing clears the block first, so every other field holds whatever was already in that memory (unknown). The 256 bytes are copied whole with no terminator added (`run.S:41-46`). The command line occupies block offsets `0x24` to `0x123`, over the APM, drive-information and system-descriptor fields the mainline kernels read from the same block.
+- **Registers on leaving. Established.** `%bx` and `%ebx` are 0. The copy leaves `%esi` at the options pointer plus `0x100`, `%edi` at `0x90124` and `%ecx` at 0; `%eax` is the entry address. No GDT, segment-register, page-table or stack change. A kernel that takes its boot block from `%esi` (2.4, and the held 2.6 build) would read a block at the options pointer plus `0x100` instead of `0x90000`; what is there is unknown. Kernels that read the fixed `0x90000` (2.2 and SGI's 2.2.10) are unaffected.
+- **Entry address. Established.** It is the ELF `e_entry` less `0xc0000000`: `0x100000` for the held kernels.
 
-- The writer is the function at VMA `0x4015d8` (file `0x9d8`). It stores `%ebx` to `ALT_MEM_K` at `0x4015f8` (file `0x9f8`), magic `0xa33f` to `0x90020` at `0x4015fe` (file `0x9fe`), offset `0x800` to `0x90022` at `0x401607` (file `0xa07`), and copies 256 bytes of the options string to `0x90800` (`COMMAND_LINE`, `PARAM+2048`) at `0x40161e`. Established.
-- Its caller at `0x401726` to `0x401735` (file `0xb26` to `0xb35`) passes the options pointer from `0x403018` and, as `ALT_MEM_K`, `[0x40301c] << 20`. Established.
-- `0x40301c` is the highest page end of the firmware memory descriptors. The loop at `0x4011cc` to `0x4011e9` sums `BasePage` (`+4`) and `PageCount` (`+8`) (`arclib/arc.h:125-126`) and keeps the maximum (stored at file `0x5e9`). The kernel reads `ALT_MEM_K` in kilobytes, so the stored value is 1024 times too large, and the 32-bit shift wraps to zero when the top page is a multiple of 4096, a 16 MB boundary such as 64 MB or 128 MB. Inferred. This would make the held 2.6 build print "Bootloader didn't set memory size" and assume 128 MB; the link is not checked on that kernel.
-- The jump function at `0x4015a6` to `0x4015cc` calls `0x401dc4` with destination `0x100000` (`0x4015af` to `0x4015bd`), clears `%ebx`, sets `%esi = 0x90000` (`0x4015c4`), and jumps to `%eax = 0x100000` (`0x4015cc`). Established. The order between the writer and this function is not read, and the format of the file `0x401dc4` loads is unknown.
-- Whether this loader is the one used for the held 2.6 vmlinux is not established.
+### 3. Handoff, `arclx2`
 
-### 4. The held visws kernels
+The order in `_start` (`0x40162c`, the PE entry point) is: GetMemoryDescriptor, banner, `InitMalloc` (`0x401154`), a "Memory avaialble: %u MB" line, argument processing, the boot-block writer (call at `0x401735`), then `LoadKernel` (call at `0x401749`), then Restart. All of the following are established from the disassembly.
 
-**SGI 2.2.10 (`linux-visws-sf-la2210.vw`).** ELF32 `EXEC`, entry `0xc0100000`, one `PT_LOAD` at file `0x1000`, file size `0x10e800`, memory size `0x131650`. Facts from the bytes unless marked:
+- **Boot-block writer, `0x4015d8`.** It first zeroes 4 KB at `0x90000` (`rep stos` of `0x400` dwords, `0x4015e7` to `0x4015f6`), so every field it does not set is 0, including the E820 count at `0x1e8`, `EXT_MEM_K`, the loader type and the new-style command-line pointer at `0x228`. It then stores its first argument at `0x901e0` (`ALT_MEM_K`, `0x4015f8`), `0xa33f` at `0x90020` (`0x4015fe`), `0x800` at `0x90022` (`0x401607`), and copies the options string, at most 256 bytes and stopping after the terminator, to `0x90800` (`0x40161e`). The command line sits at `0x90800`, the offset that becomes `COMMAND_LINE` in the kernel's zero page; the loader reaches it through the old-style magic and offset.
+- **The memory value.** `InitMalloc` keeps the largest `BasePage + PageCount` over all descriptors (`0x401154`; compare and store at `0x4011d8` to `0x4011e9`), converts it to megabytes with `shr $8` (128 when the maximum is zero, `0x401205` to `0x401218`) and the main function passes `megabytes << 20` (`0x401731`). So `ALT_MEM_K` is a byte count. The held 2.6.0-test2 build reads offset `0x1e0` as bytes (`machine_specific_memory_setup`, `0xc0342400`: the load at `0xc034240c` becomes `mem_size`, `0xc0358c18`); it subtracts 8 MB for the `sgivwfb` buffer (`0xc0342445`) and prints "Bootloader didn't set memory size" only when the value is zero (`0xc034241a`), then assumes 128 MB. With this loader the warning therefore fires only when the megabyte count is a multiple of 4096 (a zero maximum becomes 128 first). The firmware page builds the descriptors from the RAM banks plus fixed low entries, so a top at a multiple of 4 GiB is not expected on these machines (inferred). Mainline 2.2.10 and 2.4.0 read the same field as kilobytes.
+- **Jump, `0x4015a6` to `0x4015cc`.** After `LoadProgramSegments`, it prints "Starting kernel; entry point = 0x%x" with a hard-coded `0x100000` (`0x4015af` to `0x4015bd`), then `xor %ebx,%ebx`, `%esi = 0x90000` (`0x4015c4`), `cli`, `jmp *%eax` with `%eax = 0x100000`. `e_entry` is never read. This loader works for a kernel linked at `0xc0100000` with entry at its start, such as the held ones, and for no other layout.
+- **Which kernel it serves.** Setting `%esi` to the block and writing a byte-count memory field are what the held 2.6 vmlinux needs (it copies its parameters from `%esi`, `0xc01000be`). So this loader fits that vmlinux and `arclx.exe` does not (inferred). Whether it was the loader used with that file is unknown.
 
-- **Early CR3 and GDT.** The image opens with `mov $0x101000,%eax; mov %eax,%cr3; lgdt gdt_descr; lidt idt_descr`, then loads DS, ES, FS and GS with `0x18` (`0xc0100000` to `0xc0100022`, file `0x1000` to `0x1022`). This is the `CONFIG_VISWS_HACKS` block both patches add to `head.S`. The kernel's own GDT is therefore loaded before any segment register, and the loader's GDT is not used. `gdt_descr` sits at the virtual address `0xc0100226`, so the `lgdt` depends on paging being on, with the firmware's page tables live. With paging off it would read physical `0xc0100226`. Inferred from instruction order.
-- **`%esi` is overwritten.** `mov $0x90000,%esi` at `0xc0100060` (file `0x1060`) replaces the entry value, so `%esi` is not an input. Established.
-- **Command line.** `cmpw $0xa33f,0x90020` at `0xc010007b` (file `0x107b`), then 2048 bytes from `0x90000` are copied to the zero page at `0xc0105000`. The command line comes from `0x90000 + CL_OFFSET`. Established; this part of `head.S` is unchanged from 2.2.10.
-- **Memory.** The image has the strings "VISWS HACK: hard-wiring physical mem size to %dMb" and "taking %ldMb for gfx memory", the symbol `sgivw_gfx_mem_size`, and the `gfxmem=` option. On the `CONFIG_VISWS` branch `setup_arch` sets `memory_end` to 128 MB (15 July `arch/i386/kernel/setup.c`, the `#ifdef CONFIG_VISWS` hunk), then takes 16 MB for graphics from the top, or the size given by `gfxmem=`. Usable kernel memory is therefore 112 MB, with the graphics buffer at 112 MB. The boot block's `EXT_MEM_K` and `ALT_MEM_K` are not read. Established from source and strings.
-- **Other boot-block fields.** The same branch skips the reads of `ROOT_DEV`, drive info, screen info, APM, system descriptor, `MOUNT_ROOT_RDONLY` and the RAM disk flags. Root device and RAM disk settings come from the command line alone. Established from the source hunk.
-- **Build flag.** The image contains the hack code, but the shipped `.config` has no `CONFIG_VISWS_HACKS`, and `arch/i386/config.in` in the 28 July tree defines only `CONFIG_VISWS`. Where the define came from is unknown.
-- **SMP.** The 28 July patch reads the PROM's processor table: a 16-bit count at physical `0x1e00`, then `mpc_config_processor` entries, and refuses a count above four with "insane cpu count" (`smp.c:621-640` in that tree). The image has no such string, so it was built with the 15 July SMP code: two processors, ids 0 and 1, integrated APICs, no table read. Inferred from the missing string.
+### 4. What the mainline kernels expect
 
-**Visws 2.6.0-test2 vmlinux (`2cf6ee94a96c`).** ELF32 `EXEC`, entry `0xc0100000`. Its entry tests `%bx` first (file `0x1000`), fills page tables at `0x102000`, loads CR3 with `0x101000` and runs `lgdt` (file `0x1025`). It prints "Silicon Graphics Visual Workstation %s (rev %d) detected" and "Bootloader didn't set memory size, upgrade it !". Established from the bytes; the 2.6 code that prints the warning was not read.
+All of this is source reading; SGI's changes are in the next section.
 
-### 5. What the SGI patches change
+- **Load address. Established.** Kernel text is linked at `0xC0000000 + 0x100000`, physical 1 MB (`arch/i386/vmlinux.lds:9`, both trees).
+- **Paging. Established.** 2.4 builds its first page tables, writes CR3 and sets PG with `orl` (`head.S:86-106`); it does not clear PG first. 2.2 does not build them: `swapper_pg_dir` and `pg0` are static image data at `0x101000` and `0x102000` (`head.S:357-373`) and the entry writes CR3 and sets PG (`head.S:67-79`). Firmware tables that are already live are replaced at once.
+- **Segments before the kernel's GDT. Established for the order; the firmware's GDT is unknown.** Both trees load DS, ES, FS and GS with `__KERNEL_DS`, `0x18` (`segment.h:5`; 2.4 `head.S:51-55`, 2.2 `head.S:47-51`) and load their own GDT only later (2.4 `head.S:250`, 2.2 `head.S:228`). The loader's or firmware's GDT therefore needs a usable entry at selector `0x18`. Inferred.
+- **Stack. Established.** `lss stack_start` after paging is on (2.4 `head.S:109`, 2.2 `head.S:82`). The firmware's `0x61ff0` is not needed.
+- **`%bx`. Established.** Only an SMP build tests it: a non-zero `%bx` takes the secondary-processor path (2.4 `head.S:56-57`, 111-113; 2.2 `head.S:52-54`, 84-86). A loader for an SMP kernel must zero `%bx`; a uniprocessor build never looks.
+- **`%esi` and the block. Established.** 2.4 reads the boot block through `%esi` ("On entry, %esi points to the real-mode code", `head.S:42`, `144-170`). 2.2 ignores `%esi` and reads a fixed `0x90000` (`head.S:119`). A loader serving both writes the block at `0x90000` and sets `%esi` there (inferred).
+- **Boot block. Established (2.4 `setup.c:154-172`, `e820.h:15-17`; 2.2 `setup.c:100-116`).** 2 KB of fields, then a 2 KB area whose first 256 bytes are the command line (`COMMAND_LINE`, `PARAM+2048`). The fields:
 
-The 2.2 points in the earlier section change on the SGI build in four ways: memory comes from a constant rather than the boot block (128 MB less 16 MB graphics); the kernel's own GDT is loaded before any segment register, so the loader's GDT does not matter, but paging must be on at entry; only the command line is read from the boot block; and the 28 July SMP code reads the PROM processor table, which the image does not contain. Mainline 2.2.10 and 2.4.0 are unchanged for these points, and mainline 2.2.10 still needs the loader's GDT and memory counts.
+  | Offset | Field |
+  |---|---|
+  | `0x002` | `EXT_MEM_K`, 16-bit, kilobytes |
+  | `0x040` | APM information |
+  | `0x080` | drive information |
+  | `0x0a0` | system descriptor table |
+  | `0x1e0` | `ALT_MEM_K`, 32-bit, kilobytes |
+  | `0x1e8` | E820 entry count (2.4 only) |
+  | `0x1f2` | root mounted read-only flag |
+  | `0x1f8` | RAM disk flags |
+  | `0x1fc` | root device |
+  | `0x210` | loader type; the initrd fields are used only when it is non-zero (2.4 also needs `INITRD_START`) |
+  | `0x214` | kernel start |
+  | `0x218` | initrd start |
+  | `0x21c` | initrd size |
+  | `0x228` | pointer to the command line (2.4 only); zero selects the old magic |
+  | `0x2d0` | E820 map, up to 32 entries (2.4 only) |
 
-### 6. Conflicts and what is still open
+  Old-style command line: magic `0xA33F` at physical `0x90020`, offset at `0x90022`, base `0x90000` (2.4 `head.S:19-22`, 2.2 `head.S:18-21`). Both trees copy the first 2 KB of the block (from `%esi` in 2.4, from `0x90000` in 2.2) to the zero page and zero the second 2 KB (2.4 `head.S:150-158`, 2.2 `head.S:119-128`), then copy 2 KB of command line into that second half (2.4 `head.S:159-170`, 2.2 `head.S:129-136`).
+- **Memory map. Established.** 2.4 uses an E820 map when the loader gives one with at least two entries (`setup.c:456-460`, `497-507`); otherwise it takes the larger of `ALT_MEM_K` and `EXT_MEM_K` as a kilobyte count from address 0 and adds RAM below `0x9f000` and from 1 MB up to that count (`setup.c:511-521`). 2.2 takes the larger of `EXT_MEM_K` and `ALT_MEM_K` as kilobytes above 1 MB (`setup.c:276-283`), so the two trees differ by 1 MB in what the field means. Neither reads ARC memory descriptors, and neither has a visws memory reservation or graphics-memory setting in `setup.c` (searched; none).
+- **Board type and revision. Established (2.4 `setup.c:225-301`, 2.2 `setup.c:169-245`).** The PIIX4 GPIO board bits are read first, then the NS87307 GPIO block is enabled to read the revision; it runs before memory set-up (2.4 `setup.c:604-605`, 2.2 `setup.c:259-260`).
+- **Lithium and Cobalt set-up. Established.** `lithium_init` writes `0xffff` to `LI_PCI_INTEN` (`+0x46`) on both bridges (2.4 `traps.c:912-924`, 2.2 `traps.c:634-646`), then `cobalt_init` maps the Cobalt CPU block and APIC, prints their revision and ID, and ORs `CO_APIC_ENABLE` (bit 8, `cobalt.h:38`) into the APIC ID register at `+0xffc` (`cobalt.h:35`), keeping the ID (2.4 `traps.c:927-947`, 2.2 `traps.c:649-669`). This matches item 4 of [Boot into Linux](#boot-into-linux). Neither tree reads a Lithium vendor or device word (`lithium.h` defines only the bus-number and interrupt-enable registers). The PCI code uses configuration mechanism 1 (`0xCF8`, `0xCFC`) only (2.4 `pci-visws.c:27-69`) and reads bridge B's bus number to scan buses 0 and the secondary (`pci-visws.c:120-124`). The Lithium probe in item 2 of [Boot into Linux](#boot-into-linux) is 2.6 only.
+- **Interrupts. Established (2.4 `visws_apic.c:374-409`).** `init_VISWS_APIC_irqs` gives each of the 16 ISA lines the PIIX4 master, PIIX4 virtual or Cobalt handler type; Cobalt entries are programmed on first use (`co_apic_set`, `visws_apic.c:136-139`).
+- **SMP start-up. Established.** Neither tree reads a firmware processor table. 2.4 `find_visws_smp` (`mpparse.c:617-626`, called at `639-641`) sets `smp_found_config`, adds processor id 1 to `phys_cpu_present_map`, sets the integrated-APIC bit in both `apic_version` entries and sets `mp_lapic_addr` to `APIC_DEFAULT_PHYS_BASE`. 2.2 `init_visws_smp` (`smp.c:614-623`) does the same, so both start two processors, ids 0 and 1. The literal `0x1e00` appears nowhere under `arch/i386` or `include/asm-i386` in 2.4.0, and in 2.2.10 only inside page-table constants (`head.S:376-472`). This agrees with item 8 of [Boot into NT](#boot-into-nt). Both trees write the warm-reset vector at `0x467` and `0x469` (2.4 `smpboot.c:593-595`, 2.2 `smp.c:966-968`), as item 9 of that section describes.
 
-- Item 1 of [Boot into Linux](#boot-into-linux) said neither loader file was held. Both are held now and are read here.
-- Item 8 of [Boot into NT](#boot-into-nt) says the 2.2 and 2.4 ports hard-code two processors. That holds for mainline 2.2.10 and 2.4.0 and, by inference, the held SGI image. The 28 July SGI patch reads the table instead.
+### 5. The held SGI and 2.6 kernels
+
+**SGI 2.2.10 (`linux-visws-sf-la2210.vw`).** ELF32 `EXEC`, entry `0xc0100000`, one `PT_LOAD` at file `0x1000` with file size `0x10e800` and memory size `0x131650`.
+
+- **Build flags. Established.** It is a uniprocessor build: `.config` line 26 is `# CONFIG_SMP is not set`, the image contains no `orw %bx,%bx` test and no SMP symbol, and `CONFIG_BLK_DEV_INITRD` (line 94) is off. `CONFIG_VISWS=y` is line 49. `CONFIG_VISWS_HACKS` is defined by the top-level `Makefile` of both patches: under `ifdef CONFIG_VISWS` it adds `-DCONFIG_VISWS_HACKS` to `CFLAGS` and `AFLAGS` (`Makefile:96-99`). Because the image is uniprocessor, neither patch's `init_visws_smp` is in it. The 28 July patch reads a processor count at physical `0x1e00` and up to four `mpc_config_processor` entries after it, refusing a count above four (`smp.c:621-640`); the 15 July source hard-codes id 1 as 2.2 does (`smp.c:614-623`). Both are source facts and neither is in this image. The image's version string is dated 28 July 1999, which suggests but does not prove it came from the 28 July tree.
+- **Opening instructions. Established.** `head.S` begins with a block that `CONFIG_VISWS_HACKS` adds in both patches (`head.S:43-48`): `mov $0x101000,%eax; mov %eax,%cr3; lgdt gdt_descr; lidt idt_descr` (`0xc0100000` to `0xc0100015`), and only then loads DS, ES, FS and GS with `0x18` (`0xc0100017` to `0xc0100022`). The kernel's own tables and GDT are thus in place before any segment load, so the loader's GDT is not used. The kernel's `swapper_pg_dir` at `0x101000` takes over at the first CR3 write. `gdt_descr` is at the link address `0xc0100226`, so the `lgdt` can find it only with paging on. The CR3 write before it switches to the kernel's own directory, whose entries 0 and 768 both map the first 4 MB (`0x102007`: `head.S:357-364`, checked in the image at `0xc0101000` and `0xc0101c00`). With paging off at entry the read would use physical `0xc0100226`. So the image needs paging already on, which the firmware page says is the case (its page tables are still active at the loader call). Inferred from instruction order.
+- **Boot block. Established.** After paging, `head.S` sets `%esi` to `0x90000` (`0xc0100060`), so the entry value is ignored. It then copies 2048 bytes from `0x90000` to `empty_zero_page` at `0xc0105000` (`0xc0100060` to `0xc0100070`), zero-fills the next 2048 bytes, compares `0xa33f` with the word at `0x90020` (`0xc010007b`), and when it matches copies `0x800` bytes from `0x90000` plus the word at `0x90022` to `0xc0105800` (`0xc0100086` to `0xc010009d`).
+- **Memory. Established.** The image has the strings "VISWS HACK: hard-wiring physical mem size to %dMb" and "taking %ldMb for gfx memory", the symbol `sgivw_gfx_mem_size` and the `gfxmem=` option. In the patched `setup_arch` (`setup.c:227-238`) `memory_end` is set to 128 MB; the code at `0xc02013f8` is that constant. The graphics size defaults to 16 MB (`setup.c:335-337`; `0xc0201594`), is cut to whole megabytes, and is subtracted (`setup.c:339-343`), so the kernel gets 112 MB and graphics start at 112 MB. A `mem=` option can still override `memory_end` before the subtraction (`setup.c:291-305`). The boot block's `EXT_MEM_K` and `ALT_MEM_K` are not read.
+- **Other boot-block fields. Established.** The same branch skips the reads of root device, drive information, screen information, APM, system descriptor, auxiliary-device flag, the read-only flag and the RAM disk flags (`setup.c:240-273` is the `#else` side). The root device and RAM disk come from the command line. The initrd fields (`LOADER_TYPE`, `INITRD_START`, `INITRD_SIZE`) are still read in the source under `CONFIG_BLK_DEV_INITRD` (`setup.c:377-380`), which is off in the held configuration.
+- **Fit with the loaders.** Established: the image needs only the command line at the old-style place, which both loaders write, and it ignores `%esi` and the memory fields, so `arclx.exe`'s leftover `%esi` and unwritten fields do no harm. Inferred: that `arclx.exe` is the loader SGI shipped with it, since the 1999 transcript pairs `la2210.vw` with arcboot's messages.
+
+**Visws 2.6.0-test2 vmlinux (`boor-vmlinux-vws.gz`).** ELF32 `EXEC`, entry `0xc0100000`. Its entry tests `%bx` (it is an SMP build; file `0x1000`), builds page tables at `0x102000`, loads CR3 with `0x101000` and runs `lgdt` (file `0x1025`), then loads the segments, copies 2 KB from `%esi` to its zero page at `0xc0104000` and takes the command line from the new-style pointer at `+0x228` or the old magic at `0x90020` (`0xc01000be` to `0xc01000f5`). It prints "Silicon Graphics Visual Workstation %s (rev %d) detected". Established from the bytes. The memory handling is in section 3.
+
+### 6. Summary of fit, conflicts and what is open
+
+| Loader | Block written | Fits |
+|---|---|---|
+| `arclx.exe` (arcboot) | command line only, rest left as found; `%esi` not the block | 2.2.10 as patched (reads `0x90000`, ignores memory fields); not 2.4 or 2.6 (read `%esi`) |
+| `arclx2` | 4 KB zeroed, command line at `0x90800`, byte-count memory at `0x1e0`; `%esi = 0x90000` | the held 2.6.0-test2 vmlinux (inferred); not 2.2.10 or 2.4.0 (they read kilobytes) |
+
+- Item 1 of [Boot into Linux](#boot-into-linux) said neither loader file was held. arcboot and `arclx2` are held now. `larc.exe`, the other loader name in the user reports, is not.
+- Item 8 of [Boot into NT](#boot-into-nt): the 2.2 and 2.4 ports hard-code two processors. The 28 July SGI patch source reads the firmware table, but the held SGI image is uniprocessor and does neither.
 - Items 2 and 3 of [Boot into Linux](#boot-into-linux) describe the 2.6 port. The held 2.6.0-test2 build prints the warning they quote, so their scope stands.
-- The arcboot table has 37 slots, through `GetDisplayStatus` at `0x1290`. The PROM page says 35 entries. Not resolved: the PROM's `FirmwareVectorLength` was not read.
-- Not read: the 2003 loader's kernel file routine (`0x401dc4`) and its full call list; the file format it loads; the build setting behind `CONFIG_VISWS_HACKS`.
+- Unknown: whether the firmware's GDT has a usable `0x18` entry and what its page tables map at the loader call (so whether the opening `lgdt` of the SGI image and the segment loads of the mainline kernels work as they stand); whether `arclx2` was used with the held 2.6 vmlinux; whether an SMP build of SGI's 2.2.10 existed; what `larc.exe` is.
 
 ## PCI enumeration
 
@@ -700,5 +744,5 @@ The reset values of the memory controller's registers and what its timing regist
 resources to endpoint devices before the OS; the bit meanings of the Lithium `+0x48`, `+0x58` and `+0x60`-`+0x70` writes and
 the Cobalt APIC `+0xffc` field; where the embedded legacy-BIOS image is mapped and whether any of it
 is visible to an OS; the components, classes and keys of the ARC tree beyond the nodes named above; which firmware vectors
-`arcldr.exe` calls; the private vector's purpose; firmware versions 1.1002 to 1.1004; and the Linux ARC loaders. All are in
+`arcldr.exe` calls; the private vector's purpose; firmware versions 1.1002 to 1.1004; and the open Linux loader questions. All are in
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).

@@ -154,8 +154,8 @@ Answers from the HAL (symbols applied), the loader and the PROM pages, each grad
    The HAL never programs the base; it reads the status word at `0xf80`, the enable at `0xf82` and the control at `0xf84`
    (established). NT hand-off: the firmware loads `arcldr.exe` named by its environment variables, publishes the ARC system parameter block
    at `0x1000` with the vector table, and the loader builds the NT loader block, whose ARC tree must carry the "SGI REV INFO" children the
-   HAL reads (established, boot-path.md). Linux hand-off: the firmware starts an ARC program (`larc.exe` or `arclx.exe`) that is not held;
-   what it puts in `boot_params` beyond `alt_mem_k` is unknown.
+   HAL reads (established, boot-path.md). Linux hand-off: the firmware starts an ARC program (`arclx.exe` or a later loader, both held; `larc.exe` is not)
+   that writes the boot block ([boot-path.md](boot-path.md#linux-loader-handoff)); what the firmware leaves in the block's other fields is unknown.
 2. **Cobalt interrupt handling and the 8259/PIIX4 path.** [nt-hal.md](nt-hal.md#interrupt-delivery-in-the-hal) (established): all 30
    Cobalt APIC entries are masked at start-up; a device interrupt is enabled by writing the entry's vector with the level bit and
    unmasking the Lithium bridge's per-line enable; the master 8259's output is Cobalt entry 12, polled with OCW3 `0x0c`, with a specific
