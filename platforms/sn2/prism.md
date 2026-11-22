@@ -170,18 +170,29 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 ## Graphics boards and outputs
 
 - Boards named in the guides: **FireGL X2PRO-256** and **FireGL X3-256**. The -003 revision note says it "added FireGL
-  X3-256 card" (007-4701-003 p.iii), so X2PRO-256 is inferred to be the board of the earlier -001 and -002 text (not read). Both are "ATI" FireGL boards (ATI and Radeon trademark notice,
-  007-4701-003 p.ii); the figures show the X2PRO and X3 rear panels as the two XG2N variants (Figures 1-1 to 1-4,
-  pp.3 and 4). Established as names.
-- The guides do not print the GPU part. External sources (not SGI, not evidence): ATI's FireGL X3-256 is the R420-based
-  AGP 8x board with 256 MB, introduced August 2004; ATI's FireGL X2-256 is R350-based (some references say R360). SGI's
-  "X2PRO" name was not found outside SGI. **Unknown** whether X2PRO is the X2-256 part; the X3-256 as R420 is inferred from
-  external listings.
+  X3-256 card" (007-4701-003 p.iii), and the -003 and -004 figure captions name the X2PRO-256 as the other board (Figures 1-1
+  and 1-2, pp.3 and 4). The -001 (Oct 2004) and -002 (Feb 2005) guides name no board model at all: their rear-view captions
+  say only "XG2N Graphics Module". Both boards are "ATI" FireGL boards (ATI and Radeon trademark notice, 007-4701-003
+  p.ii). Established as names.
+- **X2PRO-256 is an R350 board (inferred).** All four editions of the user's guide (007-4701-001 p.18, -002 p.20, -003 p.23,
+  -004 p.23) print the same sample `lspci` output for the "verify system connections" step: per pipe a VGA-class function
+  `ATI Technologies Inc Radeon R350 NG [FireGL X2]` and a second function `Radeon R350 [FireGL X2] (Secondary)`, at
+  `11:01.0`/`11:01.1` and `12:01.0`/`12:01.1` with `(rev xx)` placeholders (established: SGI's own text names the
+  R350 FireGL X2 as the part a Prism pipe shows; a documentation sample, not a capture). The first release had only one
+  board, so that sample describes the board the later guides call X2PRO-256 (inferred: the guides never write "X2PRO-256"
+  next to the sample). The sample was not updated when the X3-256 was added, so it says nothing about the X3. Supporting,
+  not deciding: the driver table's X2 row is R350 `4E4B` (below), and the public `pci.ids` names `4E4B` "FireGL X2 AGP Pro",
+  which fits the "PRO" in SGI's name (external list, inferred). Not R360: the only R360 row in the driver table is the
+  Radeon 9800 XT (`4E4A`). Grade of the verdict: **inferred**, strong; it becomes established when a Prism `lspci -nn`
+  prints `1002:4e4b`.
+- The X3-256 as R420 (`4A4D`) is established as the driver's name-to-chip pairing only; ATI's FireGL X3-256 is R420-based
+  per the driver table, and the sample lspci block in the guides does not cover it.
 - **Chip table in the driver (table text established; board mapping not).** `fglrx_drv.o` (8.12.1) holds rows of the form
   `name (family device-ID)`: `FireGL X2-256/X2-256t (R350 4E4B)`, `FireGL X3-256 (R420 4A4D)`, `FireGL X1 (R300 4E47)`, and
   V-series and T2 rows for RV350 `4154`, RV370 `5B64`, RV380 `3E54`, RV410 `5E48` and R423 `5550`. The table has no `X2PRO`
-  string, so which chip SGI's X2PRO-256 is stays **unknown**. The X3-256 to R420 `4A4D` pairing is established in the
-  driver; that the Prism X3 board is that device is **inferred**. Reading the second field as the PCI device ID is a software
+  string (checked in the SP2, SP3 and SP4 builds of the extensions disc; the three tables list the same rows), so the
+  chip of SGI's X2PRO-256 rests on the guide sample above, not on the driver. The X3-256 to R420 `4A4D` pairing is
+  established in the driver; that the Prism X3 board is that device is **inferred**. Reading the second field as the PCI device ID is a software
   expectation. The public `pci.ids` names agree for `4A4D` and `4E4B`, but that list is external. SGI's `gfxtopology` maps
   the lspci names `R300`, `R350`, `RV350` and `R420` to board type `SG2` (script text, established).
 - Each board has 256 MB: 128 MB framebuffer plus 128 MB "retained-object" memory; the driver spills to system memory when
@@ -220,7 +231,7 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
   `booting generic kernel on platform sn2`, `SAL 3.2: SGI SN2 version 4.65` and six ACPI tables with SGI SN2 OEM IDs
   (established, as posted). Neither names a SHub, a PROM build, a TIOCA or AGP device, or the shape; the raw HTML of page 2
   of the thread has no `tioca`, `shub` or `agp` text. The 4.14.83 log lists PCI host bridges 0001:00 to 0006:00 and a boot VGA device at 0006:00:00.0
-  whose 256 MB BAR the kernel could not place. The 3.8.13 log puts an SGI IOC4 (10a9:100a), a PCI-to-PCI bridge (104c:ac28,
+  and a second function 0006:00:00.1; each function's prefetchable BAR 0 is 128 MB (0x08000000-0x0fffffff and 0x10000000-0x17ffffff) and neither could be placed by the kernel (corrected 2026-11-21: this page said one 256 MB BAR). The 3.8.13 log puts an SGI IOC4 (10a9:100a), a PCI-to-PCI bridge (104c:ac28,
   `PCI2050` in pci.ids), a Vitesse SATA controller (1725:7174) and a Broadcom NIC (14e4:1645) on domain 0001 bus 0. The 4.14.83
   log has USB functions (OHCI and EHCI drivers) at 0001:01:02.0 to 0001:01:02.2, behind that bridge. Whether the bridge is PCI-X
   is unknown: the log prints no bus mode. The shape stays unknown; this device set fits a rackmount base I/O module as well as
@@ -331,7 +342,7 @@ radeon drivers. This section uses only its public README, `devices/README.md` an
 Could transfer, **inferred** only until a Prism board is identified:
 
 - R3xx register behaviour (display, interrupt, engine, pipe-select and Z-buffer registers in voyager's `devices/display`
-  and `devices/pipes`), if the Prism X2PRO is an R350-class part. The silicon would be the same; only the host bus differs.
+  and `devices/pipes`), because the Prism X2PRO is an R350-class part (inferred, see the boards section). The silicon would be the same; only the host bus differs.
 - Board-level facts shared by both products: the "FireGL sync cable" and AGP riser parts are listed as "Onyx4/Prism"
   parts, and the card-type string `SG2` printed by Prism's `gfxtopology` is the family name voyager reads in the IRIX
   driver ("'sg2' names the family"). Same card family on both machines is inferred.
@@ -345,8 +356,8 @@ Cannot transfer:
   8x-only mode (above), so the memory-controller and aperture programming differs.
 - The driver. IRIX's `fglrx.o` and ATI's X server module are the IRIX side; Prism runs ATI's Linux `fglrx` with its own kernel
   module and DRI. The voyager ioctl and DRM tables do not apply.
-- The X3-256 (an R420-class board per external listings) is outside voyager's chip list. R420 is a later R3xx-family
-  descendant, but nothing in voyager covers it.
+- The X3-256 (R420 `4A4D` in the driver table) is outside voyager's chip list; voyager's page `devices/display/r350-r420-delta.md`
+  lists what an R300-based model would have to add for R420, from public Linux and Mesa source only.
 - voyager's open questions (bus clock and width behind a pipe, PIC topology) are Onyx4-specific; on Prism the answer is
   "AGP 8x on a TIOCA" for the bus, and the topology question becomes the TIOCA-per-pipe question here.
 

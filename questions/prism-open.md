@@ -14,12 +14,14 @@ Status: **unknown** for everything below. What is established is on [the Prism o
   unstated. Route: kernel boot log of a Prism (PCI bus numbers and `TIOCA` lines), a ProPack disk image's `dmesg` or
   `/proc/bus/pci`, ProPack kernel DWARF. Checked 2026-11-21: the 2019 public logs enumerate no AGP or TIOCA device, and the
   held image has no log. Partly answered 2026-11-21 (one AGP bridge per PROM-reported TIOCA bus; the count is open); see the kernel-source section below.
-- **GPU part.** The guides name "FireGL X2PRO-256" and "FireGL X3-256" only. Which ATI chip each board carries (R350-class for the
-  X2PRO, R420-class for the X3 by external listings) and the PCI vendor and device IDs are not in any SGI source. Route: `lspci`
-  output or `fglrx` device tables from a ProPack disk image; the held T2/Linux image has neither. The 2019 log's boot VGA
-  device (0006:00:00.0) prints no device ID. The public pci.ids list names 1002:4a4d "R420 GL [FireGL X3-256]" and
-  1002:4e4b "R350 GL [FireGL X2 AGP Pro]". That is an external name list, not SGI evidence, and no held capture prints
-  a 1002 ID, so the mapping to a board stays unknown. The driver table on the 2026-11-21 disc gives IDs for the X2-256 and X3-256 names; see below.
+- **GPU part.** Partly answered 2026-11-21. X2PRO-256: R350 (FireGL X2, likely `1002:4e4b`), **inferred**: all four editions of
+  the Prism user's guide (007-4701-001 to -004) print a sample `lspci` naming `Radeon R350 NG [FireGL X2]` and its
+  `(Secondary)` function for the Prism graphics pipe, and the driver table's X2 row is R350 `4E4B` (no `X2PRO` string in
+  the SP2, SP3 or SP4 build). The sample is a placeholder (`rev xx`), not a capture, and was not revised for the X3-256, so
+  the PCI ID itself is unconfirmed. X3-256: R420 `4A4D` by the driver table's name row; that the Prism board carries it is
+  inferred. The 2019 log's boot VGA device (0006:00:00.0, with a second function 0006:00:00.1) prints no device ID and
+  its 128 MB prefetchable BAR per function does not separate R350 from R420, since the public ID list gives both chips
+  a secondary function. Route to settle: `lspci -nn` on a Prism, or a boot log that prints `1002:` IDs.
 - **PROM and SAL.** Eight SN2 PROM images are held. None names a Prism, IP57 or XG2N; SGI's 10.54 README lists Prism for
   `shub1snprom.bin` (SAL 5.04), which is vendor intent, not a boot. The 2026-11-21 scan is in
   [the Prism platform page](../platforms/sn2/prism.md#held-prom-images-and-prism-support). The one constraint known: TIOCA setup needs SAL
@@ -58,7 +60,7 @@ disc members. They sit inside the `km-rtgfx-fglrx` and `fglrx` RPMs. The disc's 
   Route: `/proc/sgi_sn/sn_topology`, `lspci -t` and the kernel's TIOCA lines from a booted Prism.
 - **ATI part and IDs.** `fglrx_drv.o` (8.12.1) has a chip table of `name (family device-ID)` rows: `FireGL X2-256/X2-256t
   (R350 4E4B)`, `FireGL X3-256 (R420 4A4D)`, `FireGL X1 (R300 4E47)`, plus V-series and T2 rows. The table has no `X2PRO`
-  string, so which chip SGI's X2PRO-256 is stays unknown. The X3-256 to `4A4D` pairing is established in the driver. That
+  string (same in the SP2 and SP3 builds); the X2PRO-256 chip rests on the guide sample (see GPU part above). The X3-256 to `4A4D` pairing is established in the driver. That
   the Prism X3 board carries that device is inferred. Reading the second field as the PCI device ID is a software
   expectation. The public `pci.ids` agrees for `4A4D` and `4E4B`, but that list is external.
   Route: `lspci -nn` on a Prism, to read the board's own ID.
