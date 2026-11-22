@@ -51,6 +51,36 @@ not name an IO9, IO10 or IOC4. Its base I/O chips are read from Figure 3-4, chec
 from a 330 would add the PCI ids. Whether the 330's SHub, PIC and L1 firmware match the 350's is unknown;
 the L1 packages that name an IP node board for it are not tied to the 330 (sysco `sn2-brick-packages.md`).
 
+## Base I/O parts
+
+Figure 3-4 (p.76, PDF page 100) is the only place the guide names the base I/O chips. It prints no part number and no
+PCI ID for any of them. The vendor IDs below come from the public PCI ID list (`pci.ids`), matched by name.
+
+| Name in Figure 3-4 | Where the figure puts it | Part number | PCI vendor:device | Grade |
+|---|---|---|---|---|
+| LSI SAS/SATA Controller | bus B0, 133 MHz PCI-X; the SAS/SATA II port and the internal disks | unknown without a capture | vendor 1000 (LSI Logic); device unknown | name and bus established; vendor inferred; part and device unknown |
+| Broadcom Dual GigE | bus B1, 66 MHz PCI; the two GigE ports | unknown without a capture | vendor 14e4 (Broadcom); device unknown | name and bus established; vendor inferred; part and device unknown |
+| NEC USB Host Controller | 33 MHz PCI behind a bridge on B1; the two USB 2.0 ports | unknown without a capture | vendor 1033 (NEC); device unknown | name and bus established; vendor inferred; part and device unknown |
+| Silicon Image PCI to IDE | 33 MHz PCI behind the other bridge; feeds the DVD-ROM drive | unknown without a capture | vendor 1095 (Silicon Image); device unknown | name and bus established; vendor inferred; part and device unknown |
+
+The drawn label on the Silicon Image chip reads "Silcon". No driver binding is stated: no Linux v5.3 tree is held
+here, so the driver ID tables were not checked. The 350's IOC4, ISP 12160, VSC 7174 and klconfig Tigon 3 IDs are the
+350's parts, not these, and do not transfer.
+
+Searches that found no part number or capture for these chips:
+
+- The full text of 007-4790-001 (pdftotext): the four labels, the chip families (LSI, SAS, Broadcom, BCM, NEC, uPD,
+  Silicon Image, SiI, IDE) and "part number". The only part-number table is the service-tool list.
+- Figure 3-4 rendered at 130 dpi: the same labels as the text layer, no numbers.
+- Library search: LSI SAS1064/1068 with mptsas; BCM5704 with Altix; NEC uPD720100 with 1033; SiI 3112 with Altix; Altix 330
+  with lspci, with ProPack release notes, and with base I/O. No 330 part or capture. The BCM5704 hits were an OpenBSD
+  story and another project's BCM5701 note, neither about a 330.
+- Held evidence: `sn2-holdings-inventory-20261114.md` and `sn2-bringup-material-20261114.md` name no 330 part. A text
+  search of the evidence notes for "altix 330" matched notes, not captures; the other matches were not opened.
+
+Open: a boot log or `lspci` from a 330 with these cards would settle the part and device IDs. Not yet independently
+reviewed.
+
 ## Review
 
 Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).
