@@ -6,12 +6,10 @@ which of the chip set's ASICs?
 Status: **unknown** for everything below. What is established and what software expects is in
 [the Cobalt graphics pages](../devices/cobalt-graphics/README.md).
 
-- **Packet formats.** The header word layouts, the opcode set and the link-word fields of the rendering engine's
-  packet queue. Only the context-shadow table in `sgcomp.sys` and header constants in `sgcoicd.dll` are known
-  ([graphics-engine.md](../devices/cobalt-graphics/graphics-engine.md)). Route: read the packet emitters of the OpenGL
+- **Packet formats.** Partly settled ([graphics-engine.md](../devices/cobalt-graphics/graphics-engine.md#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)): the payload-count field of the header word (bits 11:5, checked against the shadow table), the chaining packet that ends a node and the two link-word layouts. Open: the opcode set, what the header's target bits select, the two builders' one-off length difference and which link word the engine reads, and the instance bits. Route: read the packet emitters of the OpenGL
   driver (`__glGenerateSetup`, `__glDrawVertexes_*`, the clear, copy and pixel-transfer builders) in Ghidra and
   correlate each emitted header with the field it feeds; the NT 4.0 `sgcoicd.dll` ships with symbols.
-- **Host setup versus engine setup.** Whether lighting, culling and clipping run on the host or in the engine. The OpenGL
+- **Host setup versus engine setup.** Clipping runs on the host: `__glDrawVertexes_Triangles` tests each vertex's clip code and calls `__glDoClipTriangle` for the triangles that cross (established, one routine). Whether lighting and culling run on the host or in the engine is open. The OpenGL
   driver's names suggest triangle setup runs on the host; the datasheet lists vertex lighting as a Cobalt feature. Route:
   the same emitters (does a lit vertex reach a packet?).
 - **Engine register window.** Meaning of `0x08000` entries, `0x0c000` entries, `0x10000` write fields, `0x10008`, the two

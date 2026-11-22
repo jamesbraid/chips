@@ -9,7 +9,7 @@ quoted as a symbol. Grades: see the overview.
 **Short answer to "FIFO or DMA".** The engine fetches commands by DMA from packet buffers in main memory. The host
 builds packets in memory (the memory is the same SDRAM the processors use), links them, and tells the engine which
 context to run through one control register; completion and stalls come back as two interrupt causes. There is no
-register FIFO that the host pushes words into. Software expectation. The packet format itself is unknown.
+register FIFO that the host pushes words into. Software expectation. The header-word count field and the chaining packet are now known ([below](#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)); the opcode set is not.
 
 ## Register window at `0xc8000000` (`0x19000` bytes)
 
@@ -74,8 +74,7 @@ engine never needs the host's cache.
   record offset `0x120`) that carries, in units of 32 bytes, the packet's size and the next buffer's position, and sets bit
   0. To wait for the engine to finish with a buffer the driver spins until bit 0 of a header or link dword in memory reads
   clear (`grmDispatchPacket`, the tail of the routine). So bit 0 means "owned by the engine" and the engine clears it.
-  The field split of the link word is inferred from two routines and not confirmed: `size/next` in the upper bits, bit 1
-  also set by `CoSetGrmPktHeader`.
+  The field split of the link word is now read from both builders ([below](#how-the-opengl-driver-builds-and-submits-packets-sgcoicddll-524)): length in bits 11:3, next position in bits 31:12, flags in bits 2:1.
 - **Per-context shadow.** Every new context starts from a 208-dword packet (`CoInitShadowRam` copies the table
   `initialCxShadow`, 19 pairs of header word and dword index, into the RN's packet area) that holds default state. The
   headers, in order of position, are: `0x80003020` (index 0), `0x046400c0` (2), `0x05260480` (9), `0x09a900c0` to
@@ -99,6 +98,78 @@ engine never needs the host's cache.
   swaps. Registry values `IdleOnOpenGL`, `IdleOnGDI`, `IdleOnGDIwithOGL`, `IdleOnD3D` and `SchedulerMode` tune it. None of
   this is hardware, but it shows what the hardware cannot do: there is no hardware context queue, only one running
   context at a time, selected by `+0x10000`.
+
+## How the OpenGL driver builds and submits packets (`sgcoicd.dll` 5.2.4)
+
+Read in Ghidra from the shipped 5.2.4 NT 4.0 package with SGI's symbols (the ICD `sgcoicd.dll`, the display driver `sgcodd.dll`
+and `sgcomp.sys`), checked against the miniport reading above. Grades: *established* is what the driver code does, read in full for
+the routine named; the hardware's reading of any word is a software expectation, as above.
+
+**The path, end to end. Established.**
+
+1. The OpenGL driver runs in the application's process. It writes packets straight into packet-buffer memory that the kernel
+   side mapped for it (it never touches an engine register; those are at physical addresses only the miniport maps).
+2. To make work visible to the engine it calls `ExtEscape` (through `__glCoExtEscape`, `0x69018322`) with one of the escape codes
+   below. The display driver's `DrvOpenGLEscape` checks the arguments (`checkargs`, with the escape's name and input size) and
+   `IsUserPktOffset` verifies that the position the application passed lies inside the context's own packet buffer, then
+   allocates a "drop" (`CoGrmAllocateDrop`) on the context's render node and calls the driver's queue entry.
+3. The miniport's scheduler runs the drops in order (`CoExecuteDrop`, `CoScheduleDrop`): drop types 1 finish, 2 screen-to-screen copy,
+   3 pixel DMA, 5 serialisation mode, 6 kick (only clears a "pending" flag on the render node), 7 and 8 bind and unbind buffers, 9
+   unsynchronised swap; types 0 and 4 complete at once. The engine itself is started by the context switch described above (the
+   `0x10000` write), not by the escape.
+4. Completion is learned by the application polling the packet buffer (below), blocking on a kernel event, or both.
+
+**ICD escape codes. Established (`DrvOpenGLEscape`; name, input size in bytes).**
+
+| Code | Name | Size | Code | Name | Size |
+|---|---|---|---|---|---|
+| `0x40` | SETCONTEXT | `0x54` | `0x50` | CACHEOP | `0x24` |
+| `0x41` | FIRSTSETCONTEXT | `0x2c` | `0x51` | PIXELDMA_CLEANUP | `0x7c` |
+| `0x42` | CREATECONTEXT | `0x20` | `0x52` | SETUP_SCR2SCR | `0x7c` |
+| `0x43` | DELETECONTEXT | `0x14` | `0x53` | CREATE_BUFFER | `0x28` |
+| `0x44` | RELEASECONTEXT | `0x14` | `0x54` | FREE_BUFFERS | `0x40` |
+| `0x46` | SHARELISTS | `0x1c` | `0x55` | BIND_BUFFERS | `0x70` |
+| `0x47` | DESCRIBELAYERPLANE | `0x20` | `0x56` | UNBIND_BUFFERS | `0x6c` |
+| `0x48` | SWAPBUFFERS | `0x7c` | `0x57` to `0x59` | CREATE, FREE, SET_READY of a texture-table packet | `0x44`, `0x40`, `0x40` |
+| `0x4b` | SETLAYERPALETTEENTRIES | `0x28` | `0x5a`, `0x5b` | CREATE_PBUFFER, DELETE_PBUFFER | `0x50`, `0x1c` |
+| `0x4c` | FINISH | `0x18` | `0x5d` | PIXELFORMATEXTDESCRIBE | `0x20` |
+| `0x4d` | KICKSCHEDULER | `0x7c` | `0x60` to `0x62` | WAIT_FOR_HARDWARE, ALLOC_PACKET_BUFFER, FREE_PACKET_BUFFER (the order of the three names against the codes was not matched; the ICD's wait is `0x62`) | `0x18` |
+| `0x4e` | CLEARBUFFER | `0x7c` | `0x4f` | PIXELDMA | `0x7c` |
+
+**Packet buffers. Established.** `InitCoPktBuffer` (`0x690186f2`) links a ring of nodes (a 40-byte descriptor each, count and size from the
+context) over one block of memory. In each node's buffer the data starts `0x20` bytes in, the last `0x180` bytes are held back as slack,
+and the descriptor carries the next node and the node's position in 32-byte units counted from a base the context records (whether that
+base is physical address zero or the pool's start was not determined; the units are 20 bits wide in the words below). The first words of
+each node buffer are a header: a link word (below) at dword 0 and again at dword 2, and a running sequence number at dword 3.
+
+**Packet header word. Software expectation, checked against 17 of 18 table entries.** A packet is a header dword followed by payload
+dwords. Bits 11:5 are the payload dword count: in the context-shadow table (`initialCxShadow`, copied by `CoInitShadowRam`) the
+distance in dwords between consecutive packets is that count plus one for 17 of the 18 packets (headers `0x80003020` through `0x93cc0340`); the last, `0x00210440`,
+runs to a padded end. Bits 4:0 hold a small index (the four copies seen differ only there, 0 to 3), and bits 31:12 are a target that selects the
+state block. Seen in the shadow table: `0x80003020`, `0x046400c0`, `0x05260480`, four each of `0x09a900c0`, `0x0ca96120` and `0x1129f020`, then `0x91aa0220`,
+`0x93cc0340`, `0x00210440`. The ICD emits, besides those, headers with the top byte `0x9x` whose targets step by `0x201` or `0x402` from one block to the next
+(`0x922a4`, `0x924a5`, `0x928a7`, `0x92ca9`, `0x92eaa`, `0x930ab`, `0x932ac`, `0x936ae`, `0x938af`), so the target looks like two fields that advance together; it was not decoded.
+Counts from the ICD's own headers: `0x80003020`, `0x91aa0020`, `0x92eaa020`, `0x936ae020` and `0x97400020` carry one payload dword; `0x84e44040`, `0x97000040`, `0x938af040` and `0x91ea2040`
+two; `0x93cc0080` four; `0x944c42c0` six; `0x9ed380e0` seven. `0x98804000` is a header with no payload (count 0, bit 14 set): the ICD inserts
+it before the closing packet when the context asks for a flush, so it is a one-dword marker (its meaning, inferred: pipeline flush or fence).
+
+**Closing a buffer and chaining. Established (`DispatchCurrentPkt` `0x6901a83a`, `ClosePacket` `0x69062118`).** The ICD ends the data in a node with a
+three-dword packet: header `0x97000040`, a dword with the next node's position in bits 31:12 and, in the low bits, a field built from the running sequence
+number, and a dword with this node's position in bits 31:12 and the low twelve bits of the sequence number. (The display-list builder's variant writes
+the same header and the two positions without the sequence number.) The node is then padded with zero dwords to a 32-byte boundary, and the link word
+below is stored. A fixed packet (`0x09280080` plus four dwords the context keeps together) is appended to the new node after a dispatch.
+
+**Link words. Established as software writes; the engine's use is expected.** The ICD's node link word is `((units_used & 0x1ff) | (next_node_position << 9)) << 3 | (flags & 6) | 1`:
+bit 0 set means the engine owns the node, bits 2:1 carry flags from the caller (not decoded; the caller's bit 1 together with its bit 0 selects a finish), bits 11:3 the number of
+32-byte units used and bits 31:12 the next node's position. The miniport's own per-packet link table (`grmDispatchPacket`, `0x1725c`) writes the same layout except that the
+unit count is stored minus one and the flags come from its caller; it then spins until the first dword of the next slot loses bit 0 (the engine clearing it). The two
+builders disagree by one in the length field, so which one the engine follows, or whether the engine reads a different word altogether, is not settled.
+
+**Waiting. Established (`CoWaitForPacket` `0x6901b50c`, tail of `DispatchCurrentPkt`).** To reuse a node, or to wait for the engine, the ICD spins on bit 0 of the
+node's first dword. It steps through an 18-entry backoff table (`delayTable`) of busy-wait counts; at the last step, unless the context's no-block flag is set,
+it asks the driver (`0x62`) whether the hardware is still busy and, if so, sleeps on a kernel event (handle kept in the context) that the miniport signals
+from the engine's completion interrupt. `Finish` is escape `0x4c` followed by a wait on a second event. `__glCoIcdKickScheduler` is escape `0x4d` with the
+closed node's position as its one argument.
 
 ## What is not known
 
