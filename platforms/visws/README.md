@@ -131,6 +131,7 @@ the chipset "largely conforms to the PC architecture with some notable exception
 | `0xfc000000` | Lithium bridge A window |
 | `0xfd000000` | Lithium bridge B window |
 | `0xff001000`, `0xff00f000`, `0xff010000` | Lithium audio register pages |
+| `0xff005000` (`0x20` bytes) | the I2C master of the optional analogue video board, as SGI's NT `sgijack.sys` uses it ([NT drivers](../../software/visws/nt-drivers.md)); the ASIC that decodes it is unknown |
 | `0xfee00000` | Local APIC of each processor (Intel default) |
 
 I/O ports of note: `0x2e`/`0x2f` Super I/O index and data; `0xf80` PIIX4 power-management block (set by firmware,

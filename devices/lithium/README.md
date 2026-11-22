@@ -147,7 +147,7 @@ through two small routines, `READ_LITHIUM` and `WRITE_LITHIUM` (offset, width 1,
 - **Pointers.** Rings are 8 KiB (4 KiB for the other size code) of contiguous memory aligned to 256 bytes, in 32-byte steps. The driver
   writes the software pointer as a single byte (`(write position - base) >> 5` for output, read position for input) and reads the
   hardware pointer as a single byte (control `+1` for output, `+0` for input), always as one-byte accesses.
-- **Counters.** `GetLiUstMscPair` forms a 64-bit time stamp from the time-stamp word of the channel and the global `ust_high`, re-reading `ust_high` until
+- **Counters.** `GetLiUstMscPair` forms a 64-bit time stamp from the time-stamp word of the channel and the global `ust_high` (`+0x204`), re-reading `ust_high` until
   it is stable, and returns the channel's counter beside it. The driver zeroes the output counter at start when the pair is unset
   (and the input counter on input), so both counters are writable.
 - **Link check.** `HwCheckLink` reads the halfword at offset 0 and says the link is good when bit 2 is clear.
@@ -159,7 +159,11 @@ through two small routines, `READ_LITHIUM` and `WRITE_LITHIUM` (offset, width 1,
 
 The NT video capture driver pairs each of four video channel windows (`0xf8000000` to `0xfb000000`) with an eight-byte control
 pair in the audio window's page at `0xff001340`, `0xff001348`, `0xff001350` and `0xff001358` (the whole page is at
-`0xff001000`; Linux names nothing above `+0x30c`). Established as mappings; the meaning of the words is unknown.
+`0xff001000`; Linux names nothing above `+0x30c`). Established as mappings. The driver uses each pair the way the audio engine's
+time-stamp and counter pairs are used: word 0 is a time stamp read against `ust_high` (the driver's `ReadUst`), word 1 a media stream counter
+whose bit 0 is a flag and bits 31:1 a count (`ReadMsc`), both zeroed when a channel starts; software expectation from the driver's
+names and use. Which pair belongs to which channel was re-checked in the 5.2.2 build: `0xff001350` goes with the window `0xf8000000`
+(`sgilivideoout1`), `0xff001358` with `0xf9000000` (`out2`), `0xff001340` with `0xfa000000` (`in1`) and `0xff001348` with `0xfb000000` (`in2`).
 [Details](../../software/visws/nt-drivers.md).
 
 ## Interrupts from PCI devices (established, with a caveat)
@@ -181,11 +185,16 @@ bits is turned into controller lines is in the [interrupt page](../../platforms/
 
 ## Review
 
-Independent review of the audio DMA section (chips commits 7990dc9..7a40091). `sgisound.sys` and its symbol file were read from the
-1999 build on the SGI 320 NT 4.0 install CD (Disk 2); the 5.2.2 build the section cites sits in an InstallShield cabinet that could
-not be unpacked here, so it was not re-read. In the 1999 build: the seven-row register table (base `0x100 + 0xc * n`, control `+4`,
-configuration `+8`, time stamp `0x300 + 8 * n`, counter `+4`, pointer bytes at control `+1` and `+0`), `sndStartDMA` (base written as
-address >> 8 with bit 29, configuration bits 1:0, 2 and 3, size code 7 for 8 KiB and 6 otherwise, silence word at `0xff00f000 + 0x500`,
-enable bit 27 last, output words at `+0x98` and `+0x9c` zeroed), `HwCheckLink` (bit 2 clear), `GetLiUstMscPair` (`ust_high` at `+0x204`
-re-read until stable) and the counter zeroing at `+0x304` and `+0x30c` all match the text. The driver imports no interrupt-connect call.
-The vendor and device id constants appear in no Windows binary read, so their `inferred` grade stands.
+Independent review of the audio DMA section (chips commits 7990dc9..7a40091) read the 1999 `sgisound.sys` and its symbol file from the SGI 320 NT 4.0
+install CD (Disk 2), because the 5.2.2 build the section cites sits in an InstallShield cabinet that could not be unpacked then. In the 1999 build the
+seven-row register table, `sndStartDMA`, `HwCheckLink`, `GetLiUstMscPair` and the counter zeroing all matched the text; the driver imports
+no interrupt-connect call. The vendor and device id constants appear in no Windows binary read, so their `inferred` grade stands.
+
+The 5.2.2 build (build time 2001-10-29, from the Digital Media 5.2.2 pack, unpacked with an InstallShield extractor) was then read directly, with
+its symbols, and the same items checked: the three page addresses; the codec command and data words and the busy loop (36,000 stalls of
+10 microseconds); the seven-row table (the table's bytes were dumped: base `0x100 + 0xc * n`, control `+4`, configuration `+8`, time stamp
+`0x300 + 8 * n`, counter `+4`, pointer bytes at control `+1` and `+0`); `sndStartDMA`'s order and bit values (base `address >> 8` with bit 29,
+configuration bits 1:0, 2 and 3, size code 7 or 6, silence word, enable bit 27 last, the output-only zeroing of `+0x98` and `+0x9c`);
+the byte-wide pointers; `HwCheckLink` (bit 2 clear); `GetLiUstMscPair` (high word at `+0x204`, counters at `+0x304` and `+0x30c`); and the absence
+of any interrupt connection. No difference from the text was found. The two builds' register table is the same table. The
+`sgilivid.sys` and `sgiust.sys` windows and addresses in the section above were re-read the same way.

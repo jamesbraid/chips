@@ -13,12 +13,14 @@ otherwise.
 |---|---|---|
 | SGI Recovery CD-1 v1.1 and SGI 320 Windows NT 4.0 install CD, Disk 1 (the two are the same NT 4.0 Service Pack 4 tree with SGI changes; the HAL, loader and drivers are byte-identical, the text-mode setup files differ in comments) | software mirror | `halborg.dll`, `halbrgup.dll`, `arcldr.exe`, `arcsetup.exe`, `sgcomp.sys` (older build), `sgcodd.dll`, `sgiusb00.sys`, `txtsetup.sif`, `dosnet.inf`, `syssetup.inf`, and the symbol tree |
 | SGI Cobalt Graphics 5.2.4 for NT 4.0 and Windows 2000 (Internet Archive item `sgi_320_540_drivers`) | software mirror | `sgcomp.sys` 5.2.4, `sgcodd.dll`, `sgcoicd.dll`, `sgiFP.dll`, `sgcotab.cpl`, symbol files |
-| SGI Digital Media Software 5.2.2 for NT 4.0 and Windows 2000 (same item) | software mirror | `sgisound.sys`, `sgilivid.sys`, `sgiust.sys`, `sgisound.dll`, the audio and video control panels, Video for Windows codecs, QuickTime components |
-| SGI Ethernet 4.01.75 (same item) | software mirror | `sgienet.inf`, `sgincen5.sys` |
+| SGI Digital Media Software 5.2.2 for NT 4.0 and Windows 2000 (same item) | software mirror | `sgisound.sys`, `sgilivid.sys`, `sgiust.sys`, `sgijack.sys`, `sgisound.dll`, the audio and video control panels, Video for Windows codecs, QuickTime components |
+| SGI Ethernet 4.01.75 (same item) | software mirror | `sgienet.inf`, `sgincen5.sys`, the release note |
 | SGI IEEE 1394 (same item) | software mirror | `Sgi1394.sys` 1.0, `RadDVDev.sys` and the DV libraries |
 
-Windows 2000 builds of the graphics and digital-media packages were unpacked but not read; their file lists broadly match the
-NT 4.0 ones.
+The InstallShield wrapper of each pack is opened with the RE image's `7z` and `unshield` (`7z x` the installer, then `unshield x data1.hdr`); the
+symbol trees inside the packs carry `.pdb` files whose CodeView 2.0 symbol records name the routines, which is what the vendor names below come from.
+Windows 2000 builds of the graphics and digital-media packages are separate binaries with different sizes from the NT 4.0 ones (for example `sgcomp.sys` is 65,808
+bytes there and 62,992 here).
 The NT 4.0 install CDs carry no text-mode OEM override under another name: the HAL and setup changes are made in place in
 the stock NT 4.0 tree, as below.
 
@@ -45,13 +47,35 @@ Hardware access is in [devices/lithium](../../devices/lithium/README.md#what-sgi
 It does not enumerate PCI: it maps three fixed Lithium pages and reports its own resource use. Imports no interrupt-connect
 call. Established.
 
+Third reading, of the 5.2.2 build itself (build time 2001-10-29, the Digital Media 5.2.2 pack, unpacked with an InstallShield extractor; the
+earlier review could read only the 1999 build). Every register fact in the Lithium page was checked against this build and held: the
+three page addresses, the codec command word at `+0x18` and data word at `+0x1c` (a write stores the data first, then the register number;
+a read stores the number with `0x80`, waits for bit 15 to clear, reads the data), the busy wait of up to 36,000 ten-microsecond stalls (after
+a timeout the driver sets a flag and never waits again), the seven-row register table (the bytes of the table itself were dumped and match
+row for row), ring base `address >> 8 | 0x20000000`, configuration bits (bit 2 stereo, bit 3 output, format in bits 1:0), control size code 7 for an
+8 KiB ring and 6 otherwise with the enable in bit 27 set last, the silence word before the enable, the output-only zeroing of `+0x98`
+and `+0x9c` of the second page, the single-byte pointers (output: software writes control `+0`, hardware read from control `+1`; input the
+other way round), and the link check on bit 2. Two details were missing from the page and are added there: the global 64-bit counter used
+for the time-stamp pair is read as `+0x204` (high word) before and after the channel's time stamp and re-read until the two highs agree, and
+the output counter written to zero at start is the word at `+0x30c`, the input one `+0x304`. The 1999 build (28,720 bytes, build 1999-04-27,
+Recovery CD-2 v1.1) carries the same register table at a different address and the same page constants; it was not read function by function.
+
 ## Unadjusted system time: `sgiust.sys` 5.2.2
 
 A 3.5 KB driver. It creates `\Device\Sgiust` and the link `\DosDevices\SGIUST`, maps the eight bytes at `0xff001200` (the
 Lithium window's `+0x200`, the 64-bit counter Linux calls unadjusted system time), writes zero to both words at load, and
-answers a control request by mapping that page into the caller's address space through `\Device\PhysicalMemory` so that
-user code can read the counter directly. Established. So the counter is writable and is not reset by anything else at
-boot; whether it counts microseconds (Linux's comment) is not measured.
+answers three control requests. Read from the 5.2.2 build in full. Established:
+
+| Code | What it does |
+|---|---|
+| `0x220000` | reads the counter for a kernel caller: the high word at `+4` first, then the low word at `+0` and the high word again, repeated until the two high reads agree; it returns the 64-bit value multiplied by 1000 |
+| `0x220004` | maps the page holding the counter into the caller's process through `\Device\PhysicalMemory`, read-write and uncached, and returns the pointer to the eight bytes |
+| `0x220008` | unmaps that view |
+
+So the counter is writable and is not reset by anything else at boot. The multiplication by 1000 on the kernel-mode read gives nanoseconds if the counter counts microseconds, as Linux's comment
+says (a software expectation of the driver; the rate itself has not been measured). The counter's low half is the first word of the pair; the high half is `ust_high` in the audio driver, at `+0x204`. The
+1999 build (2,704 bytes) has the same three codes, the same address and the same factor of 1000 (constants found in its image; not read
+function by function).
 
 ## Video capture and output: `sgilivid.sys` 5.2.2
 
@@ -65,22 +89,53 @@ channel windows and gives each a bus-0 interrupt level and a pair of control wor
 | `0xfa000000` | `0xff001340` | `0x12` (18) |
 | `0xfb000000` | `0xff001348` | `0x13` (19) |
 
-It also maps `0xff001200`, the system-time counter above, which it reads to time-stamp frames (inferred from the mapping and
-the pairing with the counter's second word at `+4`; the read sites were not followed). The levels 16 to 19 are the Cobalt entries Linux names
-as the two video outputs and two video inputs (16 and 17, 18 and 19): the HAL's translation of level to entry was not read,
-so equality of level and entry is inferred. The Lithium window offsets `+0x340` to `+0x35f` are not in Linux's register file
+The windows, control pairs and levels above were checked again in the 5.2.2 build (the same table of four, in the same order). Which window
+is which direction is in the driver's own device names: `\Device\sgilivideoout1` is `0xf8000000`, `sgilivideoout2` `0xf9000000`,
+`sgilivideoin1` `0xfa000000` and `sgilivideoin2` `0xfb000000` (established), matching the levels 16 and 17 for the two video outputs and 18
+and 19 for the two inputs that Linux names. The build also maps `0xff001200` (the system-time counter above)
+and time-stamps every frame with it.
+
+**The channel window is a register file with an eight-byte stride** (read from the 5.2.2 build with its symbols; register `n` is at window
+`+8n`, 32 bits wide; the driver has three helpers named `PIOReadLi` (read and mask), `PIOWriteLiReg` (write) and `PIOWriteLiValue` (read, clear a
+mask, set bits)). Established as use; the meaning of each is the driver's naming and the use, so a software expectation:
+
+| Register | Offset | What the driver does |
+|---|---|---|
+| 0 | `+0x00` | the channel control and enable: written `0x1003` to start an input channel and `3` to start an output channel, `0` to stop (the stop routine also writes register 3 to zero); the interrupt handler reads it first and treats zero as "not mine" |
+| 1 | `+0x08` | status: bit 1 means a frame or field event is pending and the handler loops on it; bit `0x1000` is a second event the handler reports; one parity bit (bit 17 on an input, bit 12 on an output) is compared with the driver's own field counter. `InitMsc` reads it once; whether that read clears anything is unknown |
+| 2 | `+0x10` | written `0` then `3` when each output channel is created |
+| 3 | `+0x18` | the next descriptor address: `ProgramLiNDA` writes the address of the next buffer descriptor with the flag bits `6` or'ed in (`7` when its last argument is non-zero); the handler reads it back to learn where the engine stopped |
+| 8 to `0xb` | `+0x40` to `+0x58` | written once with `0x000b408a`, `0x000b408a`, `0x0023f806` and `0x0033f407` when each output channel is created (the five values the earlier reading listed without a register: they go to registers 8, 9, 10 and 11, then register 2) |
+| `0x10` | `+0x80` | the genlock delay (`ProgramGenlockDelay` writes it on the two output channels) |
+| `0x11` | `+0x88` | a global configuration word, read-modify-written by `ProgramGlobalConfig` from the caller's configuration record: separate bits for each input source, standard and output option (the driver builds it from about fifteen flags). It lies past the `0x80`-byte window the channels map; a separate "global" device maps `0xf8000000` for `0x90` bytes to reach it |
+
+The control pair in the Lithium window is a time stamp and a counter: word 0 is the channel's UST stamp (`ReadUst` reads it and
+combines it with the high half of the system-time counter), word 1 is the media stream counter (`ReadMsc`: bits 31:1 are the count, bit 0 a
+flag; the driver extends it to 64 bits in software and `InitMsc` writes both words to zero). That is the same pair-of-words shape the audio engine
+has at `+0x300` and `+0x304`. The system-time counter is read through `ReadSysUst` (re-reading the high word at `+0x204` until it
+agrees) and scaled by 1000 in `ReadSysUst64`, as in `sgiust.sys`.
+
+The levels 16 to 19 are connected through `IoConnectInterrupt` on the HAL's vectors, and the code computes the highest interrupt priority
+over the four levels (`FindMaxInterruptIrql`) to synchronise with all of them. The Lithium window offsets `+0x340` to `+0x35f` are not in Linux's register file
 and not documented anywhere else we hold. The windows at `0xf8000000` to `0xfb000000` are decoded by an ASIC that no page
-here has placed (Cobalt, Lithium or Arsenic); unknown. A first-time set-up of the first channel writes five indexed values
-(`0x000b408a`, `0x000b408a`, `0x0023f806`, `0x0033f407` and a two-step enable `0`, `3`) through a helper whose register target was
-not followed.
+here has placed (Cobalt, Lithium or Arsenic); unknown. Descriptor and buffer layouts, the format records and the meaning of the bits of
+registers 1 and `0x11` were not decoded. The 1999 build (17,936 bytes, Recovery CD-2 v1.1) has the same window, pair and first-time
+constants (found in its image); it was not read function by function.
 
-## Ethernet: `sgincen5.sys` 4.01.75 and `sgienet.inf`
+## Ethernet: `sgincen5.sys` and `sgienet.inf` (package 4.01.75)
 
-An NDIS 4 miniport (Intel's PRO/100 driver, `E100BNT` in its debug strings, re-labelled by SGI). The setup file matches
-`PCI\VEN_8086&DEV_1229` with revision `01` and `02` and subsystem `0000`, titled "Integrated 8255x-based PCI integrated
-adapter, SGI Visual Workstation 320/540". A third line for revision `08` with the label for the 540 is commented out (and
-misspelled `SYBSYS`). Established for the match; so the on-board Ethernet is an Intel 82557 or 82558 class part on the
-Lithium bridge A, as Linux's header says, and the 540's part, if different, is not covered by this package.
+An NDIS miniport (Intel's PRO/100 driver, `E100BNT` in its debug strings, re-labelled by SGI). Read from the package's own files. The
+driver registers itself as an **NDIS 5.0** miniport (the characteristics record it hands to `NdisMRegisterMiniport` has major version 5 and the 5.0
+size, `0x60`), not NDIS 4 as an earlier version of this page said, and the setup file's upper range is `ndis5`; the INF is dated 27 March 2000
+(driver version `1.1.1.001`) though the package is numbered 4.01.75. Established.
+
+The setup file matches `PCI\VEN_8086&DEV_1229` with subsystem `0000` and revision `01` or `02`, and gives the entry the name "Silicon Graphics
+320 Integrated 82557 Ethernet". A third line, for revision `08`, names "Silicon Graphics 540 Integrated 82559 Ethernet", but it is commented out
+and misspelled (`SYBSYS`), so it can never match as shipped. Established for the strings and the match. So SGI's own setup file says the
+320's on-board part is an Intel 82557 (revisions 1 and 2) on the Lithium bridge A, as Linux's header says, and that the 540's is an 82559 at
+revision 8 (the setup file's naming, not a measured identity; the row is disabled, so the 540's Ethernet is not covered by this package as
+shipped). The service is "SGI Ethernet Driver for Intel 8255x"; its tunables (receive frame descriptors default 48, transmit control blocks 32, coalesce buffers
+8) are Intel's.
 
 ## USB: `sgiusb00.sys`
 
@@ -107,6 +162,43 @@ and a commercial driver-kit banner of 1996-97) with IOCTL names that mention a P
 own registry key (the error text "information needed to start device is missing from the registry"), so the hardware's
 identity is not in the driver. Whether the 1394 link of these machines is on board or on a card, and which chip it is, is
 unknown; the driver says nothing about either. `RadDVDev.sys` and its libraries are a DV camera layer above it.
+
+## Analogue video option: `sgijack.sys` 5.2.2 ("Jack Video Interface")
+
+Not in any earlier page. A 19.6 KB driver in the Digital Media 5.2.2 pack (a 15 KB 1999 build is on Recovery CD-2 v1.1), read in Ghidra with
+its symbols. It drives an optional analogue video board over I2C; strings and tables are the evidence. Established unless noted:
+
+- It creates a main device and eighteen further control devices, and keeps a table of three I2C chips by 8-bit
+  write address: `0x48` ("Video Decoder", registers `0x00` to `0x1f`), `0x88` ("Video Encoder", registers `0x26` to `0x7f`) and `0x40` ("i2c Expander", one register). The
+  register names are a long list in the driver: for the decoder a chip version at 0, four analogue-input controls, sync start and stop, luminance
+  brightness and contrast, chroma saturation and hue, output controls, a status register and a text slicer; for the encoder subcarrier phase bytes, burst
+  amplitude and window, closed-caption, teletext and wide-screen-signalling fields, copy-guard, colour gain and black level. That these two are Philips
+  SAA7111-class and SAA7121-class parts is inferred from the register names and the addresses; the driver names no part number.
+- The host side is an I2C master at physical `0xff005000`, `0x20` bytes (`MmMapIoSpace`), 32-bit registers; the byte-write path uses `+0x10` (transfer status and
+  control, polled for completion with an "Xfer Done timeout" error) and `+0x18` (the data byte), a reset writes `0x80` at `+0x00`, and the control
+  get and set calls read and write 32-bit registers at `base + index`. The wait routines report "wait for ack timeout", "Idle Timeout" and "Bus Error".
+  That window is not in any Lithium table here and the ASIC that decodes it is unknown.
+- The driver asks the firmware whether the board is present: it reads the ARC `SystemBiosDate` and treats a 1998 date with a month of 9 or less and a day of 16 or less as "no board" (a crude test for old firmware), then
+  searches the ARC `MultifunctionAdapter` entries for the identifier "SGI REV INFO" and reads the configuration data of adapter 3 (a non-zero word at
+  `+0x20` counts as present) (inferred from the decompiled code; not traced against the firmware's tree). Two firmware environment variables override it, read through
+  `HalGetEnvironmentVariable`: `ForceOptionBoard` and `AnalogVideo`, each true when the value is `y`. Defaults come from, and board information goes to, the
+  registry.
+
+## Hardware error log: `sgielog.sys` (1999 build)
+
+A 6 KB driver on Recovery CD-2 v1.1, read in Ghidra without symbols. It creates `\Device\Sgielog` and `\DosDevices\Sgielog`, queries the HAL
+for the callback-registration entry through the HAL dispatch table (information class `0x8100002`, the one the [HAL page](nt-hal.md#the-sgi-specific-hal-interface)
+lists as a pointer to `sgixCallbackRegister`), registers a callback with id 1, and turns what the HAL reports into event-log entries. The message texts it carries are:
+the system restarted after an uncorrectable memory ECC error at an address, during an operation, from a source; restarted after an access to
+invalid memory; a corrected ECC error in a named DIMM; an ECC error with syndrome zero ignored. At start-up it also reads a 12-byte record
+from the CMOS (`HalGetBusData` with data type CMOS, offset `0x50`) and, if it is non-zero, reports it and writes zeros back with `HalSetBusData`; that is how an
+error recorded before a restart reaches the log on the next boot (inferred from the call pattern; who writes the record is the HAL's side, not read). Established for the texts and the registration; the HAL's side of the record is not read.
+
+## Katmai state saver: `intlfxsr.sys` (Recovery CD-2 v1.1)
+
+A 6.4 KB Intel driver (build time 8 December 1998) that checks for "GenuineIntel" and the FXSR feature, then hooks thread creation and context
+switching (`PsSetCreateThreadNotifyRoutine`, `KeSetSwapContextNotifyRoutine`, `PsSetLegoNotifyRoutine`) so that NT 4.0, which does not know the SSE register state of the Pentium III
+("Katmai"), saves it per thread. It touches no SGI hardware. Established for the strings and imports, inferred for the behaviour.
 
 ## Still to read
 
