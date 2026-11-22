@@ -117,6 +117,58 @@ gives a ceiling, not a measured speed.
   capture from an IX-brick with one C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role;
   and the chip part numbers inside the IO9 (see [the IX-brick page](../bricks/ixbrick.md)).
 
+## Multi-C-brick cabling
+
+Sources: 007-4579-001 printed pp.77 to 101 (text layer), with pp.105, 106 and 108 for the connectors and the C-brick
+restrictions; 007-4520-006 printed pp.13, 17, 38, 52 and 54. The figures were not rendered: the Library serves the PDFs
+only through an authenticated viewer. So no cable line in any figure was read from a picture. **Established** means
+printed in the text; **unknown** means not printed in the pages read.
+
+**Counts (established).**
+
+- The 3300 has up to 12 processors, one IX-brick, "no routers" and up to three C-bricks in a 17U rack (p.77; Figure 3-5,
+  p.88, "1 to 3 per system").
+- The 3700 needs a minimum of one IX-brick per 64 processors and four 8-port routers per 32 processors (p.79).
+- The Figure 3-3 example (p.80, 32 processors) has eight C-brick labels, four R-brick labels and one IX-brick. These are
+  label counts from the text layer; the cables are not read.
+
+**Joining C-bricks.**
+
+- Each C-brick has one LINK (NI) connector per node: "Node 0 LINK (NI)" and "Node 1 LINK (NI)" (Figure 5-4, p.106).
+  They "connect the C-brick to an R-brick or to another C-brick" by NUMAlink cable at 1.6 GB/s each direction (p.105).
+- A 3300 has no routers (p.77), so two or three C-bricks in one are joined only through these connectors. (inferred
+  from p.77 and p.105)
+- C-bricks in one system may run at different processor speeds (p.108). Processors inside one C-brick must match.
+- Two C-bricks: which node joins which, and how many cables: **unknown** (not printed).
+- Three C-bricks: **unknown** (not printed). Figure 3-2 (p.78) draws one 3300 example with three C-bricks and an IX-brick,
+  but its cable lines are not in the text layer.
+- Four or six C-bricks: **unknown** (not printed). Neither the 3300 limit nor the 3700 example gives either count.
+
+**Attaching the IX-brick.**
+
+- A C-brick's Node 0 and Node 1 XIO (II) connectors "connect a C-brick to an I/O-brick (IX-brick or PX-brick)" by NUMAlink
+  cable at 1.2 GB/s each direction (p.105).
+- The IX-brick has two I/O ports, labelled XIO 10 and XIO 11 (Figure 3-5, p.88). The PX-brick has the same two labels
+  (Figure 3-6, p.89). Its other connections are PCI slots.
+- The driver guide's one drawing (007-4520-006 p.52, Figure 5-1) shows one C-brick, module 001c27 (p.54), with Node 0 XIO
+  to "XIO link to Port 'A'" and Node 1 XIO to "XIO link to Port 'B'". It gives no count for two or three C-bricks.
+- Which C-brick the XIO 10 and XIO 11 cables reach when there is more than one C-brick: **unknown** (not printed). The
+  node-to-port wiring for one C-brick is in [the IX-brick wiring section](#ix-brick-wiring).
+
+**Driver guide.**
+
+- The SC-brick has two nodes, each with one NUMAlink and one Xtown2 link (Figure 2-2, p.17). The rates there are 6.4 GB/s
+  and 2.4 GB/s; the user guide gives 1.6 GB/s and 1.2 GB/s for the same connectors (p.105). That conflict is the open
+  item above.
+- The driver guide says the system scales to 512 processors "in a cache-coherent domain" (p.13). The user guide gives 64
+  processors per coherent domain (p.81). Not settled.
+- A PX-brick's two 1200 MB/s Xtown2 ports "connect SC-bricks" (p.38). The count of SC-bricks per port is not printed.
+
+**Not printed.** Two-, three-, four- and six-C-brick layouts; the node pairs and cable counts for each; the C-brick that
+each XIO cable reaches in a multi-C-brick system; the cable lines of Figures 3-2 and 3-3; and the NUMAlink generation
+of the LINK cables (p.105 says only "NUMAlink cable"; p.81 names NUMAlink 4 for the internal channel only). A rendered
+Figure 3-2 or 3-3, or a cabling guide for the 3300, would settle the layouts.
+
 ## SHub generation
 
 Verdict: the 3300 and 3700 C-brick use **SHub 1**, not SHub 2. The 3300 is an extension of the Altix 350 (SHub 1)
