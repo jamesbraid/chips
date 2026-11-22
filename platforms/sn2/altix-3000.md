@@ -72,7 +72,7 @@ IX chapter is not used.
 - **Port F (drawing established; meaning inferred).** Each PIC has one Port F, and the drawing gives it one line to each of
   its two buses, each bus feeding its two slots. Port F is therefore the PCI-X side that carries both of a PIC's buses
   (inferred from the drawing and driver p.55, which says each host bridge adapter has two PCI-X buses). The letter F is
-  not defined in any held text.
+  not defined in any held text; the widget-number bullet below reads it as the PIC's own bridge port.
 - **XIO 10 is Node 0, Port A (established as drawn for the PX-brick; inferred for the IX-brick).** Driver Figure 5-1 (p.52)
   links the C-brick's "NODE 0 XIO (II)" to "XIO link to Port 'A'", with "XIO 10" over "XIO 'A'". Node 0 is slab 0 (driver
   p.54 and p.55 example). Figure 5-1 is drawn on the PX-brick back panel. The IX and PX addenda show the same PIC ports
@@ -92,7 +92,7 @@ IX chapter is not used.
 
 | PIC (widget) | Bus | Slots | Speed | Contents |
 |---|---|---|---|---|
-| Bottom (12) | 1 | Slot 1: IO9 base I/O card. Slot 2: serial daughtercard slot (007-4604-001 p.2), no bus connection | 66 MHz PCI (the IO9 is a 66 MHz PCI card, 007-4520-006 p.38) | IO9: IOC4, Ethernet, SCSI, DVD-ROM |
+| Bottom (12) | 1 | Slot 1: IO9 base I/O card (devices 1, 3 and 4). Slot 2: serial daughtercard slot (device 2, 007-4604-001 p.2), no bus connection | 66 MHz PCI (the IO9 is a 66 MHz PCI card, 007-4520-006 p.38; the 3300 capture prints `PCI:66MHz:64-bit`) | IO9: IOC4 (1), SCSI (3), Ethernet (4), DVD-ROM |
 | Bottom (12) | 2 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
 | Middle (15) | 3 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
 | Middle (15) | 4 | Slots 1 and 2 | 133 MHz with one card; 100 MHz with two | Cards |
@@ -104,19 +104,36 @@ PCI-X cards on one bus run at 100 MHz, and a bus runs at the speed of its slowes
 gives a ceiling, not a measured speed.
 
 - **Base I/O on bus 1, slot 1 (established as drawn, driver Figure 2-3 p.19).** The card is a set of three PCI functions:
-  IOC4 (labelled "Bus 1 Slot 1"), an Ethernet chipset (Broadcom BCM5701 in 007-4579-001 Figure 6-3, p.115; labelled
-  "Bus 1 Slot 3" in Figure 2-3) and a SCSI controller (QLogic in Figure 6-3; labelled "Bus 1 Slot 4" in Figure 2-3).
-  Reading those labels as PCI device numbers 1, 3 and 4 is inferred, and it conflicts with the other readings of the
-  same card. The Origin 350 IO9 capture puts the ISP 12160 (SCSI) at device 3 and the BCM5701 (Ethernet) at device 4
-  when its logical numbers are read with the one-device offset ([the Origin 350 IO9 page](io9-board.md#pci-position)).
-  The Altix NG-HINV listing puts the QLogic at `pci01.03.0` and the BCM5701 at `pci01.04.0`
-  ([the IX-brick page](../bricks/ixbrick.md)). Both put SCSI at 3 and Ethernet at 4, the reverse of Figure 2-3. Neither
-  reading is chosen; a PCI listing from an IX-brick would settle it. The IOC4 carries the RS-232 ports, PS/2 keyboard
+  IOC4, an Ethernet chipset (Broadcom BCM5701 in 007-4579-001 Figure 6-3, p.115) and a SCSI controller (QLogic in Figure 6-3).
+  Figure 2-3 labels them "Bus 1 Slot 1", "Bus 1 Slot 3" (Ethernet) and "Bus 1 Slot 4" (SCSI); the driver guide says the device
+  number is the slot number (p.54).
+- **Device numbers: IOC4 1, SCSI 3, Ethernet 4 (established by capture; settles the earlier conflict).** An Altix 3300 with
+  one IX-brick posted its console output to comp.sys.sgi.admin on 15 July 2005 (message-id
+  `1121468096.910061.279690@g49g2000cwa.googlegroups.com`, SAL 3.01 rel030813). The SAL prints the Ethernet adapter as
+  `tg0 (widget 12, slot 4)` and both SCSI adapters as `pci id 3`. Linux 2.4.20 then reports the `tg3` NIC at `01:04.0`, the
+  QLogic at `01:03.0` (`pci01.03.0-1` and `-2`, the two channels of one part) and the IOC4 at `01:01.0` with its DVD-ROM.
+  A second post (message-id `c2b1ja$ssi$1@news.ucar.edu`, an Altix with an IO9, brick type not stated) shows the same three
+  devices at 1, 3 and 4 in an EFI listing. Figure 2-3 therefore has the Ethernet and SCSI labels swapped; it is a drawing,
+  and the console names the live devices. Linux numbers its bridge devices one lower (`Device(2)` for the SCSI at 3,
+  `Device(0)` for the IOC4 at 1). The same card family, part `030-1771`, is on the Altix 3300 NIC (`030-1771-000`) and in
+  Origin 350 captures (`-005`, `-006`); that an Origin 3000 or Onyx 3000 IX-brick uses the same numbers is inferred.
+  Device 2 is bus 1 slot 2, the serial daughtercard position, which carries no PCI function. The read is in
+  sysco `software/firmware/ix-px-brick-topology.md`.
+  The IOC4 carries the RS-232 ports, PS/2 keyboard
   and mouse, the real-time jacks, NVRAM and the real-time clock, and an ATA bus to the DVD-ROM (driver p.18; Figure 6-3
   p.115). Figure 6-3 labels the IOC4 block "IOC4 FPGA ASIC"; the FPGA's role is not stated.
-- **Not settled.** The reason for the letter F; whether the XIO 10 cable reaches Port A by the upper box as drawn (a
-  capture from an IX-brick with one C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role;
-  and the chip part numbers inside the IO9 (see [the IX-brick page](../bricks/ixbrick.md)).
+- **Widget numbers are crossbar port numbers (inferred).** Linux names crossbar ports `0x8` to `0xf` (`XBOW_PORT_C` is
+  `0xc`, `XBOW_PORT_F` `0xf`), so Port A is widget 10 and Port B widget 11, which is why the connectors are XIO 10 and
+  XIO 11. The middle PIC's own PCI side is Port F, widget 15; Ports C and D reach the lower and upper PICs, widgets 12 and
+  13. That fits every drawing here and gives the `Port F` label a meaning; no held text states it. The SAL 10.54 table at
+  `0xffc2b2d8` gives widgets 12, 13 and 15 the first buses 1, 5 and 3 for both type bytes `0x3d` (IX) and `0x23` (PX)
+  (established as a binary reading).
+- **Not settled.** Whether the XIO 10 cable reaches Port A by the upper box as drawn (a capture from an IX-brick with one
+  C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role; the SCSI channel behind the external
+  connector (both drives answered on the first channel in the 3300 capture, nothing was cabled to the external one); and the
+  chip part numbers inside the IO9 (see [the IX-brick page](../bricks/ixbrick.md)). The 3300 capture prints
+  `Found I/O brick attached to module/001c04/slab/0/node` with two C-bricks, so that IX-brick hangs from the first C-brick's
+  slab 0 (Node 0).
 
 ## Multi-C-brick cabling
 
@@ -327,3 +344,8 @@ Not settled: whether the Bx2 is SHub 1 or 2; the 3000 C-brick's L1 type; the SHu
 
 Not reviewed. Changed claims: the IX-brick wiring section, the sources line and the open items in the IX-brick page's
 unknowns table that this section now answers. Renewed independent review is needed before these are cleared.
+
+### IX-brick device numbers (2026-11-22)
+
+Not reviewed. Changed claims: the IO9 device numbers (IOC4 1, SCSI 3, Ethernet 4, from the Altix 3300 capture), the
+widget-number reading and the bus 1 table row. Renewed independent review is needed before these are cleared.

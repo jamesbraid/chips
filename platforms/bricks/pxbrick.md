@@ -89,9 +89,11 @@ the addendum's drawing.
 Inferred: the middle PIC is the host-facing node. It takes host traffic on ports A and B and
 forwards traffic for the outer buses over its internal ports. No cited source says whether the
 PX-brick's middle PIC presents a widget-zero crossbar face, the question [crosstalk-link.md](../../devices/crosstalk/README.md)
-raises for PXBOW, so none is assumed here. Whether the upper and lower PICs route, which widget
-numbers the three PICs take, and whether they can be reached without the middle PIC are all
-**unknown**.
+raises for PXBOW, so none is assumed here. Whether the upper and lower PICs route and whether they can be reached without the middle PIC are
+**unknown**. The three PICs are widgets 12 (lower), 15 (middle) and 13 (upper) on an Altix host (**established as
+drawn**, 007-4520-006 pp.38, 52, 54), and the SAL 10.54 table at `0xffc2b2d8` gives the PX type byte `0x23` first buses
+1, 5 and 3 for widgets 12, 13 and 15 (established, binary reading; sysco `software/firmware/ix-px-brick-topology.md`).
+Whether an Origin 3000 compute brick assigns the same widget numbers is **unknown**.
 
 ### L1 evidence on the internal links
 
@@ -207,9 +209,9 @@ Inferred from the Linux IA-64 SN headers (checked at the pinned commit):
   (`arch/ia64/include/asm/sn/l1.h`).
 
 Those are software constants. The L1 brick-type code is what software expects the brick to
-answer, and this page cites no capture of a PX-brick's actual reply. The brick's LCD letter is **inferred** to
-be `p`. That rests on the Linux tree's letter mapping and on the L1 guide's table, which has no
-PX entry. It is untested.
+answer, and this page cites no capture of a PX-brick's actual reply. The brick's module identifier letter is
+`#`, **established as drawn**: the Altix driver guide's Figure 5-1 (007-4520-006 p.52) prints a PX-brick as module
+`001#14`. The earlier reading that it is `p` is withdrawn. The L1 guide's table has no PX entry, and its `p` is the P-brick.
 
 Unknown: L1 controller revision, board-area data, the real identity reply, request and reply
 encodings, how the L1 reaches the compute brick's L1, and the slot-power control path.
@@ -246,7 +248,7 @@ describe this brick. No InfiniteReality attachment is described, and none may be
 | Which of `XIO 10` and `XIO 11` reaches PIC port A and which port B | A widget scan from each compute-brick port |
 | Which physical-size table matches a production brick | A measured brick |
 | Meaning of the `xio` link-speed command, and the power-up speed | An L1 capture that runs `xio`, or a later L1 guide |
-| Widget numbers the three PICs take under a compute brick, head offsets, and bus-to-slot numbering | A PCI tree from a populated brick |
+| Widget numbers the three PICs take under an Origin 3000 compute brick (12, 13, 15 on Altix), head offsets, and bus-to-slot numbering | A PCI tree from a populated brick |
 | Strapping, IDSEL and interrupt wiring; slot power control | A board schematic or a PCI configuration capture |
 | Hot-plug behaviour under IRIX and Linux | A test with a certified driver and a documented power command |
 | L1 identity reply and request encodings | An L1 console capture from a PX-brick |

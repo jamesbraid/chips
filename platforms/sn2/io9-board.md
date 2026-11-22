@@ -62,17 +62,19 @@ Which SCSI channel of the ISP 12160 drives the external VHDCI connector, and whi
   `questions/ip35-io9-pci-wiring.md`). Established for the sibling by the capture. That question reads the logical numbers as configuration
   devices 1, 3 and 4, because the PIC occupies device 0 and OpenBSD's logical numbers run one lower. That reading is
   **inferred**, and the Origin 350's PIC and bus are not the Altix 350's.
-- **Altix placement.** The IOC4 at device 1, the ISP 12160 at device 3 and the BCM5701 at device 4 are the Altix's
-  expected numbering, **inferred** from the sibling and from the PROM's window rule on
-  [the base I/O page](altix-350-base-io.md#devices-on-the-pics-buses). Not established for the Altix.
-- **Conflict with the Altix IX-brick.** The IX-brick driver figure (007-4520-006 Figure 2-3, p.19) labels the Ethernet `Bus 1
-  Slot 3` and the SCSI `Bus 1 Slot 4`, which reverses devices 3 and 4 for these two parts. The NG-HINV listing of an Altix IO9
-  agrees with this page's reading (QLogic at device 3, BCM5701 at device 4). Both cards carry the name IO9; that they
-  are the same card is not established. Neither reading is chosen here; see [the Altix 3000 wiring
-  section](altix-3000.md#ix-brick-wiring).
+- **Altix placement.** The IOC4 at device 1, the ISP 12160 at device 3 and the BCM5701 at device 4. **Established for the
+  Altix IX-brick** by an Altix 3300 console capture (message-id `1121468096.910061.279690@g49g2000cwa.googlegroups.com`): the SAL prints the
+  Ethernet as `tg0 (widget 12, slot 4)` and the SCSI as `pci id 3`, and Linux shows `01:01.0`, `01:03.0` and `01:04.0`. A
+  two-chassis Altix 350 post (message-id `6d157297.0402061731.5a06088c@posting.google.com`) shows `pci01.03.0-1` for the disks and
+  `pci01.01.0` for the DVD, which puts the SCSI at 3 and the IOC4 at 1 on an Altix 350 too (the Ethernet device is not printed
+  there). The Ethernet at 4 on an Altix 350 stays **inferred**, from the IX-brick capture and the PROM's window rule on
+  [the base I/O page](altix-350-base-io.md#devices-on-the-pics-buses).
+- **The Altix IX-brick driver figure.** The IX-brick driver figure (007-4520-006 Figure 2-3, p.19) labels the Ethernet `Bus 1
+  Slot 3` and the SCSI `Bus 1 Slot 4`. The captures above put them the other way, so the figure has the two labels swapped.
+  See [the Altix 3000 wiring section](altix-3000.md#ix-brick-wiring).
 - **Interrupts.** Captured on the Origin 350 as logical interrupt inputs 0 (IOC4), 2 (ISP 12160) and 3 (BCM5701). The Altix
   PROM maps device `d` INTA to PIC pin `d - 1` ([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)), which gives the same 0, 2 and 3 for devices 1, 3 and 4
-  (established rule; the device placement stays inferred).
+  (established rule; the device placement is established for the Altix IX-brick, see above).
 - **Riser.** `-001` p.105 says the riser's nonstandard connector "connects to the IO9 card". `-002` p.115 says "the system's
   base I/O card". Whether the IO9 uses the same connector as the IO10 is **unknown**.
 
@@ -121,7 +123,7 @@ repository's hardware rules.
   running IO9 machine.
 - **Whether the IOC4 serial lines reach the card edge**, and which of them the PROM or Linux uses. Settles: a schematic,
   or a probe of the card on a running machine.
-- **The PCI device numbers of the IOC4, ISP 12160 and BCM5701 on the Altix** (the PIC pins follow from them). Settles: `lspci` from an Altix IO9.
+- **The Ethernet device number on an Altix 350** (IOC4 1 and SCSI 3 are printed for one; the IX-brick shows Ethernet at 4). Settles: `lspci` from an Altix 350 IO9.
 - **Fitted EEPROM for the BCM5701** and whether the MAC address is read from it. Settles: a board-level read on a physical
   IO9, or a published SGI IO9 document that names the part.
 - **Real-time interrupt connector behaviour under IRIX.** The manual says it is not supported under Linux. Settles: an IRIX
