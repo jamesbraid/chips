@@ -31,7 +31,8 @@ hardware requirements, or a run.
 ## Time-stamp counter agreement across processors
 
 [route: missing source] Microsoft requires one performance counter frequency across processors. The SGI HAL writes each
-processor's time-stamp counter to zero at the end of the calibration routine (`0x8002c8ab`) and in the exported `HalCalibratePerformanceCounter`
+processor's time-stamp counter to zero in the calibration routine (write at `0x8002c8ab`; two laps, so the last zeroing follows the third
+RTC edge and the last read the fourth, leaving about one second of ticks) and in the exported `HalCalibratePerformanceCounter`
 (`0x8002d210`), which first makes all processors rendezvous on a counter. No call to the second inside the HAL was found, so the kernel is the
 caller. Whether the counters then agree to within a tick, and whether the kernel calls it on this platform, is not shown. Settles it: a model
 run, or the processors' documentation.

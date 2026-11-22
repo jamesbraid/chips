@@ -233,7 +233,7 @@ and two classes of SGI's own, which is what the graphics driver's "Not an SGI HA
 |---|---|
 | `0x8100001` | 16 bytes: three function pointers to the HAL's cache-flush routines for a memory descriptor list, a physical buffer and a virtual buffer (`HalxFlushMdl`, `HalxFlushPhysicalBuffer`, `HalxFlushVirtualBuffer`), and in the last byte the flag saying whether cache-operation invalidate is supported (clear on Cobalt Lite, set otherwise by default) |
 | `0x8100002` | 4 bytes: a pointer to `sgixCallbackRegister` |
-| anything else | status `0xc0000148` (not implemented); `HalSetSystemInformation` always answers the same |
+| anything else | status `0xc0000148` (not implemented); `HalSetSystemInformation` class 1 registers the performance-counter interrupt hook, gated on bit 0 of the CPU feature word at `0x80028680`, and any other class answers `0xc0000148` ([requirements](hal-requirements.md#hr-arc-07-sgi-hal-query-and-set-classes)) |
 
 `sgixCallbackRegister` takes a record of an id (0 or 1), a callback pointer and a context pointer; a null pointer
 unregisters; invalid addresses give `0xc0000141` and an id outside 0 and 1 gives `0xc000000d`. The HAL stores two
