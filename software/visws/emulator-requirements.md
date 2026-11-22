@@ -88,6 +88,53 @@ the Linux list that the HAL also reads (items 3 to 9):
 
 A standard Windows installer will not do: the SGI setup program replaces the HAL, the loader and the video driver.
 
+## Exact versus tolerated
+
+Every access the real firmware makes before its console is up that a model must answer, with what happens on any other answer. "Exact" means a different value changes the path taken in a
+way that stops the boot or changes what the OS sees; "tolerated" means the firmware flags, reports or ignores it. Reading depth is in [boot-path.md](boot-path.md#reset-to-console-in-order-1005);
+grades are established for what was read and inferred where a name or a branch only suggests it. Widths are those of the instruction.
+
+| Access (width) | Expected | Other value | Class |
+|---|---|---|---|
+| Flash read at `0xffff0000` to `0xffffffff` and `0xfff80000` to `0xfffeffff`, 8/16/32-bit, at reset and by `rep movsl` | the image, readable before RAM works | nothing runs | exact |
+| Flash autoselect at word `0x5555`, `0x2aaa`, 16-bit writes `0xaa`, `0x55`, `0x90`, then word 0 and word 1 reads | `0x20`, `0xd5`, then `0xf0` returns to the array | flash marked unknown; environment writes and the flash upgrade do not work (no halt) | exact for saving settings, tolerated for booting |
+| Flash program/erase at `0x7a000` to `0x7bfff` (16-bit) | AMD-style command set with data polling, persistent | writes fail with error 6; the environment is rebuilt from defaults on each start | tolerated for a first boot, exact to keep settings |
+| Environment block (`0x7a000`, zero word sum, first byte not `0x00`/`0xff`) | valid or erased | erased or wrong sum loads the built-in default table | tolerated |
+| Whole-image record at flash `0x79fe8` (flag `1`, word sum zero) | consistent | the boot block loops forever retrying floppy recovery | exact |
+| Self-test record at `0x79fc0` (checksum) | consistent | the self-test is skipped and boot continues | tolerated |
+| Port `0xfb1` bit 7 (8-bit read) | clear | a floppy recovery attempt each boot, password override in the main module | tolerated if clear |
+| Port `0xfb2` bits 2 to 5 (8-bit read) | board type: 0 for a 320, 1 for a 540 (2 and 3 for the 330 and 530) | other values change the board name and the wake-up delay | exact for the intended model |
+| Port `0xfc0` bits 0 to 6 (GPIO data) | board revision | changes tables the HAL picks | exact for the intended model |
+| Port `0xfb7` (read-modify-write, 8-bit), `0xfb5` | plain read/write latch | none | tolerated |
+| Ports `0x80`, `0xed` (writes) | accepted, no effect | none | tolerated |
+| Lithium B window `0xfd0000f8`/`0xfd0000fc` (32-bit; also byte writes at `+0xfc..+0xff`) to PIIX4 configuration, registers `0x04`, `0x4e`, `0x60`, `0x69`, `0x76`, `0x77`, `0xb0`, `0xb3`, `0xc8`, `0xcb`, function 3 registers `0x40`, `0x80`, and the special-cycle word | accepted and held | wrong behaviour of PM base (`0xf80`) leaves ports `0xf80`-`0xfbf` dead: later PM reads return all ones | exact for `0x40`/`0x80` (PM base `0xf80`), tolerated for the others |
+| Ports `0xcf8`/`0xcfc` (32-bit address, 8-bit data at `0xcff`) to bus 0 device 4 function 0 | the same registers as the window | register `0xcb` bit 0 and the `0xa5` CMOS marker handling go wrong; no halt | tolerated |
+| Lithium identification `0xfc000000`, `0xfd000000` (32-bit read) | `0x100210a9` | the self-test's register test fails and the firmware prints an error (1.1005 drops the message in the main module) | exact |
+| Lithium `+0x08` (byte), `0xff01c004` (32-bit) | generation 1 to 5 stamps (`0x35c0194c`, `0x35f7357f`, `0x363e4470`, `0x366c3dfb`); other values count as generation 5 or later | choose coherent DMA and stream-buffer bits and the audio host-control store | tolerated, exact for the audio write ([boot-path.md](boot-path.md#older-releases-and-reset)) |
+| Lithium `+0x44`/`+0x45`, `+0x48`, `+0x58`, `+0x60` to `+0x70`, `+0x40` (1.0002 to 1.0004) | write-then-read-back registers | none | tolerated |
+| Cobalt CPU block `0xc2000008` (revision, 32-bit) | any; `0xa0` or `0xa8` move the bank registers to `+0x48` | the bank registers are read at the wrong offset | exact |
+| Cobalt memory controller `0xc6000000`..`+0x30` and bank registers `0xc6000048`/`0xc6000050` + 8*i | writeable; after the self-test's probe, reading back the bank codes 3, 2 or 0 | wrong bank codes give wrong memory size | exact (the self-test's probe is what sets them; a model may preset them) |
+| RAM at `0` to `0xf60000`, `0x110000` to `0x11ffff`, `0x50000`, `0xc0080` | plain RAM, write/read back, present before the self-test's probe | the probe marks banks absent | exact |
+| RAM probe at `bank*128 MiB + 64 MiB` in 16 MiB steps, patterns and the counter pair `0xc6000008`/`0xc6000010` | working RAM; counters that change | no banks found, memory error | exact |
+| Memory total at least 64 MiB | yes | loader refuses to load (status 16) | exact |
+| Cobalt interrupt controller `+0xffc` (32-bit RMW) | holds the field written | none | tolerated |
+| Local APIC `0xfee00000` (registers `0x20`, `0x30`, `0x80`, `0xd0`, `0xe0`, `0xf0`, `0x280`, `0x300`, `0x310`, `0x320`..`0x370`) | standard behaviour, SIPI and INIT broadcast delivered | other processors never appear; count stays 1 | tolerated for one processor |
+| MSRs `0x17`, `0x2a`, `0x10`, `0x11e`, `0x200`-`0x20f`, `0x250`, `0x258`, `0x259`, `0x268`-`0x26f`, `0x2ff`, `0xfe` and `cpuid` 1, 2 | readable/writeable; TSC counts; signature stable across processors | unknown ratio gives 666 MHz in the boot block, 333 MHz in the report; a mismatch between processors is reported, not fatal | tolerated |
+| NS87307 index/data `0x2e`/`0x2f`, power-management `0xfc8`/`0xfc9`, GPIO `0xfc0` | index/data pairs accepted; logical device 5 and 6 (UARTs) activated | the UARTs do not respond | exact for a serial console |
+| COM1 `0x3f8`, `0x3f9`, `0x3fa`, `0x3fb`, `0x3fc`, `0x3fd`, `0x3fe`; COM2 `0x2f8` | 16550: LSR bit 5 ready, bit 0 data; MSR reads as written for a loop-back plug (or nothing) | absent UART (reads `0xff`) is tolerated by the self-test; the main module's serial console would not work | tolerated for the self-test, exact for `console=d` |
+| CMOS `0x70`/`0x71` and extended `0x72`/`0x73` | 128 plus 128 bytes of battery RAM, preset or erased | invalid contents are reinitialised | tolerated |
+| RTC (CMOS `0`, `2`, `0x0a` bit 7, `0x0b`, `0x0d`) | clock running, update flag toggling about once a second | "not running" flag; the speed fallback and the HAL's calibration need the toggle | exact for the HAL, tolerated for the firmware |
+| PIIX4 PM `0xf80` (16-bit), `0xf84`, `0xf8c`, `0xfb0`-`0xfb7` | status clear on write one; control writes (`0x2000`) accepted | wake status bits set make the self-test take its resume path | tolerated if status reads 0 |
+| 8259 pair (`0x20`, `0x21`, `0xa0`, `0xa1`, `0x4d0`, `0x4d1`), DMA (`0x08`, `0x0b`, `0xd0`..`0xd6`) | accept initialisation | none | tolerated |
+| Port `0x92` bit 1 (APs) | write latch | none | tolerated |
+| Floppy controller `0x3f2` etc. | only for recovery | none | tolerated |
+| Display ID `0xd0000014` (32-bit read) | `0x666` | self-test display register test fails (no halt in the main module) | exact for the self-test |
+| Audio host control `0xff001000` (32-bit write `0x4100` on generation 5) | accepted | none | tolerated; exact if the NT audio driver is to start |
+| Page `0x00fff000` (32-bit read) | RAM | unknown use | tolerated |
+| PCI configuration for devices behind the bridges, bus numbers `+0x44`/`+0x45` | standard header 0 and header 1 behaviour; bus 0 is Lithium B | the bridge assignment and device scan misplace devices | exact |
+| Floppy/IDE/SCSI/USB/network adapters | as the driver names ([boot-path.md](boot-path.md#from-the-menu-to-the-loader)) | the boot entry cannot be opened ("Invalid boot device") | exact for the chosen boot device |
+| Serial console choice | `console` variable begins `d` selects `serial(0)` | video and keyboard | tolerated |
+
 ## Not known
 
 The graphics-memory split, the stand-in's ARC services at the byte level (the table's layout is in [boot-path.md](boot-path.md); which entries the loader calls is not enumerated), the

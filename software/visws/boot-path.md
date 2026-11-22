@@ -24,6 +24,179 @@ for the main-module routines quoted below.
 The power-on diagnostics level is "quick" or "extensive"; extensive also tests RAM at about 0.1 s per megabyte, and
 the firmware can switch itself to extensive after a boot that did not complete (guide).
 
+## Reset to console, in order (1.1005)
+
+Method: the boot block and self-test module of 1.1005 listed with objdump (`i8086` and `i386`) and followed by hand; the main module
+decompiled whole in Ghidra (1,555 functions) and read from the entry down. The boot block is byte-identical in every held release, so
+its part holds for all five images. Addresses `1.1005@` are main-module virtual addresses, `test+` offsets in the self-test module
+as in [firmware.md](firmware.md#the-self-test-module). Not every routine of the self-test and main module was read: what was read is
+graded established, what is named from a call list or a string is inferred, and the gaps are listed at the end of the section and in
+[questions/visws-firmware-open.md](../../questions/visws-firmware-open.md). "Tolerated" and "must be exact" for each access are collected in
+[emulator-requirements.md](emulator-requirements.md#exact-versus-tolerated).
+
+### Reset mapping and the flash
+
+- **Where the flash is. Established (image).** The processor fetches `0xfffffff0`; the byte there is a near jump to offset `0xc000` of the
+  segment based at `0xffff0000`, flash offset `0x7c000`. The boot block then reads flash through unreal-mode 4 GiB segments (reset vector
+  tables, the self-test trailer at `0xffff9fa8` to `0xffff9fbf`, the self-test code itself at `0xffff4000` to `0xffff9fbf`) and, in
+  32-bit code, copies the whole 512 KiB from `0xfff80000` to RAM at `0x80000` (`rep movsl`, `0x20000` dwords). So the whole flash must read back at
+  `0xfff80000` to `0xffffffff` (size `0x80000`, last 64 KiB also at `0xffff0000`, the same bytes), at reset with RAM not yet usable. No other
+  alias is used: the firmware never looks for the image at `0xe0000` or `0xf0000` (the legacy-BIOS image is copied into RAM there later, [below](#legacy-bios-and-the-acpi-tables)).
+  Caching: the first MTRR code programs variable MTRR 0 as write-protect over `0xfff80000` (mask `0xfff80000`), variable MTRR 1 as write-back
+  over `0` to `2 GiB`, clears the rest and enables fixed and variable ranges; the self-test replaces that with its own 64 KiB write-protect range at
+  `0xffff0000`; the copy to RAM is followed by a clear and one write-back MTRR over `0` to `2 GiB` again.
+- **Which chip select. Unknown.** Nothing in the image names a chip select. The boot block writes PIIX4 ISA-bridge configuration register `0x4e`
+  (`0xf4`) through Lithium B at step `0x1a`, after the code has already been running from the flash, so the reset-time decode is the
+  hardware default (inferred: the PIIX4 decodes the top of the 4 GiB space to its BIOS chip select by default; the datasheet was not read for this).
+- **Autoselect and ID. Established (`1.1005@0x1112f11`).** At main-module start-up the flash is probed: words `0xaa` at word index `0x5555`
+  (byte `0xaaaa`), `0x55` at `0x2aaa` (byte `0x5554`), `0x90` at `0x5555`, then word 0 must be `0x20` and word 1 `0xd5`; then `0xf0` (read array) is written to word 0. A part that
+  does not answer with those IDs leaves the flash marked unknown (`DAT_0114b9b8` is 0); the boot block's own write-protect probe in the flash tool uses the same
+  commands and also reads the protection word of the boot sector at `0x7c004` ([firmware.md](firmware.md#the-flash-tool)). Writes are 16-bit, program `0xa0`, sector erase `0x80` + unlock + `0x30`, as in the HAL.
+- **1.1005 against 1.0006 at the hardware interface. Established unless marked:**
+  1. boot block, reset vector, environment sector and the build of the self-test's memory probe: the same;
+  2. frame buffer moves from physical `0xa00000` to `0x2000000` (32 MiB), and the fixed memory descriptor list moves up 2 MiB with the module (`0xf00000` to `0x1100000`);
+  3. first 32 MiB, not 16 MiB, are descriptor type 2; the bank step counts only 128 MiB banks (so a model must fill its 32 MiB banks in 128 MiB units to be seen; established, `1.1005@0x1102d90`);
+  4. `gfxmem_alloc` limit 12 MiB per entry and 4 MiB alignment (graphics descriptors differ);
+  5. two speed tables selected by CPUID signature (no register difference);
+  6. extra display modes and the self-test's display BIST row removed (the ID row `0xd0000014 == 0x666` stays);
+  7. new: ACPI tables (RSDP at `0xf0020`) and ARC node "ACPI-BIOS", board types 2 and 3 ("SG330", "SG530"), USB hub probing, disk partitioning utility, F8 boot options;
+  8. the self-test gains `or $0x80` / `and $0x7f` masks around extended-CMOS indexes, and no new port or register;
+  9. 1.1005's Lithium set-up has no `+0x40` access (also true from 1.0005).
+  No other port, MMIO or PCI-configuration access that this page lists differs between 1.0006 and 1.1005 as far as the read routines go (inferred for the unread parts).
+
+### The boot block's protected-mode half
+
+**Established (`0xfd800` to `0xfffff` in the RAM copy, read as a listing).** After the step table the real-mode code copies `0x1f` dwords of vector
+table from flash (`0xffffc200`) to physical `0` (RAM at address 0 must be writable and no BIOS data page is expected), loads the
+descriptor tables, copies the flash and far-jumps to `0xfd800`. The 32-bit code (stack `0xeffff0`; a work area of `0x8bc` bytes is cleared at
+`0x110000`) then:
+
+1. reads the board's clock ratio from MSR `0x2a` through a table (the same 200 to 550 MHz rows) to get a delay scale (unknown ratio gives 666 MHz; used by microsecond delays that spin on the time-stamp counter, so `rdtsc` and a write of 0 to MSR `0x10` are needed and the counter must run);
+2. reads port `0xfb1`: bit 7 set (GPI bit 15 of the PIIX4 power-management block at `0xf80`+`0x30`; the main module reads the same bit as its password-override jumper) requests a floppy recovery attempt;
+3. checks the whole-image record at flash `0x79fe8` in the RAM copy: flag byte (top byte of the length word at `0x79ffc`) must be 1, the covered range must start at `0x80000`, and the 32-bit word sum
+   must be zero. If not, the code loops forever: floppy recovery attempt, then a 5 s time-stamp delay, then again. Established;
+4. floppy recovery (also run once when the jumper bit is set): resets the floppy controller (ports `0x3f2`, DMA `0x0c`), reads the boot sector of a 1.44 MB FAT floppy
+   through the standard controller, compares the 19 bytes of BIOS parameter block from offset `0x0b` against a fixed 1.44 MB geometry, finds the volume label `SGISETUP` and then a root-directory file named
+   `SGISETUP.EXE` or `PROM*.BIN` (first four characters `PROM`), reads it by FAT12 cluster chain into RAM and either runs the loaded `SGISETUP.EXE` or runs the RAM copy of the firmware, in both cases with the first argument `8`.
+   Not found or any mismatch: the attempt is dropped silently. Established (listing read; the FAT walk was not traced to the last cluster);
+5. posts `0xc0`, expands the five sections (`dcaa`: checks the `SHDR` tag, post code `0xce` and a loop on failure), posts `0xcc`, sets `CR0.CD|NW` (cache off), `wbinvd`, and
+   calls the entry address from the header as `entry(mode, arg)` with cdecl arguments taken from the work area at `0x110870` and `0x1108a4` (both zero in a normal boot; `mode` is 8 only after a recovery floppy).
+   Post codes are only written; nothing reads port `0x80` back.
+
+### Main module entry (1.1005@0x1100000)
+
+**Established (decompilation and listing read).** Order of the first calls, with the hardware they touch:
+
+| Step | Routine | What |
+|---|---|---|
+| 1 | `0x1100000` | two dwords `0x23456789` and `0xfedcba98` at physical `0xc0080` and `0xc0084`; the stack top is `0xf5ffec` (RAM to `0xf60000` must work) |
+| 2 | `0x1104007` | for CPUID signature `0x672` to `0x67f` with MSR `0x17` platform id 2: the self-test's L2 control MSR `0x11e` write and restore again, without the `invd` |
+| 3 | `0x1101db0` | port `0xfb7` bit 4 set (front-panel line, [below](#panel-led-or-beeper-line)) unless a quiet flag is set |
+| 4 | `0x1112fc6` | flash ID probe above |
+| 5 | `0x1111fda` | environment load: pointer `flash + 0x7a000`, validity test (first byte not `0x00` or `0xff`, word sum zero, [firmware.md](firmware.md#the-flash-part-and-its-contents)); invalid or erased block: a built-in default table is loaded (`DAT_0114b9b0` 5), valid: 1; the four partition and loader variables are then normalised to their ARC forms |
+| 6 | `0x1100270` | platform bring-up (below) |
+| 7 | `0x1107e40(0xa0)` | legacy-BIOS (V86) set-up, skipped when `console` begins with `d` or `D`, `Vx86DoNotRunBIOS` begins with `y`, or the board is not newer than the second generation unless `ignorehughid` is set ([below](#legacy-bios-and-the-acpi-tables)) |
+| 8 | `0x1100530` | if `mode` is 8, the floppy flash-upgrade routine runs here (`1.1005@0x111525f`) |
+| 9 | `0x1111a1d` | the autoload and menu stage ([below](#from-the-menu-to-the-loader)) |
+
+Platform bring-up (`0x1100270`), in order: front-panel line on; coherent-DMA flag from the Lithium generation word at `0xff01c004` and the `coherentdma`, `l2cache` and `l2cache_ecc` variables; memory sizing
+(the bank registers at `0xc6000048`/`0xc6000050` and up, [above](#the-main-module)); `FUN_01103c80` the processor wake-up (next subsection); the `0x4100` store when the Lithium generation is 5; `1.1005@0x1113a02`
+the device install list (keyboard and flash helpers, PCI scan and bridge assignment, SCSI and IDE adapters, floppy, USB, network, display, console selection); `1.1005@0x11010b0` the processor and memory configuration check (below);
+then the display and console are brought up before the first message. The order of the PCI configuration cycles inside the device install list was not traced access by access (unknown): the bridge
+assignment code is as [above](#pci-bus-numbering-and-windows), configuration cycles go through the Lithium B window at `+0xf8`/`+0xfc` for bus 0 devices and through ports `0xcf8`/`0xcfc` in the generic routines.
+
+### Processor wake-up (`1.1005@0x1103c80`)
+
+**Established (listing; the decompiler dropped the ICR writes).** There is no warm-reset vector write and no CMOS shutdown byte in this routine; the boot processor wakes the others itself:
+
+1. front-panel line on; interrupts off; count `1` written to the 16-bit word at `0x1e00`; the mailbox byte `0x505` cleared; `0x210` bytes of start-up stub copied to physical `0x50000`; byte `0x504` (the next local APIC id) cleared;
+2. the boot processor enables its local APIC (spurious-vector register `0xfee000f0`, bit 8, vector nibble cleared) and sets its APIC id register (`0xfee00020`) to its sequence number (0), recording the id in a table; hook routines (microcode update) run; its own table entry is written ([below](#the-processor-table)); the Cobalt interrupt controller's `+0xffc` field (bits 27:24) is set to 4;
+3. error status `0xfee00280` cleared; interrupt command register high word `0xfee00310` = 0; low word `0xfee00300` = `0x000c0650`: start-up IPI, vector `0x50`, all excluding self, edge. Mailbox `0x506` = `0x55`; spin `0x180000` loops on a 320 and `0xe00000` on a 540 (board type from port `0xfb2` bits 2 to 5);
+4. read of the error status, then INIT assert (`0x000cc500` with destination field 1) and INIT de-assert (`0x000c8500`), the APIC error register cleared again: the other processors are parked in wait-for-SIPI state for the operating system;
+5. each woken processor runs the stub: it takes a byte lock at `0x505` with `xchg`, switches to protected mode, sets bit 1 of port `0x92` (fast A20), increments the count at `0x1e00`, runs the same hooks, writes its processor-table entry, clears its MTRRs and releases the lock, sets mailbox `0x506` to `0xaa` and halts.
+
+Nothing else is needed from the model than: local APICs that accept the SIPI and INIT broadcasts, RAM at `0x50000` and `0x1000` to `0x1fff`, and port `0x92`. How the main module handles a missing second processor (the count stays 1) is the same code path (inferred: the wait is a fixed spin, not a handshake).
+
+### The processor table
+
+Format as in [Boot into NT](#boot-into-nt), item 8, confirmed against the writer (`1.1005@0x1103efd`): the entry is `0x1e02 + 20*index`; byte 0 = 0, byte 1 flag 1 (`cl` selects the boot processor, flag bit 1), byte 3 local APIC id bits 27:24, byte 4 APIC version byte, `cpuid(1)` EAX and EDX at `+4` and `+8`, `cpuid(2)` EAX and EDX at `+12` and `+16`. Established. The firmware's own scan of the table (`1.1005@0x11010b0`) reads four entries and
+sets configuration flags; it is report-only ([above](#older-releases-and-reset)).
+
+### CMOS, the real-time clock and the extended bank
+
+**Established (self-test listing and `1.1005@0x1101ca0`, `0x1101470`, `0x1101530`).**
+
+| Access | Use | If it reads otherwise |
+|---|---|---|
+| ports `0x70`/`0x71`, standard bytes `0x2e` and `0x2f` | looked at for an `0xa5` marker before the self-test trusts the CMOS; absent: both are written, then PIIX4 ISA register `0xcb` bit 0 and Cobalt CPU block `+0x18` bit 0 are set | the marker is rewritten; no halt |
+| standard bytes `0x30` to `0x3f` | compared with a fixed 16-character tag; written when the tag is not there | CMOS counted as invalid and reinitialised; no halt |
+| standard bytes `0x40` to `0x4f` | sixteen bank codes written by the self-test (3 = 128 MiB, 2 = 32 MiB, 0 absent) and read by `1.1005@0x11012f0` | see [memory](#memory-controller-and-graphics-memory) |
+| standard bytes `0x50` to `0x53` | last-boot configuration word, read back and replaced by the self-test and main module | a difference only sets a flag |
+| standard bytes `0x60` to `0x68` | wake/power-fail state copied from the PIIX4 power-management status (`0xf80`, `0xf8c`) | informational |
+| standard byte `0x7f` | bit 2 toggled by self-test commands | informational |
+| ports `0x72`/`0x73`, extended bytes `0x81` to `0x89` | a four-byte magic, two bytes of state and a CRC-16 (polynomial `0x8005`, byte-serial, start 0) of them at `0x88`/`0x89`; verified by the self-test at start (`test+0x4718`, `+0x479e`) | invalid: the record is rebuilt (`test+0x6f0e`) |
+| extended byte `0x8c` | self-test state marker (two values, `0xbb` and `0xba`, and `0xff`) | selects the "about to reset for BIST" and "about to test BIST result" paths: the self-test may reset the processor and re-enter itself once |
+| extended bytes `0x8a`, `0x8b`, `0x8d`, `0x8e`, `0x8f` | state, flags (`0x8a` bit 7 is read by `1.1005@0x1100a00`) and a stored copy of the previous run | tolerated |
+| extended bytes `0x98` to `0x9b` | processor and memory configuration flags written by `1.1005@0x11010b0` (flag bits `0x1` to `0x80000`; bit `0x40000`: the `eaddr` variable does not begin with the SGI company id) | flags only |
+| extended bytes `0x9c` to `0x9f`, `0xfc` to `0xff`, `0x00` to `0x01` | RTC and boot-state records: `0x9c` bit 0 set when seconds and minutes read at the start equal the copy stored at `0x9e`/`0x9f` (clock not running); `0x9d` bit 0 set when the year is outside 1998 to 2040; `0xfc` to `0xff` the last bank and processor configuration with a CRC-16 at `0x00`/`0x01` (`1.1005@0x1101650`, `0x1101530`) | mismatch only flags |
+
+The RTC itself is read through the standard registers (seconds `0`, minutes `2`, register `0x0a` update-in-progress, bit 7, polled by the speed fallback); "Real-time clock is not running!" is a string of the diagnostics. Nothing was found that halts on an RTC value.
+
+### Serial output before the console
+
+**Established.** The self-test writes progress text to COM1 (`0x3f8`, divisor 12 so 9600 baud, 8N1, interrupts off) from the first message on, polling the line status register bit 5 (`0x3fd`)
+before every byte; no initial presence test of the UART exists, so an unclaimed I/O port that reads `0xff` is tolerated (the poll sees "ready" and the bytes go nowhere). A loop-back plug test follows (`test+0x4d82`: modem-control writes of `0`, `1` and `2` with modem-status reads masked `0xf0` = 0, `0x50` and `0xa0`); with the plug present the self-test serial
+manager prompt is entered, otherwise it only continues. The prompt is also where the self-test stops after a failure: it posts an error code to port `0x80`, prints it, and then loops
+on the console input while pulsing the front-panel line; only a byte arriving on COM1 (the `go` command) continues. So a failing self-test is a halt that needs the serial line.
+
+### Panel LED or beeper line
+
+Port `0xfb7` bit 4 (PIIX4 general-purpose output bit 28; the register is `0xf80 + 0x34` + 3). The self-test clears it, then makes one pulse (set, a `0x3fffff`-iteration delay, clear) after the UARTs are
+enabled; the main module sets it in `0x1101db0` and clears it at the end of the processor wake-up and elsewhere. The effect is unknown (LED or beeper; established that it is only written, read back
+only for read-modify-write).
+
+### Console selection (main module)
+
+**Established (`1.1005@0x1113ca1`, `0x1101d40`, `0x11277d8`).** The ARC variables `ConsoleIn` and `ConsoleOut` are set from the `console` variable: if a display and keyboard device exist and the first character of `console`
+is not `d`, the console is `video()` and `keyboard()`; otherwise it is `serial(0)`, or `serial(1)` when the first character is `r`. `serial(0)` is the 16550-compatible port at `0x3f8` (IRQ 4) and `serial(1)` at `0x2f8` (IRQ 3);
+both are NS87307 UARTs (logical devices 6 and 5 of the super-I/O, activated by the boot block's step `0x10` and again by the self-test, `test+0x46d4`); the PIIX4 has no UART. No Arsenic access is involved in console selection or in the serial driver.
+If opening the console fails, the code sets `NoAutoLoad`, reports "CONSOLE OPEN FAILED" and retries on the other kind once.
+The line speed of the main-module serial driver was not traced (unknown).
+
+### Legacy BIOS and the ACPI tables
+
+**Established (`1.1005@0x1107e40`, `0x111a293`, `0x113eda9` to `0x113f07c`; fields read from the listing).**
+
+- The legacy-BIOS image (the "Main BIOS" in the second data module, copied so that it ends at 1 MiB, to `0xf0000`) and a V86 monitor are set up only when the conditions in step 7 hold, and then four small areas (low page `0x1000`, `0xf0000`, `0xf0020`, `0xf0e00`, `0xffff5`) are saved and restored around it.
+  Whether the image exposes a VGA mode to the OS is unknown: the string "Enable VGA Mode" is a monitor setting with no code reference found.
+- ACPI: only a root description pointer, a root table and one fixed description table. The pointer (`RSD PTR `, revision 0, OEM id `SGI___`) is written at physical `0xf0020`; it points at the root table at `0x116b0a0` (signature `RSDT`, length `0x28`, revision 1, OEM table id `320/640`, one entry); the entry is the fixed table at `0x116b020`
+  (length `0x74`, revision 1, same ids). Each table's checksum byte makes the byte sum zero (routine `0x111a27e` sums, the table stores the negation; the pointer's covers its first 20 bytes). The fixed table's firmware-control and DSDT addresses are zero: **no FACS, no DSDT, no MADT, no
+  other table exists.** The register fields are those in [firmware.md](firmware.md#from-10006-to-11005) plus: event block length 4, control length 2, timer length 4, GPE0 length 4, latency fields 10000 (C2 and C3 not supported), duty offset 1 and width 3, RTC day alarm index `0x0d`, flags `0x25`.
+  An ARC child of the root node, "ACPI-BIOS", carries the 20-byte pointer as its configuration data. Whether Windows 2000's loader or HAL consumes it is unknown (the NT HAL pages record no ACPI use, and without a DSDT an ACPI driver cannot enumerate devices; inferred, not proved).
+- Local APIC set-up for the V86 case (`1.1005@0x1109370`, boot processor): task priority `0xff` then `0`, destination format flat, logical id 1, spurious vector register `0x11f`, error vector `0xe3`, timer `0x300fd` (masked, periodic), performance counter `0x100fe` (masked), **LINT0 `0x1001f` (masked, vector `0x1f`) and LINT1 `0x184ff` (masked, NMI, level)**, error status cleared. The other processors' local vector tables are not programmed by the stub read (unknown); nothing restores the table before the loader runs (unknown).
+
+### From the menu to the loader
+
+**Established (`1.1005@0x1111a1d`, `0x110fa3d`, `0x1133d4b` and callees).**
+
+1. `AutoLoad` begins with `y` or `Y` and `NoAutoLoad` is unset: the "Press Esc key to stop system boot" countdown (`CountDown`, seconds) runs with keyboard input; Esc opens the menus. The password level (`passwd_level`) is checked first.
+2. Boot (`0x110fa3d`) resolves the boot entry from the ARC variables: the loader name is built from `SystemPartition` plus `OSLoader`, the kernel from `OSLoadPartition` and `OSLoadFilename`, options from `OSLoadOptions`. Default entries are
+   `multi(0)disk(0)fdisk(0)partition(1)` and on 1.1002 and later `scsi(0)disk(0)rdisk(0)partition(1)` or `(2)` for IDE (adapter 0) and `scsi(2)disk(0)rdisk(0)partition(1)` for the SCSI adapter, `scsi(0)cdrom(` for the CD-ROM, with the Windows 2000 and NT 4.0 default
+   entries named "Windows 2000 IDE Default", "WinNT 4.0 IDE Default", "Windows 2000 SCSI Default", "WinNT 4.0 SCSI Default"; the IDE controller is presented as SCSI adapter 0.
+3. Devices the firmware drivers name: IDE hard disks and ATAPI CD-ROM (as `scsi(0)`), the floppy, QLogic SCSI and Fibre Channel adapters through a `ql1080` family driver, the network through a PXE-style BOOTP/DHCP and TFTP client (with a Windows RIS "BINL" reply handled and `netaddr` set from the reply; `eaddr` holds the station address and a leading SGI company id is expected), and USB keyboards and mice and hubs. The network adapter driver strings name an Intel 82557-class part. File systems:
+   FAT and NTFS readers (the NTFS reader is the one the 1.0002 to 1.0006 label text called a bug fix).
+4. The file is loaded by a COFF/PE loader (`1.1005@0x1133dc6`): an `MZ` header is followed at `e_lfanew`; the image must be machine `0x14c` with the executable bit, optional-header magic `0x10b`, its text start (masked with `0x1fffffff`) must fall in free memory, and loading needs at least 64 MiB of RAM (`0x4000000`, else status 16). The sections are loaded to
+   their linked addresses masked with `0x1fffffff`. ARC errors returned: 14 not found ("Boot file not found"), 16 no memory, 20 bad device ("Invalid boot device"), 8 and 15 for read or image errors.
+5. Execute (`1.1005@0x1133ab5`, `0x1140abe`): the argument list and the environment are built as string arrays (`OSLoadPartition`, `OSLoader`, `SystemPartition`, `OSLoadFilename`, `OSLoadOptions`, `X86SystemPartition` and the console pair are exported as `name=value`), the console and
+   interrupt state of the firmware are quiesced, `clts` and `fninit` run, the stack pointer is set to `0x61ff0` and the entry is called with cdecl `(argc, argv, envp)`: flat 32-bit protected mode, the firmware's page tables still active, the ARC system parameter block at `0x1000` and its vector tables at `0x1200` and `0x1300` ([above](#boot-into-nt)), memory
+   descriptors from the firmware vector (the loader asks for them through `GetMemoryDescriptor`). No other register is set up (the registers are whatever the call leaves), and the loader's return value is printed as "Client program exits with a status".
+   The loaded file is the OS loader named by the variables (`arcldr.exe` for NT, a loader named in `OSLoader` for Linux); nothing in the firmware is specific to either. Established that no Linux-specific path exists in the firmware.
+
+### Gaps in this trace
+
+Not read at access level: the RAM probe loops (`test+0x7000` to `0x9600`), the Cobalt, display and Lithium register tests, the PCI scan access order, the SCSI, IDE, network and USB drivers, the serial driver's line settings and the flash-upgrade routine. They are in
+[questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
+
 ## The boot block
 
 **Established (flash `0x7c000`-`0x7ffff` read in full).** The code below is 16-bit with 32-bit operand overrides until the
@@ -111,11 +284,13 @@ read-modify-write below. What differs, for an emulator that runs the older image
 - **Lithium `+0x40` (1.0002 and 1.0004 only).** The Lithium set-up routine reads and writes `+0x40` of both register pages:
   window A (`0xfc000000`) ends with the top byte `0x01` and bit 5 set, window B (`0xfd000000`) with the top byte `0` and bit 5 set
   (`(old & 0x00ffffdf) | 0x01000020` and `(old & 0x00ffffdf) | 0x20`). The page must hold those bits. 1.0005, 1.0006 and 1.1005 do not touch it.
-- **`0xff001000 = 0x4100` (1.0004 to 1.1005, including 1.1005).** When the Lithium generation is exactly 5 (the word at `0xff01c004`
-  is `0x366c3dfb`, the stamp that a real machine's registry shows as "Serial I/O: 366c3dfb"), the entry routine stores `0x4100` in a
-  dword at offset `0x1000` of the two-page window at `0xff000000`. The window must accept a 32-bit write there; the register's
-  meaning, and its value on any other generation, are unknown. 1.0002 neither maps the window nor writes it. (`1.0004@0xf00250`,
-  `1.1005@0x1100270`.)
+- **`0xff001000 = 0x4100` (1.0004 to 1.1005, including 1.1005): audio host-control initialisation.** When the Lithium generation is exactly 5 (the word at `0xff01c004`
+  is `0x366c3dfb`, the stamp that a real machine's registry shows as "Serial I/O: 366c3dfb"), the entry routine stores `0x4100` as a 32-bit write at offset `0x1000` of the two-page window at `0xff000000`
+  (`1.0004@0xf00250`, `1.1005@0x1100270`; the only access to that window in the main module). `0xff001000` is the Lithium audio engine's register page and the dword is its host-control register
+  ([audio.md](../../devices/lithium/audio.md#1-where-the-engine-sits)). Bit 14 (`0x4000`) is the link-enable bit the NT audio driver writes last of its `0x8000`, `0`, `0x4000` codec-link sequence; bit 8 (`0x100`) is set by no
+  driver read for that page (its meaning is unknown), and the upper half is written as 0. So the firmware enables the codec link at generation 5 and nothing more: it never writes the codec command and data
+  registers (`+0x18`, `+0x1c`), never resets the codec, and starts no DMA. Established (single access read); the effect of bit 8 unknown. On other generations the write is not made (so the NT driver's own reset sequence is the only link set-up there).
+  1.0002 neither maps the window nor writes it.
 - **Processor identity.** From 1.0004 the firmware checks that all processors look alike (the report strings name the jumper
   setting, mixed processors and unequal L2 sizes); an emulator with several processors should give every one the same CPUID signature (stepping is ignored) and L2 size.
   The check (`1.0004@0xf010b0`) loops over four slots, reads the signature and feature words from the table at `0x1e06 + 20*i` and
@@ -214,8 +389,8 @@ coherent DMA is on when the result exceeds 2, compared unsigned (`cmp $3; jae` a
 | `0xd0000000` | 0x81 pages | display back end |
 | `0xc2000000`, `0xc4000000`, `0xc6000000`, `0xca000000` | 1 page each | Cobalt CPU block, interrupt controller, memory controller, retrace register |
 | `0xff004000` (3 pages), `0xff018000` (4), `0xff01c000` (1), `0xfe000000` (1) | | Lithium-side blocks, not described elsewhere; the word at `0xff01c004` selects the Lithium generation |
-| `0xff000000` | 2 pages | Lithium-side block; from 1.0004 (not 1.0002) the entry routine stores `0x4100` at `+0x1000` when the Lithium generation is 5 ([above](#older-releases-and-reset)) |
-| `0x00fff000` | 1 page | physical address just under 16 MiB, mapped from 1.0004; the first dword is read by `1.0006@0xf17f40`, role unknown |
+| `0xff000000` | 2 pages | Lithium audio register block (the page at `+0x1000` is the engine's host control); from 1.0004 (not 1.0002) the entry routine stores `0x4100` at `+0x1000` when the Lithium generation is 5 ([above](#older-releases-and-reset)) |
+| `0x00fff000` | 1 page | physical address just under 16 MiB (ordinary RAM range, not part of the audio engine's pages `0xff001000`, `0xff00f000`, `0xff010000`), mapped from 1.0004; its first dword is read by `1.0006@0xf17f40` and, in 1.1005, returned by `0x1113e28` to the idle loop that drains devices before the handoff (`0x1113e3b`) and passed to `0x11197aa`; role unknown |
 
 **Bus numbers. Established (`1.0006@0xf1f6f0`-`0xf1f8f0` and the helpers `0xf20700`, `0xf20730`, `0xf20f90`, `0xf20fa0`; the same
 code is in 1.1005 at `0x111a8ea`).** Two helpers write a byte to `+0x44` (primary bus number) and `+0x45` (subordinate bus number) of a

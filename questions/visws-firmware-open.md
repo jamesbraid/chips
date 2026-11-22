@@ -12,7 +12,7 @@ sector preservation) and the differences are in [software/visws/firmware.md](../
 1.0002. Still not held: 1.1002 to 1.1004, and anything after 1.1005. Settled: the word at offset `0x1c` of the `SHDR` header is a
 checksum word that makes the table and compressed modules sum to zero (all five images). Open: the compiled floppy-making script of the
 1.1005 installer (how it places the image on the floppy), whether the loader tests that word, what Lithium `+0x40` and the
-`0xff001000` store are, and what the 1.0004 CPU configuration check does on a mismatch. Next: the 1.1xxx packages from SGI's support
+audio host-control store at `0xff001000` (now read) mean, and what the 1.0004 CPU configuration check does on a mismatch. Next: the 1.1xxx packages from SGI's support
 site (no stable address on record); decode the installer script.
 
 ## Shipping firmware version and early release notes
@@ -88,3 +88,21 @@ Edition target the 230, 330 and 550, ship kernels 2.2.15, 2.2.16 and 2.3.99 with
 `larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). Open: the loaders,
 how they build `boot_params` (memory size, command line), and the older SGI Linux for the 320 and 540 (Red Hat 6.0 era) that used
 them. Next: an SGI Linux 2.2.10-era workstation release or its install floppy images.
+
+## Reset-to-console trace: what is still open
+
+[route: software now] Read for the 1.1005 image: the boot block, the self-test entry and its CMOS, power-management, serial and processor set-up, the main module's start-up order, the processor wake-up, console selection, the ACPI tables and the load and execute path
+([boot-path.md](../software/visws/boot-path.md#reset-to-console-in-order-1005)). Open:
+
+- **PIIX4 reset decode of the flash.** Which chip select decodes `0xfff80000` before any configuration. Settles with: the PIIX4 specification's BIOS chip-select default, or a bus capture.
+- **The self-test's RAM probe outcomes.** Which probe result stores bank code 3, 2 or 0, and the register tests of Cobalt, Lithium and the display (`test+0x7000` to `0x9600`). Settles with: reading those loops access by access.
+- **Self-test exit and BIST re-entry.** The path back to the boot block (`test+0x46b3`) and the extended-CMOS state bytes `0x8a` to `0x8f` that decide whether the self-test resets the processor once. Settles with: reading `test+0x4300` to `0x4700` and `0x6e00` to `0x6fa0`.
+- **The meaning of audio host-control bit 8 (`0x100`)** and why only generation 5 gets the `0x4100` store. Settles with: the Lithium specification or the vwsnd register comments.
+- **Page `0x00fff000`.** What the idle loop's first dword is. Settles with: reading `1.1005@0x11197aa` and its callers.
+- **Panel LED or beeper line** (port `0xfb7` bit 4). Settles with: the 320/540 service manual or a board trace.
+- **Main-module serial line settings** (baud, FIFO) and the `console` value `r`. Settles with: reading the serial driver (`1.1005@0x1127400` and callees).
+- **Local APIC LINT0/LINT1 on the other processors** and whether anything restores them before the loader. Settles with: reading the stub's hook list (`1.1005@0x11313xx`).
+- **ACPI use.** Whether a Windows 2000 loader or HAL uses the "ACPI-BIOS" node. The pointer, root table and one fixed table exist; no DSDT, FACS or MADT. Settles with: the Windows 2000 loader's handling of that node, or a boot with an ACPI HAL.
+- **VGA from the legacy-BIOS image.** Whether the "Main BIOS" image provides a VGA service. Settles with: disassembling that real-mode image.
+- **PCI access order and drivers.** The configuration cycles of the device scan in order, and the IDE, SCSI, USB and network drivers' register use. Settles with: reading `1.1005@0x1113a02` callees.
+- **Floppy recovery to the last cluster**, including what `SGISETUP.EXE` is expected to do with mode 8. Settles with: reading `0xffffe0xx` onwards in the boot block and a recovery floppy image.
