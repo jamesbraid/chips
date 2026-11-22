@@ -2,7 +2,7 @@
 
 Question answered: how does an interrupt get from a device to a processor on a Visual Workstation 320 or 540, and what
 must a model implement to make Linux 2.4 to 3.14 work? Source and grading as on the [platform page](README.md):
-`established` is the kernel's behaviour, `inferred` is a reading, `unknown` names what would settle it.
+`established` below means what Linux does (a software expectation of Linux, not of the shipped system) unless the line cites the shipped HAL; [Sources by origin](README.md#sources-by-origin) lists which facts the HAL confirms or contradicts, and [nt-hal.md](../../software/visws/nt-hal.md) has the shipped system's own tables. `inferred` is a reading, `unknown` names what would settle it.
 
 ## The path
 

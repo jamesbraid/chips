@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58",
+ "input_sha256": "4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -40,7 +40,7 @@
    "name": "apic_lo.vector",
    "hi": 7,
    "lo": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "cobalt",
@@ -166,7 +166,7 @@
    "name": "APIC_AS",
    "value": 24,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -182,7 +182,7 @@
    "name": "APIC_IDE0",
    "value": 4,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -206,7 +206,7 @@
    "name": "APIC_LI_AUDIO",
    "value": 22,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -270,7 +270,7 @@
    "name": "APIC_RE",
    "value": 25,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -310,7 +310,7 @@
    "name": "CPU_MAX",
    "value": 4,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -334,7 +334,7 @@
    "name": "TIME_HZ",
    "value": 100000000,
    "count": 1,
-   "grade": "established"
+   "grade": "inferred"
   }
  ]
 }

@@ -5,10 +5,55 @@ PC parts. It is an x86 machine, outside the MIPS and IA-64 scope of the rest of 
 chips are SGI's and its Linux platform code is public. This page is the overview; the chips have their own pages and
 the details are in the sub-pages.
 
-Status: written from SGI's public Linux platform code and a few owner and SGI-employee Usenet posts. **No manual, BIOS
-image or NT driver is held** ([what was read and what is missing](../../references/visws-sources.md)). Grades follow
-[the repository rules](../../AGENTS.md): SGI's Linux platform code is the vendor's software source and what it defines
-is `established` as a software definition, never a measurement; posts are `inferred` at best.
+Status: the primary target is the Windows NT 4.0 and Windows 2000 system SGI shipped, so the shipped software ranks
+first: SGI's HAL (`halborg.dll`), the SGI drivers, and the system firmware (PROM 1.0006), all read in Ghidra
+([software/visws](../../software/visws/README.md), [NT drivers](../../software/visws/nt-drivers.md)). The public Linux
+platform code is a second, later source. **No manual, chip specification or BIOS dump is held**
+([what was read and what is missing](../../references/visws-sources.md)). Grades follow [the repository rules](../../AGENTS.md)
+with one addition for this machine: a fact that only Linux states is a *software expectation of Linux*, graded
+`inferred`, not `established`, because Linux ran on the machine only as an unsupported port written after the fact. A
+fact is `established` here when a shipped binary, a published SGI document or the firmware agrees. Posts are `inferred`
+at best. The older pages in this directory still say "established" for Linux's behaviour; read that word as "what
+Linux does", and use the table below for what rests on what.
+
+## Sources by origin
+
+Count of graded items in the register definitions ([Cobalt](../../devices/cobalt/registers.toml),
+[Lithium](../../devices/lithium/registers.toml); 99 registers, fields and constants) before and after checking each against
+the shipped Windows software:
+
+| Origin of the item | Cobalt | Lithium | What happened |
+|---|---|---|---|
+| Linux and a shipped binary agree | 26 | 26 | Stay `established`; the page names the binary. |
+| Number agrees, name is Linux's only | 4 | 0 | The four video interrupt entries 16 to 19: the SGI video capture driver uses levels 16 to 19, and only Linux says which are in and out. Stay `established` for the number. |
+| Shipped binary differs or measures instead | 2 | 0 | The core clock rate (the HAL measures it) and the first IDE entry (the HAL uses 1, 4 or 5 by board generation). Linux's value re-rated `inferred`. |
+| Only Linux states it | 5 | 36 | Re-rated `inferred`, a software expectation of Linux: 30 `established` items became `inferred` on the Lithium page (six were already `inferred`) and four on the Cobalt page (one was already). |
+
+Linux-only items by group: the processor limit; the audio and the two unused graphics-engine interrupt entries (22, 24, 25);
+the bridge bus-number word; the audio interrupt status and mask bits; the audio ring-buffer control and configuration
+registers; the audio time-stamp and media-stream counters; the bridge PCI ids; the DMA chunk size. The shipped audio driver
+was read for the codec access path and the ring base register only, so the control and configuration registers are
+`inferred` until it is read further.
+
+Platform facts, by what supports them:
+
+| Fact | Linux | Shipped Windows or firmware | Now rated |
+|---|---|---|---|
+| Cobalt, Lithium and local APIC windows and the register offsets Linux touches | yes | HAL initialisation, same addresses | established |
+| Cobalt timer clock | assumes 100 MHz | HAL calibrates against the RTC; the performance counter is the TSC | established (HAL) |
+| Interrupt entry numbering (clock 28, NMI 29, 8259 at 12) | yes | HAL tables, with a different layout for the Cobalt Lite revisions | established |
+| PCI pin to Cobalt entry map for bridge B | contradictory (Linux 2.6 reuses bridge A's) | HAL table: shared pins on entries 13 to 15 | established (HAL); Linux's map is `inferred` wrong |
+| Board type and revision | port `0xfb2` probe, 540 branch unreachable | firmware's configuration tree carries both bytes | established (firmware) |
+| PCI configuration cycles | ports `0xcf8` and `0xcfc` | memory-mapped address and data registers inside each Lithium bridge window (`+0xf8`, `+0xfc`) | both established; they are different mechanisms, see [Lithium](../../devices/lithium/README.md) |
+| Which bridge is bus 0 | inferred only | HAL numbers bridge B's window first; run-time bus numbers still unknown | inferred |
+| Processor table at `0x1e00` | reads it | HAL reads it too; written by the firmware side | established |
+| PIIX4 and NS87307 set-up, soft power, reboot | partly | HAL in full; the boot block sets the chips | established (HAL, firmware) |
+| Memory controller and graphics memory split | none | HAL reads error and ECC registers only; split is in the firmware's memory list | HAL part established; bank decode unknown |
+| Interrupt routing mode names | none | HAL boot options `INTRROUTE=` `DEFAULT`, `NO8259`, `IDE8259`, `HUGH006` | established (HAL) |
+| Audio engine register file | most of it | sgisound.sys 5.2.2: codec port and base register only | partly established |
+| Ethernet device | Intel 82557 per Linux 2.2 header | SGI INF matches PCI 8086:1229 revisions 1 and 2 | established |
+| USB | PIIX4 UHCI | SGI USB driver matches PIIX4 (8086:7112) and PIIX3 (8086:7020, revision 0 rejected) | established |
+| Video interrupt entries 16 to 19 | in and out named | SGI video capture driver uses levels 16 to 19 | numbers established |
 
 | Page | Covers |
 |---|---|

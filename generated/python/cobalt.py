@@ -1,6 +1,6 @@
 """generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 defs-gen 2
-input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58
+input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0
 Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them"""
 
 UNIT = 'cobalt'

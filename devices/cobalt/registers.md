@@ -1,10 +1,10 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58 -->
+<!-- input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0 -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 
-Offsets, bit positions and values are software definitions from the Linux Visual Workstation code (kernel 2.2 to 3.14). The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.
+Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.
 
 Unit `cobalt`, macro prefix `COBALT`.
 
@@ -39,7 +39,7 @@ Array of 30 registers, stride 16.
 |---|---|---|---|---|---|
 | 16 | `mask` | established |  |  | 1 masks the line, 0 enables it. |
 | 15 | `level` | established |  |  | 1 level-triggered, 0 edge. The kernel sets it on every line it enables. |
-| 7:0 | `vector` | inferred |  |  | Interrupt vector delivered to the processor. The kernel's value fits in eight bits; the field's extent is not stated by any code and follows the standard I/O APIC layout. |
+| 7:0 | `vector` | established |  |  | Interrupt vector delivered to the processor. The kernel's value fits in eight bits; the field's extent is not stated by any code and follows the standard I/O APIC layout. |
 
 ### Register `apic_hi`
 
@@ -85,25 +85,25 @@ Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `APIC_8259` | 0xc | established |  | Line the PIIX4's cascaded interrupt controllers drive. |
-| `APIC_AS` | 0x18 | established |  | Header name AS; no code uses it. |
+| `APIC_AS` | 0x18 | inferred |  | Header name AS; no code uses it. |
 | `APIC_CPU` | 0x1c | established |  | Line of the Cobalt timer, which the header also calls the cache interrupt. |
-| `APIC_IDE0` | 0x4 | established |  | Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5). |
+| `APIC_IDE0` | 0x4 | inferred |  | Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5). The NT HAL uses line 4 on the newest 320 generation and the 540 except revision 0, 5 on the middle 320 generation and the 540 revision 0, and line 1 on the oldest 320 generation, which Linux has no case for. |
 | `APIC_IDE1` | 0x2 | established |  | Line of the second IDE channel, on the 320 only. |
 | `APIC_LINES` | 0x1e | established |  | Number of interrupt lines the kernel knows (0 to 29). |
-| `APIC_LI_AUDIO` | 0x16 | established |  | Line of the Lithium audio engine. |
-| `APIC_NMI` | 0x1d | established |  | Last line; named NMI by the header, never used by any code read. |
+| `APIC_LI_AUDIO` | 0x16 | inferred |  | Line of the Lithium audio engine. |
+| `APIC_NMI` | 0x1d | established |  | Last line; named NMI by the header and unused by Linux. The NT HAL programs it as an NMI-delivery entry (entry 28 on the Lite revisions 0xa0 and 0xa8 moves the NMI to 28 and the clock to 27). |
 | `APIC_PCIA_BASE0` | 0x0 | established |  | First line of the per-slot INTA lines of Lithium bridge A. |
 | `APIC_PCIA_BASE123` | 0x5 | established |  | First of the lines bridge A shares among INTB, INTC and INTD (the header comment says 5 and 6). |
 | `APIC_PCIB_BASE0` | 0x8 | established |  | First line of the per-slot INTA lines of Lithium bridge B (8 to 12). |
-| `APIC_PCIB_BASE123` | 0xd | established |  | First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). No code uses it. |
+| `APIC_PCIB_BASE123` | 0xd | established |  | First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). Linux uses none of them; the NT HAL's bridge B interrupt map does (shared pins on entries 13 to 15). |
 | `APIC_PHYS` | 0xc4000000 | established |  | Physical base of the interrupt controller. |
 | `APIC_PIIX4_USB` | 0x7 | established |  | Line of the PIIX4's USB function. |
-| `APIC_RE` | 0x19 | established |  | Header name RE; no code uses it. |
+| `APIC_RE` | 0x19 | inferred |  | Header name RE; no code uses it. |
 | `APIC_VIDIN0` | 0x12 | established |  | Video input 0 interrupt. |
 | `APIC_VIDIN1` | 0x13 | established |  | Video input 1 interrupt. |
 | `APIC_VIDOUT0` | 0x10 | established |  | Video output 0 interrupt. |
 | `APIC_VIDOUT1` | 0x11 | established |  | Video output 1 interrupt. |
-| `CPU_MAX` | 0x4 | established |  | Most processors the kernel accepts from that table. |
+| `CPU_MAX` | 0x4 | inferred |  | Most processors the kernel accepts from that table. |
 | `CPU_NUM_PHYS` | 0x1e00 | established |  | Physical address of the 16-bit processor count in low memory; the processor table follows at the next two bytes. Not a register: written by the machine firmware. |
 | `CPU_PHYS` | 0xc2000000 | established |  | Physical base of the CPU block. |
-| `TIME_HZ` | 0x5f5e100 | established |  | The core rate the kernel divides by the tick rate to load the timer. |
+| `TIME_HZ` | 0x5f5e100 | inferred |  | The core rate the Linux kernel divides by the tick rate to load the timer. The NT HAL assumes no rate: it measures the timer against the RTC update flag at start-up (nt-hal.md). |

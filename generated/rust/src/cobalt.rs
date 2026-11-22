@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58
+// input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -30,7 +30,7 @@ pub mod apic_lo {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod vector { // bits 7:0, inferred
+    pub mod vector { // bits 7:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -114,12 +114,12 @@ pub mod cpu_timeval {
     pub const OFFSET: u64 = 0x30;
 }
 pub const APIC_8259: u32 = 0xc; // established
-pub const APIC_AS: u32 = 0x18; // established
+pub const APIC_AS: u32 = 0x18; // inferred
 pub const APIC_CPU: u32 = 0x1c; // established
-pub const APIC_IDE0: u32 = 0x4; // established
+pub const APIC_IDE0: u32 = 0x4; // inferred
 pub const APIC_IDE1: u32 = 0x2; // established
 pub const APIC_LINES: u32 = 0x1e; // established
-pub const APIC_LI_AUDIO: u32 = 0x16; // established
+pub const APIC_LI_AUDIO: u32 = 0x16; // inferred
 pub const APIC_NMI: u32 = 0x1d; // established
 pub const APIC_PCIA_BASE0: u32 = 0x0; // established
 pub const APIC_PCIA_BASE123: u32 = 0x5; // established
@@ -127,12 +127,12 @@ pub const APIC_PCIB_BASE0: u32 = 0x8; // established
 pub const APIC_PCIB_BASE123: u32 = 0xd; // established
 pub const APIC_PHYS: u32 = 0xc4000000; // established
 pub const APIC_PIIX4_USB: u32 = 0x7; // established
-pub const APIC_RE: u32 = 0x19; // established
+pub const APIC_RE: u32 = 0x19; // inferred
 pub const APIC_VIDIN0: u32 = 0x12; // established
 pub const APIC_VIDIN1: u32 = 0x13; // established
 pub const APIC_VIDOUT0: u32 = 0x10; // established
 pub const APIC_VIDOUT1: u32 = 0x11; // established
-pub const CPU_MAX: u32 = 0x4; // established
+pub const CPU_MAX: u32 = 0x4; // inferred
 pub const CPU_NUM_PHYS: u32 = 0x1e00; // established
 pub const CPU_PHYS: u32 = 0xc2000000; // established
-pub const TIME_HZ: u32 = 0x5f5e100; // established
+pub const TIME_HZ: u32 = 0x5f5e100; // inferred

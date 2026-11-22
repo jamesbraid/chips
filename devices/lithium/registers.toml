@@ -1,8 +1,8 @@
 unit = "lithium"
 prefix = "LITHIUM"
 title = "Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them"
-doc = "Offsets and bits are software definitions from the Linux Visual Workstation code: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here."
-from = "Linux visws code: include/asm-i386/lithium.h (2.2), include/asm-i386/mach-visws/lithium.h (2.6.20), arch/x86/include/asm/visws/lithium.h and arch/x86/kernel/visws_quirks.c (2.6.33), sound driver of 2.6.33"
+doc = "Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here."
+from = "SGI NT 4.0 HAL halborg.dll 1.3, sgisound.sys 5.2.2 and sgiust.sys 5.2.2 (see devices/lithium/README.md); Linux visws code: include/asm-i386/lithium.h (2.2), include/asm-i386/mach-visws/lithium.h (2.6.20), arch/x86/include/asm/visws/lithium.h and arch/x86/kernel/visws_quirks.c (2.6.33), sound driver of 2.6.33"
 public_from = ["census:"]
 
 [spaces.bridge]
@@ -13,11 +13,11 @@ space = "bridge"
 offset = 0x44
 access = "r"
 width = 16
-grade = "established"
+grade = "inferred"
 doc = "Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read. Whether the register is writable is unknown (only read)."
 
 [registers.bus_number.fields]
-primary = { bits = [7, 0], grade = "established", doc = "Bus number the kernel scans for this bridge." }
+primary = { bits = [7, 0], grade = "inferred", doc = "Bus number the kernel scans for this bridge." }
 subordinate = { bits = [15, 8], grade = "inferred", doc = "Highest bus number behind the bridge, from the header comment only." }
 
 [registers.int_enable]
@@ -58,22 +58,22 @@ space = "audio"
 offset = 0x010
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Audio interrupt status. The driver clears pending bits by writing ones to the bits it wants cleared, and writes all ones to clear everything, so the bits are write-one-to-clear (inferred from the driver's use; no comment says so). It then masks the value it read with the mask register."
 
 [registers.intr_status.fields]
-comm1_overflow = { bits = [0, 0], grade = "established", doc = "Input channel overflow." }
-comm1_trig = { bits = [1, 1], grade = "established", doc = "Input channel trigger point reached." }
-comm2_underflow = { bits = [2, 2], grade = "established", doc = "Output channel underflow." }
-comm2_trig = { bits = [3, 3], grade = "established", doc = "Output channel trigger point reached." }
-link_err = { bits = [15, 15], grade = "established", doc = "Codec link error." }
+comm1_overflow = { bits = [0, 0], grade = "inferred", doc = "Input channel overflow." }
+comm1_trig = { bits = [1, 1], grade = "inferred", doc = "Input channel trigger point reached." }
+comm2_underflow = { bits = [2, 2], grade = "inferred", doc = "Output channel underflow." }
+comm2_trig = { bits = [3, 3], grade = "inferred", doc = "Output channel trigger point reached." }
+link_err = { bits = [15, 15], grade = "inferred", doc = "Codec link error." }
 
 [registers.intr_mask]
 space = "audio"
 offset = 0x014
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Audio interrupt enable mask, same bit layout as the status. The driver sets bits by read-modify-write and clears them the same way."
 
 [registers.codec_command]
@@ -110,31 +110,31 @@ space = "audio"
 offset = 0x104
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Input DMA control and pointers. The two low bytes are the write and read pointers in 32-byte chunks; for the input channel the hardware advances the write pointer and software the read pointer. The driver reads and writes each pointer as a single byte, at the first and second byte of this register."
 
 [registers.comm1_ctl.fields]
-wptr = { bits = [7, 0], grade = "established", doc = "Write pointer, 32-byte chunks. Hardware on input." }
-rptr = { bits = [15, 8], grade = "established", doc = "Read pointer, 32-byte chunks. Software on input." }
-tptr = { bits = [23, 16], grade = "established", doc = "Trigger pointer, 32-byte chunks." }
-tmask = { bits = [26, 24], grade = "established", doc = "Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff." }
-dma_enable = { bits = [27, 27], grade = "established", doc = "1 runs the channel." }
+wptr = { bits = [7, 0], grade = "inferred", doc = "Write pointer, 32-byte chunks. Hardware on input." }
+rptr = { bits = [15, 8], grade = "inferred", doc = "Read pointer, 32-byte chunks. Software on input." }
+tptr = { bits = [23, 16], grade = "inferred", doc = "Trigger pointer, 32-byte chunks." }
+tmask = { bits = [26, 24], grade = "inferred", doc = "Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff." }
+dma_enable = { bits = [27, 27], grade = "inferred", doc = "1 runs the channel." }
 size = { bits = [30, 28], grade = "inferred", doc = "Ring size code: the driver writes log2(ring bytes) minus 6, so 7 for 8 KiB. Codes below 2 are not used." }
-reset = { bits = [31, 31], grade = "established", doc = "1 resets the channel; the driver writes it alone before setting up." }
+reset = { bits = [31, 31], grade = "inferred", doc = "1 resets the channel; the driver writes it alone before setting up." }
 
 [registers.comm1_cfg]
 space = "audio"
 offset = 0x108
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Input DMA configuration."
 
 [registers.comm1_cfg.fields]
-format = { bits = [1, 0], grade = "established", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement." }
-mode = { bits = [2, 2], grade = "established", doc = "1 stereo, 0 mono." }
-direction = { bits = [3, 3], grade = "established", doc = "1 output, 0 input." }
-slot = { bits = [6, 4], grade = "established", doc = "Serial slot of the codec the channel uses; the driver writes 2 for both channels." }
+format = { bits = [1, 0], grade = "inferred", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement." }
+mode = { bits = [2, 2], grade = "inferred", doc = "1 stereo, 0 mono." }
+direction = { bits = [3, 3], grade = "inferred", doc = "1 output, 0 input." }
+slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the channel uses; the driver writes 2 for both channels." }
 lock = { bits = [15, 15], grade = "inferred", doc = "Name only; the driver clears it." }
 
 [registers.comm2_base]
@@ -150,7 +150,7 @@ space = "audio"
 offset = 0x110
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer."
 
 [registers.comm2_cfg]
@@ -158,7 +158,7 @@ space = "audio"
 offset = 0x114
 access = "rw"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Output DMA configuration, same layout as comm1_cfg."
 
 [registers.ust_low]
@@ -182,7 +182,7 @@ space = "audio"
 offset = 0x300
 access = "r"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Time stamp of the input channel's last sample counter update."
 
 [registers.audio1_msc]
@@ -190,7 +190,7 @@ space = "audio"
 offset = 0x304
 access = "r"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Input media stream counter: samples processed as of audio1_ust."
 
 [registers.audio2_ust]
@@ -198,7 +198,7 @@ space = "audio"
 offset = 0x308
 access = "r"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Time stamp for the output channel."
 
 [registers.audio2_msc]
@@ -206,7 +206,7 @@ space = "audio"
 offset = 0x30c
 access = "r"
 width = 32
-grade = "established"
+grade = "inferred"
 doc = "Output media stream counter."
 
 [constants]
@@ -215,6 +215,6 @@ PCI_B_PHYS = { value = 0xfd000000, grade = "established", doc = "Physical window
 AUDIO_PHYS = { value = 0xff001000, grade = "established", doc = "Physical base of the audio engine's first register page." }
 AUDIO_PAGE1 = { value = 0xff00f000, grade = "established", doc = "Second audio page; one undocumented word far into the page is zeroed when output stops (see the device page)." }
 AUDIO_PAGE2 = { value = 0xff010000, grade = "established", doc = "Third audio page; two undocumented words (copies of the DMA pointers) are zeroed when output stops (see the device page)." }
-VENDOR_ID = { value = 0x10a9, grade = "established", doc = "PCI vendor id read from both bridges (SGI)." }
-DEVICE_ID = { value = 0x1002, grade = "established", doc = "PCI device id read from both bridges." }
-DMA_CHUNK = { value = 32, grade = "established", doc = "Bytes the audio DMA moves per pointer step." }
+VENDOR_ID = { value = 0x10a9, grade = "inferred", doc = "PCI vendor id read from both bridges (SGI)." }
+DEVICE_ID = { value = 0x1002, grade = "inferred", doc = "PCI device id read from both bridges." }
+DMA_CHUNK = { value = 32, grade = "inferred", doc = "Bytes the audio DMA moves per pointer step." }

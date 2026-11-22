@@ -1,7 +1,7 @@
 # Visual Workstation: detection, board revision, processors, memory, reboot and power-off
 
 What the Linux platform code does at start-up and shutdown, in the order it does it, and what the hardware has to answer.
-Source and grading as on the [platform page](README.md); all of it is `established` as the kernel's behaviour unless a
+Source and grading as on the [platform page](README.md); all of it is Linux's behaviour (a software expectation of Linux, not of the shipped system; see [Sources by origin](README.md#sources-by-origin)) unless a
 line says otherwise. "2.2" is the first form of the code, "2.6" the later one.
 
 ## 1. Board type and revision

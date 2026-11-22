@@ -1,8 +1,8 @@
 unit = "cobalt"
 prefix = "COBALT"
 title = "Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them"
-doc = "Offsets, bit positions and values are software definitions from the Linux Visual Workstation code (kernel 2.2 to 3.14). The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not."
-from = "Linux visws code: include/asm-i386/cobalt.h (2.2, 2.4), include/asm-i386/mach-visws/cobalt.h (2.6.20), arch/x86/include/asm/visws/cobalt.h and arch/x86/kernel/visws_quirks.c (2.6.33, 3.14)"
+doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not."
+from = "SGI NT 4.0 HAL halborg.dll 1.3 (Recovery CD-1 v1.1), read in Ghidra: see software/visws/nt-hal.md; Linux visws code: include/asm-i386/cobalt.h (2.2, 2.4), include/asm-i386/mach-visws/cobalt.h (2.6.20), arch/x86/include/asm/visws/cobalt.h and arch/x86/kernel/visws_quirks.c (2.6.33, 3.14)"
 public_from = ["census:"]
 
 [spaces.cpu]
@@ -58,7 +58,7 @@ grade = "established"
 doc = "Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unmask a line and only the mask bit to mask it, reading the register back after masking. The vector it writes is the kernel's irq number plus 0x20, so it is not the line number."
 
 [registers.apic_lo.fields]
-vector = { bits = [7, 0], grade = "inferred", doc = "Interrupt vector delivered to the processor. The kernel's value fits in eight bits; the field's extent is not stated by any code and follows the standard I/O APIC layout." }
+vector = { bits = [7, 0], grade = "established", doc = "Interrupt vector delivered to the processor. The kernel's value fits in eight bits; the field's extent is not stated by any code and follows the standard I/O APIC layout." }
 level = { bits = [15, 15], grade = "established", doc = "1 level-triggered, 0 edge. The kernel sets it on every line it enables." }
 mask = { bits = [16, 16], grade = "established", doc = "1 masks the line, 0 enables it." }
 
@@ -86,24 +86,24 @@ enable = { bits = [8, 8], grade = "established", doc = "1 enables the interrupt 
 [constants]
 CPU_PHYS = { value = 0xc2000000, grade = "established", doc = "Physical base of the CPU block." }
 APIC_PHYS = { value = 0xc4000000, grade = "established", doc = "Physical base of the interrupt controller." }
-TIME_HZ = { value = 100000000, grade = "established", doc = "The core rate the kernel divides by the tick rate to load the timer." }
+TIME_HZ = { value = 100000000, grade = "inferred", doc = "The core rate the Linux kernel divides by the tick rate to load the timer. The NT HAL assumes no rate: it measures the timer against the RTC update flag at start-up (nt-hal.md)." }
 CPU_NUM_PHYS = { value = 0x1e00, grade = "established", doc = "Physical address of the 16-bit processor count in low memory; the processor table follows at the next two bytes. Not a register: written by the machine firmware." }
-CPU_MAX = { value = 4, grade = "established", doc = "Most processors the kernel accepts from that table." }
+CPU_MAX = { value = 4, grade = "inferred", doc = "Most processors the kernel accepts from that table." }
 APIC_LINES = { value = 30, grade = "established", doc = "Number of interrupt lines the kernel knows (0 to 29)." }
-APIC_IDE0 = { value = 4, grade = "established", doc = "Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5)." }
+APIC_IDE0 = { value = 4, grade = "inferred", doc = "Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5). The NT HAL uses line 4 on the newest 320 generation and the 540 except revision 0, 5 on the middle 320 generation and the 540 revision 0, and line 1 on the oldest 320 generation, which Linux has no case for." }
 APIC_IDE1 = { value = 2, grade = "established", doc = "Line of the second IDE channel, on the 320 only." }
 APIC_8259 = { value = 12, grade = "established", doc = "Line the PIIX4's cascaded interrupt controllers drive." }
 APIC_PIIX4_USB = { value = 7, grade = "established", doc = "Line of the PIIX4's USB function." }
-APIC_LI_AUDIO = { value = 22, grade = "established", doc = "Line of the Lithium audio engine." }
+APIC_LI_AUDIO = { value = 22, grade = "inferred", doc = "Line of the Lithium audio engine." }
 APIC_CPU = { value = 28, grade = "established", doc = "Line of the Cobalt timer, which the header also calls the cache interrupt." }
-APIC_NMI = { value = 29, grade = "established", doc = "Last line; named NMI by the header, never used by any code read." }
+APIC_NMI = { value = 29, grade = "established", doc = "Last line; named NMI by the header and unused by Linux. The NT HAL programs it as an NMI-delivery entry (entry 28 on the Lite revisions 0xa0 and 0xa8 moves the NMI to 28 and the clock to 27)." }
 APIC_PCIA_BASE0 = { value = 0, grade = "established", doc = "First line of the per-slot INTA lines of Lithium bridge A." }
 APIC_PCIA_BASE123 = { value = 5, grade = "established", doc = "First of the lines bridge A shares among INTB, INTC and INTD (the header comment says 5 and 6)." }
 APIC_PCIB_BASE0 = { value = 8, grade = "established", doc = "First line of the per-slot INTA lines of Lithium bridge B (8 to 12)." }
-APIC_PCIB_BASE123 = { value = 13, grade = "established", doc = "First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). No code uses it." }
+APIC_PCIB_BASE123 = { value = 13, grade = "established", doc = "First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). Linux uses none of them; the NT HAL's bridge B interrupt map does (shared pins on entries 13 to 15)." }
 APIC_VIDOUT0 = { value = 16, grade = "established", doc = "Video output 0 interrupt." }
 APIC_VIDOUT1 = { value = 17, grade = "established", doc = "Video output 1 interrupt." }
 APIC_VIDIN0 = { value = 18, grade = "established", doc = "Video input 0 interrupt." }
 APIC_VIDIN1 = { value = 19, grade = "established", doc = "Video input 1 interrupt." }
-APIC_AS = { value = 24, grade = "established", doc = "Header name AS; no code uses it." }
-APIC_RE = { value = 25, grade = "established", doc = "Header name RE; no code uses it." }
+APIC_AS = { value = 24, grade = "inferred", doc = "Header name AS; no code uses it." }
+APIC_RE = { value = 25, grade = "inferred", doc = "Header name RE; no code uses it." }

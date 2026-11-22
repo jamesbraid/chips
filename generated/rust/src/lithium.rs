@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 1f9ce5d9b4c876c11bf7a33b65f387d185e256610a122c7325864fb43c537002
+// input sha256 54a43e69300a6826905d64ebdf4107626a8df0731e7019264517aa75d3188b1f
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -59,11 +59,11 @@ pub mod host_ctl {
         }
     }
 }
-/// Audio interrupt status. The driver clears pending bits by writing ones to the bits it wants cleared, and writes all ones to clear everything, so the b (established)
+/// Audio interrupt status. The driver clears pending bits by writing ones to the bits it wants cleared, and writes all ones to clear everything, so the b (inferred)
 pub mod intr_status {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x10;
-    pub mod link_err { // bits 15:15, established
+    pub mod link_err { // bits 15:15, inferred
         pub const SHIFT: u32 = 15;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -73,7 +73,7 @@ pub mod intr_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod comm2_trig { // bits 3:3, established
+    pub mod comm2_trig { // bits 3:3, inferred
         pub const SHIFT: u32 = 3;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -83,7 +83,7 @@ pub mod intr_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod comm2_underflow { // bits 2:2, established
+    pub mod comm2_underflow { // bits 2:2, inferred
         pub const SHIFT: u32 = 2;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -93,7 +93,7 @@ pub mod intr_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod comm1_trig { // bits 1:1, established
+    pub mod comm1_trig { // bits 1:1, inferred
         pub const SHIFT: u32 = 1;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -103,7 +103,7 @@ pub mod intr_status {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod comm1_overflow { // bits 0:0, established
+    pub mod comm1_overflow { // bits 0:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -114,7 +114,7 @@ pub mod intr_status {
         }
     }
 }
-/// Audio interrupt enable mask, same bit layout as the status. The driver sets bits by read-modify-write and clears them the same way. (established)
+/// Audio interrupt enable mask, same bit layout as the status. The driver sets bits by read-modify-write and clears them the same way. (inferred)
 pub mod intr_mask {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x14;
@@ -164,11 +164,11 @@ pub mod comm1_base {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x100;
 }
-/// Input DMA control and pointers. The two low bytes are the write and read pointers in 32-byte chunks; for the input channel the hardware advances the w (established)
+/// Input DMA control and pointers. The two low bytes are the write and read pointers in 32-byte chunks; for the input channel the hardware advances the w (inferred)
 pub mod comm1_ctl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x104;
-    pub mod reset { // bits 31:31, established
+    pub mod reset { // bits 31:31, inferred
         pub const SHIFT: u32 = 31;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -188,7 +188,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod dma_enable { // bits 27:27, established
+    pub mod dma_enable { // bits 27:27, inferred
         pub const SHIFT: u32 = 27;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -198,7 +198,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod tmask { // bits 26:24, established
+    pub mod tmask { // bits 26:24, inferred
         pub const SHIFT: u32 = 24;
         pub const MASK: u32 = 0x7;
         pub const fn get(v: u32) -> u32 {
@@ -208,7 +208,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod tptr { // bits 23:16, established
+    pub mod tptr { // bits 23:16, inferred
         pub const SHIFT: u32 = 16;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -218,7 +218,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod rptr { // bits 15:8, established
+    pub mod rptr { // bits 15:8, inferred
         pub const SHIFT: u32 = 8;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -228,7 +228,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod wptr { // bits 7:0, established
+    pub mod wptr { // bits 7:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -239,7 +239,7 @@ pub mod comm1_ctl {
         }
     }
 }
-/// Input DMA configuration. (established)
+/// Input DMA configuration. (inferred)
 pub mod comm1_cfg {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x108;
@@ -253,7 +253,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod slot { // bits 6:4, established
+    pub mod slot { // bits 6:4, inferred
         pub const SHIFT: u32 = 4;
         pub const MASK: u32 = 0x7;
         pub const fn get(v: u32) -> u32 {
@@ -263,7 +263,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod direction { // bits 3:3, established
+    pub mod direction { // bits 3:3, inferred
         pub const SHIFT: u32 = 3;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -273,7 +273,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod mode { // bits 2:2, established
+    pub mod mode { // bits 2:2, inferred
         pub const SHIFT: u32 = 2;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -283,7 +283,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod format { // bits 1:0, established
+    pub mod format { // bits 1:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0x3;
         pub const fn get(v: u32) -> u32 {
@@ -299,12 +299,12 @@ pub mod comm2_base {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x10c;
 }
-/// Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer. (established)
+/// Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer. (inferred)
 pub mod comm2_ctl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x110;
 }
-/// Output DMA configuration, same layout as comm1_cfg. (established)
+/// Output DMA configuration, same layout as comm1_cfg. (inferred)
 pub mod comm2_cfg {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x114;
@@ -319,27 +319,27 @@ pub mod ust_high {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x204;
 }
-/// Time stamp of the input channel's last sample counter update. (established)
+/// Time stamp of the input channel's last sample counter update. (inferred)
 pub mod audio1_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x300;
 }
-/// Input media stream counter: samples processed as of audio1_ust. (established)
+/// Input media stream counter: samples processed as of audio1_ust. (inferred)
 pub mod audio1_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x304;
 }
-/// Time stamp for the output channel. (established)
+/// Time stamp for the output channel. (inferred)
 pub mod audio2_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x308;
 }
-/// Output media stream counter. (established)
+/// Output media stream counter. (inferred)
 pub mod audio2_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30c;
 }
-/// Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then (established)
+/// Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then (inferred)
 pub mod bus_number {
     pub const WIDTH: u32 = 16;
     pub const OFFSET: u64 = 0x44;
@@ -353,7 +353,7 @@ pub mod bus_number {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod primary { // bits 7:0, established
+    pub mod primary { // bits 7:0, inferred
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -452,8 +452,8 @@ pub mod int_enable {
 pub const AUDIO_PAGE1: u32 = 0xff00f000; // established
 pub const AUDIO_PAGE2: u32 = 0xff010000; // established
 pub const AUDIO_PHYS: u32 = 0xff001000; // established
-pub const DEVICE_ID: u32 = 0x1002; // established
-pub const DMA_CHUNK: u32 = 0x20; // established
+pub const DEVICE_ID: u32 = 0x1002; // inferred
+pub const DMA_CHUNK: u32 = 0x20; // inferred
 pub const PCI_A_PHYS: u32 = 0xfc000000; // established
 pub const PCI_B_PHYS: u32 = 0xfd000000; // established
-pub const VENDOR_ID: u32 = 0x10a9; // established
+pub const VENDOR_ID: u32 = 0x10a9; // inferred

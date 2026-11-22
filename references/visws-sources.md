@@ -1,9 +1,11 @@
 # Visual Workstation 320 and 540: sources read and sources missing
 
 What the pages under [platforms/visws/](../platforms/visws/README.md), [devices/cobalt/](../devices/cobalt/README.md)
-and [devices/lithium/](../devices/lithium/README.md) rest on, and what could not be found. Nothing here is vendor
-source beyond SGI's public Linux platform code: no BIOS image, no NT driver, no manual for the Cobalt, Lithium or
-Arsenic chips was available. The only register-level evidence is Linux.
+and [devices/lithium/](../devices/lithium/README.md) rest on, and what could not be found. This page lists the Linux code and posts that
+the platform pages first rested on. Since then SGI's shipped Windows NT 4.0 software and PROM 1.0006 have been read
+([software/visws](../software/visws/README.md)); they rank above Linux for this machine, and
+[Sources by origin](../platforms/visws/README.md#sources-by-origin) says which facts each supports. No manual or specification
+for the Cobalt, Lithium or Arsenic chips has been found, so Linux plus the shipped binaries are the register-level evidence.
 
 ## Public Linux code read
 
@@ -58,8 +60,8 @@ Both owner's guides are user documents: no register, chip name or interrupt wiri
 | Wanted | Why it matters | Route |
 |---|---|---|
 | The Audio/Video User's Guide (007-3870-001) and the NT driver kit the guides name | Possible chip names for the audio and video paths | The guide is a public PDF on a vintage-SGI mirror; the driver kit's site is gone. Not added to the document manifest in this work. |
-| The PROM or BIOS image of either machine | Reset state, PCI bus numbering, memory map, CPU table setup, PIIX4 configuration, the 307 setup | None held. The NT recovery CD's boot files or a flash dump would settle most of the open questions. |
-| The NT HAL and miniport drivers (the HAL routes the interrupts and numbers the buses) | The interrupt map the Linux code gets wrong or never uses; Cobalt memory and error registers | None held. |
+| A PROM or BIOS image other than 1.0006 | Differences between firmware versions; a 540 image | Only PROM 1.0006 is held and read ([firmware.md](../software/visws/firmware.md)). |
+| The NT HAL and miniport drivers | The interrupt map the Linux code gets wrong or never uses; Cobalt memory and error registers | Held now (Recovery CD-1 v1.1, install CD Disk 1, driver archive item); read in [nt-hal.md](../software/visws/nt-hal.md) and [nt-drivers.md](../software/visws/nt-drivers.md). Bank decoding and the Windows 2000 builds are unread. |
 | The Cobalt, Lithium and Arsenic specifications | Everything the Linux code does not touch | SGI said none releasable. |
 | A real boot log from a 320 or 540 under Linux 2.4 or 2.6 | The values the kernel prints: Lithium bus numbers, Cobalt revision, APIC ID, board type and revision | A search of the held mail and news archives found none. |
 | NetBSD, OpenBSD or FreeBSD ports | A second reading | None exists as far as the held trees show: a text search of the NetBSD, OpenBSD and OpenBSD/sgi trees finds only a line in an ACPICA change log that says not to use ACPI on a VISWS. |

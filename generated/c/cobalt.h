@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58 */
+/* input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0 */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -21,7 +21,7 @@
 #define COBALT_APIC_LO_LEVEL_SHIFT                   15 /* established */
 #define COBALT_APIC_LO_LEVEL_MASK                    0x1u
 #define COBALT_APIC_LO_LEVEL_INPLACE                 (COBALT_APIC_LO_LEVEL_MASK << COBALT_APIC_LO_LEVEL_SHIFT)
-#define COBALT_APIC_LO_VECTOR_SHIFT                  0 /* inferred */
+#define COBALT_APIC_LO_VECTOR_SHIFT                  0 /* established */
 #define COBALT_APIC_LO_VECTOR_MASK                   0xffu
 #define COBALT_APIC_LO_VECTOR_INPLACE                (COBALT_APIC_LO_VECTOR_MASK << COBALT_APIC_LO_VECTOR_SHIFT)
 
@@ -76,12 +76,12 @@
 #define COBALT_CPU_TIMEVAL_OFFSET                    0x30u /* established */
 
 #define COBALT_APIC_8259                             0xcu /* established */
-#define COBALT_APIC_AS                               0x18u /* established */
+#define COBALT_APIC_AS                               0x18u /* inferred */
 #define COBALT_APIC_CPU                              0x1cu /* established */
-#define COBALT_APIC_IDE0                             0x4u /* established */
+#define COBALT_APIC_IDE0                             0x4u /* inferred */
 #define COBALT_APIC_IDE1                             0x2u /* established */
 #define COBALT_APIC_LINES                            0x1eu /* established */
-#define COBALT_APIC_LI_AUDIO                         0x16u /* established */
+#define COBALT_APIC_LI_AUDIO                         0x16u /* inferred */
 #define COBALT_APIC_NMI                              0x1du /* established */
 #define COBALT_APIC_PCIA_BASE0                       0x0u /* established */
 #define COBALT_APIC_PCIA_BASE123                     0x5u /* established */
@@ -89,14 +89,14 @@
 #define COBALT_APIC_PCIB_BASE123                     0xdu /* established */
 #define COBALT_APIC_PHYS                             0xc4000000u /* established */
 #define COBALT_APIC_PIIX4_USB                        0x7u /* established */
-#define COBALT_APIC_RE                               0x19u /* established */
+#define COBALT_APIC_RE                               0x19u /* inferred */
 #define COBALT_APIC_VIDIN0                           0x12u /* established */
 #define COBALT_APIC_VIDIN1                           0x13u /* established */
 #define COBALT_APIC_VIDOUT0                          0x10u /* established */
 #define COBALT_APIC_VIDOUT1                          0x11u /* established */
-#define COBALT_CPU_MAX                               0x4u /* established */
+#define COBALT_CPU_MAX                               0x4u /* inferred */
 #define COBALT_CPU_NUM_PHYS                          0x1e00u /* established */
 #define COBALT_CPU_PHYS                              0xc2000000u /* established */
-#define COBALT_TIME_HZ                               0x5f5e100u /* established */
+#define COBALT_TIME_HZ                               0x5f5e100u /* inferred */
 
 #endif /* COBALT_GEN_H */

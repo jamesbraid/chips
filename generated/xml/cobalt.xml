@@ -1,16 +1,16 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 65075ae8c86b91fe79d4c928e0275c1d67dde934618f654a26e4b81ce56d0d58 -->
+<!-- input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0 -->
 <genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them">
-  <doc>Offsets, bit positions and values are software definitions from the Linux Visual Workstation code (kernel 2.2 to 3.14). The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.</doc>
+  <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.</doc>
   <space name="cpu" unit="byte"/>
   <space name="apic" unit="byte"/>
   <struct name="APIC_LO" size="4" grade="established" register="yes" offset="0x0" access="rw" count="30" stride="16" space="apic" reset="unknown">
     <doc>Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unmask a line and only the mask bit to mask it, reading the register back after masking. The vector it writes is the kernel's irq number plus 0x20, so it is not the line number.</doc>
     <field name="mask" start="16" size="1" type="uint" grade="established"/>
     <field name="level" start="15" size="1" type="uint" grade="established"/>
-    <field name="vector" start="0" size="8" type="uint" grade="inferred"/>
+    <field name="vector" start="0" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="APIC_HI" size="4" grade="inferred" register="yes" offset="0x4" access="rw" count="30" stride="16" space="apic" reset="unknown">
     <doc>Interrupt redirection entry, high word. The kernel writes zero beside every low word it sets and never reads it. By the standard I/O APIC layout it would hold the destination processor; that is inferred from the layout of the low word and the register spacing, and no code reads it back.</doc>
@@ -35,12 +35,12 @@
     <doc>Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once.</doc>
   </struct>
   <constant name="APIC_8259" value="0xc" grade="established"/>
-  <constant name="APIC_AS" value="0x18" grade="established"/>
+  <constant name="APIC_AS" value="0x18" grade="inferred"/>
   <constant name="APIC_CPU" value="0x1c" grade="established"/>
-  <constant name="APIC_IDE0" value="0x4" grade="established"/>
+  <constant name="APIC_IDE0" value="0x4" grade="inferred"/>
   <constant name="APIC_IDE1" value="0x2" grade="established"/>
   <constant name="APIC_LINES" value="0x1e" grade="established"/>
-  <constant name="APIC_LI_AUDIO" value="0x16" grade="established"/>
+  <constant name="APIC_LI_AUDIO" value="0x16" grade="inferred"/>
   <constant name="APIC_NMI" value="0x1d" grade="established"/>
   <constant name="APIC_PCIA_BASE0" value="0x0" grade="established"/>
   <constant name="APIC_PCIA_BASE123" value="0x5" grade="established"/>
@@ -48,13 +48,13 @@
   <constant name="APIC_PCIB_BASE123" value="0xd" grade="established"/>
   <constant name="APIC_PHYS" value="0xc4000000" grade="established"/>
   <constant name="APIC_PIIX4_USB" value="0x7" grade="established"/>
-  <constant name="APIC_RE" value="0x19" grade="established"/>
+  <constant name="APIC_RE" value="0x19" grade="inferred"/>
   <constant name="APIC_VIDIN0" value="0x12" grade="established"/>
   <constant name="APIC_VIDIN1" value="0x13" grade="established"/>
   <constant name="APIC_VIDOUT0" value="0x10" grade="established"/>
   <constant name="APIC_VIDOUT1" value="0x11" grade="established"/>
-  <constant name="CPU_MAX" value="0x4" grade="established"/>
+  <constant name="CPU_MAX" value="0x4" grade="inferred"/>
   <constant name="CPU_NUM_PHYS" value="0x1e00" grade="established"/>
   <constant name="CPU_PHYS" value="0xc2000000" grade="established"/>
-  <constant name="TIME_HZ" value="0x5f5e100" grade="established"/>
+  <constant name="TIME_HZ" value="0x5f5e100" grade="inferred"/>
 </genxml>
