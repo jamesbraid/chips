@@ -31,6 +31,12 @@
 | [size-ladder.md](bricks/size-ladder.md) | Origin 3000 and Onyx 3000 size ladder | This sheet lists, for each size of the Origin 3000 family that SGI's manuals describe (Origin and Onyx 3200, 3400... |
 | [xbrick.md](bricks/xbrick.md) | Origin 3000 X-brick | The X-brick is the 4U XIO expansion enclosure of the Origin 3000 and Onyx 3000 families. |
 
+## ip17
+
+| Page | Title | Summary |
+|---|---|---|
+| [prom-software.md](ip17/prom-software.md) | Crimson (IP17) PROM 4.0.3: what its own software does | This page records what the shipped Crimson PROM `SGI Version 4.0.3 Rev IP17, Apr 30, 1992` does: part `070-081x-005`... |
+
 ## ip20
 
 | Page | Title | Summary |

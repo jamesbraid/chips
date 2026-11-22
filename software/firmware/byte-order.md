@@ -68,11 +68,12 @@ The little-endian awareness is pervasive and read, not guessed:
 
 - `0xbfc11ac8` returns 1 when Config bit 15 is clear (`mfc0; srl 15; andi 1; xori 1`) and is called from 137 sites. Established.
 - Two parallel tables of CPU-board and I/O register addresses sit at `0xbfc39960` (big-endian view) and `0xbfc39988`
-  (little-endian view), 11 pointers each; 10 of the 11 little-endian pointers are the big-endian ones with the byte lane swizzled
-  (`+3` for byte registers, `+4` for the `0xbd8...` and `0xbd0...` entries, `0xbf200001` becomes `0xbf200002`); the last pair is not a swizzle
-  (big-endian `0xbf200002`, little-endian `0xb7f40000`). Code picks the table
+  (little-endian view), 10 pointers each; the little-endian pointers are the big-endian ones with the byte lane swizzled
+  (`xor 3` for byte registers, `+4` for the `0xbd8...` and `0xbd0...` entries, `0xbf200001` becomes `0xbf200002`). An eleventh
+  position reads the first entry of the next table (big-endian side) or the separate pair at `0xbfc399b0` (little-endian side,
+  `0xb7f40000`), which is why it does not swizzle. Code picks the table
   with `0xbfc11ac8` (for example `0xbfc0c6d0` to `0xbfc0c6fc`). Established for the selection; the meaning of each register is not read.
-- The monitor command table (`0xbfc38560` on) has `endian` (handler `0xbfc0c7ac`, prints which order the CPU is in from the strings at
+- The monitor command table (`0xbfc38540` on) has `endian` (handler `0xbfc0c7ac`, prints which order the CPU is in from the strings at
   `0xbfc39d60` and `0xbfc39d68`) and `e2endian` (handler `0xbfc0c7f4`, help text "e2 endian bit: e2endian [big|little]"). With no
   argument `e2endian` reads bit 2 of a byte; with `b` it sets that bit (`ori 0x4`) and with `l` it clears it (`0xbfc0c714`,
   `0xbfc0c760` on). The byte is the entry at offset `0x1c` of the table the byte-order test selects: `0xbfe00000` in the big-endian
@@ -80,11 +81,13 @@ The little-endian awareness is pervasive and read, not guessed:
   `0xbfc0c880`, both in the command handler. Established. That the byte is the CPU-board mode EEPROM's endian bit is inferred from the
   command name and the string "e2 endian bit".
 - The program loader rejects the wrong order: "not little endian byte order" at `0xbfc38454` and "not big endian byte order" at
-  `0xbfc38478`, and a warning "IO3B needed for little endian IO" at `0xbfc39a8c`. The strings are established; their call sites were not read, so what the checks do is unknown.
+  `0xbfc38478`, and a warning "IO3B needed for little endian IO" at `0xbfc39a8c`. The loader tests the file magic against the CPU's
+  order and the warning is a read of one byte (call sites read in [the IP17 software page](../../platforms/ip17/prom-software.md)).
 
 So the Crimson PROM is endian-neutral at the level of its own code (it addresses registers through the two tables) and can be
-told to restart the other way with `e2endian`. Nothing was read that tells whether the IP17 PROM would complete a boot little-endian;
-that is unknown.
+told to restart the other way with `e2endian`. [The IP17 PROM software page](../../platforms/ip17/prom-software.md) reads the
+little-endian paths in full: no code halts or restarts on a little-endian CPU, and an emulated little-endian run matches the
+big-endian run up to the first timer wait. Whether a boot completes on the real board is still unknown.
 
 ## IP20, IP22 and IP24: test, flip, restart
 
