@@ -476,6 +476,37 @@ is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
   not; the four ids are the firmware's, and mapping them to boards is unknown. The CD also holds `sgiu.inf` and `sgiul50.dll` / `sgiulnt5.sys`
   (SGI USB support); those are cabinet-compressed and were not opened.
 
+## Power-management NMI and PCI bridge set-up
+
+Read in the follow-on pass ([hot-path page](hal-hot-path.md) for the interrupt side). Established, `halborg.dll` 1.3.
+
+**`HalpHandlePwrMgmtNMI` (`0x8001ecf0`, called first by `HalHandleNMI`, which Cobalt entry 29 reaches).** Reads I/O port `0xfb0`
+(byte 0 of the PIIX4 general-purpose input register, offset inferred). If bit 2 is set it writes port `0xff3` = `0xfe` and reports
+"not a power NMI". Otherwise it reads the byte at bridge B's window `+0x08`: nonzero, it writes bridge B's address register
+(`+0xf8`) = `0x8000ff00` (bus 0, device 31, function 7: the configuration-mechanism-1 encoding of a special cycle) and data
+register (`+0xfc`) = `0x00120002`, which is the encoding of an x86 "stop grant" special cycle (inferred from the value);
+zero, it writes port `0xff1` = `0xca` and port `0xff0` = `0xba`. It returns true. `HalHandleNMI` then prints that the system halted and
+breaks into the debugger; it does not power off. The ports `0xff0` to `0xff3` belong to no device identified so far and what
+raises bit 2 is unknown ([questions](../../questions/visws-hal-open.md)). The soft-power path is separate: `pm_init_intr` clears the PM
+status (`0xf80`), writes enable (`0xf82`) = `0x100` (power button) and control (`0xf84`) = 1; `pm_intr_handler` (on the vector for ISA
+IRQ 9, level `0xb1`) acknowledges and calls `HalpPwrMgmtSuspend`, which writes CMOS `0x61` and reads `0x60`, if that reads `I` sets or
+clears bit 0 of port `0xfb5` (set below board revision `0x20`), and writes `0x2000` to `0xf84` (suspend-enable, type 0). More than nine
+errors disable the interrupt and bug-check `0x80`.
+
+**`HalpInitializePCIBridge` (`0x8001d350`).** A standard PCI-to-PCI bridge set-up, written through the parent bus handler's
+configuration-write routine as one 64-byte image: primary, secondary and subordinate bus numbers at `+0x18` to `+0x1a`
+(the subordinate number is `0xff` during enumeration and the real highest bus afterwards), I/O base and limit at `+0x1c`, `+0x1d`
+(upper 4 bits of the 4 KiB-aligned range), memory base and limit at `+0x20`, `+0x22`, prefetchable at `+0x24`, `+0x26` (1 MiB
+granularity, an empty range is written inverted), secondary status `+0x1e` and status `+0x06` cleared with `0xffff`, bridge control
+`+0x3e` = 0, command `+0x04` = (I/O and memory enables for the ranges that exist) plus bus-master. Behind such a bridge the
+interrupt pin is swizzled by adding the device number modulo 4 (`HalpBridgedPciIntPin2SysIntLine`). Nothing is Cobalt-specific here; a
+replacement HAL can use the generic bridge code.
+
+**Not read** in either pass: the two I2C layers (flat-panel identification for the boot display; a replacement that does not
+need the panel size can skip them), the V86 BIOS call path (for display BIOS calls only), and the Windows 2000 HAL below its
+tables (no symbols). Two newer 1999 NT 4.0 HAL builds (SGI patches dated 28 April and 28 July 1999, whose notes mention PCI
+resource fixes and cache-operation speed-ups) are held as InstallShield packages and were not opened.
+
 ## Routines read
 
 `HalInitSystem`, `HalInitializeProcessor`, `HalpInitializeInterrupts`, `HalpEnableNMI`, `HalpInitLithium`, `HalpInitMP`,

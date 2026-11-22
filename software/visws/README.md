@@ -28,6 +28,7 @@ given. *unknown*: not settled; the route that would settle it is in
 | [boot-path.md](boot-path.md) | What the firmware leaves behind for NT and Linux: boot files, the ARC configuration tree, memory descriptors, the processor table, the memory and device map; what is not provided (no MP table, no E820) |
 | [nt-hal.md](nt-hal.md) | The NT 4.0 HAL read function by function: Cobalt interrupt routing, timers, processor start, Lithium PCI access, error and power handling, flash environment access |
 | [nt-drivers.md](nt-drivers.md) | SGI's other Windows drivers at inventory level: audio, system time, video capture, Ethernet, USB, IEEE 1394, and text-mode setup's HAL selection |
+| [hal-hot-path.md](hal-hot-path.md) | Every register access the HAL makes per interrupt, clock tick, IPI and profile tick, and which a hypervisor with an in-kernel local APIC serves without a user-space exit |
 | [emulator-requirements.md](emulator-requirements.md) | What an emulator must provide to boot Linux and NT, and what is still unknown |
 
 ## What was read
