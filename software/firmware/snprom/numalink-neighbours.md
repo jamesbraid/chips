@@ -438,15 +438,17 @@ dispatch of the two object slots; the other uses of those offsets are data field
 | `0xffa0eb40` (alias `0xffa0ecd0`) | test bit n | local window `0x8000_0081_5003_1550` | the running node's |
 | `0xffa0e730` (alias `0xffa0eae0`) | set or clear bit n under the local lock: the whole `0x1_101d_0208` must read 0 (a stuck lock is broken after 1,000,000 us by writing 0 to `0x1_101d_0200`); release writes `0x1_101d_0200` | local window | the running node's |
 | `0xffa0ebc0` (slot 32, `+0x100` of the table `0xffbd7c18`, part `0x4363`), through `0xffa99870(obj, n)` | test bit n | `0x8000_0009_5003_1550 \| sext16([obj]) << 38` | `obj`'s node (the halfword at `obj +0` is the NASID A gave it) |
-| `0xffa0e880` (slot 31, `+0xf8`), through `0xffa99800(obj, n, v)` | set or clear bit n; lock through the node-object read: bit 0 of `0x1_101d_0208` of `obj` must read clear (limit 1,000,000 us, after which the set goes ahead); release writes 0 to `0x1_101d_0200` of `obj` | same global form | `obj`'s node |
+| `0xffa0e880` (slot 31, `+0xf8`), through `0xffa99800(obj, n, v)` | set or clear bit n; lock through the node-object read: bit 0 of `0x1_101d_0208` of `obj` must read clear (limit 1,000,000 us; the -9 result of a timeout is ignored, so the set goes ahead); release writes 0 to `0x1_101d_0200` of `obj` | same global form | `obj`'s node |
+| `0xffa0e9e0` (alias `0xffa0eb10`) | write a multi-bit field (shift, width, value) under the local lock | local window | the running node's (sites `0xffa99dcc`, `0xffa9a0ac`: bits 47 to 52) |
+| `0xffa0ec50` (alias `0xffa0ed00`) | read a field (shift, width) | local window | the running node's (site `0xffa9a0ec`: bits 47 to 52) |
 
 The class table for part `0x4422` (`0xffbd8698`; slots 31 and 32 are `0xffa99000` and `0xffa99170`) works on words at
 `0x8_901d_0000 | nasid << 38`, not here; the three bit-2 calls in its slots 91 to 93 (`0xffaade3c`, `0xffaadedc`,
 `0xffaadf4c`) are not this word. The local view and the global view with the node's own NASID must be one storage word
 (inferred: the PROM uses both on the same node).
 
-**Every site that touches bit 2.** The bit argument was resolved at each of the 118 calls of the routines above (the other
-bits are 0, 1, 3, 4, 10 to 15, 21 + n, 25, 26 + n, 30 + n, 34, 35 + n, 59 and 60).
+**Every site that touches bit 2.** The bit argument was resolved at each of the 118 calls of the routines above (115 of the test and set routines, 3 of the field routines; the other
+bits are 0, 1, 3, 4, 10 to 15, 21 + n, 25, 26 + n, 30 + n, 34, 35 + n, 47, 50, 59 and 60). Direct references outside the routines: reads at `0xffa1d466`, `0xffa1d6d6` and `0xffb123c6` (bits 21 + slice and 60, not 2) and the whole-word read-modify-write through the node object at `0xffa9fcd6` and `0xffa9fd56`, which clears 29:26 and keeps bit 2.
 
 | # | Site | Access | Whose word | What it decides |
 |---|---|---|---|---|
@@ -461,7 +463,7 @@ bits are 0, 1, 3, 4, 10 to 15, 21 + n, 25, 26 + n, 30 + n, 34, 35 + n, 59 and 60
 
 Nothing else writes bit 2. The other writers clear bits 29:26 (`0xffa9fcd6`, `0xffaf5ea6`, `0xffc4e216`, the die chain) or
 touch one other bit. The history registers `0x1_5003_1500 + 16 * lid[26:23]` (SAL_A and `0xffa1e3xx`) are rewritten whole
-and reach `0x1550` only for `lid[26:23]` = 5, which a SHub 1 node (slices 0 to 3) does not produce.
+and reach `0x1550` only for `lid[26:23]` = 5, which a SHub 1 node does not produce if its slices are 0 to 3 (inferred).
 
 **Slot 91's test reads the stand-in's own word, not A's.** Slot 92 passes `obj`, the stand-in's entry with its NASID in the
 halfword at `+0`, to `0xffa0ebc0`, which forms the address from that halfword. A's own word is read by sites 2 and 3, and
@@ -472,8 +474,8 @@ type from `0xffa80430`) it runs `0xffab1cc0` and `0xffab30e0`, then the brick ch
 of that node, tests bit 13 (`extr.u 12,2`, then `& 2`) and returns 0 at once when clear (`0xffaad940`, `0xffaad956`).
 `0xffa91260`, the only caller of the second `0x100b` routine, comes after the check. So the second `0x100b` and its 3 s wait
 need bit 13 set, which plain storage does not give. The return of 0 makes site 6 set bit 2, so slot 93 (site 7) returns at
-once. Whether any loop in `0xffab1cc0` or `0xffab30e0` waits on zeros was not traced (an emulator run with plain zeros
-reached the shell, a software expectation only).
+once. That holds only when the slice gate `0xffa0ff30` passes: with the gate 0 slot 91 returns +1 (`0xffaad8c0`, `0xffaad840`), and bit 2 stays clear. Whether any loop in `0xffab1cc0` or `0xffab30e0` waits on zeros was not traced (an emulator run with plain zeros
+reached the shell, inferred).
 
 **The two readings are one bit in two roles.**
 
@@ -481,7 +483,7 @@ reached the shell, a software expectation only).
 |---|---|---|
 | a peer's word, read by A's slot 92 (and sites 7, 8) | plain 64-bit storage. The claim wrote 0 (site 4), so bit 2 reads 0 and slot 91 runs. Nothing requires 1. Forcing 1 over the claim's write skips only slot 91's II-block accesses; it is an approximation of the register, not a reading | established (reads, writes, order); approximation (forcing) |
 | a peer that prepared itself (bits 55:54 of `SCRATCH1` set, claim skipped) | whatever its own PROM left: 0 after site 1, then 1 after site 3 when its own slot 91 returned 0 or less | inferred |
-| a node's own word at reset | irrelevant for the election winner: site 1 zeroes it before `main` reads it. It matters only when no processor wins (the store at `0x101d_0088` does not read back at `0x101d_0080`): nothing then zeroes the word, a reset 1 reaches site 2 and that node skips its own slot 91. That is the emulator reading, and the code agrees with it | established (code); software expectation (the emulator run) |
+| a node's own word at reset | irrelevant for the election winner: site 1 zeroes it before `main` reads it. It matters only when no processor wins (the store at `0x101d_0088` does not read back at `0x101d_0080`): nothing then zeroes the word, a reset 1 reaches site 2 and that node skips its own slot 91. That is the emulator reading, and the code agrees with it | established (code); inferred (the emulator run) |
 
 Plain-storage `0x1_101d_0208` reading 0 satisfies both lock forms. The `obj` form (site 6) tests bit 0
 only; the local form (sites 3, and every `0xffa0eae0`) needs the whole 64-bit word to be 0. `0x1_101d_0200` takes writes.
