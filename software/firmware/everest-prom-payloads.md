@@ -13,21 +13,25 @@ reading, unknown is not settled.
   1994 to 1995 builds also hold a compressed graphics-board PROM.
 - **The compression is the ordinary Unix `compress` LZW stream** (magic `1f 9d`, 16-bit codes, block mode) behind a 16-byte header. A stock
   decompressor reproduces every payload; each result matches the header's stored length and byte sum. Established.
-- **Every payload is big-endian MIPS** and decodes as code at the stated load address. Established. The IP21 and IP25 payloads and the later IP19
+- **Every CPU payload is big-endian MIPS** and decodes as code at the stated load address. Established. (The graphics payload is the exception:
+  it opens with a 0x100-byte data table and its code starts at offset 0x100.) The IP21 and IP25 payloads and the later IP19
   payloads are complete ELF executables (the ELF header is the first bytes of the loaded image); the earlier IP19 payloads are flat code with no header.
 - **The payloads are the "IO4 PROM Monitor" itself**, built once per CPU type, each carrying a banner of the form `SGI Version 4.21 Rev A IP21`.
   The container version (1.0, 2.1) and the CPU PROM version (3.11 to 3.17, 4.19, 4.21) are different numbers. Established.
-- **No second reset vector exists in any payload.** The payloads are linked to run from RAM after the loader copies them; none is a ROM image
-  that expects to start at the MIPS reset address. Inferred from the load addresses (physical `0x01800000`) and the entry code, which starts
-  by reading a handoff block at a fixed address rather than initialising the CPU from scratch.
+- **No second reset vector was found in the IP21 and IP25 payloads.** They are linked to run from RAM after the loader copies them; the load
+  addresses are physical `0x01800000` and the entry code does not initialise the CPU first. Inferred from the load addresses and the entry code, which
+  begins by testing a handoff block (see below). The IP19 payloads differ: their entry code sets Status, Cause and the watch registers itself, so
+  that inference does not extend to them.
 - **The log lines "Downloading PROM code" and "Jumping into IO4 PROM" are in none of the 13 images.** They come from firmware we do not hold,
   presumably the CPU board's own boot PROM. Unknown.
 
 ## Images
 
 All 13 are published in the PROM catalogue and were checked against the catalogue's sha256. The 1996 image `7019deae...` is also byte-identical to the
-copy on the retail 6.5 base media (checked by hash). The retail media carry no other IO4 flash file; the standalone programs under `stand/` are
-operating-system tools, not PROM payloads, and were not opened.
+copy extracted from the retail 6.5 base media (checked by hash); the catalogue records this image as taken from the IRIX 6.5 Installation Tools
+disc (June 1998). The Library media inventory also lists an `io4prom` in that disc's volume header; it was not compared, so whether it is the same
+bytes is unchecked. No other IO4 flash file was seen in the extracted retail trees; the standalone programs under `stand/` are operating-system
+tools, not PROM payloads, and were not opened.
 
 | Image sha256 | Container | Size | Container build | CPU PROMs inside |
 |---|---|---|---|---|
@@ -52,7 +56,8 @@ container and `... Nov 25, 1998` in the 1998 one), so the two 4.21 builds are di
 
 Established. A 24-byte big-endian header followed by one image: the magic `JFK4`, a checksum, the load address `0x81800000`, the payload length, the
 entry address (equal to the load address) and a build number (109, 111, 115, 117, 118, matching the version in the banner). The checksum is the
-plain 32-bit sum of the payload read as big-endian words; it holds for all six. The payload is flat IP19 code (the IO4 monitor built for the
+32-bit sum of the payload read as big-endian 16-bit halfwords (1.09 gives `0xaa47a8fb`); it holds for all six. It is the same rule as the
+segmented containers' record checksum. The payload is flat IP19 code (the IO4 monitor built for the
 R4400) with no segment table, no compression and no other CPU type.
 
 ## Segmented container (1994 to 1998 images)
@@ -60,22 +65,24 @@ R4400) with no segment table, no compression and no other CPU type.
 Established unless marked.
 
 - **Header, 24 bytes:** magic `JKSW`, a checksum, then load address `0x81b00000`, length, entry and build number of the first segment, which is
-  the segment loader. What range the checksum covers is unknown; it matches none of the byte, word or halfword sums tried over the loader bytes.
+  the segment loader. The checksum is the loader record's checksum: the halfword sum (as above) over the file range from `0x320` for the loader's
+  stored length. It matches in all seven (the 1996 image gives `0x06a8fd00`). The file is zero from `0xe0` to `0x320`, and the loader starts at `0x320`.
 - **Segment table at offset 0x18:** the tag `SEG2`, a segment count (4 in every image, including the three-CPU ones: loader plus three
   payloads), then 48-byte records. Each record holds an id, a file offset, a 64-bit entry address, a 64-bit load address, the stored length, a checksum,
   and a few words whose use is unknown (one looks like a size or address in the `0x10000000` range).
 - **Ids:** `0xff01` is the loader; `0x105` is the IP19 R4400 PROM, `0x205` the IP21 R8000 PROM, `0x405` the IP25 R10000 PROM and `0x305` the
   graphics PROM. The CPU assignments are read from each payload's banner. The graphics assignment is inferred from its contents (RealityEngine2
   strings and microcode loaders). The meaning of the low byte `05` is unknown.
-- **Offsets are biased.** In all seven segmented images the table's offset for every payload is `0xce0` bytes larger than where the data is, and the
-  table's end falls `0xce0` bytes past the end of the file. The loader's stored length is likewise `0xce0` larger than its bytes. Subtracting
-  `0xce0` lands each payload on its `_LZW` header and the last one exactly on the end of file. The constant is identical in every build, so it is not a
-  per-image zero fill. Why the table counts it is unknown.
-- **Record checksum:** for a payload record, the sum of the big-endian 16-bit halfwords of the whole stored segment, header included. It matches in
-  every payload checked. For the loader it does not match any sum tried (unknown).
+- **Offsets are biased.** In all seven segmented images the table's file offset for every record, the loader's included (`0x1000`), is `0xce0`
+  larger than where the data is, and the table's end falls `0xce0` bytes past the end of the file. The loader's stored length is not biased: it
+  is `0x3570` bytes in the 1.0 builds, `0x4870` in the Feb and Sep 1996 builds and `0x4600` in the 1998 build, and it ends right before the first
+  `_LZW` header. Subtracting `0xce0` lands each payload on its `_LZW` header and the last one exactly on the end of file. `0xce0` is `0x1000` minus
+  `0x320`, so the offsets are written as if the header area were padded to `0x1000`. Why the table is written that way is unknown.
+- **Record checksum:** the sum of the big-endian 16-bit halfwords of the whole stored segment (for a payload, header included). It matches for
+  the loader and every payload in all seven images.
 - **Payload record, 16-byte header then the stream:** `_LZW`, the uncompressed length, the 32-bit byte sum of the uncompressed data, and one word
-  that is 0 or 1 (meaning unknown). The stream follows, starting `1f 9d 90`.
-- **Loader (the first segment, 10 to 15 KiB):** carries the strings of the "Everest PROM Segment Loader" menu (list, power-on diagnostic mode, reset,
+  that is 0 or 1 (meaning unknown). It is 0 only for the IP19 payloads of the Jul, Sep and Oct 1994 builds and of the Sep 1996 build, and 1 in every other payload. The stream follows, starting `1f 9d 90`.
+- **Loader (the first segment, about 13 to 18 KiB):** carries the strings of the "Everest PROM Segment Loader" menu (list, power-on diagnostic mode, reset,
   select slot, load and execute a segment, copy in a segment, jump), the "Loading and executing %s boot prom image..." message, and error text that
   names the LZW magic, decompressed length and checksum checks. Its CPU-name table lists R4400 IP19, R8000 IP21 and R10000 IP25 (2.1 builds)
   or R4400 IP19, an R4400 IP23 entry, R8000 IP21, master and graphics (1.0 builds). The table is read from strings only; the selection code was not
@@ -87,7 +94,7 @@ Established unless marked.
 
 Each is big-endian. "Form" is flat code or a complete ELF executable (ELF headers read with a MIPS toolchain; the section table points past the end
 of the data, so the file carries no section headers, but the loadable segment covers the whole file with a larger memory size for zero-filled data).
-Entry code was disassembled with the MIPS toolchain at the stated base and reads as plausible code. Load addresses are physical `0x01800000`
+Entry code of the CPU payloads was disassembled with the MIPS toolchain at the stated base and reads as plausible code. Load addresses are physical `0x01800000`
 reached through a 32-bit cached address (IP19) or a 64-bit address window (IP21, IP25).
 
 | Payload | Banner | Form | Load, entry | Length | sha256 of decompressed bytes |
@@ -115,22 +122,24 @@ The 1.0 IP21 PROMs have entry `+0x5000` and a load segment of 499712 bytes (the 
 `+0x1000`. The flat IP19 payloads of the six 1993 to 1994 images are the six `JFK4` bodies, not repeated here; their sha256 values are
 `f1ca1b8d...` (1.09), `5abe1fea...` (1.11), `bf849c7c...` (1.15), `004cbbc6...` (1.17, Feb), `0ebc962f...` (1.17, Mar) and `ba6478c1...` (1.18).
 
-Entry code of the ELF payloads for IP21 and IP25 begins by reading a word at a fixed uncached address and comparing it with the ASCII tag `XFER`,
-then reading a count from the next word. That is a handoff block the loader or earlier firmware writes before jumping. Established as code; its
-producer is inferred to be the segment loader and was not read.
+The IP21 and IP25 entry code loads the word at uncached physical address `0x400` and compares it with the ASCII tag `XFER`. On a match it reads the
+next word as a count and, when the count is 1 to 5, branches into a separate path; on a mismatch, which is the normal case, it runs its
+initialisation routine and then continues. That is a handoff block some earlier stage may leave; what writes it was not traced. The IP19
+payloads carry no such test: their entry code sets Status, Cause and the watch registers directly. The graphics payload starts with a 0x100-byte
+data table of load and code offsets; its code begins at offset 0x100.
 
 ## Unknowns
 
-- What the checksum in the 24-byte segmented header covers.
-- Why segment offsets (and the loader's length) are biased by `0xce0`.
+- Why the segment table's offsets are written as if the header area were `0x1000` bytes (they are `0xce0` too large).
 - The meaning of the word after the byte sum in each `_LZW` header (0 or 1), of the low byte of each segment id, and of the record's
   `0x10000000`-range word.
 - Whether the "R4400 IP23" name in the 1.0 loaders ever selects a payload; no held image has one.
 - Where "Downloading PROM code" and "Jumping into IO4 PROM" are printed; neither is in any of these images.
 - How the IP25 start-up differs from IP21 beyond entry offset: the two images were not compared function by function.
+- What writes the `XFER` block at physical `0x400`.
 
 ## How to reproduce
 
 Read the 24-byte header, then the table at offset 0x18; for each payload record, take the stored length starting at (offset minus `0xce0`),
 drop the 16-byte header, run a standard `compress` decompressor over the rest, and check the length and byte sum against the header. For a ROM
-that is not a flat image, disassemble with a big-endian MIPS target at the load address above.
+that is not a flat image, disassemble a CPU payload with a big-endian MIPS target at the load address above.
