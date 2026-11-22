@@ -90,7 +90,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
 1. **Vectors. Established.** NT vectors encode the IRQL in the high nibble (the Irql `HalGetInterruptVector` reports back is the vector shifted right by 3). Each Cobalt entry has a fixed vector in a
    per-board-generation table (`CobaltInt2Vec`, 30 words): for the newest generation entries 0 to 29 map to `92 8a 5a 69 59 91
    81 9b 82 89 7a 73 b9 71 79 72 ac ab aa a9 61 9c b2 6a a5 a3 bc f2 f7 f9`, and the earlier generations differ
-   in entries 1, 3, 4, 5, 6, 13 and 15. The clock uses vector `0xd1` and IRQL `0x1c`. The HAL installs its own handlers
+   in entries 1, 3, 4, 5, 6, 13, 14 and 15. The clock uses vector `0xd1` and IRQL `0x1c`. The HAL installs its own handlers
    on fixed vectors: `0xe1` the processor IPI, `0xc1` the broadcast-call service, `0x41` the DPC and `0x3d` the APC
    software interrupts, `0xfd` the profile interrupt and `0xfe` the performance-counter interrupt, `0xe3` the local
    APIC error.
@@ -108,7 +108,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
    steering, `HalpEnable307Int`; bit 1 is carried but unused in the enable path). Tables exist for the three 320 generations and for the 540 revision 0;
    the `INTRROUTE` boot option (values 1, 2, 3: "no8259", "ide8259", "Hugh006") swaps in alternatives for the middle
    320 generation: "no8259" steers IRQs 1, 4, 6, 7 and 12 through the NS87307 and "ide8259" sends the IDE channels
-   through the 8259 as well. For the newest generation, IRQs 1, 4, 6, 7, 9, 12, 14, 15 carry vectors `9a 53 52 51 b8 99 59 5a`.
+   through the 8259 as well. For the newest generation, IRQs 1, 4, 5, 6, 7, 9, 12, 14, 15 carry vectors `9a 53 b1 52 51 b8 99 59 5a` (IRQ 5 has a vector in the middle and newest generations only).
    The secondary IDE channel (IRQ 15) uses Cobalt entry 2 in every table. The primary channel (IRQ 14) uses entry 4 on
    the newest 320 generation and on the 540 except revision 0, entry 5 on the middle 320 generation and the 540
    revision 0, and entry 1 on the oldest 320 generation. This agrees with Linux, which uses entry 4 and switches to 5
@@ -224,9 +224,10 @@ registers).
 
 Established (the whole option routine at `0x8002dee0`, `HalInitSystem`'s first-processor path, and `HalpXtractOptionString`
 at `0x8001a6e0`, read in full; the strings are in the image at file offsets `0x1de20` to `0x1ded4` and `0x206f0` to `0x20730`).
-The load-options string (the ARC `osloadoptions` variable the loader passes) is searched, not tokenised: a name matches
-where it is at the start or follows a blank, a tab or `/`, and a value follows `=` or `:`. Case is significant for the
-names as stored (upper case).
+The load-options string (the ARC `osloadoptions` variable the loader passes) is searched, not tokenised. `ONECPU`, `PCILOCK`,
+`INTAFFINITY`, `BREAK`, `ARCINFO` and `SYSCLOCK=` are plain substring matches with no check on what precedes them. The
+others go through `HalpXtractOptionString`, where a name matches only at the start or after a blank, a tab or `/`, and a value follows `=` or `:`; a
+value is compared by prefix (`ON`, `OFF`, `OPEN`, `CLOSE` and the `INTRROUTE` names). Case is significant (upper case).
 
 | Option | Effect |
 |---|---|
@@ -239,7 +240,7 @@ names as stored (upper case).
 | `PAGEOPENPOLICY=OPEN` / `CLOSE` | page policy value, 0 for `OPEN` and 2 for `CLOSE`; it is OR-ed into the Cobalt CPU control register at `+0x10` (bit 1) by the clock-and-control set-up at `0x80016220`, which also clears bit 0 (ECC off until `HalpEccControl`) and sets bit 3 (timer interrupt masked). The OR never clears bit 1, so `OPEN` leaves whatever the firmware left there |
 | `MEMERR=ON` / `OFF` | enables or disables the Cobalt memory-error interrupts (default on) |
 | `ECC=ON` / `OFF` | enables or disables ECC checking (default on). `HalpEccControl` (`0x8001a0c0`) turns ECC on only if the board is not a Cobalt Lite (revision `0xa0` or `0xa8`, which prints "ECC checking DISABLED on Cobalt Lite"), `MEMERR` is on and `ECC` is on: ECC checking depends on both options |
-| `BLOCKINTS=n` | numeric flag the HAL prints when set (use not traced) |
+| `BLOCKINTS=n` | numeric flag the HAL prints when set, and only if its debug level is 2 or more (use not traced) |
 | `INTRROUTE=DEFAULT` / `NO8259` / `IDE8259` / `HUGH006` | the interrupt routing mode, below |
 | `CACHEOPPOLL=n` | microseconds the cache-operation code polls (an integer) |
 
@@ -389,8 +390,8 @@ programs none of it.
 - **Bank decode registers. Unknown.** The HAL touches no Cobalt register that carries a bank address or size; the only
   memory-controller registers it uses are the ones above (ECC enable, error status, address and syndrome). The sixteen
   bank registers the firmware sizes memory from (`firmware.md`) are not used by any Windows code read.
-- **Memory error and ECC path. Established.** `HalpInitMemErrSubsystem` (`0x80019fe0`): on non-Lite boards with `MEMERR` on, it
-  maps the memory-controller block and installs the two memory-error vectors on Cobalt entries `0x1a` and `0x1b` (on a Lite board it prints
+- **Memory error and ECC path. Established.** `HalpInitMemErrSubsystem` (`0x80019ff0`): on non-Lite boards with `MEMERR` on, it
+  maps physical page 0 (the window used to rewrite a soft ECC error, `HalpSoftEccVaddr`) and installs the two memory-error vectors on Cobalt entries `0x1a` and `0x1b` (on a Lite board it prints
   "Memory Access Error checking DISABLED on Cobalt Lite"); turning ECC on is the separate `HalpEccControl`, with the conditions in the option table.
   `HalpMemErrorHandler` (`0x80019ed0`), `HalpCorrectSoftEccError` and the logging helpers behave as described under the memory-controller table.
 
@@ -461,3 +462,28 @@ is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
 `HalpInitializeRtc`; in the second reading also `HalpGetSystemInterruptVector`, `HalGetInterruptVector`, `HalpGetIntrDataByVector`, `HalEnableSystemInterrupt`, `HalpInitializePciBus`, `HalpAllocateAndInitPciBusHandler`, `HaliRegisterBusHandler`, `HalpEnumeratePciBus`, `HalpCreatePCISubBus`, `HalpInitializePCIFunction`, `HalpInitBarArray`, `HalpInitSGIHostBridge`, `HalGetAdapter`, `HalpInitAdapterObjects`, `HalpInitializeGbeDisplay0` and its bank helpers, `HalpAddGbeDisplayToRegistry`, `HalpFixupRegistry`, `HalpFixupCpuRegistryNode`, `HalpAddValueKey`, `HalpReportSerialNumber`, `HalpRegisterInternalBusHandlers` and `HalpTranslatePCIBusAddress`.
 
 Not read: the `HalpGbeDisplaySetup` register programming beyond the sequence summarised above, the V86 BIOS call path, the I2C layers, the rest of the registry-reporting routines (`HalReportResourceUsage`'s port list), the PCI-to-PCI bridge programming in detail (`HalpInitializePCIBridge`), the translation range lists, and the Windows 2000 HAL below the tables (no symbols).
+## Review
+
+Independent review of chips commits 7990dc9..7a40091 by a reviewer who wrote none of them. Method: `halborg.dll` 1.3 (sha-256
+`0926cd50…a048`) and `halbrgup.dll` from the SGI 320 NT 4.0 install CD Disk 1, with that disc's `halborg.dbg` and `halbrgup.dbg`
+(1,044 and 1,031 public symbols; the 13-symbol difference matches the list above); symbol addresses were applied to an
+`objdump` listing of each image and the routines below were read from it. Windows 2000 RTM and SP4 `halborg.dll` and `txtsetup.sif`
+were compared by table. Ghidra was not run in this pass.
+
+**Confirmed.** The whole boot-option routine and `HalpXtractOptionString`: all fourteen names and their value strings, the
+`PAGEOPENPOLICY` values 0 and 2 OR-ed into Cobalt CPU `+0x10` by the clock set-up at `0x80016220` (which also clears bit 0 and sets
+bit 3), and the `ECC` conditions in `HalpEccControl`. The `TypeBorg` accessors (address word at window `+0xf8`, data at `+0xfc`,
+bus, device, function layout, raise-and-lock, crash-dump bypass), the `0x2000` write to the bridge status halfword at the end of
+`HalpPCIConfig`, and the `0xf800` write and bus-number words in `HalpInitSGIHostBridge`. `HalpGetSystemInterruptVector` (types 0 and
+5, unbounded table index, IRQL = vector >> 3), the newest-generation vector table, all six PCI pin tables, the ISA route tables
+and the board-generation selection in `HalpInitIntrRoute`, the clock (`0x1c`/`0x1b`, vector `0xd1`) and NMI (`0x1d`/`0x1c`)
+entries, the memory-error entries `0x1a`/`0x1b` with vectors `0xf1`/`0xf2`, and the map-buffer sizes. The Windows 2000 RTM and
+SP4 vector tables (both the "new" and the `HUGH2` set, 8-byte entries) and the `txtsetup.sif` HAL mapping for NT 4.0 and
+Windows 2000.
+
+**Corrected in review.** The plain-substring options are not boundary-checked; the earlier-generation vector tables also differ at
+entry 14; IRQ 5 has a vector in the middle and newest ISA tables; `HalpInitMemErrSubsystem` is at `0x80019ff0` and maps physical page 0,
+not the memory-controller block; `BLOCKINTS` prints only at debug level 2 or more.
+
+**Not checked here.** The Windows 2000 board-selection logic (only the tables), `HalpInitializePCIFunction` resource assignment, the
+registry writes, and the `0x80021530` bridge records.
