@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 d45cdc023d3e7d9a2820df7908c327302868d4f367e78f5bacb44c0a03abb1ee -->
+<!-- input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -32,8 +32,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `comm2_base` | 0x10c | rw | 32 |  | audio | unknown | established |  |
 | `comm2_ctl` | 0x110 | rw | 32 |  | audio | unknown | inferred |  |
 | `comm2_cfg` | 0x114 | rw | 32 |  | audio | unknown | inferred |  |
-| `ust_low` | 0x200 | r | 32 |  | audio | unknown | established |  |
-| `ust_high` | 0x204 | r | 32 |  | audio | unknown | established |  |
+| `ust_low` | 0x200 | rw | 32 |  | audio | unknown | established |  |
+| `ust_high` | 0x204 | rw | 32 |  | audio | unknown | established |  |
 | `audio1_ust` | 0x300 | r | 32 |  | audio | unknown | established |  |
 | `audio1_msc` | 0x304 | rw | 32 |  | audio | unknown | established |  |
 | `audio2_ust` | 0x308 | r | 32 |  | audio | unknown | established |  |
@@ -137,11 +137,11 @@ Output DMA configuration, same layout as comm1_cfg.
 
 ### Register `ust_low`
 
-Low word of a 64-bit counter the driver calls unadjusted system time, microseconds since boot.
+Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page).
 
 ### Register `ust_high`
 
-High word of the same counter. The driver reads it before and after the other words and retries if it changed.
+High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time driver zeroes it at load.
 
 ### Register `audio1_ust`
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 d45cdc023d3e7d9a2820df7908c327302868d4f367e78f5bacb44c0a03abb1ee -->
+<!-- input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d -->
 <genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
   <doc>Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
   <space name="bridge" unit="byte"/>
@@ -65,11 +65,11 @@
   <struct name="COMM2_CFG" size="4" grade="inferred" register="yes" offset="0x114" access="rw" space="audio" reset="unknown">
     <doc>Output DMA configuration, same layout as comm1_cfg.</doc>
   </struct>
-  <struct name="UST_LOW" size="4" grade="established" register="yes" offset="0x200" access="r" space="audio" reset="unknown">
-    <doc>Low word of a 64-bit counter the driver calls unadjusted system time, microseconds since boot.</doc>
+  <struct name="UST_LOW" size="4" grade="established" register="yes" offset="0x200" access="rw" space="audio" reset="unknown">
+    <doc>Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page).</doc>
   </struct>
-  <struct name="UST_HIGH" size="4" grade="established" register="yes" offset="0x204" access="r" space="audio" reset="unknown">
-    <doc>High word of the same counter. The driver reads it before and after the other words and retries if it changed.</doc>
+  <struct name="UST_HIGH" size="4" grade="established" register="yes" offset="0x204" access="rw" space="audio" reset="unknown">
+    <doc>High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time driver zeroes it at load.</doc>
   </struct>
   <struct name="AUDIO1_UST" size="4" grade="established" register="yes" offset="0x300" access="r" space="audio" reset="unknown">
     <doc>Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.</doc>

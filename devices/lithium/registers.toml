@@ -239,18 +239,18 @@ doc = "Output DMA configuration, same layout as comm1_cfg."
 [registers.ust_low]
 space = "audio"
 offset = 0x200
-access = "r"
+access = "rw"
 width = 32
 grade = "established"
-doc = "Low word of a 64-bit counter the driver calls unadjusted system time, microseconds since boot."
+doc = "Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page)."
 
 [registers.ust_high]
 space = "audio"
 offset = 0x204
-access = "r"
+access = "rw"
 width = 32
 grade = "established"
-doc = "High word of the same counter. The driver reads it before and after the other words and retries if it changed."
+doc = "High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time driver zeroes it at load."
 
 [registers.audio1_ust]
 space = "audio"

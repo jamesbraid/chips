@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 d45cdc023d3e7d9a2820df7908c327302868d4f367e78f5bacb44c0a03abb1ee
+// input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -319,12 +319,12 @@ pub mod comm2_cfg {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x114;
 }
-/// Low word of a 64-bit counter the driver calls unadjusted system time, microseconds since boot. (established)
+/// Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the valu (established)
 pub mod ust_low {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x200;
 }
-/// High word of the same counter. The driver reads it before and after the other words and retries if it changed. (established)
+/// High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time dri (established)
 pub mod ust_high {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x204;

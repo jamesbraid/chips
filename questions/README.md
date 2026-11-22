@@ -453,7 +453,7 @@ Checked the "Madison L3 cache-as-RAM: what PAL 520's commands do in silicon" ent
 
 ## SGI Visual Workstation 320 and 540 audio (added with devices/lithium/audio.md)
 
-- **Lithium audio and AD1843 open points.** *[route: missing source (no Lithium specification) for the first six; a test boot for the last two]* The serial-slot field of the channel configuration word (NT writes 0, Linux 2); what raises the audio interrupt and whether line 22 is it; the trigger pointer and mask, underflow and idle behaviour of an enabled channel; how long the codec busy flag stays set and what a transfer does with no codec; the three undocumented words and channel rows 2 to 6; DMA reach above 4 GiB; whether `sgisound.dll` installs on Windows XP; enabling line 22 through the NT HAL. See [questions/visws-audio-open.md](visws-audio-open.md).
+- **Lithium audio and AD1843 open points.** *[route: missing source (no Lithium specification) for the first six and the last; a test boot for two others]* The serial-slot field of the channel configuration word (NT writes 0, Linux 2); what raises the audio interrupt and whether line 22 is it; the trigger pointer and mask, underflow and idle behaviour of an enabled channel; how long the codec busy flag stays set and what a transfer does with no codec; the three undocumented words and channel rows 2 to 6; DMA reach above 4 GiB; whether `sgisound.dll` installs on Windows XP; enabling line 22 through the NT HAL; the system time counter's low-halfword rule and reset. See [questions/visws-audio-open.md](visws-audio-open.md).
 
 ## SGI Visual Workstation 320 and 540 HAL follow-on (added with software/visws/hal-hot-path.md)
 

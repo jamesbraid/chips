@@ -92,8 +92,9 @@ channel windows and gives each a bus-0 interrupt level and a pair of control wor
 The windows, control pairs and levels above were checked again in the 5.2.2 build (the same table of four, in the same order). Which window
 is which direction is in the driver's own device names: `\Device\sgilivideoout1` is `0xf8000000`, `sgilivideoout2` `0xf9000000`,
 `sgilivideoin1` `0xfa000000` and `sgilivideoin2` `0xfb000000` (established), matching the levels 16 and 17 for the two video outputs and 18
-and 19 for the two inputs that Linux names. The build also maps `0xff001200` (the system-time counter above)
-and time-stamps every frame with it.
+and 19 for the two inputs that Linux names. The set-up routine (`0x1044c`, called once per channel) also maps `0xff001200` (the system-time counter above)
+for eight bytes, so there are four separate mappings of the one block, not one shared view, and reads it to time-stamp every frame. Established: the driver never writes it
+(its only register stores go to the channel window and to the pair; `InitMsc` `0x11668` zeroes the pair's two words).
 
 **The channel window is a register file with an eight-byte stride** (read from the 5.2.2 build with its symbols; register `n` is at window
 `+8n`, 32 bits wide; the driver has three helpers named `PIOReadLi` (read and mask), `PIOWriteLiReg` (write) and `PIOWriteLiValue` (read, clear a
@@ -114,6 +115,12 @@ combines it with the high half of the system-time counter), word 1 is the media 
 flag; the driver extends it to 64 bits in software and `InitMsc` writes both words to zero). That is the same pair-of-words shape the audio engine
 has at `+0x300` and `+0x304`. The system-time counter is read through `ReadSysUst` (re-reading the high word at `+0x204` until it
 agrees) and scaled by 1000 in `ReadSysUst64`, as in `sgiust.sys`.
+
+`ReadSysUst` (`0x11698`; `0x115b8` in the Windows 2000 build) reads the high word, then the low word, then the high word again, and starts again from the low word
+when the two high reads differ (against the first high read, which it does not refresh) or when the low word's low 16 bits are `0xffff`. `sgiust.sys`'s kernel read (`0x10489`;
+`0x10443` in the Windows 2000 build) uses the same three reads but the opposite exit: it starts again on a changed high word unless the low halfword is `0xffff`, in which case it
+keeps the second high word. Neither is explained by a comment in any build; that both drivers single out a low halfword of `0xffff` points to a carry hazard in the hardware's
+two-word read, a software expectation only ([open question](../../questions/visws-audio-open.md#9-the-system-time-counter-low-halfword-rule-and-reset)).
 
 The levels 16 to 19 are connected through `IoConnectInterrupt` on the HAL's vectors, and the code computes the highest interrupt priority
 over the four levels (`FindMaxInterruptIrql`) to synchronise with all of them. The Lithium window offsets `+0x340` to `+0x35f` are not in Linux's register file

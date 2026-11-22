@@ -168,6 +168,12 @@ time-stamp and counter pairs are used: word 0 is a time stamp read against `ust_
 whose bit 0 is a flag and bits 31:1 a count (`ReadMsc`), both zeroed when a channel starts; software expectation from the driver's
 names and use. Which pair belongs to which channel was re-checked in the 5.2.2 build: `0xff001350` goes with the window `0xf8000000`
 (`sgilivideoout1`), `0xff001358` with `0xf9000000` (`out2`), `0xff001340` with `0xfa000000` (`in1`) and `0xff001348` with `0xfb000000` (`in2`).
+These four pairs continue the audio driver's array of eight-byte pairs (`+0x300 + 8n`; the audio table's seven rows are n = 0 to 6, the video pairs
+are n = 8 to 11, and `+0x338` is untouched by every driver read). Established as arithmetic on the addresses; that the hardware has one array is inferred.
+
+The same driver also maps the system time counter at `0xff001200` (`+0x200` of this page, the `ust_low` and `ust_high` words) once per channel, read-only,
+and the NT time driver `sgiust.sys` maps the same eight bytes. So `0xff001200` is not a second register set sharing the page: it is the
+counter the audio driver reads the high half of (`+0x204`) to extend every channel's time stamp. The audio driver never reads `+0x200` itself.
 [Details](../../software/visws/nt-drivers.md).
 
 ## Interrupts from PCI devices (established, with a caveat)

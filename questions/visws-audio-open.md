@@ -56,3 +56,11 @@ driver in any case.
 [route: a test boot, or reading the HAL's enable path] `HalGetInterruptVector` on the internal bus with level 22 returns vector
 `0xb2` and `HalEnableSystemInterrupt` would write the controller's entry for line 22 with no bridge bit; nobody calls it for
 audio, so that it works end to end is a reading of the HAL, not an observation.
+
+## 9. The system time counter: low halfword rule and reset
+
+[missing source] The time driver and the video driver both treat a low word whose low 16 bits are `0xffff` specially when reading the 64-bit counter at `0xff001200`
+(the video driver retries, the time driver accepts the re-read high word); the audio driver and Linux read the high word before and after and do not look at the low halfword.
+Whether the hardware's two reads can tear near a carry out of bit 15, what the counter's unit and reset value are, and whether zeroing it when the time driver loads
+(a write of zero to both words, by `sgiust.sys`) steps the clock for the others are unread: Linux's "microseconds since boot" is its comment, and no binary states a rate. Routes tried: the
+three NT drivers that touch it, in both builds, and the Linux driver. Next: the Lithium specification, or a real machine read of the counter twice with a known delay.
