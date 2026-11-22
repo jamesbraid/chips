@@ -11,7 +11,7 @@ Slot letters are the labels on the XIO module. Seen from the back of the chassis
 
 | Widget | What it is | Octane | Octane2 | Rating | Source |
 |---|---|---|---|---|---|
-| 8 | HEART ("system module, heart chip") | same | same | established | Octane2 Duo Installation Guide 007-4506-001, Table C-2, p. 63 |
+| 8 | HEART (Table C-2: "System module (heart chip)") | same | same | established | Octane2 Duo Installation Guide 007-4506-001, Table C-2, p. 63 |
 | 9 | XIO slot **C** (lower right) | C | C | established | See "Printed sources" |
 | 10 | XIO slot **D** (lower left) | D | D | established | See "Printed sources" |
 | 11 | XIO slot **B** (upper right) | B | B | established | See "Printed sources" |
@@ -80,7 +80,7 @@ All are `hinv` text from posted listings; locations are the `/hw/node/xtalk/N` l
 |---|---|---|
 | Octane, 2x600 MHz R14000 | 15 IP30; 13 XTALKPCI; 12 MOT10; 11 EVO; 10 MSCSI; 9 MOT10 (all five at once) | Usenet comp.sys.sgi.admin, 2004-01-10, `<pan.2004.01.10.21.17.41.116971@j3iss.com>` |
 | Octane, 2x250 MHz R10000 | 15; 13 XTALKPCI; 12 MOT20; 11 EVO; 9 MOT10 | Usenet `<3F9C83FE.1632F316@comcast.net>` |
-| Octane, 2x250 MHz R10000 | 15; 12 MOT20; 11 GM10 (a second head) | Usenet `<WV%C8.46771$2G1.14973489@typhoon.nyroc.rr.com>`, 2002-05-11 |
+| Octane, 2x250 MHz R10000 | 15; 12 MOT20; 11 GM10 (a second graphics board) | Usenet `<WV%C8.46771$2G1.14973489@typhoon.nyroc.rr.com>`, 2002-05-11 |
 | Octane, 2x250 MHz R10000, two ESI heads | 15; 13 XTALKPCI; 12 MOT10; 11 EVO; 10 MOT10 | Nekonomicon forum 14, thread 16726610 |
 | Octane, 2x195 MHz, MXI | 15; 12 GM20 | Nekonomicon forum 14, thread 16972 |
 | the same Octane with a V6 instead | 15; 11 ODY32; nothing at 12 | Nekonomicon forum 14, thread 16972 |
@@ -92,8 +92,8 @@ Every VPro capture reports at 11 and no SI or MXI capture reports anywhere but 1
 
 ## The "9 to 12" and "10 to 13" readings
 
-A widget appears in `hinv -m` only when a board sits behind it. The Octane captures with the second head in C show 9 to 13 (the first row above shows all
-five), while the ones with C empty show 10 to 13 or 11 to 13, and a plain Octane2 shows 9, 10, 11 and 13. These are subsets of one assignment: XIO slots
+A widget appears in `hinv -m` only when a board sits behind it. The first capture above lists widgets 9 to 13 together, and its two graphics boards sit at 12 and 9. That the board at 9 is a second head in slot C is
+inferred (the listing marks no board as primary or secondary; the slot follows from the printed map). Captures with C empty show 10 to 13 or 11 to 13, and a plain Octane2 shows 9, 10, 11 and 13. These are subsets of one assignment: XIO slots
 9 to 12 and the PCI module at 13. The printed guides settle it; the captures only agree.
 
 ## Public driver expectations
