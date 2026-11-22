@@ -462,6 +462,34 @@ confines DMA memory to physical 0 to 2 GiB on both IP27 and IP30 (`sgi/ip27_mach
 `(pa - ucr_low) + 0x80000000`; it never programs add-512. Linux `arch/mips/pci/pci-xtalk-bridge.c` writes `masterwid << 20` (offset 0, add-512 clear) and gives drivers the
 64-bit form `masterwid << 60 | BAR` only, never the A32 window.
 
+**IRIX 6.5.21f (the Onyx2 guest base).** Product `eoe_6521f` (`eoe_6521f.sw` sha256
+`028e4cefbab303527afa0c23b24c6844b389e75639a4d260351adb650c8c1809`, from the "Overlays (2 of 4)" disc): `IP27boot/pcibr.o`
+sha256 `4750808d0e5b8a81182cccf72d0f1ad7d07b0588e64bf957cae55698ce4055e9`, `IP30boot/pcibr.o`
+`c8eaa61281edef2ab61e1ad24e97be63a84980ed2287c60a4c9edd042be57c62`, `IP27boot/kernel.o` for `hub_dmatrans_addr`. The 6.5.21f
+linked kernels and miniroot were not read. Offsets below are in the IP27 `pcibr.o`.
+
+- Selection is the same as above, read in `pcibr_dmatrans_addr` (0x40b4): flag `0x40` gates A64 (0x4164), bit `0x2000000`
+  is the only attribute bit tested (0x4170, 0x42a8 ORs `0x1000000`), the A32 test (0x4210 to 0x4250) has the same five
+  conditions, and the failure results are 0 with no ATE fallback. The record fields moved: default flags `+0x6c`, own
+  widget `+0x20`, master widget `+0x28`, window base `+0x40`, direct-map widget `+0x48`, a halfword at `+0x64` replacing
+  `+0x74`. `pciio_dmatrans_addr` is a call with pass-through (`IP27boot/pciio.o` 0x2e4) and `hub_dmatrans_addr`
+  (`kernel.o` 0x227f8) returns its argument. Established.
+- There is no `pcibr_directmap_init` and no `pcireg_dirmap_*` routine. The register is programmed inline in `pcibr_attach2`
+  (0x13a4 to 0x1434): `xtalk_dmatrans_addr(xconn, 0, nasid << 32, 0x4000, 0)` as later builds (nasid from the compact-node table,
+  `lh` at 0x13d8), widget from bits 63:60 of the answer or else the master widget byte, offset = address bits 47:31 when
+  address >= 2 GiB, and when the address is below 2 GiB the add-512-MB bit is set if address bits 30:0 are at least
+  `0x20000000` (0x1c30 to 0x1c4c), not only for exactly `0x20000000`. One 32-bit store to Bridge `+0x84` (0x1434). For node 0
+  that is `0x900000` with the master on widget 9. The window base is then read back from the register (0x1528 to 0x1540):
+  `offset << 31`, zero-extended, or `0x20000000` when the offset is 0 and add-512 is set, else 0. Established for the code.
+- Direct-map handling in `pcibr_dmamap_alloc` (0x30ec) and `pcibr_dmamap_addr` (0x3980): an A32 map stores `0x80000000`
+  built from `li 0x8000` and `dsll 16` (0x3278 to 0x3280) and returns `0x80000000 + (address - base)`; an ATE map's base
+  comes from `sll` of the entry index by 14, which stays below `0x80000000`. `pcibr_dmatrans_list` builds
+  `0x80000000` the same way. No `lui 0x8000` result, no `sll` on an address and no sign extension reaches a returned
+  value in any of them. Established for these routines; routines not named were not read for this.
+
+So the 6.5.21f kernel's `pcibr` cannot return `0xffffffff_8xxxxxxx` either. The same limits apply to its window: a page at
+or above base + 2 GiB gets the A64 form or a failed call.
+
 **What this does not settle.** Whether any shipped 6.5.x code converts a page above the window into a 32-bit sign-extended
 direct-map address. None of the paths above does: they return the A64 form, a zero-extended A32 value, or 0. The caller does
 not make one either: in the IP27 `divo.a` of the 29 builds from 6.5.2 to 6.5.30 (6.5.11m DIVO 2.4, `divo.a` sha256 prefix
