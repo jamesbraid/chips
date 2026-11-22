@@ -83,14 +83,16 @@ and graphics pages need them.
 
 ## Linux's ARC loaders
 
-[route: partly read] Settled negative for the held discs: Visual Workstation Environment 3.0 and ProPack 1.3 Visual Workstation
+[route: loaders read] Settled negative for the held discs: Visual Workstation Environment 3.0 and ProPack 1.3 Visual Workstation
 Edition target the 230, 330 and 550, ship kernels 2.2.15, 2.2.16 and 2.3.99 with the Visual Workstation option off, and contain no
-`larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). The kernel side of the
-handoff is now read from mainline 2.2.10 and 2.4.0: the boot block fields, the memory map source, entry registers and the
-SMP start-up ([Linux loader handoff](../software/visws/boot-path.md#linux-loader-handoff)). Still open: the loaders themselves, what
-they put in the block at `0x90000` for 2.2 and in `%esi` and `%bx` for 2.4, and whether SGI's 2.2.10 build and its July 1999 patches
-change any of it. The loader binaries, `la2210.vw` with its `.config`, the patch sets and a public visws vmlinux are not held. Next: any of
-those, or an install disc of the Red Hat 6.0 era for the 320 or 540.
+`larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). The 1999 arcboot
+loader (`arclx.exe`), a 2003 loader (`arclx2.exe`), the SGI 2.2.10 kernel with its two patches, and a visws 2.6.0-test2 vmlinux are now
+held and read in [Linux loader handoff](../software/visws/boot-path.md#linux-loader-handoff). Settled for arcboot: its firmware calls, the
+open and read path, the 52-byte header read, the command-line-only boot block and the register state at entry. Settled for the SGI
+2.2.10 image: its early GDT and paging dependence, its 112 MB of memory, and that it ignores the boot block's memory and root fields.
+Open: the 2003 loader's kernel file routine and call list; the PROM's vector count (37 slots in the loader, 35 in the PROM page); what
+defines `CONFIG_VISWS_HACKS` in the image's build; and whether the 2003 loader was built for the 2.6 kernel. Next: read the 2003
+loader's file routine at `0x401dc4` and the PROM's `FirmwareVectorLength`.
 
 ## Reset-to-console trace: what is still open
 
