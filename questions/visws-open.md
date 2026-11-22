@@ -10,7 +10,7 @@ Each entry: question, routes tried, next route.
 [missing source] Linux 2.6 takes bridge B's bus-number word as the PIIX4's bus and bridge A's as the other; the 2.4
 scan reads only bridge B's word and scans bus 0 and that bus. An SGI engineer's post says "the second PCI bus,
 normally bus one". Routes tried: all Linux versions read in full; no boot log with the printed bus numbers found in the
-held news and mail archives. The NT HAL addresses bridge B's window first and numbers each bus from its bus handler, so it is consistent with B as the PIIX4's bus but never states which number a bridge holds ([nt-hal.md](../software/visws/nt-hal.md)). Next: a boot log from a real machine.
+held news and mail archives. The NT HAL registers bridge B first and gives each handler the lowest unused PCI bus number, then writes that number into the bridge's bus-number word, so under NT bridge B is bus 0 and bridge A bus 1 (established for the HAL, second reading in [nt-hal.md](../software/visws/nt-hal.md#pci-numbering-and-resource-assignment)). What the firmware leaves in those words before an OS runs, and which numbering Linux sees, remain open. Next: a boot log from a real machine; a firmware read of those words.
 
 ## Cobalt timer pending bit
 
@@ -38,9 +38,7 @@ interrupt table; a card in a bus-B slot on a real machine, if any exist.
 
 ## Memory controller and frame buffer placement
 
-[missing source] No code programs the memory controller. The frame buffer's position is computed by the kernel with mixed
-units (bytes and kilobytes); where the frame buffer really is, how banks decode and ECC is reported are unknown. Next: PROM,
-the Cobalt graphics driver, the specification.
+[missing source] No Windows or Linux code programs bank decode: the NT HAL touches only the ECC enable, the page-policy bit and the error registers, and takes the graphics banks from firmware memory descriptors ([nt-hal.md](../software/visws/nt-hal.md#memory-banks-and-the-graphics-split)); the frame buffer's position is the first special-memory descriptor large enough. How banks decode and what the sixteen firmware-side bank registers hold are still unknown. Next: the PROM's memory programming, the specification.
 
 ## 320 revision 5 legacy interrupts in 2.6
 
@@ -51,7 +49,7 @@ machine running 2.6, or the 2.4 code for that board.
 ## Lithium: errors, type 1 decode across two bridges, the rest of the audio register file
 
 [missing source] No code reads an error register; how configuration cycles pick a bridge, what the bridges decode for
-memory and I/O, and the undocumented audio words are unknown. Next: PROM, HAL, the Lithium specification, the NT audio driver.
+memory and I/O, and the audio words other than the DMA control, configuration, pointer and counter registers (now confirmed by the NT driver) are unknown. The HAL gives each bridge a 64 MiB PCI memory window starting at PCI address `0x80000000` and an I/O half of `0x0000` to `0x7fff` or `0x8000` to `0xffff` (inferred from its static records, [nt-hal.md](../software/visws/nt-hal.md#pci-numbering-and-resource-assignment)), but no code says how the bridge decodes them. Next: PROM, the Lithium specification.
 
 ## Processor table producer
 
