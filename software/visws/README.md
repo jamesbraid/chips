@@ -24,7 +24,7 @@ given. *unknown*: not settled; the route that would settle it is in
 
 | Page | Covers |
 |---|---|
-| [firmware.md](firmware.md) | What the firmware is (an ARC-style system, not a PC BIOS), the PROM 1.0006 and 1.1005 image layouts and module tables, the flash tool, the self-test module, what changed between the two, the version history, the flash part and its environment block, the update procedure |
+| [firmware.md](firmware.md) | What the firmware is (an ARC-style system, not a PC BIOS), the layouts and module tables of the five held PROM images (1.0002, 1.0004, 1.0005, 1.0006, 1.1005), the flash tool, the self-test module, what changed between them, the release history table, the flash part and its environment block, the update procedure |
 | [boot-path.md](boot-path.md) | What the firmware leaves behind for NT and Linux: boot files, the ARC configuration tree, memory descriptors, the processor table, the memory and device map; what is not provided (no MP table, no E820) |
 | [nt-hal.md](nt-hal.md) | The NT 4.0 HAL read function by function: Cobalt interrupt routing, timers, processor start, Lithium PCI access, error and power handling, flash environment access |
 | [nt-drivers.md](nt-drivers.md) | SGI's other Windows drivers at inventory level: audio, system time, video capture, Ethernet, USB, IEEE 1394, and text-mode setup's HAL selection |
@@ -43,16 +43,17 @@ given. *unknown*: not settled; the route that would settle it is in
 | SGI Recovery CD-2 v1.1 (217,341,264 bytes raw; the same disc as Disk 2 of the 320 NT 4.0 install set) | yes (software mirror, item `sgi-recovery-2`) | The 1999-04-27 builds of the SGI drivers, including the OpenGL driver, the audio, video, time and analogue-video drivers, an error-log driver and Intel's SSE state saver; inventoried in [nt-drivers.md](nt-drivers.md#recovery-cd-2-v11-disc-2-of-the-540-set-built-5-may-1999) |
 | SGI Recovery CD-2 v1.0 (216,895,488 bytes; 547 files) | yes (software mirror) | Installer for the SGI drivers and utilities. Unpacked: its main cabinet (440 files, 24 file groups) holds drivers, DLLs, help, art work and documentation, and the two option installers hold an image-format library and a second development kit; there is no firmware item and no PROM image |
 | SGI PROM 1.0006 update package for the 320 and 540 (`PROM1_0006.exe`, 480,058 bytes) | yes (software mirror of a public Internet Archive driver item) | The 512 KiB flash image, read in Ghidra and with objdump: [firmware.md](firmware.md), [boot-path.md](boot-path.md) |
+| SGI PROM 1.0002 ("1.2"), 1.0004 and 1.0005 update packages (`PROM1_2.exe`, 493,144 bytes; `PROM1_0004.exe`, 472,551; `PROM1_0005.exe`, 479,635) and the Japanese-language readmes for 1.0004, 1.0005, 1.0006 and 1.1005 | yes (software mirror; sha256 values in [firmware.md](firmware.md#the-earlier-packages-10002-10004-and-10005)) | The three flash images, unpacked and compared with 1.0006 and 1.1005 in Ghidra and by disassembly: [firmware.md](firmware.md#from-10002-to-10006), [boot-path.md](boot-path.md#older-releases-and-reset) |
 | SGI PROM 1.1005 update package (`PROM1_1005.exe`, 1,450,371 bytes) and its release notes (7,023 bytes, dated 2000-07-11) | yes (software mirror) | The flash image, flash tool and differences from 1.0006: [firmware.md](firmware.md), [boot-path.md](boot-path.md) |
 | Public Linux source: Documentation/sgi-visws.txt, `visws_quirks.c`, `arch/x86/pci/visws.c`, the `asm/visws` headers, `smpboot_hooks.h` (history tree); 2.4 `arch/i386/kernel` (linux-mips tree) | yes | Linux boot expectations, graded established |
 | SGI Linux for the workstations: Visual Workstation Environment 3.0, ProPack 1.3 Visual Workstation Edition (CD images) | yes | Unpacked: both target the 230, 330 and 550 (PC-BIOS) workstations, ship LILO-based installers and kernels built with the Visual Workstation option off, and carry no ARC loader; the kernel source packages carry the public visws platform code |
 | Usenet: PROM release notes 1.0002 to 1.1005 (comp.sys.sgi.hardware, 2001-02-22, message `973u7b$jjr$03$1@news.t-online.com`); Linux install attempts (1999-09-23, `A7C09CFCAF83D2119C5000104B416CCF091C7D@theta.holmes.nl`; 2000-04-10, `8csntq$vku$1@nnrp1.deja.com`) | yes | Version history, firmware naming, Linux loader names |
 
-**Found, and not found.** Two firmware images are held, PROM 1.0006 (July 1999) and PROM 1.1005 (July 2000). Recovery CD-2 v1.0 was unpacked and
-does not carry the firmware. No other PROM version, flash dump or ARC loader for Linux is held in the Library, the software
-mirrors or the firmware registry. A 2005 Usenet thread (message
+**Found, and not found.** Five firmware images are held: PROM 1.0002 (February 1999, SGI's "1.2"), 1.0004 (May 1999), 1.0005 (June 1999), 1.0006 (July 1999)
+and 1.1005 (July 2000). Recovery CD-2 v1.0 was unpacked and does not carry the firmware. No other PROM version (1.1002 to 1.1004, or anything
+after 1.1005), flash dump or ARC loader for Linux is held in the Library, the software mirrors or the firmware registry. A 2005 Usenet thread (message
 `1114131220.292399.255710@g14g2000cwa.googlegroups.com`) says the update files were downloadable from SGI's support site;
-no stable address is on record. Facts about later versions (1.1002 to 1.1005) still come from the release notes and from
+no stable address is on record. Facts about 1.1002 to 1.1004 still come from the release notes and from
 the software that talks to the firmware. Recovery CD v1.0 (1 to 2 processors) is not held; v1.1 (1 to 4 processors) is.
 
 ## Scope boundaries

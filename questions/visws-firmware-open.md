@@ -6,18 +6,20 @@ platform and chip questions are in [visws-open.md](visws-open.md). Each entry: q
 
 ## The firmware image and the update package
 
-[settled for 1.0006 and 1.1005; route: missing binary for the others] SGI's PROM 1.0006 and 1.1005 update packages are in a public
-driver archive already mirrored; their flash images, the flash tool (`flash_upgrade`, header ranges, boot-block protection, environment
-sector preservation) and the differences are in [software/visws/firmware.md](../software/visws/firmware.md). Still not held: the versions
-between (1.0002 to 1.0005, 1.1002 to 1.1004). Open: the compiled floppy-making script of the 1.1005 installer (how it places the image
-on the floppy), and the purpose of the word at offset `0x1c` of the `SHDR` header (`0x01011e6d` in 1.0006, `0x21b64a13` in 1.1005; the loader's
-use of it was not read). Next: the 1.1xxx packages from SGI's support site (no stable address on record); decode the installer script.
+[settled for 1.0002, 1.0004, 1.0005, 1.0006 and 1.1005; route: missing binary for 1.1002 to 1.1004] SGI's PROM update packages for those five
+releases are held; their flash images, the flash tool (`flash_upgrade`, header ranges, boot-block protection, environment
+sector preservation) and the differences are in [software/visws/firmware.md](../software/visws/firmware.md). "PROM 1.2" in SGI's notes is
+1.0002. Still not held: 1.1002 to 1.1004, and anything after 1.1005. Settled: the word at offset `0x1c` of the `SHDR` header is a
+checksum word that makes the table and compressed modules sum to zero (all five images). Open: the compiled floppy-making script of the
+1.1005 installer (how it places the image on the floppy), whether the loader tests that word, what Lithium `+0x40` and the
+`0xff001000` store are, and what the 1.0004 CPU configuration check does on a mismatch. Next: the 1.1xxx packages from SGI's support
+site (no stable address on record); decode the installer script.
 
 ## Shipping firmware version and early release notes
 
 [route: missing source] The notes held start at 1.0002 (see [firmware.md](../software/visws/firmware.md)); there are no notes
-for 1.0000, 1.0001 or 1.0003, and the version the first units shipped with is unknown. The held 1.0006 package's own
-ReadMe repeats the 1.0002 to 1.0006 entries and adds nothing earlier. Next: a release-notes file from
+for 1.0000, 1.0001 or 1.0003, and the version the first 320s shipped with is unknown. The first 540s shipped with 1.0004 (the
+1.0004 package notes say so). The held 1.0006 package's own ReadMe repeats the 1.0002 to 1.0006 entries and adds nothing earlier. Next: a release-notes file from
 the support site, or a hardware-inventory capture from an early unit.
 
 ## The environment block: HAL side and defaults

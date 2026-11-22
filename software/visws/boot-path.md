@@ -2,9 +2,10 @@
 
 This page records what the firmware does from reset and what it leaves behind for the NT loader and HAL and for the Linux
 port. The reset path and the hand-off tables are read from the PROM 1.0006 and 1.1005 images ([firmware.md](firmware.md) for their
-layout); the rest comes from the NT and Linux side. Those two versions are held; the ones between them are not. Addresses
-written `1.0006@` or `1.1005@` name the version read; an unlabelled routine was read in 1.0006 and its 1.1005 counterpart
-was compared, as [firmware.md](firmware.md#from-10006-to-11005) says. Grades as in the [README](README.md); "software expectation" means the shipped
+layout); the rest comes from the NT and Linux side. 1.0002, 1.0004 and 1.0005 are held too and were compared against 1.0006
+([firmware.md](firmware.md#from-10002-to-10006)); [what they do differently at reset](#older-releases-and-reset) is below. 1.1002 to
+1.1004 are not held. Addresses written `1.0006@` or `1.1005@` name the version read; an unlabelled routine was read in 1.0006 and
+its 1.1005 counterpart was compared, as [firmware.md](firmware.md#from-10006-to-11005) says. Grades as in the [README](README.md); "software expectation" means the shipped
 software assumes it. Reading was done with objdump over the whole boot block and in Ghidra (x86, 32-bit, base `0xf00000`)
 for the main-module routines quoted below.
 
@@ -27,7 +28,7 @@ the firmware can switch itself to extensive after a boot that did not complete (
 
 **Established (flash `0x7c000`-`0x7ffff` read in full).** The code below is 16-bit with 32-bit operand overrides until the
 jump to the protected-mode loader.
-The boot block is byte-identical in both images; its offsets are flash offsets, and the steps below are read from 1.0006's copy (the 1.1005 addresses quoted elsewhere on this page are main-module addresses, not boot-block ones).
+The boot block's code is byte-identical in all five held images (1.0002 to 1.1005; only its build-time trailer differs); its offsets are flash offsets, and the steps below are read from 1.0006's copy (the 1.1005 addresses quoted elsewhere on this page are main-module addresses, not boot-block ones).
 
 1. **Entry.** `cli`, `cld`, then the reset-time `EAX` and `EDX` are parked in two MMX registers (so they survive; the
    purpose is inferred: `EDX` holds the processor signature at reset). A flat 4 GiB descriptor table is loaded, protected mode is entered once to
@@ -100,6 +101,34 @@ not read in full).**
 7. **Cobalt interrupt controller identification.** One routine writes the interrupt controller's `+0xffc` word as
    `(old & 0xf0ffffff) | 0x04000000` (`1.0006@0xf04072`, same in 1.1005): bits 27 to 24 are set to 4 and the enable bit at 8 is
    left alone. Which field that is, is not stated anywhere (inferred: an identification number for the controller).
+
+### Older releases and reset
+
+**Established (1.0002, 1.0004 and 1.0005 compared with 1.0006 and 1.1005, [firmware.md](firmware.md#from-10002-to-10006)).** "PROM 1.2"
+is 1.0002, the oldest release held, so nothing in it adds to what 1.1005 asks of the machine. What differs, for an emulator that
+runs the older images or one that wants to know which of these accesses the contract needs:
+
+- **Lithium `+0x40` (1.0002 and 1.0004 only).** The Lithium set-up routine reads and writes `+0x40` of both register pages:
+  window A (`0xfc000000`) ends with the top byte `0x01` and bit 5 set, window B (`0xfd000000`) with the top byte `0` and bit 5 set
+  (`(old & 0x00ffffdf) | 0x01000020` and `(old & 0x00ffffdf) | 0x20`). The page must hold those bits. 1.0005, 1.0006 and 1.1005 do not touch it.
+- **`0xff001000 = 0x4100` (1.0004 to 1.1005, including 1.1005).** When the Lithium generation is exactly 5 (the word at `0xff01c004`
+  is `0x366c3dfb`, the stamp that a real machine's registry shows as "Serial I/O: 366c3dfb"), the entry routine stores `0x4100` in a
+  dword at offset `0x1000` of the two-page window at `0xff000000`. The window must accept a 32-bit write there; the register's
+  meaning, and its value on any other generation, are unknown. 1.0002 neither maps the window nor writes it. (`1.0004@0xf00250`,
+  `1.1005@0x1100270`.)
+- **Processor identity.** From 1.0004 the firmware checks that all processors look alike (the report strings name the jumper
+  setting, mixed processors and unequal L2 sizes); an emulator with several processors should give every one the same CPUID signature,
+  bus-ratio field in MSR `0x2a` and L2 size. What the firmware does on a mismatch was not traced (unknown). Speed comes from the MSR `0x2a`
+  ratio field through a table (`1.0005@0xf1e110`, `1.0006@0xf1e180`, `1.1005@0x11197f0`); a ratio missing from the table makes
+  1.0005 and 1.0006 time the processor with `rdtsc` against the real-time clock's update-in-progress flag (register `0x0a` bit 7). A model
+  that leaves MSR `0x2a` at zero gets the table's reading of code 0, 333 MHz, in the speed report; the speed line is only a report
+  (inferred).
+- **L2 control for slot 2 processors (1.0006 and 1.1005).** For signatures `0x672` to `0x67f` with platform id 2 in MSR `0x17`, the self-test
+  module reads MSR `0x11e`, writes it with `(old & 0xff881e00) | 0x1001f`, executes `invd`, and writes the old value back
+  (`1.0006:test+0x4041`). Older images skip this.
+- **Everything else this page records at reset is the same in 1.0002 to 1.0006:** the boot block, the self-test memory-bank probe, the
+  memory descriptor list and bank step, `gfxmem_alloc`, the display start-up and the frame buffer at `0xa00000`. 1.1005's differences
+  are in [firmware.md](firmware.md#from-10006-to-11005).
 
 ## Memory controller and graphics memory
 
@@ -181,7 +210,9 @@ coherent DMA is on when the result exceeds 2, compared unsigned (`cmp $3; jae` a
 | `0xf8000000`, `0xf9000000`, `0xfa000000`, `0xfb000000` | 16 MiB each | mapped; purpose not traced |
 | `0xd0000000` | 0x81 pages | display back end |
 | `0xc2000000`, `0xc4000000`, `0xc6000000`, `0xca000000` | 1 page each | Cobalt CPU block, interrupt controller, memory controller, retrace register |
-| `0xff004000` (3 pages), `0xff018000` (4), `0xff01c000` (1), `0xff000000` (2), `0xfe000000` (1) | | Lithium-side blocks, not described elsewhere; the word at `0xff01c004` selects the Lithium generation |
+| `0xff004000` (3 pages), `0xff018000` (4), `0xff01c000` (1), `0xfe000000` (1) | | Lithium-side blocks, not described elsewhere; the word at `0xff01c004` selects the Lithium generation |
+| `0xff000000` | 2 pages | Lithium-side block; from 1.0004 (not 1.0002) the entry routine stores `0x4100` at `+0x1000` when the Lithium generation is 5 ([above](#older-releases-and-reset)) |
+| `0x00fff000` | 1 page | physical address just under 16 MiB, mapped from 1.0004; the first dword is read by `1.0006@0xf17f40`, role unknown |
 
 **Bus numbers. Established (`1.0006@0xf1f6f0`-`0xf1f8f0` and the helpers `0xf20700`, `0xf20730`, `0xf20f90`, `0xf20fa0`; the same
 code is in 1.1005 at `0x111a8ea`).** Two helpers write a byte to `+0x44` (primary bus number) and `+0x45` (subordinate bus number) of a
@@ -203,10 +234,11 @@ configuration cycles as the window for devices behind the bridges is not stated 
 0 to 7 on a bus for class `0x0604` header-type-1 bridges, recursively, then assigns the bridges' memory and I/O base and limit
 registers from the root window downwards (largest alignment first, memory alignment at least 1 MiB, I/O at least 4 KiB) and
 sets bridge control bits (command register `| 5`, `| 6` when a memory window is open). This is the code the release notes call
-"PCI bridge support" (1.1002); it is already in 1.0006. It prints "This bridge supports 32 bit IO" or "only supports 16 bit
+"PCI bridge support" (1.1002); it is first in 1.0005 (`1.0005@0xf1fdf0`; 1.0002 and 1.0004 carry no bridge-assignment code or strings, so there the
+firmware leaves bridge windows to the OS, inferred) and is the same in 1.0006 and 1.1005. It prints "This bridge supports 32 bit IO" or "only supports 16 bit
 IO" when a debug flag is set (the strings are removed in 1.1005).
 
-**Lithium set-up. Established for the writes (`1.0006@0xf20620`, `1.1005@0x111b496`; same values).** For both bridge windows:
+**Lithium set-up. Established for the writes (`1.0006@0xf20620`, `1.1005@0x111b496`; same values; 1.0005 is the same as 1.0006 at `0xf205a0`, and 1.0002 and 1.0004 add the `+0x40` writes [above](#older-releases-and-reset)).** For both bridge windows:
 `+0x48 = 0xffffffff`, `+0x58 = 0x81f`, and for each of the five dwords `+0x60`, `+0x64`, `+0x68`, `+0x6c`, `+0x70`:
 `new = (old & 0xfffffbc1) | 0x400 | 0x20c2`, where `0x400` is applied unless `coherentdma` begins with `n`, and `0x20c2` only on Lithium
 generation 5 or later and unless `streambuffer` begins with `n`. The generation (`1.0006@0xf00190`) is 1 when the byte at B `+0x08` is
@@ -417,5 +449,5 @@ The reset values of the memory controller's registers and what its timing regist
 resources to endpoint devices before the OS; the bit meanings of the Lithium `+0x48`, `+0x58` and `+0x60`-`+0x70` writes and
 the Cobalt APIC `+0xffc` field; where the embedded legacy-BIOS image is mapped and whether any of it
 is visible to an OS; the components, classes and keys of the ARC tree beyond the nodes named above; which firmware vectors
-`arcldr.exe` calls; the private vector's purpose; the firmware versions between 1.0006 and 1.1005; and the Linux ARC loaders. All are in
+`arcldr.exe` calls; the private vector's purpose; firmware versions 1.1002 to 1.1004; and the Linux ARC loaders. All are in
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).

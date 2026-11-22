@@ -1,15 +1,21 @@
 # Visual Workstation 320 and 540: the system firmware
 
-The firmware images of PROM 1.0006 (July 1999) and PROM 1.1005 (July 2000) are held and read: SGI's update packages for the
-320 and 540, each an InstallShield self-extractor that unpacks to a 512 KiB flash image. 1.1005 is the version a real
-320's registry reports ([board data](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/board-data.md)).
-The versions between them are not held, so the version history below still rests on SGI's release notes. What the images
-do at reset is in [boot-path.md](boot-path.md); this page covers what they are, how the image and its environment block are
-laid out, how it is updated and [what changed from 1.0006 to 1.1005](#from-10006-to-11005). Grades as in the README.
+Five firmware images are held and read: PROM 1.0002 (February 1999), 1.0004 (May 1999), 1.0005 (June 1999), 1.0006 (July 1999)
+and 1.1005 (July 2000). They are SGI's update packages for the 320 and 540, each wrapping a 512 KiB flash image. 1.1005 is the
+version a real 320's registry reports ([board data](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/board-data.md)).
+**"PROM 1.2" is 1.0002, the oldest image held, not a release after 1.1005.** SGI's own notes call it "the 1.2 prom"
+(the 1.0004 and 1.0005 package notes and the 1.1005 notes all do), and the package `PROM1_2.exe` carries `prom0002.bin` with
+serial 0002. No release after 1.1005 is held, and neither are 1.1002 to 1.1004. What the images do at reset is in
+[boot-path.md](boot-path.md); this page covers what they are, how the image and its environment block are laid out, how it
+is updated, [what changed from 1.0006 to 1.1005](#from-10006-to-11005), [what changed from 1.0002 to 1.0006](#from-10002-to-10006)
+and a [one-row-per-release history](#release-history-table). Grades are established, inferred or unknown (the older sections
+of this page also use "observed" for a held vendor file).
 Image offsets are flash offsets: the flash is mapped at `0xfff80000`, so flash offset `0x7c000` is physical `0xffffc000`.
 
 **Citation form.** `1.0006@0xf04a70` and `1.1005@0x1104840` are virtual addresses of the main module as the boot block
-loads it (1.0006 at `0xf00000`, 1.1005 at `0x1100000`; the three data sections follow the table below). `1.0006:flash+0x7c000`
+loads it (1.0002, 1.0004, 1.0005 and 1.0006 at `0xf00000`, 1.1005 at `0x1100000`; the data sections follow the table below,
+and each older release's own table is [in its section](#the-earlier-packages-10002-10004-and-10005)). An address in a data
+section (a string, a table) is cited the same way. `1.0006:flash+0x7c000`
 is a flash offset. `1.0006:test+0x96f7` is an offset in the self-test module (see [below](#the-self-test-module)), which
 runs from flash at `0xffff0000` plus that offset. Tools: the container's Ghidra for the main module (language x86 32-bit
 flat, base as above), x86 32-bit flat for the self-test module past its first `0x2c` bytes, which are 16-bit code run as in
@@ -131,16 +137,21 @@ original).
 | 1.1004 | Partitioning utility fix |
 | 1.1005 | Partitioning fix; 800 and 850 MHz Coppermine processors |
 
-Other facts from the notes: 1.1000 or newer is required for Windows 2000; the 1.0004 change to power-loss recovery makes
-newer firmware shut a machine back off when wall power returns after 5 to 10 seconds or more (the older behaviour was
-always to power on); upgrading with the password jumper fitted can power the machine off before the flash completes. A
+Other facts from the notes: 1.1000 or newer is required for Windows 2000; from "the 1.2 prom" (1.0002) a machine can shut
+itself back off when wall power returns, and the default is to do so after a loss of 5 to 10 seconds or more (the older
+behaviour was always to power on; the `ac` monitor command with its policy choices is in the 1.0002 image, and 1.0004 added the
+settings panel); upgrading with the password jumper fitted can power the machine off before the flash completes. A
 second Usenet report (1999-09-23) shows firmware 1.006 on a 540; the 1.1xxx scheme appears from Windows 2000 onwards.
 The notes also say a 320 needs system board revision 007 or later for Pentium III upgrades, and that a 540 is validated
-only with one, two or four processors. No 1.0000, 1.0001 or 1.0003 notes are held. The shipping version of the first
-320 and 540 units is unknown. Neither the guide nor the notes name the flash part.
+only with one, two or four processors. No 1.0000, 1.0001 or 1.0003 notes are held. The package notes say where two releases
+started (established, held files): the 1.0004 `ReadMe.txt` calls that version "the PROM used in the first release of the 540
+Visual Workstation", also "intended for all subsequent builds of the 320", and the 1.0002 `ReadMe.txt` is written for the 320
+only. So the first 540s shipped with 1.0004; the version the first 320s shipped with is unknown. From 1.0005 the notes say the
+PROM is for both machines. Neither the guide nor the notes name the flash part.
 
 First-hand check of one row: the held 1.0006 image is dated 07/07/1999 in its header and trailers, its own `ReadMe.txt`
-lists the same 1.0002 to 1.0006 changes as the 1.1005 notes (established), and the image's version strings print as
+lists the same 1.0002 to 1.0006 changes as the 1.1005 notes (established; the [history table](#release-history-table) sets each
+row against the held images where the images show it), and the image's version strings print as
 "1." followed by the four digits `0006`, which fits the 1.006 a Usenet poster saw on a 540 on 1999-09-23 (inferred from
 the format string; the screen was not seen).
 
@@ -254,9 +265,74 @@ offset `0xc000` of the segment at `0xffff0000`, flash offset `0x7c000`; behind i
 
 Header: length `0x61f00`, entry `0x01100000`, version digits `1005`, section count 5, the same decompressor (byte-pair
 encoding; it expands each section to exactly its stated length and ends at the next section's source, the same check as
-for 1.0006). The word at header offset `0x1c` is `0x21b64a13` here and `0x01011e6d` in 1.0006; the loader's use of it was not
-read (unknown). The destination of everything moved up by 2 MiB (`0xf00000` to `0x1100000`), so no `1.0006@` address equals the
+for 1.0006). The word at header offset `0x1c` is `0x21b64a13` here and `0x01011e6d` in 1.0006; in all five held images it is the word that makes
+the 32-bit little-endian sum of the whole table and compressed data (flash `0x00000` up to the end of the last module,
+`0x70` plus the header length) zero (established, checked on every image); whether the loader tests it was not read. The destination of everything moved up by 2 MiB (`0xf00000` to `0x1100000`), so no `1.0006@` address equals the
 same code at `1.1005@`.
+
+## The earlier packages: 1.0002, 1.0004 and 1.0005
+
+**Sources. Established (the held files).** Three more SGI update packages, unpacked the way the 1.0006 one is (each is a
+self-extractor around one cabinet that 7-Zip opens). Every package holds `ReadMe.txt`, `upgrade.cmd` and one `prom<serial>.bin`;
+1.0002 also holds `prom.desc`, a four-line description that its `upgrade.cmd` copies to the floppy as `README.TXT`. The images
+are not committed.
+
+| Release | Package (bytes, sha256) | `prom<serial>.bin` (524,800 bytes, sha256) | Flash image (sha256) |
+|---|---|---|---|
+| 1.0002 | `PROM1_2.exe` (493,144; `c76e9e9ad7a7fa53631054ef7c076dda741e2934f2817b71d0000eeb2d1b8ec9`) | `prom0002.bin` (`d5a926d5000e8130b416881ea33ba1ec20c4774a8b43659b702a42fbc5922e0c`) | `c1030d19c504ddfc20d89483c686bad30c304d6951e3c66298683d710aead4dc` |
+| 1.0004 | `PROM1_0004.exe` (472,551; `d1b5d76369217449f67123a40740fd2db18388bb24acf9aff2cbd7e8c5822ebe`) | `prom0004.bin` (`d12a2c60ca8f9c04400299a610c601560073329c5820a81dcac65f9663e008ed`) | `183243b7b15ebdb807d920d8dde744126a8725e68eab65e1a70c7e421d0c5080` |
+| 1.0005 | `PROM1_0005.exe` (479,635; `fea7daf1bf4bfdfd0e6da2f4bde19eb15332a470f370f0e99555b44b04d7e64d`) | `prom0005.bin` (`83f1181d8d1fd3f2ffa79cf6df33b6e93a86ed705a5de8b1dfaec799d979f198`) | `39966bac100bf3ff6713a0399ff98814042f86d35881e903d54897ad1c4b58ff` |
+
+**What "1.2" is. Established.** Every identity field of `PROM1_2.exe` says 1.0002: the file name inside is `prom0002.bin`, the
+`upgrade.cmd` serial defaults to 0002, the `0x200`-byte text header gives serial `0002`, "Firmware Version 0002" and "Fri 02/12/1999",
+the `SHDR` version digits are `0002`, and both trailers carry digits `0002` and `0001` (below). Its `ReadMe.txt` is headed "Release
+notes for PROM 1.2 release", says to flash "the 1.2 PROM onto your 320", and lists bug 652566, the wall-power behaviour and the FPU
+registry nodes. The 1.0004 and 1.0005 package notes repeat that paragraph as "as of the 1.2 prom", and the 1.1005 notes recast it as
+"firmware 1.0002 or older". So the evidence supports "1.2" meaning serial `0002`, the oldest entry in the 1.1005 notes' list and the oldest image held, built
+in February 1999, 17 months before 1.1005; it does not support a release after 1.1005. A 1.0003 is not held, so it cannot be
+excluded on its own account, but the only package that calls itself "1.2" is serial 0002.
+
+**Image layout. Established (read in full; checksums verified).** The text header is the one 1.0006 has: four revision-range
+lines (`0x06 0xFF`, `0x00 0xFF`, `0xa3 0xFF`, `0x03 0xFF`, identical in all five images, so the flash tool accepts the same boards
+for each), the build date and "builder" as build user, SGI's 1999 copyright. Header dates: 02/12/1999 (1.0002), 05/07/1999 (1.0004),
+06/22/1999 (1.0005). The flash map is the one in [the 1.0006 section](#the-prom-10006-update-package) for all three: `SHDR` table and
+modules from `0x00000`, erased gap, self-test module `0x74000`-`0x79fc0` (`0x5fc0` bytes), whole-image trailer at `0x79fe8` covering
+`0x7a000` bytes with the word sum zero, erased environment sector `0x7a000`, boot block `0x7c000`-`0x7ffff`. The label text before the
+trailer is "Experimental Bug Fixes to NTFS Driver" in all of 1.0002 to 1.0006.
+
+| Release | Whole-image trailer (UTC) | Self-test module trailer (UTC) | Boot block trailer (UTC) | `SHDR` length | Word at `0x1c` |
+|---|---|---|---|---|---|
+| 1.0002 | 1999-02-13 06:15:01, `builder`, `0002` | 1999-02-13 06:14:32 | 1999-02-13 06:15:17 | `0x6eb18` | `0x804a4cb2` |
+| 1.0004 | 1999-05-07 12:09:57, `builder`, `0004` | 1999-05-07 12:08:26 | 1999-05-07 12:10:19 | `0x6831c` | `0x908c3a82` |
+| 1.0005 | 1999-06-22 18:14:03, `builder`, `0005` | 1999-06-22 18:13:23 | 1999-05-14 12:10:23 | `0x6ab70` | `0x4856dc76` |
+| 1.0006 | 1999-07-07 10:06:35, `builder`, `0006` | 1999-07-07 10:05:34 | 1999-05-14 12:10:23 | `0x6a9a0` | `0x01011e6d` |
+| 1.1005 | 2000-07-06 18:13:36, a personal login, `1005` | 2000-07-06 18:13:20 | 1999-05-14 12:10:23 | `0x61f00` | `0x21b64a13` |
+
+**Boot block. Established (compared byte for byte).** The code and tables of the boot block (flash `0x7c000`-`0x7ffd7`) are
+identical in all five images. Only its own 24-byte trailer, which precedes the reset vector, differs: its build time, in the table above,
+and the checksum that follows from it. The boot block was last rebuilt on 1999-05-14, between the 1.0004 and 1.0005 builds, and not
+since. The reset vector, `e9 0d c0`, is the same, so [the reset path](boot-path.md#the-boot-block) is the same for every release.
+The self-test module is not: its bytes differ in every release, [see below](#from-10002-to-10006).
+
+**Module tables. Established (each section expands to its stated length and ends where the next begins; the same unpacker as 1.0006).**
+All three have five sections, entry `0x00f00000`, and the same section types as 1.0006; 1.0002 and 1.0004 place the small copied block
+elsewhere.
+
+| Release | Main module: length (packed) at `0xf00000` | Zero-filled data | First data module: flash source, destination, length | Second data module | Copied block |
+|---|---|---|---|---|---|
+| 1.0002 | `0x53540` (`0x3bc4c`) | `0xf53800`, `0x4b484` | `0x3bcbc`, `0xf9f000`, `0xb98c` | `0x42638`, `0xfaac00`, `0x4d2fc` | `0x6e924` to `0xff8000`, `0x264` |
+| 1.0004 | `0x516d0` (`0x3a1f1`) | `0xf51800`, `0x408e4` | `0x3a264`, `0xf92400`, `0xadfc` | `0x40418`, `0xf9d400`, `0x47c7c` | `0x68128` to `0xfe5400`, `0x264` |
+| 1.0005 | `0x53020` (`0x3b7e4`) | `0xf53400`, `0x487c4` | `0x3b854`, `0xf9bc00`, `0xb924` | `0x4213c`, `0xfa7800`, `0x48554` | `0x6a97c` to `0xff0000`, `0x264` |
+
+(1.0006 and 1.1005 are in their own sections above; 1.0006's data modules and copied block are placed exactly as in 1.0005, its main
+module is `0x80` bytes longer.) The main modules hold 1,314 (1.0002), 1,304 (1.0004) and 1,325 (1.0005) functions that Ghidra
+found, against 1,328 (1.0006) and 1,555 (1.1005).
+
+**Board names and processors. Established.** The strings "SG320" and "SG540" are in all of 1.0002 to 1.0006, and "Hugh" and "Borg" as
+the flash tool's board names are in all five. "SG330", "SG530", "330 fab" and "530 fab" appear only in 1.1005, so no release before
+it names board types 2 and 3 or carries ACPI tables (no `acpi_install`, no OEM id `SGI___`). None of 1.0002, 1.0004 or 1.0005 supports
+a processor the notes of the next release add: the ratio-to-speed table that [labels the processor](#from-10002-to-10006) stops at
+550 MHz in 1.0005, gains 600 and 650 MHz in 1.0006 and 800 and 850 MHz in 1.1005.
 
 ## The flash tool
 
@@ -277,8 +353,8 @@ same code at `1.1005@`.
    the minimum plus one). The messages are
    "cannot use on Hugh", "cannot use on Borg", "Needs board rev at least ...", "Cannot use on board rev > ...", "Needs at
    least Cobalt ...", "Cannot use Cobalt > ...", "Needs at least Lithium ..." and "Cannot use Lithium > ...", and a
-   malformed header prints "bad prom image header". 1.0006 and 1.1005 carry identical pairs, so a 1.1005 image runs on every board a
-   1.0006 image does. Which of the two board names is the 320: board type 0 (`(inb(0xfb2) >> 2) & 0xf`) reports "Hugh" in this
+   malformed header prints "bad prom image header". All five held images carry identical pairs, so a 1.1005 image runs on every board a
+   1.0002 image does. Which of the two board names is the 320: board type 0 (`(inb(0xfb2) >> 2) & 0xf`) reports "Hugh" in this
    check and "320" in the monitor prompt, type 1 "Borg" and "540".
 3. **Writing.** The tool skips the `0x200` header bytes and reads the rest into a RAM buffer in five chunks. If the image
    is longer than `0x7a000` and its environment sector (`0x7a000`) starts with `0x00` or `0xff`, the tool copies the
@@ -341,7 +417,7 @@ the decompiler's shape back it.
 | Self-test module | label "Experimental Bug Fixes to NTFS Driver", display table with a BIST row (`test+0x9703`, address `0xd000001c`, mask `0x0ff0ffff`, expected 0) | label "Windows 2000 Compatible", the display table's BIST row removed (the BIST code at `test+0x966a`, now `test+0x96e4`, stays); the self-test listing gains 45 `or $0x80,%al` (1 in 1.0006, 46 in 1.1005) and 21 `and $0x7f,%al` (none before) in extended-CMOS accesses (linear listing counts), most of them no-ops on the values used | established (table, listing); the reason is unknown |
 | Board types | names "SG320" and "SG540" for the ARC system type | adds "SG330", "SG530", "330 fab" and "530 fab"; the name routine (`1.1005@0x1139989`) maps board type 1 to "SG540", 2 to "SG330", 3 to "SG530" and anything else to "SG320" | inferred (names and a branch; no board of types 2 or 3 is described anywhere else) |
 | ACPI | none | `acpi_install` (`1.1005@0x111a293`) builds an ACPI root table and a fixed description table, with an ARC node "ACPI-BIOS"; the table, OEM id `SGI___`, OEM table id `320/640`, revision 1, length `0x74`, has SCI interrupt 9, SMI command port `0xb2`, enable and disable bytes `0x10` and `0x11`, PM1 event block `0xf80` (length 4), PM1 control `0xf84` (length 2), PM timer `0xf88` (length 4), GPE0 `0xf8c` (length 4), flags `0x25`; there is a root table with no further entries read (`1.1005@0x113edec`, `0x113eed0`) | established for the field values read; what Windows 2000 does with them is the HAL's side |
-| PCI bridge support (notes: 1.1002) | PCI-PCI bridge assignment code present (`1.0006@0xf1fe70`, "assign 1 bus") | present; debug printing for it, the option-ROM scan messages and the ql1240 debug text are gone (71 strings removed from the first data module and 154 added) | inferred from strings and shape |
+| PCI bridge support (notes: 1.1002) | PCI-PCI bridge assignment code present (`1.0006@0xf1fe70`, "assign 1 bus"; first appears in 1.0005, [below](#from-10002-to-10006)) | present; debug printing for it, the option-ROM scan messages and the ql1240 debug text are gone (71 strings removed from the first data module and 154 added) | inferred from strings and shape |
 | New commands and utilities (notes: 1.1002) | none of these | `dump_pci`, `env {save\|restore\|debug}`, the disk partitioning utility (messages "Partition Disk(s)", "Partitions created successfully", partition 2 fixed at 200 MB), `ignore_pci_card`, `DriveDelay`, a USB hub and keyboard/mouse probe (`init_hub`), the F8 "Advanced Boot Options" menu with the Windows 2000 safe-mode choices, Windows 2000 default start entries on `scsi()` paths | established as strings; the partition utility's boot sector strings ("Invalid partition table", "Error loading operating system") show a master boot record is written |
 | ARC path of SCSI (notes: 1.1002) | `multi()` | `scsi()` | established (strings) |
 | Debug output (notes: 1.1003) | prints PCI and QLogic debug messages | the PCI, option-ROM and ql1240 messages removed | established (strings) |
@@ -353,18 +429,95 @@ the decompiler's shape back it.
 | Display mode table | 24 rows (`1.0006@0xfe36a0`) | 26 rows (`1.1005@0x11d1ea0`): adds two 1600 by 1000 rows (75 and 85 Hz), replaces the 800 by 600 row at 119.8 Hz with one at 119.85 Hz and changes values in nine others | established; list in [the display set-up page](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/prom-init.md) |
 | Display register sequence | `1.0006@0xf3ec30` | same writes and values in the same order (the compiler reordered operands) | established |
 | Flash tool | `1.0006@0xf191f0` | same procedure | inferred (decompiler shape) |
+| Processor speed (notes: 1.1005) | one table of bus-ratio codes to MHz, up to 650 MHz (`1.0006@0xf1e1aa`) | `1.1005@0x11197f0` picks one of two tables by CPUID signature: signatures above `0x670` (family 6 model 8, the Coppermine parts) use a second table that runs 600 to 850 MHz; the first table adds 800 and 850 MHz | established (tables read; they confirm the notes' 800 and 850 MHz) |
 
 Against SGI's notes: the notes say "Support for PCI bridges", Windows 2000, F8 boot options, the partitioning utility, the
 `scsi()` path change, removal of serial-port debug output (1.1003) and 800 and 850 MHz Coppermine processors (1.1005).
 Confirmed in the image: the F8 menu, the partition utility, the `scsi()` strings, the removed debug messages. Not
-separately confirmed: the Coppermine support (the processor-signature tables were not compared) and the "PCI bridge
-support" as a distinct change (the assignment code exists in 1.0006 and appears unchanged in outline). In the image and not in the notes: the
+separately confirmed: the "PCI bridge support" as a distinct change (the assignment code exists since 1.0005 and appears
+unchanged in outline). Confirmed in the processor tables: the 800 and 850 MHz Coppermine support. In the image and not in the notes: the
 ACPI tables, the board types 2 and 3 strings, the lower 12 MiB graphics limit, the 32 MiB frame buffer address, the
 rewritten bank-descriptor step and the changed display mode table rows. Not compared: the microcode update tables, the SCSI, IDE and
 network drivers, and the monitor commands outside those named.
 
+## From 1.0002 to 1.0006
+
+Method: all five main modules were decompiled (every function Ghidra found) and matched to each other by normalised decompiler text;
+each pair of matches was then compared constant by constant, and the routines named below were read. The self-test modules were
+disassembled and compared by instruction text and by strings. Grades: established where the bytes of both sides were read or
+compared, inferred where a string or the shape of the code backs the reading, unknown otherwise. Versions are 1.0002 ("1.2"), 1.0004,
+1.0005, 1.0006. Of the 1,314 functions found in 1.0002, 1,167 match 1.0004 exactly, 44 match with different constants, 64 are modified and 39
+have no match. From 1.0004 to 1.0005, 33 differ in constants and 22 are modified; from 1.0005 to 1.0006, 24 and 6 (the
+constants that differ are mostly shifted addresses).
+
+**Unchanged from 1.0002 to 1.0006. Established.** What the other pages call the memory, graphics-memory and display start-up of 1.0006
+is the same code and data in all four older-numbered images:
+
+| Area | 1.0002 | 1.0004 | 1.0005 | 1.0006 (the reference) |
+|---|---|---|---|---|
+| Fixed memory descriptor list, nine descriptors | `0xf01d80` | `0xf01ee0` | `0xf01ee0` | `0xf01ee0` |
+| Memory bank to descriptor step (16 MiB type 2, rest type 5, `maxpmem`) | `0xf02bd0` | `0xf02e00` | `0xf02e00` | `0xf02e30` |
+| `gfxmem_alloc` (16 MiB entry limit, `cogfxmem`) | `0xf04720` | `0xf04a00` | `0xf04a00` | `0xf04a70` |
+| Text console frame buffer at `0xa00000` | `0xf3f660` | `0xf3d0e0` | `0xf3e680` | `0xf3e700` |
+| Display register sequence (timing step) | `0xf3fb90` | `0xf3d610` | `0xf3ebb0` | `0xf3ec30` |
+| Display mode table, 24 rows | `0xfeb848` | `0xfd89c8` | `0xfe36a0` | `0xfe36a0` |
+| Flash tool, header parser, write loop | `0xf18930` | `0xf19180` | `0xf19180` | `0xf191f0` |
+
+Every constant in each pair of routines was compared, not only the shape; the mode table was compared row by row (all 24 rows
+equal, including the `M N P` words and the flags). The self-test module's display ID row (`0xd0000014` equals `0x666`) and BIST row
+(`0xd000001c`) are present in all four (`1.0002:test+0x9135` and `+0x9141`, `1.0004:test+0x9596` and `+0x95a2`, `1.0005:test+0x96b3`
+and `+0x96bf`, `1.0006:test+0x96f7` and `+0x9703`). So [the display page](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/prom-init.md)
+holds for 1.0002, 1.0004 and 1.0005 as well; every difference it lists arrives in 1.1005. The `console` variable test, the panel probe and the
+`ctrlstat` write are the same routines.
+
+**What changed. Established unless marked.**
+
+| Area | Change | Release notes | Address |
+|---|---|---|---|
+| Lithium window `+0x40` | 1.0002 and 1.0004 also write `+0x40` of both Lithium windows in the set-up routine, before the `+0x48` and `+0x58` writes: window A (`0xfc000000`) gets `(old & 0x00ffffdf) \| 0x01000020`, window B (`0xfd000000`) gets `(old & 0x00ffffdf) \| 0x20`. From 1.0005 the routine has no such write; the rest (the `+0x48`, `+0x58` and `+0x60`-`+0x70` writes, the identification test) is the same in all four, and 1.1005 as before. What `+0x40` is: unknown. | none | `1.0002@0xf1ec20`, `1.0004@0xf1f5f0`; absent from `1.0005@0xf205a0`, `1.0006@0xf20620`, `1.1005@0x111b496` |
+| Lithium generation 5 write | From 1.0004, when the Lithium generation (the classification at `1.0006@0xf00190`) is exactly 5, the entry routine stores `0x4100` in the dword at `+0x1000` of the `0xff000000` window. 1.0002 has no such store. The same store is in 1.1005. | none | `1.0004@0xf00250`, `1.0005@0xf00250`, `1.0006@0xf00250`, `1.1005@0x1100270`; absent from `1.0002@0xf00240` |
+| Windows the firmware maps | 1.0004 adds two mappings to the window routine: `0xff000000` (2 pages, the one above) and the physical page `0x00fff000` (1 page; its first dword is read by `1.0006@0xf17f40`, what for is unknown). 1.0002 maps neither. | none | `1.0002@0xf03720`, `1.0004@0xf03950` |
+| CPU configuration check | 1.0004 adds a routine that compares the installed processors and records a flag word in CMOS, with the report strings "Configuration anomaly details", "Illegal CPU jumper setting", "Incompatible CPUs installed in system" and "Not all CPUs have same L2 cache size", and a CPU line in the boot messages ("%d Mhz %s (%dK L2 Cache)"). The register indices of the routines that read and write the older CMOS record also change; what the record holds is unknown. Inferred from strings and the routine's constants. | none (nearest: 1.0004 "New microcode update") | `1.0004@0xf010b0`, strings from `1.0004@0xf93286` |
+| AC-power policy and settings panel | The `ac` monitor command with its three policies is in 1.0002; 1.0004 adds the availability test ("AC policy is available"), the "Advanced Settings" panel, the `CPUSerialNumber` setting, and the strings `ac_works`, `throttle`, `_PromBootCmd` and `_MfgVar` (their use was not traced). Inferred (strings; the panel code was not read). | 1.0002 notes (wall-power behaviour); 1.0004 items 6 and 7 | `1.0002@0xf9f77d`; `1.0004@0xf97c40`, `0xf9bf00` |
+| Microcode and DHCP | The string "CPU Microcode Revision" and the code that prints it appear in 1.0004, and the string "DHCP response with wrong ROUTER len" (the router-option parsing) appears. The update tables themselves were not located. Inferred. | 1.0004 items 4 and 5 | `1.0004@0xf982fc`, `0xf99cf4` |
+| Debug output | 1.0004 drops the PCI configuration, option-ROM report and QLogic 1040 debug text 1.0002 prints; 1.0005 brings the PCI and option-ROM text back (not the QLogic text) and 1.1003 [removes it again](#from-10006-to-11005). | none for 1.0004 and 1.0005 | strings only |
+| PCI-PCI bridge assignment | The bridge scan and window assignment ("assign 1 bus", "Add_up_a_bus") first appear in 1.0005. 1.0002 and 1.0004 have no such strings or routines. The 1.0005 note names only the QLogic 2100 card; that the card needs the code is inferred. The release notes' "Support for PCI bridges" (1.1002) is therefore not the first appearance. | 1.0005 item 1 | `1.0005@0xf1fdf0` (the routine, `1.0006@0xf1fe70`), string `1.0005@0xfa2574` |
+| Self-test serial manager | 1.0004 adds the processor report strings ("Boot CPU", "Aux CPU", "BIST result", "KB L2 Cache size", "MHz bus speed", "Ratio bits") and drops the `am` and `du` commands. 1.0005 adds `rl`, `wl` and `uh` (read and write scope loops, upload). Inferred (strings). | none | strings in the module |
+| Processor speed | 1.0005 turns the bus-ratio field of MSR `0x2a` into MHz through a table that ends at 550 MHz and falls back to timing the CPU against the real-time clock's update flag. 1.0006 adds 600 and 650 MHz to the table, moves the lookup into its own routine, and caches the result per processor. | 1.0006 item 1 (600 MHz Katmai) | `1.0005@0xf1e110`; `1.0006@0xf1e180`, `0xf1e1ef`, `0xf023c0` |
+| Slot 2 L2 cache | 1.0006 puts a block at the front of the self-test module: for CPUID signatures `0x672` to `0x67f` with platform id 2 in MSR `0x17` it rewrites the L2 control MSR `0x11e` to `(old & 0xff881e00) \| 0x1001f`, executes `invd`, and restores the old value. 1.0002 to 1.0005 have no such block (that is why every later address in the module moves by `0x43` bytes). | 1.0006 item 2 (slot 2, 2 MB L2); inferred link | `1.0006:test+0x4041` |
+| Start-up code for other processors | The block copied to `0x50000` before the other processors are started grows by one dword per release: `0x82` dwords (1.0002), `0x83` (1.0004, 1.0005), `0x84` (1.0006). Inferred (the copy loop; the block itself was not read). | none | `1.0002@0xf03c60`, `1.0004@0xf03ee0`, `1.0006@0xf03f10` |
+| ACPI, board types 2 and 3, F8 boot options, disk partitioning | none in 1.0002 to 1.0006: no ACPI strings or tables, no "SG330" or "SG530", no "Advanced Boot Options", no `DriveDelay`, `Ignore_PCI_card` or "Boot Countdown". All first appear in 1.1005 ([above](#from-10006-to-11005)). | 1.1002 and 1.1005 | strings only |
+
+**Release notes against the images.** Confirmed: the AC-power policy command (1.0002 image), the 1.0004 settings panel and CPU-serial
+setting, the DHCP router message, the microcode revision report, the QLogic bridge-era code in 1.0005 (only the timing is
+inferred), the 600 MHz Katmai table row and the slot 2 L2 code in 1.0006. Not checked: the SCSI-versus-floppy fix, the long OS-loader
+name fix, the QLogic adapter limit and the restore-settings behaviour (1.0004 items 1 to 3 and 8; the drivers and menus were not
+read), the FPU registry nodes the 1.0002 notes mention (the strings are in every image; the node creation was not traced), and the
+1.0002 notes' bug number. In the images and not in the notes: the Lithium `+0x40` writes and their removal, the `0xff001000` store, the two new
+mappings, the CPU configuration check, the debug-text changes, the per-release growth of the processor start-up block and the processor
+serial-manager commands.
+
+## Release history table
+
+One row per held release, ordered by build date (header date and whole-image trailer time, UTC). Notes quoted are from each release's
+own `ReadMe.txt` and the 1.1005 notes; the Japanese-language readme files held for 1.0004, 1.0005, 1.0006 and 1.1005 (`10004readme.txt`,
+sha256 `5855dad780691cf59b99ff57fee889011780cfea6e49012f028dae6f39d51406`; `10005readme.txt`, `897dc0ca76577cabb8c6bde7dbc276c09d04611a3d3ec4a8834d5af652e00774`;
+`10006readme.txt`, `a5eb8c9b0575f6b04eb1071a83e89cf018b737906f8b45890b48233706d2b7d4`; `PROM1_1005-readme.txt`, `86cebd08c886f122f1ea702984f3385267b1d0d54ab2efddafdaa5690f9a0b89`)
+carry Japanese upgrade instructions followed by the same English change lists. The 1.0004 Japanese readme adds that the first 540s
+shipped with 1.0004 and that 320s would ship with it in turn.
+
+| Release | Built | Main changes | Cited to | Binary evidence |
+|---|---|---|---|---|
+| 1.0002 ("1.2") | 1999-02-12 (header), 1999-02-13 06:15 UTC | The oldest image held; notes for the 320 only. Wall-power policy (`ac`), FPU registry nodes, bug 652566. Full PCI, option-ROM and QLogic debug text, Lithium `+0x40` writes, no `0xff000000` window | 1.0002 `ReadMe.txt` (package `PROM1_2.exe`); 1.1005 notes | `1.0002@0xf9f77d` (`ac` help), `1.0002@0xf1ec20` (Lithium set-up), `1.0002@0xf3f660` (display start-up) |
+| 1.0004 | 1999-05-07, 1999-05-07 12:09 UTC | First 540 release (notes). Removable SCSI drive no longer hides the floppy; long OS-loader name exception; QLogic adapters 4 to 8; DHCP router option; new Pentium II and III microcode; "Advanced Settings" panel (diagnostics level, power-loss recovery, CPU serial number); restore-settings change; bugs 652566, 686252, 675742 | 1.0004 `ReadMe.txt` items 1 to 9; Japanese readme | `1.0004@0xf9bf00` ("Advanced Settings"), `0xf97c40` (AC policy), `0xf982fc` (microcode revision), `0xf99cf4` (DHCP router), `0xf010b0` (CPU check), `0xf00250` (`0xff001000` store), `0xf03950` (new windows); Lithium `+0x40` still at `0xf1f5f0` |
+| 1.0005 | 1999-06-22, 1999-06-22 18:14 UTC | QLogic 2100 Fibre Channel card; notes now for both 320 and 540 | 1.0005 `ReadMe.txt` item 1 | `1.0005@0xf1fdf0` (bridge assignment, new), `0xfa2574` (its strings); Lithium `+0x40` gone (`0xf205a0`); serial manager `rl`, `wl`, `uh` |
+| 1.0006 | 1999-07-07, 1999-07-07 10:06 UTC | 600 MHz Katmai processors; slot 2 processors with 2 MB L2 | 1.0006 `ReadMe.txt` items 1 and 2 | `1.0006@0xf1e1aa` (speed table with 600 and 650 MHz), `1.0006:test+0x4041` (L2 block); every area in [the unchanged table](#from-10002-to-10006) as 1.0002 |
+| 1.1005 | 2000-07-06, 2000-07-06 18:13 UTC; notes dated 2000-07-11 | Notes cover 1.1002 to 1.1005: Windows 2000, F8 boot options, partition utility, `scsi()` path, PCI bridges, 800 and 850 MHz Coppermine. Image also adds ACPI tables, board types 2 and 3 names, new memory descriptors and bank step, 12 MiB graphics limit, frame buffer at `0x2000000`, 26-row mode table | 1.1005 notes; [table above](#from-10006-to-11005) | `1.1005@0x111a293` (`acpi_install`), `0x1139989` (board names), `0x1102d90` (bank step), `0x1104840` (`gfxmem_alloc`), `0x11d1ea0` (modes), `0x11197f0` (speed tables), `0x1199ba4` ("Advanced Boot Options") |
+
+The 1.1002 to 1.1004 releases are known only through the 1.1005 notes (table above).
+
 ## Open
 
-The shipping firmware version, the microcode tables and the driver code in the main module, the 1.1005 package's
-floppy-making script, the purpose of the `SHDR` word at offset `0x1c` and the factory defaults are listed in
+The shipping firmware version of the first 320s, the microcode tables and the driver code in the main module, the 1.1005 package's
+floppy-making script, 1.1002 to 1.1004 and the factory defaults are listed in
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
