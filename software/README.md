@@ -13,6 +13,12 @@
 |---|---|---|
 | [elilo-ia64.md](boot/elilo-ia64.md) | ELILO on IA-64: what the boot loader hands the Linux kernel | How ELILO, the EFI boot loader of the SLES 9 and ProPack era Altix, loads a Linux/ia64 kernel, what it builds for it... |
 
+## firmware
+
+| Page | Title | Summary |
+|---|---|---|
+| [byte-order.md](firmware/byte-order.md) | Byte order in shipped SGI MIPS firmware and tools: what exists and what does not | Does any shipped SGI PROM or IRIX tool support a little-endian MIPS machine, and what can change a machine's byte order? |
+
 ## kernel
 
 | Page | Title | Summary |
