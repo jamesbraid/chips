@@ -5,7 +5,8 @@ controller (the L1) between processor reset and the start of the console, in the
 `F`, one SHub 1, 2 GiB, one processor) issues them, with what the PROM reads from each reply and what it does when the reply is
 wrong. It is written so that an L1 model can answer every request in order. The wider path is in [boot-sequence.md](boot-sequence.md);
 the L1 side of the same link is in the sysco repository, `software/firmware/l1/` (pages `sn2-prom-link-1.62.1.md`,
-`sn2-dimm-spd-request.md`, `sn2-l1-settings-defaults-1.62.1.md`, `node-link-sn1-vs-sn2.md`).
+`sn2-dimm-spd-request.md`, `sn2-l1-settings-defaults-1.62.1.md`, `node-link-sn1-vs-sn2.md`, and for the C-brick's two-node console
+`cbrick-console-routing-1.62.1.md`, with the PROM side in [Two PROMs on one L1 console](#two-proms-on-one-l1-console)).
 
 **How it was read.** The order and the call paths come from the IA-64 Ghidra module (`retools/tools/re-run --ghidra-export IMAGE
 --sn2-prom` for the call graph and decompiled C, and its `DecompileAt` script for functions the export does not reach, such as the
@@ -676,6 +677,84 @@ Read 2026-11-21 in the SAL 5.04 SHub 1 image (Ghidra, objdump for predicates); n
   succeed. With a silent L1 that is 3.3 s each: about 20 s per bank, 80 s for four, before the node is declared memory-less
   (established for the code; the run's RTC behaviour is not known). The same request frames, replies and statuses as the local node's; only the
   object and the NASID differ.
+
+## Two PROMs on one L1 console
+
+Read 2026-11-22 in SAL 5.04 (`shub1snprom.bin`, SAL_B listing with `ia64-linux-gnu-objdump` for every constant and call, Ghidra for
+the call graph); nothing was run. The L1's side of the same traffic, read in the ColdFire `2MB image` of L1 1.62.1 that serves an
+Altix 3000 C-brick, is in sysco, `software/firmware/l1/cbrick-console-routing-1.62.1.md`. Grades as above.
+
+**Answer first.**
+
+- Each node's PROM writes console text to its own node's UART (at `0x8000000ffed40000 | nasid << 38`) and the C-brick L1 has one
+  link per node, so the second node of a C-brick has a direct L1 link. It is not a node with no link. The L1 tells the nodes apart
+  by the link a frame arrives on: the PROM's requests carry no node selector (sysco note, "Node links").
+- Only the partition master binds the `r` console to its own L1 object. The listing shows no such binding on another node.
+  What a non-master PROM prints on `r` is unknown.
+- On the L1 the output of both nodes is interleaved at frame granularity and untagged, and input goes to one (slab, subchannel)
+  chosen by a rule that prefers the lowest slab that has used index 4. The rule is in the sysco note; the model consequence is below.
+
+**How a PROM reaches the console (established, listing).**
+
+1. The console objects are those of the table at `0xffbe8648` (tag byte at `+104`: `p`, `r`, `d`, `e`). `console_probe`
+   (`0xffa1fca0`) walks `pd` early and `rpd` in `main_three`; the `p` and `r` probes (`0xffae9200`, `0xffaea490`) succeed on every
+   node unless the simulator signature is set, so every node's PROM ends up on `r` after `0xffad775c` unless `main_three` skips the selection (it tests bit 14 of the
+   same word at `0xffad76a0`; the switch it stands for was not decoded). Operation slots of `r`:
+   probe `0xffaea490`, init `0xffae98e0`, poll `0xffae9b60`, readc `0xffae9c40`, getc `0xffae9d20`, putc `0xffaea0a0`, putb `0xffaea240`, flush
+   `0xffae9e20`; of `p`: probe `0xffae9200`, init `0xffae87f0`, poll `0xffae8b70`, readc `0xffae8be0`, getc `0xffae8c50`, putc `0xffae9030`,
+   putb `0xffae90c0`, flush `0xffae8ce0`.
+2. **Per CPU, `p`.** The probe `0xffa805e0` fetches the object at `+0x188` of the calling processor's record (record from
+   `[0x1000000 + (cr.lid slice + 2) * 8]`). Frames carry header `0x40 | slice` (`0xffae96f0` ORs `0x40` into the index). So `p` is
+   per processor, through that processor's node.
+3. **Per partition, `r`.** Putc, putb and flush of `r` take the object whose pointer is at block B `+0x100`, the ring at block B
+   `+0x90` and the lock at block B `+0xa8` (`0xffaea0a0`, `0xffaea240`, `0xffae9e20`), index 4, header `0x44`. Block B is the
+   structure at physical `0x1000040`, local to the node. The first halfword of the object is its node's NASID; the SAL call
+   `GET_MASTER_NASID` (`0x02000004`) returns it ([SAL runtime](../../sal/sn2-runtime.md)).
+4. **Who sets block B `+0x100` (established as a listing search, not exhaustive).** Of the sequences that load `[0x1000040]` and
+   add 256, only two store: `0xffa808d0` (a one-store setter, `st8` at `0xffa80936`) and a zero store in the block's initialiser
+   (`0xffa53160`). The setter has two callers: `0xffad796c` in `main_three` and `0xffb1ea4c` in the SAL_B runtime twin (the
+   second was not read). At `0xffad796c` the argument is `[block A + 0x180]`, the node's own L1 object, passed through the
+   address helper `0xffa1c2e0`, and the code runs only if `0xffa0ecd0(1)` is non-zero, that is bit 1 of the word at
+   `0x81_5003_1550` ("partition master", set by the election in [numalink-neighbours.md](numalink-neighbours.md#candidate-arrays-and-the-election-0xffa42640)).
+   The branch is at `0xffad78b0` to `0xffad78cc`; a node without the bit skips it and goes to `0xffad75b0`. It precedes the
+   console selection at `0xffad76ec`. So on a node that is not the partition master, block B `+0x100` is the initial zero as far
+   as this reading goes (so `GET_MASTER_NASID` on such a node reads the halfword at a zero pointer; its result is not known). Unknown: whether another store (an indirect
+   one, or in the runtime) fills it, and what a non-master's `r` console does with a null object.
+5. **The sender (`0xffa86ed0`, `l1sc_send`) works on a controller object, not on a node.** An object's first halfword is a NASID
+   (the remote-window address `nasid << 38` is built from it); when the object is not the caller's own, has equal NASID fields
+   (halfwords 0 and `0x14`) and flag bit 5 clear, the sender also takes the lock of that node's registered L1 object (block A of
+   that node, `+0x180`, read through the global window). Inferred: the intent is to serialise senders that share one node's UART.
+   The UART is always the one at the object's NASID (`sc_uart_*`), so a PROM can in principle send through another node's UART
+   over NUMAlink; the earlier section on a remote node's UART gives the wait and the die routine for that.
+
+**What a correct two-PROM boot looks like on the one console (inferred, from this page and the sysco note).**
+
+- **Two UARTs, two L1 channels, not one shared channel.** Each node has its own junk-bus UART at its own NASID's window. The L1
+  model has one link per node and the link index is the slab: the same `0x0003`, `0x000e` (slab 0 on one link, 1 on the other),
+  `0x0013`, `0x0009`, `0x0010` and the `0x1005` display texts arrive on both links and are answered per link. The model must
+  answer each node on its own link even though the requests are byte-identical.
+- **Request order is the PROM's per node; the two PROMs run it in parallel** and meet at the tree and global barriers
+  ([numalink-neighbours.md](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node)),
+  where a typed `^C` on the console ends the wait: the barrier wait polls the console (`0xffa1f340`). Whoever receives the key
+  sees it; the other waits on.
+- **The L1 starts in its prompt state.** Node output is dropped until the operator enters console mode (Ctrl-D at the locked
+  prompt); the PROM does not re-send. A boot that must show text from reset has to start the L1 in console mode.
+- **Input** goes to one node. Until a node sends a header-`0x44` frame, input follows whichever node printed last on its own
+  index; after that it goes to the lowest slab whose last index was 4. With both PROMs on `r`, slab 0's PROM (not necessarily the
+  partition master) is the one that gets the keys, and no key reaches slab 1 until slab 0 has sent a frame with another index.
+  The L1's `select` command moves it only until the next frame from either node.
+- **Output** from both nodes appears in arrival order as plain text, one frame at a time (at most 127 bytes), with no node tag.
+  The PROM flushes on every `PUTB` and frames carry whole lines in the usual case, so the two PROMs' lines interleave at line
+  granularity in practice; this is inferred from the flush rule and not measured.
+- **Replacing an approximation.** A model that gives both PROMs one shared UART, or one that sends all input to the node
+  that talked last, differs from the above: the first removes the per-node link identity the L1 relies on, the second drops
+  the "lowest slab on index 4" rule. A discriminating test: two PROMs, both printing on index 4, slab 1 prompting; keys typed on
+  the console must arrive on slab 0's UART.
+
+**Unknown.** Which node is the partition master of a C-brick pair (the election takes the highest score, the earlier list entry on
+a tie; see the neighbour page); what a non-master PROM prints on `r` and whether it prints at all; whether the second store site
+`0xffb1ea4c` (runtime twin) changes the picture; the PROM's behaviour when a frame reaches it with header `0x44` while index 4
+has no object bound; which UART device on the L1 is which node (hardware).
 
 ## Order and replies at a glance
 
