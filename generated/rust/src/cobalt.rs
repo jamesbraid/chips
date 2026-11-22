@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 316a2493ce8fdbc78278d43134e7d66000ec231e17b202c1eee81452a9022731
+// input sha256 07184971d0f3ea249d14e45362e536f8e51e340d7a8d719303517197d380f7f2
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -248,7 +248,7 @@ pub mod mem_err_addr {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x28;
 }
-/// Memory error ECC syndrome. A nonzero syndrome with a correctable error makes the HAL rewrite the location (HalpCorrectSoftEccError). (established)
+/// Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from (established)
 pub mod mem_err_syndrome {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30;
