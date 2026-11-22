@@ -563,6 +563,29 @@ replacement HAL can use the generic bridge code.
 need the panel size can skip them), the V86 BIOS call path (for display BIOS calls only), and the Windows 2000 HAL below its
 tables (no symbols). Two newer 1999 NT 4.0 HAL builds are compared in the follow-on section above.
 
+## What the PROM 1.1005 trace says about the HAL's open points
+
+From the [ARC services and tree section](boot-path.md#arc-firmware-services-tree-and-descriptors-at-byte-level-11005) (PROM 1.1005,
+every access read in the listing). The PROM is a second reader of the same registers, not a specification: where it does not touch
+a register the point stays open.
+
+| Point | What the PROM shows | Grade |
+|---|---|---|
+| Board type values behind `SYS TYPE` | `(inb(0xfb2) >> 2) & 0xf`; 0 is the 320 ("Hugh" in the flash tool), 1 the 540 ("Borg"), 2 and 3 are board names `330 fab` and `530 fab`; the tree node carries the raw value and the system identifier carries `320`, `540`, `330` or `530` | established |
+| Which board the fourth Windows 2000 interrupt generation is for | The Windows 2000 HAL picks the new tables for any `SYS TYPE` other than 0 and 1, so the PROM's types 2 and 3 are the only boards that reach it without `INTRROUTE=HUGH2`: the `330` and `530` boards. Which products those are is not documented anywhere held | inferred |
+| `HUGH006` | "Hugh" is the 320 (board type 0). `006` matches the PROM's fab name for 320 revisions 12 to 31 (`006 rev A` onward), the revisions the HAL puts in its newest generation. So the option forces a 320 of an older revision to use the newest 320 ("fab 006") tables | inferred (name match) |
+| 540 revision byte at port `0xfc0` | The PROM's `BOARD REV` node is `inb(0xfc0) & 0x7f` for every board type, so the HAL and the PROM read one byte. The PROM names a 540's fab from it: revision 0 `001 rev 0`, 1 to 31 `002 rev (n-1)`, 32 and over from the high nibble. It restarts a 540 below revision 2 through the Cobalt `+0x18` bit and from revision 2 through port `0xcf9` (the HAL's earliest-board rule names revision 0 only). What a real 540 returns is still unknown | established for the source of the byte, unknown for the value |
+| Bootstrap processor's local APIC id | The PROM writes the ID itself: the boot processor takes ordinal 0 from the mailbox byte `0x504` and stores `0 << 24` in its APIC ID register before waking the others, then records the value it reads back in the table at `0x1e02`. So the table's first entry has id 0 on a 1.1005 machine whatever the reset value was | established (code), inferred that the write takes effect on the part |
+| Cobalt in-service state for level lines | The PROM never reads or writes any acknowledge or end-of-interrupt state for the Cobalt controller; it only writes the 30 redirection entries and the ID register. No evidence | unknown |
+| Bit 17 of an entry's low word | The PROM's table gives entry 29 the value `0xffffffff` and writes it OR-ed with `0x18000`, so it stores all ones, bit 17 included, once, and never reads it back. No evidence about whether the bit is writable | unknown |
+| What raises entry 29 and what ports `0xff0` to `0xff3` are | The PROM never reads `0xfb0`. It has one use of `0xff0`: a 16-bit write of `0xcafe` inside its power-off routine, reached only for a Cobalt I/O generation below 1, a value the generation function never returns (the same routine otherwise writes the special-cycle pair the HAL's NMI routine writes). The HAL writes `0xba` to `0xff0`, `0xca` to `0xff1` and `0xfe` to `0xff3`. Together: the ports look like a write-only latch with a magic value that older boards use for a power-off or acknowledge, and both firmware and HAL carry the old-board path; no register names exist | inferred (a latch), unknown (what it does) |
+| Slot number to device number | The PROM's scan prints `Bus %d Slot %d Function %d` with the PCI device number, not a physical slot; no PROM table gives a slot-to-device map | unknown |
+| The 540's device 2 | No PROM driver, node or fix-up is bound to device 2 of either bridge; the PROM's registered ids are the PIIX4 functions (`8086:7111`, `7112`, `7113`), the 82557, the ISP1080 and the VIA equivalents | unknown |
+| Where the IEEE 1394, SCSI and video options sit | 1394: the PROM prints a `1394:` line from the top nibble of the dword at physical `0xfe000000` (a Lithium-side window, not PCI), but only when the CPU bus code is 100. Video: a `Display Engine:` line from the low nibble of the dword at `0xd0000000`, same condition. SCSI: the only SCSI controller the PROM binds is a QLogic ISP1080 (`1077:1080`); it is a PCI card in an option slot. The PROM never binds a 1394 or video device on PCI | established (reads); inferred for the SCSI card being an option |
+| "Serial I/O" word at `0xff01c004` | Read by the PROM as `Serial I/O: %08lx` and compared with four values that decode as Unix times in 1998; the result is the "Cobalt I/O" generation 2 to 5 (1 when the bridge byte at `+8` is zero, 6 above the last value, `-2` below it) | established (reads), inferred (a build stamp) |
+
+The identifier in the tree is `SGI-<model>_ARCx86_mp`, so the HAL's product-name rewrite (dash to a blank, cut at the underscore) always sees a model number. Windows 2000's four `txtsetup.sif` ids (`*SGI-3` to `*SGI-6`, [above](#the-windows-2000-builds)) can match the leading `SGI-3`/`SGI-5` of the `320`, `330`, `530` and `540` strings; how setup matches a starred id was not read, so what `*SGI-4` and `*SGI-6` name is unknown.
+
 ## Routines read
 
 `HalInitSystem`, `HalInitializeProcessor`, `HalpInitializeInterrupts`, `HalpEnableNMI`, `HalpInitLithium`, `HalpInitMP`,

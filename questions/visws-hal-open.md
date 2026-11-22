@@ -7,17 +7,17 @@ From [hal-hot-path.md](../software/visws/hal-hot-path.md), [boards-320-540](../p
 
 [missing source] The HAL never writes the controller when it acknowledges a device interrupt, and for the 8259 cascade it relies on
 the level line re-delivering while another IRQ is pending (inferred). Tried: every acknowledge routine in both HAL builds. Settles it:
-a trace of a real machine with two simultaneous legacy interrupts, or the Cobalt specification.
+a trace of a real machine with two simultaneous legacy interrupts, or the Cobalt specification. PROM 1.1005 was also read: it never touches any acknowledge or in-service state ([nt-hal.md](../software/visws/nt-hal.md#what-the-prom-11005-trace-says-about-the-hals-open-points)).
 
 ## Meaning of bit 17 of an interrupt entry's low word, and of the remote-IRR bit's writability
 
 [missing source] The HAL aborts NMI set-up if bit 17 reads set after it writes 0, and clears bit 14 of the NMI entry by writing it.
-Tried: both HAL builds. Settles it: the specification, or reads of the entry on a real machine.
+Tried: both HAL builds and PROM 1.1005, which writes entry 29's low word once as all ones (bit 17 included) and never reads it back. Settles it: the specification, or reads of the entry on a real machine.
 
 ## What raises Cobalt entry 29 and what ports `0xff0` to `0xff3` are
 
 [missing source] The power-management NMI routine reads bit 2 of port `0xfb0` and writes ports `0xff0` to `0xff3` with fixed values.
-Tried: the routine in full; no other HAL code touches them. The PIIX4 datasheet lists no such ports, and its power-management
+Tried: the routine in full; no other HAL code touches them. The PROM never reads `0xfb0`; its only use of `0xff0` is a `0xcafe` word write in a power-off path no board reaches (see the PROM note linked from the first entry above), so the PROM does not settle what raises the NMI. The PIIX4 datasheet lists no such ports, and its power-management
 block is the 64-byte window at `0xf80` (base in PMBA bits 15:6, p. 120), so they are not its registers (inferred). Settles it: the
 firmware's use of the same ports (a search of the held PROM images for those port numbers was not done), or the Lithium specification.
 
@@ -32,7 +32,7 @@ with the owner's approval).
 ## Which physical PCI slot is which device number
 
 [missing source] The guides number slots 1 to 4 and 5 and 6 by group only. Settles it: a boot log or Device Manager listing from a
-real 540 with cards in known slots; the board silkscreen.
+real 540 with cards in known slots; the board silkscreen. PROM 1.1005's scan prints bus, device (as "slot") and function but has no slot table, and no PROM driver or node is bound to device 2 of either bridge, so the 540's device 2 stays unknown too.
 
 ## Physical layout of the generation-1 boards
 
@@ -42,9 +42,17 @@ owner's guide or a boot log.
 
 ## Which local APIC id the bootstrap processor has
 
-[missing source] Every device interrupt goes to processor id 0. The firmware's table at `0x1e00` says which ids exist; whether the
-bootstrap entry always carries 0 on a 540 with four processors is not shown. Settles it: a dump of the table from a real machine or a
-read of the firmware routine that writes it ([boot-path.md](../software/visws/boot-path.md), not edited here).
+[settled for PROM 1.1005, not for a real 540's reset value] Every device interrupt goes to processor id 0. The PROM 1.1005 routine that
+runs on every processor takes an ordinal from the byte at `0x504` and writes it into the local APIC ID register, the boot processor
+being ordinal 0, before it records the entry ([boot-path.md](../software/visws/boot-path.md#processor-wake-up-and-the-local-apic-identifiers-0x1103c80-0x1103f74)),
+so the boot processor's id is 0 on a machine running that firmware (established; that the write takes effect on the part is inferred).
+What a real 540 holds at reset is not shown and no longer matters for 1.1005. Older PROMs were not re-read.
+
+## Which board the fourth Windows 2000 interrupt generation is for
+
+[partly settled] The PROM's board type has four values (`320`, `540`, `330`, `530`) and the Windows 2000 HAL selects its fourth table set for
+every SYS TYPE other than 0 and 1, so the new set serves the 330 and 530 boards (inferred; [nt-hal.md](../software/visws/nt-hal.md#what-the-prom-11005-trace-says-about-the-hals-open-points)).
+Open: what a 330 or 530 is (no held guide names them) and the Windows 2000 selection code. Settles it: decoding the RTM routine that loads the tables, or a guide for those boards.
 
 ## Uniprocessor builds of the newer HALs and the Windows 2000 HAL
 

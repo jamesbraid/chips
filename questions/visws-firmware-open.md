@@ -40,10 +40,11 @@ diagnostics in the main module. Next: the part's datasheet; read those parts of 
 
 ## The ARC tree and the loader's firmware calls
 
-[route: software now] Settled: the system parameter block at `0x1000`, the 35-entry firmware vector at `0x1200` (standard ARC
-order) and the 15-entry private vector at `0x1300`, the loader's reading of the block, the tree nodes the firmware builds by
-name. Settled since: the vectors both loaders call (fourteen, [boot-path.md](../software/visws/boot-path.md)) and what `ARCINFO` prints. Open: component classes, types and keys of every node, the private vector's purpose, what firmware revision Windows 2000 setup's PROM check expects of a PROM, and the exact way the firmware builds the identifier (text-mode setup expects `SGI-320_ARCx86`, `SGI-540_ARCx86` and the `_mp` forms; the image's `SGI-000_ARCx86` is probably a template). Next: read the tree builder (`borg_cpu_install`,
-`cpu_makecfgroot`).
+[route: software now] Settled for PROM 1.1005 ([boot-path.md](../software/visws/boot-path.md#arc-firmware-services-tree-and-descriptors-at-byte-level-11005)): the parameter block
+writer, all 35 firmware vector entries and the thunk and target of each, the file table and the Open, Read, Write and Seek rules, the
+tree nodes' classes, types, keys, identifiers and data, the identifier builder (`SGI-<model>_ARCx86_mp`), the memory descriptors, and the layout behind Windows 2000 setup's PROM check. Open: the private vector's targets,
+the direction of setup's PROM comparison, the PIIX4/82557/UHCI/ISP1080/FDC register sequences, the RAM probe values that feed the descriptor builder, the merge and trim rules in the graphics
+memory allocator, the setter of the flag at `0x114cd44`, and everything above for PROM 1.0006 and older (not re-read). Next: read the drivers' attach and strategy routines one by one.
 
 ## Memory programming, graphics split and PCI resources
 
@@ -124,5 +125,5 @@ SGI's 2.2.10 existed; what `larc.exe` is; and whether any loader (`larc.exe` is 
 - **Whether a stock 320 or 540 runs the V86 task.** It runs only when the PCI scan finds a device with an x86 expansion ROM or `DosBoot` begins with `y`; no scan of the shipped cards was run. It decides whether page 0 is mapped and the local APIC is programmed at the loader call. Settles with: a hardware-inventory capture with the PROM's debug output, or the card list of a shipped configuration.
 - **ACPI use.** Whether a Windows 2000 loader or HAL uses the "ACPI-BIOS" node. The pointer, root table and one fixed table exist; no DSDT, FACS or MADT. Settles with: the Windows 2000 loader's handling of that node, or a boot with an ACPI HAL.
 - **VGA from the legacy-BIOS image.** Whether the "Main BIOS" image provides a VGA service. Settles with: disassembling that real-mode image.
-- **PCI access order and drivers.** The configuration cycles of the device scan in order, and the IDE, SCSI, USB and network drivers' register use. Settles with: reading `1.1005@0x1113a02` callees.
+- **PCI access order and drivers.** The driver registry (PCI ids and attach routines) is read; the configuration cycles of the device scan in order and the 82557, UHCI, ISP1080 and floppy controller register use are not. Settles with: reading the attach routines listed in [boot-path.md](../software/visws/boot-path.md#boot-devices-and-drivers-11005) and their strategy routines.
 - **Floppy recovery to the last cluster**, including what `SGISETUP.EXE` is expected to do with mode 8. Settles with: reading `0xffffe0xx` onwards in the boot block and a recovery floppy image.
