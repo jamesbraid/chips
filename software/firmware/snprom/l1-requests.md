@@ -663,13 +663,19 @@ Read 2026-11-21 in the SAL 5.04 SHub 1 image (Ghidra, objdump for predicates); n
   die routine are the ones of this page. A silent mailbox parks the boot processor at the first request.
 - **A remote node's UART.** For a claimed neighbour the same object code runs with the neighbour's NASID and the UART reached
   through the global window (`0xf_fed4_0000 | nasid << 38`). The wait for a reply is the same 3,000,000 us of the local node's
-  RTC. Each poll of the receiver `0xffa87830` reads the state register (`SCRATCH2`) of that node, takes and drops the software
-  lock word `0x1_5003_1540` through the global window, and reads line status `+0x28`; with bit 0 clear (no byte) the byte read
+  RTC (a clock that does not advance never ends it: the RTC is A's own `0x1_101c_0000`, scaled by the period field of
+  `0x1_1006_0280`). Each poll of the receiver `0xffa87830` reads the state register (`SCRATCH2`) of that node, takes **bit 6** of the software
+  lock word `0x1_5003_1540` through the global window (class method `+0x238`, `0xffa93cd0`, which calls `0xffa0f1a0`), reads line
+  status `+0x28`, and drops the bit (`+0x240`, `0xffa93d80`); with bit 0 clear (no byte) the byte read
   returns -3 (bits 3:1 set with bit 0 clear: -2). Nothing on the neighbour has to write the lock word. On expiry the die routine
   runs with the neighbour's NASID: it writes the neighbour's `0x1_2000_0000`, waits 300 ms and does not park (the park
   needs the local node and the calling slice). A request to a remote node that nobody answers thus costs about 3.3 s and
-  returns -24; with the sixteen DIMM reads of the remote memory discovery that is about 53 s before the node is declared
-  memory-less (inferred from the slot 97 row of the neighbour contract, not read in the remote path).
+  returns -24. The requests a remote node's L1 gets, and what an L1 stub must answer, are read and tabulated in
+  [numalink-neighbours.md](numalink-neighbours.md#requests-to-a-remote-nodes-l1-and-what-a-stub-l1-must-answer): the
+  `0x100b` of the node set-up first, then the sixteen `0x0006` DIMM reads, each bank followed by `0x0003` and `0x000e` until they
+  succeed. With a silent L1 that is 3.3 s each: about 20 s per bank, 80 s for four, before the node is declared memory-less
+  (established for the code; the run's RTC behaviour is not known). The same request frames, replies and statuses as the local node's; only the
+  object and the NASID differ.
 
 ## Order and replies at a glance
 

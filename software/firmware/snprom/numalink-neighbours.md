@@ -374,7 +374,7 @@ slots 37, 96, 98, 4, 64, 82, 100, 86, 93 with it.
 | # | Call | Accesses at the stand-in | What it needs back | Grade |
 |---|---|---|---|---|
 | 1 | slot 36 `0xffa96180` | `0xffa964e0(obj, 2, 50)` (the `SH_GC_SRC_CTRL` write of the SHub page), write 0 to `1_101c_0000` (`rtc`), slot 34 (`0xffa95c20`, the SHub page's store list), read `1_2000_0000` and `1_1006_0580` (`SHUB_ID`), write `1_2000_0000` OR-ed with `0x3f1` (`SHUB_ID` bits 31:28 below 3) or `0x3b03f7`, then `0xffa97960(nasid)`: read `SHUB_ID`, six permission writes (`1_1006_0000`, `0400`, `0180`, `0380`, `0480`, `0100`) | nothing tested. The mask in the permission writes comes from the node table of block A in A's RAM, so it depends on whether A has put the stand-in's NASID in it (not read) | established (accesses); unknown (mask value) |
-| 2 | slot 95 `0xffa1ef70` to `0xffa1f430` | NASID differs from A's, so the remote branch: `0xffa8fb80` reads `SCRATCH2` `1_101d_0100` (the offset comes from slot 78) in the `0x8_0000_0000` form and writes it back with bits 41:39 set to 7; then `0xffa8f960` runs the node-object body `0xffa8b5d0` with `obj` as the node and the record in A's RAM. That body is the one in the SHub page's slot 95 table: the UART step is taken because bits 41:39 now read 7 (poll the line status at `0xf_fed4_0028 \| nasid << 38` until bit 6 is set, 100 ms limit, then the eight line-control writes), the lock on `1_5003_1540` bit 6 (slot 71 via `1_101d_0188` and `1_101d_0180`) and its release, the `SCRATCH2` read, clear bits 41:39, increment bits 49:42, write bit 63 clear, and the read-backs. Last, an L1 request `0x100b` goes out from A's own channel, not from the stand-in | `SCRATCH2` must read back what was written (bits 41:39 = 7); the UART line status must read with bit 6 set within 100 ms; `1_101d_0188` bit 0 clear | established (branch, accesses); inferred (that the UART steps are the SHub page's rows 3 and 4: same code, remote NASID; that the `0x100b` request is A's own, its argument being A's slice record) |
+| 2 | slot 95 `0xffa1ef70` to `0xffa1f430` | NASID differs from A's, so the remote branch: `0xffa8fb80` reads `SCRATCH2` `1_101d_0100` (the offset comes from slot 78) in the `0x8_0000_0000` form and writes it back with bits 41:39 set to 7; then `0xffa8f960` runs the node-object body `0xffa8b5d0` with `obj` as the node and the record in A's RAM. That body is the one in the SHub page's slot 95 table: the UART step is taken because bits 41:39 now read 7 (poll the line status at `0xf_fed4_0028 \| nasid << 38` until bit 6 is set, 100 ms limit, then the eight line-control writes), the lock on `1_5003_1540` bit 6 (slot 71 via `1_101d_0188` and `1_101d_0180`) and its release, the `SCRATCH2` read, clear bits 41:39, increment bits 49:42, write bit 63 clear, and the read-backs. Last, the `0x100b` PROM-version request goes out over the stand-in's UART (`0xffa90e60` on the object just initialised for the stand-in: see [the remote L1 section](#requests-to-a-remote-nodes-l1-and-what-a-stub-l1-must-answer)) | `SCRATCH2` must read back what was written (bits 41:39 = 7); the UART line status must read with bit 6 set within 100 ms; `1_101d_0188` bit 0 clear | established (branch, accesses); inferred (that the UART steps are the SHub page's rows 3 and 4: same code, remote NASID; that the `0x100b` argument is A's slice record) |
 | 3 | slot 85 `0xffa23850` | `0xffa2bd60`, the two error lists, then `0xffa23a20(obj, local)`; per slice `i` whose bit `0x1a + i` is set in A's local `cpu_bits`: write `SH_LOCAL_INT0/1_CONFIG`, write `SH_INT_NODE_ID_CONFIG` `1_1000_0300` = A's NASID or `0x800` (the stand-in is not the local node), write the enables `0x7ef`; one read of `1_1001_0000` (`SH_EVENT_OCCURRED`) whose `& 0x7ef` selects error-list clears | storage; `SH_EVENT_OCCURRED` 0 skips the clears | established (same constants as the SHub page rows, remote NASID) |
 | 4 | slot 97 `0xffa6a100` | with memory flag 0, on the stand-in's NASID and whatever the DIMM word holds: `0xffa733d0` (`1_0003_0000` read-modify-write, `1_0005_0000` write), `0xffa78100` (DIMM discovery `0xffa77bb0`, controller programming, DRAM initialisation commands), `0xffb94670`, `0xffb94680`, `0xffa6f000` (the test driver), `0xffa788b0` (read `SH_JNR_DIMM_CFG` `1_0001_0010`) and `0xffa7c6d0` while the debug-word bit 8 is clear; `0xffa782c0` and `0xffa73590` only if `0xffa788b0` is non-zero. A zero result (every bank byte's density bits 2:0 equal 7) is "no memory": `0xffa0afd0(obj)` sets bit 58 of the stand-in's `SCRATCH1` through slots 45 and 46 (vector). The DIMM word is the PROM's own output: discovery writes it from SPD answers, which it requests through the node's L1 channel (`0xffa7fcb0(nasid)`, a node record built from the entry, so by inference the stand-in's UART); no answer for a bank gives density 7 on the SHub page's evidence (local node) | the registers of the SHub page's slot 97 table and [memory-init.md](../../../devices/shub/memory-init.md) as plain storage at the stand-in's NASID, plus L1 replies over the stand-in's UART (no DIMM in any slot) or a tolerable timeout (its length not read) | established (order, test, no-memory path); inferred (the L1 channel is the stand-in's UART); unknown (remote behaviour of discovery, timeouts) |
 | 5 | slots 45, 46 | vector read of `SCRATCH1` `1_101d_0080`, write back with bits 57 and 40 set (so the stand-in's word ends with at least bits 40, 56 (the latch) and 57 set, and bit 58 when memory-less) | the read result is not tested | established |
@@ -469,7 +469,8 @@ not hardware) went past the rows above. Each item says what in the image confirm
   requests on that channel at this point are most likely the sixteen `0x0006` DIMM reads of the remote memory discovery
   (inferred from the slot 97 row; the run's log does not name the request): 16 failures, about 3.3 s each, and then the
   node is memory-less (`SCRATCH1` bit 58). Why the run's timeout did not end the loop is a model question: the count comes
-  from A's RTC and the period field above. Grades: established (the loop, the polled registers and the limit); inferred (which request).
+  from A's RTC and the period field above. Grades: established (the loop, the polled registers and the limit); the requests that can be waiting, the lock bit (bit 6) and
+  the way the wait can fail to end are read in [the remote L1 section](#requests-to-a-remote-nodes-l1-and-what-a-stub-l1-must-answer).
 - **`0x1_5003_13f0` writes.** A's own `0x1_5003_13f0` and `0x1_5003_13d0` are zeroed at `0xffa48510` to `0xffa48550` (documented
   in [prom-reset.md](../../../devices/shub/prom-reset.md)) and written again with the sense bit by `0xffa42dc0` once per tree
   barrier call on the first slice (the no-child case of the table in the barrier section, both words). The run logged
@@ -522,6 +523,114 @@ With a non-zero route the same two routines send a vector request and mask the a
 
 A router model therefore needs: `SCRATCH0` 0, lock free, `GLOBAL_PARM0` bits 23:16 zero, `PROTECTION_CONFIG` zero, port `+0x2200` bit 0 clear, and plain storage for every other register it writes; it does not need any other reset value. The reset values themselves stay **unknown** until a capture or the router's own documentation settles them (route: the router's register description in a published SGI router guide, or a read of a router at power-up with the owner's approval).
 
+## Requests to a remote node's L1, and what a stub L1 must answer
+
+Read 2026-11-22 in the SAL 5.04 SHub 1 image: Ghidra decompiles of every routine named, the instruction listing for the
+branch predicates and constants. Nothing was run. This section settles what the emulator-run note above left inferred (which
+requests the receive wait serves, how long it lasts, what the PROM does with no answer) and gives the contract for a stub L1
+behind the stand-in's UART. It covers the passive stand-in that A's PROM drives; a second node running its own PROM asks its own L1
+(the section above). The L1 side of each reply is in sysco `software/firmware/l1/sn2-remote-node-replies-1.62.1.md`.
+Grades: established is the PROM's code read in full; what real hardware does stays inferred. This section has not yet had
+an independent review.
+
+### Which object carries a remote request (established)
+
+- Slot 95's body `0xffa1f430`, remote branch, takes the slice's scratch controller object (the pointer at `+0x18` of the
+  per-slice record whose address is at `0x1000000 + (slice + 2) * 8`; the local node's own object is the pointer at `+0x188` of the same record),
+  runs `0xffa8fb80` (the `SCRATCH2` read-modify-write of the table above), then `0xffa8f960` = `0xffa8b5d0`, which clears the
+  `0xeb8`-byte object, copies the stand-in's entry into it (so the halfword at `+0` is the stand-in's NASID) and finishes by
+  setting the "display on" flag (bit 6 of the flag word at `+0x50`). It then calls `0xffa90e60` on that object.
+  **So the `0x100b` of that row goes to the stand-in's L1, not to A's.** Every register access of the send, the receive and the lock
+  uses `NASID << 38` of that object.
+- The DIMM reads (`0xffa7bd60`) use this same scratch object directly when the NASID is not A's. The identity wrappers
+  (`0xffa80210` to `0xffa80580`) go through `0xffa7fcb0(nasid)`: a node whose `SCRATCH1` reads as memory-less (`0xffa99b80`: bit 58
+  set, or bit 39 set with bit 57 clear, which is the word after the claim and the latch) or whose RAM pointer is empty
+  takes the pointer in `[[0x1000040] + 0x108][nasid]`, and while that is empty the scratch object, re-initialised for the NASID
+  if it holds another one.
+- **After slot 81 a memory-less remote node has no usable channel.** Slot 81 stores a new object for it in A's RAM
+  (`0xffa8f9c0`, flag bit 5 clear) and `0xffa7fcb0` then returns that object. `0xffa819c0`, the routine that opens a request slot,
+  only opens one on the slice's own object (`+0x188`), the slice's scratch object (`+0x18`), or an object with flag bit 5 set (the
+  router mailbox); anything else returns -30 without sending. So the L1 traffic to a memory-less stand-in is the set below,
+  all before slot 81; later identity and EEPROM requests for it fail inside the PROM and put nothing on the UART. (Established
+  for `0xffa819c0` and `0xffa8f9c0`; whether the later callers of the wrappers meet it in every case was not traced.)
+
+### The requests, in the order they are reached
+
+Frame, destination word `0x0ffff006` (`0x4ffff006` only on the I/O board path), header byte `5 + slice` of the sending processor and
+the reply rules are those of [l1-requests.md](l1-requests.md#conventions-used-below). Reply header: `0x20` plus that same
+index. "Cost if silent" is one wait (below) plus the failure tail.
+
+| # | Request | Sent from | Arguments | Reply the PROM accepts | L1 handler (ARM L1 1.62.1) | Cost if silent | Grade |
+|---|---|---|---|---|---|---|---|
+| 1 | `0x100b` PROM version | slot 95, `0xffa90e60` | ints 1 and the two PROM version bytes (count byte 3) | none: the real L1 sends no frame; a status 0, count 0 frame is accepted (`0xffa82270` with no arguments) | `0xcb474` | 3.0 s + tail | established (PROM, L1 silence per sysco) |
+| 2 | `0x0006` DIMM SPD, 16 times | slot 97, `0xffa78100` > `0xffa77bb0` > `0xffa7bd60` > `0xffa85470` > `0xffa84680` > `0xffa843f0` | device id, 4, 0, 48; ids bank-major: 8,16,9,17 (bank 0), 10,18,11,19, 12,20,13,21, 14,22,15,23 | status 0, count 2: int (bytes left), raw block of 48 SPD bytes; any negative status or other count marks the slot empty, -107 included | `0xc9658` | 3.0 s + tail each | established |
+| 3 | `0x0003` rack, bay, type | after each bank's four reads, `0xffa76290` > `0xffa80210` > `0xffa7d510` > `0xffa7d1f0` > `0xffa7ca10`; also `0xffa6f000` and the name formatter `0xffaac4b0`; while the answer is not cached | none | status 0, count 2: int `rack << 6 \| bay`, int type character (upper case is lowered by the PROM) | `0xc8bb8` | 3.0 s + tail, not cached | established |
+| 4 | `0x000e` slab | `0xffa76290` > `0xffa802f0` > `0xffa7d950` > `0xffa7ce90`, once per bank until it succeeds; also `0xffa7d510` for the type letters `l`, `b`, `{`, `f` (the fold to `c` when the slab is 0 or -1) | none | status 0, count 1: int slab (255 is read as failure) | `0xca214` | 3.0 s + tail, not cached | established |
+| 5 | `0x0013` slot | `0xffa6f000` > `0xffaac4b0` > `0xffa80270` > `0xffa7d760` > `0xffa7cbe0` | none | status 0, count 2: ints (slot, type character) | `0xca2f8` | 3.0 s + tail, not cached | established (reached); order against 3 and 4 unknown |
+| 6 | `0x0006` id 1, selector 2: node board area | only for a type letter `o` (EEPROM read repeated up to 10 times in `0xffa7d1f0`); slot 99's board builder `0xffaa1ea0` > `0xffaa1310` > `0xffaeccd0` > `0xffa84fd0`; I/O discovery `0xffaf1ee0` | 1, 2, 0, 64, then offsets 64, 128 ... until bytes-left is 0 | board area as in [the I/O request section](l1-requests.md#request-0x0006-in-io-discovery); any negative status prints "Could not retrieve EEPROM info" and goes on | `0xc9658` | 3.0 s + tail | established for the sites; for a memory-less stand-in not sent (after slot 81, see above); for one with memory the object in its RAM was not read |
+| 7 | `0x0010` processor presence | slot 99, `0xffaa1ea0` > `0xffae8660` > `0xffae8250` | none | status 0 (bytes 0 to 3), then from byte 5: int nodes (at most 4), int CPUs (at most 16), then per node int presence mask, int enable mask; the count byte 4 is not tested | `0xca5f4` | 3.0 s + tail | established (parser); L1 layout inferred |
+
+Rows 1 to 5 are the whole L1 traffic a memory-less stand-in sees on the paths read (rows 6 and 7 are issued after slot 81, where the
+channel is gone): a stub that answers them at once puts no 3 s wait in A's boot. The display request `0x1005` is not sent for the stand-in in this
+sequence: the failure routine would send it, but the request slot it needs is the one still held by the failing request, so `0xffa819c0`
+refuses (established: slot busy, flag bit 2 clear).
+
+**What the 16 DIMM reads give the PROM.** "No DIMM": status -104 (`ff ff ff 98`), count 0, six payload bytes, in every one of the 16
+(the L1 answers the ids 14, 15, 22, 23 and every unpopulated slot that way). The PROM then has bank mask 0 in all four banks, every bank
+density bits 7, `0xffa788b0` returns 0, slot 97 calls `0xffa0afd0`, which reads the stand-in's `SCRATCH1` through the vector
+read and writes it back with bit 58 set (`& 0xfbff...` then `| 0x0400000000000000`), and skips `0xffa782c0` and `0xffa73590`.
+Slot 5 then repeats the zero test, sets flag `0x2000000` in A's entry and calls `0xffa0afd0` again. Nothing is fatal and
+nothing needs a retry: the memory-less path is the same code as a node with no DIMMs. (Established.) With DIMMs present, an
+SPD set that leaves a hole between banks, or mixes `tRCD` between DIMMs, ends in `0xffa764a0`, `0xffa7b410` and the node-die routine with the
+stand-in's NASID, which does not park A (the park needs the local node; see below); the boards of a stand-in must still be
+filled contiguously because the bank mask check prints the fatal text first.
+
+### Time, retries, failure (established)
+
+- **Wait.** `0xffa82c10` = `0xffa82a10` with 3,000,000, polled by `0xffa82730`: it calls the receiver `0xffa87830` and compares `0xffa0da70`
+  (microseconds) against the value taken after the send. `0xffa0da70` is A's own RTC at `0x1_101c_0000` times a period in
+  nanoseconds, `((0x1_1006_0280 >> 4) & 0x3ff) * 10 + 10` (`0xffa0da00`; 50 ns after the slot-36 write of 4 into that field), divided by
+  1000. **If A's RTC does not advance, no wait ever ends.** That is the one reason found in the code for a receive wait that
+  outlasts its 3 s (inferred as the cause of the run noted above: the run's RTC behaviour was not looked at).
+- **Retries.** None for the wait: one send, one wait. The send alone is retried when it was only partly accepted (status -26): up to 50
+  times, 500 us apart, then -26. The DIMM caller `0xffa7bd60` does not repeat a failed slot, and the identity callers repeat only on
+  a later call (the answer is cached only when it succeeded: `0xffa81630`). The one loop is the type `o` EEPROM read, 10 tries.
+- **On expiry** (`-24`): `0xffa82a10` calls the die routine `0xffad2cb0(nasid, 0x8d)`. For the stand-in it (a) would send the display
+  text `<name>:ERR 8d` (refused, as above), clears the display flag, (b) for k = 0 to 3 writes `(old << 8) | 0x8d` to `0x1_5003_1500 + 16 * k` of
+  the stand-in and two 16-bit stores of the code (with bits 5 and 6 added on one of them) into its junk-bus windows `0xf_fed0_0000` to `0xf_fed3_0000` (`0xffa0e0d0`), (c) calls a per-slice method
+  (`0xffa99800`, effect not read) four times, (d) sets bit 39 of its `SCRATCH1` `0x1_101d_0080` (`0xffa0aee0`), (e) writes `0x1_0001_0000_0000` to its
+  `0x1_2000_0000`, clears bits 29:26 of its `0x1_5003_1550`, and (f) waits 300,000 us (`0xffa9fc70`). It returns; only for A's own NASID
+  and slice does it end in the park. Total per silent request about 3.3 s of A's RTC. (Bit 39 of `SCRATCH1` is what makes the stand-in
+  read as memory-less afterwards: `0xffa99b80`.)
+- **Receive path.** `0xffa87830` reads the stand-in's `SCRATCH2` at the top of every call (parse state in bits 41:39, count in 49:42), takes
+  the UART lock, reads line status `+0x28` and the byte at `+0x00` until no byte is ready, then drops the lock. It returns -24 only
+  through the wait above.
+
+### The lock the spin takes (established)
+
+Each receiver call starts with `0xffa8d630` > class method `+0x238` (`0xffa93cd0`) and ends with `+0x240` (`0xffa93d80`). **The bit is
+bit 6** of the stand-in's `0x1_5003_1540`, reached in the global window (`0x8000000950031540 | nasid << 38`; `0xffa0f1a0(obj, 6, 10,000,000)`
+through class slot `+0xd8`, release `0xffa0f650` through slot `+0xf0`). Acquire: read the word and spin while bit 6 is set (the first read at `0xffa0f240`; limit 10 s,
+after which `0xffa93cd0` clears the bit by force and retries); take the spin lock by reading `0x1_101d_0188` until bit 0 reads 0 (limit 1 s); read the word again
+(the second read, `0xffa0f300`); if bit 6 is still clear write it set; write 0 to `0x1_101d_0180`; try again if it was set. Release:
+the same spin lock, read, write with bit 6 cleared, write 0 to `0x1_101d_0180`. The bits 17 (the latch) and 2 of the same word belong to other callers.
+Plain storage for `0x1_5003_1540`, a read of `0x1_101d_0188` that returns 0 and a write sink at `0x1_101d_0180` satisfy all of it.
+
+### Contract for a stub L1 behind the stand-in's UART
+
+| Row | What the stub does | Grade |
+|---|---|---|
+| UART | 16550-style registers at `0xf_fed4_0000 | nasid << 38`, 8-byte stride: line status `+0x28` bit 6 set within 100 ms of reset and bit 5 set (transmit empty), bit 0 set only while a reply byte is waiting; data `+0x00`; the PROM's divisor, line-control, modem, FIFO and scratch writes need only storage | established (PROM side) |
+| Frames | HDLC-style byte stuffing, FCS-16 residue `0xf0b8`, payload at most 127 bytes ([l1-requests.md](l1-requests.md#conventions-used-below)); answer each complete request frame with one frame whose first payload byte is `0x20 | n`, n being the request's header byte | established |
+| Request 1, `0x100b` | send nothing (what the real L1 does), accepting a 3.3 s cost in A's RTC; or answer `20+n 00 00 00 00 00` (status 0, count 0) to skip it | established (both accepted by the PROM) |
+| Rows 3, 4, 5 | answer at once with the node's identity words: they are asked repeatedly until one succeeds, and the answer is cached afterwards. A negative status or wrong count fails the request (-33 for a wrong count, -32 for a wrong tag) | established |
+| Row 2 | "No DIMM": six bytes `20+n ff ff ff 98 00`, sixteen times, any time. An SPD image: status 0, count 2, int `256 - 48 = 208` and a 48-byte raw block with a valid checksum in byte 63 (sysco), equal `tRCD` across DIMMs, banks filled in order | established |
+| Rows 6, 7 | not sent for a memory-less stand-in; if a memory-bearing model sends them, `0x0006` id 1 selector 2 gets a board area or status -104, and `0x0010` the layout above | established (what the PROM accepts); L1 side inferred |
+| Timing | the PROM's RTC must run: A's `0x1_101c_0000` and the period field of `0x1_1006_0280`, or the 3 s waits never end | established (code); inferred as the cause of the run above |
+| Registers on the stand-in | `SCRATCH2` and `SCRATCH1` read back what was written; `0x1_5003_1540` plain storage; `0x1_101d_0188` reads bit 0 clear; `0x1_101d_0180` write sink; the die-routine writes of row (b) to (e) above need storage | established |
+| Unexpected | a request frame the PROM never sends (any code outside rows 1 to 7, or a second `0x100b`) is a finding, not something to answer | inferred |
+
+
 ## Unknown, and the route that would settle it
 
 - What reply types 4 and 5 are, and whether a route error gives one of them: the image only groups them with link errors
@@ -535,8 +644,7 @@ A router model therefore needs: `SCRATCH0` 0, lock free, `GLOBAL_PARM0` bits 23:
 - What `0` and `4` select in a node's direction tables, and the meaning of `POSITION`: route: the node table-write
   routines (`0xffa5e880`, `0xffa5e510`) read against the SHub 1 header names, and the Linux `sn_hwperf` heap.
 - What slots 5 and 6 leave unread on a claimed stand-in ([the section above](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk)):
-  the remote behaviour of DIMM discovery over the stand-in's UART and the timeout when the L1 does not answer (`0xffa7fcb0`,
-  `0xffa77bb0`, `0xffa7bd60`), the memory-present bodies of slots 3, 81 and 99, slot 91's I/O set-up, the EFI-store copy
+  the memory-present bodies of slots 3, 81 and 99, slot 91's I/O set-up, the EFI-store copy
   `0xffaf6640`, the builders `0xffaa1a10`, `0xffaa1930`, `0xffaa5450`, `0xffaa2760` and the three closing routines of the
   board walk (`0xffaeedf0`, `0xffaef420`, `0xffaefa20`), and the mask `0xffa97960` writes for the stand-in's NASID. Route:
   read those bodies with the stand-in's NASID; a run with the stand-in under the interpreter would show model behaviour only,
