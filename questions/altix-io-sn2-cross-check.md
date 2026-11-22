@@ -42,9 +42,9 @@ PCI-RT (IOC4 alone). So an IO10 carries an IOC4: the IO10 serial port and the re
 IO9 is the board the Origin 350 also carries (the IOC4 page records its use there). Whether the IO10's IOC4 runs behind a PIC or a
 TIOCP follows the bridge question above and is unknown.
 
-Not read for I/O topology: Altix 3000 (007-4579-001), 3700 Bx2 (007-4377-002), 330 (007-4790-001), 4700 (007-4823-001) and
-the IX-brick and PX-brick pages ([ixbrick](../platforms/bricks/ixbrick.md), [pxbrick](../platforms/bricks/pxbrick.md) already
-tie the PIC to those bricks from the 3000 and Bx2 guides). A search of the Linux mail archive for TIOCP and Altix 350 returned nothing.
+Not read for I/O topology: 3700 Bx2 (007-4377-002), 330 (007-4790-001), 4700 (007-4823-001) and the PX-brick chapter of the
+3000 guide. The IX-brick wiring of the 3000 guide is now read ([Altix 3000 page](../platforms/sn2/altix-3000.md#ix-brick-wiring)).
+A search of the Linux mail archive for TIOCP and Altix 350 returned nothing.
 Next: the chapter on the base compute module in the 350 guide, and the 4700 guide's blade I/O sections.
 
 ## TIO chiplet field
@@ -70,3 +70,7 @@ larger than the constants say, port 2 maps differently, or the allocation is wro
 ## TIOCA reset values and register access
 
 [missing source] No TIOCA register has a known reset value, and the direction of every register the provider does not touch (all but eight) is unknown. The header, provider and AGP driver (Linux v5.3, and the header at v2.6.12, v2.6.18 and v2.6.26, which differs from v5.3 only in integer type names at v2.6.12) state neither. Routes tried: the three source files and `sgi-agp.c`. Next: the SNPROM images' TIOCA setup code in Ghidra for registers firmware relies on before its first write, or the TIO AEGIS Programmers' Reference.
+
+## IX-brick Port F and the XIO 10 cable
+
+[missing source] The IX-brick drawings label each PIC's PCI-X side `Port F` and do not say what the letter means. The drawing gives Port F one line per bus, which makes it the PCI-X side that carries both of a PIC's buses; the reading is inferred. Which crosstown box on the drawing is XIO 10 is also inferred from the label match (the upper box to Port A). Routes tried: the 3000 guide's IX chapter (figures 6-2, 6-5, 6-6), the IX addendum (figure 2), the PX addendum's PIC drawing (p.3) and the driver guide's figures 2-3 and 5-1. Next: a hardware graph or `hinv` capture from an IX-brick with one C-brick cabled to XIO 11 alone (it would show which widget answers under each slab), or a published PIC specification for the letter.

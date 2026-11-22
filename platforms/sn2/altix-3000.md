@@ -7,9 +7,10 @@ holds no register facts.
 
 Sources: SGI, *SGI Altix 3000 User's Guide*, `007-4579-001` (2003), printed pages; SGI, *Linux Device Driver
 Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006` (July 2005); Linux v5.3. Grades: see [the SN2
-README](README.md). Cited pages of 007-4579-001: 33, 77, 79, 81, 87, 99, 101, 102, 107, 108, 135 and 140 (the R-brick chapter's
-overview and rear panel). Cited pages of 007-4520-006: 13, 16 to 19. Page numbers are printed; the PDF index is 24
-pages ahead for 007-4579-001 and 22 for 007-4520-006. The rack chapter and the rest of the brick chapters were not read.
+README](README.md). Cited pages of 007-4579-001: 33, 77, 79, 81, 87, 99, 101, 102, 105, 107, 108, 112 to 120, 123, 135 and 140
+(the R-brick chapter's overview and rear panel; the IX-brick chapter in the wiring section). Cited pages of 007-4520-006: 13,
+16 to 19, 38, 52, 54 and 55. Page numbers are printed; the PDF index is 24 pages ahead for 007-4579-001 and 22 for 007-4520-006.
+The rack chapter, the PX-brick chapter and the other brick chapters were not read.
 
 ## Established (007-4579-001)
 
@@ -49,6 +50,59 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 | Node chip, two per C-brick: "Super-Bedrock ASIC" (user guide) or SHub (driver guide) | role established by both guides; the one-part identity inferred. Generation: SHub 1 (see [SHub generation](#shub-generation)); the exact stepping is unknown |
 | PIC on the IX- and PX-brick | established: IX-brick is a PX-brick plus the base I/O card (IOC4, Ethernet chipset, SCSI), three host bridge adapters, six PCI-X buses (007-4520-006 pp.18 to 19). The driver guide's Figure 2-3 (007-4520-006 p.19) labels the adapters "PCI-X Host Bridge Adapter"; the name PIC comes from the IX-brick and PX-brick addenda, which label them "PIC ASIC" (007-4604-001 p.4, 007-4605-001 p.3) |
 | Router (8-port) | established as a part in the R-brick (p.81, p.87). The guide does not name its family, so neither the NUMAlink 3 nor the NUMAlink 4 register map is established for this brick |
+
+## IX-brick wiring
+
+Read 2026-11-21 from the IX-brick chapter of 007-4579-001 (printed pp.112 to 120), the IX addendum 007-4604-001 (pp.2, 4,
+10) and the driver guide's figures (007-4520-006 pp.18, 19, 52, 54, 55). Figures were read from rendered pages and their
+labels checked against the text layer. The same PIC drawing appears in the PX addendum (007-4605-001 p.3). These are
+Altix 3000 IX-bricks; the Origin 3000 IX chapter is not used.
+
+- **Three PICs (established).** "Three PIC (PCI interface chip) ASICs are key components of the IX-brick architecture"
+  (007-4579-001 p.113; 007-4604-001 p.2). Each PIC drives two PCI-X buses.
+- **The middle PIC faces the C-brick (established as drawn).** It is widget 15 and drives buses 3 and 4. Its Port A and
+  Port B go to the two "Crosstown2 XIO port" boxes (007-4579-001 Figure 6-2, p.113; 007-4604-001 Figure 2, p.4). Driver
+  Figure 5-1 (p.52) puts "Widget 15" in the middle of the rear panel.
+- **The other two PICs hang off the middle one (established as drawn).** Middle Port D joins top PIC Port D (widget 13,
+  buses 5 and 6). Middle Port C joins bottom PIC Port D (widget 12, buses 1 and 2). Both links are double-headed.
+- **Port F (drawing established; meaning inferred).** Each PIC has one Port F, and the drawing gives it one line to each of
+  its two buses, each bus feeding its two slots. Port F is therefore the PCI-X side that carries both of a PIC's buses
+  (inferred from the drawing and driver p.55, which says each host bridge adapter has two PCI-X buses). The letter F is
+  not defined in any held text.
+- **XIO 10 is Node 0, Port A (established as drawn).** Driver Figure 5-1 (p.52) links the C-brick's "NODE 0 XIO (II)" to
+  "XIO link to Port 'A'", with "XIO 10" over "XIO 'A'". Node 0 is slab 0 (driver p.54 and p.55 example). XIO 10 is the
+  left rear connector, between bus 2 and bus 3 (007-4579-001 Figure 6-6, p.120).
+- **XIO 11 is Node 1, Port B (established as drawn).** Same figure: "NODE 1 XIO (II)" to "XIO link to Port 'B'", with "XIO 11"
+  over "XIO 'B'". It is the right rear connector, between bus 4 and bus 5.
+- **Which crosstown box is XIO 10 (inferred).** The drawing puts the upper box on Port A and the lower on Port B. The
+  label match then makes the upper box XIO 10. No held text names the boxes.
+- **Rear position is not wiring.** Connector placement shows where the cable enters, not which PIC it reaches. The
+  drawings above are the only held source for the PIC each connector reaches.
+- **Widget numbers (established as drawn).** The three PICs are host bridge adapters 12, 13 and 15, "stamped at the back"
+  of the brick (007-4520-006 p.54). Figure 2-3 (p.19) and Figure 5-1 (p.52) place widget 12 on buses 1 and 2, widget 15 on
+  buses 3 and 4, and widget 13 on buses 5 and 6. The IO9 base I/O card is behind widget 12, not 15.
+
+| PIC (widget) | Bus | Slots | Speed | Contents |
+|---|---|---|---|---|
+| Bottom (12) | 1 | Slot 1: IO9 base I/O card. Slot 2: serial daughtercard slot, no bus connection | 66 MHz PCI (the IO9 is a 66 MHz PCI card, 007-4520-006 p.38) | IO9: IOC4, Ethernet, SCSI, DVD-ROM |
+| Bottom (12) | 2 | Slots 1 and 2 | 133 MHz (driver Figure 2-3, p.19) | Cards |
+| Middle (15) | 3 | Slots 1 and 2 | 133 MHz | Cards |
+| Middle (15) | 4 | Slots 1 and 2 | 133 MHz | Cards |
+| Top (13) | 5 | Slots 1 and 2 | 133 MHz | Cards |
+| Top (13) | 6 | Slots 1 and 2 | 133 MHz | Slot 2: four-port USB card (preinstalled on Onyx 3000; optional on Origin 3000, 007-4604-001 p.2) |
+
+The 133 MHz figures are each bus's capability. The guide says a bus runs at the speed of its slowest card (007-4579-001
+p.120), so the table gives the ceiling, not a measured speed.
+
+- **Base I/O on bus 1, slot 1 (established as drawn, driver Figure 2-3 p.19).** The card is a set of three PCI functions:
+  IOC4 (labelled "Bus 1 Slot 1"), an Ethernet chipset (Broadcom BCM5701 in 007-4579-001 Figure 6-3, p.115; labelled
+  "Bus 1 Slot 3") and a SCSI controller (QLogic in Figure 6-3; labelled "Bus 1 Slot 4"). Reading those labels as PCI
+  device numbers 1, 3 and 4 is inferred. The IOC4 carries the RS-232 ports, PS/2 keyboard and mouse, the real-time
+  jacks, NVRAM and the real-time clock, and an ATA bus to the DVD-ROM (driver p.18; Figure 6-3 p.115). Figure 6-3 also
+  shows an "FPGA ASIC" between the IOC4 and the IDE interface; its role is not stated.
+- **Not settled.** The reason for the letter F; whether the XIO 10 cable reaches Port A by the upper box as drawn (a
+  capture from an IX-brick with one C-brick cabled to XIO 11 alone would settle the hardware graph side); the FPGA's role;
+  and the chip part numbers inside the IO9 (see [the IX-brick page](../bricks/ixbrick.md)).
 
 ## SHub generation
 
@@ -186,3 +240,8 @@ verdict now states that the image-to-chip step is inferred. Fixed a "quoted abov
 section" that is the previous one, and the claim that `0xa00` was newly found (the SHub 2 pages already list it).
 
 Not settled: whether the Bx2 is SHub 1 or 2; the 3000 C-brick's L1 type; the SHub 1 stepping.
+
+### IX-brick wiring (2026-11-21)
+
+Not reviewed. Changed claims: the IX-brick wiring section, the sources line and the open items in the IX-brick page's
+unknowns table that this section now answers. Renewed independent review is needed before these are cleared.
