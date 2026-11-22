@@ -1,6 +1,6 @@
 # SHub 2: register rows a model needs for the PROM and for Linux
 
-For someone building a SHub 2 model. It picks, from [shub2.md](shub2.md), the rows the shipped SHub 2 firmware (snprom 10.54 build 70399, SAL 1.54; the 10.40 build, SAL 1.40, has the same reset path) needs to get from reset to its first console message, and says plainly what is not yet read between there and the `Shell>` prompt. The SHub 2 PROM listing was re-read for this page on 2026-11-22; independent review is pending.
+For someone building a SHub 2 model. It picks, from [shub2.md](shub2.md), the rows the shipped SHub 2 firmware (snprom 10.54 build 70399, SAL 1.54; the 10.40 build, SAL 1.40, has the same reset path) needs to get from reset to its first console message, and, for the stretch from there to the `Shell>` prompt, points to [shub2-to-shell.md](shub2-to-shell.md). The SHub 2 PROM listing was re-read for this page on 2026-11-22; independent review is pending.
 
 **Grades.** *established*: the access (address, width, direction, value) is read in the instruction listing, or a public Linux v5.3 header defines it. *software expectation*: what the code or the Linux driver needs, not a hardware fact. *inferred*: reasoned, reason given. *unknown*: not settled. No SHub 2 manual is held and no hardware read exists, so **no row has an established reset value**; every "must return" below is a software expectation. All offsets are in the local window (`0x2_0000_0000` + offset, bit 63 set), or the global form of [shub2.md section 1](shub2.md#1-address-map) for another node.
 
@@ -28,7 +28,16 @@ Constants the PROM programs (all read in the listing, 10.54): `X_CFG` and `Y_CFG
 
 ## Between the first console message and `Shell>`
 
-**Unknown.** The SHub 2 listing has been read through "Init memory", the memory test start and the directory set-up (progress `0x16` and the "Testing memory" print), and not beyond. What a one-node SHub 2 PROM needs after that (the NUMAlink interface set-up, TIO and PIC discovery, the interrupt registers the second-stage code and the EFI start use, the exit from the memory test) is not read for SHub 2. The SHub 1 pages ([prom-reset.md](prom-reset.md), [interrupts.md](interrupts.md)) are a sibling's behaviour and do not fill any SHub 2 row. Route: continue the same reading from the caller of the memory-test print (`0xff47a970`) to the EFI start, listing every register constant per routine ([the question](../../questions/shub2-reset-open.md)).
+Read for SHub 2 on one node, with no neighbours and no L2: [shub2-to-shell.md](shub2-to-shell.md). Summary of what a model must add to the rows above, each graded there:
+
+- **Memory and directory after the test.** `0x1_00d8` must read back 2 (the credit workaround ends at its first compare), `X_CFG` and `Y_CFG` bit 0 stored, `DIR_CONFIG` stored, the memory engine (`0x2_0080`, `0x2_0088`) finishing with no failure for the zero fill and for the directory-access command the SAL shadow uses, flash reads of the whole PROM image.
+- **Node registers.** Plain storage for SCRATCH1 (`0x101d_0080`), SCRATCH2 (`0x101d_0100`), SCRATCH5, SCRATCH6, the debug word `0x101d_0380`, the 27 interrupt config and enable pairs (`0x1000_0080` to `0x1000_1f00` family), the permission and IPI tables (`0x1006_0000`, `0x1006_0280`, `0x1006_0480`, `0x1006_0c00`), `0x1006_0f00` (node id) writable in its id and sharing fields, and a handful of firmware scratch words at `0x5003_15xx`.
+- **Network interface, one node.** NI port registers `0x5000_0000`, `0x5000_0048` and `0x5000_0010` (plus `0x2000` for port 1) answering "link down"; no vector traffic is generated.
+- **L1.** The ids sent after the memory test and which replies are required; the export-compliance check halts the boot when request `0x0005` fails or returns a firmware revision below 1.50.5.
+- **L2.** Nothing is sent on the boot path.
+- **TIO and bridge.** Only when a TIO is discovered (it is reached through the NUMAlink discovery, so a node with no link up never sees one); the registers read in its initialization are listed in the page.
+
+Still **unknown**: the TIO register bodies beyond that list, every L1 reply beyond the ones the page decodes, NUMAlink with a neighbour, and everything EFI does after the jump (progress `0x48`). The SHub 1 pages ([prom-reset.md](prom-reset.md), [interrupts.md](interrupts.md)) are a sibling's behaviour and fill no SHub 2 row; [the question](../../questions/shub2-reset-open.md) lists what would settle each.
 
 ## Linux (Altix 4700 and 450) after the PROM
 
