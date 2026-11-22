@@ -451,7 +451,7 @@ machine types and `halborg.dll` for the `_mp` ones ([nt-drivers.md](nt-drivers.m
 ### The Windows 2000 builds
 
 Windows 2000 RTM (HAL file version string `5.00.2168.1`, PE time 1999-10-30) and SP4 (`5.00.2195.6655`, PE time 2003-01-15) each carry
-one `halborg.dll` on their install CD (stripped, no symbol file shipped). The two differ in a few strings and one import. Their vector and ISA route tables are byte-identical, and their PCI pin
+one `halborg.dll` on their install CD (stripped, no symbol file shipped). Between RTM and SP4, 14 functions change, one import (`PsGetCurrentProcessId`) is added and the build strings differ; see [hal-builds](hal-builds.md) VW-HAL-DIFF-04. Their vector and ISA route tables are byte-identical, and their PCI pin
 tables have the same pins with different string pointers (the bridge records were not compared). The tables are checked in the
 [subsection below](#windows-2000-hal-tables). Against the NT 4.0 HAL:
 

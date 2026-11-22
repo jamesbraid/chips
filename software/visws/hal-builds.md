@@ -234,7 +234,6 @@ Details and function addresses are in each build page. Summary (VW-HAL-DIFF-01 t
 
 ## Statements this page corrects elsewhere
 
-- [nt-hal.md](nt-hal.md#the-windows-2000-builds): "The two differ in a few strings and one import" understates the RTM to SP4 difference. Between RTM and SP4 (and SP4 beta) 14 functions change and one import (`PsGetCurrentProcessId`) is added; see VW-HAL-DIFF-04. The same section's other claims (vector, ISA and pin tables agree) are confirmed here by value, with the layout notes in VW-HAL-DIFF-07.
 - [nt-hal.md](nt-hal.md#windows-2000-hal-tables), "Findings": "every vector and ISA table is byte-identical, and every pin block has the same pins" between RTM and SP4 is confirmed for all eight ISA tables, four vector tables and eight pin blocks, and extends to RC3 and SP4 beta. The statement that the NT 4.0 and Windows 2000 vectors agree is true for the three shared sets, with NT 4.0 storing 4-byte entries and Windows 2000 8-byte entries.
 - [hal-requirements.md](hal-requirements.md) makes no claim about the Windows 2000 interrupt entry code, so nothing there changes; a Windows 2000 HAL reading that says the NT 4.0 stubs were removed would be wrong (VW-HAL-DIFF-02).
 
