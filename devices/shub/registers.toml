@@ -2,23 +2,23 @@ unit = "shub"
 prefix = "SHUB"
 title = "SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs"
 doc = "SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use. For a register Linux does not define, a register-level grade of established covers the offset, width and direction read in the PROM image; what the register means is graded in its fields and doc, inferred unless stated."
-from = "Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver"
 public_from = ["Linux v5.3 SGI SN2 platform", "SGI Linux 2.4 ia64 SN2", "Linux v4.9 SGI real-time clock driver", "SAL 5.04 PROM"]
 
 [c]
 offset_macro = "bare"
 
 [constants]
-RTC_MASK = { value = 0x7fffffffffffff, grade = "established", doc = "Valid bits of the real-time clock and of each comparator: 55 bits. The mmtimer driver reports 55 as the clock width." }
-RTC_CONFIG_MASK = { value = 0x0ff3ffffffefffff, grade = "established", doc = "Valid bits of an RTC interrupt configuration register (header SH_RTC1_INT_CONFIG_MASK): bits 59:52 and 49:0 except bit 20." }
-RTC_ENABLE_MASK = { value = 1, grade = "established", doc = "Valid bits of an RTC interrupt enable register." }
-PIO_WRITE_STATUS_IDLE = { value = 0x3f00000000000000, grade = "established", doc = "What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero." }
-PIO_WRITE_STATUS_ALIAS_CLEAR = { value = 7, grade = "established", doc = "Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment)." }
-IPI_BASE_VALUE = { value = 0xfee, grade = "established", doc = "Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field (2 MiB, from bit 21), which is 0x1_fdc0_0000 as an address (0xfee << 21; inferred arithmetic). It is not the 0xfee00000 of the kernel's generic interrupt base constant: that equivalence does not follow from the field position. Used with the vector in the idx field." }
-PI_CAM_WAR_VALUE = { value = 0x8000000000000010, grade = "established", doc = "Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources." }
-SHUB_1_1_MAX_REVISION = { value = 2, grade = "established", doc = "Revision field value at or below which the kernel enables its SHub 1.1 workarounds." }
+RTC_MASK = { value = 0x7fffffffffffff, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Valid bits of the real-time clock and of each comparator: 55 bits. The mmtimer driver reports 55 as the clock width." }
+RTC_CONFIG_MASK = { value = 0x0ff3ffffffefffff, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Valid bits of an RTC interrupt configuration register (header SH_RTC1_INT_CONFIG_MASK): bits 59:52 and 49:0 except bit 20." }
+RTC_ENABLE_MASK = { value = 1, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Valid bits of an RTC interrupt enable register." }
+PIO_WRITE_STATUS_IDLE = { value = 0x3f00000000000000, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero." }
+PIO_WRITE_STATUS_ALIAS_CLEAR = { value = 7, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment)." }
+IPI_BASE_VALUE = { value = 0xfee, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field (2 MiB, from bit 21), which is 0x1_fdc0_0000 as an address (0xfee << 21; inferred arithmetic). It is not the 0xfee00000 of the kernel's generic interrupt base constant: that equivalence does not follow from the field position. Used with the vector in the idx field." }
+PI_CAM_WAR_VALUE = { value = 0x8000000000000010, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources." }
+SHUB_1_1_MAX_REVISION = { value = 2, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use", doc = "Revision field value at or below which the kernel enables its SHub 1.1 workarounds." }
 
 [registers.ipi_int]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110000380
 access = "w"
 width = 64
@@ -35,6 +35,7 @@ idx = { bits = [59, 52], grade = "established", doc = "Interrupt vector delivere
 send = { bits = [63, 63], grade = "established", doc = "Sending the message; the header says it generates a pulse." }
 
 [registers.ipi_access]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110060480
 access = "rw"
 width = 64
@@ -43,6 +44,7 @@ reset = "unknown"
 doc = "Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the permission registers here too (see prom-reset.md); the header gives INIT 0xffffffffffffffff and a 64-bit ACCESS_BITS field."
 
 [registers.event_occurred]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110010000
 access = "rw"
 width = 64
@@ -65,6 +67,7 @@ ii_int0 = { bits = [29, 29], grade = "established", doc = "Pending I/O interface
 ii_int1 = { bits = [30, 30], grade = "established", doc = "Pending I/O interface interrupt 1." }
 
 [registers.event_occurred_alias]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110010008
 access = "w"
 width = 64
@@ -73,6 +76,7 @@ reset = "unknown"
 doc = "Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns."
 
 [registers.shub_id]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110060580
 access = "rw"
 width = 64
@@ -89,6 +93,7 @@ revision = { bits = [31, 28], grade = "established", doc = "Chip revision. The k
 nodes_per_bit = { bits = [52, 48], grade = "established", from = "Linux v5.3 SAL header (position); SAL 5.04 PROM site 0xffa95a30 (written with 1, 2, 4, 8 or 16)", doc = "Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback." }
 
 [registers.rtc]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x1101c0000
 access = "rw"
 width = 64
@@ -100,6 +105,7 @@ doc = "Real-time clock: a 55-bit counter, read by the kernel as its clock source
 counter = { bits = [54, 0], grade = "established" }
 
 [registers.rtc_int_config]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110001480
 count = 3
 stride = 0x100
@@ -119,6 +125,7 @@ base = { bits = [49, 21], grade = "established" }
 idx = { bits = [59, 52], grade = "established" }
 
 [registers.rtc_int_enable]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x110001500
 count = 3
 stride = 0x100
@@ -134,6 +141,7 @@ doc = "Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver
 enable = { bits = [0, 0], grade = "established" }
 
 [registers.int_cmp]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x1101b0080
 count = 3
 stride = 0x80
@@ -149,6 +157,7 @@ doc = "Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, 
 compare = { bits = [54, 0], grade = "established" }
 
 [registers.pio_write_status]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x120070200
 count = 2
 stride = 0x80
@@ -167,6 +176,7 @@ writes_ok = { bits = [63, 63], grade = "established", from = "SGI Linux 2.4 ia64
 pending_write_count = { bits = [61, 56], grade = "established", doc = "Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason." }
 
 [registers.pio_write_status_alias]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x120070208
 count = 2
 stride = 0x80
@@ -177,6 +187,7 @@ reset = "unknown"
 doc = "Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2."
 
 [registers.pi_cam_control]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x120050300
 access = "w"
 width = 64
@@ -185,6 +196,7 @@ reset = "unknown"
 doc = "Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown."
 
 [registers.ptc]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x1101a0000
 count = 2
 stride = 0x80
@@ -201,6 +213,7 @@ rid = { bits = [62, 8], grade = "inferred", doc = "Region identifier and region 
 start = { bits = [63, 63], grade = "established", doc = "Start. Set in the first write; entry 1 has its own start bit at the same position." }
 
 [registers.md_dqlp_dir_privilege_vector]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x100030300
 access = "rw"
 width = 64
@@ -209,6 +222,7 @@ reset = "unknown"
 doc = "Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown."
 
 [registers.md_dqrp_dir_privilege_vector]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x100050300
 access = "rw"
 width = 64
@@ -217,6 +231,7 @@ reset = "unknown"
 doc = "Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names."
 
 [registers.junk_bus_led]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x7fed00000
 count = 4
 stride = 0x10000

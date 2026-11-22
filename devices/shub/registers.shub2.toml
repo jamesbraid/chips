@@ -1,6 +1,5 @@
-# SHub 2 overlay on devices/shub/registers.toml. Offsets are the SH2_ names of
-# the SGI Linux ia64 header shub_mmr.h (v5.3); registers the header gives no SH2_
-# name for are removed rather than assumed.
+# SHub 2 overlay on devices/shub/registers.toml. Rows the Linux v5.3 header defines
+# (SH2_ names) cite it; the others cite the SHub 2 PROM, which publication strips.
 
 remove = ["registers.ii_int", "registers.ii_int_config", "registers.ii_int_enable", "registers.event_overflow", "registers.event_overflow_alias", "registers.ipi_int_enable", "registers.int_node_id_config", "registers.local_int_config", "registers.local_int_enable", "registers.proc_err_int_config", "registers.proc_err_int_enable", "registers.proc_adv_int_config", "registers.proc_adv_int_enable", "registers.profile_int_config", "registers.profile_int_enable", "registers.rtc0_int_config", "registers.rtc0_int_enable", "registers.int_cmpa", "registers.ptc_parms",
   "registers.shub_id", "registers.pi_cam_control", "registers.ptc", "registers.md_dqlp_dir_privilege_vector", "registers.md_dqrp_dir_privilege_vector",
@@ -16,52 +15,63 @@ remove = ["registers.ii_int", "registers.ii_int_config", "registers.ii_int_enabl
 unit = "shub2"
 prefix = "SHUB2"
 title = "SHub 2 registers outside the I/O interface, differences from SHub 1"
-doc = "SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses."
+doc = "SHub 2 offsets the SGI Linux ia64 platform header defines (SH2_ names) cite it; the rest are read from the SHub 2 PROM and cite no published source. Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses."
 
 [patch."registers.ipi_int"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10000380
 
 [patch."registers.event_occurred"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10010000
 
 [patch."registers.event_occurred_alias"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10010008
 
 [add.constants]
-EVENT_OCCURRED_EXTIO_INT2 = { value = 0x200000000, grade = "established", doc = "Bit 33 of the event register: pending SHub 2 external I/O interrupt 2 (header SH2_EVENT_OCCURRED_EXTIO_INT2). The base unit's field table has no entry for it because overlays cannot add fields." }
-EVENT_OCCURRED_EXTIO_INT3 = { value = 0x400000000, grade = "established", doc = "Bit 34 of the event register: pending SHub 2 external I/O interrupt 3." }
+EVENT_OCCURRED_EXTIO_INT2 = { value = 0x200000000, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): field mask", doc = "Bit 33 of the event register: pending SHub 2 external I/O interrupt 2 (header SH2_EVENT_OCCURRED_EXTIO_INT2). The base unit's field table has no entry for it because overlays cannot add fields." }
+EVENT_OCCURRED_EXTIO_INT3 = { value = 0x400000000, grade = "established", from = "Linux v5.3 SGI SN2 platform MMR header (GPL): field mask", doc = "Bit 34 of the event register: pending SHub 2 external I/O interrupt 3." }
 
 [patch."registers.rtc"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x2101c0000
 access = "r"
 
 [patch."registers.rtc_int_config"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10001480
 
 [patch."registers.rtc_int_enable"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10001500
 
 [patch."registers.int_cmp"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x101b0080
 
 [patch."registers.ipi_access"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x10060c00
 count = 4
 stride = 0x80
 doc = "Which processors may send interprocessor interrupts to this one: four registers, one per processor slice (SH2_IPI_ACCESS0 to 3). Defined by the header; the kernel files read never touch them, so the layout is unknown."
 
 [patch."registers.pio_write_status"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x20070200
 count = 4
 stride = 0x80
 doc = "PIO write status, four instances (SHub 2 nodes carry up to four processor slices). Note the kernel indexes them out of order: slices 0, 1, 2, 3 use instances 0, 2, 1, 3, in the setup code's table. The idle value is zero, not all ones. The write_error, multi_write_error, write_error_address and writes_ok fields are the SHub 1 header's; the SHub 2 layout was not read."
 
 [patch."registers.pio_write_status_alias"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x20070208
 count = 4
 stride = 0x80
 
 [patch."registers.junk_bus_led"]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0xf0000000
 
 [patch."constants.PIO_WRITE_STATUS_IDLE"]
@@ -69,6 +79,7 @@ value = 0
 doc = "What the kernel waits for the masked pending-write count to equal on SHub 2: zero."
 
 [add.registers.ptc]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x170000000
 access = "w"
 width = 64
@@ -82,6 +93,7 @@ address = { bits = [60, 12], grade = "established", doc = "Virtual address to pu
 start = { bits = [63, 63], grade = "established" }
 
 [add.registers.bt_eng_csr]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x30040000
 count = 4
 stride = 0x10000
@@ -99,6 +111,7 @@ notify = { bits = [28, 28], grade = "inferred", doc = "The kernel's notify mode 
 error_code = { bits = [41, 36], grade = "inferred", doc = "Six-bit error code; non-zero means error. Bits: 1 short response, 2 long response, 4 (RESP_DSP), 8 access, 0x10 CRB timeout, 0x20 NACK limit (kernel BTEFAIL_SH2_* names). Whether the hardware also sets the error flag at bit 16 when this field is non-zero is unknown: the kernel's SHub 2 status decode ORs the flag in itself when the code is non-zero." }
 
 [add.registers.bt_eng_src]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x30040080
 count = 4
 stride = 0x10000
@@ -108,6 +121,7 @@ grade = "established"
 doc = "BTE source address, per engine. The kernel converts the physical address to the network address form first (nasid moved to bit 40 upward, the bank-select bits moved to bit 36)."
 
 [add.registers.bt_eng_dest]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x30040100
 count = 4
 stride = 0x10000
@@ -117,6 +131,7 @@ grade = "established"
 doc = "BTE destination address, per engine; same conversion as the source."
 
 [add.registers.bt_eng_notify]
+from = "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
 offset = 0x30040180
 count = 4
 stride = 0x10000

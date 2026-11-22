@@ -1,6 +1,6 @@
 /* generated from devices/shub/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 0992044f04abf22b8eaa26431d14cd99899711926827c5590149f06a49a6662f */
+/* input sha256 c27c4ba4b09b56b6270264238125032654f58c5a4b6632a33d80294f299d9aed */
 /* SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs */
 #ifndef SHUB_GEN_H
 #define SHUB_GEN_H
@@ -396,7 +396,7 @@
 /*
  * Memory and directory unit: privilege vector for access class 0 of the left directory queue port (header SH1_MD_DQLP_MMR_DIR_PRIVEC0, title 'privilege vector for acc=0'). Defined by the header; no use in any kernel file read. Layout and role unknown.
  */
-/* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_dqlp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_MD_DQLP_DIR_PRIVILEGE_VECTOR            0x100030300 /* established */
 
 /*
@@ -479,7 +479,7 @@
 /*
  * Same, right queue port (header SH1_MD_DQRP_MMR_DIR_PRIVEC0). The reading of DQLP and DQRP as left and right ports is inferred from the names.
  */
-/* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_dqrp_dir_privilege_vector: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_MD_DQRP_DIR_PRIVILEGE_VECTOR            0x100050300 /* established */
 
 /*
@@ -508,7 +508,7 @@
 /*
  * I/O interface interrupt 0 and 1 (SH_II_INT0, SH_II_INT1): the register a PIC's interrupt write lands on, through the Crosstalk address nasid << 36 | 1 << 47 | offset. Bits 7:0 are the processor vector, bit 8 sends it to the processor interface (header: a pulse). The data a PIC writes is inferred to be 0x100 | vector. Not accessed by the PROM.
  */
-/* ii_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ii_int: w64, reset unknown */
 #define SHUB_II_INT                                  0x110000000 /* established */
 #define SHUB_II_INT_COUNT                            2
 #define SHUB_II_INT_STRIDE                           256
@@ -522,7 +522,7 @@
 /*
  * Destination of the I/O interface interrupt n (SH_II_INTn_CONFIG): delivery type, target processor id and optional vector base, the ipi_int layout without send or vector. The PROM writes the processor id of slice 0 to n = 0 and of slice 2 to n = 1 and never reads them.
  */
-/* ii_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ii_int_config: rw64, reset unknown */
 #define SHUB_II_INT_CONFIG                           0x110000080 /* established */
 #define SHUB_II_INT_CONFIG_COUNT                     2
 #define SHUB_II_INT_CONFIG_STRIDE                    256
@@ -542,7 +542,7 @@
 /*
  * Bit 0 enables the I/O interface interrupt n. The PROM writes 1 to both and never reads them.
  */
-/* ii_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ii_int_enable: rw64, reset unknown */
 #define SHUB_II_INT_ENABLE                           0x110000200 /* established */
 #define SHUB_II_INT_ENABLE_COUNT                     2
 #define SHUB_II_INT_ENABLE_STRIDE                    128
@@ -559,7 +559,7 @@
 /*
  * Send an interprocessor interrupt (processor interface or local block, inferred). The sender writes this register in the target node's global MMR window with send set, the target's physical processor id, a delivery type, a vector and a fixed base. The kernel stores through uncached physical mode with release ordering, after a memory barrier. On a SHub 1 revision 2 or lower it holds a global lock around the store and waits for the PIO write status to drain.
  */
-/* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ipi_int: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_IPI_INT                                 0x110000380 /* established */
 #define SHUB_IPI_INT_SEND_SHIFT                      63 /* established */
 #define SHUB_IPI_INT_SEND_MASK                       0x1ull
@@ -620,7 +620,7 @@
 /*
  * Destination of the error interrupt of processor n (0 to 3): the local_int_config layout. The stride 0x80 and the four offsets come from the PROM's name table and its interrupt pair table; the header was read for n = 0 only. The NASID-change routine rewrites bits 19:4 (pid) with the new NASID when the matching enable register is non-zero. The PROM's other uses are not traced.
  */
-/* proc_err_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* proc_err_int_config: rw64, reset unknown */
 #define SHUB_PROC_ERR_INT_CONFIG                     0x110000a80 /* established */
 #define SHUB_PROC_ERR_INT_CONFIG_COUNT               4
 #define SHUB_PROC_ERR_INT_CONFIG_STRIDE              128
@@ -628,7 +628,7 @@
 /*
  * Destination of the advisory interrupt of processor n (0 to 3), the local_int_config layout (name only; the meaning of advisory is not in the sources read). Rewritten by the NASID-change routine as proc_err_int_config is.
  */
-/* proc_adv_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* proc_adv_int_config: rw64, reset unknown */
 #define SHUB_PROC_ADV_INT_CONFIG                     0x110000c80 /* established */
 #define SHUB_PROC_ADV_INT_CONFIG_COUNT               4
 #define SHUB_PROC_ADV_INT_CONFIG_STRIDE              128
@@ -636,7 +636,7 @@
 /*
  * Enable of the processor n error interrupt. The NASID-change routine reads it in the new global window and skips the matching config register when it reads 0.
  */
-/* proc_err_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* proc_err_int_enable: rw64, reset unknown */
 #define SHUB_PROC_ERR_INT_ENABLE                     0x110000e80 /* established */
 #define SHUB_PROC_ERR_INT_ENABLE_COUNT               4
 #define SHUB_PROC_ERR_INT_ENABLE_STRIDE              128
@@ -644,7 +644,7 @@
 /*
  * Enable of the processor n advisory interrupt; read by the NASID-change routine as proc_err_int_enable is.
  */
-/* proc_adv_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* proc_adv_int_enable: rw64, reset unknown */
 #define SHUB_PROC_ADV_INT_ENABLE                     0x110001080 /* established */
 #define SHUB_PROC_ADV_INT_ENABLE_COUNT               4
 #define SHUB_PROC_ADV_INT_ENABLE_STRIDE              128
@@ -652,13 +652,13 @@
 /*
  * Destination of the profiling interrupt, the local_int_config layout (name only). Rewritten by the NASID-change routine when profile_int_enable is non-zero.
  */
-/* profile_int_config: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* profile_int_config: rw64, reset unknown */
 #define SHUB_PROFILE_INT_CONFIG                      0x110001280 /* established */
 
 /*
  * Enable of the profiling interrupt; read by the NASID-change routine.
  */
-/* profile_int_enable: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* profile_int_enable: rw64, reset unknown */
 #define SHUB_PROFILE_INT_ENABLE                      0x110001300 /* established */
 
 /*
@@ -676,7 +676,7 @@
 /*
  * Where the comparator interrupt of RTC 1, 2 and 3 is sent: type, target processor id, vector area and vector. The mmtimer driver writes the vector and processor id fields and leaves type, agent and base zero. The register has the same layout as the IPI message, without the send bit. A fourth comparator (RTC 0) exists; the driver comment says firmware uses it, and the header defines nothing for it.
  */
-/* rtc_int_config: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* rtc_int_config: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_RTC_INT_CONFIG                          0x110001480 /* established */
 #define SHUB_RTC_INT_CONFIG_COUNT                    3
 #define SHUB_RTC_INT_CONFIG_STRIDE                   256
@@ -699,7 +699,7 @@
 /*
  * Enable for the comparator interrupt of RTC 1, 2 and 3. The mmtimer driver disables it, sets the comparator to all ones, clears the pending bit, writes the configuration, enables, and only then writes the real expiry, in that order.
  */
-/* rtc_int_enable: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* rtc_int_enable: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_RTC_INT_ENABLE                          0x110001500 /* established */
 #define SHUB_RTC_INT_ENABLE_COUNT                    3
 #define SHUB_RTC_INT_ENABLE_STRIDE                   256
@@ -710,7 +710,7 @@
 /*
  * Pending interrupt events for the node (SHub interrupt event occurred). The kernel's interrupt acknowledge reads it, keeps the bits in the mask of the junk-bus UART, IPI and the two II interrupts, and writes that value to the alias to clear them; Linux only reads it. Bits the header names are established. SAL 5.04 reads it for the error bits (mask 0x7ef, sites 0xffa239a0 and 0xffa23fd6) and for bit 21 (site 0xffa31506), and writes bits 5 and 8 to this register itself (sites 0xffa32816 and 0xffa32996); a model should OR written bits in (inferred). Zero from reset is tolerated; the reset value is unknown. Bit 21 must read 0 for the PROM's INIT handling. See interrupts.md.
  */
-/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* event_occurred: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_EVENT_OCCURRED                          0x110010000 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT1_SHIFT            30 /* established */
 #define SHUB_EVENT_OCCURRED_II_INT1_MASK             0x1ull
@@ -752,7 +752,7 @@
 /*
  * Clears pending events: the kernel writes the bits it wants cleared here and never reads it. That a one clears and a zero leaves a bit alone is inferred from the kernel writing back exactly the bits it read as set (interrupt acknowledge) and a single bit to clear one RTC event (the mmtimer driver). Neither the kernel nor the header says what a read returns.
  */
-/* event_occurred_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* event_occurred_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_EVENT_OCCURRED_ALIAS                    0x110010008 /* established */
 
 /*
@@ -832,7 +832,7 @@
 /*
  * Local block error detail words 1 to 5. After its forced PIO write error (see lb_reg_1005_0608) the PROM reads detail 1 (low byte 0xe9 or 0xea) and detail 2 ((value & 0x3fffffff) equal to 0x2200a0c1, the error address >> 3); either match sets bit 3 of the event mask for 0xffa30b40.  A vector read that ends in an error leaves 0xe9 in the low byte of detail 1 (a write 0xea); the PROM then writes 0 to all five and to 0x1_1007_1100, and goes on. Never read otherwise. A plain read/write register that reads 0 satisfies it.
  */
-/* lb_error_detail: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_error_detail: rw64, reset 0x0 */
 #define SHUB_LB_ERROR_DETAIL                         0x110050200 /* established */
 #define SHUB_LB_ERROR_DETAIL_COUNT                   5
 #define SHUB_LB_ERROR_DETAIL_STRIDE                  128
@@ -840,7 +840,7 @@
 /*
  * Local block error summary. The PROM tests bit 16 only: set before a vector request means an old error (it writes the alias at +8 and the mask at 0x1_1005_0508 with 0x10000, clears the detail registers and retries); set while waiting for a reply means the reply status is not examined that pass. A model returns 0.
  */
-/* lb_error_summary: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_error_summary: r64, reset 0x0 */
 #define SHUB_LB_ERROR_SUMMARY                        0x110050580 /* established */
 
 /*
@@ -903,7 +903,7 @@
 /*
  * Which processors may send interprocessor interrupts to this one (header title: CPU interrupt access permission bits). The only use found is the cross-partition driver reading it as the target of a protected remote read; the driver comment says there is no special reason for that choice. So the register can be read without harm; its bit layout and write behaviour are unknown. The SHub 1 PROM writes 1 here once, as the winner of the node election in SAL_A (SAL 5.04 PROM site 0xffc4ea40); the meaning of 1 is unknown. The node set-up (site 0xffa97c7c) later writes the node mask of the permission registers here too (see prom-reset.md); the header gives INIT 0xffffffffffffffff and a 64-bit ACCESS_BITS field.
  */
-/* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ipi_access: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_IPI_ACCESS                              0x110060480 /* established */
 
 /*
@@ -918,7 +918,7 @@
 /*
  * SHub identification (local block, inferred). The kernel reads only the revision, to switch on its SHub 1.1 workarounds when it is 2 or lower, and in the fallback for an old PROM the nodes-per-bit field, which it reports as the region size. SHub 2's counterpart is not named in the header. The SHub 1 PROM also writes it (SAL 5.04 PROM site 0xffa95a30, reached from 0xffa5f84c): it reads the word, replaces bits 42:32 with the node id, bits 45:44 with a size code and bits 52:48 with a nodes-per-bit code, and writes the word back; the other bits are stored as read, so they may be read only. After the write the three fields must read back as written. The first read, at main start, needs any node id in bits 42:32. The header gives MASK 0x011f37ffffffffff; its INIT has bits 31:0 clear, nodes-per-bit 1 and size code 3. The PROM expects revision 3 and part 0x4363; those are PROM expectations, not header facts. See prom-reset.md.
  */
-/* shub_id: rw64, reset 0x10300000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* shub_id: rw64, reset 0x10300000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_SHUB_ID                                 0x110060580 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_SHIFT             48 /* established */
 #define SHUB_SHUB_ID_NODES_PER_BIT_MASK              0x1full
@@ -944,37 +944,37 @@
 /*
  * Data word of a vector request message. The PROM stores the value to write before arming SH_VEC_PARMS for a write request (a read request stores nothing here; see SH_VEC_RDDATA). Not read back. Used only for a record that has a route (a remote node); the local node is reached through its own global window instead.
  */
-/* vec_data: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* vec_data: w64, reset 0x0 */
 #define SHUB_VEC_DATA                                0x110066000 /* established */
 
 /*
  * Vector request parameters and the start/busy handshake. TYPE bit 0 (0 read, 1 write), NI_PORT bit 1, ADDRESS bits 34:3 (the register offset bits 34:3), PIO_ID bits 45:35, START bit 62, BUSY bit 63 (header). The PROM first polls bit 63 until clear (at most 1024 reads), then writes (hops - 1) * 2 | offset AND 0x7fffffff8 | 0x40000e4000000000 for a read (PIO_ID 0x1c8) or | 0x400003d800000001 for a write (PIO_ID 0x7b); START (bit 62) launches the message. The PROM never reads BUSY again after the write; completion is read from SH_VEC_STATUS.
  */
-/* vec_parms: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* vec_parms: rw64, reset 0x0 */
 #define SHUB_VEC_PARMS                               0x110066080 /* established */
 
 /*
  * Route of a vector request: the 16-nibble route word shifted down 4 bits (the first nibble goes to SH_VEC_PARMS NI_PORT instead). When the record has no remaining hops the PROM stores 0xf00000000 (a 0xf in nibble 8). Not read back.
  */
-/* vec_route: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* vec_route: w64, reset 0x0 */
 #define SHUB_VEC_ROUTE                               0x110066100 /* established */
 
 /*
  * Data of a vector reply. Read once, after SH_VEC_STATUS shows a valid reply for a read request, and stored as the result. Before arming a read request the PROM also stores 0xdeadbeefdeadbeef here (a PROM write; the register is listed read-only because that is how the header treats it, whether the hardware accepts the store is unknown).
  */
-/* vec_rddata: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* vec_rddata: r64, reset 0x0 */
 #define SHUB_VEC_RDDATA                              0x110074000 /* established */
 
 /*
  * Vector reply status. TYPE bits 2:0, ADDRESS bits 34:3, PIO_ID bits 45:35, SOURCE bits 59:46 (header), OVERRUN bit 62, STATUS_VALID bit 63. The PROM writes 0 before each request and reads it: bit 63 already set at that point makes the request fail with -1. After the request it polls (100 microseconds apart, at most 1024 times) until bit 63 is set. The reply is a success only when OVERRUN is clear, TYPE is 0 for a read or 1 for a write, PIO_ID is 0x1c8 (read) or 0x7b (write) and ADDRESS equals the request address bits; OVERRUN gives -2, TYPE 4, 5 or 6 give -4, -5, -6, anything else -3. Writing 0 must clear bit 63.
  */
-/* vec_status: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* vec_status: rw64, reset 0x0 */
 #define SHUB_VEC_STATUS                              0x110074100 /* established */
 
 /*
  * Purge translation cache message, SHub 1 (header SH1_PTC_0 and SH1_PTC_1). To purge a virtual address range on every processor of a node the kernel writes the two registers of that node's global window back to back with interrupts and interruption collection off, the first with a type bit, the page-size exponent, the region id and a start bit, the second with the virtual address and a start bit; both stores are in one atomic assembly sequence. It does this once per page of the range, after taking a global lock, for every node that has the mm's processors, except the local node which uses the processor's own global purge instruction instead. Entry 0 is the control word and entry 1 the address word. After a batch of nodes it waits on the PIO write status.
  */
-/* ptc: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ptc: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_PTC                                     0x1101a0000 /* established */
 #define SHUB_PTC_COUNT                               2
 #define SHUB_PTC_STRIDE                              128
@@ -1012,7 +1012,7 @@
 /*
  * Compare values for RTC comparators 1, 2 and 3 (header names SH_INT_CMPB, SH_INT_CMPC, SH_INT_CMPD; the header titles them 'RTC compare value for processor B, C, D'). The interrupt fires when the clock reaches the value. The comparator for RTC 0 would sit 0x80 below these and is not defined in the header (unknown).
  */
-/* int_cmp: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* int_cmp: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_INT_CMP                                 0x1101b0080 /* established */
 #define SHUB_INT_CMP_COUNT                           3
 #define SHUB_INT_CMP_STRIDE                          128
@@ -1023,7 +1023,7 @@
 /*
  * Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock source rating 450, mask 55 bits) and for microsecond delays, because the CPU cycle counters are not synchronised across processors. The frequency is not in a register; the kernel asks firmware for it. The driver comment says the clock registers sit alone on a 64 KiB page, which is what lets user space map it read-only. The SHub 1 PROM (SAL 5.04) writes 0 to it at the SAL_B reset entry (0xffa94d20) and again to a node's counter in the interconnect phase, then reads it on every delay and timeout, so it must advance. Its tick period comes from rtc_ctl (SHub 1: 10 ns times the field plus one, 50 ns after the PROM's own write). See prom-reset.md.
  */
-/* rtc: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* rtc: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_RTC                                     0x1101c0000 /* established */
 #define SHUB_RTC_COUNTER_SHIFT                       0 /* established */
 #define SHUB_RTC_COUNTER_MASK                        0x7fffffffffffffull
@@ -1032,7 +1032,7 @@
 /*
  * SH_SCRATCH1: 64-bit scratch word, per node, that the firmware uses for the node election and for per-node state bits. Reset 0 is the header's INIT (the early election needs a zero word, inferred); the header gives no fields. Hardware sets no bit: every bit is stored by firmware. Early election (0xffc4e970): each processor stores slice + 1 to the alias, reads this register and wins when the value equals slice + 1 exactly; 0xffc4e730 repeats the exact compare, so bits 39 to 41 must still be clear then. Read-modify-write bits (all other bits kept): 41 (0xffa0b0f0, local, only when no other processor position is flagged), 39 (0xffa0aee0, global window), 40 (0xffa4eb40, global window). The discovery path reaches the register through the vector engine at its literal address, never the alias: 0xffa5d2a0 polls it until it reads 0 or bit 39 or 41 is set (any other value is polled every 10000 microseconds for up to 300000000 microseconds, 300 s, or until the console interrupt check fires, then forced to 0x20000000000), returns at once when bits 55:54 are nonzero, then stores the word with bit 39 set and bits 55:54 replaced by the NI port-probe result; 0xffa1a6d0 test-and-sets bit 56 under a firmware lock. The node set-up method 0xffacc6e0 sets bits 57 and 40. The error and park paths (0xffaf5c80, 0xffc4e030) OR in bits 41 and 39. Bits 20, 23, 25 and 33 of 0x2_0290_0000 are written by no SHub 1 site in the image. Bit 58 and the field at 30:23 appear only in the twin routine for the other chip type (0xffa60a70 at 0x4_0901_d0080).
  */
-/* scratch1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* scratch1: rw64, reset 0x0 */
 #define SHUB_SCRATCH1                                0x1101d0080 /* established */
 #define SHUB_SCRATCH1_BIT57_SHIFT                    57 /* inferred */
 #define SHUB_SCRATCH1_BIT57_MASK                     0x1ull
@@ -1056,7 +1056,7 @@
 /*
  * SH_SCRATCH1_ALIAS: the header gives the address and no description, and Linux v5.3 has no name. Established: the first stage stores slice + 1 here and then reads SH_SCRATCH1 expecting exactly that value, so the alias cannot be write-one-to-clear (a clear of a zero word would never read back equal). Inferred, from that single use: the store lands in the SH_SCRATCH1 word (either as a plain store or as an OR; a lone processor cannot tell them apart). Unknown: whether a second writer is blocked or OR-merged. A model keeps both addresses on one 64-bit cell; reads of the alias are never issued by the PROM.
  */
-/* scratch1_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* scratch1_alias: w64, reset unknown */
 #define SHUB_SCRATCH1_ALIAS                          0x1101d0088 /* established */
 
 /*
@@ -1071,25 +1071,25 @@
 /*
  * Second firmware lock pair, release side. The header names this offset SH_SCRATCH3, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x188 (lb_lock2_status); the lock use is the PROM's, and our name stays for that role. The methods of the chip object take it around read-modify-writes of fw_word_1540 by the same routines that take lb_lock (site 0xffa0ed30 on this node, 0xffa0ee90 on another): poll lb_lock2_status, do the work, write 0 here. On this node a status that does not read 0 within 1,000,000 microseconds makes the PROM write 0 here and keep polling; the other-node form gives up after its deadline and returns -9 without writing. Whether a read of the status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. Linux v5.3 does not define the lock; the behaviour is as observed at the access and the meaning is inferred.
  */
-/* lb_lock2: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock2: w64, reset 0x0 */
 #define SHUB_LB_LOCK2                                0x1101d0180 /* inferred */
 
 /*
  * Second firmware lock status. The header names this offset SH_SCRATCH3_ALIAS and gives no description; the other-node routine tests bit 0 only, which is the one bit of SH_SCRATCH3. The lock use is the PROM's and our name stays for that role. This-node polls proceed when the whole 64-bit value reads 0 (the same routine as lb_lock_status). The other-node routine, reading it through the node-object read, proceeds when bit 0 reads 0 and ignores the other bits, so a model must keep bit 0 at 0 when the lock is free. A status that never reads 0 times out after 1,000,000 microseconds (forced release on this node, error -9 on another). A read side effect is unknown. Linux v5.3 does not define the lock; the meaning is inferred.
  */
-/* lb_lock2_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock2_status: r64, reset unknown */
 #define SHUB_LB_LOCK2_STATUS                         0x1101d0188 /* inferred */
 
 /*
  * Firmware lock pair, release side. The header names this offset SH_SCRATCH4, a one-bit scratch register (mask 0x1, INIT 0) with its alias at 0x208 (lb_lock_status); the lock use is the PROM's, and our name stays for that role. The PROM takes the lock by polling lb_lock_status until it reads 0, does a read-modify-write of cpu_bits, then writes 0 here. If the status does not read 0 within 1,000,000 microseconds it writes 0 here and polls again. Whether a read of lb_lock_status takes the lock in hardware is unknown; a plain register pair where the status always reads 0 satisfies every access read. The same lock guards the field setter of fw_debug_word (site 0xffa974d0). Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
  */
-/* lb_lock: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock: rw64, reset 0x0 */
 #define SHUB_LB_LOCK                                 0x1101d0200 /* inferred */
 
 /*
  * Firmware lock status. The header names this offset SH_SCRATCH4_ALIAS and gives no description, so what a read does is unknown; the lock use is the PROM's and our name stays for that role. The bit it tests is the one bit of SH_SCRATCH4. The PROM polls it with a short delay until it reads 0; any non-zero value keeps it waiting until the 1,000,000 microsecond deadline, then it writes 0 to lb_lock and keeps polling, so a status that never reads 0 hangs the PROM. A read side effect is unknown. Linux v5.3 does not define the lock; the PROM behaviour above is as observed at the access and the meaning is inferred.
  */
-/* lb_lock_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* lb_lock_status: r64, reset unknown */
 #define SHUB_LB_LOCK_STATUS                          0x1101d0208 /* inferred */
 
 /*
@@ -1230,7 +1230,7 @@
 /*
  * Control of CRB CAM access (header title; processor interface, inferred). The only use is a SHub 1.1 workaround: on a chip of revision 2 or lower the kernel writes 0x8000000000000010 here on every timer tick, through the address of its own node. What the value does is unknown. The SHub 1 PROM (SAL 5.04) also writes it, from two routines reached through tables (site 0xffa24510 and 0xffa245f0, order not located): the low 7 bits of an argument with bit 63 set, plus bit 8 (and bit 9 when bit 5 of the argument is set) in the first, and with bits 9:8 clear in the second; the second then reads pi_reg_2006_0100, pi_reg_2006_0180 and pi_reg_2006_0200. Meaning of the fields is unknown.
  */
-/* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_cam_control: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_PI_CAM_CONTROL                          0x120050300 /* established */
 
 /*
@@ -1278,13 +1278,13 @@
 /*
  * Processor interface error detail 1. The PROM reads it once, after the forced PIO write error: (value & 0x1_ffff_fff8) equal to 0x1_1005_0608 sets bit 0 of the event mask handed to the error-clear routine 0xffa30b40; nothing else in the value is tested. Field layout unknown.
  */
-/* pi_error_detail_1: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_error_detail_1: r64, reset 0x0 */
 #define SHUB_PI_ERROR_DETAIL_1                       0x120060500 /* established */
 
 /*
  * PIO write status, one per processor slice (header: PIO write status for CPU 0 and 1; processor interface, inferred). The kernel's memory-mapped-I/O write barrier spins until the pending write count shows idle. The kernel stores the address of the instance for its slice (the slice is the processor's position within the node) in its per-processor data.
  */
-/* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pio_write_status: r64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_PIO_WRITE_STATUS                        0x120070200 /* established */
 #define SHUB_PIO_WRITE_STATUS_COUNT                  2
 #define SHUB_PIO_WRITE_STATUS_STRIDE                 128
@@ -1310,7 +1310,7 @@
 /*
  * Alias of the PIO write status. The header names only the instance for slice 0. The deadlock recovery assembly adds 8 to whichever status address it was given, so the alias for slice 1 is inferred. Writing 7 clears the deadlock, write error and multiple write error bits (assembly comment); the header names only bit 1 (deadlock), so which of bits 0 and 2 is which is unknown. The kernel does this on SHub 1 and reads the alias instead on SHub 2.
  */
-/* pio_write_status_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pio_write_status_alias: w64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_PIO_WRITE_STATUS_ALIAS                  0x120070208 /* inferred */
 #define SHUB_PIO_WRITE_STATUS_ALIAS_COUNT            2
 #define SHUB_PIO_WRITE_STATUS_ALIAS_STRIDE           128
@@ -1318,7 +1318,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Network interface link state. The PROM reads it once per port in its link probe and compares the low nibble with 9, nothing else. 9 is taken as link up (inferred from the use: the probe then checks the link credit words and reports success). Any other value is a link that is not up; no PROM code separates a link that is down from a port with no cable. The INIT of zero is a not-up value, so a node with no NUMAlink cable keeps the hardware path.
  */
-/* ni_llp_stat: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_stat: r64, reset 0x0 */
 #define SHUB_NI_LLP_STAT                             0x150000000 /* established */
 #define SHUB_NI_LLP_STAT_COUNT                       2
 #define SHUB_NI_LLP_STAT_STRIDE                      8192
@@ -1329,7 +1329,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Writing issues a reset to the network interface; the header says bits generate pulses. The PROM writes 1 (link reset) to each port whose probe says not up, up to three times with delays of 100, 200 and 400 microseconds. A write must not make link_reset_state read 9. Never read.
  */
-/* ni_llp_reset: w64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_reset: w64, reset 0x0 */
 #define SHUB_NI_LLP_RESET                            0x150000008 /* established */
 #define SHUB_NI_LLP_RESET_COUNT                      2
 #define SHUB_NI_LLP_RESET_STRIDE                     8192
@@ -1343,7 +1343,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). The header calls it control of LLP warm reset propagation: bit 0 allows a warm reset received on the link to reset the SHub. The partition-fence routine writes 0 to the port of every link whose neighbour is absent or outside the node's partition, and 1 to the rest, once per boot, in port order, and never reads the register back. The port-fill method reads it only for a record whose SH_SCRATCH1 bit 40 is set, and keeps the complement of bit 0 as a per-port flag; that read is not on a lone node's path. A lone node needs one bit of storage that resets to 1 and reads back what was written. Whether a 0 stops the LLP warm reset (and nothing else) is inferred from the header text; the register does not touch the link state or LLP_RESET.
  */
-/* ni_llp_reset_en: rw64, reset 0x1; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_reset_en: rw64, reset 0x1 */
 #define SHUB_NI_LLP_RESET_EN                         0x150000010 /* established */
 #define SHUB_NI_LLP_RESET_EN_COUNT                   2
 #define SHUB_NI_LLP_RESET_EN_STRIDE                  8192
@@ -1354,7 +1354,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). Signalling mode of the LLP channel. The PROM reads it once per port and tests bit 0 (32-bit phits): clear selects test-control mode 3 and the link-retry loop, set selects mode 0 and no loop. The INIT of zero takes the loop. Never written.
  */
-/* ni_llp_chan_mode: r64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_chan_mode: r64, reset 0x0 */
 #define SHUB_NI_LLP_CHAN_MODE                        0x150000018 /* established */
 #define SHUB_NI_LLP_CHAN_MODE_COUNT                  2
 #define SHUB_NI_LLP_CHAN_MODE_STRIDE                 8192
@@ -1365,7 +1365,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP and channel configuration. The PROM reads it and writes it straight back with MAXBURST set to 400; no other bit changes and the value read is never tested, so a plain read/write register satisfies it. This is the read that stops a model at 0x1_5000_0020.
  */
-/* ni_llp_config: rw64, reset 0x7fc6ffd00; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_config: rw64, reset 0x7fc6ffd00 */
 #define SHUB_NI_LLP_CONFIG                           0x150000020 /* established */
 #define SHUB_NI_LLP_CONFIG_COUNT                     2
 #define SHUB_NI_LLP_CONFIG_STRIDE                    8192
@@ -1385,7 +1385,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP test control. The PROM reads it, clears bits 41:40 when a link retry is needed, and finally writes bits 41:40 to the mode chosen from chan_mode.bitmode32 (3 when that bit is clear, which is the INIT). Bits 41:40 are the header field SEND_TEST_MODE; why the PROM sets 3 on a link with no test running is unknown. A plain read/write register satisfies it.
  */
-/* ni_llp_test_ctl: rw64, reset 0xa5fffff; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_test_ctl: rw64, reset 0xa5fffff */
 #define SHUB_NI_LLP_TEST_CTL                         0x150000028 /* established */
 #define SHUB_NI_LLP_TEST_CTL_COUNT                   2
 #define SHUB_NI_LLP_TEST_CTL_STRIDE                  8192
@@ -1396,7 +1396,7 @@
 /*
  * Port 0 at this offset, port 1 is the next register block, 0x2000 higher (SH_NI1_*). LLP error status. The PROM reads it; if bit 27 (the power_OK loss trap) is set it writes the word back with that bit clear and reads again; a bit still set makes the probe return 0 and the port counts as not ready. A model returns 0 and the probe goes on to the link state.
  */
-/* ni_llp_err: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni_llp_err: rw64, reset 0x0 */
 #define SHUB_NI_LLP_ERR                              0x150000048 /* established */
 #define SHUB_NI_LLP_ERR_COUNT                        2
 #define SHUB_NI_LLP_ERR_STRIDE                       8192
@@ -1407,7 +1407,7 @@
 /*
  * Link flow words 0 to 3 of NI port 0. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
  */
-/* xnni0_link_flow: r64, reset 0x1800; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni0_link_flow: r64, reset 0x1800 */
 #define SHUB_XNNI0_LINK_FLOW                         0x150001040 /* established */
 #define SHUB_XNNI0_LINK_FLOW_COUNT                   4
 #define SHUB_XNNI0_LINK_FLOW_STRIDE                  16
@@ -1415,7 +1415,7 @@
 /*
  * Link flow words 0 to 3 of NI port 1. The PROM reads them only when ni_llp_stat reads 9 (and the CPU is not the simulator id), each up to 128 times until bits 22:16 (the dynamic vc0 credit, header CREDIT_VC0_DYN) are non-zero, and returns link-down if 128 reads do not. Not reached when the link state is not 9.
  */
-/* xnni1_link_flow: r64, reset 0x1800; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni1_link_flow: r64, reset 0x1800 */
 #define SHUB_XNNI1_LINK_FLOW                         0x150003040 /* established */
 #define SHUB_XNNI1_LINK_FLOW_COUNT                   4
 #define SHUB_XNNI1_LINK_FLOW_STRIDE                  16
@@ -1423,7 +1423,7 @@
 /*
  * Local routing table of the I/O-interface side local block: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
  */
-/* iilb_local_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* iilb_local_table: rw64, reset 0x0 */
 #define SHUB_IILB_LOCAL_TABLE                        0x150020000 /* established */
 #define SHUB_IILB_LOCAL_TABLE_COUNT                  128
 #define SHUB_IILB_LOCAL_TABLE_STRIDE                 8
@@ -1431,7 +1431,7 @@
 /*
  * Global routing table of the I/O-interface side local block: 16 doublewords, same entry layout as iilb_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
  */
-/* iilb_global_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* iilb_global_table: rw64, reset 0x0 */
 #define SHUB_IILB_GLOBAL_TABLE                       0x150020400 /* established */
 #define SHUB_IILB_GLOBAL_TABLE_COUNT                 16
 #define SHUB_IILB_GLOBAL_TABLE_STRIDE                8
@@ -1439,13 +1439,13 @@
 /*
  * Route override entry of the I/O-interface side local block; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* iilb_over_ride_table: rw64, reset 0x8000000000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* iilb_over_ride_table: rw64, reset 0x8000000000000000 */
 #define SHUB_IILB_OVER_RIDE_TABLE                    0x150020480 /* established */
 
 /*
  * Local routing table of the processor interface: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
  */
-/* pi_local_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_local_table: rw64, reset 0x0 */
 #define SHUB_PI_LOCAL_TABLE                          0x150021000 /* established */
 #define SHUB_PI_LOCAL_TABLE_COUNT                    128
 #define SHUB_PI_LOCAL_TABLE_STRIDE                   8
@@ -1453,7 +1453,7 @@
 /*
  * Global routing table of the processor interface: 16 doublewords, same entry layout as pi_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
  */
-/* pi_global_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_global_table: rw64, reset 0x0 */
 #define SHUB_PI_GLOBAL_TABLE                         0x150021400 /* established */
 #define SHUB_PI_GLOBAL_TABLE_COUNT                   16
 #define SHUB_PI_GLOBAL_TABLE_STRIDE                  8
@@ -1461,13 +1461,13 @@
 /*
  * Route override entry of the processor interface; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* pi_over_ride_table: rw64, reset 0x8000000000002000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* pi_over_ride_table: rw64, reset 0x8000000000002000 */
 #define SHUB_PI_OVER_RIDE_TABLE                      0x150021480 /* established */
 
 /*
  * Local routing table of network interface port 0: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
  */
-/* ni0_local_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni0_local_table: rw64, reset 0x0 */
 #define SHUB_NI0_LOCAL_TABLE                         0x150022000 /* established */
 #define SHUB_NI0_LOCAL_TABLE_COUNT                   128
 #define SHUB_NI0_LOCAL_TABLE_STRIDE                  8
@@ -1475,7 +1475,7 @@
 /*
  * Global routing table of network interface port 0: 16 doublewords, same entry layout as ni0_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
  */
-/* ni0_global_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni0_global_table: rw64, reset 0x0 */
 #define SHUB_NI0_GLOBAL_TABLE                        0x150022400 /* established */
 #define SHUB_NI0_GLOBAL_TABLE_COUNT                  16
 #define SHUB_NI0_GLOBAL_TABLE_STRIDE                 8
@@ -1483,13 +1483,13 @@
 /*
  * Route override entry of network interface port 0; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* ni0_over_ride_table: rw64, reset 0x8000000000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni0_over_ride_table: rw64, reset 0x8000000000000000 */
 #define SHUB_NI0_OVER_RIDE_TABLE                     0x150022480 /* established */
 
 /*
  * Local routing table of network interface port 1: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
  */
-/* ni1_local_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni1_local_table: rw64, reset 0x0 */
 #define SHUB_NI1_LOCAL_TABLE                         0x150023000 /* established */
 #define SHUB_NI1_LOCAL_TABLE_COUNT                   128
 #define SHUB_NI1_LOCAL_TABLE_STRIDE                  8
@@ -1497,7 +1497,7 @@
 /*
  * Global routing table of network interface port 1: 16 doublewords, same entry layout as ni1_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
  */
-/* ni1_global_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni1_global_table: rw64, reset 0x0 */
 #define SHUB_NI1_GLOBAL_TABLE                        0x150023400 /* established */
 #define SHUB_NI1_GLOBAL_TABLE_COUNT                  16
 #define SHUB_NI1_GLOBAL_TABLE_STRIDE                 8
@@ -1505,13 +1505,13 @@
 /*
  * Route override entry of network interface port 1; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* ni1_over_ride_table: rw64, reset 0x8000000000000000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* ni1_over_ride_table: rw64, reset 0x8000000000000000 */
 #define SHUB_NI1_OVER_RIDE_TABLE                     0x150023480 /* established */
 
 /*
  * Local routing table of the memory and directory unit: 128 doublewords, indexed by the low 7 bits of the destination NASID. Fields: DIR0 bits 3:0 (direction for the next chip), V0 bit 4, NI_SEL0 bit 5, VALID bit 63 (header). The PROM writes entry i as a direction nibble taken from its route table (0xf means no route) with bit 63 set for entry 0, for the entry equal to the node's own NASID modulo 128 and for any entry whose nibble is not 0xf; the tables written to IILB, PI and MD also carry a second direction in bits 13:8 (bit 13 = 0x20 when the second port has a route), which the header mask does not include. Plain storage for the PROM: it writes every entry and reads one back only when the record is flagged for read-and-compare (not the lone-node path). Entry contents for NASID 0 alone are unknown (they come from the PROM route calculation, which is not traced).
  */
-/* md_local_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_local_table: rw64, reset 0x0 */
 #define SHUB_MD_LOCAL_TABLE                          0x150024000 /* established */
 #define SHUB_MD_LOCAL_TABLE_COUNT                    128
 #define SHUB_MD_LOCAL_TABLE_STRIDE                   8
@@ -1519,7 +1519,7 @@
 /*
  * Global routing table of the memory and directory unit: 16 doublewords, same entry layout as md_local_table, indexed by the high NASID bits (the PROM loops 0 to 15). Written with the same rule as the local table. Plain storage for the PROM.
  */
-/* md_global_table: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_global_table: rw64, reset 0x0 */
 #define SHUB_MD_GLOBAL_TABLE                         0x150024400 /* established */
 #define SHUB_MD_GLOBAL_TABLE_COUNT                   16
 #define SHUB_MD_GLOBAL_TABLE_STRIDE                  8
@@ -1527,13 +1527,13 @@
 /*
  * Route override entry of the memory and directory unit; bit 63 is ENABLE (header), and when set the entry bypasses the local and global tables. The header INIT is 0x8000000000000000 (enabled). The PROM writes 0 to disable it, once per walk after the tables. Plain storage.
  */
-/* md_over_ride_table: rw64, reset 0x8000000000002000; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* md_over_ride_table: rw64, reset 0x8000000000002000 */
 #define SHUB_MD_OVER_RIDE_TABLE                      0x150024480 /* established */
 
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*; the PROM addresses it as base + port * 0x200). Virtual-channel switch control of the crossbar-to-NI path: bit 0 NI_VCFIFO_DATELINE_SWITCH, bit 8 PI_VCFIFO_SWITCH, bit 16 MD_VCFIFO_SWITCH, bit 24 IILB_VCFIFO_SWITCH (each swaps VC0/2 with VC1/3), bits 34:32 sync-bypass and async-fifo controls (header). 0xffa5c900 reads it and writes it back with bit 24 inverted, runs the neighbour loop, and inverts it again (on a lone node the loop does nothing, so the register ends where it began). Slot 59 reads it and ORs 0x100 (0x101 when the port record has flag 0x20 set). A plain read/write register satisfies both.
  */
-/* xnni_vcswitch_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_vcswitch_flow: rw64, reset 0x0 */
 #define SHUB_XNNI_VCSWITCH_FLOW                      0x1500303a0 /* established */
 #define SHUB_XNNI_VCSWITCH_FLOW_COUNT                2
 #define SHUB_XNNI_VCSWITCH_FLOW_STRIDE               512
@@ -1541,7 +1541,7 @@
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 0/2 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
  */
-/* xnni_fifo02_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_fifo02_flow: rw64, reset 0x0 */
 #define SHUB_XNNI_FIFO02_FLOW                        0x1500303c0 /* established */
 #define SHUB_XNNI_FIFO02_FLOW_COUNT                  2
 #define SHUB_XNNI_FIFO02_FLOW_STRIDE                 512
@@ -1549,7 +1549,7 @@
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). FIFO 1/3 flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfffffffff0fffff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
  */
-/* xnni_fifo13_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_fifo13_flow: rw64, reset 0x0 */
 #define SHUB_XNNI_FIFO13_FLOW                        0x1500303d0 /* established */
 #define SHUB_XNNI_FIFO13_FLOW_COUNT                  2
 #define SHUB_XNNI_FIFO13_FLOW_STRIDE                 512
@@ -1557,7 +1557,7 @@
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). NI flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it. Only touched when the environment variable NoTimeouts is set.
  */
-/* xnni_ni_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_ni_flow: rw64, reset 0x0 */
 #define SHUB_XNNI_NI_FLOW                            0x1500303e0 /* established */
 #define SHUB_XNNI_NI_FLOW_COUNT                      2
 #define SHUB_XNNI_NI_FLOW_STRIDE                     512
@@ -1565,7 +1565,7 @@
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher (SH_XNNI1_*, PROM-confirmed for DEAD_FLOW at 0x1_5003_05f0). dead-lock flow limits of the crossbar-to-NI path (vc limit, dynamic and captured counters; a zero limit disables the check, header). The PROM reads it and writes it back ANDed with 0xfff0fff0fff0fff0, which clears the limit fields (and the vc counters shown in the same nibbles). A plain read/write register satisfies it.
  */
-/* xnni_dead_flow: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_dead_flow: rw64, reset 0x0 */
 #define SHUB_XNNI_DEAD_FLOW                          0x1500303f0 /* established */
 #define SHUB_XNNI_DEAD_FLOW_COUNT                    2
 #define SHUB_XNNI_DEAD_FLOW_STRIDE                   512
@@ -1573,7 +1573,7 @@
 /*
  * NI port 0 at this offset, port 1 is 0x200 higher. Age value stamped on outgoing packets: REQUEST_INJECT bits 7:0, REPLY_INJECT bits 15:8 (header). Slot 59 reads it and writes it back with bits 15:8 set to 0xc0 (value AND 0xffffffffffff00ff OR 0xc000), only when the node has no NUMAlink 4 router entry (count 0), which is the case for a lone node. A plain read/write register satisfies it.
  */
-/* xnni_inject_age: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xnni_inject_age: rw64, reset 0x0 */
 #define SHUB_XNNI_INJECT_AGE                         0x150030400 /* established */
 #define SHUB_XNNI_INJECT_AGE_COUNT                   2
 #define SHUB_XNNI_INJECT_AGE_STRIDE                  512
@@ -1581,199 +1581,199 @@
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_lb_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_lb_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_LB_CMP_EXP_DATA1                0x150031110 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_lb_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_lb_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_LB_CMP_ENABLE0                  0x150031120 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_lb_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_lb_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_LB_CMP_ENABLE1                  0x150031130 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ii_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ii_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_II_CMP_EXP_DATA0                0x150031140 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ii_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ii_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_II_CMP_EXP_DATA1                0x150031150 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ii_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ii_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_II_CMP_ENABLE0                  0x150031160 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ii_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ii_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_II_CMP_ENABLE1                  0x150031170 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_md_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_md_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_MD_CMP_EXP_DATA0                0x150031180 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_md_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_md_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_MD_CMP_EXP_DATA1                0x150031190 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_md_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_md_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_MD_CMP_ENABLE0                  0x1500311a0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_md_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_md_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_MD_CMP_ENABLE1                  0x1500311b0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_pi_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_pi_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_PI_CMP_EXP_DATA0                0x1500311c0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_pi_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_pi_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_PI_CMP_EXP_DATA1                0x1500311d0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_pi_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_pi_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_PI_CMP_ENABLE0                  0x1500311e0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_pi_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_pi_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_PI_CMP_ENABLE1                  0x1500311f0 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni0_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni0_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI0_CMP_EXP_DATA0               0x150031200 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni0_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni0_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI0_CMP_EXP_DATA1               0x150031210 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni0_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni0_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI0_CMP_ENABLE0                 0x150031220 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni0_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni0_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI0_CMP_ENABLE1                 0x150031230 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni1_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni1_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI1_CMP_EXP_DATA0               0x150031240 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni1_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni1_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI1_CMP_ENABLE0                 0x150031260 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it twice per node (first and last of the five lists), as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_iilb_ni1_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_iilb_ni1_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_IILB_NI1_CMP_ENABLE1                 0x150031270 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_iilb_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_iilb_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_PI_IILB_CMP_EXP_DATA0                0x150031300 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_iilb_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_iilb_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_PI_IILB_CMP_EXP_DATA1                0x150031310 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_iilb_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_iilb_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_PI_IILB_CMP_ENABLE0                  0x150031320 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_iilb_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_iilb_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_PI_IILB_CMP_ENABLE1                  0x150031330 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_ni0_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_ni0_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_PI_NI0_CMP_EXP_DATA0                 0x150031340 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_ni0_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_ni0_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_PI_NI0_CMP_ENABLE0                   0x150031360 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_ni0_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_ni0_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_PI_NI0_CMP_ENABLE1                   0x150031370 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_sic_cmp_exp_hdr0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_sic_cmp_exp_hdr0: rw64, reset 0x0 */
 #define SHUB_XN_PI_SIC_CMP_EXP_HDR0                  0x1500313c0 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_sic_cmp_exp_hdr1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_sic_cmp_exp_hdr1: rw64, reset 0x0 */
 #define SHUB_XN_PI_SIC_CMP_EXP_HDR1                  0x1500313d0 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_sic_cmp_hdr_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_sic_cmp_hdr_enable0: rw64, reset 0x0 */
 #define SHUB_XN_PI_SIC_CMP_HDR_ENABLE0               0x1500313e0 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM zeroes once per node; no reader was found. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_pi_sic_cmp_hdr_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_pi_sic_cmp_hdr_enable1: rw64, reset 0x0 */
 #define SHUB_XN_PI_SIC_CMP_HDR_ENABLE1               0x1500313f0 /* established */
 
 /*
@@ -1805,97 +1805,97 @@
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM loads, stores and zeroes; the values it keeps are not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_ni0_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_ni0_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_MD_NI0_CMP_ENABLE1                   0x150031570 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM uses as a counter, loading it and storing the value plus one. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_ni1_cmp_exp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_ni1_cmp_exp_data0: rw64, reset 0x0 */
 #define SHUB_XN_MD_NI1_CMP_EXP_DATA0                 0x150031580 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_ni1_cmp_exp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_ni1_cmp_exp_data1: rw64, reset 0x0 */
 #define SHUB_XN_MD_NI1_CMP_EXP_DATA1                 0x150031590 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage. Zeroed once per node, then read back by an error-record routine: 15a0 as a test-and-set flag word (bits 0x20, 0x40, 0x80, 0x100, 0x400), 1360 as a write-if-zero word and 1370 as an OR-accumulating word. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_ni1_cmp_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_ni1_cmp_enable0: rw64, reset 0x0 */
 #define SHUB_XN_MD_NI1_CMP_ENABLE0                   0x1500315a0 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_ni1_cmp_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_ni1_cmp_enable1: rw64, reset 0x0 */
 #define SHUB_XN_MD_NI1_CMP_ENABLE1                   0x1500315b0 /* established */
 
 /*
  * A debug-compare word of the node crossbar, in the block the PROM also uses for plain storage (0x1500 to 0x1560). The PROM writes 0 to it twice from a routine in the SAL_B image; no reader was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_exp_hdr0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_exp_hdr0: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_EXP_HDR0                  0x1500315c0 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: storage the PROM sets to 0xff00000000 and reads back per slice. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_hdr_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_hdr_enable0: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_HDR_ENABLE0               0x1500315e0 /* established */
 
 /*
  * A debug-compare word of the node crossbar that the PROM uses as plain storage: a word the PROM only reads, through the global window of a NASID it is given; the value is not decoded. A model must return what was written, all 64 bits. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data0: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA0                     0x150031600 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data1: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA1                     0x150031610 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data2: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data2: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA2                     0x150031620 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data3: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data3: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA3                     0x150031630 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data_enable0: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data_enable0: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA_ENABLE0              0x150031640 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data_enable1: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data_enable1: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA_ENABLE1              0x150031650 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data_enable2: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data_enable2: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA_ENABLE2              0x150031660 /* established */
 
 /*
  * A debug-compare word of the node crossbar. The PROM writes 0 to it once per node, as an 8-byte store through the global window, in the lists it zeroes after 15a0, 1360 and 1370. No read-back was found. Whether a non-zero value arms a hardware compare trigger is unknown.
  */
-/* xn_md_sic_cmp_data_enable3: rw64, reset 0x0; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* xn_md_sic_cmp_data_enable3: rw64, reset 0x0 */
 #define SHUB_XN_MD_SIC_CMP_DATA_ENABLE3              0x150031670 /* established */
 
 /*
  * Junk bus LED registers, one per processor slice (header SH1_REAL_JUNK_BUS_LED0 to 3, 64 KiB apart). The kernel keeps an 8-bit LED state per processor and stores it with a 16-bit write at LED0 plus slice times 64 KiB: bit 0 is the heartbeat, toggled twice a second from the timer interrupt, bit 1 an activity flag. The junk bus also holds the UART whose interrupt is event_occurred bit 20.
  */
-/* junk_bus_led: w16, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
+/* junk_bus_led: w16, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset */
 #define SHUB_JUNK_BUS_LED                            0x7fed00000 /* established */
 #define SHUB_JUNK_BUS_LED_COUNT                      4
 #define SHUB_JUNK_BUS_LED_STRIDE                     65536

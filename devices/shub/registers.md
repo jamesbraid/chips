@@ -1,13 +1,12 @@
 <!-- generated from devices/shub/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 0992044f04abf22b8eaa26431d14cd99899711926827c5590149f06a49a6662f -->
+<!-- input sha256 c27c4ba4b09b56b6270264238125032654f58c5a4b6632a33d80294f299d9aed -->
 
 # SHub 1 registers outside the I/O interface: interrupts, local block, real-time clock, PIO write status, TLB purge, junk bus LEDs
 
 SHub 1 offsets as the SGI Linux ia64 platform header defines them (SH1_ names), relative to the node's register space; the SHub 2 overlay changes them. Every register is 64 bits wide unless noted, because the kernel reaches all of them with 64-bit loads and stores. The header gives neither the unit a register belongs to nor reset values; the unit named in each doc is inferred from the register's name prefix and address block. Reset values are unknown except where the header's INIT macro names a value, which is recorded as inferred. Roles are paraphrased from the header comments and the kernel's use. For a register Linux does not define, a register-level grade of established covers the offset, width and direction read in the PROM image; what the register means is graded in its fields and doc, inferred unless stated.
 
 Unit `shub`, macro prefix `SHUB`.
-Default source: Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver.
 
 Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
 
@@ -37,7 +36,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_reg_0003_0000` | 0x100030000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM sites 0xffa785cc (read) and 0xffa785ec (write); no Linux v5.3 name |
 | `md_dqlp_dir_presvec` | 0x100030100 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (stores after the node-table loop; names SH_MD_DQLP_MMR_DIR_PRESVEC0 to 3 in the PROM table) |
 | `md_reg_0003_0200` | 0x100030200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7729c (write loop); no Linux v5.3 name |
-| `md_dqlp_dir_privilege_vector` | 0x100030300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_dqlp_dir_privilege_vector` | 0x100030300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `md_dqlp_dir_privec` | 0x100030310 | w | 64 | 7 |  | unknown | established | SAL 5.04 PROM site 0xffa79960 (constants), names SH_MD_DQLP_MMR_DIR_PRIVEC1 to 7 in the PROM table |
 | `md_reg_0003_0400` | 0x100030400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa773fc (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_lp` | 0x100031000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b10c (memctl_write_dir_access, the string the routine prints); no Linux v5.3 name |
@@ -48,30 +47,30 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_reg_0005_0000` | 0x100050000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7861c (write); no Linux v5.3 name |
 | `md_dqrp_dir_presvec` | 0x100050100 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (names SH_MD_DQRP_MMR_DIR_PRESVEC0 to 3 in the PROM table) |
 | `md_reg_0005_0200` | 0x100050200 | w | 64 | 8 |  | unknown | established | SAL 5.04 PROM site 0xffa7732c (write loop); no Linux v5.3 name |
-| `md_dqrp_dir_privilege_vector` | 0x100050300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `md_dqrp_dir_privilege_vector` | 0x100050300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `md_dqrp_dir_privec` | 0x100050310 | w | 64 | 7 |  | unknown | established | SAL 5.04 PROM site 0xffa79960, names SH_MD_DQRP_MMR_DIR_PRIVEC1 to 7 in the PROM table |
 | `md_reg_0005_0400` | 0x100050400 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa7742c (write); the only reference to the address in SAL_A and SAL_B |
 | `md_dir_access_rp` | 0x100051000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa6b14c; no Linux v5.3 name |
-| `ii_int` | 0x110000000 | w | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ii_int_config` | 0x110000080 | rw | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ii_int_enable` | 0x110000200 | rw | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ii_int` | 0x110000000 | w | 64 | 2 |  | unknown | established |  |
+| `ii_int_config` | 0x110000080 | rw | 64 | 2 |  | unknown | established |  |
+| `ii_int_enable` | 0x110000200 | rw | 64 | 2 |  | unknown | established |  |
 | `int_node_id_config` | 0x110000300 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffb73d76 and 0xffa23b16 (0x800 plus the target NASID in bits 10:0) |
-| `ipi_int` | 0x110000380 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ipi_int` | 0x110000380 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `ipi_int_enable` | 0x110000400 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa11056 (wake-up of the other processors) and 0xffa314a6; runtime cpu_launch_slave_threads |
 | `local_int_config` | 0x110000480 | rw | 64 | 6 |  | unknown | established | SAL 5.04 PROM sites 0xffa23a20 (interrupts 0 and 1, PMI vector 1), 0xffa31290 (interrupts 2 and 3, INIT), 0xffb73b86 (interrupt 5, vector 0xe9) |
 | `local_int_enable` | 0x110000500 | rw | 64 | 6 |  | unknown | established | SAL 5.04 PROM sites 0xffa23a20 (0x7ef to interrupts 0 and 1), 0xffa31290 (0x4000 to interrupts 2 and 3), 0xffb73bc6 (0x2000 to interrupt 5) |
-| `proc_err_int_config` | 0x110000a80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `proc_adv_int_config` | 0x110000c80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `proc_err_int_enable` | 0x110000e80 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `proc_adv_int_enable` | 0x110001080 | rw | 64 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `profile_int_config` | 0x110001280 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `profile_int_enable` | 0x110001300 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `proc_err_int_config` | 0x110000a80 | rw | 64 | 4 |  | unknown | established |  |
+| `proc_adv_int_config` | 0x110000c80 | rw | 64 | 4 |  | unknown | established |  |
+| `proc_err_int_enable` | 0x110000e80 | rw | 64 | 4 |  | unknown | established |  |
+| `proc_adv_int_enable` | 0x110001080 | rw | 64 | 4 |  | unknown | established |  |
+| `profile_int_config` | 0x110001280 | rw | 64 |  |  | unknown | established |  |
+| `profile_int_enable` | 0x110001300 | rw | 64 |  |  | unknown | established |  |
 | `rtc0_int_config` | 0x110001380 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa31966 (pid << 4 plus 8: agent bit set, type 0, vector 0); runtime plat_assert_berr |
 | `rtc0_int_enable` | 0x110001400 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa31a06 (write 1), 0xffa31d76 (write 0) |
-| `rtc_int_config` | 0x110001480 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `rtc_int_enable` | 0x110001500 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `event_occurred` | 0x110010000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `event_occurred_alias` | 0x110010008 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `rtc_int_config` | 0x110001480 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `rtc_int_enable` | 0x110001500 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `event_occurred` | 0x110010000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `event_occurred_alias` | 0x110010008 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `event_overflow` | 0x110010080 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM register-name table (SH_EVENT_OVERFLOW, pairing by table order); the PROM never accesses it |
 | `event_overflow_alias` | 0x110010088 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa0bb46 (write 8) |
 | `lb_reg_1002_0000` | 0x110020000 | w | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4e7f0 (offset and use); no Linux v5.3 name |
@@ -80,8 +79,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `lb_max_rep_credit_cnt` | 0x110040100 | rw | 64 |  |  | 0x1f (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_LB_MAX_REP_CREDIT_CNT_INIT macro, value 0x1f) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REP_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 134); SAL 5.04 PROM site 0xffa95f3c (read), 0xffa95f6c (write) |
 | `lb_max_req_credit_cnt` | 0x110040180 | rw | 64 |  |  | 0x1f (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_LB_MAX_REQ_CREDIT_CNT_INIT macro, value 0x1f) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_LB_MAX_REQ_CREDIT_CNT (name, offset, mask 0x1f, field); the PROM's register-name table carries the name (record 135); SAL 5.04 PROM site 0xffa95f7c (read), 0xffa95fbc (write) |
 | `conveyor_belt_time_out` | 0x110040300 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CONVEYOR_BELT_TIME_OUT_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CONVEYOR_BELT_TIME_OUT (name, offset, mask 0xfff, field); the PROM's register-name table carries the name (record 138); SAL 5.04 PROM site 0xffa9613c (read), 0xffa9615c (write) |
-| `lb_error_detail` | 0x110050200 | rw | 64 | 5 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `lb_error_summary` | 0x110050580 | r | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `lb_error_detail` | 0x110050200 | rw | 64 | 5 |  | 0x0 (inferred) | established |  |
+| `lb_error_summary` | 0x110050580 | r | 64 |  |  | 0x0 (inferred) | established |  |
 | `lb_reg_1005_0608` | 0x110050608 | w | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa24dec (store 0 through 0xffa0e640, in pio_wt_st_force_err 0xffa24cc0); no register at this offset in the SGI 2.4 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5; SH_LB_FIRST_ERROR is 0x600, SH_LB_LAST_CREDIT 0x680), none in Linux v5.3, none in the PROM's register name table (0xffbfb460) |
 | `cpu_perm` | 0x110060000 | rw | 64 |  |  | 0xffffffffffffffff (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CPU_PERM_INIT macro, 0xffffffffffffffff; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CPU_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 529 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bbc (write) |
 | `ext_io_perm` | 0x110060100 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_EXT_IO_PERM_INIT macro, 0; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_EXT_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 531 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97cac (write) |
@@ -89,27 +88,27 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `rtc_ctl` | 0x110060280 | rw | 64 |  |  | 0x100000000 (inferred) | established | SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field |
 | `io_perm` | 0x110060380 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_IO_PERM_INIT macro, 0; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IO_PERM (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0); the PROM's register-name table carries the name (SAL 5.04 image, record 536 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97c4c (write) |
 | `ioi_access` | 0x110060400 | rw | 64 |  |  | 0xffffffffffffffff (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_IOI_ACCESS_INIT macro, 0xffffffffffffffff; no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_IOI_ACCESS (name, offset, mask 0xffffffffffffffff, field ACCESS_BITS, INIT 0xffffffffffffffff); the PROM's register-name table carries the name (SAL 5.04 image, record 537 of the table from 0xffbfabb0); SAL 5.04 PROM site 0xffa97bec (write) |
-| `ipi_access` | 0x110060480 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `ipi_access` | 0x110060480 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `md_clk_sel` | 0x110060500 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa77e0c (read through the node's global window), 0xffa77e20 (mask); no Linux v5.3 name |
-| `shub_id` | 0x110060580 | rw | 64 |  |  | 0x10300000000000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `shub_id` | 0x110060580 | rw | 64 |  |  | 0x10300000000000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `shubs_present` | 0x110060600 | w | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffa79310 (names SH_SHUBS_PRESENT0 to 3 in the PROM table) |
-| `vec_data` | 0x110066000 | w | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `vec_parms` | 0x110066080 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `vec_route` | 0x110066100 | w | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `vec_rddata` | 0x110074000 | r | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `vec_status` | 0x110074100 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ptc` | 0x1101a0000 | w | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `vec_data` | 0x110066000 | w | 64 |  |  | 0x0 (inferred) | established |  |
+| `vec_parms` | 0x110066080 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `vec_route` | 0x110066100 | w | 64 |  |  | 0x0 (inferred) | established |  |
+| `vec_rddata` | 0x110074000 | r | 64 |  |  | 0x0 (inferred) | established |  |
+| `vec_status` | 0x110074100 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `ptc` | 0x1101a0000 | w | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `ptc_parms` | 0x1101a0100 | rw | 64 |  |  | 0x7ffffffff (inferred) | inferred | SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS |
 | `int_cmpa` | 0x1101b0000 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa319e6 (the counter plus the delay in ticks) |
-| `int_cmp` | 0x1101b0080 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `rtc` | 0x1101c0000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `scratch1` | 0x1101d0080 | rw | 64 |  |  | 0x0 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `scratch1_alias` | 0x1101d0088 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `int_cmp` | 0x1101b0080 | rw | 64 | 3 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `rtc` | 0x1101c0000 | rw | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `scratch1` | 0x1101d0080 | rw | 64 |  |  | 0x0 | established |  |
+| `scratch1_alias` | 0x1101d0088 | w | 64 |  |  | unknown | established |  |
 | `lb_l1_state` | 0x1101d0100 | rw | 64 |  |  | 0x0 (inferred) | established | SAL 5.04 PROM site 0xffc4e790 and 0xffc4e7a0 (read-modify-write); the PROM's runtime also names the word sc_shub_state_reg and sc_shub_pushed_data_reg |
-| `lb_lock2` | 0x1101d0180 | w | 64 |  |  | 0x0 (inferred) | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `lb_lock2_status` | 0x1101d0188 | r | 64 |  |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `lb_lock` | 0x1101d0200 | rw | 64 |  |  | 0x0 (inferred) | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `lb_lock_status` | 0x1101d0208 | r | 64 |  |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `lb_lock2` | 0x1101d0180 | w | 64 |  |  | 0x0 (inferred) | inferred |  |
+| `lb_lock2_status` | 0x1101d0188 | r | 64 |  |  | unknown | inferred |  |
+| `lb_lock` | 0x1101d0200 | rw | 64 |  |  | 0x0 (inferred) | inferred |  |
+| `lb_lock_status` | 0x1101d0208 | r | 64 |  |  | unknown | inferred |  |
 | `crb_message_control` | 0x120000000 | rw | 64 |  |  | 0x6 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_MESSAGE_CONTROL_INIT macro (value 6); the macro name says initial value, no source states a power-on default) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_MESSAGE_CONTROL, 'Coherent Request Buffer Message Control' (name, offset, bits 11:0 and 63:32); the PROM's own register-name table carries the same name (SAL 5.04 image, table site 0xffbfd280, followed by NACK_LIMIT and TIMEOUT_PRESCALE in the header's order); SAL 5.04 PROM site 0xffa97796 to 0xffa97916 (read, OR, write) and site 0xffc4e276 (SAL_A error path). Linux v5.3 dropped the register |
 | `crb_nack_limit` | 0x120000080 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_NACK_LIMIT_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_NACK_LIMIT (name, offset, fields); the PROM's register-name table carries the name at the next entry after SH_CRB_MESSAGE_CONTROL |
 | `crb_timeout_prescale` | 0x120000100 | rw | 64 |  |  | 0x0 (inferred; SGI Linux 2.4 ia64 SN2 header: the SH_CRB_TIMEOUT_PRESCALE_INIT macro, value zero) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5): SH_CRB_TIMEOUT_PRESCALE (name, offset, field); the PROM's register-name table carries the name two entries after SH_CRB_MESSAGE_CONTROL |
@@ -118,7 +117,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `fsb_vga_remap` | 0x120010180 | rw | 64 |  |  | 0x0 (inferred) | established | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) |
 | `pi_slice_present` | 0x120020080 | r | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) |
 | `pi_afi_error_mask` | 0x120050080 | rw | 64 |  |  | 0x7ffe00000 (inferred) | established | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
-| `pi_cam_control` | 0x120050300 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `pi_cam_control` | 0x120050300 | w | 64 |  |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 | `pi_crbp_error_mask` | 0x120050500 | rw | 64 |  |  | 0x1fffff (inferred) | established | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
 | `pi_error_mask` | 0x120050a80 | rw | 64 |  |  | 0x7ffffffff (inferred) | established | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
 | `pi_afi_first_error` | 0x120060080 | rw | 64 |  |  | unknown | inferred | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
@@ -126,92 +125,92 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `pi_reg_2006_0180` | 0x120060180 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa246d6; no Linux v5.3 name |
 | `pi_reg_2006_0200` | 0x120060200 | r | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffa246f6; no Linux v5.3 name |
 | `pi_crbp_first_error` | 0x120060480 | rw | 64 |  |  | unknown | inferred | SGI Linux 2.4 ia64 SN2 header (name, offset, valid bits, INIT); SAL 5.04 PROM sites 0xffa236f0 (early list) and 0xffa23600 (main_three list), both through the list writer 0xffae3f50 |
-| `pi_error_detail_1` | 0x120060500 | r | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `pio_write_status` | 0x120070200 | r | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `pio_write_status_alias` | 0x120070208 | w | 64 | 2 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_stat` | 0x150000000 | r | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_reset` | 0x150000008 | w | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_reset_en` | 0x150000010 | rw | 64 | 2 |  | 0x1 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_chan_mode` | 0x150000018 | r | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_config` | 0x150000020 | rw | 64 | 2 |  | 0x7fc6ffd00 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_test_ctl` | 0x150000028 | rw | 64 | 2 |  | 0xa5fffff (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni_llp_err` | 0x150000048 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni0_link_flow` | 0x150001040 | r | 64 | 4 |  | 0x1800 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni1_link_flow` | 0x150003040 | r | 64 | 4 |  | 0x1800 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `iilb_local_table` | 0x150020000 | rw | 64 | 128 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `iilb_global_table` | 0x150020400 | rw | 64 | 16 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `iilb_over_ride_table` | 0x150020480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `pi_local_table` | 0x150021000 | rw | 64 | 128 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `pi_global_table` | 0x150021400 | rw | 64 | 16 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `pi_over_ride_table` | 0x150021480 | rw | 64 |  |  | 0x8000000000002000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni0_local_table` | 0x150022000 | rw | 64 | 128 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni0_global_table` | 0x150022400 | rw | 64 | 16 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni0_over_ride_table` | 0x150022480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni1_local_table` | 0x150023000 | rw | 64 | 128 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni1_global_table` | 0x150023400 | rw | 64 | 16 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `ni1_over_ride_table` | 0x150023480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `md_local_table` | 0x150024000 | rw | 64 | 128 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `md_global_table` | 0x150024400 | rw | 64 | 16 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `md_over_ride_table` | 0x150024480 | rw | 64 |  |  | 0x8000000000002000 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_vcswitch_flow` | 0x1500303a0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_fifo02_flow` | 0x1500303c0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_fifo13_flow` | 0x1500303d0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_ni_flow` | 0x1500303e0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_dead_flow` | 0x1500303f0 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xnni_inject_age` | 0x150030400 | rw | 64 | 2 |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_lb_cmp_exp_data1` | 0x150031110 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_lb_cmp_enable0` | 0x150031120 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_lb_cmp_enable1` | 0x150031130 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ii_cmp_exp_data0` | 0x150031140 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ii_cmp_exp_data1` | 0x150031150 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ii_cmp_enable0` | 0x150031160 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ii_cmp_enable1` | 0x150031170 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_md_cmp_exp_data0` | 0x150031180 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_md_cmp_exp_data1` | 0x150031190 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_md_cmp_enable0` | 0x1500311a0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_md_cmp_enable1` | 0x1500311b0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_pi_cmp_exp_data0` | 0x1500311c0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_pi_cmp_exp_data1` | 0x1500311d0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_pi_cmp_enable0` | 0x1500311e0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_pi_cmp_enable1` | 0x1500311f0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni0_cmp_exp_data0` | 0x150031200 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni0_cmp_exp_data1` | 0x150031210 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni0_cmp_enable0` | 0x150031220 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni0_cmp_enable1` | 0x150031230 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni1_cmp_exp_data0` | 0x150031240 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni1_cmp_enable0` | 0x150031260 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_iilb_ni1_cmp_enable1` | 0x150031270 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_iilb_cmp_exp_data0` | 0x150031300 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_iilb_cmp_exp_data1` | 0x150031310 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_iilb_cmp_enable0` | 0x150031320 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_iilb_cmp_enable1` | 0x150031330 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_ni0_cmp_exp_data0` | 0x150031340 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_ni0_cmp_enable0` | 0x150031360 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_ni0_cmp_enable1` | 0x150031370 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_sic_cmp_exp_hdr0` | 0x1500313c0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_sic_cmp_exp_hdr1` | 0x1500313d0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_sic_cmp_hdr_enable0` | 0x1500313e0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_pi_sic_cmp_hdr_enable1` | 0x1500313f0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `pi_error_detail_1` | 0x120060500 | r | 64 |  |  | 0x0 (inferred) | established |  |
+| `pio_write_status` | 0x120070200 | r | 64 | 2 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `pio_write_status_alias` | 0x120070208 | w | 64 | 2 |  | unknown | inferred | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
+| `ni_llp_stat` | 0x150000000 | r | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `ni_llp_reset` | 0x150000008 | w | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `ni_llp_reset_en` | 0x150000010 | rw | 64 | 2 |  | 0x1 (inferred) | established |  |
+| `ni_llp_chan_mode` | 0x150000018 | r | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `ni_llp_config` | 0x150000020 | rw | 64 | 2 |  | 0x7fc6ffd00 (inferred) | established |  |
+| `ni_llp_test_ctl` | 0x150000028 | rw | 64 | 2 |  | 0xa5fffff (inferred) | established |  |
+| `ni_llp_err` | 0x150000048 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni0_link_flow` | 0x150001040 | r | 64 | 4 |  | 0x1800 (inferred) | established |  |
+| `xnni1_link_flow` | 0x150003040 | r | 64 | 4 |  | 0x1800 (inferred) | established |  |
+| `iilb_local_table` | 0x150020000 | rw | 64 | 128 |  | 0x0 (inferred) | established |  |
+| `iilb_global_table` | 0x150020400 | rw | 64 | 16 |  | 0x0 (inferred) | established |  |
+| `iilb_over_ride_table` | 0x150020480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established |  |
+| `pi_local_table` | 0x150021000 | rw | 64 | 128 |  | 0x0 (inferred) | established |  |
+| `pi_global_table` | 0x150021400 | rw | 64 | 16 |  | 0x0 (inferred) | established |  |
+| `pi_over_ride_table` | 0x150021480 | rw | 64 |  |  | 0x8000000000002000 (inferred) | established |  |
+| `ni0_local_table` | 0x150022000 | rw | 64 | 128 |  | 0x0 (inferred) | established |  |
+| `ni0_global_table` | 0x150022400 | rw | 64 | 16 |  | 0x0 (inferred) | established |  |
+| `ni0_over_ride_table` | 0x150022480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established |  |
+| `ni1_local_table` | 0x150023000 | rw | 64 | 128 |  | 0x0 (inferred) | established |  |
+| `ni1_global_table` | 0x150023400 | rw | 64 | 16 |  | 0x0 (inferred) | established |  |
+| `ni1_over_ride_table` | 0x150023480 | rw | 64 |  |  | 0x8000000000000000 (inferred) | established |  |
+| `md_local_table` | 0x150024000 | rw | 64 | 128 |  | 0x0 (inferred) | established |  |
+| `md_global_table` | 0x150024400 | rw | 64 | 16 |  | 0x0 (inferred) | established |  |
+| `md_over_ride_table` | 0x150024480 | rw | 64 |  |  | 0x8000000000002000 (inferred) | established |  |
+| `xnni_vcswitch_flow` | 0x1500303a0 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni_fifo02_flow` | 0x1500303c0 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni_fifo13_flow` | 0x1500303d0 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni_ni_flow` | 0x1500303e0 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni_dead_flow` | 0x1500303f0 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xnni_inject_age` | 0x150030400 | rw | 64 | 2 |  | 0x0 (inferred) | established |  |
+| `xn_iilb_lb_cmp_exp_data1` | 0x150031110 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_lb_cmp_enable0` | 0x150031120 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_lb_cmp_enable1` | 0x150031130 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ii_cmp_exp_data0` | 0x150031140 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ii_cmp_exp_data1` | 0x150031150 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ii_cmp_enable0` | 0x150031160 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ii_cmp_enable1` | 0x150031170 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_md_cmp_exp_data0` | 0x150031180 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_md_cmp_exp_data1` | 0x150031190 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_md_cmp_enable0` | 0x1500311a0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_md_cmp_enable1` | 0x1500311b0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_pi_cmp_exp_data0` | 0x1500311c0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_pi_cmp_exp_data1` | 0x1500311d0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_pi_cmp_enable0` | 0x1500311e0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_pi_cmp_enable1` | 0x1500311f0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni0_cmp_exp_data0` | 0x150031200 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni0_cmp_exp_data1` | 0x150031210 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni0_cmp_enable0` | 0x150031220 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni0_cmp_enable1` | 0x150031230 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni1_cmp_exp_data0` | 0x150031240 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni1_cmp_enable0` | 0x150031260 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_iilb_ni1_cmp_enable1` | 0x150031270 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_iilb_cmp_exp_data0` | 0x150031300 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_iilb_cmp_exp_data1` | 0x150031310 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_iilb_cmp_enable0` | 0x150031320 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_iilb_cmp_enable1` | 0x150031330 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_ni0_cmp_exp_data0` | 0x150031340 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_ni0_cmp_enable0` | 0x150031360 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_ni0_cmp_enable1` | 0x150031370 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_sic_cmp_exp_hdr0` | 0x1500313c0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_sic_cmp_exp_hdr1` | 0x1500313d0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_sic_cmp_hdr_enable0` | 0x1500313e0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_pi_sic_cmp_hdr_enable1` | 0x1500313f0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
 | `cpu_hist` | 0x150031500 | rw | 64 | 4 |  | unknown | established | SAL 5.04 PROM site 0xffc4e5c6 and 0xffc4e5e0 (progress write), 0xffa0ddb0; no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset |
 | `fw_word_1540` | 0x150031540 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea06 (zeroed by the election winner), 0xffa0efd0 to 0xffa0f640 (bit methods), 0xffa5d48c (zeroed on another node); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset |
 | `cpu_bits` | 0x150031550 | rw | 64 |  |  | unknown | established | SAL 5.04 PROM site 0xffc4ea00 (zeroed), 0xffa0e730 (set and clear a bit under the lock), 0xffa1d430 (test), 0xffa99cf0 and 0xffa9a130 (arbitration); no Linux v5.3 name; SGI 2.4 SN2 header (Linux/MIPS tree, linux-2.4 branch, commit 8ef7d46c94d5) names the offset |
 | `fw_debug_word` | 0x150031560 | rw | 64 |  |  | unknown | inferred | SAL 5.04 PROM site 0xffc4ea10 (zeroed in SAL_A), 0xffa19e50 (loaded from the L1 reply in phase 0xe), 0xffa975e0 (bit test), 0xffa974d0 (field setter) |
-| `xn_md_ni0_cmp_enable1` | 0x150031570 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_ni1_cmp_exp_data0` | 0x150031580 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_ni1_cmp_exp_data1` | 0x150031590 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_ni1_cmp_enable0` | 0x1500315a0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_ni1_cmp_enable1` | 0x1500315b0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_exp_hdr0` | 0x1500315c0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_hdr_enable0` | 0x1500315e0 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data0` | 0x150031600 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data1` | 0x150031610 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data2` | 0x150031620 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data3` | 0x150031630 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data_enable0` | 0x150031640 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data_enable1` | 0x150031650 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data_enable2` | 0x150031660 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `xn_md_sic_cmp_data_enable3` | 0x150031670 | rw | 64 |  |  | 0x0 (inferred) | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
-| `junk_bus_led` | 0x7fed00000 | w | 16 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |
+| `xn_md_ni0_cmp_enable1` | 0x150031570 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_ni1_cmp_exp_data0` | 0x150031580 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_ni1_cmp_exp_data1` | 0x150031590 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_ni1_cmp_enable0` | 0x1500315a0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_ni1_cmp_enable1` | 0x1500315b0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_exp_hdr0` | 0x1500315c0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_hdr_enable0` | 0x1500315e0 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data0` | 0x150031600 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data1` | 0x150031610 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data2` | 0x150031620 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data3` | 0x150031630 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data_enable0` | 0x150031640 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data_enable1` | 0x150031650 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data_enable2` | 0x150031660 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `xn_md_sic_cmp_data_enable3` | 0x150031670 | rw | 64 |  |  | 0x0 (inferred) | established |  |
+| `junk_bus_led` | 0x7fed00000 | w | 16 | 4 |  | unknown | established | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |
 
 ### Register `chip_id`
 
@@ -516,8 +515,8 @@ Array of 2 registers, stride 256.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 8 | `send` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Send the interrupt message to the processor interface. |
-| 7:0 | `idx` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Targeted processor interrupt vector. |
+| 8 | `send` | established |  |  | Send the interrupt message to the processor interface. |
+| 7:0 | `idx` | established |  |  | Targeted processor interrupt vector. |
 
 ### Register `ii_int_config`
 
@@ -527,10 +526,10 @@ Array of 2 registers, stride 256.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 49:21 | `base` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 19:4 | `pid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 3 | `agent` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Agent, must be 0 for SHub. |
-| 2:0 | `type` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Interrupt type: 0 interrupt, 2 PMI, 4 NMI, 5 INIT. |
+| 49:21 | `base` | established |  |  |  |
+| 19:4 | `pid` | established |  |  |  |
+| 3 | `agent` | established |  |  | Agent, must be 0 for SHub. |
+| 2:0 | `type` | established |  |  | Interrupt type: 0 interrupt, 2 PMI, 4 NMI, 5 INIT. |
 
 ### Register `ii_int_enable`
 
@@ -540,7 +539,7 @@ Array of 2 registers, stride 128.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+| 0 | `enable` | established |  |  |  |
 
 ### Register `int_node_id_config`
 
@@ -552,12 +551,12 @@ Send an interprocessor interrupt (processor interface or local block, inferred).
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `send` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Sending the message; the header says it generates a pulse. |
-| 59:52 | `idx` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Interrupt vector delivered to the target processor. |
-| 49:21 | `base` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Optional interrupt vector area, 2 MiB aligned. The kernel always puts 0xfee here. |
-| 19:4 | `pid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Processor id, the same value the target processor's SAPIC id holds. |
-| 3 | `agent` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Must be zero for SHub. |
-| 2:0 | `type` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Interrupt type: 0 interrupt, 2 platform management interrupt, 4 NMI, 5 INIT. |
+| 63 | `send` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Sending the message; the header says it generates a pulse. |
+| 59:52 | `idx` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Interrupt vector delivered to the target processor. |
+| 49:21 | `base` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Optional interrupt vector area, 2 MiB aligned. The kernel always puts 0xfee here. |
+| 19:4 | `pid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Processor id, the same value the target processor's SAPIC id holds. |
+| 3 | `agent` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Must be zero for SHub. |
+| 2:0 | `type` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Interrupt type: 0 interrupt, 2 platform management interrupt, 4 NMI, 5 INIT. |
 
 ### Register `ipi_int_enable`
 
@@ -631,11 +630,11 @@ Array of 3 registers, stride 256.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 59:52 | `idx` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 49:21 | `base` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 19:4 | `pid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 3 | `agent` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
-| 2:0 | `type` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+| 59:52 | `idx` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
+| 49:21 | `base` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
+| 19:4 | `pid` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
+| 3 | `agent` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
+| 2:0 | `type` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
 
 ### Register `rtc_int_enable`
 
@@ -645,7 +644,7 @@ Array of 3 registers, stride 256.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+| 0 | `enable` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
 
 ### Register `event_occurred`
 
@@ -653,15 +652,15 @@ Pending interrupt events for the node (SHub interrupt event occurred). The kerne
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 30 | `ii_int1` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending I/O interface interrupt 1. |
-| 29 | `ii_int0` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending I/O interface interrupt 0. |
-| 28 | `ipi_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending IPI interrupt. |
-| 26 | `rtc3_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending RTC comparator 3 interrupt. |
-| 25 | `rtc2_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending RTC comparator 2 interrupt. |
-| 24 | `rtc1_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending RTC comparator 1 interrupt. |
+| 30 | `ii_int1` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending I/O interface interrupt 1. |
+| 29 | `ii_int0` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending I/O interface interrupt 0. |
+| 28 | `ipi_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending IPI interrupt. |
+| 26 | `rtc3_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending RTC comparator 3 interrupt. |
+| 25 | `rtc2_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending RTC comparator 2 interrupt. |
+| 24 | `rtc1_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending RTC comparator 1 interrupt. |
 | 23 | `rtc0_int` | inferred |  | SAL 5.04 PROM site 0xffa31d96 (alias write 0x800000 right after RTC0's enable is cleared) | Pending RTC comparator 0 interrupt, from the sequence and from Linux numbering comparators 1 to 3 as bits 24 to 26. Name is ours. |
 | 21 | `bit21` | inferred |  | SAL 5.04 PROM site 0xffa31506 (read), 0xffa31566 (clear through the alias, 0x200000) | Read by the PROM's INIT handling before it forwards INIT to the other processors, cleared through the alias. Meaning unknown; name is ours. |
-| 20 | `uart_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Pending junk-bus UART interrupt. |
+| 20 | `uart_int` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Pending junk-bus UART interrupt. |
 | 8 | `bit8` | inferred |  | SAL 5.04 PROM site 0xffa32816 (write to the register), 0xffa23a20 (mask 0x7ef) | As bit 5. Name is ours. |
 | 5 | `bit5` | inferred |  | SAL 5.04 PROM site 0xffa32996 (write to the register), 0xffa23a20 (mask 0x7ef) | In the PROM's error mask 0x7ef; the PROM also writes this bit to the register itself in its express-path workaround. Name is ours. |
 | 3 | `bit3` | inferred |  | SAL 5.04 PROM site 0xffa0bb16 and 0xffa0bb46 | The PROM writes 8 to the alias (and to the overflow alias) of another node when it clears a processor-interface error before a remote access. Role inferred; name is ours. |
@@ -788,10 +787,10 @@ SHub identification (local block, inferred). The kernel reads only the revision,
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 52:48 | `nodes_per_bit` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback. |
+| 52:48 | `nodes_per_bit` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback. |
 | 45:44 | `size_code` | inferred |  | SAL 5.04 PROM site 0xffa95a30 | Written with 0, 1, 2 or 3 by thresholds 31, 63 and 127 on an argument (bits 10:9 masked, then halved). The meaning is inferred only; the PROM reads it in memory-presence code. Name is ours. |
 | 42:32 | `nasid` | inferred |  | SAL 5.04 PROM site 0xffa0dcf0 (read) and 0xffa95a30 (write) | Node id. Every read in the PROM forms global-window addresses from it, so the node's own global window at this id must decode to the node. The PROM replaces it once, later in boot; it must read back as written. Name is ours. Linux does not define this field (it takes the node id from firmware): the position and the PROM's replacement are what the code does, the meaning is inferred. |
-| 31:28 | `revision` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Chip revision. The kernel treats 2 or lower as SHub 1.1. |
+| 31:28 | `revision` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Chip revision. The kernel treats 2 or lower as SHub 1.1. |
 
 ### Register `shubs_present`
 
@@ -827,10 +826,10 @@ Array of 2 registers, stride 128.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 63 | `start` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Start. Set in the first write; entry 1 has its own start bit at the same position. |
-| 62:8 | `rid` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Region identifier and region number: the kernel passes the mm's context shifted left by three, ORed with the region number of the address. The upper bound is inferred from bit 63 being the start bit. |
-| 7:2 | `ps` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Page size as a power of two. The field is six bits wide only by inference: the kernel passes a value below 64 and the next field starts at bit 8. |
-| 0 | `type_bit` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header title: type. The kernel always writes 1; no other value is known. |
+| 63 | `start` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Start. Set in the first write; entry 1 has its own start bit at the same position. |
+| 62:8 | `rid` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Region identifier and region number: the kernel passes the mm's context shifted left by three, ORed with the region number of the address. The upper bound is inferred from bit 63 being the start bit. |
+| 7:2 | `ps` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Page size as a power of two. The field is six bits wide only by inference: the kernel passes a value below 64 and the next field starts at bit 8. |
+| 0 | `type_bit` | inferred |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Header title: type. The kernel always writes 1; no other value is known. |
 
 ### Register `ptc_parms`
 
@@ -853,7 +852,7 @@ Array of 3 registers, stride 128.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 54:0 | `compare` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+| 54:0 | `compare` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
 
 ### Register `rtc`
 
@@ -861,7 +860,7 @@ Real-time clock: a 55-bit counter, read by the kernel as its clock source (clock
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 54:0 | `counter` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver |  |
+| 54:0 | `counter` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset |  |
 
 ### Register `scratch1`
 
@@ -1031,10 +1030,10 @@ Array of 2 registers, stride 128.
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 63 | `writes_ok` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | No pending writes or errors (header INIT 0x8000000000000000). The PROM tests neither this bit nor the count at the first poll. |
-| 61:56 | `pending_write_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason. |
+| 61:56 | `pending_write_count` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Count of PIO writes still in flight. On SHub 1 the kernel treats all ones as idle (see PIO_WRITE_STATUS_IDLE); the header gives no reason. |
 | 49:3 | `write_error_address` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | Address associated with the error response. The PROM does not read it. |
 | 2 | `write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | An error response was detected for a PIO write. The PROM provokes it with a store to 0x1_1005_0608 and spins until this bit or multi_write_error is set. |
-| 1 | `write_deadlock` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | A deadlock response was detected for a PIO write. |
+| 1 | `write_deadlock` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | A deadlock response was detected for a PIO write. |
 | 0 | `multi_write_error` | established |  | SGI Linux 2.4 ia64 SN2 header (Linux/MIPS tree, commit 8ef7d46c94d5) SH_PIO_WRITE_STATUS_0 | More than one PIO write error occurred. The PROM self test accepts it in place of write_error. |
 
 ### Register `pio_write_status_alias`
@@ -1051,7 +1050,7 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 3:0 | `link_reset_state` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Status of LLP link (header). The PROM tests the value 9 only. |
+| 3:0 | `link_reset_state` | established |  |  | Status of LLP link (header). The PROM tests the value 9 only. |
 
 ### Register `ni_llp_reset`
 
@@ -1061,8 +1060,8 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 1 | `warm` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Send warm reset, a pulse (header). Never written by the PROM in this routine. |
-| 0 | `link` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Send link reset, a pulse (header). Written 1 by the PROM. |
+| 1 | `warm` | established |  |  | Send warm reset, a pulse (header). Never written by the PROM in this routine. |
+| 0 | `link` | established |  |  | Send link reset, a pulse (header). Written 1 by the PROM. |
 
 ### Register `ni_llp_reset_en`
 
@@ -1072,7 +1071,7 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `ok` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Allow LLP warm reset to reset SHUB (header). The PROM writes 0 (fenced port) or 1 (port kept inside the partition). |
+| 0 | `ok` | established |  |  | Allow LLP warm reset to reset SHUB (header). The PROM writes 0 (fenced port) or 1 (port kept inside the partition). |
 
 ### Register `ni_llp_chan_mode`
 
@@ -1082,7 +1081,7 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 0 | `bitmode32` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enables 32-bit (plus sideband) channel phits (header). The PROM branches on it. |
+| 0 | `bitmode32` | established |  |  | Enables 32-bit (plus sideband) channel phits (header). The PROM branches on it. |
 
 ### Register `ni_llp_config`
 
@@ -1092,10 +1091,10 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 35:26 | `ftu_time` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
-| 25:20 | `nulltimeout` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
-| 19:10 | `maxretry` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Header field; kept. |
-| 9:0 | `maxburst` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | The PROM replaces this field with 400 (0x190). |
+| 35:26 | `ftu_time` | established |  |  | Header field; kept. |
+| 25:20 | `nulltimeout` | established |  |  | Header field; kept. |
+| 19:10 | `maxretry` | established |  |  | Header field; kept. |
+| 9:0 | `maxburst` | established |  |  | The PROM replaces this field with 400 (0x190). |
 
 ### Register `ni_llp_test_ctl`
 
@@ -1105,7 +1104,7 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 41:40 | `send_test_mode` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Enables continuous send of data (header name). The PROM sets it to 3 or 0 by chan_mode.bitmode32. |
+| 41:40 | `send_test_mode` | established |  |  | Enables continuous send of data (header name). The PROM sets it to 3 or 0 by chan_mode.bitmode32. |
 
 ### Register `ni_llp_err`
 
@@ -1115,7 +1114,7 @@ Array of 2 registers, stride 8192.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 27 | `power_not_ok` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Detects and traps a loss of power_OK (header). The PROM clears it by writing the word back with the bit clear. |
+| 27 | `power_not_ok` | established |  |  | Detects and traps a loss of power_OK (header). The PROM clears it by writing the word back with the bit clear. |
 
 ### Register `xnni0_link_flow`
 
@@ -1465,11 +1464,11 @@ Array of 4 registers, stride 65536.
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `IPI_BASE_VALUE` | 0xfee | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field (2 MiB, from bit 21), which is 0x1_fdc0_0000 as an address (0xfee << 21; inferred arithmetic). It is not the 0xfee00000 of the kernel's generic interrupt base constant: that equivalence does not follow from the field position. Used with the vector in the idx field. |
-| `PIO_WRITE_STATUS_ALIAS_CLEAR` | 0x7 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment). |
-| `PIO_WRITE_STATUS_IDLE` | 0x3f00000000000000 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero. |
-| `PI_CAM_WAR_VALUE` | 0x8000000000000010 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources. |
-| `RTC_CONFIG_MASK` | 0xff3ffffffefffff | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Valid bits of an RTC interrupt configuration register (header SH_RTC1_INT_CONFIG_MASK): bits 59:52 and 49:0 except bit 20. |
-| `RTC_ENABLE_MASK` | 0x1 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Valid bits of an RTC interrupt enable register. |
-| `RTC_MASK` | 0x7fffffffffffff | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Valid bits of the real-time clock and of each comparator: 55 bits. The mmtimer driver reports 55 as the clock width. |
-| `SHUB_1_1_MAX_REVISION` | 0x2 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver | Revision field value at or below which the kernel enables its SHub 1.1 workarounds. |
+| `IPI_BASE_VALUE` | 0xfee | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Constant the kernel puts in the base field of every IPI message: 0xfee in units of the field (2 MiB, from bit 21), which is 0x1_fdc0_0000 as an address (0xfee << 21; inferred arithmetic). It is not the 0xfee00000 of the kernel's generic interrupt base constant: that equivalence does not follow from the field position. Used with the vector in the idx field. |
+| `PIO_WRITE_STATUS_ALIAS_CLEAR` | 0x7 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Value the kernel's TLB-purge deadlock recovery writes to the alias on SHub 1 to clear the deadlock, write error and multiple write error bits (assembly comment). |
+| `PIO_WRITE_STATUS_IDLE` | 0x3f00000000000000 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | What the kernel waits for the masked pending-write count to equal on SHub 1: all six bits set, not zero. The kernel comment points at a defect number for this behaviour; the defect text is not in the sources read. The SHub 2 overlay sets zero. |
+| `PI_CAM_WAR_VALUE` | 0x8000000000000010 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Value the kernel writes to the PI CAM control register from every timer tick on a SHub 1 of revision 2 or lower. Meaning not stated by the sources. |
+| `RTC_CONFIG_MASK` | 0xff3ffffffefffff | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Valid bits of an RTC interrupt configuration register (header SH_RTC1_INT_CONFIG_MASK): bits 59:52 and 49:0 except bit 20. |
+| `RTC_ENABLE_MASK` | 0x1 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Valid bits of an RTC interrupt enable register. |
+| `RTC_MASK` | 0x7fffffffffffff | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Valid bits of the real-time clock and of each comparator: 55 bits. The mmtimer driver reports 55 as the clock width. |
+| `SHUB_1_1_MAX_REVISION` | 0x2 | established | Linux v5.3 SGI SN2 platform MMR header (GPL): kernel use | Revision field value at or below which the kernel enables its SHub 1.1 workarounds. |
