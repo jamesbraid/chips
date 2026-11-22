@@ -213,7 +213,7 @@ in [firmware.md](firmware.md); `HalGetEnvironmentVariable` and `HalSetEnvironmen
 ## Boot display and graphics memory
 
 `HalpInitializeGbeDisplay0` maps the Cobalt display back end at `0xd0000000` (`0xa0` pages, 640 KiB: the mapping routine's second
-argument is a page count), reads the flat-panel identity over I2C (retrying twice), takes the screen size from one of two built-in mode records
+argument is a page count; `halborg.dll@0x8002d38d` pushes `0xa0` and `0x8002d39c` calls the mapper `0x80019080`, which sets the page-table entries of `0xa0` consecutive pages uncached. The largest offset the HAL's display routines (`0x80014f10` to `0x80015520`) use is `+0x70004` (cursor control); the gamma map `+0x60000` to `+0x603fc` and the window table `+0x48000` to `+0x4807c` are the next largest. The Windows 2000 builds contain no `0xd0000000` and no display code; the other drivers' extents are in [the display page](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/README.md)), reads the flat-panel identity over I2C (retrying twice), takes the screen size from one of two built-in mode records
 according to whether a panel answered, copies the console font into a mapped page, and builds the frame buffer in the first graphics bank (above).
 `HalpGbeDisplaySetup` stops the display engine if it is running (writing `0xffffff` to two registers at `+0x10020` and
 `+0x10024`, clearing the enable bits at `+0x3000c`, `+0x20008` and `+0x40004`, waiting a bounded 20,000 reads for three
