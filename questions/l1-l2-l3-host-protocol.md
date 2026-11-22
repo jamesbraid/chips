@@ -16,8 +16,10 @@ and [devices/l3/README.md](../devices/l3/README.md).
    argument count at offset 8, the same layout the Bedrock-side Linux v2.5.0 `sc_event` reads; a request has a two-byte code and count at offset 6. Next: where the PROM turns an L1
    event frame into the record it hands the kernel (the `0x1007` event-subchannel request and the receive path of the
    SAL `IROUTER_OP`), once a SAL runtime beyond the boot path is read.
-5. **Routing of L2-addressed traffic from a node.** *[route: software now]* How the L1 and the PROM handle a target
-   type of 1. Next: `RouteIRouter` (task 23) in the ARM L1 and the SN2 PROM's controller transaction code.
+5. **Routing of L2-addressed traffic from a node.** *[route: software now]* Partly answered: the PROM's L2-addressed traffic is
+   the task-3 texts `version`, `p <partition> rst` and `p <partition> pwr d` to `0x1ffff003`, and a ColdFire `O` L1 with no L2
+   answers a routing error (status 8). What remains is user space's use of the kernel's controller pipe and the C-brick (`5`)
+   L1's handling of the same word. See sysco `software/firmware/l2/altix-l2-model.md`.
 6. **L2 console baud.** *[route: software now]* 115 kbaud in the guide, `0x9600` in the L2 boot stage's board block.
    Next: the L2 kernel's serial driver divisor setup and the `l2term` console program.
 7. **Altix 4700 controller traffic on NUMAlink 4.** *[route: missing source]* The guide says enclosures talk over

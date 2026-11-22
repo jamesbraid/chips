@@ -48,8 +48,11 @@ sysco's.
    chunked-request notes). Grade inferred for the forwarding, established for the field.
 2. **On SN2 the PROM mediates.** The kernel's controller pipe is `SN_SAL_IROUTER_OP` ("IRouter") with one subchannel per
    open and 127-byte chunks (`snsc.c`, `sn_sal.h`, Linux v5.3). The kernel names the target by node, not by L2; the PROM
-   owns the route. How the PROM sends a request meant for an L2 is **unknown**: no SN2 PROM runtime beyond the boot
-   path is read for it.
+   owns the route. What the PROM itself sends an L2 is read: the text commands `version` (a probe), `p <partition> rst` and
+   `p <partition> pwr d`, all to destination word `0x1ffff003` through its own L1, and the L1 answers a routing error when no
+   L2 is attached ([software/firmware/snprom/l1-requests.md](../../software/firmware/snprom/l1-requests.md), "Requests after boot"; sysco
+   `software/firmware/l2/altix-l2-model.md`). Established for the PROM and for a ColdFire `O` L1. What user space sends through the
+   kernel's controller pipe is unknown.
 3. **Operators and consoles** reach the L2 by the console port, by telnet through the daemon's shell service, or by the
    Ethernet port from an L3 (SGIconsole), which sees every L1 through the L2s.
 4. **Firmware** is replaced through the L2: `flashsc --l2 <ip> ... l1.bin all` reflashes L1s, `... l2.bin local` the L2.
@@ -60,9 +63,10 @@ sysco's.
 | System | L2 | Grade and source |
 |---|---|---|
 | Origin 3000 series, Onyx 3000, Origin 300 and 350 with NUMAlink module | yes, except an Origin 3200 without one | established (007-4340-003 p. 5) |
-| Altix 3000 series (3300, 3700) | yes, except the 3700 Bx2 series per the same list | established (007-4340-003 p. 5); the Bx2 case is not independently checked |
+| Altix 3700 | yes: standard in the 3700; required in a rack with an R-brick or an L2 touch display, or for remote maintenance | established (007-4579-001 pp. 35 to 36) |
+| Altix 3700 Bx2 | no hardware L2. The L1 of a CR-brick or NUMAlink 4 R-brick acts as an L2 emulator when a USB-to-Ethernet adapter is plugged into its type A connector; the adapter goes on the bottom CR-brick (64 processors or fewer) or on named R-bricks in larger systems | established (007-4377-002 pp. 18, 24 to 25, 33 to 35; agrees with 007-4340-003 p. 5) |
 | Altix 350 and 330 | none required; an optional L2 joins through the base module's USB type B L1 port | established (007-4340-003 p. 4 for the 350; [platforms/sn2/altix-350.md](../../platforms/sn2/altix-350.md)) |
-| Altix 4700 | no L2 hardware. Every IRU has an embedded Linux system controller. The L1 application always runs. Connecting the IRU's (or a Dense router's) Ethernet connector to a live LAN makes it start the L2 application, which controls several L1s and talks to other L2s. The L1 command `l2` reports whether it runs, and `! init 4` starts it. | established (007-3938-005 pp. 3, 5, 19 to 20) |
+| Altix 4700 and 450 | no L2 hardware. Every IRU has an embedded Linux system controller. The L1 application always runs. Connecting the IRU's (or a Dense router's) Ethernet connector to a live LAN makes it start the L2 application, which controls several L1s and talks to other L2s. The L1 command `l2` reports whether it runs, and `! init 4` starts it. | established (007-3938-005 pp. 3, 5, 19 to 20; 007-3938-006 pp. 4, 13 to 14; Altix 4700 guide 007-4823-003 pp. 28, 31); the 450's own guide was not read |
 
 The NUMAlink 4 cables carry the 4700's controller traffic between enclosures by low-voltage differential signalling
 (007-3938-005 p. 5). Whether that traffic shares the NUMAlink wires or only the cable assembly is **unknown**.
@@ -80,3 +84,5 @@ the "Version diffs" section of its `COVERAGE.md`; this page did not read that co
 
 `software/firmware/l2/README.md`, `daemon.md`, `l1-conversation.md`, `partition-task.md`, `router-packet.md`,
 `platforms/l2/board-contract.md`, and `software/firmware/controllers.md`.
+
+What a model of the L2 needs for an Altix 3700, 3700 Bx2, 4700 or 450, graded and with a ready-to-model list, is in the sysco repository, `software/firmware/l2/altix-l2-model.md`.
