@@ -94,3 +94,34 @@ The graphics-memory split, the stand-in's ARC services at the byte level (the ta
 the Cobalt memory controller's programming and reset values, where the embedded legacy-BIOS image is mapped; and whether the real firmware or
 the OS assigns PCI resources, which determines whether an emulated stand-in must. See
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
+
+## Questions a machine model needs answered
+
+Answers from the HAL (symbols applied), the loader and the PROM pages, each graded.
+
+1. **Processor table, power-management block and hand-off.** The firmware writes the table at physical `0x1e00` from every running
+   processor ([boot-path.md](boot-path.md#boot-into-nt) item 8); the HAL reads it at `0x1000 + 0xe00` and falls back to a built-in
+   one-entry table (`DebugCpuTable`) when the count is zero (established). The PIIX4 power-management block at `0xf80` is set up by the
+   boot block, through function 3 of the PIIX4: base register `0x40` = `0x0f80`, enable register `0x80` = 1 (established, firmware).
+   The HAL never programs the base; it reads the status word at `0xf80`, the enable at `0xf82` and the control at `0xf84`
+   (established). NT hand-off: the firmware loads `arcldr.exe` named by its environment variables, publishes the ARC system parameter block
+   at `0x1000` with the vector table, and the loader builds the NT loader block, whose ARC tree must carry the "SGI REV INFO" children the
+   HAL reads (established, boot-path.md). Linux hand-off: the firmware starts an ARC program (`larc.exe` or `arclx.exe`) that is not held;
+   what it puts in `boot_params` beyond `alt_mem_k` is unknown.
+2. **Cobalt interrupt handling and the 8259/PIIX4 path.** [nt-hal.md](nt-hal.md#interrupt-delivery-in-the-hal) (established): all 30
+   Cobalt APIC entries are masked at start-up; a device interrupt is enabled by writing the entry's vector with the level bit and
+   unmasking the Lithium bridge's per-line enable; the master 8259's output is Cobalt entry 12, polled with OCW3 `0x0c`, with a specific
+   EOI, and each legacy IRQ is re-injected as a self-IPI on its own vector; the clock is entry 28 (27 on Lite) at vector `0xd1`, IRQL `0x1c`.
+3. **Lithium A versus B and the 540's board id.** The pin tables settle which device numbers have an interrupt wired
+   ([platforms/visws/README.md](../../platforms/visws/README.md)): bridge B device 4 is the PIIX4 (only the USB pin D); the Ethernet in
+   Linux's comments is bridge A device 3. Which device numbers are physical slots on the 320 versus the 540 is unknown. The PROM
+   reads the board type as `(inb(0xfb2) >> 2) & 0xf` with 0 for the 320 and 1 for the 540 (established, firmware); that the 540 therefore
+   needs bits 5:2 of the byte at `0xfb2` equal to 1 follows from the HAL's SYS TYPE values 0 and 1 and is inferred; the other bits of the
+   byte are unknown.
+4. **VGA or text mode.** The HAL's VGA text routines (physical `0xb8000`) exist but are unreachable: the display-mode word starts at the
+   frame-buffer value and nothing changes it (established). The HAL console, and so NT's boot display, is the display back end at
+   `0xd0000000` (the HAL's `gbe` code). Whether the firmware's embedded legacy-BIOS image exposes a VGA mode is unknown
+   ([questions/visws-firmware-open.md](../../questions/visws-firmware-open.md)).
+5. **A direct 8259-to-CPU route.** Nothing shows one. The HAL masks the local APIC's LINT0 on every processor, takes the master 8259 only
+   through Cobalt entry 12, and the Linux port does the same (established for both). Whether the PROM unmasks LINT0 was not found in the
+   pages read: unknown.
