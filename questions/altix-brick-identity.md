@@ -35,5 +35,4 @@ then `0x35`; the PROM folds `5` to `c`. An emulated 3300 C-brick L1 therefore an
 on the same `c`) and keeps the board name `IP41`. `IP45` is the Origin 300 board and `IP37` has no identity route.
 
 Still unknown: the contents of a real C-brick's record `0xfe` EEPROM (the L1 compares only the first four characters of its
-product name), the SHub 1 stepping on the brick, and whether the Bx2 is SHub 1 or 2 (`README.snprom` lists it for the SHub 1
-image). Route: an EEPROM info area or `/proc/sgi_sn/sn_topology` capture from a 3300 or 3700.
+product name), the SHub 1 stepping on the brick, (the Bx2 is SHub 1.2 per its guide's figure, see the Bx2 page). Route: an EEPROM info area or `/proc/sgi_sn/sn_topology` capture from a 3300 or 3700.

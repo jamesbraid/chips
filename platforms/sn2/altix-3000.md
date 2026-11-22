@@ -242,8 +242,8 @@ is inferred, since the README names images, not chips.
   lower-case to the same `c`. See [the L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type).
 - **Unknown**: no register read from a 3300 or 3700 exists. The SHub 1 identity part word at `0x1_0000_0000` would
   settle the stepping (1.1 or 1.2), and the generation flag `SN_SAL_GET_SN_INFO` returns would confirm it. The Bx2
-  is listed for the SHub 1 image by the same README, which conflicts with the README's inference that it is SHub 2;
-  not settled here (see [the Bx2 page](altix-3700-bx2.md)).
+  is SHub 1.2: its guide's CR-brick figure says so and the same README lists it for the SHub 1 image (established,
+  see [the Bx2 page](altix-3700-bx2.md); the earlier reading as SHub 2 rested on dates and is withdrawn).
 
 SHub 2 board values, checked in `shub2snprom.bin` 10.54 (function at `0xff4824e0`, read in Ghidra): the board value is
 stored at `0x5003_1240` of the node window, then compared; `0x7b` and `0x200` take the stacked-DIMM adjacency check

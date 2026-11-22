@@ -5,8 +5,7 @@ Question. Which SHub, which graphics bridge wiring, which ATI part and which fir
 Status: **unknown** for everything below. What is established is on [the Prism overview](../platforms/sn2/prism.md).
 
 - **SHub generation.** No Prism guide for the deskside, Power or Team states it. The Extreme guide's CR-brick figure labels its
-  nodes "SHUB 1.2" and "IP57 Node Card" (007-4774-001 p.60) while the text says NUMAlink-4, which conflicts with the SHub 2
-  reading of the Bx2 CR-brick. A boot log or `/proc/sgi_sn` capture, or the `shub2` flag the PROM returns to
+  nodes "SHUB 1.2" and "IP57 Node Card" (007-4774-001 p.60), the same label as the Altix 3700 Bx2 guide's CR-brick figure (SHub 1 with NUMAlink 4). A boot log or `/proc/sgi_sn` capture, or the `shub2` flag the PROM returns to
   `ia64_sn_get_sn_info`, settles it per shape. Checked 2026-11-21: the two 2019 public boot logs (SAL 4.65) and the held T2/Linux image name no SHub.
 - **TIOCA wiring.** How many TIOCA chips an XG2N has, which SHub I/O port each pipe's bridge uses, and why `gfxtopology` lists a
   different brick's CPUs as closest for the second pipe of each XG2N (007-4751-001 p.18). The parts index names a "dual TIO

@@ -70,8 +70,7 @@ that does to the minimum. No document read says which shipped.
   Established as the guide's words. The SHub generation is **unknown** for Deskside, Power and Team; the Extreme guide's
   CR-brick block diagram labels its four nodes "SHUB 1.2" and "IP57 Node Card" (007-4774-001 Figure 3-3, p.60) while its
   text calls the machine fourth-generation NUMAlink-4 (p.59). That label is the first place a manual names a SHub
-  revision for a Prism, and it conflicts with the Altix 3700 Bx2 reading in [the README](README.md#which-chip-where)
-  (inferred SHub 2); see [the question page](../../questions/prism-open.md). The graphics kernel on the ProPack 4SP4 disc
+  revision for a Prism, and it agrees with the Altix 3700 Bx2 guide's own CR-brick figure (SHub 1.2, see [the README](README.md#which-chip-where)); see [the question page](../../questions/prism-open.md). The graphics kernel on the ProPack 4SP4 disc
   has SHub 1 and SHub 2 handlers and a patch, `patches.rtgfx/dont-use-ptcga-for-shub1`, for PIO machine checks on SHub 1
   systems when the X server stopped and started. That suggests SHub 1 graphics machines ran the kernel (**inferred**); the
   patch names no Prism, so the Prism SHub stays **unknown**.

@@ -38,9 +38,8 @@ Rack numbering: three digits, compute racks from 001 (p.67); L1 brick names such
 
 The CR-brick block diagram (Figure 3-3, p.60) labels each of its four nodes "IP57 Node Card" and "SHUB 1.2", with two
 `XIO` pads and two `NI` ports per node. Established as the figure's text. The text beside it
-calls the machine NUMAlink-4 (p.59), and the README's reading of the Bx2 is SHub 2 (inferred from dates). The two cannot
-both hold unless the label is a drawing carried over from an earlier guide. Which is right is **unknown**; the Linux
-kernel decides at boot from the PROM (`ia64_sn_get_sn_info`, see the README) and a boot capture would settle it. The same
+calls the machine NUMAlink-4 (p.59). The Altix 3700 Bx2 guide's own CR-brick diagram carries the same "SHUB 1.2" label, so the label is consistent: NUMAlink 4 with SHub 1.2 (see [the Bx2 page](altix-3700-bx2.md)). The Linux
+kernel decides at boot from the PROM (`ia64_sn_get_sn_info`, see the README) and a boot capture would still confirm it. The same
 "IP57" name is the Altix 350 node board ([altix-350.md](altix-350.md)); here it appears as a node card inside the CR-brick.
 
 ## Graphics (established)
