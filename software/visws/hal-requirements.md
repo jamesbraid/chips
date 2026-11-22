@@ -27,6 +27,7 @@ the HAL must do, and what the guest sees. A gap is graded *unknown* and links an
 
 ## Sources
 
+Build-by-build reading of the code (structures, dispatch tables, SGI-specific code, build differences): [hal-builds.md](hal-builds.md).
 Hardware facts: [nt-hal.md](nt-hal.md), [hal-hot-path.md](hal-hot-path.md), [boot-path.md](boot-path.md), [firmware.md](firmware.md),
 [emulator-requirements.md](emulator-requirements.md), the [platform pages](../../platforms/visws/README.md), the
 [Cobalt page](../../devices/cobalt/README.md) with its [register list](../../devices/cobalt/registers.md), and the
