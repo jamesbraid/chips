@@ -139,6 +139,7 @@ and 698.5 mm). Weight 65 lb (29.5 kg). Power input +48 VDC on a 21-pin connector
 | Meaning of the single `Port F` label per PIC (inferred: the PIC's own bridge port, widget 15 on the middle PIC); which Crosstown2 box is `XIO 10` (inferred, the upper one) | A published PIC specification, or a cabling test |
 | Widget numbers 12, 13 and 15 are established as drawn for the Altix IX-brick; their revisions and reset values are not | A capture from a real IX-brick |
 | Whether an Origin 3000 or Onyx 3000 IX-brick uses devices 1, 3 and 4 (settled for the Altix IX-brick by CAP-3300) | A PCI listing or `hinv -vm` from one |
+| Interrupt target widget of the three PICs (the SAL 5.04 PROM gives all three the host SHub's own widget id; the value is unknown, inferred `0xa` or `0xb`, see [the PIC page](../../devices/pic/README.md#which-widget-a-pic-sends-its-interrupts-to-0x38-bits-5148-sal-504-shub1snprombin)) | A PIC `+0x38` read, or a host widget control read, from a running Altix IX-brick |
 | Head-to-bus-to-slot mapping and INTx wiring | PCI tree capture or board schematic |
 | QLogic revision and part for this product; IOC4 and BCM5701 revisions and subsystem IDs | PCI identification read, `hinv`, or an IO9 parts list |
 | IOC4 pins or functions that drive RTI and RTO; whether the DVD-ROM's IDE link is the IOC4 ATA function | Board schematic or PCI function listing |

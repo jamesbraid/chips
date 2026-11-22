@@ -925,6 +925,47 @@ Two things are allocated, in this order. Established unless marked.
 
 The value left in `int_device` after the attach reset (`0x6db6db`, all lines to device 3, written once at `0xffb6e38c`) is replaced one field at a time. For an IOC4 in slot 1 and a SATA controller in slot 3, each with interrupt pin A (pin 1; the pin value is the device's, not read here), the lines are 1 and 3 (these are the scan's slot numbers, which are Linux device number minus one: Linux devices 1 and 3 give lines 0 and 2, see the pin rule below): `int_device` field 1 becomes 1 (`0x6db6cb` from `0x6db6db`; field 3 becomes 3, which it already is), `+0x138` gets the IOC4's irq in 55:48 and the address, `+0x148` gets the SATA controller's, and bits 1 and 3 of `+0x108` are set (on top of the late-init OR constant below). The irq numbers are the first free ones in `0x3c` to `0xe6` unless the kernel requests one through `SN_SAL_IOIF_INTERRUPT` (alloc, a request of -1 picks one); with no request, the first line allocated in the scan gets `0x3c` and the next `0x3d`; devices on the same bus and line index get the same irq number in separate records, which share one target. The address is the hub provider's, `nasid << 36 | 1 << 47 | SH_II_INT0` (chosen slice 0) or `SH_II_INT1` (any other slice) with the **target** node's NASID: read in full and checked in the listing (`hub_intr_alloc` `0xffb73df0`, address builder `0xffb739e0`; the hub table is `0xffc2b8e8`, node record `+0x2d8`), the same expression as the 2.4 kernel. How the target node and slice are chosen, the irq search, and the stores that point `SH_II_INT0`/`SH_II_INT1` at a processor are in [the SHub interrupt page](../shub/interrupts.md#the-firmwares-interrupt-allocator-sn_sal_ioif_interrupt) (established, SAL 5.04 and 4.90 identical). The tables at `0xffc2b0b8` (type 4) and `0xffc2b188` (type 5) mentioned earlier are address-translation methods, unrelated. Two lines of one bus that map to the same line index get the same irq number in separate records (share count 2), as the SHub page states.
 
+### Which widget a PIC sends its interrupts to (`+0x38` bits 51:48; SAL 5.04 `shub1snprom.bin`)
+
+Read in the Ghidra decompiles, with the accessor bodies and their callers checked in a binutils listing of the same image.
+
+- **The field.** `pcireg_intr_dst_target_id_set` (`0xffab5230`) is a read-modify-write of `+0x38`: it loads the doubleword, ANDs it with
+  `0xfff0ffffffffffff` and ORs in `(value & 0xf) << 48` (listing `0xffab53a0` to `0xffab53e0`; it acts only when the id word says PIC).
+  `pcireg_intr_dst_addr_set` (`0xffab57a0`) replaces bits 47:0 and keeps 63:48, so a later address write leaves the target id alone.
+  Established. The PROM writes no other register that picks a host port.
+- **The writers.** There are two callers, and the image holds no pointer to `0xffab5230` that a table could call through: `pic_attach2` at
+  `0xffb6e68c` (once per bus head, so twice per PIC) and `tiocp_attach` at `0xffb4819c`, where the accessor does nothing for a TIO bridge.
+  `pic_attach2` passes the byte at `+0x60` of its soft-state record, which it copied (`0xffb6dd3c` to `0xffb6dd56`) from byte `+0xc` of the
+  per-widget record it was handed. Every record of a node is built with the same byte, the node's own widget id: `0xffb745e0` reads the
+  node's interrupt-interface widget control register (`nasid << 38 | 0x8_01c0_0020`, bits 3:0) and `0xffb45770` stores it at node `+0x2f2`;
+  the per-widget records at node `+0x940 + 0x30 * widget` copy that byte (`0xffb451e0`, `0xffb499a0`). Established.
+- **Result for the three PICs.** Widgets 12, 13 and 15 of one host node get the same target id: the host SHub's own widget id, bits 3:0 of
+  its widget control register, which `main_three` wrote from the crossbar face's source-id field (`W0 + 0x08` bits 9:6, see
+  [the SHub interface page](../shub_ii/README.md)). The middle PIC (15) is not treated differently from the outer ones (13, 12), and
+  nothing writes a PIC's own widget number or an enclosure number into `+0x38`. Established for the code path. The number itself is
+  unknown, because the crossbar hardware assigns it. Inferred value: `0xa` for a host on the first XIO port, `0xb` for the second. The PROM
+  special-cases widget ids 10 and 11 as the hub's own link (`0xffb45510` tests 10; `0xffb73050` tests 10 and 11 before printing "Xtalk Link
+  failed") and prefers link `0xa`, falling back to `0xb`. The field is four bits wide and 12, 13 and 15 are the PICs, so none of them can be the
+  host id.
+- **The address half.** Bits 47:0 of `+0x38` get the error interrupt's address (`0xffb6cfec`, late error set-up below): target NASID `<< 36`,
+  bit 47, and `SH_II_INT0` or `SH_II_INT1` (the allocator section of [SHub interrupts](../shub/interrupts.md)). The three PICs are widgets of
+  the host node, so they share its NASID; each interrupt's target node and slice come from the allocator (a node with no processor retargets to
+  the nearest one that has one, established there).
+- **`int_device` is not a port.** `+0x120` holds eight 3-bit fields, one per interrupt pin, set to the PCI device's scan slot (0 to 3, Linux
+  device minus 1) by the per-device connect step above; the attach resets it to `0x6db6db`. It never names a host, bridge or widget. Values
+  per PIC depend on the cards fitted. On the IO9's bus (widget 12, bus 1) INTA of the IOC4 at device 1, the SCSI at 3 and the Ethernet at 4
+  gives pins 0, 2 and 3 slots 0, 2 and 3 (the pin rule below); unused pins keep 3. No register capture of a real PIC is held.
+- **What public SGI Linux expects.** Linux v5.3 never touches `+0x38` or `+0x120`: `pic.h` declares `p_wid_int_upper`, `p_wid_int_lower` and
+  `p_int_device`, and `pcibr_provider.c` only clears the pin's enable bit, rewrites the low 48 bits of `p_int_addr[n]` (mask
+  `PIC_HOST_INTR_ADDR`, `0x0000ffffffffffff`) with the firmware's `irq_xtalkaddr`, sets the enable bit and forces the pin. It relies on the
+  PROM having set the target id. The 2.4 tree (`linux-2.4` at `8ef7d46c94d5`, `arch/ia64/sn/io/sn2/shub_intr.c`) set the interrupt's target to
+  the master widget id of the device's widget info, and `hub_widget_id` returns the widget control register's `wcr_widget_id`: the host's
+  widget id, not the PIC's. Established as source. Whether the 2.4 `pcibr_setwidint` layout (the Bridge one, `0x000F0000 & (targ << 16)` in an
+  upper word) matches this PIC's `+0x38` is unknown.
+
+Not checked: SAL 4.43 and 4.90 (the allocator routines agree there; these accessors were not re-read); which node's table `pic_attach2`
+reads when the bridge node's `+0xe` field is not `0xffff` (an I/O-only node); the widget control value on a real host.
+
 ### Which PIC pin an INTA to INTD lands on, and what SAL call `0x02000057` returns (snprom 10.54 and 4.43, SHub 1)
 
 Read in the Ghidra decompiles of both images, each function in full. Established unless marked.
