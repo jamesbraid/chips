@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 07184971d0f3ea249d14e45362e536f8e51e340d7a8d719303517197d380f7f2
+// input sha256 cce7bc8a6dec5a42f55bf11b781f187c3d3ac6119286fa318095d3b5be2dcefb
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -87,7 +87,7 @@ pub mod apic_hi {
     pub const OFFSET: u64 = 0x4;
     pub const COUNT: u32 = 30;
     pub const STRIDE: u64 = 16;
-    pub mod dest { // bits 31:24, established
+    pub mod dest { // bits 31:24, inferred
         pub const SHIFT: u32 = 24;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {

@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 07184971d0f3ea249d14e45362e536f8e51e340d7a8d719303517197d380f7f2 */
+/* input sha256 cce7bc8a6dec5a42f55bf11b781f187c3d3ac6119286fa318095d3b5be2dcefb */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -38,13 +38,13 @@
 #define COBALT_APIC_LO_VECTOR_INPLACE                (COBALT_APIC_LO_VECTOR_MASK << COBALT_APIC_LO_VECTOR_SHIFT)
 
 /*
- * Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. So the field is the destination, in the I/O APIC layout (established for the NMI use; zero as 'processor id 0, physical' for device entries is inferred from the layout). The HAL never steers a device entry to another processor.
+ * Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. What the HAL writes is established; reading the field as the destination, in the I/O APIC layout, and zero as 'processor id 0, physical' for device entries are inferred from the layout. The HAL never steers a device entry to another processor.
  */
 /* apic_hi: rw32, space apic, reset unknown */
 #define COBALT_APIC_HI_OFFSET                        0x4u /* established */
 #define COBALT_APIC_HI_COUNT                         30
 #define COBALT_APIC_HI_STRIDE                        16
-#define COBALT_APIC_HI_DEST_SHIFT                    24 /* established */
+#define COBALT_APIC_HI_DEST_SHIFT                    24 /* inferred */
 #define COBALT_APIC_HI_DEST_MASK                     0xffu
 #define COBALT_APIC_HI_DEST_INPLACE                  (COBALT_APIC_HI_DEST_MASK << COBALT_APIC_HI_DEST_SHIFT)
 

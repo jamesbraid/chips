@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "07184971d0f3ea249d14e45362e536f8e51e340d7a8d719303517197d380f7f2",
+ "input_sha256": "cce7bc8a6dec5a42f55bf11b781f187c3d3ac6119286fa318095d3b5be2dcefb",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -93,7 +93,7 @@
    "name": "apic_hi.dest",
    "hi": 31,
    "lo": 24,
-   "grade": "established"
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
