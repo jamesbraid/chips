@@ -18,6 +18,7 @@
 | Page | Title | Summary |
 |---|---|---|
 | [byte-order.md](firmware/byte-order.md) | Byte order in shipped SGI MIPS firmware and tools: what exists and what does not | Does any shipped SGI PROM or IRIX tool support a little-endian MIPS machine, and what can change a machine's byte order? |
+| [everest-prom-payloads.md](firmware/everest-prom-payloads.md) | CPU PROM payloads inside the Challenge and Onyx IO4 flash images | Real console logs of Challenge and Onyx machines (IP19 R4400, IP21 R8000, IP25 R10000) show the IO4 PROM downloading... |
 
 ## kernel
 

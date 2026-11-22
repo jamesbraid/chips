@@ -43,8 +43,10 @@ absent, not established absent.
 | IP35 | 31 (6.37-test to 6.211) | container unpacked, payload read |
 | IO4 | 13 | raw |
 
-The IO4 images are 32-bit promgen containers; they were scanned raw and carry the banner `IO4 PROM Monitor %s (BE)`. No IP19, IP21
-or IP25 CPU PROM image is held; the IRIX `symmon` boot files for IP19, IP21 and IP25 are the nearest thing (below). Images listed
+The IO4 images were scanned raw, without unpacking, and carry the banner `IO4 PROM Monitor %s (BE)`. Their segmented builds hold
+compressed IP19, IP21 and IP25 CPU PROMs, all big-endian; the unpacked payloads are described in
+[everest-prom-payloads.md](everest-prom-payloads.md) and were not part of this scan. The IRIX `symmon` boot files for IP19, IP21 and IP25
+are the other nearby evidence (below). Images listed
 as held in [prom-images.md](../../references/prom-images.md) but not in the published catalogue (an Indy 5.3 dump and an Octane 4.9
 image) were not read here.
 
