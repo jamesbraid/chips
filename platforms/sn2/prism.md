@@ -681,8 +681,8 @@ read, so no revision preference is claimed (unknown).
   tolerates an absent corelet on real hardware is unknown; the model must return a part word that matches nothing, or the CX test value.
 - *Rev 1 TIOCA.* In both, a TIOCA klconfig record with revision below 2 is skipped with a printed message; a missing `KLSTRUCT_TIOCA` (type
   `0x33`) prints a message and the VGA probe continues.
-- *How the TIO is found.* `tio_init` is entered through a function table (`10.54@0xffc4c210` holds its caller; inferred to be the TIO class methods) after the TIO lboard exists. Where the lboard is created was not traced; unknown
-  for both builds. The SAL runtime's `tio_probe` (`10.15` runtime offset `0x10900`, `10.54` runtime offset `0x10cc0`) is only a part-number predicate (part `0x4422`) with no direct caller found, so no reset-time TIO probe was seen there.
+- *How the TIO is found.* `tio_init` is entered through a function table (`10.54@0xffc4c210` holds its caller; inferred to be the TIO class methods) after the TIO lboard exists. For 5.04 the lboard is created by the TIO class's slot `0x318` (`10.54@0xffaad610`) from its early-init method, and the TIO is found by the NUMAlink discovery walk, not a widget scan
+  ([the SHub 1 TIO page](../../devices/tio/prom-access-shub1.md#7-how-a-prism-tio-is-found-numbered-given-a-board-record-and-an-l1-answer-objdump-read-2026-11-22)); 4.65 was not re-read for this. The SAL runtime's `tio_probe` (`10.15` runtime offset `0x10900`, `10.54` runtime offset `0x10cc0`) is only a part-number predicate (part `0x4422`) with no direct caller found, so no reset-time TIO probe was seen there.
 - *Request check.* Neither build asks the L1 about a TIO beyond the shared `0x0013` and `0x000e` requests.
 
 **Verdict (inferred; the grade is for the comparison, not for a boot).** SAL 5.04 is enough for a Prism model. The two builds need the same hardware at reset: the same L1 and requests, the same CPU rows for
@@ -704,7 +704,7 @@ SAL calls `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`) and `SN_SAL_IOIF_GET_PCID
   (field names are Linux's; the offsets are read from the PROM stores and loads).
 - *Provider fields for a TIOCA (established).* `tioca_attach` (`10.15@0xffb4e5f0`) stores ASIC type 4 at `+0x0` (Linux's TIOCA provider number), the corelet number at `+0x4`, the mapped TIOCA register base at `+0x20`
   and the corelet record at `+0x28`; it also stores the chip revision (ID register at `nasid << 38 | 0x8_9006_0e80`, bits 31:28) at `+0x30` and the closest NASID at `+0x34`. How the
-  bus and segment words at `+0x8` and `+0xc` are filled was not traced (unknown).
+  bus and segment words at `+0x8` and `+0xc` are filled: for 5.04, by a flag that starts in segment mode ([the SHub 1 TIO page](../../devices/tio/prom-access-shub1.md#76-segment-mode-or-bus-mode-established-mechanism-one-hop-not-traced)); not traced for 4.65.
 - *Root window and the 5.04 difference (established).* No size field exists in the record. In 4.65 the generic `pciio_bus_fixup` (`10.15@0xffb3aab0`) maps, when the bases are zero, 0x10000 bytes (64 KiB) of PCI I/O space at offset 0 for the legacy I/O base
   and 0x100000 bytes (1 MiB) of PCI memory space at offset 0 for the legacy memory base, through the generic PIO map allocator (`10.15@0xffb37c70`). Its per-ASIC bus-fixup hook is NULL for a TIOCA (entry 1 of the type-4 operations table at `0xffc18e00`).
   5.04 has a TIOCA fix-up, `tioca_bus_fixup` at `10.54@0xffb7d700` (the function at `0xffb30330` that an earlier reading cited is `pcibr_bus_fixup`, the PIC one). It sets the same 64 KiB I/O base (record `+0x10`) and 1 MiB legacy memory base (`+0x18`), and also maps three memory windows
@@ -725,7 +725,7 @@ SAL calls `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`) and `SN_SAL_IOIF_GET_PCID
 - *The 2019 addresses (inferred).* With a first-fit pool from `0x100000`, a 128 MiB BAR aligns up to `0x08000000`, which leaves `0x100000` to `0x07ffffff` free; a second 128 MiB BAR cannot use that block and lands at
   `0x10000000`. That matches the log's two BARs, so those values are what this allocator produces for two 128 MiB memory BARs on one TIOCA (the other BARs of the card are unknown, so the order of allocations
   is unknown). Smaller BARs take addresses from `0x100000` upward, also outside a 1 MiB window. The result depends on what was allocated before: a 128 MiB or larger BAR ahead of them, or two BARs of 64 MiB or more ahead of them, shifts both addresses (a 128 MiB BAR ahead takes `0x08000000`; two 64 MiB BARs take `0x04000000` and `0x08000000`); smaller BARs do not. Both builds assign identically, so the addresses do not separate 4.65 from 5.04.
-- *Unknown.* The bus and segment numbering that `0x02000056` matches, how a TIOCA object reaches the lists the lookup walks, whether 5.04's three memory windows change the PIO addresses `0x02000057` returns, and the card's BAR set.
+- *Unknown.* For 4.65, the bus and segment numbering that `0x02000056` matches (5.04: segment mode by default, linked above), how a TIOCA object reaches the lists the lookup walks, whether 5.04's three memory windows change the PIO addresses `0x02000057` returns, and the card's BAR set.
 
 ## Software SGI shipped
 
