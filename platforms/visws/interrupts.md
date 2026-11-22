@@ -39,13 +39,13 @@ must a model implement to make Linux 2.4 to 3.14 work? Source and grading as on 
 | 7 | PIIX4 USB function | header: "this one is weird" |
 | 8 to 12 | Lithium bridge B, INTA of device 0 to 4 | header says "8 and 9-12". Line 12 is also the 8259 line below |
 | 12 | PIIX4 8259 pair (serial, floppy, parallel, others) | collides with bridge B device 4 INTA. Device 4 of B is the PIIX4, whose INTA is never mapped (below), so the collision is harmless in the kernel's map |
-| 13 to 15 | Lithium bridge B, shared INTB/INTC/INTD | never used by any code |
+| 13 to 15 | Lithium bridge B, shared INTB/INTC/INTD | Linux uses none of them; the NT HAL maps bridge B's shared pins to them ([nt-hal.md](../../software/visws/nt-hal.md#interrupt-delivery-in-the-hal)) |
 | 16, 17 | Video output 0 and 1 | named only |
 | 18, 19 | Video input 0 and 1 | named only |
 | 22 | Lithium audio engine | the sound driver requests it |
-| 24, 25 | `AS`, `RE` | named only; the names' meaning is unknown |
+| 24, 25 | `AS`, `RE` | Linux names them and never uses them; the NT graphics miniport connects handlers to both ([cobalt-graphics](../../devices/cobalt-graphics/README.md)), so the numbers are established and the names' meaning is inferred |
 | 28 | Cobalt timer and "cache" interrupt | the system tick |
-| 29 | `NMI` | named only |
+| 29 | `NMI` | Linux names it and never uses it; the NT HAL programs it as an NMI-delivery entry (entry 28 on the Lite revisions) |
 
 Line 2 for IDE1 and line 4 for IDE0 coincide numerically with bridge A's per-slot lines for devices 2 and 4, and 5
 coincides with the shared line. The kernel never has a device on both at once on the machine the code was written

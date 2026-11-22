@@ -1,6 +1,6 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 892f461404377c9293c3bf0c2a21948cf46d82ee52360aa46f3d72d48d14d64b -->
+<!-- input sha256 e11424c6e5a76a241249e6f491944ff414b187a1aa1d3e94e2ea26919c6b077b -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 
@@ -87,7 +87,7 @@ Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `APIC_8259` | 0xc | established |  | Line the PIIX4's cascaded interrupt controllers drive. |
-| `APIC_AS` | 0x18 | inferred |  | Header name AS; no code uses it. |
+| `APIC_AS` | 0x18 | established |  | Header name AS. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's. |
 | `APIC_CPU` | 0x1c | established |  | Line of the Cobalt timer, which the header also calls the cache interrupt. |
 | `APIC_IDE0` | 0x4 | inferred |  | Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5). The NT HAL uses line 4 on the newest 320 generation and the 540 except revision 0, 5 on the middle 320 generation and the 540 revision 0, and line 1 on the oldest 320 generation, which Linux has no case for. |
 | `APIC_IDE1` | 0x2 | established |  | Line of the second IDE channel, on the 320 only. |
@@ -100,7 +100,7 @@ Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 
 | `APIC_PCIB_BASE123` | 0xd | established |  | First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). Linux uses none of them; the NT HAL's bridge B interrupt map does (shared pins on entries 13 to 15). |
 | `APIC_PHYS` | 0xc4000000 | established |  | Physical base of the interrupt controller. |
 | `APIC_PIIX4_USB` | 0x7 | established |  | Line of the PIIX4's USB function. |
-| `APIC_RE` | 0x19 | inferred |  | Header name RE; no code uses it. |
+| `APIC_RE` | 0x19 | established |  | Header name RE. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's. |
 | `APIC_VIDIN0` | 0x12 | established |  | Video input 0 interrupt. |
 | `APIC_VIDIN1` | 0x13 | established |  | Video input 1 interrupt. |
 | `APIC_VIDOUT0` | 0x10 | established |  | Video output 0 interrupt. |

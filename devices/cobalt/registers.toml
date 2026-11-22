@@ -107,5 +107,5 @@ APIC_VIDOUT0 = { value = 16, grade = "established", doc = "Video output 0 interr
 APIC_VIDOUT1 = { value = 17, grade = "established", doc = "Video output 1 interrupt." }
 APIC_VIDIN0 = { value = 18, grade = "established", doc = "Video input 0 interrupt." }
 APIC_VIDIN1 = { value = 19, grade = "established", doc = "Video input 1 interrupt." }
-APIC_AS = { value = 24, grade = "inferred", doc = "Header name AS; no code uses it." }
-APIC_RE = { value = 25, grade = "inferred", doc = "Header name RE; no code uses it." }
+APIC_AS = { value = 24, grade = "established", doc = "Header name AS. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's." }
+APIC_RE = { value = 25, grade = "established", doc = "Header name RE. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's." }

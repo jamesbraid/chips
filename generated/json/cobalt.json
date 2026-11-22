@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "892f461404377c9293c3bf0c2a21948cf46d82ee52360aa46f3d72d48d14d64b",
+ "input_sha256": "e11424c6e5a76a241249e6f491944ff414b187a1aa1d3e94e2ea26919c6b077b",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -182,7 +182,7 @@
    "name": "APIC_AS",
    "value": 24,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "cobalt",
@@ -286,7 +286,7 @@
    "name": "APIC_RE",
    "value": 25,
    "count": 1,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "cobalt",

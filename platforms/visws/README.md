@@ -25,13 +25,13 @@ the shipped Windows software. The rows are the first count; the paragraph after 
 | Origin of the item | Cobalt | Lithium | What happened |
 |---|---|---|---|
 | Linux and a shipped binary agree | 26 | 26 | Stay `established`; the page names the binary. |
-| Number agrees, name is Linux's only | 4 | 0 | The four video interrupt entries 16 to 19: the SGI video capture driver uses levels 16 to 19, and only Linux says which are in and out. Stay `established` for the number. |
+| Number agrees, name is Linux's only | 6 | 0 | The four video interrupt entries 16 to 19 (the SGI video capture driver uses levels 16 to 19, and only Linux says which are in and out) and the two graphics-engine entries 24 and 25 (the graphics miniport connects handlers to both; only Linux names them). Stay `established` for the number. |
 | Shipped binary differs or measures instead | 2 | 0 | The core clock rate (the HAL measures it) and the first IDE entry (the HAL uses 1, 4 or 5 by board generation). Linux's value re-rated `inferred`. |
-| Only Linux states it | 5 | 36 | Re-rated `inferred`, a software expectation of Linux: 30 `established` items became `inferred` on the Lithium page (six were already `inferred`) and four on the Cobalt page (one was already). |
+| Only Linux states it | 3 | 36 | Re-rated `inferred`, a software expectation of Linux: 30 `established` items became `inferred` on the Lithium page (six were already `inferred`) and two on the Cobalt page (one was already). |
 
-Since that count (second reading of the HAL and the audio driver): twelve Lithium items moved from "only Linux" to "Linux and a shipped binary agree" and are `established` again (the audio DMA pointer, size, enable, format, mode and direction fields, the link-failure bit, and the four time-stamp and counter registers); three new items have only a shipped binary behind them (two Cobalt control-register fields, bits 0 and 1 of the CPU control word, and the count of audio DMA channel sets). So the Lithium column is now 38 / 0 / 0 / 24 and the Cobalt column 26 / 4 / 2 / 5 with two new binary-only items.
+Since that count (second reading of the HAL and the audio driver): twelve Lithium items moved from "only Linux" to "Linux and a shipped binary agree" and are `established` again (the audio DMA pointer, size, enable, format, mode and direction fields, the link-failure bit, and the four time-stamp and counter registers); three new items have only a shipped binary behind them (two Cobalt control-register fields, bits 0 and 1 of the CPU control word, and the count of audio DMA channel sets). So the Lithium column is now 38 / 0 / 0 / 24 and the Cobalt column 26 / 6 / 2 / 3 with two new binary-only items (entries 24 and 25 moved to "number agrees" in review: the graphics miniport uses both).
 
-Linux-only items by group (first count; the audio ring-buffer control and configuration fields and the time-stamp and counter words are no longer on it): the processor limit; the audio and the two unused graphics-engine interrupt entries (22, 24, 25);
+Linux-only items by group (first count; the audio ring-buffer control and configuration fields and the time-stamp and counter words are no longer on it): the processor limit; the audio interrupt entry (22);
 the bridge bus-number word; the audio interrupt status and mask bits; the audio ring-buffer control and configuration
 registers; the audio time-stamp and media-stream counters; the bridge PCI ids; the DMA chunk size. The shipped audio driver
 was read for the codec access path and the ring base register only, so the control and configuration registers are
@@ -56,6 +56,7 @@ Platform facts, by what supports them:
 | Ethernet device | Intel 82557 per Linux 2.2 header | SGI INF matches PCI 8086:1229 revisions 1 and 2 | established |
 | USB | PIIX4 UHCI | SGI USB driver matches PIIX4 (8086:7112) and PIIX3 (8086:7020, revision 0 rejected) | established |
 | Video interrupt entries 16 to 19 | in and out named | SGI video capture driver uses levels 16 to 19 | numbers established |
+| Graphics-engine interrupt entries 24 and 25 | named `AS` and `RE`, unused | graphics miniport asks the HAL for both vectors and connects handlers | numbers established |
 
 | Page | Covers |
 |---|---|
