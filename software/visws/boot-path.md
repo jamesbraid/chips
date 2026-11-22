@@ -1,9 +1,10 @@
 # Visual Workstation 320 and 540: what the firmware hands over
 
 This page records what the firmware does from reset and what it leaves behind for the NT loader and HAL and for the Linux
-port. The reset path and the hand-off tables are read from the PROM 1.0006 image ([firmware.md](firmware.md) for its layout);
-the rest comes from the NT and Linux side. Only version 1.0006 is held, so later versions (1.1002 onwards, with Windows 2000
-support and PCI bridge support) may differ. Grades as in the [README](README.md); "software expectation" means the shipped
+port. The reset path and the hand-off tables are read from the PROM 1.0006 and 1.1005 images ([firmware.md](firmware.md) for their
+layout); the rest comes from the NT and Linux side. Those two versions are held; the ones between them are not. Addresses
+written `1.0006@` or `1.1005@` name the version read; an unlabelled routine was read in 1.0006 and its 1.1005 counterpart
+was compared, as [firmware.md](firmware.md#from-10006-to-11005) says. Grades as in the [README](README.md); "software expectation" means the shipped
 software assumes it. Reading was done with objdump over the whole boot block and in Ghidra (x86, 32-bit, base `0xf00000`)
 for the main-module routines quoted below.
 
@@ -26,6 +27,7 @@ the firmware can switch itself to extensive after a boot that did not complete (
 
 **Established (flash `0x7c000`-`0x7ffff` read in full).** The code below is 16-bit with 32-bit operand overrides until the
 jump to the protected-mode loader.
+The boot block is byte-identical in both images; its offsets are flash offsets, and the steps below are read from 1.0006's copy (the 1.1005 addresses quoted elsewhere on this page are main-module addresses, not boot-block ones).
 
 1. **Entry.** `cli`, `cld`, then the reset-time `EAX` and `EDX` are parked in two MMX registers (so they survive; the
    purpose is inferred: `EDX` holds the processor signature at reset). A flat 4 GiB descriptor table is loaded, protected mode is entered once to
@@ -74,7 +76,7 @@ not read in full).**
    first clears bit 0 of the Cobalt memory-controller register at `0xc6000000`, then reads sixteen bank registers at an
    8-byte stride from `0xc6000048` (from `0xc6000050` unless the revision is `0xa0` or `0xa8`, the "Cobalt Lite" values in
    [questions](../../questions/visws-firmware-open.md)). For each: bit 2 set marks the bank as absent or bad, otherwise bit 0
-   set means populated, and bit 1 chooses 128 MiB (set) or 32 MiB (clear). The total is the sum (`1.0006@0xf02d60`; byte-identical in 1.1005 at
+   set means populated, and bit 1 chooses 128 MiB (set) or 32 MiB (clear). The total is the sum (`1.0006@0xf02d60`; the same logic, with reordered instructions, in 1.1005 at
    `0x1102cc0`). The main module only reads the bank registers: the self-test module that ran before it wrote them, by probing the
    RAM ([below](#memory-controller-and-graphics-memory)). A separate RAM test then marks good and bad pages ("low 16 MB good",
    "low 32 MB good", "all 128 MB good" are its outcome strings). The reset values of the bank registers are still unknown.
@@ -164,7 +166,7 @@ Two facts for this page: the self-test checks that the ID register at `+0x14` re
 `1.0006:test+0x96f7`, `1.1005:test+0x9775`; the main module has no such check), and the main module keeps the low nibble of `+0x00`
 (`1.0006@0xf00200`) as the display engine's revision, the "Display Engine: 002" of a real machine's registry. The coherent-DMA
 default does not come from it: `1.0006@0xf00210` classifies the word at `0xff01c004` (`0x35c0194c` is 2, `0x35f7357f` is 3, above that 4, else -2) and
-coherent DMA is on when the result exceeds 2, unless `coherentdma` begins with `n` (`1.0006@0xf00250`).
+coherent DMA is on when the result exceeds 2, compared unsigned (`cmp $3; jae` at `1.0006@0xf00269`), so the `-2` an unrecognised stamp gives also turns it on, unless `coherentdma` begins with `n` (`1.0006@0xf00250`).
 
 ## PCI bus numbering and windows
 
@@ -209,7 +211,7 @@ IO" when a debug flag is set (the strings are removed in 1.1005).
 `new = (old & 0xfffffbc1) | 0x400 | 0x20c2`, where `0x400` is applied unless `coherentdma` begins with `n`, and `0x20c2` only on Lithium
 generation 5 or later and unless `streambuffer` begins with `n`. The generation (`1.0006@0xf00190`) is 1 when the byte at B `+0x08` is
 zero and otherwise 2, 3, 4 or 5 when the word at `0xff01c004` equals `0x35c0194c`, `0x35f7357f`, `0x363e4470` or `0x366c3dfb`, 6 when it is
-above the last and -2 for any other value. Read as Unix times the thresholds are 1998-07-30, 1998-09-10, 1998-11-02 and
+above the last and -2 (`0xfffffffe`) for any other value. The callers compare the result unsigned (`cmp $5; jb` at `1.0006@0xf20672`), so an unrecognised stamp counts as a generation of 5 or later and gets the `0x20c2` bits. Read as Unix times the thresholds are 1998-07-30, 1998-09-10, 1998-11-02 and
 1998-12-07; the same word appears in the real machine's registry as "Serial I/O: 366c3dfb", the last value, so the word is an
 identification stamp of another ASIC on the machine and the generation reflects its release (inferred). The meanings
 of the bits (`0x400` coherent DMA, `0x20c2` stream buffering) are named only by the two variables; the five dwords are likely
