@@ -374,6 +374,86 @@ response-buffer registers at `0x280` and `0x288` (see "Bridge block") if that po
   Established. Those pairs are the XBridge and Bridge identities listed under "What identifies the chip", so one driver
   serves both.
 
+## How IRIX 6.5.23 picks a DMA translation
+
+Which of the three views in [family.md](family.md#dma-windows) a DMA address comes from: the 2 GiB direct window (A32),
+the 64-bit direct form (A64) or the page map (ATE). Read from the shipped kernel objects by objdump, branch conditions
+checked in the MIPS disassembly. No 6.5.23 object is held. `pcibr_dmatrans_addr` and `pcibr_directmap_init` of the IP27
+`IP27boot/pcibr.o` are identical between 6.5.22 and 6.5.30 after normalising addresses, and the linked 6.5.30 IP27
+and IP30 kernels carry the same code as their `pcibr.o`, so 6.5.23 is inferred to match. `pcibr_dmamap_alloc` and
+`pcibr_dmamap_addr` were read in the 6.5.22 object only. All addresses below are `IP27/unix` (6.5.30) unless named.
+
+**Flags 0x40060.** The call is `pciio_dmatrans_addr(vertex, 0, paddr, size, 0x40060)` (the DIVO driver, `divo_dma`, per
+page). `pciio_dmatrans_addr` is a plain jump to `pcibr_dmatrans_addr` (0xc000000000092c00), which ORs the slot's default
+flag word (`+0x7c` of the pcibr info record) into the argument. Only these bits steer the choice (established, read in
+the code): `0x40` selects A64; `0x10` and `0x20` pick the prefetch attribute of the 64-bit form
+(`pcibr_flags_to_d64`); `0x1000000` and `0x2000000` are tested together (neither set: the routine sets `0x1000000`); the low
+three bits go to `xtalk_dmatrans_addr`. Bit `0x40000` of 0x40060 is not read by `pcibr_dmatrans_addr`; where it matters,
+if anywhere, is not settled. The public names (`PCIIO_DMA_A64` and the others) were not checked against a header here.
+
+**What comes in.** `xtalk_dmatrans_addr` ends in `hub_dmatrans_addr` (0xc00000000003bc88), which returns its physical
+address argument unchanged (established; [devices/hub/README.md](../hub/README.md)). On the IP30 it is `heart_dmatrans_addr`.
+So the 48-bit "Crosstalk address" the Bridge code works with is the CPU physical address, node number included
+(nasid << 32 on the IP27).
+
+**One-shot translation, `pcibr_dmatrans_addr` (0xc000000000073e6c), established:**
+
+1. 0x73ecc: ask the Crosstalk layer for the address; 0 fails (debug message, returns 0). 0x73ee0 to 0x73eec: if bits 63:60 are
+   clear the target widget is the master widget byte at record `+0x30` (0x7405c), else bits 63:60 are the widget and the
+   address is the low 48 bits. All ones fails (0x73ef4).
+2. 0x73f10: a target widget equal to the Bridge's own (`+0x28`) goes to `pcibr_addr_xio_to_pci` and is not DMA to memory.
+3. 0x73f1c: `flags & 0x40` clear: go to the A32 test at 0x73fcc. Set: A64 first. The per-slot device register must accept the
+   attribute bits (`pcibr_try_set_device`, mask 0x898000, 0x73f98); the result is `widget << 60 | low 48 bits | attribute
+   bits` (0x73f54, 0x740d4 onward). No test on the address value: a page above 2 GiB gets the same A64 form as one below.
+4. A64 fallback: only if `try_set_device` reports failure and the record halfword `+0x74` bit 0 is clear (0x73fac), the flags
+   are masked (0x73fc4) and the A32 test follows. With that bit set the call returns 0.
+5. A32 test (0x73fcc to 0x74008), all four must pass or the call returns 0 with no ATE fallback: size not above 0x80000000;
+   address not below the window base held at record `+0x50`; target widget equal to the direct-map widget byte at `+0x58`;
+   (address - base) + size not above 0x80000000. The result is `0x80000000 | (address - base)`, zero-extended
+   (0x74010 to 0x74104 caches it per slot). It is never sign-extended.
+
+**Where the A32 window comes from, `pcibr_directmap_init` (0xc000000000071c74), established.** It asks
+`xtalk_dmatrans_addr` for the physical address `nasid << 32` of the master node's memory (nasid from the
+compact-node table, 0x71cc4; node 0 when the admin string is absent), size 0x4000, flags 0. Then:
+direct-map offset field = that address >> 31 (`pcireg_dirmap_diroff_set`, 17 bits, so address bits 47:31); widget field =
+record byte `+0x30`; widget byte copied to `+0x58`. If the translated address is exactly `0x20000000`, add-512-MB is set
+and the window base at `+0x50` is `0x20000000`. Otherwise add-512-MB is cleared and the base is the address with bits 30:0
+cleared. The window is therefore the 2 GiB of the master node starting at its address 0 (or 512 MB into it for the Octane
+case below), reaching PCI `0x80000000` to `0xffffffff`. A node 0 master gives offset 0, widget = master widget,
+add-512 clear, which is the 0x900000 write an emulated Onyx2 run shows (software expectation only). The base is computed once at
+attach from the node of the master Hub, not from KLCONFIG memory size or a kernel variable (the nasid table is the only
+input) and not hard-coded to 2 GiB or 512 MB except the `0x20000000` compare.
+
+**Mapped translation, `pcibr_dmamap_alloc` (0xc000000000072f98) and `pcibr_dmamap_addr` (0xc000000000073818), 6.5.22 object
+only.** Alloc, in order: flag `0x40` and `try_set_device` accepting means an A64 map; else flag `0x1` (a fixed map) and
+`try_set_device` (mask 0x8f8000) accepting means an A32 map holding the window base and `0x80000000`; else page-map (ATE)
+entries are allocated and the map base is `0x40000000 + (first entry << 14)`. Addr: an A64 map returns attribute bits |
+`widget << 60` | low 48 bits; an A32 map returns 0 for an address below the base or whose end passes base + 0x80000000, else
+`0x80000000 + (address - base)`; an ATE map writes entries (`ate_write`). So a mapped request that is not marked fixed never uses
+the direct window, and one that is cannot reach past it.
+
+**Machines.**
+
+- IP27 (Onyx2, Origin 200 and 2000): the sequence above. Window base is `(nasid of master) << 32`, rounded down to 2 GiB.
+- IP30 (Octane): `heart_dmatrans_addr(0)` is compared with `0x20000000` (`IP30/unix` 0xa8000000200439c4 in
+  `pcibr_directmap_init`), so add-512-MB is set, diroff 0, base `0x20000000`. `pcibr_dmatrans_addr`
+  (0xa800000020045968) has one extra test the IP27 build lacks, address plus size below `0x80000000` (0xa800000020045aec),
+  so the A32 view reaches physical `0x20000000` to just under `0x80000000` and not the 2 GiB the window nominally spans.
+  The extra test is read in the 6.5.30 kernel and the 6.5.22 object only; whether it is from a distinct source branch or a
+  compiler difference is not known. Established for the code; that `heart_dmatrans_addr(0)` returns `0x20000000` is inferred
+  from the compare (the routine `heart_addr_phys_to_xio` was not read here).
+- IP35: separate object, not read here.
+
+**Cross-checks (software expectations).** OpenBSD `sys/arch/sgi/xbow/xbridge.c` (`xbridge_pa_to_device`, direct-map setup)
+confines DMA memory to physical 0 to 2 GiB on both IP27 and IP30 (`sgi/ip27_machdep.c`, `ip30_machdep.c`: `ucr_high = 2^31 - 1`), programs
+`BRIDGE_DIR_MAP` with the master widget and base `ucr_low >> 31`, and returns `pa + 0x80000000`; it never programs
+add-512. Linux `arch/mips/pci/pci-xtalk-bridge.c` writes `masterwid << 20` (offset 0, add-512 clear) and gives drivers the
+64-bit form `masterwid << 60 | BAR` only, never the A32 window.
+
+**What this does not settle.** Whether any shipped 6.5.x code converts a page above the window into a 32-bit sign-extended
+direct-map address. None of the paths above does: they return the A64 form, a zero-extended A32 value, or 0. See
+[the question on pages above 2 GiB](../../questions/README.md).
+
 ## Routines in the IP30 and IP27 kernels
 
 The accessors and the attach routines of the Octane kernel, which serve this chip family through the same `pcireg_*`
