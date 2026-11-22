@@ -102,16 +102,24 @@ SGI's 2.2.10 existed; what `larc.exe` is; and whether any loader (`larc.exe` is 
 [route: software now] Read for the 1.1005 image: the boot block, the self-test entry and its CMOS, power-management, serial and processor set-up, the main module's start-up order, the processor wake-up, console selection, the ACPI tables and the load and execute path
 ([boot-path.md](../software/visws/boot-path.md#reset-to-console-in-order-1005)). Open:
 
-- **PIIX4 reset decode of the flash.** Which chip select decodes `0xfff80000` before any configuration. Settles with: the PIIX4 specification's BIOS chip-select default, or a bus capture.
+- **PIIX4 reset decode of the flash.** Partly settled by the PIIX4 datasheet (XBCS at `0x4e`, reset `0x0003`, p. 57; BIOS memory
+  decode, p. 155): at reset BIOSCS# is always generated for `0xffff0000` to `0xffffffff`, but not for `0xfff80000` to `0xfffeffff`,
+  which need XBCS bits 7 and 6, both clear at reset. The firmware writes `0xf4` to `0x4e` in its PIIX4 set-up (boot-path step `0x1a`).
+  Open: whether other board logic selects the flash before that write, and whether any flash read in that range comes before it.
+  Settles with: a trace of the first flash reads against that write, or the board schematic.
 - **The self-test's RAM probe outcomes.** Which probe result stores bank code 3, 2 or 0, and the register tests of Cobalt, Lithium and the display (`test+0x7000` to `0x9600`). Settles with: reading those loops access by access.
 - **Self-test exit and BIST re-entry.** The path back to the boot block (`test+0x46b3`) and the extended-CMOS state bytes `0x8a` to `0x8f` that decide whether the self-test resets the processor once. Settles with: reading `test+0x4300` to `0x4700` and `0x6e00` to `0x6fa0`.
 - **The meaning of audio host-control bit 8 (`0x100`)** and why only generation 5 gets the `0x4100` store. Settles with: the Lithium specification or the vwsnd register comments.
 - **Page `0x00fff000`.** What the idle loop's first dword is. Settles with: reading `1.1005@0x11197aa` and its callers.
-- **Panel LED or beeper line** (port `0xfb7` bit 4). Settles with: the 320/540 service manual or a board trace.
+- **Panel LED or beeper line** (port `0xfb7` bit 4). The PIIX4 datasheet makes this pin GPO28, a non-multiplexed output (p. 38); what SGI drives it for is unknown. Settles with: the 320/540 service manual or a board trace.
 - **Main-module serial line settings** (baud, FIFO) and the `console` value `r`. Settles with: reading the serial driver (`1.1005@0x1127400` and callees).
 - **Local APIC LINT0/LINT1 on the other processors** and whether anything restores them before the loader. The boot processor is settled: the V86 case leaves them masked and nothing restores or unmasks them ([boot-path.md](../software/visws/boot-path.md#processor-state-at-the-loader-call)). Settles with: reading the stub's hook list (`1.1005@0x11313xx`).
 - **Processor state at the loader call, other releases.** Only 1.1005's main module was read for the GDT relocation, IDT, page tables and the entry state; the boot block's descriptor template is byte-identical in all five held images. Settles with: the same trace of the 1.0006 main module, if a model targets it.
-- **A20 at reset.** The boot processor never enables it, so the board must already pass address bit 20 at power-on (inferred). Settles with: the PIIX4 specification's reset state of the A20 gate, or a bus capture.
+- **A20 at reset.** Partly settled by the PIIX4 datasheet (A20GATE and A20M#, pp. 21 and 26; port `0x92` resets to `0x00`, p. 87): with
+  bit 1 clear, A20M# follows the board's A20GATE input and the chip has no fixed reset state. The boot processor reaches above 1 MiB
+  with no write to port `0x92`, so on this board A20GATE is high or something else holds A20M# high (inferred). Open: what drives
+  A20GATE here (no keyboard controller is identified in the held sources), and whether A20M# has a pull-up. Settles with: the board
+  schematic, or a bus capture of A20M# and A20GATE.
 - **Exception from a loader before its own IDT.** The stubs enter the V86 monitor's dispatcher, which prints "Unexpected exception" with the frame and, for the vectors traced, halts; the path for vector `0x0d` from a non-V86 task was not traced to its end. Settles with: reading `1.1005@0x1105328` to `0x1105377` against the dispatcher's return values.
 - **Whether a stock 320 or 540 runs the V86 task.** It runs only when the PCI scan finds a device with an x86 expansion ROM or `DosBoot` begins with `y`; no scan of the shipped cards was run. It decides whether page 0 is mapped and the local APIC is programmed at the loader call. Settles with: a hardware-inventory capture with the PROM's debug output, or the card list of a shipped configuration.
 - **ACPI use.** Whether a Windows 2000 loader or HAL uses the "ACPI-BIOS" node. The pointer, root table and one fixed table exist; no DSDT, FACS or MADT. Settles with: the Windows 2000 loader's handling of that node, or a boot with an ACPI HAL.

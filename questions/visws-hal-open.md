@@ -17,14 +17,17 @@ Tried: both HAL builds. Settles it: the specification, or reads of the entry on 
 ## What raises Cobalt entry 29 and what ports `0xff0` to `0xff3` are
 
 [missing source] The power-management NMI routine reads bit 2 of port `0xfb0` and writes ports `0xff0` to `0xff3` with fixed values.
-Tried: the routine in full; no other HAL code touches them. Settles it: the firmware's use of the same ports (a search of the held
-PROM images for those port numbers was not done), or the Lithium and PIIX4 specifications.
+Tried: the routine in full; no other HAL code touches them. The PIIX4 datasheet lists no such ports, and its power-management
+block is the 64-byte window at `0xf80` (base in PMBA bits 15:6, p. 120), so they are not its registers (inferred). Settles it: the
+firmware's use of the same ports (a search of the held PROM images for those port numbers was not done), or the Lithium specification.
 
-## PIIX4 general-purpose input and output register offsets
+## Which pins carry the board-type bits of port `0xfb2`
 
-[missing source] The PIIX4 datasheet is not held, so the offsets `0x30` and `0x34` of the power-management block (hence the meaning
-of ports `0xfb0`, `0xfb2`, `0xfb5`) rest on the datasheet from memory and are inferred. Which pins carry the board-type bits 5:2
-of `0xfb2` and what its other bits carry is unknown. Settles it: the PIIX4 datasheet (a search of the reference holdings found nothing).
+[missing schematic] The PIIX4 datasheet is now held and settles the register layout: GPIREG at `+0x30` and GPOREG at `+0x34`, bits
+5:2 of `0xfb2` are GPI18 to GPI21 (non-multiplexed), and `0xfb5` bit 0 is GPO8 ([boards-320-540.md](../platforms/visws/boards-320-540.md#the-byte-at-port-0xfb2)).
+Which pins SGI wired to carry the board type, and what bits 1:0 and 7:6 carry, is unknown: the datasheet gives pin functions, not
+board wiring. Settles it: the board schematic, or a strap measurement of GPI18 to GPI21 on a real machine (a last resort, and only
+with the owner's approval).
 
 ## Which physical PCI slot is which device number
 
