@@ -53,6 +53,17 @@ separately below.
 Banner, build time and size: established (strings and FIT read by me). The 10.54 package also ships a
 `shub2snprom.bin` (`3ea83318...`, SAL 1.54 rel081111 IP65, the sixth column above; the SHub 2 address map and reset accesses read from it are in [devices/shub/shub2.md](../../../devices/shub/shub2.md)) and SGI's `README.snprom` (`00f0a21d...`, re-hashed).
 
+**The README.snprom machine lists (established as SGI's statement).** `README.snprom` from the 10.54 build 70399
+package, 6,112 bytes, sha256 `00f0a21d82c4b3a392043b52ec77d357c84ed74bfc0eb1cf5cb76c552571bcb0`, held in the Library as
+`firmware/sn2/snprom-10.54-70399/README.snprom`. Line numbers count the file's blank first line.
+
+| Lines | What they say |
+|---|---|
+| 15 | `shub1snprom.bin` supports the Altix machines listed below |
+| 17–23 | Altix 330, Altix 350, Altix 3300, Altix 3700, Altix 3700 Bx2, Prism Rackmount, Prism Deskside, one per line |
+| 25 | `shub2snprom.bin` supports the Altix machines listed below |
+| 27–28 | Altix 4700, Altix 450 |
+
 **Container hash.** The holdings catalogue records the 10.54 container as `snprom-10.54-70399.ia64.rpm`, 6,296,643
 bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`. This is catalogue metadata: the rpm is
 not in the chips root and was not re-hashed for this page, so nobody here has tied it to the extracted files (the
