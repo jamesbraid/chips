@@ -390,8 +390,9 @@ programs none of it.
   memory-controller registers it uses are the ones above (ECC enable, error status, address and syndrome). The sixteen
   bank registers the firmware sizes memory from (`firmware.md`) are not used by any Windows code read.
 - **Memory error and ECC path. Established.** `HalpInitMemErrSubsystem` (`0x80019fe0`): on non-Lite boards with `MEMERR` on, it
-  connects Cobalt entries `0x1a` and `0x1b` and turns ECC on; `HalpMemErrorHandler` (`0x80019ed0`), `HalpCorrectSoftEccError`
-  and the logging helpers behave as described under the memory-controller table.
+  maps the memory-controller block and installs the two memory-error vectors on Cobalt entries `0x1a` and `0x1b` (on a Lite board it prints
+  "Memory Access Error checking DISABLED on Cobalt Lite"); turning ECC on is the separate `HalpEccControl`, with the conditions in the option table.
+  `HalpMemErrorHandler` (`0x80019ed0`), `HalpCorrectSoftEccError` and the logging helpers behave as described under the memory-controller table.
 
 ### Registry values the HAL writes
 
