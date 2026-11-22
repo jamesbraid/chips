@@ -6,7 +6,7 @@ For someone building a SHub 2 model. It picks, from [shub2.md](shub2.md), the ro
 
 ## Which chip is in a 3700 Bx2
 
-SHub 1.2. The Altix 3700 Bx2 guide's CR-brick block diagram labels its four nodes "SHUB 1.2" ([Bx2 page](../../platforms/sn2/altix-3700-bx2.md)). This page's rows do not apply to the Bx2; they apply to the Altix 4700 and 450 (the machines SGI's `README.snprom` lists for the SHub 2 image).
+SHub 1.2, established. The Altix 3700 Bx2 guide's CR-brick block diagram labels its four nodes "SHUB 1.2" ([Bx2 page](../../platforms/sn2/altix-3700-bx2.md)). This page's rows do not apply to the Bx2; they apply to the Altix 4700 and 450 (the machines SGI's `README.snprom` lists for the SHub 2 image).
 
 ## Rows that carry the PROM to its first console message
 

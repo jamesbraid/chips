@@ -17,7 +17,8 @@ p.80 (power supply) and the console note, `007-4805-001`. Printed page = PDF pag
 - SHub blocks as on the 350: XN, PI, MD, two NI, II and LB (p.79).
 - The guide names the interconnect "NUMAlink-4" (p.57); the first 350 guide (-001) does not number it, the second (-002) does.
 - Node board: eight DIMM slots (p.75). Figure 3-4 (p.76) labels it "IP67 node board" and its node chip "SHub 1.2 ASIC".
-  The text calls the chip "Super Hub (SHub)" (p.79) and gives no generation.
+  The text calls the chip "Super Hub (SHub)" (p.79) and gives no generation. SGI's `README.snprom` lists the 330 for
+  `shub1snprom.bin`, the SHub 1 image: established as SGI's statement ([the SHub table](README.md#which-chip-where)).
 - Memory: DIMMs of "double data rate synchronous dynamic random-access memory (DDR1 SDRAM)", four or eight per module, in
   groups of four, up to 16 GB (p.78).
 - Base I/O is on the node board, not on a card: the base module has "factory-installed disk drive(s), base I/O, and
