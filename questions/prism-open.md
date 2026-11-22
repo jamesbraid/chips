@@ -32,6 +32,12 @@ Status: **unknown** for everything below. What is established is on [the Prism o
   boot capture of the EFI shell. The 2019 logs (kernels 3.8.13 and 4.14.83) print `PCDP: v3 at 0x31efead110`, the address of the
   EFI `HCDP=` entry, so the firmware passes a PCDP v3 table (observed, as posted). The dump does not show its entries,
   so whether one describes the graphics adapter is unknown.
+  Partly answered 2026-11-22 by a Ghidra comparison of SAL 4.65 (snprom 10.15) and SAL 5.04 (10.54), recorded in
+  [the Prism platform page](../platforms/sn2/prism.md#sal-465-against-sal-504-ghidra-read-2026-11-22): the two need the same L1
+  requests, CPU rows and TIO and TIOCA discovery, so 5.04 is enough for a model (inferred; neither has been seen booting a Prism).
+  TIOCA set-up needs the TIO lboard (type `0x12`) and an L1 slot type of `l`, `^` or `b` for the TIO's NASID, and tolerates a silent function;
+  what an absent TIO chiplet returns when the PROM reads its ID word is unknown. The PROM assigns BARs itself from a first-fit pool starting at `0x100000`, so two 128 MiB BARs land at
+  `0x08000000` and `0x10000000` (inferred); it reports no root-window size, only a 1 MiB legacy memory mapping. Still unknown: how the PROM numbers the TIOCA bus and segment, and the card's BAR set.
 - **Software versions.** `fglrx`, XFree86 and ProPack 4 SP2 kernel versions are not printed in any guide. Route: a ProPack disk
   image's `rpm -qa` and `/etc/sgi-release`. The held image is T2/Linux and has neither. Partly answered 2026-11-21
   from the ProPack 4SP4 extensions disc; see the evidence section below.

@@ -571,9 +571,153 @@ number alone; the log's build date would settle it, and the logs were not read a
 - The 3.32 row comes from the earlier scan and was not run again here.
 - The 4.06 column assumes the banner version is the revision the Linux check reads; that is inferred, not read from the revision field.
 - The 1.x series fails the numeric check, but the Linux check runs only on the SHub 1 path, so it says nothing about SHub 2.
-- The code that uses the TIOCA strings was not read, so no TIOCA behaviour is claimed.
+- The code behind the TIOCA strings was read for 4.65 and 5.04 only (next two sections); no other build was read.
 - Build dates in the table are from the RPM headers, as recorded in the holdings evidence.
 
+
+### SAL 4.65 against SAL 5.04 (Ghidra read, 2026-11-22)
+
+Question: does an emulated Prism need the SAL 4.65 image the 2019 real-Prism logs print, or is SAL 5.04 enough? Both images were
+loaded as flat IA-64 flash, analysed and decompiled whole in Ghidra, and the functions quoted below were cross-checked in
+`ia64-linux-gnu-objdump` output (instruction text compared with registers and call targets masked: `ca_discover` and the type fold
+identical; `tio_init` and `tioca_space_to_xtalk` differ in under 1 percent of instructions). Nothing was run. Cited as image@address; image names are the package
+file, so `10.15 snprom.bin` is SAL 4.65 and `10.54 shub1snprom.bin` is SAL 5.04. Grades: *established* is read in both images,
+*inferred* is reasoned from what was read, *unknown* is not settled. No firmware bytes or listings are recorded here.
+
+**Image identity (established).** Package `snprom-10.15-53414.ia64.rpm` (6,279,820 bytes, from the ProPack 4 package tree) holds two files:
+`snprom.bin` (6,291,456 bytes, sha256 `c9fe5f03cae5553a0ce9e5cbd33e3bfe36a064f761a013e7a53d02232ee4622e`, banner `SGI SAL Version 4.65
+rel061204 IP41 built 02:16:27 PM Dec 4, 2006`) and `ip65prom.bin` (12,582,912 bytes, the SHub 2 series, not read here). The first
+is the SHub 1 image. Like 4.43 it still embeds its compiler command line at `10.15 snprom.bin@0xffc1a328` and `@0xffc40588`, which defines
+`CPUBOARD=IP41`, `IOBOARD=TIO`, `CONFIG_TIO`, `HWREGS_TIO`, `SHUB1`, `TIO_CX_CLOCK_RESET_WAR` and `IP41`; 5.04 has no command line.
+That is why `IP41` counts 11 in the 4.65 body and 7 in 5.04 (4.65's extra four are the two copies of the command line).
+
+**FIT and composition against 5.04 (established).**
+
+| | 4.65 (10.15) | 5.04 (10.54) |
+|---|---|---|
+| PAL_B 7.79, 5.73, third | `0xffdc0000`, `0xffe70000`, `0xfff20000` (third 2.15) | `0xffdc8000`, `0xffe78000`, `0xfff28000` (third 2.25) |
+| PAL_A 7.31, 5.37, 1.27 | `0xfffbafc0`, `0xfffc1ac0`, `0xfffc8280` | same bytes, `0xfffc2fc0`, `0xfffc9ac0`, `0xfffd0280` |
+| SAL_A (16 KiB) | `0xffc3d000` | `0xffc4e000` |
+| SAL_B | `0xffa01000`, 0x23b6d0 bytes | `0xffa01000`, 0x24cf90 bytes |
+| SAL runtime (type 0x12, gzip) | `0xffc41000`, 1,019,168 bytes expanded | `0xffc52000`, 918,824 expanded |
+| type 0x13 (gzip ELF) | absent | `0xffc8f410`, 619,440 expanded |
+| EFI (type 0x1f, gzip) | `0xffc81b10`, 3,298,360 expanded | `0xffca5ec0`, 2,495,544 expanded |
+| type 0x22 archive | `0xffd61440`, 860,160 expanded | `0xffd683d0`, 860,160 expanded |
+| type 0x23 | absent | `0xffdc0820`, 672 bytes |
+
+The three PAL_A images and the first two PAL_B images are byte-identical in the two builds (a matching sha256 for each). The third PAL_B
+(the one for Itanium 2 family `0x1f` model 2, version 2.15 against 2.25) differs in 131,895 of its 634,816 bytes. Both builds' top-of-image
+block, FIT head and SAL_A entry pointers have the same layout.
+
+**Question 1: board names and marker counts (established).** Board names in the 4.65 image: `IP41` only. No `IP57`, `Prism`, `XG2N`,
+`FireGL`, `IP53`, `IP67` or `IP65` string in the body or in any expanded component. The counts below use the page's method (printable
+strings of four bytes or more; `AGP` and `TIO` as whole words). They equal the table above for 10.15, and 5.04 gives the same numbers:
+
+| 4.65 | TIOCA | TIOCE | AGP | `SHub 1.2` | `SHub 1.1` | `SHub 1.x` | TIO (word) | IP41 |
+|---|---|---|---|---|---|---|---|---|
+| raw body (6 MiB file) | 3 | 5 | 7 | 0 | 0 | 0 | 14 | 11 |
+| SAL runtime (type 0x12) | 0 | 0 | 0 | 1 | 1 | 1 | 4 | 0 |
+| EFI (type 0x1f) | 0 | 0 | 0 | 0 | 0 | 0 | 1 | 3 |
+| archive (type 0x22) | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+
+The `SHub 1.2` string is in the SAL runtime only, with `SHub 1.1` and `SHub 1.x` next to it (the same three in 5.04's runtime). Its use was not
+read, so no revision preference is claimed (unknown).
+
+**Question 2: what each needs at reset (established unless marked).**
+
+- *Reset entry and `main`.* SAL_A's normal reset-path constants are the same in the two builds. The 4.65 SAL_A `movl` set is the 5.04 set
+  without four values, all in 5.04's fault paths: `0x8000008110030000` (the reason 1 and 2 read), `0x8000008120000000`,
+  `0x1000100000000` and `0x28000000000` (the "PAL early self-test failed" block at `10.54 shub1snprom.bin@0xffc4e256`). The election, history and LED
+  registers, the `0x81_101d_0100` bits 41:39 and the progress codes are shared. SAL_B's reset entry (`10.15@0xffa1dc40`,
+  `10.54@0xffa1de00`) and `main` (`10.15@0xffa19880`, `10.54@0xffa19a20`) decompile to the same text. A model that satisfies the first-stage list in
+  [the images page](../../software/firmware/snprom/images.md) satisfies both.
+- *CPU tables in SAL_A.* The three-row first table (`10.15@0xffc40a70`, `10.54@0xffc51648`) has the same three keys `0x1f000404`,
+  `0x1f010504` and `0x1f020104` and the same PAL_A words; the PAL_B word of the third row is `0x215` in 4.65 and `0x225` in 5.04, matching the third
+  PAL_B. The second table (`10.15@0xffc40000`, 13 rows; `10.54@0xffc51000`, 15 rows) has seven family `0x1f` rows that are byte-identical in
+  the two builds. The family `0x20` rows differ: 5.04 adds two rows (`0x20010004`, `0x20010104`) and changes the trailing words of three
+  (`0x20000404`, `0x20000504`, `0x20000704`). A Prism's Itanium 2 parts, if family `0x1f`, meet the same rows in both; which CPU a Prism carries is not read (unknown).
+- *System controller.* `sysctl_probe` is the same one-line test in both (`10.15@0xffa7f6b0`, `10.54@0xffa806d0`): it fails only for
+  the `cpuid[2]` signature `0xaeeeeeee8badbeef` and touches no hardware, unlike 4.43. A missing L1 is fatal in both. 4.65 repeats the whole command up to ten times while the
+  receive status is -0x18, prints a "PANIC: request ... failed" and "Disabling node" message, then ends in fatal `0x8d` (`10.15@0xffa81a40`); 5.04 ends in `0x8d` on the
+  first -0x18 (`10.54@0xffa82a10`). Both send with 50 tries of 500 ticks (`10.15@0xffa81900`, `10.54@0xffa82a10`).
+- *Brick-type fold.* The fold is the same code (`10.15@0xffa7bee0`, `10.54@0xffa7d510`; objdump text identical): `o`, `5`, `m`, `@` become `c`;
+  `,` and `}` become `.`; `d` becomes `r`; and `f`, `l`, `b`, `{` become `c` when the slab reply is 0 or -1. So 4.65 folds the same characters.
+- *L1 requests.* The set of request codes sent to task 6 is the same: `0x0001`, `0x0003`, `0x0006`, `0x0008`, `0x0009`, `0x000a`, `0x000e`, `0x0010`, `0x0012`,
+  `0x0013`, `0x0015`, `0x1005`, `0x1007`, `0x100a`, `0x100b`, `0x200d`, `0x200e`, `0x200f` and the one routine that takes its code as a variable
+  (`10.15@0xffb4c9f0`, `10.54@0xffb5ed50`), plus the task 3 text sends. No request is added or removed. 4.65 keeps separate copies of the
+  `0x0003`, `0x000e` and `0x0013` routines (`10.15@0xffa7ba90` and `0xffa7d030`, `0xffa7c500` and `0xffa7d8c0`, `0xffa7c130` and `0xffa7d4c0`); 5.04 has one of
+  each plus the `0x4ffff000` wrappers. The call order in `main` is the same.
+- *SAL calls.* 4.65 serves PCI configuration read and write calls (`0x02000047`, `0x02000048`; `10.15@0xffb1beb0`, `@0xffb1c1c0`), which 5.04 has dropped. The I/O interface dispatcher
+  covers `0x02000051` to `0x0200005a`, `0x0200005f`, `0x02000060` and `0x02000064` in 4.65 (`10.15@0xffb1f260`) and adds `0x0200005b` to `0x0200005e` in
+  5.04 (`10.54@0xffb1e660`). `0x0200005d` in 5.04 selects the VGA device (`10.54@0xffb3e7b0`), and the 5.04 EFI carries `SnSelectVGAConsole` while the 4.65 EFI has no such
+  string; so 4.65 has no PROM-side VGA console selection. 4.65 does have `SN_SAL_BTE_RECOVER`, the feature-set calls (`0x02000061`, `0x02000065`, `0x02000066`)
+  and the I/O interface init (`0x0200005f`), which 4.43 lacks.
+- *Base I/O bring-up.* 4.65's SAL_B and runtime carry the PCI scan and klconfig builders for the IOC4 and other base I/O
+  functions (`kl_init_pci`, `init_klcfg_ioc4`, `early_ioc4_nvram_init`, `pci_discover`, `ioc4_discover`; `10.15@0xffabf570`, `@0xffaf24d0`, `@0xffaf26f0`).
+  None of those strings is in 5.04. Both EFI images carry the `AltixPciDeviceInit` string. So 4.65 touches the base I/O PIC and IOC4 in the PROM, and 5.04 leaves that to EFI
+  (inferred: the missing strings may only mean the code was renamed or stripped). Prism guests need the base I/O either way.
+- *Closest node for a TIOCA.* `tioca_attach` records a closest NASID in the TIOCA object (offset `+0x34`). 4.65 (`10.15@0xffb4e5f0`) starts at -1 and picks the node, other than the TIOCA's own
+  NASID, with the smallest positive distance; 5.04 (`10.54@0xffb60ea0`) starts at the executing node and also requires that the node has memory. Same result on any topology where the
+  compute node is the only candidate (inferred); a case where they differ was not constructed (unknown). 5.04 also allocates a 0xb8-byte object where 4.65 allocates 0xa8, and makes two calls after
+  the register set-up that 4.65 lacks (not read).
+
+**Question 3: TIO and TIOCA at reset (established for the code, unknown where marked).**
+
+- *Same code in both.* `tio_init` (`10.15@0xffaadfd0`, `10.54@0xffaaf110`) and `ca_discover` (`10.15@0xffaf0e90`, `10.54@0xffaf23f0`) are the
+  same logic, `tioca_attach` differs in the closest-node loop, an object one quadword larger and two trailing calls in 5.04, and `tioca_space_to_xtalk` (`10.15@0xffb6dcb0`,
+  `10.54@0xffb7de00`) is identical.
+- *Absence is tolerated.* With no TIO lboard (type `0x12`) for a NASID, `tio_init` prints `tio_init: No TIO lboard for NASID 0x%x found!` and returns; nothing is fatal.
+  A TIOCA with no function answering is also tolerated: `tioca_pci_init` (`10.15@0xffb6b4c0`, `10.54@0xffb7a680`) reads the vendor ID through a
+  fault-tolerant access (`10.15@0xffb6e860`) and skips a function that returns `0xffff`.
+- *What presence needs.* The TIO's slot type from the L1 request `0x0013` (`10.15@0xffac0230`, `10.54@0xffac0420`) selects what is probed. The TIOCA
+  corelet (chiplet part `0xe020`) is initialised only when that type is `l` (0x6c), `^` (0x5e) or `b` (0x62), in both builds (`tio_init` tests it, then `ca_discover` tests it again);
+  for any other type `tioca_attach` prints "ignoring board type" and attaches nothing. So the L1 reply for the TIO's NASID must carry one of those three letters. Corelets 0 to 2 are found by reading the chiplet ID word at each base (`nasid << 38`, stride `0x10000000` bytes) and sorted by part (`0xe000` or `0xe010`, `0xe020`); corelet 3 (the CX port) is
+  tested through `0x8000_0008_b000_be18` reading `0xf`. These loads are unguarded. What a missing chiplet returns is unknown, so whether the PROM
+  tolerates an absent corelet on real hardware is unknown; the model must return a part word that matches nothing, or the CX test value.
+- *Rev 1 TIOCA.* In both, a TIOCA klconfig record with revision below 2 is skipped with `Ignoring probe of rev 1 CA bus due to PV 908609`; a missing `KLSTRUCT_TIOCA` (type
+  `0x33`) prints a message and the VGA probe continues.
+- *How the TIO is found.* `tio_init` is entered through a function table (`10.54@0xffc4c210` holds its caller; inferred to be the TIO class methods) after the TIO lboard exists. Where the lboard is created was not traced; unknown
+  for both builds. The SAL runtime's `tio_probe` (`10.15` runtime offset `0x10900`, `10.54` runtime offset `0x10cc0`) is only a part-number predicate (part `0x4422`) with no direct caller found, so no reset-time TIO probe was seen there.
+- *Request check.* Neither build asks the L1 about a TIO beyond the shared `0x0013` and `0x000e` requests.
+
+**Verdict (inferred; the grade is for the comparison, not for a boot).** SAL 5.04 is enough for a Prism model. The two builds need the same hardware at reset: the same L1 and requests, the same CPU rows for
+family `0x1f`, the same TIO and TIOCA discovery and the same SHub 1 first stage. 5.04 adds only fault-path registers, and nothing in 4.65 asks for hardware that 5.04 lacks;
+4.65's PIC and IOC4 bring-up in SAL_B is the same work as 5.04's EFI step. The case for 4.65 is fidelity to the 2019 logs: it prints the banner they show, assigns the TIOCA
+BARs as the log shows (below; 5.04 assigns identically), has no PROM VGA selection and no `0x5b` to `0x5e` calls. A model that only
+needs Prism guest boots can take 5.04. Neither image has been seen booting a Prism (unknown); both are SGI's stated `shub1snprom.bin` for Prism (vendor intent).
+
+### What SAL 4.65 returns for a TIOCA bus and its devices (Ghidra read, 2026-11-22)
+
+SAL calls `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`) and `SN_SAL_IOIF_GET_PCIDEV_INFO` (`0x02000057`) are cases of the I/O interface dispatcher
+(`10.15@0xffb1f260`, `10.54@0xffb1e660`). Handlers are the same code in both builds (only a list offset in the node record moves).
+
+- *`0x02000056` (established).* `10.15@0xffb29f10`: walks the node's bus list for the record whose segment (record `+0xc`) and bus number (`+0x8`) equal the arguments, stores the
+  record's address through the out pointer and returns 0, or returns 1 when none matches. The record is the PROM's own object, not a copy. Its first 0x30 bytes match the
+  published Linux `pcibus_bussoft` layout: ASIC type `+0x0`, XIO widget `+0x4`, bus `+0x8`, segment `+0xc`, legacy I/O base `+0x10`, legacy memory base `+0x18`, base `+0x20`, widget info `+0x28`
+  (field names are Linux's; the offsets are read from the PROM stores and loads).
+- *Provider fields for a TIOCA (established).* `tioca_attach` (`10.15@0xffb4e5f0`) stores ASIC type 4 at `+0x0` (Linux's TIOCA provider number), the corelet number at `+0x4`, the mapped TIOCA register base at `+0x20`
+  and the corelet record at `+0x28`; it also stores the chip revision (ID register at `nasid << 38 | 0x8_9006_0e80`, bits 31:28) at `+0x30` and the closest NASID at `+0x34`. How the
+  bus and segment words at `+0x8` and `+0xc` are filled was not traced (unknown).
+- *Root window (established that the PROM reports no size).* No size field exists in the record. The legacy bases are filled by the bus fix-up when zero: `pciio_bus_fixup` (`10.15@0xffb3aab0`) maps
+  0x10000 bytes (64 KiB) of PCI I/O space at offset 0 for the legacy I/O base and 0x100000 bytes (1 MiB) of PCI memory space at offset 0 for the legacy memory base, through the generic PIO map
+  allocator (`10.15@0xffb37c70`). The kernel's 1 MiB root window therefore equals the PROM's legacy memory mapping size (inferred that this is the origin of the kernel's constant; the
+  Linux side is the other section). 5.04 has the same two sizes inside a fix-up Ghidra did not recognise as a function (`10.54@0xffb30330`, 1,048,576 at `0xffb306e6` and `0xffb30836`, read in `objdump`;
+  inferred equal). `tioca_space_to_xtalk` (`10.15@0xffb6dcb0`, identical in 5.04 at `0xffb7de00`) maps TIOCA legacy memory (spaces 4 to 6) to window offset `0x8000000` when the range ends below
+  128 MiB and `0x40000000` otherwise, I/O to `0x3000000`, config to `0x1000000` (config size limit 0xff), and a BAR (spaces 8 to 13) to its assigned PCI address plus `0x40000000` for memory.
+- *`0x02000057` (established).* `10.15@0xffb39670`: finds the device record, writes its eighth quadword (the host handle) as device and function bits, the bus's word at `+0x8` of its parent record and the NASID in bits 63:40, copies 12 quadwords (0x60 bytes) to the device buffer and, if the
+  record has an interrupt record (quadword 11), 10 quadwords to the interrupt buffer, and returns 0. Same code in 5.04 (`10.54@0xffb3dbc0`). The PROM's per-BAR table (flags `+0xa4`, address `+0xa8`, size `+0xb0`, stride `0x38`)
+  starts at `+0xa0`, past the 0x60 bytes copied, so no BAR size or flag is returned (inferred from the offsets; the object being the same one is inferred). The first seven quadwords, which Linux's
+  `pcidev_info` uses as the BAR PIO addresses, come from `pciio_device_setup` (`10.15@0xffb3a2f0`, "pciio_pio_addr: win %d is in space %s"), which maps each BAR window through the allocator and
+  `tioca_space_to_xtalk`; I did not trace which word it stores (unknown).
+- *Where BAR values come from (established).* Not a copy of config space. `tioca_pci_init` (`10.15@0xffb6b4c0`, `10.54@0xffb7a680`, same pool constants) builds three first-fit pools per TIOCA:
+  memory below 1 MiB `0xc0000` for `0x40000` bytes (used for BARs that say 'below 1 MiB'); other memory `0x100000` for `0xfff00000` bytes; I/O `0x1000` for `0xefff` bytes. For each function it writes `0xffffffff` to each BAR,
+  reads the size mask, takes a block of that size aligned to its size from the pool, writes the address back (64-bit BARs get a zero upper half) and records flags, address and size. The expansion ROM is
+  sized and placed the same way from the memory pool. A revision 1 CA gets function 0 only; other revisions probe up to eight functions when function 0 is multifunction. A function with an AGP
+  capability then goes through `tioca_agp_func_init` (`10.15@0xffb6bf00`). 5.04 adds checks for allocation failure and for the ROM pool and is otherwise the same.
+- *The 2019 addresses (inferred).* With a first-fit pool from `0x100000`, a 128 MiB BAR aligns up to `0x08000000`, which leaves `0x100000` to `0x07ffffff` free; a second 128 MiB BAR cannot use that block and lands at
+  `0x10000000`. That matches the log's two BARs, so those values are what this allocator produces for two 128 MiB memory BARs on one TIOCA (the other BARs of the card are unknown, so the order of allocations
+  is unknown). Smaller BARs take addresses from `0x100000` upward, also outside a 1 MiB window. Both builds assign identically, so the addresses do not separate 4.65 from 5.04.
+- *Unknown.* The bus and segment numbering that `0x02000056` matches, whether any bus window beyond the two legacy bases exists (none was found), and the rest of the 12-quadword device record.
 
 ## Software SGI shipped
 
