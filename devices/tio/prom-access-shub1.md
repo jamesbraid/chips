@@ -21,7 +21,7 @@ established is the instruction-level fact, a software expectation is a value cod
 ## Addressing (established)
 
 - Every register access is one 8-byte uncached load (`0xffa0e5a0`: `ld8` then `mf.a`) or store (`0xffa0e640`: `st8` then `mf.a`) with
-  interrupt collection masked. Read and write wrappers `0xffa0bd20` and `0xffa0c560` take a route word first. Zero means the direct
+  `psr.i` and `psr.dt` cleared (`rsm 0x24000`, so physical-mode access). Read and write wrappers `0xffa0bd20` and `0xffa0c560` take a route word first. Zero means the direct
   access; non-zero takes the vector path (`0xffa0cec0`), not read here.
 - Register offsets in the PROM's immediates and tables carry bit 38 (`0x40_0000_0000`) as a marker for the TIO local block. The accessor
   strips it. The address is `0x8000_0008_0000_0000 | NASID << 38 | offset` (`0xffa0bd20` listing: `xor` of bit 38, `or` of
@@ -53,12 +53,11 @@ slots `0x28` and `0x30` as the SHub 2 image does.
 - **Identity word** (`0xffa0f8c0`, the node-record builder): one 8-byte read at the SHub-style offset `0x1_0000_0000` (above). Part (bits
   27:12) selects the class; revision (31:28) is kept in the node record. A TIO answers `0x4422`.
 - **TIO_NODE_ID, `0x9006_0e80`, writer** = slot `0x108`, `0xffa97fe0`, called directly from the routing-table install `0xffa620a0` at
-  `0xffa62bfc`, after slot `0x1b8`. It reads `0x9006_0e80`, replaces bits 45:32 with the node's NASID (`dep.z` 32 width 14, mask
-  `0xffffc000ffffffff`) and writes it back, then reads it again, replaces bits 53:48 with `2^k` (`dep.z` 48 width 6, mask
-  `0xffc0ffffffffffff`; k is the count of nine-bit groups in the call's last argument, `shr 9` loop at `0xffa98076`) and writes it back. Two
-  read-modify-writes, not one. Bits 47:46 and 31:0 are never changed. The SHub 2 build does the same through a single merged path
-  ([SHub 2 page](prom-access.md#order-of-events-established-unless-marked)).
-- Readers of `0x9006_0e80`: the TIOCA attach (`0xffb61186` onward) takes the revision from bits 31:28; slot `0x120` reads bits 53:48 back.
+  `0xffa62bfc`, after slot `0x1b8`. One read-modify-write: a single read (call at `0xffa9803c`) into a stack temporary, both field edits on that
+  temporary, and a single write (call at `0xffa9812c`). Bits 45:32 take the node's NASID (`dep.z` 32 width 14, mask `0xffffc000ffffffff`); bits 53:48 take
+  `2^bitlen(arg >> 9)` (`dep.z` 48 width 6, mask `0xffc0ffffffffffff`), the value of a doubling loop at `0xffa980b0` that shifts the argument right
+  one bit and doubles a counter starting at 1 until the argument is 0 (so 1 for an argument below 512). Bits 47:46 and 31:0 are never changed.
+- Readers of `0x9006_0e80`: the TIOCA attach (`0xffb61186` onward) takes the revision from bits 31:28; slot `0x120` reads bits 53:48 back; slot `0x138` (`0xffa98b06`), `0xffaae546` and `0xffb477a6` also read it.
 
 ## 2. Route rows, ITTE and error-interrupt rows, early-init stores
 
@@ -82,9 +81,9 @@ then the node-number write (section 1). The per-port tail (`0xd002_5000`, `0xd00
 2. Slot `0x2f8` (`0xffa1efd0`): node object set-up, no TIO register access. Slot `0x2a8` (`0xffa329f0`): table A (82 stores) then table B
    (9 stores), then the interrupt target (below).
 3. Slot `0x308`: empty. A progress call (`0xffa13190`, arguments 21 and 1): no TIO register.
-4. `0xffa0afd0`: read `0x901d_0080` (slot `0x168`), clear then set bit 58, write it back (slot `0x170`). This is extra against the SHub 2 build.
+4. `0xffa0afd0`: read `0x901d_0080` (slot `0x168`), clear then set bit 58, write it back (slot `0x170`). The SHub 2 image has the same step (`0xff4e02cc` calls `0xff419090`).
 5. Slot `0x168` read of `0x901d_0080`, clear then set bits 57 and 40 (masks `0xfdffffffffffffff`, `0xfffffeffffffffff`; or `0x200000000000000`,
-   `0x10000000000`), slot `0x170` write. So the word ends with bits 58, 57 and 40 set (read-modify-write each time).
+   `0x10000000000`), slot `0x170` write. So the word ends with bits 58, 57 and 40 set (read-modify-write each time). Early init is not the only writer of this word: slots `0x168` and `0x170` are also called from `0xffa1a6d0` (bit 56), `0xffa47870` (`0xffa47f00`, `0xffa47b66`, `0xffa48146`), `0xffa5b5d0`, `0xffa60550`, `0xffa637b0` and `0xffacc6e0` (bits 40 and 57). Which of them run for a TIO node was not traced (unknown); a model should keep the register as plain read/write storage.
 6. Slot `0x18`: empty. Slot `0x288` (`0xffa94570`): finds the PROM-side object, no TIO register. Slot `0x318` (`0xffaad610`): creates the
    klconfig-style board record (type `0x12` per the SHub 2 page). Slot `0x2e0`: sets flag 2 when slot `0x2d8` returns less than 1.
 
@@ -103,14 +102,15 @@ follows: `0xd004_0540`, `0xd004_0550`, `0xd004_0640`, `0xd004_0650`, `0xd004_024
 the error handlers; the last carries the values `0x17f83ff` (to `0x9005_0588` and `0x9005_0508`), 8 (to `0x9001_0008`, `0x9001_0088`) and 0. Their
 consumers were not traced.
 
-**ITTE** (`0xb000_8800 + 8 i`, i = 0 to 6, and `0xb000_8838`): **the SHub 1 PROM does write them**, unlike the SHub 2 reading, which found only a
-constructor store of zero. The PIO big-window map `0xffb74640` (descriptor `0xffc4ac20`, in the bus operations table at `0xffc2b978`) picks a free
-window record of the node's seven 1 GiB records, then stores to `0xb000_8800 + 8 idx` the value `0x1_0000 | (widget << 12) | ((xtalk_addr >> 30) & 0xff)`
-(`mov r14=65536`, `dep.z 12,2`, `extr.u 30,8`) and reads it back (`0xffb74acc`). Index 7 is `0xb000_8838` and is used for a window at or above
-`0x2_0000_0000` (the value is `0x1_0000 | widget << 12`, constructed at `0xffb74d70`). `0xffb74ec0` (descriptor `0xffc4ac30`) clears bit 0 of
-the entry on unmap (`and -2`, `0xffb750c6`) and writes `0xb000_8838` likewise. `0xffb75340` writes entry 7 in a third form. `0xffb49230`
-reads entries (hub-device info). The windows are the PROM's own PIO maps, for example the three 1 GiB memory windows `tioca_bus_fixup` takes
-(section 6). The hardware use of an ITTE entry is as inferred on the SHub 2 page. Grade: established (access), inferred (meaning).
+**ITTE** (`0xb000_8800 + 8 i`, i = 0 to 6, and `0xb000_8838`): the PROM writes them, as the SHub 2 image does (its writer is at `0xff5930ac` to `0xff59314c`, entry 7 at
+`0xff593496`, `0xff593736`, `0xff593876`, `0xff594066`, `0xff594326`). The PIO big-window map `0xffb74640` (descriptor `0xffc4ac20`, in the bus operations table at `0xffc2b978`) picks a free
+window record of the node's seven 1 GiB records, then stores to `0xb000_8800 + 8 idx` the value `0x1_0000 | (width << 12) | ((xtalk_addr >> 30) & 0xff)`
+(`mov r14=65536`, `dep.z 12,2`, `extr.u 30,8`; the field is 2 bits wide, bits 13:12, and "width" is our name for it) and reads it back (`0xffb74acc`). Entry 7 (`0xb000_8838`) covers a window that starts at or above
+`0x2_0000_0000` and ends at or below `0x10_0000_0000`; its value is `0x1_0000 | width << 12` (store at `0xffb74d70`, read-back at `0xffb74dbc`). Unmap, `0xffb74ec0`
+(descriptor `0xffc4ac30`), decrements the descriptor's reference count (`+56`) and, only when it reaches zero, writes the whole entry as 0 (`mov r41=r0` at `0xffb75096`, store at `0xffb750ac`); the `and -2`
+at `0xffb750c6` clears bit 0 of the PROM's own descriptor field at `+60`, not a hardware bit. `0xffb75340` is the constructor: it zeroes all eight entries (a loop over 0 to 6, then `0xb000_8838` at `0xffb7562c`).
+`0xffb49230` reads entries (hub-device info). The windows are the PROM's own PIO maps, for example the three 1 GiB memory windows `tioca_bus_fixup` takes
+(section 4). The hardware use of an ITTE entry is as inferred on the SHub 2 page. Grade: established (access), inferred (meaning).
 
 **Error and interrupt rows** (8-byte, all as on the SHub 2 page unless noted):
 
@@ -118,7 +118,7 @@ reads entries (hub-device info). The windows are the PROM's own PIO maps, for ex
 - Slot `0x228` (`0xffa90430`), when bit 5 of the node object's flags word (`+0x50`) is clear (otherwise it calls `0xffa8e290` and returns): read-modify-write of `0x901d_0100`
   (the address comes from slot `0x270`, `0xffa90d80`; `& 0x83ffffffffffffff | 0x1c00000000000000`: bits 62:58 cleared, bits 60:58 set); when the cpuid[2] signature is not
   `0xaeeeeeee8badbeef`, `0x9003_8180` := 0 (slot `0x260` with argument 3: `0x9003_8000 + (3 << 7)`); then `0x9000_0980` := `pid << 4 | 0xe9 << 52`, `0x9000_0a00` := 0, `0x9001_0008` := `0x90_0000`,
-  `0x9001_0088` := `0x90_0000`. The SHub 2 page does not list the `0x901d_0100` write or the `0x9003_8180` store for this slot.
+  `0x9001_0088` := `0x90_0000`. The SHub 2 image has the same slot (`0xff4a5010`) with the same `0x901d_0100` read-modify-write and cpuid test.
 - `tio_eint_init` (`0xffb75660`, caller through descriptor `0xffc4ac70`, not traced): allocates vector `0x36`, then `0x9001_0008` := `0x90_0000`,
   `0x9000_0480` := `pid fields << 4 | 0x36 << 52`, `0x9000_0500` := **1** (the early-init store above is `0xd`). It is a later rewrite of the same
   three registers. `tio_intr_init` (`0xffb78ee0`): for compute node c writes TIO `c | 1` (the constant carries bit 38, so NASID bit 0 is set)
@@ -138,10 +138,10 @@ Late init (`0xffad05b0`) calls slot `0x2e8` (`0xffaadef0`) unless flag 2 is set;
 
 1. Looks up the TIO lboard of the NASID; with none it prints "tio_init: No TIO lboard for NASID" and returns.
 2. `0xffaae050`: read-modify-write `0xb000_6100` (bit 12 clear) and, when the slot letter is not `b`, `0xb000_8100` (bit 61 clear) as on the SHub 2 page.
-3. The slot letter is `0xffac0420`'s result (from the L1 slot-type request `0x13`). For corelet n = 0 to 2 the 8-byte ID word at `0x8000_0000_0000_0000 | NASID << 38
+3. The slot letter is `0xffac0420`'s result (its source in L1 request `0x13` is not verified here). For corelet n = 0 to 2 the 8-byte ID word at `0x8000_0000_0000_0000 | NASID << 38
    | n << 28` is read (`ld8.acq`, unguarded), `& 0x0fff_f000 >> 12` gives the part (`0xaaeeed..0xaaef90`). Part `0xe000` (57344) or `0xe010` (57360) is a TIOCP,
    part `0xe020` (57376) a TIOCA. The TIOCA is attached only when the slot letter is `l` (108), `^` (94) or `b` (98) (`0xffaaf0fc` calls `ca_discover`). Corelet 3: the
-   word at `0x8000_0008_b000_be18 | NASID << 38` must read `0xf` (`cmp.eq 15`, `0xffaaee50`); then the CX port set-up runs, "CX PORT init failed" on failure.
+   word at `0x8000_0008_b000_be18 | NASID << 38` must read `0xf` (`cmp.eq 15`, `0xffaaee50`; reading it as "an FPGA port exists" is inferred); then the CX port set-up runs, "CX PORT init failed" on failure.
    Unmatched parts are ignored, so a model needs a part word that matches none of `0xe000`, `0xe010`, `0xe020` for an absent corelet; what hardware returns is unknown.
 4. `ca_discover` (`0xffaf23f0`): needs a `KLSTRUCT_TIOCA` (type `0x33`) record under the lboard; a record whose revision byte (+3) is below 2 prints "Ignoring probe of rev
    1 CA bus due to PV 908609" and the TIOCA is not probed. It then reads the PCI vendor and device IDs of function 0 straight through the corelet
@@ -160,19 +160,19 @@ loads and stores, 8 bytes wide.
 |---|---|---|---|---|
 | 1 | `0x58` `int_status_alias`, `0x68` `mult_error_alias` | W | all ones | established |
 | 2 | `0x70` `first_error`, `0x90` `crm_ct_error_detail_1`, `0x98` `crm_ct_error_detail_2` | W | 0 | established |
+| 2b | `0x88` `crm_pkterr_type_alias` := all ones; `0xa0` `crm_tnumto`, `0xa8` `gart_err`, `0xb0` `pcierr_type`, `0xb8` `pcierr_addr` := 0; `0x90` and `0x98` := 0 again (`0xffb61160` to `0xffb611d0`) | W | as listed | established |
 | 3 | TIO `0x9007_1a00` | W | 0 (`0xffb60fa6`, `0xffb60fdc`) | established |
-| 4 | corelet window `+0x2_0028 + 0x40 i`, i = 0 to 127 | W | `0xdeadbeefbeefdead` (`0xffb26280`, called after the closest node is chosen) | established |
-| 5 | `+0x3_0000 .. +0x3_0018`, `+0x2_0000 .. +0x2_0018` (stride `0x80`/`0x40`, 64 and 128 groups) | W | pattern `0xdeadbeefbeef0000 + n`, and `0x2_0030 + 0x40 i` := 0 | established (access), inferred (a RAM init) |
+| 4 | corelet window `+0x2_0028 + 0x40 i`, i = 0 to 127 (so `0x2_0000` to `0x2_1fff`) | W | `0xdeadbeefbeefdead` (`0xffb26280`, called after the closest node is chosen) | established |
+| 5 | `+0x3_0000 .. +0x3_1fff`: 64 iterations at stride `0x80`, two four-word groups each (128 groups of `0x40`); `+0x2_0000 .. +0x2_3fff`: 128 iterations, 256 groups; and `0x2_0030 + 0x40 i` := 0, i = 0 to 127 | W | words `0xdeadbeefbeef0000 + 0x100 n + w` (n the iteration, w the word index 0 to 7 across the pair) | established (access), inferred (a RAM init) |
 | 6 | `0x08` `control1` | RMW | `& ~0x7f` (clears bits 6:0, including FW enable) | established |
-| 7 | `0x10` `control2` | RMW | `& 0xffe000fffc00ffff \| 0x1ff << 40` (clear bits 25:16 `pci_max_retry`, set `crm_tnumto_period` bits 48:40 to `0x1ff`); when the revision is 1 or 2 (`(6 >> rev) & 1`, rev from `0x9006_0e80`) also clear bits 35:34 (GART prefetch enables) | established |
+| 7 | `0x10` `control2` | RMW | `& 0xffe000fffc00ffff \| 0x1ff << 40` (clear bits 25:16 `pci_max_retry`; clear the 13-bit `crm_tnumto_period` field, bits 52:40, then OR in `0x1ff << 40`); when the revision is 1 or 2 (`(6 >> rev) & 1`, rev from `0x9006_0e80`) also clear bits 35:34 (GART prefetch enables) | established |
 
 Step 4 and 5 are the TIOCA's internal arrays; the kernel never touches `0x2_0000` or `0x3_0000`; a model needs them writable (8 bytes) or
 accepts and discards them. The order inside the function is `1, 2, 3` first (`0xffb60f90` to `0xffb60fdc`), then `4, 5`, then `6, 7` (`0xffb61426` to `0xffb614f0`).
 
 **Error interrupt init (`tioca_error_intr_init`, `0xffb7d510`)**: allocates vector 53 (`0x35`) through the bridge provider table's allocator (slot `+0x28`),
 then `0x48` `err_int_dest_addr` := `vector << 56 | xtalk address`, and `0x78` `int_mask` := `0xffff_ffff_ffdf_c01e` (a bit set masks; bits 0, 5 to 13 and 21
-stay unmasked). The interrupt allocator `tioca_intr_alloc` (`0xffb7cf30`) stores the same form to `0x38` `inta_dest_addr` or `0x40` `intb_dest_addr` for lines
-A and B and edits `0x78`.
+stay unmasked). The interrupt allocator `tioca_intr_alloc` (`0xffb7cf30`) stores the same form to `0x38` `inta_dest_addr` (line A) or `0x40` `intb_dest_addr` (line B; `0xffb7d230`) and edits `0x78`. Those two destination stores and the `0x48` one are TIOCA rows too (row 15).
 
 **PCI function probing (`tioca_pci_init`, `0xffb7a680`)**, one pass per function (one for revision 1, up to eight when function 0 is multifunction):
 config address `window | 0x101_0000 | func << 8 | reg` (bus 0; `0xffb7b520`); a read through `tioca_pio_safe` (`0xffb7e9b0`):
@@ -189,7 +189,7 @@ Then BAR sizing and placement (writes `0xffffffff`, reads the size, writes the a
 `0xfff00000`, I/O `0x1000` size `0xefff`), the expansion ROM likewise, command register (offset 4) := 7 and status (offset 6) := 0 when every BAR fit.
 An AGP capability (id 2, config offset from the capability list) goes to `tioca_agp_func_init` (`0xffb7b250`): if the card's AGP status has bits 3 and 1 set (AGP 3.0 and
 8x; `& 10 == 10`), `0x08` `control1` := `(cal << 7) | (control1 & ~0x3c0)` where cal is status bits 12:10 (7 becomes 0), the AGP command register at capability +8 :=
-`0x7d00_6322`, and the isochronous bit is cleared. Otherwise the bus stays in PCI mode (`0xffb7b3xx` message). The PROM clears control1 bit 6 (FW) in that RMW; the kernel
+`0x7d00_6322`, and when status bit 17 is set a 16-bit 0 is written at capability offset `+0x20` (`0xffb7b4f0` to `0xffb7b510`). Otherwise the bus stays in PCI mode (`0xffb7b3xx` message). The PROM clears control1 bit 6 (FW) in that RMW; the kernel
 sets it back later.
 
 **`tioca_bus_fixup` (`0xffb7d700`)**: no TIOCA register access. It maps the three memory windows (PCI `0x100000..0x3fffffff`, `0x40000000..0x7fffffff`,
@@ -208,11 +208,11 @@ That function sets the persistent numbers:
 - **Value** = a module term + a table term. The module term is the module's first-seen index times 16 (`0xffb6a690`; zero on a single-module system).
   The table term for slot letter `l` is `L[slab][2]` with the table at `0xffc2b7e4` (slab 1 gives 5, slab 2 gives 6); for other letters it is the row for that
   letter in the table at `0xffc2b2d8` (row stride 17 words) plus `slab * 4`.
-- **Segment or bus.** When the node's flag at `+0x10` is zero the value goes to the bus word (`record+8`) and the segment (`record+0xc`) is 0; otherwise the segment
+- **Segment or bus.** When the PROM global at `[[0x1000040] + 0x40] + 0x10` (not a node field) is zero the value goes to the bus word (`record+8`) and the segment (`record+0xc`) is 0; otherwise the segment
   word gets the value and the bus word is 0. Which of the two modes a Prism is in is unknown. The 2019 Prism logs list `0006:00` with the boot VGA, which fits segment mode with
   an `l` slot in slab 2 (inferred; the kernel logs do not name the slab).
 
-The other fields of the record (the PROM's object, first `0x38` bytes are Linux's `struct tioca_common`): ASIC type 4 (`+0x00`), corelet number (`+0x04`, the xid),
+The other fields of the record (the PROM's object; Linux's `struct tioca_common` is `0x48` bytes and its first `0x38` match): ASIC type 4 (`+0x00`), corelet number (`+0x04`, the xid),
 legacy I/O base and legacy memory base (`+0x10`, `+0x18`, from `pciio_bus_fixup` / `tioca_bus_fixup`; the values come from the PIO allocator, not traced), TIOCA register
 base (`+0x20`; `0x8000_0000_0000_0000`-form window address, section 3), widget info pointer (`+0x28`, the corelet record), TIO revision (`+0x30`, bits 31:28 of `0x9006_0e80`) and
 closest NASID (`+0x34`; the nearest node with memory: `0xffb60ea0` loops over the node table, calls the distance function `0xffa0b210` and keeps the smallest positive value).
@@ -224,7 +224,7 @@ Revision and closest NASID sit where Linux's `struct tioca_common` expects `ca_r
 
 | # | Row | Needed answer | Grade |
 |---|---|---|---|
-| 1 | TIO identity word, `GLOBAL(N, 0x1_0000_0000)` | 8-byte read, bits 27:12 `0x4422`, bits 31:28 a revision (1 or 2 triggers the revision A workarounds; a model wanting 3 or more avoids them) | established (access), software expectation (`0x4422`), unknown (real revision) |
+| 1 | TIO identity word, `GLOBAL(N, 0x1_0000_0000)` | 8-byte read, bits 27:12 `0x4422`, bits 31:28 a revision (the PROM brackets revisions 1 and 2; Linux's PV910244 flush workaround applies to revision 1 only; a model wanting 3 or more avoids them) | established (access), software expectation (`0x4422`), unknown (real revision) |
 | 2 | `0x9006_0e80` | read/write 64 bits; PROM sets bits 45:32 and 53:48 (two RMWs); bits 31:28 = the revision in row 1 | established |
 | 3 | route and tables of section 2: `0xd002_4000/4800/5000/0000/0800/1000`, `0xd000_0020`, `0xd003_0490/0500/04b0/04c0/0520` | plain 8-byte storage | established (access) |
 | 4 | `0x9006_0700`, `0x901c_0000`, `0x901d_0080` (bits 58, 57, 40 set by the PROM; read back), `0x9006_0000/0280/0800/0a00 + 0x80 i`, `0xb000_8880/88a0 + 8 i` | plain storage | established |
@@ -234,11 +234,11 @@ Revision and closest NASID sit where Linux's `struct tioca_common` expects `ca_r
 | 8 | ITTE `0xb000_8800..8838` | eight read/write words, the PROM writes `0x1_0000 \| widget << 12 \| addr[37:30]` and reads back | established (access), inferred (meaning) |
 | 9 | `0xb000_6100` bit 12, `0xb000_8100` bit 61 (and bits 17:12 for rev 1 and 2) | read/write storage | established |
 | 10 | corelet windows `NASID << 38 \| n << 28`, n = 0 to 2 | ID word with part `0xe020`, manufacturer as the kernel table, for the Prism's TIOCA; part matching none of `0xe000 0xe010 0xe020` for the rest | established (code), unknown (hardware) |
-| 11 | `0xb000_be18` | `0xf` only when an FPGA port exists | established |
+| 11 | `0xb000_be18` | reads `0xf` to take the CX port path (established); that `0xf` means an FPGA port exists is inferred | established (access), inferred (meaning) |
 | 12 | TIOCA only when the L1 slot letter is `l`, `^` or `b` and the klconfig TIOCA record's revision byte is 2 or more | otherwise "ignoring board type" and no TIOCA | established |
-| 13 | TIOCA block, offsets `0x08 0x10 0x50 0x58 0x68 0x70 0x78 0x90 0x98 0xb0 0xb8`, window `+0x2_0000..+0x3_ffff` | read/write 8-byte storage (0x50 reads bit 0 for an error) | established |
+| 13 | TIOCA block, offsets `0x08 0x10 0x50 0x58 0x68 0x70 0x78 0x88 0x90 0x98 0xa0 0xa8 0xb0 0xb8`, window `+0x2_0000..+0x3_ffff` | read/write 8-byte storage (0x50 reads bit 0 for an error) | established |
 | 14 | TIOCA config window `base + 0x101_0000 + func << 8 + reg` | PCI function 0 (and further functions when multifunction): vendor ID read as 2 bytes; absent function: `0xffff` (with or without `int_status[0]` and `pcierr_type` bit 47) | established |
-| 15 | TIOCA `0x38 0x40 0x48 0x78` | stores accepted | established |
+| 15 | TIOCA `0x38 0x40 0x48 0x78` (`0x38`/`0x40` from `tioca_intr_alloc`, `0x48`/`0x78` from the error-interrupt init) | stores accepted | established |
 | 15a | TIO interrupt slots `0x9000_1080 + 0x100 i`, `0x9000_1800 + 0x80 i`, i = 0 to 7 (reads at all eight on every allocation; zero reads mean free) and trigger `0x9000_1000 + 0x100 i` | 8-byte read/write storage; a write to the trigger register is what a bridge's interrupt address targets | established (access), inferred (trigger) |
 | 16 | I/O window `base + 0x300_0000` | reads and writes through `tioca_pio_safe` with the rev 1 or 2 `0xb000_8100` bracket | established |
 
@@ -256,7 +256,7 @@ Each Linux access with the PROM state it needs:
 | `kmemdup` of the record, `ioremap(REGION_OFFSET(base), ..)` | the record's `+0x20` base is the corelet window address, usable with the uncached attribute added | established (access), inferred (value form) |
 | `nasid_to_cnodeid(closest_nasid)`; `pci_find_bus(segment, bus)` must exist | PROM's closest-node loop gave a valid compute NASID; PCI scan found the bus (SAL `0x0200_0057` and PCI config SAL; the PCI config route is not read here) | established (Linux), unknown (PCI config route) |
 | `control1` `|= 1 << 42` | register readable and writable; PROM left bits 6:0 clear | established |
-| `control2` clear bits 33:32, set 2; clear 35:34 | readable and writable; PROM left bits 25:16 clear and `crm_tnumto_period` at `0x1ff` | established |
+| `control2` clear bits 33:32 then write 2 into that two-bit field; clear 35:34 | readable and writable; PROM left bits 25:16 clear and the `crm_tnumto_period` field (52:40) at `0x1ff` | established |
 | `int_status_alias` and `mult_error_alias` := `1 << 4` (bit 4, GART fetch error) | write accepted (write-one-to-clear is inferred, not read) | established (access) |
 | `int_mask` clear bit 4 | `int_mask` at `0xffff_ffff_ffdf_c01e` after the PROM, so bit 4 is set (masked) and the RMW clears it | established (PROM value), software expectation (clear) |
 | `gart_aperature` := `0x8020_0007` (2 GiB, 16 KiB pages) | accepts it; the PROM never wrote the register | established (access) |
@@ -265,14 +265,17 @@ Each Linux access with the PROM state it needs:
 | `request_irq(SGI_TIOCA_ERROR = 0x35)`; handler calls SAL `0x0200_0051` | the PROM's `err_int_dest_addr` (`0x48`) holds vector `0x35`; delivery path unknown | established (PROM write), unknown (delivery) |
 | AGP aperture reads `agp_dma_addr_extn` (`0xe8`) in the 48-bit DMA path | the PROM never writes it; Linux reads it back | unknown |
 
-## Differences from the SHub 2 page
+## Differences between our two pages, and what really differs in the firmware
 
-- TIO identity is read at the SHub-style offset `0x1_0000_0000`, not at LB offset `0x8000_0000`.
-- Early init has the extra `0x901d_0080` bit-58 read-modify-write, a progress call and two empty slots.
-- The PROM writes ITTE entries in the big-window map, with a read-back.
-- `tio_eint_init` and `tio_intr_init` exist and write `0x9000_0500` := 1, `0x9000_0300`, `0x9000_0980`.
-- TIOCA attach register stores (section 4) and the PCI probing with `tioca_pio_safe` are read here; the SHub 2 page left them open.
-- The tables at `0xffbdd0c8` and `0xffbdd5f0` match the SHub 2 tables as sets, with the same values.
+Several items first appeared as differences only because the SHub 2 page had not listed them. The SHub 2 10.54 image has all of these as well: the ITTE map writer
+(above), the bit-58 read-modify-write of `0x901d_0080` (`0xff4e02cc` calls `0xff419090`), and the slot `0x228` sequence with the L1-word read-modify-write and the cpuid test
+(`0xff4a5010`). The SHub 2 page now lists them. The firmware differences found are:
+
+- the identity-read offset: `0x1_0000_0000` here, LB `0x8000_0000` there;
+- bit 38 in the table and immediate offsets here (a marker the accessor strips), against the explicit chiplet bit there.
+
+What this page adds that the SHub 2 page lacks: the TIOCA attach and probe register stores (section 4), `tio_eint_init` and `tio_intr_init`, and the TIO interrupt slots.
+The tables at `0xffbdd0c8` and `0xffbdd5f0` match the SHub 2 tables as sets, with the same values.
 
 ## Unknowns and what would settle each
 

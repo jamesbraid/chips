@@ -89,6 +89,8 @@ A TIO node is called "headless" in the PROM's messages (no processors).
    5. Slot `0x168` reads `0x901d0080` (an error message "reading advertisement register" if the read fails) and slot `0x170` writes it back
       with bits 57 and 40 set (the listing shows `and` with `0xfdff...` and `or` with `0x0200...` at `0xff4e0336` to `0xff4e039c`, then the same for bit 40). The same word is the SHub 1 scratch
       register `SH_SCRATCH1` at the same offset ([SHub reset](../shub/prom-reset.md)); a TIO has it too.
+   5a. Before the slot `0x168` read, `0xff4e02cc` calls `0xff419090`, which reads `0x901d0080` through slots `0x168` and `0x170`, clears bit 58 (`0xfbffffffffffffff`) and
+      sets it again (read-modify-write; matches the SHub 1 image's `0xffa0afd0`).
    6. Slot `0x288` (`0xff4a91e0`) looks up a PROM-side object for the node and hands it to `0xff4929f0` (not read; no register access seen).
       Slot `0x318` (`0xff4ca440`) creates the klconfig-style board record of type `0x12` (a TIO lboard, via `0xff4b7d70`) and prints a message
       when that fails.
@@ -187,6 +189,9 @@ Late init calls `0xff4cc2d0` (the TIO bring-up, "tio_init"; same logic as the SH
   (`(nasid >> 8 & 0x3f) << 10 | (nasid >> 1 & 0x7f)`) and the target's processor slice index; the target record comes from the PROM's global pointer block (offset `0x38`); which node that is was not traced, so the
   destination of the TIO error interrupt is unknown beyond "a SHub node". The bit layout (vector 59:52, pid 19:4) is the SHub
   interrupt message layout the [SHub interrupts page](../shub/interrupts.md) records for other registers.
+- **Slot `0x228` L1-word step** (`0xff4a5010`, same slot in the SHub 1 image at `0xffa90430`): before the target writes it does a read-modify-write of `0x901d0100`
+  (`& 0x83ffffffffffffff | 0x1c00000000000000`, `0xff4a5216`, `0xff4a5236`) and tests the cpuid[2] signature `0xaeeeeeee8badbeef` (`0xff4a5276`); the SHub 1 image stores 0 to
+  `0x9003_8180` on the not-equal path, and the SHub 2 code calls `0xff4a4400` at the same point (`0xff4a52bc`); that this is the same store was not decoded here.
 - **Second target.** Slot `0x228` writes `0x90000980` := `(pid << 4) | 0x0e90_0000_0000_0000` (vector `0xe9`), `0x90000a00` := 0 and
   `0x90010008`, `0x90010088` := `0x0090_0000`. Slots `0x248` and `0x250` set or clear bit 13 or bit 16 of `0x90000a00`. When enabling,
   and when the status helper reports a pending source, the PROM sends one message itself: a store to the target SHub's register at global
