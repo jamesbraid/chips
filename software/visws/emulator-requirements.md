@@ -143,6 +143,11 @@ grades are established for what was read and inferred where a name or a branch o
 | Display ID `0xd0000014` (32-bit read) | `0x666` | self-test display register test fails (no halt in the main module) | exact for the self-test |
 | Audio host control `0xff001000` (32-bit write `0x4100` on generation 5, late in bring-up) and, just before it, a 256-dword table copy (117 dwords written, entries `0xdeadcafe` skipped) into the window at `0xff018000` when the stamp is at most `0x36ffd62f` | accepted | none | tolerated; exact if the NT audio driver is to start |
 | Page `0x00fff000` (32-bit read) | RAM | unknown use | tolerated |
+| `0xc6000048` (32-bit read, any Cobalt revision; the "DIMM Speed Check") | bit 16 set | the self-test reports a soft failure and the main module waits for Esc before booting ([prom-console-path.md](prom-console-path.md#ram-probe)) | exact for an unattended boot |
+| Cobalt revision `0xc2000008` low byte | `0xa0` to `0xaf` | the "Cobalt-I/O Bus" row reports a soft failure (same wait) | exact for an unattended boot |
+| Display registers `0xd0000018` to `0xd0080020`, 40 bit-walked words ([prom-console-path.md](prom-console-path.md#cobalt-lithium-and-piix4-register-tests)); Lithium B `+0x58` bits 1:0, `+0xf8` bits 23:2, `+0x44` bits 29:24; PIIX4 function 0 bytes `0x90`, `0x93`, `0x95`, `0xb2` | hold written values; dummy reads 4 bytes above must not fault | soft failure, same wait | exact for an unattended boot |
+| Memory controller `+0x18` after the ECC test (32-bit read) | 0 | the "ECC RAM Bus" row marks the slot bad | exact for an unattended boot |
+| PCI configuration reads of an absent device (ports `0xcf8`/`0xcfc`, 16-bit) | `0xffff` | the scan sees a phantom device | exact |
 | PCI configuration for devices behind the bridges, bus numbers `+0x44`/`+0x45` | standard header 0 and header 1 behaviour; bus 0 is Lithium B | the bridge assignment and device scan misplace devices | exact |
 | Processor state at the loader call (a stand-in that enters a loader or kernel itself) | CS `0x08`, data registers `0x10`, selector `0x18` a flat code segment, PG and PE set, CR3 `0xd00000`, RAM identity-mapped, page 0 not present, IF clear, CD and NW clear, MTRR 0 write-back (type 6 with `coherentdma`) over the populated first 512 MiB group (128 MiB on a 128 MiB board), everything else uncacheable | a loader that relies on another state (a writable `0x18`, page 0, a device at its physical address, a different CS selector) behaves differently from the real firmware | exact for SGI's 2.2.10 image only as far as paging on and identity-mapped RAM; the rest is tolerated by the images held |
 | Floppy/IDE/SCSI/USB/network adapters | as the driver names ([boot-path.md](boot-path.md#from-the-menu-to-the-loader)) | the boot entry cannot be opened ("Invalid boot device") | exact for the chosen boot device |
@@ -150,9 +155,8 @@ grades are established for what was read and inferred where a name or a branch o
 
 ## Not known
 
-The graphics-memory split, the stand-in's ARC services at the byte level (the table's layout is in [boot-path.md](boot-path.md); which entries the loader calls is not enumerated), the
-the Cobalt memory controller's programming and reset values, where the embedded legacy-BIOS image is mapped; and whether the real firmware or
-the OS assigns PCI resources, which determines whether an emulated stand-in must. See
+The graphics-memory split, the stand-in's ARC services at the byte level (the table's layout is in [boot-path.md](boot-path.md); which entries the loader calls is not enumerated),
+the Cobalt memory controller's reset values and the register at `0xc6000048` on revisions other than `0xa0` and `0xa8`, and what the V86 monitor does with the embedded BIOS's port accesses. Where the embedded BIOS image goes is settled (`0xf8000` to `0xfffff`). The real firmware assigns PCI resources itself ([prom-console-path.md](prom-console-path.md#pci-scan-and-resource-assignment)), so a stand-in that skips it must do the same (bus numbers, BARs, bridge windows, command bits) or leave Linux and the HAL to; the HAL assigns anything unassigned. See
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).
 
 ## Questions a machine model needs answered

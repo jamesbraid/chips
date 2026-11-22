@@ -49,14 +49,37 @@ memory allocator, the setter of the flag at `0x114cd44`, and everything above fo
 ## Memory programming, graphics split and PCI resources
 
 [route: software now] Settled: the memory controller's bank registers are written by the self-test module's RAM probe and read by the main
-module; `gfxmem_alloc` and the `cogfxmem` parsing; the Lithium `+0x48`/`+0x58`/`+0x60`-`+0x70` values and what selects them; the Lithium bus numbering
-(B is bus 0); the PCI-PCI bridge assignment code ([boot-path.md](../software/visws/boot-path.md#memory-controller-and-graphics-memory)). Open: the
-memory controller's reset values and the meaning of its `+0x08`, `+0x10`, `+0x18`, `+0x28` and `+0x30` registers (named by use only); which probe outcome
-stores bank value 3, 2 or 0; whether the firmware reads DIMM SPD data (none found); the bit meanings of the Lithium writes; what the windows at
+module; which probe outcome stores bank value 3, 2 or 0; `gfxmem_alloc` and the `cogfxmem` parsing; the Lithium `+0x48`/`+0x58`/`+0x60`-`+0x70` values and what selects them; the Lithium bus numbering
+(B is bus 0); the PCI-PCI bridge assignment code and that the firmware assigns every BAR and bridge window itself; where the embedded legacy-BIOS image goes
+([boot-path.md](../software/visws/boot-path.md#memory-controller-and-graphics-memory), [prom-console-path.md](../software/visws/prom-console-path.md)). Open: the
+memory controller's reset values and the meaning of its `+0x08`, `+0x10`, `+0x18`, `+0x28` and `+0x30` registers (named by use only); whether the firmware reads DIMM SPD data (none found); the bit meanings of the Lithium writes; what the windows at
 `0xf8000000` to `0xfb000000`, `0xfc800000`, `0xfd800000`, `0xfe000000`, `0xff000000`, `0xff004000` and `0xff018000` are for; what the word at
-`0xff01c004` is (the registry's "Serial I/O"); whether the firmware assigns resources to endpoint devices; whether ports `0xcf8`/`0xcfc` and the
-Lithium windows are the same configuration route; where the embedded legacy-BIOS image is mapped; the factory default of `cogfxmem` (none found).
-Next: trace the SCSI, IDE and network drivers' use of the PCI code; read the self-test module's remaining tests.
+`0xff01c004` is (the registry's "Serial I/O"); whether ports `0xcf8`/`0xcfc` and the
+Lithium windows are the same configuration route (the PROM's scan uses the ports, its set-up the window); the factory default of `cogfxmem` (none found).
+Next: trace the SCSI, IDE and network drivers' use of the PCI code.
+
+## What the PROM console needs: points the access-level reading left open
+
+[route: software now unless stated] From [prom-console-path.md](../software/visws/prom-console-path.md), 1.1005 only.
+
+- **The register at `0xc6000048` on revisions other than `0xa0` and `0xa8`.** The "DIMM Speed Check" reads it as a fixed address and wants
+  bit 16 set; its other bits and its reset value are unknown. Settled by the Cobalt specification, or a read on a machine the owner names.
+- **Which boot mode a second start with persistent CMOS takes.** Extended CMOS byte `0x8b` bit 0 is tested and cleared by the self-test and
+  set by nothing in the three modules; the path through "reset for BIST" and the extended set depends on it, and on whether the write to
+  the Cobalt processor block's `+0x18` resets. Next: the serial manager's `wc` and `rs` commands, and a run with a persistent CMOS image.
+- **The retry around the extended set.** Extended bytes `0x85` and `0x86` are set on a soft failure in extended mode and a loop at
+  `test+0x44f6` re-runs the first pass; the exit condition was not decoded.
+- **Whether PIIX4 function 0 registers `0x90`, `0x93`, `0x95` and `0xb2` hold written values.** The "PCI Bus B" test walks them; the PIIX4
+  datasheet's register map settles it.
+- **How the V86 monitor treats the embedded BIOS's port accesses** (keyboard controller, speaker, 8259 and DMA, the interrupt
+  redirection and I/O bitmaps of the V86 task), whether a VGA text mode is ever visible to an operating system, and whether the
+  scan of `0xc0000` to `0xe0000` finds ROM images copied to `0xc0100`. Next: read `1.1005@0x1108c70`, `0x1109510` onwards and
+  `0x11076d0` callers, and the BIOS start-up code at `0xf8000`.
+- **Other processors' local vector tables.** Inferred from the absence of writes; the microcode and cache hook routines were scanned,
+  not read. Settled by reading `1.1005@0x1131239`, `0x1131410`, `0x1103160`, `0x110404d`.
+- **A20GATE.** What drives the PIIX4's A20GATE input on this board stays open; the PROM never sets A20 itself.
+- **Earlier releases.** 1.0002 to 1.0006 were not re-read for this page; the RAM probe is the same through the shared boot block and
+  self-test, the main-module addresses are not.
 
 ## Cobalt revision values and the older boards
 

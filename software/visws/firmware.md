@@ -391,7 +391,7 @@ runs it before it copies the flash to RAM, so it runs from flash with the stack 
   `ul`, `ua`, `uh`, `go`, `ss`, `rt`, `r_`, `w_`, `ds`, `rs`, `ri`, `wi`, `ms`, `rc`, `wc`, `rl`, `wl`, `wh`). Strings in the module name the tested
   units: "Cobalt-I/O Bus", "Cobalt Display ASIC", "Cobalt I/O ASIC", "Cobalt-Graphics Bus", "RAM Sizing", "Test Valid RAM Banks" and
   an infinite loop RAM test for 128, 256 and 512 MB single, double and stacked modules in slots A and B.
-- **Register tests. Established (table and loop read).** One loop (`1.0006:test+0x95d0`; nothing in either image references it directly, so how it is reached was not traced) walks a table of (address, mask,
+- **Register tests. Established (table and loop read; the full row-by-row account, the RAM probe and the failure paths are in [prom-console-path.md](prom-console-path.md)).** One loop (`1.0006:test+0x95d0`; nothing in either image references it directly, so how it is reached was not traced) walks a table of (address, mask,
   expected value) triples and fails the test with the address in `ebx` when `(*address & mask) != expected`; a second loop
   (`test+0x95f4`) walks (address, mask) pairs and for each runs a bit-walk (`test+0x9147`): set the masked bits, read
   back, clear them, read back, then write `0x55555555` and `0xaaaaaaaa` through the mask and compare. The Cobalt display

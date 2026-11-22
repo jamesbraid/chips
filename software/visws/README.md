@@ -26,6 +26,7 @@ given. *unknown*: not settled; the route that would settle it is in
 |---|---|
 | [firmware.md](firmware.md) | What the firmware is (an ARC-style system, not a PC BIOS), the layouts and module tables of the five held PROM images (1.0002, 1.0004, 1.0005, 1.0006, 1.1005), the flash tool, the self-test module, what changed between them, the release history table, the flash part and its environment block, the update procedure |
 | [boot-path.md](boot-path.md) | What the firmware leaves behind for NT and Linux: boot files, the ARC configuration tree, memory descriptors, the processor table, the memory and device map; what is not provided (no MP table, no E820) |
+| [prom-console-path.md](prom-console-path.md) | What the PROM needs from the machine before its console works: the RAM probe, the register tests and how a failure shows, the PCI scan and the resources it assigns, the embedded legacy BIOS, the local APIC state left behind, A20 |
 | [nt-hal.md](nt-hal.md) | The NT 4.0 HAL read function by function: Cobalt interrupt routing, timers, processor start, Lithium PCI access, error and power handling, flash environment access |
 | [nt-drivers.md](nt-drivers.md) | SGI's other Windows drivers at inventory level: audio, system time, video capture, Ethernet, USB, IEEE 1394, and text-mode setup's HAL selection |
 | [hal-hot-path.md](hal-hot-path.md) | Every register access the HAL makes per interrupt, clock tick, IPI and profile tick, and which a hypervisor with an in-kernel local APIC serves without a user-space exit |
