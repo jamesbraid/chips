@@ -18,8 +18,8 @@ Status: **unknown** for everything below. What is established is on [the IRU pag
 - **Slab numbering.** Which slab number a SHub, a TIO and a router carry within a blade or router board (the location string
   has a slab field).
 - **Compute board codes.** Which of `IP69`, `IP63` and the printed `IP73_667` is which blade, and whether any is SHub 2.
-- **Altix 450.** SHub generation (the PROM package README says the SHub 2 image supports it from 10.23, vendor intent only)
-  and whether the blades are identical to the 4700's.
+- **Altix 450.** Whether the blades are identical to the 4700's, the board codes `0x0a00` and `0x0e00` and the letters its
+  blades report; see [altix-450.md](../platforms/sn2/altix-450.md#open). The SHub generation is settled: SHub 2.
 - **Dense router.** Which 16 of the 32 router channels (four boards of eight, 007-4823-001 p.61) reach the 16 front connectors, and whether the router commands of the controller apply to
   the IRU routers.
 - **Graphics blade.** The 4700 graphics board's chip, the bridge on its PCIe slot, and whether the PROM publishes a console

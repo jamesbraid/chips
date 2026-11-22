@@ -40,8 +40,9 @@ to 76 cores per rack. The system is NUMAlink 4, a processor node is a SHub and o
 contents list a "System Controller Network" and L1 and L2 power control (Chapter 2). Not read: the blade list, the
 node details.
 
-Not established for the 450: which SHub generation it uses (README) and whether the 450's blades are the 4700's (the
-shared graphics option guide `007-4954-001` covers both, not read).
+The 450's node chip is SHub 2, from its guide's own figure labels, and its compute, memory and I/O blades share the
+L1 guide's blade-type table with the 4700; the comparison is on [altix-450.md](altix-450.md). Whether the two machines
+ship identical blades is still inferred (the shared graphics option guide `007-4954-001` was not read).
 
 ## Chips
 

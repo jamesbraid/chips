@@ -19,10 +19,10 @@ lists each with what was read. Nothing here comes from IRIX: Altix and Prism ran
 | Altix 330 | 007-4790-001 (2005) | 1U compute module | NUMAlink-4, one port | [altix-330.md](altix-330.md) |
 | Altix 3300, 3700 | 007-4579-001 (2003) | C-brick, 3U, two nodes | "NUMA 3"; R-brick routers on the 3700, "no routers" on the 3300 (p.77) | [altix-3000.md](altix-3000.md) |
 | Altix 3700 Bx2 | 007-4377-002 (2004) | CR-brick, 4U, up to four nodes and two routers | NUMAlink-4 | [altix-3700-bx2.md](altix-3700-bx2.md) |
-| Altix 4700, Altix 450 | 007-4823-001 (2006), 007-4857-001 | blades in a 10U or 5U IRU | NUMAlink 4 | [altix-4700.md](altix-4700.md), [IRU](altix-4700-iru.md), [discovery](altix-4700-discovery.md) |
+| Altix 4700, Altix 450 | 007-4823-001 (2006), 007-4857-001 (-001 to -003) | blades in a 10U or 5U IRU | NUMAlink 4 | [altix-4700.md](altix-4700.md), [IRU](altix-4700-iru.md), [discovery](altix-4700-discovery.md); the 450 against the 4700: [altix-450.md](altix-450.md) |
 | Silicon Graphics Prism | 007-4772-001 | deskside node board | not read | [prism-deskside.md](prism-deskside.md), [graphics](graphics-attachment.md) |
 
-The rackmount and scalable Prism guides (007-4701, 007-4774) and the Altix 450 body were only partly read; the
+The rackmount and scalable Prism guides (007-4701, 007-4774) were only partly read, and the Altix 450 guide's body was read for the node, blade, router and topology facts on [altix-450.md](altix-450.md); the
 machine pages say where. What each brick and module contains is on [bricks.md](bricks.md), and how the PROM and Linux name and find them is on
 [brick-identity.md](brick-identity.md).
 The Altix 3000 IX- and PX-brick are on [the Origin 3000 brick pages](../bricks/ixbrick.md), which already cite the
@@ -46,7 +46,7 @@ The manuals rarely name the generation:
 | Altix 330 | 1 (SHub 1.2) | established: the figure label "SHub 1.2 ASIC" (007-4790-001 Figure 3-4, printed p.76); `README.snprom` lists the 330 for the SHub 1 image; the guide itself gives no generation. See [altix-330.md](altix-330.md) |
 | Altix 3300, 3700 | 1 | established that SGI's `README.snprom` lists them for the SHub 1 image and not the SHub 2 one; the SHub 2 image refuses XIO, which the C-brick uses; see [altix-3000.md](altix-3000.md#shub-generation) |
 | Altix 350 | 1 | established as the same README assignment (SHub 1 image); the 350 manuals do not name the generation |
-| Altix 450 | 2 | established as the same README assignment (SHub 2 image) |
+| Altix 450 | 2 | established: the guide's compute-blade figures are labelled "SHub 2.0 ASIC" and "SHUB 2" (007-4857-003 Figure 3-5, p.73; 007-4857-001 Figure 6-10, p.118); SGI's `README.snprom` agrees (SHub 2 image). See [altix-450.md](altix-450.md) |
 | Altix 3700 Bx2 | 1 (SHub 1.2) | established: the guide's CR-brick block diagram labels the four nodes "SHUB 1.2" (007-4377-002 Figure 3-3, printed pp.50 and 68); `README.snprom` lists the Bx2 for the SHub 1 image; the Linux SHub 2 series of 1 December 2004 (message `20041201203852.GA26131@sgi.com`) calls SHub 2 a future chipset. See [altix-3700-bx2.md](altix-3700-bx2.md) |
 
 The 350 and 330 guides list the same SHub blocks: a crossbar (XN), a processor interface

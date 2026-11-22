@@ -161,5 +161,6 @@ reading of them is on this page. Nothing here comes from a 4700 boot log.
 The `klconfig` board record layout, the IRouter protocol over the SAL channel (`SN_SAL_IROUTER_OP`, `0x02000043`; opcodes
 open, close, send, receive and interrupt control), the console and error calls, and everything register-level belong to
 the SAL page and the SHub, TIO and router pages. The Altix 450 differs from the 4700 in blade count and router count
-only, as far as the guides say; its SHub generation is not stated by its guide (see the SN2 README) and PROM packaging
-(from build 10.23) places it with the SHub 2 image.
+only, as far as the guides say; its guide labels the node chip SHub 2 and PROM packaging (from build 10.23) places it
+with the SHub 2 image. What the PROM does with board types, and whether it can tell the two apart, is on
+[altix-450.md](altix-450.md#3-what-the-shub-2-prom-does-with-board-types).
