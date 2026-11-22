@@ -24,36 +24,51 @@ Identical to [w2k-rtm](w2k-rtm.md#exports): the same 98 names and ordinals.
 
 ## Kernel structure use (VW-HAL-PCR, VW-HAL-PRCB)
 
-KPCR offsets read through `fs:` (or the fixed uniprocessor address `0xffdff000`). Columns: functions touching the offset, reads, writes.
+KPCR offsets seen through `fs:` and, on the uniprocessor image, through the fixed address `0xffdff000`. Each cell is functions / reads / writes. "Uncovered code" is code no function Ghidra found covers (38836 bytes of executable sections), disassembled linearly, so a cell there can include a mis-decoded data run; offsets of `0x400` and above are dropped as such. The last column is the operand size in bytes.
 
-| KPCR offset | Functions | Reads | Writes |
+| KPCR offset | `fs:` in functions | `0xffdff000`+offset in functions | `fs:` in uncovered code | Size |
+|---|---|---|---|---|
+| `0x0` | - | - | 8 / 18 / 17 | 4 |
+| `0x8` | - | - | 7 / 17 / 0 | 4 |
+| `0x1c` | 14 / 32 / 0 | - | - | 4 |
+| `0x20` | 10 / 10 / 0 | - | 8 / 19 / 0 | 4 |
+| `0x3c` | - | - | 1 / 2 / 0 | 4 |
+| `0x40` | 1 / 1 / 0 | - | 1 / 0 / 2 | 4 |
+| `0x48` | 1 / 1 / 0 | - | - | 4 |
+| `0x4c` | 2 / 1 / 1 | - | - | 4 |
+| `0x50` | - | - | 8 / 18 / 0 | 1 |
+| `0x94` | - | - | 1 / 1 / 0 | 1 |
+| `0x95` | 3 / 1 / 2 | - | - | 1 |
+| `0x96` | 2 / 1 / 2 | - | - | 1 |
+| `0x98` | 2 / 2 / 1 | - | - | 4 |
+| `0xa0` | 3 / 1 / 2 | - | - | 4 |
+| `0xa4` | 2 / 2 / 2 | - | - | 4 |
+| `0xa8` | 1 / 0 / 1 | - | 1 / 2 / 2 | 2,4 |
+| `0xac` | 1 / 0 / 1 | - | - | 4 |
+
+Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB). The last column lists the instructions, `*idx` meaning an indexed address.
+
+| Base and offset | Where | Functions / reads / writes | Instructions |
 |---|---|---|---|
-| `0x1c` | 14 | 32 | 0 |
-| `0x20` | 10 | 10 | 0 |
-| `0x40` | 1 | 1 | 0 |
-| `0x48` | 1 | 1 | 0 |
-| `0x4c` | 2 | 1 | 1 |
-| `0x95` | 3 | 1 | 2 |
-| `0x96` | 2 | 1 | 2 |
-| `0x98` | 2 | 2 | 1 |
-| `0xa0` | 3 | 1 | 2 |
-| `0xa4` | 2 | 2 | 2 |
-| `0xa8` | 1 | 0 | 1 |
-| `0xac` | 1 | 0 | 1 |
-
-Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB).
-
-| Base and offset | Functions | Reads | Writes |
-|---|---|---|---|
-| `PCR+0x20` | 5 | 5 | 0 |
-| `PCR+0x30` | 1 | 1 | 1 |
-| `PCR+0x38` | 5 | 18 | 0 |
-| `PCR+0x4c` | 1 | 0 | 1 |
-| `PCR+0x51` | 2 | 2 | 0 |
-| `PCR+0x98` | 1 | 1 | 0 |
-| `PRCB+0x10` | 2 | 2 | 0 |
-| `PRCB+0x19` | 1 | 1 | 0 |
-| `PRCB+0x3bc` | 3 | 3 | 0 |
+| `PCR+0x98` | functions | 1 / 1 / 0 | mov |
+| `PCR+0x20` | functions | 5 / 5 / 0 | mov |
+| `PCR+0x30` | functions | 1 / 1 / 1 | or |
+| `PCR+0x38` | functions | 5 / 18 / 0 | mov |
+| `PCR+0x4c` | functions | 1 / 0 / 1 | mov |
+| `PCR+0x51` | functions | 2 / 2 / 0 | cmp |
+| `PRCB+0x10` | functions | 2 / 2 / 0 | cmp |
+| `PRCB+0x19` | functions | 1 / 1 / 0 | cmp |
+| `PRCB+0x3bc` | functions | 3 / 3 / 0 | lea*idx |
+| `PRCB+0x6e` | uncovered code | 1 / 1 / 0 | arpl |
+| `PRCB+0x18` | uncovered code | 1 / 1 / 0 | cmp |
+| `PRCB+0x2f8` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x2fc` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x300` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x304` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x308` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x30c` | uncovered code | 8 / 18 / 0 | mov |
+| `PRCB+0x53` | uncovered code | 1 / 1 / 1 | add |
+| `PRCB+0x61` | uncovered code | 1 / 2 / 2 | add*idx,and*idx |
 
 Names and uses are in [the structure tables](../hal-builds.md#structures-the-code-assumes).
 
@@ -76,6 +91,8 @@ Names and uses are in [the structure tables](../hal-builds.md#structures-the-cod
 | `FUN_80031452` (`0x80031452`) | HalPrivateDispatchTable | `+0x20` | code at `0x8002d77c` |
 | `FUN_80031452` (`0x80031452`) | HalPrivateDispatchTable | `+0x28` | code at `0x8002006e` |
 
+Conditions, read in the disassembly: HalDispatchTable `+0x34`, `+0x3c` and `+0x40` are stored only when the table's version dword is 2 or more; HalPrivateDispatchTable `+0x28` is stored only when that slot is still zero. The other stores are unconditional. The `+0x3c` and `+0x40` targets and the private `+8` target are addresses in code Ghidra did not make functions.
+
 ## Functions using board addresses or ports (VW-HAL-SGI-03)
 
 `FUN_8001f158` (pm-latch, pm-nmi-port); `FUN_8001f33c` (piix4-pm, piix4-pm-ctl); `FUN_8001f529` (piix4-pm, piix4-pm-ctl); `FUN_8001f60c` (piix4-pm, piix4-pm-ctl, pm-port); `HalInitializeProcessor` (cobalt-apic, cobalt-cpu, cobalt-mem).
@@ -87,4 +104,4 @@ Shape and trigram match (method in [the index](../hal-builds.md#sgi-specific-ver
 ## Against SP4 beta (VW-HAL-DIFF-05)
 
 All 431 functions have the same shape as in [w2k-sp4beta](w2k-sp4beta.md). Differences: 16 bytes of `.text` (time stamps in the debug directory records) and 4 bytes of
-the version resource. Data and tables are identical. SP4 is a code-identical respin of the beta with a later time stamp (2002-11-07 to 2003-01-15).
+the version resource, 26 bytes in the whole file with the PE header's time stamp and checksum. Data and tables are identical, and so is the build date string (`Nov  7 2002 10:22:33`). SP4 is a code-identical respin of the beta with a later time stamp (2002-11-07 to 2003-01-15).

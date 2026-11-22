@@ -26,47 +26,47 @@ Identical to [nt4-mp](nt4-mp.md#exports): the same 93 names and ordinals.
 ## Against the multiprocessor build (VW-HAL-DIFF-01)
 
 Named only in the multiprocessor image: `KeAcquireSpinLockRaiseToSynchMCE`, `StartPx_RMStub`, `StartPx_PMStub`, `HalpBuildTiledCR3`, `HalpFreeTiledCR3`,
-`HalpGetProcessorInfo`, `HalpMapCR3`, `HalpStartProcessor`. Named only in this image: none. Of the 551 functions here, 486 have the same shape in the
-multiprocessor image, 45 are near matches (the interrupt entries and the clock and profile code, which use the fixed PCR address here and `fs:` there) and 20
+`HalpGetProcessorInfo`, `HalpMapCR3`, `HalpStartProcessor`. Named only in this image: none. Matching this image's 551 functions against the multiprocessor image: 486 have the same shape, 45 are near matches (interrupt entries, clock, profile and processor-start code) and 20
 differ (spin locks, fast mutexes and the processor start code).
 
 ## Kernel structure use (VW-HAL-PCR, VW-HAL-PRCB)
 
-KPCR offsets read through `fs:` (or the fixed uniprocessor address `0xffdff000`). Columns: functions touching the offset, reads, writes.
+KPCR offsets seen through `fs:` and, on the uniprocessor image, through the fixed address `0xffdff000`. Each cell is functions / reads / writes. "Uncovered code" is code no function Ghidra found covers (23672 bytes of executable sections), disassembled linearly, so a cell there can include a mis-decoded data run; offsets of `0x400` and above are dropped as such. The last column is the operand size in bytes.
 
-| KPCR offset | Functions | Reads | Writes |
+| KPCR offset | `fs:` in functions | `0xffdff000`+offset in functions | `fs:` in uncovered code | Size |
+|---|---|---|---|---|
+| `0x0` | 18 / 18 / 17 | - | - | 4 |
+| `0x8` | 17 / 17 / 0 | - | - | 4 |
+| `0x20` | 18 / 18 / 0 | 8 / 8 / 0 | - | 4 |
+| `0x3c` | - | 2 / 2 / 0 | - | - |
+| `0x40` | 1 / 1 / 0 | 2 / 0 / 2 | - | 4 |
+| `0x48` | - | 1 / 1 / 0 | - | - |
+| `0x4c` | - | 2 / 1 / 1 | - | - |
+| `0x50` | - | 18 / 18 / 0 | - | - |
+| `0x94` | - | 1 / 1 / 0 | - | - |
+| `0x95` | - | 3 / 1 / 2 | - | - |
+| `0x96` | - | 2 / 1 / 2 | - | - |
+| `0x98` | - | 2 / 2 / 1 | - | - |
+| `0xa0` | - | 3 / 1 / 2 | - | - |
+| `0xa4` | - | 2 / 2 / 2 | - | - |
+| `0xa8` | - | 2 / 2 / 1 | - | - |
+
+Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB). The last column lists the instructions, `*idx` meaning an indexed address.
+
+| Base and offset | Where | Functions / reads / writes | Instructions |
 |---|---|---|---|
-| `0x0` | 18 | 18 | 17 |
-| `0x8` | 17 | 17 | 0 |
-| `0x20` | 2 | 2 | 0 |
-| `0x3c` | 2 | 2 | 0 |
-| `0x40` | 2 | 0 | 2 |
-| `0x48` | 1 | 1 | 0 |
-| `0x4c` | 2 | 1 | 1 |
-| `0x50` | 18 | 18 | 0 |
-| `0x94` | 1 | 1 | 0 |
-| `0x95` | 3 | 1 | 2 |
-| `0x96` | 2 | 1 | 2 |
-| `0x98` | 2 | 2 | 1 |
-| `0xa0` | 3 | 1 | 2 |
-| `0xa4` | 2 | 2 | 2 |
-| `0xa8` | 2 | 2 | 1 |
+| `PRCB+0xf8` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0xfc` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x100` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x104` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x108` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x10c` | functions | 18 / 18 / 0 | mov |
 
-Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB).
-
-| Base and offset | Functions | Reads | Writes |
-|---|---|---|---|
-| `PRCB+0xf8` | 18 | 18 | 0 |
-| `PRCB+0xfc` | 18 | 18 | 0 |
-| `PRCB+0x100` | 18 | 18 | 0 |
-| `PRCB+0x104` | 18 | 18 | 0 |
-| `PRCB+0x108` | 18 | 18 | 0 |
-| `PRCB+0x10c` | 18 | 18 | 0 |
+Functions that use an immediate in `0xffdff000`-`0xffdfffff` (the fixed PCR address): `HalAllProcessorsStarted`, `HalInitSystem`, `HalInitializeProcessor`, `_HalpAttach8259Handler@0`, `_HalpEnableNMI@0`, `_HalpGetCpuFeatureBits@0`, `_HalpInitLocalAPIC@0`, `_HalpInitMP@8`, `_HalpInitSoftPower@4`, `_HalpInitializeClock@4`, `_HalpResetThisProcessor@0`, `_HalpSetInternalVector@8`, `_HalpSpliceVersionInfo@0`.
 
 Names and uses are in [the structure tables](../hal-builds.md#structures-the-code-assumes).
 
-The uniprocessor kernel keeps its single PCR at a fixed address, so this image reads the PCR through absolute addresses and not
-through `fs:`; the PRCB is at PCR `+0x120`. The offsets in the first table are the same fields as on the multiprocessor page.
+The uniprocessor image still reaches the PCR through `fs:` in its interrupt entry stubs (`0x00`, `0x08` and `0x20` in 18 functions each, `0x40` in `HalpBiosCall`) and also through the fixed address `0xffdff000`: eight functions read the Prcb pointer at `+0x20` that way, and the other offsets in the second column are absolute-only. That the PRCB sits at PCR `+0x120` is the public layout (inferred); the image shows only the pointer at `+0x20` and the debug-register area at PRCB `+0xf8`.
 
 ## Dispatch table stores (VW-HAL-DISP)
 

@@ -5,6 +5,8 @@
     scan.py fp    IMAGE EXPORT.json OUT.json   per-function shape fingerprints (input to match)
     scan.py match A.fp.json B.fp.json          how each function of A matches B
     scan.py hw    IMAGE EXPORT.json            functions that use a board-specific address or port
+    scan.py names EXPORT.json VS_STOCK.json SYMS... [-- MSDBG...]   NT 4.0 name test (writes classes on stdout)
+    scan.py ties  VS_STOCK.json VS_NT4.json CANDIDATES.json   Windows 2000 body test and ties to NT 4.0 SGI names
 
 EXPORT.json is the decompile.json that `re-run --ghidra-export` wrote for IMAGE; only its function
 ranges and names are read, never its C. Every fact comes from capstone's reading of the image bytes.
@@ -164,6 +166,42 @@ def cmd_match(pa, pb):
     print()
 
 
+def gaps(pe, base, fns):
+    """Address ranges of executable sections that no function Ghidra found covers."""
+    cov = sorted((f['va'], f['end_va'] + 1) for f in fns)
+    out = []
+    for sec in pe.sections:
+        if not sec.Characteristics & 0x20000000:
+            continue
+        lo = base + sec.VirtualAddress
+        hi = lo + min(sec.Misc_VirtualSize, sec.SizeOfRawData)
+        cur = lo
+        for a, b in cov:
+            if b <= cur or a >= hi:
+                continue
+            if a > cur:
+                out.append((cur, a))
+            cur = max(cur, b)
+        if cur < hi:
+            out.append((cur, hi))
+    return out
+
+
+def sweep(pe, base, a, b):
+    """Linear disassembly of one uncovered range, skipping a byte after each undecodable one."""
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = True
+    data = read(pe, base, a, b - a)
+    out, off = [], 0
+    while off < len(data):
+        n = 0
+        for i in md.disasm(data[off:], a + off):
+            out.append(i)
+            n = i.address + i.size - (a + off)
+        off += n if n else 1
+    return out
+
+
 def cmd_facts(image, export):
     pe, base, fns, sections = load(image, export)
     iat = iat_map(pe, base)
@@ -173,34 +211,47 @@ def cmd_facts(image, export):
     def in_code(v):
         return any(a <= v < b for a, b in text)
 
-    fsacc = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0]))   # off -> fn -> [r, w]
-    tagged = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0]))  # (tag, off) -> fn -> [r, w]
-    pcrabs = collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0]))  # PCR offset -> fn -> [r, w]
+    def table():
+        return collections.defaultdict(lambda: collections.defaultdict(lambda: [0, 0]))
+
+    fsacc, tagged, pcrabs = table(), table(), table()   # offset -> function -> [reads, writes]
+    swept_fs, swept_tagged = table(), table()           # the same for code no function covers
+    sizes = collections.defaultdict(set)                # fs offset -> operand sizes seen
+    kinds = collections.defaultdict(set)                # tagged key -> mnemonics seen
+    selfpcr = collections.defaultdict(int)              # function -> immediates in 0xffdff000..0xffdfffff
     stores = []      # (fn, import name or None, base reg, disp, target va, target name)
     imports_used = collections.defaultdict(set)
-    for f in fns:
+    units = [(f['name'], disasm(pe, base, f), False) for f in fns]
+    for a, b in gaps(pe, base, fns):
+        units.append(('gap_%x' % a, sweep(pe, base, a, b), True))
+    for name, insns, swept in units:
         regs = {}    # register -> import name, or '@PCR' / '@PRCB' after a load of fs:[0x1c] / fs:[0x20]
-        for i in disasm(pe, base, f):
+        fsd, tgd = (swept_fs, swept_tagged) if swept else (fsacc, tagged)
+        for i in insns:
             ops = i.operands
             for o in ops:
+                if o.type == x86.X86_OP_IMM and 0xffdff000 <= (o.imm & 0xffffffff) < 0xffe00000 and not swept:
+                    selfpcr[name] += 1
                 if o.type != x86.X86_OP_MEM:
                     continue
                 m = o.mem
+                d = m.disp & 0xffffffff
                 if m.segment == FS and not m.base and not m.index:
-                    c = fsacc[m.disp & 0xffffffff][f['name']]
-                elif not m.segment and not m.base and 0xffdff000 <= (m.disp & 0xffffffff) < 0xffe00000:
+                    c = fsd[d][name]
+                    sizes[d].add(o.size)
+                elif m.segment in (0, x86.X86_REG_DS) and not m.base and not m.index and 0xffdff000 <= d < 0xffe00000 and not swept:
                     # the uniprocessor kernel keeps its one PCR at a fixed address: same fields, absolute
-                    c = pcrabs[(m.disp & 0xffffffff) - 0xffdff000][f['name']]
+                    c = pcrabs[d - 0xffdff000][name]
                 elif m.base and regs.get(m.base) in ('@PCR', '@PRCB') and not m.segment:
-                    c = tagged[(regs[m.base], m.disp & 0xffffffff)][f['name']]
+                    c = tgd[(regs[m.base], d)][name]
+                    kinds[(regs[m.base], d)].add(i.mnemonic + ('*idx' if m.index else ''))
                 else:
                     c = None
                 if c is not None:
                     c[1] += bool(o.access & 2)
                     c[0] += bool(o.access & 1)
-                d = m.disp & 0xffffffff
-                if not m.base and not m.index and d in iat:
-                    imports_used[iat[d]].add(f['name'])
+                if not swept and not m.base and not m.index and d in iat:
+                    imports_used[iat[d]].add(name)
             if i.mnemonic == 'mov' and len(ops) == 2:
                 d, s = ops
                 if d.type == x86.X86_OP_REG:
@@ -211,11 +262,10 @@ def cmd_facts(image, export):
                         regs[d.reg] = '@PCR' if sm.disp == 0x1c else '@PRCB'
                     else:
                         regs.pop(d.reg, None)
-                elif d.type == x86.X86_OP_MEM and d.mem.base and s.type == x86.X86_OP_IMM:
+                elif d.type == x86.X86_OP_MEM and d.mem.base and s.type == x86.X86_OP_IMM and not swept:
                     v = s.imm & 0xffffffff
                     if in_code(v):
-                        stores.append((f['name'], regs.get(d.mem.base), insn_reg(i, d.mem.base), d.mem.disp, v,
-                                       entry.get(v)))
+                        stores.append((name, regs.get(d.mem.base), insn_reg(i, d.mem.base), d.mem.disp, v, entry.get(v)))
             else:
                 for o in ops:
                     if o.type == x86.X86_OP_REG and o.access & 2:
@@ -223,9 +273,15 @@ def cmd_facts(image, export):
             if i.mnemonic == 'call':
                 for r in (x86.X86_REG_EAX, x86.X86_REG_ECX, x86.X86_REG_EDX):
                     regs.pop(r, None)
+    dump = lambda t: {k if isinstance(k, str) else '%s+%#x' % k: v for k, v in sorted(t.items(), key=lambda kv: str(kv[0]))}
     json.dump({'fs': {hex(o): fs for o, fs in sorted(fsacc.items())},
+               'fs_swept': {hex(o): fs for o, fs in sorted(swept_fs.items())},
+               'fs_sizes': {hex(o): sorted(v) for o, v in sorted(sizes.items())},
                'pcr_abs': {hex(o): fs for o, fs in sorted(pcrabs.items())},
-               'tagged': {'%s+%#x' % k: v for k, v in sorted(tagged.items())},
+               'selfpcr_imm': dict(selfpcr),
+               'tagged': dump(tagged), 'tagged_swept': dump(swept_tagged),
+               'tagged_kinds': {'%s+%#x' % k: sorted(v) for k, v in kinds.items()},
+               'gap_bytes': sum(b - a for a, b in gaps(pe, base, fns)),
                'stores': stores,
                'imports_used': {k: sorted(v) for k, v in imports_used.items()}}, sys.stdout, indent=0)
     print()
@@ -233,6 +289,49 @@ def cmd_facts(image, export):
 
 def insn_reg(i, reg):
     return i.reg_name(reg)
+
+
+def cmd_names(export, vs_stock, *dbgs):
+    """Name test. `dbgs` are the Microsoft symbol files (HAL, HALAPIC, HALMPS) of the same disc; a function name that
+    occurs in none of them, and has no stock body match, is an SGI-specific candidate."""
+    import re
+    ms = set()
+    for p in dbgs:
+        ms |= {m.decode().lstrip('_').split('@')[0] for m in re.findall(rb'[A-Za-z_@?$][A-Za-z0-9_@?$.]{3,}', open(p, 'rb').read())}
+    fns = json.load(open(export))['functions']
+    sm = {r['name']: r for r in json.load(open(vs_stock))}
+    c, cand = collections.Counter(), []
+    for f in fns:
+        n = f['name']
+        named = f['name_source'] != 'DEFAULT'
+        inms = named and n.lstrip('_').split('@')[0] in ms
+        kind = sm[n]['kind'] if n in sm else '?'
+        c['%s / %s / body %s' % ('named' if named else 'unnamed', 'name in MS' if inms else 'name not in MS', kind)] += 1
+        if named and not inms and kind == 'none':
+            cand.append(n)
+    json.dump({'counts': dict(c), 'sgi_candidates': sorted(cand)}, sys.stdout, indent=1)
+    print()
+
+
+def cmd_ties(vs_stock, vs_nt4, cands):
+    """Windows 2000 build: stock body test (functions of 4 or more instructions), then a tie to an NT 4.0 function."""
+    sg = set(json.load(open(cands))['sgi_candidates'])
+    nt = {r['va']: r for r in json.load(open(vs_nt4))}
+    c = collections.Counter()
+    for r in json.load(open(vs_stock)):
+        n = nt[r['va']]
+        if r['n'] < 4:
+            c['under 4 instructions'] += 1
+        elif r['kind'] != 'none':
+            c['body in stock (%s)' % r['kind']] += 1
+        elif n['kind'] != 'none' and n['to'] in sg:
+            c['no stock body, tied to NT 4.0 SGI-specific name'] += 1
+        elif n['kind'] != 'none':
+            c['no stock body, tied to NT 4.0 other name'] += 1
+        else:
+            c['no stock body, no tie'] += 1
+    json.dump(dict(c), sys.stdout, indent=1)
+    print()
 
 
 # Board-specific constants (physical blocks from the Cobalt and Lithium pages, and the power-management ports):
@@ -264,4 +363,4 @@ def cmd_hw(image, export):
 
 if __name__ == '__main__':
     c = sys.argv[1]
-    {'facts': cmd_facts, 'fp': cmd_fp, 'match': cmd_match, 'hw': cmd_hw}[c](*sys.argv[2:])
+    {'facts': cmd_facts, 'fp': cmd_fp, 'match': cmd_match, 'hw': cmd_hw, 'names': cmd_names, 'ties': cmd_ties}[c](*sys.argv[2:])

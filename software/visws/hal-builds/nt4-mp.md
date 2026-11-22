@@ -26,47 +26,47 @@ CodeView NB09 publics: 1,050 records, 600 function-type, 444 labels, 81 function
 
 ## Kernel structure use (VW-HAL-PCR, VW-HAL-PRCB)
 
-KPCR offsets read through `fs:` (or the fixed uniprocessor address `0xffdff000`). Columns: functions touching the offset, reads, writes.
+KPCR offsets seen through `fs:` and, on the uniprocessor image, through the fixed address `0xffdff000`. Each cell is functions / reads / writes. "Uncovered code" is code no function Ghidra found covers (23719 bytes of executable sections), disassembled linearly, so a cell there can include a mis-decoded data run; offsets of `0x400` and above are dropped as such. The last column is the operand size in bytes.
 
-| KPCR offset | Functions | Reads | Writes |
+| KPCR offset | `fs:` in functions | `0xffdff000`+offset in functions | `fs:` in uncovered code | Size |
+|---|---|---|---|---|
+| `0x0` | 18 / 18 / 17 | - | - | 4 |
+| `0x8` | 17 / 17 / 0 | - | - | 4 |
+| `0x1c` | 13 / 31 / 0 | - | - | 4 |
+| `0x20` | 26 / 26 / 0 | - | - | 4 |
+| `0x3c` | 2 / 2 / 0 | - | - | 4 |
+| `0x40` | 3 / 1 / 2 | - | - | 4 |
+| `0x48` | 1 / 1 / 0 | - | - | 4 |
+| `0x4c` | 2 / 1 / 1 | - | - | 4 |
+| `0x50` | 18 / 18 / 0 | - | - | 1 |
+| `0x94` | 1 / 1 / 0 | - | - | 1 |
+| `0x95` | 3 / 1 / 2 | - | - | 1 |
+| `0x96` | 2 / 1 / 2 | - | - | 1 |
+| `0x98` | 2 / 2 / 1 | - | - | 4 |
+| `0xa0` | 3 / 1 / 2 | - | - | 4 |
+| `0xa4` | 2 / 2 / 2 | - | - | 4 |
+| `0xa8` | 2 / 2 / 1 | - | 1 / 1 / 1 | 2 |
+
+Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB). The last column lists the instructions, `*idx` meaning an indexed address.
+
+| Base and offset | Where | Functions / reads / writes | Instructions |
 |---|---|---|---|
-| `0x0` | 18 | 18 | 17 |
-| `0x8` | 17 | 17 | 0 |
-| `0x1c` | 13 | 31 | 0 |
-| `0x20` | 26 | 26 | 0 |
-| `0x3c` | 2 | 2 | 0 |
-| `0x40` | 3 | 1 | 2 |
-| `0x48` | 1 | 1 | 0 |
-| `0x4c` | 2 | 1 | 1 |
-| `0x50` | 18 | 18 | 0 |
-| `0x94` | 1 | 1 | 0 |
-| `0x95` | 3 | 1 | 2 |
-| `0x96` | 2 | 1 | 2 |
-| `0x98` | 2 | 2 | 1 |
-| `0xa0` | 3 | 1 | 2 |
-| `0xa4` | 2 | 2 | 2 |
-| `0xa8` | 2 | 2 | 1 |
-
-Fields reached through a register loaded from `fs:[0x1c]` (PCR) or `fs:[0x20]` (PRCB).
-
-| Base and offset | Functions | Reads | Writes |
-|---|---|---|---|
-| `PCR+0x20` | 4 | 4 | 0 |
-| `PCR+0x30` | 1 | 0 | 1 |
-| `PCR+0x38` | 5 | 20 | 0 |
-| `PCR+0x4c` | 1 | 0 | 1 |
-| `PCR+0x51` | 2 | 2 | 0 |
-| `PCR+0x94` | 2 | 2 | 0 |
-| `PCR+0x98` | 1 | 1 | 0 |
-| `PRCB+0x10` | 3 | 3 | 0 |
-| `PRCB+0x18` | 1 | 1 | 0 |
-| `PRCB+0x19` | 2 | 2 | 0 |
-| `PRCB+0xf8` | 18 | 18 | 0 |
-| `PRCB+0xfc` | 18 | 18 | 0 |
-| `PRCB+0x100` | 18 | 18 | 0 |
-| `PRCB+0x104` | 18 | 18 | 0 |
-| `PRCB+0x108` | 18 | 18 | 0 |
-| `PRCB+0x10c` | 18 | 18 | 0 |
+| `PCR+0x94` | functions | 2 / 2 / 0 | lea |
+| `PCR+0x98` | functions | 1 / 1 / 0 | mov |
+| `PCR+0x20` | functions | 4 / 4 / 0 | mov |
+| `PCR+0x30` | functions | 1 / 0 / 1 | mov |
+| `PCR+0x38` | functions | 5 / 20 / 0 | mov |
+| `PCR+0x4c` | functions | 1 / 0 / 1 | mov |
+| `PCR+0x51` | functions | 2 / 2 / 0 | cmp |
+| `PRCB+0x10` | functions | 3 / 3 / 0 | cmp,movsx |
+| `PRCB+0x18` | functions | 1 / 1 / 0 | cmp |
+| `PRCB+0xf8` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x19` | functions | 2 / 2 / 0 | cmp |
+| `PRCB+0xfc` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x100` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x104` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x108` | functions | 18 / 18 / 0 | mov |
+| `PRCB+0x10c` | functions | 18 / 18 / 0 | mov |
 
 Names and uses are in [the structure tables](../hal-builds.md#structures-the-code-assumes).
 

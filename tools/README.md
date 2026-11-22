@@ -59,3 +59,9 @@ after a return that nothing branches to, and at call targets, not by symbol and 
 duplicated delay-slot target, is cut or merged by control flow. Checked against `retools/tools/chips/scan.py`
 (`gp_from_options`, the `movz`/`movn` handling and the branch-target cut). Remaining limit: a large code span with no
 return (PROM data disassembled as code) stays one routine.
+
+## HAL builds (Visual Workstation)
+
+`visws-hal/` rebuilds the Ghidra exports and the scan results behind
+[software/visws/hal-builds.md](../software/visws/hal-builds.md) from the holdings, by SHA-256, with
+`retools/tools/re-run --ghidra-export`. See [visws-hal/README.md](visws-hal/README.md) for the commands.
