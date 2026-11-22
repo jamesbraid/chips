@@ -167,6 +167,105 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
   procedure removes a "PCI/PCI-X support bracket", disconnects a 7-pin keyed synchronization cable from the card to the
   riser board, and pulls the card from "the main connector on the riser board" (007-4701-003 pp.91 to 94; established).
 
+## TIOCA kernel expectations, 2.6.5-7.308 (read 2026-11-21)
+
+Source: the 2.6.5-7.308 kernel source from the ProPack 4 SP4 extensions set, read with the build's own configuration
+(IA64 SN2 on, 16 KiB pages, `CONFIG_AGP_SGI_TIOCA=m`). Each row is a software expectation: what the kernel does and what it
+asks of the PROM. What the chip does with it is inferred. Line numbers are in that tree. The mainline comparison uses search
+hits in the Library index for linux-3.2.78-ia64, not whole files.
+
+- **Enumeration (established).** `sn_pci_init` asks SAL for every segment and bus number up to the hub's maximum
+  (`arch/ia64/sn/kernel/io_init.c:509-512`). Each answer is a bus record carrying an ASIC type (`io_init.c:117-128`, SAL
+  0x02000056). A record of type 4 goes to the TIOCA provider (`io_init.c:377-389`). Each such bus is one TIOCA. The kernel
+  reads no part number, klconfig or count limit.
+- **TIOCA count per node (unknown).** It is whatever the PROM puts in its bus records.
+- **Record fields (established).** The provider copies the record and keeps its revision and closest NASID
+  (`include/asm-ia64/sn/tioca_provider.h:93-98`, `pcibus_provider_defs.h:32-41`). It sets the uncached alias on the base
+  (`tioca_provider.c:609`).
+- **SAL gate (established).** `tioca_bus_fixup` refuses TIOCA below SAL revision 0x0406 (`tioca_provider.c:593-598`), with no
+  SHub test. Mainline 3.2.78 adds `is_shub1()` to that test (`arch/ia64/sn/pci/tioca_provider.c:592`), so the "SHub 1 only"
+  wording belongs to the mainline tree only.
+
+### Bring-up order (established as the code order)
+
+`tioca_gart_init` (`tioca_provider.c:34-204`) runs once per TIOCA bus, before any AGP device is probed. Before its register
+writes it allocates and zeroes the GART table on the closest node. At 2 GiB and 16 KiB pages that is 131072 eight-byte
+entries, 1 MiB (`:118-134`, derived). Then it writes, in order (offsets from `struct tioca`, `tioca.h:21-62`):
+
+1. control1 (+0x008): set bit 42 (`tioca_provider.c:179-180`).
+2. control2 (+0x010): clear bits 33:32, then write 2 into them (`:181-183`).
+3. control2: clear bits 35:34, the write and read prefetch enables (`:185-186`).
+4. int_status_alias (+0x058): write bit 4, the GART fetch error bit (`:192`).
+5. mult_error_alias (+0x068): write bit 4 (`:193`).
+6. int_mask (+0x078): clear bit 4, unmasking GART fetch errors (`:194`).
+7. gart_aperature (+0x028): write the aperture word (`:200`).
+8. gart_ptr_table (+0x200): write the table's coretalk address with bit 0 set (`:201`).
+
+The aperture word for this build is 0x80200007 (derived, not read from a running system): size field 0x200 for 2 GiB at
+bits 21:12 (`:83-85`), page-size bit 1 for 16 KiB (`:99-101`), AGP and PCI enable bits 0 and 2 (`:111`), and bus base
+0x80000000 ORed in (`:112`). A 4 KiB-page build gives 0x80200005.
+
+Aperture layout (established, `tioca.h:584-594`): one 2 GiB window at 0x80000000, the graphics part 0x80000000 to
+0xBFFFFFFF and the PCI32 part 0xC0000000 to 0xFFFFFFFF, both GART-mapped. The AGP driver reports 1024 MB and 65536 entries
+(`drivers/char/agp/sgi-agp.c:89-98`).
+
+### AGP enable and TLB (established as the code)
+
+- Fast-write (`tioca_provider.c:214-263`): every VGA-class AGP device on the bus must advertise FW, or the function returns
+  before setting anything (`:240`). If they do, FW is set in each device's AGP command and control1 bit 6 is set (`:262`).
+  With no VGA device on the bus, the bit is set anyway.
+- TLB flush (`include/asm-ia64/sn/tioca_provider.h:161-207`): with a coherent table, no flush except on revision A
+  (PV910244). Revision A clears the memory parameter, sets flush bit 36 (`tioca.h:126`), restores 2 and reads control2 back.
+  With an uncached table the kernel sets flush bit 36 and reads back.
+
+### Error interrupt and DMA (established as the code)
+
+- Vector 0x35 (`intr.h`). Its handler makes one SAL call and reports the interrupt handled regardless (`tioca_provider.c:553-571`,
+  `:642-644`).
+- DMA: 64-bit direct for an all-ones mask. 48-bit direct when the mask is 48 bits and the address's node field matches the AGP
+  DMA extension register (`:343-356`). Otherwise GART-mapped (`:370-456`). The kernel uses no 32-bit direct mode.
+
+### AGP bridge (established as the code)
+
+`agp_sgi_init` (`sgi-agp.c:257-312`) makes one bridge per TIOCA on the list (`:268-308`). The bridge's device is the last
+device on that TIOCA's bus list, whatever its class (`:278-286`, device set at `:291`). The bridge uses a fixed mode word and
+the 1 GiB graphics aperture. Its GART table is the TIOCA's own graphics table (`:100-110`), so there is no separate
+configure step (`:79-82`). Insert and remove write entries straight into that table (`:117-209`). Neither the AGP driver nor
+the fast-write path makes a SAL call (checked by search for SAL calls in both files).
+
+### SAL calls for TIOCA (established as the code)
+
+| SAL call | number | arguments | expected result | where |
+|---|---|---|---|---|
+| get PCI bus info | 0x02000056 | segment, bus, physical address of the out pointer | non-zero status means no bus; otherwise the record | `io_init.c:117-128, 351-352` |
+| error interrupt | 0x02000051 | segment, bus, zeros | not checked | `tioca_provider.c:566-568` |
+| SAL revision | none (system table field) | n/a | 0x0406 or higher | `sn_sal.h:159-165`, `tioca_provider.c:593` |
+
+The TIOCA bus also goes through the generic get PCI device info call (0x02000057, `io_init.c:137-146`), which the TIOCA code
+does not make itself.
+
+### TIOCX is not the TIOCA path
+
+`tiocx_init` (`arch/ia64/sn/kernel/tiocx.c:482-530`) scans odd NASIDs whose L1 brick type is SA, Athena or Daytona
+(`:371-387`) for an FPGA mezzanine and skips the CE part. It never sees a TIOCA.
+
+### Mainline 3.2.78 comparison (search hits only)
+
+- SAL gate: mainline adds the SHub 1 test at line 592. This differs from 2.6.5.
+- Aperture write (line 202), fast-write (line 264) and pointer-table write (line 203) sit where 2.6.5 has them (lines 200,
+  262, 201). The register writes match at the points searched.
+- AGP file: a search for `sgi-agp` in linux-3.2.78-ia64 returned no file. Unknown whether the index lacks it or the file is absent.
+- Not compared: the rest of each function.
+
+### 2019 128 MB BARs (unknown, cannot tie)
+
+The 4.14.83 log shows 0006:00:00.0 and .1 with 128 MB prefetchable BAR 0 at 0x08000000 and 0x10000000. That kernel is not
+2.6.5 and was not read. In 2.6.5 BAR sizing and placement are generic PCI code, not these files. The TIOCA code defines no
+host-bridge window for the bus: `tioca_bus_fixup` sets no controller resource, and the node assignment is commented out at
+`tioca_provider.c:652`. The graphics aperture is 1 GiB at 0x80000000. Two 128 MB BARs would fit by size, but the logged
+addresses sit below that window. Route: the bus record's legacy memory field from the PROM, and `/proc/iomem` or `lspci -v`
+from a booted Prism on the 2.6.5 kernel.
+
 ## Graphics boards and outputs
 
 - Boards named in the guides: **FireGL X2PRO-256** and **FireGL X3-256**. The -003 revision note says it "added FireGL

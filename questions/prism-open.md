@@ -99,9 +99,17 @@ kernel expects; what the chip does is inferred. Full reading in [platforms/sn2/p
 - **Other TIO port.** TIOCE is present (`tioce.h`, `tioce_provider.c`; part `0xCE00`, manufacturer `0x36`). `tiocp.h` is
   present with no part macro. Which Prism shape uses either is unknown.
 - **Prism constants.** None. No read file names Prism.
-- **PROM gate.** Established: the TIOCA setup checks only the SAL revision (4.06 or later). The "SHub 1 only" wording from
-  v5.3 is not confirmed by these trees; check it against v5.3 before citing it.
-  Route: the v5.3 file or a Linux 2.6.x tree from `references/code/`.
+- **PROM gate.** Established: the 2.6.5-7.308 setup checks only the SAL revision (4.06 or later), with no SHub test. The mainline
+  3.2.78 search index shows the SHub 1 test (`is_shub1()`, `arch/ia64/sn/pci/tioca_provider.c:592`), so "SHub 1 only" belongs to
+  mainline. Which tree first added it is unknown; the v5.3 text is not re-read here.
+- **Bring-up order and AGP binding (answered 2026-11-21, software expectation).** The eight register writes, the aperture
+  word (0x80200007 at 16 KiB pages), the flush rules and the AGP bridge's device choice are on [the Prism platform page](../platforms/sn2/prism.md#tioca-kernel-expectations-265-7308-read-2026-11-21).
+  The count per node stays unknown: the kernel makes one TIOCA per type-4 bus record and reads nothing else.
+- **2019 128 MB BARs (unknown).** The 2.6.5 code does not place BARs and defines no host-bridge window that covers
+  0x08000000 or 0x10000000. The 4.14.83 log cannot be tied to 2.6.5 code. Route: the PROM's bus record legacy memory field,
+  and `/proc/iomem` or `lspci -v` from a booted Prism on the 2.6.5 kernel.
+- **Open items 16 and 18 (TIOCA).** The question's referent, "items 16 and 18" of the TIOCA list, is not in any held page,
+  the TIOCA device page or the inventory. It needs the owner to name the list before it can be answered.
 
 ## Review
 
