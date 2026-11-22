@@ -239,8 +239,8 @@ register-level reading exists.
 - **10.11 (SAL 1.11):** the same 46 immediates plus four more, `0x90001080`, `0x90001180`, `0x90001800` and `0x90001880`, used by the TIOCA
   attach function there (`0xff585046` to `0xff5853f6`, and `0xff585e96`); not present in 10.54. Their role is unknown. The first early-init table
   is identical. The accept constant `0x4422` is present.
-- **Not compared:** the SHub 1 builds (SAL 5.04, 4.65), which Prism and the Altix 350 use. The corelet discovery in 4.65 and 5.04 is
-  already recorded as the same logic; the TIO class methods in them were not read.
+- **SHub 1 builds (SAL 5.04, 4.65), which Prism and the Altix 350 use:** the 5.04 TIO class methods and the TIOCA set-up are read in
+  [prom-access-shub1.md](prom-access-shub1.md); 4.65 is not re-read there.
 
 ## Unknowns and what would settle each
 

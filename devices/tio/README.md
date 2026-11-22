@@ -5,7 +5,7 @@ own Linux platform code for the Altix (linux-5.3 pin 4d856f72c10e, the last rele
 generation that code ranks as the vendor's software source: a fact it defines is **established**, as a software
 definition, never as a measurement. Anything it only implies is **inferred**; anything it does not say is **unknown**.
 Registers: [registers.md](registers.md) (five named by the code). What the SHub 2 firmware does to a TIO, with the rows a model
-must answer, is in [prom-access.md](prom-access.md).
+must answer, is in [prom-access.md](prom-access.md); the SHub 1 firmware (Prism) is in [prom-access-shub1.md](prom-access-shub1.md).
 
 ## What the chip is
 
