@@ -42,9 +42,8 @@ Next: the part's datasheet; read those parts of the main module.
 
 [route: software now] Settled: the system parameter block at `0x1000`, the 35-entry firmware vector at `0x1200` (standard ARC
 order) and the 15-entry private vector at `0x1300`, the loader's reading of the block, the tree nodes the firmware builds by
-name. Open: component classes, types and keys of every node, the private vector's purpose, which vector numbers `arcldr.exe`
-calls, and the exact way the firmware builds the identifier (text-mode setup expects `SGI-320_ARCx86`, `SGI-540_ARCx86` and the `_mp` forms; the image's `SGI-000_ARCx86` is probably a template). Next: read the tree builder (`borg_cpu_install`,
-`cpu_makecfgroot`) and enumerate the loader's `call *` sites through the vector.
+name. Settled since: the vectors both loaders call (fourteen, [boot-path.md](../software/visws/boot-path.md)) and what `ARCINFO` prints. Open: component classes, types and keys of every node, the private vector's purpose, what firmware revision Windows 2000 setup's PROM check expects of a PROM, and the exact way the firmware builds the identifier (text-mode setup expects `SGI-320_ARCx86`, `SGI-540_ARCx86` and the `_mp` forms; the image's `SGI-000_ARCx86` is probably a template). Next: read the tree builder (`borg_cpu_install`,
+`cpu_makecfgroot`).
 
 ## Memory programming, graphics split and PCI resources
 

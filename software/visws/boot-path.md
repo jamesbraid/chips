@@ -126,8 +126,33 @@ not read in full).**
    SetEnvironmentVariable, 32 GetFileInformation, 33 SetFileInformation, 34 FlushAllCaches. The names are the ARC
    specification's for those positions (the table has no firmware symbols; entries 0 to 34 are non-null except 19); the last two ARC entries
    (test Unicode character, display status) are not in this version's table. The private vector has 15 entries (one is
-   null) whose purpose was not read. Which vector numbers `arcldr.exe` actually calls was not enumerated.
-3. **The ARC configuration tree. Established (HAL read, `DumpArcInfo`, `HalpGrabArcRevInfo`).** The HAL requires the NT loader
+   null) whose purpose was not read.
+   **Which vectors the loaders call. Established (call sites in `arcldr.exe` and `arcsetup.exe`, NT 4.0 install CD).** Every
+   call goes through the vector pointer the loader copied from the block at start-up (an indirect call through the entry
+   offset, four bytes per index). Indices used, with the number of call sites in `arcldr.exe` / `arcsetup.exe`: GetPeer (9) 2 / 2,
+   GetChild (10) 3 / 3, GetConfigurationData (12) 2 / 2, GetMemoryDescriptor (18) 4 / 4, GetTime (20) 1 / 1,
+   GetRelativeTime (21) 14 / 8, Open (23) 8 / 8, Close (24) 5 / 14, Read (25) 16 / 11, GetReadStatus (26) 4 / 3, Write (27) 32 / 16,
+   Seek (28) 7 / 10, GetEnvironmentVariable (30) 1 / 1; `arcsetup.exe` also calls Restart (5) 3 times. So the firmware must
+   implement those fourteen; Load, Invoke, Execute, Halt, PowerDown, Reboot, EnterInteractiveMode, the tree editing calls
+   (AddChild, DeleteComponent, GetComponent, SaveConfiguration), GetSystemId, GetDirectoryEntry, Mount,
+   SetEnvironmentVariable, Get/SetFileInformation and FlushAllCaches have no direct call site in either loader (a count of
+   direct sites; the loaders' file-system code reaches the files through Open, Read, Seek and Write only). The SPB fields read are the
+   ones at `0x1004` to `0x1028`, saved to the loader's own copy; the same loader reads nothing from the private vector (no
+   use of its pointer was found). Windows 2000 RTM and SP4 `arcldr.exe` ("ARCx86 OS Loader V5.00") call the same thirteen
+   (GetMemoryDescriptor eight sites, Write 45); `arcsetup.exe` there adds **GetDisplayStatus (vector index 36, offset `0x90`)**, guarded by
+   a test of the block's version (above 1, or 1 with revision at least 2) and of the vector length (above `0x90`), and shows
+   "Your system's PROM (firmware) is below the required revision level" when a check against the text-mode setup file's
+   PROM version string (`1000` for the one machine type) fails; the check compares four bytes at offset `0x4c` of the data attached to a firmware tree node (at least `0x80` bytes long)
+   with that string (what the bytes are, which node, and the direction of the test were not traced; the compare is inferred to be a firmware-revision test from the message). PROM 1.0006's block (version 1,
+   revision 10, vector length `0x8c`) passes the version test and fails the length test, so it has no GetDisplayStatus
+   to call and Windows 2000 setup skips that call there; whether it passes the PROM check was not determined.
+3. **What `ARCINFO` prints. Established (`DumpArcInfo`, `0x80014430`).** With the `ARCINFO` boot option the HAL writes, through the
+   debug-port print routine (so it goes to the kernel debugger's port, not the screen), a block headed `ArcInfo:` with the
+   ARC boot device name, the ARC HAL device name, the NT boot and HAL path names and the OS load options, then "Dump arc tree
+   info at 0x..." followed by the whole configuration tree from the root: for each node a banner with two ids, its child and sibling
+   pointers, then class (as a name and a number), type, version and revision, key, affinity mask, configuration data length,
+   identifier length and the identifier string. "LoaderBlock contained no arc root" if the loader gave none.
+4. **The ARC configuration tree. Established (HAL read, `DumpArcInfo`, `HalpGrabArcRevInfo`).** The HAL requires the NT loader
    block to carry an ARC root with a standard component tree (the HAL prints "LoaderBlock contained no arc root" if it
    does not). It looks up the system component, finds the child "SGI REV INFO", and under it the children "SYS TYPE"
    (a byte: 0 for the 320, 1 for the 540, inferred from the Linux board-type values and the HAL's branches) and
@@ -150,12 +175,12 @@ not read in full).**
    firmware builds the tree itself: the nodes "SGI REV INFO", "SYS TYPE" and "BOARD REV", a configuration key `CPUMask`, processor
    components with FPU children (`borg_cpu_install`), `video()`, `serial(0)`, `serial(1)`, `console`, `keyboard()`
    and `pointer()`, and the memory descriptor list (`alloc_memdesc`). Component classes, keys and types were not decoded.
-4. **Board revision byte. Inferred.** The HAL treats `BOARD REV` below 6 as one hardware generation of the 320, 6 to 11
+5. **Board revision byte. Inferred.** The HAL treats `BOARD REV` below 6 as one hardware generation of the 320, 6 to 11
    as the second and 12 or above as the third; the 540 with revision 0 is a special case and any other 540 revision uses
    the third generation's tables. The thresholds are the same as the ones the Linux port applies to the raw 7-bit value
    it reads from the NS87307 general-purpose I/O port (below 6 revision 4, below 12 revision 5, otherwise 6), so the byte in
    the tree is the raw value. That equality is the only evidence.
-5. **Memory descriptors and the graphics banks. Established (HAL read).** The loader block's memory descriptor list
+6. **Memory descriptors and the graphics banks. Established (HAL read).** The loader block's memory descriptor list
    carries the graphics memory, and the HAL turns it into what the graphics driver reads:
    - `HalpSpliceGfxMemory` walks the list and prints "N MB Memory [G MB Graphics, M MB NT]": descriptors of type 3 (bad
      memory) are ignored, type 22 (`0x16`, a type outside the stock NT set) counts as graphics, type 6 (firmware
@@ -172,13 +197,13 @@ not read in full).**
      memory" and does not remap them.
    So the firmware reserves the graphics memory as one or more type-`0x16` descriptors, aligned to 4 MiB; how it
    chooses the split between NT and graphics is unknown (Linux hard-codes 8 MB by default, see below).
-6. **Memory map facts the HAL maps (physical).** The first 4 KiB page of memory (the BIOS data area is touched there: the
+7. **Memory map facts the HAL maps (physical).** The first 4 KiB page of memory (the BIOS data area is touched there: the
    warm-reset vector at `0x467` and the reset flag at `0x472` are written, with CMOS register `0x0f` set to `0x0a` or
    `0x00`); the processor table page at `0x1000` with the table at `+0xe00` (below); the Cobalt CPU register block
    `0xc2000000`; the Cobalt APIC `0xc4000000`; the Cobalt memory controller registers `0xc6000000`; the Lithium
    bridges A at `0xfc000000` and B at `0xfd000000` (one 4 KiB window each); the local APIC at `0xfee00000`; the flash at
    `0xfff80000`. The Cobalt blocks are described in [nt-hal.md](nt-hal.md).
-7. **Processor table at physical `0x1e00`. Established (HAL and Linux read; firmware writer read in the main module at
+8. **Processor table at physical `0x1e00`. Established (HAL and Linux read; firmware writer read in the main module at
    `0xf03f10`-`0xf0421f`, Ghidra for the entry builder).** A 16-bit processor count, followed by that
    many 20-byte entries. Both the NT HAL and the Linux 2.6 port read it from the same place (Linux: the count at `0x1e00`,
    the table two bytes on, at most four processors). If the count is zero the HAL falls back to a built-in table. The table
@@ -198,7 +223,7 @@ not read in full).**
    startup interrupts as well as INIT. The firmware itself reads the same table when it builds the ARC processor nodes
    (`0xf02030`, `0xf02140`). One more write during start-up: a read-modify-write of the dword at Cobalt APIC `+0xffc` that sets
    bits 27:24 to 4; the meaning is unknown.
-8. **Processor start convention. Established (HAL read; standard MP).** The bootstrap processor writes a real-mode
+9. **Processor start convention. Established (HAL read; standard MP).** The bootstrap processor writes a real-mode
    stub below 1 MiB, points the warm-reset vector at it, sets CMOS shutdown byte `0x0a`, sends INIT assert and
    deassert through its local APIC, and, if the APIC version is nonzero, two startup IPIs; then waits for the other
    processor to report. The Linux port uses the same warm-reset vector method.
