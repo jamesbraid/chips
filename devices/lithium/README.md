@@ -178,3 +178,14 @@ bits is turned into controller lines is in the [interrupt page](../../platforms/
 | Reset state of the interrupt enables and the bridge header | Same |
 | Meaning of the undocumented audio words; the rest of the audio register file | The NT audio driver, the specification |
 | Other functions of the chip, including any memory or video role | Same |
+
+## Review
+
+Independent review of the audio DMA section (chips commits 7990dc9..7a40091). `sgisound.sys` and its symbol file were read from the
+1999 build on the SGI 320 NT 4.0 install CD (Disk 2); the 5.2.2 build the section cites sits in an InstallShield cabinet that could
+not be unpacked here, so it was not re-read. In the 1999 build: the seven-row register table (base `0x100 + 0xc * n`, control `+4`,
+configuration `+8`, time stamp `0x300 + 8 * n`, counter `+4`, pointer bytes at control `+1` and `+0`), `sndStartDMA` (base written as
+address >> 8 with bit 29, configuration bits 1:0, 2 and 3, size code 7 for 8 KiB and 6 otherwise, silence word at `0xff00f000 + 0x500`,
+enable bit 27 last, output words at `+0x98` and `+0x9c` zeroed), `HwCheckLink` (bit 2 clear), `GetLiUstMscPair` (`ust_high` at `+0x204`
+re-read until stable) and the counter zeroing at `+0x304` and `+0x30c` all match the text. The driver imports no interrupt-connect call.
+The vendor and device id constants appear in no Windows binary read, so their `inferred` grade stands.
