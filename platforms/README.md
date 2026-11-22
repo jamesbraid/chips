@@ -31,6 +31,12 @@
 | [size-ladder.md](bricks/size-ladder.md) | Origin 3000 and Onyx 3000 size ladder | This sheet lists, for each size of the Origin 3000 family that SGI's manuals describe (Origin and Onyx 3200, 3400... |
 | [xbrick.md](bricks/xbrick.md) | Origin 3000 X-brick | The X-brick is the 4U XIO expansion enclosure of the Origin 3000 and Onyx 3000 families. |
 
+## ip20
+
+| Page | Title | Summary |
+|---|---|---|
+| [prom-software.md](ip20/prom-software.md) | Indigo R4000 (IP20) PROM 4.0.5D Rev A: what its own software does | This page records what the shipped IP20 PROM image `SGI Version 4.0.5D Rev A IP20, Aug 19, 1992` does: part... |
+
 ## ip22
 
 | Page | Title | Summary |
