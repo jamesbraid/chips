@@ -149,8 +149,8 @@ four MetaRouters with 16 at 256 processors, and above 16 Cx-bricks a second leve
 ## 7. The cable table script
 
 [`tools/origin3900-cabling/plan.py`](../../tools/origin3900-cabling/plan.py) writes the canonical graph for any even size
-from 4 to 32, as a topology plan (`plan.py N`) or one line per cable (`plan.py N --table`). At 4, 6 and 8 it reproduces
-the routers and links of the existing plans exactly. Its port choices (model choices, PROM-accepted): at 6 and 8,
+from 4 to 32 as JSON (`plan.py N`: the Cx-bricks with their A/F partner, the R-bricks with plane, level and role 0xe,
+and the links with brick, port, connector letter, peer and peer port) or one line per cable (`plan.py N --table`). Its port choices (model choices, PROM-accepted): at 6 and 8,
 Cx-brick i on port i + 1 of both R-bricks; at 10 to 16, pair k on port k + 1; above 16, Cx-bricks on level-2 ports 1 to 4
 in column order, level-2 ports 5 to 8 to the plane's level-3 R-bricks 0 to 3, level-3 port j + 1 to column j, G to plane A
 and H to plane B. [`cx3900_plan_check.py`](../ip35/replay/cx3900_plan_check.py) runs the PROM over exactly that output
@@ -186,4 +186,4 @@ level-2 or level-3 R-brick with no flag, the repeat flag alone or both flags is 
 ten 16-Cx classes, and a 160-class sample of the below-bisection 16-Cx classes (12 accepted, 64 of 1,009 expected) agree.
 The 3800 counts and non-isomorphism in section 6 were recomputed from the cabling guide's tables, including the sizes marked
 "not compared". One correction: the idle-uplink count in section 5 held for nine of the ten 16-Cx classes, not all ten.
-Not rechecked: the plan generator's match to the existing 4, 6 and 8 Cx plans, and the 12 and 14 class counts.
+Not rechecked: the 12 and 14 class counts.
