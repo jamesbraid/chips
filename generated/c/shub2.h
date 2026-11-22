@@ -1,6 +1,6 @@
 /* generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f */
+/* input sha256 670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61 */
 /* SHub 2 registers outside the I/O interface, differences from SHub 1 */
 #ifndef SHUB2_GEN_H
 #define SHUB2_GEN_H
@@ -315,7 +315,7 @@
 #define SHUB2_MEM_RED_BLACK                          0x010078 /* established */
 
 /*
- * Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+ * Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_000c_4c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
  */
 /* misc_mem_cfg: rw64, reset unknown; Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver */
 #define SHUB2_MISC_MEM_CFG                           0x010080 /* established */

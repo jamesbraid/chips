@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f",
+ "input_sha256": "670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61",
  "schema": "defs-flat/1",
  "source": "devices/shub/registers.shub2.toml",
  "profile": "public",

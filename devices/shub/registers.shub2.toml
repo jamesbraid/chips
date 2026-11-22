@@ -617,8 +617,8 @@ access = "rw"
 width = 64
 grade = "established"
 reset = "unknown"
-from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) stores at sites 0xff4814bc and 0xff48176c (read-modify-write), 0xff483e90 (value 0x0fc4_0000_00c4_c4c)"
-doc = "Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
+from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) stores at sites 0xff4814bc and 0xff48176c (read-modify-write), 0xff483e90 (value 0x0fc4_0000_000c_4c4c)"
+doc = "Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_000c_4c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value."
 
 [add.registers.misc_mem_cfg.fields]
 bit_58 = { bits = [58, 58], grade = "inferred", from = "SAL 1.54 PROM (shub2snprom.bin, snprom 10.54) site 0xff481696 (mask -0x400000000000001)", doc = "Cleared by a size test." }

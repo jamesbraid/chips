@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f -->
+<!-- input sha256 670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61 -->
 <genxml unit="shub2" prefix="SHUB2" title="SHub 2 registers outside the I/O interface, differences from SHub 1" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver">
   <doc>SHub 2 offsets as the SGI Linux ia64 platform header defines them (SH2_ names). Registers the header defines only for SHub 1 are removed; for those, SHub 2's address is not in the sources read (unknown). Field layouts not patched here are the SHub 1 ones: the header gives one set of field macros for both chips. Registers added from the SHub 2 firmware (grade and site named on each) give the 32-bit offset in the local window; add 0x2_0000_0000 for the address the firmware uses.</doc>
   <struct name="X_DIMM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10000" access="rw" reset="unknown">
@@ -119,7 +119,7 @@
     <doc>Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0 and 51:16); the code does not split the value. Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
   </struct>
   <struct name="MISC_MEM_CFG" size="8" grade="established" from="Linux v5.3 SGI SN2 platform MMR header (GPL): names, offsets and field positions; kernel use from the same tree's SN2 setup, interrupt, I/O, timer, SMP and TLB-purge code and the v4.9 real-time clock driver" register="yes" offset="0x10080" access="rw" reset="unknown">
-    <doc>Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
+    <doc>Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_000c_4c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.</doc>
     <field name="bit_59" start="59" size="1" type="uint" grade="inferred"/>
     <field name="bit_58" start="58" size="1" type="uint" grade="inferred"/>
   </struct>

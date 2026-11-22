@@ -1,6 +1,6 @@
 // generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f
+// input sha256 670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61
 // SHub 2 registers outside the I/O interface, differences from SHub 1
 #![allow(dead_code)]
 
@@ -844,7 +844,7 @@ pub mod mem_red_black {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x10078;
 }
-/// Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and  (established)
+/// Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_000c_4c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and (established)
 pub mod misc_mem_cfg {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x10080;

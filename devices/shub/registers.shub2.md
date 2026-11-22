@@ -1,6 +1,6 @@
 <!-- generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f -->
+<!-- input sha256 670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61 -->
 
 # SHub 2 registers outside the I/O interface, differences from SHub 1
 
@@ -274,7 +274,7 @@ Written once with 0x4e20_0400. The PROM name suggests two time fields (bits 15:0
 
 ### Register `misc_mem_cfg`
 
-Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_00c4_c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
+Miscellaneous memory controller word. The firmware writes 0x0fc4_0000_000c_4c4c once, then clears bit 58 when a masked size argument exceeds 0x3ff and bit 59 when it exceeds 0x1ff (routine 0xff481280, sites 0xff481696 and 0xff4816c6). Offset in the local window (add 0x2_0000_0000); the name is the PROM's own register-name table, not Linux; no source defines the reset value.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|

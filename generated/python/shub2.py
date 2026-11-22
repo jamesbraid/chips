@@ -1,6 +1,6 @@
 """generated from devices/shub/registers.shub2.toml by defs-gen - do not edit, change the source
 defs-gen 2
-input sha256 fcaa46dd34ecdda06f3b23df2459376ef83d7fb269ef3bdbe20966129fbf9d5f
+input sha256 670ca274c8f4273a84f0e6c8f7886197f0927eeb142c70788c493dee0b112a61
 SHub 2 registers outside the I/O interface, differences from SHub 1"""
 
 UNIT = 'shub2'
