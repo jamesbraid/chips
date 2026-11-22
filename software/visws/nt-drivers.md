@@ -267,6 +267,29 @@ name table also lists the Cyber9525, Image975 and 985 DVD parts, Blade 3D, Monte
 "TVGA" strings. Nothing in it mentions Cobalt, Lithium, Arsenic or the SGI platform, and the machines' graphics are not on PCI, so it is not a driver for the on-board display. Why Microsoft
 renamed a Trident driver with SGI-prefixed names is unknown (a Visual Workstation PCI card option is possible and not documented anywhere held).
 
+## Recovery CD-2 v1.1 (disc 2 of the 540 set, built 5 May 1999)
+
+Held in the software mirror (Internet Archive item `sgi-recovery-2`, 217,341,264 bytes) as a raw CD image with 2,352-byte sectors; the 2,048-byte payload of each of
+its 92,407 sectors is an ordinary ISO 9660 image of 189,249,536 bytes (351 files, 40 folders), which compares byte-equal to the first 189,249,536 bytes of
+`SGI320WinNT_Disk2.iso` in the `sgi-vw-drivers` item. So the "Disk 2" of the 320 NT 4.0 set and Recovery CD-2 v1.1 are the same disc. Its tag file says "Recovery
+CD 2 Installation, version 1.0", and the `Oeminfo.ini` it installs reads "1-4 Processors, SP4 OPK" and "Version 4.0s1.1MR6". It is a software disc: no
+firmware, no PROM image, no HAL. Its main cabinet (`data1.cab`, an InstallShield cabinet that `unshield` opens directly; 170 files) holds the SGI Windows software of May 1999.
+
+| Group | Contents | Read |
+|---|---|---|
+| Graphics drivers | `sgcomp.sys` (65,296), `sgcodd.dll` (334,704), `sgcoicd.dll` (1,245,456), `sgcotab.cpl`; build time 1999-04-27 | `sgcomp.sys` and `sgcodd.dll` are byte-identical to the NT 4.0 install CD's; the escape table of the display driver is read ([graphics-engine.md](../../devices/cobalt-graphics/graphics-engine.md)); the OpenGL driver's call sites were not |
+| Audio, video and time drivers | `sgisound.sys` (28,720), `sgilivid.sys` (17,936), `sgijack.sys` (15,216), `sgiust.sys` (2,704), `sgiacp`, `sgivcp` and their control panels; all 1999-04-27 | register constants and the audio register table checked against the 2001 builds (same table and same addresses); not read function by function |
+| Hardware error log | `sgielog.sys` (6,256) | read, see above |
+| Intel state saver | `intlfxsr.sys` (6,416, built 1998-12-08) in a "Katmai Driver" group | read, see above |
+| Flat panel and power | `sgiFP.dll`, `PwrSave.exe`, `PwrSave.sgi`, `cysaver.scr` | strings only: the power saver calls `sgiFP_PowerSave` and keeps its setting under `Software\Silicon Graphics\Control Panel\Display` |
+| Colour calibration | the ColorLock tool (`ColorLock.exe`, `ColorLock.cpl`, `SipCal32d.dll`, `CLDetect.exe`) | not read |
+| Digital media and codecs | `sgidmedia.dll`, `sgidv.dll`, `sgicolor.dll`, `sgijpeg.dll`, `sgival.dll`, Video for Windows and QuickTime components, `vidcap32.exe`, `viddiag.exe` | not read |
+| Documentation | the 320 and 540 owner's guides (PDF), the Audio/Video guide, a ColorLock guide, an HTML 320 overview, release notes | the guides are already held ([sources](../../references/visws-sources.md)); the release notes name only the graphics-memory profile and QLogic SCSI card instructions |
+| Option installers | `ifl` (an image-format library with its source, headers and HTML reference), `opt` (the Cosmo 3D and OpenGL Optimizer developer kits), `Quicktime`, `AcrobatReader` (eight languages), `yamaha` (a soft synthesizer), `SGISOUND` (an older `oemsetup.inf` installer for the audio driver), and a `Symbols` tree of `.dbg` files | not read; the symbol tree has no `.pdb`, so the 1999 builds have no routine names |
+
+The 1999 drivers are the same family as the NT 4.0 install CD's `sgcomp.sys` and `sgcodd.dll`, so the disc adds the other half of the 1999 set: the audio, video, time and analogue-video drivers, the
+OpenGL driver and the error-log and Katmai drivers. It adds no register fact that the 2001 builds do not already give.
+
 ## Still to read
 
-In order: the registry values the graphics miniport reads and the HAL writes (the HAL's are listed in [nt-hal.md](nt-hal.md#registry-values-the-hal-writes); the miniport's reads are not); the Windows 2000 builds of the drivers (unpacked, not read); the `sgiusb00.sys` / `sgiu.inf` pair on the Windows 2000 CD (cabinet-compressed, not opened); the SGI video boot driver `sgibvid.dll` of Windows 2000; and the second install CD's driver set when it is reached. Done since the first reading: the HAL's interrupt-level translation (level is the Cobalt entry), `arcsetup.exe`, and the audio driver's DMA registers.
+In order: the registry values the SGI 5.2.4 graphics miniport reads and the HAL writes (the HAL's are listed in [nt-hal.md](nt-hal.md#registry-values-the-hal-writes); the miniport's reads are not); the 1999 OpenGL driver's call sites of its escape (to confirm that the numbering of its display driver is the one it sends); the rest of `sgijack.sys` (the control devices, the registry defaults, the I2C register values the decoder and encoder are given); the descriptor and buffer formats and register bits of `sgilivid.sys`; the HAL's side of the CMOS record `sgielog.sys` reads; and the Windows 2000 builds of `sgcomp.sys`, `sgisound.sys`, `sgilivid.sys`, `sgiust.sys` and `sgijack.sys` (separate binaries from the NT 4.0 ones, only the display driver's escape table read). Done since the first reading: the HAL's interrupt-level translation (level is the Cobalt entry), `arcsetup.exe`, the audio driver's DMA registers, the Windows 2000 CD's SGI-specific files and Recovery CD-2 v1.1.
