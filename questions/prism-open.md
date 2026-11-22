@@ -122,6 +122,15 @@ kernel expects; what the chip does is inferred. Full reading in [platforms/sn2/p
   (v4.14.83:arch/ia64/sn/kernel/io_init.c:298-307, io_common.c:295-310). Unknown on both kernels: the Prism's TIOCA count per
   XG2N, and which SHub port each pipe uses.
 
+- **Which BAR claim rule a Prism's framebuffer needs (2026-11-22).** The v4.14.83, linux-sn2 and 2.6.5-7.308 trees
+  claim SN2 BARs differently; the table is on [the Prism platform page](../platforms/sn2/prism.md#same-bar-path-on-linux-sn2-and-265-7308-read-2026-11-22).
+  Established as code: 2.6.5 has no parent-window test, linux-sn2 clears UNSET and inserts an SAL address under the global
+  root on the non-ACPI path, and v4.14.83 refuses both. Inferred: on the ACPI path, a DSDT revision of 0x20101 or higher,
+  real root windows from `_CRS` make a 128 MB BAR claimable. Unknown: whether the 2.6.5 uncached-region transform of the
+  SAL address yields a bus address, the DSDT revision of the 2019 PROM, and the SAL device-info values for its BARs.
+  Route: a boot log of a Prism that prints `DSDT OEM Rev`, `TIOCA` lines and each BAR's claim result on 2.6.5 or 7.x; the
+  SAL `GET_PCIDEV_INFO` values from the same boot.
+
 ## Review
 
 Independent review, 2026-11-14, by a reviewer who wrote none of these pages. Reviewed chips revision a399d6d (pages from ee45651 and a399d6d). Sources: the SGI printed manuals, printed pages; Linux v5.3 single files from raw.githubusercontent.com, `arch/ia64/include/asm/sn/{tioca.h,pcibus_provider_defs.h}`, `arch/ia64/sn/pci/tioca_provider.c`, `arch/ia64/sn/kernel/setup.c`, `drivers/char/agp/{sgi-agp.c,Kconfig}`; public github.com/jamesbraid/voyager `README.md`, `devices/README.md`, `questions/open-questions.md`.

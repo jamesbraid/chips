@@ -326,6 +326,53 @@ Changes from the 2.6.5 record (b04c657), v4.14.83 against 2.6.5:
   v4.14.83:drivers/char/agp/sgi-agp.c:296-300 only skip. The mode word and 1 GiB aperture are unchanged
   (v4.14.83:drivers/char/agp/sgi-agp.c:104-105, 309-316). The AGP driver does not load on this boot.
 
+### Same BAR path on linux-sn2 and 2.6.5-7.308 (read 2026-11-22)
+
+linux-sn2 is the 7.3 SN2 tree (HEAD 641358e). Its SN2 port is one commit, b2907419d758 (2026-04-04), on top of the
+upstream removal in cf07cb1ff4ea (2019), so its SN2 code is a port of the 4.14 code with local changes. Two later
+commits touch the BAR path: 24d78bf62c12 (bridge claims) and 641358e (I/O space). The 2.6.5 side is the
+kernel source RPM from the ProPack 4SP4 extensions disc.
+
+| Step | v4.14.83 | linux-sn2 | 2.6.5-7.308 | Grade |
+|---|---|---|---|---|
+| Root windows | One 1 MiB legacy I/O and memory window (io_init.c:128-141, 248-257) | Same numbers (io_init.c:128-141, 265-271) | None built. The SN2 path sets no controller windows (io_init.c:341-434) | established |
+| Device BAR claim | Needs a parent window, else UNSET (setup-res.c:153-161) | Same check (setup-res.c:156-160); device claims at pci.c:339-352 | Inserts under the global root with no window check (setup-res.c:94-118; pci.c:334-362) | established |
+| Bridge window claim | Claimed (pci.c:344-359) | Skipped on the non-ACPI path (pci.c:371; commit 24d78bf62c12) | Not claimed (pci.c:368-376 loops over devices only) | established |
+| SAL address | Raw address written, then inserted; UNSET kept (io_init.c:177-201) | Raw address written, UNSET cleared, inserted under the global root, parent forced on insert error (io_init.c:189-217; UNSET clear and fallback added by b2907419d758) | Written after the scan, through an uncached-region transform, in place, with no re-insert (io_init.c:284-301, 520-522) | established as the code; meaning of the 2.6.5 value unknown |
+| Enable | Refuses UNSET or unclaimed BARs (setup-res.c:421-430) | Same two refusals (setup-res.c:510-520) | Refuses only a zero start with a nonzero end (pci.c:404-409) | established |
+| ACPI path gate | DSDT OEM revision 0x20101 or higher (acpi.h:13) | Same gate (acpi.h:13); root windows from the _CRS walk (pci.c:164 onward) | Root windows from _CRS (pci.c:255-330) | established as the code |
+
+Established (what the code does):
+
+- The biggest difference is the claim itself. 2.6.5 has no parent-window test, so a BAR at its PROM address is inserted
+  under the global memory root unless it collides. v4.14.83 and linux-sn2 both refuse a BAR that no window contains.
+  The "no compatible bridge window" failure is therefore a product of the newer generic claim code, not of the SN2 path.
+- linux-sn2 handles a refused BAR by clearing UNSET after the SAL address is applied and then inserting it directly
+  under the global root (io_init.c:199-217). It does not add a window. So on the non-ACPI path the 1 MiB window is no
+  longer what makes a BAR usable. The enable check then passes because the parent is set (setup-res.c:516).
+- linux-sn2 skips the bridge-window claim on the non-ACPI path (pci.c:371). That stops a PROM-programmed window from
+  being written back disabled. It does not change how device BARs get a parent.
+
+Inferred:
+
+- On the ACPI path (DSDT revision 0x20101 or higher), linux-sn2 builds real root windows from the root bridge's _CRS.
+  A 128 MB BAR then fits a real window and claims normally. The commit that added the I/O space fix (641358e) reports a
+  Prism with two FireGL X3 cards on DSDT 0x20101 with working BARs. That is the author's test, not a boot log we hold.
+- The emulator observation (a newer SN2 tree that printed "no compatible bridge window" but still bound an R300 with a
+  128 MB BAR0) fits linux-sn2's UNSET clear and global-root insert. It does not show which branch ran. Grade stays
+  inferred; it is only the motivation for this comparison.
+- 2.6.5 leaves a 128 MB PROM BAR usable when its address does not collide with another resource, since nothing checks a
+  window and enable does not refuse it. The disc's fglrx package is built for this kernel's package set, so that is the
+  path it would use. Whether the PROM's address for this BAR is correct is unknown (see the questions page).
+
+Unknown:
+
+- Whether the 2.6.5 uncached-region transform (io_init.c:294) yields a bus address. Its result is a CPU-side address, and
+  the in-place rewrite does not re-insert the resource, so the resource tree may keep the PROM address. The code does not
+  settle which one the device uses.
+- Which path 2.6.5 takes on the 2019 PROM. Its DSDT revision was not read.
+- The v4.14.83 ACPI window code. It sits in a separate file (io_acpi_init.c), which this comparison did not read.
+
 ## Graphics boards and outputs
 
 - Boards named in the guides: **FireGL X2PRO-256** and **FireGL X3-256**. The -003 revision note says it "added FireGL
