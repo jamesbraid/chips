@@ -41,21 +41,42 @@ is "Not a standard PCI?"):
   ones, later kernels eight) and calls this a blind enable. Reset state and whether firmware leaves it masked are
   unknown.
 
-Configuration accesses to devices behind the bridges do **not** go through these windows. The kernel uses plain PC
-type 1 configuration through ports `0xcf8` and `0xcfc` with the bus numbers above, and sets its PCI probing to that
-mechanism alone (BIOS and type 2 excluded). The windows give only the bridge's own registers. How the type 1 mechanism
-is split across two host bridges (does it decode the bus number to pick a bridge?) is not described by any code. **Unknown.**
+**Configuration cycles, two ways.** Linux uses plain PC type 1 configuration through ports `0xcf8` and `0xcfc` with the bus
+numbers above, and sets its PCI probing to that mechanism alone (BIOS and type 2 excluded). How that mechanism is split
+across two host bridges (does it decode the bus number to pick a bridge?) is not described by any Linux code. This is
+Linux's expectation only (inferred).
+
+SGI's NT 4.0 HAL does not use the ports. Its PCI accessors (named `TypeBorg`, `halborg.dll` 1.3 at `0x8001ea80` to
+`0x8001ecb0`; established, read in full) reach a device through the window of the bridge that owns its bus: the address
+register is the 32-bit word at window `+0xf8` and the data is the word at `+0xfc`, with the byte or halfword lane picked by
+the low address bits. The address word has bit 31 set, the bridge's bus number in bits 23:16 (taken from the
+bus handler's number, not from the `+0x44` word), the device number in bits 15:11, the function in bits 10:8 and the
+dword-aligned register in bits 7:2. Each access raises the processor to the highest priority level and takes a spin
+lock (skipped while writing a crash dump). After a configuration access the HAL writes `0x2000` to the bridge's own
+status halfword at window `+0x06`, which on a standard PCI header clears "received master abort" (the bit is
+write-one-to-clear in a standard header; inferred that it behaves so here). A read from a slot the HAL has judged absent
+returns all ones without touching the bus: the check accepts a device number below the handler's slot count, and a nonzero
+function only after a read of function 0's header-type byte (the exact test is not clear in the decompiled form; inferred
+that it is the multifunction bit). So the two bridges decode type 1 cycles
+themselves, each for its own bus, and the HAL needs no mechanism-1 port at all. Whether the ports also work on the real
+machine is unknown. The PIIX4 power-off special cycle that Linux writes through `0xcfc` is Linux's own.
+
+The windows give the bridge's own registers as well. The shipped USB driver (`sgiusb00.sys`, boot-time keyboard and mouse
+support) maps bridge B's window (`0xfd000000`, `0x70` bytes) and writes all ones to the word at `+0x48`, and its
+watchdog prints "PCI Error Status" and "PCI Error Status Address"; the word at `+0x48` is therefore an error-status
+register that software clears by writing ones (inferred from the write and the messages; neither Linux nor the HAL
+touches it). Its position next to the interrupt enable at `+0x46` and its address companion are unread.
 
 PCI device numbers: five devices per bridge are described by the interrupt enable bits and the interrupt map (devices 0
 to 4). The kernel does not say which are physical slots. Known occupants: Ethernet (Intel 82557, per the 2.2 header)
 at device 3 on bridge A; the PIIX4 at device 4 on bridge B, with its IDE and USB functions. The rest of the slots (the
 320 had two PCI slots on separate buses per owner posts; the 540 more) are inferred only.
 
-The error behaviour is **unknown**: no code reads an error register, handles a master abort or enables parity. The
+The error behaviour is mostly **unknown**: no Linux code reads an error register, handles a master abort or enables parity; the shipped HAL clears the master-abort status bit after each configuration access and the USB driver clears an error word at `+0x48` (above). The
 `pci_sanity_check` of the 2.2 PCI code is bypassed on this machine with the comment "Lithium PCI Bridges are
 non-standard", so a probe of bus 0 for a host bridge class does not find a standard one.
 
-## Audio engine (established, from the driver)
+## Audio engine (the Linux driver; the NT driver is checked below)
 
 ### Codec access
 
@@ -88,6 +109,32 @@ bit, a microsecond later the link-enable bit alone. Nothing else of the link is 
 
 One shared line to the Cobalt interrupt controller (line 22, kernel interrupt 38). The handler reads the status
 register, clears all pending bits by writing ones, and masks the result with the enabled set.
+
+### What SGI's NT audio driver confirms (sgisound.sys 5.2.2)
+
+Read in Ghidra for its hardware access only ([driver inventory](../../software/visws/nt-drivers.md)). Established:
+
+- It maps the same three pages (`0xff001000`, `0xff010000`, `0xff00f000`, `0x1000` bytes each), so the page addresses are
+  not Linux's invention.
+- Codec access is by 16-bit accesses to the command word at `+0x18` and the data word at `+0x1c`: the register number goes in
+  the low bits, `0x80` marks a read, and bit 15 of the command word is the busy flag, polled in 10-microsecond steps up to
+  36,000 times (about 0.36 s). The same driver writes `+0x00` with `0x8000`, then `0`, then `0x4000` to bring the link up:
+  reset, release, link enable, which agrees with the Linux register layout.
+- A ring base is written as the physical address shifted right 8 with bit 29 (`0x20000000`) set.
+- The silence value goes to a word at `0xff00f000 + 0x500`: `0x80808080` for 8-bit samples, `0` for 16-bit, which is the
+  "zero-sample value" Linux names. The words at `0xff010000 + 0x98` and `+0x9c` are zeroed when output starts or stops.
+- It never connects an interrupt (the driver imports no connect-interrupt call): it uses a timer and a deferred call, so
+  NT does not depend on Cobalt entry 22 for audio. Whether entry 22 is the audio line is therefore still Linux's word only.
+
+Not traced in the NT driver: the DMA control and configuration registers, the status and mask bits, the media-stream
+counters.
+
+### Window offsets beyond the audio file (sgilivid.sys 5.2.2)
+
+The NT video capture driver pairs each of four video channel windows (`0xf8000000` to `0xfb000000`) with an eight-byte control
+pair in the audio window's page at `0xff001340`, `0xff001348`, `0xff001350` and `0xff001358` (the whole page is at
+`0xff001000`; Linux names nothing above `+0x30c`). Established as mappings; the meaning of the words is unknown.
+[Details](../../software/visws/nt-drivers.md).
 
 ## Interrupts from PCI devices (established, with a caveat)
 
