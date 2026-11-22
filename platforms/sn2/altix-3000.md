@@ -189,8 +189,28 @@ in the pages read.
 
 **Not printed.** Two-, three-, four- and six-C-brick layouts; the node pairs and cable counts for each; the C-brick that
 each XIO cable reaches in a multi-C-brick system; and the NUMAlink generation of the LINK cables (p.105 says only
-"NUMAlink cable"; p.81 names NUMAlink 4 for the internal channel only). None of the figures read here (3-2, 3-3, 3-5,
-3-6, 5-4) draws an inter-brick cable. A cabling guide for the 3300 is the place to look.
+"NUMAlink cable"; p.81 names NUMAlink 4 for the internal channel only). None of the figures first read here (3-2, 3-3, 3-5,
+3-6, 5-4) draws an inter-brick cable. Two more do, in block form: Figure 3-4 (p.82) and Figure 2-1 (p.28), read below. A
+cabling guide for the 3300 is the place to look.
+
+**Routed layouts (read 2026-11-22; figures rendered from the guide's PDF at printed page + 24 and read as images).**
+
+- **Established.** The smallest configuration the guide prints with routers is Figure 3-4 (p.82, "Functional Block Diagram of
+Basic System"): four C-bricks, each with two Super-Bedrock nodes, and two R-bricks. Each node has one line to an R-brick, and
+the two nodes of a C-brick go to different R-bricks: R-brick 1 takes one node of each of the four C-bricks and R-brick 2 the
+other node of each, so each R-brick has four C-brick links. Each R-brick also draws four arrows labelled "To network fabric".
+Figure 2-1 (p.28, the control network) agrees: two R-bricks, four C-bricks, and a NUMAlink cable (USB signals used) from
+each R-brick to each of the four C-bricks.
+- **Established.** The text gives the minimum as four 8-port routers per 32 processors (p.79), which is two per 16 and agrees
+  with Figure 3-4. The 32-processor example (Figure 3-3, p.80) has eight C-bricks and four R-bricks and no cabling.
+- **Inferred** (arithmetic from the drawings and the R-brick ports): a 32-processor system has 16 C-brick node links and four
+  R-bricks of four C-brick ports each (ports 2 to 5); the four "To network fabric" arrows per R-brick match the four R-to-R
+  ports (1, 6, 7 and 8).
+- **Unknown without the cabling guide or a capture of a configured system.** Which C-brick connector (Node 0 LINK or Node 1
+  LINK) goes to which R-brick: Figure 3-4 does not label the nodes. Which R-brick port (2 to 5) each C-brick uses: not drawn.
+  How the R-bricks join each other, including the four R-bricks of the 32-processor example: the arrows end at no brick.
+  Figure 3-4 is a functional block diagram, not a cabling figure, so the topology above is as drawn and the connector
+  pairing is not printed anywhere in the guide.
 
 ## SHub generation
 

@@ -311,7 +311,11 @@ These come from reading the L1 firmware shipped with a 6.5.30 IRIX release, for 
   system with two G-bricks, four C-bricks, two R-bricks, two I-bricks and an N-brick (`007-4264-002`, p. 17).
 - **Altix 3700 (NUMA 3 architecture).** **Established.** A system of up to 512 processors needs at least four 8-port routers
   per 32 processors (`007-4579-001`, p. 79). The 32-processor example in Figure 3-3 (p. 80) draws eight C-bricks and
-  four R-bricks. **Inferred** that two C-bricks per router is the usual ratio; the guide states only the minimum.
+  four R-bricks. **Inferred** that two C-bricks per router is the usual ratio; the guide states only the minimum. Figure 3-4 (p. 82)
+  draws the smallest routed Altix 3000 system the guide prints: four C-bricks and two R-bricks, each C-brick's two nodes
+  cabled one to each R-brick, so each R-brick has four C-brick links, and four "To network fabric" arrows per R-brick.
+  Which C-brick connector goes to which R-brick port, and how the R-bricks join each other, are not drawn:
+  [the Altix 3000 page](../sn2/altix-3000.md#multi-c-brick-cabling) has the detail and the unknowns.
 
 ### Interconnect drawings
 
