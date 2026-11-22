@@ -21,8 +21,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `ram` | 0x0 | rw | 8 | 32760 | chip1744 | unknown | inferred | Analog Devices/Maxim DS1744 nonvolatile timekeeping SRAM datasheet, document 19-5502, revision 6/13 |
-| `clock` | 0x7ff8 | rw | 8 | 8 | chip1744 | unknown | established | Analog Devices/Maxim DS1744 nonvolatile timekeeping SRAM datasheet, document 19-5502, revision 6/13 |
+| `ram` | 0x0 | rw | 8 | 32760 | chip1744 | unknown | inferred |  |
+| `clock` | 0x7ff8 | rw | 8 | 8 | chip1744 | unknown | established |  |
 
 ### Register `ram`
 

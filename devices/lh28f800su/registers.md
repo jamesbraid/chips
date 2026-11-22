@@ -15,9 +15,9 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Word | Width | Grade | Source |
 |---|---|---|---|
-| `BSR` | 8 | established | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) |
-| `CSR` | 8 | established | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) |
-| `GSR` | 8 | established | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) |
+| `BSR` | 8 | established |  |
+| `CSR` | 8 | established |  |
+| `GSR` | 8 | established |  |
 
 ### Word `BSR`
 
@@ -25,11 +25,11 @@ Block status register, one per block, read through the extended-status mode at t
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7 | `block_ready` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | This block's write operation is ready. |
-| 6 | `lock_cleared` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | The displayed lock is cleared when this bit is set. Every displayed lock reads locked at power-up, until the status upload has run. The displayed bit is not the stored lock bit. |
-| 5:4 | `op_status` | established | bsr_op (ok_or_running=0, failure=2, aborted=3) | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Bit 5 is operation unsuccessful and bit 4 is operation aborted, read together. The value 01 is invalid. |
-| 3 | `queue_full` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Queue full. |
-| 2 | `low_vpp` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Low VPP detected during an operation on this block. |
+| 7 | `block_ready` | established |  |  | This block's write operation is ready. |
+| 6 | `lock_cleared` | established |  |  | The displayed lock is cleared when this bit is set. Every displayed lock reads locked at power-up, until the status upload has run. The displayed bit is not the stored lock bit. |
+| 5:4 | `op_status` | established | bsr_op (ok_or_running=0, failure=2, aborted=3) |  | Bit 5 is operation unsuccessful and bit 4 is operation aborted, read together. The value 01 is invalid. |
+| 3 | `queue_full` | established |  |  | Queue full. |
+| 2 | `low_vpp` | established |  |  | Low VPP detected during an operation on this block. |
 
 ### Word `CSR`
 
@@ -37,11 +37,11 @@ Compatible status register, read after 0x70. Bit 7 is ready when set and busy wh
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7 | `ready` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | 1 when the write state machine is ready, 0 while busy. |
-| 6 | `erase_suspended` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Erase suspended. |
-| 5 | `erase_error` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Erase error. Bits 5 and 4 both set after an erase attempt mean an improper command sequence. Printed p. 12. |
-| 4 | `program_error` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Program error. Printed p. 12. |
-| 3 | `low_vpp` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Low VPP detected during an operation. Printed p. 12. |
+| 7 | `ready` | established |  |  | 1 when the write state machine is ready, 0 while busy. |
+| 6 | `erase_suspended` | established |  |  | Erase suspended. |
+| 5 | `erase_error` | established |  |  | Erase error. Bits 5 and 4 both set after an erase attempt mean an improper command sequence. Printed p. 12. |
+| 4 | `program_error` | established |  |  | Program error. Printed p. 12. |
+| 3 | `low_vpp` | established |  |  | Low VPP detected during an operation. Printed p. 12. |
 
 ### Word `GSR`
 
@@ -49,13 +49,13 @@ Global status register, read through the extended-status mode at the GSR word ad
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7 | `write_ready` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Write state machine ready. |
-| 6 | `suspended` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Operation suspended. |
-| 5:4 | `op_status` | established | gsr_op (ok_or_running=0, sleep=1, failure=2, failure_or_abort=3) | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Bit 5 and bit 4 together give the operation state. |
-| 3 | `queue_full` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Command queue full. |
-| 2 | `buffer_available` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | At least one page buffer available. |
-| 1 | `buffer_ready` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Selected page buffer ready. |
-| 0 | `buffer_select` | established |  | Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996) | Buffer 1 selected when set. |
+| 7 | `write_ready` | established |  |  | Write state machine ready. |
+| 6 | `suspended` | established |  |  | Operation suspended. |
+| 5:4 | `op_status` | established | gsr_op (ok_or_running=0, sleep=1, failure=2, failure_or_abort=3) |  | Bit 5 and bit 4 together give the operation state. |
+| 3 | `queue_full` | established |  |  | Command queue full. |
+| 2 | `buffer_available` | established |  |  | At least one page buffer available. |
+| 1 | `buffer_ready` | established |  |  | Selected page buffer ready. |
+| 0 | `buffer_select` | established |  |  | Buffer 1 selected when set. |
 
 ## Enums
 

@@ -756,8 +756,8 @@ Real-time clock control; the name is ours. The PROM writes 0x100000000, then wri
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 33:32 | `mode` | inferred |  | SAL 5.04 PROM site 0xffa96626 (read), 0xffa967e6 (set to 1) and 0xffa94d26 (written 1) | Read by an interconnect-phase routine that branches on 1, 2 and 3, and set to 1 by another. Written 1 by the reset entry. Meaning inferred only; the header calls it SOURCE_SEL. |
-| 28 | `toggle_bit` | inferred |  | SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field | Header field TOGGLE_BIT. The header states no role; the PROM's two writes leave it clear. |
-| 25:16 | `counter` | inferred |  | SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field | Header field COUNTER, a 10-bit count. The header gives its position only; that the clock advances here is inferred. |
+| 28 | `toggle_bit` | inferred |  |  | Header field TOGGLE_BIT. The header states no role; the PROM's two writes leave it clear. |
+| 25:16 | `counter` | inferred |  |  | Header field COUNTER, a 10-bit count. The header gives its position only; that the clock advances here is inferred. |
 | 13:4 | `period` | inferred |  | SAL 5.04 PROM site 0xffa0da00 and the SAL runtime's chipset_rtc_period | Tick period field: the PROM and the SAL runtime both compute the period in nanoseconds as 10 times (value + 1), a software expectation read in two places; that the counter really ticks at that rate is inferred. Written 4 by the PROM. The header calls it MAX_COUNT. |
 | 0 | `run` | inferred |  | SAL 5.04 PROM site 0xffa94d06 (clear), 0xffa94d26 (set), 0xffa967e6 (clear) | Clear when the PROM writes the counter to 0, set after; cleared again by an interconnect-phase routine. A run control is inferred from that order only; the header calls it ENABLE_COUNTER. |
 
@@ -787,7 +787,7 @@ SHub identification (local block, inferred). The kernel reads only the revision,
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 52:48 | `nodes_per_bit` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback. |
+| 52:48 | `nodes_per_bit` | established |  |  | Nodes per bit (the kernel's name for the region size). The positions come from macros in the SAL header; the role is the kernel's use of the value as the region size in its old-PROM fallback. |
 | 45:44 | `size_code` | inferred |  | SAL 5.04 PROM site 0xffa95a30 | Written with 0, 1, 2 or 3 by thresholds 31, 63 and 127 on an argument (bits 10:9 masked, then halved). The meaning is inferred only; the PROM reads it in memory-presence code. Name is ours. |
 | 42:32 | `nasid` | inferred |  | SAL 5.04 PROM site 0xffa0dcf0 (read) and 0xffa95a30 (write) | Node id. Every read in the PROM forms global-window addresses from it, so the node's own global window at this id must decode to the node. The PROM replaces it once, later in boot; it must read back as written. Name is ours. Linux does not define this field (it takes the node id from firmware): the position and the PROM's replacement are what the code does, the meaning is inferred. |
 | 31:28 | `revision` | established |  | Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset | Chip revision. The kernel treats 2 or lower as SHub 1.1. |
@@ -837,8 +837,8 @@ Purge translation cache parameters, next to SH1_PTC_0 and SH1_PTC_1. The PROM wr
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 35:24 | `ptc_to_val` | inferred |  | SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS | Header field PTC_TO_VAL, described as time-out valid. Name and position are the header's; the meaning is inferred. |
-| 23:0 | `ptc_to_wrap` | inferred |  | SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS | Header field PTC_TO_WRAP, the time-out period. Name and position are the header's; the PROM's use is not decoded. |
+| 35:24 | `ptc_to_val` | inferred |  |  | Header field PTC_TO_VAL, described as time-out valid. Name and position are the header's; the meaning is inferred. |
+| 23:0 | `ptc_to_wrap` | inferred |  |  | Header field PTC_TO_WRAP, the time-out period. Name and position are the header's; the PROM's use is not decoded. |
 
 ### Register `int_cmpa`
 
@@ -957,9 +957,9 @@ FSB system agent configuration (SH_FSB_SYSTEM_AGENT_CONFIG in the SGI 2.4 SN2 he
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 24 | `bit24` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back). |
-| 17 | `bit17` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded. |
-| 3 | `bit3` | established |  | SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name | berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write). |
+| 24 | `bit24` | established |  |  | serialize_fsb_en. Set by SAL_A; set before and cleared after the SHUB_ID write and the writes to 0x120000000 in 0xffa976e0. The name and position are the header's; what the bit does to the bus is not stated (a model needs only the read-back). |
+| 17 | `bit17` | established |  |  | xtpr_trans_rsp, the header's name. Set by a local SAL_B routine and tested across nodes; the PROM's use of it is not decoded. |
+| 3 | `bit3` | established |  |  | berr_assert_en, the header's name. Set, cleared and tested by the PROM's bus error assertion routines (read-modify-write). |
 
 ### Register `fsb_vga_remap`
 
@@ -967,10 +967,10 @@ FSB VGA address space remap, next to pi_reg_2001_0100 in the FSB block. One PROM
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 62 | `vga_remapping_enabled` | established |  | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) | VGA remapping enabled. Kept by the PROM's read-modify-write. |
-| 48:38 | `nid` | established |  | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) | VGA remap node id. |
-| 37:36 | `asid` | established |  | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) | VGA remap address space id. |
-| 35:17 | `offset` | established |  | SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write) | VGA remap node offset. |
+| 62 | `vga_remapping_enabled` | established |  |  | VGA remapping enabled. Kept by the PROM's read-modify-write. |
+| 48:38 | `nid` | established |  |  | VGA remap node id. |
+| 37:36 | `asid` | established |  |  | VGA remap address space id. |
+| 35:17 | `offset` | established |  |  | VGA remap node offset. |
 
 ### Register `pi_slice_present`
 
@@ -978,7 +978,7 @@ Per-slice flags in the processor interface; the name is ours. The local-master a
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 5:4 | `present2` | inferred |  | SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller) | Second processor of slice 0 and 1, read by the CPU enumeration callers; inferred, not re-read here. Name is ours. |
+| 5:4 | `present2` | inferred |  |  | Second processor of slice 0 and 1, read by the CPU enumeration callers; inferred, not re-read here. Name is ours. |
 | 1:0 | `present` | inferred |  | SAL 5.04 PROM site 0xffa115ac | Bit n set means the first processor of slice n is present (inferred from use); the local-master arbitration tests only slices 0 and 1. Name is ours. |
 
 ### Register `pi_afi_error_mask`

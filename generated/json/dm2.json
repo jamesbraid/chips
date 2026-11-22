@@ -3476,8 +3476,7 @@
    "name": "FPGA_INFO_RECORDS",
    "value": 8,
    "count": 1,
-   "grade": "established",
-   "from": "shipped kernel driver and media library readings"
+   "grade": "established"
   },
   {
    "unit": "dm2",
@@ -3485,8 +3484,7 @@
    "name": "FPGA_INFO_RECORD_SIZE",
    "value": 28,
    "count": 1,
-   "grade": "established",
-   "from": "shipped kernel driver and media library readings"
+   "grade": "established"
   },
   {
    "unit": "dm2",

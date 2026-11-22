@@ -15,7 +15,7 @@
     <value name="failure" value="2" grade="established"/>
     <value name="failure_or_abort" value="3" grade="established"/>
   </enum>
-  <struct name="BSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+  <struct name="BSR" size="1" grade="established">
     <doc>Block status register, one per block, read through the extended-status mode at the BSR word address of that block. Bits 1 and 0 are reserved.</doc>
     <field name="block_ready" start="7" size="1" type="uint" grade="established"/>
     <field name="lock_cleared" start="6" size="1" type="uint" grade="established"/>
@@ -23,7 +23,7 @@
     <field name="queue_full" start="3" size="1" type="uint" grade="established"/>
     <field name="low_vpp" start="2" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="CSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+  <struct name="CSR" size="1" grade="established">
     <doc>Compatible status register, read after 0x70. Bit 7 is ready when set and busy when clear. Bits 2 to 0 are reserved.</doc>
     <field name="ready" start="7" size="1" type="uint" grade="established"/>
     <field name="erase_suspended" start="6" size="1" type="uint" grade="established"/>
@@ -31,7 +31,7 @@
     <field name="program_error" start="4" size="1" type="uint" grade="established"/>
     <field name="low_vpp" start="3" size="1" type="uint" grade="established"/>
   </struct>
-  <struct name="GSR" size="1" grade="established" from="Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)">
+  <struct name="GSR" size="1" grade="established">
     <doc>Global status register, read through the extended-status mode at the GSR word address of a block. Only the low byte is defined. DQ8 to DQ15 are not used for status register reads (printed p. 4).</doc>
     <field name="write_ready" start="7" size="1" type="uint" grade="established"/>
     <field name="suspended" start="6" size="1" type="uint" grade="established"/>

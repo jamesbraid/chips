@@ -13,57 +13,57 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `pi_cpu_protect` | 0x0 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_prot_override` | 0x8 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_io_protect` | 0x10 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cpu_protect` | 0x0 | rw | 64 |  |  | 0xffffffffffffffff (established) | established |  |
+| `pi_prot_override` | 0x8 | w | 64 |  |  | unknown | established |  |
+| `pi_io_protect` | 0x10 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `pi_calias_size` | 0x28 | rw | 64 |  |  | 0xf (established) | established | census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed) |
-| `pi_reply_level` | 0x60 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nmi_b` | 0x78 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_softreset` | 0x80 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_reply_level` | 0x60 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_nmi_b` | 0x78 | w | 64 |  |  | unknown | established |  |
+| `pi_softreset` | 0x80 | w | 64 |  |  | unknown | established |  |
 | `pi_int_pend_mod` | 0x90 | w | 64 |  |  | unknown | established | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) |
-| `pi_cc_pend_set_a` | 0xc8 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_pend_set_b` | 0xd0 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_cc_mask` | 0xe8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_cc_pend_set_a` | 0xc8 | w | 64 |  |  | unknown | established |  |
+| `pi_cc_pend_set_b` | 0xd0 | w | 64 |  |  | unknown | established |  |
+| `pi_cc_pend_clr_a` | 0xd8 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_cc_pend_clr_b` | 0xe0 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_cc_mask` | 0xe8 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `pi_rt_local_ctrl` | 0x160 | rw | 64 |  |  | unknown | established | census: 6 sites, 1 routines |
-| `pi_rt_filter_ctrl` | 0x168 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_write_data` | 0x200 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_read_data` | 0x208 | r | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_count_targ` | 0x210 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_ready` | 0x218 | r | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_shift_load` | 0x220 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_shift_unload` | 0x228 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bist_enter_run` | 0x230 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_page_a` | 0x300 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_bias_a` | 0x310 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_page_b` | 0x328 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_bias_b` | 0x338 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_rt_filter_ctrl` | 0x168 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_bist_write_data` | 0x200 | w | 64 |  |  | unknown | established |  |
+| `pi_bist_read_data` | 0x208 | r | 64 |  |  | 0x0 (established) | established |  |
+| `pi_bist_count_targ` | 0x210 | w | 64 |  |  | unknown | established |  |
+| `pi_bist_ready` | 0x218 | r | 64 |  |  | 0x0 (established) | established |  |
+| `pi_bist_shift_load` | 0x220 | w | 64 |  |  | unknown | established |  |
+| `pi_bist_shift_unload` | 0x228 | w | 64 |  |  | unknown | established |  |
+| `pi_bist_enter_run` | 0x230 | w | 64 |  |  | unknown | established |  |
+| `pi_gfx_page_a` | 0x300 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_credit_cntr_a` | 0x308 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_bias_a` | 0x310 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_int_cntr_a` | 0x318 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_page_b` | 0x328 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_credit_cntr_b` | 0x330 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_bias_b` | 0x338 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_gfx_int_cntr_b` | 0x340 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `pi_err_int_pend` | 0x400 | rw | 64 |  |  | unknown | established | census: 13 sites, 5 routines (rw); census: 3 sites, 2 routines (rw, indexed) |
 | `pi_err_int_mask_a` | 0x408 | rw | 64 |  |  | 0x0 (established) | established | census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed) |
 | `pi_err_int_mask_b` | 0x410 | rw | 64 |  |  | 0x0 (established) | established | census: 5 sites, 2 routines (rw); census: 1 sites, 1 routines (w, indexed) |
 | `pi_err_status0_a` | 0x430 | r | 64 |  |  | unknown | established | census: 5 sites, 4 routines |
-| `pi_err_status0_a_rclr` | 0x438 | r | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_err_status0_a_rclr` | 0x438 | r | 64 |  |  | unknown | established |  |
 | `pi_err_status1_a` | 0x440 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
 | `pi_err_status1_a_rclr` | 0x448 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
 | `pi_err_status0_b` | 0x450 | r | 64 |  |  | unknown | established | census: 5 sites, 4 routines |
-| `pi_err_status0_b_rclr` | 0x458 | r | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_err_status0_b_rclr` | 0x458 | r | 64 |  |  | unknown | established |  |
 | `pi_err_status1_b` | 0x460 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
 | `pi_err_status1_b_rclr` | 0x468 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
-| `pi_spool_cmp_a` | 0x470 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_spool_cmp_b` | 0x478 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_crb_timeout_a` | 0x480 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_crb_timeout_b` | 0x488 | w | 64 |  |  | unknown | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_sysad_errchk_en` | 0x490 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bad_check_bit_a` | 0x498 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cnt_a` | 0x4a8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cnt_b` | 0x4b0 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
-| `pi_nack_cmp` | 0x4b8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) |
+| `pi_spool_cmp_a` | 0x470 | rw | 64 |  |  | unknown | established |  |
+| `pi_spool_cmp_b` | 0x478 | rw | 64 |  |  | unknown | established |  |
+| `pi_crb_timeout_a` | 0x480 | w | 64 |  |  | unknown | established |  |
+| `pi_crb_timeout_b` | 0x488 | w | 64 |  |  | unknown | established |  |
+| `pi_sysad_errchk_en` | 0x490 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_bad_check_bit_a` | 0x498 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_bad_check_bit_b` | 0x4a0 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_nack_cnt_a` | 0x4a8 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_nack_cnt_b` | 0x4b0 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `pi_nack_cmp` | 0x4b8 | rw | 64 |  |  | 0x0 (established) | established |  |
 
 ### Register `pi_cpu_protect`
 
@@ -101,8 +101,8 @@ Layout of the interrupt pending modify register, pi_int_pend_mod, as Linux write
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 8 | `set` | inferred |  | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) | set the level (1) or clear it (0); the role is read from how Linux builds the word |
-| 6:0 | `level` | inferred |  | census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed) | interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout |
+| 8 | `set` | inferred |  |  | set the level (1) or clear it (0); the role is read from how Linux builds the word |
+| 6:0 | `level` | inferred |  |  | interrupt level number; Linux ORs the level into the word unmasked. The 0 to 127 range is inferred from the width of the sibling Bedrock layout |
 
 ### Register `pi_cc_pend_set_a`
 
@@ -174,7 +174,7 @@ Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header nam
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 40 | `enable` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Graphics page enable, bit 40. The header names it PI_GFX_PAGE_ENABLE for both processor pages. |
+| 40 | `enable` | established |  |  | Graphics page enable, bit 40. The header names it PI_GFX_PAGE_ENABLE for both processor pages. |
 
 ### Register `pi_gfx_credit_cntr_a`
 
@@ -194,7 +194,7 @@ Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's p
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 40 | `enable` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Graphics page enable, bit 40, the same bit as the processor A page. |
+| 40 | `enable` | established |  |  | Graphics page enable, bit 40, the same bit as the processor A page. |
 
 ### Register `pi_gfx_credit_cntr_b`
 
@@ -426,12 +426,12 @@ Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Si
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 5 | `qual` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Check the data-quality signal, named PI_SYSAD_ERRCHK_QUAL in the header. |
-| 4 | `state` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Check SysState parity, named PI_SYSAD_ERRCHK_STATE in the header. |
-| 3 | `cmdp` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Check SysCmd parity, named PI_SYSAD_ERRCHK_CMDP in the header. |
-| 2 | `sadp` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Check SysAD parity, named PI_SYSAD_ERRCHK_SADP in the header. |
-| 1 | `qualgen` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Generate the data-quality signal, named PI_SYSAD_ERRCHK_QUALGEN in the header. |
-| 0 | `eccgen` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Generate error-correction bits, named PI_SYSAD_ERRCHK_ECCGEN in the header. |
+| 5 | `qual` | established |  |  | Check the data-quality signal, named PI_SYSAD_ERRCHK_QUAL in the header. |
+| 4 | `state` | established |  |  | Check SysState parity, named PI_SYSAD_ERRCHK_STATE in the header. |
+| 3 | `cmdp` | established |  |  | Check SysCmd parity, named PI_SYSAD_ERRCHK_CMDP in the header. |
+| 2 | `sadp` | established |  |  | Check SysAD parity, named PI_SYSAD_ERRCHK_SADP in the header. |
+| 1 | `qualgen` | established |  |  | Generate the data-quality signal, named PI_SYSAD_ERRCHK_QUALGEN in the header. |
+| 0 | `eccgen` | established |  |  | Generate error-correction bits, named PI_SYSAD_ERRCHK_ECCGEN in the header. |
 
 ### Register `pi_bad_check_bit_a`
 
@@ -447,8 +447,8 @@ Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 20 | `enable` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Count enable, bit 20, named PI_NACK_CNT_EN in the header. |
-| 19:0 | `count` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Negative-acknowledge count, bits 19:0, named PI_NACK_CNT_MASK in the header. |
+| 20 | `enable` | established |  |  | Count enable, bit 20, named PI_NACK_CNT_EN in the header. |
+| 19:0 | `count` | established |  |  | Negative-acknowledge count, bits 19:0, named PI_NACK_CNT_MASK in the header. |
 
 ### Register `pi_nack_cnt_b`
 
@@ -456,8 +456,8 @@ Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 20 | `enable` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Count enable, bit 20, the same bit as the processor A counter. |
-| 19:0 | `count` | established |  | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Negative-acknowledge count, bits 19:0. |
+| 20 | `enable` | established |  |  | Count enable, bit 20, the same bit as the processor A counter. |
+| 19:0 | `count` | established |  |  | Negative-acknowledge count, bits 19:0. |
 
 ### Register `pi_nack_cmp`
 
@@ -521,8 +521,8 @@ Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives 
 | `PI_ERR_WR_PWERR` | 0x1 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 1 in the error status of a write request: partial write error. |
 | `PI_ERR_WR_TERR` | 0x3 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 3 in the error status of a write request: timeout. |
 | `PI_ERR_WR_WERR` | 0x0 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Error type 0 in the error status of a write request: write error. |
-| `PI_LOCAL_WINDOW_BASE` | 0x1000000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical base of the processor's own hub window; no node shift. |
+| `PI_LOCAL_WINDOW_BASE` | 0x1000000 | established |  | Physical base of the processor's own hub window; no node shift. |
 | `PI_MIN_STACK_SIZE` | 0x1000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Smallest error stack, bytes. The header's size macro gives the stack as this value shifted left by the size field minus one, or zero when the field is zero. |
-| `PI_NODE_SHIFT` | 0x20 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration. |
-| `PI_NODE_WINDOW_BASE` | 0x1800000 | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Physical base of a named node's window. |
+| `PI_NODE_SHIFT` | 0x20 | established |  | Physical node number shift of the Origin 200/2000 hub in the 32-bit-node-number configuration. |
+| `PI_NODE_WINDOW_BASE` | 0x1800000 | established |  | Physical base of a named node's window. |
 | `PI_STACK_SIZE_SHIFT` | 0xc | established | public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) | Shift of the 4 KiB unit of the error stack size, from the header. |

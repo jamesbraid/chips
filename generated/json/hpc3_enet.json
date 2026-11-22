@@ -622,8 +622,7 @@
    "name": "RX_DESC_CTL.own",
    "hi": 14,
    "lo": 14,
-   "grade": "inferred",
-   "from": "HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14"
+   "grade": "inferred"
   },
   {
    "unit": "hpc3_enet",

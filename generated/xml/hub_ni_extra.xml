@@ -84,16 +84,16 @@
     <field name="address" start="3" size="29" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NVS_* masks and shifts"/>
     <field name="pio_type" start="0" size="3" type="ni_pio_type" grade="established" from="public Linux SN0 Hub network interface header: NVS_* masks and shifts"/>
   </struct>
-  <struct name="NI_RETURN_VECTOR" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600308" access="rw" reset="unknown">
+  <struct name="NI_RETURN_VECTOR" size="8" grade="established" register="yes" offset="0x600308" access="rw" reset="unknown">
     <doc>Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="NI_VECTOR_CLEAR" size="8" grade="established" from="census: 3 sites, 3 routines" register="yes" offset="0x600380" access="r" reset="unknown">
     <doc>The header describes the register as 'Vector PIO read &amp; clear status': a read clears, so the cor mask is all bits. Established by the header's comment, the same evidence the processor clear-on-read registers cite.</doc>
   </struct>
-  <struct name="NI_IO_PROTECT" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600400" access="rw" reset="0xffffffffffffffff">
+  <struct name="NI_IO_PROTECT" size="8" grade="established" register="yes" offset="0x600400" access="rw" reset="0xffffffffffffffff">
     <doc>PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="NI_IO_PROT_OVRRD" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600408" access="w" reset="unknown">
+  <struct name="NI_IO_PROT_OVRRD" size="8" grade="established" register="yes" offset="0x600408" access="w" reset="unknown">
     <doc>PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="NI_AGE_CPU0_MEMORY" size="8" grade="established" from="census: 9 sites, 3 routines" register="yes" offset="0x600500" access="rw" reset="0x0">
@@ -102,7 +102,7 @@
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_CPU0_PIO" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600508" access="rw" reset="0x0">
+  <struct name="NI_AGE_CPU0_PIO" size="8" grade="established" register="yes" offset="0x600508" access="rw" reset="0x0">
     <doc>CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
@@ -114,37 +114,37 @@
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_CPU1_PIO" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600518" access="rw" reset="0x0">
+  <struct name="NI_AGE_CPU1_PIO" size="8" grade="established" register="yes" offset="0x600518" access="rw" reset="0x0">
     <doc>CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_GBR_MEMORY" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600520" access="rw" reset="0x0">
+  <struct name="NI_AGE_GBR_MEMORY" size="8" grade="established" register="yes" offset="0x600520" access="rw" reset="0x0">
     <doc>Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_GBR_PIO" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600528" access="rw" reset="0x0">
+  <struct name="NI_AGE_GBR_PIO" size="8" grade="established" register="yes" offset="0x600528" access="rw" reset="0x0">
     <doc>Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_IO_MEMORY" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600530" access="rw" reset="0x0">
+  <struct name="NI_AGE_IO_MEMORY" size="8" grade="established" register="yes" offset="0x600530" access="rw" reset="0x0">
     <doc>I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_AGE_IO_PIO" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x600538" access="rw" reset="0x0">
+  <struct name="NI_AGE_IO_PIO" size="8" grade="established" register="yes" offset="0x600538" access="rw" reset="0x0">
     <doc>I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.</doc>
     <field name="vchannel" start="10" size="2" type="ni_vchannel" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="congestion" start="8" size="2" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
     <field name="age" start="0" size="8" type="uint" grade="established" from="public Linux SN0 Hub network interface header: NAGE_* masks, shifts and channel names"/>
   </struct>
-  <struct name="NI_PORT_PARMS" size="8" grade="established" from="public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants)" register="yes" offset="0x608000" access="rw" reset="0x1bf0">
+  <struct name="NI_PORT_PARMS" size="8" grade="established" register="yes" offset="0x608000" access="rw" reset="0x1bf0">
     <doc>Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header. The fields are graded on their own. The IRIX register table confirms the access.</doc>
     <field name="null_timeout" start="10" size="6" type="uint" grade="established"/>
     <field name="max_burst" start="0" size="10" type="uint" grade="established"/>

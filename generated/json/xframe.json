@@ -38,8 +38,7 @@
    "name": "DMA_CHANNELS",
    "value": 16,
    "count": 1,
-   "grade": "established",
-   "from": "Linux s2io driver"
+   "grade": "established"
   },
   {
    "unit": "xframe",

@@ -185,7 +185,7 @@ Word 1 of a receive descriptor, the count and flags that HPC3 writes back when a
 | 31 | `eox` | established |  | HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14 | End of chain. The channel stops after this descriptor. |
 | 30 | `eoxp` | established |  | HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14 | Must be set on every receive descriptor, which carries one frame. |
 | 29 | `xie` | established |  | HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14 | Interrupt after this descriptor. Ignored unless end-of-packet is also set. |
-| 14 | `own` | inferred |  | HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14 | Reserved in the specification and used by every driver as a receive ownership flag. HPC3 does not read it: the specification gives no ownership check. The write-back of the count clears it. |
+| 14 | `own` | inferred |  |  | Reserved in the specification and used by every driver as a receive ownership flag. HPC3 does not read it: the specification gives no ownership check. The write-back of the count clears it. |
 | 13:0 | `count` | established |  | HPC3 Chip Specification, revision 1.4, pp. 6-7 and 14 | Buffer size when armed. After a frame, HPC3 writes back the bytes left: the frame length is the armed size, minus the bytes left, minus 3. |
 
 ### Word `TX_DESC_CTL`

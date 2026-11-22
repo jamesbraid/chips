@@ -125,8 +125,7 @@
    "stride": 8,
    "space": null,
    "reset": 16401,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -216,8 +215,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -475,8 +473,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -566,8 +563,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -580,8 +576,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -594,8 +589,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -861,8 +855,7 @@
    "stride": 8,
    "space": null,
    "reset": 67108863,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -884,8 +877,7 @@
    "stride": 8,
    "space": null,
    "reset": 273,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -893,8 +885,7 @@
    "name": "misc_error_mask.clear_precise",
    "hi": 12,
    "lo": 12,
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_ii",
@@ -902,8 +893,7 @@
    "name": "misc_error_mask.bte_1_enable",
    "hi": 8,
    "lo": 8,
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_ii",
@@ -911,8 +901,7 @@
    "name": "misc_error_mask.bte_0_enable",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_ii",
@@ -920,8 +909,7 @@
    "name": "misc_error_mask.widget_0_enable",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_ii",
@@ -934,8 +922,7 @@
    "stride": 8,
    "space": null,
    "reset": 1152921500378988543,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1851,8 +1838,7 @@
    "stride": 8,
    "space": null,
    "reset": 255,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1874,8 +1860,7 @@
    "stride": 8,
    "space": null,
    "reset": 16777215,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1897,8 +1882,7 @@
    "stride": 32,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1911,8 +1895,7 @@
    "stride": 32,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1925,8 +1908,7 @@
    "stride": 32,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -1939,8 +1921,7 @@
    "stride": 32,
    "space": null,
    "reset": 0,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",
@@ -2651,8 +2632,7 @@
    "name": "BTE_REGISTER_SIZE",
    "value": 48,
    "count": 1,
-   "grade": "inferred",
-   "from": "Linux 2.5.40 SN1 register headers: names, offsets and field layouts"
+   "grade": "inferred"
   },
   {
    "unit": "bedrock_ii",

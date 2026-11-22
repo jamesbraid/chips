@@ -27,18 +27,18 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `cnfgb` | 0x1 | r | 8 |  | ecpcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `ecr` | 0x2 | rw | 8 |  | ecpcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `cnfga` | 0x0 | r | 8 |  | ecpcs_cfg | 0x1f | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `pp_fifo` | 0x0 | rw | 8 |  | ecpcs_cfifo | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `ecp_dfifo` | 0x0 | rw | 8 |  | ecpcs_ecp | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `test_fifo` | 0x0 | rw | 8 |  | ecpcs_tfifo | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `data` | 0x0 | rw | 8 |  | ppcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `dsr` | 0x1 | r | 8 |  | ppcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `dcr` | 0x2 | rw | 8 |  | ppcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `epp_addr` | 0x3 | rw | 8 |  | ppcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `epp_data` | 0x4 | rw | 8 | 4 | ppcs | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
-| `ecp_afifo` | 0x0 | w | 8 |  | ppcs_ecp | unknown | established | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) |
+| `cnfgb` | 0x1 | r | 8 |  | ecpcs | unknown | established |  |
+| `ecr` | 0x2 | rw | 8 |  | ecpcs | unknown | established |  |
+| `cnfga` | 0x0 | r | 8 |  | ecpcs_cfg | 0x1f | established |  |
+| `pp_fifo` | 0x0 | rw | 8 |  | ecpcs_cfifo | unknown | established |  |
+| `ecp_dfifo` | 0x0 | rw | 8 |  | ecpcs_ecp | unknown | established |  |
+| `test_fifo` | 0x0 | rw | 8 |  | ecpcs_tfifo | unknown | established |  |
+| `data` | 0x0 | rw | 8 |  | ppcs | unknown | established |  |
+| `dsr` | 0x1 | r | 8 |  | ppcs | unknown | established |  |
+| `dcr` | 0x2 | rw | 8 |  | ppcs | unknown | established |  |
+| `epp_addr` | 0x3 | rw | 8 |  | ppcs | unknown | established |  |
+| `epp_data` | 0x4 | rw | 8 | 4 | ppcs | unknown | established |  |
+| `ecp_afifo` | 0x0 | w | 8 |  | ppcs_ecp | unknown | established |  |
 
 ### Register `cnfgb`
 
@@ -46,10 +46,10 @@ Configuration register B, read only. Its IRQ-line sample bit depends on the boar
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7 | `compression` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Compression. Reads zero: compression is unsupported. |
-| 6 | `irq_line_sample` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Samples the IRQ line. The sampled value depends on the board. |
-| 5:3 | `irq_select` | established | cnfgb_irq_select (irq7=1) | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Reports the IRQ selection. Reads 001, which the datasheet names IRQ7. |
-| 2:0 | `dma_select` | established | cnfgb_dma_select (dma3=3) | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Reports the DMA channel selection. Reads 011, which the datasheet names DMA channel 3. |
+| 7 | `compression` | established |  |  | Compression. Reads zero: compression is unsupported. |
+| 6 | `irq_line_sample` | established |  |  | Samples the IRQ line. The sampled value depends on the board. |
+| 5:3 | `irq_select` | established | cnfgb_irq_select (irq7=1) |  | Reports the IRQ selection. Reads 001, which the datasheet names IRQ7. |
+| 2:0 | `dma_select` | established | cnfgb_dma_select (dma3=3) |  | Reports the DMA channel selection. Reads 011, which the datasheet names DMA channel 3. |
 
 ### Register `ecr`
 
@@ -57,12 +57,12 @@ Extended control register. Its top three bits select the mode, which also decide
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7:5 | `mode` | established | ecr_mode (standard=0, bidirectional=1, parallel_fifo=2, ecp=3, epp=4, reserved=5, test_fifo=6, configuration=7) | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Mode select. The value decides which register the chip-select offsets 0 and 1 answer as. |
-| 4 | `ecp_fault_irq_disable` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | In ECP mode, zero enables the interrupt on a falling FAULT edge. |
-| 3 | `dma_enable` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Enables DMA. |
-| 2 | `service_intr_disable` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | One disables DMA and all service interrupts. |
-| 1 | `fifo_full` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | FIFO full. Read only. |
-| 0 | `fifo_empty` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | FIFO empty. Read only. |
+| 7:5 | `mode` | established | ecr_mode (standard=0, bidirectional=1, parallel_fifo=2, ecp=3, epp=4, reserved=5, test_fifo=6, configuration=7) |  | Mode select. The value decides which register the chip-select offsets 0 and 1 answer as. |
+| 4 | `ecp_fault_irq_disable` | established |  |  | In ECP mode, zero enables the interrupt on a falling FAULT edge. |
+| 3 | `dma_enable` | established |  |  | Enables DMA. |
+| 2 | `service_intr_disable` | established |  |  | One disables DMA and all service interrupts. |
+| 1 | `fifo_full` | established |  |  | FIFO full. Read only. |
+| 0 | `fifo_empty` | established |  |  | FIFO empty. Read only. |
 
 ### Register `cnfga`
 
@@ -70,8 +70,8 @@ Configuration register A, read only. It reads the constant with the implementati
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7:4 | `impl_id` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Implementation ID. Reads as one. |
-| 3:0 | `reserved_low` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Reserved. Reads as ones. |
+| 7:4 | `impl_id` | established |  |  | Implementation ID. Reads as one. |
+| 3:0 | `reserved_low` | established |  |  | Reserved. Reads as ones. |
 
 ### Register `pp_fifo`
 
@@ -95,13 +95,13 @@ Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising A
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 7 | `busy` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Inverse of the BUSY input. |
-| 6 | `ack` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The ACK input. |
-| 5 | `perror` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The PERROR input. |
-| 4 | `select_in` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The SELECT input. |
-| 3 | `fault` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | The FAULT input. |
-| 2 | `print_intr` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Print interrupt. Cleared by the rising edge of ACK, set by a read of this register. |
-| 0 | `timeout` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Set when the 10 microsecond EPP timeout occurs, if enabled. Cleared by any write to this register. |
+| 7 | `busy` | established |  |  | Inverse of the BUSY input. |
+| 6 | `ack` | established |  |  | The ACK input. |
+| 5 | `perror` | established |  |  | The PERROR input. |
+| 4 | `select_in` | established |  |  | The SELECT input. |
+| 3 | `fault` | established |  |  | The FAULT input. |
+| 2 | `print_intr` | established |  |  | Print interrupt. Cleared by the rising edge of ACK, set by a read of this register. |
+| 0 | `timeout` | established |  |  | Set when the 10 microsecond EPP timeout occurs, if enabled. Cleared by any write to this register. |
 
 ### Register `dcr`
 
@@ -109,12 +109,12 @@ Parallel control register.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 5 | `direction` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Direction. Puts the data lines in high impedance (reverse) when set. It has no effect in standard mode or in the parallel FIFO mode. |
-| 4 | `irq_on_ack` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Enables an interrupt on a rising ACK. |
-| 3 | `select_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the SELECT control line. |
-| 2 | `init_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the INIT control line. Active low: 0 drives INIT active, 1 inactive. |
-| 1 | `autofd_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the AUTOFD control line. |
-| 0 | `strobe_ctl` | established |  | TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) | Drives the STROBE control line. |
+| 5 | `direction` | established |  |  | Direction. Puts the data lines in high impedance (reverse) when set. It has no effect in standard mode or in the parallel FIFO mode. |
+| 4 | `irq_on_ack` | established |  |  | Enables an interrupt on a rising ACK. |
+| 3 | `select_ctl` | established |  |  | Drives the SELECT control line. |
+| 2 | `init_ctl` | established |  |  | Drives the INIT control line. Active low: 0 drives INIT active, 1 inactive. |
+| 1 | `autofd_ctl` | established |  |  | Drives the AUTOFD control line. |
+| 0 | `strobe_ctl` | established |  |  | Drives the STROBE control line. |
 
 ### Register `epp_addr`
 

@@ -20,8 +20,7 @@
    "name": "BUS_RESET_DELAY_DEFAULT_S",
    "value": 5,
    "count": 1,
-   "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "grade": "established"
   },
   {
    "unit": "isp12160",
@@ -29,8 +28,7 @@
    "name": "BUS_RESET_DELAY_MAX_S",
    "value": 15,
    "count": 1,
-   "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "grade": "established"
   },
   {
    "unit": "isp12160",
@@ -119,8 +117,7 @@
    "name": "PCI_DEVICE_ID",
    "value": 4630,
    "count": 1,
-   "grade": "established",
-   "from": "QLogic ISP12160A data sheet (1999); QLogic QLA12160 hardware installation guide (2001); IRIX 6.5 Bedrock-class controller object; IRIX 6.5 Octane SCSI driver object; Linux qla1280, NetBSD isp and OpenBSD qlw drivers (pins in references/documents/INDEX.md); stock PROM 6.210 SCSI diagnostic"
+   "grade": "established"
   }
  ]
 }

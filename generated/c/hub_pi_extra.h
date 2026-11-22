@@ -29,19 +29,19 @@
 /*
  * CPU protection register, named PI_CPU_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.
  */
-/* pi_cpu_protect: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cpu_protect: rw64, reset 0xffffffffffffffff */
 #define HUB_PI_CPU_PROTECT_OFFSET                    0x0u /* established */
 
 /*
  * Protection override register, named PI_PROT_OVRRD in the header as the way to clear a CPU protection bit. The header gives neither an unlock value nor a behaviour, so none is imported. The IRIX register table confirms the access.
  */
-/* pi_prot_override: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_prot_override: w64, reset unknown */
 #define HUB_PI_PROT_OVERRIDE_OFFSET                  0x8u /* established */
 
 /*
  * Interrupt pending protection register, named PI_IO_PROTECT in the header. The header gives no fields. The IRIX register table confirms the access.
  */
-/* pi_io_protect: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_io_protect: rw64, reset 0x0 */
 #define HUB_PI_IO_PROTECT_OFFSET                     0x10u /* established */
 
 /* pi_calias_size: rw64, reset 0xf; census: 3 sites, 3 routines (rw); census: 2 sites, 2 routines (rw, indexed) */
@@ -53,19 +53,19 @@
 /*
  * Reply level register, named PI_REPLY_LEVEL in the header. The header gives no fields. The IRIX register table confirms the access.
  */
-/* pi_reply_level: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_reply_level: rw64, reset 0x0 */
 #define HUB_PI_REPLY_LEVEL_OFFSET                    0x60u /* established */
 
 /*
  * Non-maskable interrupt to processor B, named PI_NMI_B in the header and paired with the processor A register at the same stride. The IRIX register table confirms the access.
  */
-/* pi_nmi_b: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nmi_b: w64, reset unknown */
 #define HUB_PI_NMI_B_OFFSET                          0x78u /* established */
 
 /*
  * Soft reset, named PI_SOFTRESET in the header with the comment that it resets both processors. The header gives no value and no fields, so the data written is not imported. The IRIX register table confirms the access.
  */
-/* pi_softreset: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_softreset: w64, reset unknown */
 #define HUB_PI_SOFTRESET_OFFSET                      0x80u /* established */
 
 /*
@@ -83,31 +83,31 @@
 /*
  * Cross-call interrupt pending set for processor A, named PI_CC_PEND_SET_A in the header. The IRIX register table confirms the access.
  */
-/* pi_cc_pend_set_a: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_set_a: w64, reset unknown */
 #define HUB_PI_CC_PEND_SET_A_OFFSET                  0xc8u /* established */
 
 /*
  * Cross-call interrupt pending set for processor B, named PI_CC_PEND_SET_B in the header. The header's pairing rule puts it eight bytes above the processor A set. The IRIX register table confirms the access.
  */
-/* pi_cc_pend_set_b: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_set_b: w64, reset unknown */
 #define HUB_PI_CC_PEND_SET_B_OFFSET                  0xd0u /* established */
 
 /*
  * Cross-call interrupt pending clear for processor A, named PI_CC_PEND_CLR_A in the header. The IRIX register table confirms the access.
  */
-/* pi_cc_pend_clr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_clr_a: rw64, reset 0x0 */
 #define HUB_PI_CC_PEND_CLR_A_OFFSET                  0xd8u /* established */
 
 /*
  * Cross-call interrupt pending clear for processor B, named PI_CC_PEND_CLR_B in the header. The IRIX register table confirms the access.
  */
-/* pi_cc_pend_clr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_pend_clr_b: rw64, reset 0x0 */
 #define HUB_PI_CC_PEND_CLR_B_OFFSET                  0xe0u /* established */
 
 /*
  * Cross-call interrupt mask, named PI_CC_MASK in the header. The IRIX register table confirms the access.
  */
-/* pi_cc_mask: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_cc_mask: rw64, reset 0x0 */
 #define HUB_PI_CC_MASK_OFFSET                        0xe8u /* established */
 
 /*
@@ -134,55 +134,55 @@
 /*
  * Global clock filter control, named PI_RT_FILTER_CTRL in the header, which gives no fields. It sits next to the real-time clock control register. The IRIX register table confirms the access.
  */
-/* pi_rt_filter_ctrl: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_rt_filter_ctrl: rw64, reset 0x0 */
 #define HUB_PI_RT_FILTER_CTRL_OFFSET                 0x168u /* established */
 
 /*
  * Built-in self-test write data, named PI_BIST_WRITE_DATA in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_write_data: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_write_data: w64, reset unknown */
 #define HUB_PI_BIST_WRITE_DATA_OFFSET                0x200u /* established */
 
 /*
  * Built-in self-test read data, named PI_BIST_READ_DATA in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_read_data: r64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_read_data: r64, reset 0x0 */
 #define HUB_PI_BIST_READ_DATA_OFFSET                 0x208u /* established */
 
 /*
  * Built-in self-test count and target, named PI_BIST_COUNT_TARG in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.
  */
-/* pi_bist_count_targ: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_count_targ: w64, reset unknown */
 #define HUB_PI_BIST_COUNT_TARG_OFFSET                0x210u /* established */
 
 /*
  * Built-in self-test ready indicator, named PI_BIST_READY in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_ready: r64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_ready: r64, reset 0x0 */
 #define HUB_PI_BIST_READY_OFFSET                     0x218u /* established */
 
 /*
  * Built-in self-test control, named PI_BIST_SHIFT_LOAD in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_shift_load: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_shift_load: w64, reset unknown */
 #define HUB_PI_BIST_SHIFT_LOAD_OFFSET                0x220u /* established */
 
 /*
  * Built-in self-test control, named PI_BIST_SHIFT_UNLOAD in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_shift_unload: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_shift_unload: w64, reset unknown */
 #define HUB_PI_BIST_SHIFT_UNLOAD_OFFSET              0x228u /* established */
 
 /*
  * Built-in self-test control, named PI_BIST_ENTER_RUN in the header. The IRIX register table confirms the access.
  */
-/* pi_bist_enter_run: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bist_enter_run: w64, reset unknown */
 #define HUB_PI_BIST_ENTER_RUN_OFFSET                 0x230u /* established */
 
 /*
  * Graphics page for processor A, named PI_GFX_PAGE_A in the header. The header names only the enable bit, which is in the fields below. The IRIX register table confirms the access.
  */
-/* pi_gfx_page_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_page_a: rw64, reset 0x0 */
 #define HUB_PI_GFX_PAGE_A_OFFSET                     0x300u /* established */
 #define HUB_PI_GFX_PAGE_A_ENABLE_SHIFT               40 /* established */
 #define HUB_PI_GFX_PAGE_A_ENABLE_MASK                0x1ull
@@ -191,25 +191,25 @@
 /*
  * Graphics credit counter for processor A, named PI_GFX_CREDIT_CNTR_A in the header. The header gives no field layout and no meaning beyond the name. The IRIX register table confirms the access.
  */
-/* pi_gfx_credit_cntr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_credit_cntr_a: rw64, reset 0x0 */
 #define HUB_PI_GFX_CREDIT_CNTR_A_OFFSET              0x308u /* established */
 
 /*
  * Graphics bias for processor A, named PI_GFX_BIAS_A in the header. The header gives no field layout. The IRIX register table confirms the access.
  */
-/* pi_gfx_bias_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_bias_a: rw64, reset 0x0 */
 #define HUB_PI_GFX_BIAS_A_OFFSET                     0x310u /* established */
 
 /*
  * Graphics interrupt counter for processor A, named PI_GFX_INT_CNTR_A in the header. The header gives no field layout. The IRIX register table confirms the access.
  */
-/* pi_gfx_int_cntr_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_int_cntr_a: rw64, reset 0x0 */
 #define HUB_PI_GFX_INT_CNTR_A_OFFSET                 0x318u /* established */
 
 /*
  * Graphics page for processor B, named PI_GFX_PAGE_B in the header. The header's pairing rule puts it 0x28 above the processor A page. The IRIX register table confirms the access.
  */
-/* pi_gfx_page_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_page_b: rw64, reset 0x0 */
 #define HUB_PI_GFX_PAGE_B_OFFSET                     0x328u /* established */
 #define HUB_PI_GFX_PAGE_B_ENABLE_SHIFT               40 /* established */
 #define HUB_PI_GFX_PAGE_B_ENABLE_MASK                0x1ull
@@ -218,19 +218,19 @@
 /*
  * Graphics credit counter for processor B, named PI_GFX_CREDIT_CNTR_B in the header. The IRIX register table confirms the access.
  */
-/* pi_gfx_credit_cntr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_credit_cntr_b: rw64, reset 0x0 */
 #define HUB_PI_GFX_CREDIT_CNTR_B_OFFSET              0x330u /* established */
 
 /*
  * Graphics bias for processor B, named PI_GFX_BIAS_B in the header. The IRIX register table confirms the access.
  */
-/* pi_gfx_bias_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_bias_b: rw64, reset 0x0 */
 #define HUB_PI_GFX_BIAS_B_OFFSET                     0x338u /* established */
 
 /*
  * Graphics interrupt counter for processor B, named PI_GFX_INT_CNTR_B in the header. The IRIX register table confirms the access.
  */
-/* pi_gfx_int_cntr_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_gfx_int_cntr_b: rw64, reset 0x0 */
 #define HUB_PI_GFX_INT_CNTR_B_OFFSET                 0x340u /* established */
 
 /*
@@ -497,7 +497,7 @@
 /*
  * Clear-on-read alias of error status 0 for processor A, named PI_ERR_STATUS0_A_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
  */
-/* pi_err_status0_a_rclr: r64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_err_status0_a_rclr: r64, reset unknown */
 #define HUB_PI_ERR_STATUS0_A_RCLR_OFFSET             0x438u /* established */
 #define HUB_PI_ERR_STATUS0_A_RCLR_VALID_SHIFT        63 /* established */
 #define HUB_PI_ERR_STATUS0_A_RCLR_VALID_MASK         0x1ull
@@ -599,7 +599,7 @@
 /*
  * Clear-on-read alias of error status 0 for processor B, named PI_ERR_STATUS0_B_RCLR in the header. The header's comment says a read clears the register. The IRIX register table confirms the access. Established by the header's comment 'clear on read' for the whole register: the cor mask is all bits.
  */
-/* pi_err_status0_b_rclr: r64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_err_status0_b_rclr: r64, reset unknown */
 #define HUB_PI_ERR_STATUS0_B_RCLR_OFFSET             0x458u /* established */
 #define HUB_PI_ERR_STATUS0_B_RCLR_VALID_SHIFT        63 /* established */
 #define HUB_PI_ERR_STATUS0_B_RCLR_VALID_MASK         0x1ull
@@ -677,31 +677,31 @@
 /*
  * Error spool compare for processor A, named PI_SPOOL_CMP_A in the header. The header gives no field layout. The IRIX register table confirms the access.
  */
-/* pi_spool_cmp_a: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_spool_cmp_a: rw64, reset unknown */
 #define HUB_PI_SPOOL_CMP_A_OFFSET                    0x470u /* established */
 
 /*
  * Error spool compare for processor B, named PI_SPOOL_CMP_B in the header. The IRIX register table confirms the access.
  */
-/* pi_spool_cmp_b: rw64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_spool_cmp_b: rw64, reset unknown */
 #define HUB_PI_SPOOL_CMP_B_OFFSET                    0x478u /* established */
 
 /*
  * Timed-out CRB entries for processor A, named PI_CRB_TIMEOUT_A in the header. The header gives no field layout. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.
  */
-/* pi_crb_timeout_a: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_crb_timeout_a: w64, reset unknown */
 #define HUB_PI_CRB_TIMEOUT_A_OFFSET                  0x480u /* established */
 
 /*
  * Timed-out CRB entries for processor B, named PI_CRB_TIMEOUT_B in the header. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.
  */
-/* pi_crb_timeout_b: w64, reset unknown; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_crb_timeout_b: w64, reset unknown */
 #define HUB_PI_CRB_TIMEOUT_B_OFFSET                  0x488u /* established */
 
 /*
  * Enables for the processor bus checks, named PI_SYSAD_ERRCHK_EN in the header. Six enable bits, each named in the header's constants. The IRIX register table confirms the access.
  */
-/* pi_sysad_errchk_en: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_sysad_errchk_en: rw64, reset 0x0 */
 #define HUB_PI_SYSAD_ERRCHK_EN_OFFSET                0x490u /* established */
 #define HUB_PI_SYSAD_ERRCHK_EN_QUAL_SHIFT            5 /* established */
 #define HUB_PI_SYSAD_ERRCHK_EN_QUAL_MASK             0x1ull
@@ -725,19 +725,19 @@
 /*
  * Forced SysAD check-bit error for processor A, named PI_BAD_CHECK_BIT_A in the header and described there as diagnostic. The header gives no field layout. The IRIX register table confirms the access.
  */
-/* pi_bad_check_bit_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bad_check_bit_a: rw64, reset 0x0 */
 #define HUB_PI_BAD_CHECK_BIT_A_OFFSET                0x498u /* established */
 
 /*
  * Forced SysAD check-bit error for processor B, named PI_BAD_CHECK_BIT_B in the header. The IRIX register table confirms the access.
  */
-/* pi_bad_check_bit_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_bad_check_bit_b: rw64, reset 0x0 */
 #define HUB_PI_BAD_CHECK_BIT_B_OFFSET                0x4a0u /* established */
 
 /*
  * Consecutive negative-acknowledge counter for processor A, named PI_NACK_CNT_A in the header. The IRIX register table confirms the access.
  */
-/* pi_nack_cnt_a: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cnt_a: rw64, reset 0x0 */
 #define HUB_PI_NACK_CNT_A_OFFSET                     0x4a8u /* established */
 #define HUB_PI_NACK_CNT_A_ENABLE_SHIFT               20 /* established */
 #define HUB_PI_NACK_CNT_A_ENABLE_MASK                0x1ull
@@ -749,7 +749,7 @@
 /*
  * Consecutive negative-acknowledge counter for processor B, named PI_NACK_CNT_B in the header. The IRIX register table confirms the access.
  */
-/* pi_nack_cnt_b: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cnt_b: rw64, reset 0x0 */
 #define HUB_PI_NACK_CNT_B_OFFSET                     0x4b0u /* established */
 #define HUB_PI_NACK_CNT_B_ENABLE_SHIFT               20 /* established */
 #define HUB_PI_NACK_CNT_B_ENABLE_MASK                0x1ull
@@ -761,7 +761,7 @@
 /*
  * Negative-acknowledge compare, named PI_NACK_CMP in the header. The header gives a maximum of 0x0fffff for the count, so the compare is twenty bits wide. The IRIX register table confirms the access.
  */
-/* pi_nack_cmp: rw64, reset 0x0; public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts) */
+/* pi_nack_cmp: rw64, reset 0x0 */
 #define HUB_PI_NACK_CMP_OFFSET                       0x4b8u /* established */
 
 #define HUB_IP_ERROR                                 0x4000u /* established */

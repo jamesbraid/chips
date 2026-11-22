@@ -175,7 +175,7 @@
 /*
  * Return vector of a vector operation, named NI_RETURN_VECTOR in the header. The header gives no layout. The IRIX register table confirms the access.
  */
-/* ni_return_vector: rw64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_return_vector: rw64, reset unknown */
 #define HUB_NI_RETURN_VECTOR_OFFSET                  0x600308u /* established */
 
 /*
@@ -187,13 +187,13 @@
 /*
  * PIO protection bits, one per region, named NI_IO_PROTECT in the header. Offset and name are from the header. The header gives neither a field layout nor a reset. The IRIX register table confirms the access.
  */
-/* ni_io_protect: rw64, reset 0xffffffffffffffff; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_io_protect: rw64, reset 0xffffffffffffffff */
 #define HUB_NI_IO_PROTECT_OFFSET                     0x600400u /* established */
 
 /*
  * PIO protection override, named NI_IO_PROT_OVRRD in the header. The header gives no unlock value or behaviour, so none is imported. The IRIX register table confirms the access.
  */
-/* ni_io_prot_ovrrd: w64, reset unknown; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_io_prot_ovrrd: w64, reset unknown */
 #define HUB_NI_IO_PROT_OVRRD_OFFSET                  0x600408u /* established */
 
 /*
@@ -214,7 +214,7 @@
 /*
  * CPU 0 PIO age control, named NI_AGE_CPU0_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_cpu0_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_cpu0_pio: rw64, reset 0x0 */
 #define HUB_NI_AGE_CPU0_PIO_OFFSET                   0x600508u /* established */
 #define HUB_NI_AGE_CPU0_PIO_VCHANNEL_SHIFT           10 /* established */
 #define HUB_NI_AGE_CPU0_PIO_VCHANNEL_MASK            0x3ull
@@ -244,7 +244,7 @@
 /*
  * CPU 1 PIO age control, named NI_AGE_CPU1_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_cpu1_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_cpu1_pio: rw64, reset 0x0 */
 #define HUB_NI_AGE_CPU1_PIO_OFFSET                   0x600518u /* established */
 #define HUB_NI_AGE_CPU1_PIO_VCHANNEL_SHIFT           10 /* established */
 #define HUB_NI_AGE_CPU1_PIO_VCHANNEL_MASK            0x3ull
@@ -259,7 +259,7 @@
 /*
  * Block-transfer engine memory age control, named NI_AGE_GBR_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_gbr_memory: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_gbr_memory: rw64, reset 0x0 */
 #define HUB_NI_AGE_GBR_MEMORY_OFFSET                 0x600520u /* established */
 #define HUB_NI_AGE_GBR_MEMORY_VCHANNEL_SHIFT         10 /* established */
 #define HUB_NI_AGE_GBR_MEMORY_VCHANNEL_MASK          0x3ull
@@ -274,7 +274,7 @@
 /*
  * Block-transfer engine PIO age control, named NI_AGE_GBR_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_gbr_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_gbr_pio: rw64, reset 0x0 */
 #define HUB_NI_AGE_GBR_PIO_OFFSET                    0x600528u /* established */
 #define HUB_NI_AGE_GBR_PIO_VCHANNEL_SHIFT            10 /* established */
 #define HUB_NI_AGE_GBR_PIO_VCHANNEL_MASK             0x3ull
@@ -289,7 +289,7 @@
 /*
  * I/O interface memory age control, named NI_AGE_IO_MEMORY in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_io_memory: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_io_memory: rw64, reset 0x0 */
 #define HUB_NI_AGE_IO_MEMORY_OFFSET                  0x600530u /* established */
 #define HUB_NI_AGE_IO_MEMORY_VCHANNEL_SHIFT          10 /* established */
 #define HUB_NI_AGE_IO_MEMORY_VCHANNEL_MASK           0x3ull
@@ -304,7 +304,7 @@
 /*
  * I/O interface PIO age control, named NI_AGE_IO_PIO in the header. Layout in NI_AGE_FORMAT. The IRIX register table confirms the access.
  */
-/* ni_age_io_pio: rw64, reset 0x0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_age_io_pio: rw64, reset 0x0 */
 #define HUB_NI_AGE_IO_PIO_OFFSET                     0x600538u /* established */
 #define HUB_NI_AGE_IO_PIO_VCHANNEL_SHIFT             10 /* established */
 #define HUB_NI_AGE_IO_PIO_VCHANNEL_MASK              0x3ull
@@ -319,7 +319,7 @@
 /*
  * Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the header. The fields are graded on their own. The IRIX register table confirms the access.
  */
-/* ni_port_parms: rw64, reset 0x1bf0; public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) */
+/* ni_port_parms: rw64, reset 0x1bf0 */
 #define HUB_NI_PORT_PARMS_OFFSET                     0x608000u /* established */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_SHIFT         10 /* established */
 #define HUB_NI_PORT_PARMS_NULL_TIMEOUT_MASK          0x3full

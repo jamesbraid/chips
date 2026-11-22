@@ -29,8 +29,8 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `cpu_enable_b` | 0x58 | rw | 64 |  |  | 0x1 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_a` | 0x70 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `nmi_b` | 0x78 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `ipi_a` | 0x80 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
-| `ipi_b` | 0x88 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
+| `ipi_a` | 0x80 | w | 64 |  |  | unknown | established |  |
+| `ipi_b` | 0x88 | w | 64 |  |  | unknown | established |  |
 | `int_pend_mod` | 0x90 | w | 64 |  |  | unknown | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend0` | 0x98 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
 | `int_pend1` | 0xa0 | r | 64 |  |  | 0x0 (established) | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts |
@@ -1050,4 +1050,4 @@ Performance counter 1 of CPU B. Forty bits wide. On overflow it wraps to zero, s
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `PI1_BASE` | 0x200000 | established | Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts | Offset of the second processor interface's register file from the first, in the node's register space. The unit's registers are the first interface's; the second repeats them at this distance. No public source tree states it. |
+| `PI1_BASE` | 0x200000 | established |  | Offset of the second processor interface's register file from the first, in the node's register space. The unit's registers are the first interface's; the second repeats them at this distance. No public source tree states it. |

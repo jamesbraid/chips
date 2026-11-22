@@ -27,7 +27,7 @@
 /*
  * Configuration register B, read only. Its IRQ-line sample bit depends on the board wiring, so its reset value is unknown.
  */
-/* cnfgb: r8, space ecpcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* cnfgb: r8, space ecpcs, reset unknown */
 #define TL16PIR552_CNFGB_OFFSET                      0x1u /* established */
 #define TL16PIR552_CNFGB_COMPRESSION_SHIFT           7 /* established */
 #define TL16PIR552_CNFGB_COMPRESSION_MASK            0x1u
@@ -45,7 +45,7 @@
 /*
  * Extended control register. Its top three bits select the mode, which also decides what the other chip-select offsets hold. The two low bits are read only.
  */
-/* ecr: rw8, space ecpcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* ecr: rw8, space ecpcs, reset unknown */
 #define TL16PIR552_ECR_OFFSET                        0x2u /* established */
 #define TL16PIR552_ECR_MODE_SHIFT                    5 /* established */
 #define TL16PIR552_ECR_MODE_MASK                     0x7u
@@ -69,7 +69,7 @@
 /*
  * Configuration register A, read only. It reads the constant with the implementation ID in the top nibble and the low nibble reserved and read as ones.
  */
-/* cnfga: r8, space ecpcs_cfg, reset 0x1f; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* cnfga: r8, space ecpcs_cfg, reset 0x1f */
 #define TL16PIR552_CNFGA_OFFSET                      0x0u /* established */
 #define TL16PIR552_CNFGA_IMPL_ID_SHIFT               4 /* established */
 #define TL16PIR552_CNFGA_IMPL_ID_MASK                0xfu
@@ -81,31 +81,31 @@
 /*
  * Forward data FIFO that uses the standard parallel-port handshake.
  */
-/* pp_fifo: rw8, space ecpcs_cfifo, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* pp_fifo: rw8, space ecpcs_cfifo, reset unknown */
 #define TL16PIR552_PP_FIFO_OFFSET                    0x0u /* established */
 
 /*
  * ECP data FIFO. A forward write enqueues data. A reverse read receives peripheral data through the ECP handshake.
  */
-/* ecp_dfifo: rw8, space ecpcs_ecp, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* ecp_dfifo: rw8, space ecpcs_ecp, reset unknown */
 #define TL16PIR552_ECP_DFIFO_OFFSET                  0x0u /* established */
 
 /*
  * Test FIFO with no parallel-port protocol handshake. FIFO state stays reflected by the FULL and EMPTY bits. Overflow and underrun do not stall. Read and write counters wrap in test mode.
  */
-/* test_fifo: rw8, space ecpcs_tfifo, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* test_fifo: rw8, space ecpcs_tfifo, reset unknown */
 #define TL16PIR552_TEST_FIFO_OFFSET                  0x0u /* established */
 
 /*
  * Parallel data port in standard and bidirectional modes. A write drives the data lines and a read returns their value. In the other modes offset 0 of this chip select is a different register; see the ECP-mode and FIFO spaces.
  */
-/* data: rw8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* data: rw8, space ppcs, reset unknown */
 #define TL16PIR552_DATA_OFFSET                       0x0u /* established */
 
 /*
  * Status inputs, plus the PRINT and EPP TIMEOUT status. PRINT clears on a rising ACK and sets when this register is read. TIMEOUT clears when this register is written. Bit positions are in the fields below.
  */
-/* dsr: r8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* dsr: r8, space ppcs, reset unknown */
 #define TL16PIR552_DSR_OFFSET                        0x1u /* established */
 #define TL16PIR552_DSR_BUSY_SHIFT                    7 /* established */
 #define TL16PIR552_DSR_BUSY_MASK                     0x1u
@@ -132,7 +132,7 @@
 /*
  * Parallel control register.
  */
-/* dcr: rw8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* dcr: rw8, space ppcs, reset unknown */
 #define TL16PIR552_DCR_OFFSET                        0x2u /* established */
 #define TL16PIR552_DCR_DIRECTION_SHIFT               5 /* established */
 #define TL16PIR552_DCR_DIRECTION_MASK                0x1u
@@ -156,13 +156,13 @@
 /*
  * EPP address. An access generates the EPP address strobe automatically.
  */
-/* epp_addr: rw8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* epp_addr: rw8, space ppcs, reset unknown */
 #define TL16PIR552_EPP_ADDR_OFFSET                   0x3u /* established */
 
 /*
  * EPP data. Each of the four offsets with the high address bit set is this register. An access generates the EPP data strobe automatically.
  */
-/* epp_data: rw8, space ppcs, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* epp_data: rw8, space ppcs, reset unknown */
 #define TL16PIR552_EPP_DATA_OFFSET                   0x4u /* established */
 #define TL16PIR552_EPP_DATA_COUNT                    4
 #define TL16PIR552_EPP_DATA_STRIDE                   1
@@ -170,7 +170,7 @@
 /*
  * ECP address FIFO. A written byte enters the FIFO tagged as an ECP address.
  */
-/* ecp_afifo: w8, space ppcs_ecp, reset unknown; TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996) */
+/* ecp_afifo: w8, space ppcs_ecp, reset unknown */
 #define TL16PIR552_ECP_AFIFO_OFFSET                  0x0u /* established */
 
 #endif /* TL16PIR552_GEN_H */

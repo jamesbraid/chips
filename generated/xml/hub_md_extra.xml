@@ -113,12 +113,12 @@
     <field name="short_pack" start="2" size="2" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MMCE_* masks"/>
     <field name="bad_data" start="0" size="2" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MMCE_* masks"/>
   </struct>
-  <struct name="MD_MEM_DIMM_INIT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x200090" access="w" reset="unknown">
+  <struct name="MD_MEM_DIMM_INIT" size="8" grade="established" register="yes" offset="0x200090" access="w" reset="unknown">
     <doc>Memory DIMM mode initialisation. Layout in the MD_DIMM_INIT_FORMAT word. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.</doc>
     <field name="select" start="32" size="4" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks"/>
     <field name="mode" start="0" size="12" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks"/>
   </struct>
-  <struct name="MD_DIR_DIMM_INIT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x200098" access="w" reset="unknown">
+  <struct name="MD_DIR_DIMM_INIT" size="8" grade="established" register="yes" offset="0x200098" access="w" reset="unknown">
     <doc>Directory DIMM mode initialisation. Same layout as the memory register. The IRIX register table gives write-only access; the earlier reading of the Linux header assumed read and write.</doc>
     <field name="select" start="32" size="4" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks"/>
     <field name="mode" start="0" size="12" type="uint" grade="established" from="public Linux SN0 Hub memory/directory header: MDI_* masks"/>
@@ -158,53 +158,53 @@
   <struct name="MD_LED0" size="8" grade="established" from="census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed)" register="yes" offset="0x220050" access="w" reset="unknown">
     <field name="led" start="0" size="8" type="uint" grade="inferred" from="public Linux SN0 Hub memory/directory header: field layout and masks"/>
   </struct>
-  <struct name="MD_LED1" size="8" grade="established" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x220058" access="w" reset="unknown">
+  <struct name="MD_LED1" size="8" grade="established" register="yes" offset="0x220058" access="w" reset="unknown">
     <doc>Eight-bit LED of the second processor, the twin of md_led0 in the census. The header gives no access type; write-only is carried over from md_led0 and is inferred. The IRIX register table confirms the access.</doc>
     <field name="led" start="0" size="8" type="uint" grade="inferred" from="public Linux SN0 Hub memory/directory header: field layout and masks"/>
   </struct>
-  <struct name="MD_UREG1_1" size="8" grade="established" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x220088" access="rw" reset="0x0">
+  <struct name="MD_UREG1_1" size="8" grade="established" register="yes" offset="0x220088" access="rw" reset="0x0">
     <doc>Microcontroller and UART 1 register 1 of 16; the census has register 0. The IRIX register table confirms the access.</doc>
   </struct>
-  <struct name="MD_UREG1_2" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x220090" access="rw" reset="unknown">
+  <struct name="MD_UREG1_2" size="8" grade="inferred" register="yes" offset="0x220090" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 2 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_3" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x220098" access="rw" reset="unknown">
+  <struct name="MD_UREG1_3" size="8" grade="inferred" register="yes" offset="0x220098" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 3 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_4" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200a0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_4" size="8" grade="inferred" register="yes" offset="0x2200a0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 4 of 16; the census has register 0. The header gives no access type, so rw is assumed. The IRIX kernel's LED macro gives it a second role: on the Origin 200 (the SN00 variant) it is the eight-bit LED of the processor in slice 1, as register 0 is the LED of slice 0, at a spacing of four registers per slice. Other Hub variants use the separate LED registers.</doc>
   </struct>
-  <struct name="MD_UREG1_5" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200a8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_5" size="8" grade="inferred" register="yes" offset="0x2200a8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 5 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_6" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200b0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_6" size="8" grade="inferred" register="yes" offset="0x2200b0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 6 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_7" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200b8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_7" size="8" grade="inferred" register="yes" offset="0x2200b8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 7 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_8" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200c0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_8" size="8" grade="inferred" register="yes" offset="0x2200c0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 8 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_9" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200c8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_9" size="8" grade="inferred" register="yes" offset="0x2200c8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 9 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_10" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200d0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_10" size="8" grade="inferred" register="yes" offset="0x2200d0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 10 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_11" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200d8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_11" size="8" grade="inferred" register="yes" offset="0x2200d8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 11 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_12" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200e0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_12" size="8" grade="inferred" register="yes" offset="0x2200e0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 12 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_13" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200e8" access="rw" reset="unknown">
+  <struct name="MD_UREG1_13" size="8" grade="inferred" register="yes" offset="0x2200e8" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 13 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_14" size="8" grade="inferred" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200f0" access="rw" reset="unknown">
+  <struct name="MD_UREG1_14" size="8" grade="inferred" register="yes" offset="0x2200f0" access="rw" reset="unknown">
     <doc>Microcontroller and UART 1 register 14 of 16; the census has register 0. The header gives no access type, so rw is assumed.</doc>
   </struct>
-  <struct name="MD_UREG1_15" size="8" grade="established" from="public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)" register="yes" offset="0x2200f8" access="rw" reset="0x0">
+  <struct name="MD_UREG1_15" size="8" grade="established" register="yes" offset="0x2200f8" access="rw" reset="0x0">
     <doc>Microcontroller and UART 1 register 15 of 16; the census has register 0. The IRIX register table confirms the access.</doc>
   </struct>
   <struct name="MD_MIG_CANDIDATE_FORMAT" size="8" grade="established" from="public Linux SN0 Hub memory/directory header: MD_MIG_CANDIDATE masks">

@@ -329,8 +329,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_pi",
@@ -343,8 +342,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
+   "grade": "established"
   },
   {
    "unit": "bedrock_pi",
@@ -4169,8 +4167,7 @@
    "name": "PI1_BASE",
    "value": 2097152,
    "count": 1,
-   "grade": "established",
-   "from": "Linux 2.5.40 SN1 processor-interface register header: names, offsets and field layouts"
+   "grade": "established"
   }
  ]
 }

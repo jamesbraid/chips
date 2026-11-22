@@ -15,11 +15,11 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `hc_interrupt_enable` | 0x10 | rw | 32 |  |  | 0x0 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
-| `hc_fm_interval` | 0x34 | rw | 32 |  |  | 0x2edf | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_interrupt_enable` | 0x10 | rw | 32 |  |  | 0x0 | established |  |
+| `hc_fm_interval` | 0x34 | rw | 32 |  |  | 0x2edf | established |  |
 | `hc_fm_number` | 0x3c | r | 32 |  |  | 0x0 (OpenHCI 1.0a section 7.3.3 (printed page 122), as the source datasheet cites it; IO-8 board test register table for the write check (index 0xf, offset 0x3c)) | established | OpenHCI 1.0a section 7.3.3 (printed page 122), as the source datasheet cites it; IO-8 board test register table for the write check (index 0xf, offset 0x3c) |
-| `hc_rh_descriptor_a` | 0x48 | rw | 32 |  |  | 0x10000902 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
-| `hc_rh_descriptor_b` | 0x4c | rw | 32 |  |  | 0x60000 | established | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 |
+| `hc_rh_descriptor_a` | 0x48 | rw | 32 |  |  | 0x10000902 | established |  |
+| `hc_rh_descriptor_b` | 0x4c | rw | 32 |  |  | 0x60000 | established |  |
 
 ### Register `hc_interrupt_enable`
 
@@ -31,9 +31,9 @@ Frame interval word. The frame interval and its toggle take the OpenHCI reset va
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31 | `frame_interval_toggle` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Toggle, reset zero per the specification |
-| 30:16 | `fs_largest_data_packet` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Largest data packet size. Its reset value is TBD in the OpenHCI specification; the USS-312 data sheet (Table 40) gives 0h and the IO-8 board test expects zero |
-| 13:0 | `frame_interval` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Frame interval in bit times, reset 0x2edf per the specification |
+| 31 | `frame_interval_toggle` | established |  |  | Toggle, reset zero per the specification |
+| 30:16 | `fs_largest_data_packet` | established |  |  | Largest data packet size. Its reset value is TBD in the OpenHCI specification; the USS-312 data sheet (Table 40) gives 0h and the IO-8 board test expects zero |
+| 13:0 | `frame_interval` | established |  |  | Frame interval in bit times, reset 0x2edf per the specification |
 
 ### Register `hc_fm_number`
 
@@ -49,11 +49,11 @@ Root hub descriptor A. The specification makes the power-switching and over-curr
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:24 | `power_on_to_power_good_time` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Power-on to power-good time in 2 ms units, driver written per the specification. The board test checks only bits 25 and 24 |
-| 12 | `no_over_current_protection` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Over-current protection disabled when set, driver written per the specification |
-| 11 | `over_current_protection_mode` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Per-port (1) or global (0) over-current reporting, driver written per the specification |
-| 9 | `no_power_switching` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Power switching disabled when set, driver written per the specification |
-| 8 | `power_switching_mode` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Per-port (1) or global (0) power switching, driver written per the specification |
+| 31:24 | `power_on_to_power_good_time` | established |  |  | Power-on to power-good time in 2 ms units, driver written per the specification. The board test checks only bits 25 and 24 |
+| 12 | `no_over_current_protection` | established |  |  | Over-current protection disabled when set, driver written per the specification |
+| 11 | `over_current_protection_mode` | established |  |  | Per-port (1) or global (0) over-current reporting, driver written per the specification |
+| 9 | `no_power_switching` | established |  |  | Power switching disabled when set, driver written per the specification |
+| 8 | `power_switching_mode` | established |  |  | Per-port (1) or global (0) power switching, driver written per the specification |
 
 ### Register `hc_rh_descriptor_b`
 
@@ -61,14 +61,14 @@ Root hub descriptor B. The specification gives the device-removable and port-pow
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:16 | `port_power_control_mask` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | One bit per port from bit 17, driver written |
-| 15:0 | `device_removable` | established |  | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | One bit per port from bit 1, driver written |
+| 31:16 | `port_power_control_mask` | established |  |  | One bit per port from bit 17, driver written |
+| 15:0 | `device_removable` | established |  |  | One bit per port from bit 1, driver written |
 
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
-| `FM_NUMBER_WRITE_MASK` | 0xffff | inferred | OpenHCI 1.0a (sections cited per item); Lucent USS-312 datasheet; Online Diagnostics manual 108-0286-007; IO-8 board test (io8bt) in the stock PROM diagnostics; public IRIX hinv capture of an Origin 300 IO-8 | Read-back mask the IO-8 board test applies after writing the frame number register. It shows the full 16-bit field is expected to hold a driver write while the controller is not operational. What the part does with a write while operational is unknown. |
+| `FM_NUMBER_WRITE_MASK` | 0xffff | inferred |  | Read-back mask the IO-8 board test applies after writing the frame number register. It shows the full 16-bit field is expected to hold a driver write while the controller is not operational. What the part does with a write while operational is unknown. |
 | `FRAME_INTERVAL_RESET` | 0x2edf | established | OpenHCI 1.0a, section 7.3.1 (figure on printed page 120, table on printed page 121), as the source datasheet cites it | Reset value of the frame interval field of the frame interval register. The specification gives it. The field that holds the largest data packet size in the same register is marked TBD there, so it is not listed here (see the register's doc). |
 | `HCLSTHRESHOLD_RESET` | 0x628 | established | Lucent USS-312 datasheet, Table 44 | Reset value of the low-speed threshold register the datasheet gives. |
 | `MAX_LAT` | 0x56 | established | Lucent USS-312 datasheet | Max_Lat configuration value the datasheet gives for this part. |

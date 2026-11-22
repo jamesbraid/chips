@@ -20,19 +20,19 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `ni_diag_parms` | 0x600110 | rw | 64 |  |  | unknown | established | census: 2 sites, 1 routines (rw); census: 2 sites, 1 routines (rw, indexed) |
 | `ni_vector_parms` | 0x600200 | w | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
 | `ni_vector_status` | 0x600300 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines (r); census: 7 sites, 3 routines (r, indexed) |
-| `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_return_vector` | 0x600308 | rw | 64 |  |  | unknown | established |  |
 | `ni_vector_clear` | 0x600380 | r | 64 |  |  | unknown | established | census: 3 sites, 3 routines |
-| `ni_io_protect` | 0x600400 | rw | 64 |  |  | 0xffffffffffffffff (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_io_protect` | 0x600400 | rw | 64 |  |  | 0xffffffffffffffff (established) | established |  |
+| `ni_io_prot_ovrrd` | 0x600408 | w | 64 |  |  | unknown | established |  |
 | `ni_age_cpu0_memory` | 0x600500 | rw | 64 |  |  | 0x0 (established) | established | census: 9 sites, 3 routines |
-| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu0_pio` | 0x600508 | rw | 64 |  |  | 0x0 (established) | established |  |
 | `ni_age_cpu1_memory` | 0x600510 | rw | 64 |  |  | 0x0 (established) | established | census: 9 sites, 3 routines |
-| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
-| `ni_port_parms` | 0x608000 | rw | 64 |  |  | 0x1bf0 (established) | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
+| `ni_age_cpu1_pio` | 0x600518 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `ni_age_gbr_memory` | 0x600520 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `ni_age_gbr_pio` | 0x600528 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `ni_age_io_memory` | 0x600530 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `ni_age_io_pio` | 0x600538 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `ni_port_parms` | 0x608000 | rw | 64 |  |  | 0x1bf0 (established) | established |  |
 | `ni_port_error` | 0x608008 | r | 64 |  |  | unknown | established | census: 4 sites, 4 routines (r); census: 1 sites, 1 routines (r, indexed) |
 | `ni_port_error_clear` | 0x608088 | r | 64 |  |  | unknown | established | census: 10 sites, 4 routines (r); census: 3 sites, 3 routines (r, indexed) |
 | `ni_meta_entry` | 0x638008 | rw | 64 | 31 |  | unknown | inferred | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) |
@@ -220,8 +220,8 @@ Port parameters, named NI_PORT_PARMS in the header. Offset and name are from the
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 15:10 | `null_timeout` | established |  | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The IRIX register table places the field at 15:10, as the shift and the default constant do. |
-| 9:0 | `max_burst` | established |  | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Maximum burst, ten bits at 9:0, named NPP_MAXBURST in the header. |
+| 15:10 | `null_timeout` | established |  |  | Null-packet timeout, six bits. The header gives it a shift of 10 and a mask of 0x3f at bit 16, which disagree. The IRIX register table places the field at 15:10, as the shift and the default constant do. |
+| 9:0 | `max_burst` | established |  |  | Maximum burst, ten bits at 9:0, named NPP_MAXBURST in the header. |
 
 ### Register `ni_port_error`
 
@@ -326,5 +326,5 @@ Array of 15 registers, stride 8.
 | `NI_NASID_TO_COARSEREG_SHIFT` | 0x3 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Shift from a node number to its region number in coarse mode, with eight nodes per region. |
 | `NI_NASID_TO_FINEREG_SHIFT` | 0x0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Shift from a node number to its region number in fine mode, where each node is a region. |
 | `NI_PORT_ERROR_COUNT_MAX` | 0xff | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Largest value of an error counter in the port error register, named NPE_COUNT_MAX in the header. |
-| `NI_PORT_PARMS_DEFAULTS` | 0x1bf0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |
-| `NI_PORT_PARMS_HUB20_DEFAULTS` | 0x7f0 | established | public Linux SN0 Hub network interface header, pinned linux tree (names, masks, shifts and software default constants) | Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |
+| `NI_PORT_PARMS_DEFAULTS` | 0x1bf0 | established |  | Composite default of the port parameters register: null timeout 6 at 15:10 and burst 0x3f0. A default the header gives for software to write, not a reset read from hardware. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |
+| `NI_PORT_PARMS_HUB20_DEFAULTS` | 0x7f0 | established |  | Composite default the header gives for the Hub 2.0 port parameters: null timeout 1 at 15:10 and burst 0x3f0. A software default, not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register, the Hub 2.0 value on Hub revision 2. |

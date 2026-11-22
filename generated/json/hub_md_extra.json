@@ -1268,8 +1268,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -1300,8 +1299,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -1578,8 +1576,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -1601,8 +1598,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -1615,8 +1611,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1629,8 +1624,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1643,8 +1637,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1657,8 +1650,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1671,8 +1663,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1685,8 +1676,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1699,8 +1689,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1713,8 +1702,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1727,8 +1715,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1741,8 +1728,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1755,8 +1741,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1769,8 +1754,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1783,8 +1767,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "inferred",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_md_extra",
@@ -1797,8 +1780,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -1985,8 +1967,7 @@
    "name": "HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS",
    "value": 8584695805640703,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -2021,8 +2002,7 @@
    "name": "HUB_MD_MLAN_CTL_RESET_DEFAULTS",
    "value": 6628048896,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -2030,8 +2010,7 @@
    "name": "HUB_MD_MOQ_SIZE_RESET_DEFAULTS",
    "value": 12818,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",
@@ -2084,8 +2063,7 @@
    "name": "HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS",
    "value": 1024,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants)"
+   "grade": "established"
   },
   {
    "unit": "hub_md_extra",

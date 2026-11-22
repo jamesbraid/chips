@@ -16,8 +16,7 @@
    "stride": 1,
    "space": "ecpcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -25,8 +24,7 @@
    "name": "cnfgb.compression",
    "hi": 7,
    "lo": 7,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -34,8 +32,7 @@
    "name": "cnfgb.irq_line_sample",
    "hi": 6,
    "lo": 6,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -43,16 +40,14 @@
    "name": "cnfgb.irq_select",
    "hi": 5,
    "lo": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "cnfgb.irq_select.irq7",
    "value": 1,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -60,16 +55,14 @@
    "name": "cnfgb.dma_select",
    "hi": 2,
    "lo": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "cnfgb.dma_select.dma3",
    "value": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -82,8 +75,7 @@
    "stride": 1,
    "space": "ecpcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -91,72 +83,63 @@
    "name": "ecr.mode",
    "hi": 7,
    "lo": 5,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.standard",
    "value": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.bidirectional",
    "value": 1,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.parallel_fifo",
    "value": 2,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.ecp",
    "value": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.epp",
    "value": 4,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.reserved",
    "value": 5,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.test_fifo",
    "value": 6,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
    "kind": "enum_value",
    "name": "ecr.mode.configuration",
    "value": 7,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -164,8 +147,7 @@
    "name": "ecr.ecp_fault_irq_disable",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -173,8 +155,7 @@
    "name": "ecr.dma_enable",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -182,8 +163,7 @@
    "name": "ecr.service_intr_disable",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -191,8 +171,7 @@
    "name": "ecr.fifo_full",
    "hi": 1,
    "lo": 1,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -200,8 +179,7 @@
    "name": "ecr.fifo_empty",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -214,8 +192,7 @@
    "stride": 1,
    "space": "ecpcs_cfg",
    "reset": 31,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -223,8 +200,7 @@
    "name": "cnfga.impl_id",
    "hi": 7,
    "lo": 4,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -232,8 +208,7 @@
    "name": "cnfga.reserved_low",
    "hi": 3,
    "lo": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -246,8 +221,7 @@
    "stride": 1,
    "space": "ecpcs_cfifo",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -260,8 +234,7 @@
    "stride": 1,
    "space": "ecpcs_ecp",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -274,8 +247,7 @@
    "stride": 1,
    "space": "ecpcs_tfifo",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -288,8 +260,7 @@
    "stride": 1,
    "space": "ppcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -302,8 +273,7 @@
    "stride": 1,
    "space": "ppcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -311,8 +281,7 @@
    "name": "dsr.busy",
    "hi": 7,
    "lo": 7,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -320,8 +289,7 @@
    "name": "dsr.ack",
    "hi": 6,
    "lo": 6,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -329,8 +297,7 @@
    "name": "dsr.perror",
    "hi": 5,
    "lo": 5,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -338,8 +305,7 @@
    "name": "dsr.select_in",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -347,8 +313,7 @@
    "name": "dsr.fault",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -356,8 +321,7 @@
    "name": "dsr.print_intr",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -365,8 +329,7 @@
    "name": "dsr.timeout",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -379,8 +342,7 @@
    "stride": 1,
    "space": "ppcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -388,8 +350,7 @@
    "name": "dcr.direction",
    "hi": 5,
    "lo": 5,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -397,8 +358,7 @@
    "name": "dcr.irq_on_ack",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -406,8 +366,7 @@
    "name": "dcr.select_ctl",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -415,8 +374,7 @@
    "name": "dcr.init_ctl",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -424,8 +382,7 @@
    "name": "dcr.autofd_ctl",
    "hi": 1,
    "lo": 1,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -433,8 +390,7 @@
    "name": "dcr.strobe_ctl",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -447,8 +403,7 @@
    "stride": 1,
    "space": "ppcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -461,8 +416,7 @@
    "stride": 1,
    "space": "ppcs",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   },
   {
    "unit": "tl16pir552",
@@ -475,8 +429,7 @@
    "stride": 1,
    "space": "ppcs_ecp",
    "reset": "unknown",
-   "grade": "established",
-   "from": "TI TL16PIR552 datasheet, SLLS222A (December 1995, revised August 1996)"
+   "grade": "established"
   }
  ]
 }

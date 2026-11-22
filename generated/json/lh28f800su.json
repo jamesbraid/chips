@@ -10,8 +10,7 @@
    "kind": "word",
    "name": "BSR",
    "width": 8,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -19,8 +18,7 @@
    "name": "BSR.block_ready",
    "hi": 7,
    "lo": 7,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -28,8 +26,7 @@
    "name": "BSR.lock_cleared",
    "hi": 6,
    "lo": 6,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -37,8 +34,7 @@
    "name": "BSR.op_status",
    "hi": 5,
    "lo": 4,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -70,8 +66,7 @@
    "name": "BSR.queue_full",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -79,16 +74,14 @@
    "name": "BSR.low_vpp",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
    "kind": "word",
    "name": "CSR",
    "width": 8,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -96,8 +89,7 @@
    "name": "CSR.ready",
    "hi": 7,
    "lo": 7,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -105,8 +97,7 @@
    "name": "CSR.erase_suspended",
    "hi": 6,
    "lo": 6,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -114,8 +105,7 @@
    "name": "CSR.erase_error",
    "hi": 5,
    "lo": 5,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -123,8 +113,7 @@
    "name": "CSR.program_error",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -132,16 +121,14 @@
    "name": "CSR.low_vpp",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
    "kind": "word",
    "name": "GSR",
    "width": 8,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -149,8 +136,7 @@
    "name": "GSR.write_ready",
    "hi": 7,
    "lo": 7,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -158,8 +144,7 @@
    "name": "GSR.suspended",
    "hi": 6,
    "lo": 6,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -167,8 +152,7 @@
    "name": "GSR.op_status",
    "hi": 5,
    "lo": 4,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -208,8 +192,7 @@
    "name": "GSR.queue_full",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -217,8 +200,7 @@
    "name": "GSR.buffer_available",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -226,8 +208,7 @@
    "name": "GSR.buffer_ready",
    "hi": 1,
    "lo": 1,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",
@@ -235,8 +216,7 @@
    "name": "GSR.buffer_select",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "Sharp, LH28F800SU 8M Flash Memory, SMT96107 (May 1996)"
+   "grade": "established"
   },
   {
    "unit": "lh28f800su",

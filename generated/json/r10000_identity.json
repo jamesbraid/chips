@@ -101,8 +101,7 @@
    "name": "R10K_R16000_DISPLAY_MAJOR_OFFSET",
    "value": 2,
    "count": 1,
-   "grade": "inferred",
-   "from": "Linux v6.6 MIPS headers and CPU driver"
+   "grade": "inferred"
   },
   {
    "unit": "r10000_identity",
@@ -110,8 +109,7 @@
    "name": "R10K_R16000_PRID_1GHZ",
    "value": 3920,
    "count": 1,
-   "grade": "inferred",
-   "from": "Linux v6.6 MIPS headers and CPU driver"
+   "grade": "inferred"
   },
   {
    "unit": "r10000_identity",
@@ -128,8 +126,7 @@
    "name": "R10K_R16000_TLB_ENTRIES",
    "value": 64,
    "count": 1,
-   "grade": "inferred",
-   "from": "Linux v6.6 MIPS headers and CPU driver"
+   "grade": "inferred"
   },
   {
    "unit": "r10000_identity",

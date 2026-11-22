@@ -1030,8 +1030,8 @@ XG configuration word, map-RAM type code: the diagnostic indexes a three-string 
 | `FPGA_INFO_OFF_NAME` | 0x0 | established | shipped kernel driver and media library readings | byte offset in an FPGA info record: pointer to the name string, used in the load failure messages |
 | `FPGA_INFO_OFF_PORT_OFFSET` | 0x10 | established | shipped kernel driver and media library readings | byte offset in an FPGA info record: port offset ORed into the status and data port offsets |
 | `FPGA_INFO_OFF_SELECT` | 0xc | established | shipped kernel driver and media library readings | byte offset in an FPGA info record: select word stored at the per-FPGA programming control register |
-| `FPGA_INFO_RECORDS` | 0x8 | established | shipped kernel driver and media library readings | records in the info table, indexed by the FPGA number the load routine takes (0 to 7) |
-| `FPGA_INFO_RECORD_SIZE` | 0x1c | established | shipped kernel driver and media library readings | size of one FPGA info record: seven big-endian 32-bit words (name pointer, kind, image size, select word, port offset, DONE mask, INIT mask) |
+| `FPGA_INFO_RECORDS` | 0x8 | established |  | records in the info table, indexed by the FPGA number the load routine takes (0 to 7) |
+| `FPGA_INFO_RECORD_SIZE` | 0x1c | established |  | size of one FPGA info record: seven big-endian 32-bit words (name pointer, kind, image size, select word, port offset, DONE mask, INIT mask) |
 | `FPGA_IXCC_DONE_MASK` | 0x40 | established | shipped kernel driver and media library readings | DONE mask of the ixcc record, tested in the word read from the programming register |
 | `FPGA_IXCC_IMAGE_SIZE` | 0x4db30 | established | shipped kernel driver and media library readings | image size in bytes of the ixcc record; the exact byte total the image file must contain (kind 2 skips the length check) |
 | `FPGA_IXCC_INIT_MASK` | 0x80 | established | shipped kernel driver and media library readings | INIT mask of the ixcc record, tested in the word read from the programming register |

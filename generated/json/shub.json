@@ -2171,8 +2171,7 @@
    "name": "rtc_ctl.toggle_bit",
    "hi": 28,
    "lo": 28,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
+   "grade": "inferred"
   },
   {
    "unit": "shub",
@@ -2180,8 +2179,7 @@
    "name": "rtc_ctl.counter",
    "hi": 25,
    "lo": 16,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa94d06, 0xffa94d26 (writes), 0xffa0da00 (read of the period); the SAL runtime component's chipset_rtc_period reads the same field"
+   "grade": "inferred"
   },
   {
    "unit": "shub",
@@ -2286,8 +2284,7 @@
    "name": "shub_id.nodes_per_bit",
    "hi": 52,
    "lo": 48,
-   "grade": "established",
-   "from": "Linux v5.3 SGI SN2 platform MMR header (GPL): name and offset"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -2465,8 +2462,7 @@
    "name": "ptc_parms.ptc_to_val",
    "hi": 35,
    "lo": 24,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+   "grade": "inferred"
   },
   {
    "unit": "shub",
@@ -2474,8 +2470,7 @@
    "name": "ptc_parms.ptc_to_wrap",
    "hi": 23,
    "lo": 0,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa960a6 (write, then read back); the PROM's table lists it as SH_PTC_PARMS"
+   "grade": "inferred"
   },
   {
    "unit": "shub",
@@ -2948,8 +2943,7 @@
    "name": "pi_reg_2001_0100.bit24",
    "hi": 24,
    "lo": 24,
-   "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -2957,8 +2951,7 @@
    "name": "pi_reg_2001_0100.bit17",
    "hi": 17,
    "lo": 17,
-   "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -2966,8 +2959,7 @@
    "name": "pi_reg_2001_0100.bit3",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "SAL 5.04 PROM site 0xffc4e800 and 0xffc4e816 (read-modify-write); Linux v5.3 defines no name"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -2989,8 +2981,7 @@
    "name": "fsb_vga_remap.vga_remapping_enabled",
    "hi": 62,
    "lo": 62,
-   "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -2998,8 +2989,7 @@
    "name": "fsb_vga_remap.nid",
    "hi": 48,
    "lo": 38,
-   "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -3007,8 +2997,7 @@
    "name": "fsb_vga_remap.asid",
    "hi": 37,
    "lo": 36,
-   "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -3016,8 +3005,7 @@
    "name": "fsb_vga_remap.offset",
    "hi": 35,
    "lo": 17,
-   "grade": "established",
-   "from": "SGI Linux 2.4 ia64 SN2 platform MMR header (linux-2.4 branch of the MIPS-tree mirror, commit 8ef7d46c94d5), SH_FSB_VGA_REMAP (header macro mask 0x4001fffffffe0000); Linux v5.3 does not define it; SAL 5.04 / 10.54 PROM site 0xffaeb22c (read) and 0xffaeb26c (write)"
+   "grade": "established"
   },
   {
    "unit": "shub",
@@ -3039,8 +3027,7 @@
    "name": "pi_slice_present.present2",
    "hi": 5,
    "lo": 4,
-   "grade": "inferred",
-   "from": "SAL 5.04 PROM site 0xffa115ac (read through the global window of the node), 0xffa99e2c (caller)"
+   "grade": "inferred"
   },
   {
    "unit": "shub",

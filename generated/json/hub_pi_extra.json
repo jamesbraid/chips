@@ -16,8 +16,7 @@
    "stride": 8,
    "space": null,
    "reset": 18446744073709551615,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -30,8 +29,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -44,8 +42,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -209,8 +206,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -223,8 +219,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -237,8 +232,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -260,8 +254,7 @@
    "name": "pi_int_pend_mod.set",
    "hi": 8,
    "lo": 8,
-   "grade": "inferred",
-   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_pi_extra",
@@ -269,8 +262,7 @@
    "name": "pi_int_pend_mod.level",
    "hi": 6,
    "lo": 0,
-   "grade": "inferred",
-   "from": "census: 9 sites, 8 routines (w); census: 8 sites, 8 routines (w, indexed)"
+   "grade": "inferred"
   },
   {
    "unit": "hub_pi_extra",
@@ -283,8 +275,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -297,8 +288,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -311,8 +301,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -325,8 +314,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -339,8 +327,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -412,8 +399,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -426,8 +412,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -440,8 +425,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -454,8 +438,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -468,8 +451,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -482,8 +464,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -496,8 +477,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -510,8 +490,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -524,8 +503,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -533,8 +511,7 @@
    "name": "pi_gfx_page_a.enable",
    "hi": 40,
    "lo": 40,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -547,8 +524,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -561,8 +537,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -575,8 +550,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -589,8 +563,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -598,8 +571,7 @@
    "name": "pi_gfx_page_b.enable",
    "hi": 40,
    "lo": 40,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -612,8 +584,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -626,8 +597,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -640,8 +610,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -1448,8 +1417,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -1756,8 +1724,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -1987,8 +1954,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2001,8 +1967,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2015,8 +1980,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2029,8 +1993,7 @@
    "stride": 8,
    "space": null,
    "reset": "unknown",
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2043,8 +2006,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2052,8 +2014,7 @@
    "name": "pi_sysad_errchk_en.qual",
    "hi": 5,
    "lo": 5,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2061,8 +2022,7 @@
    "name": "pi_sysad_errchk_en.state",
    "hi": 4,
    "lo": 4,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2070,8 +2030,7 @@
    "name": "pi_sysad_errchk_en.cmdp",
    "hi": 3,
    "lo": 3,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2079,8 +2038,7 @@
    "name": "pi_sysad_errchk_en.sadp",
    "hi": 2,
    "lo": 2,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2088,8 +2046,7 @@
    "name": "pi_sysad_errchk_en.qualgen",
    "hi": 1,
    "lo": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2097,8 +2054,7 @@
    "name": "pi_sysad_errchk_en.eccgen",
    "hi": 0,
    "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2111,8 +2067,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2125,8 +2080,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2139,8 +2093,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2148,8 +2101,7 @@
    "name": "pi_nack_cnt_a.enable",
    "hi": 20,
    "lo": 20,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2157,8 +2109,7 @@
    "name": "pi_nack_cnt_a.count",
    "hi": 19,
    "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2171,8 +2122,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2180,8 +2130,7 @@
    "name": "pi_nack_cnt_b.enable",
    "hi": 20,
    "lo": 20,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2189,8 +2138,7 @@
    "name": "pi_nack_cnt_b.count",
    "hi": 19,
    "lo": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2203,8 +2151,7 @@
    "stride": 8,
    "space": null,
    "reset": 0,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2491,8 +2438,7 @@
    "name": "PI_LOCAL_WINDOW_BASE",
    "value": 16777216,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2509,8 +2455,7 @@
    "name": "PI_NODE_SHIFT",
    "value": 32,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",
@@ -2518,8 +2463,7 @@
    "name": "PI_NODE_WINDOW_BASE",
    "value": 25165824,
    "count": 1,
-   "grade": "established",
-   "from": "public Linux SN0 Hub processor-interface header, Linux v4.0 (names, offsets, masks and shifts)"
+   "grade": "established"
   },
   {
    "unit": "hub_pi_extra",

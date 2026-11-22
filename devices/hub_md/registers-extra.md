@@ -26,30 +26,30 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `md_protocol_error` | 0x200060 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `md_mem_error` | 0x200070 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines (r); census: 1 sites, 1 routines (r, indexed) |
 | `md_misc_error` | 0x200080 | r | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
-| `md_mem_dimm_init` | 0x200090 | w | 64 |  |  | unknown | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_dir_dimm_init` | 0x200098 | w | 64 |  |  | unknown | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
+| `md_mem_dimm_init` | 0x200090 | w | 64 |  |  | unknown | established |  |
+| `md_dir_dimm_init` | 0x200098 | w | 64 |  |  | unknown | established |  |
 | `md_moq_size` | 0x2000a0 | w | 64 |  |  | 0x3212 (established) | established | census: 1 sites, 1 routines |
 | `md_mlan_ctl` | 0x2000a8 | rw | 64 |  |  | 0x18b100002 (established) | established | census: 6 sites, 1 routines |
 | `md_perf_sel` | 0x210000 | w | 64 |  |  | unknown | established | census: 2 sites, 2 routines |
 | `md_perf_cnt0` | 0x210010 | w | 64 |  |  | unknown | established | census: 1 sites, 1 routines |
 | `md_slotid_ustat` | 0x220048 | r | 64 |  |  | unknown | established | census: 2 sites, 2 routines (r); census: 2 sites, 2 routines (r, indexed) |
 | `md_led0` | 0x220050 | w | 64 |  |  | unknown | established | census: 4 sites, 1 routines (w); census: 40 sites, 11 routines (w, indexed) |
-| `md_led1` | 0x220058 | w | 64 |  |  | unknown | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_1` | 0x220088 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_2` | 0x220090 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_3` | 0x220098 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_5` | 0x2200a8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_6` | 0x2200b0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_7` | 0x2200b8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_8` | 0x2200c0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_9` | 0x2200c8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_10` | 0x2200d0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_11` | 0x2200d8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_12` | 0x2200e0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_13` | 0x2200e8 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_14` | 0x2200f0 | rw | 64 |  |  | unknown | inferred | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
-| `md_ureg1_15` | 0x2200f8 | rw | 64 |  |  | 0x0 (established) | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) |
+| `md_led1` | 0x220058 | w | 64 |  |  | unknown | established |  |
+| `md_ureg1_1` | 0x220088 | rw | 64 |  |  | 0x0 (established) | established |  |
+| `md_ureg1_2` | 0x220090 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_3` | 0x220098 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_4` | 0x2200a0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_5` | 0x2200a8 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_6` | 0x2200b0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_7` | 0x2200b8 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_8` | 0x2200c0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_9` | 0x2200c8 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_10` | 0x2200d0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_11` | 0x2200d8 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_12` | 0x2200e0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_13` | 0x2200e8 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_14` | 0x2200f0 | rw | 64 |  |  | unknown | inferred |  |
+| `md_ureg1_15` | 0x2200f8 | rw | 64 |  |  | 0x0 (established) | established |  |
 
 ### Register `md_io_protect`
 
@@ -388,18 +388,18 @@ Layout of the page migration candidate. The header's initiator and node-number m
 | `HUB_MD_DIR_SHARED` | 0x0 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Directory state shared, from the header's state constants. |
 | `HUB_MD_DIR_UNOWNED` | 0x7 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Directory state unowned, from the header's state constants. |
 | `HUB_MD_DIR_WAIT` | 0x5 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Directory state wait, from the header's state constants. |
-| `HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS` | 0x1e7fbc3fffffff | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Composite default of the memory configuration register, built from the header's default constant. The header gives it as a value software writes, not a reset read from hardware. Eight bank codes of 7, reply guarantee 15, both directory and ignore-ECC bits set, and the four timing fields at their header values. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
+| `HUB_MD_MEMORY_CONFIG_RESET_DEFAULTS` | 0x1e7fbc3fffffff | established |  | Composite default of the memory configuration register, built from the header's default constant. The header gives it as a value software writes, not a reset read from hardware. Eight bank codes of 7, reply guarantee 15, both directory and ignore-ECC bits set, and the four timing fields at their header values. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
 | `HUB_MD_MEM_BANKS_M_MODE` | 0x8 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Bank count in the header's M-mode build, the default when N mode is not configured. |
 | `HUB_MD_MEM_BANKS_N_MODE` | 0x4 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Bank count in the header's N-mode build (CONFIG_SGI_SN_N_MODE). |
 | `HUB_MD_MLAN_CTL_ACCESS_BYTES` | 0x8 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Access size in bytes of the one-wire control register in the shipped IRIX kernel accessor: its loads and stores there are doubleword (census context). Bit 33 belongs to the upper phase field, so a 32-bit access cannot write the whole register; that consequence follows from the field layout, not from a trace. |
-| `HUB_MD_MLAN_CTL_RESET_DEFAULTS` | 0x18b100000 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
-| `HUB_MD_MOQ_SIZE_RESET_DEFAULTS` | 0x3212 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Default value of the outgoing queue size register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
+| `HUB_MD_MLAN_CTL_RESET_DEFAULTS` | 0x18b100000 | established |  | Default value of the one-wire control register: the two phase fields at 0x31 each, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
+| `HUB_MD_MOQ_SIZE_RESET_DEFAULTS` | 0x3212 | established |  | Default value of the outgoing queue size register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
 | `HUB_MD_PAGE_NUM_SHIFT` | 0xc | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Address to page number shift. |
 | `HUB_MD_PAGE_SIZE` | 0x1000 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Hardware page size, bytes. |
 | `HUB_MD_REFCNT_COUNT_MASK_PREMIUM` | 0x7ffff | established | public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT, MD_PPROT_REFCNT_WIDTH | Nineteen-bit reference count mask, premium memory; which memory is premium is inferred. |
 | `HUB_MD_REFCNT_COUNT_MASK_STANDARD` | 0x7ff | established | public Linux SN0 Hub memory/directory header: MD_SPROT_REFCNT_SHFT, MD_SPROT_REFCNT_WIDTH | Eleven-bit reference count mask, standard memory. |
 | `HUB_MD_REFCNT_COUNT_SHIFT` | 0x5 | established | public Linux SN0 Hub memory/directory header: MD_PPROT_REFCNT_SHFT and MD_SPROT_REFCNT_SHFT | Bit position of the count in a node's reference word. |
-| `HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS` | 0x400 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Default value of the refresh control register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
+| `HUB_MD_REFRESH_CONTROL_RESET_DEFAULTS` | 0x400 | established |  | Default value of the refresh control register, from the header's default constant. Not a reset read. The IRIX header defines the macro with this value, and the PROM writes it to the register. |
 | `HUB_MD_SIZE_128MB` | 0x5 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Bank code 5: 128 MB. Valid in the memory configuration register, per the header comment. |
 | `HUB_MD_SIZE_16MB` | 0x2 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Bank code 2: 16 MB. |
 | `HUB_MD_SIZE_1GB` | 0x8 | established | public Linux SN0 Hub memory/directory header, pinned linux tree (field masks, shifts and default constants) | Bank code 8: 1 GB. Does not fit a three-bit bank field. |
