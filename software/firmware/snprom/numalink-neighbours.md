@@ -740,9 +740,11 @@ every row is a software expectation. Not yet independently reviewed.
   through the vector read helper `0xffa0bd20` (register 0: part number bits 27:12, revision 31:28). `chipset_init_chip`
   (`0xffa0f8c0`) stores both and calls the classifier `0xffa0f7e0`, which is table-driven: it walks the zero-terminated
   array of four type tables at `0xffbd8a18` (`0xffbd7c18`, `0xffbd7f98`, `0xffbd8318`, `0xffbd8698`) and stores the first
-  table whose match method returns 1; if none does it returns 0. The classifier has nine direct callers (`0xffa0f9cc`,
-  `0xffa0fb6c`, `0xffa20dfc`, `0xffa44fac`, `0xffa46bcc`, `0xffa5c3fc`, `0xffa7c83c`, `0xffa8d55c`, `0xffa8d5dc`).
-- Each match method loads the 16-bit part number and compares it with one immediate, then returns 1 or 0:
+  table whose match method returns 1; if none does it returns 0. The classifier has twelve direct callers (`0xffa0f9cc`,
+  `0xffa0fb6c`, `0xffa20dfc`, `0xffa44fac`, `0xffa46bcc`, `0xffa5c3fc`, `0xffa7c83c`, `0xffa8d55c`, `0xffa8d5dc`, `0xffa8d68c`,
+  `0xffae0d5c`, and `0xffb0935c` in the node-id setter `0xffb09210`).
+- Each match method loads the 16-bit part number and compares it with one immediate, then returns 1 or 0. The "compare at"
+  addresses below are the immediate loads; each `cmp4` is in the next bundle (for example `0xffa948dc` loads, `0xffa948e0` compares):
 
   | Type table | Match | Part | Name |
   |---|---|---|---|
@@ -766,8 +768,9 @@ every row is a software expectation. Not yet independently reviewed.
   record builder): the router's id field is stored from a different source for `0x3017`; `0xffb0f896` (in `0xffb0f840`, the
   operator command that prints router link status, below): any other part prints "Destination must be a router." and
   stops, so an NL4 router is refused by it; `0xffa5ef00`, `0xffa5ef10`, `0xffa5f300`, `0xffa5f306` (in `0xffa5e880`): the
-  V0/V1 bits (bits 4 and 12, [global-config.md](../../../devices/router_nl4/global-config.md#the-terminal-hop-values-0-and-4)) of the node's own table words for a neighbour on NI port 0 or 1 that is
-  an NL3 router. Those four are writes to the node's `0x1_5002_xxxx` table registers, not router accesses. For `0x239`:
+  V0/V1 bits (bits 4 and 12, [global-config.md](../../../devices/router_nl4/global-config.md#the-terminal-hop-values-0-and-4)) of the table words for a neighbour on NI port 0 or 1 that is
+  an NL3 router. Those four write the `0x1_5002_xxxx` tables of the object being distributed, which can be a neighbour node and not
+  only the local one; they are not router accesses. For `0x239`:
   `0xffa5368c`, `0xffa53916` (in `0xffa53650`), `0xffa5b6b0` (distribution `0xffa5b5d0`), `0xffa5c11c`, `0xffa5c5a6`,
   `0xffa5c60c` (route programmer `0xffa5c0f0`) and `0xffa5cd4c` (in `0xffa5c910`).
 - The listing has no other immediate 12311, 569, 17251 or 17442 in the boot routines (`0xffa00000` to `0xffb10000`); the
@@ -796,12 +799,12 @@ where it has the offset; the rest are unnamed. **Inferred** for every meaning in
 | `0x178`, `0x180`, `0x188`, `0x190` | `0xffa64280`, `0xffa64290`, `0xffa642a0`, `0xffa642b0` | | none: return 256, 16, 8 (ports), 2 (type code) |
 | `0x198` | `0xffa66440` | `nl3r_latency` | none: returns 3 for argument 2, else 255 |
 | `0x1a0` | `0xffa642c0` | | none: bits 55:52 of the register 0 word minus 1, the port the request entered by (NL4: bits 43:40) |
-| `0x1a8` | `0xffa642e0` | | read port block `+0x8` (`PORT_STATUS_ERROR`); returns the low byte and bits 15:8 |
+| `0x1a8` | `0xffa642e0` | | read port block `+0x8` (`PORT_STATUS_ERROR`) (block number = argument + 2, argument 0-based); returns the low byte and bits 15:8 |
 | `0x1c0` | `0xffa643c0` (body `0xffa63bb0`) | | first contact, see below |
-| `0x1c8` | `0xffa64570` | | for ports 1 to 8: write `+0x8` of the block with `0x4000000000` and read it back; with bit 31 of the flag argument set it first reads `0x10` |
+| `0x1c8` | `0xffa64570` | | for ports 1 to 8 (loop variable p, block number p + 1): write `+0x8` of the block with `0x4000000000` and read it back; with bit 31 of the flag argument set it first reads `0x10` |
 | `0x1d0` | `0xffa64940` | | none: edits the PROM's own route table (nibble get and set, `0xffa0cec0`, `0xffa0cf20`) |
 | `0x1d8` | `0xffa64d10` | | the table writer, see below |
-| `0x1e0` | `0xffa65a10` | | write port block `+0x200 + 8 * (entry mod 128)` for one port and entry |
+| `0x1e0` | `0xffa65a10` | | write port block `+0x200 + 8 * (entry mod 128)` for one port (argument + 2 is the block number, so the argument is 0-based) and entry |
 | `0x1e8` | `0xffa65b80` | | reads (diagnostic print): `+0x200 + 8 * i` for i = 0 to 127, twice, then `+0x100 + 8 * j` for j = 0 to 15, in each of the 8 port blocks |
 | `0x1f0` | `0xffa66040` | | under the lock: bit 0 of the flag argument read-modify-writes `0x10` (set or clear a mask), bit 1 does the same to `+0x18` (`PORT_RESET_MASK`) of each port in a mask |
 | `0x208` to `0x258` | `0xffa924b0` to `0xffa940c0` | `sc_uart_*` | none of the vector helpers: these are the system-controller UART routines, identical to the SHub's, with a direct local-register branch and a branch for "vector mode" (bit 5 of the controller object's flag at `+0x50`) that reaches the router through slots `0x260` to `0x268` |
@@ -809,14 +812,14 @@ where it has the offset; the rest are unnamed. **Inferred** for every meaning in
 | `0x268` | `0xffa8cc20` | `sc_nl3r_dev_reg_offset` | maps UART register index `i` to router offset `0x240 + 8 * i` (NL4: `0x30 + 8 * (i xor 1)`) |
 | `0x280` | `0xffa8cc40` | `sc_nl3r_uart_divisor` | returns 13 |
 | `0x298` | `0xffa912d0` | `sc_nl3r_sim_data` | read `0x50000` and fill a record of fixed constants (16, 18, 26, 28, 114, 2048) from it |
-| `0x330` | `0xffaaa4e0` | `nl3r_config_global` | when its port argument is non-zero: read `0x20`, replace bits 4:1 with `port - 1`, write back; then a write to the node's own register (not the router) |
-| `0x338` | `0xffaaa740` | `nl3r_config_port` | one read of port block `+0x88` (`ERROR_CLEAR`); the value is discarded. A read that clears is possible and not shown |
+| `0x330` | `0xffaaa4e0` | `nl3r_config_global` | when its port argument is non-zero: read `0x20`, replace bits 4:1 with `port - 1`, write back; then `0xffa16750`, a memset wrapper that zero-fills 88 bytes at `nasid << 38 + 0x3000000000 +` an offset (not a router access) |
+| `0x338` | `0xffaaa740` | `nl3r_config_port` | one read of port block `+0x88` (`ERROR_CLEAR`) (block number = argument + 1, argument 1-based); the value is discarded. A read that clears is possible and not shown |
 
 The NL3 table has no entry at slot `0x328`: the NL4 `nl4r_init_global` is not called for an NL3 router. The slots
 `0x208` to `0x258` are shared with the SHub table by address; the vector branch of the UART routines uses
 the register map of slot `0x268`, so an NL3 router's controller UART is at `0x240` to `0x278` (eight registers, index 0 to
 7; the framing layer `0xffa8d720`, `0xffa8d870`, `0xffa8daa0`, `0xffa8dff0` and `0xffa8e290` uses indexes 0 to 3, as for NL4,
-and `0xffa918c0`, `0xffa91c20`, `0xffa91d60` and `0xffa91f90` use others, not decoded). Which index is transmit data, status,
+and `0xffa918c0`, `0xffa91c20`, `0xffa91d60` and `0xffa91f90` use others, not decoded). The UART index numbering above is as the code passes it. Which index is transmit data, status,
 receive data and receive status for NL3 is **inferred** from the NL4 mapping and not read.
 
 **First contact, slot `0x1c0` (`0xffa63bb0`), in order.**
@@ -827,9 +830,11 @@ receive data and receive status for NL3 is **inferred** from the NL4 mapping and
    and the lock was not obtained (the same wait as the NL4 `cache_advert`).
 3. Still zero: `0xffa63930`: read-modify-write `0x20` (clear bit 52, bits 19:16 and the fields under `0xffeffffffff0fe01`,
    set bit 4); read-modify-write `0x28` (bits 31:12 cleared with bit 30 set, bits 11:8 := 7); for each of the 8 port blocks
-   read-modify-write `+0x0` (low 10 bits := 400). Then read `0x50`; the module id, slot and slab requests
-   (`0xffa80dd0`, `0xffa80f90`, `0xffa81170`) through the controller UART of the router (the `0x240` registers); write `0x100`
-   with bit 31 set and bits 30:24 replaced (`0xffa94960`); unlock (write 0 to `0x118`).
+   read-modify-write `+0x0` (low 10 bits := 400). Then read `0x50` into a word. The `0x100` word is built locally from it:
+   bits 31:24 cleared (mask `0xffffffff00ffffff`), the module id (`0xffa80dd0`) in bits 63:32, the slot (`0xffa80f90`) in bits
+   15:12, bit 19 set if `0xffaac160` returns non-zero, the slab (`0xffa81170`) in bits 18:16; written through `0xffa94960`;
+   then unlock (write 0 to `0x118`). That the three requests go through the router's controller UART at `0x240` is **inferred**:
+   those bodies were not read. Bit 31 and bits 30:24 are not set here; that pattern belongs to the table writer.
 
 **The table writer, slot `0x1d8` (`0xffa64d10`).** For each port block (no lock held) the 128 entries at `+0x200 + 8 * i`
 and the 16 entries at `+0x100 + 8 * j`: read, and write only when the value differs from the one built from the PROM's route
@@ -843,8 +848,8 @@ The dispatch sites are `adds rX = slot` after the `[object + 0x20]` type-table l
 `br.call` through b6. Only routines in the `intcon` family appear, so an NL3 router is driven by the same generic code
 as an NL4 router:
 
-- `0x1c0` from `0xffa45a16` in `0xffa45780` (`discover_object`); `0x1a0` from `0xffa45b00` there and `0xffa46c50` in
-  `0xffa46a50` (`intcon_chklink`); `0x1a8` from `0xffa46c96`, `0xffa46d80`, `0xffa46e50`, `0xffa46f30` in `0xffa46a50`;
+- `0x1c0` from `0xffa45a16` in `0xffa45780` (`discover_object`); `0x1a0` from `0xffa45b00` there, `0xffa46c50` in
+  `0xffa46a50` (`intcon_chklink`) and `0xffa5c43c` in `0xffa5c0f0`; `0x1a8` from `0xffa46c96`, `0xffa46d80`, `0xffa46e50`, `0xffa46f30` in `0xffa46a50`;
   `0x1c8` from `0xffa45510` in `0xffa450e0`; `0x188` (port count), `0x178`, `0x180`, `0x190`, `0x198` from the crawl and
   the numbering routines.
 - `0x1d8` from `0xffa5bf30` in the distribution `0xffa5b5d0`; `0x1e0` from `0xffa5c4f0` and `0xffa5c730` in the route
@@ -867,14 +872,17 @@ as an NL4 router:
 
 ### SAL runtime (what the operating system can make the firmware do to an NL3 router)
 
-`chipfunc_nl3r` (runtime `0xa1f50`) binds `nl3r_name`, `nl3r_probe`, `nl3r_lock` (`0x11ef0`, the same `0x518` poll),
-`nl3r_unlock` (`0x11f40`, write 0 to `0x118`), `nl3r_advert_read` (`0xeed0`, `0x100`; `nl3r_advert_write` `0xef30` is
-also present), `nl3r_set_nasid` (`0x11fa0`, `0x10` bits 11:8), `nl3r_clock_port` (`0x120b0`, `0x20` bits 4:1),
-`nl3r_latency`, the `sc_uart_*` set with `sc_nl3r_dev_reg`, `sc_nl3r_dev_reg_offset` (`0x240 + 8 * i`),
-`sc_nl3r_uart_divisor` (13) and `sc_nl3r_sim_data`, and the `nl3r_hwperf_*` set. `nl3r_hwperf_acquire`, `_release` and
+`chipfunc_nl3r` (runtime `0xa1f50`) binds only `nl3r_name`, `nl3r_probe`, `nl3r_lock` (`0x11ef0`, the same `0x518` poll),
+`nl3r_unlock` (`0x11f40`, write 0 to `0x118`), `nl3r_advert_read` (`0xeed0`, `0x100`), `nl3r_latency`, the `sc_uart_*` set with
+`sc_nl3r_dev_reg`, `sc_nl3r_dev_reg_offset` (`0x240 + 8 * i`), `sc_nl3r_uart_divisor` (13) and `sc_nl3r_sim_data`, and the
+`nl3r_hwperf_*` set (slots `0x340` to `0x378`). Slots `0x108`, `0x148` and `0x170` point to `salruntime_chipfunc_unimplemented`,
+as in the NL4 and SHub tables: `nl3r_set_nasid` (`0x11fa0`, `0x10` bits 11:8), `nl3r_clock_port` (`0x120b0`, `0x20` bits 4:1)
+and `nl3r_advert_write` (`0xef30`) exist as code in the runtime but nothing references them. `nl3r_hwperf_acquire`, `_release` and
 `_force_release` touch no register. `nl3r_hwperf_get_mmrs` (`0x1bb80`) and `_set_mmrs` (`0x1b950`) take their addresses
-from the caller, but a validator (`0x1aeb0`) checks each against a table of 32 entries: for each of the eight port blocks,
-`+0x0`, `+0x8`, `+0x20` and `+0x28` (`0x10000` to `0x40828`). Anything else is refused. The runtime has none of the table-writing
+from the caller, but a validator (`0x1aeb0`) checks each against a table at runtime `0xa3f08` of 33 entries of 16 bytes (address, write-permit
+flag): entry 0 is register 0 with flag 0 (readable, not writable) and entries 1 to 32 are, for each of the eight port blocks,
+`+0x0`, `+0x8`, `+0x20` and `+0x28` (`0x10000` to `0x40828`) with flag 1. `set_mmrs` passes mode 1 and `get_mmrs` mode 0. Anything
+else is refused. The runtime has none of the table-writing
 routines. `salruntime_irouter_op` (`0xaff0`) is the system-controller channel (`sysctl_irtr_open`, `_send_chunk` and the
 rest), not a router register access; as [the router README](../../../devices/router_nl4/README.md#how-software-reaches-the-router) says of `SN_SAL_IROUTER_OP`.
 
