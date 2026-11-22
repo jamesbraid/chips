@@ -77,6 +77,8 @@ non-standard", so a probe of bus 0 for a host bridge class does not find a stand
 
 ## Audio engine (the Linux driver; the NT driver is checked below)
 
+What a Windows driver needs on top of this section (codec programming values, per-period traffic, ordering, HAL needs) is on [audio.md](audio.md).
+
 ### Codec access
 
 The AD1843's 16-bit registers are reached through a command and a data word: write the data, then the command with
