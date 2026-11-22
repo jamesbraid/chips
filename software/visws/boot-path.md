@@ -622,12 +622,12 @@ file id, 7 invalid, 8 I/O, 9 is-directory, 10 too many open files, 13 no such de
 
 ### The hand-off block (`1.1005@0x1134635`)
 
-Run when the loader is about to be started (only if the flag word at `0x1147400` is non-zero). It copies `0x8c` bytes from the static table at
+Run early, not at the loader call: its only caller is `0x1113a36`, inside the start-up routine `0x1113a02`, which main initialisation calls at `0x110038e`, before the descriptor scan and the static descriptors. The flag word at `0x1147400` it tests is always 1 (stored at `0x110008e`), so the test never skips. It copies `0x8c` bytes from the static table at
 `0x11d6220` to physical `0x1200` and `0x3c` bytes from `0x11d62b0` to `0x1300`, then writes the system parameter block with
 immediate stores: `ARCS` at `0x1000`, length `0x48` at `0x1004`, version word 1 at `0x1008`, revision word 10 at `0x100a`, zero at
 `0x100c` (restart block), `0x1010` (debug block) and `0x102c` (adapter count), then `0x8c`, `0x1200`, `0x3c` and `0x1300` at
 `0x101c` to `0x1028`. The routine writes nothing at `0x1014` or `0x1018` (the exception and TLB-miss vector fields), so they hold
-whatever the page held before; the loaders never read them. Established.
+whatever the page held before; the loaders never read them. The restart block pointer does not stay zero: `0x1113acb` then calls `0x110d404`, which allocates a `0x228`-byte block (`RSTB`, length `0x228`, version 1, revision 10) through `0x110d46c`, chains the previous head at `+0xc` and stores the new block at `0x100c` (`0x110d485`); `0x110c136` calls it too. So the SPB's restart field is non-zero at loader entry. Established.
 
 ### The firmware vector (static table `0x11d6220`, 35 dwords) and what each entry does
 
@@ -649,7 +649,7 @@ a 32-bit value in `EAX`. Established for every row (thunk and target read); the 
 | 10 | GetChild | `0x1134746` | 4 | returns `[node+0x2c]`; a NULL node returns the root (`0x114cd3c`) |
 | 11 | GetParent | `0x1134753` | 4 | returns `[node+0x24]` |
 | 12 | GetConfigurationData | `0x1134760` | 8 | copies `[comp+0x18]` bytes from `[comp+0x34]` to the caller's buffer; status 7 when length or data pointer is zero |
-| 13 | AddChild | `0x1134772` | 12 | `0x1130ab4`: allocates a `0x38`-byte node, copies the `0x24`-byte component, duplicates identifier and configuration data, appends as the last child of the parent (a NULL parent leaves the node unlinked; the root is set elsewhere). Warns on a version or revision other than 1 and 10. Returns the node or NULL |
+| 13 | AddChild | `0x1134772` | 12 | `0x1130ab4`: allocates a `0x38`-byte node, copies the `0x24`-byte component, duplicates identifier and configuration data, appends as the last child of the parent (a NULL parent leaves the node unlinked; the root is set elsewhere). Warns when the component's version or revision differs from the live words at `0x1008` and `0x100a` (1 and 10 as written above, not constants). Returns the node or NULL |
 | 14 | DeleteComponent | `0x1134789` | 4 | `0x1130bed`: status 7 for NULL or a node with children, else unlinks and frees |
 | 15 | GetComponent | `0x1134796` | 4 | `0x113e6e2`: path lookup (below) |
 | 16 | SaveConfiguration | `0x11347a3` | 0 | `0x1103c00`: `xor eax,eax; ret`, a success no-op |
@@ -657,7 +657,7 @@ a 32-bit value in `EAX`. Established for every row (thunk and target read); the 
 | 18 | GetMemoryDescriptor | `0x11347ad` | 4 | `0x111416d`: NULL returns the list head; otherwise the node's magic dword (`+0x0c`) must be `0x4b45565e`, and `[node+0x10]` (next) is returned; any other pointer returns NULL |
 | 19 | (reserved) | zero | n/a | |
 | 20 | GetTime | `0x11347ba` | 0 | returns `0x114bc58`, a static TIME_FIELDS refilled from the CMOS clock by `0x1136efc` on every call |
-| 21 | GetRelativeTime | `0x11347bf` | 0 | `0x1119fbe`: seconds computed from the same fields (hours, minutes, seconds of the current day; `-0x15180` is one day) |
+| 21 | GetRelativeTime | `0x11347bf` | 0 | `0x1119fbe`: `((day * 24 + hour) * 60 + minute) * 60 + second - 86400`, passed with year and month to `0x1118c10` |
 | 22 | GetDirectoryEntry | `0x11347c4` | `0x10` | `0x1119f46`: only on a file opened as a directory (status 18 otherwise), forwards driver command 5 |
 | 23 | Open | `0x11347df` | 12 | `0x1119977` (below) |
 | 24 | Close | `0x11347f6` | 4 | `0x1119e78`: file-system close (command 2), then the driver's close; status 4 for a bad id |
@@ -680,13 +680,13 @@ loader's guard on the vector length ([Boot into NT](#boot-into-nt) item 2). The 
 configuration read and write helpers the drivers use (`0x111a79c(devid, register, value)`). Neither loader calls the private vector; the purpose of the other
 targets was not traced.
 
-**Power-down (`0x111460b`).** Does nothing on the second-southbridge flag (below). Otherwise: sets CMOS bytes (`0x61`, `0x5a`), clears the PIIX4
+**Power-down (`0x111460b`).** Does nothing on the second-southbridge flag (below). Otherwise: sets CMOS bytes (`0x61`, `0x5a`), calls `0x11149e8(0)` (with a zero argument it only reads port `0xfb5` and returns without writing; the board tests ahead of the read were not decoded), clears the PIIX4
 power-button status (reads `0xf80` and writes it back while bit 8 is set), writes `0x2000` to `0xf84` (sleep enable, type 0),
 waits, runs `0x1114685`, waits, prints "Shutdown: keep holding that button" (Cobalt I/O generation 0) or "Shutdown: system didn't shut
 down", waits again. `0x1114685` writes bridge B's address register (`+0xf8`) `0x8000ff00` and data register (`+0xfc`) `0x00120002`, the
 same special-cycle pair the HAL's power NMI routine writes ([nt-hal.md](nt-hal.md#power-management-nmi-and-pci-bridge-set-up)),
 when the Cobalt I/O generation is 1 or more. Below 1 it writes the 16-bit value `0xcafe` to port `0xff0`. The generation function returns 1 to 6 or `-2`, never 0, so the port
-write is unreachable in this build (established from the return values; `jb` is an unsigned test). Established.
+write is unreachable in this build (established from the return values; `jb` is an unsigned test). Established. The routine is also reached from file I/O: every Read, Write and GetReadStatus calls `0x1113e3b`, which calls `0x1102830`, which reads PM status `0xf80` and, when the power-button bit (bit 8) is set, writes it back and jumps to PowerDown.
 
 ### Open, Read, Write, Seek and the file table
 
@@ -695,11 +695,11 @@ write is unreachable in this build (established from the return values; `jb` is 
 - **Open (`0x1119977`).** Stores `-1` in the output id first, status 7 for a NULL path. Resolves the path (`0x113e989`), then checks the OpenMode
   against the device's attribute bits (`0x20` readable, `0x40` writable): mode 0 read, 1 write, 2 read-write, 3 create-write,
   4 create-read-write, 5 supersede-write, 6 supersede-read-write, 7 open-directory (needs readable), 8 create-directory (needs writable);
-  any other mode status 7; a mode the device cannot do status 2. A directory open on a non-directory gives 18, a missing driver 13, a
+  any other mode status 7; a mode the device cannot do status 2. A directory open on a non-directory gives 18, and so does every create, supersede or directory mode (3 to 8) when no file system is attached (`+0x6c` zero); a missing driver 13, a
   failed mount 20. On success it runs the driver's open (command 1), then the file system's (`+0x68` hook) and returns the slot index. Established.
-- **Driver calls.** Each device node has a strategy routine (slot `+0x40`) taking a command in the block's first dword: 1 open,
+- **Driver calls.** Open calls the file-system hook with command 0 and then command 1 (when a file system is attached). Each device node has a strategy routine (slot `+0x40`) taking a command in the block's first dword: 1 open,
   2 close, 3 read, 4 write, 6 read status, 7 per-call housekeeping, 10 mount, `0x11` get file information. A file system (FAT,
-  NTFS, ISO 9660, TFTP) sits in the `+0x68` hook with its own command numbers (1 open, 2 close, 3 read, 4 write, 5 get directory
+  NTFS, ISO 9660, TFTP) sits in the `+0x68` hook with its own command numbers (0 and 1 open steps, 2 close, 3 read, 4 write, 5 get directory
   entry, 6 read status, 7 get file information). Established for the numbers (call sites).
 - **Read (`0x1119bec`).** Raw block devices (flag `0x20`) are read in whole sectors; an unaligned head or tail goes through a `0x800`-byte bounce buffer on the stack, and the
   transfer is repeated until the count is satisfied. The position is a 64-bit byte offset advanced by the bytes moved. A write needs a
@@ -727,11 +727,11 @@ Established (`0x1130ab4`, templates in the data module).
 | CPU n | processor, CentralProcessor | 0, 0, affinity 1 | built from the processor table entry (`0x1102240`; the string format was not decoded) | `0x2c` bytes | `0x1102090` |
 | FPU n | processor, FloatingPointProcessor | same | same | none | same |
 | `SGI REV INFO` | adapter, MultiFunction | 0, 0, all | `SGI REV INFO` (13 with NUL) | `0x118` bytes: 24-byte header and a 256-byte text block | `0x111a338` |
-| `SYS TYPE` | same | same | 9 | 4 bytes: board type | same |
-| `BOARD REV` | same | same | 10 | 4 bytes: board revision | same |
-| `COBALT` | same | same | 7 | 4 bytes: byte at Cobalt CPU block `+8` | same |
-| `COBALT I/O` | same | same | 11 | 4 bytes: Cobalt I/O generation | same |
-| `DISPLAY ENGINE` | same | same | 15 | 4 bytes: low nibble of the dword at `0xd0000000` | same |
+| `SYS TYPE` | same | same | 9 | `0x1c` bytes: 24-byte header and 4 data bytes (board type) | same |
+| `BOARD REV` | same | same | 10 | `0x1c` bytes: header and 4 data bytes (board revision) | same |
+| `COBALT` | same | same | 7 | `0x1c` bytes: header and the byte at Cobalt CPU block `+8` | same |
+| `COBALT I/O` | same | same | 11 | `0x1c` bytes: header and the Cobalt I/O generation | same |
+| `DISPLAY ENGINE` | same | same | 15 | `0x1c` bytes: header and the low nibble of the dword at `0xd0000000` | same |
 | `ARC PROM` | same | same | 9 | `0x118` bytes: header, then the 64 flash bytes at `0x79fc0` to `0x79fff`, then 24 bytes from `0x7ffd8` | same |
 | `ACPI-BIOS` | adapter, MultiFunction | 0, 0, all | 10 | `0x2c` bytes | `0x111a293` |
 | `PARALLEL1`, `PCI` bus 0 and 1, `pckbd`, `pcms`, USB keyboard and mouse, floppy, `COM1`, display, monitor, network | as the table in the build routines | | | | `0x111b5d8`, `0x111cd3a`, `0x1122d61`, `0x1127561`, `0x113f889` and following |
@@ -749,16 +749,16 @@ Established (`0x1130ab4`, templates in the data module).
   (`007 rev n` for `0x20` to `0x2f`); type 1 revision 0 is `001 rev 0`, 1 to 31 `002 rev (rev-1)`, from 32 `(rev>>4 & 7)+1` and `rev & 0xf`; types 2 and 3 use `(rev>>4 & 7)` and `rev & 0xf`.
   The thresholds 6 and 12 are the HAL's generation boundaries. Established (code), meaning of fab numbers unknown.
 - **`SGI REV INFO` text** (`0x111a52c`): `Motherboard: <fab and revision> (<66|100|133>MHz CPU Bus)`, `Cobalt:%02lx`, `Cobalt I/O: %03ld`, `PCI Bridge: %02lx`, `Serial I/O: %08lx`,
-  and, only when the bus speed code is 100, `1394: %08lx` and `Display Engine: %03ld`. The bus code (`0x1100130`) is 133 for board types 2 and 3, 100 for type 1, and for type 0 either 66 or 100
+  and, only when the bus speed code is 100, `1394: %08lx` and `Display Engine: %03ld` (the printing is gated; the reads are not: `0x11003e0`, called from `0x110039d` on every boot, caches SYS TYPE, BOARD REV, Cobalt, the generation, the bridge byte, 1394, Serial I/O and Display Engine into `0x1160380` to `0x116039c`; `0xfe000000` is read whenever the bus code is not 66 and `0xd0000000` unconditionally). The bus code (`0x1100130`) is 133 for board types 2 and 3, 100 for type 1, and for type 0 either 66 or 100
   by bit 0 of port `0xfb2`. Established. The values come from these reads, all through the windows the PROM maps in `0x1103730` to `0x11039c0`:
   Cobalt = byte `0xc2000008`; PCI Bridge = byte at bridge B `+8` (`0xfd000008`); Serial I/O = dword at `0xff01c004`; 1394 = top nibble of the dword at `0xfe000000`; Display Engine = low nibble of the dword at `0xd0000000`.
 - **Cobalt I/O generation** (`0x11001c0`): 1 when the bridge byte is zero, else 2, 3, 4 or 5 when the `0xff01c004` word equals `0x35c0194c`, `0x35f7357f`, `0x363e4470` or `0x366c3dfb`
   (these decode as Unix times 30 July, 10 September, 2 November and 7 December 1998, so the word is a build stamp, inferred), 6 when the word is greater than `0x366c3dfb`, and `-2` when it is smaller and not one of the four.
-  That the printed "Serial I/O" figure is this word is established (same pointer and offset). The QEMU model page says any other value counts as 5 or later; the code gives 6 above and `-2` below.
+  That the printed "Serial I/O" figure is this word is established (same pointer and offset). Callers compare the result unsigned (`>= 3` at `0x11128d4` and `0x1112a1e`, `>= 5` at `0x111b4e6`), so `-2` counts as the newest. A second reader, `0x1100240` (from `0x1100284`), returns 2 for `0x35c0194c`, 3 for `0x35f7357f`, 4 above that and `-2` otherwise; a `>= 3` test on it defaults `l2cache` and `coherentdma`. The QEMU Lithium page (lines 188 to 197) says the same; only the summary row in `visual-workstation.rst` (lines 1176 to 1178) is shorthand.
 - **`ARC PROM` and Windows 2000 setup's check.** The node's configuration data is the 24-byte header, then flash `0x79fc0` to `0x79fff`, then flash `0x7ffd8` to `0x7ffef`. The whole-image trailer (flash `0x79fe8`) lands at configuration offset `0x40`,
   so its four ASCII version digits are at offset `0x4c`, exactly the offset text-mode setup compares with its `PROM` version string. So that check reads the running firmware's version digits (`1005` for this image) from the `ARC PROM` node (established for the layout; the direction of the comparison in setup is still not traced).
 - **Second-southbridge flag (`0x11004a0`).** The PROM writes `0x80002000` to bridge B's address register and reads the data register; a value of `0x05961106` (vendor `0x1106`, device `0x0596`) sets the flag at `0x1147410`.
-  When set, `SYS TYPE` reads 0, `BOARD REV` reads `0x20`, `PowerDown` does nothing, and the IDE set-up writes `0x3ac9f20b` instead of `0xc077c077` to IDE register `0x40`. The PROM also registers drivers for the matching VIA USB (`1106:3038`) and IDE (`1106:0571`) parts. Which product carries this southbridge is unknown. Established (code).
+  When set, `SYS TYPE` reads 0, `BOARD REV` reads `0x20`, `PowerDown` does nothing, the IDE set-up writes `0x3ac9f20b` instead of `0xc077c077` to IDE register `0x40` and skips the `0x44` write, `0x112408c` calls `0x1124054` (bridge B address `0x80002108`, byte `0x8a` to `+0xfd`), and `0x1127224` skips a register `0x48` write. The PROM also registers drivers for the matching VIA USB (`1106:3038`) and IDE (`1106:0571`) parts. Which product carries this southbridge is unknown. Established (code).
 
 ### Memory descriptors in the loader block
 
@@ -766,14 +766,14 @@ A descriptor is a `0x14`-byte block: type, base page, page count, magic `0x4b455
 
 - **Static descriptors** (`0x1101e30`, in this order, byte address, pages, type): `0x0` 1 type 6; `0x1000` 1 type 1; `0x2000` `0x60` type 5;
   `0x9f000` `0x61` type 6; `0x2ff000` 1 type 5; `0xf50000` `0xb0` type 5; `0x1100000` `0x80` type 6; `0x1180000` `0x80` type 5; `0xd00000` `0x250` type `0x14`.
-  A type is carved out of the free run that contains it, so the rest stays what it was. Types are the loader's: 0 exception block, 1 system block, 2 free, 3 bad, 4 loaded program, 5 firmware temporary, 6 firmware permanent, `0x14` (20) memory data, `0x16` (22) special memory.
+  A type is carved out of the free run that contains it, so the rest stays what it was. Types are the loader's: 0 exception block, 1 system block, 2 free, 3 bad, 4 loaded program, 5 firmware temporary, 6 firmware permanent, `0x14` (20) and `0x16` (22), whose names (memory data and special memory) come from the loader's own strings, not from the PROM.
 - **RAM** (`0x1102d90`): the 16-entry slot table is scanned in 128 MiB steps; each slot whose entry equals `0x40` counts, adjacent banks are merged into at most eight ranges, and the total is `DAT_0115c310`. The environment variable `maxpmem` lowers the total (not below 128 MiB). The first `min(total, 32 MiB)` becomes one type 2 (free) descriptor from address 0; every further range becomes a type 5 (firmware temporary) descriptor. Established for the code; what the 16 slot entries are when the routine receives them (the value `0x40` per 128 MiB slot) and how the RAM probe produced them are unread.
-- **Graphics memory** (`0x1104840`): returns failure when total RAM is below 64 MiB. Between 64 and 128 MiB it uses a built-in 4 MiB and 8 MiB pair. From 128 MiB it parses `cogfxmem` (a total, then up to twelve bank sizes in pages), slot mask `1`/`2` entries default to `0x100` and `0x500` pages, and a bank below `0x400` pages is raised to that. Each bank size is rounded up to 4 MiB (`0x400` pages), banks are merged by 32 MiB slot masks when there are more banks than 32 MiB slots of RAM, trimmed so the total leaves at least 64 MiB for the system, and each bank is allocated with `0x11141e9(address, pages, 0x16)`. A flag word at `0x114cd44` (setter not traced) lifts the first two banks to at least `0x400` and `0x800` pages. The merge and trim rules (about 300 lines of the routine) were read only for shape: inferred.
+- **Graphics memory** (`0x1104840`): returns failure when total RAM is below 64 MiB. Between 64 and 128 MiB it uses a built-in 4 MiB and 8 MiB pair. From 128 MiB it parses `cogfxmem` (a total, then up to twelve bank sizes in pages), slot mask `1`/`2` entries default to `0x100` and `0x500` pages, and a bank below `0x400` pages is raised to that. Each bank size is rounded up to 4 MiB (`0x400` pages), banks are merged by 32 MiB slot masks when there are more banks than 32 MiB slots of RAM, trimmed so the total leaves at least 64 MiB for the system, and each bank is allocated with `0x11141e9(address, pages, 0x16)`. A flag word at `0x114cd44` (set at `0x11317b0` and `0x11317d5` from graphics-device detection in `0x113175c`) lifts the first two banks to at least `0x400` and `0x800` pages. The merge and trim rules (about 300 lines of the routine) were read only for shape: inferred.
 - **The loader's own region** is the type `0x14` descriptor at `0xd00000`, which holds the firmware page tables (CR3 is `0xd00000` at the loader call, [above](#processor-state-at-the-loader-call)). The HAL ignores type 3 and counts type 6 only toward the total, so types 5 and `0x14` count as NT memory.
 
 ### Boot devices and drivers (1.1005)
 
-PCI drivers register through `0x111a6cc` with a `0x18`-byte record (attach, remove, other hook, then vendor and device). Registered ids, all established:
+PCI drivers register through `0x111a6cc` with a `0x18`-byte record (attach, remove, other hook, vendor, device, and a sixth dword set to -1). The PCI enumeration has a QLogic `1077:2100` special case at `0x111ab31` that ORs `0x300` into the bridge's per-device word. Registered ids, all established:
 
 | Driver | PCI id | Attach | What it touches |
 |---|---|---|---|
@@ -798,8 +798,8 @@ What is *not* done for the drivers: the register sequences of the 82557, the UHC
 
 The boot processor runs the same routine the others do (`0x1103f74`) before waking them, with the mailbox byte `0x504` just cleared: it increments the byte (so the boot processor takes ordinal 0), enables its local APIC (`+0xf0 |= 0x100`), saves the ID it had at reset in the table `0x119c460`, and writes `ordinal << 24` into the local APIC ID register. The start-up stub the other processors run takes its ID from the same counter, as the processor-table item above and the QEMU page say; the stub itself was not re-read here. So the boot processor's APIC ID on a 1.1005 machine is **0**, set by the firmware, whatever the reset value was (established; that the write takes effect on the processor is inferred from the processor table entry read back afterwards at `0x1103f3d`). The table entry holds the ID after the write.
 
-**Cobalt APIC at the loader call.** The PROM's own set-up (`0x1109240`) writes all 30 redirection entries masked, level and its own vector (`0x99 0x91 0x9a 0xa2 0x31 0x61 0x59 0x51 0x79 0x98 0x81 0x71 0xf3 0x97 0x29 0x69 0x95 0x94 0x93 0x92 0xb9 0xb1 0xa9 0xa1 0xa5 0xa3 0xf2 0xf1 0xf9`, then the all-ones word for entry 29), and the ID register with bits 27:24 set to 4 and bit 8 set.
-A teardown (`0x11092e0`) re-masks the entries, clears the enable bit of the Cobalt APIC and the local APIC's software-enable bit (`+0xf0` bit 8) and sets the task priority to `0xff`. Whether the second runs before the loader call was not traced.
+**Cobalt APIC at the loader call.** The PROM's own set-up (`0x1109240`) writes all 30 redirection entries as vector `| 0x18000` (masked), then clears the mask bit (`0x10000`) of every vector that has a registered handler (flag at `0x11536cc + vec * 16`, set at `0x1108a4e`), so those entries end unmasked. The vectors are (`0x99 0x91 0x9a 0xa2 0x31 0x61 0x59 0x51 0x79 0x98 0x81 0x71 0xf3 0x97 0x29 0x69 0x95 0x94 0x93 0x92 0xb9 0xb1 0xa9 0xa1 0xa5 0xa3 0xf2 0xf1 0xf9`, then the all-ones word for entry 29), and the ID register at `+0xffc` gets 4 in bits 27:24 only if they read zero, then bit 8 is set.
+`0x11092e0` is the routine that masks everything: it re-masks the entries, clears the enable bit of the Cobalt APIC and the local APIC's software-enable bit (`+0xf0` bit 8) and sets the task priority to `0xff`. Whether the second runs before the loader call was not traced.
 
 ## Boot into Linux
 
