@@ -4,13 +4,13 @@ A list drawn from what the Linux platform code touches ([boot-and-detection.md](
 [interrupts.md](interrupts.md), [cobalt](../../devices/cobalt/README.md), [lithium](../../devices/lithium/README.md)).
 It is the minimum that Linux 2.6.33 to 3.14 reads and writes, so a model that supplies it can be tested against that
 code. It is **not** a hardware specification and carries no claim that a real machine's firmware, NT or other software
-needs only this. Nothing here has been run: no model was built or booted for this list.
+needs only this. This list was written from the code: no model has been built or booted against it in this repository. What the Windows NT side needs (the ARC firmware services, the loader block, the HAL's register uses) is in [emulator-requirements.md](../../software/visws/emulator-requirements.md).
 
 ## Boot with the stock PC-style entry (what Linux needs)
 
 1. **A kernel loaded by a PC-compatible boot path** with a boot parameter block that holds the memory size in the
-   alternate-memory field. There is no firmware memory map; the kernel makes one. The loader the real machine used
-   is unknown.
+   alternate-memory field. There is no firmware memory map; the kernel makes one. The real machine's firmware is an ARC-style PROM
+   ([boot-path.md](../../software/visws/boot-path.md#boot-into-linux)); the Linux ARC loaders that built the parameter block are not held.
 2. **The processor table**: a 16-bit count at physical `0x1e00` and MP-table processor entries from `0x1e02`, the first marked
    as the boot processor and enabled. Local APIC at `0xfee00000`, version non-zero.
 3. **Board identification**: port `0xfb2` returning a byte with bits 4, 5 and 7 clear (reads as board type 0, the 320);

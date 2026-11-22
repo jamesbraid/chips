@@ -54,7 +54,7 @@ source:
    with 30 redirection entries and the ID register at `+0xffc` (bit 8 the enable); local APIC at `0xfee00000`. Linux
    also reads the Cobalt revision and the APIC id.
 7. Cobalt interrupt routing to the CPUs with the entries listed in [nt-hal.md](nt-hal.md): the PIIX4 8259 master as one
-   level input (entry 12) that the kernel polls with the OCW3 poll command, IDE on entries 4 and 2 (the revisions noted),
+   level input (entry 12) that the kernel polls with the OCW3 poll command, IDE on entries 4 and 2 (the revisions noted; the HAL puts the first channel on entry 1 on the oldest 320 generation and on 5 on the middle one),
    PCI slot lines on entries 0 to 15 per the two bridge map. The kernel does not use an I/O APIC.
 8. The warm-reset vector method for starting the other processors (CMOS register `0x0f` set to `0x0a` and the
    vector at `0x467`) and the local APICs' INIT and startup IPIs.
@@ -84,7 +84,7 @@ the Linux list that the HAL also reads (items 3 to 9):
    APIC timer, so the Cobalt timer must count at its true rate against the emulated RTC), and the NS87307 logical
    device interrupt-type registers.
 4. The Cobalt graphics device through the SGI driver `sgcomp.sys` (see [devices/cobalt-graphics](../../devices/cobalt-graphics/));
-   for the HAL's own text output the display has to initialise through its Cobalt path or fall back to VGA text.
+   the HAL's own text output goes through that Cobalt frame buffer only: its VGA text routines are present but unreachable (the display mode is fixed to the frame buffer), so a model that cannot start the frame buffer gets no HAL console output, not a VGA fallback ([nt-hal.md](nt-hal.md#boot-options-the-hal-parses)).
 
 A standard Windows installer will not do: the SGI setup program replaces the HAL, the loader and the video driver.
 
