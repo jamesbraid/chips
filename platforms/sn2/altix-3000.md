@@ -137,8 +137,10 @@ is inferred, since the README names images, not chips.
   (strings at file offsets `0x5908b` to `0x59173`). `Opus IP65` is the only name carrying the board of the SHub 2
   PROM. IP41 code in the L1 prints "SH%d NI0 always NL4 on IP41 brick" and handles several SHubs per brick.
   **Established** (L1 1.62.1 `2MB image`, read in sysco `software/firmware/l1/sn2-l1-1.62.1-packages.md`; the identity
-  routine at image `0xffe7b404`, the name tables at `0xffe7ff50` and `0xffe80220`): the 3000 C-brick is
-  **`C (IP41)`**, type character `5` (0x35). The L1 takes it from the product name of its board record `0xfe` (prefix
+  routine at image `0xffe7b404`, the name tables at `0xffe7ff50` and `0xffe80220`): an `IP41` product name in record `0xfe`
+  gives type `5` (0x35): established for the L1 and PROM logic, inferred that a real Altix 3000 C-brick's record holds `IP41`
+  (support: the PROM's built-in default string, the banner, and `5` being the only candidate in the supported-brick string).
+  The 3000 C-brick is therefore `C (IP41)`. The L1 takes it from the product name of its board record `0xfe` (prefix
   `IP41`), with a stored setting only as a fallback and no strap or pin read. `C (IP45)` is the Origin 300 board and
   `C (IP37)` has no identity route in any package; only `5` is in a supported-brick string of the 1.62.1 container
   (`O5#=?` in both 2 MB packages), and the SHub 1 PROM names its compute board `IP41` (banner, klconfig board name,

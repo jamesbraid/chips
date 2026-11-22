@@ -29,8 +29,8 @@ KLCONFIG builder; a captured `config` line or `/proc/sgi_sn/sn_topology` from re
 
 Settled: the 3300 and 3700 C-brick are SHub 1 ([altix-3000.md](../platforms/sn2/altix-3000.md#shub-generation)).
 
-Settled (L1 1.62.1 `2MB image` and SAL 5.04, [altix-3000.md](../platforms/sn2/altix-3000.md)): the C-brick is `C (IP41)`,
-type character `5`. The L1 picks it from the product name of its board record `0xfe`; its `0x0003` reply is `rack << 6 | bay`
+Established for the L1 and PROM logic (L1 1.62.1 `2MB image` and SAL 5.04, [altix-3000.md](../platforms/sn2/altix-3000.md)), inferred
+for a real brick's record: the C-brick is `C (IP41)`, type character `5`. The L1 picks it from the product name of its board record `0xfe`; its `0x0003` reply is `rack << 6 | bay`
 then `0x35`; the PROM folds `5` to `c`. An emulated 3300 C-brick L1 therefore answers `0x0003` with `0x35` (or `C`, which lands
 on the same `c`) and keeps the board name `IP41`. `IP45` is the Origin 300 board and `IP37` has no identity route.
 

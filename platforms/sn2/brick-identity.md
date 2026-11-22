@@ -8,7 +8,7 @@ pages.
 Sources: SGI's Linux platform code at v5.3 (cited `v5.3:path`; also v2.6.12 where a file differs), SGI, *SGI L1 and L2
 Controller Software User's Guide* `007-3938-005` (April 2006), SGI, *SGI Altix 3000 User's Guide* `007-4579-001`
 (printed pages), SGI, *SGI Altix 350 System User's Guide* `007-4660-002`. The community SN2 tree was not needed. No
-PROM or kernel binary was read for this page (see Unknown). Grades follow [the SN2 README](README.md).
+kernel binary was read for this page; the PROM fold of the module-word type (`0xffa7d510`, SAL 5.04) was read in Ghidra (see Unknown). Grades follow [the SN2 README](README.md).
 
 ## The module id
 
