@@ -89,10 +89,13 @@ Edition target the 230, 330 and 550, ship kernels 2.2.15, 2.2.16 and 2.3.99 with
 2.2.10 kernel with its two patches and a visws 2.6.0-test2 vmlinux are held and read in
 [Linux loader handoff](../software/visws/boot-path.md#linux-loader-handoff). Settled: both loaders' firmware calls and load paths, the
 boot block each writes and the registers each leaves, which kernels each can serve, the SGI image's uniprocessor build, early
-GDT and paging steps (SGI image), its 112 MB of memory and the source of its build flag.
-Open: whether the firmware's global descriptor table has a usable selector `0x18` and what its page tables map when the loader is called;
-whether the second loader (`arclx2`, no source or licence held) was used with the held 2.6.0-test2 vmlinux; whether an SMP build of
-SGI's 2.2.10 existed; and what `larc.exe` is. Next: a firmware trace of the state at the loader call, or a copy of `larc.exe`.
+GDT and paging steps (SGI image), its 112 MB of memory and the source of its build flag. Settled by the 1.1005 trace: the processor state at the loader
+call ([boot-path.md](../software/visws/boot-path.md#processor-state-at-the-loader-call)): selector `0x18` is a flat DPL 3 code segment (loads into DS and ES
+succeed, stores and the load of SS fault), all RAM is identity-mapped with PG set and CR3 at `0xd00000`, nothing maps virtual `0xc0100000`, IF is clear, and
+the NT loader and a Linux loader are loaded by the same COFF path and get the same state; so the SGI 2.2.10 image's opening `lgdt` works and an
+unmodified 2.2 or 2.4 kernel stops at its first store.
+Open: whether the second loader (`arclx2`, no source or licence held) was used with the held 2.6.0-test2 vmlinux; whether an SMP build of
+SGI's 2.2.10 existed; what `larc.exe` is; and whether any loader (`larc.exe` is not held) installed a writable `0x18` before a mainline kernel. Next: a copy of `larc.exe`.
 
 ## Reset-to-console trace: what is still open
 
@@ -106,7 +109,11 @@ SGI's 2.2.10 existed; and what `larc.exe` is. Next: a firmware trace of the stat
 - **Page `0x00fff000`.** What the idle loop's first dword is. Settles with: reading `1.1005@0x11197aa` and its callers.
 - **Panel LED or beeper line** (port `0xfb7` bit 4). Settles with: the 320/540 service manual or a board trace.
 - **Main-module serial line settings** (baud, FIFO) and the `console` value `r`. Settles with: reading the serial driver (`1.1005@0x1127400` and callees).
-- **Local APIC LINT0/LINT1 on the other processors** and whether anything restores them before the loader. Settles with: reading the stub's hook list (`1.1005@0x11313xx`).
+- **Local APIC LINT0/LINT1 on the other processors** and whether anything restores them before the loader. The boot processor is settled: the V86 case leaves them masked and nothing restores or unmasks them ([boot-path.md](../software/visws/boot-path.md#processor-state-at-the-loader-call)). Settles with: reading the stub's hook list (`1.1005@0x11313xx`).
+- **Processor state at the loader call, other releases.** Only 1.1005's main module was read for the GDT relocation, IDT, page tables and the entry state; the boot block's descriptor template is byte-identical in all five held images. Settles with: the same trace of the 1.0006 main module, if a model targets it.
+- **A20 at reset.** The boot processor never enables it, so the board must already pass address bit 20 at power-on (inferred). Settles with: the PIIX4 specification's reset state of the A20 gate, or a bus capture.
+- **Exception from a loader before its own IDT.** The stubs enter the V86 monitor's dispatcher, which prints "Unexpected exception" with the frame and, for the vectors traced, halts; the path for vector `0x0d` from a non-V86 task was not traced to its end. Settles with: reading `1.1005@0x1105328` to `0x1105377` against the dispatcher's return values.
+- **Whether a stock 320 or 540 runs the V86 task.** It runs only when the PCI scan finds a device with an x86 expansion ROM or `DosBoot` begins with `y`; no scan of the shipped cards was run. It decides whether page 0 is mapped and the local APIC is programmed at the loader call. Settles with: a hardware-inventory capture with the PROM's debug output, or the card list of a shipped configuration.
 - **ACPI use.** Whether a Windows 2000 loader or HAL uses the "ACPI-BIOS" node. The pointer, root table and one fixed table exist; no DSDT, FACS or MADT. Settles with: the Windows 2000 loader's handling of that node, or a boot with an ACPI HAL.
 - **VGA from the legacy-BIOS image.** Whether the "Main BIOS" image provides a VGA service. Settles with: disassembling that real-mode image.
 - **PCI access order and drivers.** The configuration cycles of the device scan in order, and the IDE, SCSI, USB and network drivers' register use. Settles with: reading `1.1005@0x1113a02` callees.

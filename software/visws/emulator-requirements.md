@@ -22,6 +22,8 @@ operating system rewrites, so the device needs a persistent, erasable model. The
 chips the HAL expects (PIIX4, NS87307, CMOS RTC, 8259 pair, floppy, IDE and SCSI), a keyboard (a USB or PS/2
 keyboard; the HAL carries `nogfxkbd` and keyboard nodes), and a working Cobalt graphics output for its menus.
 
+What the 1.1005 firmware needs from the processor model itself (established, [processor state at the loader call](boot-path.md#processor-state-at-the-loader-call)): CPUID leaves 0, 1 and 2, `rdmsr` and `wrmsr`, `wbinvd` and `invd`, CR4 (only the global-pages bit is toggled and restored), `ltr`, `lgdt` and `lidt`, 4 KiB paging with the directory at `0xd00000`, `clts` and `fninit`. Hardware task switches (`ljmp` to a TSS selector) and V86 mode are used only when a PCI device with an x86 expansion ROM is found or `DosBoot` begins with `y`. No interrupt is ever enabled on the boot processor (IF stays clear from reset to the loader), so a model that delivers none to it is faithful. Address bit 20 must already pass at reset: the boot processor never enables A20 (inferred).
+
 ## A replacement for Linux
 
 What the Linux visws port needs before it is entered ([boot-path.md](boot-path.md)), all established from the public
@@ -62,6 +64,13 @@ source:
    (suspend-enable at `0xf84` bit 13, after clearing status at `0xf80`, then the special cycle through `0xcfc`).
 10. The standard PC legacy devices (8259 pair, 8254 not used for the clock, CMOS RTC, IDE, floppy, serial, parallel, PS/2
     or USB input through the PIIX4's USB controller on its dedicated Cobalt entry).
+11. The entry state, if the stand-in starts a kernel itself rather than running the PROM and an ARC loader
+    ([processor state at the loader call](boot-path.md#processor-state-at-the-loader-call)): protected mode with paging on and
+    all RAM identity-mapped (SGI's 2.2.10 image needs exactly this, because its first `lgdt` operand is a virtual address
+    and its first CR3 load is made with paging already on); interrupts off. Reproducing the PROM further also reproduces its limits: its
+    selector `0x18` is a flat DPL 3 code segment, page 0 is not mapped, and the devices are reachable only through aliases from `0xb0000000`, so
+    a mainline 2.2 or 2.4 kernel (which loads `0x18` into DS and ES before its own GDT and then stores through them)
+    stops at its first store, as on the real firmware. A stand-in that wants those kernels to run provides a flat writable `0x18`.
 
 ## A replacement for Windows NT 4.0
 
@@ -133,6 +142,7 @@ grades are established for what was read and inferred where a name or a branch o
 | Audio host control `0xff001000` (32-bit write `0x4100` on generation 5, late in bring-up) and, just before it, a 256-dword table copy (117 dwords written, entries `0xdeadcafe` skipped) into the window at `0xff018000` when the stamp is at most `0x36ffd62f` | accepted | none | tolerated; exact if the NT audio driver is to start |
 | Page `0x00fff000` (32-bit read) | RAM | unknown use | tolerated |
 | PCI configuration for devices behind the bridges, bus numbers `+0x44`/`+0x45` | standard header 0 and header 1 behaviour; bus 0 is Lithium B | the bridge assignment and device scan misplace devices | exact |
+| Processor state at the loader call (a stand-in that enters a loader or kernel itself) | CS `0x08`, data registers `0x10`, selector `0x18` a flat code segment, PG and PE set, CR3 `0xd00000`, RAM identity-mapped, page 0 not present, IF clear, CD and NW clear, MTRR 0 write-back over 0 to 2 GiB | a loader that relies on another state (a writable `0x18`, page 0, a device at its physical address, a different CS selector) behaves differently from the real firmware | exact for SGI's 2.2.10 image only as far as paging on and identity-mapped RAM; the rest is tolerated by the images held |
 | Floppy/IDE/SCSI/USB/network adapters | as the driver names ([boot-path.md](boot-path.md#from-the-menu-to-the-loader)) | the boot entry cannot be opened ("Invalid boot device") | exact for the chosen boot device |
 | Serial console choice | `console` variable begins `d` selects `serial(0)` | video and keyboard | tolerated |
 
@@ -171,10 +181,15 @@ Answers from the HAL (symbols applied), the loader and the PROM pages, each grad
    `0xd0000000` (the HAL's `gbe` code). Whether the firmware's embedded legacy-BIOS image exposes a VGA mode is unknown
    ([questions/visws-firmware-open.md](../../questions/visws-firmware-open.md)).
 5. **A direct 8259-to-CPU route.** Nothing shows one. The HAL masks the local APIC's LINT0 on every processor, takes the master 8259 only
-   through Cobalt entry 12, and the Linux port does the same (established for both). Whether the PROM unmasks LINT0 was not found in the
-   pages read: unknown.
+   through Cobalt entry 12, and the Linux port does the same (established for both). The PROM never unmasks LINT0 on the boot processor: the legacy-BIOS case writes it masked and the default path writes no local-vector-table
+   register (established, [processor state at the loader call](boot-path.md#processor-state-at-the-loader-call)); the other processors' tables are unknown.
 6. **Per-interrupt cost, destinations and acknowledge.** [hal-hot-path.md](hal-hot-path.md) (established): the HAL's interrupt level is the local
    APIC task-priority register, a device interrupt touches only the local APIC (no Cobalt, Lithium or PIIX4 register), the clock costs three Cobalt
    register accesses per tick (status read, write and read-back), a legacy interrupt costs four to seven 8259 port accesses, and every device line and the clock are written with destination 0, which on the I/O APIC layout means processor id 0 (inferred); only the NMI
    entry is logical. Board differences (memory groups, processors, slots, the `0xfb2` board-type byte):
    [boards-320-540.md](../../platforms/visws/boards-320-540.md).
+7. **Processor state at the loader call.** Flat 32-bit protected mode, CS `0x08` and the data registers `0x10` from a GDT in a page the firmware allocates, interrupts
+   off, paging on with the directory at `0xd00000` identity-mapping all RAM (page 0 unmapped, devices only through aliases from `0xb0000000`),
+   a 256-gate IDT of firmware stubs, caches on with one write-back MTRR over the first 2 GiB, 8259s masked, and no difference between the NT loader
+   and a Linux loader (established, 1.1005; selector `0x18` is a code segment, which stops mainline 2.2 and 2.4 kernels at their first store but not SGI's
+   2.2.10 image). Detail and addresses: [boot-path.md](boot-path.md#processor-state-at-the-loader-call).
