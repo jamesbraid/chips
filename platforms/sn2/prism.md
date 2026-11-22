@@ -257,14 +257,50 @@ does not make itself.
 - AGP file: a search for `sgi-agp` in linux-3.2.78-ia64 returned no file. Unknown whether the index lacks it or the file is absent.
 - Not compared: the rest of each function.
 
-### 2019 128 MB BARs (unknown, cannot tie)
+### 2019 128 MB BARs (v4.14.83 read, 2026-11-22)
 
-The 4.14.83 log shows 0006:00:00.0 and .1 with 128 MB prefetchable BAR 0 at 0x08000000 and 0x10000000. That kernel is not
-2.6.5 and was not read. In 2.6.5 BAR sizing and placement are generic PCI code, not these files. The TIOCA code defines no
-host-bridge window for the bus: `tioca_bus_fixup` sets no controller resource, and the node assignment is commented out at
-`tioca_provider.c:652`. The graphics aperture is 1 GiB at 0x80000000. Two 128 MB BARs would fit by size, but the logged
-addresses sit below that window. Route: the bus record's legacy memory field from the PROM, and `/proc/iomem` or `lspci -v`
-from a booted Prism on the 2.6.5 kernel.
+The 4.14.83 log shows 0006:00:00.0 and .1, each with a 128 MB prefetchable BAR 0 at 0x08000000 and 0x10000000. The reading
+uses the stable tag v4.14.83 (`1d4bd2e4e1d2`). Its SN2, AGP and PCI-bus files are identical to mainline v4.14 (`e3d97e8db5c4`).
+The two generic PCI files that differ (`drivers/pci/probe.c`, `drivers/acpi/pci_root.c`) change bus numbering, PCIe MPS,
+host-bridge release and OSC control. Neither changes BAR reads or placement.
+
+Established (what the code does):
+
+- On ia64 the boot path places no BARs. The core reads each base from config space and sizes it (v4.14.83:drivers/pci/probe.c:196-199,
+  283-286). The ia64 hook claims only nonzero bases (v4.14.83:arch/ia64/pci/pci.c:326-341). Assignment runs only on hot-add
+  (v4.14.83:drivers/acpi/pci_root.c:615-617) and on rescan (v4.14.83:drivers/pci/probe.c:2704). No ia64 file calls the assignment helpers.
+  A zero base stays unclaimed, and enabling the device then fails with "not claimed" (v4.14.83:drivers/pci/setup-res.c:427-431).
+- On the ACPI path (taken when the DSDT OEM revision is at least 0x20101, v4.14.83:arch/ia64/include/asm/sn/acpi.h:13), the SN2
+  code changes only a device's ROM resource (v4.14.83:arch/ia64/sn/kernel/io_acpi_init.c:439-457). The per-device BAR addresses
+  in the PROM record (v4.14.83:arch/ia64/include/asm/sn/pcidev.h:56) are applied only on the non-ACPI path
+  (v4.14.83:arch/ia64/sn/kernel/io_init.c:177-190).
+- The TIOCA bus fixup creates no host-bridge window (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:583-658). The TIOCA
+  apertures start at 0x80000000 (v4.14.83:arch/ia64/include/asm/sn/tioca.h:584-594), above both logged bases. The TIOCE code
+  reads the firmware-programmed bridge windows and reserves them, and writes no BAR (v4.14.83:arch/ia64/sn/pci/tioce_provider.c:800-843).
+- Root-bus windows come from the root bridge's ACPI _CRS (v4.14.83:arch/ia64/pci/pci.c:234-269; drivers/acpi/pci_root.c
+  `acpi_pci_root_create`, v4.14.83:drivers/acpi/pci_root.c:867-900).
+
+Inferred:
+
+- The PROM wrote both bases before the kernel ran. Nothing in the v4.14.83 boot path writes them. Whether the root's _CRS covers
+  0x08000000 to 0x17ffffff is unknown: the log does not print the window list.
+- One card, not two pipes. Both functions sit on bus 0 of one segment. A pipe has its own TIOCA bus, and the log shows one bus
+  for these. The board's 256 MB (128 MB framebuffer and 128 MB retained objects, per the graphics boards section) fits one 128 MB BAR per function.
+  The chip is unknown: the kernel code names no device, and the log prints no vendor ID.
+
+Changes from the 2.6.5 record (b04c657):
+
+- SAL gate: v4.14.83 adds the SHub 1 test (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:592). Commit d3e5e1a1b4f4 (2006-06-28, in the
+  linux-sn2 history) added it, so 2.6.5 lacks it (established). A v4.14.83 kernel therefore skips the SAL-revision check on an SHub 2 machine.
+- Closest node: 2.6.5 left the controller node unset. v4.14.83 sets it (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:656).
+- GART setup: the same eight register writes in the same order as b04c657 recorded. The lines are two higher (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:181-203).
+  The 2.6.5 bodies were not re-read here.
+- AGP: one bridge per TIOCA with devices. The bridge takes the last list entry, since the VGA and AGP checks at
+  v4.14.83:drivers/char/agp/sgi-agp.c:296-300 only skip. The mode word and the 1 GiB aperture are unchanged (v4.14.83:drivers/char/agp/sgi-agp.c:104-105, 309-316).
+  Not compared: the page-allocation and `cant_use_aperture` fields (v4.14.83:drivers/char/agp/sgi-agp.c:41-56, 264-268).
+
+Route still open: the log's `ACPI  DSDT OEM Rev` line (v4.14.83:arch/ia64/sn/kernel/io_common.c:499-500) would show whether the
+ACPI path ran. The platform page does not quote that line. Also needed: the root bridge's _CRS from a booted Prism.
 
 ## Graphics boards and outputs
 

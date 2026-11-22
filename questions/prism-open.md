@@ -105,11 +105,19 @@ kernel expects; what the chip does is inferred. Full reading in [platforms/sn2/p
 - **Bring-up order and AGP binding (answered 2026-11-21, software expectation).** The eight register writes, the aperture
   word (0x80200007 at 16 KiB pages), the flush rules and the AGP bridge's device choice are on [the Prism platform page](../platforms/sn2/prism.md#tioca-kernel-expectations-265-7308-read-2026-11-21).
   The count per node stays unknown: the kernel makes one TIOCA per type-4 bus record and reads nothing else.
-- **2019 128 MB BARs (unknown).** The 2.6.5 code does not place BARs and defines no host-bridge window that covers
-  0x08000000 or 0x10000000. The 4.14.83 log cannot be tied to 2.6.5 code. Route: the PROM's bus record legacy memory field,
-  and `/proc/iomem` or `lspci -v` from a booted Prism on the 2.6.5 kernel.
-- **Open items 16 and 18 (TIOCA).** The question's referent, "items 16 and 18" of the TIOCA list, is not in any held page,
-  the TIOCA device page or the inventory. It needs the owner to name the list before it can be answered.
+- **2019 128 MB BARs (v4.14.83 read).** Established: on ia64 the boot path places no BARs, and the SN2 code does not write
+  them, so the kernel only reads and claims bases the firmware left (the reading is on
+  [the Prism platform page](../platforms/sn2/prism.md#2019-128-mb-bars-v41483-read-2026-11-22)). Inferred: the PROM wrote
+  0x08000000 and 0x10000000, and the two functions are one card. Unknown: the root bridge's _CRS window, the vendor ID, and
+  the DSDT OEM revision that picks the ACPI path. Route: the log's `ACPI  DSDT OEM Rev` line, `lspci -nn`, and the root
+  bridge's _CRS (acpidump) from a booted Prism.
+- **Deskside PCI-X bridge / dual TIO riser doc read.** b04c657 read the 2.6.5 kernel and found no PCI-X bridge or riser
+  described in it. The 4.14.83 log shows a PCI-to-PCI bridge behind domain 0001 bus 0, with no bus mode printed. Unknown:
+  what bridges the four deskside PCI-X buses, and what the parts index's dual TIO riser carries.
+- **TIOCA count per XG2N and pipe-to-port wiring.** b04c657 found that the 2.6.5 kernel makes one TIOCA per PROM bus record
+  of the TIOCA type, so the count is whatever the PROM writes. v4.14.83 on the ACPI path makes one TIOCA per root bus
+  (v4.14.83:arch/ia64/sn/kernel/io_acpi_init.c:468-488, io_common.c:295-310), so the count follows the DSDT's root bridges.
+  Unknown on both kernels: the Prism DSDT, and which SHub port each pipe uses.
 
 ## Review
 
