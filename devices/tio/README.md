@@ -4,7 +4,8 @@ Mode: **no-spec**. No TIO register specification, firmware or silicon capture is
 own Linux platform code for the Altix (linux-5.3 pin 4d856f72c10e, the last release that carries it). For this
 generation that code ranks as the vendor's software source: a fact it defines is **established**, as a software
 definition, never as a measurement. Anything it only implies is **inferred**; anything it does not say is **unknown**.
-Registers: [registers.md](registers.md) (five named by the code).
+Registers: [registers.md](registers.md) (five named by the code). What the SHub 2 firmware does to a TIO, with the rows a model
+must answer, is in [prom-access.md](prom-access.md).
 
 ## What the chip is
 
@@ -139,7 +140,8 @@ No other revision-dependent behaviour is named.
 
 ## Not covered
 
-No register of the TIO's local block (LB) is named by any file read except the identification word. The TIO's own interrupt routing, link
+No register of the TIO's local block (LB) is named by any file read except the identification word. The SHub 2 PROM's accesses to the local block
+are mapped in [prom-access.md](prom-access.md) (offsets and roles; roles are mostly inferred). The TIO's own interrupt routing, link
 layer, error registers, memory-mapped counters and the ICE chiplet beyond the three registers above are **unknown**; the route is a TIO
 register specification or the controller firmware's register tables (sysco holds readings of the latter).
 

@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4",
+ "input_sha256": "b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e",
  "schema": "defs-flat/1",
  "source": "devices/tio/registers.toml",
  "profile": "public",
@@ -10,12 +10,28 @@
    "kind": "register",
    "name": "node_id",
    "offset": 2416316032,
-   "access": "r",
+   "access": "rw",
    "width": 64,
    "count": 1,
    "stride": 8,
    "space": null,
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "node_id.nodes_per_bit_pow2",
+   "hi": 53,
+   "lo": 48,
+   "grade": "inferred"
+  },
+  {
+   "unit": "tio",
+   "kind": "field",
+   "name": "node_id.node",
+   "hi": 45,
+   "lo": 32,
    "grade": "established"
   },
   {

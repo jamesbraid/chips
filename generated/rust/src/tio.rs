@@ -1,6 +1,6 @@
 // generated from devices/tio/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4
+// input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e
 // TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers
 #![allow(dead_code)]
 
@@ -8,6 +8,26 @@
 pub mod node_id {
     pub const WIDTH: u32 = 64;
     pub const OFFSET: u64 = 0x90060e80;
+    pub mod nodes_per_bit_pow2 { // bits 53:48, inferred
+        pub const SHIFT: u32 = 48;
+        pub const MASK: u64 = 0x3f;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod node { // bits 45:32, established
+        pub const SHIFT: u32 = 32;
+        pub const MASK: u64 = 0x3fff;
+        pub const fn get(v: u64) -> u64 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u64, x: u64) -> u64 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod rev { // bits 31:28, established
         pub const SHIFT: u32 = 28;
         pub const MASK: u64 = 0xf;

@@ -1,11 +1,13 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/tio/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4 -->
+<!-- input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e -->
 <genxml unit="tio" prefix="TIO" title="TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers">
   <doc>Offsets, field positions and constants are software definitions from SGI's Linux Altix platform code (header and driver, v5.3); the TIO's own register specification is not held. Only five registers are named by that code. Reset values are unknown throughout. Offsets are node offsets inside the TIO's address space, not CPU addresses.</doc>
-  <struct name="NODE_ID" size="8" grade="established" register="yes" offset="0x90060e80" access="r" reset="unknown">
-    <doc>Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).</doc>
+  <struct name="NODE_ID" size="8" grade="established" register="yes" offset="0x90060e80" access="rw" reset="unknown">
+    <doc>Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1). The SHub 2 PROM also read-modify-writes the register to install the node number (bits 45:32) and a six-bit value (bits 53:48); see devices/tio/prom-access.md.</doc>
+    <field name="nodes_per_bit_pow2" start="48" size="6" type="uint" grade="inferred"/>
+    <field name="node" start="32" size="14" type="uint" grade="established"/>
     <field name="rev" start="28" size="4" type="uint" grade="established"/>
     <field name="part" start="12" size="16" type="uint" grade="established"/>
     <field name="mfg" start="1" size="11" type="uint" grade="established"/>

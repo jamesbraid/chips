@@ -1,6 +1,6 @@
 /* generated from devices/tio/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4 */
+/* input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e */
 /* TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers */
 #ifndef TIO_GEN_H
 #define TIO_GEN_H
@@ -9,10 +9,16 @@
 
 
 /*
- * Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).
+ * Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1). The SHub 2 PROM also read-modify-writes the register to install the node number (bits 45:32) and a six-bit value (bits 53:48); see devices/tio/prom-access.md.
  */
-/* node_id: r64, reset unknown */
+/* node_id: rw64, reset unknown */
 #define TIO_NODE_ID                                  0x90060e80 /* established */
+#define TIO_NODE_ID_NODES_PER_BIT_POW2_SHIFT         48 /* inferred */
+#define TIO_NODE_ID_NODES_PER_BIT_POW2_MASK          0x3full
+#define TIO_NODE_ID_NODES_PER_BIT_POW2_INPLACE       (TIO_NODE_ID_NODES_PER_BIT_POW2_MASK << TIO_NODE_ID_NODES_PER_BIT_POW2_SHIFT)
+#define TIO_NODE_ID_NODE_SHIFT                       32 /* established */
+#define TIO_NODE_ID_NODE_MASK                        0x3fffull
+#define TIO_NODE_ID_NODE_INPLACE                     (TIO_NODE_ID_NODE_MASK << TIO_NODE_ID_NODE_SHIFT)
 #define TIO_NODE_ID_REV_SHIFT                        28 /* established */
 #define TIO_NODE_ID_REV_MASK                         0xfull
 #define TIO_NODE_ID_REV_INPLACE                      (TIO_NODE_ID_REV_MASK << TIO_NODE_ID_REV_SHIFT)

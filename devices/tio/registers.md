@@ -1,6 +1,6 @@
 <!-- generated from devices/tio/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 7741ddd1e830aa7f7d968c01f9fcf9d209afc507f90a0cc9fb65275099e050b4 -->
+<!-- input sha256 b463b599a6e231ec27eb619f305e4db2b5869fa84254ccd3fe4d207973c9b22e -->
 
 # TIO (NUMAlink I/O node ASIC of the Altix generation), as SGI's Linux platform code names its registers
 
@@ -14,7 +14,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 | Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
 |---|---|---|---|---|---|---|---|---|
-| `node_id` | 0x90060e80 | r | 64 |  |  | unknown | established |  |
+| `node_id` | 0x90060e80 | rw | 64 |  |  | unknown | established |  |
 | `ice_frz_cfg` | 0xb0008100 | rw | 64 |  |  | unknown | established |  |
 | `itte` | 0xb0008800 | rw | 64 | 8 |  | unknown | established |  |
 | `ice_pmi_tx_cfg` | 0xb000b100 | rw | 64 |  |  | unknown | established |  |
@@ -22,10 +22,12 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `node_id`
 
-Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1).
+Widget-format identification word of the TIO itself (`TIO_NODE_ID`). The kernel reads the whole 64-bit register, keeps the low 32 bits and splits them with the same macros it uses for every widget identification word: part number, revision, manufacturer. Its one use: the revision field decides whether the write-request flush workaround applies (revision 1). The SHub 2 PROM also read-modify-writes the register to install the node number (bits 45:32) and a six-bit value (bits 53:48); see devices/tio/prom-access.md.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
+| 53:48 | `nodes_per_bit_pow2` | inferred |  |  | Six-bit value written by the same method: a power of two derived from the call's size argument. The meaning is inferred from the SHub 2 node register, whose same-position field the PROM names NODES_PER_BIT. |
+| 45:32 | `node` | established |  |  | Node number (NASID), written by the SHub 2 PROM's node-number method with a 14-bit deposit. Read-modify-write: other bits are kept. |
 | 31:28 | `rev` | established |  |  | Revision. 1 is the revision the TIOCP flush erratum applies to. |
 | 27:12 | `part` | established |  |  |  |
 | 11:1 | `mfg` | established |  |  |  |
