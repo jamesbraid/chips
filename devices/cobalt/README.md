@@ -158,3 +158,34 @@ The frame buffer is the top 8 MB of memory that the kernel reserves from its own
 | Bus-error and cache interrupt sources on line 28 | The HAL's timer handler treats status bit 0 as an unexpected cache-operation interrupt and bit 1 as the timer; further sources: the specification |
 | Revision register values and meaning | Boot logs from real boxes (the kernel prints the value) |
 | Anything the graphics engine does through this block | The graphics pages |
+
+## Reset values, extents and widths: what the shipped code settles
+
+Read from the disassembly of `halborg.dll` 1.3 and PROM 1.1005 (cross-checked in 1.0006), not from decompiler output. A register read
+after firmware start-up is not a reset value; this section lists which registers firmware or the HAL reads before writing.
+
+- **Reset values: none is established.** In the code read, no read of a register is tested against a power-on value. The
+  identification word's first read is a read-modify-write that keeps the other bits "as read" in both the PROM and the HAL, and
+  the revision is only compared. Reset state of every register is **unknown**. The PROM never touches the CPU block's `+0x10`,
+  `+0x20`, `+0x30` and `+0x38` or any interrupt entry (only `+0x08`, `+0x18` and the id word are accessed by immediate
+  address in the self-test and main module), so a read of those in the PROM monitor before any operating system has run
+  would be a reset value; see [the questions page](../../questions/visws-reset-values-open.md).
+- **Revision (`+0x08`).** Readers compare the whole word with `0xa0` and `0xa8` (HAL), the low byte with them (PROM main module),
+  and the word minus its low nibble with `0xa0` (PROM self-test). So bits 31:8 read zero on every accepted board and bits 7:4
+  are `0xa` (inferred from the self-test's comparison). The low nibble is not constrained: `0xa4` is not excluded.
+- **Extents and widths.** The HAL and the PROM map each block as one page (HAL: page-table entries cache-disabled and
+  write-through). Nothing uses an offset above `0xffc` in the interrupt block, `0x38` in the CPU block or `0xc8` in the memory block
+  (the bank registers end at `0xc4`, the HAL's search limit `0xc8`). So each extent is at least 4 KiB and the upper bound is
+  **unknown**. Every access in the code read is a 32-bit load or store (the one narrower access the earlier HAL reading reports, a byte read of an entry's high word, was not re-checked here).
+- **Timer.** The HAL (0x800161ba, 0x8002d284) stores all ones in the count twice, the second time (calibration) while the run bit is already set, then
+  reads the current count one real-time-clock second later and takes the fall as the rate. A write while running must therefore
+  restart the count from the value written (inferred; a reload that waits for the next expiry would give a wrong rate). The rate
+  itself is not measured: the HAL derives it, Linux assumes 100 MHz.
+- **Status bits.** Only bits 1 (timer) and 0 (cache operation) are used. The HAL writes all ones once at timer set-up and the
+  pattern with bit 1 clear in the tick, so bit 1 clears on a written zero and a written one is harmless. Whether bit 1 clears
+  by itself stays open.
+- **Interrupt controller.** Entry destination: every device entry has destination 0 and only the NMI entry is logical. The HAL masks all
+  thirty entries before it enables the controller, so entries are writable while the controller is disabled. Id field: the HAL
+  writes 4 only if the field reads zero; the PROM writes 4 always. A model that resets the field to 0 satisfies both; the real
+  reset value is unknown, and so is what the field means.
+- **CPU `+0x18`.** The PROM writes 1, 3 or ORs bit 0 into it on paths that were not all traced; see the register entry.

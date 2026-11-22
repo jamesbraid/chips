@@ -20,13 +20,87 @@ doc = "Bus numbers behind the bridge. Linux reads it as a 16-bit value from each
 primary = { bits = [7, 0], grade = "inferred", doc = "Bus number the kernel scans for this bridge." }
 subordinate = { bits = [15, 8], grade = "inferred", doc = "Highest bus number behind the bridge, from the header comment only." }
 
+[registers.bridge_cmd]
+space = "bridge"
+offset = 0x04
+access = "rw"
+width = 16
+grade = "inferred"
+doc = "Command word of the standard header. The NT HAL stores all ones here once when it sets up a bridge whose revision byte is above zero; nothing reads it back. Whether every bit is writable is unknown. No reset value is known."
+
+[registers.bridge_status]
+space = "bridge"
+offset = 0x06
+access = "rw"
+width = 16
+grade = "inferred"
+doc = "Status word of the standard header. The HAL stores a value with bits 15:11 set here at bridge set-up and the master-abort bit (bit 13) after each configuration access; the PROM never touches it. That the bits clear on a written one is the standard header's rule and is inferred. Which bits the bridge ever sets is unknown."
+
+[registers.bridge_rev]
+space = "bridge"
+offset = 0x08
+access = "r"
+width = 8
+grade = "established"
+doc = "Revision byte. The HAL tests it above zero to choose where the bus number goes; the PROM tests bridge B's byte against zero and maps zero to Lithium generation 1. Only zero or not zero is used; the values and the reset state are unknown."
+
+[registers.bridge_40]
+space = "bridge"
+offset = 0x40
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "When the revision byte is zero the top byte holds the bus number: the HAL clears bits 31:24 and ORs in the bus number shifted up 24, as a 32-bit read-modify-write. PROM 1.0002 and 1.0004 also read-modify-write this word before their error-status and control stores; later PROM images do not touch it. The meaning of the other bits is unknown."
+
+[registers.err_status]
+space = "bridge"
+offset = 0x48
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown."
+
+[registers.bridge_58]
+space = "bridge"
+offset = 0x58
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared. The NT HAL never touches it."
+
+[registers.dma_ctl]
+space = "bridge"
+offset = 0x60
+count = 32
+stride = 4
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Thirty-two words, one per PCI device number on the bridge's bus (inferred from the PROM's device scan, which indexes them by device number). The PROM sets up the first five with one 32-bit read-modify-write each, in both bridges, and its device scan read-modify-writes any of the 32 for a QLogic ISP2100 Fibre Channel adapter: it clears bits 7:6 and sets bits 9:8 of that device's word. Bits 5:1 and bit 10 are cleared and bits 31:12, 11, 9:6 and 0 are kept. Then bit 10 is set unless the firmware setting coherentdma starts with n, and bits 13, 7, 6 and 1 are set on Lithium generation 5 or later unless the setting streambuffer starts with n. The setting names make bit 10 coherent DMA and the other four stream buffering (inferred from the names only). What bits 11, 8 and 5:2 do is unknown. The NT HAL never touches them."
+
+[registers.cfg_addr]
+space = "bridge"
+offset = 0xf8
+access = "rw"
+width = 32
+grade = "established"
+doc = "Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, dword register in 7:2. Used by the HAL and, from the first instruction after reset, by the PROM boot block on bridge B. The PROM self-test checks that bits 23:2 can be set and cleared."
+
+[registers.cfg_data]
+space = "bridge"
+offset = 0xfc
+access = "rw"
+width = 32
+grade = "established"
+doc = "Configuration data. Accessed as a byte, halfword or word; the lane is picked by the low address bits (the boot block stores a byte at this offset plus the register's low two bits)."
+
 [registers.int_enable]
 space = "bridge"
 offset = 0x46
 access = "rw"
 width = 16
 grade = "established"
-doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. Reset state unknown, and so whether the firmware leaves it masked."
+doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable (it tests the 32-bit word that holds this register in its upper half, mask bits 29:24, and restores the old word), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked."
 
 [registers.int_enable.fields]
 inta_0 = { bits = [0, 0], grade = "inferred", doc = "INTA of device 0 on this bridge." }

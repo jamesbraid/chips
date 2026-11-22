@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 cce7bc8a6dec5a42f55bf11b781f187c3d3ac6119286fa318095d3b5be2dcefb
+// input sha256 35170f49ee8ac12d6c880fa6df715404fff2b2377770e4dfa5c12c473b50a477
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -188,7 +188,7 @@ pub mod cpu_reset {
         }
     }
 }
-/// Timer status. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and late (established)
+/// Timer status. The HAL also stores all ones here once while setting up the timer, after it loads the count and sets the run bit, so an all-ones write i (established)
 pub mod cpu_stat {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x20;
@@ -223,7 +223,7 @@ pub mod cpu_timecur {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x38;
 }
-/// Memory controller control. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halb (established)
+/// Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store  (established)
 pub mod mem_ecc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x0;

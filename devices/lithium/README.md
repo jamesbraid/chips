@@ -202,3 +202,34 @@ configuration bits 1:0, 2 and 3, size code 7 or 6, silence word, enable bit 27 s
 the byte-wide pointers; `HwCheckLink` (bit 2 clear); `GetLiUstMscPair` (high word at `+0x204`, counters at `+0x304` and `+0x30c`); and the absence
 of any interrupt connection. No difference from the text was found. The two builds' register table is the same table. The
 `sgilivid.sys` and `sgiust.sys` windows and addresses in the section above were re-read the same way.
+
+## Reset values and the bridge words nobody documents: what the shipped code settles
+
+Read from the disassembly of the PROM boot block, self-test and set-up routine (1.1005; the same writes in 1.0006) and of the
+HAL's bridge set-up and window mapping (`halborg.dll` 1.3). Nothing here is a reset value. The one register read before a write
+is `+0x58`, in the boot block (`0xffffc505`, 1.1005), and that read only feeds an OR.
+
+- **Registers `0x4a` to `0xf4`.** In the routines read, only `+0x58`, `+0x60` to `+0xdc`, `+0xf8` and `+0xfc` are accessed besides
+  `+0x40` to `+0x48`. No access to `+0x4a` to `+0x54`, `+0x5c` and `+0xe0` to `+0xf4` was found there (the PROM's generic
+  configuration routines were not searched for a base-plus-offset access); whether those registers exist is unknown. The PROM
+  writes `+0x04`, `+0x06`, `+0x40` (1.0005 on) or `+0x46` in none of the routines read, and the self-test restores `+0x44`'s word after its test, so a
+  read of those before any operating system has run would be a reset value.
+- **`+0x40`.** The HAL uses its top byte for the bus number when the revision byte is zero (a read-modify-write); PROM 1.0002 and
+  1.0004 read-modify-write it with fixed bits; nothing later does. Meaning unknown.
+- **`+0x48`.** All ones are written by the PROM and nothing reads it. It is an error word in the NT USB driver's own message. Which
+  events set it, and parity reporting, are unknown.
+- **`+0x58`.** The boot block ORs in the low five bits (before the self-test and main module), the self-test requires bits 1:0 to
+  toggle, and the main module then stores a value with bits 11 and 4:0 set. The final value after a normal boot is therefore that
+  stored value; meaning unknown.
+- **`+0x60` to `+0xdc`.** Thirty-two words, indexed by PCI device number (inferred: the PROM's device scan, `1.1005@0x111aae9`,
+  walks buses, devices 0 to 31 and functions 0 to 7 and, when it finds vendor `0x1077` device `0x2100` (a QLogic ISP2100 Fibre
+  Channel adapter) at function 0, read-modify-writes the dword at `0x60 + 4 * device` of the window of that bus (bus 0 is bridge B,
+  others A; `0x111ab46` to `0x111ab5e`): clear bits 7:6, set bits 9:8). The set-up routine's five words (`+0x60` to `+0x70`,
+  `1.1005@0x111b511`) are devices 0 to 4. The PROM relies on bit 10 meaning coherent DMA and on four more bits meaning stream
+  buffering only through the names of the two firmware settings. Bits 9:8 are set only for that adapter: their meaning is unknown.
+- **`+0x46`.** The self-test requires bits 13:8 to be settable in addition to the eight bits the kernels use; the HAL sets bits only.
+- **Inbound DMA, error and parity reporting, audio interrupt.** No shipped software configures an inbound window or reads an
+  error word, and the audio interrupt is not connected by the NT driver. All stay as already recorded.
+
+The access list is from immediate addresses and the set-up routine's window pointers in those images; code that reaches a window
+through a stored pointer elsewhere was not searched.

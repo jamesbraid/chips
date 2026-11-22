@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 3f1f16f43367bf801d3487d3f46fc041d27282231a5e1ce431999a48961f8e91
+// input sha256 78866ce3821efd7401690def7766490d0c09af2ced32a4f16cd02982ce35da1f
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -349,6 +349,26 @@ pub mod audio2_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30c;
 }
+/// Command word of the standard header. The NT HAL stores all ones here once when it sets up a bridge whose revision byte is above zero; nothing reads it (inferred)
+pub mod bridge_cmd {
+    pub const WIDTH: u32 = 16;
+    pub const OFFSET: u64 = 0x4;
+}
+/// Status word of the standard header. The HAL stores a value with bits 15:11 set here at bridge set-up and the master-abort bit (bit 13) after each conf (inferred)
+pub mod bridge_status {
+    pub const WIDTH: u32 = 16;
+    pub const OFFSET: u64 = 0x6;
+}
+/// Revision byte. The HAL tests it above zero to choose where the bus number goes; the PROM tests bridge B's byte against zero and maps zero to Lithium g (established)
+pub mod bridge_rev {
+    pub const WIDTH: u32 = 8;
+    pub const OFFSET: u64 = 0x8;
+}
+/// When the revision byte is zero the top byte holds the bus number: the HAL clears bits 31:24 and ORs in the bus number shifted up 24, as a 32-bit read- (inferred)
+pub mod bridge_40 {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x40;
+}
 /// Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then (inferred)
 pub mod bus_number {
     pub const WIDTH: u32 = 16;
@@ -458,6 +478,33 @@ pub mod int_enable {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+}
+/// Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the P (inferred)
+pub mod err_status {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x48;
+}
+/// Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the  (inferred)
+pub mod bridge_58 {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x58;
+}
+/// Thirty-two words, one per PCI device number on the bridge's bus (inferred from the PROM's device scan, which indexes them by device number). The PROM  (inferred)
+pub mod dma_ctl {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x60;
+    pub const COUNT: u32 = 32;
+    pub const STRIDE: u64 = 4;
+}
+/// Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, (established)
+pub mod cfg_addr {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0xf8;
+}
+/// Configuration data. Accessed as a byte, halfword or word; the lane is picked by the low address bits (the boot block stores a byte at this offset plus (established)
+pub mod cfg_data {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0xfc;
 }
 pub const AUDIO_DMA_CHANNELS: u32 = 0x7; // inferred
 pub const AUDIO_PAGE1: u32 = 0xff00f000; // established
