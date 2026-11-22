@@ -51,7 +51,10 @@ graphics pages), the 2.2 `irq.c`/`smp.c` hooks (only their `#ifdef` lines were s
 
 - *Silicon Graphics 320 Visual Workstation Owner's Guide*, 007-3701-001, 152 pages: DIMM slot groups, the processor bus, ports and PCI bus summary (table A-3).
 - *Silicon Graphics 540 Visual Workstation Owner's Guide*, 007-3882-001, 210 pages: DIMM slot groups A to D, one to four Xeons, two PCI buses of 4 and 2 slots with their voltages (table A-5).
-- Held but not read for this work: *320 and 540 Software Installation Guide*, 007-3703-002 (and translations). Named by the guides and not held: *Audio/Video User's Guide* 007-3870-001, *SD1100* 007-3866-001 (both public web PDFs).
+- *Silicon Graphics Visual Workstations Software Installation Guide for Windows NT*, 007-3703-003 (1999, 40 pages): the boot partition rules and the graphics memory profile (pp. 31 to 38) read; the rest not used.
+- *Silicon Graphics 320 and 540 Visual Workstation Audio/Video User's Guide*, 007-3870-001: held and read for the hardware features, audio and sync controls (chapters 1 to 3).
+- Not held: *SD1100* 007-3866-001 (a public web PDF).
+- Articles read for the second Windows pass: the Microprocessor Report piece (15 February 1999) and the Tech Monitor piece (5 January 1999). What they and the guides say about the chips is set out in [platforms/visws/documents.md](../platforms/visws/documents.md).
 
 Both owner's guides are user documents: no register, chip name or interrupt wiring appears in what was read. Page numbers are the printed ones.
 
@@ -59,9 +62,9 @@ Both owner's guides are user documents: no register, chip name or interrupt wiri
 
 | Wanted | Why it matters | Route |
 |---|---|---|
-| The Audio/Video User's Guide (007-3870-001) and the NT driver kit the guides name | Possible chip names for the audio and video paths | The guide is a public PDF on a vintage-SGI mirror; the driver kit's site is gone. Not added to the document manifest in this work. |
+| The NT driver kit the guides name | Possible chip names for the audio and video paths | The Audio/Video User's Guide (007-3870-001) is held now and names no chips; the driver kit's site is gone. |
 | A PROM or BIOS image other than 1.0006 | Differences between firmware versions; a 540 image | Only PROM 1.0006 is held and read ([firmware.md](../software/visws/firmware.md)). |
-| The NT HAL and miniport drivers | The interrupt map the Linux code gets wrong or never uses; Cobalt memory and error registers | Held now (Recovery CD-1 v1.1, install CD Disk 1, driver archive item); read in [nt-hal.md](../software/visws/nt-hal.md) and [nt-drivers.md](../software/visws/nt-drivers.md). Bank decoding and the Windows 2000 builds are unread. |
+| The NT HAL and miniport drivers | The interrupt map the Linux code gets wrong or never uses; Cobalt memory and error registers | Held now (Recovery CD-1 v1.1, install CD Disk 1, driver archive item; Windows 2000 RTM and SP4 CDs for the 2000 HAL and loaders); read in [nt-hal.md](../software/visws/nt-hal.md) and [nt-drivers.md](../software/visws/nt-drivers.md). Bank decoding (a Cobalt register fact the HAL never touches) and the 2000 drivers other than the HAL are unread. |
 | The Cobalt, Lithium and Arsenic specifications | Everything the Linux code does not touch | SGI said none releasable. |
 | A real boot log from a 320 or 540 under Linux 2.4 or 2.6 | The values the kernel prints: Lithium bus numbers, Cobalt revision, APIC ID, board type and revision | A search of the held mail and news archives found none. |
 | NetBSD, OpenBSD or FreeBSD ports | A second reading | None exists as far as the held trees show: a text search of the NetBSD, OpenBSD and OpenBSD/sgi trees finds only a line in an ACPICA change log that says not to use ACPI on a VISWS. |

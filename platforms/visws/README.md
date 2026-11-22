@@ -61,6 +61,7 @@ Platform facts, by what supports them:
 |---|---|
 | [boot-and-detection.md](boot-and-detection.md) | How the kernel recognises the machine, board type and revision, the processor table, memory, reboot and power-off |
 | [interrupts.md](interrupts.md) | Interrupt routing end to end: device to Lithium to Cobalt to processor, the PIIX4's cascaded 8259s, board-revision exceptions |
+| [documents.md](documents.md) | What the published documents (owner's, install and audio/video guides, the Microprocessor Report article, the Tech Monitor piece) say about the chips, set against the Windows software |
 | [model-needs.md](model-needs.md) | What an emulator needs to boot Linux 2.6 on it |
 | [../../devices/cobalt/README.md](../../devices/cobalt/README.md) | The system ASIC: timer, revision, interrupt controller, memory |
 | [../../devices/lithium/README.md](../../devices/lithium/README.md) | The I/O ASIC: the two PCI bridges and the audio engine |
