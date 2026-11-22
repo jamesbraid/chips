@@ -16,14 +16,14 @@ User's Guide*, `007-4823-001` (PDF page is printed page plus 20); *SGI L1 and L2
 **Method for the PROM.** Every access, immediate, comparison and branch below was read in a flat
 `ia64-linux-gnu-objdump -D -z -b binary -m ia64-elf64 --adjust-vma=0xff400000` listing of the image. Ghidra was not
 needed for the claims. String addresses are global-pointer relative; the pointer for this component is `0xff7b8000`
-(checked: with it the six I/O names below land on their strings). Not read: the 4700 guide revisions -002 and -003.
+(checked: with it the six I/O names below land on their strings). The 4700 guide revisions -002 and -003 were also searched (blade lists and the dense-router chapter).
 
 ## 1. What the 450 guide says
 
 ### Node chip: SHub 2 (established)
 
 The guide calls the node chip the "Super-Hub (SHub) ASIC": a crossbar between one or two processors, local memory and
-the network interface (-001 p.64). Its figures label it "SHUB 2": the DIMM-group diagram (-001 Figure 6-10, p.118;
+the network interface (the name on -001 p.64, the crossbar sentence on p.65). Its figures label it "SHUB 2": the DIMM-group diagram (-001 Figure 6-10, p.118;
 the same in -002 and -003) and, in -003, the block diagram of a compute blade, titled "SHub 2.0 ASIC" with blocks PI,
 XN, MD, LB and two NI ports, each "NUMAlink 4 3.2 GB/s each direction" (Figure 3-5, p.73). So the 450's generation is
 stated by its own guide, which the [README](README.md) and the 4700 pages previously said it was not. The block list
@@ -35,12 +35,12 @@ is the same as the first-generation SHub's; the guide's own label is the evidenc
   double-wide blade" (-001 p.62; Figure 3-3, p.64). Two routers are built in; a system "needs a minimum of one IA
   blade (base I/O)" (-001 p.62; -003 p.68 says IA/IA2).
 - Blade types (-001 p.70, -003 pp.60 and 76): compute/memory (up to two Itanium 2 sockets, 4, 8 or 12 DIMMs), memory-only,
-  single-wide two-slot PCI-X (a separate bus per card), double-wide three-slot PCI-X, single-wide PCIe (two cards),
+  single-wide two-slot PCI-X (a separate bus per card), double-wide three-slot PCI-X, single-wide PCIe (two cards in -001; one or two in -003, one if a 3D graphics card is fitted),
   double-wide PCIe plus PCI-X (two and two), and the double-wide IA base I/O blade (one or two disks, a DVD drive, two
-  half-height PCI-X slots, two Ethernet, one SAS/SATA port, four USB). -003 adds an IA2 base I/O blade: RAID 1, a DVD
-  writer and an optional 2D graphics card (p.58). The three-slot and the double-wide PCIe blades are "only used" in
+  half-height PCI-X slots, two Ethernet, one SAS/SATA port, four USB). -003 adds an IA2 base I/O blade: RAID 1 and a DVD
+  writer (-003 p.60, pp.76 to 77) and an optional 2D graphics card (p.58). The three-slot and the double-wide PCIe blades are "only used" in
   systems with more than one IRU (-003 p.60).
-- The L1 guide's blade-type table (007-3938-006 Table 2-1, p.40: C1, C2, M2, IA, I2E, I3X, I4E, RC) is headed "Altix 450
+- The L1 guide's blade-type table (007-3938-006 Table 2-1, p.40: C1 and C2 "SHub 2.x based", M2, IA, I2E, I3X, I4E, RC) is headed "Altix 450
   or Altix 4700", one table for both. Its `blade` example (p.44, again as Example 3-3 on p.55) lists ten slots and two `DUAL_ROUTER` boards, which is a
   4700 IRU. The 450 guide prints no slot-by-slot listing, so which blade the guide's single-wide parts correspond to
   in that table is **inferred** (same slot counts), as on the [IRU page](altix-4700-iru.md#blade-types).
@@ -110,9 +110,26 @@ The type is then stored into the global-window word at `0x5003_1240` (routine `0
 | `0x0e00` | `0xff4829c0` | same: returns without the check |
 | anything else | `0xff482770` | prints "UNABLE TO VERIFY DIMM CONFIGURATION: unknown board type" and returns |
 
-Two readers of the stored word treat `0x0e00` and `0x007b` together: `0xff481d20` computes a 2 for those two and a 3 for
-every other type (`0xff481d30` to `0xff481d50`), and the routine at `0xff43fe30` returns at once for `0x0e00`
-(`0xff43fe7c`). What the factor 2 or 3 and the early return are for was not traced.
+Other routines read the stored word and branch on it (established as branches; their purpose is mostly untraced):
+
+- `0xff481d20` computes 2 for `0x0e00` and `0x007b` and 3 for every other type (`0xff481d30` to `0xff481d50`).
+- `0xff43fe30` acts only for `0x0e00`: at `0xff43fe86` the compare with 3584 falls through to `0xff43feb0`, which calls
+  `0xff423920` and reads `0x8000_0002_1005_0708`; every other type returns at `0xff43feac`. It does not pair `0x0e00` with `0x7b`.
+- `0xff491a70` returns 0 for `0x0200`, `0x007b`, `0x0300`, `0x0400`, `0x0a00` and `0x0d00` and 1 for any other type
+  (`0xff491ab0` to `0xff491b10`; `0x0e00`, `0x0500` to `0x0800` give 1). It takes the type through the same L1 query
+  routine (`0xff48f620`). Its four callers (`0xff4ade7c`, `0xff4adfbc`, `0xff4b08dc`, `0xff4b0a1c`) exclusive-or the
+  result with a bit derived from the node and shift it left 33 into a value written to `0x2_1006_0700`, `SH2_GC_SRC_CTRL`,
+  whose `SOURCE_SEL` field is bits 33:32 ([shub2.md](../../devices/shub/shub2.md)). So the type picks the polarity of
+  one clock-source bit. That is all that was read; why `0x0a00` and `0x0d00` fall with the small boards and `0x0e00`
+  with the larger ones does not identify any of them.
+- `0xff4cbbc0` compares against `0x0800`, `0x0700`, `0x0300`, `0x0500`, `0x0d00`, `0x0600` and brick letters
+  (`0xff4cbc70` to `0xff4cbd9c`); not traced.
+- Eight more routines load `0x5003_1240` (`0xff41e396`, `0xff41e816`, `0xff476056`, `0xff476536`, `0xff477e46`,
+  `0xff478036`, `0xff47e846`, `0xff480f86`); not all were read.
+
+Two details of the first part: the type routine `0xff4824e0` returns at `0xff48250c` before any of this when `cpuid[2]` holds
+the simulator marker `0xaeeeeeee8badbeef`, and in `0xff48ebb0` a reply above 255 first calls an unidentified routine
+(`0xff4c9580`, from `0xff48ed9c`) before the 16-bit store.
 
 **Which products those are.** `0x0200` is Linux's `L1_BOARDTYPE_IP63`, "CB", a 4700-generation compute board
 (`v5.3:arch/ia64/include/asm/sn/l1.h`; established as the constant, the blade pairing is inferred, see the
@@ -143,9 +160,9 @@ chain of compares (`0xff568300` to `0xff568630`):
 The six blade names agree with the codes the Linux header gives, which lifts the "IC to IE" pairing on the discovery
 page from slot-count reasoning to a second source (the names are the PROM's own). Code `0x0d00`, "P2X", is a two-slot
 PCI-X blade; the Linux header has no code for one, and of the guides read only the 450's lists a two-slot PCI-X blade
-(-001 p.70; the 4700 guide's PCI-X blade has three slots and the L1 guide table has I3X only). It is **inferred** that
-`0x0d00` is the 450's two-slot PCI-X blade. That the 4700 never offered one is not established: 007-4823-002 and -003
-were not read.
+(-001 p.70, -003 p.60). The 4700 guide's blade lists in -001, -002 and -003 name only the three-slot double-wide PCI-X
+blade, and the L1 guide table has I3X only. It is **inferred** that `0x0d00` is the 450's two-slot PCI-X blade and not
+offered on the 4700 (absence from three 4700 guide revisions, not a statement).
 
 ### Can the PROM tell a 450 from a 4700?
 
@@ -154,8 +171,9 @@ No sign of it, in what was read. Routes tried:
 - Strings in the whole image and in the four decompressed components: no "450", "4700", "IRU", "dense" or "Prism". The only
   "Altix" strings are the I/O topology title and the EFI driver names. The node board is named `IP65` in the KLCONFIG
   builder (`hwcfg_node_init`) and in the LBI device print: one name for both machines, a build target, not a model.
-- The only board-type test on the reset and memory path is the table above, which looks at the node's own board, not at
-  the chassis. Nothing compares a slot count, a router count or an IRU type.
+- The board-type tests found (the table and routines above) look at the node's own board, not at the chassis; no routine
+  read compares a slot count, a router count or an IRU type. Not every reader of the type word was traced, so "no
+  450/4700 switch" is **inferred**, not established.
 - The topology is discovered: the interconnect phase prints "Found %d objects (%d chipsets, %d routers, %d
   iochipsets)" and builds fat-tree, meta-router and repeater-router objects from what answers, with no configured
   product (image offsets `0x1d47b8`, `0x1d4e10`, `0x1d3cb0`; routine bodies not traced).
@@ -179,7 +197,6 @@ online.
 ## Open
 
 - Board codes `0x0a00` and `0x0e00`, and the code that `IP71` (`{`) maps to for a blade: which blades they are.
-- Whether the 450's two-slot PCI-X blade is `0x0d00` and whether it is 450-only.
+- Whether the 450's two-slot PCI-X blade is `0x0d00` and whether it is 450-only (supported, not shown, by the 4700 guides).
 - Whether the L1 sends a chassis code that the PROM uses; which chassis label is the 450's.
 - The 450 slot that takes the double-wide blade; the router port each slot uses.
-- The 4700 guide revisions -002 and -003.

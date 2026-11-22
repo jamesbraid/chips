@@ -64,14 +64,14 @@ package, 6,112 bytes, sha256 `00f0a21d82c4b3a392043b52ec77d357c84ed74bfc0eb1cf5c
 | 25 | `shub2snprom.bin` supports the Altix machines listed below |
 | 27–28 | Altix 4700, Altix 450 |
 
-**Container hash.** The holdings catalogue records the 10.54 container as `snprom-10.54-70399.ia64.rpm`, 6,296,643
-bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`. This is catalogue metadata: the rpm is
-not in the chips root and was not re-hashed for this page, so nobody here has tied it to the extracted files (the
-extracted `shub1snprom.bin` and `README.snprom` hashes above are the only ones computed). No container hash is recorded
+**Container hash (closed 2026-11-22).** The container is the SGI ProPack 4 ia64 RPM, member path
+`htdocs/SGI-ProPack/4/rpm/ia64/snprom-10.54-70399.ia64.rpm` of the ProPack package-mirror archive. Extracted and hashed
+here: 6,296,643 bytes, sha256 `48616566404b060bf606f1ce7d6149c9261c6477f89d32051336df60ee423ce4`, matching the catalogue
+value. Its gzip cpio payload (read after skipping the RPM lead, signature header and main header) holds
+`boot/efi/efi/sgi/snprom/shub1snprom.bin` (`51ccf9ad...`), `shub2snprom.bin` (`3ea83318...`) and `README.snprom`
+(`00f0a21d...`), each matching the hashes above, so the rpm is tied to all three files. No container hash is recorded
 for the other packages, and [irix-files](../../../references/irix-files.md#sn2-firmware-and-kernels) says the container
-name of most images was not recorded when the files were copied. A search of held sources for the 10.54 rpm file name found
-nothing. The route to close this is to hash the rpm in the owner's package mirror, compare it with the catalogue value,
-and check the rpm header against the extracted files.
+name of most images was not recorded when the files were copied.
 
 **Why the SHub 2 builds are not for the Altix 350 (established).** `shub2snprom.bin` and `ip65prom.bin` are built for the CPU board
 `IP65` with SHub 2.0, carry the string `SHUB2 does not support XIO I/O.`, and SGI's `README.snprom` lists them for the
@@ -297,7 +297,7 @@ Not an order; the current list with routes is [questions/sn2-prom-open.md](../..
   a later static reading of it.
 - **No hardware capture of any held build.** No log or register capture ties an image to a machine. Any physical read of the
   owner's machines follows the repository's rules and is not proposed here.
-- **Container hash and owner machine identity** (section 1, section 7 item 2).
+- **Owner machine identity** (section 1, section 7 item 2). The 10.54 container hash is closed (section 1).
 
 ## Review
 
