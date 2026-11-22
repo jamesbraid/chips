@@ -20,6 +20,10 @@ platform is in [platforms/visws](../../platforms/visws/README.md).
   the 320 needs 3.3 V or universal cards. Which slots hang off which bridge is unknown.
 - **An audio DMA engine (established).** The same chip holds a serial link to an Analog Devices AD1843 codec and two DMA
   channels, at a third window, `0xff001000`, driven by SGI's own sound driver. The audio interrupt is Cobalt line 22.
+- **Other windows in the same region are not audio (unknown).** The PROM's boot code on Lithium generation 5 copies a table into
+  a 4-page window at `0xff018000` (gated on the stamp at `0xff01c004`), and the region also has windows at `0xff004000` and
+  `0xff01c000`; see [boot-path.md](../../software/visws/boot-path.md). Neither the audio driver reads, [audio.md](audio.md) nor the
+  Linux code touch them, so what they are is unknown; a Lithium specification or the PROM's later use of the table would settle it.
 - **Other functions are unknown.** The video input and output paths and the Arsenic link belong to the Cobalt
   graphics pages. Whether the Lithium has a memory path of its own is unknown; a 1999 post says "Lithium chipset", by
   context the I/O side.
