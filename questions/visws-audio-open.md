@@ -27,7 +27,7 @@ the NT driver cannot tell the difference except through the audible result.
 
 ## 4. How long the codec busy flag stays set, and link failure
 
-[missing source] The NT driver waits up to 360 ms and Linux 2 ticks; the real duration of a codec register transfer is unknown
+[missing source] The NT driver waits up to 360 ms (one read plus up to 36,000) and Linux 2 ticks; the real duration of a codec register transfer is unknown
 (the data sheet sends a control write in slot 1 of the following serial frame, so about a frame, but the engine's own latency is
 not stated). What happens to a transfer when the codec is absent (bit 2 of `+0x00` set) is unread.
 Next: the specification.

@@ -36,10 +36,10 @@ The codec sits behind a serial link controlled from the engine. A codec register
 and data words, no indirect window of any other kind (`CODECRegisterWrite` `0x10ef2`, `CODECRegisterRead` `0x10f4a`,
 `CODECWaitForReady` `0x10e96`; established):
 
-- Write: wait until command bit 15 (busy) is clear, store the data word at `+0x1c`, then store the register number (0 to 25
+- Write: wait until command bit 15 (busy) is clear, store the data word at `+0x1c`, then store the register number (0 to 28
   used; bit 7 clear) at `+0x18`.
 - Read: wait for busy clear, store `0x80 | register` at `+0x18`, wait for busy clear again, read the data word at `+0x1c`.
-- The wait polls the halfword at `+0x18`, one read per 10 microseconds of `KeStallExecutionProcessor`, at most 36,000 reads; on
+- The wait polls the halfword at `+0x18`, one initial read, then one read per 10 microseconds of `KeStallExecutionProcessor`, at most 36,000 more; on
   timeout the driver sets a flag and never waits again, and every later codec access is skipped. The driver keeps a copy of every
   register it writes and never reads codec registers back except register 0.
 
@@ -58,6 +58,17 @@ Start-up (`HwInitializeCodec` `0x1109c`, established; register names from the da
 | 9 | reg 15 write | `0x0205` | ADC left and right take clock generator 1, DAC1 takes clock generator 2, DAC2 stays on the fixed 48 kHz |
 | 10 | reg 9 write; reg 8 write | `0x0808`; `0x8848` | DAC1 output level 0 dB and unmuted; headphone unmuted, mono output left muted |
 
+Around the table:
+
+- `HwInitialize` reads the host control halfword (`HwCheckLink` `0x10fc2`) before the `0x8000`, `0`, `0x4000` sequence and
+  fails the load if bit 2 is set, so a model must not hold bit 2 set before link enable. It ignores the return value of
+  `HwInitializeCodec`: if INIT never clears, the driver still loads, without codec set-up; only the busy-timeout flag fails the load.
+- After the table, `SoundCardInstanceInit` `0x116a5` calls `SoundMixerInit` `0x11b40`, which always runs `HwInitMixerControl` for the
+  ADC source: with no stored settings that is two writes of register 2 with the value 0. If a `Mixer Settings` registry value exists,
+  every control is replayed (regs 4, 5, 7, 9, the mutes, reg 25, reg 2), including a two-step write of reg 9 that overwrites the `0x0808` above.
+- `DriverEntry` does nothing unless `Services\sgisound\Parameters` has at least one subkey (it returns an error otherwise).
+- `SoundDelay` is `KeDelayExecutionThread` and does nothing at IRQL 2 or above; each wait is a minimum, quantised to clock ticks.
+
 The driver's own initial copy of the register file equals the data sheet's reset values wherever the data sheet gives one
 (register 0 `0xc001`, mix registers `0x8888`, clock generator rates `0xbb80`, channel power `0x00c0`), so a reset codec model
 meets its assumptions. Linux's Visual Workstation driver gives DAC1 clock generator 1 and the ADC generator 2, the opposite of the NT driver, and sets the
@@ -68,11 +79,11 @@ Run-time writes (`established`, from the functions named):
 
 | When | Register and value | Source |
 |---|---|---|
-| sample rate change | reg 17 (generator 1) for input, reg 20 (generator 2) for output; the value is the rate in hertz, written only when rate, size or channels changed | `HwSetWaveFormat` `0x1155e`; data sheet pp. 41-42 (one LSB is one hertz) |
+| sample rate change | reg 17 (generator 1) for input, reg 20 (generator 2) for output; the value is the rate in hertz, written only when rate, size or channels changed and the stream is not already started | `HwSetWaveFormat` `0x1155e`; data sheet p. 39 (reg 17) and p. 42 (reg 20): one LSB is one hertz |
 | the engine converts 8-bit and mono | register 26 is never rewritten after step 3, so the codec always runs 16-bit stereo and the engine's configuration word (format, stereo bit) does the conversion | whole-driver search for writes to 26 |
 | mixer volume, mute | regs 4, 5, 7 (mix gain and mute for the three inputs), 9 (DAC1 level); mute is bits 7 and 15 | `MixSetVolume` `0x102e0`, `MixSetMute` `0x1051e` |
-| record source and gain | reg 2: source `0x4040`, `0x6060` or `0x2020` (both channels: auxiliary 1, auxiliary 2, microphone); gain in bits 11:8 and 3:0; microphone boost toggles bits 12 and 4; reg 25: `0` normal, `0x00a0` digital loopback from DAC1 | `MixSetADCSelector` `0x1071e`, `MixSetADCHardware` `0x1043e`, `MixSetMicBoost` `0x106e0`, `sndIoctlSetLoopbackMode` `0x107b6` |
-| video-locked sampling (only when an application selects a sync source) | reg 16 (input) or 19 (output): top two bits set, low byte a base-rate and divisor code (NTSC rates 8000, 11025, 16000, 22050, 32000, 44100, 48000) | `HwSetClkSyncSrc` `0x11282`, `HwSetClkVideoLockRate` `0x1130c`; data sheet p. 41 |
+| record source and gain | reg 2: source `0x4040`, `0x6060` or `0x2020` (both channels: auxiliary 1, auxiliary 2, microphone); gain in bits 11:8 and 3:0; microphone boost toggles bits 12 and 4; reg 25: `0x00a0` is digital loopback from DAC1. The selector writes reg 2 as the absolute value, so it also clears microphone boost, and writes reg 25 as `0` for the three analog sources | `MixSetADCSelector` `0x1071e`, `MixSetADCHardware` `0x1043e`, `MixSetMicBoost` `0x106e0`; `sndIoctlSetLoopbackMode` `0x107b6` only writes reg 25 = `0x00a0` and ignores its input |
+| video-locked sampling (only when an application selects a sync source) | reg 16 (input) or 19 (output): top two bits set, low byte a base-rate and divisor code (NTSC rates 8000, 11025, 16000, 22050, 32000, 44056, 44100, 48000; 44056 only in mode 0) | `HwSetClkSyncSrc` `0x11282`, `HwSetClkVideoLockRate` `0x1130c`; data sheet pp. 37-38 (reg 16) and p. 41 (reg 19) |
 
 Data sheet registers the driver never touches: 1 (channel status and overrange), 3, 6, 10 to 14, 18, 21 to 24. Reading
 register 1 clears it on any access (data sheet p. 28), which is moot since nothing reads it.
@@ -84,8 +95,8 @@ additions are listed (all established, `sndInitializeWaveSpec` `0x11954`, `sndSt
 
 - Each channel has one ring, flat and contiguous, 8 KiB (`0x2000`) fixed: the driver sets the size unconditionally, so the
   size code written is always 7. The 4 KiB branch in `sndStartDMA` is dead code in the shipped configuration.
-- The ring comes from `MmAllocateContiguousMemory` with a ceiling of `0xffffffff`, so it is below 4 GiB, and is aligned up to
-  256 bytes. The base register gets that physical address shifted right 8 with bit 29 set. The register can hold more (Linux's
+- The ring comes from `MmAllocateContiguousMemory` with a ceiling of `0xffffffff`, so it is below 4 GiB, and is moved up to a 256-byte boundary by adding `0x100` minus its low byte in the Windows 2000 and NT 4.0 builds, so an
+  already aligned block moves by `0x100` (the 1999 build's arithmetic differs but its odd branch is never reached). The base register gets that physical address shifted right 8 with bit 29 set. The register can hold more (Linux's
   comment: a 40-bit address, bit 37 selecting coherence), but the NT driver never uses it, so the engine's reach above 4 GiB is unknown.
 - There is no descriptor list: the engine reads (output) or writes (input) the ring between two byte-wide pointers in 32-byte
   steps, wrapping at the ring size. Hardware owns one pointer, software the other.
@@ -101,8 +112,8 @@ additions are listed (all established, `sndInitializeWaveSpec` `0x11954`, `sndSt
 |---|---|---|
 | The NT driver never connects an interrupt in any of the three builds: no interrupt-connect call is imported, it never reads `+0x10` or `+0x14`, and it never sets the trigger pointer or mask. | established | import tables, whole-driver search |
 | It is timer driven instead: when a stream starts it arms a periodic kernel timer (due almost at once, period 4 ms) whose DPC does the copy; a periodic timer cannot fire faster than the clock tick, which the HAL sets to 10 ms by default, so about 100 DPCs per second per running stream. | established for the call; the 10 ms is the HAL's default | `sndStartTransferDpc` `0x13160`; [nt-hal.md](../../software/visws/nt-hal.md) |
-| The engine's interrupt is Cobalt controller line 22. Cause is `+0x10` (bits: input trigger, input overflow, output trigger, output underflow, link error), enable `+0x14`; Linux reads the status then writes ones back to clear, and re-arms by clearing then or-ing the mask. | line: established as Linux's constant; bit roles and write-one-to-clear: inferred | Linux `vwsnd_audio_intr`, `li_enable_interrupts`; [registers.md](registers.md) |
-| In the NT HAL the vector for line 22 is `0xb2`, checked in the raw HAL file in two of its per-generation tables (the earlier reading says line 22 does not differ between generations; the third table was not looked at). A driver would obtain it with `HalGetInterruptVector` on the internal bus with level 22; for lines 16 and up the HAL only writes the controller's redirection entry and touches no bridge enable. | vector value: established; that a driver doing so works: inferred (nobody does it) | `CobaltInt2Vec` in `halborg.dll` 1.3; [nt-hal.md](../../software/visws/nt-hal.md#interrupt-level-to-cobalt-entry) |
+| The engine's interrupt is Cobalt controller line 22 (Linux's constant; that this is the audio line is a reading of Linux plus the HAL table index, not seen in any NT use). Cause is `+0x10` (bits: input trigger, input overflow, output trigger, output underflow, link error), enable `+0x14`; Linux reads the status then writes ones back to clear, and re-arms by clearing then or-ing the mask. | line, bit roles and write-one-to-clear: inferred | Linux `vwsnd_audio_intr`, `li_enable_interrupts`; [registers.md](registers.md) |
+| In the NT HAL the vector for line 22 is `0xb2`, (entry 22 of the HAL's vector table, which has the same value in all three generations' tables). A driver would obtain it with `HalGetInterruptVector` on the internal bus with level 22; for lines 16 and up the HAL only writes the controller's redirection entry and touches no bridge enable. | vector table value: established; that it is the audio line or that a driver doing so works: inferred | `CobaltInt2Vec` in `halborg.dll` 1.3; [nt-hal.md](../../software/visws/nt-hal.md#interrupt-level-to-cobalt-entry) |
 
 A polling model is enough for the shipped driver. A new driver that wants real interrupts would have to find out what the
 engine actually raises, which no software read here does (questions 2 and 3).
@@ -114,7 +125,7 @@ Per DPC with a stream running (`SoundOutTransferDpc` `0x12e10`, `sndLoadDMABuffe
 
 | Stream | Register accesses per DPC | Width |
 |---|---|---|
-| output | read of the hardware read pointer (control `+1`), once for the free-space test; when buffers are outstanding, two more pointer reads for the position; one write of the software pointer (control `+0`) after data was copied | all 1 byte |
+| output | read of the hardware read pointer (control `+1`), once for the free-space test; when buffers are outstanding, two more pointer reads for the position; one write of the software pointer (control `+0`) after data was copied; the position ioctl, the peak meter and `GetCurrentWaveOutPosition` also read the pointers | all 1 byte |
 | input | read of the hardware write pointer (control `+0`) and of the software pointer (control `+1`); one write of the software pointer (control `+1`) after data was copied | all 1 byte |
 
 So three to four byte accesses per stream per tick, about 400 per second for playback alone at the default 10 ms clock, none of
@@ -125,20 +136,26 @@ so a DPC late by a few tens of milliseconds underflows.
 One-off traffic:
 
 - Start of a stream (`sndStartDMA`): for output, a control-word write to clear enable, two writes to page `0xff010000`
-  (`+0x98`, `+0x9c`); then for both directions the base, the configuration, the control word (size, enable last), the
-  silence word at `0xff00f000 + 0x500` before the enable; then a write of the stream's counter word (`+0x30c` output,
-  `+0x304` input) to zero, and four reads for the time-stamp pair. All 32-bit except the pointers.
-- Stop: input clears the enable bit with one control-word write; output writes nothing to the engine, it only cancels the
+  (`+0x98`, `+0x9c`); then for both directions the base, the configuration, the control word (size and enable in one store), the
+  silence word at `0xff00f000 + 0x500` before that store. The counter zeroing (`+0x30c` output, `+0x304` input) and the four
+  reads of the time-stamp pair happen in the first DPC that moves data (`sndLoadDMABuffer`, `sndFillInputBuffers`), not in
+  `sndStartDMA`. All 32-bit except the pointers.
+- The shadow copy of the control word has its low 16 bits (both pointers) and trigger fields always 0, and every 32-bit control
+  store sends the whole shadow. So the output start, the output clear-enable before it and the input stop each reset both
+  pointer bytes to 0; the pointers are otherwise written only as single bytes. A model must treat a 32-bit control write as
+  setting the pointers. Linux first writes the channel-reset bit (`0x80000000`); the NT driver never does.
+- Stop: `sndStopDMA` first runs one more fill or load pass (for input that reads the hardware pointer and writes the software
+  pointer); then input clears the enable bit with one control-word write; output writes nothing to the engine, it only cancels the
   timer. The output channel therefore keeps its enable bit until the next start clears it (`sndStopDMA` `0x10d24`, all three
   builds). What the engine does with an enabled channel whose pointers are equal is unknown (the Linux comment says it repeats
   the last sample after an underflow).
-- Codec accesses (`CODECRegisterWrite`): one status read, two writes, per register: `HwInitializeCodec` makes 7 writes and 3 to 5 reads of
+- Codec accesses (`CODECRegisterWrite`): one status read, two writes, per register: `HwInitializeCodec` makes 7 writes and 2 to 5 reads of
   register 0 and spends about 490 ms of guest time in waits; a rate change makes 1; a volume change 1 to 4.
 
 Ordering that matters (established unless marked):
 
 1. The link-enable write (`+0x00`) must precede every codec access.
-2. The configuration, base and size must be written before the control word that sets enable; the silence word before the
+2. The configuration and base must be written before the control word, which carries the size and the enable together; the silence word before the
    enable; the input channel's base before anything starts, even for output.
 3. The data copy into the ring precedes the software-pointer write; the driver issues no barrier. On x86 the stores arrive in
    program order, so a model may read the ring at or after the pointer write (inferred).
@@ -163,7 +180,8 @@ Ordering that matters (established unless marked):
 
 The minimum set for `sgisound.sys` to initialise and play (all of this is established from the code except where marked):
 
-- Host control: accept the `0x8000`, `0`, `0x4000` sequence; bit 2 reads 0.
+- Host control: accept the `0x8000`, `0`, `0x4000` sequence; bit 2 reads 0 before and after. Linux's probe also wants the value after
+  link enable to differ from a plain `0x4000` (it treats exactly `0x4000`, or bit 1 set, as no codec), so set a ready bit.
 - Codec port: command word busy bit that is 0 (or clears at once), 16-bit write and read of data and command; register 0 reads
   `0xc001` for a short time after link enable, then bit 15 clears (within 2 ms: the driver reads at 0, 1 and 2 ms), then after the clear of PDNI in register 28
   bit 14 clears within 580 ms (a model may clear it at once). The value of registers 1 to 28 can be a plain array with the
@@ -172,4 +190,6 @@ The minimum set for `sgisound.sys` to initialise and play (all of this is establ
   the engine consumes or fills the ring at the sample rate of the selected clock generator (inferred) and advances its pointer.
 - The two time-stamp words and counters, and the three odd words in pages 1 and 2, as plain storage (inferred; the driver only
   writes them and the pairs read back).
+- A 32-bit write to a channel's control register must load both pointer bytes (see above).
+- Registry: `Services\sgisound\Parameters` with at least one device subkey, or the driver does not start.
 - No interrupt, no PCI function.

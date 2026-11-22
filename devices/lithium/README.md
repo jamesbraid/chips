@@ -123,13 +123,13 @@ Read in Ghidra for its hardware access only ([driver inventory](../../software/v
   reset, release, link enable, which agrees with the Linux register layout.
 - A ring base is written as the physical address shifted right 8 with bit 29 (`0x20000000`) set.
 - The silence value goes to a word at `0xff00f000 + 0x500`: `0x80808080` for 8-bit samples, `0` for 16-bit, which is the
-  "zero-sample value" Linux names. The words at `0xff010000 + 0x98` and `+0x9c` are zeroed when output starts or stops.
+  "zero-sample value" Linux names. The words at `0xff010000 + 0x98` and `+0x9c` are zeroed when output starts (the Windows driver) or stops (Linux).
 - It never connects an interrupt (the driver imports no connect-interrupt call): it uses a timer and a deferred call, so
   NT does not depend on Cobalt entry 22 for audio. Whether entry 22 is the audio line is therefore still Linux's word only.
 
 ### The DMA engine as the NT driver programs it (second reading)
 
-Read in Ghidra with SGI's debug symbols (`sgisound.sys` 5.2.2, build time 2001-10-29: `sndStartDMA` at `0x113f2`, `sndStopDMA`,
+Read in Ghidra with SGI's debug symbols (`sgisound.sys` 5.2.2, build time 2001-10-29: `sndStartDMA` at `0x113f2` in the NT 4.0 build and `0x10b62` in the Windows 2000 build, `sndStopDMA`,
 `sndLoadDMABuffer`, `sndIoctlGetPosition`, `HwAssignDmaOffsets`, `HwInitializeCodec`, `GetLiUstMscPair`). All register access goes
 through two small routines, `READ_LITHIUM` and `WRITE_LITHIUM` (offset, width 1, 2 or 4, in the first mapped page). Established:
 
@@ -141,8 +141,7 @@ through two small routines, `READ_LITHIUM` and `WRITE_LITHIUM` (offset, width 1,
 - **Start (`sndStartDMA`).** Output only first clears the enable bit and writes the control word, and zeroes the two words at `+0x98` and
   `+0x9c` of the second page (`0xff010000`); both directions then write the ring base (physical address shifted right 8, bit 29
   set), the configuration word (format `0` for 8-bit and `1` for 16-bit in bits 1:0, stereo in bit 2, output in bit 3; other bits as the
-  shadow copy holds them), then the control word with the size code in bits 30:28 (7 for the default 8 KiB ring, 6 otherwise) and, last,
-  the enable bit 27 set. The silence word (`0x80808080` for 8-bit, `0` for 16-bit) is written to `0xff00f000 + 0x500` before the
+  shadow copy holds them), then the control word, one store carrying the size code in bits 30:28 (7 for the 8 KiB ring, which is the only size the driver sets up) and the enable bit 27. The silence word (`0x80808080` for 8-bit, `0` for 16-bit) is written to `0xff00f000 + 0x500` before the
   enable. The driver keeps a shadow copy of every register it writes and ORs bits into the shadow, so it never reads configuration
   or control back.
 - **Pointers.** Rings are 8 KiB (4 KiB for the other size code) of contiguous memory aligned to 256 bytes, in 32-byte steps. The driver
@@ -195,7 +194,7 @@ The 5.2.2 build (build time 2001-10-29, from the Digital Media 5.2.2 pack, unpac
 its symbols, and the same items checked: the three page addresses; the codec command and data words and the busy loop (36,000 stalls of
 10 microseconds); the seven-row table (the table's bytes were dumped: base `0x100 + 0xc * n`, control `+4`, configuration `+8`, time stamp
 `0x300 + 8 * n`, counter `+4`, pointer bytes at control `+1` and `+0`); `sndStartDMA`'s order and bit values (base `address >> 8` with bit 29,
-configuration bits 1:0, 2 and 3, size code 7 or 6, silence word, enable bit 27 last, the output-only zeroing of `+0x98` and `+0x9c`);
+configuration bits 1:0, 2 and 3, size code 7 or 6, silence word, enable bit 27 set in the same control store, the output-only zeroing of `+0x98` and `+0x9c`);
 the byte-wide pointers; `HwCheckLink` (bit 2 clear); `GetLiUstMscPair` (high word at `+0x204`, counters at `+0x304` and `+0x30c`); and the absence
 of any interrupt connection. No difference from the text was found. The two builds' register table is the same table. The
 `sgilivid.sys` and `sgiust.sys` windows and addresses in the section above were re-read the same way.
