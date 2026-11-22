@@ -381,10 +381,10 @@ slots 37, 96, 98, 4, 64, 82, 100, 86, 93 with it.
 | 6 | slot 3 `0xffacbfa0` (memory present only) | `0xffac42d0(1, nasid, 0)` and the RAM table work in the stand-in's memory: reads `[0x8000_0030_0100_0070 \| nasid << 38]` and `[... 0100_0038]` (the pointer table at node offset `0x0100_0000`), writes a 40-byte copy of the entry, the heap arena (`0xffadd540`), copies A's words `0x1000040` and `0x1000078` into the same offsets of the stand-in, then `0xffafbca0` (the EFI-store checksum: 16 reads of 64 KiB from the stand-in's flash, `0xffa0fa00`) | real RAM behind node offset `0x0100_0000` and above, readable and writable, and a flash window; the checksum text only changes a message | established (accesses); inferred (that the flash is the stand-in's) |
 | 7 | slot 81 `0xffa915f0` | memory present: record work in the stand-in's RAM (`[0x1000010]`, `0x188`) and `0xffa80720`; memory-less: `0xffa8f9c0(obj, local)` builds the record in A's RAM and a missing record prints a message (`0xffbb4978`) and returns | no register beyond rows 1 and 2 | established (shape); unknown (bodies) |
 | 8 | slot 99 `0xffaacaf0` | memory present: `0xffaa0100(nasid)` allocates the `0xb0000`-byte hardware-configuration block from the stand-in's heap and lays it out (stores into the stand-in's RAM); then, always, the board builder `0xffa9fe80(obj, 0x11, flag)` (see the board record below) | see rows 6 and the board record | established |
-| 9 | slot 92 `0xffaadae0` | `0xffa99870(obj, 2)`: read `1_5003_1550` of the stand-in (global window) and test bit 2. Set: no I/O set-up. Clear: slot 91 (`0xffaad720`, the I/O initialisation of the SHub page: long, includes II-block accesses at the stand-in) and, if it returns 0 or less, a locked read-modify-write setting bit 2 (`1_101d_0208` poll, `1_101d_0200` release). Then `0xffb91760` | **stub choice:** bit 2 of `1_5003_1550` reads 1, which skips the whole I/O set-up | established (test); unknown (slot 91 body, as on the SHub page) |
+| 9 | slot 92 `0xffaadae0` | `0xffa99870(obj, 2)`: read `1_5003_1550` of the stand-in (global window) and test bit 2. Set: no I/O set-up. Clear: slot 91 (`0xffaad720`, the I/O initialisation of the SHub page: long, includes II-block accesses at the stand-in) and, if it returns 0 or less, a locked read-modify-write setting bit 2 (`1_101d_0208` poll, `1_101d_0200` release). Then `0xffb91760` | plain storage: the claim wrote 0 (row 6), so bit 2 reads 0 and slot 91 runs; with the II block reading 0 it returns 0 at the brick check, and the read-modify-write leaves bit 2 set. See [bit 2 of `0x1_5003_1550`](#bit-2-of-0x1_5003_1550-every-access-and-whose-word-it-is) | established (test, both branches); unknown (slot 91 body past the brick check, as on the SHub page) |
 | 10 | slot 6: slots 37, 96, 64, 82, 100, 86 | nothing: each method is a 16-byte return | | established |
 | 11 | slot 6: slot 98 `0xffa6a310` and slot 4 `0xffacc680` | only when the flag is 0 (memory present). Slot 98 reads the stand-in's RAM pointer (`0x8000_0030_0100_0038 \| nasid << 38`, then `+0x188`) and stores a zero word. Slot 4 is the EFI-store synchronisation `0xffaf72e0`: for every present NASID it reads `SH_JNR_DIMM_CFG` and the checksum word at `[[0x0100_0070] + 0x80]` of that node's RAM, votes, and, if A's checksum loses, copies flash blocks from the winner (`0xffaf6640`) | RAM and flash as in row 6 | established (accesses); unknown (the copy's reads and writes) |
-| 12 | slot 6: slot 93 `0xffaadc10` | `0xffab38b0(nasid)`: on the slice gate, `0xffa99870(obj, 2)` again; clear: prints "Discovering local I/O on nasid %d" and runs `0xffab15c0`: the crossbar initialisation `0xffab0560` on the stand-in's window (`0x8000_0008_0000_0000 \| nasid << 38`; it compares the node's link with the crossbar master and prints "early return from xbow_init" if they differ, else walks the widget ports), then a 4-byte identification read at that window and a continue only for part `0xd000` or `0xd100`; any other value prints "New Widget %x connected to HUB." and stops. Set (row 9's stub choice): returns at once | | established (gate, first read); unknown (the rest of the I/O walk) |
+| 12 | slot 6: slot 93 `0xffaadc10` | `0xffab38b0(nasid)`: on the slice gate, `0xffa99870(obj, 2)` again; clear: prints "Discovering local I/O on nasid %d" and runs `0xffab15c0`: the crossbar initialisation `0xffab0560` on the stand-in's window (`0x8000_0008_0000_0000 \| nasid << 38`; it compares the node's link with the crossbar master and prints "early return from xbow_init" if they differ, else walks the widget ports), then a 4-byte identification read at that window and a continue only for part `0xd000` or `0xd100`; any other value prints "New Widget %x connected to HUB." and stops. Set (what row 9 leaves behind when slot 91 returned 0 or less): returns at once | | established (gate, first read); unknown (the rest of the I/O walk) |
 
 **The peer's board record (established for the source and the condition).** Slot 99's board builder `0xffa9fe80` goes
 to `0xffaa1ea0(obj, 0x11, flag)`, which allocates the board (`0xffaed240` through `0xffaa4c60`), writes type `0x11`, the
@@ -419,8 +419,72 @@ closing routines and the router branch for a node-only configuration).
 | Model | Stub requirements |
 |---|---|
 | bit-22 stand-in (unclaimed) | None of this section runs (stage 0x23 needs flag `0x10000`). Keep bit 40 clear. The board walk prints "no connecting hub board" per port and goes on. |
-| claimed S1 stand-in, memory-less | Plain storage for the registers in rows 1 to 5 and the SHub page's slot 97 tables at the stand-in's NASID (`SCRATCH1` and `SCRATCH2` read back what was written; the vector lock pair `1_101d_0188` reads 0 with bit 0 clear and `1_101d_0180` takes writes); UART line status `0xf_fed4_0028` reading bit 6 set; an L1 behind the UART that answers the SPD and EEPROM requests with "no DIMM" and an error (stub choice), or silence with the timeout lengths unread; `1_5003_1550` bit 2 set (stub choice) to skip I/O set-up; `1_5003_1540` bits 6 and 17 clear. A's RAM hosts the board. |
+| claimed S1 stand-in, memory-less | Plain storage for the registers in rows 1 to 5 and the SHub page's slot 97 tables at the stand-in's NASID (`SCRATCH1` and `SCRATCH2` read back what was written; the vector lock pair `1_101d_0188` reads 0 with bit 0 clear and `1_101d_0180` takes writes); UART line status `0xf_fed4_0028` reading bit 6 set; an L1 behind the UART that answers the SPD and EEPROM requests with "no DIMM" and an error (stub choice), or silence with the timeout lengths unread; `1_5003_1550` plain storage (bit 2 is not a stub choice, see [bit 2 of `0x1_5003_1550`](#bit-2-of-0x1_5003_1550-every-access-and-whose-word-it-is)) and the II block's `0x8_01c0_0128` reading 0 (no brick); `1_5003_1540` bits 6 and 17 clear. A's RAM hosts the board. |
 | claimed S1 stand-in with memory | The above, plus RAM and a flash window at the stand-in's NASID for rows 6, 7, 8 and 11, and real SPD answers. Use the memory-less model first. |
+
+### Bit 2 of `0x1_5003_1550`: every access, and whose word it is
+
+The word is the PROM's flag word (`cpu_bits`, plain storage on the SHub page). Bit 2 means "the I/O set-up of this node has
+been dealt with": the PROM tests it before running slot 91 and sets it when slot 91 returns 0 or less. Read in
+`shub1snprom.bin` (SAL 5.04, snprom 10.54) in Ghidra (`--sn2-prom`, decompile of every function named) and in the
+`ia64-linux-gnu-objdump` listing, which supplies every branch sense and constant below; nothing was run. Not yet independently
+reviewed. Grades are *established* (code) unless stated.
+
+**The routines that reach the word's bits.** A scan of every `adds ...=248` or `=256` near an `adds ...=32` found no other
+dispatch of the two object slots; the other uses of those offsets are data fields.
+
+| Routine | Does | Address | Whose word |
+|---|---|---|---|
+| `0xffa0eb40` (alias `0xffa0ecd0`) | test bit n | local window `0x8000_0081_5003_1550` | the running node's |
+| `0xffa0e730` (alias `0xffa0eae0`) | set or clear bit n under the local lock: the whole `0x1_101d_0208` must read 0 (a stuck lock is broken after 1,000,000 us by writing 0 to `0x1_101d_0200`); release writes `0x1_101d_0200` | local window | the running node's |
+| `0xffa0ebc0` (slot 32, `+0x100` of the table `0xffbd7c18`, part `0x4363`), through `0xffa99870(obj, n)` | test bit n | `0x8000_0009_5003_1550 \| sext16([obj]) << 38` | `obj`'s node (the halfword at `obj +0` is the NASID A gave it) |
+| `0xffa0e880` (slot 31, `+0xf8`), through `0xffa99800(obj, n, v)` | set or clear bit n; lock through the node-object read: bit 0 of `0x1_101d_0208` of `obj` must read clear (limit 1,000,000 us, after which the set goes ahead); release writes 0 to `0x1_101d_0200` of `obj` | same global form | `obj`'s node |
+
+The class table for part `0x4422` (`0xffbd8698`; slots 31 and 32 are `0xffa99000` and `0xffa99170`) works on words at
+`0x8_901d_0000 | nasid << 38`, not here; the three bit-2 calls in its slots 91 to 93 (`0xffaade3c`, `0xffaadedc`,
+`0xffaadf4c`) are not this word. The local view and the global view with the node's own NASID must be one storage word
+(inferred: the PROM uses both on the same node).
+
+**Every site that touches bit 2.** The bit argument was resolved at each of the 118 calls of the routines above (the other
+bits are 0, 1, 3, 4, 10 to 15, 21 + n, 25, 26 + n, 30 + n, 34, 35 + n, 59 and 60).
+
+| # | Site | Access | Whose word | What it decides |
+|---|---|---|---|---|
+| 1 | `0xffc4ea00`, SAL_A `0xffc4e970` | W64 0 to the whole word (and `1540`, `1560`) | the running node's | only the election winner writes (`0xffc4e9b6`: the value read at `0x101d_0080` equals the slice + 1 stored at `0x101d_0088`); bit 2 is 0 from here |
+| 2 | `main` `0xffa19fcc` | test | the running node's | clear: `0xffa19fdc` branches to `0xffa1a400`, which calls slot 91 for `main`'s node through `0xffab3840` (`0xffa1a40c`); set: that call is skipped. Both reach progress 20 (`0xffa19fe0`) and `0xffa483d0` |
+| 3 | `main` `0xffa1a45c` | set to 1 | the running node's | after that call returned 0 or less (`0xffa1a410`, branch `0xffa1a426`); a positive return leaves it clear |
+| 4 | `0xffa5d44c`, the claim `0xffa5d2a0` | W64 0 to the whole word (then `1540`), node-object write at the peer's NASID | the peer's | every path of the claim except two early exits: bits 55:54 of the peer's `SCRATCH1` already set, and a negative return of `0xffa959d0` |
+| 5 | slot 92 `0xffaadb1c` | test | `obj`'s | clear: slot 91 (`+0x2d8`) for `obj`; set: skipped |
+| 6 | slot 92 `0xffaadbfc` | set to 1 | `obj`'s | after slot 91 returned 0 or less (`0xffaadbc6`); a positive return calls `0xffb91720` and leaves it clear |
+| 7 | `0xffab394c` in `0xffab38b0` (slot 93) | test, `obj` from `0xffa0fa00(nasid)` | the NASID argument's | clear (and the slice gate `0xffa0ff30` non-zero): "Discovering local I/O" and `0xffab15c0`; set: returns 1 |
+| 8 | `0xffb49fdc` in `0xffb49e40` | test, per node of a walk | each node's | a node of the type byte it looks for, with the bit clear, gets `0xffb49a60` and bit 30 set; what that does was not read |
+
+Nothing else writes bit 2. The other writers clear bits 29:26 (`0xffa9fcd6`, `0xffaf5ea6`, `0xffc4e216`, the die chain) or
+touch one other bit. The history registers `0x1_5003_1500 + 16 * lid[26:23]` (SAL_A and `0xffa1e3xx`) are rewritten whole
+and reach `0x1550` only for `lid[26:23]` = 5, which a SHub 1 node (slices 0 to 3) does not produce.
+
+**Slot 91's test reads the stand-in's own word, not A's.** Slot 92 passes `obj`, the stand-in's entry with its NASID in the
+halfword at `+0`, to `0xffa0ebc0`, which forms the address from that halfword. A's own word is read by sites 2 and 3, and
+by sites 5 to 8 only when `obj` is A's own node.
+
+**What slot 91 does at a stand-in whose II block reads 0.** After the gates (debug-word bit 14 clear, slice gate, module
+type from `0xffa80430`) it runs `0xffab1cc0` and `0xffab30e0`, then the brick check `0xffab2e60`: it reads `0x8_01c0_0128`
+of that node, tests bit 13 (`extr.u 12,2`, then `& 2`) and returns 0 at once when clear (`0xffaad940`, `0xffaad956`).
+`0xffa91260`, the only caller of the second `0x100b` routine, comes after the check. So the second `0x100b` and its 3 s wait
+need bit 13 set, which plain storage does not give. The return of 0 makes site 6 set bit 2, so slot 93 (site 7) returns at
+once. Whether any loop in `0xffab1cc0` or `0xffab30e0` waits on zeros was not traced (an emulator run with plain zeros
+reached the shell, a software expectation only).
+
+**The two readings are one bit in two roles.**
+
+| Role | What the word must read | Grade |
+|---|---|---|
+| a peer's word, read by A's slot 92 (and sites 7, 8) | plain 64-bit storage. The claim wrote 0 (site 4), so bit 2 reads 0 and slot 91 runs. Nothing requires 1. Forcing 1 over the claim's write skips only slot 91's II-block accesses; it is an approximation of the register, not a reading | established (reads, writes, order); approximation (forcing) |
+| a peer that prepared itself (bits 55:54 of `SCRATCH1` set, claim skipped) | whatever its own PROM left: 0 after site 1, then 1 after site 3 when its own slot 91 returned 0 or less | inferred |
+| a node's own word at reset | irrelevant for the election winner: site 1 zeroes it before `main` reads it. It matters only when no processor wins (the store at `0x101d_0088` does not read back at `0x101d_0080`): nothing then zeroes the word, a reset 1 reaches site 2 and that node skips its own slot 91. That is the emulator reading, and the code agrees with it | established (code); software expectation (the emulator run) |
+
+Plain-storage `0x1_101d_0208` reading 0 satisfies both lock forms. The `obj` form (site 6) tests bit 0
+only; the local form (sites 3, and every `0xffa0eae0`) needs the whole 64-bit word to be 0. `0x1_101d_0200` takes writes.
 
 ### The router routines: when they run
 
@@ -574,7 +638,7 @@ index. "Cost if silent" is one wait (below) plus the failure tail.
 | 5 | `0x0013` slot | `0xffa6f000` > `0xffaac4b0` > `0xffa80270` > `0xffa7d760` > `0xffa7cbe0` | none | status 0, count 2: ints (slot, type character) | `0xca2f8` | 3.0 s + tail, not cached | established (reached); order against 3 and 4 unknown |
 | 6 | `0x0006` id 1, selector 2: node board area | only for a type letter `o` (EEPROM read repeated up to 10 times in `0xffa7d1f0`); slot 99's board builder `0xffaa1ea0` > `0xffaa1310` > `0xffaeccd0` > `0xffa84fd0`; I/O discovery `0xffaf1ee0` | 1, 2, 0, 64, then offsets 64, 128 ... until bytes-left is 0 | board area as in [the I/O request section](l1-requests.md#request-0x0006-in-io-discovery); any negative status prints "Could not retrieve EEPROM info" and goes on | `0xc9658` | 3.0 s + tail | established for the sites; for a memory-less stand-in after slot 81 through slot 9 (see above); for one with memory the object in its RAM was not read |
 | 7 | `0x0010` processor presence | slot 99, `0xffaa1ea0` > `0xffae8660` > `0xffae8250` | none | status 0 (bytes 0 to 3), then from byte 5: int nodes (at most 4), int CPUs (at most 16), then per node int presence mask, int enable mask; the count byte 4 is not tested | `0xca5f4` | 3.0 s + tail | established (parser); L1 layout inferred |
-| 8 | `0x100b` again, target `0x4ffff000` | slot 91, `0xffaad720` > `0xffa91260` > `0xffa91060`, only past the I/O set-up routines, so only when bit 2 of the stand-in's `0x1_5003_1550` reads 0 | same as row 1 | same as row 1 | `0xcb474` | 3.0 s + tail | established (site); the L1 sees a second `0x100b` |
+| 8 | `0x100b` again, target `0x4ffff000` | slot 91, `0xffaad720` > `0xffa91260` > `0xffa91060`: needs bit 2 of the word clear (the word of whichever node slot 91 runs for) **and** the brick check `0xffab2e60` to pass (bit 13 of `0x8_01c0_0128` of that node set); a stand-in with plain-storage zeros stops at the check and never sends it | same as row 1 | same as row 1 | `0xcb474` | 3.0 s + tail | established (site and both conditions); the L1 sees a second `0x100b` only for a node with a brick |
 | 9 | `0x1005` display text | the failure routine, when the failing request's object can open another slot (flag bit 2, see above), and the bank-hole check `0xffa764a0` (`<name>:ERR d8`, code `0xd8`, also fatal text on the console) | one string | status 0, count 0 | `0xcaeb4` | 3.0 s + tail | established (sites) |
 
 Before slot 81 the traffic is rows 1 to 5; after it, for a memory-less stand-in, the new object re-asks the identity requests (rows 3 to 5) and
@@ -639,9 +703,9 @@ Plain storage for `0x1_5003_1540`, a read of `0x1_101d_0188` that returns 0 and 
 | Row 2 | "No DIMM": six bytes `20+n ff ff ff 98 00`, sixteen times, any time. An SPD image: status 0, count 2, int `256 - 48 = 208` and a 48-byte raw block with a valid checksum in byte 63 (sysco), equal `tRCD` across DIMMs, banks filled in order | established |
 | Rows 6 to 9 | sent after slot 81 on header byte 9 (the reply must carry `0x20 \| 9`): `0x0006` id 1 selector 2 gets a board area or status -104, `0x0010` the layout above, `0x100b` silence or `20+n 00 00 00 00 00`, `0x1005` status 0 | established (what the PROM accepts); L1 side inferred |
 | Timing | the PROM's RTC must run: A's `0x1_101c_0000` and the period field of `0x1_1006_0280`, or the 3 s waits never end | established (code); inferred as the cause of the run above |
-| Registers on the stand-in | `SCRATCH2` and `SCRATCH1` read back what was written; `0x1_5003_1540` and `0x1_5003_1550` plain storage; `0x1_101d_0188` and `0x1_101d_0208` read bit 0 clear; `0x1_101d_0180` and `0x1_101d_0200` write sinks; the die-routine writes of row (b) to (e) above need storage | established |
+| Registers on the stand-in | `SCRATCH2` and `SCRATCH1` read back what was written; `0x1_5003_1540` and `0x1_5003_1550` plain storage; `0x1_101d_0188` reads bit 0 clear; `0x1_101d_0208` reads 0 (the `obj`-form lock tests bit 0 only, the local-window lock needs the whole word 0, see the bit 2 section); `0x1_101d_0180` and `0x1_101d_0200` write sinks; the die-routine writes of row (b) to (e) above need storage | established |
 | RAM pointer | `0x8000_0030_0100_0038 \| nasid << 38` must read 0 (or be unmapped-safe): `0xffa7fcb0` takes the node's RAM object when that word is non-zero and the node does not read as memory-less | established |
-| Unexpected | a request frame the PROM never sends (any code outside rows 1 to 9) is a finding, not something to answer; a second `0x100b` (row 8) and a `0x1005` (row 9) are expected | inferred |
+| Unexpected | a request frame the PROM never sends (any code outside rows 1 to 9) is a finding, not something to answer; a second `0x100b` (row 8, only for a node with a brick) and a `0x1005` (row 9) are expected | inferred |
 
 
 ## Contract rows: the scrub stores, the clock and the atomics (read 2026-11-22)

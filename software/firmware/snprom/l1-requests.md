@@ -106,9 +106,12 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
 ### 1. `0x100b` PROM version, progress `0xd`
 
 - **Site:** `0xffa90f5c`, routine `0xffa90e60`, called from `sysctl_init` `0xffa1f62c`. The routine's twin `0xffa91060` (site
-  `0xffa9115c`, target `0x4ffff000`) has no caller on the local path; slot 91 of the SHub page (`0xffaad720` > `0xffa91260`, I/O set-up, only
-  when bit 2 of `0x1_5003_1550` reads 0) sends it for a node set up from another node, see
-  [numalink-neighbours.md](numalink-neighbours.md#requests-to-a-remote-nodes-l1-and-what-a-stub-l1-must-answer).
+  `0xffa9115c`, target `0x4ffff000`) is not called from `sysctl_init`; its only caller is slot 91 of the SHub page (`0xffaad720` > `0xffa91260`, I/O
+  set-up). Slot 91 runs for a node whose own bit 2 of `0x1_5003_1550` reads 0 (`main` for its own node, slot 92 for a
+  node set up from another node) and sends this request only past the brick check `0xffab2e60`, which needs bit 13 of
+  that node's `0x8_01c0_0128` set; a stand-in whose registers are plain zeros returns 0 there and sends nothing. See
+  [numalink-neighbours.md](numalink-neighbours.md#bit-2-of-0x1_5003_1550-every-access-and-whose-word-it-is) and
+  [the remote node's L1](numalink-neighbours.md#requests-to-a-remote-nodes-l1-and-what-a-stub-l1-must-answer).
 - **Arguments:** three integers: `1`, then `5`, then `4`. The last two are the bytes at `0xffba20e8` and `0xffba20e9`, the PROM
   version (5.04); the same bytes feed the version field in `0xffa46540`. (Established: image bytes read.)
 - **Reply read:** `sysctl_cmd_command` is run, then the reply is parsed with an expected list of zero arguments. The result of
