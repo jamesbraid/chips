@@ -259,48 +259,72 @@ does not make itself.
 
 ### 2019 128 MB BARs (v4.14.83 read, 2026-11-22)
 
-The 4.14.83 log shows 0006:00:00.0 and .1, each with a 128 MB prefetchable BAR 0 at 0x08000000 and 0x10000000. The reading
-uses the stable tag v4.14.83 (`1d4bd2e4e1d2`). Its SN2, AGP and PCI-bus files are identical to mainline v4.14 (`e3d97e8db5c4`).
-The two generic PCI files that differ (`drivers/pci/probe.c`, `drivers/acpi/pci_root.c`) change bus numbering, PCIe MPS,
-host-bridge release and OSC control. Neither changes BAR reads or placement.
+The 4.14.83 boot in the 2019 public forum post (thread 849, post 12; full dmesg on page 1) runs the non-ACPI SN2 path. The
+log prints `ACPI  DSDT OEM Rev 0x20001`, below the 0x20101 that selects the ACPI path, and its DSDT is a header-only stub
+of 36 bytes. The reading uses the v4.14.83 tag (`1d4bd2e4e1d2`). Its SN2, AGP, PCI-bus and TIOCA files are identical to
+mainline v4.14 (`e3d97e8db5c4`). The generic PCI files that differ change bus numbering, MPS, host-bridge release and OSC
+control only.
+
+What the log shows for segment 0006, bus 00: a root bus with one I/O window and one memory window of 1 MiB, mapped to bus
+addresses 0x00000000 to 0x000fffff. Both 128 MB BARs fail to claim with "no compatible bridge window": 0006:00:00.0 BAR 0 at
+0x08000000 (prefetchable) and 0006:00:00.1 BAR 0 at 0x10000000. Devices on segments 0001, 0003 and 0004 (tg3, IOC4, sata_vsc,
+EHCI, OHCI) fail to enable with "BAR n [mem size ...] not assigned". The 0006 functions never reach enable in the log, since
+no driver binds to the boot VGA device.
 
 Established (what the code does):
 
-- On ia64 the boot path places no BARs. The core reads each base from config space and sizes it (v4.14.83:drivers/pci/probe.c:196-199,
-  283-286). The ia64 hook claims only nonzero bases (v4.14.83:arch/ia64/pci/pci.c:326-341). Assignment runs only on hot-add
-  (v4.14.83:drivers/acpi/pci_root.c:615-617) and on rescan (v4.14.83:drivers/pci/probe.c:2704). No ia64 file calls the assignment helpers.
-  A zero base stays unclaimed, and enabling the device then fails with "not claimed" (v4.14.83:drivers/pci/setup-res.c:427-431).
-- On the ACPI path (taken when the DSDT OEM revision is at least 0x20101, v4.14.83:arch/ia64/include/asm/sn/acpi.h:13), the SN2
-  code changes only a device's ROM resource (v4.14.83:arch/ia64/sn/kernel/io_acpi_init.c:439-457). The per-device BAR addresses
-  in the PROM record (v4.14.83:arch/ia64/include/asm/sn/pcidev.h:56) are applied only on the non-ACPI path
-  (v4.14.83:arch/ia64/sn/kernel/io_init.c:177-190).
-- The TIOCA bus fixup creates no host-bridge window (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:583-658). The TIOCA
-  apertures start at 0x80000000 (v4.14.83:arch/ia64/include/asm/sn/tioca.h:584-594), above both logged bases. The TIOCE code
-  reads the firmware-programmed bridge windows and reserves them, and writes no BAR (v4.14.83:arch/ia64/sn/pci/tioce_provider.c:800-843).
-- Root-bus windows come from the root bridge's ACPI _CRS (v4.14.83:arch/ia64/pci/pci.c:234-269; drivers/acpi/pci_root.c
-  `acpi_pci_root_create`, v4.14.83:drivers/acpi/pci_root.c:867-900).
+- Claim order. For each bus the core claims the nonzero BARs first (v4.14.83:arch/ia64/pci/pci.c:372-373), then calls the
+  platform fixup (v4.14.83:arch/ia64/pci/pci.c:374). The SN2 non-ACPI code sets the SAL addresses in that fixup (v4.14.83:arch/ia64/sn/kernel/io_init.c:177-190). So the claim
+  message uses the base the core read from config space (v4.14.83:drivers/pci/probe.c:196-199, 283-287), and the SAL
+  addresses are applied after it.
+- SAL inputs. Bus records come from SN_SAL_IOIF_GET_PCIBUS_INFO (0x02000056; io_init.c:49-59, 229-233), called per segment
+  and bus (io_init.c:298-307). Per-device BAR addresses come from SN_SAL_IOIF_GET_PCIDEV_INFO (0x02000057; io_init.c:64-78,
+  168-172). A zero SAL address leaves the BAR unchanged (io_init.c:179-180).
+- Root window. The root bus gets only two windows, both from the PROM's legacy bases: I/O of 64 KiB and memory of exactly
+  1 MiB, starting at bus address zero (io_init.c:127-141, 248-257). The 1 MiB size is a constant in the kernel (io_init.c:139).
+  It does not come from TIOCA or PIC, and it applies to every root bus on this path whatever its ASIC. The log does not print
+  each bus's ASIC type, so the provider behind 0006 is unknown.
+- Claim rule. A BAR is claimed only when a window contains its address after translation. An address outside every window
+  translates at offset zero (v4.14.83:drivers/pci/host-bridge.c:74-98). Bus addresses at or above 0x00100000 find no window,
+  and the claim fails (v4.14.83:drivers/pci/setup-res.c:153-159).
+- Failure state. A failed claim sets IORESOURCE_UNSET on the BAR (v4.14.83:drivers/pci/setup-res.c:155-157). The SAL
+  addresses do not clear that flag. Enable refuses an UNSET BAR with "not assigned" (setup-res.c:421-425).
+- Path choice. The ACPI path needs DSDT OEM revision 0x20101 or higher (v4.14.83:arch/ia64/include/asm/sn/acpi.h:13), and the
+  revision is read from the DSDT at boot (v4.14.83:arch/ia64/sn/kernel/io_common.c:462-469). Revision 0x20001 selects the
+  non-ACPI path, so the ACPI _CRS windows never apply to this boot.
 
 Inferred:
 
-- The PROM wrote both bases before the kernel ran. Nothing in the v4.14.83 boot path writes them. Whether the root's _CRS covers
-  0x08000000 to 0x17ffffff is unknown: the log does not print the window list.
-- One card, not two pipes. Both functions sit on bus 0 of one segment. A pipe has its own TIOCA bus, and the log shows one bus
-  for these. The board's 256 MB (128 MB framebuffer and 128 MB retained objects, per the graphics boards section) fits one 128 MB BAR per function.
-  The chip is unknown: the kernel code names no device, and the log prints no vendor ID.
+- The PROM wrote 0x08000000 and 0x10000000 into the BAR registers before the kernel ran. The SAL device-info values were not
+  printed, so whether they match is unknown.
+- The 128 MB BARs could not be claimed on this kernel under any firmware values. The only root window is 1 MiB, and a 128 MB
+  BAR does not fit. The non-ACPI path creates no bridge window of its own. So on this boot the framebuffer and its second
+  function were unusable, and the boot is not a working-graphics reference.
+- One card, not two pipes. Both functions sit on bus 0 of one segment, and a pipe has its own TIOCA bus. The chip is
+  unknown: the kernel names no device, and the log prints no vendor ID.
 
-Changes from the 2.6.5 record (b04c657):
+What an emulated PROM must return on this kernel:
 
-- SAL gate: v4.14.83 adds the SHub 1 test (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:592). Commit d3e5e1a1b4f4 (2006-06-28, in the
-  linux-sn2 history) added it, so 2.6.5 lacks it (established). A v4.14.83 kernel therefore skips the SAL-revision check on an SHub 2 machine.
+- To reproduce the failure: a BAR whose bus address is at or above 0x00100000 gets "no compatible bridge window" and
+  "not assigned" on enable, whatever the SAL address says. The 0006 BARs and the segment 0001 and 0004 devices show this.
+- To avoid it: the BAR must sit inside the root's 1 MiB legacy window, so its bus address and size both fit below 0x00100000
+  (the root's legacy memory base comes from the PROM's bus record). A 128 MB BAR can never meet that, so this kernel cannot
+  make the framebuffer usable through this path.
+- A PROM cannot repair an UNSET BAR through the SAL addresses, because the flag stays set after the failed claim.
+- The other lever is the DSDT OEM revision, which selects the ACPI path. That path reads the root bridge's _CRS windows and
+  was not exercised by this boot.
+
+Changes from the 2.6.5 record (b04c657), v4.14.83 against 2.6.5:
+
+- SAL gate: v4.14.83 adds the SHub 1 test (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:592). Commit d3e5e1a1b4f4 (2006-06-28,
+  in the linux-sn2 history) added it, so 2.6.5 lacks it (established). A v4.14.83 kernel therefore skips the SAL-revision
+  check on an SHub 2 machine.
 - Closest node: 2.6.5 left the controller node unset. v4.14.83 sets it (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:656).
-- GART setup: the same eight register writes in the same order as b04c657 recorded. The lines are two higher (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:181-203).
-  The 2.6.5 bodies were not re-read here.
-- AGP: one bridge per TIOCA with devices. The bridge takes the last list entry, since the VGA and AGP checks at
-  v4.14.83:drivers/char/agp/sgi-agp.c:296-300 only skip. The mode word and the 1 GiB aperture are unchanged (v4.14.83:drivers/char/agp/sgi-agp.c:104-105, 309-316).
-  Not compared: the page-allocation and `cant_use_aperture` fields (v4.14.83:drivers/char/agp/sgi-agp.c:41-56, 264-268).
-
-Route still open: the log's `ACPI  DSDT OEM Rev` line (v4.14.83:arch/ia64/sn/kernel/io_common.c:499-500) would show whether the
-ACPI path ran. The platform page does not quote that line. Also needed: the root bridge's _CRS from a booted Prism.
+- GART setup: the same eight register writes in the same order as b04c657 recorded, two lines higher
+  (v4.14.83:arch/ia64/sn/pci/tioca_provider.c:181-203). The 2.6.5 bodies were not re-read.
+- AGP: one bridge per TIOCA with devices, and the bridge takes the last list entry. The VGA and AGP checks at
+  v4.14.83:drivers/char/agp/sgi-agp.c:296-300 only skip. The mode word and 1 GiB aperture are unchanged
+  (v4.14.83:drivers/char/agp/sgi-agp.c:104-105, 309-316). The AGP driver does not load on this boot.
 
 ## Graphics boards and outputs
 

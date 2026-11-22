@@ -105,19 +105,22 @@ kernel expects; what the chip does is inferred. Full reading in [platforms/sn2/p
 - **Bring-up order and AGP binding (answered 2026-11-21, software expectation).** The eight register writes, the aperture
   word (0x80200007 at 16 KiB pages), the flush rules and the AGP bridge's device choice are on [the Prism platform page](../platforms/sn2/prism.md#tioca-kernel-expectations-265-7308-read-2026-11-21).
   The count per node stays unknown: the kernel makes one TIOCA per type-4 bus record and reads nothing else.
-- **2019 128 MB BARs (v4.14.83 read).** Established: on ia64 the boot path places no BARs, and the SN2 code does not write
-  them, so the kernel only reads and claims bases the firmware left (the reading is on
-  [the Prism platform page](../platforms/sn2/prism.md#2019-128-mb-bars-v41483-read-2026-11-22)). Inferred: the PROM wrote
-  0x08000000 and 0x10000000, and the two functions are one card. Unknown: the root bridge's _CRS window, the vendor ID, and
-  the DSDT OEM revision that picks the ACPI path. Route: the log's `ACPI  DSDT OEM Rev` line, `lspci -nn`, and the root
-  bridge's _CRS (acpidump) from a booted Prism.
+- **2019 128 MB BARs (v4.14.83 read).** Established for the code path: the 4.14.83 boot in the 2019 forum post ran the non-ACPI
+  SN2 path (its DSDT OEM revision is 0x20001), so the BAR bases come from the PROM through SAL device info and config space.
+  The root bus had only a 1 MiB legacy memory window, and a 128 MB BAR cannot be claimed in it, so both framebuffer
+  functions failed to claim and stayed unusable under that kernel. Inferred: the PROM wrote 0x08000000 and 0x10000000, and
+  the two functions are one card. The reading is on
+  [the Prism platform page](../platforms/sn2/prism.md#2019-128-mb-bars-v41483-read-2026-11-22). Unknown: the SAL device-info
+  values for those BARs (not printed), the chip's vendor ID, and whether any other PROM build gives a larger root window.
+  Route: `lspci -nn` and the SAL device-info values from a booted Prism.
 - **Deskside PCI-X bridge / dual TIO riser doc read.** b04c657 read the 2.6.5 kernel and found no PCI-X bridge or riser
   described in it. The 4.14.83 log shows a PCI-to-PCI bridge behind domain 0001 bus 0, with no bus mode printed. Unknown:
   what bridges the four deskside PCI-X buses, and what the parts index's dual TIO riser carries.
 - **TIOCA count per XG2N and pipe-to-port wiring.** b04c657 found that the 2.6.5 kernel makes one TIOCA per PROM bus record
-  of the TIOCA type, so the count is whatever the PROM writes. v4.14.83 on the ACPI path makes one TIOCA per root bus
-  (v4.14.83:arch/ia64/sn/kernel/io_acpi_init.c:468-488, io_common.c:295-310), so the count follows the DSDT's root bridges.
-  Unknown on both kernels: the Prism DSDT, and which SHub port each pipe uses.
+  of the TIOCA type, so the count is whatever the PROM writes. The 4.14.83 boot is on the non-ACPI path, which makes one
+  provider per bus that SAL reports, and its log shows six host bridges (0001 to 0006) without printing their ASIC types
+  (v4.14.83:arch/ia64/sn/kernel/io_init.c:298-307, io_common.c:295-310). Unknown on both kernels: the Prism's TIOCA count per
+  XG2N, and which SHub port each pipe uses.
 
 ## Review
 
