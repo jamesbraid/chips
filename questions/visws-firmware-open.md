@@ -83,11 +83,14 @@ and graphics pages need them.
 
 ## Linux's ARC loaders
 
-[route: missing binary] Settled negative for the held discs: Visual Workstation Environment 3.0 and ProPack 1.3 Visual Workstation
+[route: partly read] Settled negative for the held discs: Visual Workstation Environment 3.0 and ProPack 1.3 Visual Workstation
 Edition target the 230, 330 and 550, ship kernels 2.2.15, 2.2.16 and 2.3.99 with the Visual Workstation option off, and contain no
-`larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). Open: the loaders,
-how they build `boot_params` (memory size, command line), and the older SGI Linux for the 320 and 540 (Red Hat 6.0 era) that used
-them. Next: an SGI Linux 2.2.10-era workstation release or its install floppy images.
+`larc.exe`, `arclx.exe` or `la2210.vw` and no ARC loader source ([boot-path.md](../software/visws/boot-path.md)). The kernel side of the
+handoff is now read from mainline 2.2.10 and 2.4.0: the boot block fields, the memory map source, entry registers and the
+SMP start-up ([Linux loader handoff](../software/visws/boot-path.md#linux-loader-handoff)). Still open: the loaders themselves, what
+they put in the block at `0x90000` for 2.2 and in `%esi` and `%bx` for 2.4, and whether SGI's 2.2.10 build and its July 1999 patches
+change any of it. The loader binaries, `la2210.vw` with its `.config`, the patch sets and a public visws vmlinux are not held. Next: any of
+those, or an install disc of the Red Hat 6.0 era for the 320 or 540.
 
 ## Reset-to-console trace: what is still open
 

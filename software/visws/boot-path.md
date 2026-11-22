@@ -585,12 +585,126 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
    graphics buffer, at the top of memory and 8 MB by default (the size is a boot parameter, trimmed to whole megabytes),
    as a reserved region. The Linux port's boot-time probing is only the PIIX4 board-type bits, the NS87307 GPIO
    revision, the two Lithium device and vendor words (a warning is printed if they do not read as SGI's Lithium),
-   and the Cobalt revision and APIC id registers.
+   and the Cobalt revision and APIC id registers. These points are the 2.6 port; the 2.2 and 2.4 trees differ, see
+   [Linux loader handoff](#linux-loader-handoff).
 3. **Tables the kernel does not get.** No MP table, no E820, no ACPI, no PnP BIOS: established for Linux 2.6 (the
    platform replaces `find_smp_config`, `get_smp_config` and `memory_setup`).
 4. **Interrupt set-up the kernel assumes already done.** None: the kernel unmasks the Lithium PCI interrupt-enable
    registers (`+0x46`, all eight bits on both bridges) and enables the Cobalt APIC itself by setting bit 8 of its ID
    register without changing the id ([nt-hal.md](nt-hal.md) for the register map; Linux page for the IRQ table).
+
+## Linux loader handoff
+
+Scope. The Linux loaders (`larc.exe`, `arclx.exe`, the 1999 arcboot source and the public `arclx2` build), the SGI 2.2.10
+kernel `la2210.vw` and its July 1999 patches, and a public vmlinux and `.config` for the visws kernel are not held. So the loader side below is
+unknown. The kernel side is read from mainline Linux 2.2.10 (`88e12acf949f`) and 2.4.0 (`13a80dffb749`), which both carry
+the visws platform code. Those trees show what a visws kernel of that line expects. They do not show what SGI's build does.
+Citations are `file:line` in those trees; "2.2" means 2.2.10 and "2.4" means 2.4.0.
+
+### 1. How the loader is started and reads the kernel
+
+- **Call. Established (PROM image).** The firmware calls the loader with cdecl `(argc, argv, envp)` after the stack and
+  console set-up in [From the menu to the loader](#from-the-menu-to-the-loader), item 5. Which ARC vectors the Linux loader
+  calls, and whether it uses the `0x1200` or `0x1300` slot: **unknown**, no Linux loader binary is held.
+- **Device and file. Observed (user transcripts, not checked on hardware).** A 1999 report names `OSLoadPartition`
+  `multi(0)disk(0)fdisk(0)partition(1)`, `OSLoadFilename` `/la2210.vw` and `OSLoadOptions` `root:/dev/fd0 load_ramdisk=1`
+  (Usenet `A7C09CFCAF83D2119C5000104B416CCF091C7D@theta.holmes.nl`, 1999-09-23). A 2000 report of the same install names
+  `OSLoadPartition` `Floppy1` (Usenet `8csntq$vku$1@nnrp1.deja.com`, 2000-04-10). Both are floppy installs. Which partition
+  string is right for these machines in general: **unknown**.
+- **Read sequence. Observed (one transcript, 1999-09-23).** The same report shows `ARC opening
+  multi(0)disk(0)fdisk(0)partition(1)la2210.vw`, then `ARC reading 52 bytes at offset 0`, then repeated reads that did not
+  finish. Whether the PROM or the loader prints these lines is **unknown**. 52 bytes is the size of an ELF32 file header, so
+  the first read is probably the ELF header at offset 0: **inferred**. No seek appears in the transcript.
+- **Arguments and environment.** The loader's `argv` and `envp` are the firmware's `name=value` strings (PROM item above).
+  The kernel command line is the `OSLoadOptions` text, which the loader must copy into the block in section 2.
+
+### 2. Handoff to the kernel
+
+The loader's load address, the block it builds and its entry registers are **unknown**. What the kernels require:
+
+- **Load address. Established.** The 2.4 link script puts kernel text at virtual `0xC0000000 + 0x100000` (`arch/i386/vmlinux.lds:9`),
+  that is physical 1 MB. The entry code runs at physical addresses and offsets its own tables by `__PAGE_OFFSET`
+  (2.4 `arch/i386/kernel/head.S:86`, `98`). The 2.2 link address was not read.
+- **Paging. Established (2.4 `head.S:86-106`; 2.2 `head.S:70-75`).** The entry builds its own tables in `pg0`, writes CR3 and
+  sets PG with `orl`. It does not clear PG first. So the PROM's live tables are fine on entry and are replaced at once.
+- **Segments before the kernel's GDT. Established (code order); the firmware's GDT is unknown.** The entry loads DS, ES, FS
+  and GS with `__KERNEL_DS` (`0x18`, 2.4 `include/asm-i386/segment.h:5`) at `head.S:50-56`, and loads its own GDT later
+  (`lgdt`, `head.S:250`). A segment load reads the current GDT, so the loader's GDT must hold a valid entry at `0x18`:
+  **inferred**.
+- **Stack. Established.** The entry sets its own stack after paging is on (`lss stack_start`, 2.4 `head.S:109`). The PROM's
+  `0x61ff0` is not needed.
+- **Registers on entry.** `%bx` must be zero for the boot processor: both trees test it under `CONFIG_SMP` before anything
+  else (2.4 `head.S:52-53`, 2.2 `head.S:53`), and a nonzero value takes the secondary-processor path. The PROM page says the
+  registers are whatever the call leaves, so the loader has to zero `%bx` itself. The loader must also set `%esi`: 2.4
+  reads the boot block through it (`head.S:42`, `146-170`). 2.2 ignores `%esi` and reads a fixed physical `0x90000`
+  (2.2 `head.S:119`). **Established** for the kernels; a loader that serves both must write the block at both places:
+  **inferred**.
+- **Boot block layout. Established (2.4 `arch/i386/kernel/setup.c:154-172`, `include/asm-i386/e820.h:15,17`; 2.2 `setup.c:100-116`).**
+  The block is 2 KB of fields followed by a 2 KB area holding the command line at `PARAM+2048`, which setup reads as 256 bytes.
+  The fields used by both trees:
+
+  | Offset | Field |
+  |---|---|
+  | `0x002` | `EXT_MEM_K`, 16-bit, KB above 1 MB |
+  | `0x040` | APM information |
+  | `0x080` | drive information |
+  | `0x0a0` | system descriptor table |
+  | `0x1e0` | `ALT_MEM_K`, 32-bit, KB above 1 MB |
+  | `0x1f2` | root mounted read-only flag |
+  | `0x1f8` | RAM disk flags |
+  | `0x1fc` | root device |
+  | `0x210` | loader type; initrd is used only when nonzero |
+  | `0x214` | kernel start |
+  | `0x218` | initrd start |
+  | `0x21c` | initrd size |
+  | `0x228` | pointer to the command line (2.4 only); zero means use the old magic |
+  | `0x800` | command line, `COMMAND_LINE` |
+
+  2.4 also reads the E820 count at `0x1e8` and the map at `0x2d0`. 2.2 has no E820 fields. Old-style command line: magic
+  `0xA33F` at physical `0x90020`, offset at `0x90022`, base `0x90000` (2.4 `head.S:19-23`, 2.2 `head.S:18-21`).
+- **Memory map. Established (2.2 and 2.4 source).** 2.4 copies the loader's E820 map when there is one (`setup.c:497-510`).
+  Otherwise it builds two regions from `ALT_MEM_K` or `EXT_MEM_K`, whichever is larger (`setup.c:511-521`). 2.2 takes the
+  larger of the two counts (`setup.c:276-283`). Neither reads ARC memory descriptors. Neither tree has a visws memory
+  reservation or graphics-memory setting in `setup.c`: established negative. SGI's build is **unknown**.
+
+### 3. What the kernels expect of the hardware at early boot
+
+- **Board type and revision. Established (2.4 `setup.c:225-300`; 2.2 `setup.c:169-244`).** The PIIX4 GPIO board-id bits are
+  read first, then the NS87307 GPIO block is enabled to read the board revision. This runs before memory set-up
+  (2.4 `setup.c:604-605`).
+- **Cobalt APIC and CPU block. Established (2.4 `arch/i386/kernel/traps.c:926-946`; 2.2 `traps.c:663-668`).** `cobalt_init`
+  maps the Cobalt CPU block and APIC, prints their revision and ID, and sets `CO_APIC_ENABLE` (bit 8, `cobalt.h:38`) in the
+  APIC ID register (`0x0ffc`, `cobalt.h:35`) with `|=`, so the ID is kept.
+- **Lithium interrupt enable. Established (2.4 `traps.c:922-923`; 2.2 `traps.c:644-645`).** Before the Cobalt APIC enable,
+  `cobalt_init` writes `0xffff` to `LI_PCI_INTEN` (`+0x46`) on both bridges. This matches [Boot into Linux](#boot-into-linux),
+  item 4.
+- **Lithium identity. Established negative.** Neither tree reads a Lithium device or vendor word at boot. The PCI code uses
+  configuration mechanism 1 through `0xCF8` and `0xCFC` only (2.4 `pci-visws.c:27-67`, buses 0 and secondary at
+  `pci-visws.c:123-124`), not the Lithium windows. The probe in [Boot into Linux](#boot-into-linux), item 2, is 2.6 only.
+- **Interrupts. Established (2.4 `visws_apic.c:374-409`).** `init_VISWS_APIC_irqs` gives the 16 ISA lines the PIIX4 master,
+  PIIX4 virtual or Cobalt handler type. Cobalt entries are programmed on first use (`co_apic_set`, `visws_apic.c:136-139`).
+- **SMP start-up. Established.** Neither kernel reads a firmware processor table. 2.4 `find_visws_smp`
+  (`mpparse.c:617-640`) sets `smp_found_config`, sets bit 1 of `phys_cpu_present_map` (processor id 1), sets the
+  integrated-APIC bit in both `apic_version` entries and sets `mp_lapic_addr` to `APIC_DEFAULT_PHYS_BASE`. 2.2
+  `init_visws_smp` (`smp.c:614-636`) does the same. So the processors are two, ids 0 and 1. No file under `arch/i386` in
+  2.4.0 reads physical `0x1e00`. In 2.2.10 the only `1e00` hits are page-table constants (`head.S:376-472`). This agrees
+  with item 8 of [Boot into NT](#boot-into-nt). SGI's build is **unknown**.
+- **Warm reset for secondary processors. Established.** Both trees write the warm-reset vector at `0x467` and `0x469`
+  (2.4 `smpboot.c:593-595`; 2.2 `smp.c:966-968`), which matches item 7 of [Boot into NT](#boot-into-nt).
+
+### 4. Contradictions and conflicts
+
+- **PROM side: no contradiction.** The cdecl call, flat protected mode and the live PROM tables are all acceptable to these
+  kernels. The entry replaces the tables, and the stack is reset.
+- **Scope of [Boot into Linux](#boot-into-linux), item 2 and item 3.** The 2.6 statements there (the "Bootloader didn't set
+  memory size" warning and its 128 MB default, the graphics-buffer reservation, and no use of E820 from the loader) are not in
+  2.2.10 or 2.4.0. The 2.4 tree uses the E820 map when the loader supplies one. Those statements are left as written and are
+  now scoped to 2.6 in that section.
+- **Open, not contradicted:** the entry needs `%bx` zero and either `%esi` or a block at `0x90000`. The PROM page does not say
+  what the registers hold at entry, so only the loader can settle that.
+- **Open:** SGI's 2.2.10 build and its July 1999 patches may change any point in sections 2 and 3. The patches are not held, so
+  this cannot be checked. A route: the loader binaries, `la2210.vw` with its `.config`, the two patch sets, or an install disc
+  of the Red Hat 6.0 era for the 320 or 540.
 
 ## PCI enumeration
 
