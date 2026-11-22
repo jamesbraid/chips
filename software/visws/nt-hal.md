@@ -1,6 +1,6 @@
 # Visual Workstation 320 and 540: the Windows NT 4.0 HAL
 
-SGI's HAL for the pair is `halborg.dll` (multiprocessor) and `halbrgup.dll` (uniprocessor), both from Recovery CD-1 v1.1,
+SGI's HAL for the pair is `halborg.dll` (multiprocessor) and `halbrgup.dll` (uniprocessor), both from Recovery CD-1 v1.1 (byte-identical copies are in `\I386\` of the SGI 320 NT 4.0 install CD, Disk 1, in the Internet Archive item `sgi-vw-drivers`),
 file revision strings "1.3", linked 1999-04-27 (PE timestamps), image base `0x80010000`, native-subsystem DLLs that
 import only `ntoskrnl.exe`. Each has a matching CodeView symbol file (`halborg.dbg`, `halbrgup.dbg`), which names about
 1,050 symbols and the 75 object files it was built from. The two HALs share all symbols except thirteen
@@ -46,7 +46,7 @@ until the CMOS RTC's update-in-progress flag (register `0x0a`, bit 7) falls and 
 value, waits for the same transition one second later, and reads how far the counter fell, rounded to the nearest 10 kHz.
 The reload value for a tick is the tick length (default 10 ms, in 100-ns units, `maximum_increment` `0x186a0`; the
 minimum increment is `0x2710`, 1 ms) multiplied by the measured frequency and divided by 10 million, with rounding.
-The local APIC timer is the alternative clock source, with the 8254 selectable by the boot option `USE8254`; the
+The local APIC timer is the alternative clock source, selected by the boot option `SYSCLOCK=APIC` ([options](#boot-options-the-hal-parses)); the
 same calibration scheme (against the RTC second) is used to scale the local APIC timer.
 
 **Memory-controller block (`0xc6000000`).** Established for the registers the HAL touches; the rest unknown.
@@ -137,6 +137,12 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
    to entry 3 here. Linux 2.6's map sends bridge B's shared pins to entries 5 to 7 and their rotations (the base of bridge
    A) and leaves 13 to 15 unused, which this table contradicts for bridge B.
 
+## PCI configuration cycles
+
+The `TypeBorg` accessors send configuration cycles through a memory-mapped address and data register pair inside each
+Lithium bridge window rather than through ports `0xcf8` and `0xcfc`; the address word layout, locking and the
+master-abort clean-up are in [devices/lithium](../../devices/lithium/README.md#the-bridge-window-established).
+
 ## The NS87307 super-I/O and the PIIX4
 
 The NS87307 sits at index and data ports `0x2e` and `0x2f` (logical device 7 is GPIO at `0x0fc0`, 8 is power
@@ -159,7 +165,7 @@ special-cycle (stop grant) value through port `0xcfc`.
 2. `HalpStartProcessor` finds the Nth enabled non-bootstrap table entry, sends INIT (ICR low word `0xc500`) and deassert
    (`0x8500`) to its APIC id, and, if the first table entry's APIC version byte is nonzero, two startup IPIs
    (ICR `0x600` plus the stub's page number) a short delay apart, waits for ICR delivery-status clear between steps, then waits for
-   the other processor to flag itself in a shared block, a bounded number of times. `ONECPU` (boot option) stops secondary
+   the other processor to flag itself in a shared block, a bounded number of times. `ONECPU` (boot option, above) stops secondary
    processors from being started.
 3. Inter-processor interrupts are local APIC fixed IPIs at vector `0xe1`; a broadcast-call mechanism (vector `0xc1`)
    and a cache-operation interrupt exist. Local APIC set-up for each processor (`HalpInitLocalAPIC`): task priority
@@ -216,9 +222,46 @@ registers).
 
 ## Boot options the HAL parses
 
-From the OS load options, case-insensitive: `BREAK`, `ONECPU`, `PCILOCK`, `TIMERRES`, `CLOCKLEVEL`, `USE8254`,
-`INTERRUPTAFFINITY`, `INTRROUTE`, `HUGH006`, `NOGUI`, the debug baud options `dbaud` and `rbaud`. Names are strings in
-the HAL; their effects above are read for `ONECPU`, `USE8254` and `INTRROUTE`, inferred for the others.
+Established (the whole option routine at `0x8002dee0`, `HalInitSystem`'s first-processor path, and `HalpXtractOptionString`
+at `0x8001a6e0`, read in full; the strings are in the image at file offsets `0x1de20` to `0x1ded4` and `0x206f0` to `0x20730`).
+The load-options string (the ARC `osloadoptions` variable the loader passes) is searched, not tokenised: a name matches
+where it is at the start or follows a blank, a tab or `/`, and a value follows `=` or `:`. Case is significant for the
+names as stored (upper case).
+
+| Option | Effect |
+|---|---|
+| `ONECPU` | counts up the "do not start processors" flag; secondary processors are not started |
+| `PCILOCK` | sets a flag that keeps the PCI resource settings (read by the PCI set-up, not traced) |
+| `INTAFFINITY` | static interrupt affinity flag |
+| `BREAK` | breakpoint into the debugger at start-up |
+| `ARCINFO` | sets bit 0 of the HAL's boot-command flags (enables the ARC-tree dump at start-up, inferred from the dump routine) |
+| `SYSCLOCK=COBALT` / `SYSCLOCK=APIC` | choose the Cobalt timer (default) or the local APIC timer as the system clock |
+| `PAGEOPENPOLICY=OPEN` / `CLOSE` | memory-controller page policy value (set to 0 for `OPEN` and 2 for `CLOSE`); the register it feeds is not found in the routines read |
+| `MEMERR=ON` / `OFF` | enables or disables the Cobalt memory-error interrupts (default on) |
+| `ECC=ON` / `OFF` | enables or disables ECC checking (default on) |
+| `BLOCKINTS=n` | numeric flag the HAL prints when set (use not traced) |
+| `INTRROUTE=DEFAULT` / `NO8259` / `IDE8259` / `HUGH006` | the interrupt routing mode, below |
+| `CACHEOPPOLL=n` | microseconds the cache-operation code polls (an integer) |
+
+`TIMERRES`, `CLOCKLEVEL` and `NOGUI` are not options of this HAL: the first two do not occur in the image at all, and `nogui`
+and the debug port settings (`dbaud`, `rbaud`) belong to the debugger-port set-up rather than this routine. `USE8254`
+is a string in the image that this routine does not read; the HAL's performance counter reads the 8254 only if a flag
+that the routines read never set is non-zero, and otherwise returns the processor's time-stamp counter with the calibrated
+frequency in its second result (`KeQueryPerformanceCounter`, `0x80013990`). So the Windows performance counter on this
+machine is the TSC unless the flag is set elsewhere (inferred for who sets it).
+
+**`INTRROUTE` and "Hugh006" (established, `HalpInitIntrRoute` at `0x80016bd0`).** The HAL picks its tables from two bytes of
+the firmware's SGI REV INFO node: SYS TYPE (0 for the 320, 1 for the 540) and BOARD REV. A 320 below board revision 6 and
+the 540 revision 0 use the first tables; a 320 of revision 6 to 11 uses the middle tables and inverts the floppy interrupt
+at the NS87307; everything else uses the third tables. Only the middle generation honours `INTRROUTE`: `NO8259` and
+`IDE8259` swap in two alternative ISA route tables (with the debug message "interrupt route no8259" or "ide8259");
+`HUGH006` prints "interrupt route Hugh006", clears the floppy inversion and falls through to the newest generation's tables
+for the ISA route, the Cobalt-entry vector table and both PCI pin maps. So "Hugh006" is not a new routing mode of its own: it
+is the switch that makes a middle-generation 320 (revision 6 to 11) wire its interrupts like the newest boards, which is
+what a board with the later interrupt fix-up would need. "Hugh" in the HAL's data is a bare string next to "Twibble" and
+"Borg", unused by any routine read. A 2000 Usenet post by an SGI employee (`8gbvta$fos$1@murrow.corp.sgi.com`) says the 320,
+the 540 and the 1600SW flat panel carried the code names borg, hugh and 7of9 without saying which is which, so "Hugh006"
+probably names a board revision of one of the two workstations (inferred; unknown which).
 
 ## Points this reading settles for the platform pages
 

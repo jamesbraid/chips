@@ -27,6 +27,7 @@ given. *unknown*: not settled; the route that would settle it is in
 | [firmware.md](firmware.md) | What the firmware is (an ARC-style system, not a PC BIOS), the PROM 1.0006 image layout and module table, the version history, the flash part and its environment block, the update procedure |
 | [boot-path.md](boot-path.md) | What the firmware leaves behind for NT and Linux: boot files, the ARC configuration tree, memory descriptors, the processor table, the memory and device map; what is not provided (no MP table, no E820) |
 | [nt-hal.md](nt-hal.md) | The NT 4.0 HAL read function by function: Cobalt interrupt routing, timers, processor start, Lithium PCI access, error and power handling, flash environment access |
+| [nt-drivers.md](nt-drivers.md) | SGI's other Windows drivers at inventory level: audio, system time, video capture, Ethernet, USB, IEEE 1394, and text-mode setup's HAL selection |
 | [emulator-requirements.md](emulator-requirements.md) | What an emulator must provide to boot Linux and NT, and what is still unknown |
 
 ## What was read
@@ -36,6 +37,8 @@ given. *unknown*: not settled; the route that would settle it is in
 | System Firmware User's Guide for Windows NT, 007-4225-001 | yes (techpubs mirror) | Firmware identity, settings screens, update procedure |
 | Silicon Graphics 320 and 540 owner's and installation guides (007-3701-001, 007-3882-001, 007-3703-003) | yes (techpubs mirror) | listed; not read |
 | SGI Recovery CD-1 v1.1 (NT 4.0 SP4 image with SGI files; 497,657,856 bytes, sha256 `041f74f9…e0a40`) | yes (software mirror) | `halborg.dll`, `halbrgup.dll`, `arcldr.exe`, `arcsetup.exe`, `sgcomp.sys`, `sgiusb00.sys`, and the CodeView symbol files `halborg.dbg` and `halbrgup.dbg` |
+| SGI 320 Windows NT 4.0 install CD, Disk 1 (Internet Archive item `sgi-vw-drivers`; same NT 4.0 SP4 tree as Recovery CD-1 with SGI setup changes) | yes (software mirror) | Byte-identical HAL, loader and driver files; `txtsetup.sif` HAL and machine-type entries ([nt-drivers.md](nt-drivers.md)) |
+| SGI Cobalt Graphics 5.2.4, Digital Media 5.2.2, Ethernet 4.01.75, IEEE 1394 driver packs (Internet Archive item `sgi_320_540_drivers`) | yes (software mirror) | The drivers in [nt-drivers.md](nt-drivers.md) and the graphics pages |
 | SGI Recovery CD-2 v1.0 (216,895,488 bytes; 547 files) | yes (software mirror) | Installer for the SGI drivers and utilities. Unpacked: its main cabinet (440 files, 24 file groups) holds drivers, DLLs, help, art work and documentation, and the two option installers hold an image-format library and a second development kit; there is no firmware item and no PROM image |
 | SGI PROM 1.0006 update package for the 320 and 540 (`PROM1_0006.exe`, 480,058 bytes) | yes (software mirror of a public Internet Archive driver item) | The 512 KiB flash image, read in Ghidra and with objdump: [firmware.md](firmware.md), [boot-path.md](boot-path.md) |
 | Public Linux source: Documentation/sgi-visws.txt, `visws_quirks.c`, `arch/x86/pci/visws.c`, the `asm/visws` headers, `smpboot_hooks.h` (history tree); 2.4 `arch/i386/kernel` (linux-mips tree) | yes | Linux boot expectations, graded established |

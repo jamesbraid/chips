@@ -136,6 +136,14 @@ not read in full).**
    identifier string in 1.0006 is `SGI-000_ARCx86`, next to the strings that name the loader variables (inferred to be the
    system component's identifier: the HAL's rewrite rules, dash to blank and cut at the underscore, fit it; the rewrite then
    gives a product name from the board type, not from this string alone).
+   **Text-mode setup's side. Established (`txtsetup.sif` on the SGI NT 4.0 install CDs).** Setup maps the system identifier string to a
+   HAL: `SGI-320_ARCx86` and `SGI-540_ARCx86` are the uniprocessor machine types (`sgiborg_up`, which copies `halbrgup.dll` to
+   `hal.dll`), and the same strings with `_mp` appended are the multiprocessor types (`sgiborg_mp`, which copies `halborg.dll`).
+   So the firmware's system identifier carries the model number and a `_mp` suffix when more than one processor is present;
+   the held 1.0006 image's `SGI-000_ARCx86` is then probably a template, not the string a running machine reports (inferred; a 1999 user report of
+   `SGI_ARCx86_mp` is the same pattern with the number missing). Setup's HAL-load step names `arcsetup.exe` in place of the
+   stock `ntdetect.com`, with the setup file's own comment that this is a placeholder, and the stock `hal486c`, `halapic`,
+   `halmca` and `ntdetect` are commented out.
    The HAL also carries code and strings to add MultiFunctionAdapter, Flash, Audio, Video, Raid, SCSI, Keyboard, Mouse and
    processor nodes to the NT registry itself (`HalpAddMultiFunctionNode`, `HalpFixupRegistry`); the 1.0002 notes show
    the firmware creates the floating-point nodes. **Firmware side. Established (strings; the 1.0006 data module).** The

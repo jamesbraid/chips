@@ -43,7 +43,7 @@ Next: the part's datasheet; read those parts of the main module.
 [route: software now] Settled: the system parameter block at `0x1000`, the 35-entry firmware vector at `0x1200` (standard ARC
 order) and the 15-entry private vector at `0x1300`, the loader's reading of the block, the tree nodes the firmware builds by
 name. Open: component classes, types and keys of every node, the private vector's purpose, which vector numbers `arcldr.exe`
-calls, and the identifier string's exact role (`SGI-000_ARCx86` is inferred). Next: read the tree builder (`borg_cpu_install`,
+calls, and the exact way the firmware builds the identifier (text-mode setup expects `SGI-320_ARCx86`, `SGI-540_ARCx86` and the `_mp` forms; the image's `SGI-000_ARCx86` is probably a template). Next: read the tree builder (`borg_cpu_install`,
 `cpu_makecfgroot`) and enumerate the loader's `call *` sites through the vector.
 
 ## Memory programming, graphics split and PCI resources
@@ -63,11 +63,15 @@ invalidation and move the clock and NMI interrupt entries; which products carrie
 operation interrupt, are not stated. The oldest 320 generation (board revision below 6) uses the primary IDE entry 1 per the HAL
 and entry 4 per Linux. Next: a hardware-inventory capture or board photographs; the Cobalt specification.
 
-## HAL names and options with unknown meaning
+## HAL names with unknown meaning
 
-[route: software now] "Hugh" (an interrupt routing mode and a boot option `HUGH006`), "Twibble" (a node string) and the
-effects of `BREAK`, `PCILOCK`, `TIMERRES`, `CLOCKLEVEL` and `INTERRUPTAFFINITY` are inferred from names only. Next: read
-the option-parsing code and each use (`HalpXtractOptionString` callers) and the `EnableHughInts` consumers.
+[route: software now] Settled by reading the HAL's option routine ([nt-hal.md](../software/visws/nt-hal.md)): the boot options
+are `ONECPU`, `PCILOCK`, `INTAFFINITY`, `BREAK`, `ARCINFO`, `SYSCLOCK=`, `PAGEOPENPOLICY=`, `MEMERR=`, `ECC=`,
+`BLOCKINTS=`, `INTRROUTE=` and `CACHEOPPOLL=`; `HUGH006` is an `INTRROUTE` value that gives a middle-generation 320 the
+newest board's interrupt tables; `TIMERRES` and `CLOCKLEVEL` are not in this HAL. Open: which board or product "Hugh" names, the
+use of "Twibble" and the bare strings "Borg" and "Hugh" in the HAL's data, what `PCILOCK`, `INTAFFINITY` and `BLOCKINTS`
+change in the routines that read them, which register `PAGEOPENPOLICY` programs, and who sets the flag that makes the
+performance counter use the 8254. Next: trace the readers of those flags.
 
 ## The uniprocessor HAL and the unread HAL routines
 

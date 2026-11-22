@@ -10,7 +10,7 @@ Each entry: question, routes tried, next route.
 [missing source] Linux 2.6 takes bridge B's bus-number word as the PIIX4's bus and bridge A's as the other; the 2.4
 scan reads only bridge B's word and scans bus 0 and that bus. An SGI engineer's post says "the second PCI bus,
 normally bus one". Routes tried: all Linux versions read in full; no boot log with the printed bus numbers found in the
-held news and mail archives. Next: a boot log from a real machine, or the NT HAL.
+held news and mail archives. The NT HAL addresses bridge B's window first and numbers each bus from its bus handler, so it is consistent with B as the PIIX4's bus but never states which number a bridge holds ([nt-hal.md](../software/visws/nt-hal.md)). Next: a boot log from a real machine.
 
 ## Cobalt timer pending bit
 
