@@ -345,8 +345,8 @@ routing registers (configuration `0x80002000`, register `0x60`, value `0x8080808
      permanent) counts toward the total only, and everything else is NT memory. Pages are 4 KiB.
    - The display start-up picks the first type-`0x16` descriptor big enough for the boot-time frame buffer (the
      visible area rounded up to 512 by 128 tiles of 16 pages each) as the frame buffer base, and keeps up to 32
-     type-`0x16` descriptors as banks. If there is none it prints "You need an updated PROM!", takes 256 pages from
-     the loader's free memory, and carries on.
+     type-`0x16` descriptors as banks. If there is none it prints "You need an updated PROM!", carves 16 MiB (4,096 pages)
+     off the end of a free or firmware-temporary descriptor ([nt-hal.md](nt-hal.md#memory-banks-and-the-graphics-split)), and carries on.
    - `HalpAddGbeDisplayToRegistry` publishes them under `SGICtrl\Memory` in the NT control tree as `GraphicsMemory` and
      `GraphicsMemorySize` (base and byte size of the first bank), `NumberOfBanks` and `BankAddr00` to `BankAddr31` and
      `BankSize00` to `BankSize31` (byte address and page count of each); that is the list `sgcomp.sys` reads (see

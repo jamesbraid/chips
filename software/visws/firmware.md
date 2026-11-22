@@ -36,7 +36,7 @@ the boot block (listed with objdump, `i8086`); objdump `i386` cross-checked ever
    ([boot-path.md](boot-path.md)). So the firmware does not provide an MP table, an E820 call or the usual
    BIOS services to the OS.
 3. **It does carry some PC-compatible pieces. Established (PROM 1.0006 strings and code; HAL read).** The HAL has
-   real-mode and V86 thunks (`HalpBiosCall`), a VGA text path next to the Cobalt graphics path, and programs the legacy
+   real-mode and V86 thunks (`HalpBiosCall`), a VGA text path next to the Cobalt graphics path (unreachable in the HAL: its display mode is fixed to the frame buffer, [nt-hal.md](nt-hal.md#boot-options-the-hal-parses)), and programs the legacy
    chips (PIIX4, NS87307, 8259, CMOS RTC) directly. The 1.0006 image carries a legacy-BIOS image in its data module (a
    "Main BIOS" banner, an "IBM COMPATIBLE" signature string and the usual PC fatal-error messages), 8042 keyboard-controller
    emulation strings, and names for a V86 BIOS layer and the variables `DosBoot`, `Vx86DoNotRunBIOS`
