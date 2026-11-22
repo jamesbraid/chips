@@ -37,7 +37,8 @@ Every fact carries one of five grades. Nothing is unlabelled.
 | Microprocessor Report, 15 February 1999, "SGI Chip Set Powers NT Workstations" | trade press | bandwidth split, fill and triangle rates, UMA rationale |
 | Design News, "SGI reinvents NT workstations" (1999) | trade press | three-ASIC structure, static memory split |
 | SGI Cobalt Graphics Driver 5.2.4 for Windows NT 4.0 (patch SG0020054, 12 December 2001): `sgcomp.sys`, `sgcodd.dll`, `sgcoicd.dll`, `sgcotab.cpl`, with the matching `.dbg` symbol files | shipped binaries | everything marked software expectation |
-| Same driver for Windows 2000 (also v5.2.4) | shipped binaries | cross-check only; not read in full |
+| Same driver for Windows 2000 (also v5.2.4; different binaries) | shipped binaries | the display driver's OpenGL escape table, read and identical; the rest cross-check only |
+| Windows 2000 RTM `sgibvid.dll`, `sglfb.sys`, `sglfb.dll` | shipped binaries (the Windows 2000 CD) | the display back end as the OS's own drivers program it; the "Arsenic" naming |
 | Linux `drivers/video/sgivwfb.c`, `include/video/sgivw.h`, `arch/x86/kernel/visws_quirks.c`, `arch/x86/include/asm/visws/cobalt.h` (Linux history tree, 2.6.x era) | public driver | display back end registers, memory reservation |
 | Usenet posts in comp.sys.sgi.admin (2003 to 2004) | public posts | history, absence of Linux 3D support |
 
@@ -52,8 +53,8 @@ vendor's own and are cited here by name.
   Lithium and Arsenic, with the 3D engine inside Cobalt (see [the Cobalt page](../cobalt/README.md)). Design News counts
   the same three as a graphics engine, a display engine and an I/O engine, and the Product Guide names two custom parts, a
   "graphics and memory controller" and an "I/O coprocessor". Observed. Mapping them: the rendering engine is in Cobalt
-  (established by the kernel notes); the display back end at `0xd0000000` is inferred to be Arsenic, because the NT
-  driver prefixes every display-back-end routine `as` (`asStartFrm`, `asSetConfigAndTiming`, `asSetInterrupt`) and
+  (established by the kernel notes); the display back end at `0xd0000000` is named Arsenic by SGI's own software (the Windows 2000 boot video driver prints "Failed to find SGI Arsenic chip ID" when the
+  `0x666` ID does not read; established as the vendor's name for the chip), and the NT driver agrees by prefixing every display-back-end routine `as` (`asStartFrm`, `asSetConfigAndTiming`, `asSetInterrupt`) and
   names its pixel-format table `ArsenicPixelFormats`; Lithium is the I/O chip. Nothing states where the register
   blocks physically are, so the mapping of blocks to chips is inferred.
 - **Unified memory.** The memory array is 100 MHz, 256 bits wide and not interleaved, 3.2 GB/s in total. Per the trade
@@ -93,8 +94,8 @@ Interrupt pins on the Cobalt controller (numbering from Linux `cobalt.h`): 16 an
 audio, 24 "AS", 25 "RE", 28 CPU timer and cache. The NT miniport asks the HAL for the vectors of pins 24 and 25 and
 connects the engine's handler to pin 25 and the retrace handler to pin 24. So pin 25 carries the rendering engine's
 interrupt and pin 24 the display's vertical retrace. Software expectation. That "RE" stands for rendering engine and
-"AS" for Arsenic is inferred, not published: it agrees with the `as` prefix and the Arsenic pixel-format table above,
-and with the kernel notes naming Arsenic as the video chip.
+"AS" for Arsenic is inferred, not published: it agrees with the `as` prefix, the Arsenic pixel-format table above, the boot video driver's
+own naming of the chip at `0xd0000000` and the kernel notes naming Arsenic as the video chip.
 
 ## What an emulator needs for a console and for the NT or Linux display
 

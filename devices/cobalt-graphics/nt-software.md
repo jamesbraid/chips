@@ -10,8 +10,9 @@ The package is patch SG0020054, dated 12 December 2001, for NT Workstation 4.0 o
 320 and 540. Its release note lists the fixes in this version: the bounding-box test of a display list overflowed
 for coordinates above 2 to the 24th, a point light above a plane lit the plane below it (a sign error), and RGB textures
 wider than 640 pixels were corrupted when loaded into texture memory. It supersedes 4.1.2 to 4.1.4 and 5.2.1 to 5.2.3,
-and an earlier "MR software 1.8". A Windows 2000 build with the same version number ships separately; only the NT 4.0
-one was read. Observed (release note); the file list is established.
+and an earlier "MR software 1.8". A Windows 2000 build with the same version number ships separately (different binaries: `sgcomp.sys` 65,808 bytes against 62,992,
+`sgcodd.dll` 339,040 against 299,696, `sgcoicd.dll` 1,120,336 against 1,069,328); the NT 4.0 build is the one read in full, and the
+Windows 2000 display driver's OpenGL escape table was read and matches it. Observed (release note); the file list is established.
 
 | File | What it is | Grade |
 |---|---|---|
@@ -120,15 +121,25 @@ was never published (SGI engineers' Usenet posts, 2004). Observed.
 - Supports 8, 16 and 32 bits per pixel from the table of modes in `sgivw.h` (about the NT table, fewer rows; the
   1600 x 1024 flat-panel mode is selected with `monitor:1600sw`). Pseudocolour for 8 bpp; 16 bpp is RGBA5551 and 32 bpp is
   RGBA8888 with red in the low byte in Linux's view. NT's pixel-format table (`ArsenicPixelFormats`) has the same 16-bit
-  masks and puts red in the top byte of a 32-bit pixel, the opposite order; which is right for the hardware is unknown.
+  masks and puts red in the top byte of a 32-bit pixel, the opposite order. Windows 2000's built-in `sglfb.sys` reports the
+  same top-byte red masks for its 32-bit mode ([NT drivers](../../software/visws/nt-drivers.md#windows-2000-builds-and-the-w2k-only-files)), so two NT drivers agree; which is right for the hardware is still unknown.
 - Does not use any interrupt, DDC or the flat-panel I2C.
 
 The kernel platform code, in the same files, gives the interrupt routing and the board type detection. Those belong to
 the system-side pages, not here.
 
+## Windows 2000's own Cobalt drivers
+
+Windows 2000 does not need the SGI pack to put up a desktop: its CD carries a boot video driver (`sgibvid.dll`) and a "Cobalt Graphics" miniport and
+display driver (`sglfb.sys`, `sglfb.dll`), both of which drive only the display back end at `0xd0000000` and ask only for an ID of `0x666`. They are read in
+[NT drivers](../../software/visws/nt-drivers.md#windows-2000-builds-and-the-w2k-only-files). What they add to this page: the `0x666` check is described by their own
+messages as finding the "SGI Arsenic chip ID", so SGI's software names the display back end Arsenic; both set the "linear" bit of the frame control, which the SGI
+5.2.4 miniport does not; `sglfb` is the only NT driver here that offers a plain linear 32-bit mode and writes `0x17` to the window table; and the registry values it needs
+are `GraphicsMemory` and `GraphicsMemorySize` only (no bank list).
+
 ## Emulator checklist
 
-1. `0xd0000000` DBE window with the register behaviour above; a scan-out that follows `frm_control`, `frm_size_*`
+1. `0xd0000000` DBE window with the register behaviour above, enough for Windows 2000's `sgibvid` and `sglfb` too (they use the same registers); a scan-out that follows `frm_control`, `frm_size_*`
    and honours either the linear or the tile-list form. Enough for Linux's console and for NT's VGA-class use before the
    Cobalt driver loads (the PROM's own display path is unknown).
 2. `0xc2000000` Cobalt CPU block with a revision byte in `0xa1`..`0xa7`, `0xa9`..`0xaf` at `+8`.

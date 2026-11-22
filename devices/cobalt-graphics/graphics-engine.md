@@ -123,7 +123,7 @@ the routine named; the hardware's reading of any word is a software expectation,
 The display driver tests the code and the sizes with `checkargs` before it acts. Every input size below was read in the display driver
 and equals the size the ICD passes at each of its 33 call sites of `__glCoExtEscape` (all read from the disassembly); the output size
 the ICD supplies equals the driver's requirement, or is larger where the driver asks for none. An escape also takes an output size,
-listed after the table.
+listed after the table. The Windows 2000 5.2.4 display driver (`sgcodd.dll`, 339,040 bytes, a different binary from this one) was read the same way and carries the identical table, sizes and all.
 
 | Code | Name | In | Code | Name | In |
 |---|---|---|---|---|---|
