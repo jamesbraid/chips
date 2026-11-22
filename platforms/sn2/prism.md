@@ -237,6 +237,68 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 - **NMI.** Pressing NMI on an XG2N sends an interrupt to the PROM, which captures CPU state to flash and the system log
   (007-4774-001 p.79; established).
 
+## Held PROM images and Prism support
+
+Scan of the eight SN2 PROM images in the chips root, six snprom packages from 3.32 to 10.54, checked 2026-11-21. Each image was
+read in place; the gzip components named by its FIT were expanded and scanned again. Nothing was disassembled or run. A string
+shows what the code can say, not what it does. Grades: *established* means the string is in the image, *inferred* a reading
+past it, with the reason given, *unknown* not settled.
+
+The brief named 31 builds. Only these eight images are held: the chips root, the software mirror's `prom` tree and a bounded
+search of the software inputs, extracts and media trees found no other SN2 PROM. The holdings page names snprom 4.04, 4.20
+build 41216 and 4.31 to 4.33 as held but not extracted; none of them was found, so they are unknown.
+
+| Package | Image | SAL banner | Built | SAL 4.06 or later | sha256 (first 12) |
+|---|---|---|---|---|---|
+| snprom 3.32, build 30085 | `snprom.bin` | 3.32 rel040406 IP41 | 2004-04-06 | no | `cce7adf38c0b` |
+| snprom 4.20, build 40503 | `snprom.bin` | 4.20 rel050614 IP41 | 2005-06-14 | yes | `0fdd129ecc2e` |
+| snprom 4.43, build 44607 | `snprom.bin` | 4.43 rel051202 IP41 | 2005-12-02 | yes | `035274812b50` |
+| snprom 10.11, build 52277 | `ip65prom.bin` | 1.11 rel061018 IP65 | 2006-10-18 | no (SHub 2 series) | `372e74f7201d` |
+| snprom 10.40, build 62478 | `shub1snprom.bin` | 4.90 rel071217 IP41 | 2007-12-17 | yes | `26170cc83c3d` |
+| snprom 10.40, build 62478 | `shub2snprom.bin` | 1.40 rel071217 IP65 | 2007-12-17 | no (SHub 2 series) | `1c8144e3d318` |
+| snprom 10.54, build 70399 | `shub1snprom.bin` | 5.04 rel081111 IP41 | 2008-11-11 | yes | `51ccf9ad830b` |
+| snprom 10.54, build 70399 | `shub2snprom.bin` | 1.54 rel081111 IP65 | 2008-11-11 | no (SHub 2 series) | `3ea833181fda` |
+
+Every gzip component in the eight images ends at its stream end. The SAL banner is in the first-stage component; the 4.06 column
+compares the banner version with the revision the Linux check reads, which is inferred to be the same number.
+
+Marker counts, uncompressed image bytes / expanded components (case-sensitive, whole words where marked):
+
+| Image | TIOCA | TIOCE | AGP | `SHub 1.2` | TIO (word) | Board names in the bytes | IP57, Prism, XG2N, ATI, FireGL, IP53, IP67 |
+|---|---|---|---|---|---|---|---|
+| 3.32 `snprom.bin` | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 14 / 11 | IP41 | 0 |
+| 4.20 `snprom.bin` | 2 / 0 | 0 / 0 | 8 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 4.43 `snprom.bin` | 3 / 0 | 3 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 10.11 `ip65prom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
+| 10.40 `shub1snprom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
+| 10.40 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
+| 10.54 `shub1snprom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
+| 10.54 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
+
+- **TIOCA and AGP (established as strings).** `TIOCA commands`, `AGP GART Mapped` and `Could not find KLSTRUCT_TIOCA` are in the
+  uncompressed body of 4.20 and every later build; 3.32 has none of them. `tioca_agp_func_init: Found AGP capability` appears from
+  4.43 on, and TIOCE first appears in 4.43. What the code does with these strings is unknown.
+- **Prism (none named).** No image contains `Prism`, `IP57`, `XG2N`, `FireGL`, `ATI` as a word, `SHUB 1.2` in capitals, `IP53`
+  or `IP67`. The SHub 1 images name IP41 only and the SHub 2 images IP65 only. `SHub 1.2` in mixed case is in the expanded
+  components of 4.20 onward and in no uncompressed body; its context was not read.
+- **README (10.54 only held).** `README.snprom` in the 10.54 package lists for `shub1snprom.bin` the Altix 330, 350, 3300,
+  3700, 3700 Bx2, Prism Rackmount and Prism Deskside, and for `shub2snprom.bin` the Altix 4700 and 450 (established as the
+  text). The 10.40 README is not held, so its list is unknown. The chips notes date the README from package 10.20; 3.32, 4.20,
+  4.43 and 10.11 predate it.
+
+**Earliest build with TIOCA support.** Snprom 4.20, build 40503: the TIOCA strings are present and its SAL banner is above
+4.06 (established as strings). It is not a Prism build; nothing in it names one.
+
+**Earliest build that could boot a Prism.** No build can be shown to boot one. The only held image a vendor lists for Prism is
+snprom 10.54 `shub1snprom.bin` (SAL 5.04). That is inferred to boot a Prism from SGI's list and the SHub 1 generation, with no
+observed boot. The SHub 2 images are not Prism images by SGI's list. The 2019 Prism logs were from SAL 4.65, which is not held.
+
+**Unsure.**
+- Eight images, not 31. The count in the brief could not be matched to any held source.
+- The 4.06 column assumes the banner version is the revision the Linux check reads; that is inferred, not read from the revision field.
+- The 1.x series fails the numeric check, but the Linux check runs only on the SHub 1 path, so it says nothing about SHub 2.
+- The code that uses the TIOCA strings was not read, so no TIOCA behaviour is claimed.
+
 ## Software SGI shipped
 
 Established, from the guides:

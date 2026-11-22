@@ -20,7 +20,9 @@ Status: **unknown** for everything below. What is established is on [the Prism o
   device (0006:00:00.0) prints no device ID. The public pci.ids list names 1002:4a4d "R420 GL [FireGL X3-256]" and
   1002:4e4b "R350 GL [FireGL X2 AGP Pro]". That is an external name list, not SGI evidence, and no held capture prints
   a 1002 ID, so the mapping to a board stays unknown. The driver table on the 2026-11-21 disc gives IDs for the X2-256 and X3-256 names; see below.
-- **PROM and SAL.** No snprom build is tied to the Prism, and no PROM is held. The one constraint known: TIOCA setup needs SAL
+- **PROM and SAL.** Eight SN2 PROM images are held. None names a Prism, IP57 or XG2N; SGI's 10.54 README lists Prism for
+  `shub1snprom.bin` (SAL 5.04), which is vendor intent, not a boot. The 2026-11-21 scan is in
+  [the Prism platform page](../platforms/sn2/prism.md#held-prom-images-and-prism-support). The one constraint known: TIOCA setup needs SAL
   revision 4.06 or later (`v5.3:arch/ia64/sn/pci/tioca_provider.c`; the same check in the 2.6.5 and 2.6.16 trees, which have no SHub test). Whether the Prism PROM emits a PCDP VGA entry for the
   AGP card, and whether graphics boards carry an option ROM, is unknown. Route: PROM image or the disk's `/usr/cpu/firmware`;
   boot capture of the EFI shell. The 2019 logs (kernels 3.8.13 and 4.14.83) print `PCDP: v3 at 0x31efead110`, the address of the
