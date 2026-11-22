@@ -15,11 +15,16 @@ Open items, each with the route that settles it:
   register. **Partly settled** in the SHub 1 SAL 5.04 image: a router entry is a count of "turns", `(out - in)` modulo 8
   with 1-based ports, `0xf` is "no route", and the route register holds absolute output ports with `0xf` in nibble 8
   when no hop remains ([boot-sequence.md](../software/firmware/snprom/boot-sequence.md#numalink-discovery-with-a-linked-port-the-neighbour-crawl-sal-504)).
-  Open: the node-end values 0 and 4, why nibble 8 is set to `0xf`, and the SHub 2 routine `0xff4663d0` itself (SHub 1
-  counterpart `0xffa5a670`).
-- The inputs of the table writer (`0xff471a80`): which call uses compare mode and which write-everything, which router
-  gets six and which two multicast translation writes, the `set_force_local` value and the multicast `NODE_ID`
-  arithmetic. Route: its caller `0xff467320` and the graph record it walks.
+  The node-end values 0 and 4 are read as code (4 when the destination is a node, 0 when it is a router, written at the
+  last hop; [global-config.md](../devices/router_nl4/global-config.md#the-terminal-hop-values-0-and-4)). Open: what the
+  receiving chip does with them (inferred as a terminal code), why nibble 8 is set to `0xf`, and the SHub 2 routine
+  `0xff4663d0` itself (SHub 1 counterpart `0xffa5a670`).
+- The inputs of the table writer (`0xff471a80`) are settled as code
+  ([inputs](../devices/router_nl4/global-config.md#inputs-of-the-table-writer)): compare mode from the router's
+  `SCRATCH0` bit 40, six or two translation writes from the meta-router bit that the `POSITION` pins set, `floc` from
+  bit 15 of the flag halfword, the multicast `NODE_ID` arithmetic. Open: the `POSITION` value of an R-brick in each
+  plane, whether the numbering accepts a router with each pin value, and whether anything sets bits 4 and 15 of the
+  flag halfword. Route: the numbering routines `0xffa4a740` and `0xffa4c540` against a router stand-in.
 - The `RTC_SOURCE` select encoding (`0xf` after initialisation), the `0x2008` timestamp and the node method behind it,
   the units of the router lock timeout, and whether `0x1038` is a read-and-set. Route: the node method at slot `0x160`
   (SHub 2 `0xff4ae400`); the encodings and units may have no software route.
