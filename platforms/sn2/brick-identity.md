@@ -63,11 +63,12 @@ The `DAYTONA`, `1932` and `191010` codes and the whole `L1_BOARDTYPE_*` list (`C
 `AD`) are absent from v2.6.12 and present in v5.3, so they belong to the 4700 and Prism generation, not to the bricks
 here. The mapping of these letters to firmware packages is in sysco `software/firmware/l1/sn2-brick-packages.md`.
 
-**There is no code for the CR-brick.** Nothing in `l1.h` or `module.h` names a CR-brick, and the CR-brick has no
+**There is no code for the CR-brick in Linux.** Nothing in `l1.h` or `module.h` names a CR-brick, and the CR-brick has no
 `MODULE_*` entry. The 3700 Bx2 appears in the controller guide's revision log only (`007-3938-005`, revision 004).
-Which type character a CR-brick reports is **unknown**; candidates are `c` (the same character as a C-brick) or one of
-the board-name codes `4` and `5`. The route is a captured `config` line from a Bx2 or the CR-brick's identity record in
-an L1 image.
+The firmware answers it (sysco `software/firmware/l1/arm-brick-identity-1.62.1.md`): the ARM L1's identity routine returns `@` (0x40) for a board
+record named `VORTIX_L1`, and the Vortix family is the only one that sets up four IP57 nodes and two NL4 routers, the CR-brick's shape. Inferred, strongly: the
+CR-brick's L1 reports `@`, displayed `C (Vortix)` by the ColdFire name table, and the SAL 5.04 PROM folds it to `c` (`0xffa7d510`) so the kernel module id is `RRRcBB`, the
+same as a C-brick. Not established: no brick record or capture is held and no string says CR-brick. Both `4` and `5` are the two-node boards (IP45, IP41).
 
 ## The hardware map: KLCONFIG
 
@@ -156,8 +157,8 @@ contents or L1 identity dump is held. See [../../questions/altix-brick-identity.
 
 ## Unknown
 
-- The CR-brick's L1 type character and the 350 modules' type character (sysco holds the firmware side). The Altix 3000
-  C-brick's is settled: `5`, folded to `c` by the PROM before the module word is packed (`0xffa7d510`, SAL 5.04).
+- The 350 modules' L1 type character (sysco holds the firmware side). The Altix 3000
+  C-brick's is `5` and the CR-brick's `@` (inferred), both folded to `c` by the PROM before the module word is packed (`0xffa7d510`, SAL 5.04).
 - The contents of a real KLCONFIG board list for any Altix machine. The route is a read of the PROM's list builder in
   `snprom` (Ghidra; held in the RE root) or a captured `/proc/sgi_sn/sn_topology`; neither was done for this page.
 - The serial ID EEPROM layout on IP57 and the interface board.

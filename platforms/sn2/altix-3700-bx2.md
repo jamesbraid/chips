@@ -46,6 +46,16 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
   have no external I/O port. Established as drawn.
 - **SHub generation: SHub 1.2, established by the guide's own figure.** Figure 3-3 (printed p.50, and again on p.68; "Functional Block Diagram of CR-brick", 007-4377-002) labels all four nodes "SHUB 1.2" and "IP57 Node Card" and shows XIO and NI ports on each. The vendor's `README.snprom` (snprom 10.54) lists the Altix 3700 Bx2 for `shub1snprom.bin` and not for `shub2snprom.bin`, which agrees. Three more facts point the same way: the guide gives the CR-brick two XIO ports (nodes 1 and 3, p.72) and the SHub 2 PROM refuses XIO ("SHUB2 does not support XIO I/O."); the SHub 1 PROM image carries the NUMAlink 4 router code (`nl4r_*`), so SHub 1 plus NL4 routers is a shipped combination; and SGI's 1 December 2004 Linux patch that adds SHub 2 calls it "a future SGI chipset" (message `20041201203852.GA26131@sgi.com` on linux-ia64), while the Bx2 guide is dated November 2004. The earlier reading of the Bx2 as SHub 2 rested on dates only and is withdrawn. Not captured from a running machine; the generation flag the PROM returns to Linux would still confirm it (see [altix-3000.md](altix-3000.md#shub-generation)).
 
+## L1 identity and PROM handling (firmware reading)
+
+- **Type letter `@`, inferred.** The controller firmware (L1 1.34.2 to 1.62.1; sysco `software/firmware/l1/arm-brick-identity-1.62.1.md`) has one brick
+  family that sets up four IP57 nodes (`SHUB N0` to `N3`) and two NL4 routers and eight processors: Vortix. Its identity routine (ARM `l1`, `brickInit` `0x31c40`
+  in the 1.62.1 Linux L1) answers `@` (0x40) for a board record whose product name begins `VORTIX_L1`; the ColdFire name table prints `@` as `C (Vortix)`.
+  No string names a CR-brick, so the tie rests on the node and router counts matching Figure 3-3. A `c` or `5` answer is excluded for this brick (`5` is the two-node IP41 module).
+- **No Bx2 image.** The L1 comes only in shared containers; the ARM packages carry Vortix, the ColdFire packages do not (the one IP57 caller there uses one node).
+- **PROM.** SAL 5.04 has no IP57 or system-type branch; it folds `@` to `c` and, unlike an `o` brick, takes none of the type-keyed side paths. What differs from the
+  Altix 350 is data (node count, slabs, routers present, the IX and PX bricks on the XIO ports). See [the PROM identification section](../../software/firmware/snprom/boot-sequence.md#node-board-identification-ip41-ip57-others).
+
 ## Review
 
 Independent review, 2026-11-14, by a reviewer who did not write these pages. Reviewed chips revision 15a5a4e (pages as of 54d699c, db2c26d, 939a0d4; manual index 60a97bd).

@@ -11,8 +11,9 @@ what do the 350's serial ID EEPROMs hold, and what exactly does the PROM write i
 v5.3, the KLCONFIG structure and what Linux reads from it, the geoid fields and the location-string format.
 
 **Open**
-1. The CR-brick and Altix 350 module type characters (`c` or a board-name code). The Altix 3000 C-brick is settled: its L1
-   reports `5` (IP41) and the PROM folds it to `c` (see the 2026-11-21 section below).
+1. The Altix 350 module type character. The Altix 3000 C-brick is settled: its L1
+   reports `5` (IP41) and the PROM folds it to `c` (see the 2026-11-21 section below). The CR-brick: its L1 reports `@` (inferred, the ARM `Vortix`
+   family, four IP57 nodes and two NL4 routers; sysco `arm-brick-identity-1.62.1.md`) and the PROM folds it to `c`. Still open: a real brick's board record.
 2. ~~Whether the PROM stores the raw or the folded character in the module id.~~ Folded: `0xffa7d510` turns `5`, `o`, `m` and `@` into
    `c` before packing the word ([l1-requests.md](../software/firmware/snprom/l1-requests.md)). Which character a 350 L1 sends stays open.
 3. Which board kinds the PROM puts in each brick's KLCONFIG list, and the geoid values it writes for a C-brick, CR-brick
