@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516 -->
+<!-- input sha256 867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536 -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -108,7 +108,7 @@ Input DMA configuration.
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 15 | `lock` | inferred |  |  | Name only; the driver clears it. |
-| 6:4 | `slot` | inferred |  |  | Serial slot of the codec the channel uses; the driver writes 2 for both channels. |
+| 6:4 | `slot` | inferred |  |  | Serial slot of the codec the channel uses; Linux writes 2 for both channels; the NT audio driver never writes the field, so it stays 0 there. |
 | 3 | `direction` | established |  |  | 1 output, 0 input (NT driver: set for the output channel only). |
 | 2 | `mode` | established |  |  | 1 stereo, 0 mono (NT driver: set when the format has two channels). |
 | 1:0 | `format` | established |  |  | 0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match. |

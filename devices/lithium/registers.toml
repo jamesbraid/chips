@@ -134,7 +134,7 @@ doc = "Input DMA configuration."
 format = { bits = [1, 0], grade = "established", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match." }
 mode = { bits = [2, 2], grade = "established", doc = "1 stereo, 0 mono (NT driver: set when the format has two channels)." }
 direction = { bits = [3, 3], grade = "established", doc = "1 output, 0 input (NT driver: set for the output channel only)." }
-slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the channel uses; the driver writes 2 for both channels." }
+slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the channel uses; Linux writes 2 for both channels; the NT audio driver never writes the field, so it stays 0 there." }
 lock = { bits = [15, 15], grade = "inferred", doc = "Name only; the driver clears it." }
 
 [registers.comm2_base]
