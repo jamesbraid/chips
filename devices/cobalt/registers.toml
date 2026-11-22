@@ -1,12 +1,13 @@
 unit = "cobalt"
 prefix = "COBALT"
 title = "Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them"
-doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not."
+doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel and the NT HAL touch is here; the bank registers of the memory controller and the graphics engine registers are not."
 from = "SGI NT 4.0 HAL halborg.dll 1.3 (Recovery CD-1 v1.1), read in Ghidra: see software/visws/nt-hal.md; Linux visws code: include/asm-i386/cobalt.h (2.2, 2.4), include/asm-i386/mach-visws/cobalt.h (2.6.20), arch/x86/include/asm/visws/cobalt.h and arch/x86/kernel/visws_quirks.c (2.6.33, 3.14)"
 public_from = ["census:"]
 
 [spaces.cpu]
 [spaces.apic]
+[spaces.mem]
 
 [registers.cpu_rev]
 space = "cpu"
@@ -39,7 +40,27 @@ grade = "established"
 doc = "Timer status. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and later code never writes it, so whether a level timer interrupt needs this clear to deassert is open."
 
 [registers.cpu_stat.fields]
+cacheop_intr = { bits = [0, 0], grade = "established", doc = "Read: 1 means a cache-operation interrupt is pending. The NT HAL treats it as unexpected (halborg.dll 1.3, CacheopInterrupt) and clears it by writing the register with this bit zero and every other bit one. Which cache operation raises it is unknown." }
 timer_intr = { bits = [1, 1], grade = "established", doc = "Read: 1 means the timer interrupt is pending. Write 0: clear it." }
+
+[registers.cpu_reset]
+space = "cpu"
+offset = 0x18
+access = "rw"
+width = 32
+grade = "established"
+doc = "Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through port 0xcf9. A separate register from the memory block's error status at offset 0x18."
+
+[registers.cpu_reset.fields]
+reset = { bits = [0, 0], grade = "established", doc = "1 resets the machine on the boards named above." }
+
+[registers.cpu_timecur]
+space = "cpu"
+offset = 0x38
+access = "r"
+width = 32
+grade = "established"
+doc = "Timer current value. The NT HAL's timer calibration reads it after starting the timer with a reload of 0xffffffff and takes the fall as the tick count over one RTC second (halborg.dll 1.3, HalpCalibrateCobaltTimer); it counts down."
 
 [registers.cpu_timeval]
 space = "cpu"
@@ -60,6 +81,10 @@ grade = "established"
 doc = "Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unmask a line and only the mask bit to mask it, reading the register back after masking. The vector it writes is the kernel's irq number plus 0x20, so it is not the line number."
 
 [registers.apic_lo.fields]
+delivery_mode = { bits = [10, 8], grade = "established", doc = "Delivery mode in the I/O APIC layout. The NT HAL writes 0 (fixed) for every device entry and 4 (NMI) for the NMI entry, after first writing the entry with 0 and reading it back." }
+dest_mode = { bits = [11, 11], grade = "established", doc = "1 means the high word's destination is a logical mask, 0 a physical id. The NT HAL sets it only on the NMI entry; device entries are physical." }
+remote_irr = { bits = [14, 14], grade = "established", doc = "The NT HAL reads it on the NMI entry and clears it by writing the entry back with the bit zero (HalpHandleCoNMI), then re-reads it. Whether it is set by delivery of a level line and cleared by the local APIC end of interrupt is not shown." }
+bit17 = { bits = [17, 17], grade = "unknown", doc = "The NT HAL writes the NMI entry with this bit clear, reads it back, and aborts NMI set-up (masking the entry) if it reads set. Its meaning is not known." }
 vector = { bits = [7, 0], grade = "established", doc = "Interrupt vector delivered to the processor. The kernel's value fits in eight bits; the field's extent is not stated by any code and follows the standard I/O APIC layout." }
 level = { bits = [15, 15], grade = "established", doc = "1 level-triggered, 0 edge. The kernel sets it on every line it enables." }
 mask = { bits = [16, 16], grade = "established", doc = "1 masks the line, 0 enables it." }
@@ -71,8 +96,9 @@ count = 30
 stride = 0x10
 access = "rw"
 width = 32
-grade = "inferred"
-doc = "Interrupt redirection entry, high word. The kernel writes zero beside every low word it sets and never reads it. By the standard I/O APIC layout it would hold the destination processor; that is inferred from the layout of the low word and the register spacing, and no code reads it back."
+grade = "established"
+doc = "Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. So the field is the destination, in the I/O APIC layout (established for the NMI use; zero as 'processor id 0, physical' for device entries is inferred from the layout). The HAL never steers a device entry to another processor."
+
 
 [registers.apic_id]
 space = "apic"
@@ -82,10 +108,50 @@ width = 32
 grade = "established"
 doc = "Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known."
 
+[registers.apic_hi.fields]
+dest = { bits = [31, 24], grade = "established", doc = "Destination: a logical processor mask when the low word's dest_mode is set (the NMI entry), otherwise a processor id (device entries, written as 0)." }
+
 [registers.apic_id.fields]
+id = { bits = [27, 24], grade = "established", doc = "Controller id field. The NT HAL and the firmware write 4 here when it reads zero; the clear-and-set is done with the enable bit cleared first. What the id is used for is not known." }
 enable = { bits = [8, 8], grade = "established", doc = "1 enables the interrupt controller. Linux sets it once at start-up." }
 
+[registers.mem_ecc]
+space = "mem"
+offset = 0x00
+access = "rw"
+width = 32
+grade = "established"
+doc = "Memory controller control. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read."
+
+[registers.mem_ecc.fields]
+ecc_enable = { bits = [0, 0], grade = "established", doc = "1 enables ECC checking." }
+
+[registers.mem_err_status]
+space = "mem"
+offset = 0x18
+access = "rw"
+width = 32
+grade = "established"
+doc = "Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors)."
+
+[registers.mem_err_addr]
+space = "mem"
+offset = 0x28
+access = "r"
+width = 32
+grade = "established"
+doc = "Memory error address, printed by the HAL as the address of the error."
+
+[registers.mem_err_syndrome]
+space = "mem"
+offset = 0x30
+access = "r"
+width = 32
+grade = "established"
+doc = "Memory error ECC syndrome. A nonzero syndrome with a correctable error makes the HAL rewrite the location (HalpCorrectSoftEccError)."
+
 [constants]
+MEM_PHYS = { value = 0xc6000000, grade = "established", doc = "Physical base of the memory-controller block, mapped by the NT HAL as one page. The firmware also reads bank registers from 0xc6000048 upward; the HAL never does." }
 CPU_PHYS = { value = 0xc2000000, grade = "established", doc = "Physical base of the CPU block." }
 APIC_PHYS = { value = 0xc4000000, grade = "established", doc = "Physical base of the interrupt controller." }
 TIME_HZ = { value = 100000000, grade = "inferred", doc = "The core rate the Linux kernel divides by the tick rate to load the timer. The NT HAL assumes no rate: it measures the timer against the RTC update flag at start-up (nt-hal.md)." }

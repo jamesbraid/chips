@@ -100,6 +100,43 @@ vector, and raises the local APIC input, matches everything the kernel does.
 See [the interrupt page](../../platforms/visws/interrupts.md) for the table, the board-revision exceptions and the PCI
 routing.
 
+### As the NT HAL drives it (established, `halborg.dll` 1.3)
+
+Full detail and addresses are in [hal-hot-path.md](../../software/visws/hal-hot-path.md) and
+[nt-hal.md](../../software/visws/nt-hal.md#interrupt-delivery-in-the-hal); the register fields are in
+[registers.md](registers.md).
+
+- **Entry format.** Low word: vector in bits 7:0, delivery mode in 10:8 (0 fixed for devices, 4 NMI for entry 29), destination
+  mode in bit 11 (physical 0, logical 1), remote-IRR style bit 14, level bit 15, mask bit 16, and a bit 17 that the HAL
+  treats as "not supported" if it reads set after writing the NMI entry (meaning unknown). High word: destination in bits 31:24.
+- **Start-up.** All 30 entries are written with low word `0x10000` (masked), high word 0. Then the id register (`+0xffc`) is
+  read; if bits 27:24 are zero the HAL writes 4 into them (with the enable bit clear), then sets the enable bit (bit 8).
+- **Vector programming and unmask.** `HalEnableSystemInterrupt` keeps a use count per entry. The first user of an entry
+  below 16 first sets the entry's bit in the owning Lithium bridge's 16-bit enable at window `+0x46` (entries 0 to 7 in
+  bridge A, 8 to 15 in bridge B, read-modify-write under a lock), then writes the entry's low word as `vector | 0x8000`
+  (level, unmasked, fixed, physical) and then the high word as 0. The vector comes from one of three 30-entry tables chosen by
+  board generation (decoded from the image; entries 12 and 22 are `0xb9` and `0xb2` in all three, the clock entry's own vector
+  `0xd1` is not taken from the table).
+- **Mask.** The last user to disable an entry reads the low word and writes it back with bit 16 set; the high word is
+  rewritten unchanged. The bridge's enable bit is never cleared again.
+- **Destination and CPU choice.** Every device entry and the clock get destination 0 (physical): the HAL has no per-CPU
+  steering. Its `INTAFFINITY` boot option sets a flag that nothing in the image reads. Only the NMI entry is logical: low
+  word `0x8ff`, high word one bit per processor id, `1 << processor number` of the processor that sets it (the bootstrap
+  processor), then delivery mode NMI added. The local APICs use the flat model with logical id `1 << processor number`
+  (destination format register `0xf0000000`). Whether processor id 0 is the bootstrap processor on a real 540 is not
+  shown (the table the firmware leaves says which entries exist; see the questions page).
+- **Acknowledge.** None: the HAL writes nothing to the controller on delivery or at the end of an interrupt (the local APIC
+  EOI only), unlike Linux 2.6, which masks the entry first and rewrites it at the end.
+- **Line 22.** The HAL's vector for entry 22 (Linux's audio line) is `0xb2` in all three tables. The NT audio driver connects
+  no interrupt and polls instead ([devices/lithium](../lithium/README.md)).
+
+## CPU-block status and the memory-controller block (established for what the HAL touches)
+
+CPU status `+0x20` bit 0 is a cache-operation interrupt (unexpected; cleared by writing all ones but bit 0) and bit 1 the timer.
+CPU `+0x18` bit 0 resets the machine on early boards; `+0x38` is the timer's current value, counting down. The memory block at
+`0xc6000000` holds, for the HAL, `+0x00` (bit 0 ECC enable), `+0x18` (error status), `+0x28` (error address) and `+0x30`
+(syndrome): see [registers.md](registers.md).
+
 ## Memory controller (unknown)
 
 No Linux code programs the memory controller: the memory size is handed over by the loader (see
