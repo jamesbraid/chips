@@ -43,9 +43,10 @@ owner's guide or a boot log.
 bootstrap entry always carries 0 on a 540 with four processors is not shown. Settles it: a dump of the table from a real machine or a
 read of the firmware routine that writes it ([boot-path.md](../software/visws/boot-path.md), not edited here).
 
-## Newer HAL builds and the Windows 2000 HAL
+## Uniprocessor builds of the newer HALs and the Windows 2000 HAL
 
-[missing binary extraction] The patches SG0020002 (28 April 1999) and SG0020021 (28 July 1999) replace the HAL with later builds;
-they are held as InstallShield packages and were not unpacked, so differences in the hot path are unknown. The Windows 2000 HAL
-below its tables was not read. Settles it: unpack the packages, apply the symbols they carry, compare by symbol as for the
-1.3 builds.
+[missing binary extraction] The multiprocessor builds of patches SG0020002 and SG0020021 were compared with 1.3 (same hot path and
+tables; see [nt-hal.md](../software/visws/nt-hal.md#follow-on-corrections-and-additions)); their uniprocessor builds were not. The
+Windows 2000 HAL below its tables was not read, and the earlier claim that its tables are identical in RTM and SP4 was not re-checked:
+the media are not in the local cache. Settles it: the Windows 2000 RTM and SP4 images from the software mirror, compared by symbol
+against the 1.3 build as done for the patches.

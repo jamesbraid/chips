@@ -57,7 +57,7 @@ not call the Begin and End routines and does not change TPR (established). Seque
 |---|---|
 | 1 | write port `0x20` = `0x0c` (OCW3 poll), read port `0x20`; bit 7 clear means nothing pending |
 | 2 | if the low three bits are 2 (the cascade): write port `0xa0` = `0x0c`, read port `0xa0`; bit 7 clear means a spurious cascade, answered with write port `0x20` = `0x62` and an exit; otherwise the IRQ is 8 plus the low three bits |
-| 3 | end of interrupt: IRQ 0 to 7, write port `0x20` = `0x60` or the IRQ (specific EOI); IRQ 8 to 15, write port `0xa0` = `0x20` (non-specific EOI) and then port `0x20` = `0x62` (specific EOI of the cascade) |
+| 3 | end of interrupt: IRQ 0 to 7, write port `0x20` = `0x60` OR the IRQ (specific EOI); IRQ 8 to 15, write port `0xa0` = `0x20` (non-specific EOI of the slave) and then port `0x20` = `0x62` (specific EOI of the cascade input on the master) |
 | 4 | read port `0x21` (the result is discarded; an ordering read) |
 | 5 | look up the vector for the ISA IRQ in the board's route table; zero means none and the handler goes to step 8 |
 | 6 | `cli`; read the interrupt command register (`+0x300`) until bit 12 (delivery status) is clear, at most `0x5000` reads, then a breakpoint |
@@ -88,7 +88,7 @@ The handler `HalpCobaltInterrupt` `0x8001408c` (UP: `halbrgup.dll` `0x80013f6c`)
 | 2 | read Cobalt CPU status (`0xc2000000 + 0x20`); bit 0 set (cache operation, unexpected) prints an error and writes status = `0xfffffffe` |
 | 3 | bit 1 clear (not a timer tick): `HalEndSystemInterrupt` and leave |
 | 4 | write status (`+0x20`) = `0xfffffffd`: clears the pending bit, other bits written as ones |
-| 5 | multiprocessor build, when the IPI-clock flag is set: subtract the current tick length from an accumulator; when it reaches zero (the accumulator is reloaded with the 10 ms maximum, so the broadcast happens at most at 100 Hz even if the timer runs faster), wait for command-register bit 12 clear and write `+0x300` = `0x000c00d1` (vector `0xd1`, all excluding self, fixed). The high word is not written |
+| 5 | multiprocessor build, when the IPI-clock flag is set: subtract the current tick length from an accumulator; when it reaches zero (the accumulator is reloaded with the 10 ms maximum, so the broadcast happens at most at 100 Hz even if the timer runs faster, and the other processors tick slower than the boot processor after `HalSetTimeIncrement` shortens the tick; the flag is set only when a second processor has been started, see [nt-hal.md](nt-hal.md#follow-on-corrections-and-additions)), wait for command-register bit 12 clear and write `+0x300` = `0x000c00d1` (vector `0xd1`, all excluding self, fixed). The high word is not written |
 | 6 | if the tick length was changed, write the new reload to `0xc2000000 + 0x30` |
 | 7 | `KeUpdateSystemTime`, which calls `HalEndSystemInterrupt` (EOI, TPR restore) |
 

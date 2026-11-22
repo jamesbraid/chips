@@ -6,9 +6,9 @@ import only `ntoskrnl.exe`. Each has a matching CodeView symbol file (`halborg.d
 1,050 symbols and the 75 object files it was built from. The two HALs share all symbols except thirteen
 multiprocessor-only ones (the real-mode start stub, the processor table reader and the processor start routines).
 `halborg.dll` was read through Ghidra, with the debug-file names applied, covering the routines listed at the end (a second
-pass re-checked every established claim below in a Ghidra project with all 1,050 public names applied: 541 of 560 functions
+pass re-checked every established claim below in a Ghidra project with all 1,050 public-symbol records applied: 541 of 560 functions
 decompile, and the 41 static routines that have no public name are cited by what they do); the
-uniprocessor HAL (1,037 public names) was compared symbol by symbol and read where it differs. The Windows 2000 builds (no symbols) were compared by table and string
+uniprocessor HAL (1,037 records; the symbol counts differ between passes, see the review section) was compared symbol by symbol and read where it differs. The Windows 2000 builds (no symbols) were compared by table and string
 ([second reading](#second-reading-interrupt-levels-pci-dma-memory-registry-processors)). SHA-256: `halborg.dll` `0926cd50…4a048`, `halbrgup.dll` `21978c78…f7de8`.
 Grades as in the [README](README.md); unless stated, a fact is established for the routine named.
 
@@ -39,7 +39,7 @@ below are from `asm/visws/cobalt.h`; the HAL agrees wherever both touch a regist
 | `+0x08` | Revision. Values `0xa0` and `0xa8` mean "Cobalt Lite": no ECC, no memory error reporting, no cache-operation invalidate, and different APIC entry numbers for the clock and NMI (below). | established |
 | `+0x10` | Control. Bit 0: ECC checking on (set with bit 0 of the memory block's first register). Bit 1: page policy, set by `PAGEOPENPOLICY=CLOSE` (below). Bit 2: timer run. Bit 3: timer interrupt mask (0 = unmasked). | established |
 | `+0x18` | Bit 0 is set to reset the machine on early boards (below). | established |
-| `+0x20` | Status. Bit 0: a cache-operation interrupt (unexpected: the HAL prints an error and clears it with a write of all ones but bit 0). Bit 1: timer interrupt pending, cleared by writing the register with bit 1 zero and every other bit one (the clock handler writes `0xfffffffd`). | established |
+| `+0x20` | Status. Bit 0: a cache-operation interrupt (unexpected: the HAL prints an error and clears it with a write of all ones but bit 0). Bit 1: timer interrupt pending. The clock handler writes the register with `0xfffffffd` (bit 1 zero, every other bit one) on every tick: the write pattern is established; that a zero in bit 1 is what clears the pending bit (write-zero-to-clear) is inferred from the handler's use. | established for the pattern, inferred for the semantics |
 | `+0x30` | Timer reload value; writing `0xffffffff` starts a calibration pass | established |
 | `+0x38` | Timer current value (counts down) | established |
 
@@ -63,10 +63,10 @@ same calibration scheme (against the RTC second) is used to scale the local APIC
 
 What the bits mean is inferred from the HAL's message selection (messages are "Invalid Address ... during
 read/write from ...", "Hard ECC error", "Soft ECC error ... syndrome", "MULTIPLE MEMORY ERRORS"). A non-fatal error with
-a nonzero syndrome is corrected by rewriting the location (`HalpCorrectSoftEccError`); the error is logged and the
+a nonzero syndrome sends the handler to `HalpCorrectSoftEccError` (`0x80019810`), which **does not rewrite the location** (below); the error is logged and the
 status cleared. A fatal one displays the message, turns checking off, calls the SGI callback, logs to CMOS and
 bug-checks with code `0x80`. Memory
-error interrupts use Cobalt APIC entries `0x1a` and `0x1b` with vectors `0xf1` and `0xf2`; they are enabled only if the
+error interrupts use Cobalt APIC entries `0x1a` and `0x1b` with vectors `0xf1` and `0xf2` (entry `0x1b`'s vector equals its table slot; entry `0x1a`'s table value is `0xbc`, so only that entry and the NMI entry differ from their slots); they are enabled only if the
 board is not Cobalt Lite and the `HalpEnableMemerr` default (on) holds. Register `+0x18` of the CPU block is a
 separate register from the memory block's.
 
@@ -101,7 +101,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
    are used): for the newest generation entries 0 to 29 map to `92 8a 5a 69 59 91
    81 9b 82 89 7a 73 b9 71 79 72 ac ab aa a9 61 9c b2 6a a5 a3 bc f2 f7 f9`. The oldest generation differs in entries 1, 3, 4 and 6
    (`59 53 51 52`) and the middle one in entries 4, 5, 13, 14 and 15 (`51 59 53 72 79`). The clock handler runs at IRQL `0x1c` on
-   vector `0xd1`, and the memory-error and NMI entries do not use their table slots (below). The HAL installs its own handlers
+   vector `0xd1` (written as a literal, not taken from the table), and entry `0x1a` (memory error, vector `0xf1`) and the NMI entry do not use their table slots; entry `0x1b` (memory error, `0xf2`) happens to equal its slot (below). The HAL installs its own handlers
    on fixed vectors: `0xe1` the processor IPI, `0xc1` the broadcast-call service, `0x41` the DPC and `0x3d` the APC
    software interrupts, `0xfd` the profile interrupt and `0xfe` the performance-counter interrupt, `0xe3` the local
    APIC error. In the multiprocessor build the Cobalt timer interrupt arrives on one processor, which re-sends the tick to the others
@@ -109,7 +109,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
 2. **PIIX4 legacy interrupts. Established.** The PIIX4's 8259 pair is not wired to the processors directly: the master
    output is an input to Cobalt (entry 12), so none of the ISA IRQs has its own Cobalt entry. The HAL programs the
    8259s with edge cascade, master base 0, slave base 8, mask everything, then on a Cobalt interrupt it polls the master
-   (command `0x0c`, port `0x20`), follows IRQ 2 into the slave, issues a specific end-of-interrupt, and re-injects the
+   (command `0x0c`, port `0x20`), follows IRQ 2 into the slave, issues the end-of-interrupt (specific on the master; a non-specific one on the slave, see the follow-on section), and re-injects the
    interrupt as a self-IPI through the local APIC at the vector assigned to that ISA IRQ. Linux does the same poll and
    treats legacy IRQs 1 to 15 as virtual. The IDE channels (IRQs 14 and 15) bypass the 8259 and have their own Cobalt
    entries.
@@ -117,8 +117,8 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
    ISA IRQ is selected from the board generation (HAL "SYS TYPE" and "BOARD REV", see [boot-path.md](boot-path.md)):
    vector, a second number that is the Cobalt entry used when the 8259 flag is clear (it is ignored for an 8259 row), and a flag byte
    (bit 0: delivered through the 8259; bit 2: also needs the NS87307 interrupt steering, `HalpEnable307Int`, which is given the ISA
-   IRQ number, not the second byte; bit 1, set on IRQs 14 and 15 in every table but the oldest, is returned by `HalpGetIntrDataByVector`
-   and not used by `HalEnableSystemInterrupt`). Tables exist for the three 320 generations and for the 540 revision 0, which
+   IRQ number, not the second byte; bit 1, set on IRQs 14 and 15 in the middle, newest and 540 revision 0 tables but not in the oldest, `no8259` (flag byte 0) or `ide8259` (flag byte 1) tables, is returned by `HalpGetIntrDataByVector`;
+   `HalEnableSystemInterrupt` ignores it, and `HalDisableSystemInterrupt` uses it: for such a row whose use count is zero the disable goes to the 8259 path instead of masking the Cobalt entry). Tables exist for the three 320 generations and for the 540 revision 0, which
    steers IRQs 4 and 7 through the NS87307 to Cobalt entries 3 and 4 and has no vector for IRQ 5;
    the `INTRROUTE` boot option (values 1, 2, 3: "no8259", "ide8259", "Hugh006") swaps in alternatives for the middle
    320 generation: "no8259" steers IRQs 1, 4, 6, 7 and 12 through the NS87307 and "ide8259" sends the IDE channels
@@ -127,8 +127,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
    the newest 320 generation and on the 540 except revision 0, entry 5 on the middle 320 generation and the 540
    revision 0, and entry 1 on the oldest 320 generation. This agrees with Linux, which uses entry 4 and switches to 5
    for one 320 revision; Linux has no case for the oldest generation, which would therefore use the wrong entry
-   (unconfirmed on hardware). The floppy interrupt polarity is inverted at the
-   NS87307 on the middle generation only.
+   (unconfirmed on hardware). The NS87307 steering (`HalpEnable307Int` `0x8001ab60`, three arguments: ISA IRQ, mode, polarity; mode is forced to 0, level, whenever the row is not an 8259 row, and the polarity is the floppy-inversion output of `HalpGetIntrDataByVector`) is reached only from rows with flag bit 2, which exist only in the `no8259` table (IRQs 1, 4, 6, 7, 12) and the 540 revision 0 table (IRQs 4 and 7); no table has a row for IRQ 3. The floppy inversion is therefore non-zero only when the middle-generation board runs `INTRROUTE=NO8259` (IRQ 6's row is then not an 8259 row); on a default middle-generation board IRQ 6 goes through the 8259 and the 307 steering is never invoked (established, decoded tables and call site).
 4. **PCI pin to Cobalt entry. Established (HAL data tables, read in full).** For each bridge and board generation the HAL
    holds five slot rows of four bytes (pins A to D), each byte a Cobalt APIC entry or "none"; the generation is chosen as
    for the ISA table (generation 1: 320 below revision 6 and the 540 revision 0; generation 2: 320 revisions 6 to 11;
@@ -167,8 +166,7 @@ management at `0x0fc8`). The HAL initialises it (`Ns307InitChip`) and uses it fo
 and 12: the HAL selects the logical device for that IRQ (index register 7, then the device number 0, 5, 6, 3, 4 and 1 respectively,
 which are the standard keyboard, COM2, COM1, floppy, parallel and mouse devices) and writes its
 interrupt-type register (index `0x71`): bit 0 is set when the interrupt mode argument is zero (level-sensitive) and bit 1 when the
-polarity argument is nonzero (established for the write, inferred for where the polarity argument comes from; the floppy inversion
-flag is the only candidate seen). The PIIX4 PM block is at `0x0f80`
+polarity argument is nonzero (established for the write and for the polarity argument: it is the floppy-inversion output of `HalpGetIntrDataByVector`, set only for IRQ 6 on a middle-generation board whose IRQ 6 row is not an 8259 row, that is under `INTRROUTE=NO8259`). The PIIX4 PM block is at `0x0f80`
 (status `+0`, enable `+2`, control `+4`). The soft-power interrupt handler (`HalpInitSoftPower`, installed on the vector the HAL assigns to ISA IRQ 9)
 clears the PM status, enables the power-button interrupt (`0x100`) and arms the control register; the handler suspends
 the machine on a power-button event and bug-checks with `0x80` after repeated errors. `HalpPwrMgmtSuspend` ends by writing `0x2000` (the
@@ -277,7 +275,7 @@ machine is the TSC unless the flag is set elsewhere (inferred for who sets it).
 
 **`INTRROUTE` and "Hugh006" (established, `HalpInitIntrRoute`).** The HAL picks its tables from two bytes of
 the firmware's SGI REV INFO node: SYS TYPE (0 for the 320, 1 for the 540) and BOARD REV. A 320 below board revision 6 and
-the 540 revision 0 use the first tables; a 320 of revision 6 to 11 uses the middle tables and inverts the floppy interrupt
+the 540 revision 0 use the first tables; a 320 of revision 6 to 11 uses the middle tables and, only under `INTRROUTE=NO8259`, inverts the floppy interrupt
 at the NS87307; everything else uses the third tables. Only the middle generation honours `INTRROUTE`: `NO8259` and
 `IDE8259` swap in two alternative ISA route tables (with the debug message "interrupt route no8259" or "ide8259");
 `HUGH006` prints "interrupt route Hugh006", clears the floppy inversion and falls through to the newest generation's tables
@@ -330,7 +328,7 @@ nearby addresses. Grades as above.
   Cobalt entry. An ISA row with the 8259 flag enables the line at the 8259 (`HalpEnable8259Int`); a row that needs the
   NS87307 also calls `HalpEnable307Int`; a row without the 8259 flag (including the NS87307 ones) takes the Cobalt entry in its second byte. A Cobalt entry is enabled once: a per-entry use count (an array of bytes with no public symbol, under a spin lock) is incremented, and only the first user, for entries below 16, sets that entry's bit in the owning
   Lithium bridge (`HalpEnableLiInt`) and writes the redirection entry with the vector and bit 15 (level) set
-  (`HalpSetCoApicRedirEntry`). `HalDisableSystemInterrupt` is the reverse.
+  (`HalpSetCoApicRedirEntry`). `HalDisableSystemInterrupt` (`0x800166f0`) is **not** the reverse: it only decrements the use count and, at zero, reads the entry and writes its low word back with the mask bit (16) set (the 8259 path described above for rows with flag bit 1 aside). Nothing ever clears a Lithium enable bit: `HalpEnableLiInt` does a 16-bit `|=` of bit `n & 7` into window `+0x46` under a spin lock, so once an entry has been enabled its bridge bit stays set for the life of the system.
 - **Internal-bus vectors installed in the IDT.** `HalpSetInternalVector` records a vector's IRQL in a per-vector
   table (`HalpRegisterVector`, 16 entries indexed by vector >> 4) and writes the IDT gate's two halves at 8 bytes per vector.
   Established; the table's consumers (`HalBeginSystemInterrupt`) were not followed.
@@ -366,7 +364,7 @@ nearby addresses. Grades as above.
   interrupt line register from the pin tables above. `PCILOCK` (boot option) is read by the PCI set-up path; the routine that
   tests it was not traced. Resource-exhaustion returns `0xc000009a`.
 - **The initial windows. Inferred.** The HAL image carries one statically initialised record per bridge (`PCISystemBusData`, two records of `0xc0` bytes, B first;
-  the NT 4.0 image, Windows 2000 RTM and SP4 agree). Each starts with the bridge's physical window address and the HAL replaces it with
+  the NT 4.0 image agrees with Windows 2000 RTM and SP4 as recorded in the first pass; the Windows 2000 media are not in the local cache, so that agreement was not re-checked in the follow-on pass). Each starts with the bridge's physical window address and the HAL replaces it with
   the mapped address, then the address and data registers (`+0xf8`, `+0xfc`) and a register at window `+0x48`. The bus handler's bus
   data points into the record, and the translation routine reads its range lists from there, so the layout is read from the
   consumer: for bridge B the I/O range is `0x0000` to `0x7fff`, for A `0x8000` to
@@ -376,8 +374,7 @@ nearby addresses. Grades as above.
   and the translation routine (`HalpTranslatePCIBusAddress`) finds the range whose base and limit contain the bus address and
   adds that entry's 64-bit offset, so a bus-side `0x80000000` to `0x83ffffff` lands at system `0xf4000000` to `0xf7ffffff` on bridge B
   and `0xf0000000` to `0xf3ffffff` on bridge A (established for the routine and the initial data; the resource assignment that
-  consumes the same ranges later was not re-read). Bridge A's I/O range carries an offset word of `0xffff8000`; how that
-  wraps into a system I/O address was not followed. Neither bridge has a prefetch range. Memory BARs land at
+  consumes the same ranges later was not re-read). Bridge A's I/O range carries an offset word of `0xffff8000` in the initial data, but `HalpInitSGIHostBridge` (`0x80018200`) rewrites the bridge's I/O range before enumeration: for a bridge revision above zero it zeroes the I/O range's system-side offset (64 bits, `+0x10` of the supported-ranges record); at revision zero it zeroes the I/O range base (`+0x18`) instead. It touches the memory ranges not at all (established, decompiled; in the newer build 20021 the routine only gains debug prints). So the offset in the initial data does not survive on revision-above-zero bridges. Neither bridge has a prefetch range. Memory BARs land at
   `0x80000000` on both buses (PCI side) and the Lithium windows are the only thing that tells them apart.
 - **Interrupt pins. Established (above).** The per-bridge pin tables are reached through the pointer at record `+0xb8`
   (`HalpPciIntPin2SysIntLine`; `HalpSysIntLine2PciIntPin`).
@@ -421,7 +418,7 @@ pages; an aligned bank is also remapped through KSEG0). The graphics miniport re
   memory-controller registers it uses are the ones above (ECC enable, error status, address and syndrome). The sixteen
   bank registers the firmware sizes memory from (`firmware.md`) are not used by any Windows code read.
 - **Memory error and ECC path. Established.** `HalpInitMemErrSubsystem`: on non-Lite boards with `MEMERR` on, it
-  maps physical page 0 (the window used to rewrite a soft ECC error, `HalpSoftEccVaddr`) and installs the two memory-error vectors on Cobalt entries `0x1a` and `0x1b` (on a Lite board it prints
+  maps physical page 0 (the window `HalpSoftEccVaddr` that `HalpCorrectSoftEccError` maps and then does not write through) and installs the two memory-error vectors on Cobalt entries `0x1a` and `0x1b` (on a Lite board it prints
   "Memory Access Error checking DISABLED on Cobalt Lite"); turning ECC on is the separate `HalpEccControl`, with the conditions in the option table.
   `HalpMemErrorHandler`, `HalpCorrectSoftEccError` and the logging helpers behave as described under the memory-controller table.
 
@@ -476,6 +473,20 @@ is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
   not; the four ids are the firmware's, and mapping them to boards is unknown. The CD also holds `sgiu.inf` and `sgiul50.dll` / `sgiulnt5.sys`
   (SGI USB support); those are cabinet-compressed and were not opened.
 
+## Follow-on corrections and additions
+
+Checked against `halborg.dll` 1.3 (and `halbrgup.dll` where noted) after the independent review of the second reading. Established unless marked.
+
+- **Soft-ECC "rewrite" (`HalpCorrectSoftEccError`, `0x80019810`; the uniprocessor build has the same bytes).** The routine maps the page of the error address through the soft-ECC window, then forms a pointer to a quadword within the 32-byte line: the page offset of the address plus a lane offset from the syndrome argument (the third argument): `+0x00` if syndrome byte 0 is nonzero, else `+0x08` if byte 1 is nonzero, else `+0x10` if byte 2 is nonzero, else `+0x18`. It then executes `lock add dword ptr [esp+4], 0` at `0x80019867`, and `esp+4` is the stack slot that holds that pointer, not the memory it points to; no read or write of the mapped location occurs. It increments a counter and returns. A model must not depend on the HAL writing the corrected data back; whether the hardware scrubs the line on its own is unknown. The syndrome-byte-to-quadword lane mapping above is from the disassembly; its meaning for the memory width (256 bits plus ECC per the Cobalt page) is inferred.
+- **`+0x20` bit 1.** The write pattern is established; write-zero-to-clear semantics are inferred.
+- **Tick forwarding to the other processors.** The countdown that gates the broadcast is re-armed with the maximum increment each time it expires, and decremented by the current increment on every Cobalt tick, so after `HalSetTimeIncrement` shortens the tick the other processors tick at 10 ms intervals, slower than the boot processor's clock. The IPI-clock flag is set by the non-boot-processor phase-1 initialisation (`HalpInitMP`, `0x8002f210`: phase nonzero and processor number nonzero), so it stays clear on a machine that never starts a second processor. See [hal-hot-path.md](hal-hot-path.md).
+- **`HalStartNextProcessor`.** It saves the dword at `0x467` and CMOS register `0x0f` before writing the warm-reset vector and `0x0a`, and restores both after the started processor has flagged itself or the wait expires.
+- **8259 end of interrupt.** For a slave IRQ the slave gets the non-specific EOI (`0x20` to port `0xa0`) and the master the specific EOI `0x62`; a master IRQ gets `irq | 0x60`. (The earlier "specific EOI" wording in this page and the interrupt page covers the master only.)
+- **`HalpEnableNMI`.** It writes the entry back as the value it read plus bit `0x400`, including whatever read-only bits the read returned.
+- **LINT1** of the local APIC is programmed NMI delivery, masked and level-triggered (`0x184ff`: bit 15 set).
+- **`FUN_800196e0` (no public name).** A read-modify-write of one byte of PIIX4 configuration space (bus 0, device 4, function 0, offset `0xcb`), setting bit 2; `HalpGetCmosData` and `HalpSetCmosData` call it once, the first time (flag at `0x800211a8`), and fail the access if it fails; what the bit enables is not shown in the HAL. The bit's name (the reviewer called it the CMOS extended-data enable) comes from the PIIX4 datasheet, which is not held: the byte and bit are established, the name is not.
+- **Newer builds.** The two later 1999 NT 4.0 multiprocessor HAL builds (patch SG0020002, 28 April 1999; SG0020021, 28 July 1999; both unpacked from their installer cabinets, with their symbol files) were compared function by function with 1.3 after masking addresses. The interrupt, clock, IPI, profile, NMI, power-management, memory-error and Cobalt/Lithium code, and the vector, ISA-route and PCI-pin tables, are the same in both; 20002 differs only in the display start-up and the PCI range type-translation data, and 20021 in the PCI enumeration, BAR assignment, range handling and configuration accessors (about fifty routines, mostly larger) plus a debug-level test replacing a comparison throughout. Only the multiprocessor builds were compared; the uniprocessor builds of the patches were not.
+
 ## Power-management NMI and PCI bridge set-up
 
 Read in the follow-on pass ([hot-path page](hal-hot-path.md) for the interrupt side). Established, `halborg.dll` 1.3.
@@ -504,8 +515,7 @@ replacement HAL can use the generic bridge code.
 
 **Not read** in either pass: the two I2C layers (flat-panel identification for the boot display; a replacement that does not
 need the panel size can skip them), the V86 BIOS call path (for display BIOS calls only), and the Windows 2000 HAL below its
-tables (no symbols). Two newer 1999 NT 4.0 HAL builds (SGI patches dated 28 April and 28 July 1999, whose notes mention PCI
-resource fixes and cache-operation speed-ups) are held as InstallShield packages and were not opened.
+tables (no symbols). Two newer 1999 NT 4.0 HAL builds are compared in the follow-on section above.
 
 ## Routines read
 
@@ -527,7 +537,7 @@ Not read: the `HalpGbeDisplaySetup` register programming beyond the sequence sum
 
 Independent review of chips commits 7990dc9..7a40091 by a reviewer who wrote none of them. Method: `halborg.dll` 1.3 (sha-256
 `0926cd50…a048`) and `halbrgup.dll` from the SGI 320 NT 4.0 install CD Disk 1, with that disc's `halborg.dbg` and `halbrgup.dbg`
-(1,044 and 1,031 public symbols; the 13-symbol difference matches the list above); symbol addresses were applied to an
+(counted as 1,044 and 1,031 public symbols by that review's reader; the Ghidra importer in the follow-on pass reads 1,050 records in `halborg.dbg`'s CodeView public-symbol stream, 1,037 in `halbrgup.dbg`. The reason for the gap of six was not traced, and the thirteen-symbol difference between the two builds matches the list above either way); symbol addresses were applied to an
 `objdump` listing of each image and the routines below were read from it. Windows 2000 RTM and SP4 `halborg.dll` and `txtsetup.sif`
 were compared by table. Ghidra was not run in this pass.
 

@@ -148,7 +148,7 @@ offset = 0x30
 access = "r"
 width = 32
 grade = "established"
-doc = "Memory error ECC syndrome. A nonzero syndrome with a correctable error makes the HAL rewrite the location (HalpCorrectSoftEccError)."
+doc = "Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write."
 
 [constants]
 MEM_PHYS = { value = 0xc6000000, grade = "established", doc = "Physical base of the memory-controller block, mapped by the NT HAL as one page. The firmware also reads bank registers from 0xc6000048 upward; the HAL never does." }
