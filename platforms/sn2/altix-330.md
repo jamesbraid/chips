@@ -54,18 +54,21 @@ the L1 packages that name an IP node board for it are not tied to the 330 (sysco
 ## Base I/O parts
 
 Figure 3-4 (p.76, PDF page 100) is the only place the guide names the base I/O chips. It prints no part number and no
-PCI ID for any of them. The vendor IDs below come from the public PCI ID list (`pci.ids`), matched by name.
+PCI ID for any of them. The two parts and their PCI locations below come from a boot console of a real 330, not from
+the guide: the Library capture `captures/ia64/altix330-debian-ia64-2005-08-26-boot-console-wb2015.html`, sha256
+`98ba4ec045609497893cf880485887d82c64cb2a4d711e776d4d627b3751c476`. That capture is a Wayback copy of a debian-ia64
+list post quoting the kernel log. The device IDs are inferred from Linux's PCI and driver ID tables (`include/linux/pci_ids.h`,
+`drivers/ata/pata_sil680.c`, `drivers/message/fusion/lsi/mpi_cnfg.h`).
 
 | Name in Figure 3-4 | Where the figure puts it | Part number | PCI vendor:device | Grade |
 |---|---|---|---|---|
-| LSI SAS/SATA Controller | bus B0, 133 MHz PCI-X; the SAS/SATA II port and the internal disks | unknown without a capture | vendor 1000 (LSI Logic); device unknown | name and bus established; vendor inferred; part and device unknown |
-| Broadcom Dual GigE | bus B1, 66 MHz PCI; the two GigE ports | unknown without a capture | vendor 14e4 (Broadcom); device unknown | name and bus established; vendor inferred; part and device unknown |
-| NEC USB Host Controller | 33 MHz PCI behind a bridge on B1; the two USB 2.0 ports | unknown without a capture | vendor 1033 (NEC); device unknown | name and bus established; vendor inferred; part and device unknown |
-| Silicon Image PCI to IDE | 33 MHz PCI behind the other bridge; feeds the DVD-ROM drive | unknown without a capture | vendor 1095 (Silicon Image); device unknown | name and bus established; vendor inferred; part and device unknown |
+| LSI SAS/SATA Controller | bus B0, 133 MHz PCI-X; the SAS/SATA II port and the internal disks | LSISAS1064 (`scsi0 : ioc0: LSISAS1064, FwRev=00040200h, Ports=1, MaxQ=203, IRQ=62`); at 0000:01:01.0 (mptbase, IRQ 62) | 1000:0050 (vendor `PCI_VENDOR_ID_LSI_LOGIC`, device `MPI_MANUFACTPAGE_DEVID_SAS1064`) | part observed at 0000:01:01.0; IDs inferred |
+| Silicon Image PCI to IDE | 33 MHz PCI behind the other bridge; feeds the DVD-ROM drive | SiI680 (`SiI680: IDE controller at PCI slot 0000:d1:04.0`, chipset revision 2, base clock 133, native mode, driving the DVD-ROM on hda); at 0000:d1:04.0 | 1095:0680 (vendor `PCI_VENDOR_ID_CMD`, device `PCI_DEVICE_ID_SII_680`) | part and location observed at 0000:d1:04.0; IDs inferred |
+| Broadcom Dual GigE | bus B1, 66 MHz PCI; the two GigE ports | unknown | vendor 14e4 (Broadcom, inferred from the name); device unknown | unknown. Circumstantial only: a dual-function device at 0000:02:01.0 and .1, no driver line |
+| NEC USB Host Controller | 33 MHz PCI behind a bridge on B1; the two USB 2.0 ports | unknown | vendor 1033 (NEC, inferred from the name); device unknown | unknown. Circumstantial only: a three-function device at 0000:d0:02.0, .1 and .2, no driver line |
 
-The drawn label on the Silicon Image chip reads "Silcon". No driver binding is stated: no Linux v5.3 tree is held
-here, so the driver ID tables were not checked. The 350's IOC4, ISP 12160, VSC 7174 and klconfig Tigon 3 IDs are the
-350's parts, not these, and do not transfer.
+The kernel log names no driver for the Broadcom or NEC functions (the module list was cut short), so their
+locations do not identify the chips.
 
 Searches that found no part number or capture for these chips:
 
@@ -78,7 +81,7 @@ Searches that found no part number or capture for these chips:
 - Held evidence: `sn2-holdings-inventory-20261114.md` and `sn2-bringup-material-20261114.md` name no 330 part. A text
   search of the evidence notes for "altix 330" matched notes, not captures; the other matches were not opened.
 
-Open: a boot log or `lspci` from a 330 with these cards would settle the part and device IDs. Not yet independently
+Open: the Broadcom and NEC parts and IDs. A boot log or `lspci` from a 330 would settle them. Not yet independently
 reviewed.
 
 ## Review
