@@ -1,6 +1,6 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0 -->
+<!-- input sha256 892f461404377c9293c3bf0c2a21948cf46d82ee52360aa46f3d72d48d14d64b -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 
@@ -61,12 +61,14 @@ Cobalt revision. The kernel prints it at start-up and, in the 2.4 interrupt path
 
 ### Register `cpu_ctrl`
 
-Timer control. The kernel sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count. Other bits are never touched.
+Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask, ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 3 | `timer_mask` | established |  |  | 1 masks the timer interrupt; 0 lets it through. |
 | 2 | `timer_run` | established |  |  | 1 starts the system timer; 0 leaves it stopped. |
+| 1 | `page_close` | established |  |  | Page policy. The HAL ORs 2 in for PAGEOPENPOLICY=CLOSE and 0 for OPEN (the default); it never clears the bit, so what OPEN means for a bit the firmware set is unknown. That the bit makes the controller close DRAM pages after an access is inferred from the option's names only. |
+| 0 | `ecc_enable` | established |  |  | 1 turns ECC checking on (the HAL sets it with bit 0 of the first memory-controller register). Cleared by the HAL at start-up; the NT HAL never sets it on a Cobalt Lite revision (0xa0, 0xa8). |
 
 ### Register `cpu_stat`
 

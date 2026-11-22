@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0 */
+/* input sha256 892f461404377c9293c3bf0c2a21948cf46d82ee52360aa46f3d72d48d14d64b */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -49,7 +49,7 @@
 #define COBALT_CPU_REV_OFFSET                        0x8u /* established */
 
 /*
- * Timer control. The kernel sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count. Other bits are never touched.
+ * Timer and memory control. Linux sets timer_run and clears timer_mask, each by a read-modify-write, after loading the count, and touches no other bit. The NT HAL (halborg.dll 1.3: the Cobalt control set-up in HalInitSystem and HalpEccControl) also clears ecc_enable at start-up, sets timer_mask, ORs in page_close from its PAGEOPENPOLICY boot option, and sets ecc_enable together with bit 0 of the memory block when it enables ECC.
  */
 /* cpu_ctrl: rw32, space cpu, reset unknown */
 #define COBALT_CPU_CTRL_OFFSET                       0x10u /* established */
@@ -59,6 +59,12 @@
 #define COBALT_CPU_CTRL_TIMER_RUN_SHIFT              2 /* established */
 #define COBALT_CPU_CTRL_TIMER_RUN_MASK               0x1u
 #define COBALT_CPU_CTRL_TIMER_RUN_INPLACE            (COBALT_CPU_CTRL_TIMER_RUN_MASK << COBALT_CPU_CTRL_TIMER_RUN_SHIFT)
+#define COBALT_CPU_CTRL_PAGE_CLOSE_SHIFT             1 /* established */
+#define COBALT_CPU_CTRL_PAGE_CLOSE_MASK              0x1u
+#define COBALT_CPU_CTRL_PAGE_CLOSE_INPLACE           (COBALT_CPU_CTRL_PAGE_CLOSE_MASK << COBALT_CPU_CTRL_PAGE_CLOSE_SHIFT)
+#define COBALT_CPU_CTRL_ECC_ENABLE_SHIFT             0 /* established */
+#define COBALT_CPU_CTRL_ECC_ENABLE_MASK              0x1u
+#define COBALT_CPU_CTRL_ECC_ENABLE_INPLACE           (COBALT_CPU_CTRL_ECC_ENABLE_MASK << COBALT_CPU_CTRL_ECC_ENABLE_SHIFT)
 
 /*
  * Timer status. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and later code never writes it, so whether a level timer interrupt needs this clear to deassert is open.

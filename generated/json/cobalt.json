@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "4b2e0f69485555e5288f25eb78c70a877ad2e500f2b2dfccc0724b895f60dff0",
+ "input_sha256": "892f461404377c9293c3bf0c2a21948cf46d82ee52360aa46f3d72d48d14d64b",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -116,6 +116,22 @@
    "name": "cpu_ctrl.timer_run",
    "hi": 2,
    "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_ctrl.page_close",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_ctrl.ecc_enable",
+   "hi": 0,
+   "lo": 0,
    "grade": "established"
   },
   {

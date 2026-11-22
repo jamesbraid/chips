@@ -6,8 +6,8 @@ import only `ntoskrnl.exe`. Each has a matching CodeView symbol file (`halborg.d
 1,050 symbols and the 75 object files it was built from. The two HALs share all symbols except thirteen
 multiprocessor-only ones (the real-mode start stub, the processor table reader and the processor start routines).
 `halborg.dll` was read through Ghidra, with the debug-file names applied, covering the routines listed at the end; the
-uniprocessor HAL and the remaining routines (bus-handler plumbing, DMA adapters, the PCI resource code beyond
-enumeration, console output) were not read. SHA-256: `halborg.dll` `0926cd50…4a048`, `halbrgup.dll` `21978c78…f7de8`.
+uniprocessor HAL was compared symbol by symbol and read where it differs. The Windows 2000 builds (no symbols) were compared by table and string
+([second reading](#second-reading-interrupt-levels-pci-dma-memory-registry-processors)). SHA-256: `halborg.dll` `0926cd50…4a048`, `halbrgup.dll` `21978c78…f7de8`.
 Grades as in the [README](README.md); unless stated, a fact is established for the routine named.
 
 "Borg" in the file names is the Cobalt platform's name inside SGI (the PCI configuration accessors are named
@@ -34,7 +34,7 @@ below are from `asm/visws/cobalt.h`; the HAL agrees wherever both touch a regist
 | Offset | Use | Grade |
 |---|---|---|
 | `+0x08` | Revision. Values `0xa0` and `0xa8` mean "Cobalt Lite": no ECC, no memory error reporting, no cache-operation invalidate, and different APIC entry numbers for the clock and NMI (below). | established |
-| `+0x10` | Control. Bit 0: ECC checking on (set with bit 0 of the memory block's first register). Bit 2: timer run. Bit 3: timer interrupt mask (0 = unmasked). | established |
+| `+0x10` | Control. Bit 0: ECC checking on (set with bit 0 of the memory block's first register). Bit 1: page policy, set by `PAGEOPENPOLICY=CLOSE` (below). Bit 2: timer run. Bit 3: timer interrupt mask (0 = unmasked). | established |
 | `+0x18` | Bit 0 is set to reset the machine on early boards (below). | established |
 | `+0x20` | Status. Bit 0: a cache-operation interrupt (unexpected: the HAL prints an error and clears it with a write of all ones but bit 0). Bit 1: timer interrupt pending, cleared by writing a zero to it. | established |
 | `+0x30` | Timer reload value; writing `0xffffffff` starts a calibration pass | established |
@@ -87,7 +87,7 @@ to 17, video in 18 to 19, Lithium audio 22, two graphics-engine entries 24 and 2
 
 ## Interrupt delivery in the HAL
 
-1. **Vectors. Established.** NT vectors encode the IRQL in the high nibble. Each Cobalt entry has a fixed vector in a
+1. **Vectors. Established.** NT vectors encode the IRQL in the high nibble (the Irql `HalGetInterruptVector` reports back is the vector shifted right by 3). Each Cobalt entry has a fixed vector in a
    per-board-generation table (`CobaltInt2Vec`, 30 words): for the newest generation entries 0 to 29 map to `92 8a 5a 69 59 91
    81 9b 82 89 7a 73 b9 71 79 72 ac ab aa a9 61 9c b2 6a a5 a3 bc f2 f7 f9`, and the earlier generations differ
    in entries 1, 3, 4, 5, 6, 13 and 15. The clock uses vector `0xd1` and IRQL `0x1c`. The HAL installs its own handlers
@@ -236,9 +236,9 @@ names as stored (upper case).
 | `BREAK` | breakpoint into the debugger at start-up |
 | `ARCINFO` | sets bit 0 of the HAL's boot-command flags (enables the ARC-tree dump at start-up, inferred from the dump routine) |
 | `SYSCLOCK=COBALT` / `SYSCLOCK=APIC` | choose the Cobalt timer (default) or the local APIC timer as the system clock |
-| `PAGEOPENPOLICY=OPEN` / `CLOSE` | memory-controller page policy value (set to 0 for `OPEN` and 2 for `CLOSE`); the register it feeds is not found in the routines read |
+| `PAGEOPENPOLICY=OPEN` / `CLOSE` | page policy value, 0 for `OPEN` and 2 for `CLOSE`; it is OR-ed into the Cobalt CPU control register at `+0x10` (bit 1) by the clock-and-control set-up at `0x80016220`, which also clears bit 0 (ECC off until `HalpEccControl`) and sets bit 3 (timer interrupt masked). The OR never clears bit 1, so `OPEN` leaves whatever the firmware left there |
 | `MEMERR=ON` / `OFF` | enables or disables the Cobalt memory-error interrupts (default on) |
-| `ECC=ON` / `OFF` | enables or disables ECC checking (default on) |
+| `ECC=ON` / `OFF` | enables or disables ECC checking (default on). `HalpEccControl` (`0x8001a0c0`) turns ECC on only if the board is not a Cobalt Lite (revision `0xa0` or `0xa8`, which prints "ECC checking DISABLED on Cobalt Lite"), `MEMERR` is on and `ECC` is on: ECC checking depends on both options |
 | `BLOCKINTS=n` | numeric flag the HAL prints when set (use not traced) |
 | `INTRROUTE=DEFAULT` / `NO8259` / `IDE8259` / `HUGH006` | the interrupt routing mode, below |
 | `CACHEOPPOLL=n` | microseconds the cache-operation code polls (an integer) |
@@ -279,10 +279,170 @@ Against the open list in [questions/visws-open.md](../../questions/visws-open.md
 - **Processor table producer.** The table at `0x1e00` is read by the HAL as well, so it is the firmware's (or the
   firmware's loader's) output, not something a Linux boot loader invents; which one writes it is still unknown.
 - **Memory controller.** The NT HAL does program and read the Cobalt memory block at `0xc6000000` (table above), but only
-  ECC enable and error status; bank decoding and the frame-buffer placement are still unread.
+  ECC enable and error status; bank decoding and the frame-buffer placement are still unread. The graphics split reaches the HAL only as memory descriptors, see [Memory banks and the graphics split](#memory-banks-and-the-graphics-split); the HAL never decodes banks.
 - **Bus numbering.** The HAL addresses bridge B's window first (index 0 at `0xfd000000`) and bridge A second, matching
   Linux's choice of bridge B as the PIIX4 bus; the numbers the bridges hold are assigned by the HAL's host-bridge
-  init when it enumerates, so which is bus 0 at run time is still not stated.
+  init when it enumerates, so which is bus 0 at run time is still not stated. Settled by the second reading ([PCI numbering](#pci-numbering-and-resource-assignment)): the HAL registers the first bridge it finds as bus 0, so at run time bridge B (window `0xfd000000`) is bus 0 and bridge A (`0xfc000000`) is bus 1 (established for the NT HAL, for a machine whose PCI-to-PCI bridges, if any, are behind bridge B).
+
+## Second reading: interrupt levels, PCI, DMA, memory, registry, processors
+
+Read in Ghidra with the shipped debug symbols applied (`halborg.dll` 1.3, sha-256 `0926cd50…4a048`, and `halbrgup.dll`,
+`21978c78…f7de8`) and checked against `objdump`. Addresses are `halborg.dll`'s; the uniprocessor build has the same routines at
+nearby addresses. Grades as above.
+
+### Interrupt level to Cobalt entry
+
+- **The internal bus's "level" is the Cobalt entry number. Established.** `HalGetInterruptVector` (`0x8002b520`) hands a
+  request to the bus handler for the bus type; for the internal bus (type 0) and PCI (type 5) that is
+  `HalpGetSystemInterruptVector` (`0x80028fc0`). It indexes `CobaltInt2Vec` with the bus level directly (no bounds check;
+  the table has 30 words) and returns the vector. The Irql it reports is the vector shifted right by 3, and the affinity is
+  the default mask if the vector is nonzero, else zero. Any other interface type prints "Unexpected interface type" and
+  returns vector 0. So the video drivers' levels 16 to 19 ([nt-drivers.md](nt-drivers.md)) are Cobalt entries 16 to 19.
+- **Vector back to entry. Established.** `HalEnableSystemInterrupt` (`0x800164f0`) calls `HalpGetIntrDataByVector`
+  (`0x80016a30`), which first searches the generation's 16-row ISA route table for the vector (three bytes per row, the
+  columns of the table above) and, if the vector is not there, searches `CobaltInt2Vec` for it: the position found is the
+  Cobalt entry. An ISA row with the 8259 flag enables the line at the 8259 (`HalpEnable8259Int`); a row that needs the
+  NS87307 also calls `HalpEnable307Int`. A Cobalt entry is enabled once: a per-entry use count (bytes at `0x80021818`,
+  under a spin lock) is incremented, and only the first user, for entries below 16, sets that entry's bit in the owning
+  Lithium bridge (`HalpEnableLiInt`) and writes the redirection entry with the vector and bit 15 (level) set
+  (`HalpSetCoApicRedirEntry`). `HalDisableSystemInterrupt` (`0x800166f0`) is the reverse.
+- **Internal-bus vectors installed in the IDT.** `HalpSetInternalVector` (`0x8002f6f0`) records a vector's IRQL in a per-vector
+  table (`HalpRegisterVector`, 16 entries indexed by vector >> 4) and writes the IDT gate's two halves at 8 bytes per vector.
+  Established; the table's consumers (`HalBeginSystemInterrupt`) were not followed.
+
+### PCI numbering and resource assignment
+
+- **Bus numbers. Established.** `HalpInitializePciBus` (`0x8002e9b0`) makes one PCI bus handler per primary bus
+  (`_ucNumPrimaryBusses` is initialised to 2) in the order bridge B (index 0, window `0xfd000000`) then bridge A (index 1,
+  window `0xfc000000`; `HalpGetLiCnfgAddr`, `0x8001c650`). The handler is registered with bus number "any"
+  (`HaliRegisterBusHandler`, `0x80029050`), which takes the lowest unused PCI bus number. Bridge B is therefore bus 0 and
+  bridge A bus 1, except that a PCI-to-PCI bridge found while enumerating bus 0 would take number 1 first and push A to
+  the next free number (the machines' behaviour with a bridged card in a slot of B is therefore unverified).
+- **Bridge window write. Established.** `HalpInitSGIHostBridge` (`0x80018200`) runs for each bridge before it is
+  enumerated, with a subordinate-bus value of `0xff`, and again afterwards for bridge B only, with the highest bus number
+  found behind it (bridge A keeps `0xff`). It tests the byte at window `+0x08` (the revision half of the class word): above
+  zero, the low byte of the word at `+0x44` is set to the bus number and its next byte to the subordinate number, and `0xffff` is written to the halfword
+  at `+0x04` (the bridge's own command word); at revision zero the bus
+  number goes in the top byte of the word at `+0x40` instead. (The HAL also notes a bus-number limit of `0x20` or `5` in its own bookkeeping; its use was not followed.) In both cases the status halfword at `+0x06` is then written
+  `0xf800`, which clears the five error bits of a standard status word. This is the bus-number word that Linux reads at `+0x44`; Linux
+  only knows the revision above zero layout. See [Lithium](../../devices/lithium/README.md).
+- **Enumeration. Established.** `HalpEnumeratePciBus` (`0x8001c730`) walks devices 0 to 31, functions 0 to 7 of each
+  device (the function step happens inside the device loop, the loop stops on an all-ones vendor), reading each header
+  through the bridge's window (`TypeBorg`). Header type 0 goes to `HalpInitializePCIFunction`; type 1 (PCI-to-PCI bridge) goes
+  to it and then to `HalpCreatePCISubBus` (`0x8001c930`), which registers a child bus handler, copies the parent's ranges,
+  rounds the memory ranges to 1 MiB and the I/O range to 4 KiB, programs the bridge's numbers
+  (`HalpInitializePCIBridge`) and recurses. Any other header type prints "Unknown header Type" and is skipped.
+- **The HAL assigns the resources itself. Established.** `HalpInitializePCIFunction` (`0x8001cdd0`) disables I/O and memory
+  decoding, writes ones to each base address register and reads the size back, rejects a register whose mask is not a power
+  of two ("PCI: defective device"), raises every memory size below 4 KiB to 4 KiB, sorts the registers by size (largest first),
+  and hands out addresses from the bus's remaining ranges (memory base aligned to its size; 64-bit registers take two
+  slots; a prefetchable register falls back to non-prefetchable memory if the bus has no prefetch range, "cannot give out
+  Prefetch Memory"). It then sets the I/O and memory enable bits and calls the bus's interrupt-pin hook to write the
+  interrupt line register from the pin tables above. `PCILOCK` (boot option) is read by the PCI set-up path; the routine that
+  tests it was not traced. Resource-exhaustion returns `0xc000009a`.
+- **The initial windows. Inferred.** The HAL image carries one statically initialised record per bridge (`0x80021530` for B,
+  `0x800215f0` for A, `0xc0` bytes each; byte-identical in the NT 4.0 image, Windows 2000 RTM and SP4). The layout was
+  taken from the consumers' use, not from a definition: for bridge B the I/O range is `0x0000` to `0x7fff`, for A `0x8000` to
+  `0xffff`; both have a non-prefetchable memory range from PCI address `0x80000000` to `0x83ffffff` (64 MiB each); a further
+  word holds `0x74000000` (B) and `0x70000000` (A), which looks like each bridge's system-side base for its 64 MiB (the 64-bit
+  addition `HalpTranslatePCIBusAddress`, `0x800182b0`, performs when it maps a bus address through the matched range's offset),
+  but the offsets are added from range-list entries the code builds later and the equation PCI `0x80000000` to system
+  `0x70000000` or `0x74000000` was not confirmed. Neither bridge has a prefetch range. If true, memory BARs land at
+  `0x80000000` on both buses (PCI side) and the Lithium windows are the only thing that tells them apart.
+- **Interrupt pins. Established (above).** The per-bridge pin tables are reached through the pointer at record `+0xb8`
+  (`HalpPciIntPin2SysIntLine`, `0x80018430`; `HalpSysIntLine2PciIntPin`, `0x80018520`).
+
+### DMA
+
+Established. The HAL has no scatter-gather or IOMMU code for the Cobalt or Lithium: its adapter objects are the stock x86
+PC HAL's. `HalGetAdapter` (`0x80029cd0`) hands out ISA/EISA 8237 channel adapters (page registers at the standard ports; the
+EISA control base is never written, so it stays zero; the 8237 on the PIIX4 serves the floppy and parallel port) and master adapters that use *map
+registers*: `HalpInitAdapterObjects` (`0x80017290`) allocates a physically contiguous map buffer below 16 MiB from the
+firmware's descriptors (64 KiB, or 192 KiB when the machine has memory above 16 MiB, ignoring firmware-permanent and
+graphics-special descriptors in that test), and `IoMapTransfer` copies through it when a buffer lies above 16 MiB or crosses
+a boundary the adapter cannot take (`HalpMapTransfer`, `HalpCopyBufferMap`). `HalpGrowMapBuffers` grows the pool in 64 KiB
+steps. Common buffers (`HalAllocateCommonBuffer`) are contiguous memory below the adapter's mask. Cache flushing around DMA goes
+through the Cobalt cache-operation path (`HalxFlushMdl` and friends, above). What the bridges or Cobalt do with a bus-master address (translation, limits, snooping) is not visible in the HAL: it
+programs none of it.
+
+### Memory banks and the graphics split
+
+- **The HAL reads descriptors, not banks. Established.** `HalpSpliceGfxMemory` (`0x8001f3e0`) adds the page counts of the
+  loader block's memory descriptors by type: type 3 (bad) is skipped, type 6 (firmware permanent) is counted in the total
+  only, type `0x16` (the loader's "special memory") is the graphics memory, everything else is NT's. It prints "N MB Memory
+  [G MB Graphics, M MB NT]". The first graphics bank comes from `HalpInitializeGbeDisplay0` (`0x8002d380`): the first
+  type-`0x16` descriptor large enough for the frame buffer (the size field times 16); if none is large enough it prints
+  "You need an updated PROM!" and takes 1 MiB of free memory instead. The helper at `0x8002d700` then records up to 32 banks
+  (base address and size in pages) in `HalpGfxBankAddr` / `HalpGfxBankSize`. `HalpAddGbeDisplayToRegistry` (`0x800158e0`)
+  publishes them: under `\Registry\Machine\...\SGICtrl\Memory` (a key the HAL creates) it writes `GraphicsMemory` (the frame
+  buffer's physical base), `GraphicsMemorySize`, `NumberOfBanks` and per bank `BankAddrNN` / `BankSizeNN` (`NN` 00 to 31; the
+  HAL warns "Update the prom for aligned graphics memory" if a bank is not aligned to 4 MiB with a size that is a multiple
+  of 1 KiB pages). The graphics miniport reads these.
+- **How the split is requested. Established (miniport).** The graphics control panel's "Memory Reservation Profile" (a
+  per-profile list of up to twelve bank sizes) reaches the miniport (`sgcomp.sys` 5.2.4, control code `0x232094`) as a count and
+  sizes; the miniport rounds each size up to 4 KiB pages and writes the firmware environment variable `cogfxmem` through
+  `HalSetEnvironmentVariable` as a decimal total followed by one decimal size per bank, all in pages, comma separated
+  (`"total,b0,b1,..."`). A restart applies it: the firmware turns the variable into the special-memory descriptors the HAL
+  reads (the install guide 007-3703-003 says a restart prompt appears and that the largest value offered is the installed
+  memory minus 64 MB that NT reserves). What the PROM does with the string is the firmware side of
+  [firmware.md](firmware.md) (the variable name `cogfxmem` is in the PROM image); not re-read here.
+- **Bank decode registers. Unknown.** The HAL touches no Cobalt register that carries a bank address or size; the only
+  memory-controller registers it uses are the ones above (ECC enable, error status, address and syndrome). The sixteen
+  bank registers the firmware sizes memory from (`firmware.md`) are not used by any Windows code read.
+- **Memory error and ECC path. Established.** `HalpInitMemErrSubsystem` (`0x80019fe0`): on non-Lite boards with `MEMERR` on, it
+  connects Cobalt entries `0x1a` and `0x1b` and turns ECC on; `HalpMemErrorHandler` (`0x80019ed0`), `HalpCorrectSoftEccError`
+  and the logging helpers behave as described under the memory-controller table.
+
+### Registry values the HAL writes
+
+All through the standard registry calls (`ZwSetValueKey`, `RtlWriteRegistryValue`). Established.
+
+| Key | Value | Written from |
+|---|---|---|
+| `\Registry\Machine\Hardware\Description\System\CentralProcessor\N` | `FeatureSet` (dword), `VendorIdentifier` (string), `~Mhz` (dword) | `HalpFixupRegistry` (`0x8002e980`) via `HalpFixupCpuRegistryNode`, one pass per processor until the open of key N fails; the values come from the HAL's per-processor `ChipSpecs` table (`HalpGetCpuFeatureBits`, CPUID) and its measured frequency |
+| `\Registry\Machine\Hardware\Description\System` | `Serial Number` (binary) | `HalpReportSerialNumber` (`0x8002f030`), only when the firmware gave a non-empty serial; the string's origin in the ARC tree was not followed |
+| `...\Description\System\MultifunctionAdapter\N` | `Identifier`, `Configuration Data`, `Component Information` | `HalpAddMultiFunctionNode` (`0x8002f910`) for the nodes the HAL adds (Internal, PCI, ISA names from its table) |
+| `SGICtrl\Memory` (HAL-created key) | `GraphicsMemory`, `GraphicsMemorySize`, `NumberOfBanks`, `BankAddrNN`, `BankSizeNN` | `HalpAddGbeDisplayToRegistry`, above |
+| `\Registry\Machine\System\CurrentControlSet\Control\SystemResources\ReservedResources` | reserved ports and memory of the platform | `HalReportResourceUsage` family (key name in the image; the list was not read) |
+
+### Uniprocessor and multiprocessor builds
+
+`halbrgup.dll` has the same ~1,040 symbols as `halborg.dll` minus thirteen: the real-mode start stub (`StartPx_RMStub`, `StartPx_PMStub`,
+`MpLowStub*`), `HalpGetProcessorInfo`, `HalpStartProcessor`, `HalpBuildTiledCR3`, `HalpMapCR3`, `HalpFreeTiledCR3`,
+`MpFreeCR3`, `DebugCpuTable`, `Halp1stPhysicalPageVaddr` and a spin-lock variant. Established. The uniprocessor build still uses the
+local APIC for the IPI-capable paths, the clock option, profile interrupt and performance counter (`HalpInitLocalAPIC`,
+`HalRequestIpi` at the local APIC's interrupt command register `0xfffe0300` through the high-address mapping) and the Cobalt
+entries; it has no table reader and `HalStartNextProcessor` returns false at once, and `HalpInitMP` does nothing more than
+count calls and set the IPI-clock flag (no low-memory stub, no processor table read). In the multiprocessor build
+`HalpInitMP` (phase 0) maps physical page 0 and allocates a page below 1 MiB for the stub (`HalpAllocPhysicalMemory`);
+`HalStartNextProcessor` fills it as above. Setup chooses `halbrgup.dll` for the `SGI-320_ARCx86` and `SGI-540_ARCx86`
+machine types and `halborg.dll` for the `_mp` ones ([nt-drivers.md](nt-drivers.md)).
+
+### The Windows 2000 builds
+
+Windows 2000 RTM (HAL file version string `5.00.2168.1`, PE time 1999-10-30) and SP4 (`5.00.2195.6655`, PE time 2003-01-15) each carry
+one `halborg.dll` on their install CD (stripped, no symbol file shipped). The two differ in a few strings and one import; every table in
+this page that appears in both (the four vector tables, the four sets of PCI pin tables, the ISA route tables, the bridge records)
+is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
+
+- **A fourth board wiring.** Windows 2000 selects among four tables, not three: SYS TYPE 0 (320) by BOARD REV as before; SYS TYPE 1 (540)
+  revision 0 uses the oldest tables and any other 540 the newest; any other SYS TYPE, or `INTRROUTE=HUGH2`, selects a new set. Its Cobalt
+  entry vectors are `5a 92 8a 73 59 91 81 9b 69 89 7a (none) b9 71 79 72 ac ab aa a9 61 9c b2 6a a5 a3 bc f2 f7 f9`, bridge A's pin rows
+  are slot 0 none, slot 1 `1 5 6 5`, slot 2 `2 6 5 6`, slots 3 and 4 none, bridge B's are slot 0 none, slot 1 `9 13 14 15`, slot 2
+  `10 15 13 14`, slot 3 none and slot 4 pin D `7`. Established as data. Which board this is (the name resembles the NT 4.0 option
+  `HUGH006`; the Usenet note gives "hugh" as a code name for the 540 or the flat panel) is unknown.
+- **Options.** `INTRROUTE` survives with one value, `HUGH2`, printed as "HAL: interrupt route %s"; `DEFAULT`, `NO8259`,
+  `IDE8259` and `HUGH006` are gone. `ONECPU`, `PCILOCK`, `INTAFFINITY`, `BREAK`, `ARCINFO`, `SYSCLOCK`, `PAGEOPENPOLICY`, `MEMERR`, `ECC`,
+  `BLOCKINTS`, `CACHEOPPOLL` and `USE8254` strings are still in the image.
+- **Plug and Play.** The Windows 2000 HAL has the translator/arbiter entry points (`HaliGetInterruptTranslator`, "HalIrqTranslateResourcesRoot"
+  messages), a one-vector-per-level table of eight-byte entries instead of NT 4.0's word table (`HalpGetSystemIntVec` reads the vector from
+  offset 4 of the entry), and prints the frame buffer address and size ("Graphics: Framebuffer address"). The "You need an updated PROM" message
+  is gone.
+- **One HAL for both processor counts.** `txtsetup.sif` has a single computer type, `sgiborg_mp`, for the firmware ids `*SGI-3`, `*SGI-4`, `*SGI-5` and
+  `*SGI-6` (Windows 2000 RTM and SP4), copying `halborg.dll` as `hal.dll`, `sgibvid.dll` as the boot video driver and `arcldr.exe`
+  as the loader. Where NT 4.0 distinguished a 320 from a 540 and a uniprocessor from a multiprocessor NT in the machine identifier, Windows 2000 does
+  not; the four ids are the firmware's, and mapping them to boards is unknown. The CD also holds `sgiu.inf` and `sgiul50.dll` / `sgiulnt5.sys`
+  (SGI USB support); those are cabinet-compressed and were not opened.
 
 ## Routines read
 
@@ -297,6 +457,6 @@ Against the open list in [questions/visws-open.md](../../questions/visws-open.md
 `HalpInitSoftPower`, `pm_init_intr`, `pm_intr_handler`, `HalpInit8259`, `Halp8259Interrupt`, `Ns307InitChip`,
 `HalpEnable307Int`, `HalpSpliceGfxMemory`, `HalpCheckCompatibility`, `CacheopInitialize`, `CacheopInterrupt`,
 `HalQueryRealTimeClock` (CMOS RTC in BCD, years below 70 read as 20xx; an out-of-range date resets to 1 January 1998),
-`HalpInitializeRtc`.
+`HalpInitializeRtc`; in the second reading also `HalpGetSystemInterruptVector`, `HalGetInterruptVector`, `HalpGetIntrDataByVector`, `HalEnableSystemInterrupt`, `HalpInitializePciBus`, `HalpAllocateAndInitPciBusHandler`, `HaliRegisterBusHandler`, `HalpEnumeratePciBus`, `HalpCreatePCISubBus`, `HalpInitializePCIFunction`, `HalpInitBarArray`, `HalpInitSGIHostBridge`, `HalGetAdapter`, `HalpInitAdapterObjects`, `HalpInitializeGbeDisplay0` and its bank helpers, `HalpAddGbeDisplayToRegistry`, `HalpFixupRegistry`, `HalpFixupCpuRegistryNode`, `HalpAddValueKey`, `HalpReportSerialNumber`, `HalpRegisterInternalBusHandlers` and `HalpTranslatePCIBusAddress`.
 
-Not read: the PCI resource assignment beyond naming, the `HalpGbeDisplaySetup` register programming beyond the sequence summarised in the next paragraph, the DMA adapter and map-register code, the bus handler tables, the V86 BIOS call path, the I2C layers.
+Not read: the `HalpGbeDisplaySetup` register programming beyond the sequence summarised above, the V86 BIOS call path, the I2C layers, the rest of the registry-reporting routines (`HalReportResourceUsage`'s port list), the PCI-to-PCI bridge programming in detail (`HalpInitializePCIBridge`), the translation range lists, and the Windows 2000 HAL below the tables (no symbols).
