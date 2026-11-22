@@ -32,7 +32,7 @@ helper in this image.
    them with "file loaded but not executed: opposite endian", and it does not recognise a PE image at all. Established.
 2. **"Setting endianness."** Nothing in the image refers to that string. The routine that does the work, in the same order position as the
    string among the other start-up progress strings, is `0xbfc08e00`: it measures the CPU's byte order and, if the HPC1 byte at
-   `0xbfb800c3` answers, sets or clears its low five bits. It does **not** touch the MC. The Config.BE test and the byte-order flip are a
+   `0xbfb800c3` answers, sets or clears its low five bits. The step itself has no MC access, but its helper `0xbfc2a5b0` clears MC `+0xec` and reads MC `+4` (below). The Config.BE test and the byte-order flip are a
    separate, earlier step at the reset vector. Established for the code, inferred for the string-to-routine pairing.
 3. **RAM.** The probe code places the first bank at physical `0x08000000` and packs the rest after it (largest first), skipping from
    `0x18000000` to `0x20000000`. Nothing here programs RAM at physical 0 or 6 MiB. Physical `0x0` to `0x1fff` is described as RAM
@@ -52,9 +52,9 @@ The first word at `0xbfc00000` is `j 0xbfc003c0`; the next vectors jump to `0xbf
    the name is NetBSD's `HPC1_BIGENDIAN` register (five endian bits, two revision bits; `0xbfb800c3` is the same register's low byte as a
    big-endian CPU addresses it). Inferred: this clears a little-endian request left in the HPC.
 4. MC `+0xec` and `+0xfc` are zeroed. CPUCTRL0 (`+0x04`) is written whole with `0x3c002014 | ((line/8 + 4) << 20)`, where `line` is
-   16 when Config.SC (bit 17) is set and otherwise `1 << (Config[23:22] + 4)`; CPUCTRL1 (`+0x0c`) gets `0x16`; `+0xd4` gets `0x11453433`,
+   16 when Config.SC (bit 17) is set and otherwise `1 << (Config[23:22] + 4)`; CPUCTRL1 (`+0x0c`) gets `0x1016` (`0xbfc004a4`/`a8`, the only CPUCTRL1 store in the image; public header bit `0x1000` FIXEDEHPC set and `0x2000` LITTLEHPC clear, so the HPC is fixed big-endian, inferred from the names); `+0xd4` gets `0x11453433`,
    `+0xdc` gets `0x34332`. The value written to CPUCTRL0 has bit 17 (`LENDIAN`) clear, bit 16 (`WRESETPMEM`) clear and bit 18
-   (`WRESETDMEM`) clear. This is the only MC endianness-bit write the image makes, and it is a whole-register store, not a
+   (`WRESETDMEM`) clear. This is the only CPUCTRL0 write that could carry an endianness bit, and it is a whole-register store, not a
    read-modify-write. No routine sets or clears `0x20000` or `0x40000` in CPUCTRL0, and the strings "CPUCTRL0" and "Big Endian" are absent (the
    Indigo2 helper that prints them has no counterpart here); every CPUCTRL0 write site found is listed in the device map. Established (the constants are in the listing; the bit names are the public header's). An 625-tick wait on the MC
    refresh counter at `+0x1004` follows.
@@ -70,7 +70,7 @@ The first word at `0xbfc00000` is `j 0xbfc003c0`; the next vectors jump to `0xbf
 a 32-bit register at **MC `+0x30`** (bit `0x1` PRE, `0x2` chip select, `0x4` clock, `0x8` data to the chip, `0x10` data from the chip).
 
 - Callers (every `jal` and `j` scanned): the flip routine is called only from `0xbfc003f4`; the word write only from the flip; the word read
-  only from the flip. The six references to `0xbfa00030` all lie in `0xbfc0134c` to `0xbfc015b8`. No other code writes the EEPROM register or
+  only from the flip. About 27 access sites for `0xbfa00030` all lie in `0xbfc01350` to `0xbfc01570`. No other code writes the EEPROM register or
   stores `0x10000` to MC `+0`.
 - **Why `+0x30` and `+0`.** The public header has the EEPROM register at `+0x34` and CPUCTRL0 at `+0x04`, one word above those. Inferred: the R4000
   system bus is 64 bits wide and the MC's 32-bit registers sit on one half of it, so a little-endian CPU, which swaps the word lane, reaches
@@ -102,13 +102,12 @@ initialisation, below), `0xbfc01f5c`, `0xbfc02fa0`. The order cache, exception, 
 why `0xbfc08e00` is the best match for "Setting endianness" (inferred; the reference itself is missing). `0xbfc08e00` does:
 
 1. Store `0x11223344` to the stack and read back the byte at the lowest address. If it is `0x44` the CPU is little-endian and the word at
-   `0xa8741070` is set to 1 (`0xbfc08e1c`..`28`). This is the only store to that word in the image. It is zero when the routine runs because the memory-sizing step clears RAM (inferred; `0xbfc00798` re-zeroes the PROM data area on restart paths only).
-2. Read the byte at `0xbfb800c3` through the guarded-access helper `0xbfc2a5b0` (it saves and installs a bus-error handler; returns 0 when the access
-   succeeds; tail not read, inferred).
-3. Access succeeded: if the CPU is little-endian, OR `0x1f` into the byte; otherwise AND it with `0xe0`. So the five endianness bits of the HPC1 register
+   `0xa8741070` is set to 1 (`0xbfc08e1c`..`28`). This is the only store to that word in the image. It is zero on the first call only by argument (memory sizing clears RAM; `0xbfc00798` re-zeroes the PROM data area on restart paths); the cold-start clear was not verified. The flag is only ever set, never cleared. The routine has a second caller, `jal` at `0xbfc079f4` inside `0xbfc07950`, reached through `0xbfc05f04` and `0xbfc05ed0` from `0xbfc01944` and `0xbfc01b80` (the console re-initialisation path), so the step can run more than once.
+2. Read the byte at `0xbfb800c3` as a guarded **store**: `0xbfc2a5b0` (only caller `0xbfc08e34`, a0 = `0xbfb800c3`, a1 = 1) writes zero to MC `+0xec`, takes a setjmp (`0xbfc3a780`) as a bus-error guard, then stores zero with `sb`/`sh`/`sw` by size (`sb` at `0xbfc2a660`), reads MC `+4` (`0xbfc0aae0`), and returns 0 if the store took or 1 on a bus error (`0xbfc2a618`). So the step first writes 0 to the HPC1 byte.
+3. Store took: if the CPU is little-endian, OR `0x1f` into the byte; otherwise AND it with `0xe0`. So the five endianness bits of the HPC1 register
    are all set for a little-endian CPU and all cleared for a big-endian one (the register's meaning is NetBSD's; the stores are in the listing).
-4. Access failed (no register): if the CPU is little-endian, set the word at `0xa8740da0` to 1. That word is read by the Ethernet driver
-   (`0xbfc10fec`, `0xbfc11688`), which then word-swaps its packet buffers. Established; the purpose is inferred from the swap call.
+4. Store faulted (no register): if the CPU is little-endian, set the word at `0xa8740da0` to 1. That word is read by the Ethernet driver
+   (`0xbfc10fec`, `0xbfc11688`), which then calls slot 5 of the table at `0xbfc54074`, `0xbfc36874`, a 32-bit byte-swap loop, over its packet buffers. Established; the purpose is inferred.
 
 The byte test and the table lookup are therefore the PROM's only checks of its own byte order. **Under the reset path above the flag is 0 on any
 CPU that reaches this routine**, because a little-endian CPU is restarted first. The flag can be 1 only if the restart store does not
@@ -116,7 +115,7 @@ take effect (or on a mode-pin arrangement not covered by the EEPROM). Inferred; 
 
 ## Windows NT boot defaults and the loader (question 1)
 
-Table: 25 words at `0xbfc45c40`..`0xbfc45c9f`, indexed by the record number of the 44-byte environment record table at `0xbfc45760`
+Table: 24 words at `0xbfc45c40`..`0xbfc45c9f`, indexed by the record number of the 44-byte environment record table at `0xbfc45760`
 (index = (record address minus `0xbfc45760`) / 44). Non-zero entries (established, full table dumped):
 
 | Index | Variable | NT value |
@@ -140,8 +139,8 @@ Readers, each testing `0xa8741070` first (established):
 - `0xbfc097d8` (`resetenv`, command table) resets every record except keys `203` (`passwd_key`), `220` (`netpasswd_key`) and `250` (`eaddr`) the same way.
 - `0xbfc2b530` (legacy NVRAM migration) resets a list of variables (`OSLoader`, `OSLoadFilename`, `OSLoadOptions`, `SystemPartition`,
   `OSLoadPartition`, `TimeZone`, `FWSearchPath`, `scsiretries`, `scsihostid`, `netpasswd_key`, `keybd`, `lang`, `sgilogo`, `nogui`) to defaults at `0xbfc2b70c`..`2b7b8`, with the same table.
-- Table length: the table has 24 words but `netpasswd_key` is record 24, so the initialiser's key-`220` branch (`0xbfc08f94`) and `0xbfc090d4` read
-  index 24, which is the first four ASCII bytes of the string `scsi()...` (`0x73637369`), used as a pointer when the flag is set. Arithmetic
+- Table length: the table has 24 words but `netpasswd_key` is record 24, so the initialiser's first-pass key-`220` branch (`0xbfc08f94`), the second-pass branch at `0xbfc09164` (flag test `0xbfc09180`, table load `0xbfc091a8`) and the migration routine (key list entry at `0xbfc53c7c`, load at `0xbfc2b780`) read
+  index 24 (address `0xbfc45ca0`), which is the first four ASCII bytes of the string `scsi()...` (`0x73637369`), used as a pointer when the flag is set. Arithmetic
   established; the fault that would follow is inferred. Not reachable unless the flag is set.
 
 Boot, the loader and what a little-endian image meets (established unless marked):
@@ -170,9 +169,8 @@ take effect, what does Config.BE ignore), and the NT osloader image header (its 
 ## Memory sizing and where RAM sits (established unless marked)
 
 `0xbfc00a00` clears the two bank registers (MC `+0xc4`, `+0xcc`; each holds two 16-bit bank words, banks 0 and 2 in the high half) and for each
-of four banks: sets the word to `0x3f20`, probes the size with the pattern routine `0xbfc00d1c` (it tries eight sizes by the 4 MiB doubling
-steps, using test words at `0xa8000000` and `0xac000000`, i.e. physical `0x08000000` and `0x0c000000`), programs the size word
-(`0xbfc00f1c`: `((size-1) << 8)`, bit `0x4000` when a sub-bank pattern applies, valid bit `0x2000`, base byte `0x20`), runs an address test
+of four banks: sets the word to `0x3f20`, probes the size with the pattern routine `0xbfc00d1c` (a loop quadrupling the trial size from 4 to 16 to 64 MiB, `0xbfc00dc8`..`e48`, then a second stage at `0xac000000` after the bank word is set to `0x7f20`; test words at `0xa8000000` and `0xac000000`), programs the size word
+(`0xbfc00f1c` emits `((size-1) << 8)`, bit `0x4000` when a sub-bank pattern applies, and base `0xff` in the delay slot at `0xbfc00f58`; the caller's temporary `0x2020` at `0xbfc00a70` gives valid bit and base `0x20` for the test; the final valid bit and base come from `0xbfc00f9c`..`fb0`), runs an address test
 (`0xbfc02b50`) over `size << 22` bytes at `0xa8000000`, and clears the word on failure. `0xbfc00f64` then places the banks. Public header field names:
 base `0xff` (in 4 MiB units), size `0x1f00`, valid `0x2000`, sub-banks `0x4000`.
 
@@ -210,7 +208,7 @@ Nodes are 20 bytes: `type`, `base page`, `page count`, magic `0x4b45565e` at `+0
 `GetMemoryDescriptor` is `0xbfc0ac30` (null returns the head; any other pointer returns its `next` when the magic matches, else 0). The list is
 built by `0xbfc081fc`: free memory (type 3) from physical `0x08002000`, `min(total bank size, 0x08000000)` bytes rounded to pages, minus two pages
 (the minimum is taken by `0xbfc35f34`; the cap is 128 MiB, half of what the IP22 page records); free pages 0 to 1 (type 3 at base 0). `0xbfc0ac74` then
-retypes page `0x1000` to type 1 (system parameter block) and page 0 to type 0 (exception block), through the retype routine `0xbfc0acb8`. Types are the
+retypes address `0x1000` (page 1) to type 1 (system parameter block) and address 0 (page 0) to type 0 (exception block), through the retype routine `0xbfc0acb8`, which takes byte addresses. Types are the
 SGI numbering of the public NetBSD header (0 exception block, 1 SPB, 3 free memory). Memory above the first 128 MiB, and the second window, never
 become descriptors in this routine. Unknown whether another path adds them.
 
@@ -282,8 +280,8 @@ path ends in the EnterInteractiveMode stub `0xbfc005e8`. The loader builds its p
 
 ## Commands (established)
 
-Command table at `0xbfc42e24`, three words per entry (name, handler, help text), 23 entries: `auto` `0xbfc388e0`, `boot` `0xbfc37080`, `.checksum` `0xbfc389a0`,
-`.dump` `0xbfc0d0e0`, `exit` `0xbfc38a70`, `.fill` `0xbfc0dab0`, `.g` `0xbfc0dcd0`, `.go` `0xbfc38aa0`, `help` and `.?` `0xbfc390c4`, `init` `0xbfc00774`, `hinv`
+Command table at `0xbfc42e24`, three words per entry (name, handler, help text), 22 entries followed by a null: `auto` `0xbfc388e0`, `boot` `0xbfc37080`, `.checksum` `0xbfc389a0`,
+`.dump` `0xbfc0d0e0`, `exit` `0xbfc38a70`, `.fill` `0xbfc0dab0`, `.g` `0xbfc0dcd0`, `.go` `0xbfc38aa0` (calls a built-in Invoke at `0xbfc38bc4`, which bypasses the opposite-endian check), `help` and `.?` `0xbfc390c4`, `init` `0xbfc00774`, `hinv`
 `0xbfc39330`, `ls` `0xbfc39ec0`, `passwd` `0xbfc0def0`, `printenv` `0xbfc3a414`, `.p` `0xbfc0dde0`, `resetenv` `0xbfc097d8`, `resetpw` `0xbfc0e004`, `setenv`
 `0xbfc3a1f0`, `single` `0xbfc3a500`, `unsetenv` `0xbfc3a38c`, `version` `0xbfc01e9c`. Names starting with `.` are the table's hidden commands (the help text for them is
 `checksum:`, `dump:`, and so on). The manufacturing autoboot list is `ide.IP20`, `bootp()ide.IP20`, `sashIP20`, `bootp()sashIP20`, `unix.IP20`, `bootp()unix.IP20`
@@ -295,7 +293,7 @@ Only offsets whose use was read are listed.
 
 | Address | Block | Offsets read or written here |
 |---|---|---|
-| `0xbfa00000` | MC | `+0x04` CPUCTRL0 (reset whole write; low nibble `2`; bit `0x400` pulsed `0xbfc03674`/`0xbfc0f5ec`; bit `0x200` set then spin at `0xbfc07ed4`; bit `0x04000000` and `0x10e0` at `0xbfc07950`), `+0x0c` CPUCTRL1, `+0x30` (little-endian view of the EEPROM register), `+0xc4`/`+0xcc` bank words, `+0xd4`, `+0xdc`, `+0xec`, `+0xfc`, `+0x1004` refresh counter, `+0x2004`..`+0x204c` DMA |
+| `0xbfa00000` | MC | `+0x04` CPUCTRL0 (reset whole write; low nibble `2`; bit `0x400` pulsed `0xbfc03674`/`0xbfc0f5ec`; bit `0x200` whole-register store then spin at `0xbfc07ed8`; bit `0x04000000` and `0x10e0` at `0xbfc07950`), `+0x0c` CPUCTRL1 (`0x1016`, single store), `+0x30` (little-endian view of the EEPROM register), `+0xc4`/`+0xcc` bank words, `+0xd4`, `+0xdc`, `+0xec`, `+0xfc`, `+0x1004` refresh counter, `+0x2004`..`+0x204c` DMA |
 | `0xbfb80000` | HPC1 | `+0xc0` endian register (`+0xc3` byte), `+0x1bc`/`+0x1bf` auxiliary EEPROM and LED byte, `+0xe00` (NetBSD's battery-backed RAM block, code at `0xbfc2c750`..); many more offsets from `+0x00` to `+0x4ff0` are used (SCSI, Ethernet, serial, audio) and were not decoded |
 | `0xbfbd0000` | board id | word read at `0xbfc07c3c`; bits `0x7000` inverted and shifted down (`0xbfc07c44`), a 3-bit board field (meaning unknown) |
 
