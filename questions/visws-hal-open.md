@@ -45,8 +45,11 @@ read of the firmware routine that writes it ([boot-path.md](../software/visws/bo
 
 ## Uniprocessor builds of the newer HALs and the Windows 2000 HAL
 
-[missing binary extraction] The multiprocessor builds of patches SG0020002 and SG0020021 were compared with 1.3 (same hot path and
-tables; see [nt-hal.md](../software/visws/nt-hal.md#follow-on-corrections-and-additions)); their uniprocessor builds were not. The
-Windows 2000 HAL below its tables was not read, and the earlier claim that its tables are identical in RTM and SP4 was not re-checked:
-the media are not in the local cache. Settles it: the Windows 2000 RTM and SP4 images from the software mirror, compared by symbol
-against the 1.3 build as done for the patches.
+[missing binary extraction for the uniprocessor builds] The multiprocessor builds of patches SG0020002 and SG0020021 were compared
+with 1.3 (same hot path and tables; see [nt-hal.md](../software/visws/nt-hal.md#follow-on-corrections-and-additions)); their
+uniprocessor builds were not. The Windows 2000 tables are now compared byte for byte in RTM and SP4
+([subsection](../software/visws/nt-hal.md#windows-2000-hal-tables)): the two images agree, and Windows 2000 has one more vector
+table, one more pin set and two more ISA tables than NT 4.0. Still open: which table each SYS TYPE and `INTRROUTE` value selects
+(the RTM selection code is not decoded), and the Windows 2000 code below the tables, which has no symbols. Settles it: decoding the
+RTM routine that loads the tables (its absolute references are listed in the subsection), and comparing the uniprocessor patch
+builds with 1.3.

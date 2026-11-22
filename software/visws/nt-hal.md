@@ -364,7 +364,7 @@ nearby addresses. Grades as above.
   interrupt line register from the pin tables above. `PCILOCK` (boot option) is read by the PCI set-up path; the routine that
   tests it was not traced. Resource-exhaustion returns `0xc000009a`.
 - **The initial windows. Inferred.** The HAL image carries one statically initialised record per bridge (`PCISystemBusData`, two records of `0xc0` bytes, B first;
-  the NT 4.0 image agrees with Windows 2000 RTM and SP4 as recorded in the first pass; the Windows 2000 media are not in the local cache, so that agreement was not re-checked in the follow-on pass). Each starts with the bridge's physical window address and the HAL replaces it with
+  the NT 4.0 image agrees with Windows 2000 RTM and SP4 as recorded in the first pass; the follow-on pass did not compare the bridge records, see [the Windows 2000 HAL tables](#windows-2000-hal-tables)). Each starts with the bridge's physical window address and the HAL replaces it with
   the mapped address, then the address and data registers (`+0xf8`, `+0xfc`) and a register at window `+0x48`. The bus handler's bus
   data points into the record, and the translation routine reads its range lists from there, so the layout is read from the
   consumer: for bridge B the I/O range is `0x0000` to `0x7fff`, for A `0x8000` to
@@ -450,15 +450,15 @@ machine types and `halborg.dll` for the `_mp` ones ([nt-drivers.md](nt-drivers.m
 ### The Windows 2000 builds
 
 Windows 2000 RTM (HAL file version string `5.00.2168.1`, PE time 1999-10-30) and SP4 (`5.00.2195.6655`, PE time 2003-01-15) each carry
-one `halborg.dll` on their install CD (stripped, no symbol file shipped). The two differ in a few strings and one import; every table in
-this page that appears in both (the four vector tables, the four sets of PCI pin tables, the ISA route tables, the bridge records)
-is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
+one `halborg.dll` on their install CD (stripped, no symbol file shipped). The two differ in a few strings and one import. Their vector and ISA route tables are byte-identical, and their PCI pin
+tables have the same pins with different string pointers (the bridge records were not compared). The tables are checked in the
+[subsection below](#windows-2000-hal-tables). Against the NT 4.0 HAL:
 
 - **A fourth board wiring.** Windows 2000 selects among four tables, not three: SYS TYPE 0 (320) by BOARD REV as before; SYS TYPE 1 (540)
   revision 0 uses the oldest tables and any other 540 the newest; any other SYS TYPE, or `INTRROUTE=HUGH2`, selects a new set. Its Cobalt
   entry vectors are `5a 92 8a 73 59 91 81 9b 69 89 7a (none) b9 71 79 72 ac ab aa a9 61 9c b2 6a a5 a3 bc f2 f7 f9`, bridge A's pin rows
-  are slot 0 none, slot 1 `1 5 6 5`, slot 2 `2 6 5 6`, slots 3 and 4 none, bridge B's are slot 0 none, slot 1 `9 13 14 15`, slot 2
-  `10 15 13 14`, slot 3 none and slot 4 pin D `7`. Established as data. Which board this is (the name resembles the NT 4.0 option
+  are slot 0 pin A `0`, slot 1 `1 5 6 5`, slot 2 `2 6 5 6`, slots 3 and 4 none; bridge B's are slot 0 pin A `8`, slot 1 `9 13 14 15`,
+  slot 2 `10 15 13 14`, slot 3 none and slot 4 pin D `7` (slot 0 corrected in the subsection). Established as data. Which board this is (the name resembles the NT 4.0 option
   `HUGH006`; the Usenet note gives "hugh" as a code name for the 540 or the flat panel) is unknown.
 - **Options.** `INTRROUTE` survives with one value, `HUGH2`, printed as "HAL: interrupt route %s"; `DEFAULT`, `NO8259`,
   `IDE8259` and `HUGH006` are gone. `ONECPU`, `PCILOCK`, `INTAFFINITY`, `BREAK`, `ARCINFO`, `SYSCLOCK`, `PAGEOPENPOLICY`, `MEMERR`, `ECC`,
@@ -472,6 +472,52 @@ is byte-identical between RTM and SP4. Against the NT 4.0 HAL:
   as the loader. Where NT 4.0 distinguished a 320 from a 540 and a uniprocessor from a multiprocessor NT in the machine identifier, Windows 2000 does
   not; the four ids are the firmware's, and mapping them to boards is unknown. The CD also holds `sgiu.inf` and `sgiul50.dll` / `sgiulnt5.sys`
   (SGI USB support); those are cabinet-compressed and were not opened.
+
+### Windows 2000 HAL tables
+
+Compared by bytes and values across the NT 4.0 image and both Windows 2000 images; no code was read. The NT 4.0 tables sit at
+the addresses that the interrupt route set-up (`HalpInitIntrRoute`) loads. The symbol file names only the run-time pointers
+(`CobaltInt2Vec`, `PciIntMapBusA`, `PciIntMapBusB`, `HalpIntrRoute`), which are zero in the file, and names none of the tables.
+The NT 4.0 image holds fifteen tables of these shapes: three vector, six ISA route and six PCI pin.
+
+Images, by file name, version and SHA-256 prefix:
+
+- NT 4.0 `halborg.dll`, revision string 1.3, version resource 4.00, `0926cd50`.
+- Windows 2000 RTM `halborg.dll`, version 5.00.2168.1, `a51bb518`.
+- Windows 2000 SP4 `halborg.dll`, version 5.00.2195.6655, `213b3d97`.
+
+Offsets are file offsets in each Windows 2000 image.
+
+| NT 4.0 tables | NT 4.0 addresses | Windows 2000 RTM | Windows 2000 SP4 | Result |
+|---|---|---|---|---|
+| Vector: oldest, middle, newest (30 vectors each) | `0x80020e48`, `0x80020ec8`, `0x80020f48` | `0x10a08`, `0x10b08`, `0x10c08` | `0x10a28`, `0x10b28`, `0x10c28` | Same vectors in 8-byte entries (a zero dword, then the vector); no byte match |
+| ISA route: oldest 320, middle 320, `no8259`, `ide8259`, 540 revision 0, newest 320 | `0x80020d28`, `0x80020d58`, `0x80020d88`, `0x80020db8`, `0x80020e18`, `0x80020de8` | `0x10888`, `0x108b8`, `0x108e8`, `0x10918`, `0x10948`, `0x10978` | `0x108a8`, `0x108d8`, `0x10908`, `0x10938`, `0x10968`, `0x10998` | Byte-identical, 48 bytes each |
+| PCI pins: bridge A and B, generations 1 to 3 | `0x80020fc8`, `0x80020ff0`, `0x80021018`, `0x80021040`, `0x80021068`, `0x80021090` | `0x10e08`, `0x10e30`, `0x10e58`, `0x10e80`, `0x10ea8`, `0x10ed0` | `0x10e28`, `0x10e50`, `0x10e78`, `0x10ea0`, `0x10ec8`, `0x10ef0` | All 30 pin bytes identical; string pointers differ in every row, so no 40-byte match |
+
+The ISA names are inferred from row content against the descriptions above, not stated by the image. Grades: byte-identical
+blobs and pin bytes are established; the vector values are established with the layout difference noted.
+
+Only in Windows 2000:
+
+- **Vector table, new set.** RTM `0x10d08`, SP4 `0x10d28`. Against the NT 4.0 newest table, entries 0 (`92` to `5a`), 1 (`8a` to `92`),
+  2 (`5a` to `8a`), 3 (`69` to `73`), 8 (`82` to `69`) and 11 (`73` to none) differ. Its values match the list in "A fourth board wiring" above.
+- **PCI pins, new set.** Bridge A at RTM `0x10ef8` / SP4 `0x10f18`, bridge B at `0x10f20` / `0x10f40`. Slots 1 to 4 match the
+  wiring above. Slot 0 does not: bridge A's slot 0 pin A is entry 0 and bridge B's is entry 8, not none.
+- **Two ISA route tables.** RTM `0x109a8` and `0x109d8`, SP4 `0x109c8` and `0x109f8`. The first is the newest 320 table
+  without its IRQ 15 row. The second adds that row: vector `0x73`, Cobalt entry 3, flag `2`. That vector equals entry 3 of the new
+  vector table, so the row agrees with the new set. Why the first table has no IRQ 15 row is unknown.
+
+Findings:
+
+- Windows 2000 has four vector tables, eight pin blocks (four sets) and eight ISA route tables. Against NT 4.0 that is one more
+  vector table, one more pin set and two more ISA tables. The "four vector tables" count and the "fourth board wiring" stand.
+- RTM and SP4 agree: every vector and ISA table is byte-identical, and every pin block has the same pins. Only the pointer
+  fields in the pin rows differ.
+- RTM code names all four vector tables, all eight pin blocks and six of the eight ISA tables by absolute address (found by a
+  scan of the RTM image; the code is not decoded). The two ISA tables with no such reference are byte-identical to the NT 4.0
+  `no8259` and `ide8259` tables. That fits Windows 2000 keeping only `HUGH2`, but it is inferred until the selection code is read.
+
+Still unknown: which table each SYS TYPE and `INTRROUTE` value selects, which board the new set serves, and the bridge records.
 
 ## Follow-on corrections and additions
 
