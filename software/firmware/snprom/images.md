@@ -244,9 +244,10 @@ before the first L1 request, and the order of the identity queries (unknown on b
 
 1. **Versions in the field against versions held.** Published Prism logs (irixnet forum thread 849, post 12, 2019-01-27)
    print "SGI SAL version 4.65"; an Altix 350 owner's notes state SAL 4.56 and SHub 1.2 (a statement, not a log:
-   inferred). Neither build is held: 4.43 is 2005, 4.90 is 2007, 5.04 is 2008, so 4.56 and 4.65 fall between 4.43 and
-   4.90. No held image has been seen on a real machine, and a Prism log and a log of a held build come from
-   different builds. That the 5.04 image serves the Altix 350 and Prism rests on `README.snprom`, not on observation.
+   inferred). Both banners are held: 4.56 is snprom 10.6 (build 49286, `4.56 rel060615`) and 4.65 is snprom 10.15 (build 53414,
+   `4.65 rel061204`). The owner's 4.56 is a statement with no log to match. The 4.65 match rests on the version number alone.
+   No held image has been seen on a real machine, and a Prism log and a log of a held build come from different builds.
+   That the 5.04 image serves the Altix 350 and Prism rests on `README.snprom`, not on observation.
 2. **IO10 against IO9.** 007-4660-001 knows only the IO9 and says it is required; -002 makes the IO10 standard and the
    IO9 optional (pp.72, 112). The 4.43 EFI (2005) already has the Vitesse SATA message, so the IO10 existed in firmware
    before the 2008 build. Prism guides use the IO10 in compute modules (`prism.md`). Which card a given owner machine has

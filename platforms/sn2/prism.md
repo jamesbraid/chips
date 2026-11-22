@@ -355,11 +355,10 @@ The gzip components named by its FIT were expanded in memory and scanned with th
 component ends at its stream end. Nothing was disassembled or run. A string shows what the code can say, not what it does. Grades:
 *established* means the string or README text is in the file, *inferred* a reading past it with the reason given, *unknown* not settled.
 
-The holdings evidence lists 31 snprom RPMs (2004 to 2008). The mirror's ProPack 4 directory (`yourepo.tar.gz`) holds 28 of them,
-4.20 build 41216 to 10.54; this scan covers all 28, and the rows for 3.32, 4.20 build 40503 and the 10.40 and 10.54 shub2 images were already here. Not scanned: snprom 4.04 (only in a ProPack 4 CD
-image not read here, so unknown), and the 10.11 to 10.15 `ip65prom.bin` (SHub 2 series). The 10.40 RPM on the ProPack 4 SP4 CD 2 is
-byte-identical to the mirror copy (sha256 `84a0d30c...`). Snprom 4.20 build 41216 carries the same `snprom.bin` as build 40503, so it has no row of its own. The 10.11 and 10.54 RPMs are also
-in this set; their `ip65prom.bin` and shub2 images are rows of their own.
+The holdings evidence lists 31 snprom RPMs (2004 to 2008). This scan reads 29 of them: the 28 in the mirror's ProPack 4 directory
+(`yourepo.tar.gz`, 4.20 build 41216 to 10.54) and snprom 4.04 from the ProPack 4 CD 2 image in the same tarball. The 10.40 RPM on the
+ProPack 4 SP4 CD 2 is byte-identical to the mirror copy (sha256 `84a0d30c...`). Snprom 4.20 build 41216 carries the same `snprom.bin`
+as build 40503, so it has no row of its own. The 3.32 row is from the earlier scan; its RPM is not in the copy read here.
 
 | Package | Image | SAL banner | Built | SAL 4.06 or later | sha256 (first 12) |
 |---|---|---|---|---|---|
@@ -405,29 +404,36 @@ print them: `AGP`, `TIO`, `ATI`, `FireGL` and `XG2N` as whole words, the rest as
 | Image | TIOCA | TIOCE | AGP | `SHub 1.2` | TIO (word) | Board names in the bytes | IP57, Prism, XG2N, ATI, FireGL, IP53, IP67 |
 |---|---|---|---|---|---|---|---|
 | 3.32 `snprom.bin` | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 14 / 11 | IP41 | 0 |
+| 4.04 `snprom.bin` | 3 / 0 | 0 / 0 | 8 / 0 | 0 / 1 | 22 / 13 | IP41 | 0 |
 | 4.20 `snprom.bin` | 2 / 0 | 0 / 0 | 8 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
 | 4.31 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
 | 4.32 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
 | 4.33 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
 | 4.43 `snprom.bin` | 3 / 0 | 4 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
 | 10.5 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.5 `ip65prom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
 | 10.6 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.6 `ip65prom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
 | 10.11 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
-| 10.11 `ip65prom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
+| 10.11 `ip65prom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
 | 10.13 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.13 `ip65prom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
 | 10.15 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.15 `ip65prom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
 | 10.20 to 10.36 `shub1snprom.bin` (each) | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
 | 10.37, 10.39, 10.41 to 10.53 `shub1snprom.bin` (each) | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
 | 10.40 `shub1snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
-| 10.40 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
+| 10.40 `shub2snprom.bin` | 6 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
 | 10.54 `shub1snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
-| 10.54 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
+| 10.54 `shub2snprom.bin` | 6 / 0 | 5 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
 
-The `SHub 1.2` column counts both `SHub 1.2` and `SHUB 1.2`.
+The `SHub 1.2` column counts both `SHub 1.2` and `SHUB 1.2`. The TIOCE column counts the standalone five-byte string `TIOCE`; earlier
+counts left it out and read one lower. Matching is case-sensitive: case-insensitive matching counts 69 in 4.43, 65 of them lower-case
+`tioce` in the body. TIOCE cannot overlap itself, so overlapping matches do not change it.
 
 - **TIOCA and AGP (established as strings).** `TIOCA commands`, `AGP GART Mapped` and `Could not find KLSTRUCT_TIOCA` are in the
-  uncompressed body of 4.20 and every later build; 3.32 has none of them. `tioca_agp_func_init: Found AGP capability` appears from
-  4.43 on, and TIOCE first appears in 4.43. What the code does with these strings is unknown.
+  uncompressed body of 4.04 and every later build; 3.32 has none of them. `tioca_agp_func_init: Found AGP capability` appears from
+  4.31 on, and TIOCE first appears in 4.43. What the code does with these strings is unknown.
 - **Prism (none named).** No held image contains `Prism`, `IP57`, `XG2N`, `FireGL`, `ATI` as a word, `IP53` or `IP67`. The SHub 1
   images name IP41 only and the SHub 2 images IP65 only. `SHub 1.2` in mixed case is in the expanded components of every SHub 1 image
   scanned and in no uncompressed body; its context was not read.
@@ -437,8 +443,8 @@ The `SHub 1.2` column counts both `SHub 1.2` and `SHUB 1.2`.
   Five README variants by sha256 prefix: 10.20 `322469680d4d` (870 bytes); 10.23 to 10.40 `afd8bc7587d8` (881); 10.41 and 10.42
   `d5f012760182` (2064); 10.50, 10.52 and 10.53 `d7a8d90bf7a1` (2064); 10.54 `00f0a21d82c4` (6112). The README is vendor intent, not a boot.
 
-**Earliest build with TIOCA support.** Snprom 4.20 (build 40503, and build 41216 with the same image): the TIOCA strings are present and
-its SAL banner is 4.20 (established as strings). 3.32 has none. Snprom 4.04 is not scanned, so it is unknown. It is not a Prism build;
+**Earliest build with TIOCA support.** Snprom 4.04 (build 35871, banner `4.04 reorg041203 IP41`): three TIOCA strings are present,
+including `tioca_attach: TIOCA error`, which 4.20 does not have (established as strings). 3.32 has none. It is not a Prism build;
 nothing in it names one.
 
 **Earliest build whose README names Prism.** Snprom 10.20 (build 54294, 2007-01-10, README-1): its shub1 image is listed for Prism
@@ -455,10 +461,7 @@ SHub 2 images are not Prism images by SGI's list. The 2019 Prism logs print `SGI
 number alone; the log's build date would settle it, and the logs were not read again for this page.
 
 **Unsure.**
-- Snprom 4.04 and the `ip65prom.bin` images of 10.5 to 10.15 are not scanned. The rows for 3.32 and 4.20 build 40503 come from the earlier
-  scan and were not run again here.
-- The TIOCE counts differ from the earlier scan of the same images: this scan has 4 for 4.43 (earlier: 3) and 5 for 10.40 and 10.54
-  shub1 (earlier: 4). The strings are the same; I did not find why the counts differ.
+- The 3.32 row comes from the earlier scan and was not run again here.
 - The 4.06 column assumes the banner version is the revision the Linux check reads; that is inferred, not read from the revision field.
 - The 1.x series fails the numeric check, but the Linux check runs only on the SHub 1 path, so it says nothing about SHub 2.
 - The code that uses the TIOCA strings was not read, so no TIOCA behaviour is claimed.

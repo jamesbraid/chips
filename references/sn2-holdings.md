@@ -75,8 +75,9 @@ two processors, about 8 GB), posted on the irixnet forum, thread 849, post 12, o
 (<https://forums.irixnet.org/thread-849.html>), both print EFI version 1.10, "SGI SAL version 4.65" with the SAL
 revision 3.2 header, the SAL platform feature ITC_Drift, the console `ttySG0` as an "SGI SN L1", and ACPI tables with
 OEM table ids XSDTSN2, APICSN2, SRATSN2, SLITSN2, FACPSN2 and DSDTSN2. Neither prints a PROM banner, SHub revision or
-board number. Established as an observation of that machine. SAL 4.65 is a SHub 1 build number in the same series as
-the held images (4.43 and 4.90); the 4.65 image itself is not held. An Altix 350 owner's notes on
+board number. Established as an observation of that machine. SAL 4.65 is a SHub 1 build number, and snprom 10.15 (build
+53414, banner `SGI SAL Version 4.65 rel061204 IP41`) is held. The match to these logs rests on the version number alone, so it is
+inferred ([the held-PROM section](../platforms/sn2/prism.md#held-prom-images-and-prism-support)). An Altix 350 owner's notes on
 <https://nsafran.com/> state SHub 1.2 and SAL 4.56 for a one-node, two-processor machine; that is the owner's
 statement, not a captured log, so it is graded inferred.
 
