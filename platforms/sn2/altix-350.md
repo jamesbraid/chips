@@ -73,7 +73,7 @@ for a Bedrock on the 350.
 | PIC | On the PCI riser card; two buses of two slots (-001 p.105, p.99 diagram; the -002 logic diagram p.107 is the same). It sits behind an "XIO" link from the SHub in the diagram. | established that a PIC is present and that the buses are two with two slots each (-001 pp.96, 109); the XIO link is drawn, not described |
 | IOC4 on the IO9 | One IDE channel for the DVD-ROM, NVRAM and the time-of-day clock (-001 p.104; -002 p.114) | established |
 | IOC4 on the IO10 | The Linux IOC4 base driver treats the IO10 as an IOC4 card: it lists three variants, IO9, IO10 and PCI-RT, "each brings out different combinations of IOC4 signals" (Linux history tree, drivers/misc/ioc4.c, function `ioc4_variant`, line 225) | established that an IOC4 is on the IO10; **unknown** which of its functions the IO10 uses: the guide says serial ports come out on the 36-pin MDR connector (-002 p.112) and says nothing about the IOC4 |
-| SATA controller on the IO10 | A Vitesse VSC 7174 at PCI slot 3 on the IO10's bus, as the driver finds it (same `ioc4_variant`); a 2008 patch says boards with an IO10 cannot boot without the Vitesse SATA driver (message `alpine.BSF.1.10.0812100942580.16859@pkunk.americas.sgi.com`) | established from the driver; the guide says only "serial ATA" (-002 pp.112 to 113) |
+| SATA controller on the IO10 | A Vitesse VSC 7174 at PCI slot 3 on the IO10's bus, as the driver finds it (same `ioc4_variant`); a 2008 mailing-list post (list not recorded, not retrieved) says IO10 boards cannot boot without the Vitesse SATA driver | established from the driver; the guide says only "serial ATA" (-002 pp.112 to 113); the boot claim is unknown (not retrieved) |
 | SCSI controller on the IO9 | A QLogic ISP 12160 at PCI slot 3 on the IO9's bus (same function) | established from the driver; the guide says Ultra160 SCSI (-001 p.99 diagram and p.197) |
 | Ethernet on the IO9 and IO10 | One 10/100/1000 BaseT port | established as a port (-001 p.104; -002 p.72); the controller part is **unknown** (not named in either guide, not searched in the Linux sources yet) |
 | NUMAlink | Two ports per module, 3.2 GB/s each direction (-001 pp.109, 112) | established. -002 calls it NUMAlink-4 (pp.66, 69), so for the later machine the router generation is known by name; -001 left it unnumbered |
@@ -114,10 +114,12 @@ are Figures 2-3 (p.70) and 2-4 (p.71). Its cable tables cover only the 16-module
 modules; -001 p.70 says the base module connects to seven more, "a total of eight modules".
 
 The router has eight NUMAlink-4 connectors, A to H, which are ports 1 to 8 (Figure 6-2 p.151; Figure 6-3 p.153; Table
-2-4 "From 1st router port 1(A)"). Each link runs at 3.2 GB/s each direction (Table 6-2 p.154). Established. Every router
-connector goes to port 1 (NUMAlink 1) of one module:
+2-4 "From 1st router port 1(A)"). Each link runs at 3.2 GB/s each direction (Table 6-2 p.154). Established.
+Dual plane is established from Table 2-4 (p.84) and Figures 2-4 (p.71) and 2-13 (p.85): each router connector goes to
+port 1 (NUMAlink 1) of one module. The single-plane column is inferred from Table 2-3 and Figure 2-12, because the
+prose on p.69 conflicts with them (below):
 
-| Router connector (port) | Single plane (Table 2-3) | Dual plane, router 1 (Table 2-4) | Dual plane, router 2 (Table 2-4) |
+| Router connector (port) | Single plane (Table 2-3, inferred) | Dual plane, router 1 (Table 2-4) | Dual plane, router 2 (Table 2-4) |
 |---|---|---|---|
 | A (1) | module 5 | module 5 | module 1 |
 | B (2) | module 6 | module 6 | module 2 |
@@ -128,10 +130,10 @@ connector goes to port 1 (NUMAlink 1) of one module:
 | G (7) | module 11 | module 11 | module 15 |
 | H (8) | module 12 | module 12 | module 16 |
 
-The module-to-module links on port 0 (NUMAlink 0) are the same in both forms: 1 with 5, 2 with 6, 3 with 7, 4 with 8,
-9 with 13, 10 with 14, 11 with 15, 12 with 16. Single plane leaves port 1 of modules 1 to 4 and 13 to 16 unused
-(inferred: the tables and Figure 2-12 show no link there), so those modules reach the single-plane router through one
-module-to-module link (inferred). Dual plane puts all 16 modules on a router (Figures 2-4 and 2-13 agree with Table 2-4).
+The port 0 links (NUMAlink 0) are 1 with 5, 2 with 6, 3 with 7, 4 with 8, 9 with 13, 10 with 14, 11 with 15 and 12 with
+16. Table 2-4 prints them (established); Table 2-3 prints the same pairs (inferred for single plane). Single plane leaves
+port 1 of modules 1 to 4 and 13 to 16 unused (inferred: the tables and Figure 2-12 show no link there), so those modules
+reach the single-plane router through one module-to-module link (inferred). Dual plane puts all 16 modules on a router.
 
 **The single-plane conflict (open).** The prose on p.69 says "a single NUMAlink-4 connection is made to the port 0
 connector on the back of (up to) eight Altix 350 modules. Additional modules (9 thru 16) are connected to the open
@@ -142,14 +144,15 @@ port the router uses and which modules it reaches. The tables, both figures and 
 other, so this page uses the table reading (inferred). The prose stays unresolved. The dual-plane prose at p.69 matches
 Table 2-4. Open item: [questions/numalink4-router-open.md](../../questions/numalink4-router-open.md).
 
--001 has no router: its ring text and configuration table name none, and it has no router chapter. No -003 or -004 is
-held (resolve_library, 2026-11-21). Full cabling, port use and the PROM side:
+-001 has no router: its ring text and configuration table name none, and it has no router chapter. No -003 or -004 was
+located. Full cabling, port use and the PROM side:
 [../../devices/router_nl4/global-config.md](../../devices/router_nl4/global-config.md).
 
 **Router L1.** One L1 controller with a two-line display of 12 characters a line, a USB "L1 port" on the rear, and a DB-9
 console (-002 pp.150, 152 to 154). Figure 6-2 (p.151) puts the L1 console and the L2 host USB on the system control
-board. Table 6-2 gives one L1 port at 12 Mbit/s. Established. The guide gives no L1 address for the router and no router
-line in the L2 `cfg` listing, which shows each module's "system controller addresses" (-002 p.56). In a dual-plane system a
+board. Table 6-2 gives one L1 port at 12 Mbit/s. Established. The guide gives no L1 address for the router. Page 56 describes
+the L2 `cfg` listing as showing each module's "system controller addresses", but the guide prints no listing, so
+whether the router appears in one is unknown. In a dual-plane system a
 USB-to-Ethernet adapter on each router's USB port links it to an Ethernet switch (-002 p.86, Figure 2-14 p.87). The L1
 and L2 guide 007-3938-005 addresses a brick by USB port, L1 index, then rack, type character and slot (pp.10, 49, 69).
 Its type character `r` is the R-brick (Table 3-1, p.70), and its router command set (pp.108 to 109) is "valid only for
