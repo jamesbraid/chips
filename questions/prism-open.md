@@ -22,9 +22,11 @@ Status: **unknown** for everything below. What is established is on [the Prism o
   inferred. The 2019 log's boot VGA device (0006:00:00.0, with a second function 0006:00:00.1) prints no device ID and
   its 128 MB prefetchable BAR per function does not separate R350 from R420, since the public ID list gives both chips
   a secondary function. Route to settle: `lspci -nn` on a Prism, or a boot log that prints `1002:` IDs.
-- **PROM and SAL.** Eight SN2 PROM images are held. None names a Prism, IP57 or XG2N; SGI's 10.54 README lists Prism for
-  `shub1snprom.bin` (SAL 5.04), which is vendor intent, not a boot. The 2026-11-21 scan is in
-  [the Prism platform page](../platforms/sn2/prism.md#held-prom-images-and-prism-support). The one constraint known: TIOCA setup needs SAL
+- **PROM and SAL.** The 2026-11-21 scan of the snprom builds 4.20 to 10.54 is in
+  [the Prism platform page](../platforms/sn2/prism.md#held-prom-images-and-prism-support). No held image names a Prism, IP57
+  or XG2N (established, strings). SGI's README lists Prism Rackmount and Prism Deskside for `shub1snprom.bin` in every build
+  from 10.20 to 10.54 (established as text; vendor intent, not a boot). Whether any of those images boots a Prism or accepts one
+  is unknown. Snprom 10.15 (SAL 4.65) is the candidate PROM for the 2019 logs (inferred from the banner number alone). The one constraint known: TIOCA setup needs SAL
   revision 4.06 or later (`v5.3:arch/ia64/sn/pci/tioca_provider.c`; the same check in the 2.6.5 and 2.6.16 trees, which have no SHub test). Whether the Prism PROM emits a PCDP VGA entry for the
   AGP card, and whether graphics boards carry an option ROM, is unknown. Route: PROM image or the disk's `/usr/cpu/firmware`;
   boot capture of the EFI shell. The 2019 logs (kernels 3.8.13 and 4.14.83) print `PCDP: v3 at 0x31efead110`, the address of the

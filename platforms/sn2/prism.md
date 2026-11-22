@@ -250,65 +250,121 @@ How the AGP boards attach to a node, from the manuals plus the parts index (infe
 
 ## Held PROM images and Prism support
 
-Scan of the eight SN2 PROM images in the chips root, six snprom packages from 3.32 to 10.54, checked 2026-11-21. Each image was
-read in place; the gzip components named by its FIT were expanded and scanned again. Nothing was disassembled or run. A string
-shows what the code can say, not what it does. Grades: *established* means the string is in the image, *inferred* a reading
-past it, with the reason given, *unknown* not settled.
+Scan of the snprom PROM images held in the software mirror and the chips root, checked 2026-11-21. Each shub1 image (`shub1snprom.bin`
+from 10.20; `snprom.bin` before it, which the 10.20 README calls the old name) was read from its RPM's boot/efi payload, read-only.
+The gzip components named by its FIT were expanded in memory and scanned with the image. FIT lengths are in 16-byte units; every gzip
+component ends at its stream end. Nothing was disassembled or run. A string shows what the code can say, not what it does. Grades:
+*established* means the string or README text is in the file, *inferred* a reading past it with the reason given, *unknown* not settled.
 
-The brief named 31 builds. Only these eight images are held: the chips root, the software mirror's `prom` tree and a bounded
-search of the software inputs, extracts and media trees found no other SN2 PROM. The holdings page names snprom 4.04, 4.20
-build 41216 and 4.31 to 4.33 as held but not extracted; none of them was found, so they are unknown.
+The holdings evidence lists 31 snprom RPMs (2004 to 2008). The mirror's ProPack 4 directory (`yourepo.tar.gz`) holds 28 of them,
+4.20 build 41216 to 10.54; this scan covers all 28, and the rows for 3.32, 4.20 build 40503 and the 10.40 and 10.54 shub2 images were already here. Not scanned: snprom 4.04 (only in a ProPack 4 CD
+image not read here, so unknown), and the 10.11 to 10.15 `ip65prom.bin` (SHub 2 series). The 10.40 RPM on the ProPack 4 SP4 CD 2 is
+byte-identical to the mirror copy (sha256 `84a0d30c...`). Snprom 4.20 build 41216 carries the same `snprom.bin` as build 40503, so it has no row of its own. The 10.11 and 10.54 RPMs are also
+in this set; their `ip65prom.bin` and shub2 images are rows of their own.
 
 | Package | Image | SAL banner | Built | SAL 4.06 or later | sha256 (first 12) |
 |---|---|---|---|---|---|
 | snprom 3.32, build 30085 | `snprom.bin` | 3.32 rel040406 IP41 | 2004-04-06 | no | `cce7adf38c0b` |
 | snprom 4.20, build 40503 | `snprom.bin` | 4.20 rel050614 IP41 | 2005-06-14 | yes | `0fdd129ecc2e` |
+| snprom 4.31, build 41991 | `snprom.bin` | 4.31 rel050815 IP41 | 2005-08-15 | yes | `940d0572ae56` |
+| snprom 4.32, build 42255 | `snprom.bin` | 4.32 rel050826 IP41 | 2005-08-26 | yes | `0d472fdf1662` |
+| snprom 4.33, build 43044 | `snprom.bin` | 4.33 rel050928 IP41 | 2005-09-28 | yes | `d240e02343eb` |
 | snprom 4.43, build 44607 | `snprom.bin` | 4.43 rel051202 IP41 | 2005-12-02 | yes | `035274812b50` |
+| snprom 10.5, build 49047 | `snprom.bin` | 4.55 rel060605 IP41 | 2006-06-05 | yes | `e4b15c43dcc1` |
+| snprom 10.6, build 49286 | `snprom.bin` | 4.56 rel060615 IP41 | 2006-06-15 | yes | `d2f1d33f3149` |
+| snprom 10.11, build 52277 | `snprom.bin` | 4.61 rel061018 IP41 | 2006-10-18 | yes | `4429f5b1f496` |
 | snprom 10.11, build 52277 | `ip65prom.bin` | 1.11 rel061018 IP65 | 2006-10-18 | no (SHub 2 series) | `372e74f7201d` |
+| snprom 10.13, build 53000 | `snprom.bin` | 4.63 rel061117 IP41 | 2006-11-17 | yes | `99f6e19f18fe` |
+| snprom 10.15, build 53414 | `snprom.bin` | 4.65 rel061204 IP41 | 2006-12-04 | yes | `c9fe5f03cae5` |
+| snprom 10.20, build 54294 | `shub1snprom.bin` | 4.70 rel070110 IP41 | 2007-01-10 | yes | `c1eaa9c2f723` |
+| snprom 10.23, build 55327 | `shub1snprom.bin` | 4.73 rel070222 IP41 | 2007-02-22 | yes | `ecc02724e066` |
+| snprom 10.24, build 55786 | `shub1snprom.bin` | 4.74 rel070313 IP41 | 2007-03-13 | yes | `ee68afb2ca93` |
+| snprom 10.30, build 56501 | `shub1snprom.bin` | 4.80 rel070412 IP41 | 2007-04-12 | yes | `716f71f8033b` |
+| snprom 10.32, build 57173 | `shub1snprom.bin` | 4.82 rel070510 IP41 | 2007-05-10 | yes | `8f5e3e7cb545` |
+| snprom 10.33, build 57534 | `shub1snprom.bin` | 4.83 rel070525 IP41 | 2007-05-25 | yes | `99224eb444de` |
+| snprom 10.34, build 58301 | `shub1snprom.bin` | 4.84 rel070626 IP41 | 2007-06-26 | yes | `c696b3ef70ac` |
+| snprom 10.35, build 58805 | `shub1snprom.bin` | 4.85 rel070717 IP41 | 2007-07-17 | yes | `6391dfe787f3` |
+| snprom 10.36, build 59285 | `shub1snprom.bin` | 4.86 rel070806 IP41 | 2007-08-06 | yes | `fd3de49dfb64` |
+| snprom 10.37, build 60198 | `shub1snprom.bin` | 4.87 rel070913 IP41 | 2007-09-13 | yes | `7ecf858d10d3` |
+| snprom 10.39, build 62073 | `shub1snprom.bin` | 4.89 rel071130 IP41 | 2007-11-30 | yes | `a9b55ca3d5cb` |
 | snprom 10.40, build 62478 | `shub1snprom.bin` | 4.90 rel071217 IP41 | 2007-12-17 | yes | `26170cc83c3d` |
 | snprom 10.40, build 62478 | `shub2snprom.bin` | 1.40 rel071217 IP65 | 2007-12-17 | no (SHub 2 series) | `1c8144e3d318` |
+| snprom 10.41, build 63582 | `shub1snprom.bin` | 4.91 rel080201 IP41 | 2008-02-01 | yes | `5a030c1e3ba9` |
+| snprom 10.42, build 64020 | `shub1snprom.bin` | 4.92 rel080219 IP41 | 2008-02-19 | yes | `6af5afa691c9` |
+| snprom 10.50, build 65357 | `shub1snprom.bin` | 5.00 rel080415 IP41 | 2008-04-15 | yes | `90d8e7c0e9f5` |
+| snprom 10.52, build 67935 | `shub1snprom.bin` | 5.02 rel080731 IP41 | 2008-07-31 | yes | `f7e3a85ad527` |
+| snprom 10.53, build 68395 | `shub1snprom.bin` | 5.03 rel080819 IP41 | 2008-08-20 | yes | `b6bebb02c50d` |
 | snprom 10.54, build 70399 | `shub1snprom.bin` | 5.04 rel081111 IP41 | 2008-11-11 | yes | `51ccf9ad830b` |
 | snprom 10.54, build 70399 | `shub2snprom.bin` | 1.54 rel081111 IP65 | 2008-11-11 | no (SHub 2 series) | `3ea833181fda` |
 
-Every gzip component in the eight images ends at its stream end. The SAL banner is in the first-stage component; the 4.06 column
-compares the banner version with the revision the Linux check reads, which is inferred to be the same number.
+Build dates are the RPM header build times from the holdings evidence, not re-read here. The SAL 4.06 column compares the banner
+version with the revision the Linux check reads, which is inferred to be the same number.
 
-Marker counts, uncompressed image bytes / expanded components (case-sensitive, whole words where marked):
+Marker counts, uncompressed image / expanded components. Counted from printable strings of four or more bytes, as `strings` would
+print them: `AGP`, `TIO`, `ATI`, `FireGL` and `XG2N` as whole words, the rest as substrings.
 
 | Image | TIOCA | TIOCE | AGP | `SHub 1.2` | TIO (word) | Board names in the bytes | IP57, Prism, XG2N, ATI, FireGL, IP53, IP67 |
 |---|---|---|---|---|---|---|---|
 | 3.32 `snprom.bin` | 0 / 0 | 0 / 0 | 0 / 0 | 0 / 0 | 14 / 11 | IP41 | 0 |
 | 4.20 `snprom.bin` | 2 / 0 | 0 / 0 | 8 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
-| 4.43 `snprom.bin` | 3 / 0 | 3 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 4.31 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 4.32 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 4.33 `snprom.bin` | 3 / 0 | 0 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 4.43 `snprom.bin` | 3 / 0 | 4 / 0 | 9 / 0 | 0 / 1 | 23 / 14 | IP41 | 0 |
+| 10.5 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.6 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.11 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
 | 10.11 `ip65prom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 14 / 4 | IP41, IP65 | 0 |
-| 10.40 `shub1snprom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
+| 10.13 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.15 `snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.20 to 10.36 `shub1snprom.bin` (each) | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 14 / 5 | IP41 | 0 |
+| 10.37, 10.39, 10.41 to 10.53 `shub1snprom.bin` (each) | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
+| 10.40 `shub1snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
 | 10.40 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
-| 10.54 `shub1snprom.bin` | 3 / 0 | 4 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
+| 10.54 `shub1snprom.bin` | 3 / 0 | 5 / 0 | 7 / 0 | 0 / 1 | 12 / 4 | IP41 | 0 |
 | 10.54 `shub2snprom.bin` | 6 / 0 | 4 / 0 | 7 / 0 | 0 / 0 | 12 / 4 | IP41, IP65 | 0 |
+
+The `SHub 1.2` column counts both `SHub 1.2` and `SHUB 1.2`.
 
 - **TIOCA and AGP (established as strings).** `TIOCA commands`, `AGP GART Mapped` and `Could not find KLSTRUCT_TIOCA` are in the
   uncompressed body of 4.20 and every later build; 3.32 has none of them. `tioca_agp_func_init: Found AGP capability` appears from
   4.43 on, and TIOCE first appears in 4.43. What the code does with these strings is unknown.
-- **Prism (none named).** No image contains `Prism`, `IP57`, `XG2N`, `FireGL`, `ATI` as a word, `SHUB 1.2` in capitals, `IP53`
-  or `IP67`. The SHub 1 images name IP41 only and the SHub 2 images IP65 only. `SHub 1.2` in mixed case is in the expanded
-  components of 4.20 onward and in no uncompressed body; its context was not read.
-- **README (10.54 only held).** `README.snprom` in the 10.54 package lists for `shub1snprom.bin` the Altix 330, 350, 3300,
-  3700, 3700 Bx2, Prism Rackmount and Prism Deskside, and for `shub2snprom.bin` the Altix 4700 and 450 (established as the
-  text). The 10.40 README is not held, so its list is unknown. The chips notes date the README from package 10.20; 3.32, 4.20,
-  4.43 and 10.11 predate it.
+- **Prism (none named).** No held image contains `Prism`, `IP57`, `XG2N`, `FireGL`, `ATI` as a word, `IP53` or `IP67`. The SHub 1
+  images name IP41 only and the SHub 2 images IP65 only. `SHub 1.2` in mixed case is in the expanded components of every SHub 1 image
+  scanned and in no uncompressed body; its context was not read.
+- **README (10.20 onward).** `README.snprom` first ships in package 10.20 and is in no earlier build. Every README from 10.20 to 10.54
+  lists, for `shub1snprom.bin`, the Altix 330, 350, 3300, 3700, 3700 Bx2, Prism Rackmount and Prism Deskside (established as the
+  text; each README carries the two Prism lines). For `shub2snprom.bin` it lists the Altix 4700, and from 10.23 the Altix 450.
+  Five README variants by sha256 prefix: 10.20 `322469680d4d` (870 bytes); 10.23 to 10.40 `afd8bc7587d8` (881); 10.41 and 10.42
+  `d5f012760182` (2064); 10.50, 10.52 and 10.53 `d7a8d90bf7a1` (2064); 10.54 `00f0a21d82c4` (6112). The README is vendor intent, not a boot.
 
-**Earliest build with TIOCA support.** Snprom 4.20, build 40503: the TIOCA strings are present and its SAL banner is above
-4.06 (established as strings). It is not a Prism build; nothing in it names one.
+**Earliest build with TIOCA support.** Snprom 4.20 (build 40503, and build 41216 with the same image): the TIOCA strings are present and
+its SAL banner is 4.20 (established as strings). 3.32 has none. Snprom 4.04 is not scanned, so it is unknown. It is not a Prism build;
+nothing in it names one.
 
-**Earliest build that could boot a Prism.** No build can be shown to boot one. The only held image a vendor lists for Prism is
-snprom 10.54 `shub1snprom.bin` (SAL 5.04). That is inferred to boot a Prism from SGI's list and the SHub 1 generation, with no
-observed boot. The SHub 2 images are not Prism images by SGI's list. The 2019 Prism logs were from SAL 4.65, which is not held.
+**Earliest build whose README names Prism.** Snprom 10.20 (build 54294, 2007-01-10, README-1): its shub1 image is listed for Prism
+Rackmount and Prism Deskside (established as text). No build before 10.20 has a README, so no held text before 10.20 names a Prism.
+
+**Other shub1 builds that list Prism.** Every build from 10.20 to 10.53 (17 builds, with the same two Prism lines in each README).
+Whether any of them accepts a Prism is unknown. No image contains a Prism string, and the PROM does not branch on the board name
+(boot-path review), so the strings cannot settle acceptance.
+
+**Earliest build that could boot a Prism.** No build can be shown to boot one. Inferred from SGI's list and the SHub 1 generation:
+the 10.20 image (SAL 4.70) is the earliest held shub1 image the vendor lists for Prism, and the 10.54 image (SAL 5.04) the newest. The
+SHub 2 images are not Prism images by SGI's list. The 2019 Prism logs print `SGI SAL version 4.65`. Snprom 10.15 (build 53414, banner
+`4.65 rel061204`) is the only held image with that banner, so it is the candidate for those logs' PROM. That is inferred from the version
+number alone; the log's build date would settle it, and the logs were not read again for this page.
 
 **Unsure.**
-- Eight images, not 31. The count in the brief could not be matched to any held source.
+- Snprom 4.04 and the `ip65prom.bin` images of 10.5 to 10.15 are not scanned. The rows for 3.32 and 4.20 build 40503 come from the earlier
+  scan and were not run again here.
+- The TIOCE counts differ from the earlier scan of the same images: this scan has 4 for 4.43 (earlier: 3) and 5 for 10.40 and 10.54
+  shub1 (earlier: 4). The strings are the same; I did not find why the counts differ.
 - The 4.06 column assumes the banner version is the revision the Linux check reads; that is inferred, not read from the revision field.
 - The 1.x series fails the numeric check, but the Linux check runs only on the SHub 1 path, so it says nothing about SHub 2.
 - The code that uses the TIOCA strings was not read, so no TIOCA behaviour is claimed.
+- Build dates in the table are from the RPM headers, as recorded in the holdings evidence.
+
 
 ## Software SGI shipped
 
