@@ -34,9 +34,10 @@ jump to the protected-mode loader.
 2. **Caches.** Caches are disabled and flushed, every MTRR is cleared, and one variable MTRR is set over the flash window
    (base `0xfff80000`, type 4, write-protect). Cache is then re-enabled (post code `0xdd`). Step `0x02` below clears the whole MTRR set again
    when the processor reports fixed-range MTRRs.
-3. **Patch record.** If the 24-byte trailer ending at flash `0x79fc0` has a non-zero, non-`0xffffffff` length word and the
+3. **Self-test module (the old "patch record").** If the 24-byte trailer ending at flash `0x79fc0` has a non-zero, non-`0xffffffff` length word and the
    covered words sum to zero, the code jumps to the start of the record (flash `0x74000`) with a return address in
-   the boot block, so a patch can be added without erasing the boot sector. The 1.0006 image carries one.
+   the boot block. Both held images carry one, and it is the power-on self-test and memory-bank set-up
+   ([the self-test module](firmware.md#the-self-test-module)), not a patch.
 4. **Set-up steps.** A table of (step number, handler) pairs is walked; each step number is written to port `0x80` first.
    The steps in the image are:
 
@@ -73,11 +74,10 @@ not read in full).**
    first clears bit 0 of the Cobalt memory-controller register at `0xc6000000`, then reads sixteen bank registers at an
    8-byte stride from `0xc6000048` (from `0xc6000050` unless the revision is `0xa0` or `0xa8`, the "Cobalt Lite" values in
    [questions](../../questions/visws-firmware-open.md)). For each: bit 2 set marks the bank as absent or bad, otherwise bit 0
-   set means populated, and bit 1 chooses 128 MiB (set) or 32 MiB (clear). The total is the sum. So memory is sized by
-   reading what the memory controller reports about populated banks, not by probing writes; a separate RAM test then marks good
-   and bad pages ("low 16 MB good", "low 32 MB good", "all 128 MB good" are its outcome strings). How the controller's timing
-   and bank registers are programmed before this, and the reset values of those registers, were not found in the part read
-   (unknown).
+   set means populated, and bit 1 chooses 128 MiB (set) or 32 MiB (clear). The total is the sum (`1.0006@0xf02d60`; byte-identical in 1.1005 at
+   `0x1102cc0`). The main module only reads the bank registers: the self-test module that ran before it wrote them, by probing the
+   RAM ([below](#memory-controller-and-graphics-memory)). A separate RAM test then marks good and bad pages ("low 16 MB good",
+   "low 32 MB good", "all 128 MB good" are its outcome strings). The reset values of the bank registers are still unknown.
 3. **Firmware address map.** The firmware builds page tables (`setup_memory_map`) and maps these windows: Lithium A and B
    (`0xfc000000`, `0xfd000000`), the Cobalt processor, interrupt and memory blocks (`0xc2000000`, `0xc4000000`,
    `0xc6000000`), the retrace register (`0xca000000`) and the display back end (`0xd0000000`, 0x81 pages), the local APIC
@@ -86,15 +86,136 @@ not read in full).**
 4. **Lithium set-up.** One routine writes `0xffffffff` to `+0x48` and `0x81f` to `+0x58` of both bridge windows, then does
    a read-modify-write on the five dwords `+0x60` to `+0x70` (mask `0xfffffbc1`, then bits set from a board-revision-
    and variable-dependent value), and finally reads the Lithium A identification dword and prints an error unless it
-   equals `0x100210a9` (vendor `0x10a9`, device `0x1002`). A helper writes a byte to `+0x44`, the bus-number register Linux reads;
-   its callers were not traced. The meaning of `+0x48`, `+0x58` and `+0x60`-`+0x70` is unknown.
-5. **Graphics memory.** The strings `gfxmem_alloc: <128MB of ram and !bad configuration`, `cogfxmem` and `maxpmem` show that
-   firmware chooses the graphics reservation (memory type `0x16` in the loader block) and that a variable can steer
-   it. The algorithm was not read, so the split chosen on each memory size is unknown.
-6. **PCI resources.** No generic PCI bus walk or BAR-sizing loop was found in the main module: configuration mechanism 1
-   (`0xcf8`) is used only against the PIIX4 (one diagnostic and a few register accesses). That is a search of the module
-   for the usual patterns, not a trace of the SCSI, IDE and network drivers, so whether the firmware assigns resources to
-   any PCI device before the OS (for its own boot devices) is unknown; the OS side assigns anyway (see PCI enumeration below).
+   equals `0x100210a9` (vendor `0x10a9`, device `0x1002`; 1.1005 drops the message). The bit meanings of `+0x48`, `+0x58` and
+   the five dwords at `+0x60` to `+0x70` are unknown, but the choice of values is read: [below](#pci-bus-numbering-and-windows).
+   The helpers that write bytes to `+0x44` and `+0x45` are traced in the same section.
+5. **Graphics memory.** `gfxmem_alloc` (`1.0006@0xf04a70`, `1.1005@0x1104840`) chooses the graphics reservation and enters it
+   as memory type `0x16` in the loader block; `cogfxmem` and `maxpmem` steer it. Read in full: [below](#memory-controller-and-graphics-memory).
+6. **PCI resources.** The first reading missed the PCI code: the main module does walk PCI-to-PCI bridges and assigns their bus
+   numbers and windows (`1.0006@0xf1fe70` "assign 1 bus"), and numbers the two Lithium bridges itself. See
+   [below](#pci-bus-numbering-and-windows). Whether it assigns resources to endpoint devices for its own boot devices
+   was not traced (the drivers were not read); the OS side assigns anyway (see PCI enumeration below).
+7. **Cobalt interrupt controller identification.** One routine writes the interrupt controller's `+0xffc` word as
+   `(old & 0xf0ffffff) | 0x04000000` (`1.0006@0xf04072`, same in 1.1005): bits 27 to 24 are set to 4 and the enable bit at 8 is
+   left alone. Which field that is, is not stated anywhere (inferred: an identification number for the controller).
+
+## Memory controller and graphics memory
+
+Registers of the Cobalt memory-controller block at `0xc6000000` as the two images use them. The block is not described by
+the Linux code or the HAL beyond the error registers, so every meaning here comes from the firmware's use (inferred unless
+marked) and the names are descriptive only.
+
+| Offset | Access in the firmware | Use | Grade |
+|---|---|---|---|
+| `+0x00` bit 0 | self-test sets it (writes 1) before filling a block of RAM with ones and flushing the caches, clears it (writes 0) when the probe ends; the main module clears it before sizing | error-check (ECC) enable; the HAL sets it together with the Cobalt CPU block's ECC bit | the accesses established; the meaning inferred |
+| `+0x08`, `+0x10` | read | the self-test's delay: it takes half of `+0x08` and waits for `+0x10` to fall to that value and rise through it, between probe writes | inferred (a free-running counter and a period) |
+| `+0x18` | written 0 | cleared right after the check bit is set; after a failed read-back the test reads `+0x28` and `+0x30` (a failing address and a byte-lane mask, looked up in a table of 65 entries) | inferred |
+| `+0x48 + 8*i` (Cobalt revisions `0xa0` and `0xa8`) or `+0x50 + 8*i` (all others), i = 0 to 15 | written by the self-test, read by the main module and the "RAM Bank Control Regs" report | bank control: bit 0 enabled, bit 1 128 MiB rather than 32 MiB, bit 2 absent or bad. The self-test stores 3, 2 or 0 | read side established; the write side inferred |
+
+**Bank detection. Inferred (self-test code read as a listing, `1.0006:test+0x80a7`-`0x8300`; not run).** There is no SPD or
+other DIMM EEPROM access in either image: a search for SMBus use turns up the clock-generator commands and nothing else, and the
+word "SPD" is in neither. Detection is a write and read-back test per bank slot `i` (0 to 15; slot stride 128 MiB): at
+`i * 128 MiB + 64 MiB` it writes four 32-byte patterns (`0x12345678`, `0x5a5a5a5a`, `0xc3c3c3c3`, `0x9abcdef0`) at 16 MiB steps and zero
+words to `0x00fffffc`, waits on the counter pair between writes, then reads back. From the comparison it stores 3, 2 or 0 in the
+bank register (slot 0 never gets 0); which outcome gives which value was not traced (unknown). It copies the sixteen values to
+the standard CMOS bytes `0x40`-`0x4f` (ports `0x70`/`0x71`; the main module's "Slot Group A to D" report reads them and counts `3` as
+128 MB) and a bit mask of the slots whose value is 2 to the extended-bank bytes written as `0xb4`-`0xb7` (ports `0x72`/`0x73`).
+Reset values of the bank registers are unknown (the code writes before it reads).
+
+**Memory descriptors. Established (`1.0006@0xf02e30`, `0xf01ee0`; `1.1005@0x1102d90`, `0x1101e30`).** From the bank array the
+firmware makes descriptors (type, base page, page count): the first 16 MiB (1.1005: 32 MiB) type 2, the rest of memory type 5, plus a
+fixed list of low-memory descriptors (table in [firmware.md](firmware.md#from-10006-to-11005)); `maxpmem` (a number with `K`,
+`M` or `G` suffix) caps the total, and 1.1005 refuses a cap below 128 MiB. MTRRs are then set from the same array
+(`1.0006@0xf03100`: MTRRs are switched off, `0x200`-`0x20f` cleared, then up to four variable ranges are set, one per 512 MiB of
+address space, sized from the banks present, type 6 (write-back) when coherent DMA is on and type 0 (uncacheable) when it is off,
+and MTRRs are switched on again).
+
+**Graphics memory. Established for the algorithm (`gfxmem_alloc`, decompiled and read in full for both images; the result was
+not run).**
+
+1. Inputs: total RAM in bytes; the variable `cogfxmem`. Below 64 MiB the function fails; between 64 and 128 MiB the variable is ignored
+   and the defaults are used; from 128 MiB `cogfxmem` is parsed.
+2. The variable is a comma-separated list of decimal numbers, `total,s0,s1,...` (up to twelve sizes after the total), in 4 KiB pages
+   (the same form the HAL's miniport writes, [nt-hal.md](nt-hal.md#memory-banks-and-the-graphics-split)). If the sizes
+   do not add up to `total`, the whole variable is discarded. Defaults: entry 1 `0x100` pages and entry 2 `0x500` pages.
+3. Entry 1 is clamped to `0x100`-`0x1000` pages (1.1005: `0xc00`) and rounded down to a multiple of `0x100`; entry 2 is raised to at least `0x400`;
+   a flat panel (panel id 3, 4 or 5, see [the display set-up](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/prom-init.md))
+   raises them to at least `0x400` and `0x800`. Every entry is then rounded up to a multiple of `0x400` pages (4 MiB), so the
+   defaults end up 4 MiB and 8 MiB. If the RAM left over would be under 64 MiB the largest later entries are cut until it is not (the install
+   guide's "largest value is installed memory minus 64 MB"). With fewer entries than the number of 32 MiB units in RAM the
+   entries are merged by slot masks (details in the code, not reproduced).
+4. Placement: each entry is carved, in order, from descriptors of type 2 or 5 whose base is at or above 16 MiB, as type `0x16`
+   descriptors that start on a 4 MiB boundary. The next piece's search starts at the following 32 MiB boundary, and RAM above
+   384 MiB makes the first start 32 MiB. So the carve-out is scattered in 32 MiB steps through low memory, not placed at the
+   top of RAM. Agreement: a published registry export of a real 512 MiB machine lists reserved ranges at the starts of the
+   32 MiB blocks `0x2000000`, `0x4000000`, `0x6000000`, `0x8000000`, `0xa000000`, `0xc000000`, `0xe000000`, and `0x20000000`, `0x22000000` of 4, 12,
+   12, 8, 4, 4, 4, 4 and 4 MiB ([board data](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/board-data.md)).
+5. The HAL turns those type `0x16` descriptors into the miniport's bank list (section 6 of Boot into NT below), and
+   the miniport's rule of at least two banks matches the two entries (inferred).
+
+Which numbers the control panel's profiles write, and the factory default of `cogfxmem` (none was found in the image's
+variable defaults), are unknown.
+
+## Display back end start-up
+
+The firmware programs the display back end at `0xd0000000` itself: the text console and the boot screens. The reading, with every
+register write in order and the mode table, is in [the Cobalt repository's page](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/prom-init.md).
+Two facts for this page: the self-test checks that the ID register at `+0x14` reads `0x666` (a triple in its table,
+`1.0006:test+0x96f7`, `1.1005:test+0x9775`; the main module has no such check), and the main module keeps the low nibble of `+0x00`
+(`1.0006@0xf00200`) as the display engine's revision, the "Display Engine: 002" of a real machine's registry. The coherent-DMA
+default does not come from it: `1.0006@0xf00210` classifies the word at `0xff01c004` (`0x35c0194c` is 2, `0x35f7357f` is 3, above that 4, else -2) and
+coherent DMA is on when the result exceeds 2, unless `coherentdma` begins with `n` (`1.0006@0xf00250`).
+
+## PCI bus numbering and windows
+
+**Windows the main module maps (`1.0006@0xf03980`, `1.1005@0x1103730`; physical, 4 KiB pages). Established.**
+
+| Window | Size | Role |
+|---|---|---|
+| `0xf0000000` | 64 MiB | PCI memory window of Lithium A (`1.0006@0xf1f6f0` pairs it with A) |
+| `0xf4000000` | 64 MiB | PCI memory window of Lithium B; a real machine's registry export gives the first PCI bus ports from `0x10` and memory translated to `0xf4000000`, the second ports `0x8000`-`0xffff` and `0xf0000000`, which fits B as the first bus |
+| `0xfc000000`, `0xfd000000` | 4 KiB | the Lithium A and B register pages (identification at `+0x00`) |
+| `0xfc800000`, `0xfd800000` | 8 MiB | one window per bridge, A then B; role not traced |
+| `0xf8000000`, `0xf9000000`, `0xfa000000`, `0xfb000000` | 16 MiB each | mapped; purpose not traced |
+| `0xd0000000` | 0x81 pages | display back end |
+| `0xc2000000`, `0xc4000000`, `0xc6000000`, `0xca000000` | 1 page each | Cobalt CPU block, interrupt controller, memory controller, retrace register |
+| `0xff004000` (3 pages), `0xff018000` (4), `0xff01c000` (1), `0xff000000` (2), `0xfe000000` (1) | | Lithium-side blocks, not described elsewhere; the word at `0xff01c004` selects the Lithium generation |
+
+**Bus numbers. Established (`1.0006@0xf1f6f0`-`0xf1f8f0` and the helpers `0xf20700`, `0xf20730`, `0xf20f90`, `0xf20fa0`; the same
+code is in 1.1005 at `0x111a8ea`).** Two helpers write a byte to `+0x44` (primary bus number) and `+0x45` (subordinate bus number) of a
+Lithium window, selected 0 for A and 1 for B. The sequence: A is first given primary `0xff`; a counter that starts at `-1` is
+incremented, so **Lithium B gets bus 0** (subordinate `0xfe` while its subtree is scanned, then the highest bus number allocated behind
+it), then the counter is incremented again and **Lithium A gets the next number** (bus 1 when nothing sits behind B), subordinate
+`0xff`. The firmware's root bridge objects carry type 1 for B and 0 for A, memory window bases `0xf4000000` and `0xf0000000`, and I/O bases
+`0x1000` (B) and `0x9000` (A). The PIIX4 at device 4 on bus 0 is consistent
+with B being bus 0, which answers the earlier question of which bridge is bus 0.
+
+**Configuration access. Established.** Three routes appear: the boot block and the self-test module go through Lithium B's
+window, an address word at `+0xf8` and a data word at `+0xfc` (the address word is `0x80000000 | bus << 16 | device << 11 |
+function << 8 | register`; example `0xfd0000f8 = 0x80002004`, `0xfd0000fc = 9` writes the PIIX4's command register); the
+main module's generic functions (`1.0006@0xf1f340`-`0xf1f6e6`) use ports `0xcf8`/`0xcfc`; and the main module sends the stop-grant special cycle
+the way Linux does (`0xfd0000f8 = 0x8000ff00`, `0xfd0000fc = 0x120002`, `1.0006@0xf18920`). Whether ports `0xcf8`/`0xcfc` reach the same
+configuration cycles as the window for devices behind the bridges is not stated in the code (unknown).
+
+**Bridge assignment. Established (`1.0006@0xf1fe70`, `0xf1fde0`, `0xf20ed0`).** The firmware scans devices 0 to 31 and functions
+0 to 7 on a bus for class `0x0604` header-type-1 bridges, recursively, then assigns the bridges' memory and I/O base and limit
+registers from the root window downwards (largest alignment first, memory alignment at least 1 MiB, I/O at least 4 KiB) and
+sets bridge control bits (command register `| 5`, `| 6` when a memory window is open). This is the code the release notes call
+"PCI bridge support" (1.1002); it is already in 1.0006. It prints "This bridge supports 32 bit IO" or "only supports 16 bit
+IO" when a debug flag is set (the strings are removed in 1.1005).
+
+**Lithium set-up. Established for the writes (`1.0006@0xf20620`, `1.1005@0x111b496`; same values).** For both bridge windows:
+`+0x48 = 0xffffffff`, `+0x58 = 0x81f`, and for each of the five dwords `+0x60`, `+0x64`, `+0x68`, `+0x6c`, `+0x70`:
+`new = (old & 0xfffffbc1) | 0x400 | 0x20c2`, where `0x400` is applied unless `coherentdma` begins with `n`, and `0x20c2` only on Lithium
+generation 5 or later and unless `streambuffer` begins with `n`. The generation (`1.0006@0xf00190`) is 1 when the byte at B `+0x08` is
+zero and otherwise 2, 3, 4 or 5 when the word at `0xff01c004` equals `0x35c0194c`, `0x35f7357f`, `0x363e4470` or `0x366c3dfb`, 6 when it is
+above the last and -2 for any other value. Read as Unix times the thresholds are 1998-07-30, 1998-09-10, 1998-11-02 and
+1998-12-07; the same word appears in the real machine's registry as "Serial I/O: 366c3dfb", the last value, so the word is an
+identification stamp of another ASIC on the machine and the generation reflects its release (inferred). The meanings
+of the bits (`0x400` coherent DMA, `0x20c2` stream buffering) are named only by the two variables; the five dwords are likely
+per-DMA-channel controls (inferred, no register source). Before the OS, the firmware also disables the PIIX4's four PCI interrupt
+routing registers (configuration `0x80002000`, register `0x60`, value `0x80808080`) and clears the edge/level controls (`0x4d0 = 0`,
+`0x4d1 = 6`) (`1.0006@0xf205f0`).
 
 ## Boot into NT
 
@@ -284,15 +405,15 @@ The HAL's display path has a text mode on the standard VGA registers and a Cobal
 `HalpInitializeGbeDisplay0` can fail and the HAL falls back. The firmware displays its menus and the NT boot screen on
 the Cobalt graphics output; console and keyboard devices named `consoleout` and `consolein`, `nogfxkbd` and a `console`
 variable exist (a serial console option; debug output goes to COM1 or COM2 with baud rates from the `dbaud` and
-`rbaud` options). Graphics initialisation order, display timing tables (the HAL has a Cobalt video timing table
-`cobaltVTimings` and an I2C path for flat-panel and monitor identification) belong to
-[devices/cobalt-graphics](../../devices/cobalt-graphics/) and are not read here.
+`rbaud` options). The firmware's own display initialisation, mode table and flat-panel probe are read in
+[the Cobalt repository's page](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/prom-init.md); the HAL's
+`cobaltVTimings` table belongs to [devices/cobalt-graphics](../../devices/cobalt-graphics/).
 
 ## What no source settles
 
-How the memory controller's timing and bank registers are programmed and their reset values; how the graphics reservation is
-chosen; whether the firmware assigns PCI resources for any device before the OS; the meanings of the Lithium `+0x48`, `+0x58`
-and `+0x60`-`+0x70` writes and the Cobalt APIC `+0xffc` write; where the embedded legacy-BIOS image is mapped and whether any of it
+The reset values of the memory controller's registers and what its timing registers are; whether the firmware assigns PCI
+resources to endpoint devices before the OS; the bit meanings of the Lithium `+0x48`, `+0x58` and `+0x60`-`+0x70` writes and
+the Cobalt APIC `+0xffc` field; where the embedded legacy-BIOS image is mapped and whether any of it
 is visible to an OS; the components, classes and keys of the ARC tree beyond the nodes named above; which firmware vectors
-`arcldr.exe` calls; the private vector's purpose; later firmware versions; and the Linux ARC loaders. All are in
+`arcldr.exe` calls; the private vector's purpose; the firmware versions between 1.0006 and 1.1005; and the Linux ARC loaders. All are in
 [questions/visws-firmware-open.md](../../questions/visws-firmware-open.md).

@@ -6,9 +6,9 @@ chips are SGI's and its Linux platform code is public. This page is the overview
 the details are in the sub-pages.
 
 Status: the primary target is the Windows NT 4.0 and Windows 2000 system SGI shipped, so the shipped software ranks
-first: SGI's HAL (`halborg.dll`), the SGI drivers, and the system firmware (PROM 1.0006), all read in Ghidra
+first: SGI's HAL (`halborg.dll`), the SGI drivers, and the system firmware (PROM 1.0006 and 1.1005), all read in Ghidra
 ([software/visws](../../software/visws/README.md), [NT drivers](../../software/visws/nt-drivers.md)). The public Linux
-platform code is a second, later source. **No manual, chip specification or BIOS dump is held**
+platform code is a second, later source. **No manual or chip specification is held**
 ([what was read and what is missing](../../references/visws-sources.md)). Grades follow [the repository rules](../../AGENTS.md)
 with one addition for this machine: a fact that only Linux states is a *software expectation of Linux*, graded
 `inferred`, not `established`, because Linux ran on the machine only as an unsupported port written after the fact. A
@@ -47,10 +47,10 @@ Platform facts, by what supports them:
 | PCI pin to Cobalt entry map for bridge B | contradictory (Linux 2.6 reuses bridge A's) | HAL table: shared pins on entries 13 to 15 | established (HAL); Linux's map is `inferred` wrong |
 | Board type and revision | port `0xfb2` probe, 540 branch unreachable | firmware's configuration tree carries both bytes | established (firmware) |
 | PCI configuration cycles | ports `0xcf8` and `0xcfc` | memory-mapped address and data registers inside each Lithium bridge window (`+0xf8`, `+0xfc`) | both established; they are different mechanisms, see [Lithium](../../devices/lithium/README.md) |
-| Which bridge is bus 0 | inferred only | HAL numbers bridge B's window first; run-time bus numbers still unknown | inferred |
+| Which bridge is bus 0 | inferred only | the firmware numbers bridge B first (counter starts at -1, so B is bus 0, A gets the next number); the HAL numbers B's window first too | established (firmware, `1.0006@0xf1f6f0`) |
 | Processor table at `0x1e00` | reads it | HAL reads it too; written by the firmware side | established |
 | PIIX4 and NS87307 set-up, soft power, reboot | partly | HAL in full; the boot block sets the chips | established (HAL, firmware) |
-| Memory controller and graphics memory split | none | HAL reads error and ECC registers only; split is in the firmware's memory list | HAL part established; bank decode unknown |
+| Memory controller and graphics memory split | none | HAL reads error and ECC registers only; the firmware's self-test probes the RAM and writes the sixteen bank registers, and `gfxmem_alloc` carves the graphics memory from `cogfxmem` ([boot-path.md](../../software/visws/boot-path.md#memory-controller-and-graphics-memory)) | firmware part established; the bank register bits inferred |
 | Interrupt routing mode names | none | HAL boot options `INTRROUTE=` `DEFAULT`, `NO8259`, `IDE8259`, `HUGH006` | established (HAL) |
 | Audio engine register file | most of it | sgisound.sys 5.2.2: codec port and base register only | partly established |
 | Ethernet device | Intel 82557 per Linux 2.2 header | SGI INF matches PCI 8086:1229 revisions 1 and 2 | established |

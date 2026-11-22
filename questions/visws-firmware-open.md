@@ -1,19 +1,17 @@
 # SGI Visual Workstation 320 and 540 firmware and NT software: open questions
 
-Open points from [software/visws](../software/visws/README.md). One firmware image (PROM 1.0006) is held and read; the rest is
+Open points from [software/visws](../software/visws/README.md). Two firmware images (PROM 1.0006 and PROM 1.1005) are held and read; the rest is
 read from NT's HAL and loader, SGI's firmware guide, SGI release notes reposted to Usenet and the public Linux port. The
 platform and chip questions are in [visws-open.md](visws-open.md). Each entry: question, routes tried, next route.
 
 ## The firmware image and the update package
 
-[settled for 1.0006; route: missing binary for the other versions] The Recovery CD-2 v1.0 route failed: unpacking its
-InstallShield 3 archives (unshield reads them) shows drivers, help and documentation and no firmware item; the cabinets are
-dated 1999-05-27, before the first update package. The image was found elsewhere: SGI's PROM 1.0006 update package is in a
-public driver archive already mirrored, and its 512 KiB flash image is read in [software/visws/firmware.md](../software/visws/firmware.md)
-and [boot-path.md](../software/visws/boot-path.md). Still not held: any other version (1.0002 to 1.0005, 1.1002 to 1.1005), the
-update utility's flashing code path (`flash_upgrade` was named, not read), and how it treats the 0x200-byte file header, the
-erased environment sector and the boot block. Next: the 1.1xxx update packages from SGI's support site (no stable address on
-record), then read `flash_upgrade` in the held image.
+[settled for 1.0006 and 1.1005; route: missing binary for the others] SGI's PROM 1.0006 and 1.1005 update packages are in a public
+driver archive already mirrored; their flash images, the flash tool (`flash_upgrade`, header ranges, boot-block protection, environment
+sector preservation) and the differences are in [software/visws/firmware.md](../software/visws/firmware.md). Still not held: the versions
+between (1.0002 to 1.0005, 1.1002 to 1.1004). Open: the compiled floppy-making script of the 1.1005 installer (how it places the image
+on the floppy), and the purpose of the word at offset `0x1c` of the `SHDR` header (`0x01011e6d` in 1.0006, `0x21b64a13` in 1.1005; the loader's
+use of it was not read). Next: the 1.1xxx packages from SGI's support site (no stable address on record); decode the installer script.
 
 ## Shipping firmware version and early release notes
 
@@ -33,10 +31,10 @@ routines.
 
 ## Flash sector map and the rest of the flash
 
-[route: missing source] The part name `M29F400T` is a HAL symbol and the image layout fits a top-boot four-megabit part; no
-datasheet is held, so the sector map is inferred. The patch record, the module table and the boot block are mapped; not yet
-read: the Pentium II and III microcode tables, the disk, network and SCSI drivers and the diagnostics in the main module.
-Next: the part's datasheet; read those parts of the main module.
+[route: software now] Settled: the sector map is the table in the firmware (`1.0006@0xfcbef0`, eleven sectors), the part id words the code
+tests are `0x20` and `0xd5` (the usual codes for an M29F400T; no datasheet is held, so the part is inferred), and the module table, boot
+block and self-test module are mapped. Not yet read: the Pentium II and III microcode tables, the disk, network and SCSI drivers and the
+diagnostics in the main module. Next: the part's datasheet; read those parts of the main module.
 
 ## The ARC tree and the loader's firmware calls
 
@@ -47,13 +45,15 @@ name. Settled since: the vectors both loaders call (fourteen, [boot-path.md](../
 
 ## Memory programming, graphics split and PCI resources
 
-[route: software now] Settled: memory is sized from sixteen Cobalt bank registers; who writes the processor table; the boot-block
-PIIX4, NS87307 and Lithium set-up. Open: how the Cobalt memory controller is programmed and its reset values (not found in the
-code read); how `cogfxmem` and `gfxmem_alloc` choose the graphics split; whether the firmware assigns PCI resources for any
-device (no generic walk found, boot-device drivers not traced); the meanings of the Lithium `+0x48`, `+0x58`, `+0x60`-`+0x70`
-and Cobalt APIC `+0xffc` writes; the small windows at `0xfe000000`, `0xff000000`, `0xff004000`, `0xff018000` and `0xff01c000`;
-where the embedded legacy-BIOS image is mapped. Next: read the memory-controller programming and the graphics allocator in the
-main module; a capture of the Cobalt and Lithium registers after the firmware's initialisation is not a reset value.
+[route: software now] Settled: the memory controller's bank registers are written by the self-test module's RAM probe and read by the main
+module; `gfxmem_alloc` and the `cogfxmem` parsing; the Lithium `+0x48`/`+0x58`/`+0x60`-`+0x70` values and what selects them; the Lithium bus numbering
+(B is bus 0); the PCI-PCI bridge assignment code ([boot-path.md](../software/visws/boot-path.md#memory-controller-and-graphics-memory)). Open: the
+memory controller's reset values and the meaning of its `+0x08`, `+0x10`, `+0x18`, `+0x28` and `+0x30` registers (named by use only); which probe outcome
+stores bank value 3, 2 or 0; whether the firmware reads DIMM SPD data (none found); the bit meanings of the Lithium writes; what the windows at
+`0xf8000000` to `0xfb000000`, `0xfc800000`, `0xfd800000`, `0xfe000000`, `0xff000000`, `0xff004000` and `0xff018000` are for; what the word at
+`0xff01c004` is (the registry's "Serial I/O"); whether the firmware assigns resources to endpoint devices; whether ports `0xcf8`/`0xcfc` and the
+Lithium windows are the same configuration route; where the embedded legacy-BIOS image is mapped; the factory default of `cogfxmem` (none found).
+Next: trace the SCSI, IDE and network drivers' use of the PCI code; read the self-test module's remaining tests.
 
 ## Cobalt revision values and the older boards
 

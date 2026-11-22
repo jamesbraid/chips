@@ -2,7 +2,7 @@
 
 What the pages under [platforms/visws/](../platforms/visws/README.md), [devices/cobalt/](../devices/cobalt/README.md)
 and [devices/lithium/](../devices/lithium/README.md) rest on, and what could not be found. This page lists the Linux code and posts that
-the platform pages first rested on. Since then SGI's shipped Windows NT 4.0 software and PROM 1.0006 have been read
+the platform pages first rested on. Since then SGI's shipped Windows NT 4.0 software and PROM 1.0006 and 1.1005 have been read
 ([software/visws](../software/visws/README.md)); they rank above Linux for this machine, and
 [Sources by origin](../platforms/visws/README.md#sources-by-origin) says which facts each supports. No manual or specification
 for the Cobalt, Lithium or Arsenic chips has been found, so Linux plus the shipped binaries are the register-level evidence.
@@ -63,7 +63,7 @@ Both owner's guides are user documents: no register, chip name or interrupt wiri
 | Wanted | Why it matters | Route |
 |---|---|---|
 | The NT driver kit the guides name | Possible chip names for the audio and video paths | The Audio/Video User's Guide (007-3870-001) is held now and names no chips; the driver kit's site is gone. |
-| A PROM or BIOS image other than 1.0006 | Differences between firmware versions; a 540 image | Only PROM 1.0006 is held and read ([firmware.md](../software/visws/firmware.md)). |
+| A PROM or BIOS image other than 1.0006 and 1.1005 | The versions between; a 540 image | PROM 1.0006 and 1.1005 are held and compared ([firmware.md](../software/visws/firmware.md)). |
 | The NT HAL and miniport drivers | The interrupt map the Linux code gets wrong or never uses; Cobalt memory and error registers | Held now (Recovery CD-1 v1.1, install CD Disk 1, driver archive item; Windows 2000 RTM and SP4 CDs for the 2000 HAL and loaders); read in [nt-hal.md](../software/visws/nt-hal.md) and [nt-drivers.md](../software/visws/nt-drivers.md). Bank decoding (a Cobalt register fact the HAL never touches) and the 2000 drivers other than the HAL are unread. |
 | The Cobalt, Lithium and Arsenic specifications | Everything the Linux code does not touch | SGI said none releasable. |
 | A real boot log from a 320 or 540 under Linux 2.4 or 2.6 | The values the kernel prints: Lithium bus numbers, Cobalt revision, APIC ID, board type and revision | A search of the held mail and news archives found none. |

@@ -1,18 +1,21 @@
 # Visual Workstation 320 and 540: what an emulator must provide
 
-Two routes: run the firmware image (only PROM 1.0006 is held), or replace it with a small stand-in that leaves the machine in the state
+Two routes: run the firmware image (PROM 1.0006 and 1.1005 are held), or replace it with a small stand-in that leaves the machine in the state
 the operating system software expects. Grades as in the [README](README.md). Everything below is a requirement
 derived from shipped NT software and the public Linux port; the chipset's register behaviour itself is in the chip
 pages.
 
 ## Running the real firmware
 
-The PROM 1.0006 image is held ([firmware.md](firmware.md)), so this route can be tried; no run has been done. What the image
+The PROM 1.0006 and 1.1005 images are held ([firmware.md](firmware.md)), so this route can be tried; no run has been done. What the image
 asks of the machine before it reaches its main module: RAM that works up to 16 MiB with no sizing (the boot block copies
 the flash to `0x80000` and expands the firmware to `0xf00000`-`0xff0264`), the Lithium configuration window at
 `0xfd0000f8`/`0xfd0000fc` and the PIIX4 behind it, an NS87307 answering on ports `0x2e`/`0x2f`, the 8259 and DMA
-ports, MSR and MTRR instructions, and Cobalt bank registers at `0xc6000048` and up that report populated banks
-([boot-path.md](boot-path.md)). The flash is 512 KiB mapped at `0xfff80000` (software expectation: the HAL maps and programs it), accessed as a 16-bit
+ports, MSR and MTRR instructions, and Cobalt bank registers at `0xc6000048` and up (`0xc6000050` and up on all but Cobalt revisions `0xa0` and `0xa8`) that report populated banks
+([boot-path.md](boot-path.md)). Before any of that the self-test module runs from flash: it needs RAM that answers write and read-back at
+`bank * 128 MiB + 64 MiB` in 16 MiB steps for the banks that exist, a timer pair at `0xc6000008`/`0xc6000010`, CMOS at ports `0x70`-`0x73`,
+COM1, the display ID `0x666` at `0xd0000014`, and Lithium identification `0x100210a9` at `0xfc000000` and `0xfd000000`
+([firmware.md](firmware.md#the-self-test-module)). The flash is 512 KiB mapped at `0xfff80000` (software expectation: the HAL maps and programs it), accessed as a 16-bit
 AMD-command-set flash with the usual two-cycle unlock; the ARC environment lives in its top 8 KiB sector, which the
 operating system rewrites, so the device needs a persistent, erasable model. The firmware would additionally need the
 chips the HAL expects (PIIX4, NS87307, CMOS RTC, 8259 pair, floppy, IDE and SCSI), a keyboard (a USB or PS/2
