@@ -11,10 +11,10 @@ public_from = ["census:"]
 [registers.bus_number]
 space = "bridge"
 offset = 0x44
-access = "r"
+access = "rw"
 width = 16
 grade = "inferred"
-doc = "Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read. Whether the register is writable is unknown (only read)."
+doc = "Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read by Linux. It is writable: the NT HAL read-modify-writes it (clears and sets the low byte for the primary number, then the next byte for the subordinate number) and the PROM stores its two bytes separately in its bus numbering. The self-test also reads and restores the dword that holds it, in bridge B only."
 
 [registers.bus_number.fields]
 primary = { bits = [7, 0], grade = "inferred", doc = "Bus number the kernel scans for this bridge." }
@@ -66,7 +66,7 @@ offset = 0x58
 access = "rw"
 width = 32
 grade = "inferred"
-doc = "Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared. The NT HAL never touches it."
+doc = "Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared, on bridge B only. The NT HAL never touches it."
 
 [registers.dma_ctl]
 space = "bridge"
@@ -84,7 +84,7 @@ offset = 0xf8
 access = "rw"
 width = 32
 grade = "established"
-doc = "Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, dword register in 7:2. Used by the HAL and, from the first instruction after reset, by the PROM boot block on bridge B. The PROM self-test checks that bits 23:2 can be set and cleared."
+doc = "Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, dword register in 7:2. Used by the HAL and, from the first instruction after reset, by the PROM boot block on bridge B. The PROM self-test checks, on bridge B only, that bits 23:2 can be set and cleared; it reads the old value first and restores it."
 
 [registers.cfg_data]
 space = "bridge"
@@ -100,7 +100,7 @@ offset = 0x46
 access = "rw"
 width = 16
 grade = "established"
-doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable (it tests the 32-bit word that holds this register in its upper half, mask bits 29:24, and restores the old word), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked."
+doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked."
 
 [registers.int_enable.fields]
 inta_0 = { bits = [0, 0], grade = "inferred", doc = "INTA of device 0 on this bridge." }

@@ -161,31 +161,56 @@ The frame buffer is the top 8 MB of memory that the kernel reserves from its own
 
 ## Reset values, extents and widths: what the shipped code settles
 
-Read from the disassembly of `halborg.dll` 1.3 and PROM 1.1005 (cross-checked in 1.0006), not from decompiler output. A register read
-after firmware start-up is not a reset value; this section lists which registers firmware or the HAL reads before writing.
+Read from the disassembly of `halborg.dll` 1.3 and PROM 1.1005 (cross-checked in the other four held releases where noted), not from
+decompiler output. A register read after firmware start-up is not a reset value; this section lists what firmware or the HAL does
+with each register before and after it first writes it.
 
-- **Reset values: none is established.** In the code read, no read of a register is tested against a power-on value. The
-  identification word's first read is a read-modify-write that keeps the other bits "as read" in both the PROM and the HAL, and
-  the revision is only compared. Reset state of every register is **unknown**. The PROM never touches the CPU block's `+0x10`,
-  `+0x20`, `+0x30` and `+0x38` or any interrupt entry (only `+0x08`, `+0x18` and the id word are accessed by immediate
-  address in the self-test and main module), so a read of those in the PROM monitor before any operating system has run
-  would be a reset value; see [the questions page](../../questions/visws-reset-values-open.md).
-- **Revision (`+0x08`).** Readers compare the whole word with `0xa0` and `0xa8` (HAL), the low byte with them (PROM main module),
-  and the word minus its low nibble with `0xa0` (PROM self-test). So bits 31:8 read zero on every accepted board and bits 7:4
-  are `0xa` (inferred from the self-test's comparison). The low nibble is not constrained: `0xa4` is not excluded.
-- **Extents and widths.** The HAL and the PROM map each block as one page (HAL: page-table entries cache-disabled and
-  write-through). Nothing uses an offset above `0xffc` in the interrupt block, `0x38` in the CPU block or `0xc8` in the memory block
-  (the bank registers end at `0xc4`, the HAL's search limit `0xc8`). So each extent is at least 4 KiB and the upper bound is
-  **unknown**. Every access in the code read is a 32-bit load or store (the one narrower access the earlier HAL reading reports, a byte read of an entry's high word, was not re-checked here).
-- **Timer.** The HAL (0x800161ba, 0x8002d284) stores all ones in the count twice, the second time (calibration) while the run bit is already set, then
-  reads the current count one real-time-clock second later and takes the fall as the rate. A write while running must therefore
-  restart the count from the value written (inferred; a reload that waits for the next expiry would give a wrong rate). The rate
-  itself is not measured: the HAL derives it, Linux assumes 100 MHz.
+- **Reset values: none is established.** In the code read, no register's value is tested against a power-on value before a
+  write. The identification word is read first and its field tested, but only for "is it zero" (both the HAL, at `0x8002e463`, and
+  the PROM main module, at `1.1005@0x11092b4`, test bits 27:24 before they write); the revision is only compared. Reset state
+  of every register is **unknown**. The PROM never reads or writes the CPU block's `+0x10`, `+0x20`, `+0x30`, `+0x38` or the
+  cache-operation registers (the self-test and main module touch only `+0x08` and `+0x18` of that block, by immediate address and
+  through the main module's block pointer). A read of those from the
+  PROM monitor, before any operating system has run, would be a reset value. The interrupt entries are not on that list: the PROM
+  writes all thirty (`1.1005@0x1109240`, then again to mask them at `0x11092e0`).
+- **Revision (`+0x08`).** The HAL compares the whole word with `0xa0` and `0xa8`; the PROM main module reads it as a byte
+  (`1.1005@0x1104298`, `1.0006@0xf04524`) and as a masked dword (`1.1005@0x1100170`); the self-test compares the whole dword with them
+  (`test+0x423a`) to pick the bank-register base and separately records `(revision with its low nibble cleared) xor 0xa0` in
+  extended CMOS without branching on it (`test+0x514a`). Equality tests with two values bound nothing for any other board, and the
+  recorded difference is never acted on in the code read, so the claim that bits 31:8 are zero and bits 7:4 are `0xa` is
+  **inferred** only, from the self-test's choice of that expression and the `Cobalt:a4` text a real machine reports. The low
+  nibble is not constrained: `0xa4` is not excluded.
+- **Extents.** The HAL and the PROM map each block as one page (HAL: page-table entries cache-disabled and write-through).
+  The highest offsets used are `+0xffc` in the interrupt block, `+0x50` in the CPU block (cache-operation busy) and `+0xc8` in
+  the memory block. The non-Lite bank registers are `+0x50 + 8*i` for i from 0 to 15, so the last is at `+0xc8` (the PROM's loop
+  bound, `1.1005@0x1102d60`, `test+0x4256`); only revisions `0xa0` and `0xa8` end at `+0xc0`. So each extent is at least 4 KiB and the
+  upper bound is **unknown**.
+- **Widths.** Almost every access is a 32-bit load or store. Narrower accesses seen: the PROM's byte read of the revision
+  (above), and the HAL's byte test of an entry's high word after writing it (`0x80016364`, a flush read).
+- **CPU block above `+0x38`.** The HAL's cache flush routine (`0x8001b190`, `0x8001b1e0`, `0x8001b140`) uses three registers: it
+  waits for bit 16 of `+0x40` to clear, stores the start address at `+0x48`, then stores `count | 0x10000` (plus `0x40000` for
+  invalidate) at `+0x40`, where count is the number of 32-byte lines (at most `0xffff` per request). After the last request it
+  polls bit 16 of `+0x50` until it clears. These are the cache-operation registers; what an operation does is **unknown**
+  (inferred from the use). The HAL skips them on revisions `0xa0` and `0xa8`.
+- **Timer.** The HAL stores all ones in the count three times: at set-up before the run bit is set (`0x800161ba`), then in each
+  of the two passes of its calibration loop (`0x8002d284`), both with the run bit set; each pass reads the current count about one
+  real-time-clock second later (`0x8002d2c0`) and only the last is used, as the rate, rounded to the nearest 10,000. A write
+  while running must therefore restart the count from the value written (inferred; a reload that waits for the next expiry would
+  give a wrong rate). The rate itself is not measured: the HAL derives it, Linux assumes 100 MHz.
 - **Status bits.** Only bits 1 (timer) and 0 (cache operation) are used. The HAL writes all ones once at timer set-up and the
   pattern with bit 1 clear in the tick, so bit 1 clears on a written zero and a written one is harmless. Whether bit 1 clears
   by itself stays open.
-- **Interrupt controller.** Entry destination: every device entry has destination 0 and only the NMI entry is logical. The HAL masks all
-  thirty entries before it enables the controller, so entries are writable while the controller is disabled. Id field: the HAL
-  writes 4 only if the field reads zero; the PROM writes 4 always. A model that resets the field to 0 satisfies both; the real
-  reset value is unknown, and so is what the field means.
-- **CPU `+0x18`.** The PROM writes 1, 3 or ORs bit 0 into it on paths that were not all traced; see the register entry.
+- **Interrupt controller.** Entry destination: every device entry has destination 0 and only the NMI entry is logical. The HAL
+  masks all thirty entries and the PROM writes all thirty (vector with the level bit, high word 0, mask bit chosen per line from a
+  table) before they touch the identification word, so entries accept writes while the controller is disabled. Id field: the HAL
+  and the PROM main module both read the word, write 4 into bits 27:24 only if they read zero (clearing bit 8 in that store), then
+  set bit 8 in every case (`1.1005@0x11092a2` to `0x11092d2`, `1.0006@0xf093a3` to `0xf093c3`). Only three PROM sites write 4
+  without testing: `1.1005@0x1103de2`, `1.0006@0xf04072` and the self-test (`test+0x13fd`), the same early code in all five held
+  releases. A model that resets the field to 0 satisfies all of them; the real reset value is unknown, and so is what the field
+  means. The main module ends by masking all entries and clearing bit 8 (`0x11092e0` to `0x1109339`).
+- **CPU `+0x18`.** The self-test sets bit 0 only on a cold boot (neither CMOS marker byte `0x2e`, `0x2f` is `0xa5`; it then writes
+  `0xa5` to both and every boot zeroes both afterwards, `test+0x156`), writes 3 after storing a BIST marker in extended CMOS byte
+  `0x8c`, and writes 1 on a path whose caller was not traced. The main module's reboot routine (`1.1005@0x1102870`) sets bit 0
+  unless a board-class test (`0x1102840`) picks a write of 6 to port `0xcf9`, as the HAL does.
+- **Memory block delay counters.** The self-test reads `+0x08` and polls `+0x10` (signed compares) between probe writes
+  (`test+0x41b0`, `test+0x4220`): until the counter is at or below half of `+0x08`, then at or above it. Meaning from that use only.

@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 35170f49ee8ac12d6c880fa6df715404fff2b2377770e4dfa5c12c473b50a477
+// input sha256 35a12479d2011e5f542f1e404c8ad96418ec1ca5a7d7910be1f9fb4db3e75137
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -173,7 +173,7 @@ pub mod cpu_ctrl {
         }
     }
 }
-/// Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, Bo (established)
+/// Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to port 0xcf9 on the newer board c (established)
 pub mod cpu_reset {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x18;
@@ -223,6 +223,21 @@ pub mod cpu_timecur {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x38;
 }
+/// Cache-operation request, used by the NT HAL's cache flush routine. It first waits for bit 16 to clear, then stores the line count (the byte length rou (inferred)
+pub mod cpu_cacheop_ctl {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x40;
+}
+/// Start address of the cache operation requested through the cache-operation request register (cpu_cacheop_ctl). The HAL stores it immediately before th (inferred)
+pub mod cpu_cacheop_addr {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x48;
+}
+/// Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine poll (inferred)
+pub mod cpu_cacheop_busy {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x50;
+}
 /// Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store  (established)
 pub mod mem_ecc {
     pub const WIDTH: u32 = 32;
@@ -238,6 +253,16 @@ pub mod mem_ecc {
         }
     }
 }
+/// Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed va (inferred)
+pub mod mem_period {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x8;
+}
+/// Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe w (inferred)
+pub mod mem_counter {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x10;
+}
 /// Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is z (established)
 pub mod mem_err_status {
     pub const WIDTH: u32 = 32;
@@ -252,6 +277,13 @@ pub mod mem_err_addr {
 pub mod mem_err_syndrome {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30;
+}
+/// Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the  (inferred)
+pub mod mem_bank {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x50;
+    pub const COUNT: u32 = 16;
+    pub const STRIDE: u64 = 8;
 }
 pub const APIC_8259: u32 = 0xc; // established
 pub const APIC_AS: u32 = 0x18; // established

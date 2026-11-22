@@ -12,11 +12,10 @@ identification words, which are read-only. Tried: both PROM modules, the boot bl
 disassembly; Linux; two other HAL builds. Not tried: Windows 2000's HAL accesses, the NT Ethernet, USB and SCSI drivers, and the
 Linux driver for any later chip revision. Settles it: the Cobalt and Lithium specifications. For the registers firmware never writes, a read-only sample taken from the PROM
 monitor (its `dump`, `get` and `ioread` commands), after power-on and before any operating system has run, would be a reset
-value: the Cobalt CPU block's `+0x10`, `+0x20`, `+0x30`, `+0x38`; the thirty interrupt entries; the bridges' `+0x04`, `+0x06`,
-`+0x40` and `+0x46`. Smallest test: those words, 32-bit reads, on one machine; the status and current-count words are plain
-reads in every code path read, but whether any word is read-to-clear is unknown, so the bridge offsets other than the four named
-are excluded. It needs the owner's approval and a named machine; it has not been run. Registers the PROM writes (the id word,
-bridge `+0x44`, `+0x48`, `+0x58`, `+0x60` to `+0x70`, the memory controller) cannot be sampled this way.
+value: the Cobalt CPU block's `+0x10`, `+0x20`, `+0x30`, `+0x38`, `+0x40`, `+0x48`, `+0x50`; the bridges' `+0x04`, `+0x06`,
+`+0x40` and `+0x46`. The thirty interrupt entries are not on the list: the PROM writes them (it also writes the id word first-hand, so neither can be sampled this way). Smallest test: those words, 32-bit reads, on one machine; whether any word is read-to-clear is unknown (the CPU status word is cleared by a write, but nothing shows a read has no effect), so the bridge
+offsets other than the four named and the CPU `+0x20` bit 0 are excluded from a first read; read `+0x20` last. It needs the owner's approval and a named machine; it has not been run. Registers the PROM writes (the id word,
+bridge `+0x44`, `+0x48`, `+0x58`, `+0x60` to `+0xdc`, the memory controller's control and bank words) cannot be sampled this way.
 
 ## Extents of the three Cobalt blocks and the two bridge windows
 

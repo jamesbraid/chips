@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "35170f49ee8ac12d6c880fa6df715404fff2b2377770e4dfa5c12c473b50a477",
+ "input_sha256": "35a12479d2011e5f542f1e404c8ad96418ec1ca5a7d7910be1f9fb4db3e75137",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -261,6 +261,45 @@
   {
    "unit": "cobalt",
    "kind": "register",
+   "name": "cpu_cacheop_ctl",
+   "offset": 64,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_cacheop_addr",
+   "offset": 72,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_cacheop_busy",
+   "offset": 80,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
    "name": "mem_ecc",
    "offset": 0,
    "access": "rw",
@@ -278,6 +317,32 @@
    "hi": 0,
    "lo": 0,
    "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_period",
+   "offset": 8,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_counter",
+   "offset": 16,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",
@@ -317,6 +382,19 @@
    "space": "mem",
    "reset": "unknown",
    "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_bank",
+   "offset": 80,
+   "access": "rw",
+   "width": 32,
+   "count": 16,
+   "stride": 8,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "inferred"
   },
   {
    "unit": "cobalt",

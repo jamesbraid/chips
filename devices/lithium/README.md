@@ -206,20 +206,26 @@ of any interrupt connection. No difference from the text was found. The two buil
 ## Reset values and the bridge words nobody documents: what the shipped code settles
 
 Read from the disassembly of the PROM boot block, self-test and set-up routine (1.1005; the same writes in 1.0006) and of the
-HAL's bridge set-up and window mapping (`halborg.dll` 1.3). Nothing here is a reset value. The one register read before a write
-is `+0x58`, in the boot block (`0xffffc505`, 1.1005), and that read only feeds an OR.
+HAL's bridge set-up and window mapping (`halborg.dll` 1.3). Nothing here is a reset value. Reads that come before the first
+write are all read-modify-writes or read-and-restore tests, so no code depends on the value read: the boot block's OR into `+0x58`
+(`0xffffc505`, 1.1005), the set-up routine's masks on `+0x60` to `+0x70`, the device scan's change to a device's word, the HAL's
+changes to `+0x40` and `+0x44`, and the self-test's read, test and restore of `+0x58`, `+0x44` and `+0xf8` (`test+0x51ad`, bridge B
+only). The self-test's identification check (`test+0x5222`) reads bridge A's word and reads bridge B's only when A matched; it
+records a mismatch in extended CMOS and does not halt.
 
 - **Registers `0x4a` to `0xf4`.** In the routines read, only `+0x58`, `+0x60` to `+0xdc`, `+0xf8` and `+0xfc` are accessed besides
   `+0x40` to `+0x48`. No access to `+0x4a` to `+0x54`, `+0x5c` and `+0xe0` to `+0xf4` was found there (the PROM's generic
   configuration routines were not searched for a base-plus-offset access); whether those registers exist is unknown. The PROM
-  writes `+0x04`, `+0x06`, `+0x40` (1.0005 on) or `+0x46` in none of the routines read, and the self-test restores `+0x44`'s word after its test, so a
-  read of those before any operating system has run would be a reset value.
+  writes `+0x04`, `+0x06`, `+0x40` (1.0005 on) or `+0x46` in none of the routines read, and the self-test reads and restores the word that holds `+0x44` and `+0x46` (bridge B), so a
+  read of `+0x04`, `+0x06` and `+0x40` before any operating system has run would be a reset value.
 - **`+0x40`.** The HAL uses its top byte for the bus number when the revision byte is zero (a read-modify-write); PROM 1.0002 and
-  1.0004 read-modify-write it with fixed bits; nothing later does. Meaning unknown.
+  1.0004 read-modify-write it with fixed bits, and 1.0005, 1.0006 and 1.1005 do not (checked in all five images: the set-up
+  routine of 1.0002 and 1.0004 has the `+0x40` stores before the `+0x48` store, the other three begin at the `+0x48` store).
+  Meaning unknown. In 1.0002 and 1.0004 the stores also clear bits 31:24, the byte the HAL uses for the bus number.
 - **`+0x48`.** All ones are written by the PROM and nothing reads it. It is an error word in the NT USB driver's own message. Which
   events set it, and parity reporting, are unknown.
 - **`+0x58`.** The boot block ORs in the low five bits (before the self-test and main module), the self-test requires bits 1:0 to
-  toggle, and the main module then stores a value with bits 11 and 4:0 set. The final value after a normal boot is therefore that
+  toggle (bridge B only), and the main module then stores a value with bits 11 and 4:0 set. The final value after a normal boot is therefore that
   stored value; meaning unknown.
 - **`+0x60` to `+0xdc`.** Thirty-two words, indexed by PCI device number (inferred: the PROM's device scan, `1.1005@0x111aae9`,
   walks buses, devices 0 to 31 and functions 0 to 7 and, when it finds vendor `0x1077` device `0x2100` (a QLogic ISP2100 Fibre
@@ -227,7 +233,8 @@ is `+0x58`, in the boot block (`0xffffc505`, 1.1005), and that read only feeds a
   others A; `0x111ab46` to `0x111ab5e`): clear bits 7:6, set bits 9:8). The set-up routine's five words (`+0x60` to `+0x70`,
   `1.1005@0x111b511`) are devices 0 to 4. The PROM relies on bit 10 meaning coherent DMA and on four more bits meaning stream
   buffering only through the names of the two firmware settings. Bits 9:8 are set only for that adapter: their meaning is unknown.
-- **`+0x46`.** The self-test requires bits 13:8 to be settable in addition to the eight bits the kernels use; the HAL sets bits only.
+- **`+0x44`.** Writable: the HAL read-modify-writes it and the PROM stores its two bytes separately.
+- **`+0x46`.** The self-test requires bits 13:8 to be settable (bridge B only) in addition to the eight bits the kernels use; the HAL sets bits only.
 - **Inbound DMA, error and parity reporting, audio interrupt.** No shipped software configures an inbound window or reads an
   error word, and the audio interrupt is not connected by the NT driver. All stay as already recorded.
 

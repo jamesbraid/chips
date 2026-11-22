@@ -1,10 +1,10 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 35170f49ee8ac12d6c880fa6df715404fff2b2377770e4dfa5c12c473b50a477 -->
+<!-- input sha256 35a12479d2011e5f542f1e404c8ad96418ec1ca5a7d7910be1f9fb4db3e75137 -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 
-Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel and the NT HAL touch is here; the bank registers of the memory controller and the graphics engine registers are not.
+Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.
 
 Unit `cobalt`, macro prefix `COBALT`.
 
@@ -31,10 +31,16 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `cpu_stat` | 0x20 | rw | 32 |  | cpu | unknown | established |  |
 | `cpu_timeval` | 0x30 | rw | 32 |  | cpu | unknown | established |  |
 | `cpu_timecur` | 0x38 | r | 32 |  | cpu | unknown | established |  |
+| `cpu_cacheop_ctl` | 0x40 | rw | 32 |  | cpu | unknown | inferred |  |
+| `cpu_cacheop_addr` | 0x48 | rw | 32 |  | cpu | unknown | inferred |  |
+| `cpu_cacheop_busy` | 0x50 | r | 32 |  | cpu | unknown | inferred |  |
 | `mem_ecc` | 0x0 | rw | 32 |  | mem | unknown | established |  |
+| `mem_period` | 0x8 | r | 32 |  | mem | unknown | inferred |  |
+| `mem_counter` | 0x10 | r | 32 |  | mem | unknown | inferred |  |
 | `mem_err_status` | 0x18 | rw | 32 |  | mem | unknown | established |  |
 | `mem_err_addr` | 0x28 | r | 32 |  | mem | unknown | established |  |
 | `mem_err_syndrome` | 0x30 | r | 32 |  | mem | unknown | established |  |
+| `mem_bank` | 0x50 | rw | 32 | 16 | mem | unknown | inferred |  |
 
 ### Register `apic_lo`
 
@@ -64,16 +70,16 @@ Array of 30 registers, stride 16.
 
 ### Register `apic_id`
 
-Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known. The NT HAL reads it and, only when bits 27:24 are zero, clears bit 8 and the field and stores 4 in the field; it then in every case ORs in bit 8 and stores it again. It masks all thirty entries first, so entries accept writes while the controller is disabled. The PROM does not test the field: it replaces bits 27:24 with 4 unconditionally and keeps every other bit as read, once in the self-test and once in the main module, with no other access to this offset in either. No reset value is known: no code depends on the value before its first write. Addresses: the Cobalt README.
+Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known. The NT HAL and the PROM main module run the same sequence: read the word, test bits 27:24, and only when they are zero clear bit 8 and the field and store 4 in the field; then in every case set bit 8 and store again. Both test the field before writing it, so each depends on the value only through whether the field is zero. The HAL masks all thirty entries first and the PROM writes all thirty first (vector with the level bit, high word 0; mask bit from a per-line table), so entries accept writes while the controller is disabled. The PROM also has three places that set the field to 4 without testing it: the self-test, the early start-up in the main module, and the same early code in every held release (1.0002 to 1.1005). The main module ends by masking all entries and clearing bit 8. No reset value is known. Addresses: the Cobalt README.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 27:24 | `id` | established |  |  | Controller id field. The NT HAL writes 4 here only when the field reads zero (with the enable bit cleared in that store); the PROM always writes 4 whatever it read. What the id is used for is not known. |
+| 27:24 | `id` | established |  |  | Controller id field. The NT HAL writes 4 here only when the field reads zero (with the enable bit cleared in that store); the PROM main module does the same test, and its self-test and early start-up write 4 unconditionally. What the id is used for is not known. |
 | 8 | `enable` | established |  |  | 1 enables the interrupt controller. Linux sets it once at start-up. |
 
 ### Register `cpu_rev`
 
-Cobalt revision. The kernel prints it at start-up and, in the 2.4 interrupt path, reads it after a driver has acknowledged its device as a way to make sure the driver's write has reached the device before the end-of-interrupt. Three shipped readers constrain the value: the NT HAL compares the whole 32-bit word with 0xa0 and 0xa8, so those two revisions read with bits 31:8 zero; the PROM main module keeps only the low byte before the same comparisons; the PROM self-test records the difference between the word with its low nibble cleared and 0xa0, so the revisions it expects have bits 31:8 zero and 0xa in bits 7:4. The low nibble and the layout beneath it are not known. The register is only ever read, so no reset value is known. Addresses: the Cobalt README.
+Cobalt revision. The kernel prints it at start-up and, in the 2.4 interrupt path, reads it after a driver has acknowledged its device as a way to make sure the driver's write has reached the device before the end-of-interrupt. Readers: the NT HAL compares the whole 32-bit word with 0xa0 and 0xa8; the PROM main module reads it as a byte (and as a dword masked to the low byte) before the same comparisons; the PROM self-test compares the whole dword with them to choose the bank-register base, and records the difference between the word with its low nibble cleared and 0xa0 in extended CMOS without branching on it. Those equality tests bound nothing for a board that is neither 0xa0 nor 0xa8, and the record is never acted on in the code read, so what other revisions read is inferred only from the Cobalt:a4 revision text a real machine reports. Byte and dword reads both occur. The register is only ever read, so no reset value is known. Addresses: the Cobalt README.
 
 ### Register `cpu_ctrl`
 
@@ -88,7 +94,7 @@ Timer and memory control. Linux sets timer_run and clears timer_mask, each by a 
 
 ### Register `cpu_reset`
 
-Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through port 0xcf9. A separate register from the memory block's error status at offset 0x18. The PROM self-test also writes it: a read-modify-write that ORs in bit 0 when the CMOS marker bytes are not 0xa5 (the value read is only ORed, never tested), a store of 3 (bits 1 and 0) right after it stores 0xbb in extended CMOS byte 0x8c, and a store of 1 on a second path whose caller was not traced. What bit 1 does is unknown. Addresses: the Cobalt README.
+Machine reset on early boards (the PROM main module's reboot routine does the same: it sets bit 0 here, or writes 6 to port 0xcf9 on the newer board classes). The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through port 0xcf9. A separate register from the memory block's error status at offset 0x18. The PROM self-test also writes it: a read-modify-write that ORs in bit 0 only when neither of two CMOS marker bytes is 0xa5 (a cold boot: it writes 0xa5 to both, and every boot then zeroes both) (the value read is only ORed, never tested), a store of 3 (bits 1 and 0) right after it stores 0xbb in extended CMOS byte 0x8c, and a store of 1 on a second path whose caller was not traced. What bit 1 does is unknown. Addresses: the Cobalt README.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -96,7 +102,7 @@ Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below boa
 
 ### Register `cpu_stat`
 
-Timer status. The HAL also stores all ones here once while setting up the timer, after it loads the count and sets the run bit, so an all-ones write is accepted and a model that treats a written 1 as no change matches it. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and later code never writes it, so whether a level timer interrupt needs this clear to deassert is open.
+Timer status. The HAL also stores all ones here once while setting up the timer, after it loads the count and sets the run bit, so an all-ones write is accepted and a model that treats a written 1 as no change matches it. It does not read it back there. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and later code never writes it, so whether a level timer interrupt needs this clear to deassert is open.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
@@ -105,11 +111,23 @@ Timer status. The HAL also stores all ones here once while setting up the timer,
 
 ### Register `cpu_timeval`
 
-Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it with the run bit already set, in a second calibration pass, and reads the current count about one real-time-clock second later; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). The HAL never reads this register back. Addresses: the Cobalt README.
+Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once. The NT HAL writes all ones to it three times: once at set-up before the run bit is set, then twice more in the calibration loop (two passes, run bit already set), and each pass reads the current count about one real-time-clock second later, of which only the last is used; it takes all ones minus that count as the rate, rounded to the nearest 10,000, with no range test. For that to measure one second the write must set the running count at once, not only a reload that waits for the next expiry (software expectation; the hardware behaviour is inferred). The HAL never reads this register back. Addresses: the Cobalt README.
 
 ### Register `cpu_timecur`
 
 Timer current value. The NT HAL's timer calibration reads it after starting the timer with a reload of 0xffffffff and takes the fall as the tick count over one RTC second (halborg.dll 1.3, HalpCalibrateCobaltTimer); it counts down.
+
+### Register `cpu_cacheop_ctl`
+
+Cache-operation request, used by the NT HAL's cache flush routine. It first waits for bit 16 to clear, then stores the line count (the byte length rounded up to 32-byte lines, at most 0xffff per request) in bits 15:0 with bit 16 set (start), and bit 18 set as well when the caller asks for invalidate and the HAL's invalidate flag is set. The address goes to cpu_cacheop_addr first. The HAL does not use these registers on the reduced revisions. The bit meanings come from this use only; nothing says what the operation does on the bus.
+
+### Register `cpu_cacheop_addr`
+
+Start address of the cache operation requested through the cache-operation request register (cpu_cacheop_ctl). The HAL stores it immediately before the request word and never reads it.
+
+### Register `cpu_cacheop_busy`
+
+Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine polls bit 16 of the request register the same way before it starts a new one.
 
 ### Register `mem_ecc`
 
@@ -118,6 +136,14 @@ Memory controller control. At timer set-up the HAL also stores 0 here and 0 in t
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 0 | `ecc_enable` | established |  |  | 1 enables ECC checking. |
+
+### Register `mem_period`
+
+Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed value. The meaning is from that use only.
+
+### Register `mem_counter`
+
+Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
 
 ### Register `mem_err_status`
 
@@ -130,6 +156,12 @@ Memory error address, printed by the HAL as the address of the error.
 ### Register `mem_err_syndrome`
 
 Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write.
+
+### Register `mem_bank`
+
+Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the limit of the PROM's decode loop. The self-test writes 3, 2 or 0; the main module reads them: bit 2 absent or bad, bit 0 populated, bit 1 128 MiB.
+
+Array of 16 registers, stride 8.
 
 ## Constants
 

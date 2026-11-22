@@ -1,6 +1,6 @@
 /* generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 78866ce3821efd7401690def7766490d0c09af2ced32a4f16cd02982ce35da1f */
+/* input sha256 d45cdc023d3e7d9a2820df7908c327302868d4f367e78f5bacb44c0a03abb1ee */
 /* Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them */
 #ifndef LITHIUM_GEN_H
 #define LITHIUM_GEN_H
@@ -213,9 +213,9 @@
 #define LITHIUM_BRIDGE_40_OFFSET                     0x40u /* inferred */
 
 /*
- * Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read. Whether the register is writable is unknown (only read).
+ * Bus numbers behind the bridge. Linux reads it as a 16-bit value from each bridge's window and keeps the low byte as that bridge's PCI bus number, then scans that bus. The header comment says low byte primary, high byte subordinate; the high byte is never read by Linux. It is writable: the NT HAL read-modify-writes it (clears and sets the low byte for the primary number, then the next byte for the subordinate number) and the PROM stores its two bytes separately in its bus numbering. The self-test also reads and restores the dword that holds it, in bridge B only.
  */
-/* bus_number: r16, space bridge, reset unknown */
+/* bus_number: rw16, space bridge, reset unknown */
 #define LITHIUM_BUS_NUMBER_OFFSET                    0x44u /* inferred */
 #define LITHIUM_BUS_NUMBER_SUBORDINATE_SHIFT         8 /* inferred */
 #define LITHIUM_BUS_NUMBER_SUBORDINATE_MASK          0xffu
@@ -225,7 +225,7 @@
 #define LITHIUM_BUS_NUMBER_PRIMARY_INPLACE           (LITHIUM_BUS_NUMBER_PRIMARY_MASK << LITHIUM_BUS_NUMBER_PRIMARY_SHIFT)
 
 /*
- * Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable (it tests the 32-bit word that holds this register in its upper half, mask bits 29:24, and restores the old word), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked.
+ * Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked.
  */
 /* int_enable: rw16, space bridge, reset unknown */
 #define LITHIUM_INT_ENABLE_OFFSET                    0x46u /* established */
@@ -261,7 +261,7 @@
 #define LITHIUM_ERR_STATUS_OFFSET                    0x48u /* inferred */
 
 /*
- * Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared. The NT HAL never touches it.
+ * Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared, on bridge B only. The NT HAL never touches it.
  */
 /* bridge_58: rw32, space bridge, reset unknown */
 #define LITHIUM_BRIDGE_58_OFFSET                     0x58u /* inferred */
@@ -275,7 +275,7 @@
 #define LITHIUM_DMA_CTL_STRIDE                       4
 
 /*
- * Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, dword register in 7:2. Used by the HAL and, from the first instruction after reset, by the PROM boot block on bridge B. The PROM self-test checks that bits 23:2 can be set and cleared.
+ * Configuration address for a type 1 cycle on the bridge's own bus and the buses behind it: bit 31 set, bus in 23:16, device in 15:11, function in 10:8, dword register in 7:2. Used by the HAL and, from the first instruction after reset, by the PROM boot block on bridge B. The PROM self-test checks, on bridge B only, that bits 23:2 can be set and cleared; it reads the old value first and restores it.
  */
 /* cfg_addr: rw32, space bridge, reset unknown */
 #define LITHIUM_CFG_ADDR_OFFSET                      0xf8u /* established */
