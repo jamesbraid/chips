@@ -83,7 +83,7 @@ distribution that do touch it are in the same section.
 | 5 | `SCRATCH1` `0x1_101d_0080`, read | claim; the wait loop only for an entry that was not claimed | **0** on the first read (established: 0, or any word with bit 41 or bit 39 set and bits 55:54 clear, lets the claim go on; non-zero otherwise stalls the claim 300 s and then forces bit 41; bits 55:54 non-zero makes the PROM skip the claim entirely, which is the "already prepared" model, not S1) | each read | a read that returns bits 55:54 set before any write: the claim was skipped and the stand-in is not programmed |
 | 6 | `0x1_5003_1550`, `0x1_5003_1540`, write | claim | accept; expected data 0 | each write | none |
 | 7 | `SCRATCH1`, write | claim | accept; expected value `0x0040008000000000` for q = 0 or `0x0080008000000000` for q = 1 (bit 39, plus bit `54 + q`: only port q is up) | the write | a value with bit 41 only: the claim timed out |
-| 8 | `SCRATCH2` `0x1_101d_0100`, read | `0xffa8d120`, from `shub_discover` | low byte `0x6c`; bits 34:26 rack, 25:20 bay, 15:8 partition; **must differ from A's** (A's is `0x0410006c` for rack 1 bay 1; use `0x0420006c`, bay 2, the same partition byte; stand-in choice) | the read | a read failure prints "shub_discover: sysctl_get_pushed_data failed", and a stand-in that returns A's value is dropped as the same chip |
+| 8 | `SCRATCH2` `0x1_101d_0100`, read | `0xffa8d120`, from `shub_discover` | low byte `0x6c`; bits 34:26 rack, 25:20 bay, 18:16 slab, 15:8 partition; **must differ from A's in the geoid key** (A's is `0x0410006c` for rack 1 bay 1 slab 0). For the second node of one brick use A's rack, bay and partition with slab 1: `0x0411006c` (the shape the brick's L1 writes; [A second node that runs its own PROM](#a-second-node-that-runs-its-own-prom-the-two-node-brick)). `0x0420006c` (bay 2) also passes and was the earlier stand-in choice | the read | a read failure prints "shub_discover: sysctl_get_pushed_data failed", and a stand-in that returns A's value is dropped as the same chip |
 | 9 | `0x1_5003_1580`, read | only the wait loop and the barrier, neither of which includes a claimed stand-in | storage | each read | a read means the stand-in was waited for: its flags lack `0x10000` |
 | 10 | NI tables: local `0x1_5002_2000 + k * 0x1000 + 8 * i` (i < 128), global `+0x400` (16), override `+0x480`; memory `0x1_5002_4000`, `+0x400`, `+0x480`; I/O `0x1_5002_0000`, `+0x400`, `+0x480`; processor `0x1_5002_1000`, `+0x400`, `+0x480`; k = 0, 1 | `0xffa5e880` (distribution), vector writes; read-back first when the entry's NASID is final | accept; read back what was written | every write: address, value | writes to NI tables with a valid bit (63) in an entry other than 0 and A's and the stand-in's own: a route to a third node |
 | 11 | `0x1_5003_03a0 + k * 0x200` (read-modify-write, OR `0x100`, or `0x101` when the port record's bit 5 is set), `0x1_5003_0400 + k * 0x200` (`(v & ~0xff00) | 0xc000` only when A has no router), flow registers `0x1_5003_03c0`, `03d0`, `03e0`, `03f0` (read-modify-write, mask clears) | distribution; `0xffa5d850` | storage with read-back | each access | none |
@@ -111,6 +111,43 @@ destination is the neighbouring node, 0 when it is the neighbouring router, both
 this page: the claimed stand-in is **not** inert after distribution (the node set-up and its latch run against it at
 progress 0x23, and the board walk reads the peer's memory), and a stand-in that publishes its own word with bit 22 set is
 excluded from every election and barrier, so a passive stand-in can be the other model.
+
+## A second node that runs its own PROM (the two-node brick)
+
+Read on 2026-11-22 in the same image (Ghidra decompiles of `0xffa8d120`, `0xffa5df20`, `0xffa5d2a0`, `0xffa7d010`, `0xffa7d510`, `0xffa7d760`, `0xffa7d950`, `0xffa7ca10`, `0xffa7cbe0`, `0xffa7ce90`, `0xffaac4b0`, `0xffa11ab0`, `0xffa450e0`, `0xffa4d390`; the `ia64-linux-gnu-objdump` listing for call order). Nothing was run. The Altix 3300 and 3700 C-brick holds two nodes joined by one internal NUMAlink ([altix-3000.md](../../../platforms/sn2/altix-3000.md)); both run this PROM. S1 above is the case where node B is a passive register file. Here B executes the same code as A. Timeline of the `SCRATCH1` events: [boot-sequence.md](boot-sequence.md#when-each-node-publishes-bits-5455-and-22-execution-order).
+
+**Identity of one node (what its own PROM derives; established).** In `main` (call `0xffaac4b0(2, nasid)` at `0xffa19d8c`) the node asks its own system controller over its own UART window (the request carries no node selector: the L1 tells the nodes apart by the link the request arrives on), caches the answers per node object (`0xffa81510` lookup, `0xffa81630` store) and builds the 12-byte local geoid:
+
+| Field | L1 request | Site | Lands in |
+|---|---|---|---|
+| rack, bay, type | `0x0003` (word: rack bits 15:6, bay 5:0; second integer the type letter) | `0xffa7ca10`, folded by `0xffa7d510` (`5`, `o`, `m`, `@` to `c`), packed by `0xffa7d010` | module word `rack << 16 \| type << 8 \| bay`, so rack 1 bay 1 type `c` is `0x00016301` |
+| slot | `0x0013` (first integer) | `0xffa7d760` via `0xffa80270` | geoid bits 47:44 |
+| slab | `0x000e` (one integer, a signed byte) | `0xffa7d950` via `0xffa802f0` | geoid bits 43:40 |
+| partition | `0x0009` | `0xffa7db00`, call at `0xffa19dec` | record byte `+5`, the same byte `SCRATCH2` bits 15:8 carries |
+
+So the **slab is the SHub's index in the brick**: node 0 of a C-brick answers `0x000e` with 0 and node 1 with 1 over its own UART ([altix-3000.md](../../../platforms/sn2/altix-3000.md) names node 0 as slab 0). The same reply feeds `SCRATCH2` bits 18:16 when the L1 writes that register at reset (`(shub & 0xf) << 16`, [prom-reset.md](../../../devices/shub/prom-reset.md)); `0xffa8d120` reads bits 18:16 (3 bits), 38:35 (4 bits, the slot nibble), 34:26 and 25:20 (rack, bay) and 15:8 (partition), packs type `c` (99) fixed, and ORs a flag when bit 19 is set (`0xffaac0a0` stores a 1 in a RAM record byte; its reader was not traced). Established.
+
+**What the neighbour sees, and what must agree (established code; the consequences inferred).**
+
+1. A reads B's `SCRATCH2` in `0xffa5df20`, after the claim test `0xffa5d2a0` returned non-negative: for a claimed node and for one found "already prepared" (bits 55:54 non-zero) alike. The geoid built from it is compared with every table entry by `0xffa11ab0`: low 32 bits (rack, bay, type; bits 15:8 masked), then the slot nibble, then the slab (signed), then the kind. Equal means the same chip and nothing is added.
+2. A's own entry is built from L1 answers, B's from `SCRATCH2`, and each node also meets *itself* through the loop-back crawl. For that dedup, and for the two entries to differ, the L1 answers and `SCRATCH2` of each node have to agree: `0x0003` rack, bay and a type that folds to `c`; `0x0013` equal to `SCRATCH2` bits 38:35; `0x000e` equal to bits 18:16. A C-brick's L1 reports type `5` (folded to `c`).
+3. The two entries differ only by slab, so they are one brick's two nodes; the partition byte is the same. A lower slab compares lower (`0xffa450e0` inserts a negative compare in front): **slab 0 is first in the list and gets NASID 0, slab 1 gets NASID 2** from `0xffa4d390` with the default `NASIDOffset` 0 and `NASIDStride` 2 (type-1 entries in list order; the stride arithmetic is in `0xffa149c0`, whose body was not read: the 0, 2 rule is the earlier reading). Each node runs the same numbering on its own list, so both reach the same assignment if both lists hold both entries. Node B then installs NASID 2 in its own `SHUB_ID` (`0xffacd2b0`) and runs the NASID-change block of `main_three` that node A skips.
+4. A passive B that A has claimed (S1) gets its NASID, tables and `SHUB_ID` from A's distribution instead; its `SCRATCH2` still has to carry its slab.
+
+**Router module word (S2 row 7) for comparison.** `0xffa668b0` builds the router's `SCRATCH0` from the same three L1 requests (`0xffa80dd0` module id in bits 31:0, `0xffa81170` slab `& 0xf` at bit 32, `0xffa80f90` slot `& 0xf` at bit 42), so a router's L1 plays the same role as a node's.
+
+**Per-node accesses before the neighbour exists (summary of the order, established).** Own `SCRATCH2` pre-loaded by the L1; L1 requests `0x0003`, `0x0013`, `0x000e`, `0x0009`, `0x0001` (rows 3 to 7 of the request list in [boot-sequence.md](boot-sequence.md#the-l1-requests-from-reset-to-the-end-of-memory-set-up-with-arguments)); first `SCRATCH1` publication; crawl; count; wait; bit 22; elections; barrier; numbering; distribution; barrier; NASID install.
+
+**What B's hardware and L1 must present for A to come out right.**
+
+| # | Item | Value | Grade |
+|---|---|---|---|
+| 1 | B's `SCRATCH2` at A's read | low byte `0x6c`; A's rack, bay and partition; slab 1; bits 38:35 equal to B's `0x0013` answer (0 for racks below 512); bit 19 clear | established (decode); the L1's own write is established in the sysco repository |
+| 2 | B's L1 over B's UART | `0x0003`, `0x0013`, `0x000e` (= 1), `0x0009` consistent with row 1; replies per [l1-requests.md](l1-requests.md) | established |
+| 3 | B's `SCRATCH1` when A's crawl reads it | non-zero with bits 55:54 = B's port-up mask at B's own publication (bit `54 + q` for the internal link on B's port q), bit 20, and **no** bit 39, 41 or 22 | established (the claim test); inferred (that this is what real hardware shows at that moment) |
+| 4 | the link | `LLP_STAT` low nibble 9 on A's port p and B's port q by the time of each node's first publication (progress 22 in `main`); otherwise the claim test stalls 300 s | established (code); unknown (when hardware trains the link) |
+| 5 | B's chip word `0x1_0000_0000` | part `0x4363`, bit 56 = q | established (S1 row 1) |
+| 6 | B as a barrier participant | B must run its half of the tree and global barriers, since its word has no bit 22 at A's read | established |
 
 ## S2: a stand-in NL4 router on a linked port
 
@@ -451,14 +488,50 @@ not hardware) went past the rows above. Each item says what in the image confirm
   S2 option (b) also assumes). A stand-in that wants the crawl to end at it must either leave port q down in its own
   `LLP_STAT` (then the claim does not happen) or loop the request back as the run did.
 
+## Address bit 32 and the router registers the PROM reads before writing (SAL 5.04)
+
+Read on 2026-11-22 in the same image (Ghidra decompiles of `0xffa0bd20`, `0xffa0c560`, `0xffa66460`, `0xffa67220`, `0xffa668b0`; the listing for the address tests). The names are the Linux v5.3 SHub 1 header's (`SH1_*_MMR_OFFSET` in `arch/ia64/include/asm/sn/addrs.h`, `SH_SHUB_ID` in `shub_mmr.h`).
+
+**What bit 32 selects (established as code and as the Linux expectation).** Every SHub 1 register offset the PROM uses has bit 32 set (`0x1_xxxx_xxxx`). The two access routines test it in the argument address, route 0 only (`tbit` at `0xffa0bda6` in the read, `0xffa0c5e6` in the write): with bit 38 of the argument clear they form `0x8000_0008_0000_0000 | nasid << 38 | address` (bit 63 uncached, bit 35 the global MMR window, `0x8_0000_0000`) and
+
+| Bit 38 of the argument | Bit 32 | Address issued |
+|---|---|---|
+| clear | set | the address as given: the SHub's own register block |
+| clear | clear | the address plus `0x180_0000` (widget 1, offset `0x80_0000`): the small-window path |
+| set | either | bit 38 cleared, nothing added (the form the PROM uses for router register numbers) |
+
+Linux does the same for a remote SHub 1 register: `SH1_IS_BIG_WINDOW_ADDR(x)` is `x & BWIN_TOP` with `BWIN_TOP` = `0x1_0000_0000`; set goes straight through `GLOBAL_MMR_ADDR`, clear goes to `NODE_SWIN_BASE(n, 1) + 0x800000 + x`, and `0x180_0000` is `1 << 24` plus `0x80_0000`. For the local window the Linux offset is `0x80_0000_0000` (bit 39), for the global window `0x8_0000_0000` (bit 35). So, for the node: **bit 32 set means the register block of the SHub itself; clear means the small-window path through widget 1.** A stand-in must decode `0x1_xxxx_xxxx` as its registers.
+
+With a non-zero route the same two routines send a vector request and mask the address with `0x7_ffff_fff8` (bits 34:3), so bit 32 reaches the remote chip unchanged inside the request's `ADDRESS` field and bit 38 is dropped ([vector request](../../../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it)). The neighbour must treat that address like a local offset. **For a router, the one access read here that carries bit 32 is the chip-word read** (`0xffa46a50` passes the constant `0x1_0000_0000` at `0xffa46b36`, the same for node and router); every other router address in the S2 tables is a register number below `0x1000_0000` with no bit 32. So the router must answer the `0x1_0000_0000` read with register 0 (`STATUS_REV_ID`, part `0x239`), by ignoring bit 32 or by decoding it: **inferred** (software expectation: the crawl requires part `0x239` from this read, `0xffa0f7e0`); the hardware decode is **unknown**.
+
+**Router registers the PROM reads before it writes them, and what it needs (all reset values `unknown` in the register table; the PROM's dependence is graded here).** Router register numbers as in S2; each is a vector read on the router's route.
+
+| Register | Read at | What the PROM does with the value | Value it relies on | Grade |
+|---|---|---|---|---|
+| `SCRATCH0` `0x1000` | `0xffa668b0` (twice, around the lock) | non-zero means "already advertised": no set-up, no mark | 0 until the PROM writes it | established (test); inferred (reset 0) |
+| `SCRATCH3_ALIAS` `0x1038` | `0xffa9a6f0` | lock: bit 0 clear means free | bit 0 clear at reset | established (test); inferred (reset) |
+| `GLOBAL_PARM1` `0x20` | `0xffa66460`, once, when `SCRATCH0` was 0 | read-modify-write clearing bits 20:16 and 12:8 | none (other bits preserved) | established; any reset works |
+| port `+0x18d0`, `+0x1840` (ports 1 to 8) | `0xffa66460` | read-modify-write: low 6 bits of each byte of `+0x18d0` cleared and bit 0 set, bit 29 of `+0x1840` set | none (other bits preserved) | established; any reset works |
+| `GLOBAL_PARM0` `0x10` | `0xffa67220` (insert) | bit `16 + n` of the value becomes bit 5 of port n's record; that bit adds `0x1` to the flow-register write of the node's port set-up (row 11 of S1) | bits 23:16 read 0 unless a dateline is meant | established (use); inferred (reset 0) |
+| port `+0x2200` | `0xffa67220`, after writing 1 to `+0x2208` | link flag set when chip-word bit `32 + n - 1` is set **and** bit 0 here is clear | bit 0 clear after the clear write (so `+0x2208` must clear it) | established (test); the clear semantics of `+0x2208` inferred from the name |
+| `PROTECTION_CONFIG` `0x1003018` | `0xffa67220` (only when `SCRATCH0` bit 40 is set), the table writer `0xffa67cb0` and the fence routine `0xffa69d20` (read-modify-write) | bits 21:8 become the router's id when bit 40 is set (else `0xffff`); bit `n` of the low byte zero sets port n's record bit 1 (fenced) | bits 7:0 and 21:8 zero at reset on a fresh router | established (use); inferred (reset 0) |
+| `PORT_RST_MASK` `0x1003020 + 8 * i` | `0xffa69d20` | read-modify-write | none (preserved) | established |
+| `RTC_SOURCE` `0x1001900` | `nl4r_config_global` (`0xffaaab20`), after `nl4r_init_global` or the first-time set-up wrote it | read-modify-write of the select nibbles | what the earlier write left: `0x888888888` after first-time set-up | established |
+| port counters `+0x18a0` | `0xffa66fb0` (link-quality check) | a rise of more than 50 between reads fails the step | constant | established |
+| L1 mailbox `0x30` bit 0, `0x40` bit 0 | S2 row 6 | busy and receive-ready tests | bit 0 of `0x30` clear when idle; bit 0 of `0x40` clear when empty | established (tests) |
+
+A router model therefore needs: `SCRATCH0` 0, lock free, `GLOBAL_PARM0` bits 23:16 zero, `PROTECTION_CONFIG` zero, port `+0x2200` bit 0 clear, and plain storage for every other register it writes; it does not need any other reset value. The reset values themselves stay **unknown** until a capture or the router's own documentation settles them (route: the router's register description in a published SGI router guide, or a read of a router at power-up with the owner's approval).
+
 ## Unknown, and the route that would settle it
 
 - What reply types 4 and 5 are, and whether a route error gives one of them: the image only groups them with link errors
   ([the vector request](../../../devices/router_nl4/node-access.md#shub-1-sal-504-the-vector-request-as-the-image-sends-it));
   route: the SHub 2 image's decoder of the vector status, or a hardware capture (needs the owner's approval).
-- The router's decode of address bit 32. The L1 mailbox framing and the PROM's wait per request are now read ([the
+- The router's decode of address bit 32 (the PROM sends a node's and a router's chip-word read with the same address, [below](#address-bit-32-and-the-router-registers-the-prom-reads-before-writing-sal-504)). The L1 mailbox framing and the PROM's wait per request are now read ([the
   mailbox section](#the-routers-l1-mailbox-s2-row-6)); still unknown are the other bits of the mailbox status registers and
   the hardware's queueing; route: the L1's scan-chain side (`JTAG_UART_read`, `JTAG_UART_write`) in the sysco repository, or a capture.
+- When the internal link between the two nodes of a brick is trained, and which NI port of each node it uses; route: a capture of `LLP_STAT` on both nodes around the memory probe, or the training sequence in SAL_A and PAL (not traced).
+- What the bit-19 flag of `SCRATCH2` does (`0xffaac0a0` sets a RAM record byte); route: that byte's readers.
 - What `0` and `4` select in a node's direction tables, and the meaning of `POSITION`: route: the node table-write
   routines (`0xffa5e880`, `0xffa5e510`) read against the SHub 1 header names, and the Linux `sn_hwperf` heap.
 - What slots 5 and 6 leave unread on a claimed stand-in ([the section above](#what-the-prom-does-to-a-claimed-remote-node-class-slots-5-and-6-and-the-board-walk)):

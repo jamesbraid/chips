@@ -430,7 +430,7 @@ through slot `0x168` and decodes it in the port-fill method `0xffa5e0b0` into th
 | 41 | the same exception and park paths; `0xffa5d2a0` forces it when its wait times out | `0x1010000` (with `0x10000`) unless debug-word bit 8 is set | "took an exception, disabled" |
 | 46 to 49 | `0xffa46530`, from an L1 request (`0xffa7fab0`) | byte `+0x3c` | printed as "ShrMode"; meaning inferred from the print |
 | 50 to 53 | `0xffa46530`, from the environment variable `force_coarse` (when debug-word bit 5 is clear) | byte `+0x3d` | printed as "Syssize"; inferred |
-| 54, 55 | `0xffa5d6a0` ("shub_port_status"): bit p = port p has a link | port-record link bit | the node's own view of which ports are up; established |
+| 54, 55 | `0xffa5d6a0` ("shub_port_status"): bit p = port p has a link. Two writers: the node itself in `0xffa46530` (live mask of its own ports, chip slot `0x1b0`), and a claiming neighbour in `0xffa5d2a0` (the mask it probed through the vector path) | port-record link bit | the node's own view of which ports are up; established. Non-zero here is also what makes a neighbour skip the claim (see [the timeline](#when-each-node-publishes-bits-5455-and-22-execution-order)) |
 | 56 | latch at `0xffa1a6d0` (test and set under lock 0x11); bits 57 and 40 by node-object method 5 | none read | unknown |
 | 58 | the twin routine `0xffa60a70` for the TIO chip type | `0x2000000` | TIO marker; inferred (no SHub 1 writer) |
 
@@ -443,6 +443,26 @@ through slot `0x168` and decodes it in the port-fill method `0xffa5e0b0` into th
 (128 tries each, then -1). Result 1 sets bit p of the 54:55 mask. The register at `0x1_5000_0010 + (p << 13)`
 (`LLP_RESET_EN`, reset 1) is read only by `0xffa5e0b0`, only when bit 40 of the neighbour's word is set, and a clear bit 0
 becomes port-record bit 1 (port fenced); established for the access, inferred for the meaning of the bit.
+
+### When each node publishes bits 54:55 and 22 (execution order)
+
+Read on 2026-11-22 in the same image (Ghidra decompiles of `0xffa46530`, `0xffa47870`, `0xffa5d2a0`, `0xffa5d6a0`, `0xffa5e0b0`, `0xffa4d390`; the `ia64-linux-gnu-objdump` listing for the order of calls, which the decompiler does not preserve: the compiler placed blocks out of address order, so the order below follows branches and progress-code arguments, not addresses). Chip method slots in the SHub 1 class table at `0xffbd7c18`: `0x168` = `0xffa959d0` (read `SCRATCH1`), `0x170` = `0xffa96920` (write it), `0x1b0` = `0xffa5d6a0` (port-up mask), `0x1c0` = `0xffa5df20`, `0x1c8` = `0xffa5e0b0`. Established unless marked.
+
+| # | Where | Event on this node's own `SCRATCH1` (or on a neighbour's) | Read by |
+|---|---|---|---|
+| 1 | `main`, after progress 22 (DIMM probing), only on the first slice (`0xffa0ff30` returns 1); call at `0xffa1a37c` | **First publication, whole word.** `0xffa46530` stores a freshly built word: bits 54+q for every up local port (live `shub_port_status`: `LLP_ERR`, `LLP_STAT` nibble 9, the `0x1_5000_1040` counters), bit 20 always, bits 16, 18, 19, 21, 46 to 53 and 23 to 38 as in the table above; bits 15:0, 17, 22, 39, 40, 41 are 0. A whole-word store, so it also erases anything a neighbour wrote earlier (a claim's bit 39 and mask) | the neighbour's crawl (row 4) and its claim test |
+| 2 | `main`, progress 24 and 25, then the jump to RAM `0xffac6bb0` into `main_two` | nothing on `SCRATCH1` | |
+| 3 | `main_two`, progress 28 (`0xffa1b0cc`), `0xffa47870`, first slice only | the crawl `0xffa47290`; per neighbour, the claim test `0xffa5d2a0` reads the neighbour's word: bits 55:54 non-zero returns at once (nothing written, "already prepared"); word 0, or bit 39 or 41 set, claims it (bit 39 and the mask `54 + q` written, see above); any other non-zero word polls every 10 ms up to 300 s of RTC, then forces bit 41. **So a self-publishing peer whose word has bit 20 but no bits 55:54 (its port was not yet up at row 1) stalls the crawl 300 s and then ends up flagged `0x1010000`.** The word is then decoded once, at insert, by `0xffa5e0b0` (bit 22 becomes flag `0x800000`, bits 55:54 the port-record link bits, bit 40 selects NASID source) | |
+| 4 | `0xffa47870`, after the crawl returns | read-modify-write: bits 15:0 := object count (the record count at `+0x10`); "Waiting for peers" loop (live reads of each peer's bits 15:0, 41, 39 and its `0x1_5003_1580` counter, no use of bit 22); then read-modify-write `| 0x400000`: **bit 22**; "Discovery results" | peers' wait loops (bits 15:0); peers' crawl decode (bit 22) only if their read happens after this point |
+| 5 | `main_two`: `0xffa48560`, the two master elections `0xffa445b0` and `0xffa44660`, `0xffa44ba0`, then the first global barrier call `0xffa1b14c` | barrier mailbox bit 17 on each node's own word, set and cleared in two phases (`0xffa43d20`) | peers' barrier waits |
+| 6 | `main_two`, progress 29 (`0xffa1b24c`): `0xffa4d390` (NASID numbering), `0xffa5b5d0` (distribution), second barrier `0xffa1b1ac`, progress 30, NASID install `0xffacd2b0` | the distribution writes a *claimed* neighbour's tables and `SHUB_ID`; an unclaimed peer programs itself | |
+| 7 | `main_three`, after the NASID install (`0xffa4eb40`) | bit 40 ("NASID final"); bit 56 latch and bits 57 and 40 of the node set-up on claimed neighbours later | |
+
+Ordering consequences (the first is code, the rest follow from it, **inferred**):
+
+- A node's bit 22 is set only after its own wait loop has seen every unflagged peer's count, and a peer writes its count only after its own crawl (row 4). So in the symmetric case, where both nodes run this firmware, node A's crawl read of node B (row 3) always sees B's word without bit 22: B enters A's candidate arrays, the elections and both barriers, and B has to play its half of them. Bit 22 reaches a reader only when the *writer is a stand-in that publishes it before the reader's crawl* (the passive case, [numalink-neighbours.md](numalink-neighbours.md#barriers-master-election-and-the-stages-after-distribution-with-a-second-node), row 2).
+- The claim path (neighbour word 0) is a race against the neighbour's row 1: a claimed node that later runs row 1 overwrites the claim. The symmetric case therefore wants both nodes to reach row 1 with the link already up (`LLP_STAT` nibble 9 on the shared link at progress 22), or the crawl stalls 300 s.
+- Whether the link is trained by progress 22 on hardware is **unknown**; route: a capture of both nodes' `LLP_STAT` before and after the memory probe, or the SAL_A and PAL sequence that trains it (not traced).
 
 ### The crawl step, in order (established, `0xffa45780`)
 
