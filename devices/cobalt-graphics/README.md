@@ -133,5 +133,5 @@ the routines read), I2C, flat-panel logic, DDC, the audio, 1394 and USB blocks.
 
 The unknowns are in [the open questions](../../questions/cobalt-graphics-open.md): the packet format and the rendering
 engine's unread register range, the cursor and video-capture programming, what the chip set's second interrupt
-register at `0xca000000` carries, the I2C bit positions, the reset values of every register, and which ASIC hosts the display
+register at `0xca000000` carries, the reset values of every register, and which ASIC hosts the display
 back end (Arsenic is inferred).

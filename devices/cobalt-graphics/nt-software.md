@@ -29,8 +29,8 @@ names quoted in these pages are the vendor's own.
 
 `DriverEntry` first asks the HAL for system information through the HAL dispatch table, class `0x8100001`, 16 bytes
 back. If the answer is not success it prints "cobalt: Not an SGI HAL" and does not attach. So the NT HAL on these
-machines is SGI's, and answers a query no stock HAL answers. What it returns is unknown. The route is the HAL image on
-a held system disk. Software expectation.
+machines is SGI's, and answers a query no stock HAL answers. What it returns is read in the HAL: three cache-flush
+routine pointers and the cache-operation-invalidate flag ([nt-hal.md](../../software/visws/nt-hal.md#the-sgi-specific-hal-interface)). Established for the HAL's side, software expectation for the driver's use.
 
 `CobaltFindAdapter` then claims `0xd0000000` to `0xd008001f` with `IoAssignResources`, reads the chip revision at
 `0xc2000008` (accepted if the high nibble is `0xa` and the low nibble is neither 0 nor 8), and stores it. The revision

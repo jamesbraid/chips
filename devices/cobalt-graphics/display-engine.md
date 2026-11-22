@@ -20,7 +20,7 @@ any register: neither driver reads one before writing, and both only ever see a 
 |---|---|---|---|---|
 | `0x000` | ctrlstat | chip ID in `[3:0]` (read by Linux as a constant field), `SENSE_N` `[4]`, `PCLKSEL` `[29:28]`. NT writes `0x30000000` as the last step of every mode set; Linux writes `0x20000000` before programming and `0x30000000` afterwards if bit 25 reads set. Linux treats `PCLKSEL` below 2 as "not scanning out from the internal dot clock". Meaning of bit 25 unknown | L, N | software expectation |
 | `0x004` | dotclock | PLL: `M` `[7:0]`, `N` `[13:8]`, `P` `[15:14]`, `RUN` `[20]`. Both drivers write `M-1` and `N-1`. Output is 27 MHz times `M` over `N`, divided by 2 to the `P`; reproduces the clock column of 26 of the 27 NT table rows to within 1.4 percent (see below) | L, N | software expectation (fields), inferred (formula) |
-| `0x008` | i2c | CRT I2C lines (DDC). NT's `CoDDC_GetEDID` reads an EDID over it. Bit positions unknown | L, N (name only) | unknown |
+| `0x008` | i2c | CRT I2C lines (DDC). NT's `CoDDC_GetEDID` reads an EDID over it. Bit 0 SDA, bit 1 SCL, 1 pulls the line low (see below) | L, N | established (NT) |
 | `0x00c` | sysclk | system clock PLL. Neither driver touches it | L (name only) | unknown |
 | `0x010` | i2cfp | flat-panel I2C lines, bit-banged. See below | L, N | software expectation |
 | `0x014` | id | NT refuses to attach unless it reads `0x666` | N | software expectation |
@@ -122,8 +122,15 @@ Flat-panel presence and type are read over I2C through `i2cfp` (`+0x10`): `mli2c
 device `0x71` (read address). The panel ID is bits `[7:5]` of that byte. `5` is the SGI 1600SW digital panel (1600 by
 1024), which Linux uses as `FLATPANEL_SGI_1600SW`. Bit 2 of the status byte is power-save: NT's
 `mli2cFlatPanelPowerSave` sets it when the panel is to sleep. The routines drive SCL and SDA by write-ahead masks held
-in a context record, so the bit positions in the register are not visible in the driver code read. Software
-expectation for the byte layout; unknown for the line bits.
+in a context record that the callers fill in, which is where the bit positions come from. Established (`sgcomp.sys` 5.2.4,
+the bit-bang routines `i2cHWSetSCL`, `i2cHWSetSDA`, `i2cHWGetSCL`, `i2cHWGetSDA` at `0x1cae6` to `0x1cb7a` and their two
+context builders `mli2cFlatPanelStatus` and `CoDDC_GetEDID`, read in full): in both I2C registers, `+0x08` for the monitor
+and `+0x10` for the flat panel, **bit 0 is SDA and bit 1 is SCL**; writing a bit as 1 pulls its line low and writing 0 lets
+it float high, and reading a bit gives 1 when the line is low (inverted sense, open-drain). The same register is both the
+write and the read-back location. The DDC reader (`CoDDC_GetEDID`, `0x1d182`) tries the three device write addresses
+`0xa2`, `0xa6` and `0xa0` in that order (reading `0x100`, `0x100` and `0x80` bytes), each up to three times, so an EDID of
+one or two blocks is accepted; the flat-panel status device is at write address `0x70` and read address `0x71`
+(`mli2cFlatPanelSetStatus`, `mli2cFlatPanelStatus`). Reset values stay unknown.
 
 ## Mode table
 

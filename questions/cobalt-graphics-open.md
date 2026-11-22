@@ -32,8 +32,6 @@ Status: **unknown** for everything below. What is established and what software 
   the `0x80000` capture words are named by Linux and untouched by Linux and by the NT miniport routines read. Where NT
   puts gamma and how the 2D cursor is drawn is unresolved. Route: the display driver `sgcodd.dll` (it may draw the
   cursor itself and send gamma as engine packets) and the Windows 2000 driver.
-- **I2C bit positions.** Which bits of `+0x08` and `+0x10` are SCL and SDA, and the polarity. Route: `i2cTransfer` and
-  its context set-up in `sgcomp.sys`.
 - **PLL and clock.** The `sysclk` register (`+0x0c`), the purpose of the one-second PLL restart in NT's mode set, and
   `ctrlstat` bit 25.
 - **Pixel order.** Whether 32-bit pixels are red-first in memory (Linux) or red in the top byte of the word (NT's
@@ -41,5 +39,3 @@ Status: **unknown** for everything below. What is established and what software 
   pixel-format table's users in `sgcodd.dll`.
 - **Memory banks.** How the firmware chooses and passes the graphics memory split ("profile") and the bank list NT reads
   from `SGICtrl\Memory`. Route: the PROM and the NT loader on a system disk.
-- **SGI HAL query.** What the HAL returns to the class `0x8100001` query that `DriverEntry` makes. Route: the SGI HAL
-  image on a held NT disk.
