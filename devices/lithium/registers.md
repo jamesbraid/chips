@@ -1,6 +1,6 @@
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 54a43e69300a6826905d64ebdf4107626a8df0731e7019264517aa75d3188b1f -->
+<!-- input sha256 69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516 -->
 
 # Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 
@@ -34,10 +34,10 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `comm2_cfg` | 0x114 | rw | 32 |  | audio | unknown | inferred |  |
 | `ust_low` | 0x200 | r | 32 |  | audio | unknown | established |  |
 | `ust_high` | 0x204 | r | 32 |  | audio | unknown | established |  |
-| `audio1_ust` | 0x300 | r | 32 |  | audio | unknown | inferred |  |
-| `audio1_msc` | 0x304 | r | 32 |  | audio | unknown | inferred |  |
-| `audio2_ust` | 0x308 | r | 32 |  | audio | unknown | inferred |  |
-| `audio2_msc` | 0x30c | r | 32 |  | audio | unknown | inferred |  |
+| `audio1_ust` | 0x300 | r | 32 |  | audio | unknown | established |  |
+| `audio1_msc` | 0x304 | rw | 32 |  | audio | unknown | established |  |
+| `audio2_ust` | 0x308 | r | 32 |  | audio | unknown | established |  |
+| `audio2_msc` | 0x30c | rw | 32 |  | audio | unknown | established |  |
 | `bus_number` | 0x44 | r | 16 |  | bridge | unknown | inferred |  |
 | `int_enable` | 0x46 | rw | 16 |  | bridge | unknown | established |  |
 
@@ -49,7 +49,7 @@ Audio link controller. The driver resets the codec link by writing reset, waitin
 |---|---|---|---|---|---|
 | 15 | `reset` | established |  |  | 1 asserts the codec reset (the driver's comment calls it the active-low reset signal). |
 | 14 | `link_enable` | established |  |  | 1 takes the codec link out of reset after the reset pulse. |
-| 2 | `link_failure` | inferred |  |  | Name only (LI_HC_LINK_FAILURE). |
+| 2 | `link_failure` | established |  |  | Link failure. The NT audio driver's link check (HwCheckLink) reads the halfword at offset 0 and treats the link as good when this bit is 0; it is the only bit that driver tests. |
 | 1 | `link_codec` | inferred |  |  | Name only (LI_HC_LINK_CODEC). |
 | 0 | `link_ready` | inferred |  |  | Name only (LI_HC_LINK_READY). |
 
@@ -94,12 +94,12 @@ Input DMA control and pointers. The two low bytes are the write and read pointer
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
 | 31 | `reset` | inferred |  |  | 1 resets the channel; the driver writes it alone before setting up. |
-| 30:28 | `size` | inferred |  |  | Ring size code: the driver writes log2(ring bytes) minus 6, so 7 for 8 KiB. Codes below 2 are not used. |
-| 27 | `dma_enable` | inferred |  |  | 1 runs the channel. |
+| 30:28 | `size` | established |  |  | Ring size code: log2(ring bytes) minus 6. Linux writes 7 for 8 KiB; the NT driver writes 7 for an 8 KiB ring and 6 (4 KiB) for any other size it is configured with, and its default is 8 KiB. Codes below 2 are not used by Linux. |
+| 27 | `dma_enable` | established |  |  | 1 runs the channel. The NT driver sets it last, after the base, configuration and size, and clears it again when it stops an input channel. |
 | 26:24 | `tmask` | inferred |  |  | Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff. |
 | 23:16 | `tptr` | inferred |  |  | Trigger pointer, 32-byte chunks. |
-| 15:8 | `rptr` | inferred |  |  | Read pointer, 32-byte chunks. Software on input. |
-| 7:0 | `wptr` | inferred |  |  | Write pointer, 32-byte chunks. Hardware on input. |
+| 15:8 | `rptr` | established |  |  | Read pointer, 32-byte chunks. Software on input. The NT driver accesses it as the byte at offset +1 (hardware on output, software on input). |
+| 7:0 | `wptr` | established |  |  | Write pointer, 32-byte chunks. Hardware on input. The NT driver reads and writes it as the byte at offset +0 of the register (software on output, hardware on input). |
 
 ### Register `comm1_cfg`
 
@@ -109,9 +109,9 @@ Input DMA configuration.
 |---|---|---|---|---|---|
 | 15 | `lock` | inferred |  |  | Name only; the driver clears it. |
 | 6:4 | `slot` | inferred |  |  | Serial slot of the codec the channel uses; the driver writes 2 for both channels. |
-| 3 | `direction` | inferred |  |  | 1 output, 0 input. |
-| 2 | `mode` | inferred |  |  | 1 stereo, 0 mono. |
-| 1:0 | `format` | inferred |  |  | 0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. |
+| 3 | `direction` | established |  |  | 1 output, 0 input (NT driver: set for the output channel only). |
+| 2 | `mode` | established |  |  | 1 stereo, 0 mono (NT driver: set when the format has two channels). |
+| 1:0 | `format` | established |  |  | 0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match. |
 
 ### Register `comm2_base`
 
@@ -135,19 +135,19 @@ High word of the same counter. The driver reads it before and after the other wo
 
 ### Register `audio1_ust`
 
-Time stamp of the input channel's last sample counter update.
+Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter.
 
 ### Register `audio1_msc`
 
-Input media stream counter: samples processed as of audio1_ust.
+Input media stream counter: samples processed as of audio1_ust. The NT driver writes zero to it when it starts input with no pending counter pair, so it is writable.
 
 ### Register `audio2_ust`
 
-Time stamp for the output channel.
+Time stamp for the output channel, read the same way as audio1_ust.
 
 ### Register `audio2_msc`
 
-Output media stream counter.
+Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable.
 
 ### Register `bus_number`
 
@@ -177,6 +177,7 @@ Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes 
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
+| `AUDIO_DMA_CHANNELS` | 0x7 | inferred |  | Number of DMA channel register sets. The NT audio driver carries a seven-entry table, indexed by channel, of the register offsets of each set: each set repeats comm1_base, comm1_ctl and comm1_cfg at a 12-byte stride and each time-stamp and counter pair repeats audio1_ust and audio1_msc at an 8-byte stride (the table is listed in the Lithium page). The driver uses entries 0 (input) and 1 (output), matching Linux. That channels 2 to 6 exist in hardware is inferred from the table alone. |
 | `AUDIO_PAGE1` | 0xff00f000 | established |  | Second audio page; one undocumented word far into the page is zeroed when output stops (see the device page). |
 | `AUDIO_PAGE2` | 0xff010000 | established |  | Third audio page; two undocumented words (copies of the DMA pointers) are zeroed when output stops (see the device page). |
 | `AUDIO_PHYS` | 0xff001000 | established |  | Physical base of the audio engine's first register page. |

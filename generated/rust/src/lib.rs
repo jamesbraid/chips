@@ -1,6 +1,6 @@
 // generated from devices/ and formats/ by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 3bc1a408fafe6cf5864c6097f8385dd80cd441ac765df9f53f7ca213d26c3880
+// input sha256 a0d7dab500a6589bf7193d18d7d6eb09e9933fc413ef1204675bf5197ff9706e
 #![no_std]
 pub mod aic7880;
 pub mod bedrock;

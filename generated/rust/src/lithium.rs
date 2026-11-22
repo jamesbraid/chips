@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 54a43e69300a6826905d64ebdf4107626a8df0731e7019264517aa75d3188b1f
+// input sha256 69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -28,7 +28,7 @@ pub mod host_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod link_failure { // bits 2:2, inferred
+    pub mod link_failure { // bits 2:2, established
         pub const SHIFT: u32 = 2;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -178,7 +178,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod size { // bits 30:28, inferred
+    pub mod size { // bits 30:28, established
         pub const SHIFT: u32 = 28;
         pub const MASK: u32 = 0x7;
         pub const fn get(v: u32) -> u32 {
@@ -188,7 +188,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod dma_enable { // bits 27:27, inferred
+    pub mod dma_enable { // bits 27:27, established
         pub const SHIFT: u32 = 27;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -218,7 +218,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod rptr { // bits 15:8, inferred
+    pub mod rptr { // bits 15:8, established
         pub const SHIFT: u32 = 8;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -228,7 +228,7 @@ pub mod comm1_ctl {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod wptr { // bits 7:0, inferred
+    pub mod wptr { // bits 7:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0xff;
         pub const fn get(v: u32) -> u32 {
@@ -263,7 +263,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod direction { // bits 3:3, inferred
+    pub mod direction { // bits 3:3, established
         pub const SHIFT: u32 = 3;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -273,7 +273,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod mode { // bits 2:2, inferred
+    pub mod mode { // bits 2:2, established
         pub const SHIFT: u32 = 2;
         pub const MASK: u32 = 0x1;
         pub const fn get(v: u32) -> u32 {
@@ -283,7 +283,7 @@ pub mod comm1_cfg {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
-    pub mod format { // bits 1:0, inferred
+    pub mod format { // bits 1:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0x3;
         pub const fn get(v: u32) -> u32 {
@@ -319,22 +319,22 @@ pub mod ust_high {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x204;
 }
-/// Time stamp of the input channel's last sample counter update. (inferred)
+/// Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equa (established)
 pub mod audio1_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x300;
 }
-/// Input media stream counter: samples processed as of audio1_ust. (inferred)
+/// Input media stream counter: samples processed as of audio1_ust. The NT driver writes zero to it when it starts input with no pending counter pair, so  (established)
 pub mod audio1_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x304;
 }
-/// Time stamp for the output channel. (inferred)
+/// Time stamp for the output channel, read the same way as audio1_ust. (established)
 pub mod audio2_ust {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x308;
 }
-/// Output media stream counter. (inferred)
+/// Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable. (established)
 pub mod audio2_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30c;
@@ -449,6 +449,7 @@ pub mod int_enable {
         }
     }
 }
+pub const AUDIO_DMA_CHANNELS: u32 = 0x7; // inferred
 pub const AUDIO_PAGE1: u32 = 0xff00f000; // established
 pub const AUDIO_PAGE2: u32 = 0xff010000; // established
 pub const AUDIO_PHYS: u32 = 0xff001000; // established

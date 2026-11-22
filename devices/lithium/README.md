@@ -30,7 +30,7 @@ Each bridge's window starts with a standard PCI configuration header (the kernel
 0 and 2). Two bridge-specific registers are used, both 16 bits, both outside the standard header (the kernel's comment
 is "Not a standard PCI?"):
 
-- **Bus number** at `0x44`. The low byte is the bus the kernel scans for this bridge. The code reads only the low
+- **Bus number** at `0x44`. The NT HAL *writes* this word (second reading: [nt-hal.md](../../software/visws/nt-hal.md#pci-numbering-and-resource-assignment)): when the byte at window `+0x08` is above zero, the low byte gets the HAL's bus number for the bridge and the next byte the highest bus behind it, and the status halfword at `+0x06` is cleared with `0xf800`; when that byte is zero the bus number goes in the top byte of `+0x40` instead. So the number is the OS's to set; the HAL gives bridge B (window `0xfd000000`) bus 0 and bridge A bus 1 (established for the NT HAL). The low byte is the bus the kernel scans for this bridge. The code reads only the low
   byte. The 2.4 scan reads bridge B's value and scans bus 0 and that bus; the 2.6 scan reads both and scans both. The
   two disagree about which bridge is bus 0: 2.6 treats bridge B's number as the PIIX4's bus and bridge A's as the other,
   and 2.4 prints B's number as the second bus. A post by an SGI engineer says "the second PCI bus, normally bus one". So
@@ -126,8 +126,34 @@ Read in Ghidra for its hardware access only ([driver inventory](../../software/v
 - It never connects an interrupt (the driver imports no connect-interrupt call): it uses a timer and a deferred call, so
   NT does not depend on Cobalt entry 22 for audio. Whether entry 22 is the audio line is therefore still Linux's word only.
 
-Not traced in the NT driver: the DMA control and configuration registers, the status and mask bits, the media-stream
-counters.
+### The DMA engine as the NT driver programs it (second reading)
+
+Read in Ghidra with SGI's debug symbols (`sgisound.sys` 5.2.2, build time 2001-10-29: `sndStartDMA` at `0x113f2`, `sndStopDMA`,
+`sndLoadDMABuffer`, `sndIoctlGetPosition`, `HwAssignDmaOffsets`, `HwInitializeCodec`, `GetLiUstMscPair`). All register access goes
+through two small routines, `READ_LITHIUM` and `WRITE_LITHIUM` (offset, width 1, 2 or 4, in the first mapped page). Established:
+
+- **Seven channel register sets, two used.** `HwAssignDmaOffsets` copies one row of a seven-row table into the channel state: base, control,
+  configuration, time stamp, counter, and the byte offsets of the read and write pointers. Rows: base `0x100 + 0xc * n`, control `+4`,
+  configuration `+8`, time stamp `0x300 + 8 * n`, counter `+4` after it, for n = 0 to 6 (so `0x100` to `0x150` and `0x300` to `0x334`); the
+  read-pointer byte is control `+1` and the write-pointer byte control `+0`. The driver gives input row 0 and output row 1, the same as
+  Linux's two channels. That rows 2 to 6 exist in the silicon is inferred from the table only.
+- **Start (`sndStartDMA`).** Output only first clears the enable bit and writes the control word, and zeroes the two words at `+0x98` and
+  `+0x9c` of the second page (`0xff010000`); both directions then write the ring base (physical address shifted right 8, bit 29
+  set), the configuration word (format `0` for 8-bit and `1` for 16-bit in bits 1:0, stereo in bit 2, output in bit 3; other bits as the
+  shadow copy holds them), then the control word with the size code in bits 30:28 (7 for the default 8 KiB ring, 6 otherwise) and, last,
+  the enable bit 27 set. The silence word (`0x80808080` for 8-bit, `0` for 16-bit) is written to `0xff00f000 + 0x500` before the
+  enable. The driver keeps a shadow copy of every register it writes and ORs bits into the shadow, so it never reads configuration
+  or control back.
+- **Pointers.** Rings are 8 KiB (4 KiB for the other size code) of contiguous memory aligned to 256 bytes, in 32-byte steps. The driver
+  writes the software pointer as a single byte (`(write position - base) >> 5` for output, read position for input) and reads the
+  hardware pointer as a single byte (control `+1` for output, `+0` for input), always as one-byte accesses.
+- **Counters.** `GetLiUstMscPair` forms a 64-bit time stamp from the time-stamp word of the channel and the global `ust_high`, re-reading `ust_high` until
+  it is stable, and returns the channel's counter beside it. The driver zeroes the output counter at start when the pair is unset
+  (and the input counter on input), so both counters are writable.
+- **Link check.** `HwCheckLink` reads the halfword at offset 0 and says the link is good when bit 2 is clear.
+- **What the NT driver never touches.** The interrupt status and mask words at `+0x10` and `+0x14`, any trigger pointer or trigger mask, the
+  channel reset bit, and the configuration slot and lock bits. Those stay Linux-only (`inferred`). The driver runs off a timer and a
+  deferred procedure (`SoundOutTransferDpc`, `SoundInTransferDpc`), polling the pointers.
 
 ### Window offsets beyond the audio file (sgilivid.sys 5.2.2)
 
@@ -146,7 +172,7 @@ bits is turned into controller lines is in the [interrupt page](../../platforms/
 
 | Unknown | Route |
 |---|---|
-| Which bridge has bus 0; the actual bus numbers | A boot log of Linux 2.6 on a real machine (the kernel prints both); a PROM |
+| What bus numbers a boot leaves in the bridge words under Linux or a firmware that numbers them itself | A boot log of Linux 2.6 on a real machine (the kernel prints both); a PROM. (The NT HAL numbers B as 0 and A as 1 and writes them itself.) |
 | Type 1 decode across two bridges; memory and I/O window routing | PROM, NT HAL, the Lithium specification |
 | Error reporting, parity, master abort | Same |
 | Reset state of the interrupt enables and the bridge header | Same |

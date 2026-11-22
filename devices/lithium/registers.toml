@@ -49,7 +49,7 @@ doc = "Audio link controller. The driver resets the codec link by writing reset,
 [registers.host_ctl.fields]
 link_ready = { bits = [0, 0], grade = "inferred", doc = "Name only (LI_HC_LINK_READY)." }
 link_codec = { bits = [1, 1], grade = "inferred", doc = "Name only (LI_HC_LINK_CODEC)." }
-link_failure = { bits = [2, 2], grade = "inferred", doc = "Name only (LI_HC_LINK_FAILURE)." }
+link_failure = { bits = [2, 2], grade = "established", doc = "Link failure. The NT audio driver's link check (HwCheckLink) reads the halfword at offset 0 and treats the link as good when this bit is 0; it is the only bit that driver tests." }
 link_enable = { bits = [14, 14], grade = "established", doc = "1 takes the codec link out of reset after the reset pulse." }
 reset = { bits = [15, 15], grade = "established", doc = "1 asserts the codec reset (the driver's comment calls it the active-low reset signal)." }
 
@@ -114,12 +114,12 @@ grade = "inferred"
 doc = "Input DMA control and pointers. The two low bytes are the write and read pointers in 32-byte chunks; for the input channel the hardware advances the write pointer and software the read pointer. The driver reads and writes each pointer as a single byte, at the first and second byte of this register."
 
 [registers.comm1_ctl.fields]
-wptr = { bits = [7, 0], grade = "inferred", doc = "Write pointer, 32-byte chunks. Hardware on input." }
-rptr = { bits = [15, 8], grade = "inferred", doc = "Read pointer, 32-byte chunks. Software on input." }
+wptr = { bits = [7, 0], grade = "established", doc = "Write pointer, 32-byte chunks. Hardware on input. The NT driver reads and writes it as the byte at offset +0 of the register (software on output, hardware on input)." }
+rptr = { bits = [15, 8], grade = "established", doc = "Read pointer, 32-byte chunks. Software on input. The NT driver accesses it as the byte at offset +1 (hardware on output, software on input)." }
 tptr = { bits = [23, 16], grade = "inferred", doc = "Trigger pointer, 32-byte chunks." }
 tmask = { bits = [26, 24], grade = "inferred", doc = "Trigger mask: an interrupt fires when the hardware pointer and the trigger pointer agree after masking the low (8 minus this) bits. 0 means a mask of 0xff." }
-dma_enable = { bits = [27, 27], grade = "inferred", doc = "1 runs the channel." }
-size = { bits = [30, 28], grade = "inferred", doc = "Ring size code: the driver writes log2(ring bytes) minus 6, so 7 for 8 KiB. Codes below 2 are not used." }
+dma_enable = { bits = [27, 27], grade = "established", doc = "1 runs the channel. The NT driver sets it last, after the base, configuration and size, and clears it again when it stops an input channel." }
+size = { bits = [30, 28], grade = "established", doc = "Ring size code: log2(ring bytes) minus 6. Linux writes 7 for 8 KiB; the NT driver writes 7 for an 8 KiB ring and 6 (4 KiB) for any other size it is configured with, and its default is 8 KiB. Codes below 2 are not used by Linux." }
 reset = { bits = [31, 31], grade = "inferred", doc = "1 resets the channel; the driver writes it alone before setting up." }
 
 [registers.comm1_cfg]
@@ -131,9 +131,9 @@ grade = "inferred"
 doc = "Input DMA configuration."
 
 [registers.comm1_cfg.fields]
-format = { bits = [1, 0], grade = "inferred", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement." }
-mode = { bits = [2, 2], grade = "inferred", doc = "1 stereo, 0 mono." }
-direction = { bits = [3, 3], grade = "inferred", doc = "1 output, 0 input." }
+format = { bits = [1, 0], grade = "established", doc = "0 is 8-bit unsigned (the engine xors each byte with 0x80), 1 is 16-bit two's complement. The NT driver derives the value from the sample size (8 gives 0, 16 gives 1) and writes the silence word 0x80808080 or 0 to match." }
+mode = { bits = [2, 2], grade = "established", doc = "1 stereo, 0 mono (NT driver: set when the format has two channels)." }
+direction = { bits = [3, 3], grade = "established", doc = "1 output, 0 input (NT driver: set for the output channel only)." }
 slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the channel uses; the driver writes 2 for both channels." }
 lock = { bits = [15, 15], grade = "inferred", doc = "Name only; the driver clears it." }
 
@@ -182,34 +182,35 @@ space = "audio"
 offset = 0x300
 access = "r"
 width = 32
-grade = "inferred"
-doc = "Time stamp of the input channel's last sample counter update."
+grade = "established"
+doc = "Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter."
 
 [registers.audio1_msc]
 space = "audio"
 offset = 0x304
-access = "r"
+access = "rw"
 width = 32
-grade = "inferred"
-doc = "Input media stream counter: samples processed as of audio1_ust."
+grade = "established"
+doc = "Input media stream counter: samples processed as of audio1_ust. The NT driver writes zero to it when it starts input with no pending counter pair, so it is writable."
 
 [registers.audio2_ust]
 space = "audio"
 offset = 0x308
 access = "r"
 width = 32
-grade = "inferred"
-doc = "Time stamp for the output channel."
+grade = "established"
+doc = "Time stamp for the output channel, read the same way as audio1_ust."
 
 [registers.audio2_msc]
 space = "audio"
 offset = 0x30c
-access = "r"
+access = "rw"
 width = 32
-grade = "inferred"
-doc = "Output media stream counter."
+grade = "established"
+doc = "Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable."
 
 [constants]
+AUDIO_DMA_CHANNELS = { value = 7, grade = "inferred", doc = "Number of DMA channel register sets. The NT audio driver carries a seven-entry table, indexed by channel, of the register offsets of each set: each set repeats comm1_base, comm1_ctl and comm1_cfg at a 12-byte stride and each time-stamp and counter pair repeats audio1_ust and audio1_msc at an 8-byte stride (the table is listed in the Lithium page). The driver uses entries 0 (input) and 1 (output), matching Linux. That channels 2 to 6 exist in hardware is inferred from the table alone." }
 PCI_A_PHYS = { value = 0xfc000000, grade = "established", doc = "Physical window of bridge A, the one with the Ethernet device." }
 PCI_B_PHYS = { value = 0xfd000000, grade = "established", doc = "Physical window of bridge B, the one with the PIIX4." }
 AUDIO_PHYS = { value = 0xff001000, grade = "established", doc = "Physical base of the audio engine's first register page." }

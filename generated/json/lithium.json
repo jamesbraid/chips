@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "54a43e69300a6826905d64ebdf4107626a8df0731e7019264517aa75d3188b1f",
+ "input_sha256": "69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",
  "profile": "public",
@@ -40,7 +40,7 @@
    "name": "host_ctl.link_failure",
    "hi": 2,
    "lo": 2,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -214,7 +214,7 @@
    "name": "comm1_ctl.size",
    "hi": 30,
    "lo": 28,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -222,7 +222,7 @@
    "name": "comm1_ctl.dma_enable",
    "hi": 27,
    "lo": 27,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -246,7 +246,7 @@
    "name": "comm1_ctl.rptr",
    "hi": 15,
    "lo": 8,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -254,7 +254,7 @@
    "name": "comm1_ctl.wptr",
    "hi": 7,
    "lo": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -291,7 +291,7 @@
    "name": "comm1_cfg.direction",
    "hi": 3,
    "lo": 3,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -299,7 +299,7 @@
    "name": "comm1_cfg.mode",
    "hi": 2,
    "lo": 2,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -307,7 +307,7 @@
    "name": "comm1_cfg.format",
    "hi": 1,
    "lo": 0,
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -385,20 +385,20 @@
    "stride": 4,
    "space": "audio",
    "reset": "unknown",
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
    "kind": "register",
    "name": "audio1_msc",
    "offset": 772,
-   "access": "r",
+   "access": "rw",
    "width": 32,
    "count": 1,
    "stride": 4,
    "space": "audio",
    "reset": "unknown",
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -411,20 +411,20 @@
    "stride": 4,
    "space": "audio",
    "reset": "unknown",
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
    "kind": "register",
    "name": "audio2_msc",
    "offset": 780,
-   "access": "r",
+   "access": "rw",
    "width": 32,
    "count": 1,
    "stride": 4,
    "space": "audio",
    "reset": "unknown",
-   "grade": "inferred"
+   "grade": "established"
   },
   {
    "unit": "lithium",
@@ -530,6 +530,14 @@
    "name": "int_enable.inta_0",
    "hi": 0,
    "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "AUDIO_DMA_CHANNELS",
+   "value": 7,
+   "count": 1,
    "grade": "inferred"
   },
   {
