@@ -117,7 +117,7 @@ Order (established as code; the data-flow of the inputs is partly decoded):
 7. Write-everything mode only. `nl4r_init_global`, then lock (a failed lock prints `router lock 0x%lx from %I failed` and
    the routine carries on without it), then `PROTECTION_CONFIG` (`0x1003018`): read, bits 30:22 (nine `FORCE_LOCAL_LUT` bits:
    the local block and the eight ports) all set to bit 15 of the router's flag halfword (the PROM prints it as `floc`;
-   no code that sets it was found, so it reads 0 on every boot, inferred) and bits 21:8 (`NODE_ID`) set to the router's own NASID; written back.
+   set only by the three-level-topology case below, so 0 for a one- or two-router stand-in, inferred) and bits 21:8 (`NODE_ID`) set to the router's own NASID; written back.
    Then `SCRATCH0` (`0x1000`) read and bit 40 set (written back): a marker. What reads it is unknown. Then unlock (a
    failed unlock prints `distribute_numbers: router unlock 0x%lx from %I failed`).
 
@@ -133,8 +133,9 @@ input port; the local-block tables (step 3) belong to the router's own port. Ent
 ### Inputs of the table writer
 
 Read on 2026-11-21 in snprom 10.54, `0xffa67cb0` (SHub 1) and `0xff471a80` (SHub 2) as Ghidra decompiles and
-`ia64-linux-gnu-objdump` listings. The two writers are the same code (the listings differ by register numbering and by
-the address base `0x40_0000_0000` that the SHub 1 image adds to every router offset; the SHub 2 constants match). Their
+`ia64-linux-gnu-objdump` listings. The two writers are the same logic (the listings differ by register numbering, in places by instruction selection (a
+masked-instruction match ratio of 0.949 in the review), and by
+the address base `0x40_0000_0000` that the SHub 1 image adds to every router offset; the constants agree). Their
 distribution callers `0xffa5b5d0` and `0xff467320` match instruction for instruction once registers and addresses are
 masked. Not independently reviewed. **Established as code.** The writer passes nothing but the descriptor: of the four arguments the caller loads
 (descriptor, the count of router entries, and the two halfwords from `0xffa4d390`) the router writer reads only the
@@ -143,18 +144,21 @@ record the crawl built, node-table entry `+0x30`):
 
 | Input | Field | Effect in the writer | Set by |
 |---|---|---|---|
-| compare mode | byte `+0x2b` bit 0 | set: every table entry read first and written only on a difference, an entry equal to `VALID \| 0xf` skipped, no steps 6 and 7 (return after `LB_DATELINE`); clear: write-everything | `0xffa67220` (`0xff470ff0`) sets it when bit 40 of the word it is passed (`SCRATCH0` of the router) is set. Bit 40 of `SCRATCH0` is the marker step 7 of the writer sets at the end of a completed pass, so a router a PROM already programmed is compared on the next pass and a fresh router is written in full (established: both ends read; the word the insert gets is the one `cache_advert` returns, the `SCRATCH0` value it read or wrote) |
+| compare mode | byte `+0x2b` bit 0 | set: every table entry read first and written only on a difference, an entry equal to `VALID \| 0xf` skipped, no steps 6 and 7 (return after `LB_DATELINE`); clear: write-everything | `0xffa67220` (`0xff470ff0`) sets it when bit 40 of the word it is passed (`SCRATCH0` of the router) is set. Bit 40 of `SCRATCH0` is the marker step 7 of the writer sets at the end of a completed pass, so a router a PROM already programmed is compared on the next pass and a fresh router is written in full (established: both ends read; the word the insert gets is the one `cache_advert` returns, the `SCRATCH0` value it read or wrote). Reachability: `cache_advert` returns early on a non-zero `SCRATCH0` without setting `+0x2b` bit 1, but the insert still runs, and byte `+0x2b` is entry byte `+0x5b`, whose bit 0 makes `0xffa5b5d0` choose the router by the graph-equality test (index modulo count equals group) rather than by bit 1. So an already-programmed router is written in compare mode; that a second PROM pass over it happens is **inferred**, not traced |
 | meta router | halfword `+0x38` bit 0 | clear: six translation writes (step 6) and the multicast destination vector `0x4f90` written; set: two translation writes and `0x4f90` not written | `0xffa67220` from the router's register 0 `POSITION` pins (below) |
-| repeater router | halfword `+0x38` bit 1 | not read by the writer; read by the numbering (`0xffa4a740`, `0xffa4d390`), which counts only routers with bits 1:0 clear and walks through routers with bit 1 set | same, from register 0 bit 45 |
+| repeater router | halfword `+0x38` bit 1 | not read by the writer; read by the numbering: `0xffa4d3a0` counts routers with bit 0 clear (only when `RtrRoutes` is non-zero) and `0xffa4a740` counts routers with bits 1:0 clear and walks through routers with bit 1 set | same, from register 0 bit 45 |
 | level | halfword `+0x38` bits 14:12 | not read by the writer; the numbering's level, 7 when the pins give 0 | same |
-| `LB_DATELINE` | halfword `+0x38` bit 4 | written to `0x4000` as a 0 or 1 | never set by any store found (inferred 0) |
-| force local (`floc`) | halfword `+0x38` bit 15 | copied to the nine `FORCE_LOCAL_LUT` bits (30:22) of `PROTECTION_CONFIG`; also steers the in-memory route tables, which then put every destination in the 512-entry local table (`0xffa67650`) | never set by any store found (inferred 0) |
+| `LB_DATELINE` | halfword `+0x38` bit 4 | written to `0x4000` as a 0 or 1 | set by `0xffa49fc0`, a ring or loop detector (called from `0xffa4af7c` and `0xffa4c1ec`; SHub 2 `0xff4530c0`, `0xff453170`, `0xff4531d0`), which ORs `0x10` at `0xffa4a5e0`, `0xffa4a690` and `0xffa4a6f0` when it finds a loop through routers; 0 for a stand-in with no such loop (inferred: a single router, or two with no cycle) |
+| force local (`floc`) | halfword `+0x38` bit 15 | copied to the nine `FORCE_LOCAL_LUT` bits (30:22) of `PROTECTION_CONFIG`; also steers the in-memory route tables, which then put every destination in the 512-entry local table (`0xffa67650`) | set by `0xffa547e0` (entered at `0xffa547d0`, called at `0xffa5adbc`; SHub 2 `0xff460790`): `or r14=r45,r14; st2` at `0xffa54b70` with `r45` = -32768 from `0xffa54810`. The condition: a type-2 router at level 2 (test at `0xffa54a06`) none of whose eight neighbours is at level 2 (`0xffa54a96`) and with at least one neighbour in another group (the quotient compare at `0xffa54ac6`). That is a three-level topology; 0 for a one- or two-router stand-in (inferred) |
 
-Bits 1, 4 and 15 and the level: the discovery builds the descriptor on a zeroed stack record (`memset` of 72 bytes at
-`0xffa45940`), and the only stores found to the halfword are in `0xffa67220` (bits 0, 1 and 14:12), `0xffa4a740` (bits 14:12,
-preserving the rest) and `0xffa4c540` (bits 7:6 and 11:8, preserving the rest), so bits 4 and 15 stay 0 (**inferred**:
-the store search covered those three routines and the whole SHub 1 image only by their mask patterns; an unmasked
-whole-word store elsewhere would defeat it).
+Every writer of the halfword (established by a search for the load, modify and store sequences, not for mask patterns
+alone, since several are read-modify-write ORs of a constant): the discovery builds the descriptor on a zeroed stack
+record (`memset` of 72 bytes at `0xffa45940`); then `0xffa67220` (bits 0, 1 and 14:12), `0xffa4a740` (bits 14:12,
+preserving the rest), `0xffa4c540` (bits 7:6 and 11:8), `0xffa490f0` (bits 7:6 cleared and 11:8 set to `0xf` for each
+router, then for one record bit 6 set and 11:7 cleared: stores at `0xffa491a0` and `0xffa49210`), `0xffa517b0` (OR 8
+at `0xffa51d70`, `0xffa52000`, `0xffa52150`), `0xffa49fc0` (bit 4) and `0xffa547e0` (bit 15). The same `0xffa49fc0`
+ORs `0x20` into byte `+3` of a port record (stores near `0xffa4a566` and `0xffa4a736`), which is the per-port dateline
+flag the table writer collects, so that flag is **not** only what the router reported (see Unknown).
 
 **Where the pins go (established as code, `0xffa67220` at `0xffa6726c` to `0xffa672fc`).** With register 0 bits 45:44
 as `P1`, `P0` and bits 47:46 as `Q`:
@@ -206,7 +210,7 @@ node method's first instructions are the same in both images (`0xff46a580` again
 calls slot `0x1d0` with the object, its entering port, a pointer to the *next* object's descriptor or 0, the
 destination NASID and a value. The value is the turn `(out - in)` modulo the next object's port count (slot `0x188`:
 8 for a router, 2 for a SHub), so the entry in object X's own table, for that destination, is what **the next chip**
-will do (the Linux/MIPS SN2 header describes the field `SH_NI0_LOCAL_TABLE_DIR0` as "Direction field for next chip":
+will do (the Linux/MIPS tree's IA-64 SN2 header describes the field `SH_NI0_LOCAL_TABLE_DIR0` as "Direction field for next chip":
 `include/asm-ia64/sn/sn2/shub_mmr.h`, branch `linux-2.4`). The descriptor argument is non-zero only for the last
 call (the block at `0xffa552f0`, which also serves a one-hop path; the in-loop call at `0xffa54fd0` passes 0): there the
 value is replaced. The two calls at `0xffa55950` and `0xffa55a10` pass the entry argument `-1`: the multicast bytes.
@@ -246,7 +250,9 @@ for a router destination (a request that terminates in the router, such as an ac
 local-block tables are keyed by its own `NODE_ID` and carry their own direction, `DIR1`). In a two-node system
 with no router every entry for the peer is therefore `4`; with a router the entries in the nodes are turns at the router
 and the router's own last-hop entries are `4`. No source states the decode of `DIR0` in the receiving chip: **unknown**,
-and the `V0` bit and the override table are not written to by any value here.
+and the override table is not written by any value here. The `V0` (bit 4) and `V1` (bit 12) virtual-channel bits are
+set in the processor table's word by `0xffa5e880` when the neighbour on NI port 0 or 1 has part number `0x3017` (an NL3
+router), in the local and global tables alike.
 
 ### The route entry a hop writes (method slot `0x1e0`, `0xff4733a0`)
 
@@ -435,16 +441,17 @@ offset +28). Established as the guide's statements.
 
 ## Unknown
 
-- Where the upstream port in the walk record (offset 16) is first set. (The per-port dateline flag is settled: the
+- Where the upstream port in the walk record (offset 16) is first set. (The per-port dateline flag has two sources: the
   insert `0xffa67220` sets bit 5 of port `k`'s record byte `+0x2b` from bit `16 + k` of the router's own
-  `GLOBAL_PARM0`, and step 4 of the table writer writes the same bits back, so it rewrites what the router reported.)
+  `GLOBAL_PARM0`, and `0xffa49fc0` ORs the same bit when it finds a loop; step 4 of the table writer then writes the
+  collected bits to `GLOBAL_PARM0` when they differ.)
 - The encodings of the `RTC_SOURCE` select fields (what `0xf` means; whether the upstream port's own select matters).
 - What the `0x2008` timestamp write is for, and the node method at slot `0x160`.
 - Whether `0x1038` really is a read-and-set (inferred from the loop only). The timeout is 10,000,000 microseconds
   (10 s) in `nl4r_config_global` and 0 (one try) in the router's first-contact routine ([above](#router-access-from-a-shub-1-node-sal-504)).
 - The `POSITION` pin values of an R-brick in each plane (they pick the six-or-two translation writes and, through the
-  numbering, whether the PROM accepts the router), the source of bits 4 and 15 of the flag halfword (inferred never set),
-  and what `FORCE_LOCAL_LUT` and `LB_DATELINE` do in the router. The writer's inputs themselves are settled
+  numbering, whether the PROM accepts the router), the three-level topology and ring cases that set bits 15 and 4 of the flag halfword (set by `0xffa547e0`
+  and `0xffa49fc0`), and what `FORCE_LOCAL_LUT` and `LB_DATELINE` do in the router. The writer's inputs themselves are settled
   ([above](#inputs-of-the-table-writer)).
 - The order of the three router phases (table distribution, clock walk, fences) in one boot, and the fence routine.
 - What the direction nibble in a table entry selects: **partly settled** in the SHub 1 image, whose route programmer

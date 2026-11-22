@@ -22,9 +22,9 @@ Open items, each with the route that settles it:
 - The inputs of the table writer (`0xff471a80`) are settled as code
   ([inputs](../devices/router_nl4/global-config.md#inputs-of-the-table-writer)): compare mode from the router's
   `SCRATCH0` bit 40, six or two translation writes from the meta-router bit that the `POSITION` pins set, `floc` from
-  bit 15 of the flag halfword, the multicast `NODE_ID` arithmetic. Open: the `POSITION` value of an R-brick in each
-  plane, whether the numbering accepts a router with each pin value, and whether anything sets bits 4 and 15 of the
-  flag halfword. Route: the numbering routines `0xffa4a740` and `0xffa4c540` against a router stand-in.
+  bit 15 of the flag halfword (set by `0xffa547e0` in a three-level topology), `LB_DATELINE` from bit 4 (set by the loop
+  detector `0xffa49fc0`), the multicast `NODE_ID` arithmetic. Open: the `POSITION` value of an R-brick in each
+  plane, whether the numbering accepts a router with each pin value, and what `floc` and `LB_DATELINE` do in the router. Route: the numbering routines `0xffa4a740` and `0xffa4c540` against a router stand-in.
 - The `RTC_SOURCE` select encoding (`0xf` after initialisation), the `0x2008` timestamp and the node method behind it,
   the units of the router lock timeout, and whether `0x1038` is a read-and-set. Route: the node method at slot `0x160`
   (SHub 2 `0xff4ae400`); the encodings and units may have no software route.
