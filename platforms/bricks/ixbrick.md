@@ -18,7 +18,8 @@ also prints `IXbrick`. See [interconnect-naming.md](../../references/interconnec
 - **IX:** SGI, *IX-Brick Addendum*, `007-4604-001`, printed page numbers.
 - **PX:** SGI, *PX-Brick Addendum*, `007-4605-001`, page 3 (the same PIC drawing as IX Figure 2).
 - **U3900:** SGI, *Origin 3900 Server User's Guide*, `007-4653-001`, printed pages 67 to 69 (IX chapter) and 80 (PX chapter).
-- **ALTIX:** SGI, *Altix 3000 User's Guide*, `007-4579-001`, printed pages 105, 113 to 115, 118 and 126. The IX-brick in this guide sits in an Altix 3000, so every use below carries a transfer caveat for Origin 3000 and Onyx 3000.
+- **ALTIX:** SGI, *Altix 3000 User's Guide*, `007-4579-001`, printed pages 105, 113 to 115, 118, 120 and 126. The IX-brick in this guide sits in an Altix 3000, so every use below carries a transfer caveat for Origin 3000 and Onyx 3000.
+- **DRV:** SGI, *Linux Device Driver Programmer's Guide, Porting to SGI Altix Systems*, `007-4520-006`, printed pages 19, 38, 52 and 54 (figures 2-3, 3-1 and 5-1, and the widget numbers). Its figures are drawn for the PX-brick and the IX-brick with BaseIO card; see [the Altix 3000 wiring section](../sn2/altix-3000.md#ix-brick-wiring).
 - **ARCH:** SGI, *Origin 3000 System Architecture*, `108-0240-002`, printed pages 2-27 and 2-31, used only for port naming.
 - **NG-HINV:** a 2004 public newsgroup post with an Altix `hinv -v` and EFI listing. One user's report, not a capture of a specified machine.
 
@@ -33,11 +34,11 @@ also prints `IXbrick`. See [interconnect-naming.md](../../references/interconnec
 | The three PICs sit in the enclosure as drawn: the top PIC beside buses 6 and 5, the middle beside 4 and 3, the bottom beside 2 and 1. | established as drawn | IX p.4 (Figure 2) |
 | The middle PIC is the host-facing chip. Its upper Crosstown2 XIO port connects to its port A and its lower one to its port B. | established as drawn | IX p.4; the same drawing in PX p.3, U3900 p.67, ALTIX p.113 |
 | Each PIC drives its two buses through two separate lines from its `Port F`. A double-headed link joins the middle PIC's port D to the top PIC's port D, and another joins the middle PIC's port C to the bottom PIC's port D. Each downstream PIC has one link from the middle PIC. | established as drawn | IX p.4 |
-| Port A is `XIO 10` and port B is `XIO 11`. | inferred | The XBridge figures label the same ports `Port A (10)` and `Port B (11)` in ARCH pp.2-27 and 2-31. The addendum does not say which Crosstown2 box is which connector. |
+| Port A is `XIO 10` and port B is `XIO 11`. | established as drawn | DRV Figure 5-1 (p.52): `XIO link to Port 'A'` over `XIO 10`, and `Port 'B'` over `XIO 11`. Figure 5-1 is drawn for a PX-brick back panel, so the IX reading is carried across from the shared PIC drawing (inferred). ARCH pp.2-27 and 2-31 label the ports the same way (not re-read for this change). Which Crosstown2 box is which connector is inferred; see [the Altix 3000 wiring section](../sn2/altix-3000.md#ix-brick-wiring). |
 
-Unknown: what the single `Port F` label means when each PIC drives two bus lines,
-and which PIC is which connector. A widget scan or a cabling test on a real enclosure
-would settle both.
+Unknown: what the single `Port F` label means when each PIC drives two bus lines.
+The meaning is inferred (see the wiring section above) and no held text defines it.
+A cabling test on a real enclosure would settle which Crosstown2 box is `XIO 10`.
 
 ## PCI and PCI-X buses
 
@@ -89,8 +90,12 @@ dual-channel Ultra160 part. The Altix report is weaker than a capture of this pr
 the product revision of the IO9 is unknown, and the Altix report's revision is not
 to be copied to this product.
 
-Inferred, from a sibling platform: on that Altix IO9 the IOC4, SCSI and Ethernet
-functions sit at devices 1, 3 and 4 on bus 1, as on the Origin 350 IO9.
+Conflict, not settled: on that Altix IO9 the NG-HINV listing puts the SCSI at device 3
+and the Ethernet at device 4 on bus 1. The Origin 350 IO9 capture agrees when its logical
+numbers are read with the one-device offset ([the IO9 board page](../sn2/io9-board.md)).
+The DRV Figure 2-3 (p.19) labels the Ethernet `Bus 1 Slot 3` and the SCSI `Bus 1 Slot 4`,
+the reverse. Both readings stay inferred; see [the Altix 3000 wiring
+section](../sn2/altix-3000.md#ix-brick-wiring).
 
 Unknown: the QLogic revision and part for this product; the IOC4, BCM5701 and QLogic
 subsystem IDs; which IOC4 pins or functions drive RTI and RTO; whether the DVD-ROM's
@@ -127,8 +132,9 @@ and 698.5 mm). Weight 65 lb (29.5 kg). Power input +48 VDC on a 21-pin connector
 
 | Unknown | What would settle it |
 | --- | --- |
-| Meaning of the single `Port F` label per PIC; which Crosstown2 box is `XIO 10` and which is `XIO 11` | Widget scan or cabling test |
-| Widget numbers of the three PICs, their revisions and reset values | A capture from a real IX-brick |
+| Meaning of the single `Port F` label per PIC (inferred); which Crosstown2 box is `XIO 10` (inferred, the upper one) | A published PIC specification, or a cabling test |
+| Widget numbers 12, 13 and 15 are established as drawn for the Altix IX-brick; their revisions and reset values are not | A capture from a real IX-brick |
+| PCI device numbers of the IOC4, SCSI and Ethernet functions (conflicting readings) | A PCI listing from an IX-brick |
 | Head-to-bus-to-slot mapping and INTx wiring | PCI tree capture or board schematic |
 | QLogic revision and part for this product; IOC4 and BCM5701 revisions and subsystem IDs | PCI identification read, `hinv`, or an IO9 parts list |
 | IOC4 pins or functions that drive RTI and RTO; whether the DVD-ROM's IDE link is the IOC4 ATA function | Board schematic or PCI function listing |

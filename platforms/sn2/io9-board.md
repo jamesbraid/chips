@@ -65,6 +65,11 @@ Which SCSI channel of the ISP 12160 drives the external VHDCI connector, and whi
 - **Altix placement.** The IOC4 at device 1, the ISP 12160 at device 3 and the BCM5701 at device 4 are the Altix's
   expected numbering, **inferred** from the sibling and from the PROM's window rule on
   [the base I/O page](altix-350-base-io.md#devices-on-the-pics-buses). Not established for the Altix.
+- **Conflict with the Altix IX-brick.** The IX-brick driver figure (007-4520-006 Figure 2-3, p.19) labels the Ethernet `Bus 1
+  Slot 3` and the SCSI `Bus 1 Slot 4`, which reverses devices 3 and 4 for these two parts. The NG-HINV listing of an Altix IO9
+  agrees with this page's reading (QLogic at device 3, BCM5701 at device 4). Both cards carry the name IO9; that they
+  are the same card is not established. Neither reading is chosen here; see [the Altix 3000 wiring
+  section](altix-3000.md#ix-brick-wiring).
 - **Interrupts.** Captured on the Origin 350 as logical interrupt inputs 0 (IOC4), 2 (ISP 12160) and 3 (BCM5701). The Altix
   PROM maps device `d` INTA to PIC pin `d - 1` ([PIC page](../../devices/pic/README.md#which-pic-pin-an-inta-to-intd-lands-on-and-what-sal-call-0x02000057-returns-snprom-1054-and-443-shub-1)), which gives the same 0, 2 and 3 for devices 1, 3 and 4
   (established rule; the device placement stays inferred).
