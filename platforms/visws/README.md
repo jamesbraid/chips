@@ -19,8 +19,8 @@ Linux does", and use the table below for what rests on what.
 ## Sources by origin
 
 Count of graded items in the register definitions ([Cobalt](../../devices/cobalt/registers.toml),
-[Lithium](../../devices/lithium/registers.toml); 99 registers, fields and constants) before and after checking each against
-the shipped Windows software:
+[Lithium](../../devices/lithium/registers.toml); 99 registers, fields and constants at the first count, 102 now) before and after checking each against
+the shipped Windows software. The rows are the first count; the paragraph after the table gives the changes since:
 
 | Origin of the item | Cobalt | Lithium | What happened |
 |---|---|---|---|
@@ -29,7 +29,9 @@ the shipped Windows software:
 | Shipped binary differs or measures instead | 2 | 0 | The core clock rate (the HAL measures it) and the first IDE entry (the HAL uses 1, 4 or 5 by board generation). Linux's value re-rated `inferred`. |
 | Only Linux states it | 5 | 36 | Re-rated `inferred`, a software expectation of Linux: 30 `established` items became `inferred` on the Lithium page (six were already `inferred`) and four on the Cobalt page (one was already). |
 
-Linux-only items by group: the processor limit; the audio and the two unused graphics-engine interrupt entries (22, 24, 25);
+Since that count (second reading of the HAL and the audio driver): twelve Lithium items moved from "only Linux" to "Linux and a shipped binary agree" and are `established` again (the audio DMA pointer, size, enable, format, mode and direction fields, the link-failure bit, and the four time-stamp and counter registers); three new items have only a shipped binary behind them (two Cobalt control-register fields, bits 0 and 1 of the CPU control word, and the count of audio DMA channel sets). So the Lithium column is now 38 / 0 / 0 / 24 and the Cobalt column 26 / 4 / 2 / 5 with two new binary-only items.
+
+Linux-only items by group (first count; the audio ring-buffer control and configuration fields and the time-stamp and counter words are no longer on it): the processor limit; the audio and the two unused graphics-engine interrupt entries (22, 24, 25);
 the bridge bus-number word; the audio interrupt status and mask bits; the audio ring-buffer control and configuration
 registers; the audio time-stamp and media-stream counters; the bridge PCI ids; the DMA chunk size. The shipped audio driver
 was read for the codec access path and the ring base register only, so the control and configuration registers are

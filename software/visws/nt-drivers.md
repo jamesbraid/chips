@@ -28,7 +28,7 @@ The setup files are the stock NT 4.0 ones edited by SGI (every changed line is m
 
 - Alpha, MIPS and PowerPC source lists, the old x86 HALs' loader entries and `ntdetect.com`/`setupldr.bin` are commented
   out. The only computer types are `sgiborg_up` and `sgiborg_mp`; the machine identifiers are listed in
-  [boot-path.md](boot-path.md). Setup's HAL-load step names `arcsetup.exe`, with a comment saying it is a placeholder.
+  [boot-path.md](boot-path.md). Setup's HAL-load step names `arcsetup.exe`, with a comment saying it is a placeholder. The file is not one: `arcsetup.exe` is the ARC build of NT's text-mode setup loader (its strings carry the stock setup loader's source names `arcdisp.c`, `arcdtect.c`, `oemdisk.c`, `parseini.c` and `setup.c`, it loads `setupreg.hiv`, `sgiusb00.sys` and the storage drivers, and it reaches the firmware only through the vectors listed in [boot-path.md](boot-path.md)); the firmware runs it in place of `arcldr.exe` when booting the install CD (inferred from the setup file's loader table; the CD's boot sequence was not traced).
 - `halbrgup.dll` becomes `hal.dll` for the uniprocessor type and `halborg.dll` for the multiprocessor type. A second table lists
   `halborg.dll` for both types (its use was not read).
 - Display: `sgcomp` ("Cobalt Graphics") is the only entry in the display map, with `sgcodd.dll`; its registry device
@@ -41,7 +41,7 @@ The setup files are the stock NT 4.0 ones edited by SGI (every changed line is m
 
 ## Audio: `sgisound.sys` 5.2.2
 
-Hardware access is in [devices/lithium](../../devices/lithium/README.md#what-sgis-nt-audio-driver-confirms-sgisoundsys-522).
+Hardware access is in [devices/lithium](../../devices/lithium/README.md#what-sgis-nt-audio-driver-confirms-sgisoundsys-522), including the DMA control, configuration and counter registers (read in full with SGI's symbols, second reading).
 It does not enumerate PCI: it maps three fixed Lithium pages and reports its own resource use. Imports no interrupt-connect
 call. Established.
 
@@ -110,8 +110,4 @@ unknown; the driver says nothing about either. `RadDVDev.sys` and its libraries 
 
 ## Still to read
 
-In order: the audio driver's DMA control and configuration registers (settles the rest of the Lithium audio register file);
-the HAL's interrupt-level translation for the internal bus (settles level versus entry for the video lines); the registry
-values the graphics miniport reads and the HAL writes for the video and audio hardware (`HalpFixupRegistry`); `arcsetup.exe`,
-the setup placeholder; the Windows 2000 builds of all of the above; and the second install CD's driver set when it is
-reached.
+In order: the registry values the graphics miniport reads and the HAL writes (the HAL's are listed in [nt-hal.md](nt-hal.md#registry-values-the-hal-writes); the miniport's reads are not); the Windows 2000 builds of the drivers (unpacked, not read); the `sgiusb00.sys` / `sgiu.inf` pair on the Windows 2000 CD (cabinet-compressed, not opened); the SGI video boot driver `sgibvid.dll` of Windows 2000; and the second install CD's driver set when it is reached. Done since the first reading: the HAL's interrupt-level translation (level is the Cobalt entry), `arcsetup.exe`, and the audio driver's DMA registers.
