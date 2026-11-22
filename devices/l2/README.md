@@ -50,7 +50,7 @@ sysco's.
    open and 127-byte chunks (`snsc.c`, `sn_sal.h`, Linux v5.3). The kernel names the target by node, not by L2; the PROM
    owns the route. What the PROM itself sends an L2 is read: the text commands `version` (a probe), `p <partition> rst` and
    `p <partition> pwr d`, all to destination word `0x1ffff003` through its own L1, and the L1 answers a routing error when no
-   L2 is attached ([software/firmware/snprom/l1-requests.md](../../software/firmware/snprom/l1-requests.md), "Requests after boot"; sysco
+   L2 is attached (and the PROM sends `* rst` or `* pwr d` to its own L1 only when its partition is 0) ([software/firmware/snprom/l1-requests.md](../../software/firmware/snprom/l1-requests.md), "Requests after boot"; sysco
    `software/firmware/l2/altix-l2-model.md`). Established for the PROM and for a ColdFire `O` L1. What user space sends through the
    kernel's controller pipe is unknown.
 3. **Operators and consoles** reach the L2 by the console port, by telnet through the daemon's shell service, or by the
@@ -66,7 +66,7 @@ sysco's.
 | Altix 3700 | yes: standard in the 3700; required in a rack with an R-brick or an L2 touch display, or for remote maintenance | established (007-4579-001 pp. 35 to 36) |
 | Altix 3700 Bx2 | no hardware L2. The L1 of a CR-brick or NUMAlink 4 R-brick acts as an L2 emulator when a USB-to-Ethernet adapter is plugged into its type A connector; the adapter goes on the bottom CR-brick (64 processors or fewer) or on named R-bricks in larger systems | established (007-4377-002 pp. 18, 24 to 25, 33 to 35; agrees with 007-4340-003 p. 5) |
 | Altix 350 and 330 | none required; an optional L2 joins through the base module's USB type B L1 port | established (007-4340-003 p. 4 for the 350; [platforms/sn2/altix-350.md](../../platforms/sn2/altix-350.md)) |
-| Altix 4700 and 450 | no L2 hardware. Every IRU has an embedded Linux system controller. The L1 application always runs. Connecting the IRU's (or a Dense router's) Ethernet connector to a live LAN makes it start the L2 application, which controls several L1s and talks to other L2s. The L1 command `l2` reports whether it runs, and `! init 4` starts it. | established (007-3938-005 pp. 3, 5, 19 to 20; 007-3938-006 pp. 4, 13 to 14; Altix 4700 guide 007-4823-003 pp. 28, 31); the 450's own guide was not read |
+| Altix 4700 and 450 | no L2 hardware. Every IRU has an embedded Linux system controller. The L1 application always runs. Connecting the IRU's (or a Dense router's) Ethernet connector to a live LAN makes it start the L2 application, which controls several L1s and talks to other L2s. The L1 command `l2` reports whether it runs, and `! init 4` starts it. | established (007-3938-005 pp. 3, 5, 19 to 20; 007-3938-006 pp. 4, 13 to 14; Altix 4700 guide 007-4823-003 pp. 27, 31); established for the 450 only through the shared 007-3938-006 text, its own guide was not read |
 
 The NUMAlink 4 cables carry the 4700's controller traffic between enclosures by low-voltage differential signalling
 (007-3938-005 p. 5). Whether that traffic shares the NUMAlink wires or only the cable assembly is **unknown**.
