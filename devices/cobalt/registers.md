@@ -1,6 +1,6 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 07184971d0f3ea249d14e45362e536f8e51e340d7a8d719303517197d380f7f2 -->
+<!-- input sha256 cce7bc8a6dec5a42f55bf11b781f187c3d3ac6119286fa318095d3b5be2dcefb -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 
@@ -54,13 +54,13 @@ Array of 30 registers, stride 16.
 
 ### Register `apic_hi`
 
-Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. So the field is the destination, in the I/O APIC layout (established for the NMI use; zero as 'processor id 0, physical' for device entries is inferred from the layout). The HAL never steers a device entry to another processor.
+Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. What the HAL writes is established; reading the field as the destination, in the I/O APIC layout, and zero as 'processor id 0, physical' for device entries are inferred from the layout. The HAL never steers a device entry to another processor.
 
 Array of 30 registers, stride 16.
 
 | Bits | Field | Grade | Values | Source | Description |
 |---|---|---|---|---|---|
-| 31:24 | `dest` | established |  |  | Destination: a logical processor mask when the low word's dest_mode is set (the NMI entry), otherwise a processor id (device entries, written as 0). |
+| 31:24 | `dest` | inferred |  |  | Destination (what the HAL writes is established; the meaning follows the I/O APIC layout and is inferred): a logical processor mask when the low word's dest_mode is set (the NMI entry), otherwise a processor id (device entries, written as 0). |
 
 ### Register `apic_id`
 

@@ -174,7 +174,7 @@ Answers from the HAL (symbols applied), the loader and the PROM pages, each grad
    through Cobalt entry 12, and the Linux port does the same (established for both). Whether the PROM unmasks LINT0 was not found in the
    pages read: unknown.
 6. **Per-interrupt cost, destinations and acknowledge.** [hal-hot-path.md](hal-hot-path.md) (established): the HAL's interrupt level is the local
-   APIC task-priority register, a device interrupt touches only the local APIC (no Cobalt, Lithium or PIIX4 register), the clock costs two Cobalt
-   register accesses per tick, a legacy interrupt costs four to seven 8259 port accesses, and every device line and the clock are delivered to
-   processor id 0; only the NMI entry is logical. Board differences (memory groups, processors, slots, the `0xfb2` board-type byte):
+   APIC task-priority register, a device interrupt touches only the local APIC (no Cobalt, Lithium or PIIX4 register), the clock costs three Cobalt
+   register accesses per tick (status read, write and read-back), a legacy interrupt costs four to seven 8259 port accesses, and every device line and the clock are written with destination 0, which on the I/O APIC layout means processor id 0 (inferred); only the NMI
+   entry is logical. Board differences (memory groups, processors, slots, the `0xfb2` board-type byte):
    [boards-320-540.md](../../platforms/visws/boards-320-540.md).

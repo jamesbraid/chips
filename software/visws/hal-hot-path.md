@@ -37,9 +37,10 @@ vector tables in [nt-hal.md](nt-hal.md#interrupt-delivery-in-the-hal)). The kern
 1. `HalBeginSystemInterrupt` `0x800135a8`: read TPR `+0x80`; write TPR (the handler's level value); `sti`. The old level is
    returned. If it was below DPC level, a per-processor flag is set (no APIC access).
 2. The driver's routine runs.
-3. `HalEndSystemInterrupt` `0x80013538`: write EOI (`+0xb0`, value 0) **first**; then, if the old level is at or above DPC
-   level, write TPR (old level) and read TPR back; below DPC level it runs pending software interrupts instead of
-   restoring TPR itself. A deferred-8259 mask is tested at the end; nothing in this build sets it (the block that would is
+3. `HalEndSystemInterrupt` `0x80013538`: write EOI (`+0xb0`, value 0) **first**; then always write TPR (the old level's
+   value) and read it back (`0x80013553`). If the old level is below DPC level and the per-processor pending-dispatch byte
+   (`fs:0x96`) is set, it first writes TPR `0x41`, executes `sti`, runs `KiDispatchInterrupt` and `cli`, and only then writes
+   the old level; so both paths end with a TPR write and a read-back. A deferred-8259 mask is tested at the end; nothing in this build sets it (the block that would is
    unreachable), so `HalpDeliverPending8259Ints` `0x80013dd4` never delivers anything (inferred from the unreferenced block).
 
 There is **no access to any Cobalt, Lithium or PIIX4 register** in the acknowledge path: no mask, no end-of-interrupt to Cobalt,
@@ -85,11 +86,11 @@ The handler `HalpCobaltInterrupt` `0x8001408c` (UP: `halbrgup.dll` `0x80013f6c`)
 | Step | Access |
 |---|---|
 | 1 | `HalBeginSystemInterrupt`: TPR read, TPR write `0xd1` |
-| 2 | read Cobalt CPU status (`0xc2000000 + 0x20`); bit 0 set (cache operation, unexpected) prints an error and writes status = `0xfffffffe` |
+| 2 | read Cobalt CPU status (`0xc2000000 + 0x20`); bit 0 set (cache operation, unexpected) prints an error, writes status = `0xfffffffe` and reads status back (`0x8001b4f6`), then the status is read again |
 | 3 | bit 1 clear (not a timer tick): `HalEndSystemInterrupt` and leave |
-| 4 | write status (`+0x20`) = `0xfffffffd`: clears the pending bit, other bits written as ones |
+| 4 | write status (`+0x20`) = `0xfffffffd` (clears the pending bit, other bits written as ones), then **read status back** (`0x80014157`, value unused: a write-then-read ordering access) |
 | 5 | multiprocessor build, when the IPI-clock flag is set: subtract the current tick length from an accumulator; when it reaches zero (the accumulator is reloaded with the 10 ms maximum, so the broadcast happens at most at 100 Hz even if the timer runs faster, and the other processors tick slower than the boot processor after `HalSetTimeIncrement` shortens the tick; the flag is set only when a second processor has been started, see [nt-hal.md](nt-hal.md#follow-on-corrections-and-additions)), wait for command-register bit 12 clear and write `+0x300` = `0x000c00d1` (vector `0xd1`, all excluding self, fixed). The high word is not written |
-| 6 | if the tick length was changed, write the new reload to `0xc2000000 + 0x30` |
+| 6 | if the tick length was changed, write the new reload to `0xc2000000 + 0x30` (the control register `+0x10` is only touched at start-up, by `HalpInitializeClock`: read-modify-write setting bit 2, then another clearing bit 3) |
 | 7 | `KeUpdateSystemTime`, which calls `HalEndSystemInterrupt` (EOI, TPR restore) |
 
 Each other processor takes the broadcast on vector `0xd1` in `HalpClockInterruptPn` `0x80011788`: Begin, `KeUpdateRunTime`, End. It touches no Cobalt register.
@@ -98,9 +99,9 @@ Each other processor takes the broadcast on vector `0xd1` in `HalpClockInterrupt
 
 | Case | Sender | Receiver |
 |---|---|---|
-| Kernel IPI (`HalRequestIpi` `0x80012c64`) | read `+0x300` until bit 12 clear; write `+0x310` = mask << 24; write `+0x300` = `0x8e1` (vector `0xe1`, fixed, logical destination). High word first, low word triggers | `HalpIpiHandler` `0x80012d80`: Begin (level `0x1d`), `KiIpiServiceRoutine`, End |
+| Kernel IPI (`HalRequestIpi` `0x80012c64`) | read `+0x300` until bit 12 clear; write `+0x310` = mask << 24; write `+0x300` = `0x8e1` (vector `0xe1`, fixed, logical destination), then poll `+0x300` bit 12 again before restoring flags (`0x80012c95` to `0x80012cab`). High word first, low word triggers | `HalpIpiHandler` `0x80012d80`: Begin (level `0x1d`), `KiIpiServiceRoutine`, End |
 | Broadcast call (`HalpGenericCall` `0x800129d4`) | shared-memory handshake, then `+0x310` = mask << 24 and `+0x300` = `0x8c1` (vector `0xc1`) | `HalpBroadcastCallService` `0x80012928` (level `0x1b`): Begin, `HalpPollForBroadcast`, End |
-| APC and DPC requests (`HalRequestSoftwareInterrupt` `0x80016810`) | a DPC the HAL judges "short" only sets a per-processor flag (inferred: `HalpCmpShortDpc` was not read in full). Otherwise `HalpGenerateInterrupt` `0x800168c0`: `cli`, read `+0x300`, wait for bit 12 clear, write `+0x300` = `0x40000` OR the vector (`0x3d` for APC, `0x41` for DPC), wait again, restore flags | `HalpDispatchInterrupt` `0x80013178`: read TPR, write TPR `0x41`, write EOI, `KiDispatchInterrupt`, restore TPR. `HalpApcInterrupt` `0x800132fc` likewise |
+| APC and DPC requests (`HalRequestSoftwareInterrupt` `0x80016810`) | `HalpCmpShortDpc` (`0x800135e4`, established) compares the requested level with a per-processor byte (`fs:0x95`) that Begin sets to 2 when the old level was below DPC level and End clears; when equal, `HalpSetDpcPending` (`0x80013600`) stores the level in `fs:0x96` and no APIC access happens (End dispatches it, above). Otherwise `HalpGenerateInterrupt` `0x800168c0`: `cli`, read `+0x300`, wait for bit 12 clear, write `+0x300` = `0x40000` OR the vector (`0x3d` for APC, `0x41` for DPC), wait again, restore flags | `HalpDispatchInterrupt` `0x80013178`: read TPR, write TPR `0x41`, `sti`, write EOI, `KiDispatchInterrupt`, `cli`, restore TPR and read it back. `HalpApcInterrupt` `0x800132fc`: read TPR, write TPR `0x3d`, write EOI **before** `sti`, deliver the APC, `cli`, restore TPR and read back |
 
 ## One profile tick
 
@@ -111,22 +112,24 @@ register (`+0x3e0`) is set to `0xb` (divide by one) once, in calibration. The co
 measured against the RTC second (so the local APIC timer must count at a true rate, and the emulated time-stamp counter must
 tick as well: the calibration writes the time-stamp-counter MSR and reads it back). Handler `HalpProfileInterrupt` `0x80013758`:
 Begin (level `0x1f`, vector `0xfd`), `KeProfileInterrupt` only if profiling is on, End. The performance-counter vector `0xfe`
-(LVT `+0x340`, masked until enabled) has the same shape.
+(LVT `+0x340`: `0x100fe` masked, `0x0a0fe` once `HalpEnablePerfInterupt` `0x8002f780` enables it) has the same shape.
+
+## Redirection-entry accesses
+
+Every `HalpSetCoApicRedirEntry` (`0x80016310`) writes the low word, then the high word, then reads the high word back, as an 8-bit access (`0x80016364`, a `test byte` of the byte at `+4`): a write-then-read ordering access. `HalpGetCoApicRedirEntry` reads low, then high. On an NMI set-up the high word's bits 23:0 are uninitialised stack contents (only bits 31:24 are set). `HalHandleNMI` calls `HalpHandleCoNMI` after the debugger break, not before.
 
 ## What a hypervisor can serve in the kernel, and what leaves it (inferred)
 
 | Access | Frequency | Needs user space? |
 |---|---|---|
 | Local APIC: TPR, EOI, command register, timer LVT, initial and current count, spurious vector, logical destination | every IRQL change, every interrupt, every IPI, profile ticks | No. An in-kernel local APIC (ideally with its hardware-assisted APIC virtualisation) serves all of them; a local APIC modelled in user space would exit on every IRQL change and is not viable |
-| Cobalt CPU block `0xc2000000` (`+0x20` read and write, `+0x30` on a tick-length change) | two accesses per clock tick (100 per second, up to 1,000 with 1 ms timers) | Yes, a memory-mapped I/O exit each; the status write must take effect before the next read. Cheap enough |
+| Cobalt CPU block `0xc2000000` (`+0x20` read and write, `+0x30` on a tick-length change) | three accesses per clock tick (status read, status write, status read back; 100 per second, up to 1,000 with 1 ms timers), plus `+0x30` on a tick-length change | Yes, a memory-mapped I/O exit each; the status write must take effect before the read-back. Cheap enough |
 | Cobalt interrupt controller `0xc4000000` | enable and disable of a line, start-up | Yes; not in the per-interrupt path |
 | Lithium windows `0xfc000000`, `0xfd000000` (`+0xf8` and `+0xfc` configuration cycles, `+0x46` enables) | PCI configuration and driver connect, not interrupts | Yes |
 | PIIX4 8259 ports `0x20`, `0xa0`, `0x21` | four to seven per legacy interrupt (serial, floppy, parallel, keyboard and mouse) | Yes. The in-kernel 8259 cannot be used as is: its output goes to the processor's external-interrupt input, which the HAL masks, not to a Cobalt entry (inferred from the HAL's local APIC set-up); a user-space 8259 raising Cobalt entry 12 is the fit |
 | CMOS ports `0x70`, `0x71` | start-up calibration, RTC reads | Yes |
 
 Delivery into the in-kernel local APIC from a user-space Cobalt model is by injecting the entry's vector at processor id 0.
-The HAL never rewrites a device entry's destination, so the model does not need to redirect a line per processor: all device
-lines and the clock go to the processor with local APIC id 0 (the HAL's bootstrap processor, assuming the firmware's table
-gives it id 0; unknown, see the questions page). Only the NMI entry is delivered in logical mode. Level lines that
+The HAL never rewrites a device entry's destination (written as 0), so the model does not need to redirect a line per processor: on the usual reading of the I/O APIC layout every device line and the clock go to the processor with local APIC id 0 (inferred; the HAL only requires that a processor with id 0 exists and is started, and which processor that is, is unknown, see the questions page). Only the NMI entry is delivered in logical mode. Level lines that
 must be re-presented after the guest's EOI (entry 12 above) need an end-of-interrupt notification to user space; how a given
 hypervisor delivers that was not checked.

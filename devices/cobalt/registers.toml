@@ -97,7 +97,7 @@ stride = 0x10
 access = "rw"
 width = 32
 grade = "established"
-doc = "Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. So the field is the destination, in the I/O APIC layout (established for the NMI use; zero as 'processor id 0, physical' for device entries is inferred from the layout). The HAL never steers a device entry to another processor."
+doc = "Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. What the HAL writes is established; reading the field as the destination, in the I/O APIC layout, and zero as 'processor id 0, physical' for device entries are inferred from the layout. The HAL never steers a device entry to another processor."
 
 
 [registers.apic_id]
@@ -109,7 +109,7 @@ grade = "established"
 doc = "Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known."
 
 [registers.apic_hi.fields]
-dest = { bits = [31, 24], grade = "established", doc = "Destination: a logical processor mask when the low word's dest_mode is set (the NMI entry), otherwise a processor id (device entries, written as 0)." }
+dest = { bits = [31, 24], grade = "inferred", doc = "Destination (what the HAL writes is established; the meaning follows the I/O APIC layout and is inferred): a logical processor mask when the low word's dest_mode is set (the NMI entry), otherwise a processor id (device entries, written as 0)." }
 
 [registers.apic_id.fields]
 id = { bits = [27, 24], grade = "established", doc = "Controller id field. The NT HAL and the firmware write 4 here when it reads zero; the clear-and-set is done with the enable bit cleared first. What the id is used for is not known." }
