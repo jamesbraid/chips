@@ -12,7 +12,7 @@ SHub 1.2. The Altix 3700 Bx2 guide's CR-brick block diagram labels its four node
 
 | Row | Address and access | A model must | Grade |
 |---|---|---|---|
-| Progress ports | W16 `0x2_f000_0000 + 0x1_0000 * n`, n = `cr.lid` bits 24:23 | accept any value (codes `0x30`, `0x31`, `0x35`, `0x32`, `0x34`, `0x08`, `0x0c`, `0x0d`, `0x0e`, `0x10` onward; `0xb0` to `0xb7` are stops) | established (access); software expectation (any value) |
+| Progress ports | W16 `0x2_f000_0000 + 0x1_0000 * n`, n = `cr.lid` bits 24:23 | accept any value (codes `0x30`, `0x31`, `0x35`, `0x32`, `0x34`, `0x08`, `0x0c`, `0x0d`, `0x0e`, `0x10` onward; `0xb0` to `0xb7` are stops; `0xb7` is a PAL `0x208` status of `-4`, `0xb6` any other nonzero status) | established (access); software expectation (any value) |
 | Junk bus time | W `0x1002_0000` = `0xffff_ffff_0003` | accept | established (access) |
 | Address mode `V` | R `0x2_2011_0000` | return 0 to 4 (it indexes a five-entry table; no range check) | established (use); unknown (real value) |
 | Node-addressing row | RW `0x101d_0c00` (`SCRATCH24`) | store 64 bits and read back | established |
