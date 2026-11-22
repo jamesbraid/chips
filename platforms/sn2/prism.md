@@ -611,7 +611,7 @@ block, FIT head and SAL_A entry pointers have the same layout.
 
 **Question 1: board names and marker counts (established).** Board names in the 4.65 image: `IP41` only. No `IP57`, `Prism`, `XG2N`,
 `FireGL`, `IP53`, `IP67` or `IP65` string in the body or in any expanded component. The counts below use the page's method (printable
-strings of four bytes or more; `AGP` and `TIO` as whole words). They equal the table above for 10.15, and 5.04 gives the same numbers:
+strings of four bytes or more; `AGP` and `TIO` as whole words). They equal the table above for 10.15. The 5.04 counts are the same except raw TIO word 12 and IP41 7 (4.65's two command-line copies account for both differences: two `TIO` words and four `IP41`) and, in the EFI, TIO word 0 and IP41 1:
 
 | 4.65 | TIOCA | TIOCE | AGP | `SHub 1.2` | `SHub 1.1` | `SHub 1.x` | TIO (word) | IP41 |
 |---|---|---|---|---|---|---|---|---|
@@ -660,6 +660,8 @@ read, so no revision preference is claimed (unknown).
   NASID, with the smallest positive distance; 5.04 (`10.54@0xffb60ea0`) starts at the executing node and also requires that the node has memory. Same result on any topology where the
   compute node is the only candidate (inferred); a case where they differ was not constructed (unknown). 5.04 also allocates a 0xb8-byte object where 4.65 allocates 0xa8, and makes two calls after
   the register set-up that 4.65 lacks (not read).
+- *TIOCA bus fix-up.* 5.04 has a TIOCA-specific bus fix-up (`10.54@0xffb7d700`) that also maps three PCI memory windows (`0x100000` to `0xbfffffff`); 4.65's per-ASIC hook for a TIOCA is NULL and it has no such windows
+  (detail in the next section). Whether this changes any value the PROM returns to the kernel was not traced (unknown).
 
 **Question 3: TIO and TIOCA at reset (established for the code, unknown where marked).**
 
@@ -672,9 +674,9 @@ read, so no revision preference is claimed (unknown).
 - *What presence needs.* The TIO's slot type from the L1 request `0x0013` (`10.15@0xffac0230`, `10.54@0xffac0420`) selects what is probed. The TIOCA
   corelet (chiplet part `0xe020`) is initialised only when that type is `l` (0x6c), `^` (0x5e) or `b` (0x62), in both builds (`tio_init` tests it, then `ca_discover` tests it again);
   for any other type `tioca_attach` prints "ignoring board type" and attaches nothing. So the L1 reply for the TIO's NASID must carry one of those three letters. Corelets 0 to 2 are found by reading the chiplet ID word at each base (`nasid << 38`, stride `0x10000000` bytes) and sorted by part (`0xe000` or `0xe010`, `0xe020`); corelet 3 (the CX port) is
-  tested through `0x8000_0008_b000_be18` reading `0xf`. These loads are unguarded. What a missing chiplet returns is unknown, so whether the PROM
+  tested through `0x8000_0008_b000_be18` reading `0xf`. A failed CX port set-up prints "CX PORT init failed" and the loop carries on with the next corelet (not fatal). These loads are unguarded. What a missing chiplet returns is unknown, so whether the PROM
   tolerates an absent corelet on real hardware is unknown; the model must return a part word that matches nothing, or the CX test value.
-- *Rev 1 TIOCA.* In both, a TIOCA klconfig record with revision below 2 is skipped with `Ignoring probe of rev 1 CA bus due to PV 908609`; a missing `KLSTRUCT_TIOCA` (type
+- *Rev 1 TIOCA.* In both, a TIOCA klconfig record with revision below 2 is skipped with a printed message; a missing `KLSTRUCT_TIOCA` (type
   `0x33`) prints a message and the VGA probe continues.
 - *How the TIO is found.* `tio_init` is entered through a function table (`10.54@0xffc4c210` holds its caller; inferred to be the TIO class methods) after the TIO lboard exists. Where the lboard is created was not traced; unknown
   for both builds. The SAL runtime's `tio_probe` (`10.15` runtime offset `0x10900`, `10.54` runtime offset `0x10cc0`) is only a part-number predicate (part `0x4422`) with no direct caller found, so no reset-time TIO probe was seen there.
@@ -691,24 +693,27 @@ needs Prism guest boots can take 5.04. Neither image has been seen booting a Pri
 SAL calls `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`) and `SN_SAL_IOIF_GET_PCIDEV_INFO` (`0x02000057`) are cases of the I/O interface dispatcher
 (`10.15@0xffb1f260`, `10.54@0xffb1e660`). Handlers are the same code in both builds (only a list offset in the node record moves).
 
-- *`0x02000056` (established).* `10.15@0xffb29f10`: walks the node's bus list for the record whose segment (record `+0xc`) and bus number (`+0x8`) equal the arguments, stores the
-  record's address through the out pointer and returns 0, or returns 1 when none matches. The record is the PROM's own object, not a copy. Its first 0x30 bytes match the
+- *`0x02000056` (established).* The dispatcher case is `10.15@0xffb1fcb0` (jump table `0xffb952a0`; call at `0xffb1fcdc`) and `10.54@0xffb1f300` (call at `0xffb1f32c`). It stores the lookup result through the
+  out pointer and returns 0, or 1 when the result is NULL. The lookup helper is `10.15@0xffb29f10` (`10.54@0xffb2a140`): it walks the circular list at node `+0x78` (5.04: `+0x80`; each entry's record is at entry `+0x20`) and then the chain at node `+0x98`
+  (5.04: `+0xa0`), matching segment at record `+0xc` and bus at `+0x8`. `tioca_attach` links its object on node `+0x88` (5.04: `+0x90`); the function that links the object onto `+0x78` or `+0x98` was not found, so how a TIOCA object
+  reaches the lists the lookup walks is unknown. The returned record is the PROM's own object, not a copy. Its first 0x30 bytes match the
   published Linux `pcibus_bussoft` layout: ASIC type `+0x0`, XIO widget `+0x4`, bus `+0x8`, segment `+0xc`, legacy I/O base `+0x10`, legacy memory base `+0x18`, base `+0x20`, widget info `+0x28`
   (field names are Linux's; the offsets are read from the PROM stores and loads).
 - *Provider fields for a TIOCA (established).* `tioca_attach` (`10.15@0xffb4e5f0`) stores ASIC type 4 at `+0x0` (Linux's TIOCA provider number), the corelet number at `+0x4`, the mapped TIOCA register base at `+0x20`
   and the corelet record at `+0x28`; it also stores the chip revision (ID register at `nasid << 38 | 0x8_9006_0e80`, bits 31:28) at `+0x30` and the closest NASID at `+0x34`. How the
   bus and segment words at `+0x8` and `+0xc` are filled was not traced (unknown).
-- *Root window (established that the PROM reports no size).* No size field exists in the record. The legacy bases are filled by the bus fix-up when zero: `pciio_bus_fixup` (`10.15@0xffb3aab0`) maps
-  0x10000 bytes (64 KiB) of PCI I/O space at offset 0 for the legacy I/O base and 0x100000 bytes (1 MiB) of PCI memory space at offset 0 for the legacy memory base, through the generic PIO map
-  allocator (`10.15@0xffb37c70`). The kernel's 1 MiB root window therefore equals the PROM's legacy memory mapping size (inferred that this is the origin of the kernel's constant; the
-  Linux side is the other section). 5.04 has the same two sizes inside a fix-up Ghidra did not recognise as a function (`10.54@0xffb30330`, 1,048,576 at `0xffb306e6` and `0xffb30836`, read in `objdump`;
-  inferred equal). `tioca_space_to_xtalk` (`10.15@0xffb6dcb0`, identical in 5.04 at `0xffb7de00`) maps TIOCA legacy memory (spaces 4 to 6) to window offset `0x8000000` when the range ends below
-  128 MiB and `0x40000000` otherwise, I/O to `0x3000000`, config to `0x1000000` (config size limit 0xff), and a BAR (spaces 8 to 13) to its assigned PCI address plus `0x40000000` for memory.
-- *`0x02000057` (established).* `10.15@0xffb39670`: finds the device record, writes its eighth quadword (the host handle) as device and function bits, the bus's word at `+0x8` of its parent record and the NASID in bits 63:40, copies 12 quadwords (0x60 bytes) to the device buffer and, if the
-  record has an interrupt record (quadword 11), 10 quadwords to the interrupt buffer, and returns 0. Same code in 5.04 (`10.54@0xffb3dbc0`). The PROM's per-BAR table (flags `+0xa4`, address `+0xa8`, size `+0xb0`, stride `0x38`)
-  starts at `+0xa0`, past the 0x60 bytes copied, so no BAR size or flag is returned (inferred from the offsets; the object being the same one is inferred). The first seven quadwords, which Linux's
-  `pcidev_info` uses as the BAR PIO addresses, come from `pciio_device_setup` (`10.15@0xffb3a2f0`, "pciio_pio_addr: win %d is in space %s"), which maps each BAR window through the allocator and
-  `tioca_space_to_xtalk`; I did not trace which word it stores (unknown).
+- *Root window and the 5.04 difference (established).* No size field exists in the record. In 4.65 the generic `pciio_bus_fixup` (`10.15@0xffb3aab0`) maps, when the bases are zero, 0x10000 bytes (64 KiB) of PCI I/O space at offset 0 for the legacy I/O base
+  and 0x100000 bytes (1 MiB) of PCI memory space at offset 0 for the legacy memory base, through the generic PIO map allocator (`10.15@0xffb37c70`). Its per-ASIC bus-fixup hook is NULL for a TIOCA (entry 1 of the type-4 operations table at `0xffc18e00`).
+  5.04 has a TIOCA fix-up, `tioca_bus_fixup` at `10.54@0xffb7d700` (the function at `0xffb30330` that an earlier reading cited is `pcibr_bus_fixup`, the PIC one). It sets the same 64 KiB I/O base (record `+0x10`) and 1 MiB legacy memory base (`+0x18`), and also maps three memory windows
+  up front: PCI `0x100000` to `0x3fffffff`, `0x40000000` to `0x7fffffff` and `0x80000000` to `0xbfffffff`. 4.65 has no such windows. Both builds still map each BAR in `pciio_device_setup` (4.65 `0xffb3a2f0`; 5.04 `0xffb3ef90`, whose three PIO-map calls are at `0xffb3f1bc`, `0xffb3f31c` and `0xffb3f54c`).
+  Effect on the records (inferred): `0x02000056` has no field for the windows, so its fields and sizes are unchanged; the addresses chosen for the legacy bases come from the PIO allocator and were not compared. The windows may change the PIO address words `0x02000057`
+  returns, and a BAR above `0xbfffffff` has no 5.04 window (the BAR pool reaches `0xffffffff`); neither was traced (unknown). `tioca_space_to_xtalk` (`10.15@0xffb6dcb0`, identical in 5.04 at `0xffb7de00`) maps TIOCA legacy memory (spaces 4 to 6) to window offset `0x8000000`
+  when the range ends below 128 MiB, and refuses it (returns 0) when the offset field (bits 31:24) of the window control register at TIOCA base `+0x8` is non-zero; otherwise `0x40000000`. I/O maps to `0x3000000`, config to `0x1000000` (config limit 0xff), and a BAR (spaces 8 to 13) to its assigned PCI address plus
+  `0x40000000` for memory. The kernel's 1 MiB root window equals the legacy memory size (inferred as the origin of the kernel's constant; the Linux side is the other section).
+- *`0x02000057` (established).* `10.15@0xffb39670` and `10.54@0xffb3dbc0` are the same code. They find the device record by segment, bus and devfn, and rewrite quadword 7 as device and function bits, the parent bus number at bits 39:32 and the first argument shifted left 40 (the segment per the SAL README's call
+  description; the earlier reading said the NASID, and the code shows only "first argument"). They copy 12 quadwords to the device buffer and, when quadword 11 (the interrupt record) is non-null, 10 quadwords from it to the interrupt buffer, and return 0.
+  `pciio_device_setup` (`10.15@0xffb3a2f0`, "pciio_pio_addr: win %d is in space %s") fills the first seven: quadwords 0 to 5 are the PIO addresses of BAR 0 to 5 (PIO map of space `8 + i`, I/O BARs first, then memory BARs), and quadword 6 is the expansion ROM (space 1).
+  The per-BAR table (type at `+0xa0`, flags `+0xa4`, PCI address `+0xa8`, size `+0xb0`, stride `0x38`) lies outside the copy, so no PCI address, size or flag is returned (established).
 - *Where BAR values come from (established).* Not a copy of config space. `tioca_pci_init` (`10.15@0xffb6b4c0`, `10.54@0xffb7a680`, same pool constants) builds three first-fit pools per TIOCA:
   memory below 1 MiB `0xc0000` for `0x40000` bytes (used for BARs that say 'below 1 MiB'); other memory `0x100000` for `0xfff00000` bytes; I/O `0x1000` for `0xefff` bytes. For each function it writes `0xffffffff` to each BAR,
   reads the size mask, takes a block of that size aligned to its size from the pool, writes the address back (64-bit BARs get a zero upper half) and records flags, address and size. The expansion ROM is
@@ -716,8 +721,8 @@ SAL calls `SN_SAL_IOIF_GET_PCIBUS_INFO` (`0x02000056`) and `SN_SAL_IOIF_GET_PCID
   capability then goes through `tioca_agp_func_init` (`10.15@0xffb6bf00`). 5.04 adds checks for allocation failure and for the ROM pool and is otherwise the same.
 - *The 2019 addresses (inferred).* With a first-fit pool from `0x100000`, a 128 MiB BAR aligns up to `0x08000000`, which leaves `0x100000` to `0x07ffffff` free; a second 128 MiB BAR cannot use that block and lands at
   `0x10000000`. That matches the log's two BARs, so those values are what this allocator produces for two 128 MiB memory BARs on one TIOCA (the other BARs of the card are unknown, so the order of allocations
-  is unknown). Smaller BARs take addresses from `0x100000` upward, also outside a 1 MiB window. Both builds assign identically, so the addresses do not separate 4.65 from 5.04.
-- *Unknown.* The bus and segment numbering that `0x02000056` matches, whether any bus window beyond the two legacy bases exists (none was found), and the rest of the 12-quadword device record.
+  is unknown). Smaller BARs take addresses from `0x100000` upward, also outside a 1 MiB window. The result depends on what was allocated before: a 128 MiB or larger BAR ahead of them, or two BARs of 64 MiB or more ahead of them, shifts both addresses (a 128 MiB BAR ahead takes `0x08000000`; two 64 MiB BARs take `0x04000000` and `0x08000000`); smaller BARs do not. Both builds assign identically, so the addresses do not separate 4.65 from 5.04.
+- *Unknown.* The bus and segment numbering that `0x02000056` matches, how a TIOCA object reaches the lists the lookup walks, whether 5.04's three memory windows change the PIO addresses `0x02000057` returns, and the card's BAR set.
 
 ## Software SGI shipped
 
