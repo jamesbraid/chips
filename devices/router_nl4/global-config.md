@@ -439,6 +439,10 @@ offset +28). Established as the guide's statements.
   statement of what happens with an unpopulated port); no power-on or cable-check procedure for the router is given in
   the router chapter.
 
+## The node side of the clock distribution (SAL 5.04)
+
+The router registers above (`RTC_SOURCE`, `RTC_INTRN_CNTRL`) carry the clock between nodes. The node end is the SHub's `SH_GC_SRC_CTRL` (`0x1_1006_0280`) and counter `SH_RTC` (`0x1_101c_0000`). The partition master's board walk puts itself in own-clock mode with its counter enabled, puts every other node in a slave mode chosen by the connection that leads upstream (source select 0 or 2, counter not enabled), copies its own counter value `T` into each node, waits 5 microseconds on its own RTC and requires every node's counter to read greater than `T`; a node that does not is reported `ERROR: RTC is not advancing` and, for an even NASID, dropped. Every other PROM wait uses the running node's own counter. The sequence, the field uses, the methods and the grades are in [boot-sequence.md](../../software/firmware/snprom/boot-sequence.md#the-icc-underflow-workaround-stores-and-the-clock-distribution-sal-504-read-2026-11-22); the cross-node rows are in [numalink-neighbours.md](../../software/firmware/snprom/numalink-neighbours.md#contract-rows-the-scrub-stores-the-clock-and-the-atomics-read-2026-11-22). Whether the router's `RTC_SOURCE` selection is what makes a slave node's counter run was not traced (unknown; route: the order of the router writes against the node's check in the same walk).
+
 ## Unknown
 
 - Where the upstream port in the walk record (offset 16) is first set. (The per-port dateline flag has two sources: the
