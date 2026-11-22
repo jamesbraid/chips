@@ -43,7 +43,7 @@ same byte. Established values relevant to the Altix 3000, 350 and Bx2 bricks:
 
 | Code | Char | Name in `l1.h` | Brick |
 |---|---|---|---|
-| 0x63 | `c` | `C` | C-brick (see the open item on the Altix 3000 C-brick) |
+| 0x63 | `c` | `C` | C-brick; the Altix 3000 C-brick's L1 sends `5` (IP41) and the PROM folds it to `c` ([altix-3000.md](altix-3000.md)) |
 | 0x72 | `r` | `R` | R-brick |
 | 0x69 | `i` | `I` | I-brick (Origin 3000, folded target for IX and IA) |
 | 0x3d | `=` | `IX` | IX-brick |
@@ -156,9 +156,8 @@ contents or L1 identity dump is held. See [../../questions/altix-brick-identity.
 
 ## Unknown
 
-- The CR-brick's L1 type character, the 350 modules' type character, and the Altix 3000 C-brick's (sysco holds the
-  firmware side).
-- Whether the PROM stores raw or folded characters in the module id (affects `sn_generate_path` output).
+- The CR-brick's L1 type character and the 350 modules' type character (sysco holds the firmware side). The Altix 3000
+  C-brick's is settled: `5`, folded to `c` by the PROM before the module word is packed (`0xffa7d510`, SAL 5.04).
 - The contents of a real KLCONFIG board list for any Altix machine. The route is a read of the PROM's list builder in
   `snprom` (Ghidra; held in the RE root) or a captured `/proc/sgi_sn/sn_topology`; neither was done for this page.
 - The serial ID EEPROM layout on IP57 and the interface board.

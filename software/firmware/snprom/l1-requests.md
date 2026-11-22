@@ -148,6 +148,13 @@ record (sysco pages above). Function addresses are in the SAL_B flash image.
 - **Repeats:** once (cached) unless the cache is lost.
 - **Type `o`:** when the type letter is `o` the identity wrapper `0xffa7d1f0` follows with up to eleven board-area EEPROM reads
   (`0xffa84fd0`, site `0xffa7d46c`) until one succeeds; not reached for `F` (inferred for the arguments: not traced).
+- **Type fold in `0xffa7d510`** (established, Ghidra and `ia64-linux-gnu-objdump`, SAL 5.04 `shub1snprom.bin`): after the
+  lowercase step the routine compares the type with 111 (`o`), 53 (`5`), 109 (`m`) and 64 (`@`); a match becomes 99 (`c`).
+  Then 44 (`,`) and 125 (`}`) become 46 (`.`), and 100 (`d`) becomes 114 (`r`). A `l`, `b`, `{` or `f` first asks `0x000e` and
+  becomes `c` when the slab is 0 or -1 (below). Any other value passes through; no reply is rejected here. The packed word is
+  `rack << 16 | type << 8 | bay` (`0xffa7d010`, bay must be below 256). So an Altix 3000 C-brick whose L1 answers `5`
+  (0x35; sysco `software/firmware/l1/sn2-l1-1.62.1-packages.md`, "C-brick type letter") and one that answers `C` both reach the
+  module word as `c`; `o` (the ColdFire Opus letter) also becomes `c`, `F` only with slab 0 or -1.
 - **Reply on the wire** (established, L1 1.62.1 handler `0xc8bb8` and `syscom_process_outbound_response` `0xc3f64`; the handler is shared with
   `0x0002`, which sends only the first integer): `20|subchannel`, status `00 00 00 00`, count `02`, `00` plus the module word big-endian,
   `00` plus the type character as a 32-bit big-endian integer: 16 payload bytes before the CRC. For an Altix 350: word `rack << 6 | bay`,

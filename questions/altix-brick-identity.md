@@ -11,8 +11,10 @@ what do the 350's serial ID EEPROMs hold, and what exactly does the PROM write i
 v5.3, the KLCONFIG structure and what Linux reads from it, the geoid fields and the location-string format.
 
 **Open**
-1. The CR-brick, Altix 350 module and Altix 3000 C-brick type characters (`c` or the board-name codes `4` and `5`).
-2. Whether the PROM stores the raw or the folded character in the module id.
+1. The CR-brick and Altix 350 module type characters (`c` or a board-name code). The Altix 3000 C-brick is settled: its L1
+   reports `5` (IP41) and the PROM folds it to `c` (see the 2026-11-21 section below).
+2. ~~Whether the PROM stores the raw or the folded character in the module id.~~ Folded: `0xffa7d510` turns `5`, `o`, `m` and `@` into
+   `c` before packing the word ([l1-requests.md](../software/firmware/snprom/l1-requests.md)). Which character a 350 L1 sends stays open.
 3. Which board kinds the PROM puts in each brick's KLCONFIG list, and the geoid values it writes for a C-brick, CR-brick
    and 350 module. Needs the PROM's list builder and `SN_SAL_IOIF_GET_HUBDEV_INFO` handler read in Ghidra.
 4. The IP57 and interface-board EEPROM layouts (not printed in any guide read).
@@ -25,7 +27,13 @@ KLCONFIG builder; a captured `config` line or `/proc/sgi_sn/sn_topology` from re
 
 ## Altix 3000 C-brick: SHub generation and board code (2026-11-21)
 
-Settled: the 3300 and 3700 C-brick are SHub 1 ([altix-3000.md](../platforms/sn2/altix-3000.md#shub-generation)). Still
-unknown: which L1 type (`C (IP37)`, `C (IP41)` or `C (IP45)`, strings in `l1-1.62.1.bin`) is the 3000 C-brick, the SHub 1
-stepping on it, and whether the Bx2 is SHub 1 or 2 (`README.snprom` lists it for the SHub 1 image). Route: an EEPROM
-info area or `/proc/sgi_sn/sn_topology` capture from a 3300 or 3700; the SAL 5.04 board-identity code in Ghidra.
+Settled: the 3300 and 3700 C-brick are SHub 1 ([altix-3000.md](../platforms/sn2/altix-3000.md#shub-generation)).
+
+Settled (L1 1.62.1 `2MB image` and SAL 5.04, [altix-3000.md](../platforms/sn2/altix-3000.md)): the C-brick is `C (IP41)`,
+type character `5`. The L1 picks it from the product name of its board record `0xfe`; its `0x0003` reply is `rack << 6 | bay`
+then `0x35`; the PROM folds `5` to `c`. An emulated 3300 C-brick L1 therefore answers `0x0003` with `0x35` (or `C`, which lands
+on the same `c`) and keeps the board name `IP41`. `IP45` is the Origin 300 board and `IP37` has no identity route.
+
+Still unknown: the contents of a real C-brick's record `0xfe` EEPROM (the L1 compares only the first four characters of its
+product name), the SHub 1 stepping on the brick, and whether the Bx2 is SHub 1 or 2 (`README.snprom` lists it for the SHub 1
+image). Route: an EEPROM info area or `/proc/sgi_sn/sn_topology` capture from a 3300 or 3700.

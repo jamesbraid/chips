@@ -136,8 +136,20 @@ is inferred, since the README names images, not chips.
   `C (IP41)`, `C (IP45)`, `C (Twister)`, `C (Vortix)`, `Opus`, `Gemini`, `Dorado`, `Opus TIO`, `Opus IP65` and `NL4R`
   (strings at file offsets `0x5908b` to `0x59173`). `Opus IP65` is the only name carrying the board of the SHub 2
   PROM. IP41 code in the L1 prints "SH%d NI0 always NL4 on IP41 brick" and handles several SHubs per brick.
-  **Unknown**: which of `C (IP37)`, `C (IP41)` and `C (IP45)` is the 3000 C-brick; the L1 table does not name a
-  product, and the PROM images know only `IP41`. The type table gives no SHub generation.
+  **Established** (L1 1.62.1 `2MB image`, read in sysco `software/firmware/l1/sn2-l1-1.62.1-packages.md`; the identity
+  routine at image `0xffe7b404`, the name tables at `0xffe7ff50` and `0xffe80220`): the 3000 C-brick is
+  **`C (IP41)`**, type character `5` (0x35). The L1 takes it from the product name of its board record `0xfe` (prefix
+  `IP41`), with a stored setting only as a fallback and no strap or pin read. `C (IP45)` is the Origin 300 board and
+  `C (IP37)` has no identity route in any package; only `5` is in a supported-brick string of the 1.62.1 container
+  (`O5#=?` in both 2 MB packages), and the SHub 1 PROM names its compute board `IP41` (banner, klconfig board name,
+  build flag). The `IP41` module in those two packages probes four processors and discovers NUMAlink 4 neighbours
+  ("SH%d NI0 always NL4 on IP41 brick"). Established for the L1 and PROM sides; no captured `config` line from a real
+  brick exists. The type table itself gives no SHub generation.
+- **Established** (SAL 5.04 `shub1snprom.bin`, `0xffa7d510`, Ghidra and `ia64-linux-gnu-objdump`): the L1's
+  `0x0003` reply for this brick is status 0, `rack << 6 | bay`, then `0x35`. The PROM does not keep `5`: it folds
+  `5`, `o`, `m` and `@` to `c` (99) before packing the module word, so the word the kernel is later given carries `c` (the SAL call that returns it was not
+  traced; inferred). A reply of `C` would
+  lower-case to the same `c`. See [the L1 request page](../../software/firmware/snprom/l1-requests.md#3-0x0003-rack-bay-type).
 - **Unknown**: no register read from a 3300 or 3700 exists. The SHub 1 identity part word at `0x1_0000_0000` would
   settle the stepping (1.1 or 1.2), and the generation flag `SN_SAL_GET_SN_INFO` returns would confirm it. The Bx2
   is listed for the SHub 1 image by the same README, which conflicts with the README's inference that it is SHub 2;
