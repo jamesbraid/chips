@@ -65,8 +65,8 @@ here. The mapping of these letters to firmware packages is in sysco `software/fi
 
 **There is no code for the CR-brick in Linux.** Nothing in `l1.h` or `module.h` names a CR-brick, and the CR-brick has no
 `MODULE_*` entry. The 3700 Bx2 appears in the controller guide's revision log only (`007-3938-005`, revision 004).
-The firmware answers it (sysco `software/firmware/l1/arm-brick-identity-1.62.1.md`): the ARM L1's identity routine returns `@` (0x40) for a board
-record named `VORTIX_L1`, and the Vortix family is the only one that sets up four IP57 nodes and two NL4 routers, the CR-brick's shape. Inferred, strongly: the
+The firmware answers it (sysco `software/firmware/l1/arm-brick-identity-1.62.1.md`): the ARM L1's identity routine stores type `@` (0x40) when a board
+record names `VORTIX_PWR` (a `VORTIX_L1` record only sets the subtype and sends it to record `0xfe`), and the Vortix family is the only one that sets up four IP57 nodes and two NL4 routers, the CR-brick's shape. Inferred, strongly: the
 CR-brick's L1 reports `@`, displayed `C (Vortix)` by the ColdFire name table, and the SAL 5.04 PROM folds it to `c` (`0xffa7d510`) so the kernel module id is `RRRcBB`, the
 same as a C-brick. Not established: no brick record or capture is held and no string says CR-brick. Both `4` and `5` are the two-node boards (IP45, IP41).
 

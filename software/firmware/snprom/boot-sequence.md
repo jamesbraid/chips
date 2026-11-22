@@ -154,7 +154,7 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
 - **Bx2 CR-brick against Altix 350, both IP57 (SAL 5.04, `shub1snprom.bin`, Ghidra full export of the image and the SAL runtime).**
   Neither machine has a code path of its own. Every branch on the compute brick's type is the fold in `0xffa7d510` (runtime copy
   `sysctl_moduleid_get`, `0x10004b330`; callers of the module getter `0xffa80210`: `0xffaac4b0`, `0xffab0900`, `0xffab19f0`, `0xffaae7f0`,
-  `0xffab0c00`, `0xffabfb10`, `0xffaed410`, `0xffac0210` and others, none of which showed a test of a compute-brick letter; the ones that compare letters test the I/O brick's type). The fold sends `@`, `5`, `m` and `o` to `c`, and
+  `0xffab0c00`, `0xffabfb10`, `0xffaed410`, `0xffac0210` and others, none of which showed a test of a compute-brick letter; the ones that compare letters test the I/O brick's type). The fold sends `@`, `5`, `m` and `o` to `c`, `,` and `}` to `.`, `d` to `r`, and
   `f`, `l`, `b`, `{` to `c` when the `0x000e` slab is 0 or -1. A CR-brick's L1 reports `@` (sysco
   `arm-brick-identity-1.62.1.md`, inferred) and gets `c` at once; a 350 reporting `F` gets `f`, one `0x000e` request, then `c` for its lone node
   (slab 0), and a 350 reporting `o` gets `c` plus the extra behaviour below. Established for the code, inferred for the 350's letter. The kernel therefore
@@ -168,9 +168,7 @@ exit come from the public IA-64 PAL specification, not this image; marked *archi
   carry no brick-type test; a CR-brick's two NL4 routers and a 350's optional router go through the same code), L1 handling (same request set;
   the `0x0013` reply for a single-slot brick is `0` and the stored letter, so `@` stays `@` and `F` is lowercased only by the PROM's `A` to `Z` rule), and memory
   (per-node SPD reads, twelve DIMM slots per IP57 on both machines). I/O keys on the type the *I/O* L1 reports, not the compute brick's: `bridge_discover`
-  (`0xffabfb10`) and the type-name routine `0xffb43e50` map `=` to IXbrick and `#` to PXbrick (what a CR-brick's XIO ports attach), and `m`, `o`, `l`, `{` to
-  `onboardIO` (what a 350's own PIC reports). Established for the table; which letters each machine's I/O L1 sends is unknown. Not enumerated: any test on the SHub revision
-  that could separate a 1.2 on a CR-brick from the 350's SHub (no SHub revision test was found in the compute-brick paths read); the XBOW and PIC register code was not diffed between the two I/O shapes.
+  (`0xffabfb10`) and the type-name routine `0xffb43e50` map `=` to IXbrick and `#` to PXbrick (what a CR-brick's XIO ports attach), and, in `bridge_discover`, `m`, `o`, `l`, `{` to `onboardIO` (what a 350's own PIC would report); the name routine `0xffb43e50` instead names `m`, `o` and `{` "OPbrick" and `l` "DORADO". Established for the tables; which letters each machine's I/O L1 sends is unknown. SHub-revision branches exist (not type-keyed): each reads the SHub ID register at `0x1_1006_0580` and tests revision bits 31:28 below 3, at `0xffa978d0` (function `0xffa976e0`), `0xffa773b0` (`0xffa76bf0`), `0xffb71550` (`0xffb714a0`), `0xffb737f6` (`0xffb73750`), `0xffb7995c` (`0xffb798a0`) and `0xffb8fdec` (`0xffb8fc50`). A SHub 1.2 takes the same side as a 1.1 only if both read 2 or less; the revision encoding of 1.1 and 1.2 was not decoded, so that is unknown. Also read: `0xffb327a0` compares the slot type at `+0x104` with `{`, `m` and `0x300`. More callers of the raw-type wrapper `0xffa7d1f0`: `0xffa6f000`, `0xffa73330`, `0xffa7f8c0`, `0xffa85550`, `sal_0200003b` (`0xffb1bf10`); `0xffa6f000`, `0xffa73330` and `0xffb1bf10` were not traced, so "no IP57 or system-type branch" is graded not found, not absent. Not enumerated: the XBOW and PIC register code was not diffed between the two I/O shapes.
 
 ## L1 controller dependency
 

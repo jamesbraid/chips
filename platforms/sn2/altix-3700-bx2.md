@@ -50,10 +50,10 @@ Brick contents are in [bricks.md](bricks.md); module ids and the hardware map in
 
 - **Type letter `@`, inferred.** The controller firmware (L1 1.34.2 to 1.62.1; sysco `software/firmware/l1/arm-brick-identity-1.62.1.md`) has one brick
   family that sets up four IP57 nodes (`SHUB N0` to `N3`) and two NL4 routers and eight processors: Vortix. Its identity routine (ARM `l1`, `brickInit` `0x31c40`
-  in the 1.62.1 Linux L1) answers `@` (0x40) for a board record whose product name begins `VORTIX_L1`; the ColdFire name table prints `@` as `C (Vortix)`.
+  in the 1.62.1 Linux L1) stores type `@` (0x40) when a second-pass board record names `VORTIX_PWR`; a `VORTIX_L1` record at `0xff` only sets the subtype byte and sends the routine to record `0xfe`; the ColdFire name table prints `@` as `C (Vortix)`.
   No string names a CR-brick, so the tie rests on the node and router counts matching Figure 3-3. A `c` or `5` answer is excluded for this brick (`5` is the two-node IP41 module).
 - **No Bx2 image.** The L1 comes only in shared containers; the ARM packages carry Vortix, the ColdFire packages do not (the one IP57 caller there uses one node).
-- **PROM.** SAL 5.04 has no IP57 or system-type branch; it folds `@` to `c` and, unlike an `o` brick, takes none of the type-keyed side paths. What differs from the
+- **PROM.** SAL 5.04 has no IP57 or system-type branch found (the SHub-revision tests are listed in [the PROM section](../../software/firmware/snprom/boot-sequence.md#node-board-identification-ip41-ip57-others); they are not keyed on type); it folds `@` to `c` and, unlike an `o` brick, takes none of the type-keyed side paths. What differs from the
   Altix 350 is data (node count, slabs, routers present, the IX and PX bricks on the XIO ports). See [the PROM identification section](../../software/firmware/snprom/boot-sequence.md#node-board-identification-ip41-ip57-others).
 
 ## Review
