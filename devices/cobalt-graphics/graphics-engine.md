@@ -150,7 +150,7 @@ state block. Seen in the shadow table: `0x80003020`, `0x046400c0`, `0x05260480`,
 `0x93cc0340`, `0x00210440`. The ICD emits, besides those, headers with the top byte `0x9x` whose targets step by `0x201` or `0x402` from one block to the next
 (`0x922a4`, `0x924a5`, `0x928a7`, `0x92ca9`, `0x92eaa`, `0x930ab`, `0x932ac`, `0x936ae`, `0x938af`), so the target looks like two fields that advance together; it was not decoded.
 Counts from the ICD's own headers: `0x80003020`, `0x91aa0020`, `0x92eaa020`, `0x936ae020` and `0x97400020` carry one payload dword; `0x84e44040`, `0x97000040`, `0x938af040` and `0x91ea2040`
-two; `0x93cc0080` four; `0x944c42c0` six; `0x9ed380e0` seven. `0x98804000` is a header with no payload (count 0, bit 14 set): the ICD inserts
+two; `0x93cc0080` four; `0x944c42c0` twenty-two (bits 11:5 give 22, and the builder that emits it copies a 20-dword table behind the header); `0x9ed380e0` seven. `0x98804000` is a header with no payload (count 0, bit 14 set): the ICD inserts
 it before the closing packet when the context asks for a flush, so it is a one-dword marker (its meaning, inferred: pipeline flush or fence).
 
 **Closing a buffer and chaining. Established (`DispatchCurrentPkt` `0x6901a83a`, `ClosePacket` `0x69062118`).** The ICD ends the data in a node with a
@@ -180,3 +180,13 @@ the engine writes pixels into the display back end's tile lists (the miniport ha
 display, see `pAllocateTilesForBuffer`). The route is the OpenGL driver `sgcoicd.dll`, whose setup code is a software
 implementation of the geometry pipeline that ends by writing packets; reading its packet emitters in full (see
 [the open questions](../../questions/cobalt-graphics-open.md)).
+
+## Review
+
+Independent review of the OpenGL packet-path section (chips commits 7990dc9..7a40091). `sgcoicd.dll` 5.2.4 could not be opened (the
+package is an InstallShield cabinet), so the claims were checked against the 1999 `sgcodd.dll` and `sgcomp.sys` from the SGI 320 NT 4.0
+install CD. Confirmed there: the shadow-table rule that bits 11:5 of a header are the payload count (every table distance matches
+count plus one except the last entry, which runs to a padded end); the chain packet `0x97000040` with a next-position dword and a
+position-and-sequence dword; the escape dispatch on a code range from `0x40` upward. Not matching: the escape input sizes and the set of
+live codes in that build differ from the table above (for example `0x40` takes `0x50`, not `0x54`, and `0x48` is not handled), so the
+table is the 5.2.4 build's alone and remains unchecked here. The count for `0x944c42c0` was corrected from six to twenty-two.
