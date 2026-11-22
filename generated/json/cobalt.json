@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "e11424c6e5a76a241249e6f491944ff414b187a1aa1d3e94e2ea26919c6b077b",
+ "input_sha256": "316a2493ce8fdbc78278d43134e7d66000ec231e17b202c1eee81452a9022731",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -21,6 +21,14 @@
   {
    "unit": "cobalt",
    "kind": "field",
+   "name": "apic_lo.bit17",
+   "hi": 17,
+   "lo": 17,
+   "grade": "unknown"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
    "name": "apic_lo.mask",
    "hi": 16,
    "lo": 16,
@@ -32,6 +40,30 @@
    "name": "apic_lo.level",
    "hi": 15,
    "lo": 15,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.remote_irr",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.dest_mode",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_lo.delivery_mode",
+   "hi": 10,
+   "lo": 8,
    "grade": "established"
   },
   {
@@ -53,7 +85,15 @@
    "stride": 16,
    "space": "apic",
    "reset": "unknown",
-   "grade": "inferred"
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_hi.dest",
+   "hi": 31,
+   "lo": 24,
+   "grade": "established"
   },
   {
    "unit": "cobalt",
@@ -66,6 +106,14 @@
    "stride": 4,
    "space": "apic",
    "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "apic_id.id",
+   "hi": 27,
+   "lo": 24,
    "grade": "established"
   },
   {
@@ -137,6 +185,27 @@
   {
    "unit": "cobalt",
    "kind": "register",
+   "name": "cpu_reset",
+   "offset": 24,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_reset.reset",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
    "name": "cpu_stat",
    "offset": 32,
    "access": "rw",
@@ -157,6 +226,14 @@
   },
   {
    "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_stat.cacheop_intr",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
    "kind": "register",
    "name": "cpu_timeval",
    "offset": 48,
@@ -165,6 +242,79 @@
    "count": 1,
    "stride": 4,
    "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "cpu_timecur",
+   "offset": 56,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "cpu",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_ecc",
+   "offset": 0,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "mem_ecc.ecc_enable",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_err_status",
+   "offset": 24,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_err_addr",
+   "offset": 40,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "register",
+   "name": "mem_err_syndrome",
+   "offset": 48,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mem",
    "reset": "unknown",
    "grade": "established"
   },
@@ -341,6 +491,14 @@
    "kind": "constant",
    "name": "CPU_PHYS",
    "value": 3254779904,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "MEM_PHYS",
+   "value": 3321888768,
    "count": 1,
    "grade": "established"
   },

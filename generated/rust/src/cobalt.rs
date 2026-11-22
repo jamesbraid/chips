@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 e11424c6e5a76a241249e6f491944ff414b187a1aa1d3e94e2ea26919c6b077b
+// input sha256 316a2493ce8fdbc78278d43134e7d66000ec231e17b202c1eee81452a9022731
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -10,6 +10,16 @@ pub mod apic_lo {
     pub const OFFSET: u64 = 0x0;
     pub const COUNT: u32 = 30;
     pub const STRIDE: u64 = 16;
+    pub mod bit17 { // bits 17:17, unknown
+        pub const SHIFT: u32 = 17;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod mask { // bits 16:16, established
         pub const SHIFT: u32 = 16;
         pub const MASK: u32 = 0x1;
@@ -30,6 +40,36 @@ pub mod apic_lo {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod remote_irr { // bits 14:14, established
+        pub const SHIFT: u32 = 14;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod dest_mode { // bits 11:11, established
+        pub const SHIFT: u32 = 11;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod delivery_mode { // bits 10:8, established
+        pub const SHIFT: u32 = 8;
+        pub const MASK: u32 = 0x7;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod vector { // bits 7:0, established
         pub const SHIFT: u32 = 0;
         pub const MASK: u32 = 0xff;
@@ -41,17 +81,37 @@ pub mod apic_lo {
         }
     }
 }
-/// Interrupt redirection entry, high word. The kernel writes zero beside every low word it sets and never reads it. By the standard I/O APIC layout it wo (inferred)
+/// Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word (established)
 pub mod apic_hi {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x4;
     pub const COUNT: u32 = 30;
     pub const STRIDE: u64 = 16;
+    pub mod dest { // bits 31:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u32 = 0xff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identificatio (established)
 pub mod apic_id {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0xffc;
+    pub mod id { // bits 27:24, established
+        pub const SHIFT: u32 = 24;
+        pub const MASK: u32 = 0xf;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
     pub mod enable { // bits 8:8, established
         pub const SHIFT: u32 = 8;
         pub const MASK: u32 = 0x1;
@@ -113,6 +173,21 @@ pub mod cpu_ctrl {
         }
     }
 }
+/// Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, Bo (established)
+pub mod cpu_reset {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x18;
+    pub mod reset { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
 /// Timer status. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and late (established)
 pub mod cpu_stat {
     pub const WIDTH: u32 = 32;
@@ -127,9 +202,54 @@ pub mod cpu_stat {
             (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
         }
     }
+    pub mod cacheop_intr { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown  (established)
 pub mod cpu_timeval {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x30;
+}
+/// Timer current value. The NT HAL's timer calibration reads it after starting the timer with a reload of 0xffffffff and takes the fall as the tick count (established)
+pub mod cpu_timecur {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x38;
+}
+/// Memory controller control. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halb (established)
+pub mod mem_ecc {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x0;
+    pub mod ecc_enable { // bits 0:0, established
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+}
+/// Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is z (established)
+pub mod mem_err_status {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x18;
+}
+/// Memory error address, printed by the HAL as the address of the error. (established)
+pub mod mem_err_addr {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x28;
+}
+/// Memory error ECC syndrome. A nonzero syndrome with a correctable error makes the HAL rewrite the location (HalpCorrectSoftEccError). (established)
+pub mod mem_err_syndrome {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30;
 }
@@ -155,4 +275,5 @@ pub const APIC_VIDOUT1: u32 = 0x11; // established
 pub const CPU_MAX: u32 = 0x4; // inferred
 pub const CPU_NUM_PHYS: u32 = 0x1e00; // established
 pub const CPU_PHYS: u32 = 0xc2000000; // established
+pub const MEM_PHYS: u32 = 0xc6000000; // established
 pub const TIME_HZ: u32 = 0x5f5e100; // inferred

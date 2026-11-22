@@ -1,22 +1,29 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 e11424c6e5a76a241249e6f491944ff414b187a1aa1d3e94e2ea26919c6b077b -->
+<!-- input sha256 316a2493ce8fdbc78278d43134e7d66000ec231e17b202c1eee81452a9022731 -->
 <genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them">
-  <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel touches is here; the memory controller and graphics engine registers are not.</doc>
+  <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel and the NT HAL touch is here; the bank registers of the memory controller and the graphics engine registers are not.</doc>
   <space name="cpu" unit="byte"/>
   <space name="apic" unit="byte"/>
+  <space name="mem" unit="byte"/>
   <struct name="APIC_LO" size="4" grade="established" register="yes" offset="0x0" access="rw" count="30" stride="16" space="apic" reset="unknown">
     <doc>Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unmask a line and only the mask bit to mask it, reading the register back after masking. The vector it writes is the kernel's irq number plus 0x20, so it is not the line number.</doc>
+    <field name="bit17" start="17" size="1" type="uint" grade="unknown"/>
     <field name="mask" start="16" size="1" type="uint" grade="established"/>
     <field name="level" start="15" size="1" type="uint" grade="established"/>
+    <field name="remote_irr" start="14" size="1" type="uint" grade="established"/>
+    <field name="dest_mode" start="11" size="1" type="uint" grade="established"/>
+    <field name="delivery_mode" start="8" size="3" type="uint" grade="established"/>
     <field name="vector" start="0" size="8" type="uint" grade="established"/>
   </struct>
-  <struct name="APIC_HI" size="4" grade="inferred" register="yes" offset="0x4" access="rw" count="30" stride="16" space="apic" reset="unknown">
-    <doc>Interrupt redirection entry, high word. The kernel writes zero beside every low word it sets and never reads it. By the standard I/O APIC layout it would hold the destination processor; that is inferred from the layout of the low word and the register spacing, and no code reads it back.</doc>
+  <struct name="APIC_HI" size="4" grade="established" register="yes" offset="0x4" access="rw" count="30" stride="16" space="apic" reset="unknown">
+    <doc>Interrupt redirection entry, high word. Linux and the NT HAL write zero beside every device entry's low word; the HAL writes the NMI entry's high word with one bit set per processor id (1 shifted by the processor number) in bits 31:24 for logical delivery. So the field is the destination, in the I/O APIC layout (established for the NMI use; zero as 'processor id 0, physical' for device entries is inferred from the layout). The HAL never steers a device entry to another processor.</doc>
+    <field name="dest" start="24" size="8" type="uint" grade="established"/>
   </struct>
   <struct name="APIC_ID" size="4" grade="established" register="yes" offset="0xffc" access="rw" space="apic" reset="unknown">
     <doc>Controller identification and enable. The kernel reads it, sets the enable bit with a read-modify-write that it says must not change the identification, and prints the result. Where the identification field sits is not known.</doc>
+    <field name="id" start="24" size="4" type="uint" grade="established"/>
     <field name="enable" start="8" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="CPU_REV" size="4" grade="established" register="yes" offset="0x8" access="r" space="cpu" reset="unknown">
@@ -29,12 +36,33 @@
     <field name="page_close" start="1" size="1" type="uint" grade="established"/>
     <field name="ecc_enable" start="0" size="1" type="uint" grade="established"/>
   </struct>
+  <struct name="CPU_RESET" size="4" grade="established" register="yes" offset="0x18" access="rw" space="cpu" reset="unknown">
+    <doc>Machine reset on early boards. The NT HAL sets bit 0 to reboot the 320 below board revision 12 and the 540 revision 0 (halborg.dll 1.3, HalpReboot, BoardResetAtPIIX4); other boards reboot through port 0xcf9. A separate register from the memory block's error status at offset 0x18.</doc>
+    <field name="reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
   <struct name="CPU_STAT" size="4" grade="established" register="yes" offset="0x20" access="rw" space="cpu" reset="unknown">
     <doc>Timer status. The 2.2 and 2.4 timer handlers clear the pending bit by reading the register and writing it back with that bit cleared. The 2.5 and later code never writes it, so whether a level timer interrupt needs this clear to deassert is open.</doc>
     <field name="timer_intr" start="1" size="1" type="uint" grade="established"/>
+    <field name="cacheop_intr" start="0" size="1" type="uint" grade="established"/>
   </struct>
   <struct name="CPU_TIMEVAL" size="4" grade="established" register="yes" offset="0x30" access="rw" space="cpu" reset="unknown">
     <doc>Timer count. The kernel writes the Cobalt core rate divided by the tick rate (a 100 MHz core rate) before starting the timer and calls it a countdown value. That it reloads itself each period is inferred from the kernel using it as the periodic tick and writing it once.</doc>
+  </struct>
+  <struct name="CPU_TIMECUR" size="4" grade="established" register="yes" offset="0x38" access="r" space="cpu" reset="unknown">
+    <doc>Timer current value. The NT HAL's timer calibration reads it after starting the timer with a reload of 0xffffffff and takes the fall as the tick count over one RTC second (halborg.dll 1.3, HalpCalibrateCobaltTimer); it counts down.</doc>
+  </struct>
+  <struct name="MEM_ECC" size="4" grade="established" register="yes" offset="0x0" access="rw" space="mem" reset="unknown">
+    <doc>Memory controller control. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read.</doc>
+    <field name="ecc_enable" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="MEM_ERR_STATUS" size="4" grade="established" register="yes" offset="0x18" access="rw" space="mem" reset="unknown">
+    <doc>Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors).</doc>
+  </struct>
+  <struct name="MEM_ERR_ADDR" size="4" grade="established" register="yes" offset="0x28" access="r" space="mem" reset="unknown">
+    <doc>Memory error address, printed by the HAL as the address of the error.</doc>
+  </struct>
+  <struct name="MEM_ERR_SYNDROME" size="4" grade="established" register="yes" offset="0x30" access="r" space="mem" reset="unknown">
+    <doc>Memory error ECC syndrome. A nonzero syndrome with a correctable error makes the HAL rewrite the location (HalpCorrectSoftEccError).</doc>
   </struct>
   <constant name="APIC_8259" value="0xc" grade="established"/>
   <constant name="APIC_AS" value="0x18" grade="established"/>
@@ -58,5 +86,6 @@
   <constant name="CPU_MAX" value="0x4" grade="inferred"/>
   <constant name="CPU_NUM_PHYS" value="0x1e00" grade="established"/>
   <constant name="CPU_PHYS" value="0xc2000000" grade="established"/>
+  <constant name="MEM_PHYS" value="0xc6000000" grade="established"/>
   <constant name="TIME_HZ" value="0x5f5e100" grade="inferred"/>
 </genxml>

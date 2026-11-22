@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516",
+ "input_sha256": "867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",
  "profile": "public",

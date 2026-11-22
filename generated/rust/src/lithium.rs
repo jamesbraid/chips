@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 69a0b4402428d76839df18d00139f130d59741159c6c92400acf4d1cd13a3516
+// input sha256 867489c17c85dac9513105459ccd089778983f88dbdd9e722ed74820f68cb536
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
