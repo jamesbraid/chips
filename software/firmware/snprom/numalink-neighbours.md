@@ -547,12 +547,17 @@ an independent review.
   set, or bit 39 set with bit 57 clear, which is the word after the claim and the latch) or whose RAM pointer is empty
   takes the pointer in `[[0x1000040] + 0x108][nasid]`, and while that is empty the scratch object, re-initialised for the NASID
   if it holds another one.
-- **After slot 81 a memory-less remote node has no usable channel.** Slot 81 stores a new object for it in A's RAM
-  (`0xffa8f9c0`, flag bit 5 clear) and `0xffa7fcb0` then returns that object. `0xffa819c0`, the routine that opens a request slot,
-  only opens one on the slice's own object (`+0x188`), the slice's scratch object (`+0x18`), or an object with flag bit 5 set (the
-  router mailbox); anything else returns -30 without sending. So the L1 traffic to a memory-less stand-in is the set below,
-  all before slot 81; later identity and EEPROM requests for it fail inside the PROM and put nothing on the UART. (Established
-  for `0xffa819c0` and `0xffa8f9c0`; whether the later callers of the wrappers meet it in every case was not traced.)
+- **After slot 81 a memory-less remote node is reached through request slot 9, with a fresh identity cache.** Slot 81 (`0xffa915f0`,
+  the method at offset `0x288` of the SHub 1 class table `0xffbd7c18`) builds a new object for it in A's RAM (`0xffa8f9c0`), registers it
+  in `[[0x1000040] + 0x108][nasid]`, and calls `0xffa80720` on it, which sets bit 2 (value 4) of the object's flag word at `+0x50` for
+  every object (it also stores the object at `[RAM + 0x180]` when the object's NASID equals the halfword at `+0x28`), then `0xffa8c420`
+  (allocates a `0x80c`-byte receive ring, clears flag bit 3 so reads go through the ring). `0xffa7fcb0` now returns this object.
+  `0xffa819c0`, which opens a request slot, takes slot `5 + slice` on the slice's own object, the slice's scratch object or a
+  router-mailbox object; with flag bit 2 set it also scans slots 9 to `0x13` (the slot at object `+0x768`, 152 bytes apart) for a free one.
+  So the new object opens slot 9: **the request header byte is 9, not `5 + slice`** (the handle is the header byte, [l1-requests.md](l1-requests.md#conventions-used-below)),
+  and the reply must come back as `0x20 | 9`. The new object's cache (`+0xa8`) is empty, so `0x0003`, `0x000e` and `0x0013` are asked again
+  for it. Established for all of this code; that the wrapper callers after slot 81 reach it on each path was not traced. (An earlier version of
+  this section said the open fails with -30; that missed the flag-bit-2 scan.)
 
 ### The requests, in the order they are reached
 
@@ -567,13 +572,19 @@ index. "Cost if silent" is one wait (below) plus the failure tail.
 | 3 | `0x0003` rack, bay, type | after each bank's four reads, `0xffa76290` > `0xffa80210` > `0xffa7d510` > `0xffa7d1f0` > `0xffa7ca10`; also `0xffa6f000` and the name formatter `0xffaac4b0`; while the answer is not cached | none | status 0, count 2: int `rack << 6 \| bay`, int type character (upper case is lowered by the PROM) | `0xc8bb8` | 3.0 s + tail, not cached | established |
 | 4 | `0x000e` slab | `0xffa76290` > `0xffa802f0` > `0xffa7d950` > `0xffa7ce90`, once per bank until it succeeds; also `0xffa7d510` for the type letters `l`, `b`, `{`, `f` (the fold to `c` when the slab is 0 or -1) | none | status 0, count 1: int slab (255 is read as failure) | `0xca214` | 3.0 s + tail, not cached | established |
 | 5 | `0x0013` slot | `0xffa6f000` > `0xffaac4b0` > `0xffa80270` > `0xffa7d760` > `0xffa7cbe0` | none | status 0, count 2: ints (slot, type character) | `0xca2f8` | 3.0 s + tail, not cached | established (reached); order against 3 and 4 unknown |
-| 6 | `0x0006` id 1, selector 2: node board area | only for a type letter `o` (EEPROM read repeated up to 10 times in `0xffa7d1f0`); slot 99's board builder `0xffaa1ea0` > `0xffaa1310` > `0xffaeccd0` > `0xffa84fd0`; I/O discovery `0xffaf1ee0` | 1, 2, 0, 64, then offsets 64, 128 ... until bytes-left is 0 | board area as in [the I/O request section](l1-requests.md#request-0x0006-in-io-discovery); any negative status prints "Could not retrieve EEPROM info" and goes on | `0xc9658` | 3.0 s + tail | established for the sites; for a memory-less stand-in not sent (after slot 81, see above); for one with memory the object in its RAM was not read |
+| 6 | `0x0006` id 1, selector 2: node board area | only for a type letter `o` (EEPROM read repeated up to 10 times in `0xffa7d1f0`); slot 99's board builder `0xffaa1ea0` > `0xffaa1310` > `0xffaeccd0` > `0xffa84fd0`; I/O discovery `0xffaf1ee0` | 1, 2, 0, 64, then offsets 64, 128 ... until bytes-left is 0 | board area as in [the I/O request section](l1-requests.md#request-0x0006-in-io-discovery); any negative status prints "Could not retrieve EEPROM info" and goes on | `0xc9658` | 3.0 s + tail | established for the sites; for a memory-less stand-in after slot 81 through slot 9 (see above); for one with memory the object in its RAM was not read |
 | 7 | `0x0010` processor presence | slot 99, `0xffaa1ea0` > `0xffae8660` > `0xffae8250` | none | status 0 (bytes 0 to 3), then from byte 5: int nodes (at most 4), int CPUs (at most 16), then per node int presence mask, int enable mask; the count byte 4 is not tested | `0xca5f4` | 3.0 s + tail | established (parser); L1 layout inferred |
+| 8 | `0x100b` again, target `0x4ffff000` | slot 91, `0xffaad720` > `0xffa91260` > `0xffa91060`, only past the I/O set-up routines, so only when bit 2 of the stand-in's `0x1_5003_1550` reads 0 | same as row 1 | same as row 1 | `0xcb474` | 3.0 s + tail | established (site); the L1 sees a second `0x100b` |
+| 9 | `0x1005` display text | the failure routine, when the failing request's object can open another slot (flag bit 2, see above), and the bank-hole check `0xffa764a0` (`<name>:ERR d8`, code `0xd8`, also fatal text on the console) | one string | status 0, count 0 | `0xcaeb4` | 3.0 s + tail | established (sites) |
 
-Rows 1 to 5 are the whole L1 traffic a memory-less stand-in sees on the paths read (rows 6 and 7 are issued after slot 81, where the
-channel is gone): a stub that answers them at once puts no 3 s wait in A's boot. The display request `0x1005` is not sent for the stand-in in this
-sequence: the failure routine would send it, but the request slot it needs is the one still held by the failing request, so `0xffa819c0`
-refuses (established: slot busy, flag bit 2 clear).
+Before slot 81 the traffic is rows 1 to 5; after it, for a memory-less stand-in, the new object re-asks the identity requests (rows 3 to 5) and
+reaches rows 6 and 7 (slot 99) and, with the I/O set-up, row 8. A stub that answers every row at once adds no 3 s wait to A's boot.
+Row 9 needs care. The failure routine sends `<name>:ERR 8d` while the object's display flag (bit 6) is set, and clears it only after the
+send returns. On the scratch object (before slot 81) the failing request still holds its slot and the open is refused, so nothing goes out.
+On an object with flag bit 2 the open succeeds on the next free slot, a silent L1 fails that display request too, and the failure re-enters
+the routine with the flag still set: one more send per free slot (slots 9 to `0x13`) until none is left, up to eleven extra waits of 3.3 s
+(established from the code; not run). The bank-hole check `0xffa764a0` and the I/O code also call the routine with codes other than `0x8d`;
+each has the same display send.
 
 **What the 16 DIMM reads give the PROM.** "No DIMM": status -104 (`ff ff ff 98`), count 0, six payload bytes, in every one of the 16
 (the L1 answers the ids 14, 15, 22, 23 and every unpopulated slot that way). The PROM then has bank mask 0 in all four banks, every bank
@@ -593,12 +604,13 @@ filled contiguously because the bank mask check prints the fatal text first.
   1000. **If A's RTC does not advance, no wait ever ends.** That is the one reason found in the code for a receive wait that
   outlasts its 3 s (inferred as the cause of the run noted above: the run's RTC behaviour was not looked at).
 - **Retries.** None for the wait: one send, one wait. The send alone is retried when it was only partly accepted (status -26): up to 50
-  times, 500 us apart, then -26. The DIMM caller `0xffa7bd60` does not repeat a failed slot, and the identity callers repeat only on
-  a later call (the answer is cached only when it succeeded: `0xffa81630`). The one loop is the type `o` EEPROM read, 10 tries.
-- **On expiry** (`-24`): `0xffa82a10` calls the die routine `0xffad2cb0(nasid, 0x8d)`. For the stand-in it (a) would send the display
-  text `<name>:ERR 8d` (refused, as above), clears the display flag, (b) for k = 0 to 3 writes `(old << 8) | 0x8d` to `0x1_5003_1500 + 16 * k` of
-  the stand-in and two 16-bit stores of the code (with bits 5 and 6 added on one of them) into its junk-bus windows `0xf_fed0_0000` to `0xf_fed3_0000` (`0xffa0e0d0`), (c) calls a per-slice method
-  (`0xffa99800`, effect not read) four times, (d) sets bit 39 of its `SCRATCH1` `0x1_101d_0080` (`0xffa0aee0`), (e) writes `0x1_0001_0000_0000` to its
+  attempts in all (49 retries), 500 us apart, then -26. The DIMM caller `0xffa7bd60` does not repeat a failed slot, and the identity callers repeat only on
+  a later call (the answer is cached only when it succeeded: `0xffa81630`). The one loop is the type `o` EEPROM read, 11 attempts. A simulator CPU signature makes `0xffa82a10` return -24 at once without sending (and
+  without the die routine) and shifts the RTC reading left by 7 in `0xffa0da70`; neither applies to an emulated real CPU id.
+- **On expiry** (`-24`): `0xffa82a10` calls the die routine `0xffad2cb0(nasid, 0x8d)`. For the stand-in it (a) sends the display
+  text `<name>:ERR 8d` if the open succeeds (row 9; refused on the scratch object), then clears the display flag, (b) for k = 0 to 3 writes `(old << 8) | 0x8d` to `0x1_5003_1500 + 16 * k` of
+  the stand-in and two 16-bit stores of the code (with bits 5 and 6 added on one of them) into its junk-bus windows `0xf_fed0_0000` to `0xf_fed3_0000` (`0xffa0e0d0`), (c) calls class method `+0xf8` (`0xffa0e880`) four times, with bit `0x1a + k`: it polls `0x1_101d_0208` until bit 0 reads 0 (1 s limit, so a
+  register that never clears costs 4 s per failure), clears that bit of `0x1_5003_1550`, and writes 0 to `0x1_101d_0200`, (d) sets bit 39 of its `SCRATCH1` `0x1_101d_0080` (`0xffa0aee0`), (e) writes `0x1_0001_0000_0000` to its
   `0x1_2000_0000`, clears bits 29:26 of its `0x1_5003_1550`, and (f) waits 300,000 us (`0xffa9fc70`). It returns; only for A's own NASID
   and slice does it end in the park. Total per silent request about 3.3 s of A's RTC. (Bit 39 of `SCRATCH1` is what makes the stand-in
   read as memory-less afterwards: `0xffa99b80`.)
@@ -621,14 +633,15 @@ Plain storage for `0x1_5003_1540`, a read of `0x1_101d_0188` that returns 0 and 
 | Row | What the stub does | Grade |
 |---|---|---|
 | UART | 16550-style registers at `0xf_fed4_0000 | nasid << 38`, 8-byte stride: line status `+0x28` bit 6 set within 100 ms of reset and bit 5 set (transmit empty), bit 0 set only while a reply byte is waiting; data `+0x00`; the PROM's divisor, line-control, modem, FIFO and scratch writes need only storage | established (PROM side) |
-| Frames | HDLC-style byte stuffing, FCS-16 residue `0xf0b8`, payload at most 127 bytes ([l1-requests.md](l1-requests.md#conventions-used-below)); answer each complete request frame with one frame whose first payload byte is `0x20 | n`, n being the request's header byte | established |
+| Frames | HDLC-style byte stuffing, FCS-16 residue `0xf0b8`, payload at most 127 bytes ([l1-requests.md](l1-requests.md#conventions-used-below)); answer each complete request frame with one frame whose first payload byte is `0x20 | n`, n being the request's header byte (`5 + slice` before slot 81, 9 or higher after) | established |
 | Request 1, `0x100b` | send nothing (what the real L1 does), accepting a 3.3 s cost in A's RTC; or answer `20+n 00 00 00 00 00` (status 0, count 0) to skip it | established (both accepted by the PROM) |
 | Rows 3, 4, 5 | answer at once with the node's identity words: they are asked repeatedly until one succeeds, and the answer is cached afterwards. A negative status or wrong count fails the request (-33 for a wrong count, -32 for a wrong tag) | established |
 | Row 2 | "No DIMM": six bytes `20+n ff ff ff 98 00`, sixteen times, any time. An SPD image: status 0, count 2, int `256 - 48 = 208` and a 48-byte raw block with a valid checksum in byte 63 (sysco), equal `tRCD` across DIMMs, banks filled in order | established |
-| Rows 6, 7 | not sent for a memory-less stand-in; if a memory-bearing model sends them, `0x0006` id 1 selector 2 gets a board area or status -104, and `0x0010` the layout above | established (what the PROM accepts); L1 side inferred |
+| Rows 6 to 9 | sent after slot 81 on header byte 9 (the reply must carry `0x20 \| 9`): `0x0006` id 1 selector 2 gets a board area or status -104, `0x0010` the layout above, `0x100b` silence or `20+n 00 00 00 00 00`, `0x1005` status 0 | established (what the PROM accepts); L1 side inferred |
 | Timing | the PROM's RTC must run: A's `0x1_101c_0000` and the period field of `0x1_1006_0280`, or the 3 s waits never end | established (code); inferred as the cause of the run above |
-| Registers on the stand-in | `SCRATCH2` and `SCRATCH1` read back what was written; `0x1_5003_1540` plain storage; `0x1_101d_0188` reads bit 0 clear; `0x1_101d_0180` write sink; the die-routine writes of row (b) to (e) above need storage | established |
-| Unexpected | a request frame the PROM never sends (any code outside rows 1 to 7, or a second `0x100b`) is a finding, not something to answer | inferred |
+| Registers on the stand-in | `SCRATCH2` and `SCRATCH1` read back what was written; `0x1_5003_1540` and `0x1_5003_1550` plain storage; `0x1_101d_0188` and `0x1_101d_0208` read bit 0 clear; `0x1_101d_0180` and `0x1_101d_0200` write sinks; the die-routine writes of row (b) to (e) above need storage | established |
+| RAM pointer | `0x8000_0030_0100_0038 \| nasid << 38` must read 0 (or be unmapped-safe): `0xffa7fcb0` takes the node's RAM object when that word is non-zero and the node does not read as memory-less | established |
+| Unexpected | a request frame the PROM never sends (any code outside rows 1 to 9) is a finding, not something to answer; a second `0x100b` (row 8) and a `0x1005` (row 9) are expected | inferred |
 
 
 ## Contract rows: the scrub stores, the clock and the atomics (read 2026-11-22)
