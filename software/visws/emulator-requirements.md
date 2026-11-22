@@ -8,7 +8,7 @@ pages.
 ## Running the real firmware
 
 The PROM 1.0002, 1.0004, 1.0005, 1.0006 and 1.1005 images are held ([firmware.md](firmware.md)), so this route can be tried; no run has been done. 1.1005 is the release a real 320
-reports and the one to aim for; "PROM 1.2" is 1.0002, the oldest, and asks for less. What the image
+reports and the one to aim for; "PROM 1.2" is 1.0002, the oldest; it asks for something different (the Lithium `+0x40` read-modify-write). What the image
 asks of the machine before it reaches its main module: RAM that works up to 16 MiB with no sizing (the boot block copies
 the flash to `0x80000` and expands the firmware to `0xf00000`-`0xff0264`), the Lithium configuration window at
 `0xfd0000f8`/`0xfd0000fc` and the PIIX4 behind it, an NS87307 answering on ports `0x2e`/`0x2f`, the 8259 and DMA

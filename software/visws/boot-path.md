@@ -95,7 +95,7 @@ not read in full).**
 5. **Graphics memory.** `gfxmem_alloc` (`1.0006@0xf04a70`, `1.1005@0x1104840`) chooses the graphics reservation and enters it
    as memory type `0x16` in the loader block; `cogfxmem` and `maxpmem` steer it. Read in full: [below](#memory-controller-and-graphics-memory).
 6. **PCI resources.** The first reading missed the PCI code: the main module does walk PCI-to-PCI bridges and assigns their bus
-   numbers and windows (`1.0006@0xf1fe70` "assign 1 bus"), and numbers the two Lithium bridges itself. See
+   numbers and windows (`1.0006@0xf1fe70`, strings `assign_1_bus: ...`), and numbers the two Lithium bridges itself. See
    [below](#pci-bus-numbering-and-windows). Whether it assigns resources to endpoint devices for its own boot devices
    was not traced (the drivers were not read); the OS side assigns anyway (see PCI enumeration below).
 7. **Cobalt interrupt controller identification.** One routine writes the interrupt controller's `+0xffc` word as
@@ -105,8 +105,8 @@ not read in full).**
 ### Older releases and reset
 
 **Established (1.0002, 1.0004 and 1.0005 compared with 1.0006 and 1.1005, [firmware.md](firmware.md#from-10002-to-10006)).** "PROM 1.2"
-is 1.0002, the oldest release held, so nothing in it adds to what 1.1005 asks of the machine. What differs, for an emulator that
-runs the older images or one that wants to know which of these accesses the contract needs:
+is 1.0002, the oldest release held. It asks something different of the machine from 1.1005, not less: it needs the Lithium `+0x40`
+read-modify-write below. What differs, for an emulator that runs the older images or one that wants to know which of these accesses the contract needs:
 
 - **Lithium `+0x40` (1.0002 and 1.0004 only).** The Lithium set-up routine reads and writes `+0x40` of both register pages:
   window A (`0xfc000000`) ends with the top byte `0x01` and bit 5 set, window B (`0xfd000000`) with the top byte `0` and bit 5 set
@@ -117,10 +117,13 @@ runs the older images or one that wants to know which of these accesses the cont
   meaning, and its value on any other generation, are unknown. 1.0002 neither maps the window nor writes it. (`1.0004@0xf00250`,
   `1.1005@0x1100270`.)
 - **Processor identity.** From 1.0004 the firmware checks that all processors look alike (the report strings name the jumper
-  setting, mixed processors and unequal L2 sizes); an emulator with several processors should give every one the same CPUID signature,
-  bus-ratio field in MSR `0x2a` and L2 size. What the firmware does on a mismatch was not traced (unknown). Speed comes from the MSR `0x2a`
-  ratio field through a table (`1.0005@0xf1e110`, `1.0006@0xf1e180`, `1.1005@0x11197f0`); a ratio missing from the table makes
-  1.0005 and 1.0006 time the processor with `rdtsc` against the real-time clock's update-in-progress flag (register `0x0a` bit 7). A model
+  setting, mixed processors and unequal L2 sizes); an emulator with several processors should give every one the same CPUID signature (stepping is ignored) and L2 size.
+  The check (`1.0004@0xf010b0`) loops over four slots, reads the signature and feature words from the table at `0x1e06 + 20*i` and
+  `0x1e0a + 20*i`, compares them with per-processor speed and L2 words, stores a flag word in extended CMOS bytes `0x98` to `0x9b` (ports `0x72`/`0x73`) and always
+  returns 0: a mismatch is reported and recorded, never fatal (established for 1.0004; the 1.1005 routine was not compared). It does not read MSR `0x2a`. Speed comes from the MSR `0x2a`
+  ratio field through a table that every release from 1.0002 has (`1.0002@0xf1d5f0`, `1.0004@0xf1e110`, `1.0005@0xf1e110`, `1.0006@0xf1e180`, `1.1005@0x11197f0`;
+  1.0006 adds the 600 and 650 MHz rows and 1.1005 has two tables); a ratio missing from the table makes
+  1.0002 to 1.0006 time the processor with `rdtsc` against the real-time clock's update-in-progress flag (register `0x0a` bit 7). A model
   that leaves MSR `0x2a` at zero gets the table's reading of code 0, 333 MHz, in the speed report; the speed line is only a report
   (inferred).
 - **L2 control for slot 2 processors (1.0006 and 1.1005).** For signatures `0x672` to `0x67f` with platform id 2 in MSR `0x17`, the self-test
