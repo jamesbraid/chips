@@ -30,6 +30,7 @@
 | [dm2/](dm2/README.md) | Scoping datasheet: SGI DMediaPro DM2 (XT-DIGVID) XIO video board, with DIVO as the fallback | Status: scoping draft, not independently reviewed. |
 | [dm8/](dm8/README.md) | DMediaPro DM8 PCI audio option | The DM8 is a commercial off-the-shelf audio design, not an SGI ASIC board. |
 | [dp83843/](dp83843/README.md) | DP83840A and DP83843 Ethernet transceivers | The Ethernet controller on the Origin 200 and Origin 300 base I/O boards reaches its 10/100 Mb/s transceiver only... |
+| [dp8573a/](dp8573a/README.md) | DP8573A: the Indigo's real-time clock and battery-backed RAM | The Indigo keeps its time of day in a National Semiconductor DP8573A-family real-time clock: BCD counters from... |
 | [ds1685/](ds1685/README.md) | DS1685/DS1687 real-time clock and battery-backed RAM | The Octane and Octane2 system boards (IP30) carry a Dallas real-time clock with 242 bytes of battery-backed user RAM. |
 | [ds1742/](ds1742/README.md) | DS1742W nonvolatile timekeeping RAM (Fuel L1) | The DS1742W is a 3.3 V, 2,048-byte battery-backed SRAM with a clock, identified on a revision B Fuel board by its... |
 | [ds1744/](ds1744/README.md) | DS1744 nonvolatile timekeeping SRAM | The DS1744 is a 32 KiB byte-wide battery-backed SRAM with a clock in its top eight bytes. |

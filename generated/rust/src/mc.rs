@@ -1,6 +1,6 @@
 // @generated from devices/mc/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 e58245850b29894ab613ba249050f6e030d591556170de875fcddec530f692ce
+// input sha256 dae392f2b3e15a33aee9340388e677b1c60d361b28987e437dd2dd4709e5ba5a
 // SGI MC memory controller of the R4000 Indigo, Indy and Indigo2: CPU control, GIO arbitration, memory configuration, error reporting and the graphics DMA engine
 #![allow(dead_code)]
 #![allow(clippy::doc_markdown)]

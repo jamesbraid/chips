@@ -21,7 +21,7 @@ address, for any address below `0x20000000`. Memory from `0x20000000` up cannot 
 | `0x00000000`–`0x0007ffff` | 512 KiB | Alias of the first 512 KiB of main memory at `0x08000000`, for the CPU exception vectors at physical 0 and 0x80. | **established**, map and IRIX (the header says memory from 0 to 512K is aliased at 0 and at 128 MiB). The PROM relies on it (exception stubs at `0x80000000`, `0xbfc08b28`; ARC block at `0xa0001000`; see [PROM page](prom-software.md#memory-sizing-and-where-ram-sits-established-unless-marked)). Whether the alias reaches beyond 512 KiB (NT wants RAM to 6 MiB): **unknown**. |
 | `0x00080000`–`0x07ffffff` | ~128 MiB | EISA I/O space and EISA memory in the MC's map. The Indigo has no EISA bus. | map: **established** for the chip; for this board **unknown** (what an access returns with no EISA chips present: a bus error or a GIO timeout). Route: a read of a real board, or the MC specification's EISA section. |
 | `0x08000000`–`0x17ffffff` | 256 MiB | **Main memory, low window.** Banks are programmed here first, largest first, from `0x08000000`. | **established**: `mc.h` (`SEG0_BASE` and size), PROM placement code `0xbfc00f64`. |
-| `0x18000000`–`0x1effffff` | 112 MiB | Reserved: bus error on read, bus-error interrupt on write. | map **established**. A write that runs past the low window raises the GIO error at `0x18000000` (a Usenet report of a 384 MiB board under PROM 4.0.5D shows `GioErrorAddr: 18000000`), `inferred` for the cause. |
+| `0x18000000`–`0x1effffff` | 112 MiB | Reserved: bus error on read, bus-error interrupt on write. | map **established**. A write that runs past the low window raises the GIO error at `0x18000000` (a Usenet report of a 384 MiB board under PROM 4.0.5D shows `GioErrorAddr: 18000000` and `EPC: BFC02F60`, inside the PROM's address test at `0xbfc02f30`, which runs before the memory-clear fill), `inferred` for the cause. |
 | `0x1f000000`–`0x1f3fffff` | 4 MiB | **Graphics slot.** The Entry graphics board's registers are probed at `0x1f3f0000` and `0x1f3f8000`; the Express family at the slot base. | extent **established** (`IP20.h`: 4 MiB for graphics, `LIO_ADDR` `0x1f000000`); the probe addresses are NetBSD's. Which board answers where: other pages. |
 | `0x1f400000`–`0x1f5fffff` | 2 MiB | **GIO slot 0.** | **established** (IRIX: 6 MiB of GIO slots after the graphics 4 MiB; the specification gives slot 0 2 MiB; NetBSD probes `0x1f400000`). |
 | `0x1f600000`–`0x1f9fffff` | 4 MiB | **GIO slot 1** (spec: 4 MiB). IRIX also names a second and third HPC1 at `0x1f980000` and `0x1f900000` ("may not be present"), i.e. inside this slot's range, for GIO cards that carry an HPC1. | slot **established**; HPC1 identities from `IP20.h` names only; whether any real card answers there: **unknown**. |
@@ -95,3 +95,13 @@ sections; see [questions/ip20-mc.md](../../questions/ip20-mc.md).
 ## Open
 
 See [questions/ip20-mc.md](../../questions/ip20-mc.md) and [questions/ip20-prom-software.md](../../questions/ip20-prom-software.md).
+
+## Review (2026-11-23)
+
+Independent evidence review of `f2d9873e` (this page and the questions page), with the MC page commits `d6723f08` and `b6b9bf88`. Outcome in brief; the full table is on the [MC page](../../devices/mc/README.md#review-2026-11-23).
+
+- Address map entries checked against the specification's CPU memory map (page 22): confirmed, including the `0x00000000` alias of `0x08000000` (512 KiB), the 256 MiB low window and the 256 MiB high window `0x20000000` to `0x2fffffff`. The specification allows 512 MiB in total; the "384 MiB" cap on the high window comes from the kernel and the PROM does not enforce it (it places four 128 MiB banks to `0x2fffffff`).
+- The `0x18000000` row: the Usenet failure at `GioErrorAddr: 18000000` is the PROM's address test, not the memory-clear fill (see the MC page); the row's cause stays `inferred` and now names the address test.
+- The PROM's MC set-up order (steps 3 to 6): confirmed against the listing; step 6 reads the RPSS counter, as the page says. The `cpuctrl0` word in step 3 has bits 16 to 19 clear (big-endian).
+- The 4.0.5G column is the earlier comparison's statement; the image was not available to this review, so it is unverified.
+- The `interrupts.md` page now appears in `platforms/README.md` (index regenerated).

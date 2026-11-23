@@ -1,6 +1,6 @@
 <!-- generated from devices/mc/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 e58245850b29894ab613ba249050f6e030d591556170de875fcddec530f692ce -->
+<!-- input sha256 dae392f2b3e15a33aee9340388e677b1c60d361b28987e437dd2dd4709e5ba5a -->
 
 # SGI MC memory controller of the R4000 Indigo, Indy and Indigo2: CPU control, GIO arbitration, memory configuration, error reporting and the graphics DMA engine
 
@@ -75,7 +75,7 @@ CPU control 0: refresh, parity reporting, watchdog enable, system and graphics r
 | 25 | `bad_par` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Write bad parity on CPU stores to memory, for a parity diagnostic. |
 | 24:20 | `mux_hwm` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | High-water mark of the MUX chip CPU write FIFO; the lowest bit is ignored. Software stores 32 minus the mark: the value is the cache line size in bytes divided by 8, plus 4 (6, 8, 12 or 20 for 4-, 8-, 16- or 32-word lines). |
 | 19 | `wrst` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Warm reset of the R4000 that does not re-read the serial EEPROM. |
-| 18 | `little` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Configure the MC for a little-endian CPU. The boot-time EEPROM sets it; if it disagrees with the CPU the machine does not work. The Linux header calls bit 17 the little-endian bit and bit 18 a memory-destroying warm reset; the specification and the IRIX header (which the shipped IRIX code uses) say bit 17 is reserved and bit 18 is little-endian. |
+| 18 | `little` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Configure the MC for a little-endian CPU. The boot-time EEPROM sets it; if it disagrees with the CPU the machine does not work. The Linux header calls bit 17 the little-endian bit and bit 18 a memory-destroying warm reset; the specification (section 5.1), NetBSD and the IRIX header (which the shipped IRIX code uses) say bit 17 is reserved and bit 18 is little-endian. |
 | 16 | `wr_st` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Warm restart: starts an R4000 reset sequence without resetting other chips or most of the MC. Refresh continues. The Indigo PROM stores this bit alone to apply a new endian setting after rewriting the serial EEPROM. |
 | 15 | `prom_wr_en` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Clear: a CPU write to the boot PROM raises a bus-error interrupt. Set: writes are silently ignored. It does not block the write. |
 | 14 | `snoop_en` | established |  | MC Chip Specification, section 5.1; IRIX sys/mc.h | Enable snoop logic for graphics DMA. |

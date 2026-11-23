@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/mc/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 e58245850b29894ab613ba249050f6e030d591556170de875fcddec530f692ce -->
+<!-- input sha256 dae392f2b3e15a33aee9340388e677b1c60d361b28987e437dd2dd4709e5ba5a -->
 <genxml unit="mc" prefix="MC" title="SGI MC memory controller of the R4000 Indigo, Indy and Indigo2: CPU control, GIO arbitration, memory configuration, error reporting and the graphics DMA engine" from="MC Chip Specification (R4000 project), revision 1.15">
   <doc>The MC gate array sits between the R4000, main memory and the GIO bus. This unit is every register software touches. Offsets are from the start of the MC window (physical 1fa00000) and are the big-endian view: the chip answers each register at two addresses four bytes apart, the higher one for a big-endian CPU and the lower one for a little-endian CPU (the lower is these offsets minus 4; the semaphore pages and the DMA block follow the same rule). All registers are 32-bit words on the CPU bus; the IRIX header marks some as byte or halfword registers, which says how many bits are meaningful, not a different access width. Grades: established means the public IRIX source tree, a shipped IRIX header or the MC chip specification states it; inferred means a reasoned reading, with the reasoning in devices/mc/README.md. The specification covers MC revisions A and B (Fast Forward machines, Indigo notes included); the Indigo board carries revisions A to C, so a reset value taken from the specification is graded for the specification's revision and is not a read of an Indigo.</doc>
   <space name="mc" unit="byte"/>

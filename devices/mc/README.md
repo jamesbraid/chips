@@ -29,7 +29,7 @@ Sources, in the repository's evidence order:
   An emulator's MC model returns 3 and calls it revision C (a note, not evidence).
 - Boards in the field carried A, B and C parts. A Usenet report of a 030-8096-004 Rev E board says it "had Rev. C memory controllers"
   and would not boot with 384 MiB under PROM 4.0.5D but would under PROM 4.0.5G
-  (`3DF1F502.D82C6820@machtnix.net`, `3EF3585F.DBE9C4C1@machtnix.net`), which is the memory-clear defect described in the PROM
+  (`3DF1F502.D82C6820@machtnix.net` for the board, the PROM and the failure, `3EF3585F.DBE9C4C1@machtnix.net` for the fix by a PROM swap and "both had Rev. C memory-controllers"), which is the over-256-MiB defect described in the PROM
   section below. `inferred`: the chip marking is the poster's, not a register read.
 - The Indigo PROM 4.0.5D never reads `SYSID`. Software that does: the kernel's `mlreset` (`mc_rev_level = SYSID & 0xf`,
   confirmed in the IRIX 6.5 Indigo kernel object).
@@ -114,8 +114,12 @@ fields: `get_mem_conf`, `bank_addrlo`, `banksz`, `szmem` in the Indigo kernel (`
   `0x10000` (zoom 1, stride 0), `dma_size` ← `(total << 1) | 0x8000` (lines of 32 KiB, `total / 32 KiB` of them), `dma_gio_adrs` ← 0
   (the fill constant; this starts the DMA), poll `dma_run` bit 6, then `dma_cause` ← 0 (`0xbfc00b28`–`0xbfc00bb8`). **4.0.5D does this in one run
   from `0x08000000` for the whole total**, so a total above 256 MiB runs the fill across the hole at `0x18000000` into I/O space. 4.0.5G
-  (and the later source) clamp the first run to 256 MiB and start a second at `0x20000000`. The Usenet failure with 384 MiB reports
-  `GioErrorAddr: 18000000` exactly. `inferred` that this is the cause; the same report shows PROM 4.0.5G booting with 384 MiB.
+  (and the later source) clamp the first run to 256 MiB and start a second at `0x20000000` (the 4.0.5G image is not on the reader's storage; this is the earlier comparison's statement). The Usenet failure with 384 MiB reports
+  `GioErrorAddr: 18000000` exactly and `EPC: BFC02F60`. That exception address lies in the address test (`0xbfc02f30`, called at `0xbfc00afc` with the total), which
+  runs **before** the DMA fill: it stores each address to itself at `0xa8000000` plus 4, 8, 16 and so on below the total, then reads each back (the load at `0xbfc02f60`), and
+  with a total above 256 MiB the offset `0x10000000` reaches physical `0x18000000`, which bus-errors. So the first fault in the report is the address test, not the fill; the fill would cross the same hole afterwards. `established` for the address-test
+  code (listing) and that its range is the whole total; `inferred` that it is the fault in the report (the exception address fits, nothing was run). The
+  same poster reports a 4.0.5G board booting with 384 MiB; a user report, graded `inferred`.
 - Valid bit and size are set for the test with base `0x20`, address test over the whole size, then the bank is cleared if the walking-bit
   test fails; the final base comes last (`0xbfc00f64`).
 
@@ -144,8 +148,8 @@ Order of accesses for each bank *n* (0 to 3), what the model sees:
    pattern. A word that does not match marks SIMM *i* missing or bad (flags `0x8000`, `0x4000`, `0x2000`, `0x1000`). All four bad means "no bank"; some but not all
    bad is reported and the bank is dropped. **An unpopulated SIMM must therefore return something other than the pattern just written**, even
    though the preceding store put it on the bus; zero is enough.
-3. Clear offsets 0 to 12. For distance 4 MiB then 16 MiB: store the four patterns at `0xa8000000 + distance`, load offsets 0 to 12; any nonzero word means the
-   address wrapped. **A bank smaller than the window must wrap**: a 4 MiB bank (one sub-bank) wraps at 4 MiB, a 16 MiB bank at 16 MiB; with no wrap by 64 MiB the distance is 64 MiB. A model with
+3. Clear offsets 0 to 12. For distance 4 MiB then 16 MiB: store the four patterns at `0xa8000000 + distance`, load offsets 0 to 12; all four words nonzero means the
+   address wrapped (`0xbfc00e5c`); all zero means no wrap, so the distance grows by four; some but not all nonzero is treated like the lane failure of step 2. **A bank smaller than the window must wrap**: a 4 MiB bank (one sub-bank) wraps at 4 MiB, a 16 MiB bank at 16 MiB; with no wrap by 64 MiB the distance is 64 MiB. A model with
    flat 128 MiB RAM never wraps, so it reports distance 64 MiB for every bank.
 4. Half *n* ← `0x7f20`; store the patterns at `0xac000000` (physical `0x0c000000`, 64 MiB above), zero at +16 to +28 as before, and require all four back. Present: second
    sub-bank, size = twice the distance, so 64 MiB distance gives 32 units. Absent: half *n* ← `0x3f20` and size = the distance. A flat 128 MiB model therefore
@@ -243,15 +247,37 @@ specification notes.
 
 ## IP12 (R3000 Indigo)
 
-The R3000 Indigo is not an MC machine, as far as the sources show: the specification's change log removed R3000 support in February
-1992 ("Removed R3K support"), and the 4.0.1 Rev C PROM for the R3000 board (`070-8088-xxx`) touches only a different, much smaller set of
-offsets in the `0x1fa00000` page: `0x00`, `0x04` (one read at `0xbfc15a20`), `0x08`, then `0x1fa10000`, `0x1fa10004`, `0x1fa10200`–`0x1fa10210`,
-`0x1fa20008` and `0x1faa0000`, `0x1faa0100` (listing scan; accesses through computed bases not seen). No `memcfg`, `*_memacc`,
-`cpu_err_*` or DMA offset appears, and the register at `+0x00` is written with `0x200` and `0xc00` and ORed with `0xc`, `0xe`, `0x80`,
-`0x40` in ways that do not match `cpuctrl0`'s fields. An emulator's R3000 Indigo model names this region the earlier PIC and CTL gate arrays
-(a note, not evidence). So for every register in [registers.md](registers.md): **IP12 does not use it** (`inferred`: no access found, no
-source states otherwise), except `+0x00`/`+0x04`/`+0x08`, whose IP12 meaning is `unknown` and a different layout from the MC's.
+The R3000 Indigo has no MC. The board schematic for the R3000 Indigo CPU board (`032-8044-003`, 36 sheets; table of contents on sheet 2, sheet 8) lists
+a Processor Interface Controller (`PIC1`) with the CPU, tag, GIO, VME and memory-bank lines (`BANK0` to `BANK2`, three banks) and a data buffer
+controller, then memory drivers and three main-memory sheets; no MC appears. `established` that the board has no MC chip (published schematic, sheet 2
+and sheet 8). The MC specification's change log removed R3000 support in February 1992 ("Removed R3K support"), which agrees.
+The 4.0.1 Rev C PROM for the R3000 board (`070-8088-xxx`) touches only a small set of offsets in the `0x1fa00000` page:
+`0x00`, `0x04` (one read at `0xbfc15a20`), `0x08`, then `0x1fa10000`, `0x1fa10004`, `0x1fa10200`-`0x1fa10210`, `0x1fa20008` and `0x1faa0000`,
+`0x1faa0100` (listing scan; accesses through computed bases not seen). No `memcfg`, `*_memacc`, `cpu_err_*` or DMA offset appears, and the register
+at `+0x00` is written with `0x200` and `0xc00` and ORed with `0xc`, `0xe`, `0x80`, `0x40` in ways that do not match `cpuctrl0`'s fields. So for every register in
+[registers.md](registers.md): **IP12 does not use it** (`established` for the chip, `inferred` that the `0x1fa00000` page is the `PIC1`: the schematic names no address,
+and another project's R3000 Indigo model maps the `PIC1` there, a note and not evidence). The `PIC1` is the R3000 Indigo's memory and bus interface; its registers,
+its bank-size encoding and its sizing sequence are `unknown`: see [questions/ip12-pic1.md](../../questions/ip12-pic1.md). Nothing on this page applies to it.
 
 ## Open
 
 See [questions/ip20-mc.md](../../questions/ip20-mc.md).
+
+## Review (2026-11-23)
+
+Independent evidence review of commits `d6723f08` (registers and page), `f2d9873e` (address map and questions) and `b6b9bf88` (sizing checklist) on chips main.
+Sources read: the MC specification (revision 1.15) pages 22 and 24 to 38; the IP20 PROM `070-8116-004` (4.0.5D) disassembled at the addresses below; NetBSD `sgimips/dev/imcreg.h`
+(`07004b2a`), Linux `arch/mips/include/asm/sgi/mc.h` (v5.3 tree); the two Usenet posts by message-id; the R3000 Indigo schematic (`032-8044-003`). Not read: the 4.0.5G image (not on the reader's
+storage) and the IRIX 6.5 Indigo kernel object (not held on the reader's storage), so statements resting on them keep their earlier grade.
+
+| Claim | Outcome |
+|---|---|
+| `cpuctrl0` bits: 16 warm restart, 17 reserved, 18 little-endian select, 19 R4000 warm reset | **Confirmed.** Specification section 5.1, pages 26 and 27; NetBSD `imcreg.h` agrees. Linux `mc.h` is wrong for 17 and 18 (it names `0x20000` little-endian and `0x40000` warm reset). The IP22 pages already used bit 16 only; the IP20 PROM page, the byte-order survey and the MC register note were corrected in the fix commit. Same bit layout holds for the Indy and Indigo2 MC (NetBSD's driver serves IP22 and IP24; the specification covers revisions A and B). |
+| Bank word: 7:0 base (4 MiB units), 12:8 size code, 13 valid, 14 sub-bank; halves of `memcfg0/1` | **Confirmed**: specification section 5.12 (page 33) and the listing (`0xbfc01000`, `0xbfc010a8`). |
+| Probe words `0x3f20`, `0x7f20`, `0x5fff`; readbacks `0x7f207f40`, `0x7f807fa0` | **Confirmed** by `0xbfc00a24`, `0xbfc00e78`, `0xbfc00f1c`, `0xbfc00f58`, `0xbfc00f64` to `0xbfc00ff0`; a flat model that never wraps sizes every bank 128 MiB with two sub-banks. Wrap rule corrected in detail: a wrap is all four words nonzero, not any (`0xbfc00e5c`). |
+| `+0x1004` is the RPSS counter; 625-tick signed wait | **Confirmed**: `0xbfc004e8` to `0xbfc00500` (read, `addiu 0x271`, `subu`, `slt`, branch); specification section 5.21, reset divider `0x0104` is one tick per 100 ns. The PROM page called it the refresh counter in three places (fixed). |
+| 4.0.5D memory-clear defect above 256 MiB | **Grade changed.** The code facts hold (fill from `0x08000000` for the whole total, `0xbfc00b28` to `0xbfc00bb8`). The failure in the Usenet report is the address test at `0xbfc02f30` (`EPC: BFC02F60`, `GioErrorAddr: 18000000`), which runs before the fill and crosses the hole first. Both posts exist, are public, and give the board, PROM `070-8116-004`, "Rev. C" controller and the 4.0.5G fix; the chip marking and the fix are user reports. 4.0.5G fix: **unverified** from the image; stated as the earlier comparison and the poster. |
+| IP12 does not use the MC | **Confirmed and upgraded** to established for the chip: the schematic has no MC, it has a `PIC1` and three memory banks. The `PIC1` is the R3000 Indigo's memory interface; its registers are unknown and filed as [a question](../../questions/ip12-pic1.md). |
+| Offsets and grades sampled against the specification | Every offset in `registers.toml` match the specification's table (page 24, big-endian addresses) including the semaphore pages, TLB pairs and `rpss_ctr`; reset values for `cpuctrl0` (`0x00100012`), `ctrld`, `rpss_divider`, `cpu_time`, `lb_time`, `lock_memory`, `cpu_memacc` (`0x01454333`) and `gio_memacc` (`0x4333`) match the reset columns. No other discrepancy found. Not checked: the kernel `mlreset` constants. |
+
+Exposure note: a Library search for the Linux header names also returned snippets of the vendor IRIX header; the bit meanings above were settled on the specification and NetBSD alone.

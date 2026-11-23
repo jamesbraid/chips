@@ -24,9 +24,5 @@ Status: **unknown** for everything below.
   is unexplained.
 - **What an access to the EISA ranges returns on the Indigo**, and whether the second and third HPC1 windows (`0x1fb00000`, `0x1f980000`,
   `0x1f900000`) answer on a stock board.
-- **Corrections for [the PROM page](../platforms/ip20/prom-software.md).** Its reset-path and flip-routine sections name CPUCTRL0 bits 17 and 18 after the
-  Linux header (`LENDIAN`, `WRESETDMEM`). The MC specification and the IRIX header say bit 18 is the little-endian select, bit 17 is
-  reserved and bit 19 is the R4000 warm reset; bit 16 is the warm restart in all three. Its statement that "no routine sets or clears
-  `0x20000` or `0x40000`" reads, with the right names, as: no routine in 4.0.5D writes the little-endian select bit. Route: edit that page; not changed here.
 - **4.0.5G was not re-read.** The 4.0.5G image (`070-8116-005`) is listed in the PROM catalogue but is not on the storage this reading used.
   Route: put the image where the reader can reach it, then confirm the clamp at the memory clear and the `rpss_divider` handling.
