@@ -12,6 +12,7 @@ whether a boot capture is held.
 | IP15 | 4D420 | 070-040x-008 | 4.0 IP5/IP7/IP9 OPT, Apr 26 1991 | 131072 | `49036d7d12b022494721b2666a6443306e4610946794043b2b35037d1df84010` | yes |
 | IP17 | Crimson | 070-081x-005 | 4.0.3 Rev, Apr 30 1992 | 524288 | `46217a1c9a73f3e5eaec7eb955945ba4f5634c329e50063a7a08ddfa77d4ba33` | yes |
 | IP20 | Indigo | 070-8116-004.BE | 4.0.5D Rev A, Aug 19 1992 | 524288 | `e6e1f1ed90d5979ef5829f823c2a4ff65ea24c3273a2b065a8b71abeba97f82f` | no |
+| IP20 | Indigo | 070-8116-005-BE | 4.0.5G Rev B, Nov 10 1992 | 524288 | `ae35c0971b594c9f028f79e2fd97bf45fbf170697b334d2ca8a4f46349d939bd` | no |
 | IP22 | Indigo2 | 070-8127-002 | 5.1 Rev B, Sep 16 1993 (BE) | 524288 | `be6b22c3b90adf6eebc18da11ce49e59292eeab35b694c6e8bd75ef485a40241` | yes |
 | IP22 | Indigo2 | 070-1367-012 | 5.3 Rev E, Jan 29 1996 (BE) | 524288 | `7b3eb33889bcc40c3dadc7093c06d3e221b6e2a5073acc556f62932b08b6cd8a` | no |
 | IP24 | Indy | 070-9101-007 | 5.0 Rev B6, Sep 28 1994 | 524288 | `ea6800820dddf98e4bdfc3b9d15d7e44e801cc10aebed2774d42171970a471ba` | no |

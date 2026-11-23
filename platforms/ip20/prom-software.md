@@ -299,6 +299,90 @@ Only offsets whose use was read are listed.
 
 Graphics, audio and serial accesses (`0xbfbe0000`, `0xbfb847e8`, `0xbfb84fe8`, `0xbfb80d03`..`0xbfb80d37`) were seen but not read. Unknown.
 
+## 4.0.5G differences
+
+Second image read: `SGI Version 4.0.5G Rev B IP20,  Nov 10, 1992`, part 070-8116-005, 524288 bytes, sha256
+`ae35c0971b594c9f028f79e2fd97bf45fbf170697b334d2ca8a4f46349d939bd` (listed in [prom-images.md](../../references/prom-images.md)). Method as above: the
+whole image disassembled with the MIPS objdump, then compared with 4.0.5D by function, string and constant. It is a big-endian image, not a pair-swapped
+dump: the first word is `j 0xbfc003c0` and the next two vectors are `j 0xbfc0074c`, as in 4.0.5D, and the image holds 1102 `jr ra` against 1059 in 4.0.5D.
+Code after the first few hundred bytes moves (the image grows by graphics test code), so the 4.0.5G addresses below are not the 4.0.5D ones; where a 4.0.5D
+address is meant it is named as such.
+
+**Answer first.** None of the byte-order or Windows NT machinery changes. Every item in the list below is the same code or data, only relocated. What is
+new is an unrelated block of graphics diagnostics, a routine that fills empty boot variables from the first disk, a 35th firmware-vector slot, and
+two 256 MiB clamps in the memory test and memory clear. Graded established unless marked.
+
+### Byte order and the NT path: unchanged, relocated
+
+- **Reset path.** The reset routine at `0xbfc003c0` is instruction-for-instruction the 4.0.5D one (diff of the whole routine to `0xbfc00540`: one
+  difference, the address constant that a later call receives). Status `0x00410000`, Config written with 3 and read back, the Config bit 15 test
+  and the single flip call at `0xbfc003f4`, the HPC1 word at `0xbfb800c0` cleared when its bit 0 is set, MC `+0xec` and `+0xfc` zeroed, CPUCTRL0
+  whole-register write of `0x3c002014 | ((line/8 + 4) << 20)`, CPUCTRL1 `0x1016` (still the only store to MC `+0x0c` in the image), `+0xd4` `0x11453433`,
+  `+0xdc` `0x34332`, the 625-tick refresh wait. The flip routine itself (now `0xbfc01390`, 4.0.5D `0xbfc01320`) is identical over its whole length: EEPROM
+  word 0 read, XOR `0x8400`, write back, store `0x10000` to MC `+0`, via MC `+0x30`.
+- **In-memory byte-order probe.** Now at `0xbfc0b9e0` (4.0.5D `0xbfc08e00`), body unchanged: store `0x11223344`, read the low byte, set the RAM flag when it is
+  `0x44`; guarded store of zero to the HPC1 byte `0xbfb800c3` through the same helper (now `0xbfc30360`, identical); store took, then OR `0x1f` for a
+  little-endian CPU or AND `0xe0` otherwise; store faulted, then set the Ethernet byte-swap word. Two callers as before (`0xbfc01658`, `0xbfc0a5c4`). The RAM
+  flag moved from `0xa8741070` to `0xa87410b0` and the Ethernet word from `0xa8740da0` to `0xa8740de0`; the flag still has one store, in this routine.
+- **NT default table.** Same five non-null entries (`SystemPartition`, `OSLoadPartition`, `OSLoader`, `OSLoadFilename`, `scsihostid` = `6`) with the
+  same strings, now at `0xbfc49630`. The same readers test the flag first (environment initialiser both passes, `resetenv`, legacy migration). The flag is
+  still set only by the probe. One real difference: the 24-word table used to be followed directly by the string `scsi()...`, so the
+  index-24 reads for `netpasswd_key` (see the table-length note above) fetched `0x73637369`. In 4.0.5G a zero word sits between the table and the string, so
+  the same read returns null, the code takes its "entry is null, use the record's own default" branch, and the over-read is harmless. Established as arithmetic
+  and from the null test in the code; it is a layout accident, not a deliberate fix (inferred).
+- **Environment records.** Same 25 records, names, offsets and lengths. One default differs: `volume` is now `80`, was `128`.
+- **Loader.** Load, the header reader, Execute and Invoke are identical in structure over their whole range (only RAM-flag addresses and the vector
+  length below differ). The accepted magics are the same six, and the "opposite endian" refusal in Execute still tests the loaded-little-endian flag, not
+  the CPU's byte order. `.go` and its built-in Invoke are unchanged. The command table has the same 22 entries and no byte-order command.
+- **"Setting endianness."** Still in the progress-string block (now `0xbfc45cd0`), still not referenced by any address pair or data word; none of the seven
+  progress strings is. Unchanged.
+- **New CPUCTRL0 writer, no endian bit.** A new routine at `0xbfc07cd8` reads CPUCTRL0, ORs `0x2`, sets (argument non-zero) or clears
+  ESNOOP `0x4000`, clears `0x40000`, and prints each step. It also writes MC `+0x16c` = `0x2000400d` and zeroes `+0x154` and `+0x15c`. One of its
+  messages reads "set CPUCTRL0 = %x (Big Endian)" and is printed right after the `0x40000` clear. By the public header's names `0x40000` is
+  WRESETDMEM and the little-endian bit is `0x20000`, which this routine never touches; so the label does not match the header's bit name. Established
+  for the code and the string; why the label says Big Endian is unknown (the string's author may have had a different bit map in mind). It is called
+  only from the new DMA test code below (inferred from the call graph: one caller, `0xbfc079b0`, itself reached only from the graphics tests). The
+  4.0.5D statement that no routine sets or clears `0x20000` or `0x40000` in CPUCTRL0 therefore stays true for `0x20000` and no longer holds for `0x40000`.
+
+### Memory: placement and descriptors unchanged, two clamps added
+
+- **Probe and placement** (`0xbfc00a00` onwards): identical to 4.0.5D over its whole length except the memory-clear tail below. Banks still start at
+  physical `0x08000000`, largest first, skipping `0x18000000` to `0x20000000`; the 128 MiB bank maximum is the same field.
+- **Descriptors.** The builder (now `0xbfc0ad78` region; the retype and magic code with it) is identical: free memory type 3 from `0x08002000`,
+  `min(total, 0x08000000)` bytes (the 128 MiB cap) minus two pages, plus pages 0 and 1 retyped to exception block and system parameter block. Memory above
+  the first 128 MiB still never becomes a descriptor here.
+- **Memory-clear DMA.** The tail of the sizing routine (`0xbfc00b6c`..`0xbfc00c30`) used to run one MC DMA over the whole total from physical `0x08000000`.
+  It now limits the first run to `0x10000000` bytes (256 MiB, the whole first window) and, if the total is larger, runs a second one for the remainder
+  starting at `0x20000000`, which is the second window. In 4.0.5D a total above 256 MiB made the single run cross the hole at `0x18000000`. Established as
+  code; that this is why the split exists is inferred.
+- **Address test.** The write-then-verify loop (4.0.5G `0xbfc02fa0`) now clamps its size argument to `0x10000000`. Inferred: same reason. Memory at
+  `0x20000000` and above is therefore outside that test.
+
+### Other changes
+
+- **New graphics diagnostics.** Several KiB of new code and strings: a graphics-presence stage that now dispatches on a board class
+  to two new routines (`0xbfc05f88`, `0xbfc07130`), with GR2-family tests ("GR2: Dac test", "VC1 test", "XMAP test", "CPU to bitplanes DMA test"), power-on
+  failure messages for the Bt479 DAC, REX and VC1, "GE7 not responding", "unknown GE configuration", " missing Z" and " missing bitplanes", a VDMA page-table
+  helper ("set_dmapte", "VDMA uTLB miss", "mk_dmada") and the DMA setup and go helpers named by their own messages ("basic_DMA_setup", "dma_go"). The
+  helper `0xbfc07cd8` above is the one that writes CPUCTRL0. Established that the code exists and what each string says; what a board must answer to pass is not read.
+- **Removed text.** " with Z-buffer" and "Video Backend not installed." no longer appear. The Ethernet collision message becomes "ec0: 16 xmit collisions" and the
+  driver gains a "Starting receive DMA in eput()" trace. New disk-side messages: "Can't read volume header" and an `ENOSPC` diagnostic. Which routine owns each is
+  found by address pair only.
+- **Boot variables from the first disk.** A new routine (`0xbfc094b8`), called at the end of the environment initialiser and of `resetenv`, walks the configuration
+  tree to a disk-class child, opens it, obtains its volume header and, if the SGI disk-label magic `0x0be5a941` is there, fills `SystemPartition`,
+  `OSLoadPartition`, `OSLoader` (with `sash`) and `OSLoadFilename` only where the variable is empty (inferred from a skip when the variable test returns non-zero). `SystemPartition` is the partition numbered after the first
+  entry of type 0 (the volume header) with a non-zero size and `OSLoadPartition` is the label's root partition; `OSLoadFilename` is the label's boot-file
+  field. Layout of the label from the public Linux `sgi.c` partition parser, so the reading of which field is which is inferred; the call sequence is established.
+  Because it only fills empty variables, it does not change the NT-default rule.
+- **ARC firmware vector.** Its length is now `0x8c` (35 slots, was `0x88`, 34). The new last slot (34), `0xbfc0a0e4`, flushes caches over the size
+  table that cache set-up builds, so by slot order and body it is FlushAllCaches (inferred). Load, Invoke and Execute, the system parameter block fields and the
+  ten private-vector slots are otherwise unchanged. Slots 35 and 36 (TestUnicodeCharacter, GetDisplayStatus) are still absent.
+- **Unchanged outright.** NVRAM layout, checksum and the guarded-store helper, the 25-record table apart from `volume`, the 22 commands, the console opener
+  and the start-up call order in the main routine (checked by function diff; the compare ignores address constants, so a changed call target would not show). Not diffed function by function: the Ethernet, SCSI and serial drivers and the
+  monitor commands; they were compared only by string and by the addresses they touch, so smaller changes there are unknown.
+
+What would settle the open parts: a comparison against a third IP20 revision, the R4000 manual for the CPUCTRL0 label, or a run of this image.
+
 ## Unknowns and routes that would settle them
 
 See [questions/ip20-prom-software.md](../../questions/ip20-prom-software.md).
