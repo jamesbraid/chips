@@ -1,6 +1,6 @@
 // @generated from devices/ and formats/ by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 da999be299b4132fbeb806c2b988bd0db0155eb3f00bb1d22e6c0f05c35a054d
+// input sha256 5476752b1a3ae8b2e45f4581a7dbba864e7c94ea8256f9a09e44ee4e13c0a4a8
 #![no_std]
 #![cfg_attr(rustfmt, rustfmt_skip)]
 pub mod aic7880;
@@ -19,6 +19,7 @@ pub mod cobalt;
 pub mod cobalt_mc;
 pub mod dm2;
 pub mod dp83843;
+pub mod dp8573a;
 pub mod ds1685;
 pub mod ds1742;
 pub mod ds1744;

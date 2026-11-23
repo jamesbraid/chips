@@ -1,0 +1,807 @@
+{
+ "generator": "defs-gen 4",
+ "input_sha256": "3d5cf3c64ca396076a616c64c2650a09e803487e15909b32eb1f6fd64cc9c1d7",
+ "schema": "defs-flat/1",
+ "source": "devices/dp8573a/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "status",
+   "offset": 3,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.ram7",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.register_select",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.ram5",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.ram4",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.alarm",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.periodic",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.power_fail",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "status.interrupt_status",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "hundredths",
+   "offset": 23,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "seconds",
+   "offset": 27,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "minutes",
+   "offset": 31,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "hours",
+   "offset": 35,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "day_of_month",
+   "offset": 39,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "month",
+   "offset": 43,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "year",
+   "offset": 47,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "ram_0c",
+   "offset": 51,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "reg_0d",
+   "offset": 55,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "unknown"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "day_of_week",
+   "offset": 59,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_seconds",
+   "offset": 79,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_minutes",
+   "offset": 83,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_hours",
+   "offset": 87,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_day_of_month",
+   "offset": 91,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_month",
+   "offset": 95,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "cmp_day_of_week",
+   "offset": 99,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "save_seconds",
+   "offset": 103,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "save_minutes",
+   "offset": 107,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "save_hours",
+   "offset": 111,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "save_day_of_month",
+   "offset": 115,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "save_month",
+   "offset": 119,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "ram_1e",
+   "offset": 123,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "ram_test",
+   "offset": 127,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_common",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "periodic_flag",
+   "offset": 15,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs0",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.test_enable",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.osc_fail_or_single_supply",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.ms",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.ten_ms",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.hundred_ms",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.second",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.ten_second",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "periodic_flag.minute",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "timesave_ctl",
+   "offset": 19,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs0",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "timesave_ctl.enable",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "timesave_ctl.absent",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "timesave_ctl.ram",
+   "hi": 5,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "rt_mode",
+   "offset": 7,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs1",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "rt_mode.ram",
+   "hi": 7,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "rt_mode.int_standby",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "rt_mode.run",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "rt_mode.hour12",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "rt_mode.leap",
+   "hi": 1,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "output_mode",
+   "offset": 11,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs1",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "output_mode.mfo_oscillator",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "output_mode.ram",
+   "hi": 6,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "int0_ctl",
+   "offset": 15,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs1",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.ram",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.ms",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.ten_ms",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.hundred_ms",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.second",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.ten_second",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int0_ctl.minute",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "register",
+   "name": "int1_ctl",
+   "offset": 19,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": "dp8573a_rs1",
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.power_fail_int_enable",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.alarm_int_enable",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_day_of_week",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_month",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_day_of_month",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_hours",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_minutes",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "field",
+   "name": "int1_ctl.cmp_seconds",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "BAD_CLOCK_FLAG",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "EPOCH_YEAR",
+   "value": 1970,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "INT1_INIT",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "LANE_OFFSET",
+   "value": 3,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "RAM_TEST_A",
+   "value": 165,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "RAM_TEST_B",
+   "value": 90,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "RT_RS",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "RT_RUN",
+   "value": 24,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "RT_TIMSAV_ON",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "dp8573a",
+   "kind": "constant",
+   "name": "WINDOW_SIZE",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  }
+ ]
+}

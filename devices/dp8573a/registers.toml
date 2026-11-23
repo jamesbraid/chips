@@ -1,0 +1,389 @@
+unit = "dp8573a"
+prefix = "DP8573A"
+title = "National DP8573A real-time clock and battery-backed RAM (Indigo, R3000 and R4000 boards)"
+doc = "The Indigo's time-of-day chip, reached through the first peripheral controller at physical 0x1fb80e00. Offsets here are byte addresses from that base and name the byte a big-endian CPU addresses: each chip register sits in the low byte lane of a 4-byte slot, so register n is at offset 4n+3 (a little-endian CPU addresses the same register 3 bytes lower). Registers 1 to 4 exist twice, selected by the register-select bit of the main status register, which are the dp8573a_rs0 and dp8573a_rs1 spaces below; everything else is in common. IRIX comments call the part a DP8572 or DP8573 and name its header and structure after the 8573; the 8573A data sheet's address table is the layout software uses, and the 8572A adds a second page, two Julian-day counters and a page-select bit that no Indigo software touches. The board's exact part number is not stated by any shipped file. Grades: established means read in the IRIX source, the kernel object or the 4.0.5D PROM (the README cites addresses) or stated by the data sheet; inferred means a reasoned reading; unknown means nothing held settles it. Nothing was measured on a board. The prose and the behaviour a model needs are in devices/dp8573a/README.md."
+from = "IRIX 6.5 IP20 clock header and kernel object, PROM 070-8116-004 (4.0.5D), National DP8573A data sheet (1993 RTC handbook)"
+public_from = ["National Semiconductor 1993 real-time clock handbook, DP8573A section", "NetBSD sgimips dp8573areg.h and dpclock.c"]
+name_source = "public"
+name_cite = "NetBSD sys/arch/sgimips/dev/dp8573areg.h and the National DP8573A data sheet"
+
+[spaces.dp8573a_common]
+unit = "byte"
+doc = "Registers that answer whichever register block is selected: main status, the clock counters, compare RAM, time save RAM and the general RAM bytes."
+
+[spaces.dp8573a_rs0]
+unit = "byte"
+doc = "Register block 0 (main status bit 6 clear): the periodic flag and time save control registers, at the slots of chip registers 3 and 4."
+
+[spaces.dp8573a_rs1]
+unit = "byte"
+doc = "Register block 1 (main status bit 6 set): real time mode, output mode and the two interrupt control registers, at the slots of chip registers 1 to 4."
+
+[constants]
+WINDOW_SIZE = { value = 0x80, grade = "established", doc = "Bytes the 32 four-byte slots occupy, from the clock base." }
+LANE_OFFSET = { value = 3, grade = "established", doc = "Byte of each 4-byte slot that carries the register on a big-endian CPU. The header shifts word accesses by 0 on the R4000 board and by 24 on the older R3000 and 4D-generation boards." }
+RT_RUN = { value = 0x18, grade = "established", doc = "Real time mode bits the IRIX header calls run: start (bit 3) plus interrupt-in-standby (bit 4). The kernel and PROM treat a clock whose mode register has neither bit set as not running." }
+RT_RS = { value = 0x40, grade = "established", doc = "Main status bit 6, register select, as the header names it." }
+RT_TIMSAV_ON = { value = 0x80, grade = "established", doc = "Time save control bit 7, time save enable." }
+INT1_INIT = { value = 0x80, grade = "established", doc = "Interrupt control 1 value both IRIX and the PROM write: only the power-fail interrupt enable set, all alarm compares off." }
+BAD_CLOCK_FLAG = { value = 0x01, grade = "established", doc = "Bit of the hours compare RAM byte the IRIX kernel uses as its software flag that the clock date is not trustworthy." }
+EPOCH_YEAR = { value = 1970, grade = "established", doc = "Calendar year the year counter counts from in both IRIX and the PROM: the counter holds BCD years since 1970." }
+RAM_TEST_A = { value = 0xa5, grade = "established", doc = "Pattern the PROM writes to the hours compare RAM byte in its start-up RAM test." }
+RAM_TEST_B = { value = 0x5a, grade = "established", doc = "Pattern the PROM writes to the day-of-month compare RAM byte in the same test." }
+
+[registers.status]
+offset = 0x03
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+ro = 0x03
+w1c = 0x0c
+grade = "established"
+from = "DP8573A data sheet, main status register and Table III; IRIX dp8573clk.h ck_status; kernel.o 0x50e0 and 0x518c; PROM 0xbfc2c73c"
+doc = "Always present, whichever block is selected. Bit 0 is the interrupt status, high while the chip's interrupt output is asserted (read only). Bit 1 is the power-fail status, which follows the PFAIL input and cannot be written. Bit 2 is the periodic interrupt flag and bit 3 the alarm interrupt flag; both are cleared by writing a one to them and are set whether or not the interrupt is enabled. Bits 4, 5 and 7 are general RAM bits on the 8573A. Bit 6 selects register block 1. IRIX and the PROM write zero to select block 0 before every access sequence and set bit 6 with a read-modify-write (the PROM and kernel read routines leave it set when they finish). A qtest can discriminate: bit 6 flips which of two registers answers at the slot of register 3, bits 2 and 3 clear only on a one written, bits 0 and 1 ignore writes."
+
+[registers.status.fields]
+interrupt_status = { bits = [0, 0], grade = "established", doc = "Interrupt output pending." }
+power_fail = { bits = [1, 1], grade = "established", doc = "Power-fail status from the PFAIL pin. Read only." }
+periodic = { bits = [2, 2], grade = "established", doc = "Periodic interrupt flag; write one to clear." }
+alarm = { bits = [3, 3], grade = "established", doc = "Alarm (time compare) interrupt flag; write one to clear." }
+ram4 = { bits = [4, 4], grade = "established", doc = "General RAM bit on the 8573A." }
+ram5 = { bits = [5, 5], grade = "established", doc = "General RAM bit on the 8573A." }
+register_select = { bits = [6, 6], grade = "established", doc = "Selects register block 1 (set) or block 0 (clear) for the slots of registers 1 to 4." }
+ram7 = { bits = [7, 7], grade = "established", doc = "General RAM bit on the 8573A. On the 8572A this is the page select; no Indigo software sets it." }
+
+[registers.hundredths]
+offset = 0x17
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[0]; PROM 0xbfc2c878 (motion test), 0xbfc2c73c"
+doc = "Hundredths and tenths of a second, two BCD digits, 00 to 99, incrementing every 10 ms while the clock runs. The PROM's first read of the clock after reset polls this byte and requires it to change (see the README). A qtest can discriminate: with the start bit set the byte changes within a few tens of milliseconds and wraps from 99 to 00 as it carries into seconds."
+
+[registers.seconds]
+offset = 0x1b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[1]; kernel.o 0x518c; PROM 0xbfc2c7e8"
+doc = "Seconds, BCD 00 to 59. Written by IRIX and the PROM only with the clock stopped."
+
+[registers.minutes]
+offset = 0x1f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[2]"
+doc = "Minutes, BCD 00 to 59."
+
+[registers.hours]
+offset = 0x23
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III and real time mode description; IRIX dp8573clk.h ck_counter[3]; kernel.o rtodc 0x4bf4 (keeps bits 4 and 5 as the tens digit)"
+doc = "Hours, BCD. In 24-hour mode (real time mode bit 2 clear, which is how IRIX and the PROM run the chip) the range is 00 to 23 and bits 5:4 are the tens digit. In 12-hour mode the range is 01 to 12 and bit 7 is the AM/PM flag (PM set)."
+
+[registers.day_of_month]
+offset = 0x27
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[4]"
+doc = "Day of month, BCD 01 to 28/29/30/31. Rolls over to 01."
+
+[registers.month]
+offset = 0x2b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[5]"
+doc = "Month, BCD 01 to 12. Rolls over to 01."
+
+[registers.year]
+offset = 0x2f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[6]; kernel.o wtodc 0x4df8 and PROM 0xbfc2c390 (both subtract or add 1970)"
+doc = "Year, BCD 00 to 99. IRIX and the PROM store years since 1970 here, not a century year. The PROM accepts a clock whose year plus 1970 is below 2070."
+
+[registers.ram_0c]
+offset = 0x33
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III (general RAM); IRIX dp8573clk.h ck_counter[7]"
+doc = "A general RAM byte. Not touched by any shipped Indigo code."
+
+[registers.reg_0d]
+offset = 0x37
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "unknown"
+from = "DP8573A data sheet Table III lists 'bits 0 and 1 only'; IRIX dp8573clk.h ck_counter[8]"
+doc = "The data sheet's address table shows only bits 0 and 1 present and gives no function, and the page text does not describe them. No shipped Indigo code touches this byte. Whether the other bits read as zero is not stated."
+
+[registers.day_of_week]
+offset = 0x3b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_counter[9]; NetBSD dp8573areg.h DP8573A_DOW"
+doc = "Day of week counter, 1 to 7, rolls over to 1. The chip does not derive it from the date; software sets it. IRIX never writes it (its time computation ignores it); NetBSD writes it."
+
+[registers.cmp_seconds]
+offset = 0x4f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III and alarm description; IRIX dp8573clk.h ck_cmpram[0]"
+doc = "Seconds compare RAM. Compared with the seconds counter only when interrupt control 1 bit 0 is set; otherwise a free RAM byte."
+
+[registers.cmp_minutes]
+offset = 0x53
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_cmpram[1]"
+doc = "Minutes compare RAM, same rules as the seconds one with interrupt control 1 bit 1."
+
+[registers.cmp_hours]
+offset = 0x57
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_cmpram[2]; kernel.o 0x5254, 0x526c, 0x5288 (bit 0 as the bad-clock flag); PROM 0xbfc029f8 (RAM test, saves and restores it)"
+doc = "Hours compare RAM, a free RAM byte while interrupt control 1 bit 2 is clear. IRIX keeps its bad-clock flag in bit 0 of this byte (set when the kernel finds the date lost, cleared by a successful set). The PROM's start-up RAM test saves the byte, writes a5, reads it back and restores it. A qtest can discriminate: the byte holds any written value and survives with the clock running."
+
+[registers.cmp_day_of_month]
+offset = 0x5b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_cmpram[3]; PROM 0xbfc029f8 (RAM test writes 5a)"
+doc = "Day-of-month compare RAM. The PROM's RAM test writes 5a here and restores it."
+
+[registers.cmp_month]
+offset = 0x5f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_cmpram[4]"
+doc = "Month compare RAM."
+
+[registers.cmp_day_of_week]
+offset = 0x63
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_cmpram[5]"
+doc = "Day-of-week compare RAM."
+
+[registers.save_seconds]
+offset = 0x67
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III and time save description; IRIX dp8573clk.h ck_timsav[0]; kernel.o 0x50e0; PROM 0xbfc2c73c"
+doc = "Time save RAM, seconds. While time save control bit 7 is set this byte follows the seconds counter; clearing that bit freezes it, which is how software reads the clock without a rollover. The PROM zeroes all five time save bytes before latching (the data sheet says to clear unused bits first); the kernel does not."
+
+[registers.save_minutes]
+offset = 0x6b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_timsav[1]"
+doc = "Time save RAM, minutes."
+
+[registers.save_hours]
+offset = 0x6f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_timsav[2]"
+doc = "Time save RAM, hours."
+
+[registers.save_day_of_month]
+offset = 0x73
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_timsav[3]"
+doc = "Time save RAM, day of month."
+
+[registers.save_month]
+offset = 0x77
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ck_timsav[4]"
+doc = "Time save RAM, month. There is no year in time save RAM; software reads the year counter directly after the latch."
+
+[registers.ram_1e]
+offset = 0x7b
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III; IRIX dp8573clk.h ram[0]"
+doc = "A general RAM byte. Not touched by any shipped Indigo code."
+
+[registers.ram_test]
+offset = 0x7f
+space = "dp8573a_common"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet Table III (RAM / test mode register); IRIX dp8573clk.h ram[1]"
+doc = "A general RAM byte that doubles as the chip's test-mode register while the test-enable bit of the periodic flag register is set. The data sheet says to write zero here in a start-up sequence that first sets that bit. No shipped Indigo code touches it; a model can treat it as RAM."
+
+[registers.periodic_flag]
+offset = 0x0f
+space = "dp8573a_rs0"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet periodic flag register; IRIX dp8573clk.h ck_pflag; kernel.o 0x518c writes zero; PROM 0xbfc2c7e8 writes zero"
+doc = "Block 0. Bits 0 to 5 are the six periodic event flags: minutes, tens of seconds, seconds, 100 ms, 10 ms and 1 ms rollovers. They are set whether or not the matching interrupt is enabled and are cleared by reading the register. Bit 6 reads as the oscillator-fail flag (set on initial power-up and after an oscillator failure, cleared by starting the clock with the oscillator running) and, when written, selects battery-backed operation (zero) or single-supply operation (one). Bit 7 is the test-mode enable; software must keep it clear. IRIX and the PROM write zero here once while setting the clock, which asks for battery-backed operation and clears test mode. A qtest can discriminate: bits 0 to 5 are clear after a read, bit 6 is high before the first start of the clock after power-up and low after."
+
+[registers.periodic_flag.fields]
+minute = { bits = [0, 0], grade = "established", doc = "Minutes counter rolled over." }
+ten_second = { bits = [1, 1], grade = "established", doc = "Tens-of-seconds digit rolled over." }
+second = { bits = [2, 2], grade = "established", doc = "Seconds counter rolled over." }
+hundred_ms = { bits = [3, 3], grade = "established", doc = "100 ms digit rolled over." }
+ten_ms = { bits = [4, 4], grade = "established", doc = "10 ms digit rolled over." }
+ms = { bits = [5, 5], grade = "established", doc = "1 ms tick." }
+osc_fail_or_single_supply = { bits = [6, 6], grade = "established", doc = "Read: oscillator failed. Write: zero selects battery-backed mode, one selects single-supply mode." }
+test_enable = { bits = [7, 7], grade = "established", doc = "Test mode enable; keep clear." }
+
+[registers.timesave_ctl]
+offset = 0x13
+space = "dp8573a_rs0"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet time save control register; IRIX dp8573clk.h ck_tsavctl; kernel.o 0x50e0 (writes 80 then 00); PROM 0xbfc2c73c"
+doc = "Block 0. Bit 7 is the time save enable: while set the time save RAM follows the clock, and a write that clears it freezes the clock's value there. Bits 0 to 5 are general RAM; bit 6 is not present and reads zero. IRIX and the PROM read the clock by writing 80 then 00 and then reading the time save bytes; the kernel's set sequence writes zero here. A qtest can discriminate: write 80 then 00 leaves the five time save bytes equal to the counters at that instant and unchanged afterwards."
+
+[registers.timesave_ctl.fields]
+ram = { bits = [5, 0], grade = "established", doc = "General RAM bits." }
+absent = { bits = [6, 6], grade = "established", doc = "Not present on the 8573A; reads zero." }
+enable = { bits = [7, 7], grade = "established", doc = "Time save enable." }
+
+[registers.rt_mode]
+offset = 0x07
+space = "dp8573a_rs1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet real time mode register; IRIX dp8573clk.h ck_rtime; kernel.o 0x50e0 and 0x518c; PROM 0xbfc2c73c"
+doc = "Block 1. Bits 1:0 are the leap-year counter: years since the last leap year, 0 meaning this year is one. Bit 2 selects 12-hour (set) or 24-hour (clear) mode; IRIX and the PROM leave it clear. Bit 3 starts the clock when set and holds the counters stopped when clear; while the oscillator has not started the chip holds it clear, and it clears itself on an oscillator failure. Bit 4 keeps the interrupt configuration alive in standby; both programs set it with bit 3 (run bits 0x18). Bits 7:5 are general RAM on the 8573A (crystal select bits on the 8572A). The data sheet requires clearing bit 3 before writing the counters; IRIX and the PROM do exactly that and then write the mode back with bit 3 set and the leap field from the year. A qtest can discriminate: the counters advance only while bit 3 is set, and a read of the clock sequence returns the mode byte with bits 3 and 4 as written."
+
+[registers.rt_mode.fields]
+leap = { bits = [1, 0], grade = "established", doc = "Years since the last leap year." }
+hour12 = { bits = [2, 2], grade = "established", doc = "Set for 12-hour mode with an AM/PM bit; clear for 24-hour mode." }
+run = { bits = [3, 3], grade = "established", doc = "Clock start (set) or stop (clear)." }
+int_standby = { bits = [4, 4], grade = "established", doc = "Interrupt operation in standby." }
+ram = { bits = [7, 5], grade = "established", doc = "General RAM bits on the 8573A." }
+
+[registers.output_mode]
+offset = 0x0b
+space = "dp8573a_rs1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet output mode register; IRIX dp8573clk.h ck_outmode; kernel.o 0x518c writes zero; PROM 0xbfc2c7e8 writes zero"
+doc = "Block 1. Bit 7 chooses what the MFO pin carries: the power-fail interrupt (clear) or the buffered crystal oscillator (set). Bits 6:0 are general RAM. IRIX and the PROM write zero while setting the clock. Where MFO is wired on the Indigo is unknown."
+
+[registers.output_mode.fields]
+ram = { bits = [6, 0], grade = "established", doc = "General RAM bits." }
+mfo_oscillator = { bits = [7, 7], grade = "established", doc = "MFO pin carries the buffered oscillator instead of the power-fail interrupt." }
+
+[registers.int0_ctl]
+offset = 0x0f
+space = "dp8573a_rs1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet interrupt control register 0; IRIX dp8573clk.h ck_int0ctl"
+doc = "Block 1. Bits 0 to 5 enable the six periodic interrupts (minutes, tens of seconds, seconds, 100 ms, 10 ms, 1 ms), which raise main status bit 2 and the interrupt output; bits 6 and 7 are general RAM. Shipped Indigo code never writes this register (the kernel's clock tick comes from the 8254 timer), so what it holds at power-up decides whether the chip interrupts; the data sheet says its contents are random until written."
+
+[registers.int0_ctl.fields]
+minute = { bits = [0, 0], grade = "established", doc = "Minutes periodic interrupt enable." }
+ten_second = { bits = [1, 1], grade = "established", doc = "Tens-of-seconds periodic interrupt enable." }
+second = { bits = [2, 2], grade = "established", doc = "Seconds periodic interrupt enable." }
+hundred_ms = { bits = [3, 3], grade = "established", doc = "100 ms periodic interrupt enable." }
+ten_ms = { bits = [4, 4], grade = "established", doc = "10 ms periodic interrupt enable." }
+ms = { bits = [5, 5], grade = "established", doc = "1 ms periodic interrupt enable." }
+ram = { bits = [7, 6], grade = "established", doc = "General RAM bits." }
+
+[registers.int1_ctl]
+offset = 0x13
+space = "dp8573a_rs1"
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "DP8573A data sheet interrupt control register 1; IRIX dp8573clk.h ck_int1ctl and RTC_INT1INIT; kernel.o 0x518c; PROM 0xbfc2c7e8 (both write 80); ide rt_clock test writes the same"
+doc = "Block 1. Bits 0 to 5 enable the compare of seconds, minutes, hours, day of month, month and day of week against the matching compare RAM byte: a clear bit forces that comparison to always-equal and frees the RAM byte. Bit 6 lets an alarm match (all enabled compares equal) raise the interrupt output; bit 7 enables the power-fail interrupt and the low-battery circuit. IRIX and the PROM write 80 whenever they set the clock, which disables every compare and the alarm interrupt and leaves only the power-fail interrupt enabled. A qtest can discriminate: with bits 0 to 5 clear the compare RAM never raises main status bit 3."
+
+[registers.int1_ctl.fields]
+cmp_seconds = { bits = [0, 0], grade = "established", doc = "Compare seconds." }
+cmp_minutes = { bits = [1, 1], grade = "established", doc = "Compare minutes." }
+cmp_hours = { bits = [2, 2], grade = "established", doc = "Compare hours." }
+cmp_day_of_month = { bits = [3, 3], grade = "established", doc = "Compare day of month." }
+cmp_month = { bits = [4, 4], grade = "established", doc = "Compare month." }
+cmp_day_of_week = { bits = [5, 5], grade = "established", doc = "Compare day of week." }
+alarm_int_enable = { bits = [6, 6], grade = "established", doc = "Alarm match raises the interrupt output." }
+power_fail_int_enable = { bits = [7, 7], grade = "established", doc = "Power-fail interrupt enable." }
