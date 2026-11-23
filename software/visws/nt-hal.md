@@ -407,6 +407,34 @@ The boot frame buffer itself is capped at 1 MiB, with the visible height cut to 
 buffer's physical base), `GraphicsMemorySize` (bytes of the first bank), `NumberOfBanks` and per bank `BankAddrNN` / `BankSizeNN` (`NN` 00 to 31; the
 HAL warns "Update the prom for aligned graphics memory" if a bank's base is not 4 MiB aligned or its size is not a multiple of 1,024
 pages; an aligned bank is also remapped through KSEG0). The graphics miniport reads these.
+- **Where the HAL puts things, and the `0x80000000` addresses in it. Established (`halborg.dll`: the display, bank and mapping
+  routines and every `0x80000000` operand read; `halbrgup.dll` carries the same operand set).** The HAL never chooses where
+  graphics memory sits and forms no physical address with bit 31 set (its other `0x80000000` operands are flag-word masks and a cap
+  on a timer length). The placement is the firmware's: the PROM carves the type-`0x16` pieces in 32 MiB steps from
+  `0x2000000`, not at the top of RAM ([boot-path.md](boot-path.md#memory-controller-and-graphics-memory)); Linux's top-of-RAM frame
+  buffer is Linux's own. The "N MB Graphics, M MB NT" line is a sum over the descriptors (above). With 128 MiB of RAM the PROM's
+  built-in pair is 4 MiB and 8 MiB, so a 36 MiB figure comes from `cogfxmem` or from whatever descriptors the firmware stand-in supplies.
+  The HAL's own mapping uses three things:
+  - a private mapper (`halborg.dll@0x80019080`, which calls the allocator at `0x80018fd0`) that hands out virtual addresses from
+    `0xffd00000` upward, sets the page-table entries for the physical range and marks each uncached. The boot frame buffer, the
+    display back end (`0xd0000000`) and the font copy all go through it, so the HAL's frame-buffer writes are at `0xffd0xxxx`
+    virtual and at the first bank's physical base, a plain RAM address;
+  - a boot display of 1024 by 768 (no flat panel answered, 12 tiles of 64 KiB, 768 KiB) or 1600 by 1024 (panel present, capped at
+    1 MiB), 8 bits per pixel, taken from two built-in records (`0x800207d8`, `0x800209b8`); when capped, the rest of the first bank is
+    zeroed a page at a time through one re-pointed mapping (`0x8002d587`..`0x8002d5df`);
+  - a helper (`0x80019130`, one caller at `0x800159d4`, in `HalpAddGbeDisplayToRegistry`) that, for each bank which is 4 MiB aligned
+    and a multiple of 4 MiB long, sets the cache-disable bit in the page-directory or page-table entries of the kernel's own
+    virtual window onto low memory, virtual `0x80000000` plus the physical address (frames below `0x20000`, so physical memory under
+    512 MiB). It only edits entries that are already present. This is the "remapped through KSEG0" above. Virtual `0x82000000` is
+    therefore physical `0x2000000`; an `0x8xxxxxxx` address that comes from the HAL or the kernel is a virtual address, not a bus address.
+    The loader uses the same convention (physical OR `0x80000000`, for example for its own heap in `arcldr.exe`).
+  The boot frame buffer's base is therefore whatever the first type-`0x16` descriptor says: `0x2000000` under PROM 1.1005, whose
+  first 4 MiB piece starts at the first 32 MiB step ([boot-path.md](boot-path.md#memory-controller-and-graphics-memory)). A base such
+  as `0x1c00000` appears as no constant in either HAL, the loader, the miniport or the display driver, so it is a value of the
+  descriptor list in front of the HAL, not of the HAL (inferred; what settles it is the list the stand-in firmware hands over, or the
+  `GraphicsMemory` registry value the HAL then writes). The same list feeds the miniport's bank list, which is why the miniport and the
+  HAL agree on where graphics memory is without either one computing it.
+  The only physical `0x8xxxxxxx` addresses in the NT stack are the miniport's, in [the Cobalt repository](https://github.com/jamesbraid/cobalt/blob/main/devices/cobalt-graphics/graphics-engine.md#cpu-aperture-windows-at-0x80000000).
 - **How the split is requested. Established (miniport).** The graphics control panel's "Memory Reservation Profile" (a
   per-profile list of up to twelve bank sizes) reaches the miniport (`sgcomp.sys` 5.2.4, control code `0x232094`) as a count and
   sizes; the miniport rounds each size up to 4 KiB pages and writes the firmware environment variable `cogfxmem` through

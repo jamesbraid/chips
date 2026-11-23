@@ -748,6 +748,11 @@ Established (`0x1130ab4`, templates in the data module).
 - **`SYS TYPE`** is `(inb(0xfb2) >> 2) & 0xf` (`0x11000f0`), forced to 0 on the second-southbridge flag. Values 0 to 3 name the boards `320`, `540`, `330` and `530`
   (strings `320 fab`, `540 fab`, `330 fab`, `530 fab`). Established. This settles the earlier inference that 1 means the 540 and shows the value space is wider than the HAL's two branches.
 - **`BOARD REV`** is `inb(0xfc0) & 0x7f` (`0x1100110`), forced to `0x20` on the second-southbridge flag. The HAL and the PROM therefore read the same raw byte (earlier inferred, now established for the PROM).
+  The HAL does not read the port: its lookup (`halborg.dll@0x80014a32` to `0x80014a77`; the same in `halbrgup.dll`, string pushed at `0x800148fe`) finds the configuration-tree component
+  `SGI REV INFO`, then its children `SYS TYPE` and `BOARD REV`, and copies each node's data byte (the board revision to
+  offset 8 and the type to offset 9 of its own record). Neither HAL build (`halborg.dll`, `halbrgup.dll`) has an `in` or `out` with
+  an immediate port `0xfc0` to `0xfc9`. Whether another route reaches the GPIO port through a base read back from the Super I/O was not traced.
+  The PROM's tree node is built at `1.1005@0x111a3fe`..`0x111a422` (name string `BOARD REV`, data the return value of `0x1100110`). Established.
   The PROM's own names for the revision (`0x11176db`, `0x1117780`, `0x111787c`): board type 0 revisions 0 and 1 are fabs `002` and `003`, 2 is `004 rev A or B`, 3 to 5 `004 rev C` to `E`,
   6 `005 rev B-E`, 7 to 11 `005 rev F` onward (`rev + 0x3f` as a letter), 12 to 31 `006 rev A` onward (`rev + 0x35`), and from 32 `(rev>>4 & 7) + 5` with `rev & 0xf` as the revision number
   (`007 rev n` for `0x20` to `0x2f`); type 1 revision 0 is `001 rev 0`, 1 to 31 `002 rev (rev-1)`, from 32 `(rev>>4 & 7)+1` and `rev & 0xf`; types 2 and 3 use `(rev>>4 & 7)` and `rev & 0xf`.
@@ -781,12 +786,38 @@ PCI drivers register through `0x111a6cc` with a `0x18`-byte record (attach, remo
 
 | Driver | PCI id | Attach | What it touches |
 |---|---|---|---|
-| PIIX4 power management | `8086:7113` | `0x11144fd` | the interrupt hook that reads PM status `0xf80`, the button bit `0x100`, GPI byte `0xfb1`; no config writes read |
+| PIIX4 power management and SMBus (function 3) | `8086:7113` | `0x11144fd` | configuration and I/O set-up, read in full: [the SMBus base and what uses it](#piix4-function-3-the-smbus-base); the interrupt hooks (`0x11145f0`, `0x11145f3`) are empty |
 | Intel 82557 Ethernet (node `Intel 82557`) | `8086:1229` | `0x1115aaf` | PHY names listed for DP83840, i82553, i82555, i82503; register-level use not traced |
 | PIIX4 USB (UHCI) and VIA USB | `8086:7112`, `1106:3038` | `0x111cc6f` | creates the USB keyboard and mouse nodes; register-level use not traced |
 | PIIX4 IDE and VIA IDE | `8086:7111`, `1106:0571` | `0x1124166` | see below |
 | QLogic ISP1080 (`ql1080`) | `1077:1080` only | `0x11218aa` | register-level use not traced; no `1077:1240` or `1077:1020` binding |
 
+- **PIIX4 function 3: the SMBus base.** Established (`1.1005@0x11144fd`..`0x11145ef`, read in full; the boot block and the self-test
+  were searched for the same configuration offsets and have none). The attach routine for `8086:7113` runs once at PCI scan with the
+  function's configuration address (device 4, function 3 behind Lithium B) and does, in order:
+  1. clears the status word (`+6`) with `0x3800`;
+  2. reads register `0x40` (PMBA) and keeps it, minus bit 0, as the power-management base for itself; reads register `0x80`
+     (PMREGMISC) and, if bit 0 (power-management I/O enable) is clear, which the boot block's step `0x1b` normally prevents, writes
+     `0x0f80` to `0x40` and 1 to `0x80` itself;
+  3. **writes the dword `0x0fd0` to register `0x90` (SMBBA)** (`1.1005@0x1114559`..`0x1114565`; the helper at `0x111a8c5` is the
+     32-bit configuration write). The register holds the I/O base in bits 15:4 and bit 0 is a read-only 1 (PIIX4 p. 135), so `0x0fd0`
+     is a legal 16-byte-aligned base and the register would read back `0x00000fd1` (inferred from the definition; no read was found);
+  4. sets bit 0 of the command word (`+4`), the function's SMBus I/O enable (PIIX4 p. 117, which says the bit works independently of the
+     power-management enable);
+  5. writes `0x0f82` = `0x0100` (power-button enable), `0x0f84` = `0x1401`, `0x0f8e` = 0, reads `0xf80` and port `0xfb1`, and on
+     bit 7 of `0xfb1` clear and PM status bit 8 set calls the power-down routine; sets or clears one bit in each of the GPO bytes
+     `0xfb5` and `0xfb4` (`0x11149e8`, `0x1114a56`); writes the status back to clear it;
+  6. writes the byte `0x09` to register `0xd2` (SMBHSTCFG): host-interface enable (bit 0) and interrupt select 100, IRQ 9 (PIIX4 p. 135);
+  7. calls `0x11146b8`, which is the only SMBus transaction the boot path makes: one block write of six bytes
+     (`02 ff df fe ff ef`) to slave address `0xd2` (7-bit `0x69`), command 0, through I/O `0xfd0`: status clear at `0xfd0`, block
+     index reset by reading `0xfd2`, data at `0xfd7`, byte count 6 at `0xfd5`, address at `0xfd4`, control `0x54` (start, block
+     transaction) at `0xfd2`. The same registers, with the six bytes taken from the caller, are what the monitor's clock-generator
+     commands (`ics`, `spread`) use (`0x11146fb`). That the slave is the board's clock generator is inferred from those command
+     names and the address; the bytes' meaning is unknown.
+
+  Nothing else in the main module touches `0xfd0` to `0xfd7`: no DIMM or SPD access exists ([memory sizing](#memory-controller-and-graphics-memory)).
+  Neither HAL names port `0xfd0` or the configuration offsets `0x90` and `0xd2` (both HAL builds disassembled in full: no such
+  immediate operand), so SMBBA is a firmware-only setting for NT. 1.0006 and earlier were not checked for the same write.
 - **IDE and ATAPI.** The attach finds the I/O BAR among the six BAR slots (the bus-master block), writes PCI command (`+4`) 5, clears status (`+6`) with `0x3800`,
   sets latency (`+0xd`) `0x80`, writes IDE timing (`+0x40`) `0xc077c077` and (`+0x44`) 0, then probes four drives at the legacy compatibility ports: primary `0x1f0` and `0x3f6`, secondary `0x170` and `0x376`
   (`0x11246af`). On board type 1 it also writes `0x80002140` to bridge B's address register and the byte `0x40` to `+0xff` (config byte 3 of register `0x40`, PIIX4 function 1) afterwards.
