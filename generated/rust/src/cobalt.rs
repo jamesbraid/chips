@@ -1,6 +1,6 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3
+// input sha256 227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e
 // Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 #![allow(dead_code)]
 
@@ -227,6 +227,36 @@ pub mod cpu_timecur {
 pub mod cpu_cacheop_ctl {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x40;
+    pub mod invalidate { // bits 18:18, inferred
+        pub const SHIFT: u32 = 18;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod start { // bits 16:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
+    pub mod line_count { // bits 15:0, inferred
+        pub const SHIFT: u32 = 0;
+        pub const MASK: u32 = 0xffff;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 /// Start address of the cache operation requested through the cache-operation request register (cpu_cacheop_ctl). The HAL stores it immediately before th (inferred)
 pub mod cpu_cacheop_addr {
@@ -237,6 +267,16 @@ pub mod cpu_cacheop_addr {
 pub mod cpu_cacheop_busy {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x50;
+    pub mod busy { // bits 16:16, inferred
+        pub const SHIFT: u32 = 16;
+        pub const MASK: u32 = 0x1;
+        pub const fn get(v: u32) -> u32 {
+            (v >> SHIFT) & MASK
+        }
+        pub const fn set(v: u32, x: u32) -> u32 {
+            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
+        }
+    }
 }
 pub const APIC_8259: u32 = 0xc; // established
 pub const APIC_AS: u32 = 0x18; // established

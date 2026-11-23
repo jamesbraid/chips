@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3",
+ "input_sha256": "227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -273,6 +273,30 @@
   },
   {
    "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_cacheop_ctl.invalidate",
+   "hi": 18,
+   "lo": 18,
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_cacheop_ctl.start",
+   "hi": 16,
+   "lo": 16,
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_cacheop_ctl.line_count",
+   "hi": 15,
+   "lo": 0,
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
    "kind": "register",
    "name": "cpu_cacheop_addr",
    "offset": 72,
@@ -295,6 +319,14 @@
    "stride": 4,
    "space": "cpu",
    "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "field",
+   "name": "cpu_cacheop_busy.busy",
+   "hi": 16,
+   "lo": 16,
    "grade": "inferred"
   },
   {

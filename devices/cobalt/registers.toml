@@ -62,6 +62,11 @@ width = 32
 grade = "inferred"
 doc = "Cache-operation request, used by the NT HAL's cache flush routine. It first waits for bit 16 to clear, then stores the line count (the byte length rounded up to 32-byte lines, at most 0xffff per request) in bits 15:0 with bit 16 set (start), and bit 18 set as well when the caller asks for invalidate and the HAL's invalidate flag is set. The address goes to cpu_cacheop_addr first. The HAL does not use these registers on the reduced revisions. The bit meanings come from this use only; nothing says what the operation does on the bus."
 
+[registers.cpu_cacheop_ctl.fields]
+line_count = { bits = [15, 0], grade = "inferred", doc = "Number of 32-byte lines, at most 0xffff per request." }
+start = { bits = [16, 16], grade = "inferred", doc = "Set by the HAL with the line count to start the operation; the HAL waits for it to clear before the next request." }
+invalidate = { bits = [18, 18], grade = "inferred", doc = "Set when the caller asks for invalidate and the HAL's invalidate flag is set." }
+
 [registers.cpu_cacheop_addr]
 space = "cpu"
 offset = 0x48
@@ -77,6 +82,9 @@ access = "r"
 width = 32
 grade = "inferred"
 doc = "Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine polls bit 16 of the request register the same way before it starts a new one."
+
+[registers.cpu_cacheop_busy.fields]
+busy = { bits = [16, 16], grade = "inferred", doc = "1 while cache operations are outstanding; the HAL polls it until clear after the last request." }
 
 [registers.cpu_timecur]
 space = "cpu"

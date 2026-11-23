@@ -1,6 +1,6 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3 */
+/* input sha256 227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e */
 /* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
@@ -122,6 +122,15 @@
  */
 /* cpu_cacheop_ctl: rw32, space cpu, reset unknown */
 #define COBALT_CPU_CACHEOP_CTL_OFFSET                0x40u /* inferred */
+#define COBALT_CPU_CACHEOP_CTL_INVALIDATE_SHIFT      18 /* inferred */
+#define COBALT_CPU_CACHEOP_CTL_INVALIDATE_MASK       0x1u
+#define COBALT_CPU_CACHEOP_CTL_INVALIDATE_INPLACE    (COBALT_CPU_CACHEOP_CTL_INVALIDATE_MASK << COBALT_CPU_CACHEOP_CTL_INVALIDATE_SHIFT)
+#define COBALT_CPU_CACHEOP_CTL_START_SHIFT           16 /* inferred */
+#define COBALT_CPU_CACHEOP_CTL_START_MASK            0x1u
+#define COBALT_CPU_CACHEOP_CTL_START_INPLACE         (COBALT_CPU_CACHEOP_CTL_START_MASK << COBALT_CPU_CACHEOP_CTL_START_SHIFT)
+#define COBALT_CPU_CACHEOP_CTL_LINE_COUNT_SHIFT      0 /* inferred */
+#define COBALT_CPU_CACHEOP_CTL_LINE_COUNT_MASK       0xffffu
+#define COBALT_CPU_CACHEOP_CTL_LINE_COUNT_INPLACE    (COBALT_CPU_CACHEOP_CTL_LINE_COUNT_MASK << COBALT_CPU_CACHEOP_CTL_LINE_COUNT_SHIFT)
 
 /*
  * Start address of the cache operation requested through the cache-operation request register (cpu_cacheop_ctl). The HAL stores it immediately before the request word and never reads it.
@@ -134,6 +143,9 @@
  */
 /* cpu_cacheop_busy: r32, space cpu, reset unknown */
 #define COBALT_CPU_CACHEOP_BUSY_OFFSET               0x50u /* inferred */
+#define COBALT_CPU_CACHEOP_BUSY_BUSY_SHIFT           16 /* inferred */
+#define COBALT_CPU_CACHEOP_BUSY_BUSY_MASK            0x1u
+#define COBALT_CPU_CACHEOP_BUSY_BUSY_INPLACE         (COBALT_CPU_CACHEOP_BUSY_BUSY_MASK << COBALT_CPU_CACHEOP_BUSY_BUSY_SHIFT)
 
 #define COBALT_APIC_8259                             0xcu /* established */
 #define COBALT_APIC_AS                               0x18u /* established */

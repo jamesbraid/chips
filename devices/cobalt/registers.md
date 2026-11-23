@@ -1,6 +1,6 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 20f482005a324addbb08bda15ddc0986046d26510e25bccbbd22bdfb507c0ee3 -->
+<!-- input sha256 227f99188f7621959f0a363f89816adf63abc0248581cdd907555397055db96e -->
 
 # Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 
@@ -113,6 +113,12 @@ Timer current value. The NT HAL's timer calibration reads it after starting the 
 
 Cache-operation request, used by the NT HAL's cache flush routine. It first waits for bit 16 to clear, then stores the line count (the byte length rounded up to 32-byte lines, at most 0xffff per request) in bits 15:0 with bit 16 set (start), and bit 18 set as well when the caller asks for invalidate and the HAL's invalidate flag is set. The address goes to cpu_cacheop_addr first. The HAL does not use these registers on the reduced revisions. The bit meanings come from this use only; nothing says what the operation does on the bus.
 
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 18 | `invalidate` | inferred |  |  | Set when the caller asks for invalidate and the HAL's invalidate flag is set. |
+| 16 | `start` | inferred |  |  | Set by the HAL with the line count to start the operation; the HAL waits for it to clear before the next request. |
+| 15:0 | `line_count` | inferred |  |  | Number of 32-byte lines, at most 0xffff per request. |
+
 ### Register `cpu_cacheop_addr`
 
 Start address of the cache operation requested through the cache-operation request register (cpu_cacheop_ctl). The HAL stores it immediately before the request word and never reads it.
@@ -120,6 +126,10 @@ Start address of the cache operation requested through the cache-operation reque
 ### Register `cpu_cacheop_busy`
 
 Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine polls bit 16 of the request register the same way before it starts a new one.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 16 | `busy` | inferred |  |  | 1 while cache operations are outstanding; the HAL polls it until clear after the last request. |
 
 ## Constants
 
