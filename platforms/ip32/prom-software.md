@@ -33,7 +33,9 @@ shapes or partial paths. **Unknown**: not settled.
 ## Flash layout (established)
 
 The flash is 512 KiB at `0xbfc00000` (the segment descriptor the PROM carries has base `0xbfc00000`, end `0xbfc80000`).
-The image holds five segments, each placed at a 0x100-aligned flash offset. The three code segments (sloader, post1,
+The image holds five segments, each placed at the next 0x200-aligned flash offset after the previous segment ends
+(rounding the end up to 0x200 puts all five segments of both images where they are; rounding to 0x100 would put the 4.8
+`firmware` at `0x9100` and its `version` at `0x68500`, where the bytes are zero). The three code segments (sloader, post1,
 firmware) begin with the branch `0x10000011` that skips their own header; `env` begins with eight zero bytes and
 `version` with an ELF magic (the eight bytes before `SHDR` are not a branch there). Each segment has a 0x40-byte header:
 
@@ -129,7 +131,21 @@ at header `+0x12` to be 3, walks the `{address, length}` records from segment `+
 `address | 0xa0000000`, requires the sum of all copied and descriptor words to be 0 (a failure returns 1), calls
 `0xbfc06b28`, and jumps to the address of the final record. The chunks are: text
 `0x81000000..0x81048e70` (the segment's own header and branch are at its start), read-only data and strings
-`0x81048e70..0x81054100`, initialised data `0x81054100..0x8105ffe0`; zero-initialised data follows. The descriptor values
+`0x81048e70..0x81054100`, initialised data `0x81054100..0x8105ffe0`; zero-initialised data follows.
+The records sit between the chunks in the file, so later chunks are shifted from their run-time address. Offsets are
+from the segment base (flash offset `0x9200`; the files carry another `0x100` bytes of container header):
+
+| | 4.18 | 4.8 |
+|---|---|---|
+| record 1 (at `+0x40`), text: data at | `+0x00000`, length `0x48e70` | `+0x00000`, length `0x48350` |
+| record 2, read-only data: record at, data at | `+0x48e70`, `+0x48e78` | `+0x48350`, `+0x48358` |
+| record 3, initialised data: record at, data at | `+0x54108`, `+0x54110` | `+0x53478`, `+0x53480` |
+| final record `{0x81000000, 0}` at, balance word at | `+0x5fff0`, `+0x5fff8` | `+0x5f270`, `+0x5f278` |
+| segment length | `0x5fffc` | `0x5f27c` |
+
+In both images a file offset is the address less `0x81000000`, plus 8 in the read-only data chunk and plus 0x10 in the
+initialised data chunk. The whole segment's words sum to zero (checked on both images). The visual and audio assets live in the initialised-data
+chunk, so their file offsets are 0x10 above the address; see [prom-assets.md](prom-assets.md). The descriptor values
 and the code-address mapping were first derived from about 3000 resolved jump targets, which agree with the loader.
 
 Cache-resident stack and the `0x1f310008` word (inferred): the 64-bit register at `0x1f310008` is read-modify-written by
