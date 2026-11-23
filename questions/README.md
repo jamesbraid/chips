@@ -480,6 +480,7 @@ Checked the "Madison L3 cache-as-RAM: what PAL 520's commands do in silicon" ent
 ## Indigo WD33C93 SCSI controller (added with devices/wd33c93)
 
 - **Indigo WD33C93 SCSI controller.** *[route: software now for the 4.0.5G PROM; the Indigo schematic for the clock; the HPC1 page for the interrupt and reset lines]* Unknown: which chip revision the R4000 board fits, the board's clock frequency, the WD33C93B revision code, whether the HPC1 reset bit also drives SCSI RST, how the HPC1 gates the interrupt line into INT2, access widths other than byte, and the 4.0.5G SCSI code. See [questions/ip20-wd33c93.md](ip20-wd33c93.md).
+- **Indigo R4000 GIO bus and board facts.** *[route: software now for the PROM's missing-board path; the board schematic for the GIO clock and the fourth memory bank; hardware residue: reserved-region reads]* Unknown: how the PROM tolerates a missing graphics board, the status bit for reserved-region accesses, what `0x1f800000` to `0x1f9fffff` returns, the GIO clock, the secondary and primary cache line sizes, whether an R4000PC shipped, which SIMM sizes SGI shipped and whether the fourth bank is wired. See [questions/ip20-gio.md](ip20-gio.md).
 
 ## Indigo HPC1 (added with devices/hpc1)
 
