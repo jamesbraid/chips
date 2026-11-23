@@ -20,7 +20,7 @@ none was read from a board.
   reset control and port 92), 1 IDE, 2 USB (UHCI), 3 power management and SMBus.
 - **The board wires it unlike a PC.** The 8259 pair's combined output goes to the board's interrupt controller (below), the
   IDE interrupts and the USB interrupt each have an entry of their own, and the flash holding the system firmware sits behind
-  the chip's BIOS chip select (inferred; see unknowns). The Super I/O (the PC87307) supplies the
+  the chip's BIOS chip select (inferred; see unknowns). The Super I/O ([ns-pc87307](../ns-pc87307/README.md)) supplies the
   UARTs, floppy and parallel port.
 - **Not described here.** The standard 8259, 8254 and DMA register sets, the USB host controller's I/O registers (no held
   software touches them at register level) and the function 3 device-monitor registers (offsets 0x50 to 0x7f), which no

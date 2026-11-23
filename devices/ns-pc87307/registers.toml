@@ -1,0 +1,1562 @@
+unit = "ns_pc87307"
+prefix = "PC87307"
+title = "National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540"
+doc = "Register contract of the PC87307 Super I/O: its configuration protocol, the nine logical devices' configuration registers, the GPIO ports and the power management block, from the published datasheet, with the board's use taken from the system firmware, the Windows NT hardware abstraction layer and the Linux Visual Workstation code. Every register is eight bits wide. Grades: established means a datasheet page states it (the page is cited) or the shipped firmware and HAL do it in a routine read in full, which is a software expectation and not a measurement; inferred means a reasoned reading; unknown means no held source settles it. The configuration registers are addressed by an index written to an index port, so the offsets of the card, logical-device, chip-select and power management spaces are indexes, not bus addresses. The part has two variants: the PC87307 reads 0xc0 in its identification register and the PC97307 0xcf, and the PC97307 adds a stepping register; which one the board carries is not known. Not listed: the keyboard, mouse, real-time clock and advanced power control function registers, the floppy controller, UART and parallel port function registers, which are standard PC parts at the bases the logical devices select."
+from = "National Semiconductor PC87307/PC97307 Plug and Play Compatible PC97 SuperI/O datasheet (Preliminary, March 1998)"
+public_from = ["National Semiconductor PC87307/PC97307 datasheet"]
+name_source = "public"
+name_cite = "National Semiconductor PC87307/PC97307 datasheet: register names and mnemonics (Tables 2-5 to 2-20, 8-1, 8-2, 9-1)"
+
+[spaces.pc87307_cfgport]
+unit = "byte"
+doc = "The configuration port pair, offsets from the index port. In PnP motherboard mode the index port is 0x2e and the data port 0x2f, both read/write; other straps give 0x15c and 0x15d, or the full Plug and Play ISA write-only ports 0x279 and 0xa79. The firmware, the HAL and Linux use 0x2e and 0x2f."
+
+[spaces.pc87307_card]
+unit = "byte"
+doc = "Card-level configuration registers, selected by index on the data port (first-level indexes 0x00 to 0x27)."
+
+[spaces.pc87307_ld0]
+unit = "byte"
+doc = "Logical device 0 (keyboard controller) configuration registers, selected by index after writing 0 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld1]
+unit = "byte"
+doc = "Logical device 1 (mouse controller) configuration registers, selected by index after writing 1 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld2]
+unit = "byte"
+doc = "Logical device 2 (real-time clock and advanced power control) configuration registers, selected by index after writing 2 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld3]
+unit = "byte"
+doc = "Logical device 3 (floppy disk controller) configuration registers, selected by index after writing 3 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld4]
+unit = "byte"
+doc = "Logical device 4 (parallel port) configuration registers, selected by index after writing 4 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld5]
+unit = "byte"
+doc = "Logical device 5 (second UART with infrared) configuration registers, selected by index after writing 5 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld6]
+unit = "byte"
+doc = "Logical device 6 (first UART) configuration registers, selected by index after writing 6 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld7]
+unit = "byte"
+doc = "Logical device 7 (general-purpose I/O) configuration registers, selected by index after writing 7 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_ld8]
+unit = "byte"
+doc = "Logical device 8 (power management) configuration registers, selected by index after writing 8 to the logical device number register (index 0x07)."
+
+[spaces.pc87307_cs]
+unit = "byte"
+doc = "Programmable chip select registers, second-level indexes written to the chip select index register (card index 0x23) and read or written through the chip select data register (card index 0x24)."
+
+[spaces.pc87307_gpio0]
+unit = "byte"
+doc = "GPIO block, bank 0, byte offsets from the logical device 7 base (the board puts it at 0xfc0). Selected while SuperI/O configuration 2 bit 7 is 0."
+
+[spaces.pc87307_gpio1]
+unit = "byte"
+doc = "GPIO block, bank 1, byte offsets from the logical device 7 base. Selected while SuperI/O configuration 2 bit 7 is 1."
+
+[spaces.pc87307_pmport]
+unit = "byte"
+doc = "Power management index and data ports, offsets from the logical device 8 base (the board puts it at 0xfc8)."
+
+[spaces.pc87307_pm]
+unit = "byte"
+doc = "Power management registers, selected by index through the power management index port."
+
+[registers.cfg_index]
+space = "pc87307_cfgport"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0x0
+reset_grade = "inferred"
+reset_from = "datasheet gives no reset value for the index register; none is read by held software"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25"
+doc = "Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly."
+
+[registers.cfg_data]
+space = "pc87307_cfgport"
+offset = 0x1
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25"
+doc = "Configuration data register: reads and writes the register selected by the index. Reserved bits must be preserved, so software uses read-modify-write."
+
+[registers.pnp_rd_data]
+space = "pc87307_card"
+offset = 0x0
+access = "w"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27"
+doc = "Plug and Play set RD_DATA port, used only by the Plug and Play ISA protocol. Bits 1 and 0 are fixed at 11."
+
+[registers.pnp_isolation]
+space = "pc87307_card"
+offset = 0x1
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27"
+doc = "Plug and Play serial isolation, used only by the Plug and Play ISA protocol."
+
+[registers.cfg_control]
+space = "pc87307_card"
+offset = 0x2
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30"
+doc = "Configuration control, write only, self-clearing. Bit 0 resets all logical devices and restores the configuration registers to their reset values (the soft reset); bit 1 returns the cards to the Wait for Key state and bit 2 resets the card select number, both only meaningful in Plug and Play ISA mode."
+
+[registers.cfg_control.fields]
+reset = { bits = [0, 0], grade = "established", doc = "Soft reset of the logical devices and configuration registers." }
+wait_key = { bits = [1, 1], grade = "established", doc = "Return to the Wait for Key state." }
+reset_csn = { bits = [2, 2], grade = "established", doc = "Reset the card select number to 0." }
+
+[registers.pnp_wake]
+space = "pc87307_card"
+offset = 0x3
+access = "w"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27"
+doc = "Plug and Play Wake[CSN], write only."
+
+[registers.pnp_resource]
+space = "pc87307_card"
+offset = 0x4
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27"
+doc = "Plug and Play resource data, read only."
+
+[registers.pnp_status]
+space = "pc87307_card"
+offset = 0x5
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27"
+doc = "Plug and Play status, read only."
+
+[registers.csn]
+space = "pc87307_card"
+offset = 0x6
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30"
+doc = "Card select number, used by the Plug and Play ISA protocol."
+
+[registers.ldn]
+space = "pc87307_card"
+offset = 0x7
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30"
+doc = "Logical device number: selects which logical device's registers the indexes 0x30 to 0xff address. The HAL writes 0, 5, 6, 3, 4 and 1 to steer IRQs 1, 3, 4, 6, 7 and 12; the PROM and Linux write 7 and 8 to set the GPIO and power management bases."
+
+[registers.sid]
+space = "pc87307_card"
+offset = 0x20
+access = "r"
+width = 8
+reset = 0xc0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34"
+doc = "Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's."
+
+[registers.sid.fields]
+chip_id = { bits = [7, 5], grade = "established", doc = "Chip identification (PC87307 reading)." }
+revision = { bits = [4, 0], grade = "established", doc = "Revision (PC87307 reading; the PC97307 uses these bits for its chip identification)." }
+
+[[registers.sid.tests]]
+value = 0xc0
+expect = { chip_id = 6, revision = 0 }
+
+[registers.sioc1]
+space = "pc87307_card"
+offset = 0x21
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34-35"
+doc = "SuperI/O configuration 1. Reset is 0x04, 0x06, 0x14 or 0x16 depending on the SELCS and CFG1 straps, whose board settings are not known. A soft reset has no effect."
+
+[registers.sioc1.fields]
+zws_en = { bits = [0, 0], grade = "established", doc = "ZWS (zero wait state) enable, any host access except configuration and parallel port." }
+cs0_sel = { bits = [1, 1], grade = "established", doc = "0 selects the NSC test output on the CS0 pin, 1 selects CS0; initialised from the SELCS strap." }
+pcat_mode = { bits = [2, 2], grade = "established", doc = "1 PC-AT drive mode (reset), 0 PS/2 drive mode." }
+xdb_sel = { bits = [4, 4], grade = "established", doc = "X-bus data buffer select, read only, from the CFG1 strap." }
+lock_scratch = { bits = [5, 5], grade = "established", doc = "1 makes bits 7:6 read only until a hardware reset." }
+scratch = { bits = [7, 6], grade = "established", doc = "General purpose scratch bits." }
+
+[registers.sioc2]
+space = "pc87307_card"
+offset = 0x22
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35"
+doc = "SuperI/O configuration 2. Reset is 0x00 to 0x03: bits 1:0 reflect the base address straps (11 is the 0x2e pair). The datasheet says the BIOS may switch the index and data ports to the Plug and Play addresses by changing these bits. A soft reset has no effect."
+
+[registers.sioc2.fields]
+baddr = { bits = [1, 0], grade = "established", doc = "Base address strap value." }
+gpio22_pin = { bits = [2, 2], grade = "established", doc = "0 GPIO22, 1 power-on-reset output." }
+gpio21_sel = { bits = [4, 3], grade = "established", doc = "Pin function of GPIO21, IRSL2/ID2 or IRSL0." }
+gpio20_pin = { bits = [5, 5], grade = "established", doc = "0 GPIO20, 1 IRSL1/ID1." }
+wdo_sel = { bits = [6, 6], grade = "established", doc = "0 GPIO17 uses the pin, 1 the watchdog output." }
+gpio_bank = { bits = [7, 7], grade = "established", doc = "Active GPIO register bank: 0 bank 0, 1 bank 1." }
+
+[registers.cs_index]
+space = "pc87307_card"
+offset = 0x23
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35"
+ro = 0xf0
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35-36"
+doc = "Programmable chip select configuration index: the second-level index of the chip select register that the data register reaches. Bits 7:4 read 0."
+
+[registers.cs_data]
+space = "pc87307_card"
+offset = 0x24
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+doc = "Programmable chip select configuration data: the register named by the index above."
+
+[registers.srid]
+space = "pc87307_card"
+offset = 0x27
+access = "r"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+doc = "Chip revision identification, PC97307 only: incremented on each tapeout."
+
+[registers.cs_base_msb]
+space = "pc87307_cs"
+offset = 0x0
+access = "rw"
+width = 8
+count = 3
+stride = 4
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40"
+doc = "CS0, CS1 and CS2 base address, most significant byte (second-level indexes 0x00, 0x04 and 0x08)."
+
+[registers.cs_base_lsb]
+space = "pc87307_cs"
+offset = 0x1
+access = "rw"
+width = 8
+count = 3
+stride = 4
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40"
+doc = "CS0, CS1 and CS2 base address, least significant byte (indexes 0x01, 0x05, 0x09)."
+
+[registers.cs_config]
+space = "pc87307_cs"
+offset = 0x2
+access = "rw"
+width = 8
+count = 3
+stride = 4
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40"
+doc = "CS0, CS1 and CS2 configuration (indexes 0x02, 0x06, 0x0a). The board's use of the chip selects is not known."
+
+[registers.cs_config.fields]
+mask_a0 = { bits = [0, 0], grade = "established", doc = "1 ignores address bit A0." }
+mask_a1 = { bits = [1, 1], grade = "established", doc = "1 ignores A1." }
+mask_a2 = { bits = [2, 2], grade = "established", doc = "1 ignores A2." }
+mask_a3 = { bits = [3, 3], grade = "established", doc = "1 ignores A3." }
+on_write = { bits = [4, 4], grade = "established", doc = "1 asserts the chip select on a matching write." }
+on_read = { bits = [5, 5], grade = "established", doc = "1 asserts the chip select on a matching read." }
+ignore_rdwr = { bits = [6, 6], grade = "established", doc = "1 asserts on address match regardless of read or write and bits 5:4." }
+mask_a11_0 = { bits = [7, 7], grade = "established", doc = "1 ignores address bits A11 to A0 (only A15 to A12 decode)." }
+
+[registers.ld0_activate]
+space = "pc87307_ld0"
+offset = 0x30
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Activate (bit 0). The PROM activates it; the HAL selects it to steer IRQ 1. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld0_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld0_iorc]
+space = "pc87307_ld0"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld0_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld0_base_msb]
+space = "pc87307_ld0"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Base address bits 15:8."
+
+[registers.ld0_base_lsb]
+space = "pc87307_ld0"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0x60
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+ro = 0x4
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld0_cmd_base_msb]
+space = "pc87307_ld0"
+offset = 0x62
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Command window base address bits 15:8."
+
+[registers.ld0_cmd_base_lsb]
+space = "pc87307_ld0"
+offset = 0x63
+access = "rw"
+width = 8
+reset = 0x64
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+ro = 0x4
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Command window base address bits 7:0; bit 2 reads 1. The reset reads 0x64 (the table prints it as 64)."
+
+[registers.ld0_irq]
+space = "pc87307_ld0"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x1
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld0_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld0_irq_type]
+space = "pc87307_ld0"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+ro = 0xfc
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld0_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld0_dma0]
+space = "pc87307_ld0"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld0_dma1]
+space = "pc87307_ld0"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld0_config]
+space = "pc87307_ld0"
+offset = 0xf0
+access = "rw"
+width = 8
+reset = 0x40
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+doc = "Keyboard controller configuration: bits 7:6 pick the clock source (00 8 MHz, 01 12 MHz, 10 16 MHz, only with the keyboard controller inactive)."
+
+[registers.ld0_config.fields]
+clk = { bits = [7, 6], grade = "established", doc = "Clock source." }
+
+[registers.ld1_activate]
+space = "pc87307_ld1"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+doc = "Activate (bit 0). The HAL selects it to steer IRQ 12. The device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld1_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld1_irq]
+space = "pc87307_ld1"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0xc
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld1_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld1_irq_type]
+space = "pc87307_ld1"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+ro = 0xfc
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld1_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld1_dma0]
+space = "pc87307_ld1"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld1_dma1]
+space = "pc87307_ld1"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld2_activate]
+space = "pc87307_ld2"
+offset = 0x30
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "Activate (bit 0). The PROM activates it. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld2_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld2_iorc]
+space = "pc87307_ld2"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld2_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld2_base_msb]
+space = "pc87307_ld2"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "Base address bits 15:8."
+
+[registers.ld2_base_lsb]
+space = "pc87307_ld2"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0x70
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+ro = 0x1
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld2_irq]
+space = "pc87307_ld2"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x8
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld2_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld2_irq_type]
+space = "pc87307_ld2"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+ro = 0xfd
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device."
+
+[registers.ld2_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld2_dma0]
+space = "pc87307_ld2"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld2_dma1]
+space = "pc87307_ld2"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld3_activate]
+space = "pc87307_ld3"
+offset = 0x30
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "Activate (bit 0). The PROM activates it and its ARC tree lists a floppy controller at the usual 0x3f2 window; the HAL selects it to steer IRQ 6. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld3_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld3_iorc]
+space = "pc87307_ld3"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld3_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld3_base_msb]
+space = "pc87307_ld3"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "Base address bits 15:8."
+
+[registers.ld3_base_lsb]
+space = "pc87307_ld3"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0xf2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+ro = 0x5
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld3_irq]
+space = "pc87307_ld3"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x6
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld3_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld3_irq_type]
+space = "pc87307_ld3"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+ro = 0xfd
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld3_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld3_dma0]
+space = "pc87307_ld3"
+offset = 0x74
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "DMA channel select 0: bits 2:0, 4 means none."
+
+[registers.ld3_dma1]
+space = "pc87307_ld3"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld3_config]
+space = "pc87307_ld3"
+offset = 0xf0
+access = "rw"
+width = 8
+reset = 0x20
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36-37"
+doc = "Floppy configuration: tri-state, DENSEL polarity, TDR mode and four-drive encode."
+
+[registers.ld3_config.fields]
+tristate = { bits = [0, 0], grade = "established", doc = "Tri-state the floppy pins when inactive." }
+densel_pol = { bits = [5, 5], grade = "established", doc = "DENSEL active high (1, default) or low for 500 kbit/s and 1 Mbit/s." }
+tdr_enh = { bits = [6, 6], grade = "established", doc = "Enhanced TDR mode." }
+four_drive = { bits = [7, 7], grade = "established", doc = "Four-drive encode." }
+
+[registers.ld3_drive_id]
+space = "pc87307_ld3"
+offset = 0xf1
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37"
+doc = "Drive ID register: drive 0 and drive 1 identification bits reflected in the tape drive register."
+
+[registers.ld3_drive_id.fields]
+drive0 = { bits = [1, 0], grade = "established", doc = "Drive 0 ID." }
+drive1 = { bits = [3, 2], grade = "established", doc = "Drive 1 ID." }
+
+[registers.ld4_activate]
+space = "pc87307_ld4"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "Activate (bit 0). The PROM activates it. Its ARC tree lists the parallel port at the PC's first address 0x378, not the reset base 0x278, so the PROM's configuration writes the base (inferred: the 26 Super I/O writes are not decoded). The device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld4_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld4_iorc]
+space = "pc87307_ld4"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld4_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld4_base_msb]
+space = "pc87307_ld4"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+ro = 0xfc
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "Base address bits 15:8."
+
+[registers.ld4_base_lsb]
+space = "pc87307_ld4"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0x78
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+ro = 0x3
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld4_irq]
+space = "pc87307_ld4"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x7
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld4_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld4_irq_type]
+space = "pc87307_ld4"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+ro = 0xfd
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld4_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld4_dma0]
+space = "pc87307_ld4"
+offset = 0x74
+access = "rw"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "DMA channel select 0: bits 2:0, 4 means none."
+
+[registers.ld4_dma1]
+space = "pc87307_ld4"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld4_config]
+space = "pc87307_ld4"
+offset = 0xf0
+access = "rw"
+width = 8
+reset = 0xf2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37-38"
+doc = "Parallel port configuration. Bits 7:4 must not be changed for normal operation. Reset 0xf2: mode select 111 (IEEE 1284 with EPP selectable), configuration bits in the port accessible, clock enabled."
+
+[registers.ld4_config.fields]
+tristate = { bits = [0, 0], grade = "established", doc = "Tri-state the port pins when inactive." }
+clk_en = { bits = [1, 1], grade = "established", doc = "Parallel port clock enable, ANDed with PMC3 bit 1." }
+pnp_spp = { bits = [3, 3], grade = "established", doc = "Plug and Play resource data reports 0 ECP, 1 SPP." }
+cfg_regs = { bits = [4, 4], grade = "established", doc = "1 makes the three configuration registers that follow the ECP register block accessible in ECP mode." }
+mode = { bits = [7, 5], grade = "established", doc = "Mode select (bit 5 is the least significant).", enums = { spp = { value = 0, grade = "established" }, spp_ext = { value = 1, grade = "established" }, epp17 = { value = 2, grade = "established" }, epp19 = { value = 3, grade = "established" }, ieee1284 = { value = 4, grade = "established" }, ieee1284_epp = { value = 7, grade = "established" } } }
+
+[[registers.ld4_config.tests]]
+value = 0xf2
+expect = { tristate = 0, clk_en = 1, pnp_spp = 0, cfg_regs = 1, mode = 7 }
+
+[registers.ld5_activate]
+space = "pc87307_ld5"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "Activate (bit 0). COM2 at 0x2f8, IRQ 3 (the reset values); the PROM activates it. The device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld5_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld5_iorc]
+space = "pc87307_ld5"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld5_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld5_base_msb]
+space = "pc87307_ld5"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "Base address bits 15:8."
+
+[registers.ld5_base_lsb]
+space = "pc87307_ld5"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0xf8
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+ro = 0x7
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld5_irq]
+space = "pc87307_ld5"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld5_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld5_irq_type]
+space = "pc87307_ld5"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+ro = 0xfd
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld5_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld5_dma0]
+space = "pc87307_ld5"
+offset = 0x74
+access = "rw"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "DMA channel select 0: bits 2:0, 4 means none."
+
+[registers.ld5_dma1]
+space = "pc87307_ld5"
+offset = 0x75
+access = "rw"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17"
+doc = "DMA channel select 1: bits 2:0, 4 means none."
+
+[registers.ld5_config]
+space = "pc87307_ld5"
+offset = 0xf0
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38"
+doc = "UART configuration. The datasheet gives reset 0x02 in Sections 2.8.1 and 2.9.1 and 0x00 in its bitmap summary; this unit takes 0x02 (the tables and sections agree)."
+
+[registers.ld5_config.fields]
+tristate = { bits = [0, 0], grade = "established", doc = "Tri-state the UART signals when inactive." }
+power = { bits = [1, 1], grade = "established", doc = "1 normal power mode (clock enabled), 0 low power." }
+busy = { bits = [2, 2], grade = "established", doc = "Transfer in progress, read only." }
+ring_pin = { bits = [3, 3], grade = "established", doc = "0 the RI input uses the RI pin, 1 the RING pin." }
+bank_en = { bits = [7, 7], grade = "established", doc = "Bank select enable: when clear, the extended registers are ignored." }
+
+[registers.ld6_activate]
+space = "pc87307_ld6"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "Activate (bit 0). COM1 at 0x3f8, IRQ 4 (the reset values); the PROM's serial console, activated by the boot block and again by the self-test. The device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld6_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld6_iorc]
+space = "pc87307_ld6"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld6_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld6_base_msb]
+space = "pc87307_ld6"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "Base address bits 15:8."
+
+[registers.ld6_base_lsb]
+space = "pc87307_ld6"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0xf8
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+ro = 0x7
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld6_irq]
+space = "pc87307_ld6"
+offset = 0x70
+access = "rw"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board."
+
+[registers.ld6_irq.fields]
+line = { bits = [3, 0], grade = "established", doc = "IRQ line." }
+
+[registers.ld6_irq_type]
+space = "pc87307_ld6"
+offset = 0x71
+access = "rw"
+width = 8
+reset = 0x3
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+ro = 0xfd
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table."
+
+[registers.ld6_irq_type.fields]
+level = { bits = [0, 0], grade = "established", doc = "1 level, 0 edge." }
+polarity = { bits = [1, 1], grade = "established", doc = "1 high (push-pull), 0 low (open-drain)." }
+
+[registers.ld6_dma0]
+space = "pc87307_ld6"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld6_dma1]
+space = "pc87307_ld6"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld6_config]
+space = "pc87307_ld6"
+offset = 0xf0
+access = "rw"
+width = 8
+reset = 0x2
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38"
+doc = "UART configuration. The datasheet gives reset 0x02 in Sections 2.8.1 and 2.9.1 and 0x00 in its bitmap summary; this unit takes 0x02 (the tables and sections agree)."
+
+[registers.ld6_config.fields]
+tristate = { bits = [0, 0], grade = "established", doc = "Tri-state the UART signals when inactive." }
+power = { bits = [1, 1], grade = "established", doc = "1 normal power mode (clock enabled), 0 low power." }
+busy = { bits = [2, 2], grade = "established", doc = "Transfer in progress, read only." }
+ring_pin = { bits = [3, 3], grade = "established", doc = "0 the RI input uses the RI pin, 1 the RING pin." }
+bank_en = { bits = [7, 7], grade = "established", doc = "Bank select enable: when clear, the extended registers are ignored." }
+
+[registers.ld7_activate]
+space = "pc87307_ld7"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "Activate (bit 0). The PROM and Linux write the base 0xfc0 and activate it; the board revision is read from its data byte. The device is active only when its function enable bit in the power management block is also set."
+
+[registers.ld7_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld7_iorc]
+space = "pc87307_ld7"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld7_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld7_base_msb]
+space = "pc87307_ld7"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "Base address bits 15:8."
+
+[registers.ld7_base_lsb]
+space = "pc87307_ld7"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+ro = 0x7
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld7_dma0]
+space = "pc87307_ld7"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld7_dma1]
+space = "pc87307_ld7"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.ld8_activate]
+space = "pc87307_ld8"
+offset = 0x30
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "Activate (bit 0). The PROM and Linux write the base 0xfc8 and activate it; Linux and the PROM then write function enable register 2. When clear, the power management registers are not accessible but are kept."
+
+[registers.ld8_activate.fields]
+active = { bits = [0, 0], grade = "established", doc = "1 activates the device on the ISA bus." }
+
+[registers.ld8_iorc]
+space = "pc87307_ld8"
+offset = 0x31
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0."
+
+[registers.ld8_iorc.fields]
+value = { bits = [0, 0], grade = "established", doc = "0 drives 0xaa, 1 drives 0x55." }
+enable = { bits = [1, 1], grade = "established", doc = "Enable the check." }
+
+[registers.ld8_base_msb]
+space = "pc87307_ld8"
+offset = 0x60
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "Base address bits 15:8."
+
+[registers.ld8_base_lsb]
+space = "pc87307_ld8"
+offset = 0x61
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+ro = 0x1
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "Base address bits 7:0; the low bits are read only and the decoder ignores them."
+
+[registers.ld8_dma0]
+space = "pc87307_ld8"
+offset = 0x74
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "DMA channel select 0: bits 2:0, 4 means none. Read only."
+
+[registers.ld8_dma1]
+space = "pc87307_ld8"
+offset = 0x75
+access = "r"
+width = 8
+reset = 0x4
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20"
+doc = "DMA channel select 1: bits 2:0, 4 means none. Read only."
+
+[registers.p1_data]
+space = "pc87307_gpio0"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+doc = "Port 1 data. A read returns the pin for an input bit and the latch for an output bit; a write latches the value and drives output pins only. The write latch resets to 0xff. The firmware and Linux read this byte at the GPIO base after enabling the block."
+
+[registers.p1_data.fields]
+board_rev = { bits = [6, 0], grade = "inferred", doc = "Board revision: Linux and the PROM read the byte at the GPIO base and keep these seven bits (below 6 is revision 4, below 12 revision 5, otherwise 6 on a 320; the registry export of one 320 reports 0x11). That the pins carry the revision is the software's reading; the board's wiring is not known." }
+
+[registers.p1_dir]
+space = "pc87307_gpio0"
+offset = 0x1
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 1 direction: 0 input, 1 output."
+
+[registers.p1_otype]
+space = "pc87307_gpio0"
+offset = 0x2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 1 output type: 0 open-drain, 1 push-pull."
+
+[registers.p1_pullup]
+space = "pc87307_gpio0"
+offset = 0x3
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 1 pull-up control: 0 none, 1 internal pull-up."
+
+[registers.p2_data]
+space = "pc87307_gpio0"
+offset = 0x4
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 2 data, as port 1."
+
+[registers.p2_dir]
+space = "pc87307_gpio0"
+offset = 0x5
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 2 direction."
+
+[registers.p2_otype]
+space = "pc87307_gpio0"
+offset = 0x6
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 2 output type."
+
+[registers.p2_pullup]
+space = "pc87307_gpio0"
+offset = 0x7
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171"
+doc = "Port 2 pull-up control."
+
+[registers.p1_lock]
+space = "pc87307_gpio1"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.171"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.171"
+doc = "Port 1 lock. Bits 7 and 6 lock the direction and pull-up bits of GPIO17 and GPIO16, and for outputs the pin value and buffer type. Only a hardware (master) reset clears them. Bits 5:0 are reserved; offsets 0x01 to 0x07 of this bank are reserved."
+
+[registers.p1_lock.fields]
+lock16 = { bits = [6, 6], grade = "established", doc = "Lock GPIO16." }
+lock17 = { bits = [7, 7], grade = "established", doc = "Lock GPIO17." }
+
+[registers.pm_index]
+space = "pc87307_pmport"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.172"
+ro = 0xf8
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.172"
+doc = "Power management index register: selects the register the data port reaches. Bits 7:3 read 0."
+
+[registers.pm_data]
+space = "pc87307_pmport"
+offset = 0x1
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.172-173"
+doc = "Power management data register."
+
+[registers.fer1]
+space = "pc87307_pm"
+offset = 0x0
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.173"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.173"
+doc = "Function enable register 1. A logical device is active only while its activate bit and its enable bit here are both set. Hardware resets it to 0xff."
+
+[registers.fer1.fields]
+kbc = { bits = [0, 0], grade = "established", doc = "Keyboard controller." }
+rtc = { bits = [2, 2], grade = "established", doc = "Real-time clock." }
+fdc = { bits = [3, 3], grade = "established", doc = "Floppy controller." }
+pp = { bits = [4, 4], grade = "established", doc = "Parallel port." }
+uart2 = { bits = [5, 5], grade = "established", doc = "Second UART and infrared." }
+uart1 = { bits = [6, 6], grade = "established", doc = "First UART." }
+
+[registers.fer2]
+space = "pc87307_pm"
+offset = 0x1
+access = "rw"
+width = 8
+reset = 0xff
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.177"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.173-174"
+doc = "Function enable register 2. Linux and the PROM write bit 7 set (Linux's comment: it enables access to the GPIO registers). Hardware resets it to 0xff according to Table 9-1's bitmap and the text of 9.2.4; the text for bit 7 marks the cleared state as the default, which contradicts that. The PC87317 sibling datasheet resets the bit to 1."
+
+[registers.fer2.fields]
+cs0 = { bits = [0, 0], grade = "established", doc = "Programmable chip select 0." }
+cs1 = { bits = [1, 1], grade = "established", doc = "Programmable chip select 1." }
+cs2 = { bits = [2, 2], grade = "established", doc = "Programmable chip select 2." }
+gpio = { bits = [7, 7], grade = "established", doc = "GPIO ports 1 and 2 enabled." }
+
+[registers.pmc1]
+space = "pc87307_pm"
+offset = 0x2
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.174"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.174"
+doc = "Power management control 1: tri-state controls for the floppy, parallel and UART pins, ORed with the logical devices' own bits."
+
+[registers.pmc1.fields]
+fdc_tri = { bits = [3, 3], grade = "established", doc = "Floppy pins." }
+pp_tri = { bits = [4, 4], grade = "established", doc = "Parallel port pins." }
+uart2_tri = { bits = [5, 5], grade = "established", doc = "UART2 and infrared pins." }
+uart1_tri = { bits = [6, 6], grade = "established", doc = "UART1 pins." }
+
+[registers.pmc2]
+space = "pc87307_pm"
+offset = 0x3
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.174"
+doc = "Power management control 2: clock source and clock multiplier. Bits 2:0 follow the CFG3 and CFG2 straps at reset, whose board settings are not known."
+
+[registers.pmc2.fields]
+clk_src = { bits = [1, 0], grade = "established", doc = "Clock source: 00 24 MHz on X1, 10 48 MHz on X1, 11 on-chip multiplier.", enums = { x1_24mhz = { value = 0, grade = "established" }, x1_48mhz = { value = 2, grade = "established" }, multiplier = { value = 3, grade = "established" } } }
+mult_en = { bits = [2, 2], grade = "established", doc = "Clock multiplier enable." }
+mult_valid = { bits = [7, 7], grade = "established", doc = "Multiplier clock stable, read only." }
+
+[registers.pmc3]
+space = "pc87307_pm"
+offset = 0x4
+access = "rw"
+width = 8
+reset = 0xe
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175"
+ro = 0xc0
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175"
+doc = "Power management control 3: parallel port, UART2 and UART1 clock enables (ANDed with the devices' own bits) and read-only busy flags."
+
+[registers.pmc3.fields]
+pp_clk = { bits = [1, 1], grade = "established", doc = "Parallel port clock." }
+uart2_clk = { bits = [2, 2], grade = "established", doc = "UART2 clock." }
+uart1_clk = { bits = [3, 3], grade = "established", doc = "UART1 clock." }
+uart2_busy = { bits = [6, 6], grade = "established", doc = "UART2 busy." }
+uart1_busy = { bits = [7, 7], grade = "established", doc = "UART1 busy." }
+
+[registers.wdto]
+space = "pc87307_pm"
+offset = 0x5
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175"
+doc = "Watchdog time-out in minutes; 0 stops the watchdog. Also cleared when the power management device is activated."
+
+[registers.wdcf]
+space = "pc87307_pm"
+offset = 0x6
+access = "rw"
+width = 8
+reset = 0x0
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.176"
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175-176"
+doc = "Watchdog configuration: which interrupts reload the timer."
+
+[registers.wdcf.fields]
+kbc = { bits = [0, 0], grade = "established", doc = "Keyboard IRQ." }
+mouse = { bits = [1, 1], grade = "established", doc = "Mouse IRQ." }
+uart1 = { bits = [2, 2], grade = "established", doc = "UART1 IRQ." }
+uart2 = { bits = [3, 3], grade = "established", doc = "UART2 IRQ." }
+
+[registers.wdst]
+space = "pc87307_pm"
+offset = 0x7
+access = "r"
+width = 8
+reset = 0x1
+reset_from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.176"
+ro = 0xff
+grade = "established"
+from = "National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.176"
+doc = "Watchdog status. Bit 0 is the watchdog output (1 inactive). Section 9.1.2 says bit 1; the register description and bitmap say bit 0. Whether the output reaches anything on the board is not known."
+
+[registers.wdst.fields]
+wdo = { bits = [0, 0], grade = "established", doc = "Watchdog output value, 0 active." }
+
+[constants]
+CFG_INDEX_PORT = { value = 0x2e, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Configuration index port, PnP motherboard mode (software expectation: the PROM and Linux write it directly)." }
+CFG_DATA_PORT = { value = 0x2f, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Configuration data port." }
+GPIO_BASE = { value = 0xfc0, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Base the PROM and Linux program for logical device 7 (software expectation)." }
+PM_BASE = { value = 0xfc8, grade = "established", from = "PROM 1.1005 boot block, read in Ghidra: software/visws/boot-path.md", doc = "Base the PROM and Linux program for logical device 8 (software expectation)." }

@@ -18,6 +18,7 @@ printed ones. Grades for the cross-check column follow the [README](README.md).
 | A/V guide | *Silicon Graphics 320 and 540 Visual Workstation Audio/Video User's Guide*, 007-3870-001 |
 | PIIX4 datasheet | Intel, *82371AB PCI-to-ISA/IDE Xcelerator (PIIX4)* Technical Product Specification, 290562-001, April 1997 (an Intel part, not an SGI document) |
 | PIIX4 spec update | Intel, *82371AB, 82371EB, 82371MB PIIX4 Specification Update*, 297738-017, January 2002 |
+| PC87307 datasheet | National Semiconductor, *PC87307/PC97307 Plug and Play Compatible PC97 SuperI/O*, Preliminary, March 1998 (a National part, not an SGI document; the board's documents call the chip the NS87307) |
 
 ## What they say about the chips
 

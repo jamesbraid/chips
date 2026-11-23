@@ -1,0 +1,507 @@
+<?xml version="1.0" ?>
+<!-- generated from devices/ns-pc87307/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 76cde275bc5d5315ccc6348402124412d364c8bfe4d70fc6d57910902abc382f -->
+<genxml unit="ns_pc87307" prefix="PC87307" title="National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540">
+  <doc>Register contract of the PC87307 Super I/O: its configuration protocol, the nine logical devices' configuration registers, the GPIO ports and the power management block, from the published datasheet, with the board's use taken from the system firmware, the Windows NT hardware abstraction layer and the Linux Visual Workstation code. Every register is eight bits wide. Grades: established means a datasheet page states it (the page is cited) or the shipped firmware and HAL do it in a routine read in full, which is a software expectation and not a measurement; inferred means a reasoned reading; unknown means no held source settles it. The configuration registers are addressed by an index written to an index port, so the offsets of the card, logical-device, chip-select and power management spaces are indexes, not bus addresses. The part has two variants: the PC87307 reads 0xc0 in its identification register and the PC97307 0xcf, and the PC97307 adds a stepping register; which one the board carries is not known. Not listed: the keyboard, mouse, real-time clock and advanced power control function registers, the floppy controller, UART and parallel port function registers, which are standard PC parts at the bases the logical devices select.</doc>
+  <space name="pc87307_cfgport" unit="byte"/>
+  <space name="pc87307_card" unit="byte"/>
+  <space name="pc87307_ld0" unit="byte"/>
+  <space name="pc87307_ld1" unit="byte"/>
+  <space name="pc87307_ld2" unit="byte"/>
+  <space name="pc87307_ld3" unit="byte"/>
+  <space name="pc87307_ld4" unit="byte"/>
+  <space name="pc87307_ld5" unit="byte"/>
+  <space name="pc87307_ld6" unit="byte"/>
+  <space name="pc87307_ld7" unit="byte"/>
+  <space name="pc87307_ld8" unit="byte"/>
+  <space name="pc87307_cs" unit="byte"/>
+  <space name="pc87307_gpio0" unit="byte"/>
+  <space name="pc87307_gpio1" unit="byte"/>
+  <space name="pc87307_pmport" unit="byte"/>
+  <space name="pc87307_pm" unit="byte"/>
+  <enum name="ld4_config_mode">
+    <value name="spp" value="0" grade="established"/>
+    <value name="spp_ext" value="1" grade="established"/>
+    <value name="epp17" value="2" grade="established"/>
+    <value name="epp19" value="3" grade="established"/>
+    <value name="ieee1284" value="4" grade="established"/>
+    <value name="ieee1284_epp" value="7" grade="established"/>
+  </enum>
+  <enum name="pmc2_clk_src">
+    <value name="x1_24mhz" value="0" grade="established"/>
+    <value name="x1_48mhz" value="2" grade="established"/>
+    <value name="multiplier" value="3" grade="established"/>
+  </enum>
+  <struct name="PNP_RD_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27" register="yes" offset="0x0" access="w" space="pc87307_card" reset="0x0">
+    <doc>Plug and Play set RD_DATA port, used only by the Plug and Play ISA protocol. Bits 1 and 0 are fixed at 11.</doc>
+  </struct>
+  <struct name="PNP_ISOLATION" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27" register="yes" offset="0x1" access="r" space="pc87307_card" reset="unknown">
+    <doc>Plug and Play serial isolation, used only by the Plug and Play ISA protocol.</doc>
+  </struct>
+  <struct name="CFG_CONTROL" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30" register="yes" offset="0x2" access="w" space="pc87307_card" reset="unknown">
+    <doc>Configuration control, write only, self-clearing. Bit 0 resets all logical devices and restores the configuration registers to their reset values (the soft reset); bit 1 returns the cards to the Wait for Key state and bit 2 resets the card select number, both only meaningful in Plug and Play ISA mode.</doc>
+    <field name="reset_csn" start="2" size="1" type="uint" grade="established"/>
+    <field name="wait_key" start="1" size="1" type="uint" grade="established"/>
+    <field name="reset" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PNP_WAKE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27" register="yes" offset="0x3" access="w" space="pc87307_card" reset="0x0">
+    <doc>Plug and Play Wake[CSN], write only.</doc>
+  </struct>
+  <struct name="PNP_RESOURCE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27" register="yes" offset="0x4" access="r" space="pc87307_card" reset="unknown">
+    <doc>Plug and Play resource data, read only.</doc>
+  </struct>
+  <struct name="PNP_STATUS" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27" register="yes" offset="0x5" access="r" space="pc87307_card" reset="unknown">
+    <doc>Plug and Play status, read only.</doc>
+  </struct>
+  <struct name="CSN" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30" register="yes" offset="0x6" access="rw" space="pc87307_card" reset="0x0">
+    <doc>Card select number, used by the Plug and Play ISA protocol.</doc>
+  </struct>
+  <struct name="LDN" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.27, 30" register="yes" offset="0x7" access="rw" space="pc87307_card" reset="0x0">
+    <doc>Logical device number: selects which logical device's registers the indexes 0x30 to 0xff address. The HAL writes 0, 5, 6, 3, 4 and 1 to steer IRQs 1, 3, 4, 6, 7 and 12; the PROM and Linux write 7 and 8 to set the GPIO and power management bases.</doc>
+  </struct>
+  <struct name="SID" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34" register="yes" offset="0x20" access="r" space="pc87307_card" reset="0xc0">
+    <doc>Identification. In the PC87307 bits 7:5 are the chip identification and bits 4:0 the revision, and the register reads 0xc0. In the PC97307 all eight bits are the chip identification and it reads 0xcf. Reset 0xc0 is the PC87307's.</doc>
+    <field name="chip_id" start="5" size="3" type="uint" grade="established"/>
+    <field name="revision" start="0" size="5" type="uint" grade="established"/>
+    <test value="0xc0" kind="vector">
+      <expect field="chip_id" value="6"/>
+      <expect field="revision" value="0"/>
+    </test>
+  </struct>
+  <struct name="SIOC1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34-35" register="yes" offset="0x21" access="rw" space="pc87307_card" reset="unknown">
+    <doc>SuperI/O configuration 1. Reset is 0x04, 0x06, 0x14 or 0x16 depending on the SELCS and CFG1 straps, whose board settings are not known. A soft reset has no effect.</doc>
+    <field name="scratch" start="6" size="2" type="uint" grade="established"/>
+    <field name="lock_scratch" start="5" size="1" type="uint" grade="established"/>
+    <field name="xdb_sel" start="4" size="1" type="uint" grade="established"/>
+    <field name="pcat_mode" start="2" size="1" type="uint" grade="established"/>
+    <field name="cs0_sel" start="1" size="1" type="uint" grade="established"/>
+    <field name="zws_en" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="SIOC2" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35" register="yes" offset="0x22" access="rw" space="pc87307_card" reset="unknown">
+    <doc>SuperI/O configuration 2. Reset is 0x00 to 0x03: bits 1:0 reflect the base address straps (11 is the 0x2e pair). The datasheet says the BIOS may switch the index and data ports to the Plug and Play addresses by changing these bits. A soft reset has no effect.</doc>
+    <field name="gpio_bank" start="7" size="1" type="uint" grade="established"/>
+    <field name="wdo_sel" start="6" size="1" type="uint" grade="established"/>
+    <field name="gpio20_pin" start="5" size="1" type="uint" grade="established"/>
+    <field name="gpio21_sel" start="3" size="2" type="uint" grade="established"/>
+    <field name="gpio22_pin" start="2" size="1" type="uint" grade="established"/>
+    <field name="baddr" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="CS_INDEX" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.35-36" register="yes" offset="0x23" access="rw" space="pc87307_card" reset="0x0">
+    <doc>Programmable chip select configuration index: the second-level index of the chip select register that the data register reaches. Bits 7:4 read 0.</doc>
+  </struct>
+  <struct name="CS_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36" register="yes" offset="0x24" access="rw" space="pc87307_card" reset="0x0">
+    <doc>Programmable chip select configuration data: the register named by the index above.</doc>
+  </struct>
+  <struct name="SRID" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36" register="yes" offset="0x27" access="r" space="pc87307_card" reset="unknown">
+    <doc>Chip revision identification, PC97307 only: incremented on each tapeout.</doc>
+  </struct>
+  <struct name="CFG_INDEX" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25" register="yes" offset="0x0" access="rw" space="pc87307_cfgport" reset="0x0">
+    <doc>Configuration index register. A write selects the configuration register the data port then reaches; a read returns the last index written. Reset: the part wakes in the Config state in PnP motherboard mode, so no key sequence is needed. The PROM and Linux write ports 0x2e and 0x2f directly.</doc>
+  </struct>
+  <struct name="CFG_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.24-25" register="yes" offset="0x1" access="rw" space="pc87307_cfgport" reset="unknown">
+    <doc>Configuration data register: reads and writes the register selected by the index. Reserved bits must be preserved, so software uses read-modify-write.</doc>
+  </struct>
+  <struct name="CS_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40" register="yes" offset="0x0" access="rw" count="3" stride="4" space="pc87307_cs" reset="0x0">
+    <doc>CS0, CS1 and CS2 base address, most significant byte (second-level indexes 0x00, 0x04 and 0x08).</doc>
+  </struct>
+  <struct name="CS_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40" register="yes" offset="0x1" access="rw" count="3" stride="4" space="pc87307_cs" reset="0x0">
+    <doc>CS0, CS1 and CS2 base address, least significant byte (indexes 0x01, 0x05, 0x09).</doc>
+  </struct>
+  <struct name="CS_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.39-40" register="yes" offset="0x2" access="rw" count="3" stride="4" space="pc87307_cs" reset="0x0">
+    <doc>CS0, CS1 and CS2 configuration (indexes 0x02, 0x06, 0x0a). The board's use of the chip selects is not known.</doc>
+    <field name="mask_a11_0" start="7" size="1" type="uint" grade="established"/>
+    <field name="ignore_rdwr" start="6" size="1" type="uint" grade="established"/>
+    <field name="on_read" start="5" size="1" type="uint" grade="established"/>
+    <field name="on_write" start="4" size="1" type="uint" grade="established"/>
+    <field name="mask_a3" start="3" size="1" type="uint" grade="established"/>
+    <field name="mask_a2" start="2" size="1" type="uint" grade="established"/>
+    <field name="mask_a1" start="1" size="1" type="uint" grade="established"/>
+    <field name="mask_a0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="P1_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170" register="yes" offset="0x0" access="rw" space="pc87307_gpio0" reset="0xff">
+    <doc>Port 1 data. A read returns the pin for an input bit and the latch for an output bit; a write latches the value and drives output pins only. The write latch resets to 0xff. The firmware and Linux read this byte at the GPIO base after enabling the block.</doc>
+    <field name="board_rev" start="0" size="7" type="uint" grade="inferred"/>
+  </struct>
+  <struct name="P1_DIR" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x1" access="rw" space="pc87307_gpio0" reset="0x0">
+    <doc>Port 1 direction: 0 input, 1 output.</doc>
+  </struct>
+  <struct name="P1_OTYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x2" access="rw" space="pc87307_gpio0" reset="0x0">
+    <doc>Port 1 output type: 0 open-drain, 1 push-pull.</doc>
+  </struct>
+  <struct name="P1_PULLUP" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x3" access="rw" space="pc87307_gpio0" reset="0xff">
+    <doc>Port 1 pull-up control: 0 none, 1 internal pull-up.</doc>
+  </struct>
+  <struct name="P2_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x4" access="rw" space="pc87307_gpio0" reset="0xff">
+    <doc>Port 2 data, as port 1.</doc>
+  </struct>
+  <struct name="P2_DIR" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x5" access="rw" space="pc87307_gpio0" reset="0x0">
+    <doc>Port 2 direction.</doc>
+  </struct>
+  <struct name="P2_OTYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x6" access="rw" space="pc87307_gpio0" reset="0x0">
+    <doc>Port 2 output type.</doc>
+  </struct>
+  <struct name="P2_PULLUP" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.170-171" register="yes" offset="0x7" access="rw" space="pc87307_gpio0" reset="0xff">
+    <doc>Port 2 pull-up control.</doc>
+  </struct>
+  <struct name="P1_LOCK" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.171" register="yes" offset="0x0" access="rw" space="pc87307_gpio1" reset="0x0">
+    <doc>Port 1 lock. Bits 7 and 6 lock the direction and pull-up bits of GPIO17 and GPIO16, and for outputs the pin value and buffer type. Only a hardware (master) reset clears them. Bits 5:0 are reserved; offsets 0x01 to 0x07 of this bank are reserved.</doc>
+    <field name="lock17" start="7" size="1" type="uint" grade="established"/>
+    <field name="lock16" start="6" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD0_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x30" access="rw" space="pc87307_ld0" reset="unknown">
+    <doc>Activate (bit 0). The PROM activates it; the HAL selects it to steer IRQ 1. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD0_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x31" access="rw" space="pc87307_ld0" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD0_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x60" access="rw" space="pc87307_ld0" reset="0x0">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD0_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x61" access="rw" space="pc87307_ld0" reset="0x60">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD0_CMD_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x62" access="rw" space="pc87307_ld0" reset="0x0">
+    <doc>Command window base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD0_CMD_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x63" access="rw" space="pc87307_ld0" reset="0x64">
+    <doc>Command window base address bits 7:0; bit 2 reads 1. The reset reads 0x64 (the table prints it as 64).</doc>
+  </struct>
+  <struct name="LD0_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x70" access="rw" space="pc87307_ld0" reset="0x1">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD0_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x71" access="rw" space="pc87307_ld0" reset="0x2">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD0_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x74" access="r" space="pc87307_ld0" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD0_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.30 Table 2-12" register="yes" offset="0x75" access="r" space="pc87307_ld0" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD0_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36" register="yes" offset="0xf0" access="rw" space="pc87307_ld0" reset="0x40">
+    <doc>Keyboard controller configuration: bits 7:6 pick the clock source (00 8 MHz, 01 12 MHz, 10 16 MHz, only with the keyboard controller inactive).</doc>
+    <field name="clk" start="6" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD1_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13" register="yes" offset="0x30" access="rw" space="pc87307_ld1" reset="0x0">
+    <doc>Activate (bit 0). The HAL selects it to steer IRQ 12. The device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD1_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13" register="yes" offset="0x70" access="rw" space="pc87307_ld1" reset="0xc">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD1_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13" register="yes" offset="0x71" access="rw" space="pc87307_ld1" reset="0x2">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD1_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13" register="yes" offset="0x74" access="r" space="pc87307_ld1" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD1_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-13" register="yes" offset="0x75" access="r" space="pc87307_ld1" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD2_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x30" access="rw" space="pc87307_ld2" reset="unknown">
+    <doc>Activate (bit 0). The PROM activates it. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD2_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x31" access="rw" space="pc87307_ld2" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD2_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x60" access="rw" space="pc87307_ld2" reset="0x0">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD2_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x61" access="rw" space="pc87307_ld2" reset="0x70">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD2_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x70" access="rw" space="pc87307_ld2" reset="0x8">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD2_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x71" access="rw" space="pc87307_ld2" reset="0x0">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD2_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x74" access="r" space="pc87307_ld2" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD2_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.31 Table 2-14" register="yes" offset="0x75" access="r" space="pc87307_ld2" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD3_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x30" access="rw" space="pc87307_ld3" reset="unknown">
+    <doc>Activate (bit 0). The PROM activates it and its ARC tree lists a floppy controller at the usual 0x3f2 window; the HAL selects it to steer IRQ 6. Reset 0 or 1 according to the CFG0 strap (the board's strap is not known); the device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD3_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x31" access="rw" space="pc87307_ld3" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD3_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x60" access="rw" space="pc87307_ld3" reset="0x3">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD3_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x61" access="rw" space="pc87307_ld3" reset="0xf2">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD3_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x70" access="rw" space="pc87307_ld3" reset="0x6">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD3_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x71" access="rw" space="pc87307_ld3" reset="0x3">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD3_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x74" access="rw" space="pc87307_ld3" reset="0x2">
+    <doc>DMA channel select 0: bits 2:0, 4 means none.</doc>
+  </struct>
+  <struct name="LD3_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-15" register="yes" offset="0x75" access="r" space="pc87307_ld3" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD3_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.36-37" register="yes" offset="0xf0" access="rw" space="pc87307_ld3" reset="0x20">
+    <doc>Floppy configuration: tri-state, DENSEL polarity, TDR mode and four-drive encode.</doc>
+    <field name="four_drive" start="7" size="1" type="uint" grade="established"/>
+    <field name="tdr_enh" start="6" size="1" type="uint" grade="established"/>
+    <field name="densel_pol" start="5" size="1" type="uint" grade="established"/>
+    <field name="tristate" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD3_DRIVE_ID" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37" register="yes" offset="0xf1" access="rw" space="pc87307_ld3" reset="0x0">
+    <doc>Drive ID register: drive 0 and drive 1 identification bits reflected in the tape drive register.</doc>
+    <field name="drive1" start="2" size="2" type="uint" grade="established"/>
+    <field name="drive0" start="0" size="2" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD4_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x30" access="rw" space="pc87307_ld4" reset="0x0">
+    <doc>Activate (bit 0). The PROM activates it. Its ARC tree lists the parallel port at the PC's first address 0x378, not the reset base 0x278, so the PROM's configuration writes the base (inferred: the 26 Super I/O writes are not decoded). The device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD4_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x31" access="rw" space="pc87307_ld4" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD4_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x60" access="rw" space="pc87307_ld4" reset="0x2">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD4_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x61" access="rw" space="pc87307_ld4" reset="0x78">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD4_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x70" access="rw" space="pc87307_ld4" reset="0x7">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD4_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x71" access="rw" space="pc87307_ld4" reset="0x0">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD4_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x74" access="rw" space="pc87307_ld4" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none.</doc>
+  </struct>
+  <struct name="LD4_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.32 Table 2-16" register="yes" offset="0x75" access="r" space="pc87307_ld4" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD4_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.37-38" register="yes" offset="0xf0" access="rw" space="pc87307_ld4" reset="0xf2">
+    <doc>Parallel port configuration. Bits 7:4 must not be changed for normal operation. Reset 0xf2: mode select 111 (IEEE 1284 with EPP selectable), configuration bits in the port accessible, clock enabled.</doc>
+    <field name="mode" start="5" size="3" type="ld4_config_mode" grade="established"/>
+    <field name="cfg_regs" start="4" size="1" type="uint" grade="established"/>
+    <field name="pnp_spp" start="3" size="1" type="uint" grade="established"/>
+    <field name="clk_en" start="1" size="1" type="uint" grade="established"/>
+    <field name="tristate" start="0" size="1" type="uint" grade="established"/>
+    <test value="0xf2" kind="vector">
+      <expect field="tristate" value="0"/>
+      <expect field="clk_en" value="1"/>
+      <expect field="pnp_spp" value="0"/>
+      <expect field="cfg_regs" value="1"/>
+      <expect field="mode" value="7"/>
+    </test>
+  </struct>
+  <struct name="LD5_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x30" access="rw" space="pc87307_ld5" reset="0x0">
+    <doc>Activate (bit 0). COM2 at 0x2f8, IRQ 3 (the reset values); the PROM activates it. The device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD5_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x31" access="rw" space="pc87307_ld5" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD5_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x60" access="rw" space="pc87307_ld5" reset="0x2">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD5_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x61" access="rw" space="pc87307_ld5" reset="0xf8">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD5_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x70" access="rw" space="pc87307_ld5" reset="0x3">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD5_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x71" access="rw" space="pc87307_ld5" reset="0x3">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD5_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x74" access="rw" space="pc87307_ld5" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none.</doc>
+  </struct>
+  <struct name="LD5_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-17" register="yes" offset="0x75" access="rw" space="pc87307_ld5" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none.</doc>
+  </struct>
+  <struct name="LD5_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38" register="yes" offset="0xf0" access="rw" space="pc87307_ld5" reset="0x2">
+    <doc>UART configuration. The datasheet gives reset 0x02 in Sections 2.8.1 and 2.9.1 and 0x00 in its bitmap summary; this unit takes 0x02 (the tables and sections agree).</doc>
+    <field name="bank_en" start="7" size="1" type="uint" grade="established"/>
+    <field name="ring_pin" start="3" size="1" type="uint" grade="established"/>
+    <field name="busy" start="2" size="1" type="uint" grade="established"/>
+    <field name="power" start="1" size="1" type="uint" grade="established"/>
+    <field name="tristate" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD6_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x30" access="rw" space="pc87307_ld6" reset="0x0">
+    <doc>Activate (bit 0). COM1 at 0x3f8, IRQ 4 (the reset values); the PROM's serial console, activated by the boot block and again by the self-test. The device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD6_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x31" access="rw" space="pc87307_ld6" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD6_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x60" access="rw" space="pc87307_ld6" reset="0x3">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD6_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x61" access="rw" space="pc87307_ld6" reset="0xf8">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD6_IRQ" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x70" access="rw" space="pc87307_ld6" reset="0x4">
+    <doc>Interrupt select: bits 3:0 give the IRQ line, 1 to 15, 0 means none. The part offers IRQ 1, 3 to 12, 14 and 15. The HAL writes the interrupt type register only; Linux 2.2 writes this one on a 320 revision 5 board.</doc>
+    <field name="line" start="0" size="4" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD6_IRQ_TYPE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x71" access="rw" space="pc87307_ld6" reset="0x3">
+    <doc>Interrupt type: bit 0 edge (0) or level (1), bit 1 polarity, low with an open-drain output (0) or high with a push-pull output (1). Which bits are writable depends on the device. The HAL's steering writes bits 0 and 1 of this register for IRQs 1, 3, 4, 6, 7 and 12, and only on the no-8259 route table and the 540 revision 0 table.</doc>
+    <field name="polarity" start="1" size="1" type="uint" grade="established"/>
+    <field name="level" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD6_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x74" access="r" space="pc87307_ld6" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD6_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-18" register="yes" offset="0x75" access="r" space="pc87307_ld6" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD6_CONFIG" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.38" register="yes" offset="0xf0" access="rw" space="pc87307_ld6" reset="0x2">
+    <doc>UART configuration. The datasheet gives reset 0x02 in Sections 2.8.1 and 2.9.1 and 0x00 in its bitmap summary; this unit takes 0x02 (the tables and sections agree).</doc>
+    <field name="bank_en" start="7" size="1" type="uint" grade="established"/>
+    <field name="ring_pin" start="3" size="1" type="uint" grade="established"/>
+    <field name="busy" start="2" size="1" type="uint" grade="established"/>
+    <field name="power" start="1" size="1" type="uint" grade="established"/>
+    <field name="tristate" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD7_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x30" access="rw" space="pc87307_ld7" reset="0x0">
+    <doc>Activate (bit 0). The PROM and Linux write the base 0xfc0 and activate it; the board revision is read from its data byte. The device is active only when its function enable bit in the power management block is also set.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD7_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x31" access="rw" space="pc87307_ld7" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD7_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x60" access="rw" space="pc87307_ld7" reset="0x0">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD7_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x61" access="rw" space="pc87307_ld7" reset="0x0">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD7_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x74" access="r" space="pc87307_ld7" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD7_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.33 Table 2-19" register="yes" offset="0x75" access="r" space="pc87307_ld7" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD8_ACTIVATE" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x30" access="rw" space="pc87307_ld8" reset="0x0">
+    <doc>Activate (bit 0). The PROM and Linux write the base 0xfc8 and activate it; Linux and the PROM then write function enable register 2. When clear, the power management registers are not accessible but are kept.</doc>
+    <field name="active" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD8_IORC" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x31" access="rw" space="pc87307_ld8" reset="0x0">
+    <doc>I/O range check: bit 0 chooses the byte the device drives (0xaa or 0x55) and bit 1 enables the check, valid only while the device is inactive. Bits 7:2 read 0.</doc>
+    <field name="enable" start="1" size="1" type="uint" grade="established"/>
+    <field name="value" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="LD8_BASE_MSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x60" access="rw" space="pc87307_ld8" reset="0x0">
+    <doc>Base address bits 15:8.</doc>
+  </struct>
+  <struct name="LD8_BASE_LSB" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x61" access="rw" space="pc87307_ld8" reset="0x0">
+    <doc>Base address bits 7:0; the low bits are read only and the decoder ignores them.</doc>
+  </struct>
+  <struct name="LD8_DMA0" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x74" access="r" space="pc87307_ld8" reset="0x4">
+    <doc>DMA channel select 0: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="LD8_DMA1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.34 Table 2-20" register="yes" offset="0x75" access="r" space="pc87307_ld8" reset="0x4">
+    <doc>DMA channel select 1: bits 2:0, 4 means none. Read only.</doc>
+  </struct>
+  <struct name="FER1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.173" register="yes" offset="0x0" access="rw" space="pc87307_pm" reset="0xff">
+    <doc>Function enable register 1. A logical device is active only while its activate bit and its enable bit here are both set. Hardware resets it to 0xff.</doc>
+    <field name="uart1" start="6" size="1" type="uint" grade="established"/>
+    <field name="uart2" start="5" size="1" type="uint" grade="established"/>
+    <field name="pp" start="4" size="1" type="uint" grade="established"/>
+    <field name="fdc" start="3" size="1" type="uint" grade="established"/>
+    <field name="rtc" start="2" size="1" type="uint" grade="established"/>
+    <field name="kbc" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="FER2" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.173-174" register="yes" offset="0x1" access="rw" space="pc87307_pm" reset="0xff">
+    <doc>Function enable register 2. Linux and the PROM write bit 7 set (Linux's comment: it enables access to the GPIO registers). Hardware resets it to 0xff according to Table 9-1's bitmap and the text of 9.2.4; the text for bit 7 marks the cleared state as the default, which contradicts that. The PC87317 sibling datasheet resets the bit to 1.</doc>
+    <field name="gpio" start="7" size="1" type="uint" grade="established"/>
+    <field name="cs2" start="2" size="1" type="uint" grade="established"/>
+    <field name="cs1" start="1" size="1" type="uint" grade="established"/>
+    <field name="cs0" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PMC1" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.174" register="yes" offset="0x2" access="rw" space="pc87307_pm" reset="0x0">
+    <doc>Power management control 1: tri-state controls for the floppy, parallel and UART pins, ORed with the logical devices' own bits.</doc>
+    <field name="uart1_tri" start="6" size="1" type="uint" grade="established"/>
+    <field name="uart2_tri" start="5" size="1" type="uint" grade="established"/>
+    <field name="pp_tri" start="4" size="1" type="uint" grade="established"/>
+    <field name="fdc_tri" start="3" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PMC2" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.174" register="yes" offset="0x3" access="rw" space="pc87307_pm" reset="unknown">
+    <doc>Power management control 2: clock source and clock multiplier. Bits 2:0 follow the CFG3 and CFG2 straps at reset, whose board settings are not known.</doc>
+    <field name="mult_valid" start="7" size="1" type="uint" grade="established"/>
+    <field name="mult_en" start="2" size="1" type="uint" grade="established"/>
+    <field name="clk_src" start="0" size="2" type="pmc2_clk_src" grade="established"/>
+  </struct>
+  <struct name="PMC3" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175" register="yes" offset="0x4" access="rw" space="pc87307_pm" reset="0xe">
+    <doc>Power management control 3: parallel port, UART2 and UART1 clock enables (ANDed with the devices' own bits) and read-only busy flags.</doc>
+    <field name="uart1_busy" start="7" size="1" type="uint" grade="established"/>
+    <field name="uart2_busy" start="6" size="1" type="uint" grade="established"/>
+    <field name="uart1_clk" start="3" size="1" type="uint" grade="established"/>
+    <field name="uart2_clk" start="2" size="1" type="uint" grade="established"/>
+    <field name="pp_clk" start="1" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="WDTO" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175" register="yes" offset="0x5" access="rw" space="pc87307_pm" reset="0x0">
+    <doc>Watchdog time-out in minutes; 0 stops the watchdog. Also cleared when the power management device is activated.</doc>
+  </struct>
+  <struct name="WDCF" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.175-176" register="yes" offset="0x6" access="rw" space="pc87307_pm" reset="0x0">
+    <doc>Watchdog configuration: which interrupts reload the timer.</doc>
+    <field name="uart2" start="3" size="1" type="uint" grade="established"/>
+    <field name="uart1" start="2" size="1" type="uint" grade="established"/>
+    <field name="mouse" start="1" size="1" type="uint" grade="established"/>
+    <field name="kbc" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="WDST" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.176" register="yes" offset="0x7" access="r" space="pc87307_pm" reset="0x1">
+    <doc>Watchdog status. Bit 0 is the watchdog output (1 inactive). Section 9.1.2 says bit 1; the register description and bitmap say bit 0. Whether the output reaches anything on the board is not known.</doc>
+    <field name="wdo" start="0" size="1" type="uint" grade="established"/>
+  </struct>
+  <struct name="PM_INDEX" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.172" register="yes" offset="0x0" access="rw" space="pc87307_pmport" reset="0x0">
+    <doc>Power management index register: selects the register the data port reaches. Bits 7:3 read 0.</doc>
+  </struct>
+  <struct name="PM_DATA" size="1" grade="established" from="National Semiconductor PC87307/PC97307 datasheet (Preliminary, March 1998) p.172-173" register="yes" offset="0x1" access="rw" space="pc87307_pmport" reset="unknown">
+    <doc>Power management data register.</doc>
+  </struct>
+  <constant name="CFG_DATA_PORT" value="0x2f" grade="established"/>
+  <constant name="CFG_INDEX_PORT" value="0x2e" grade="established"/>
+  <constant name="GPIO_BASE" value="0xfc0" grade="established"/>
+  <constant name="PM_BASE" value="0xfc8" grade="established"/>
+</genxml>

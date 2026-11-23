@@ -371,3 +371,7 @@ prose_offsets = false
 [units.piix4]
 group = "piix4"
 prose_offsets = false
+
+[units.ns_pc87307]
+group = "ns_pc87307"
+prose_offsets = false
