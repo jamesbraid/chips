@@ -278,6 +278,17 @@ instead, press <Esc>" and calls the loader `0xbfc38530(5, 0, ...)`; if that retu
 path ends in the EnterInteractiveMode stub `0xbfc005e8`. The loader builds its path from `SystemPartition`, `OSLoader`, `OSLoadPartition` and
 `OSLoadFilename`; the string forms were not traced past the name table.
 
+## Default boot variables from a disk volume header (established unless marked)
+
+A routine at `0xbfc06900` (one caller, `0xbfc05fbc`, in the start-up function `0xbfc05ed0` after the three driver initialisers) walks the configuration
+tree to a disk-class child, opens it, obtains its volume header and checks the SGI disk-label magic `0x0be5a941` (at `0xbfc06970`). `SystemPartition`,
+`OSLoadPartition`, `OSLoader` and `OSLoadFilename` are each set only where the variable is not set at all: the lookup helper returns null for an absent
+variable, and a non-null result skips the assignment. Whether a variable stored with an empty value counts as set is not traced (inferred: it does, since the
+lookup finds it). `SystemPartition` becomes `<disk path>partition(N)` where N is the index of the first of the 16 partition entries (label offset 312, 12 bytes
+each) with a non-zero block count and type 0; if no entry matches it is left unset. `OSLoadPartition` uses the label's root-partition field, `OSLoader`
+becomes `sash`, and `OSLoadFilename` is the label's boot-file field. The field meanings are from the public Linux `sgi.c` partition parser, so which field is
+which is inferred; the call sequence is established. The routine opens the disk and never closes it (no call to the Close slot's routine in its body).
+
 ## Commands (established)
 
 Command table at `0xbfc42e24`, three words per entry (name, handler, help text), 22 entries followed by a null: `auto` `0xbfc388e0`, `boot` `0xbfc37080`, `.checksum` `0xbfc389a0`,
@@ -309,13 +320,13 @@ Code after the first few hundred bytes moves (the image grows by graphics test c
 address is meant it is named as such.
 
 **Answer first.** None of the byte-order or Windows NT machinery changes. Every item in the list below is the same code or data, only relocated. What is
-new is an unrelated block of graphics diagnostics, a routine that fills empty boot variables from the first disk, a 35th firmware-vector slot, and
-two 256 MiB clamps in the memory test and memory clear. Graded established unless marked.
+new is an unrelated block of graphics diagnostics, a 35th firmware-vector slot, two 256 MiB clamps in the memory test and memory clear, and one added
+call at the end of `resetenv`. Graded established unless marked.
 
 ### Byte order and the NT path: unchanged, relocated
 
-- **Reset path.** The reset routine at `0xbfc003c0` is instruction-for-instruction the 4.0.5D one (diff of the whole routine to `0xbfc00540`: one
-  difference, the address constant that a later call receives). Status `0x00410000`, Config written with 3 and read back, the Config bit 15 test
+- **Reset path.** The reset routine at `0xbfc003c0` is instruction-for-instruction the 4.0.5D one (the reset routine proper, `0xbfc003c0` to `0xbfc00520`, differs
+  only in the target of the flip call; the next step's `s8` constant, just past it, is the only other change). Status `0x00410000`, Config written with 3 and read back, the Config bit 15 test
   and the single flip call at `0xbfc003f4`, the HPC1 word at `0xbfb800c0` cleared when its bit 0 is set, MC `+0xec` and `+0xfc` zeroed, CPUCTRL0
   whole-register write of `0x3c002014 | ((line/8 + 4) << 20)`, CPUCTRL1 `0x1016` (still the only store to MC `+0x0c` in the image), `+0xd4` `0x11453433`,
   `+0xdc` `0x34332`, the 625-tick refresh wait. The flip routine itself (now `0xbfc01390`, 4.0.5D `0xbfc01320`) is identical over its whole length: EEPROM
@@ -348,7 +359,7 @@ two 256 MiB clamps in the memory test and memory clear. Graded established unles
 
 - **Probe and placement** (`0xbfc00a00` onwards): identical to 4.0.5D over its whole length except the memory-clear tail below. Banks still start at
   physical `0x08000000`, largest first, skipping `0x18000000` to `0x20000000`; the 128 MiB bank maximum is the same field.
-- **Descriptors.** The builder (now `0xbfc0ad78` region; the retype and magic code with it) is identical: free memory type 3 from `0x08002000`,
+- **Descriptors.** The builder (`0xbfc0adcc` to `0xbfc0ae2c`, 4.0.5D `0xbfc081fc`; the minimum is taken through `0xbfc38fb4`) is identical: free memory type 3 from `0x08002000`,
   `min(total, 0x08000000)` bytes (the 128 MiB cap) minus two pages, plus pages 0 and 1 retyped to exception block and system parameter block. Memory above
   the first 128 MiB still never becomes a descriptor here.
 - **Memory-clear DMA.** The tail of the sizing routine (`0xbfc00b6c`..`0xbfc00c30`) used to run one MC DMA over the whole total from physical `0x08000000`.
@@ -368,14 +379,13 @@ two 256 MiB clamps in the memory test and memory clear. Graded established unles
 - **Removed text.** " with Z-buffer" and "Video Backend not installed." no longer appear. The Ethernet collision message becomes "ec0: 16 xmit collisions" and the
   driver gains a "Starting receive DMA in eput()" trace. New disk-side messages: "Can't read volume header" and an `ENOSPC` diagnostic. Which routine owns each is
   found by address pair only.
-- **Boot variables from the first disk.** A new routine (`0xbfc094b8`), called at the end of the environment initialiser and of `resetenv`, walks the configuration
-  tree to a disk-class child, opens it, obtains its volume header and, if the SGI disk-label magic `0x0be5a941` is there, fills `SystemPartition`,
-  `OSLoadPartition`, `OSLoader` (with `sash`) and `OSLoadFilename` only where the variable is empty (inferred from a skip when the variable test returns non-zero). `SystemPartition` is the partition numbered after the first
-  entry of type 0 (the volume header) with a non-zero size and `OSLoadPartition` is the label's root partition; `OSLoadFilename` is the label's boot-file
-  field. Layout of the label from the public Linux `sgi.c` partition parser, so the reading of which field is which is inferred; the call sequence is established.
-  Because it only fills empty variables, it does not change the NT-default rule.
-- **ARC firmware vector.** Its length is now `0x8c` (35 slots, was `0x88`, 34). The new last slot (34), `0xbfc0a0e4`, flushes caches over the size
-  table that cache set-up builds, so by slot order and body it is FlushAllCaches (inferred). Load, Invoke and Execute, the system parameter block fields and the
+- **Boot variables from a volume header: unchanged, one new call.** The routine is not new; see [its own section](#default-boot-variables-from-a-disk-volume-header-established-unless-marked).
+  It is the same 108 instructions at `0xbfc094b8` (4.0.5D `0xbfc06900`; only address constants differ). Callers: `0xbfc08b6c`, in the start-up function
+  `0xbfc08a80` (4.0.5D `0xbfc05ed0`, which called it at `0xbfc05fbc`) after the three driver initialisers, and, new in 4.0.5G, `0xbfc0c4c0` at the end of
+  `resetenv` (which grows from 78 to 80 instructions). The environment initialiser at `0xbfc0baa0` does not call it. Established. An earlier revision of this
+  section called the routine new and placed its call in the environment initialiser; both were wrong.
+- **ARC firmware vector.** Its length is now `0x8c` (35 slots, was `0x88`, 34). The new last slot (34), `0xbfc0a0e4`, loads one size word (`0xa87c871c`, stored at `0xbfc0a1e0`) and does a
+  range flush from `0x88000000`, a single value rather than a table, so by slot order and body it is FlushAllCaches (inferred). Load, Invoke and Execute, the system parameter block fields and the
   ten private-vector slots are otherwise unchanged. Slots 35 and 36 (TestUnicodeCharacter, GetDisplayStatus) are still absent.
 - **Unchanged outright.** NVRAM layout, checksum and the guarded-store helper, the 25-record table apart from `volume`, the 22 commands, the console opener
   and the start-up call order in the main routine (checked by function diff; the compare ignores address constants, so a changed call target would not show). Not diffed function by function: the Ethernet, SCSI and serial drivers and the
