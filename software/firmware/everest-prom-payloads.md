@@ -136,7 +136,7 @@ data table of load and code offsets; its code begins at offset 0x100.
 - Whether the "R4400 IP23" name in the 1.0 loaders ever selects a payload; no held image has one.
 - Where "Downloading PROM code" and "Jumping into IO4 PROM" are printed; neither is in any of these images.
 - How the IP25 start-up differs from IP21 beyond entry offset: the two images were not compared function by function.
-- What writes the `XFER` block at physical `0x400`.
+- What writes the `XFER` block at physical `0x400` (none of the three 4.21 monitors does; see [the monitor page](../../platforms/everest/prom-software.md)).
 
 ## How to reproduce
 

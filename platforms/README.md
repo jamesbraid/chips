@@ -31,6 +31,12 @@
 | [size-ladder.md](bricks/size-ladder.md) | Origin 3000 and Onyx 3000 size ladder | This sheet lists, for each size of the Origin 3000 family that SGI's manuals describe (Origin and Onyx 3200, 3400... |
 | [xbrick.md](bricks/xbrick.md) | Origin 3000 X-brick | The X-brick is the 4U XIO expansion enclosure of the Origin 3000 and Onyx 3000 families. |
 
+## everest
+
+| Page | Title | Summary |
+|---|---|---|
+| [prom-software.md](everest/prom-software.md) | Everest IO4 PROM monitor 4.21 (IP19, IP21, IP25): what its own software does | This page records what the three CPU builds of the "IO4 PROM Monitor", version `SGI Version 4.21 Rev A`, build of... |
+
 ## ip17
 
 | Page | Title | Summary |
