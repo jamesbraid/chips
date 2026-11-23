@@ -111,4 +111,5 @@
 | [prom-l1-request-timeouts.md](ip35/prom-l1-request-timeouts.md) | IP35 PROM 6.210: what the boot PROM does when the system controller does not answer | Question. |
 | [prom-lead-test-and-shared-uart.md](ip35/prom-lead-test-and-shared-uart.md) | IP35 PROM 6.210: the lead-processor test and the node's shared L1 UART | Question. |
 | [prom-md-config.md](ip35/prom-md-config.md) | IP35 PROM: every write to the memory controller's bank configuration during boot | Question. |
+| [prom-module-ids.md](ip35/prom-module-ids.md) | IP35 PROM: how module ids are formed, and what the duplicate rack/bay check compares | Question. |
 | [prom-tod-clock.md](ip35/prom-tod-clock.md) | IP35 PROM 6.210: reading the time-of-day clock | Scope. |

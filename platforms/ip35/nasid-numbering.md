@@ -34,6 +34,7 @@ No vendor source text was used. The facts below come from the binary reading and
 |---|---|
 | The four Cx-brick boards take consecutive NASIDs in the order board 1, 2, 0, 3 | [Cx-brick node numbering](../bricks/cxbrick.md#module-identity-and-node-names) |
 | Module and slab names come from the L1's rack, slot and `0x000e` answers, not from the NASID | [Cx-brick, brick type letter 6](../bricks/cxbrick.md#brick-type-letter-6-in-the-prom-and-kernel) |
+| Module ids come from the L1's rack, bay, type letter and position answers, one per node board, not from the NASID; the duplicate-position check compares them | [IP35 PROM module ids](prom-module-ids.md) |
 | The Bedrock region-size field (bits 47:46) and its coarse value | [Bedrock local block](../../devices/bedrock_lb/README.md#identity-and-node-number), `devices/bedrock_lb/registers.toml` |
 | Hub and Bedrock node-number writes, and the ordering of those writes | [Hub and Bedrock node-number write timing](../../questions/hub-bedrock-config-write-timing.md) |
 

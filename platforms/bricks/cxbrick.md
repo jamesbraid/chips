@@ -243,10 +243,12 @@ brick. Its L1 keeps the module ID and a partition ID. Every Cx-brick in one part
 partition ID, which is 1 to 63; 0 means unpartitioned. The console of the lowest-numbered Cx-brick
 in a partition is the partition console (`007-4426-001` p. 4).
 
-**Inferred.** The module is the brick, not the node. Up to four Bedrock nodes share one module ID
-and one L1. The inference follows from the one-L1 and one-module-ID statements above. It differs
-from the C-brick, whose L1 sits on its single IP35 board, and from the Origin 350, where one IP53
-board is the whole module.
+**Inferred.** The L1 and the module ID and partition ID it stores belong to the brick: up to four
+Bedrock nodes share one L1. It differs from the C-brick, whose L1 sits on its single IP35 board, and
+from the Origin 350, where one IP53 board is the whole module. The module ids the IP35 PROM puts in
+its node board records are a different thing: it forms one per node board, with consecutive bay
+numbers, and its duplicate-position check compares them per node board (see
+[the PROM module-id page](../ip35/prom-module-ids.md)).
 
 **Established** (`007-4653-001` pp. 21, 134, 144). A Cx-brick name carries the type letter `c`, the
 same letter as a C-brick. The example `001c07` is a Cx-brick in rack 001, slot 07. The slot is the
@@ -272,24 +274,30 @@ or the module-and-slot path. Route: a Cx-brick inventory with the `slab` paths.
 **Established** (public header). Linux 5.3 `arch/ia64/include/asm/sn/l1.h`, line 18, defines
 `L1_BRICKTYPE_TWISTER` as `0x36` (letter `6`) with the comment "IP53 & ROUTER".
 
-**Unknown** (regraded in the verification pass). An earlier version said that when the local L1
-answers the type letter `6` the requester also sends `0x000e`, adds that answer modulo 4 to the
-slot, turns an answer of 4 into the letter `R`, folds `6` to `c`, and that the kernel names the node
-vertex `module/<id>/node` with an alias `module/<id>/slab/<n>/node`. None of it could be re-found:
-the strings `slab` and `module/<id>/node` do not occur in the shipped IP35 kernel members or in the
-unpacked PROM segment, and the `0x000e` request is not in the brick-class question page. Route: read
-the PROM's L1 brick-type request routine and the kernel's module and slab naming code in full.
+**Established** (IP35 PROM 6.210 and 6.211, read in full; see
+[the PROM module-id page](../ip35/prom-module-ids.md)). When the controller answers the type letter
+`6`, the PROM also sends request `0x000e`, adds the answer (low two bits, sign kept) to the bay, turns
+an answer of 4 into the letter `R` and folds `6` to `c`. This restores what an earlier version said
+and a later pass withdrew for want of the request routine.
+
+**Unknown.** The kernel naming claim of that earlier version, that the node vertex is
+`module/<id>/node` with an alias `module/<id>/slab/<n>/node`. The strings `slab` and
+`module/<id>/node` do not occur in the shipped IP35 kernel members or in the unpacked PROM segment.
+Route: read the kernel's module and slab naming code in full.
 
 **Established** (IP35 PROM 6.210, in the brick-class question page). The letter `6` is not one of
 the five letters `7`, `8`, `9`, `0` and `Q`. Those set a nonzero board class in the PROM's
 classifier, so IP53 boards that answer `6` take the IP35 path. The classifier table is in
 [the IP35 PROM brick-class question](../../questions/ip35-prom-l1-brick-class.md).
 
-**Unknown.** Whether a Cx-brick L1 answers letter `6` with the brick's own slot on every board link,
-and what position values it returns. An earlier version inferred board positions 0 to 3 and a router
-position 4, naming boards `001c07` to `001c10` and a router `001r07`. That depended on the
-`0x000e` request above, which could not be re-found, so the reading is withdrawn. Route: an L1
-transcript from a real Cx-brick.
+**Established** (PROM routines above; controller side in the sysco repository, marked unverified
+there). The controller answers positions 0 to 3 for the four node boards and 4 for the router. The
+PROM's sum gives the nodes bays *b* to *b* + 3 and the router bay *b* with the letter `r`: for a
+brick at unit 7, boards `001c07` to `001c10` and a router `001r07`. That restores the earlier
+inference.
+
+**Unknown.** What a real Cx-brick controller sends on the wire. Route: an L1 transcript from a real
+Cx-brick.
 
 ## What is not settled
 
