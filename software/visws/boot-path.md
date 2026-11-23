@@ -796,13 +796,13 @@ PCI drivers register through `0x111a6cc` with a `0x18`-byte record (attach, remo
   were searched for the same configuration offsets and have none). The attach routine for `8086:7113` runs once at PCI scan with the
   function's configuration address (device 4, function 3 behind Lithium B) and does, in order:
   1. clears the status word (`+6`) with `0x3800`;
-  2. reads register `0x40` (PMBA) and keeps it, minus bit 0, as the power-management base for itself; reads register `0x80`
+  2. reads register `0x40` (PMBA) and stores it, minus bit 0, at `ds:0x114ba54`, a variable nothing reads afterwards: every later access uses the constant `0xf80` (the status read-and-clear routine is `0x11145f6`, called from `0x1102830`); reads register `0x80`
      (PMREGMISC) and, if bit 0 (power-management I/O enable) is clear, which the boot block's step `0x1b` normally prevents, writes
      `0x0f80` to `0x40` and 1 to `0x80` itself;
   3. **writes the dword `0x0fd0` to register `0x90` (SMBBA)** (`1.1005@0x1114559`..`0x1114565`; the helper at `0x111a8c5` is the
      32-bit configuration write). The register holds the I/O base in bits 15:4 and bit 0 is a read-only 1 (PIIX4 p. 135), so `0x0fd0`
      is a legal 16-byte-aligned base and the register would read back `0x00000fd1` (inferred from the definition; no read was found);
-  4. sets bit 0 of the command word (`+4`), the function's SMBus I/O enable (PIIX4 p. 117, which says the bit works independently of the
+  4. sets bit 0 of the command word (`+4`), the function's SMBus I/O enable (PIIX4 p. 118, which says the bit works independently of the
      power-management enable);
   5. writes `0x0f82` = `0x0100` (power-button enable), `0x0f84` = `0x1401`, `0x0f8e` = 0, reads `0xf80` and port `0xfb1`, and on
      bit 7 of `0xfb1` clear and PM status bit 8 set calls the power-down routine; sets or clears one bit in each of the GPO bytes
@@ -811,8 +811,9 @@ PCI drivers register through `0x111a6cc` with a `0x18`-byte record (attach, remo
   7. calls `0x11146b8`, which is the only SMBus transaction the boot path makes: one block write of six bytes
      (`02 ff df fe ff ef`) to slave address `0xd2` (7-bit `0x69`), command 0, through I/O `0xfd0`: status clear at `0xfd0`, block
      index reset by reading `0xfd2`, data at `0xfd7`, byte count 6 at `0xfd5`, address at `0xfd4`, control `0x54` (start, block
-     transaction) at `0xfd2`. The same registers, with the six bytes taken from the caller, are what the monitor's clock-generator
-     commands (`ics`, `spread`) use (`0x11146fb`). That the slave is the board's clock generator is inferred from those command
+     transaction) at `0xfd2`. The same bytes are replayed by a command-table handler in the second module (`1.1005@0x1116b0f`, handler at
+     module offset `+0x250`). The same registers, with the six bytes taken from the caller, are what the monitor's clock-generator
+     commands (`ics`, `spread`) use (`0x11146fb`, called from `0x1116d36` and `0x1116da2`; the first sends `0a ff df ff ff ef`). That the slave is the board's clock generator is inferred from those command
      names and the address; the bytes' meaning is unknown.
 
   Nothing else in the main module touches `0xfd0` to `0xfd7`: no DIMM or SPD access exists ([memory sizing](#memory-controller-and-graphics-memory)).

@@ -409,8 +409,14 @@ HAL warns "Update the prom for aligned graphics memory" if a bank's base is not 
 pages; an aligned bank is also remapped through KSEG0). The graphics miniport reads these.
 - **Where the HAL puts things, and the `0x80000000` addresses in it. Established (`halborg.dll`: the display, bank and mapping
   routines and every `0x80000000` operand read; `halbrgup.dll` carries the same operand set).** The HAL never chooses where
-  graphics memory sits and forms no physical address with bit 31 set (its other `0x80000000` operands are flag-word masks and a cap
-  on a timer length). The placement is the firmware's: the PROM carves the type-`0x16` pieces in 32 MiB steps from
+  graphics memory sits and forms no physical address in the `0x80000000` to `0xbfffffff` range, the range of the miniport's apertures
+  (below). Its private mapper does map physical addresses with bit 31 set, all of them devices: `0xd0000000` (`@0x8002d392`),
+  `0xc2000000`, `0xc6000000` and `0xc4000000` (`@0x8002e345` to `0x8002e367`), `0xfc000000` and `0xfd000000` (`@0x8001c690`,
+  `0x8001c69a`), `0xfee00000` and `0xfffe0000` (`@0x8002e32f`). The `0x80000000` immediates are a debug-flag test (`@0x800186ef`, with an
+  `or` at `0x80018b3a`) and an `or` at `0x8001eac1` that looks like a configuration-address enable bit (inferred); `halbrgup.dll` has the
+  same at `0x8001858f`, `0x800189da` and `0x8001e911`. The timer cap (`and 0x7fffffff`, compare `0x989680`, `0x80013650`) is a mask, not an
+  `0x80000000` operand.
+  The placement is the firmware's: the PROM carves the type-`0x16` pieces in 32 MiB steps from
   `0x2000000`, not at the top of RAM ([boot-path.md](boot-path.md#memory-controller-and-graphics-memory)); Linux's top-of-RAM frame
   buffer is Linux's own. The "N MB Graphics, M MB NT" line is a sum over the descriptors (above). With 128 MiB of RAM the PROM's
   built-in pair is 4 MiB and 8 MiB, so a 36 MiB figure comes from `cogfxmem` or from whatever descriptors the firmware stand-in supplies.
