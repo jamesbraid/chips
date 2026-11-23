@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f",
+ "input_sha256": "826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d",
  "schema": "defs-flat/1",
  "source": "devices/cobalt/registers.toml",
  "profile": "public",
@@ -299,105 +299,6 @@
   },
   {
    "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_ecc",
-   "offset": 0,
-   "access": "rw",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "field",
-   "name": "mem_ecc.ecc_enable",
-   "hi": 0,
-   "lo": 0,
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_period",
-   "offset": 8,
-   "access": "r",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "inferred"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_counter",
-   "offset": 16,
-   "access": "r",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "inferred"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_err_status",
-   "offset": 24,
-   "access": "rw",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_err_addr",
-   "offset": 40,
-   "access": "r",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_err_syndrome",
-   "offset": 48,
-   "access": "r",
-   "width": 32,
-   "count": 1,
-   "stride": 4,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "register",
-   "name": "mem_bank",
-   "offset": 80,
-   "access": "rw",
-   "width": 32,
-   "count": 16,
-   "stride": 8,
-   "space": "mem",
-   "reset": "unknown",
-   "grade": "inferred"
-  },
-  {
-   "unit": "cobalt",
    "kind": "constant",
    "name": "APIC_8259",
    "value": 12,
@@ -451,6 +352,22 @@
    "value": 22,
    "count": 1,
    "grade": "inferred"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_MEM_ERR0",
+   "value": 26,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "cobalt",
+   "kind": "constant",
+   "name": "APIC_MEM_ERR1",
+   "value": 27,
+   "count": 1,
+   "grade": "established"
   },
   {
    "unit": "cobalt",
@@ -569,14 +486,6 @@
    "kind": "constant",
    "name": "CPU_PHYS",
    "value": 3254779904,
-   "count": 1,
-   "grade": "established"
-  },
-  {
-   "unit": "cobalt",
-   "kind": "constant",
-   "name": "MEM_PHYS",
-   "value": 3321888768,
    "count": 1,
    "grade": "established"
   },

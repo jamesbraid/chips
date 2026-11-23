@@ -1,10 +1,10 @@
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f -->
+<!-- input sha256 826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d -->
 
-# Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
+# Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 
-Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.
+Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Names: the register and constant names follow the public Linux header and the shipped HAL's own function names (where the HAL names the feature); the memory controller, which neither names, is the separate unit cobalt_mc with names of our own. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.
 
 Unit `cobalt`, macro prefix `COBALT`.
 
@@ -16,7 +16,6 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 |---|---|---|
 | cpu | byte |  |
 | apic | byte |  |
-| mem | byte |  |
 
 ## Registers
 
@@ -34,13 +33,6 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 | `cpu_cacheop_ctl` | 0x40 | rw | 32 |  | cpu | unknown | inferred |  |
 | `cpu_cacheop_addr` | 0x48 | rw | 32 |  | cpu | unknown | inferred |  |
 | `cpu_cacheop_busy` | 0x50 | r | 32 |  | cpu | unknown | inferred |  |
-| `mem_ecc` | 0x0 | rw | 32 |  | mem | unknown | established |  |
-| `mem_period` | 0x8 | r | 32 |  | mem | unknown | inferred |  |
-| `mem_counter` | 0x10 | r | 32 |  | mem | unknown | inferred |  |
-| `mem_err_status` | 0x18 | rw | 32 |  | mem | unknown | established |  |
-| `mem_err_addr` | 0x28 | r | 32 |  | mem | unknown | established |  |
-| `mem_err_syndrome` | 0x30 | r | 32 |  | mem | unknown | established |  |
-| `mem_bank` | 0x50 | rw | 32 | 16 | mem | unknown | inferred |  |
 
 ### Register `apic_lo`
 
@@ -129,51 +121,19 @@ Start address of the cache operation requested through the cache-operation reque
 
 Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine polls bit 16 of the request register the same way before it starts a new one.
 
-### Register `mem_ecc`
-
-Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store of 1 and clears it with a store of 0; the main module clears bit 0 by read-modify-write before it sizes memory; none depends on a value read before the first write. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read.
-
-| Bits | Field | Grade | Values | Source | Description |
-|---|---|---|---|---|---|
-| 0 | `ecc_enable` | established |  |  | 1 enables ECC checking. |
-
-### Register `mem_period`
-
-Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed value. The meaning is from that use only.
-
-### Register `mem_counter`
-
-Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
-
-### Register `mem_err_status`
-
-Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors).
-
-### Register `mem_err_addr`
-
-Memory error address, printed by the HAL as the address of the error.
-
-### Register `mem_err_syndrome`
-
-Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write.
-
-### Register `mem_bank`
-
-Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the limit of the PROM's decode loop. The self-test writes 3, 2 or 0; the main module reads them: bit 2 absent or bad, bit 0 populated, bit 1 128 MiB.
-
-Array of 16 registers, stride 8.
-
 ## Constants
 
 | Constant | Value | Grade | Source | Description |
 |---|---|---|---|---|
 | `APIC_8259` | 0xc | established |  | Line the PIIX4's cascaded interrupt controllers drive. |
-| `APIC_AS` | 0x18 | established |  | Header name AS. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's. |
+| `APIC_AS` | 0x18 | established |  | Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's. |
 | `APIC_CPU` | 0x1c | established |  | Line of the Cobalt timer, which the header also calls the cache interrupt. |
 | `APIC_IDE0` | 0x4 | inferred |  | Line of the first IDE channel (on board 320 revision 5 the kernel uses line 5). The NT HAL uses line 4 on the newest 320 generation and the 540 except revision 0, 5 on the middle 320 generation and the 540 revision 0, and line 1 on the oldest 320 generation, which Linux has no case for. |
 | `APIC_IDE1` | 0x2 | established |  | Line of the second IDE channel, on the 320 only. |
 | `APIC_LINES` | 0x1e | established |  | Number of interrupt lines the kernel knows (0 to 29). |
 | `APIC_LI_AUDIO` | 0x16 | inferred |  | Line of the Lithium audio engine. |
+| `APIC_MEM_ERR0` | 0x1a | established |  | First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, with vectors 0xf2 and 0xf1 as read in nt-hal.md, only when the board is not a Cobalt Lite revision. Which error uses which line is not recovered. |
+| `APIC_MEM_ERR1` | 0x1b | established |  | Second memory-error interrupt line; see APIC_MEM_ERR0. On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28. |
 | `APIC_NMI` | 0x1d | established |  | Last line; named NMI by the header and unused by Linux. The NT HAL programs it as an NMI-delivery entry (entry 28 on the Lite revisions 0xa0 and 0xa8 moves the NMI to 28 and the clock to 27). |
 | `APIC_PCIA_BASE0` | 0x0 | established |  | First line of the per-slot INTA lines of Lithium bridge A. |
 | `APIC_PCIA_BASE123` | 0x5 | established |  | First of the lines bridge A shares among INTB, INTC and INTD (the header comment says 5 and 6). |
@@ -181,7 +141,7 @@ Array of 16 registers, stride 8.
 | `APIC_PCIB_BASE123` | 0xd | established |  | First of the lines bridge B shares among INTB, INTC and INTD (13 to 15). Linux uses none of them; the NT HAL's bridge B interrupt map does (shared pins on entries 13 to 15). |
 | `APIC_PHYS` | 0xc4000000 | established |  | Physical base of the interrupt controller. |
 | `APIC_PIIX4_USB` | 0x7 | established |  | Line of the PIIX4's USB function. |
-| `APIC_RE` | 0x19 | established |  | Header name RE. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's. |
+| `APIC_RE` | 0x19 | established |  | Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's. |
 | `APIC_VIDIN0` | 0x12 | established |  | Video input 0 interrupt. |
 | `APIC_VIDIN1` | 0x13 | established |  | Video input 1 interrupt. |
 | `APIC_VIDOUT0` | 0x10 | established |  | Video output 0 interrupt. |
@@ -189,5 +149,4 @@ Array of 16 registers, stride 8.
 | `CPU_MAX` | 0x4 | inferred |  | Most processors the kernel accepts from that table. |
 | `CPU_NUM_PHYS` | 0x1e00 | established |  | Physical address of the 16-bit processor count in low memory; the processor table follows at the next two bytes. Not a register: written by the machine firmware. |
 | `CPU_PHYS` | 0xc2000000 | established |  | Physical base of the CPU block. |
-| `MEM_PHYS` | 0xc6000000 | established |  | Physical base of the memory-controller block, mapped by the NT HAL as one page (the HAL maps the three blocks with a page count of 1 and sets the page-table entries cache-disabled and write-through; the PROM maps one page each too). No code reads past the first page, and the highest offset used anywhere is the interrupt controller's identification word, so each extent is at least 4 KiB and not otherwise known. The firmware also reads bank registers from 0xc6000048 upward; the HAL never does. |
 | `TIME_HZ` | 0x5f5e100 | inferred |  | The core rate the Linux kernel divides by the tick rate to load the timer. The NT HAL assumes no rate: it measures the timer against the RTC update flag at start-up (nt-hal.md). |

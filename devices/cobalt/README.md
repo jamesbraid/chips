@@ -5,7 +5,7 @@ exist in a releasable form ([sources](../../references/visws-sources.md)). Every
 platform code for the Visual Workstation 320 and 540 (kernel 2.2 to 3.14). For this machine that code ranks as the
 vendor's software source: what it defines is **established**, as a software definition, never as a measurement. What
 it only implies is **inferred**; the rest is **unknown**. The platform is in [platforms/visws](../../platforms/visws/README.md);
-this page covers the system side of the chip. Registers: [registers.md](registers.md) (seven registers and constants).
+this page covers the system side of the chip. Registers: [registers.md](registers.md) (the CPU block, timer and interrupt controller; the memory controller is its own unit, [cobalt_mc](../cobalt_mc/README.md)).
 
 The chip also holds the 3D rendering engine and the video-out DMA to the Arsenic chip; those are the graphics pages'
 business and nothing below describes them beyond the interrupt lines they use.
@@ -137,7 +137,7 @@ CPU `+0x18` bit 0 resets the machine on early boards; `+0x38` is the timer's cur
 `0xc6000000` holds, for the HAL, `+0x00` (bit 0 ECC enable), `+0x18` (error status), `+0x28` (error address) and `+0x30`
 (syndrome): see [registers.md](registers.md).
 
-## Memory controller (unknown)
+## Memory controller (unit [cobalt_mc](../cobalt_mc/registers.md))
 
 No Linux code programs the memory controller: the memory size is handed over by the loader (see
 [boot and detection](../../platforms/visws/boot-and-detection.md)) and the kernel never sees a bank register, ECC

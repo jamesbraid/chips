@@ -22,6 +22,7 @@
 | [cad-duo-pci-card/](cad-duo-pci-card/README.md) | Cad Duo PCI card (030-1155-002) | The Cad Duo is an SGI option board, part 030-1155-002. |
 | [cobalt/](cobalt/README.md) | Cobalt: the Visual Workstation system ASIC (CPU block, interrupt controller, timer) | Mode: no-spec. |
 | [cobalt-graphics/](cobalt-graphics/README.md) | Cobalt graphics: the Visual Workstation 320 and 540 graphics subsystem | Overview of the 320 and 540 Visual Workstation graphics (the Cobalt rendering engine and the Arsenic display back... |
+| [cobalt_mc/](cobalt_mc/README.md) | Cobalt memory controller | Mode: no-spec. |
 | [crime/](crime/README.md) | CRIME | Mode: spec-backed (see references/documents/specs.md: CRIME 1.5 Specification, revision 0.3; its CPU interface and... |
 | [crosstalk/](crosstalk/README.md) | Crosstalk (XIO): the link, its widgets and its host ends | Overview datasheet of the SGI I/O link called XIO (SGI's trademark) or Crosstalk (the protocol and fabric name; the... |
 | [crosstown-ktown/](crosstown-ktown/README.md) | Crosstown, KTOWN, Ktown2 and Xtown2: the XIO-over-cable conversion boards | What these four names are, which is a protocol, which a board, which a cable, how an XIO link changes when it leaves... |

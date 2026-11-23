@@ -1,0 +1,89 @@
+<!-- generated from devices/cobalt_mc/registers.toml by defs-gen - do not edit, change the source -->
+<!-- defs-gen 2 -->
+<!-- input sha256 3d100dec20588755741fdb06f5abce36f69505f14e7ee89805fe602319bd80dc -->
+
+# Cobalt memory controller of the SGI Visual Workstation 320 and 540: ECC control, error reporting and the bank registers
+
+The block is not described by the Linux Visual Workstation code. Everything here is what the shipped Windows NT 4.0 HAL (halborg.dll 1.3: HalpEccControl, HalpMemErrorHandler, HalpCorrectSoftEccError) and the PROM self-test and main module (releases 1.0002 to 1.1005) do to it, read as listings: see software/visws/nt-hal.md, boot-path.md and prom-console-path.md. Grades: established means a shipped binary programs or reads the item exactly this way; inferred means a meaning taken from how the code uses it (a check's name, a message selected by a bit). The chip's specification is not held. Register and constant names are our own plain descriptions: neither the HAL nor the PROM carries a name for any of these registers. The block is one page; offsets are from MC_BASE. Reset values are unknown throughout: the PROM writes every register before it reads it. All accesses seen are 32-bit. The CPU block's control bit 0 also takes part in enabling ECC (unit cobalt).
+
+Unit `cobalt_mc`, macro prefix `COBALT_MC`.
+
+Every item has a grade: established, inferred or unknown. A grade says how the item was derived from its source; it does not claim the item was measured on silicon.
+
+## Address spaces
+
+| Space | Offset unit | Description |
+|---|---|---|
+| mc | byte |  |
+
+## Registers
+
+| Register | Offset | Access | Width | Count | Space | Reset | Grade | Source |
+|---|---|---|---|---|---|---|---|---|
+| `ecc_control` | 0x0 | rw | 32 |  | mc | unknown | established |  |
+| `delay_period` | 0x8 | r | 32 |  | mc | unknown | inferred |  |
+| `delay_counter` | 0x10 | r | 32 |  | mc | unknown | inferred |  |
+| `error_status` | 0x18 | rw | 32 |  | mc | unknown | established |  |
+| `error_address` | 0x28 | r | 32 |  | mc | unknown | established |  |
+| `error_syndrome` | 0x30 | r | 32 |  | mc | unknown | established |  |
+| `dimm_speed_check` | 0x48 | r | 32 |  | mc | unknown | inferred |  |
+| `bank` | 0x50 | rw | 32 | 16 | mc | unknown | inferred |  |
+
+### Register `ecc_control`
+
+Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store of 1 and clears it with a store of 0; the main module clears bit 0 by read-modify-write before it sizes memory; none depends on a value read before the first write. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 0 | `ecc_enable` | established |  |  | 1 enables ECC checking. |
+
+### Register `delay_period`
+
+Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (delay_counter). Compared as a signed value. The meaning is from that use only.
+
+### Register `delay_counter`
+
+Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
+
+### Register `error_status`
+
+Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors).
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 17 | `syndrome_only` | inferred |  |  | With this bit set and a zero syndrome the HAL treats the error as non-fatal. The bits that select the invalid-address, hard ECC, soft ECC and multiple-error messages are not recovered here (unknown). |
+| 16 | `nonfatal` | inferred |  |  | An error with this bit set is non-fatal to the HAL. |
+
+### Register `error_address`
+
+Memory error address, printed by the HAL as the address of the error.
+
+### Register `error_syndrome`
+
+Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write.
+
+### Register `dimm_speed_check`
+
+Read once by the PROM self-test's DIMM speed check (check 0x0d, prom-console-path.md), on every Cobalt revision. The check passes only when bit 16 reads 1; otherwise it reports a soft failure and the main module waits for a key before booting. What the bit reports is inferred from the check's name only. On revisions 0xa0 and 0xa8 this address is bank register 0 (see bank), whose codes never have bit 16, so the check always fails there. The firmware never writes it.
+
+| Bits | Field | Grade | Values | Source | Description |
+|---|---|---|---|---|---|
+| 16 | `speed_ok` | inferred |  |  | 1 passes the PROM's DIMM speed check. |
+
+### Register `bank`
+
+Bank register of each of sixteen 128 MiB address slots (slot i decodes from i * 128 MiB), on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower at 0x48. The sixteenth is the limit of the PROM's decode loop. The PROM self-test probes each slot with write and read-back patterns and stores a code: 3 (a full 128 MiB module: each 16 MiB test block reads back its own pattern), 2 (the blocks alias, a 32 MiB-class module, or a partial result) or 0 (nothing there; slot 0 is never stored as 0). It reads all sixteen back into CMOS, and the main module counts only slots at 3 as 128 MiB banks. The registers must read back what was written. Whether any bit has a hardware meaning beyond those three codes is unknown: an earlier reading of bit 0 as populated, bit 1 as 128 MiB and bit 2 as absent or bad does not fit the stored code 2, so only the codes are stated. The write side is inferred; the read side is established as a value the main module compares.
+
+Array of 16 registers, stride 8.
+
+## Constants
+
+| Constant | Value | Grade | Source | Description |
+|---|---|---|---|---|
+| `BANK_ABSENT` | 0x0 | inferred |  | Code stored for an empty slot; never for slot 0. |
+| `BANK_FIRST_LITE` | 0x48 | inferred |  | Offset of bank register 0 on revisions 0xa0 and 0xa8; every other revision starts at 0x50. |
+| `BANK_FULL` | 0x3 | inferred |  | Code the PROM self-test stores for a slot holding a full 128 MiB module. |
+| `BANK_PARTIAL` | 0x2 | inferred |  | Code stored when a slot's test blocks alias (32 MiB-class) or the result is partial. |
+| `BANK_SLOTS` | 0x10 | inferred |  | Bank slots the PROM decodes (2 GiB). Owners' posts say the 320 takes two banks and the 540 four. |
+| `BANK_SPAN` | 0x8000000 | inferred |  | Address span of one bank slot: the PROM self-test probes slot i at i * 128 MiB plus 64 MiB. |
+| `BASE` | 0xc6000000 | established |  | Physical base of the memory-controller block, mapped by the NT HAL as one page (the HAL maps the three blocks with a page count of 1 and sets the page-table entries cache-disabled and write-through; the PROM maps one page each too). No code reads past the first page, and the highest offset used anywhere is the interrupt controller's identification word, so each extent is at least 4 KiB and not otherwise known. The firmware also reads bank registers from 0xc6000048 upward; the HAL never does. |

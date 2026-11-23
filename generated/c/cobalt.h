@@ -1,7 +1,7 @@
 /* generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f */
-/* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them */
+/* input sha256 826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d */
+/* Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller */
 #ifndef COBALT_GEN_H
 #define COBALT_GEN_H
 
@@ -135,53 +135,6 @@
 /* cpu_cacheop_busy: r32, space cpu, reset unknown */
 #define COBALT_CPU_CACHEOP_BUSY_OFFSET               0x50u /* inferred */
 
-/*
- * Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store of 1 and clears it with a store of 0; the main module clears bit 0 by read-modify-write before it sizes memory; none depends on a value read before the first write. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read.
- */
-/* mem_ecc: rw32, space mem, reset unknown */
-#define COBALT_MEM_ECC_OFFSET                        0x0u /* established */
-#define COBALT_MEM_ECC_ECC_ENABLE_SHIFT              0 /* established */
-#define COBALT_MEM_ECC_ECC_ENABLE_MASK               0x1u
-#define COBALT_MEM_ECC_ECC_ENABLE_INPLACE            (COBALT_MEM_ECC_ECC_ENABLE_MASK << COBALT_MEM_ECC_ECC_ENABLE_SHIFT)
-
-/*
- * Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed value. The meaning is from that use only.
- */
-/* mem_period: r32, space mem, reset unknown */
-#define COBALT_MEM_PERIOD_OFFSET                     0x8u /* inferred */
-
-/*
- * Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.
- */
-/* mem_counter: r32, space mem, reset unknown */
-#define COBALT_MEM_COUNTER_OFFSET                    0x10u /* inferred */
-
-/*
- * Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors).
- */
-/* mem_err_status: rw32, space mem, reset unknown */
-#define COBALT_MEM_ERR_STATUS_OFFSET                 0x18u /* established */
-
-/*
- * Memory error address, printed by the HAL as the address of the error.
- */
-/* mem_err_addr: r32, space mem, reset unknown */
-#define COBALT_MEM_ERR_ADDR_OFFSET                   0x28u /* established */
-
-/*
- * Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write.
- */
-/* mem_err_syndrome: r32, space mem, reset unknown */
-#define COBALT_MEM_ERR_SYNDROME_OFFSET               0x30u /* established */
-
-/*
- * Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the limit of the PROM's decode loop. The self-test writes 3, 2 or 0; the main module reads them: bit 2 absent or bad, bit 0 populated, bit 1 128 MiB.
- */
-/* mem_bank: rw32, space mem, reset unknown */
-#define COBALT_MEM_BANK_OFFSET                       0x50u /* inferred */
-#define COBALT_MEM_BANK_COUNT                        16
-#define COBALT_MEM_BANK_STRIDE                       8
-
 #define COBALT_APIC_8259                             0xcu /* established */
 #define COBALT_APIC_AS                               0x18u /* established */
 #define COBALT_APIC_CPU                              0x1cu /* established */
@@ -189,6 +142,8 @@
 #define COBALT_APIC_IDE1                             0x2u /* established */
 #define COBALT_APIC_LINES                            0x1eu /* established */
 #define COBALT_APIC_LI_AUDIO                         0x16u /* inferred */
+#define COBALT_APIC_MEM_ERR0                         0x1au /* established */
+#define COBALT_APIC_MEM_ERR1                         0x1bu /* established */
 #define COBALT_APIC_NMI                              0x1du /* established */
 #define COBALT_APIC_PCIA_BASE0                       0x0u /* established */
 #define COBALT_APIC_PCIA_BASE123                     0x5u /* established */
@@ -204,7 +159,6 @@
 #define COBALT_CPU_MAX                               0x4u /* inferred */
 #define COBALT_CPU_NUM_PHYS                          0x1e00u /* established */
 #define COBALT_CPU_PHYS                              0xc2000000u /* established */
-#define COBALT_MEM_PHYS                              0xc6000000u /* established */
 #define COBALT_TIME_HZ                               0x5f5e100u /* inferred */
 
 #endif /* COBALT_GEN_H */

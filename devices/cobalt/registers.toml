@@ -1,13 +1,16 @@
 unit = "cobalt"
 prefix = "COBALT"
-title = "Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them"
-doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not."
+# Names follow Linux include/asm-i386/cobalt.h (2.2, 2.4) and arch/x86/include/asm/visws/cobalt.h (2.6.33), and
+# the function names the shipped halborg.dll 1.3 carries (CoApic redirection entry, Cacheop, CalibrateCobaltTimer).
+# No SGI source symbol is used.
+name_source = "ours"
+title = "Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller"
+doc = "Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Names: the register and constant names follow the public Linux header and the shipped HAL's own function names (where the HAL names the feature); the memory controller, which neither names, is the separate unit cobalt_mc with names of our own. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not."
 from = "SGI NT 4.0 HAL halborg.dll 1.3 (Recovery CD-1 v1.1), read in Ghidra: see software/visws/nt-hal.md; Linux visws code: include/asm-i386/cobalt.h (2.2, 2.4), include/asm-i386/mach-visws/cobalt.h (2.6.20), arch/x86/include/asm/visws/cobalt.h and arch/x86/kernel/visws_quirks.c (2.6.33, 3.14)"
 public_from = ["census:"]
 
 [spaces.cpu]
 [spaces.apic]
-[spaces.mem]
 
 [registers.cpu_rev]
 space = "cpu"
@@ -139,69 +142,7 @@ dest = { bits = [31, 24], grade = "inferred", doc = "Destination (what the HAL w
 id = { bits = [27, 24], grade = "established", doc = "Controller id field. The NT HAL writes 4 here only when the field reads zero (with the enable bit cleared in that store); the PROM main module does the same test, and its self-test and early start-up write 4 unconditionally. What the id is used for is not known." }
 enable = { bits = [8, 8], grade = "established", doc = "1 enables the interrupt controller. Linux sets it once at start-up." }
 
-[registers.mem_ecc]
-space = "mem"
-offset = 0x00
-access = "rw"
-width = 32
-grade = "established"
-doc = "Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store of 1 and clears it with a store of 0; the main module clears bit 0 by read-modify-write before it sizes memory; none depends on a value read before the first write. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read."
-
-[registers.mem_ecc.fields]
-ecc_enable = { bits = [0, 0], grade = "established", doc = "1 enables ECC checking." }
-
-[registers.mem_period]
-space = "mem"
-offset = 0x08
-access = "r"
-width = 32
-grade = "inferred"
-doc = "Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed value. The meaning is from that use only."
-
-[registers.mem_counter]
-space = "mem"
-offset = 0x10
-access = "r"
-width = 32
-grade = "inferred"
-doc = "Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown."
-
-[registers.mem_bank]
-space = "mem"
-offset = 0x50
-count = 16
-stride = 8
-access = "rw"
-width = 32
-grade = "inferred"
-doc = "Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the limit of the PROM's decode loop. The self-test writes 3, 2 or 0; the main module reads them: bit 2 absent or bad, bit 0 populated, bit 1 128 MiB."
-
-[registers.mem_err_status]
-space = "mem"
-offset = 0x18
-access = "rw"
-width = 32
-grade = "established"
-doc = "Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors)."
-
-[registers.mem_err_addr]
-space = "mem"
-offset = 0x28
-access = "r"
-width = 32
-grade = "established"
-doc = "Memory error address, printed by the HAL as the address of the error."
-
-[registers.mem_err_syndrome]
-space = "mem"
-offset = 0x30
-access = "r"
-width = 32
-grade = "established"
-doc = "Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write."
-
 [constants]
-MEM_PHYS = { value = 0xc6000000, grade = "established", doc = "Physical base of the memory-controller block, mapped by the NT HAL as one page (the HAL maps the three blocks with a page count of 1 and sets the page-table entries cache-disabled and write-through; the PROM maps one page each too). No code reads past the first page, and the highest offset used anywhere is the interrupt controller's identification word, so each extent is at least 4 KiB and not otherwise known. The firmware also reads bank registers from 0xc6000048 upward; the HAL never does." }
 CPU_PHYS = { value = 0xc2000000, grade = "established", doc = "Physical base of the CPU block." }
 APIC_PHYS = { value = 0xc4000000, grade = "established", doc = "Physical base of the interrupt controller." }
 TIME_HZ = { value = 100000000, grade = "inferred", doc = "The core rate the Linux kernel divides by the tick rate to load the timer. The NT HAL assumes no rate: it measures the timer against the RTC update flag at start-up (nt-hal.md)." }
@@ -223,5 +164,7 @@ APIC_VIDOUT0 = { value = 16, grade = "established", doc = "Video output 0 interr
 APIC_VIDOUT1 = { value = 17, grade = "established", doc = "Video output 1 interrupt." }
 APIC_VIDIN0 = { value = 18, grade = "established", doc = "Video input 0 interrupt." }
 APIC_VIDIN1 = { value = 19, grade = "established", doc = "Video input 1 interrupt." }
-APIC_AS = { value = 24, grade = "established", doc = "Header name AS. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's." }
-APIC_RE = { value = 25, grade = "established", doc = "Header name RE. Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's." }
+APIC_AS = { value = 24, grade = "established", doc = "Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 24 and connects a handler to it. The line number is established; the name is Linux's." }
+APIC_RE = { value = 25, grade = "established", doc = "Linux does not use the line; the NT graphics miniport (sgcomp.sys) asks the HAL for the vector of line 25 and connects a handler to it. The line number is established; the name is Linux's." }
+APIC_MEM_ERR0 = { value = 26, grade = "established", doc = "First memory-error interrupt line. The NT HAL (halborg.dll 1.3, HalpMemErrInterrupt, HalpInitMemErrSubsystem) connects lines 26 and 27, with vectors 0xf2 and 0xf1 as read in nt-hal.md, only when the board is not a Cobalt Lite revision. Which error uses which line is not recovered." }
+APIC_MEM_ERR1 = { value = 27, grade = "established", doc = "Second memory-error interrupt line; see APIC_MEM_ERR0. On Lite revisions 0xa0 and 0xa8 the HAL puts the clock here and the NMI on line 28." }

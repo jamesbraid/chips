@@ -1,12 +1,11 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f -->
-<genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them">
-  <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.</doc>
+<!-- input sha256 826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d -->
+<genxml unit="cobalt" prefix="COBALT" title="Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller">
+  <doc>Offsets, bit positions and values come from the Linux Visual Workstation code (kernel 2.2 to 3.14) and are cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3). Grades: established means the shipped HAL programs the item the same way (or the item is its own table); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. Where the HAL differs, the item says so. The chip's own specification is not held. Offsets are relative to the base of each block (CPU_PHYS and APIC_PHYS below). Linux reads and writes every register as a 32-bit word. Names: the register and constant names follow the public Linux header and the shipped HAL's own function names (where the HAL names the feature); the memory controller, which neither names, is the separate unit cobalt_mc with names of our own. Reset values are unknown throughout. Only what the kernel, the NT HAL and the PROM touch is here; the graphics engine registers are not.</doc>
   <space name="cpu" unit="byte"/>
   <space name="apic" unit="byte"/>
-  <space name="mem" unit="byte"/>
   <struct name="APIC_LO" size="4" grade="established" register="yes" offset="0x0" access="rw" count="30" stride="16" space="apic" reset="unknown">
     <doc>Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unmask a line and only the mask bit to mask it, reading the register back after masking. The vector it writes is the kernel's irq number plus 0x20, so it is not the line number.</doc>
     <field name="bit17" start="17" size="1" type="uint" grade="unknown"/>
@@ -60,28 +59,6 @@
   <struct name="CPU_CACHEOP_BUSY" size="4" grade="inferred" register="yes" offset="0x50" access="r" space="cpu" reset="unknown">
     <doc>Bit 16 is set while cache operations are outstanding. The HAL polls it, stalling between reads, after the last flush request; the request routine polls bit 16 of the request register the same way before it starts a new one.</doc>
   </struct>
-  <struct name="MEM_ECC" size="4" grade="established" register="yes" offset="0x0" access="rw" space="mem" reset="unknown">
-    <doc>Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store of 1 and clears it with a store of 0; the main module clears bit 0 by read-modify-write before it sizes memory; none depends on a value read before the first write. The NT HAL clears it at start-up and sets bit 0, together with the CPU block's control bit 0, to turn ECC checking on (halborg.dll 1.3, HalpEccControl). Other bits are not touched by any software read.</doc>
-    <field name="ecc_enable" start="0" size="1" type="uint" grade="established"/>
-  </struct>
-  <struct name="MEM_PERIOD" size="4" grade="inferred" register="yes" offset="0x8" access="r" space="mem" reset="unknown">
-    <doc>Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed value. The meaning is from that use only.</doc>
-  </struct>
-  <struct name="MEM_COUNTER" size="4" grade="inferred" register="yes" offset="0x10" access="r" space="mem" reset="unknown">
-    <doc>Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe writes, in every probe step. Whether it counts up or down is not shown.</doc>
-  </struct>
-  <struct name="MEM_ERR_STATUS" size="4" grade="established" register="yes" offset="0x18" access="rw" space="mem" reset="unknown">
-    <doc>Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is zero, and clears the register by writing zero. The meaning of the bits is inferred from the messages the handler selects with them (invalid address, hard ECC, soft ECC, multiple errors).</doc>
-  </struct>
-  <struct name="MEM_ERR_ADDR" size="4" grade="established" register="yes" offset="0x28" access="r" space="mem" reset="unknown">
-    <doc>Memory error address, printed by the HAL as the address of the error.</doc>
-  </struct>
-  <struct name="MEM_ERR_SYNDROME" size="4" grade="established" register="yes" offset="0x30" access="r" space="mem" reset="unknown">
-    <doc>Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from the syndrome byte that is nonzero but performs no write-back; a model must not depend on a HAL write.</doc>
-  </struct>
-  <struct name="MEM_BANK" size="4" grade="inferred" register="yes" offset="0x50" access="rw" count="16" stride="8" space="mem" reset="unknown">
-    <doc>Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the limit of the PROM's decode loop. The self-test writes 3, 2 or 0; the main module reads them: bit 2 absent or bad, bit 0 populated, bit 1 128 MiB.</doc>
-  </struct>
   <constant name="APIC_8259" value="0xc" grade="established"/>
   <constant name="APIC_AS" value="0x18" grade="established"/>
   <constant name="APIC_CPU" value="0x1c" grade="established"/>
@@ -89,6 +66,8 @@
   <constant name="APIC_IDE1" value="0x2" grade="established"/>
   <constant name="APIC_LINES" value="0x1e" grade="established"/>
   <constant name="APIC_LI_AUDIO" value="0x16" grade="inferred"/>
+  <constant name="APIC_MEM_ERR0" value="0x1a" grade="established"/>
+  <constant name="APIC_MEM_ERR1" value="0x1b" grade="established"/>
   <constant name="APIC_NMI" value="0x1d" grade="established"/>
   <constant name="APIC_PCIA_BASE0" value="0x0" grade="established"/>
   <constant name="APIC_PCIA_BASE123" value="0x5" grade="established"/>
@@ -104,6 +83,5 @@
   <constant name="CPU_MAX" value="0x4" grade="inferred"/>
   <constant name="CPU_NUM_PHYS" value="0x1e00" grade="established"/>
   <constant name="CPU_PHYS" value="0xc2000000" grade="established"/>
-  <constant name="MEM_PHYS" value="0xc6000000" grade="established"/>
   <constant name="TIME_HZ" value="0x5f5e100" grade="inferred"/>
 </genxml>

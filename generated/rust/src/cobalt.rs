@@ -1,7 +1,7 @@
 // generated from devices/cobalt/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 030719b34808e9232adfa76cc09640736d4c29f383e1f941ca179aab2b40eb8f
-// Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block and the interrupt controller, as SGI's Linux platform code names them
+// input sha256 826434452ed937ca170c881051b95aad522fe52d7ce6d8dc38e54c6c482ecd9d
+// Cobalt (system ASIC of the SGI Visual Workstation 320 and 540): the CPU block with its timer, and the interrupt controller
 #![allow(dead_code)]
 
 /// Interrupt redirection entry, low word, one per interrupt line (thirty lines, 0 to 29). The kernel writes the level bit and an interrupt vector to unma (established)
@@ -238,53 +238,6 @@ pub mod cpu_cacheop_busy {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x50;
 }
-/// Memory controller control. At timer set-up the HAL also stores 0 here and 0 in the error status. The PROM self-test sets bit 0 with a full-word store  (established)
-pub mod mem_ecc {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x0;
-    pub mod ecc_enable { // bits 0:0, established
-        pub const SHIFT: u32 = 0;
-        pub const MASK: u32 = 0x1;
-        pub const fn get(v: u32) -> u32 {
-            (v >> SHIFT) & MASK
-        }
-        pub const fn set(v: u32, x: u32) -> u32 {
-            (v & !(MASK << SHIFT)) | ((x & MASK) << SHIFT)
-        }
-    }
-}
-/// Read by the PROM self-test between its probe writes; half of it is the delay threshold for the counter register (mem_counter). Compared as a signed va (inferred)
-pub mod mem_period {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x8;
-}
-/// Counter the PROM self-test polls (signed compares) until it is at or below, then at or above, half the value of mem_period, as a delay between probe w (inferred)
-pub mod mem_counter {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x10;
-}
-/// Memory error status. The NT HAL's error handler reads it, treats the error as non-fatal when bit 16 is set or when bit 17 is set and the syndrome is z (established)
-pub mod mem_err_status {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x18;
-}
-/// Memory error address, printed by the HAL as the address of the error. (established)
-pub mod mem_err_addr {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x28;
-}
-/// Memory error ECC syndrome. A nonzero syndrome with a correctable error sends the HAL to HalpCorrectSoftEccError, which computes a quadword offset from (established)
-pub mod mem_err_syndrome {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x30;
-}
-/// Bank registers on every revision except 0xa0 and 0xa8, whose registers start eight bytes lower. The last register is the sixteenth, which is also the  (inferred)
-pub mod mem_bank {
-    pub const WIDTH: u32 = 32;
-    pub const OFFSET: u64 = 0x50;
-    pub const COUNT: u32 = 16;
-    pub const STRIDE: u64 = 8;
-}
 pub const APIC_8259: u32 = 0xc; // established
 pub const APIC_AS: u32 = 0x18; // established
 pub const APIC_CPU: u32 = 0x1c; // established
@@ -292,6 +245,8 @@ pub const APIC_IDE0: u32 = 0x4; // inferred
 pub const APIC_IDE1: u32 = 0x2; // established
 pub const APIC_LINES: u32 = 0x1e; // established
 pub const APIC_LI_AUDIO: u32 = 0x16; // inferred
+pub const APIC_MEM_ERR0: u32 = 0x1a; // established
+pub const APIC_MEM_ERR1: u32 = 0x1b; // established
 pub const APIC_NMI: u32 = 0x1d; // established
 pub const APIC_PCIA_BASE0: u32 = 0x0; // established
 pub const APIC_PCIA_BASE123: u32 = 0x5; // established
@@ -307,5 +262,4 @@ pub const APIC_VIDOUT1: u32 = 0x11; // established
 pub const CPU_MAX: u32 = 0x4; // inferred
 pub const CPU_NUM_PHYS: u32 = 0x1e00; // established
 pub const CPU_PHYS: u32 = 0xc2000000; // established
-pub const MEM_PHYS: u32 = 0xc6000000; // established
 pub const TIME_HZ: u32 = 0x5f5e100; // inferred
