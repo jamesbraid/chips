@@ -1,11 +1,14 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 2 -->
-<!-- input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d -->
+<!-- input sha256 2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761 -->
 <genxml unit="lithium" prefix="LITHIUM" title="Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them">
   <doc>Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here.</doc>
   <space name="bridge" unit="byte"/>
   <space name="audio" unit="byte"/>
+  <space name="audio_page1" unit="byte"/>
+  <space name="audio_page2" unit="byte"/>
+  <space name="stamp" unit="byte"/>
   <struct name="HOST_CTL" size="4" grade="established" register="yes" offset="0x0" access="rw" space="audio" reset="unknown">
     <doc>Audio link controller. The driver resets the codec link by writing reset, waiting a microsecond, then writing link_enable alone, and never reads the register after that in the code read. PROM 1.1005 also stores link enable plus bit 8 here, as a 32-bit write on Lithium generation 5 (software/visws/boot-path.md). The three low bits are named by the driver but never tested.</doc>
     <field name="reset" start="15" size="1" type="uint" grade="established"/>
@@ -83,6 +86,12 @@
   <struct name="AUDIO2_MSC" size="4" grade="established" register="yes" offset="0x30c" access="rw" space="audio" reset="unknown">
     <doc>Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable.</doc>
   </struct>
+  <struct name="SILENCE_WORD" size="4" grade="inferred" register="yes" offset="0x500" access="rw" space="audio_page1" reset="unknown">
+    <doc>A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 for 8-bit samples, 0 for 16-bit (sgisound.sys 5.2.2, sndStartDMA, read in full; Linux's Visual Workstation sound driver writes the same). Linux's comment calls it an undocumented register holding the zero sample, which the hardware repeats after an underflow with a bug that leaves the old value in place. That comment is the only statement of its role, so the role is inferred; reads are never made, so the readable value is unknown.</doc>
+  </struct>
+  <struct name="DMA_POINTER_COPY" size="4" grade="inferred" register="yes" offset="0x98" access="rw" count="2" stride="4" space="audio_page2" reset="unknown">
+    <doc>Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA read and write pointers that the chip fails to zero when DMA stops, so it zeroes them itself after stopping output. The NT driver zeroes both when it starts output (sgisound.sys 5.2.2, sndStartDMA). Which word is which pointer is unknown. The behaviour is Linux's statement only and the accesses are established, so the role is inferred.</doc>
+  </struct>
   <struct name="BRIDGE_CMD" size="2" grade="inferred" register="yes" offset="0x4" access="rw" space="bridge" reset="unknown">
     <doc>Command word of the standard header. The NT HAL stores all ones here once when it sets up a bridge whose revision byte is above zero; nothing reads it back. Whether every bit is writable is unknown. No reset value is known.</doc>
   </struct>
@@ -101,7 +110,7 @@
     <field name="primary" start="0" size="8" type="uint" grade="inferred"/>
   </struct>
   <struct name="INT_ENABLE" size="2" grade="established" register="yes" offset="0x46" access="rw" space="bridge" reset="unknown">
-    <doc>Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked.</doc>
+    <doc>Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. The NT HAL uses the register differently from the header comment: for a Cobalt interrupt line n below 16 (lines 0 to 7 on bridge A, 8 to 15 on bridge B) it ORs bit n&amp;7 into this register, under a spin lock, once, and never clears a bit (halborg.dll 1.3 HalpEnableLiInt, read in full). So the bit gates the Cobalt line by number, whichever bus the source is on, which does not fit the per-device reading of the bit names below; the bit names stay as the header comment gives them (inferred) and the HAL's use is the established software behaviour. Reset state unknown, and so whether the firmware leaves it masked.</doc>
     <field name="intd" start="7" size="1" type="uint" grade="inferred"/>
     <field name="intc" start="6" size="1" type="uint" grade="inferred"/>
     <field name="intb" start="5" size="1" type="uint" grade="inferred"/>
@@ -112,7 +121,7 @@
     <field name="inta_0" start="0" size="1" type="uint" grade="inferred"/>
   </struct>
   <struct name="ERR_STATUS" size="4" grade="inferred" register="yes" offset="0x48" access="rw" space="bridge" reset="unknown">
-    <doc>Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown.</doc>
+    <doc>Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown. The USB driver's message table also has a "PCI Error Status Address" string, which implies an address register beside this one; the driver's code touches only the error status word (it maps 0x70 bytes of the window and stores once), so the address register's offset is unread and unknown.</doc>
   </struct>
   <struct name="BRIDGE_58" size="4" grade="inferred" register="yes" offset="0x58" access="rw" space="bridge" reset="unknown">
     <doc>Bridge control, meaning unknown. All accesses are 32-bit and all by the PROM: the boot block ORs the low five bits into it in both bridges before the main module runs, the main module then stores a value with bit 11 and bits 4:0 set, and the self-test checks that bits 1:0 can be set and cleared, on bridge B only. The NT HAL never touches it.</doc>
@@ -126,13 +135,22 @@
   <struct name="CFG_DATA" size="4" grade="established" register="yes" offset="0xfc" access="rw" space="bridge" reset="unknown">
     <doc>Configuration data. Accessed as a byte, halfword or word; the lane is picked by the low address bits (the boot block stores a byte at this offset plus the register's low two bits).</doc>
   </struct>
+  <struct name="BUILD_STAMP" size="4" grade="inferred" register="yes" offset="0x4" access="r" space="stamp" reset="unknown">
+    <doc>Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares it with four values that decode as Unix times of 30 July, 10 September, 2 November and 7 December 1998 (0x35c0194c, 0x35f7357f, 0x363e4470, 0x366c3dfb) to pick the Cobalt I/O generation 2 to 5; a larger value gives 6, any other value gives -2, and bridge B's revision byte of zero gives 1 before the word is read. It also copies a table into the table window (constant TABLE_WINDOW_PHYS) unless the word is above 0x36ffd62f. The firmware prints it as the Serial I/O revision. A build stamp is a reading from the values, so the meaning is inferred; the reads are established (PROM 1.1005 and 1.0006, whole functions; see software/visws/boot-path.md). The block's other words are unknown, and so are its reset and write behaviour.</doc>
+  </struct>
   <constant name="AUDIO_DMA_CHANNELS" value="0x7" grade="inferred"/>
   <constant name="AUDIO_PAGE1" value="0xff00f000" grade="established"/>
   <constant name="AUDIO_PAGE2" value="0xff010000" grade="established"/>
   <constant name="AUDIO_PHYS" value="0xff001000" grade="established"/>
+  <constant name="BRIDGE_A_PCI_MEM_PHYS" value="0xf0000000" grade="established"/>
+  <constant name="BRIDGE_B_PCI_MEM_PHYS" value="0xf4000000" grade="established"/>
   <constant name="DEVICE_ID" value="0x1002" grade="inferred"/>
   <constant name="DMA_CHUNK" value="0x20" grade="inferred"/>
   <constant name="PCI_A_PHYS" value="0xfc000000" grade="established"/>
   <constant name="PCI_B_PHYS" value="0xfd000000" grade="established"/>
+  <constant name="PCI_MEM_BUS_BASE" value="0x80000000" grade="established"/>
+  <constant name="PCI_MEM_SIZE" value="0x4000000" grade="established"/>
+  <constant name="STAMP_PHYS" value="0xff01c000" grade="established"/>
+  <constant name="TABLE_WINDOW_PHYS" value="0xff018000" grade="established"/>
   <constant name="VENDOR_ID" value="0x10a9" grade="inferred"/>
 </genxml>

@@ -1,6 +1,6 @@
 {
  "generator": "defs-gen 2",
- "input_sha256": "e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d",
+ "input_sha256": "2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761",
  "schema": "defs-flat/1",
  "source": "devices/lithium/registers.toml",
  "profile": "public",
@@ -437,6 +437,32 @@
   {
    "unit": "lithium",
    "kind": "register",
+   "name": "silence_word",
+   "offset": 1280,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "audio_page1",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
+   "name": "dma_pointer_copy",
+   "offset": 152,
+   "access": "rw",
+   "width": 32,
+   "count": 2,
+   "stride": 4,
+   "space": "audio_page2",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
+   "kind": "register",
    "name": "bridge_cmd",
    "offset": 4,
    "access": "rw",
@@ -659,6 +685,19 @@
   },
   {
    "unit": "lithium",
+   "kind": "register",
+   "name": "build_stamp",
+   "offset": 4,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "stamp",
+   "reset": "unknown",
+   "grade": "inferred"
+  },
+  {
+   "unit": "lithium",
    "kind": "constant",
    "name": "AUDIO_DMA_CHANNELS",
    "value": 7,
@@ -692,6 +731,22 @@
   {
    "unit": "lithium",
    "kind": "constant",
+   "name": "BRIDGE_A_PCI_MEM_PHYS",
+   "value": 4026531840,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "BRIDGE_B_PCI_MEM_PHYS",
+   "value": 4093640704,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
    "name": "DEVICE_ID",
    "value": 4098,
    "count": 1,
@@ -718,6 +773,38 @@
    "kind": "constant",
    "name": "PCI_B_PHYS",
    "value": 4244635648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_MEM_BUS_BASE",
+   "value": 2147483648,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "PCI_MEM_SIZE",
+   "value": 67108864,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "STAMP_PHYS",
+   "value": 4278304768,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "lithium",
+   "kind": "constant",
+   "name": "TABLE_WINDOW_PHYS",
+   "value": 4278288384,
    "count": 1,
    "grade": "established"
   },

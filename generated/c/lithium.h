@@ -1,6 +1,6 @@
 /* generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source */
 /* defs-gen 2 */
-/* input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d */
+/* input sha256 2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761 */
 /* Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them */
 #ifndef LITHIUM_GEN_H
 #define LITHIUM_GEN_H
@@ -189,6 +189,20 @@
 #define LITHIUM_AUDIO2_MSC_OFFSET                    0x30cu /* established */
 
 /*
+ * A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 for 8-bit samples, 0 for 16-bit (sgisound.sys 5.2.2, sndStartDMA, read in full; Linux's Visual Workstation sound driver writes the same). Linux's comment calls it an undocumented register holding the zero sample, which the hardware repeats after an underflow with a bug that leaves the old value in place. That comment is the only statement of its role, so the role is inferred; reads are never made, so the readable value is unknown.
+ */
+/* silence_word: rw32, space audio_page1, reset unknown */
+#define LITHIUM_SILENCE_WORD_OFFSET                  0x500u /* inferred */
+
+/*
+ * Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA read and write pointers that the chip fails to zero when DMA stops, so it zeroes them itself after stopping output. The NT driver zeroes both when it starts output (sgisound.sys 5.2.2, sndStartDMA). Which word is which pointer is unknown. The behaviour is Linux's statement only and the accesses are established, so the role is inferred.
+ */
+/* dma_pointer_copy: rw32, space audio_page2, reset unknown */
+#define LITHIUM_DMA_POINTER_COPY_OFFSET              0x98u /* inferred */
+#define LITHIUM_DMA_POINTER_COPY_COUNT               2
+#define LITHIUM_DMA_POINTER_COPY_STRIDE              4
+
+/*
  * Command word of the standard header. The NT HAL stores all ones here once when it sets up a bridge whose revision byte is above zero; nothing reads it back. Whether every bit is writable is unknown. No reset value is known.
  */
 /* bridge_cmd: rw16, space bridge, reset unknown */
@@ -225,7 +239,7 @@
 #define LITHIUM_BUS_NUMBER_PRIMARY_INPLACE           (LITHIUM_BUS_NUMBER_PRIMARY_MASK << LITHIUM_BUS_NUMBER_PRIMARY_SHIFT)
 
 /*
- * Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked.
+ * Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. The NT HAL uses the register differently from the header comment: for a Cobalt interrupt line n below 16 (lines 0 to 7 on bridge A, 8 to 15 on bridge B) it ORs bit n&7 into this register, under a spin lock, once, and never clears a bit (halborg.dll 1.3 HalpEnableLiInt, read in full). So the bit gates the Cobalt line by number, whichever bus the source is on, which does not fit the per-device reading of the bit names below; the bit names stay as the header comment gives them (inferred) and the HAL's use is the established software behaviour. Reset state unknown, and so whether the firmware leaves it masked.
  */
 /* int_enable: rw16, space bridge, reset unknown */
 #define LITHIUM_INT_ENABLE_OFFSET                    0x46u /* established */
@@ -255,7 +269,7 @@
 #define LITHIUM_INT_ENABLE_INTA_0_INPLACE            (LITHIUM_INT_ENABLE_INTA_0_MASK << LITHIUM_INT_ENABLE_INTA_0_SHIFT)
 
 /*
- * Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown.
+ * Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown. The USB driver's message table also has a "PCI Error Status Address" string, which implies an address register beside this one; the driver's code touches only the error status word (it maps 0x70 bytes of the window and stores once), so the address register's offset is unread and unknown.
  */
 /* err_status: rw32, space bridge, reset unknown */
 #define LITHIUM_ERR_STATUS_OFFSET                    0x48u /* inferred */
@@ -286,14 +300,26 @@
 /* cfg_data: rw32, space bridge, reset unknown */
 #define LITHIUM_CFG_DATA_OFFSET                      0xfcu /* established */
 
+/*
+ * Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares it with four values that decode as Unix times of 30 July, 10 September, 2 November and 7 December 1998 (0x35c0194c, 0x35f7357f, 0x363e4470, 0x366c3dfb) to pick the Cobalt I/O generation 2 to 5; a larger value gives 6, any other value gives -2, and bridge B's revision byte of zero gives 1 before the word is read. It also copies a table into the table window (constant TABLE_WINDOW_PHYS) unless the word is above 0x36ffd62f. The firmware prints it as the Serial I/O revision. A build stamp is a reading from the values, so the meaning is inferred; the reads are established (PROM 1.1005 and 1.0006, whole functions; see software/visws/boot-path.md). The block's other words are unknown, and so are its reset and write behaviour.
+ */
+/* build_stamp: r32, space stamp, reset unknown */
+#define LITHIUM_BUILD_STAMP_OFFSET                   0x4u /* inferred */
+
 #define LITHIUM_AUDIO_DMA_CHANNELS                   0x7u /* inferred */
 #define LITHIUM_AUDIO_PAGE1                          0xff00f000u /* established */
 #define LITHIUM_AUDIO_PAGE2                          0xff010000u /* established */
 #define LITHIUM_AUDIO_PHYS                           0xff001000u /* established */
+#define LITHIUM_BRIDGE_A_PCI_MEM_PHYS                0xf0000000u /* established */
+#define LITHIUM_BRIDGE_B_PCI_MEM_PHYS                0xf4000000u /* established */
 #define LITHIUM_DEVICE_ID                            0x1002u /* inferred */
 #define LITHIUM_DMA_CHUNK                            0x20u /* inferred */
 #define LITHIUM_PCI_A_PHYS                           0xfc000000u /* established */
 #define LITHIUM_PCI_B_PHYS                           0xfd000000u /* established */
+#define LITHIUM_PCI_MEM_BUS_BASE                     0x80000000u /* established */
+#define LITHIUM_PCI_MEM_SIZE                         0x4000000u /* established */
+#define LITHIUM_STAMP_PHYS                           0xff01c000u /* established */
+#define LITHIUM_TABLE_WINDOW_PHYS                    0xff018000u /* established */
 #define LITHIUM_VENDOR_ID                            0x10a9u /* inferred */
 
 #endif /* LITHIUM_GEN_H */

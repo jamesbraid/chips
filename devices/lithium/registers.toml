@@ -4,6 +4,11 @@ title = "Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI b
 doc = "Offsets and bits are software definitions from the Linux Visual Workstation code, cross-checked against SGI's shipped Windows NT 4.0 HAL (halborg.dll 1.3), audio driver (sgisound.sys 5.2.2) and unadjusted-system-time driver (sgiust.sys 5.2.2). Grades: established means the Linux code and a shipped Windows binary agree (or the item is a window address both map); inferred means only Linux defines it, a software expectation of Linux and not of the shipped system. The shipped audio driver was read for the register file only where this page says so. Original basis: the bridge interrupt and bus-number registers from the platform setup and PCI code, the audio engine from SGI's own sound driver (copyright 1999 SGI). The chip's specification is not held. Two bridges (A and B) each show a PCI configuration-style header at a fixed physical window; the audio engine sits at a third. Reset values are unknown throughout. Only registers a kernel touches are here."
 from = "SGI NT 4.0 HAL halborg.dll 1.3, sgisound.sys 5.2.2 and sgiust.sys 5.2.2 (see devices/lithium/README.md); Linux visws code: include/asm-i386/lithium.h (2.2), include/asm-i386/mach-visws/lithium.h (2.6.20), arch/x86/include/asm/visws/lithium.h and arch/x86/kernel/visws_quirks.c (2.6.33), sound driver of 2.6.33"
 public_from = ["census:"]
+# Register names are our own lower-case spellings. Where a name equals a Linux 2.5.40/2.6.33 name without its LI_ prefix
+# the register says so. No shipped binary names a Lithium register; the strings halborg.dll 1.3 prints ("LiBase",
+# "Cobalt IO hostbidge") and the one sgiusb00.sys prints ("PCI Error Status") are the only vendor spellings, and only
+# err_status echoes one.
+name_source = "ours"
 
 [spaces.bridge]
 [spaces.audio]
@@ -58,7 +63,7 @@ offset = 0x48
 access = "rw"
 width = 32
 grade = "inferred"
-doc = "Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown."
+doc = "Error status. The PROM stores all ones here in both bridges at the start of its bridge set-up and nothing in the NT HAL or the PROM reads it, so the PROM never examines what the bridge records. The shipped NT USB driver also writes all ones and prints the word as PCI Error Status. Write-one-to-clear is the reading of those stores and the name. The bit meanings, what raises them and whether the bridge reports parity errors are unknown. The USB driver's message table also has a \"PCI Error Status Address\" string, which implies an address register beside this one; the driver's code touches only the error status word (it maps 0x70 bytes of the window and stores once), so the address register's offset is unread and unknown."
 
 [registers.bridge_58]
 space = "bridge"
@@ -100,7 +105,7 @@ offset = 0x46
 access = "rw"
 width = 16
 grade = "established"
-doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. Reset state unknown, and so whether the firmware leaves it masked."
+doc = "Interrupt enables, one bit per PCI interrupt source of the bridge. Linux writes it once at start-up, to every device bit on both bridges (the 2.2 kernel writes 0xffff, later kernels 0x00ff), and never reads it. The header calls the five low bits the INTA lines of the five slots and the next three the shared INTB, INTC and INTD. The PROM self-test requires bits 13:8 to be settable and clearable, on bridge B only (it reads, tests and restores the 32-bit word that holds this register in its upper half, mask bits 29:24), so six more bits exist above the eight the kernels use; their sources are unknown. The NT HAL uses the register differently from the header comment: for a Cobalt interrupt line n below 16 (lines 0 to 7 on bridge A, 8 to 15 on bridge B) it ORs bit n&7 into this register, under a spin lock, once, and never clears a bit (halborg.dll 1.3 HalpEnableLiInt, read in full). So the bit gates the Cobalt line by number, whichever bus the source is on, which does not fit the per-device reading of the bit names below; the bit names stay as the header comment gives them (inferred) and the HAL's use is the established software behaviour. Reset state unknown, and so whether the firmware leaves it masked."
 
 [registers.int_enable.fields]
 inta_0 = { bits = [0, 0], grade = "inferred", doc = "INTA of device 0 on this bridge." }
@@ -129,6 +134,8 @@ link_enable = { bits = [14, 14], grade = "established", doc = "1 takes the codec
 reset = { bits = [15, 15], grade = "established", doc = "1 asserts the codec reset (the driver's comment calls it the active-low reset signal)." }
 
 [registers.intr_status]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_INTR_STATUS"
 space = "audio"
 offset = 0x010
 access = "rw"
@@ -144,6 +151,8 @@ comm2_trig = { bits = [3, 3], grade = "inferred", doc = "Output channel trigger 
 link_err = { bits = [15, 15], grade = "inferred", doc = "Codec link error." }
 
 [registers.intr_mask]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_INTR_MASK"
 space = "audio"
 offset = 0x014
 access = "rw"
@@ -152,6 +161,8 @@ grade = "inferred"
 doc = "Audio interrupt enable mask, same bit layout as the status. The driver sets bits by read-modify-write and clears them the same way."
 
 [registers.codec_command]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_CODEC_COMMAND"
 space = "audio"
 offset = 0x018
 access = "rw"
@@ -165,6 +176,8 @@ dir = { bits = [7, 7], grade = "established", doc = "1 read, 0 write." }
 busy = { bits = [15, 15], grade = "established", doc = "1 while a transfer is in progress." }
 
 [registers.codec_data]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_CODEC_DATA"
 space = "audio"
 offset = 0x01c
 access = "rw"
@@ -173,6 +186,8 @@ grade = "established"
 doc = "Codec register data, 16 bits used by the driver."
 
 [registers.comm1_base]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM1_BASE"
 space = "audio"
 offset = 0x100
 access = "rw"
@@ -181,6 +196,8 @@ grade = "established"
 doc = "Input DMA ring buffer base: the 40-bit physical address shifted right 8, with bit 29 set. The driver says bit 37 of the address (bit 29 here) must be set, and that it enables cache coherence. The ring is up to 8 KiB, 256 byte-aligned. The driver also writes this register once with the output buffer's address even when only output is used, because the input channel carries stray data otherwise (the driver quotes the NT driver on this)."
 
 [registers.comm1_ctl]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM1_CTL"
 space = "audio"
 offset = 0x104
 access = "rw"
@@ -198,6 +215,8 @@ size = { bits = [30, 28], grade = "established", doc = "Ring size code: log2(rin
 reset = { bits = [31, 31], grade = "inferred", doc = "1 resets the channel; the driver writes it alone before setting up." }
 
 [registers.comm1_cfg]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM1_CFG"
 space = "audio"
 offset = 0x108
 access = "rw"
@@ -213,6 +232,8 @@ slot = { bits = [6, 4], grade = "inferred", doc = "Serial slot of the codec the 
 lock = { bits = [15, 15], grade = "inferred", doc = "Name only; the driver clears it." }
 
 [registers.comm2_base]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM2_BASE"
 space = "audio"
 offset = 0x10c
 access = "rw"
@@ -221,6 +242,8 @@ grade = "established"
 doc = "Output DMA ring buffer base, same encoding as comm1_base."
 
 [registers.comm2_ctl]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM2_CTL"
 space = "audio"
 offset = 0x110
 access = "rw"
@@ -229,6 +252,8 @@ grade = "inferred"
 doc = "Output DMA control and pointers, same layout as comm1_ctl. For output the hardware advances the read pointer and software the write pointer."
 
 [registers.comm2_cfg]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_COMM2_CFG"
 space = "audio"
 offset = 0x114
 access = "rw"
@@ -237,6 +262,8 @@ grade = "inferred"
 doc = "Output DMA configuration, same layout as comm1_cfg."
 
 [registers.ust_low]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_UST_LOW"
 space = "audio"
 offset = 0x200
 access = "rw"
@@ -245,6 +272,8 @@ grade = "established"
 doc = "Low word of a 64-bit counter Linux calls unadjusted system time, microseconds since boot (the unit is Linux's comment; the time driver scales the value by 1000). The NT audio driver never reads it. The time driver and the video driver map these eight bytes on their own, and the time driver writes zero to both words at load, so they are writable. Both drivers also retry a read when the low halfword is 0xffff (their rules differ; see the NT drivers page)."
 
 [registers.ust_high]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_UST_HIGH"
 space = "audio"
 offset = 0x204
 access = "rw"
@@ -253,6 +282,8 @@ grade = "established"
 doc = "High word of the same counter. The NT audio, time and video drivers all read it before and after the other words and retry if it changed; the time driver zeroes it at load."
 
 [registers.audio1_ust]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_AUDIO1_UST"
 space = "audio"
 offset = 0x300
 access = "r"
@@ -261,6 +292,8 @@ grade = "established"
 doc = "Time stamp of the input channel's last sample counter update. The NT driver pairs it with ust_high (read first, re-read afterwards, retried until equal) to form a 64-bit time stamp for the media stream counter."
 
 [registers.audio1_msc]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_AUDIO1_MSC"
 space = "audio"
 offset = 0x304
 access = "rw"
@@ -269,6 +302,8 @@ grade = "established"
 doc = "Input media stream counter: samples processed as of audio1_ust. The NT driver writes zero to it when it starts input with no pending counter pair, so it is writable."
 
 [registers.audio2_ust]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_AUDIO2_UST"
 space = "audio"
 offset = 0x308
 access = "r"
@@ -277,12 +312,44 @@ grade = "established"
 doc = "Time stamp for the output channel, read the same way as audio1_ust."
 
 [registers.audio2_msc]
+name_source = "public"
+name_cite = "Linux 2.5.40 sound/oss/vwsnd.c register names LI_AUDIO2_MSC"
 space = "audio"
 offset = 0x30c
 access = "rw"
 width = 32
 grade = "established"
 doc = "Output media stream counter. The NT driver writes zero to it when it starts output with no pending counter pair, so it is writable."
+
+[spaces.audio_page1]
+[spaces.audio_page2]
+[spaces.stamp]
+
+[registers.silence_word]
+space = "audio_page1"
+offset = 0x500
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 for 8-bit samples, 0 for 16-bit (sgisound.sys 5.2.2, sndStartDMA, read in full; Linux's Visual Workstation sound driver writes the same). Linux's comment calls it an undocumented register holding the zero sample, which the hardware repeats after an underflow with a bug that leaves the old value in place. That comment is the only statement of its role, so the role is inferred; reads are never made, so the readable value is unknown."
+
+[registers.dma_pointer_copy]
+space = "audio_page2"
+offset = 0x98
+count = 2
+stride = 4
+access = "rw"
+width = 32
+grade = "inferred"
+doc = "Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA read and write pointers that the chip fails to zero when DMA stops, so it zeroes them itself after stopping output. The NT driver zeroes both when it starts output (sgisound.sys 5.2.2, sndStartDMA). Which word is which pointer is unknown. The behaviour is Linux's statement only and the accesses are established, so the role is inferred."
+
+[registers.build_stamp]
+space = "stamp"
+offset = 0x4
+access = "r"
+width = 32
+grade = "inferred"
+doc = "Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares it with four values that decode as Unix times of 30 July, 10 September, 2 November and 7 December 1998 (0x35c0194c, 0x35f7357f, 0x363e4470, 0x366c3dfb) to pick the Cobalt I/O generation 2 to 5; a larger value gives 6, any other value gives -2, and bridge B's revision byte of zero gives 1 before the word is read. It also copies a table into the table window (constant TABLE_WINDOW_PHYS) unless the word is above 0x36ffd62f. The firmware prints it as the Serial I/O revision. A build stamp is a reading from the values, so the meaning is inferred; the reads are established (PROM 1.1005 and 1.0006, whole functions; see software/visws/boot-path.md). The block's other words are unknown, and so are its reset and write behaviour."
 
 [constants]
 AUDIO_DMA_CHANNELS = { value = 7, grade = "inferred", doc = "Number of DMA channel register sets. The NT audio driver carries a seven-entry table, indexed by channel, of the register offsets of each set: each set repeats comm1_base, comm1_ctl and comm1_cfg at a 12-byte stride and each time-stamp and counter pair repeats audio1_ust and audio1_msc at an 8-byte stride (the table is listed in the Lithium page). The driver uses entries 0 (input) and 1 (output), matching Linux. That channels 2 to 6 exist in hardware is inferred from the table alone." }
@@ -294,3 +361,9 @@ AUDIO_PAGE2 = { value = 0xff010000, grade = "established", doc = "Third audio pa
 VENDOR_ID = { value = 0x10a9, grade = "inferred", doc = "PCI vendor id read from both bridges (SGI)." }
 DEVICE_ID = { value = 0x1002, grade = "inferred", doc = "PCI device id read from both bridges." }
 DMA_CHUNK = { value = 32, grade = "inferred", doc = "Bytes the audio DMA moves per pointer step." }
+BRIDGE_A_PCI_MEM_PHYS = { value = 0xf0000000, grade = "established", doc = "Processor physical address of bridge A's 64 MiB PCI memory window, which appears at PCI address 0x80000000 (halborg.dll 1.3 translation routine and initial data; PROM 1.1005 maps the same; the HAL adds 0x70000000 to the PCI address)." }
+BRIDGE_B_PCI_MEM_PHYS = { value = 0xf4000000, grade = "established", doc = "Processor physical address of bridge B's 64 MiB PCI memory window, at PCI address 0x80000000 (HAL adds 0x74000000)." }
+PCI_MEM_SIZE = { value = 0x4000000, grade = "established", doc = "Size of each bridge's PCI memory window, 64 MiB (HAL records; PROM mapping)." }
+PCI_MEM_BUS_BASE = { value = 0x80000000, grade = "established", doc = "PCI-side address of the start of both bridges' memory windows." }
+STAMP_PHYS = { value = 0xff01c000, grade = "established", doc = "Physical base of the one-page Lithium-side block whose second word is build_stamp. The PROM maps it, and also reads that word through its mapping of the four-page table window, past the end of that mapping." }
+TABLE_WINDOW_PHYS = { value = 0xff018000, grade = "established", doc = "Physical base of a four-page window the PROM fills with a 256-dword table (117 dwords written) on generation 5 when the stamp is at most 0x36ffd62f. The role of the window is unknown." }

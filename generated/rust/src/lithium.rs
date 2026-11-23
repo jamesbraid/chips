@@ -1,6 +1,6 @@
 // generated from devices/lithium/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 2
-// input sha256 e7c19babb48b173aef121304cc256824e7027206aa0806be257e512b8e08565d
+// input sha256 2ecc848822dac3d53b8566dbf237b74f289a92c859754826456896e519933761
 // Lithium (I/O ASIC of the SGI Visual Workstation 320 and 540): the PCI bridge window and the audio engine, as SGI's Linux platform code names them
 #![allow(dead_code)]
 
@@ -349,6 +349,18 @@ pub mod audio2_msc {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0x30c;
 }
+/// A word on the second audio page, offset from physical 0xff00f000. Both audio drivers store the silence sample here before they start DMA: 0x80808080 f (inferred)
+pub mod silence_word {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x500;
+}
+/// Two words on the third audio page, offset from physical 0xff010000 (0x98 and 0x9c). Linux's comment calls them undocumented internal copies of the DMA (inferred)
+pub mod dma_pointer_copy {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x98;
+    pub const COUNT: u32 = 2;
+    pub const STRIDE: u64 = 4;
+}
 /// Command word of the standard header. The NT HAL stores all ones here once when it sets up a bridge whose revision byte is above zero; nothing reads it (inferred)
 pub mod bridge_cmd {
     pub const WIDTH: u32 = 16;
@@ -506,12 +518,23 @@ pub mod cfg_data {
     pub const WIDTH: u32 = 32;
     pub const OFFSET: u64 = 0xfc;
 }
+/// Word at physical 0xff01c004, in a one-page Lithium-side block that no driver touches. The PROM reads it (no HAL or driver read was found) and compares (inferred)
+pub mod build_stamp {
+    pub const WIDTH: u32 = 32;
+    pub const OFFSET: u64 = 0x4;
+}
 pub const AUDIO_DMA_CHANNELS: u32 = 0x7; // inferred
 pub const AUDIO_PAGE1: u32 = 0xff00f000; // established
 pub const AUDIO_PAGE2: u32 = 0xff010000; // established
 pub const AUDIO_PHYS: u32 = 0xff001000; // established
+pub const BRIDGE_A_PCI_MEM_PHYS: u32 = 0xf0000000; // established
+pub const BRIDGE_B_PCI_MEM_PHYS: u32 = 0xf4000000; // established
 pub const DEVICE_ID: u32 = 0x1002; // inferred
 pub const DMA_CHUNK: u32 = 0x20; // inferred
 pub const PCI_A_PHYS: u32 = 0xfc000000; // established
 pub const PCI_B_PHYS: u32 = 0xfd000000; // established
+pub const PCI_MEM_BUS_BASE: u32 = 0x80000000; // established
+pub const PCI_MEM_SIZE: u32 = 0x4000000; // established
+pub const STAMP_PHYS: u32 = 0xff01c000; // established
+pub const TABLE_WINDOW_PHYS: u32 = 0xff018000; // established
 pub const VENDOR_ID: u32 = 0x10a9; // inferred
