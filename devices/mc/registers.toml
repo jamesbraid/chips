@@ -1,0 +1,669 @@
+unit = "mc"
+prefix = "MC"
+name_source = "public"
+name_cite = "IRIX sys/mc.h (public source tree, irix/kern/sys/mc.h), NetBSD sgimips imcreg.h, Linux asm/sgi/mc.h"
+title = "SGI MC memory controller of the R4000 Indigo, Indy and Indigo2: CPU control, GIO arbitration, memory configuration, error reporting and the graphics DMA engine"
+doc = "The MC gate array sits between the R4000, main memory and the GIO bus. This unit is every register software touches. Offsets are from the start of the MC window (physical 1fa00000) and are the big-endian view: the chip answers each register at two addresses four bytes apart, the higher one for a big-endian CPU and the lower one for a little-endian CPU (the lower is these offsets minus 4; the semaphore pages and the DMA block follow the same rule). All registers are 32-bit words on the CPU bus; the IRIX header marks some as byte or halfword registers, which says how many bits are meaningful, not a different access width. Grades: established means the public IRIX source tree, a shipped IRIX header or the MC chip specification states it; inferred means a reasoned reading, with the reasoning in devices/mc/README.md. The specification covers MC revisions A and B (Fast Forward machines, Indigo notes included); the Indigo board carries revisions A to C, so a reset value taken from the specification is graded for the specification's revision and is not a read of an Indigo."
+from = "MC Chip Specification (R4000 project), revision 1.15"
+public_from = ["MC Chip Specification", "IRIX", "NetBSD", "Linux"]
+
+[spaces.mc]
+unit = "byte"
+doc = "Byte offsets from the start of the MC window, big-endian view."
+
+[registers.cpuctrl0]
+offset = 0x04
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x00100012
+reset_grade = "inferred"
+reset_from = "MC Chip Specification, section 5.1 (reset column: refresh enabled, four-line bursts, MUX high-water mark 1, all else 0). Bit 18 and the HPC bit of the arbitration register are loaded from the serial EEPROM at reset, so the value is inferred, not a constant."
+grade = "established"
+from = "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+doc = "CPU control 0: refresh, parity reporting, watchdog enable, system and graphics reset, interrupt enable, PROM-write bus error, warm resets, the little-endian toggle, the MUX FIFO high-water mark and the bus-error data stall. The Indigo PROM reads this register back after every store to any MC register, as a write-buffer flush, and the kernel's first-revision workaround is a dummy PROM read before each MC store. A qtest can check the reset value, that the stall field and the high-water field read back what was written, and that writing the warm-restart bit restarts the CPU without clearing memory."
+
+[registers.cpuctrl0.fields]
+refs = { bits = [3, 0], grade = "established", doc = "Refresh burst length divided by two lines: 1 is two lines, 2 is four, 4 is eight, 15 is thirty. Four lines for 1M-and-larger SIMMs; eight for 256Kx36 and 512Kx36." }
+rfe = { bits = [4, 4], grade = "established", doc = "Refresh enable." }
+gpr = { bits = [5, 5], grade = "established", doc = "Report parity errors on GIO transactions." }
+mpr = { bits = [6, 6], grade = "established", doc = "Report parity errors on main memory." }
+cpr = { bits = [7, 7], grade = "established", doc = "Report parity errors on CPU bus transactions." }
+dog = { bits = [8, 8], grade = "established", doc = "Watchdog enable. The watchdog resets the machine when its counter wraps." }
+sin = { bits = [9, 9], grade = "established", doc = "System initialization: setting it resets the whole machine as if power were cycled." }
+grr = { bits = [10, 10], grade = "established", doc = "Graphics reset, active low: clear asserts the graphics reset, set releases it. It resets to clear." }
+en_lock = { bits = [11, 11], grade = "established", doc = "Let EISA lock memory away from the CPU; the specification says to leave it 0. Meaningless on the Indigo, which has no EISA." }
+cmd_par = { bits = [12, 12], grade = "established", doc = "Report parity errors on the SysCmd bus. The specification notes early R4000 revisions do not drive correct SysCmd parity." }
+int_en = { bits = [13, 13], grade = "established", doc = "Enable the interrupt writes the MC makes to the CPU. Without it the CPU never sees an interrupt." }
+snoop_en = { bits = [14, 14], grade = "established", doc = "Enable snoop logic for graphics DMA." }
+prom_wr_en = { bits = [15, 15], grade = "established", doc = "Clear: a CPU write to the boot PROM raises a bus-error interrupt. Set: writes are silently ignored. It does not block the write." }
+wr_st = { bits = [16, 16], grade = "established", doc = "Warm restart: starts an R4000 reset sequence without resetting other chips or most of the MC. Refresh continues. The Indigo PROM stores this bit alone to apply a new endian setting after rewriting the serial EEPROM." }
+little = { bits = [18, 18], grade = "established", doc = "Configure the MC for a little-endian CPU. The boot-time EEPROM sets it; if it disagrees with the CPU the machine does not work. The Linux header calls bit 17 the little-endian bit and bit 18 a memory-destroying warm reset; the specification and the IRIX header (which the shipped IRIX code uses) say bit 17 is reserved and bit 18 is little-endian." }
+wrst = { bits = [19, 19], grade = "established", doc = "Warm reset of the R4000 that does not re-read the serial EEPROM." }
+mux_hwm = { bits = [24, 20], grade = "established", doc = "High-water mark of the MUX chip CPU write FIFO; the lowest bit is ignored. Software stores 32 minus the mark: the value is the cache line size in bytes divided by 8, plus 4 (6, 8, 12 or 20 for 4-, 8-, 16- or 32-word lines)." }
+bad_par = { bits = [25, 25], grade = "established", doc = "Write bad parity on CPU stores to memory, for a parity diagnostic." }
+r4k_chk_par_n = { bits = [26, 26], grade = "established", doc = "Set: tell the R4000 not to check parity on memory read data. Clear: it checks." }
+back2 = { bits = [27, 27], grade = "established", doc = "Allow back-to-back GIO writes with no dead tristate cycle between the MC and the MUX chip." }
+bus_rate = { bits = [31, 28], grade = "established", doc = "Stall cycles between bus-error data returned to the CPU; should equal the CPU memory read column field." }
+
+[registers.cpuctrl1]
+offset = 0x0c
+space = "mc"
+access = "rw"
+width = 32
+reset = 0xc
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.2 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+doc = "CPU control 1: the CPU address/command FIFO high-water mark, GIO bus timeout enable and the fixed-endianness selects for the HPC and the two GIO slots. The HPC fixed bit must be set for an HPC1.5, which every Indigo uses, and clear for an HPC3. A qtest can check the reset value and that bits outside the defined ones read back as written or as zero (the source does not say which)."
+
+[registers.cpuctrl1.fields]
+mc_hwm = { bits = [3, 0], grade = "established", doc = "High-water mark of the MC CPU address/command FIFO: 17 minus the entries wanted; never below 6." }
+abort_en = { bits = [4, 4], grade = "established", doc = "Enable GIO bus timeouts. Without it a bad GIO address hangs the system." }
+hpc_fx = { bits = [12, 12], grade = "established", doc = "HPC DMA endianness is fixed to the HPC little-endian bit. Set for HPC1.5, clear for HPC3." }
+hpc_little = { bits = [13, 13], grade = "established", doc = "HPC DMA is little-endian when the fixed bit is set. Set to the CPU's byte order for an HPC1.5." }
+exp0_fx = { bits = [14, 14], grade = "established", doc = "Slot 0 DMA endianness is fixed to the slot 0 little-endian bit." }
+exp0_little = { bits = [15, 15], grade = "established", doc = "Slot 0 DMA is little-endian when fixed." }
+exp1_fx = { bits = [16, 16], grade = "established", doc = "Slot 1 DMA endianness is fixed to the slot 1 little-endian bit." }
+exp1_little = { bits = [17, 17], grade = "established", doc = "Slot 1 DMA is little-endian when fixed." }
+
+[registers.dogc]
+offset = 0x14
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.3 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.3; IRIX sys/mc.h"
+doc = "Watchdog timer. A read returns the 20-bit counter, which counts refresh bursts and so wraps in about 67 seconds at the 62 microsecond refresh interval; any write clears it. When CPUCTRL0 enables the watchdog, a wrap resets the machine. IRIX names the read and the write DOGC and DOGR."
+
+[registers.dogc.fields]
+count = { bits = [19, 0], grade = "established", doc = "Watchdog counter." }
+
+[registers.sysid]
+offset = 0x1c
+space = "mc"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "MC Chip Specification, section 5.4; IRIX sys/mc.h"
+doc = "MC revision and EISA-present bit. The specification gives revision A as 0 and revision B as 1; IRIX code treats revisions 0 and 1 specially and refers to a 'revision C' part for large DRAM, which is inferred to read 3."
+
+[registers.sysid.fields]
+chip_rev = { bits = [3, 0], grade = "established", doc = "Revision of the MC chip: 0 is A, 1 is B." }
+eisa = { bits = [4, 4], grade = "established", doc = "EISA bus present, from the board's eisa_present pin. Always 0 on the Indigo." }
+
+[registers.rpss_divider]
+offset = 0x2c
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x0104
+reset_grade = "inferred"
+reset_from = "MC Chip Specification, section 5.5 (reset column) and the Indigo PROM 4.0.5D, which times a refresh wait with the RPSS counter and never writes this register"
+grade = "established"
+from = "MC Chip Specification, section 5.5; IRIX sys/mc.h"
+doc = "Divider and increment for the RPSS counter. The counter adds the increment each time the CPU clock has been divided by the divider plus one. At a 50 MHz CPU clock the reset value (divide by five, add one) counts every 100 nanoseconds; for a 33 MHz clock the specification says divide by ten and add three. IRIX kernels write a different value (divide by two, add one)."
+
+[registers.rpss_divider.fields]
+div = { bits = [7, 0], grade = "established", doc = "Clock divider minus one." }
+inc = { bits = [15, 8], grade = "established", doc = "Amount added to the RPSS counter on each divided tick." }
+
+[registers.eerom]
+offset = 0x34
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.6 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+doc = "Bit-banged serial interface to the 93C56-class EEPROM that holds the R4000 mode stream. The first three EEPROM bits are read by the MC itself at reset: byte order, HPC bus width and a reserved bit. Software rewrites the EEPROM through this register and then restarts the CPU to change byte order. The data-in bit cannot be written. A qtest can check that data-in follows the modelled EEPROM and that chip-select and clock read back."
+
+[registers.eerom.fields]
+pre = { bits = [0, 0], grade = "inferred", from = "Linux asm/sgi/mc.h names it as the EEPROM PRE pin; the specification and the IRIX header call it reserved", doc = "PRE pin of the EEPROM." }
+cs = { bits = [1, 1], grade = "established", doc = "EEPROM chip select, active high." }
+sck = { bits = [2, 2], grade = "established", doc = "EEPROM serial clock." }
+sdata_out = { bits = [3, 3], grade = "established", doc = "Data to the EEPROM." }
+sdata_in = { bits = [4, 4], grade = "established", doc = "Data from the EEPROM; read only." }
+
+[registers.ctrld]
+offset = 0x44
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x0c30
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.7 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.7; IRIX sys/mc.h"
+doc = "Refresh counter preload. The counter counts down at the CPU clock and, on reaching zero, reloads from this register and requests a refresh burst. It should hold the number of CPU clocks in 62.5 microseconds."
+
+[registers.ctrld.fields]
+ref = { bits = [15, 0], grade = "established", doc = "Preload value." }
+
+[registers.ref_ctr]
+offset = 0x4c
+space = "mc"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "MC Chip Specification, section 5.8; IRIX sys/mc.h"
+doc = "Current value of the refresh counter."
+
+[registers.ref_ctr.fields]
+refc = { bits = [15, 0], grade = "established", doc = "Refresh counter." }
+
+[registers.gio64_arb]
+offset = 0x84
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x400
+reset_grade = "inferred"
+reset_from = "MC Chip Specification, section 5.9 (reset column: only the one-GIO bit is 1). Bit 0 is loaded from the serial EEPROM at reset and the column leaves it blank."
+grade = "established"
+from = "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+doc = "GIO arbitration parameters: per-device bus width, real-time or long-burst class, bus-master ability and pipelining. Real-time devices are served in fixed priority; long-burst devices round-robin with the CPU between each. The IRIX kernel comments that reads of this register and of the two time registers can return corrupted values, so it writes from a software copy and never reads back. A qtest can check the reset value and that every defined bit stores."
+
+[registers.gio64_arb.fields]
+hpc_size_64 = { bits = [0, 0], grade = "established", doc = "HPC transfers are 64 bits wide. 0 for HPC1 and HPC1.5, 1 for HPC3. Loaded from the serial EEPROM at reset because the MC needs it for the boot PROM fetches." }
+grx_size_64 = { bits = [1, 1], grade = "established", doc = "Graphics transfers are 64 bits wide. The specification says starter and Express graphics are 32-bit and Newport is 32-bit in an Indigo and 64-bit elsewhere." }
+exp0_size_64 = { bits = [2, 2], grade = "established", doc = "GIO slot 0 transfers are 64 bits wide. 0 for Indigo." }
+exp1_size_64 = { bits = [3, 3], grade = "established", doc = "GIO slot 1 transfers are 64 bits wide. 0 for Indigo." }
+eisa_size_64 = { bits = [4, 4], grade = "established", doc = "EISA transfers are 64 bits wide; the specification says set 0." }
+hpc_exp_size_64 = { bits = [5, 5], grade = "established", doc = "Second HPC (the window below the primary HPC) transfers are 64 bits wide." }
+grx_rt = { bits = [6, 6], grade = "established", doc = "Graphics is a real-time device (1) or long-burst (0)." }
+exp0_rt = { bits = [7, 7], grade = "established", doc = "Slot 0 is real-time." }
+exp1_rt = { bits = [8, 8], grade = "established", doc = "Slot 1 is real-time." }
+eisa_mst = { bits = [9, 9], grade = "established", doc = "EISA can be a GIO master: 0 for Indigo, 1 for Fullhouse." }
+one_gio = { bits = [10, 10], grade = "established", doc = "One pipelined GIO bus exists. Should be set." }
+grx_mst = { bits = [11, 11], grade = "established", doc = "Graphics can be a bus master; the specification says 0 for every device that exists." }
+exp0_mst = { bits = [12, 12], grade = "established", doc = "Slot 0 can be a bus master; set only when a master is installed." }
+exp1_mst = { bits = [13, 13], grade = "established", doc = "Slot 1 can be a bus master." }
+exp0_piped = { bits = [14, 14], grade = "established", doc = "Slot 0 is a pipelined device: 0 for Indigo, 1 for Fullhouse." }
+exp1_piped = { bits = [15, 15], grade = "established", doc = "Slot 1 is a pipelined device." }
+
+[registers.cpu_time]
+offset = 0x8c
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x100
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.10 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.10; IRIX sys/mc.h"
+doc = "Length of the CPU's arbitration slot in GIO clocks. The CPU holds the bus for the whole period even if idle. IRIX writes 43 (about 1.3 microseconds at 33 MHz)."
+
+[registers.cpu_time.fields]
+time = { bits = [15, 0], grade = "established", doc = "GIO clocks in the CPU time period." }
+
+[registers.lb_time]
+offset = 0x9c
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x200
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.11 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.11; IRIX sys/mc.h"
+doc = "Length of the long-burst devices' arbitration slot in GIO clocks. Unlike the CPU's, a long-burst slot ends when the device stops using the bus. IRIX writes 847 (about 25 microseconds at 33 MHz)."
+
+[registers.lb_time.fields]
+time = { bits = [15, 0], grade = "established", doc = "GIO clocks in the long-burst time period." }
+
+[registers.memcfg0]
+offset = 0xc4
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+doc = "Memory configuration for banks 0 (high half) and 1 (low half). Each bank is four 36-bit SIMMs of one size. The base is compared with physical address bits 29 to 22, so it is in 4 MiB units and must be a multiple of the bank size; larger banks go at lower bases. A zero half means no usable bank. The specification gives only the valid bits a reset value of 0. If two valid banks overlap, accesses raise a bus error and do not complete."
+
+[registers.memcfg0.fields]
+base1 = { bits = [7, 0], grade = "established", doc = "Base address of bank 1, in 4 MiB units." }
+msize1 = { bits = [12, 8], grade = "established", doc = "Bank 1 SIMM size code: 0 is 256Kx36 (4 MiB bank), 1 is 512Kx36, 3 is 1Mx36, 7 is 2Mx36, 15 is 4Mx36, 31 is 8Mx36 (128 MiB bank)." }
+vld1 = { bits = [13, 13], grade = "established", doc = "Bank 1 is valid." }
+bnk1 = { bits = [14, 14], grade = "established", doc = "Bank 1 SIMMs have two sub-banks; set for the 512Kx36, 2Mx36 and 8Mx36 sizes." }
+base0 = { bits = [23, 16], grade = "established", doc = "Base address of bank 0, in 4 MiB units." }
+msize0 = { bits = [28, 24], grade = "established", doc = "Bank 0 SIMM size code." }
+vld0 = { bits = [29, 29], grade = "established", doc = "Bank 0 is valid." }
+bnk0 = { bits = [30, 30], grade = "established", doc = "Bank 0 SIMMs have two sub-banks." }
+
+[registers.memcfg1]
+offset = 0xcc
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+doc = "Memory configuration for banks 2 (high half) and 3 (low half); the layout is that of the first configuration register."
+
+[registers.memcfg1.fields]
+base3 = { bits = [7, 0], grade = "established", doc = "Base address of bank 3, in 4 MiB units." }
+msize3 = { bits = [12, 8], grade = "established", doc = "Bank 3 SIMM size code." }
+vld3 = { bits = [13, 13], grade = "established", doc = "Bank 3 is valid." }
+bnk3 = { bits = [14, 14], grade = "established", doc = "Bank 3 SIMMs have two sub-banks." }
+base2 = { bits = [23, 16], grade = "established", doc = "Base address of bank 2, in 4 MiB units." }
+msize2 = { bits = [28, 24], grade = "established", doc = "Bank 2 SIMM size code." }
+vld2 = { bits = [29, 29], grade = "established", doc = "Bank 2 is valid." }
+bnk2 = { bits = [30, 30], grade = "established", doc = "Bank 2 SIMMs have two sub-banks." }
+
+[registers.cpu_memacc]
+offset = 0xd4
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x01454333
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.13 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+doc = "DRAM timing used for CPU accesses, in CPU clocks. The Indigo PROM writes 0x11453433 and tests the register by walking a one bit through the low 28 bits, then restoring the old value. A qtest can check the reset value and that bits 27 to 0 store."
+
+[registers.cpu_memacc.fields]
+wr_col = { bits = [3, 0], grade = "established", doc = "Cycles the column address is held between page-mode writes." }
+rd_col = { bits = [7, 4], grade = "established", doc = "Cycles the column address is held between page-mode reads." }
+row = { bits = [11, 8], grade = "established", doc = "Row address cycles minus one; the specification says set 4." }
+rash = { bits = [15, 12], grade = "established", doc = "Cycles RAS must stay high for precharge." }
+rcasl = { bits = [19, 16], grade = "established", doc = "Refresh: cycles RAS is low before CAS is raised." }
+rasl = { bits = [23, 20], grade = "established", doc = "Refresh: cycles RAS is high before CAS drops between lines." }
+cbr = { bits = [27, 24], grade = "established", doc = "Refresh: cycles CAS is low before RAS drops." }
+cas_half = { bits = [28, 28], grade = "established", doc = "Hold CAS high for only half a cycle in page-mode reads; needed for three-cycle page-mode reads." }
+big_alias = { bits = [29, 29], grade = "established", from = "IRIX sys/mc.h (revision D); Linux asm/sgi/mc.h", doc = "Place the low-memory alias at 512 MiB. Revision D parts only, never the Indigo." }
+
+[registers.gio_memacc]
+offset = 0xdc
+space = "mc"
+access = "rw"
+width = 32
+reset = 0x4333
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.13 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+doc = "DRAM timing used for GIO accesses, in GIO clocks. The specification recommends write and read column 2, row 3 and precharge 2; the Indigo PROM writes read column 3, the Indy and Indigo2 PROMs read column 2."
+
+[registers.gio_memacc.fields]
+wr_col = { bits = [3, 0], grade = "established", doc = "Cycles the column address is held between page-mode writes." }
+rd_col = { bits = [7, 4], grade = "established", doc = "Cycles the column address is held between page-mode reads." }
+row = { bits = [11, 8], grade = "established", doc = "Row address cycles." }
+rash = { bits = [15, 12], grade = "established", doc = "Cycles RAS must stay high." }
+cas_half = { bits = [16, 16], grade = "established", doc = "Hold CAS high for half a cycle in page-mode reads." }
+addr_half = { bits = [17, 17], grade = "established", doc = "Change the column address on the falling clock edge." }
+big_alias = { bits = [29, 29], grade = "established", from = "IRIX sys/mc.h (revision D); Linux asm/sgi/mc.h", doc = "As in the CPU register. Revision D only." }
+
+[registers.cpu_err_addr]
+offset = 0xe4
+space = "mc"
+access = "r"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.14 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.14; IRIX sys/mc.h"
+doc = "Address of the last CPU parity or bus error; valid only while an error bit is set in the CPU error status. For a parity error the low three bits are meaningless and the status byte field gives the failing byte lane. The specification's revision B fix list says revision A could latch the wrong address when a write follows a read that failed parity."
+
+[registers.cpu_err_addr.fields]
+addr = { bits = [31, 0], grade = "established", doc = "Error address." }
+
+[registers.cpu_err_stat]
+offset = 0xec
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.15 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+doc = "CPU error status. Any write clears it (the PROM and the kernel write zero). The bits are sticky. A qtest can check that a write of any value clears every bit and that a CPU read of an unmapped address sets the address-error bit."
+
+[registers.cpu_err_stat.fields]
+byte = { bits = [7, 0], grade = "established", doc = "Byte lanes in error, bit 0 the lowest lane; several may be set." }
+rd = { bits = [8, 8], grade = "established", doc = "With the parity bit: the error was on a memory read (clear: a memory write)." }
+par = { bits = [9, 9], grade = "established", doc = "CPU parity error." }
+addr = { bits = [10, 10], grade = "established", doc = "Memory bus error: the address maps to no valid bank, or an MC register was accessed at the address wrong for the current byte order." }
+sysad_par = { bits = [11, 11], grade = "established", doc = "SysAD address or MC write data parity error; only the low four byte bits are valid." }
+syscmd_par = { bits = [12, 12], grade = "established", doc = "SysCmd parity error; the byte field is invalid." }
+bad_data = { bits = [13, 13], grade = "established", doc = "The CPU sent a bad-data identifier." }
+
+[registers.gio_err_addr]
+offset = 0xf4
+space = "mc"
+access = "r"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.16 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.16; IRIX sys/mc.h"
+doc = "Address of the last GIO parity or bus error, valid while a GIO error bit is set. Low two bits are meaningless for 32-bit devices, low three for 64-bit."
+
+[registers.gio_err_addr.fields]
+addr = { bits = [31, 0], grade = "established", doc = "Error address." }
+
+[registers.gio_err_stat]
+offset = 0xfc
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.17 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+doc = "GIO error status. Any write clears it. The bits are sticky."
+
+[registers.gio_err_stat.fields]
+byte = { bits = [7, 0], grade = "established", doc = "Byte lanes in error." }
+rd_par = { bits = [8, 8], grade = "established", doc = "GIO memory read parity error." }
+wr_par = { bits = [9, 9], grade = "established", doc = "GIO memory write parity error." }
+time = { bits = [10, 10], grade = "established", doc = "GIO transaction timed out; needs the timeout enable in CPU control 1." }
+prom = { bits = [11, 11], grade = "established", doc = "CPU wrote the boot PROM while the PROM-write enable in CPU control 0 was clear." }
+addr = { bits = [12, 12], grade = "established", doc = "Parity error on a GIO slave address cycle; needs the GIO parity enable." }
+bc = { bits = [13, 13], grade = "established", doc = "Parity error on a GIO slave byte-count cycle." }
+pio_rd_par = { bits = [14, 14], grade = "established", doc = "Data parity error on a programmed-I/O read." }
+pio_wr_par = { bits = [15, 15], grade = "established", doc = "Data parity error on a programmed-I/O write." }
+
+[registers.sys_semaphore]
+offset = 0x104
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.18 (reset column)"
+grade = "established"
+from = "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+doc = "System semaphore, in the privileged register page. A read returns the bit and sets it to one; a write stores bit 0."
+
+[registers.sys_semaphore.fields]
+sem = { bits = [0, 0], grade = "established", doc = "Semaphore bit." }
+
+[registers.lock_memory]
+offset = 0x10c
+space = "mc"
+access = "rw"
+width = 32
+reset = 1
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.19 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.19; IRIX sys/mc.h"
+doc = "Writing 0 locks every device except the CPU out of main memory, for a locked CPU sequence; 1 releases."
+
+[registers.lock_memory.fields]
+lock_n = { bits = [0, 0], grade = "established", doc = "0 locked, 1 unlocked." }
+
+[registers.eisa_lock]
+offset = 0x114
+space = "mc"
+access = "rw"
+width = 32
+reset = 1
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.20 (reset column)"
+grade = "established"
+from = "MC Chip Specification, section 5.20; IRIX sys/mc.h"
+doc = "Writing 0 asserts the EISA lock output. The Indigo has no EISA bus, so the register has no effect there (inferred from the absent bus)."
+
+[registers.eisa_lock.fields]
+lock = { bits = [0, 0], grade = "established", doc = "0 locked, 1 unlocked." }
+
+[registers.dma_gio_mask]
+offset = 0x154
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX sys/mc.h (name and role); IRIX VDMA initialisation (writes zero)"
+doc = "Mask applied to the GIO address of a graphics DMA to translate it, with the substitution register. The kernel and the Indigo PROM store zero in both, which leaves the address unchanged. The bit layout is not stated by any source held."
+
+[registers.dma_gio_sub]
+offset = 0x15c
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX sys/mc.h (name and role); IRIX VDMA initialisation (writes zero)"
+doc = "Substitution bits for the GIO address translation; see the mask register."
+
+[registers.dma_cause]
+offset = 0x164
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+doc = "Sticky cause bits of the graphics DMA engine, the same bits the run register shows below the running bit. Software writes zero to clear them and to drop the DMA-done interrupt. Whether a write of any value clears them is not stated; IRIX only writes zero."
+
+[registers.dma_cause.fields]
+pagefault = { bits = [0, 0], grade = "established", doc = "Touched a page whose valid bit is clear." }
+utlbmiss = { bits = [1, 1], grade = "established", doc = "The four-entry DMA TLB had no entry for the segment." }
+clean = { bits = [2, 2], grade = "established", doc = "Wrote to a read-only page." }
+complete = { bits = [3, 3], grade = "established", doc = "The last DMA finished successfully. IRIX ignores the error bits when this is set." }
+bmem = { bits = [4, 4], grade = "established", doc = "Invalid memory address." }
+bpte = { bits = [5, 5], grade = "established", doc = "Invalid page-table-entry address." }
+
+[registers.dma_ctl]
+offset = 0x16c
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX VDMA header and kernel VDMA code"
+doc = "Graphics DMA control. The kernel initialises it to a constant that also carries fields no source names (the kernel's comment lists a TLB limit of 512, a slave limit of 4, a 32-word cache line and the page size); only the three named bits are defined here. The Indigo PROM writes zero to turn translation off for its memory-clear DMA."
+
+[registers.dma_ctl.fields]
+ie = { bits = [4, 4], grade = "established", doc = "Enable the DMA-complete interrupt." }
+xlate = { bits = [8, 8], grade = "established", doc = "Translate DMA memory addresses as virtual through the DMA TLB; clear means physical." }
+decslv = { bits = [9, 9], grade = "established", doc = "The slave does true GIO decrementing DMA." }
+
+[registers.dma_tlb_hi]
+offset = 0x184
+count = 4
+stride = 0x10
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel VDMA code (uTLB handling)"
+doc = "DMA TLB entry high word, four entries. Holds the virtual address of one segment (the span one page of page-table entries maps), aligned to that span. Software clears unused entries by writing zero."
+
+[registers.dma_tlb_lo]
+offset = 0x18c
+count = 4
+stride = 0x10
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel VDMA code (uTLB handling)"
+doc = "DMA TLB entry low word, four entries. Names the physical page of page-table entries for the segment in the matching high word. Bits 25 to 6 are the physical address divided by 64."
+
+[registers.dma_tlb_lo.fields]
+valid = { bits = [1, 1], grade = "established", doc = "Entry valid." }
+pt_addr = { bits = [25, 6], grade = "established", doc = "Physical address of the page-table page, divided by 64." }
+
+[registers.rpss_ctr]
+offset = 0x1004
+space = "mc"
+access = "r"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.21 (reset column)"
+grade = "established"
+from = "MC Chip Specification, sections 2.6.2 and 5.21; IRIX sys/mc.h"
+doc = "RPSS counter: 32 bits, read only, rolls over without an interrupt. It advances by the divider register's increment every divider-plus-one CPU clocks; at reset that is one every 100 nanoseconds at 50 MHz. The page is mappable by user processes. A qtest can check that two reads differ and that a write is ignored."
+
+[registers.dma_memadr]
+offset = 0x2004
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX sys/mc.h; IRIX kernel VDMA code"
+doc = "DMA memory address, virtual or physical according to the translate bit. It advances as the DMA runs, so after a stop or fault it names the next byte; software reads it to find the faulting address."
+
+[registers.dma_memadrd]
+offset = 0x200c
+space = "mc"
+access = "w"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX sys/mc.h (name and note: memory address and set defaults)"
+doc = "Writes the memory address register and also sets default values for the other DMA parameters. Which defaults is not stated by any source held, and no held code writes it."
+
+[registers.dma_size]
+offset = 0x2014
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel VDMA code; Indigo PROM memory clear"
+doc = "DMA line width in bytes and line count. The kernel splits transfers over 65535 bytes into lines of 32768."
+
+[registers.dma_size.fields]
+width = { bits = [15, 0], grade = "established", doc = "Line width in bytes." }
+height = { bits = [31, 16], grade = "established", doc = "Number of lines." }
+
+[registers.dma_stride]
+offset = 0x201c
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel VDMA code; IRIX vdma_args structure"
+doc = "Signed byte distance from the end of one line to the start of the next, and the vertical zoom factor (how many times each line repeats, at most 1023). The kernel forces the stride to zero when there is one line to avoid a TLB-miss quirk."
+
+[registers.dma_stride.fields]
+stride = { bits = [15, 0], grade = "established", doc = "Stride in bytes, two's complement." }
+zoom = { bits = [31, 16], grade = "established", doc = "Line repeat count." }
+
+[registers.dma_gio_adr]
+offset = 0x2024
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX sys/mc.h; IRIX vdma_args structure"
+doc = "GIO slave address of the DMA, or the constant to write in fill mode. Writing it does not start the DMA."
+
+[registers.dma_gio_adrs]
+offset = 0x202c
+space = "mc"
+access = "w"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX sys/mc.h; IRIX kernel VDMA code; Indigo PROM memory clear"
+doc = "Writes the GIO address (or fill constant) and starts the DMA. The kernel writes it last, after the other parameters."
+
+[registers.dma_mode]
+offset = 0x2034
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX VDMA header"
+doc = "DMA mode. The Indigo PROM's memory clear uses long burst, incrementing address, fill and graphics-to-host."
+
+[registers.dma_mode.fields]
+gtoh = { bits = [1, 1], grade = "established", doc = "Transfer from graphics to host memory (clear: host to graphics)." }
+sync = { bits = [2, 2], grade = "established", doc = "Delay the transfer until the graphics sync." }
+fill = { bits = [3, 3], grade = "established", doc = "Write a constant (the GIO address register) to memory." }
+inca = { bits = [4, 4], grade = "established", doc = "Memory address increments (clear: decrements)." }
+snoop = { bits = [5, 5], grade = "established", doc = "Enable cache snoop (short bursts)." }
+lburst = { bits = [6, 6], grade = "established", doc = "Long-burst transfers." }
+
+[registers.dma_count]
+offset = 0x203c
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX sys/mc.h (name: zoom count and byte count); Indigo PROM memory clear"
+doc = "Working counters of the running DMA: the remaining zoom count and byte count. The Indigo PROM writes 1 in the upper half before starting a fill, commenting that the zoom factor is one; the field layout is not stated by any source held."
+
+[registers.dma_stdma]
+offset = 0x2044
+space = "mc"
+access = "rw"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX kernel VDMA code"
+doc = "Start or resume the virtual DMA. The kernel writes 1 after fixing a page fault to resume and 0 to stop a timed-out transfer."
+
+[registers.dma_run]
+offset = 0x204c
+space = "mc"
+access = "r"
+width = 32
+reset = "unknown"
+grade = "established"
+from = "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+doc = "DMA status: the cause bits plus a running bit. The PROM polls the running bit to wait for its memory clear."
+
+[registers.dma_run.fields]
+pagefault = { bits = [0, 0], grade = "established", doc = "As in the cause register." }
+utlbmiss = { bits = [1, 1], grade = "established", doc = "As in the cause register." }
+clean = { bits = [2, 2], grade = "established", doc = "As in the cause register." }
+complete = { bits = [3, 3], grade = "established", doc = "As in the cause register." }
+bmem = { bits = [4, 4], grade = "established", doc = "As in the cause register." }
+bpte = { bits = [5, 5], grade = "established", doc = "As in the cause register." }
+running = { bits = [6, 6], grade = "established", doc = "A DMA is in progress." }
+
+[registers.dma_memadrds]
+offset = 0x2074
+space = "mc"
+access = "w"
+width = 32
+reset = "unknown"
+grade = "inferred"
+from = "IRIX sys/mc.h (name and note: memory address, set defaults and start DMA)"
+doc = "Writes the memory address, sets the default DMA parameters and starts the DMA. No held code writes it."
+
+[registers.semaphore]
+offset = 0x10004
+count = 16
+stride = 0x1000
+space = "mc"
+access = "rw"
+width = 32
+reset = 0
+reset_grade = "established"
+reset_from = "MC Chip Specification, section 5.18 (reset column)"
+grade = "established"
+from = "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+doc = "Sixteen user semaphores, each in its own 4 KiB page so a page can be mapped into a user process. A read returns the bit and sets it to one; a write stores bit 0."
+
+[registers.semaphore.fields]
+sem = { bits = [0, 0], grade = "established", doc = "Semaphore bit." }

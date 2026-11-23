@@ -47,6 +47,7 @@
 | [hub_windows/](hub_windows/registers.md) | Hub register arrays whose extent is a fact of its own | Runs of consecutive Hub registers seen as one array each, so that the end of the run is data. |
 | [ice1724/](ice1724/README.md) | VIA/IC Ensemble ICE1724 (Envy24HT) PCI audio controller | Mode: no-spec (the driver-derived facts below come from the binary; the vendor datasheet in the section after them... |
 | [ics1890/](ics1890/README.md) | ICS1890 Ethernet PHY (Octane base I/O) | The ICS1890 is Integrated Circuit Systems' 10Base-T/100Base-TX PHYceiver, the Ethernet transceiver on the Octane and... |
+| [int2/](int2/README.md) | INT2: the Indigo interrupt controller and 8254 timer block | INT2 gathers the Indigo's local interrupt sources into two CPU interrupt lines, holds a five-bit control port and... |
 | [ioc3/](ioc3/README.md) | IOC3 | Mode: no-spec (see references/documents/specs.md: no specification is held). |
 | [ioc4/](ioc4/README.md) | IOC4 | Mode: no-spec (see references/documents/specs.md: no specification is held). |
 | [isp1040/](isp1040/README.md) | QLogic ISP1040 SCSI host adapter | The ISP1040 is the single-channel QLogic SCSI adapter on the BaseIO and BaseIO-G boards, PCI vendor `0x1077`, device... |
@@ -60,6 +61,7 @@
 | [lucent_ohci/](lucent_ohci/README.md) | AT&T/Lucent 11C1:5802 two-port OHCI USB host controller | The part is a two-port USB host controller with an OpenHCI register interface, PCI vendor `0x11c1`, device `0x5802`. |
 | [mace/](mace/README.md) | MACE | Mode: spec-backed (see references/documents/specs.md: MACE I/O ASIC Specification, chip revision 2.0, 31 May 1996... |
 | [mbcs/](mbcs/README.md) | MBCS (RASC Core Services) | Mode: no-spec. |
+| [mc/](mc/README.md) | MC memory controller (Indigo R4000, Indy, Indigo2) | Mode: spec-backed. |
 | [menet/](menet/README.md) | MENET: the four-port Fast Ethernet and asynchronous serial XIO board | The MENET (part 030-0873) is an XIO board for the Origin 2000 and Onyx2. |
 | [mscsi/](mscsi/README.md) | MSCSI: the four-channel SCSI XIO board | The MSCSI is an XIO board for the Origin 2000 and Onyx2, and for the GIGAchannel of the Origin 200. |
 | [ns-pc87307/](ns-pc87307/README.md) | National Semiconductor PC87307 Super I/O (marked NS87307) as wired in the Visual Workstation 320 and 540 | Mode: spec-backed. |

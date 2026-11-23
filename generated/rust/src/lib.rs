@@ -1,6 +1,6 @@
 // @generated from devices/ and formats/ by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 97aa0dc3331e32c63f7fa0a0a6d826dfbc288341116f0adedbac378a7b1a5096
+// input sha256 397331117228315fbd367c5e72853755786add8d853d7d44653804958fd9fc7d
 #![no_std]
 #![cfg_attr(rustfmt, rustfmt_skip)]
 pub mod aic7880;
@@ -50,6 +50,7 @@ pub mod lucent_ohci;
 pub mod mace;
 pub mod mace_extra;
 pub mod mbcs;
+pub mod mc;
 pub mod ns_pc87307;
 pub mod pic;
 pub mod pic_extra;

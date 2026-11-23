@@ -1,0 +1,1852 @@
+{
+ "generator": "defs-gen 4",
+ "input_sha256": "e58245850b29894ab613ba249050f6e030d591556170de875fcddec530f692ce",
+ "schema": "defs-flat/1",
+ "source": "devices/mc/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpuctrl0",
+   "offset": 4,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 1048594,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.bus_rate",
+   "hi": 31,
+   "lo": 28,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.back2",
+   "hi": 27,
+   "lo": 27,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.r4k_chk_par_n",
+   "hi": 26,
+   "lo": 26,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.bad_par",
+   "hi": 25,
+   "lo": 25,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.mux_hwm",
+   "hi": 24,
+   "lo": 20,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.wrst",
+   "hi": 19,
+   "lo": 19,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.little",
+   "hi": 18,
+   "lo": 18,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.wr_st",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.prom_wr_en",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.snoop_en",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.int_en",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.cmd_par",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.en_lock",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.grr",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.sin",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.dog",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.cpr",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.mpr",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.gpr",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.rfe",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl0.refs",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.1; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpuctrl1",
+   "offset": 12,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.exp1_little",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.exp1_fx",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.exp0_little",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.exp0_fx",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.hpc_little",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.hpc_fx",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.abort_en",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpuctrl1.mc_hwm",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.2; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dogc",
+   "offset": 20,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.3; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dogc.count",
+   "hi": 19,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.3; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "sysid",
+   "offset": 28,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.4; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "sysid.eisa",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.4; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "sysid.chip_rev",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.4; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "rpss_divider",
+   "offset": 44,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 260,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.5; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "rpss_divider.inc",
+   "hi": 15,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.5; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "rpss_divider.div",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.5; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "eerom",
+   "offset": 52,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eerom.sdata_in",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eerom.sdata_out",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eerom.sck",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eerom.cs",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.6; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eerom.pre",
+   "hi": 0,
+   "lo": 0,
+   "grade": "inferred",
+   "from": "Linux asm/sgi/mc.h names it as the EEPROM PRE pin; the specification and the IRIX header call it reserved"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "ctrld",
+   "offset": 68,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 3120,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.7; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "ctrld.ref",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.7; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "ref_ctr",
+   "offset": 76,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.8; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "ref_ctr.refc",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.8; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "gio64_arb",
+   "offset": 132,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 1024,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp1_piped",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp0_piped",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp1_mst",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp0_mst",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.grx_mst",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.one_gio",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.eisa_mst",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp1_rt",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp0_rt",
+   "hi": 7,
+   "lo": 7,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.grx_rt",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.hpc_exp_size_64",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.eisa_size_64",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp1_size_64",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.exp0_size_64",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.grx_size_64",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio64_arb.hpc_size_64",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.9; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpu_time",
+   "offset": 140,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 256,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.10; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_time.time",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.10; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "lb_time",
+   "offset": 156,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 512,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.11; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "lb_time.time",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.11; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "memcfg0",
+   "offset": 196,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.bnk0",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.vld0",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.msize0",
+   "hi": 28,
+   "lo": 24,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.base0",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.bnk1",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.vld1",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.msize1",
+   "hi": 12,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg0.base1",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "memcfg1",
+   "offset": 204,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.bnk2",
+   "hi": 30,
+   "lo": 30,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.vld2",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.msize2",
+   "hi": 28,
+   "lo": 24,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.base2",
+   "hi": 23,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.bnk3",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.vld3",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.msize3",
+   "hi": 12,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "memcfg1.base3",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.12; IRIX sys/mc.h and the IRIX kernel's bank code"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpu_memacc",
+   "offset": 212,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 21316403,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.big_alias",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "IRIX sys/mc.h (revision D); Linux asm/sgi/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.cas_half",
+   "hi": 28,
+   "lo": 28,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.cbr",
+   "hi": 27,
+   "lo": 24,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.rasl",
+   "hi": 23,
+   "lo": 20,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.rcasl",
+   "hi": 19,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.rash",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.row",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.rd_col",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_memacc.wr_col",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "gio_memacc",
+   "offset": 220,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 17203,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.big_alias",
+   "hi": 29,
+   "lo": 29,
+   "grade": "established",
+   "from": "IRIX sys/mc.h (revision D); Linux asm/sgi/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.addr_half",
+   "hi": 17,
+   "lo": 17,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.cas_half",
+   "hi": 16,
+   "lo": 16,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.rash",
+   "hi": 15,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.row",
+   "hi": 11,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.rd_col",
+   "hi": 7,
+   "lo": 4,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_memacc.wr_col",
+   "hi": 3,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.13; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpu_err_addr",
+   "offset": 228,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.14; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_addr.addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.14; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "cpu_err_stat",
+   "offset": 236,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.bad_data",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.syscmd_par",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.sysad_par",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.addr",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.par",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.rd",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "cpu_err_stat.byte",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.15; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "gio_err_addr",
+   "offset": 244,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.16; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_addr.addr",
+   "hi": 31,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.16; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "gio_err_stat",
+   "offset": 252,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.pio_wr_par",
+   "hi": 15,
+   "lo": 15,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.pio_rd_par",
+   "hi": 14,
+   "lo": 14,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.bc",
+   "hi": 13,
+   "lo": 13,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.addr",
+   "hi": 12,
+   "lo": 12,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.prom",
+   "hi": 11,
+   "lo": 11,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.time",
+   "hi": 10,
+   "lo": 10,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.wr_par",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.rd_par",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "gio_err_stat.byte",
+   "hi": 7,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.17; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "sys_semaphore",
+   "offset": 260,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "sys_semaphore.sem",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "lock_memory",
+   "offset": 268,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 1,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.19; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "lock_memory.lock_n",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.19; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "eisa_lock",
+   "offset": 276,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 1,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.20; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "eisa_lock.lock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, section 5.20; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_gio_mask",
+   "offset": 340,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "IRIX sys/mc.h (name and role); IRIX VDMA initialisation (writes zero)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_gio_sub",
+   "offset": 348,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "IRIX sys/mc.h (name and role); IRIX VDMA initialisation (writes zero)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_cause",
+   "offset": 356,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.bpte",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.bmem",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.complete",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.clean",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.utlbmiss",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_cause.pagefault",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_ctl",
+   "offset": 364,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_ctl.decslv",
+   "hi": 9,
+   "lo": 9,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_ctl.xlate",
+   "hi": 8,
+   "lo": 8,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_ctl.ie",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_tlb_hi",
+   "offset": 388,
+   "access": "rw",
+   "width": 32,
+   "count": 4,
+   "stride": 16,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX kernel VDMA code (uTLB handling)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_tlb_lo",
+   "offset": 396,
+   "access": "rw",
+   "width": 32,
+   "count": 4,
+   "stride": 16,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX kernel VDMA code (uTLB handling)"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_tlb_lo.pt_addr",
+   "hi": 25,
+   "lo": 6,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code (uTLB handling)"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_tlb_lo.valid",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code (uTLB handling)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "rpss_ctr",
+   "offset": 4100,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, sections 2.6.2 and 5.21; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_memadr",
+   "offset": 8196,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX sys/mc.h; IRIX kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_memadrd",
+   "offset": 8204,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "IRIX sys/mc.h (name and note: memory address and set defaults)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_size",
+   "offset": 8212,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_size.height",
+   "hi": 31,
+   "lo": 16,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_size.width",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_stride",
+   "offset": 8220,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; IRIX vdma_args structure"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_stride.zoom",
+   "hi": 31,
+   "lo": 16,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; IRIX vdma_args structure"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_stride.stride",
+   "hi": 15,
+   "lo": 0,
+   "grade": "established",
+   "from": "IRIX kernel VDMA code; IRIX vdma_args structure"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_gio_adr",
+   "offset": 8228,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX sys/mc.h; IRIX vdma_args structure"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_gio_adrs",
+   "offset": 8236,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX sys/mc.h; IRIX kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_mode",
+   "offset": 8244,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.lburst",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.snoop",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.inca",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.fill",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.sync",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_mode.gtoh",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "IRIX VDMA header"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_count",
+   "offset": 8252,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "IRIX sys/mc.h (name: zoom count and byte count); Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_stdma",
+   "offset": 8260,
+   "access": "rw",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX kernel VDMA code"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_run",
+   "offset": 8268,
+   "access": "r",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.running",
+   "hi": 6,
+   "lo": 6,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.bpte",
+   "hi": 5,
+   "lo": 5,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.bmem",
+   "hi": 4,
+   "lo": 4,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.complete",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.clean",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.utlbmiss",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "dma_run.pagefault",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "IRIX VDMA header and kernel VDMA code; Indigo PROM memory clear"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "dma_memadrds",
+   "offset": 8308,
+   "access": "w",
+   "width": 32,
+   "count": 1,
+   "stride": 4,
+   "space": "mc",
+   "reset": "unknown",
+   "grade": "inferred",
+   "from": "IRIX sys/mc.h (name and note: memory address, set defaults and start DMA)"
+  },
+  {
+   "unit": "mc",
+   "kind": "register",
+   "name": "semaphore",
+   "offset": 65540,
+   "access": "rw",
+   "width": 32,
+   "count": 16,
+   "stride": 4096,
+   "space": "mc",
+   "reset": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+  },
+  {
+   "unit": "mc",
+   "kind": "field",
+   "name": "semaphore.sem",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established",
+   "from": "MC Chip Specification, sections 2.6.1 and 5.18; IRIX sys/mc.h"
+  }
+ ]
+}
