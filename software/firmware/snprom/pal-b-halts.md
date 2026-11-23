@@ -53,6 +53,8 @@ entry. `r7 = 0xcccc` is a marker a debugger can see, nothing reads it. The code 
 
 The first four are event-handler errors (inferred from their context: machine-check and INIT entry code); only the last is on the boot path the model runs.
 
+**Effect on the other node (software expectation, observed in a model run; the wait is established in [boot-sequence.md](boot-sequence.md#the-waiting-for-peers-loop)).** On a two-node Altix 3300 model a processor that stopped at `0xffe7f100` (nothing releases it) never ran `0xffa47870` far enough to publish its object count in `SH_SCRATCH1` bits 15:0, so the other node's "Waiting for peers" loop waited the full 300 s deadline for it and printed "Timed out waiting for %I reason: Chipset not done yet, index 1 flag 0x110000". The cause there was the PAL self-test failure stop, not a race between the two nodes' claims. A model run shows model behaviour only, not what hardware does.
+
 ## 2. How the model gets there: the self-test table
 
 *Established.* After SAL_A answers the reason-3 query, PAL_B continues at `0xffed8740` (the return address it handed over as `r36`, built at
