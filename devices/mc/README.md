@@ -65,7 +65,7 @@ Addresses are PROM addresses; every value is read from the listing. The values m
 | `0xbfc004a8` | `cpuctrl1` ← `0x1016` | `mc_hwm` 6, `abort_en`, `hpc_fx` set, `hpc_little` clear. The only store to this register in the image. |
 | `0xbfc004c8` | `cpu_memacc` ← `0x11453433` | Write/read column 3/3, row 4, precharge 3, refresh timings 5/4/1, `cas_half`. |
 | `0xbfc004dc` | `gio_memacc` ← `0x34332` | Write column 2, read column 3, row 3, precharge 4, `cas_half`, `addr_half`. |
-| `0xbfc004e8`–`0xbfc00500` | `rpss_ctr` read | Waits for 625 counter ticks (62.5 µs at the reset 100 ns tick) so the SIMMs see at least eight refresh lines before use. The image never writes `rpss_divider` or `ctrld`: it relies on their reset values. `inferred` (reset `0x0104` and `0x0c30`, specification). |
+| `0xbfc004e8`–`0xbfc00500` | `rpss_ctr` read (`+0x1004`; the refresh counter is `ref_ctr` at `+0x4c`, which the PROM never reads) | Waits for 625 counter ticks (62.5 µs at the reset 100 ns tick) so the SIMMs see at least eight refresh lines before use. The image never writes `rpss_divider` or `ctrld`: it relies on their reset values. `inferred` (reset `0x0104` and `0x0c30`, specification). |
 | `0xbfc028b0`–`0xbfc02934` (pon_mc) | `cpuctrl0` bit 4 cleared; `cpu_memacc` walking-one test | Clears refresh enable, writes 1 << 27 down to 1 into `cpu_memacc` reading each back, restores the old value and `cpuctrl0`, then repeats on an HPC1 register. Failure spins at `0xbfc02938`. Bits 28 and up of `cpu_memacc` are not tested. |
 | `0xbfc00a0c`, `0xbfc00a10` | `memcfg0`, `memcfg1` ← 0 | Invalidates all four banks. |
 | `0xbfc01000` helper | one 16-bit half of `memcfg0/1` | Bank 0 is the high half of `memcfg0`, bank 1 its low half, bank 2 the high half of `memcfg1`, bank 3 its low half. Followed by the `cpuctrl0` read. |
@@ -118,6 +118,52 @@ fields: `get_mem_conf`, `bank_addrlo`, `banksz`, `szmem` in the Indigo kernel (`
   `GioErrorAddr: 18000000` exactly. `inferred` that this is the cause; the same report shows PROM 4.0.5G booting with 384 MiB.
 - Valid bit and size are set for the test with base `0x20`, address test over the whole size, then the bank is cleared if the walking-bit
   test fails; the final base comes last (`0xbfc00f64`).
+
+### Sizing memory exactly as the PROM expects (a model checklist)
+
+All `established` from the 4.0.5D listing (`0xbfc00a00`–`0xbfc00f60`, `0xbfc01000`, `0xbfc010a8`) and the later PROM's source. A bank word is the
+16-bit value below; bank 0 and 2 are the high half of `memcfg0` and `memcfg1`, bank 1 and 3 the low half, and the PROM stores
+a half with a read-modify-write of the whole register (`0xbfc01000`), then reads `cpuctrl0`. Field layout:
+bit 14 sub-banks, bit 13 valid, bits 12:8 size code, bits 7:0 base in 4 MiB units.
+
+| Half-word | Decode | Where it appears |
+|---|---|---|
+| `0x3f20` | valid, one sub-bank, size code 31 (128 MiB window), base `0x20` (`0x08000000`) | first write for each bank: the probe configuration (`0xbfc00a20`). A store to bank 0 shows as `0x3f20xxxx` in `memcfg0`, to bank 1 as `xxxx3f20`. |
+| `0x7f20` | the same with the sub-bank bit set | the second-sub-bank probe (`0xbfc00e78`) and, later, the test configuration of a bank sized at 128 MiB with two sub-banks (`size word or 0x2020`, `0xbfc00a70`) |
+| `0x5fff` | valid **clear**, sub-bank bit set, size code 31, base `0xff` | the sized-but-not-yet-placed marker for a 128 MiB two-sub-bank bank (`0xbfc00f58` ORs `0xff` into the size word). Base `0xff` keeps the word nonzero so that "sized" differs from "no memory" (zero). |
+| `0x7f40`, `0x7f80`, `0x7fa0` | valid, two sub-banks, size code 31, base `0x40` (`0x10000000`), `0x80` (`0x20000000`), `0xa0` (`0x28000000`) | the placed words of banks 1, 2 and 3 when all four banks are 128 MiB two-sub-bank. With bank 0 at `0x7f20`, `memcfg0` reads `0x7f207f40` and `memcfg1` reads `0x7f807fa0`: four banks of 128 MiB, 512 MiB total. `0x60` is skipped (the jump from `0x18000000` to `0x20000000`). |
+
+Other sized words the same code writes before placement (size word `or 0xff`): 4 MiB `0x00ff`, 8 MiB `0x41ff`, 16 MiB `0x03ff`, 32 MiB
+`0x47ff`, 64 MiB `0x0fff`, 128 MiB `0x5fff`. After placement the size and sub-bank bits stay and the valid bit and base replace the `0xff`.
+
+Order of accesses for each bank *n* (0 to 3), what the model sees:
+
+1. Both words ← 0 once at the start (`0xbfc00a0c`, `0xbfc00a10`), so every bank is invalid.
+2. Half *n* ← `0x3f20`. Then, with only bank *n* valid, in kseg1 (`0xa8000000` is physical `0x08000000`): store `0x11111111`, `0x22222222`, `0x44444444`,
+   `0x88888888` at offsets 0, 4, 8, 12; for each word *i*: store zero at offset `16 + 4i`, load offset `4i`, and require it to equal the
+   pattern. A word that does not match marks SIMM *i* missing or bad (flags `0x8000`, `0x4000`, `0x2000`, `0x1000`). All four bad means "no bank"; some but not all
+   bad is reported and the bank is dropped. **An unpopulated SIMM must therefore return something other than the pattern just written**, even
+   though the preceding store put it on the bus; zero is enough.
+3. Clear offsets 0 to 12. For distance 4 MiB then 16 MiB: store the four patterns at `0xa8000000 + distance`, load offsets 0 to 12; any nonzero word means the
+   address wrapped. **A bank smaller than the window must wrap**: a 4 MiB bank (one sub-bank) wraps at 4 MiB, a 16 MiB bank at 16 MiB; with no wrap by 64 MiB the distance is 64 MiB. A model with
+   flat 128 MiB RAM never wraps, so it reports distance 64 MiB for every bank.
+4. Half *n* ← `0x7f20`; store the patterns at `0xac000000` (physical `0x0c000000`, 64 MiB above), zero at +16 to +28 as before, and require all four back. Present: second
+   sub-bank, size = twice the distance, so 64 MiB distance gives 32 units. Absent: half *n* ← `0x3f20` and size = the distance. A flat 128 MiB model therefore
+   always sizes every bank as 128 MiB with two sub-banks.
+5. Half *n* ← size word `or 0xff` (`0xbfc00f1c`), then ← size word `or 0x2020` and an address test of `size` bytes from `0xa8000000` (`0xbfc02b50`). If it fails, the bank is cleared.
+   The final write per bank is size word `or 0xff` again, or zero.
+
+Then placement (`0xbfc00f64`): for size code 31 down to 0 (halving the unit count each pass), for banks 0 to 3 whose size code matches, set valid and the next
+base (unit 32, advancing by the bank's unit count, jumping from `0x60` to `0x80`); stop after four banks. Equal sizes keep bank order. The total
+at `0xbfc010a8` is the sum of `(size code + 1) * 4 MiB` over valid banks, and that, doubled and with `0x8000` ORed, is the DMA fill's size register.
+
+The PROM does not stop at the Indigo's 384 MiB limit: four 128 MiB banks place and total 512 MiB, and 4.0.5D's single memory-clear run for that
+total crosses the hole at `0x18000000` (see the PROM section above).
+
+**The counter the PROM polls at `+0x1004` is the RPSS counter (`rpss_ctr`), not the refresh counter.** The refresh counter is `ref_ctr` at `+0x4c`, which the PROM never reads. The wait
+(`0xbfc004e8`–`0xbfc00500`) reads `rpss_ctr` once, then reads it again until the **signed** difference reaches 625; the counter can be any
+32-bit value at the start. The tick rate is 100 ns after reset, so the wait is 62.5 µs; a model that returns a value that advances by one or more per read
+also finishes. Interrupt wiring that reaches the MC: [INT2](../int2/README.md) and the [interrupt routing table](../../platforms/ip20/interrupts.md).
 
 ## Register notes and what a qtest can discriminate
 

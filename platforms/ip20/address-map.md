@@ -2,7 +2,8 @@
 
 The physical address space of the Indigo R4000 board as the MC chip decodes it, with each region's contents and grade, then the
 order in which the PROM 4.0.5D programs the MC. The MC registers themselves are in [devices/mc](../../devices/mc/README.md); what
-else the PROM does is on [the PROM software page](prom-software.md).
+else the PROM does is on [the PROM software page](prom-software.md). The interrupt controller whose six lines the MC forwards to the CPU is [INT2](../../devices/int2/README.md); which
+device drives which bit is [the interrupt routing table](interrupts.md).
 
 Grades follow [AGENTS.md](../../AGENTS.md): **established** (public IRIX source tree, shipped IRIX header, or the MC specification, and
 the PROM listing agrees), **inferred**, **unknown**. Sources are named per row: *map* is the MC specification's physical map
@@ -62,11 +63,11 @@ differs in the items listed afterwards.
    interrupts enabled, no parity reporting, watchdog off, graphics held in reset, big-endian, `back2` and `r4k_chk_par_n` set, bus-rate field 3. `hwm` = cache line bytes / 8 + 4.
 4. **CPU control 1** `0xbfc004a8`: `0x1016` (`mc_hwm` 6, GIO timeouts on, HPC endianness fixed big-endian).
 5. **DRAM timing** `0xbfc004c8`, `0xbfc004dc`: `cpu_memacc` `0x11453433`, `gio_memacc` `0x34332`.
-6. **Refresh wait** `0xbfc004e4`–`0xbfc00504`: 625 RPSS-counter ticks at the reset 100 ns rate (62.5 µs), the time for eight refresh lines. The
+6. **Refresh wait** `0xbfc004e4`–`0xbfc00504`: 625 RPSS-counter (`+0x1004`, not the refresh counter) ticks at the reset 100 ns rate (62.5 µs), the time for eight refresh lines. The
    PROM does not write `rpss_divider`, `ctrld` or the arbitration registers.
 7. **HPC and serial set-up**, `0xbfc0089c`, `0xbfc0096c`, `0xbfc008f8`: not MC.
 8. **MC data path test** `0xbfc028b0`: refresh off, a walking one through `cpu_memacc`, refresh restored.
-9. **Memory sizing** `0xbfc00a00`: both bank words ← 0; per bank the probe at `0xbfc00d1c` (four patterns at `0xa8000000`, a 4× growing
+9. **Memory sizing** `0xbfc00a00` (the exact word values and access order a model must satisfy are in the [MC page](../../devices/mc/README.md#sizing-memory-exactly-as-the-prom-expects-a-model-checklist)): both bank words ← 0; per bank the probe at `0xbfc00d1c` (four patterns at `0xa8000000`, a 4× growing
    alias test, a sub-bank test at `0xac000000`), `0xbfc00f1c` writes the size word, `0xbfc00f64` places the banks and sums the total
    (`0xbfc010a8`), an address test `0xbfc02b50` and `0xbfc02f30` runs over the whole size, and a failed bank is cleared.
 10. **Refresh burst** `0xbfc00544`–`0xbfc005b4`: `cpuctrl0` low nibble ← 2 (four lines) unless some bank is a 4 or 8 MiB (256Kx36, 512Kx36) bank.
