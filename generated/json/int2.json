@@ -1,0 +1,415 @@
+{
+ "generator": "defs-gen 4",
+ "input_sha256": "ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e",
+ "schema": "defs-flat/1",
+ "source": "devices/int2/registers.toml",
+ "profile": "public",
+ "rows": [
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "local0_status",
+   "offset": 3,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "local0_mask",
+   "offset": 7,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "local1_status",
+   "offset": 11,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "local1_mask",
+   "offset": 15,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "vme_status",
+   "offset": 19,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "vme0_mask",
+   "offset": 23,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "vme1_mask",
+   "offset": 27,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "port_config",
+   "offset": 31,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "port_config.power",
+   "hi": 4,
+   "lo": 4,
+   "grade": "unknown"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "port_config.vr_interrupt_latch",
+   "hi": 3,
+   "lo": 3,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "port_config.ser1_rts",
+   "hi": 2,
+   "lo": 2,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "port_config.ser0_rts",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "port_config.parity_or_ext_clock",
+   "hi": 0,
+   "lo": 0,
+   "grade": "unknown"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "timer_ack",
+   "offset": 35,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_ack.timer1",
+   "hi": 1,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_ack.timer0",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "error_status",
+   "offset": 39,
+   "access": "r",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "unknown"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "timer0",
+   "offset": 51,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "timer1",
+   "offset": 55,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "timer2",
+   "offset": 59,
+   "access": "rw",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "register",
+   "name": "timer_control",
+   "offset": 63,
+   "access": "w",
+   "width": 8,
+   "count": 1,
+   "stride": 1,
+   "space": null,
+   "reset": "unknown",
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_control.counter",
+   "hi": 7,
+   "lo": 6,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_control.rw",
+   "hi": 5,
+   "lo": 4,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_control.mode",
+   "hi": 3,
+   "lo": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "field",
+   "name": "timer_control.bcd",
+   "hi": 0,
+   "lo": 0,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "ACK_TIMER0",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "ACK_TIMER1",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_CENTR",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_DUART",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_ENET",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_FIFO",
+   "value": 1,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_GDMA",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_GIO1",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_SCSI",
+   "value": 4,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL0_VME0",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_ACFAIL",
+   "value": 32,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_DSP",
+   "value": 16,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_GIO2",
+   "value": 128,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_GR1MODE",
+   "value": 2,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_VIDEO",
+   "value": 64,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "LOCAL1_VME1",
+   "value": 8,
+   "count": 1,
+   "grade": "established"
+  },
+  {
+   "unit": "int2",
+   "kind": "constant",
+   "name": "TIMER_MASTER_HZ",
+   "value": 1000000,
+   "count": 1,
+   "grade": "inferred"
+  }
+ ]
+}

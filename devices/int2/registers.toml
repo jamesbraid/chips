@@ -1,0 +1,181 @@
+unit = "int2"
+prefix = "INT2"
+title = "INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000 boards)"
+doc = "The Indigo's interrupt multiplexer: two local interrupt status and mask registers, the VME interrupt status and masks, a five-bit port register that also acknowledges the vertical-retrace latch, a timer acknowledge strobe and an 8254 timer block. Offsets are from the INT2 base, physical 0x1fb801c0 on both the R3000 and R4000 Indigo boards, and name the byte a big-endian CPU addresses: each register is one byte on a 4-byte stride and sits in the low byte lane, so a little-endian CPU addresses the same register 3 bytes lower (0x1fb801c0 for local 0 status). Names follow the shipped IRIX header for the R4000 Indigo and, for the 8254, the standard part; NetBSD's names for the same offsets are in the page. Grades: established means read in full in the R4000 Indigo kernel object or the 4.0.5D PROM (the README cites the addresses) or stated by a public header; inferred means a reasoned reading; unknown means nothing shipped settles it. Nothing was measured on a board. The prose is in devices/int2/README.md and the interrupt routing table in the R4000 Indigo platform directory."
+from = "IRIX 6.5 IP20 kernel objects (IP20boot/kernel.o and drivers) and PROM 070-8116-004 (4.0.5D); shipped header IP20.h"
+public_from = ["NetBSD sgimips", "Linux", "Intel 8254 data sheet"]
+name_source = "public"
+name_cite = "NetBSD sys/arch/sgimips/dev/int2reg.h and the Linux sgi/ioc.h INT2 structure"
+
+[constants]
+LOCAL0_FIFO = { value = 0x01, grade = "established", doc = "Local 0 bit 0: GIO slot 0 interrupt, also named FIFO full." }
+LOCAL0_CENTR = { value = 0x02, grade = "established", doc = "Local 0 bit 1: parallel (Centronics) port, from the HPC1 parallel channel." }
+LOCAL0_SCSI = { value = 0x04, grade = "established", doc = "Local 0 bit 2: SCSI." }
+LOCAL0_ENET = { value = 0x08, grade = "established", doc = "Local 0 bit 3: Ethernet." }
+LOCAL0_GDMA = { value = 0x10, grade = "established", doc = "Local 0 bit 4: graphics DMA done." }
+LOCAL0_DUART = { value = 0x20, grade = "established", doc = "Local 0 bit 5: the serial controllers, ORed." }
+LOCAL0_GIO1 = { value = 0x40, grade = "established", doc = "Local 0 bit 6: GIO slot 1 (graphics geometry engine, or a second HPC1)." }
+LOCAL0_VME0 = { value = 0x80, grade = "established", doc = "Local 0 bit 7: VME interrupt group 0, gated by the VME 0 mask." }
+LOCAL1_GR1MODE = { value = 0x02, grade = "established", doc = "Local 1 bit 1: the GR1 mode input on the R4000 board, the case interlock on the R3000 board (the header names it for both boards)." }
+LOCAL1_VME1 = { value = 0x08, grade = "established", doc = "Local 1 bit 3: VME interrupt group 1, gated by the VME 1 mask." }
+LOCAL1_DSP = { value = 0x10, grade = "established", doc = "Local 1 bit 4: DSP, from the HPC1 DSP interrupt block." }
+LOCAL1_ACFAIL = { value = 0x20, grade = "established", doc = "Local 1 bit 5: AC power failure." }
+LOCAL1_VIDEO = { value = 0x40, grade = "established", doc = "Local 1 bit 6: video option." }
+LOCAL1_GIO2 = { value = 0x80, grade = "established", doc = "Local 1 bit 7: GIO slot 2, which carries the graphics vertical retrace." }
+ACK_TIMER0 = { value = 0x01, grade = "established", doc = "Timer acknowledge bit for timer 0." }
+ACK_TIMER1 = { value = 0x02, grade = "established", doc = "Timer acknowledge bit for timer 1." }
+TIMER_MASTER_HZ = { value = 1000000, grade = "inferred", doc = "8254 clock input. IRIX programs counter 2 with 200 and uses 5000 as the counter 2 output rate, and the PROM programs it with 10000 for a 100 Hz reference; both agree only at 1 MHz. No shipped header states it." }
+
+[registers.local0_status]
+offset = 0x03
+access = "r"
+width = 8
+ro = 0xff
+reset = "unknown"
+grade = "established"
+from = "IP20.h LIO_0_ISR_ADDR (read-only, byte); kernel.o local 0 handler at 0x28c8 (status AND mask in software); PROM 4.0.5D 0xbfc03720 interrupt test"
+doc = "Raw state of the eight local 0 sources, one bit each, high while the source asserts. It is not gated by the mask: the PROM clears both masks and then reads status, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal."
+
+[registers.local0_mask]
+offset = 0x07
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "inferred"
+reset_from = "kernel.o mlreset (0x2258) and PROM 0xbfc008f8 both write zero before using it; no code relies on a power-on value"
+grade = "established"
+from = "IP20.h LIO_0_MASK_ADDR; PROM 4.0.5D 0xbfc03780 pattern test; kernel.o setlclvector 0x23a0"
+doc = "Enables local 0 sources toward the CPU. A one bit lets the source raise the local 0 output. All eight bits read back what was written: the PROM writes 00 aa cc f0 ff 55 33 0f in turn and compares. A qtest can discriminate: byte write then read of 0xaa and 0x55."
+
+[registers.local1_status]
+offset = 0x0b
+access = "r"
+width = 8
+ro = 0xff
+reset = "unknown"
+grade = "established"
+from = "IP20.h LIO_1_ISR_ADDR; kernel.o local 1 handler at 0x2a1c; PROM 4.0.5D 0xbfc03868"
+doc = "Raw state of the eight local 1 sources. Same rules as local 0 status. With all masks clear the PROM expects bits 0, 2, 3 and 4 to read zero and tolerates bits 1, 5, 6 and 7."
+
+[registers.local1_mask]
+offset = 0x0f
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "inferred"
+reset_from = "kernel.o mlreset (0x2250) and PROM 0xbfc00908 write zero before use"
+grade = "established"
+from = "IP20.h LIO_1_MASK_ADDR; PROM 4.0.5D 0xbfc03784 pattern test"
+doc = "Enables local 1 sources toward the CPU. All eight bits read back."
+
+[registers.vme_status]
+offset = 0x13
+access = "r"
+width = 8
+ro = 0xff
+reset = "unknown"
+grade = "established"
+from = "IP20.h VME_ISR_ADDR (byte, read-only) and VRSTAT_ADDR; gr2.a Gr2RetraceHandler reads bit 0"
+doc = "VME interrupt request levels 1 to 7 in bits 1 to 7 (inferred from the header names; no shipped R4000 Indigo code reads it for VME). Bit 0 is read by the GR2 retrace handler as the vertical-retrace status, active low (the header says 'no interrupt' when set): the handler polls it up to ten times 1 microsecond apart. NetBSD names this offset the map status register of the Indy's INT3 and gives it a different meaning."
+
+[registers.vme0_mask]
+offset = 0x17
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "inferred"
+reset_from = "kernel.o mlreset (0x22f8) writes zero"
+grade = "established"
+from = "IP20.h VME_0_MASK_ADDR; kernel.o mlreset and iointr_at_cpu (0x2e3c, sets one bit)"
+doc = "Which VME levels may raise local 0 bit 7. The IRIX routine that targets an I/O interrupt at the CPU sets bit n in this register. The PROM never reads this register back."
+
+[registers.vme1_mask]
+offset = 0x1b
+access = "rw"
+width = 8
+reset = 0x00
+reset_grade = "inferred"
+reset_from = "kernel.o mlreset (0x22fc) and PROM 0xbfc00920 write zero"
+grade = "established"
+from = "IP20.h VME_1_MASK_ADDR; PROM 4.0.5D 0xbfc02a64 (writes 0x5a, reads back)"
+doc = "Which VME levels may raise local 1 bit 3. The PROM writes 0x5a and checks the read-back, so all eight bits hold."
+
+[registers.port_config]
+offset = 0x1f
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IP20.h PORT_CONFIG and PCON_*; PROM 4.0.5D 0xbfc00930 (writes 0x16); gr2.a gr2_retr_intr (0xa0); sduart.a du_rs422; lg1.a light.o"
+doc = "Five-bit read/write port at the offset NetBSD calls the map polarity register on the Indy generation. The header calls it the LED and serial-port configuration register. Bits 1 and 2 are the RTS lines of serial ports 0 and 1 (the serial driver sets and clears them to switch the port between RS-232 and RS-422 modes); bit 3 is the vertical-retrace interrupt latch control; bit 4 is named power in the header. The PROM writes 0x16 during start-up. The header also names bits 1 to 3 as LEDs on the R4000 board and bit 0 as a cache parity flag; which role a bit plays on which board, and the LED polarity, are not settled."
+
+[registers.port_config.fields]
+parity_or_ext_clock = { bits = [0, 0], grade = "unknown", doc = "PCON_PARITY on the R4000 board (cache parity error), external serial clock on the R3000 board. No shipped code reads or writes it." }
+ser0_rts = { bits = [1, 1], grade = "established", doc = "One serial port's RS-232 or RS-422 select (the header names it RTS and TX+ for port 0). The serial driver sets it when the port opens and clears it for RS-422 mode; the header also names it LED_HEART." }
+ser1_rts = { bits = [2, 2], grade = "established", doc = "The other serial port's select, same use as bit 1; the header also names it LED_IDLE." }
+vr_interrupt_latch = { bits = [3, 3], grade = "established", doc = "Vertical retrace interrupt latch control. The graphics retrace handlers write it clear, flush the bus and write it set again to acknowledge the interrupt; it is set the rest of the time. The header also names it LED_GFX." }
+power = { bits = [4, 4], grade = "unknown", doc = "PCON_POWER. The PROM sets it at start-up and no shipped code clears it; the header comment says power off, so its polarity is not settled." }
+
+[registers.timer_ack]
+offset = 0x23
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IP20.h TIMER_ACK_ADDR (write strobe); kernel.o ackrtclock 0x76c4 and ackkgclock 0x76ec; PROM 0xbfc00960 (writes 3)"
+doc = "Write-only strobe. Writing 1 clears the timer 0 interrupt latch, 2 clears timer 1. IRIX acknowledges timer 0 with 1 and timer 1 with 2; the PROM writes 3 at start to clear both. Writing zero bits has no effect. A qtest can discriminate: timer 0 interrupt line drops after a write of 1 and timer 1 stays asserted."
+
+[registers.timer_ack.fields]
+timer0 = { bits = [0, 0], grade = "established" }
+timer1 = { bits = [1, 1], grade = "established" }
+
+[registers.error_status]
+offset = 0x27
+access = "r"
+width = 8
+reset = "unknown"
+grade = "unknown"
+from = "NetBSD int2reg.h names the offset INT2_ERROR_STATUS; Linux ioc.h marks the errstat byte reserved on INT2"
+doc = "No R4000 Indigo kernel object or the PROM touches this offset. NetBSD defines it for the Indy generation, where Linux calls it reserved on INT2. Nothing shipped for the Indigo reads it."
+
+[registers.timer0]
+offset = 0x33
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IP20.h PT_CLOCK_ADDR 0x1fb801f0 (8254); kernel.o startrtclock 0x7544"
+doc = "8254 counter 0 data, one byte at a time per the control word. Its output is the timer 0 interrupt (CPU IP4). IRIX loads it with 50 after control word 0x34, giving 100 Hz from the 5 kHz counter 2 output."
+
+[registers.timer1]
+offset = 0x37
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "kernel.o startkgclock 0x7714 and slowkgclock 0x7914"
+doc = "8254 counter 1 data. Its output is the timer 1 interrupt (CPU IP5), the profiling and fast clock. IRIX loads it with 5000 divided by the wanted rate, MSB shifted down, after control word 0x74."
+
+[registers.timer2]
+offset = 0x3b
+access = "rw"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "kernel.o startrtclock 0x7544 (control 0xb4, count 200); PROM 0xbfc2ca70 (control 0xb4, count 10000)"
+doc = "8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX counts 200 into it; the PROM reuses it as a 100 Hz reference with count 10000 and latches it with control word 0x80."
+
+[registers.timer_control]
+offset = 0x3f
+access = "w"
+width = 8
+reset = "unknown"
+grade = "established"
+from = "IP20.h PT_CLOCK_ADDR; kernel.o startrtclock (writes 0x34, 0xb4), stopclocks (0x32, 0x72, 0xb2), slowkgclock (0x74); PROM 0xbfc2ca7c (0xb4, 0x80)"
+doc = "8254 control word. The R4000 Indigo kernel and the PROM only write it. Standard 8254 layout; the values seen are 0x34, 0x74 and 0xb4 (counter 0, 1, 2 in mode 2 with LSB then MSB), 0x32, 0x72 and 0xb2 (mode 1) and 0x80 (latch counter 2) and 0xb8 (counter 2 mode 4)."
+
+[registers.timer_control.fields]
+bcd = { bits = [0, 0], grade = "established" }
+mode = { bits = [3, 1], grade = "established" }
+rw = { bits = [5, 4], grade = "established" }
+counter = { bits = [7, 6], grade = "established" }
