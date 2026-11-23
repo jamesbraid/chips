@@ -1,6 +1,6 @@
 """generated from devices/int2/registers.toml by defs-gen - do not edit, change the source
 defs-gen 4
-input sha256 ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e
+input sha256 29645b43ee4985139264014550a8e1993073007c6bdd414538f5005486db0086
 INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000 boards)"""
 
 UNIT = 'int2'

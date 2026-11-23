@@ -46,12 +46,12 @@ access. The PROM's one exception is that it writes the first 8254 counter at `+0
 
 ## Status and mask behaviour
 
-**Status is raw and read-only (established).** The PROM at `0xbfc03780` writes both mask registers with `00 aa cc f0 ff 55 33 0f`
+**Status is read-only (established); raw, not hardware-masked (inferred).** The PROM at `0xbfc03780` writes both mask registers with `00 aa cc f0 ff 55 33 0f`
 and reads each back; later at `0xbfc03824` it zeroes both masks and then reads the status registers, requiring the local 0 bits other than
 bit 0 and bit 6 to be zero and local 1 bits 0, 2, 3 and 4 to be zero (it allows bit 1, bits 5, 6, 7, and the two GIO bits on local 0). IRIX
-computes `status AND mask` in software (`kernel.o` local 0 handler at `0x28c8`, local 1 at `0x2a1c`), so a masked-off source still
-shows in status. Status bits follow the source lines directly: no shipped code ever writes a status register, so there is
-no write-1-to-clear. Whether a status read has side effects is unknown; the shipped code reads status without ill effect repeatedly
+computes `status AND mask` in software (`kernel.o` local 0 handler at `0x28c8`, local 1 at `0x2a1c`), and the PROM tolerates some set status bits
+with both masks zero. That is consistent with a status that ignores the mask, but a status that the part masks itself would be consistent with it too,
+so the unmasked reading is inferred. No shipped code ever writes a status register, so a write-1-to-clear is not used (a write has no known effect). Whether a status read has side effects is unknown; the shipped code reads status without ill effect repeatedly
 (the PROM polls local 0 bit 5 for serial input).
 
 **Mask registers are plain 8-bit latches (established).** All bits read back what was written. A qtest should write and read `0xaa`
@@ -76,7 +76,7 @@ highest set Cause pending bit, plus the lookup tables at `.data+0x340`) and the 
 | 8254 counter 0 | 12 | IP4 / Int2 | `clock()` (`os/clock.o`) |
 | 8254 counter 1 | 13 | IP5 / Int3 | fast clock |
 | bus error | 14 | IP6 / Int4 | `buserror_intr` (`os/trap.o`) |
-| (R4000 count/compare, internal) | 15 | IP7 / Int5 | `clr_r4kcount_intr` at `0x2d30` |
+| (R4000 count/compare, internal) | 15 | IP7 / Int5 | wrapper at `0x2d30`, which calls `clr_r4kcount_intr` (`0xeebc`, writes CP0 Compare) |
 
 The shipped header names the Cause bits `CAUSE_IP3` to `CAUSE_IP8` (bit 10 to bit 15) in its own level numbering; the R4000 manual
 numbers the same bits IP2 to IP7. Cause bit 14 is bound to the bus-error handler by the dispatch table (established). No INT2 register shows a bus-error
@@ -135,11 +135,11 @@ Kernel clock set-up (`startrtclock`, `kernel.o 0x7544`, in `spl7`): control `0x3
 with `50`; control `0xb4` (counter 2, same mode), counter 2 loaded with `200`. `stopclocks` (`0x75ec`) writes control `0x32`, `0x72`, `0xb2` (modes 1)
 and acknowledges both timers. The fast clock (`startkgclock` at `0x7714`, `slowkgclock` at `0x7914`) loads counter 1 with `5000 / fasthz`
 under control `0x74` and stops it with count zero. The PROM's delay routine at `0xbfc2ca70` programs counter 2 with control `0xb4` and count
-`10000` (`0x2710`) and polls it after a latch command (`0x80`), apparently to time the CPU against a 100 Hz reference; the PROM's INT2 init
+`10000` (`0x2710`) and reads it after a latch command (`0x80`); it returns the ticks that elapsed during a fixed 512-iteration loop, so it calibrates a delay loop (the count of 10000 is a window, not evidence of the input rate); the PROM's INT2 init
 (`0xbfc00940`) writes `0x02`, `0x42`, `0x42` to `+0x30` and `0x03` to the acknowledge register at `+0x23`.
 
 **Clock rate (inferred).** The kernel divides counter 2 by 200 and treats 5000 as a rate (`5000 / fasthz`), so counter 2's output is 5 kHz and the
-input is 1 MHz; counter 0's divisor of 50 then ticks at 100 Hz. NetBSD and Linux both state a 1 MHz clock ("unlike in PCs it's clocked at exactly
+input is 1 MHz if counter 2 feeds counters 0 and 1 (NetBSD `int.c`, `int_8254_cal`: "Timer2 clocks timer0 and timer1", programmed that way on IP12); counter 0's divisor of 50 then ticks at 100 Hz. NetBSD and Linux both state a 1 MHz clock ("unlike in PCs it's clocked at exactly
 1 MHz"). The shipped headers do not state the crystal. Counter 0 gives `HZ = 100` on IP20 (inferred from the two constants).
 
 **Acknowledge.** `ackrtclock` (`0x76c4`) writes `1` to `+0x23` after a bus flush; `ackkgclock` (`0x76ec`) writes `2`. The header calls the register "clear timer
@@ -157,7 +157,8 @@ The Indy and Indigo2 replace the Indigo's INT2 with one in the IOC family reache
 the same byte offsets (`+3`, `+7`, `+0xb`, `+0xf`) as the Indigo, then a VME status and two mask registers, a polarity register, the timer clear,
 an error status ("reserved on INT2") and the 8254 at `+0x33` onward. The source bits differ: on those parts local 0 is FIFO full, SCSI 0, SCSI 1,
 Ethernet, graphics DMA, parallel port, second HPC, and an LIO2 line; local 1 is ISDN, power, ISDN, LIO3, HPC3, AC fail, video and GIO2. The two
-tables differ at bits 1, 2, 5, 6 and 7 of local 0 and at nearly every bit of local 1, so the Indigo cannot reuse an Indy table. Neither the Indy's mappable interrupts nor the power-button
+tables differ at bits 1, 2, 5 and 6 of local 0 and at bits 0, 1, 2 and 4 of local 1. Local 0 bit 0 (FIFO), 3 (Ethernet) and 4 (graphics DMA) and local 1 bits 5, 6 and 7
+(AC fail, video, GIO 2) carry the same names, and local 0 bit 7 and local 1 bit 3 are the mappable-interrupt groups on both (NetBSD `int.c`), so the Indigo still cannot reuse an Indy table. Neither the Indy's mappable interrupts nor the power-button
 interrupt exist on the Indigo; the Indigo's `0x13` to `0x1f` are the VME block and the port register.
 
 ## What a qtest can discriminate
@@ -167,6 +168,18 @@ interrupt exist on the Indigo; the Indigo's `0x13` to `0x1f` are the VME block a
 - Timer acknowledge: write `1` drops timer 0's output, `2` drops timer 1's; writes of zero do nothing.
 - Port register bit 3 pulse clears local 1 bit 7.
 - 8254: control `0x34` then two byte writes to counter 0 load a 16-bit divisor; counter 2 loaded with `200` and counter 0 with `50` yield 100 Hz at a 1 MHz input.
+
+## Review (2026-11-23)
+
+Independent review of `dabb2b8e` (this page, `registers.toml`, `questions/int2.md`) and `0ae35d94` (`platforms/ip20/interrupts.md`), against the
+IP20 `kernel.o` and PROM 070-8116-004 (4.0.5D, sha256 `e6e1f1ed...ba97f82f`) at the cited addresses, and NetBSD `int2reg.h`/`int.c` and Linux `ioc.h`.
+Confirmed by re-reading the code: the 8254 lane (`+3`, `+7`, `+0xb`, `+0xf`), the clock set-up constants and control words, the acknowledge strobe values,
+the PROM timing routine, the CPU line map (dispatch-table relocations name `clock`, `ackkgclock`, `buserror_intr`), the three GIO lines, the port bits
+and the PROM's three `+0x30` writes. Corrected: the Indy-generation comparison (local 1 bits 5, 6, 7 and the mapped groups match, not "nearly every bit"),
+the count/compare handler address, the PROM timing routine's purpose (a delay-loop calibration, which does not discriminate the input rate), and the grade
+of the unmasked-status reading (inferred). The 4.0.5G image (070-8116-005) was not found: the Library holds only the 4.0.5D image by part number
+(plus an unrelated parts list entry), so no 4.0.5D/4.0.5G comparison of the INT2 code was possible; the existing 4.0.5G notes in
+[prom-software.md](../../platforms/ip20/prom-software.md) do not cover INT2. Not checked: the shipped header's wording (restricted tree not opened), IP12.
 
 ## Open
 

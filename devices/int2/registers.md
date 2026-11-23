@@ -1,6 +1,6 @@
 <!-- generated from devices/int2/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e -->
+<!-- input sha256 29645b43ee4985139264014550a8e1993073007c6bdd414538f5005486db0086 -->
 
 # INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000 boards)
 
@@ -31,7 +31,7 @@ Every item has a grade: established, inferred or unknown. A grade says how the i
 
 ### Register `local0_status`
 
-Raw state of the eight local 0 sources, one bit each, high while the source asserts. It is not gated by the mask: the PROM clears both masks and then reads status, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal.
+Raw state of the eight local 0 sources, one bit each, high while the source asserts. It appears not to be gated by the mask (inferred): the PROM clears both masks and then reads status, tolerating some set bits, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal.
 
 ### Register `local0_mask`
 
@@ -92,7 +92,7 @@ No R4000 Indigo kernel object or the PROM touches this offset. NetBSD defines it
 
 ### Register `timer2`
 
-8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX counts 200 into it; the PROM reuses it as a 100 Hz reference with count 10000 and latches it with control word 0x80.
+8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's interrupt driver states this and programs it that way on the R3000 Indigo; IRIX's counter 0 and 1 divisors fit it). IRIX counts 200 into it; the PROM reuses it to time a fixed delay loop, count 10000, and latches it with control word 0x80.
 
 ### Register `timer_control`
 
@@ -125,4 +125,4 @@ No R4000 Indigo kernel object or the PROM touches this offset. NetBSD defines it
 | `LOCAL1_GR1MODE` | 0x2 | established |  | Local 1 bit 1: the GR1 mode input on the R4000 board, the case interlock on the R3000 board (the header names it for both boards). |
 | `LOCAL1_VIDEO` | 0x40 | established |  | Local 1 bit 6: video option. |
 | `LOCAL1_VME1` | 0x8 | established |  | Local 1 bit 3: VME interrupt group 1, gated by the VME 1 mask. |
-| `TIMER_MASTER_HZ` | 0xf4240 | inferred |  | 8254 clock input. IRIX programs counter 2 with 200 and uses 5000 as the counter 2 output rate, and the PROM programs it with 10000 for a 100 Hz reference; both agree only at 1 MHz. No shipped header states it. |
+| `TIMER_MASTER_HZ` | 0xf4240 | inferred |  | 8254 clock input. IRIX programs counter 2 with 200 and divides 5000 by the wanted fast-clock rate, which gives 100 Hz and a 5 kHz counter 2 output only at 1 MHz if counter 2 feeds counters 0 and 1. NetBSD's interrupt driver states 1 MHz (and the cascade) in a comment, but its R4000 Indigo path does not use the 8254. The PROM's count of 10000 does not depend on the rate. No shipped header states it. |

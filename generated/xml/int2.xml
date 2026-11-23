@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <!-- generated from devices/int2/registers.toml by defs-gen - do not edit, change the source -->
 <!-- defs-gen 4 -->
-<!-- input sha256 ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e -->
+<!-- input sha256 29645b43ee4985139264014550a8e1993073007c6bdd414538f5005486db0086 -->
 <genxml unit="int2" prefix="INT2" title="INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000 boards)">
   <doc>The Indigo's interrupt multiplexer: two local interrupt status and mask registers, the VME interrupt status and masks, a five-bit port register that also acknowledges the vertical-retrace latch, a timer acknowledge strobe and an 8254 timer block. Offsets are from the INT2 base, physical 0x1fb801c0 on both the R3000 and R4000 Indigo boards, and name the byte a big-endian CPU addresses: each register is one byte on a 4-byte stride and sits in the low byte lane, so a little-endian CPU addresses the same register 3 bytes lower (0x1fb801c0 for local 0 status). Names follow the shipped IRIX header for the R4000 Indigo and, for the 8254, the standard part; NetBSD's names for the same offsets are in the page. Grades: established means read in full in the R4000 Indigo kernel object or the 4.0.5D PROM (the README cites the addresses) or stated by a public header; inferred means a reasoned reading; unknown means nothing shipped settles it. Nothing was measured on a board. The prose is in devices/int2/README.md and the interrupt routing table in the R4000 Indigo platform directory.</doc>
   <struct name="LOCAL0_STATUS" size="1" grade="established" register="yes" offset="0x3" access="r" reset="unknown">
-    <doc>Raw state of the eight local 0 sources, one bit each, high while the source asserts. It is not gated by the mask: the PROM clears both masks and then reads status, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal.</doc>
+    <doc>Raw state of the eight local 0 sources, one bit each, high while the source asserts. It appears not to be gated by the mask (inferred): the PROM clears both masks and then reads status, tolerating some set bits, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal.</doc>
   </struct>
   <struct name="LOCAL0_MASK" size="1" grade="established" register="yes" offset="0x7" access="rw" reset="0x0">
     <doc>Enables local 0 sources toward the CPU. A one bit lets the source raise the local 0 output. All eight bits read back what was written: the PROM writes 00 aa cc f0 ff 55 33 0f in turn and compares. A qtest can discriminate: byte write then read of 0xaa and 0x55.</doc>
@@ -48,7 +48,7 @@
     <doc>8254 counter 1 data. Its output is the timer 1 interrupt (CPU IP5), the profiling and fast clock. IRIX loads it with 5000 divided by the wanted rate, MSB shifted down, after control word 0x74.</doc>
   </struct>
   <struct name="TIMER2" size="1" grade="established" register="yes" offset="0x3b" access="rw" reset="unknown">
-    <doc>8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX counts 200 into it; the PROM reuses it as a 100 Hz reference with count 10000 and latches it with control word 0x80.</doc>
+    <doc>8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's interrupt driver states this and programs it that way on the R3000 Indigo; IRIX's counter 0 and 1 divisors fit it). IRIX counts 200 into it; the PROM reuses it to time a fixed delay loop, count 10000, and latches it with control word 0x80.</doc>
   </struct>
   <struct name="TIMER_CONTROL" size="1" grade="established" register="yes" offset="0x3f" access="w" reset="unknown">
     <doc>8254 control word. The R4000 Indigo kernel and the PROM only write it. Standard 8254 layout; the values seen are 0x34, 0x74 and 0xb4 (counter 0, 1, 2 in mode 2 with LSB then MSB), 0x32, 0x72 and 0xb2 (mode 1) and 0x80 (latch counter 2) and 0xb8 (counter 2 mode 4).</doc>

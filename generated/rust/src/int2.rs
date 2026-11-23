@@ -1,12 +1,12 @@
 // @generated from devices/int2/registers.toml by defs-gen - do not edit, change the source
 // defs-gen 4
-// input sha256 ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e
+// input sha256 29645b43ee4985139264014550a8e1993073007c6bdd414538f5005486db0086
 // INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000 boards)
 #![allow(dead_code)]
 #![allow(clippy::doc_markdown)]
 #![cfg_attr(rustfmt, rustfmt_skip)]
 
-/// Raw state of the eight local 0 sources, one bit each, high while the source asserts. It is not gated by the mask: the PROM clears both masks and then  (established)
+/// Raw state of the eight local 0 sources, one bit each, high while the source asserts. It appears not to be gated by the mask (inferred): the PROM clear (established)
 pub mod local0_status {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x3;
@@ -136,7 +136,7 @@ pub mod timer1 {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x37;
 }
-/// 8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX c (established)
+/// 8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's interrupt driver states this and programs it that way on the R3000 Indigo; IRIX's co (established)
 pub mod timer2 {
     pub const WIDTH: u32 = 8;
     pub const OFFSET: u64 = 0x3b;

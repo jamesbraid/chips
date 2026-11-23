@@ -1,7 +1,7 @@
 /* generated from devices/int2/registers.toml by defs-gen - do not edit, change
  * the source */
 /* defs-gen 4 */
-/* input sha256 ddb7d5c9a928bcccdae1a8a3a03b7439bba8c65460f360e653d4e8612963b52e */
+/* input sha256 29645b43ee4985139264014550a8e1993073007c6bdd414538f5005486db0086 */
 /* INT2 local interrupt controller and 8254 timer block (Indigo, R3000 and R4000
  * boards) */
 #ifndef INT2_GEN_H
@@ -12,10 +12,10 @@
 
 /*
  * Raw state of the eight local 0 sources, one bit each, high while the source
- * asserts. It is not gated by the mask: the PROM clears both masks and then
- * reads status, and IRIX ANDs status with the mask in software. Bit layout is
- * the LOCAL0 constants. A qtest can discriminate: a write has no effect; the
- * bit follows the source signal.
+ * asserts. It appears not to be gated by the mask (inferred): the PROM clears
+ * both masks and then reads status, tolerating some set bits, and IRIX ANDs
+ * status with the mask in software. Bit layout is the LOCAL0 constants. A qtest
+ * can discriminate: a write has no effect; the bit follows the source signal.
  */
 /* local0_status: r8, reset unknown */
 #define INT2_LOCAL0_STATUS_OFFSET                    0x3u /* established */
@@ -139,10 +139,11 @@
 #define INT2_TIMER1_OFFSET                           0x37u /* established */
 
 /*
- * 8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header
- * states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX
- * counts 200 into it; the PROM reuses it as a 100 Hz reference with count 10000
- * and latches it with control word 0x80.
+ * 8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's interrupt
+ * driver states this and programs it that way on the R3000 Indigo; IRIX's
+ * counter 0 and 1 divisors fit it). IRIX counts 200 into it; the PROM reuses it
+ * to time a fixed delay loop, count 10000, and latches it with control word
+ * 0x80.
  */
 /* timer2: rw8, reset unknown */
 #define INT2_TIMER2_OFFSET                           0x3bu /* established */

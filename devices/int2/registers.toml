@@ -24,7 +24,7 @@ LOCAL1_VIDEO = { value = 0x40, grade = "established", doc = "Local 1 bit 6: vide
 LOCAL1_GIO2 = { value = 0x80, grade = "established", doc = "Local 1 bit 7: GIO slot 2, which carries the graphics vertical retrace." }
 ACK_TIMER0 = { value = 0x01, grade = "established", doc = "Timer acknowledge bit for timer 0." }
 ACK_TIMER1 = { value = 0x02, grade = "established", doc = "Timer acknowledge bit for timer 1." }
-TIMER_MASTER_HZ = { value = 1000000, grade = "inferred", doc = "8254 clock input. IRIX programs counter 2 with 200 and uses 5000 as the counter 2 output rate, and the PROM programs it with 10000 for a 100 Hz reference; both agree only at 1 MHz. No shipped header states it." }
+TIMER_MASTER_HZ = { value = 1000000, grade = "inferred", doc = "8254 clock input. IRIX programs counter 2 with 200 and divides 5000 by the wanted fast-clock rate, which gives 100 Hz and a 5 kHz counter 2 output only at 1 MHz if counter 2 feeds counters 0 and 1. NetBSD's interrupt driver states 1 MHz (and the cascade) in a comment, but its R4000 Indigo path does not use the 8254. The PROM's count of 10000 does not depend on the rate. No shipped header states it." }
 
 [registers.local0_status]
 offset = 0x03
@@ -34,7 +34,7 @@ ro = 0xff
 reset = "unknown"
 grade = "established"
 from = "IP20.h LIO_0_ISR_ADDR (read-only, byte); kernel.o local 0 handler at 0x28c8 (status AND mask in software); PROM 4.0.5D 0xbfc03720 interrupt test"
-doc = "Raw state of the eight local 0 sources, one bit each, high while the source asserts. It is not gated by the mask: the PROM clears both masks and then reads status, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal."
+doc = "Raw state of the eight local 0 sources, one bit each, high while the source asserts. It appears not to be gated by the mask (inferred): the PROM clears both masks and then reads status, tolerating some set bits, and IRIX ANDs status with the mask in software. Bit layout is the LOCAL0 constants. A qtest can discriminate: a write has no effect; the bit follows the source signal."
 
 [registers.local0_mask]
 offset = 0x07
@@ -163,7 +163,7 @@ width = 8
 reset = "unknown"
 grade = "established"
 from = "kernel.o startrtclock 0x7544 (control 0xb4, count 200); PROM 0xbfc2ca70 (control 0xb4, count 10000)"
-doc = "8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's header states this; IRIX's counter 0 and 1 divisors only make sense with it). IRIX counts 200 into it; the PROM reuses it as a 100 Hz reference with count 10000 and latches it with control word 0x80."
+doc = "8254 counter 2 data. Its output clocks counters 0 and 1 (NetBSD's interrupt driver states this and programs it that way on the R3000 Indigo; IRIX's counter 0 and 1 divisors fit it). IRIX counts 200 into it; the PROM reuses it to time a fixed delay loop, count 10000, and latches it with control word 0x80."
 
 [registers.timer_control]
 offset = 0x3f

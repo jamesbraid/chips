@@ -12,5 +12,7 @@
 5. **Edge or level latch of the timer interrupts, and read of the acknowledge register.** *[route: the 8254 data sheet and the HP-1 schematic]* Unknown.
 6. **The R3000 board mapping and the case-interlock bit.** *[route: an IRIX 5.3 or earlier IP12 kernel object]* The CPU-line mapping rests on NetBSD only; local 1 bit 1
    (case interlock on IP12) has no handler in the IP20 kernel.
-7. **The 4.0.5G PROM.** *[route: software now]* Not compared with 4.0.5D for INT2 behaviour.
+7. **The 4.0.5G PROM.** *[route: software now, once the image is in the Library under its part number]* Not compared with 4.0.5D for INT2 behaviour: the 070-8116-005 image is
+   listed by checksum in `references/prom-images.md` but the Library search by part number finds only the 4.0.5D image and an unrelated parts list, so the INT2 init (`0xbfc008f8` in 4.0.5D) and
+   the delay routine could not be diffed.
 8. **VME status bits 1 to 7 and local 0 bit 7 behaviour.** *[route: an IP20 board with a VME option, or the V30/35 guide]* No IP20 code reads `0x13` for VME.

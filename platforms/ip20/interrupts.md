@@ -14,9 +14,9 @@ From the IRIX `kernel.o` dispatch table (see the INT2 page). Cause bits are numb
 | 10 | IP2 | INT2 local 0 |
 | 11 | IP3 | INT2 local 1 |
 | 12 | IP4 | 8254 counter 0 (scheduler clock) |
-| 13 | IP5 | 8254 counter 1 (fast clock) |
+| 13 | IP5 | 8254 counter 1 (fast clock; the dispatch record's handler is `ackkgclock`, which only acknowledges) |
 | 14 | IP6 | bus error |
-| 15 | IP7 | CP0 count/compare |
+| 15 | IP7 | CP0 count/compare (wrapper at `0x2d30`, calls `clr_r4kcount_intr`) |
 
 ## Local 0 (status `0x1fb801c3`, mask `0x1fb801c7`)
 
@@ -44,12 +44,12 @@ From the IRIX `kernel.o` dispatch table (see the INT2 page). Cause bits are numb
 | 6 | `0x40` | LIO_VIDEO | video option board | the video option | established name (vector 14); no handler found in the IP20 objects |
 | 7 | `0x80` | LIO_GIO_2 | GIO bus interrupt line 2, shared by all slots; the graphics board's retrace handler registers here | port register `0x1fb801df` bit 3 pulse (clear then set) | established for the retrace use (`gr2_retr_intr`, `light.o`); handler at `0x2c84` |
 
-The vertical-retrace status can also be read in VME status bit 0 (`0x1fb801d3`), active low, which the GR2 retrace handler polls (`LIO1`
+The vertical-retrace status can also be read in VME status bit 0 (`0x1fb801d3`), which the GR2 retrace handler polls (up to ten times, leaving the loop when the bit reads 1; the active-low reading is from the header comment, not from the code) (`LIO1`
 bit 7 is the latched interrupt, VME status bit 0 is the live status; the two relationships are from the header comment and the polling code).
 
 ## Other INT2 signals
 
-- **8254 counter 0** drives the CPU line for Cause bit 12, acknowledged by writing `1` to `0x1fb801e3`; **counter 1** drives Cause bit 13, acknowledged by writing `2`. Established.
+- **8254 counter 0** drives the CPU line for Cause bit 12, acknowledged by writing `1` to `0x1fb801e3`; **counter 1** drives Cause bit 13, acknowledged by writing `2`. The dispatch records bind `clock` to bit 12 and `ackkgclock` to bit 13 (established); that the 8254 counter outputs are what raise those bits rests on NetBSD (`int.c`) and the kernel's use of the acknowledge strobes, so the wiring is inferred.
 - **Bus error** drives Cause bit 14. Established as the dispatch binding; the source is the MC (inferred).
 - **FPU** exceptions are internal to the R4000 and use no INT2 line.
 - **Front panel and power**: INT2 has no power-button input on the Indigo (the Indy's INT3 has a power interrupt on local 1 bit 1). The R4000 board's
